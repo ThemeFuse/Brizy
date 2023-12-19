@@ -253,6 +253,157 @@ export const ProShortCodes = {
   Archive: true
 };
 
+export const ShortCodesKeywords = {
+  Text: "text content paragraph copy",
+  Image: "image picture photo graphic",
+  Button: "button CTA action link",
+  Icon: "icon symbol graphic logo",
+  Spacer: "space gap distance",
+  Map: "Map location address geography",
+  Form2: "form input submission",
+  Line: "divider separator boundary",
+  Menu: "navigation list links",
+  MenuSimple: "simple menu basic navigation list",
+  Login: "Login sign in authentication access",
+  Translation: "language translate multilingual",
+
+  ImageGallery: "gallery slideshow collection",
+  Video: "video media clip",
+  Audio: "audio sound music",
+  VideoPlaylist: "video playlist media list collection",
+
+  IconText: "icon with text combined symbol graphic and text",
+  Lottie: "Lottie animation animated graphic",
+  Embed: "embed external content insert",
+  StarRating: "star rating feedback review",
+  Alert: "notification warning message",
+  Counter: "counter number numeric display",
+  Countdown: "countdown timer time remaining",
+  ProgressBar: "progress bar loading completion",
+  Calendly: "Calendly calendar scheduling",
+  Carousel: "carousel slider rotating display",
+  Tabs: "tabs tabbed content sections",
+  Accordion: "accordion expanding sections collapsible",
+  Switcher: "switcher toggle on-off",
+  Table: "table data spreadsheet",
+  Timeline: "timeline chronology events",
+
+  StoryButton: "story button narrative action interactive",
+  StoryIcon: "story icon narrative symbol graphic",
+  StoryEmbed: "story embed narrative integration insert",
+  StoryText: "story text narrative content copy",
+  StoryMap: "story map narrative location geography",
+  StoryProgressBar: "story progress bar narrative loading completion",
+  StoryLine: "story line narrative divider boundary",
+  StoryCountdown2: "story countdown narrative timer time remaining",
+  StoryCounter: "story counter narrative number numeric display",
+  StoryShape: "story shape narrative graphic visual element",
+  StoryForm2: "story form narrative input submission",
+  StoryStarRating: "story star rating narrative feedback review",
+  StoryLottie: "story Lottie narrative animation animated graphic",
+
+  StoryImage: "story image narrative picture visual element",
+  StoryVideo: "story video narrative media clip",
+
+  StoryLeadific: "story Leadific narrative Leadific engagement",
+
+  Facebook: "Facebook social media networking",
+  Twitter: "Twitter social media microblogging",
+  FacebookComments: "Facebook comments social interaction feedback",
+
+  Columns: "columns layout grid",
+  Row: "row horizontal alignment series",
+  ProtectedPage: "protected page restricted access security",
+  ResetPassword: "reset password authentication security",
+  Posts: "posts articles blog",
+  PostTitle: "post title article heading headline",
+  AssetsPosts: "assets posts media posts blog assets",
+  UserFirstName: "user first name personalization customization",
+  UserLastName: "user last name personalization customization",
+  UserEmail: "user email contact communication",
+  UserPhoneNumber: "user phone number contact communication",
+  UserRoles: "user roles permissions access",
+  UserUsername: "user username identification login",
+  Cart: "cart shopping cart basket",
+  Product: "product item merchandise",
+  ShoppingBag: "shopping bag purchase buying",
+  MyAccount: "my account user profile personal information",
+
+  MinistryBrandsGroupLayout:
+    "Ministry Brands Group Layout organization layout group structure",
+  MinistryBrandsGroupSlider:
+    "Ministry Brands Group Slider organization slider group rotating display",
+  MinistryBrandsEventLayout:
+    "Ministry Brands Event Layout event layout event structure",
+  MinistryBrandsEventCalendar:
+    "Ministry Brands Event Calendar event calendar scheduling",
+  MinistryBrandsSermonLayout:
+    "Ministry Brands Sermon Layout sermon layout message structure",
+  MinistryBrandsSermonList:
+    "Ministry Brands Sermon List sermon list message collection",
+  MinistryBrandsSermonFeatured:
+    "Ministry Brands Sermon Featured featured sermon highlighted message",
+  MinistryBrandsSermonDetail:
+    "Ministry Brands Sermon Detail sermon details message information",
+  MinistryBrandsGroupList:
+    "Ministry Brands Group List group list organization collection",
+  MinistryBrandsGroupDetail:
+    "Ministry Brands Group Detail group details organization information",
+  MinistryBrandsEventFeatured:
+    "Ministry Brands Event Featured featured event highlighted activity",
+  MinistryBrandsGroupFeatured:
+    "Ministry Brands Group Featured featured group highlighted organization",
+  MinistryBrandsEventList:
+    "Ministry Brands Event List event list activity collection",
+  MinistryBrandsEventDetail:
+    "Ministry Brands Event Detail event details activity information",
+  MinistryBrandsFormWidget:
+    "Ministry Brands Form Widget organization form group submission",
+
+  Leadific: "Leadific engagement",
+
+  ShopPosts: "shop posts store articles retail blog",
+  ShopCategories: "shop categories store classifications retail groups",
+
+  Search: "search find lookup locate",
+
+  WPSidebar: "WP Sidebar WordPress sidebar website sidebar side menu",
+  WPCustomShortcode:
+    "WP Custom Shortcode WordPress shortcode custom code embedded code",
+
+  WOOCategories:
+    "WOO Categories WooCommerce categories product classifications merchandise groups",
+  WOOPages: "WOO Pages WooCommerce pages product pages merchandise information",
+  Products: "products items merchandise",
+  WOOCart: "WOO Cart WooCommerce cart shopping cart basket",
+
+  WPFeaturedImage: "WPFeaturedImage",
+
+  PostExcerpt: "post excerpt, summary, highlight",
+  WPPostContent: "post content, body, text",
+  WPPostInfo: "post information, details, metadata",
+  WPBreadcrumbs: "breadcrumbs, navigation, path",
+  WPPostNavigation: "post navigation, previous, next",
+
+  WOOProductTitle: "product title, name, identifier",
+  WOOExcerpt: "product excerpt, summary, highlight",
+  WOOProductContent: "product content, description, details",
+  WOOPrice: "product price, cost, value",
+  WOOGallery: "product gallery, images, visuals",
+  WOOAddToCart: "add to cart, purchase, buy",
+  WOOStock: "product stock, availability, inventory",
+  WOOSku: "product SKU, stock keeping unit, identifier",
+  WOOProductMeta: "product meta data, additional information, details",
+  WOORating: "product rating, reviews, feedback",
+  WOOAttributes: "product attributes, variations, options",
+  WOOUpsell: "upsell, related products, recommendations",
+  WOOBreadcrumbs: "product breadcrumbs, navigation, path",
+  Review: "product review, feedback, opinion",
+
+  WOOArchives: "product archives, list, collection",
+  Archive: "archive, collection, list"
+};
+
 export const CloudShortCodes = {
   Text: getText(config),
   Image: getImage(config),

@@ -1,18 +1,21 @@
 import produce from "immer";
 import { Dispatch } from "redux";
-import { ElementModel } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import {
   itemsToSymbols,
   normalizeMenuItems,
   symbolsToItems
 } from "visual/editorComponents/Menu/utils";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { Block } from "visual/types";
 import { mapModels } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
 import { FromTo } from "../types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 
@@ -21,10 +24,10 @@ type GlobalBlocks = ReduxState["globalBlocks"];
 type Source = FromTo["from"] | FromTo["to"];
 
 export function attachGlobalBlocks(
-  value: ElementModel,
+  value: ElementModelType,
   source: Source,
   gb: GlobalBlocks
-): ElementModel {
+): ElementModelType {
   if ("itemPath" in source) {
     const { itemPath = [] } = source;
 
@@ -40,10 +43,9 @@ export function attachGlobalBlocks(
           cursor.type === "GlobalBlock" &&
           cursor.value
         ) {
-          // @ts-expect-error: _id is not the type unknowns
           const { _id } = cursor.value;
 
-          if (gb[_id]) {
+          if (_id && gb[_id]) {
             Object.assign(cursor, gb[_id].data, {
               __tmp_global_original__: JSON.stringify(cursor)
             });
@@ -60,9 +62,9 @@ export function attachGlobalBlocks(
 }
 
 export function detachGlobalBlocks(
-  value: ElementModel,
+  value: ElementModelType,
   dispatch: Dispatch<ReduxAction>
-): ElementModel {
+): ElementModelType {
   const globalBlockUpdates: Array<string[]> = [];
 
   const ret = produce(value, (draft) => {
@@ -97,14 +99,14 @@ export function detachGlobalBlocks(
 }
 
 export function gbTransform(
-  data: ElementModel,
+  data: ElementModelType,
   gb: GlobalBlocks
-): ElementModel {
+): ElementModelType {
   return mapModels((model: Block) => {
     if (model.type === "GlobalBlock") {
       const { _id } = model.value;
 
-      if (gb[_id] && gb[_id].data) {
+      if (_id && gb[_id] && gb[_id].data) {
         return gb[_id].data;
       }
     }
@@ -118,12 +120,12 @@ export function gbTransform(
 //#region Menu
 
 interface AttachMenu {
-  model: ElementModel;
+  model: ElementModelType;
   config: ConfigCommon;
   omitSymbols?: boolean;
 }
 
-export function attachMenu(data: AttachMenu): ElementModel {
+export function attachMenu(data: AttachMenu): ElementModelType {
   const { config, model, omitSymbols = false } = data;
   const menuData = config.menuData;
 
@@ -160,19 +162,17 @@ export function attachMenu(data: AttachMenu): ElementModel {
   }, model);
 }
 
-export function detachMenu(value: ElementModel): ElementModel {
-  return mapModels((block: ElementModel) => {
-    const { type, value } = block as { type: string; value: ElementModel };
+export function detachMenu(value: ElementModelType): ElementModelType {
+  return mapModels((block: ElementModelType) => {
+    const { type, value } = block;
 
     if (type === "Menu" && value.items) {
       return produce(block, (draft) => {
         Object.assign(
-          //@ts-expect-error: Object is of type 'unknown'.
           draft.value.symbols || {},
           //@ts-expect-error: Object is of type 'unknown'.
           itemsToSymbols(draft.value.items)
         );
-        //@ts-expect-error: Object is of type 'unknown'.
         delete draft.value.items;
       });
     }

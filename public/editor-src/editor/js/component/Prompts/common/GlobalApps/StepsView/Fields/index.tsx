@@ -31,7 +31,7 @@ export class Fields extends Component<Props> {
     id: "",
     headTitle: "",
     headDescription: "",
-    description: "",
+    descriptions: "",
     data: [],
     nextLoading: null,
     prevLoading: null,
@@ -227,7 +227,7 @@ export class Fields extends Component<Props> {
   }
 
   render(): ReactElement {
-    const { description, error, prevLoading, nextLoading, onPrev, onNext } =
+    const { descriptions, error, prevLoading, nextLoading, onPrev, onNext } =
       this.props;
 
     return (
@@ -236,9 +236,9 @@ export class Fields extends Component<Props> {
         <div className="brz-ed-popup-integrations-step__body">
           {error && <Alert message={error} type="error" />}
           {this.renderOptions()}
-          {description && (
+          {descriptions && (
             <p className="brz-p brz-ed-popup-integrations__description">
-              {description}
+              {descriptions}
             </p>
           )}
           <div className="brz-ed-popup-integrations-step__buttons">

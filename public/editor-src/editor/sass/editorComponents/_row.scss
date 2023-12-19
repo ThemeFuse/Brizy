@@ -25,6 +25,14 @@
       left: 0;
     }
 
+    > div[data-scroll-motion],
+    > div[data-scroll-motion] > .brz-hover-animation__container,
+    > .brz-hover-animation__container {
+      min-height: inherit;
+      display: inherit;
+      align-items: inherit;
+    }
+
     // align by container
     > .brz-hover-animation__container > .brz-bg,
     > .brz-bg {

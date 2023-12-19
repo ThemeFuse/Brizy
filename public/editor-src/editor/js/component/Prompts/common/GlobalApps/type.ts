@@ -50,10 +50,12 @@ export interface BaseIntegrationContext {
 
 export type AppData = {
   id: string;
-  pro: boolean;
+  pro?: boolean;
   img: string;
   title: string;
   shortTitle: string;
-  stages: Array<{ type: BaseKey; title: string; hideProgress?: boolean }>;
-  docsUrl: string;
+  restrictions?: { [key: string]: unknown };
+  descriptions?: string;
+  stages: Array<{ type: BaseKey; title?: string; hideProgress?: boolean }>;
+  docsUrl?: string;
 };

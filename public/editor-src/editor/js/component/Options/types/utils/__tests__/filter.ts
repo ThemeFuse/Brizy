@@ -41,7 +41,6 @@ jest.mock(
   "visual/component/Options/types/PopupConditions.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/PromptAddPopup.tsx", () => undefined);
 jest.mock("visual/component/Options/types/PromptIcon.jsx", () => undefined);
 jest.mock("visual/component/Options/types/RadioGroup.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Range2.jsx", () => undefined);

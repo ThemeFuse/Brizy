@@ -1,5 +1,4 @@
 import produce from "immer";
-import { assetUrl } from "visual/utils/asset";
 import { pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { getAccounts } from "../common/GlobalApps/api";
@@ -7,23 +6,21 @@ import { AppData } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 
 class Recaptcha extends BaseIntegration {
-  appsData = [];
+  appsData: AppData[] = [];
   appsComponent = AppsComponent;
 
   async componentDidMount(): Promise<void> {
-    const url = assetUrl("integrations.json");
-    const r = await fetch(url);
-    const { recaptcha } = await r.json();
     const { status, data: accounts } = await getAccounts({
       group: "recaptcha",
       services: "recaptcha"
     });
 
-    this.appsData = recaptcha;
+    const { Integrations } = await import("visual/config/integrations");
+    this.appsData = Integrations.recaptcha;
 
     if (status === 200 && accounts && accounts.length > 0) {
       this.setState(
-        produce(draft => {
+        produce((draft) => {
           draft.data = { recaptcha: { data: accounts[0] } };
           draft.connectedApps = this.getConnectedApps(accounts);
           draft.loading = false;
@@ -52,7 +49,7 @@ class Recaptcha extends BaseIntegration {
     await pendingRequest();
 
     this.setState(
-      produce(draft => {
+      produce((draft) => {
         const connectedAppData = draft.data[appId] || {};
 
         draft.connectedApp = appId;

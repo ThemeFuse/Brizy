@@ -155,8 +155,8 @@
         }
       }
 
-      >.brz-ed-sidebar__control__options {
-        >.brz-ed-sidebar__control__item {
+      > .brz-ed-sidebar__control__options {
+        > .brz-ed-sidebar__control__item {
           padding-top: 20px;
           padding-bottom: 20px;
           max-height: none;
@@ -165,7 +165,7 @@
 
         &.brz-ed-sidebar__control {
           &--top {
-            >.brz-ed-sidebar__control__item {
+            > .brz-ed-sidebar__control__item {
               &:first-child {
                 border-bottom-width: 1px;
               }
@@ -175,7 +175,7 @@
           &--bottom {
             border-top-width: 0;
 
-            >.brz-ed-sidebar__control__item {
+            > .brz-ed-sidebar__control__item {
               &:last-child {
                 border-top-width: 1px;
               }
@@ -192,7 +192,7 @@
 
   // Control Bottom
   &__control--bottom {
-    >.brz-ed-sidebar__control__item:last-child {
+    > .brz-ed-sidebar__control__item:last-child {
       border-bottom-color: transparent;
     }
   }
@@ -278,6 +278,7 @@
     &--deviceMode {
       .brz-ed-sidebar__popover-content {
         min-width: 130px;
+        max-width: fit-content;
       }
     }
 
@@ -454,7 +455,7 @@
         color: white;
       }
 
-      >.brz-img {
+      > .brz-img {
         position: absolute;
         top: 0;
         left: 0;
@@ -499,7 +500,7 @@
       opacity: 0;
       transition: opacity 150ms;
 
-      >.brz-span {
+      > .brz-span {
         position: absolute;
         top: 50%;
         left: 0;
@@ -526,7 +527,7 @@
     padding: 30px;
     height: 100%;
 
-    .brz-ed-sidebar-options>[class^="brz-ed-option"] {
+    .brz-ed-sidebar-options > [class^="brz-ed-option"] {
       margin-bottom: 30px;
     }
 
@@ -536,7 +537,7 @@
         padding-bottom: 30px;
       }
 
-      .brz-ed-option__select>div,
+      .brz-ed-option__select > div,
       .brz-control__select {
         width: 100%;
       }

@@ -157,7 +157,7 @@ class Blocks extends Component {
               {showSidebar && (
                 <Sidebar>
                   {showImportKit && (
-                    <SidebarOption title="BLOCKS">
+                    <SidebarOption title={t("BLOCKS")}>
                       <Select
                         defaultValue={selectedKit}
                         className="brz-control__select--dark brz-control__select--full-width"
@@ -174,7 +174,7 @@ class Blocks extends Component {
                     </SidebarOption>
                   )}
                   {showType && (
-                    <SidebarOption title="STYLES">
+                    <SidebarOption title={t("STYLES")}>
                       <SidebarList
                         lists={types}
                         counters={this.getTypesCounters()}
@@ -184,7 +184,7 @@ class Blocks extends Component {
                     </SidebarOption>
                   )}
                   {showCategories && (
-                    <SidebarOption title="CATEGORIES">
+                    <SidebarOption title={t("CATEGORIES")}>
                       <SidebarList
                         lists={categories}
                         counters={this.getCategoriesCounter(currentFilter.type)}

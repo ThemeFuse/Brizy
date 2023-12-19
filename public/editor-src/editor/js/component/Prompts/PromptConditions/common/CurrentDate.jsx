@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { t } from "visual/utils/i18n";
 
 export default function CurrentDate(props) {
   const { value: triggerValue = "", onChange = () => {} } = props;
@@ -18,16 +19,16 @@ export default function CurrentDate(props) {
         className="brz-control__select--light"
         itemHeight={30}
         defaultValue={triggerValue.type}
-        onChange={type => onChange({ ...triggerValue, type })}
+        onChange={(type) => onChange({ ...triggerValue, type })}
       >
         <SelectItem key="before" value="before">
-          is before
+          {t("is before")}
         </SelectItem>
         <SelectItem key="matches" value="matches">
-          matches
+          {t("matches")}
         </SelectItem>
         <SelectItem key="after" value="after">
-          is after
+          {t("is after")}
         </SelectItem>
       </Select>
       <div className="brz-control__select">

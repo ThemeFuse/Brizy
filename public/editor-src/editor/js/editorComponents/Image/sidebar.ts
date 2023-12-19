@@ -74,7 +74,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                       display: "block",
                       helper: {
                         content:
-                          "Specify an alternate text for the image, if it cannot be displayed."
+                          t("Specify an alternate text for the image, if it cannot be displayed.")
                       }
                     },
                     {

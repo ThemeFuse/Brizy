@@ -12,16 +12,13 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import {
   ADD_BLOCK,
-  DELETE_GLOBAL_BLOCK,
   HYDRATE,
-  MAKE_GLOBAL_TO_NORMAL_BLOCK,
-  MAKE_NORMAL_TO_GLOBAL_BLOCK,
+  MAKE_BLOCK_TO_GLOBAL_BLOCK,
+  MAKE_GLOBAL_BLOCK_TO_BLOCK,
   REMOVE_BLOCK,
   REORDER_BLOCKS,
   UPDATE_BLOCKS,
   UPDATE_ERROR,
-  UPDATE_GB_RULES,
-  UPDATE_GLOBAL_BLOCK,
   UPDATE_POPUP_RULES,
   UPDATE_TRIGGERS,
   updateError
@@ -46,17 +43,16 @@ import {
   errorSelector,
   fontsSelector,
   globalBlocksAssembledSelector,
-  globalBlocksSelector,
   pageBlocksRawSelector,
   pageSelector,
   projectAssembled,
   projectSelector,
   stylesSelector
 } from "../../selectors";
+import { handleGlobalBlocks } from "./globalBlocks";
 import {
   apiOnChange,
   apiPublish,
-  apiUpdateGlobalBlock,
   apiUpdateGlobalBlocks,
   apiUpdatePopupRules,
   debouncedApiAutoSave,
@@ -283,8 +279,8 @@ function handleProject({ action, state, oldState, apiHandler }) {
 
 function handlePage({ action, state }) {
   switch (action.type) {
-    case MAKE_NORMAL_TO_GLOBAL_BLOCK:
-    case MAKE_GLOBAL_TO_NORMAL_BLOCK:
+    case MAKE_BLOCK_TO_GLOBAL_BLOCK:
+    case MAKE_GLOBAL_BLOCK_TO_BLOCK:
     case REORDER_BLOCKS:
     case UPDATE_BLOCKS:
     case ADD_BLOCK:
@@ -342,69 +338,6 @@ function handlePage({ action, state }) {
       //   debouncedApiUpdatePage(page);
       // }
     }
-  }
-}
-
-function handleGlobalBlocks({ action, state }) {
-  if (action.type === ADD_GLOBAL_BLOCK) {
-    const { _id } = action.payload.block.value;
-
-    const globalBlock = globalBlocksSelector(state)[_id];
-
-    debouncedApiUpdateGlobalBlock.set(_id, _id, globalBlock, action.meta);
-  } else if (
-    action.type === UPDATE_GLOBAL_BLOCK ||
-    action.type === REMOVE_BLOCK
-  ) {
-    const { id } = action.payload;
-    const globalBlock = globalBlocksAssembledSelector(state)[id];
-
-    if (globalBlock) {
-      debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, action.meta);
-    }
-  } else if (action.type === UPDATE_GB_RULES) {
-    const { id } = action.payload;
-    const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-    const meta = {
-      is_autosave: 0
-    };
-    const globalBlock = globalBlocksSelector(state)[id];
-
-    apiUpdateGlobalBlock(id, globalBlock, meta)
-      .then(syncSuccess)
-      .catch(syncFail);
-  }
-  if (action.type === MAKE_GLOBAL_TO_NORMAL_BLOCK) {
-    const { fromBlockId } = action.payload;
-    const globalBlock = globalBlocksAssembledSelector(state)[fromBlockId];
-
-    debouncedApiUpdateGlobalBlock.set(
-      fromBlockId,
-      fromBlockId,
-      globalBlock,
-      action.meta
-    );
-  } else if (action.type === DELETE_GLOBAL_BLOCK) {
-    const { id } = action.payload;
-    const globalBlock = globalBlocksSelector(state)[id];
-    const meta = {
-      is_autosave: 0
-    };
-
-    debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, meta);
-  } else if (action.type === UNDO || action.type === REDO) {
-    // const { blocksData: currentBlocksData } = action.currentSnapshot;
-    // const { blocksData: nextBlocksData } = action.nextSnapshot;
-    // const nextGlobalBlocks = globalBlocksAssembledSelector({
-    //   ...state,
-    //   ...action.nextSnapshot
-    // });
-    // Object.keys(nextGlobalBlocks).forEach(id => {
-    //   if (currentBlocksData[id] !== nextBlocksData[id]) {
-    //     const globalBlock = nextGlobalBlocks[id];
-    //     debouncedApiUpdateGlobalBlock.set(id, id, globalBlock);
-    //   }
-    // });
   }
 }
 

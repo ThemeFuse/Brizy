@@ -66,7 +66,7 @@ export function getItems({
               type: "slider-dev",
               config: {
                 min: 0,
-                max: 100,
+                max: dvv("buttonWidthSuffix") === "px" ? 300 : 100,
                 units: [
                   { value: "%", title: "%" },
                   { value: "px", title: "px" }
@@ -99,7 +99,7 @@ export function getItems({
       type: "popover-dev",
       position: 30,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

@@ -2,8 +2,11 @@ import classNames from "classnames";
 import React, { ReactNode } from "react";
 import _ from "underscore";
 import { noop } from "underscore";
-import { ElementModel } from "visual/component/Elements/Types";
-import { fromElementModel } from "visual/component/Options/types/utils/fromElementModel";
+import {
+  ElementDefaultValue,
+  ElementModel
+} from "visual/component/Elements/Types";
+import { getOptionModel } from "visual/component/Options/types/utils/fromElementModel";
 import { toElementModel } from "visual/component/Options/types/utils/toElementModel";
 import { mergeOptions, optionMap } from "visual/component/Options/utils";
 import {
@@ -16,18 +19,21 @@ import * as GlobalState from "visual/global/StateMode";
 import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
+import { css } from "visual/utils/cssStyle";
+import { filterCSS, getCSSObjects } from "visual/utils/cssStyle/cssStyle2";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { concatFinalCSS } from "visual/utils/cssStyle/utils";
 import { IS_PRO } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
-import {
-  defaultValueKey,
-  defaultValueValue
-} from "visual/utils/onChange/device";
+import { defaultValueKey } from "visual/utils/onChange/device";
 import { WithClassName } from "visual/utils/options/attributes";
 import { wrapOption } from "visual/utils/options/utils";
 import { attachRef } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import * as Responsive from "visual/utils/responsiveMode";
+import { DESKTOP } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
+import { NORMAL } from "visual/utils/stateMode";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
 import { Literal } from "visual/utils/types/Literal";
 import { uuid } from "visual/utils/uuid";
@@ -148,7 +154,7 @@ export class EditorComponent<
     onToolbarLeave: _.noop
   };
 
-  static defaultValue: ElementModel = {};
+  static defaultValue: ElementDefaultValue = {};
 
   static experimentalDynamicContent = false;
 
@@ -227,7 +233,7 @@ export class EditorComponent<
     }
 
     const defaultValue = (this.constructor as typeof EditorComponent)
-      .defaultValue as M;
+      .defaultValue;
     const defaultValueFlat = flattenDefaultValue(defaultValue) as M;
     const dynamicContentKeys = Object.keys(defaultValueFlat).reduce(
       (acc, k) => {
@@ -265,6 +271,61 @@ export class EditorComponent<
     }
 
     return null;
+  }
+
+  getMockToolbarOptions = (toolbar: NewToolbarConfig<M>): ToolbarItemType[] => {
+    return toolbar.getItems({
+      v: {} as M,
+      device: DESKTOP,
+      state: NORMAL,
+      context: this.context,
+      component: this as Editor<M>
+    });
+  };
+
+  getCSS(
+    toolbar: NewToolbarConfig<M>,
+    sidebar?: NewToolbarConfig<M>
+  ): OutputStyle {
+    const { v, vs, vd } = this.getValue2();
+
+    const toolbarOptions = this.getMockToolbarOptions(toolbar);
+    const sidebarOptions = sidebar ? this.getMockToolbarOptions(sidebar) : [];
+    const options = [...toolbarOptions, ...sidebarOptions];
+
+    const defaultCSSObj = getCSSObjects(vd, options);
+    const rulesCSSObj = getCSSObjects(vs, options);
+    const customCSSObj = getCSSObjects(v, options);
+
+    return filterCSS(defaultCSSObj, rulesCSSObj, customCSSObj);
+  }
+
+  getCSSClassnames({
+    toolbar,
+    sidebar,
+    stylesFn,
+    extraClassNames
+  }: {
+    toolbar: NewToolbarConfig<M>;
+    sidebar?: NewToolbarConfig<M>;
+    stylesFn?: (v: M, vs: M, vd: M) => OutputStyle;
+    extraClassNames?: Array<string | Record<string, boolean>>;
+  }) {
+    const { v, vs, vd } = this.getValue2();
+
+    const cssFromStylesFn =
+      typeof stylesFn === "function" ? stylesFn(v, vs, vd) : undefined;
+
+    const cssFromToolbarOptions = this.getCSS(toolbar, sidebar);
+
+    const _css = cssFromStylesFn
+      ? concatFinalCSS(cssFromStylesFn, cssFromToolbarOptions)
+      : cssFromToolbarOptions;
+
+    return classNames(
+      extraClassNames,
+      css(this.getComponentId(), this.getId(), _css)
+    );
   }
 
   getDCValue(v: M): DCObjResult {
@@ -767,14 +828,13 @@ export class EditorComponent<
       const deps = option.dependencies || _.identity;
 
       if (isDev) {
-        option.value = fromElementModel(type)((key) =>
-          defaultValueValue({
-            v,
-            key: createOptionId(id, key),
-            device,
-            state
-          })
-        );
+        option.value = getOptionModel({
+          id,
+          type,
+          v,
+          breakpoint: device,
+          state
+        });
       }
 
       const elementModel = toElementModel<typeof type>(type, (key) =>

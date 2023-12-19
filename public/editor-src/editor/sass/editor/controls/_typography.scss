@@ -2,7 +2,7 @@
 
 .brz-ed-control__typography {
   display: grid;
-  grid-template-columns: 208px 175px;
+  grid-template-columns: 228px 195px;
   width: 100%;
 
   &--tabs-icon {
@@ -19,7 +19,7 @@
   }
 
   &--style-only {
-    grid-template-columns: 170px;
+    grid-template-columns: 210px;
   }
 
   .brz-ed-font__typography {
@@ -94,7 +94,10 @@
 
     .brz-ed-component__label {
       margin-right: 0;
+      text-overflow: ellipsis;
       white-space: nowrap;
+      overflow: hidden;
+      display: block;
     }
 
     .brz-ed__col:not(:first-child) {

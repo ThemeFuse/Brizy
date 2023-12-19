@@ -61,11 +61,11 @@ const apiKeys = [
     type: "search",
     multiple: true,
     choices: [
-      { label: "Time", value: "time" },
-      { label: "Page URL", value: "pageUrl" },
-      { label: "User Agent", value: "userAgent" },
-      { label: "Remote IP", value: "remoteIp" },
-      { label: "Credit", value: "credit" }
+      { label: t("Time"), value: "time" },
+      { label: t("Page URL"), value: "pageUrl" },
+      { label: t("User Agent"), value: "userAgent" },
+      { label: t("Remote IP"), value: "remoteIp" },
+      { label: t("Credit"), value: "credit" }
     ]
   }
 ];

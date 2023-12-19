@@ -1,10 +1,10 @@
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { Value, Props } from "./types";
+import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -18,7 +18,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

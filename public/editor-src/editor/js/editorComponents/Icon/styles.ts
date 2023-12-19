@@ -26,7 +26,10 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStyleElementIconPropertyHoverTransition"
+        "cssStyleElementIconPropertyHoverTransition",
+        "cssStyleVisibleMode|||editor",
+        "cssStyleVisibleMode|||preview",
+        "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
       ]
     }
   };

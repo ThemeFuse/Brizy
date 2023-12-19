@@ -1,8 +1,11 @@
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import { Dictionary } from "visual/types/utils";
-import { ElementModel } from "visual/component/Elements/Types";
 
 export interface Value extends ElementModel {
-  items: ElementModel[];
+  items: ElementModelType[];
   dynamic: "off" | "on";
   spacing: number;
   sliderArrowsSpacing: number;

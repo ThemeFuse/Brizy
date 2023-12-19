@@ -317,7 +317,7 @@ export const getItems =
         type: "popover-dev",
         devices: "desktop",
         config: {
-          size: "auto",
+          size: "medium",
           title: t("Colors"),
           icon: {
             style: {
@@ -447,7 +447,10 @@ export const getItems =
                       type: "inputText-dev",
                       placeholder: "http://",
                       disabled: inGallery,
-                      devices: "desktop"
+                      devices: "desktop",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   },
                   {

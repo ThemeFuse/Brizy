@@ -1,7 +1,17 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { is } from "visual/utils/string/NoEmptyString";
 import { Props, Value } from "./index";
+
+const spaceTranslate = t("Space");
+const verticalTranslate = is(t("Vertical")) ? t("Vertical") : "Vertical";
+const horizontalTranslate = is(t("Horizontal"))
+  ? t("Horizontal")
+  : "Horizontal";
+
+const verticalLabel = `${verticalTranslate[0]}. ${spaceTranslate}`;
+const horizontalLabel = `${horizontalTranslate[0]}. ${spaceTranslate}`;
 
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -73,7 +83,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 },
                 {
                   id: "spacing",
-                  label: vertical ? t("V. Space") : t("H. Space"),
+                  label: vertical ? verticalLabel : horizontalLabel,
                   type: "slider-dev",
                   config: {
                     min: 0,
@@ -82,7 +92,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 },
                 {
                   id: "verticalSpacing",
-                  label: t("V. Space"),
+                  label: verticalLabel,
                   disabled: vertical,
                   type: "slider-dev",
                   config: {
@@ -93,7 +103,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "horizontalSpacing",
                   disabled: !vertical,
-                  label: t("H. Space"),
+                  label: horizontalLabel,
                   type: "slider-dev",
                   config: {
                     min: 0,
@@ -188,7 +198,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
     {
       id: "toolbarColor",
       type: "popover-dev",
-      config: { size: "auto", title: t("Colors") },
+      config: {
+        size: "medium",
+        title: t("Colors")
+      },
       devices: "desktop",
       position: 90,
       options: [

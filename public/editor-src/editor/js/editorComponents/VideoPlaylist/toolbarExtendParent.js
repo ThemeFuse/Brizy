@@ -30,8 +30,8 @@ export function getItems({ v, device }) {
           type: "select-dev",
           devices: "desktop",
           choices: [
-            { value: "horizontal", title: "Horizontal" },
-            { value: "vertical", title: "Vertical" }
+            { value: "horizontal", title: t("Horizontal") },
+            { value: "vertical", title: t("Vertical") }
           ]
         },
         {
@@ -41,8 +41,8 @@ export function getItems({ v, device }) {
           devices: "desktop",
           disabled: positionItem === "horizontal",
           choices: [
-            { value: "above", title: "Top" },
-            { value: "under", title: "Bottom" }
+            { value: "above", title: t("Top") },
+            { value: "under", title: t("Bottom") }
           ]
         },
         {
@@ -61,7 +61,7 @@ export function getItems({ v, device }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

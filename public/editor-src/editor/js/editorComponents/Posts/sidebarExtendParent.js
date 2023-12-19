@@ -22,7 +22,7 @@ export const title = ({ v, device }) => {
 };
 
 const helperCustomCSS = `
-<p class="brz-p">You can use the following selectors to create targeted CSS.</p>
+<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -66,7 +66,7 @@ export function getItems() {
                       display: "block",
                       devices: "desktop",
                       helper: { content: helperCustomCSS },
-                      placeholder: "element { CSS goes here }"
+                      placeholder: `element { ${t("CSS goes here")} }`
                     }
                   ]
                 }

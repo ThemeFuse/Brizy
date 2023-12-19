@@ -2,7 +2,10 @@ import { isT } from "fp-utilities";
 import produce from "immer";
 import { insert, mergeIn } from "timm";
 import { last } from "underscore";
-import { ElementModel } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import { Settings } from "visual/libs/gallery";
 import { Breakpoint, DeviceMode2 } from "visual/types";
 import { setIds } from "visual/utils/models";
@@ -94,18 +97,19 @@ export const getSpacing = (v: Value) => {
 };
 
 export const changeImagesData = (
-  items: ElementModel[],
+  items: ElementModelType[],
   data: Record<string, unknown>
-): ElementModel[] => {
-  return items.map((image: ElementModel) =>
-    mergeIn(image, ["value"], {
-      ...(image.value as Value),
-      ...(data ?? {})
-    })
-  ) as ElementModel[];
+): ElementModelType[] => {
+  return items.map(
+    (image) =>
+      mergeIn(image, ["value"], {
+        ...(image.value as Value),
+        ...(data ?? {})
+      }) as ElementModelType
+  );
 };
 
-export const removeHorizontalThumbStyleData = (items: ElementModel[]) => {
+export const removeHorizontalThumbStyleData = (items: ElementModelType[]) => {
   return items.map(({ type, value }) => {
     const {
       // this is a small hack to remove some keys from object without mutation
@@ -129,7 +133,7 @@ export const removeHorizontalThumbStyleData = (items: ElementModel[]) => {
 
 export const addHorizontalThumbStyleData = (
   v: Value,
-  items?: ElementModel[]
+  items?: ElementModelType[]
 ) => {
   const {
     items: dbItems,
@@ -150,7 +154,7 @@ export const addHorizontalThumbStyleData = (
   const _items = items ?? dbItems;
 
   return _items.map(({ type, value }) => {
-    if ((value as Value).clonedFromGallery) {
+    if (value.clonedFromGallery) {
       return { type, value };
     }
 
@@ -205,7 +209,7 @@ export const getPatchExtraData = (v: Value): Partial<Value> => {
   }
 };
 
-export const isPlaceholderImage = (item: ElementModel): boolean =>
+export const isPlaceholderImage = (item: ElementModelType): boolean =>
   !(item.value as Value).imageSrc;
 
 const initialPlaceholders = new Map();
@@ -213,7 +217,7 @@ const initialPlaceholders = new Map();
 export const multiUpload = (
   v: Value,
   patchItems: ElementModel[]
-): ElementModel[] => {
+): ElementModelType[] => {
   const { _id, layout, items: dbItems, lightBox } = v;
 
   if (!initialPlaceholders.get(_id)) {
@@ -228,7 +232,7 @@ export const multiUpload = (
 
   const items = patchItems
     .map((item: ElementModel) => {
-      const currentItem = dbItems.find((i: ElementModel) => {
+      const currentItem = dbItems.find((i: ElementModelType) => {
         const value = i.value as Value;
         return (
           value.imageSrc &&
@@ -329,12 +333,14 @@ export const multiUpload = (
   return newItem ? insert(_items, 0, newItem) : _items;
 };
 
-export const imagesSrc = (items: ElementModel[]): string[] => {
+export const imagesSrc = (items: ElementModelType[]): string[] => {
   return items.map((v) => (v.value as Value).imageSrc).filter(Boolean);
 };
 
-export const notUsedPlaceholders = (items?: ElementModel[]): ElementModel[] =>
-  items ? items.filter((item) => !item?.wasUsed) : [];
+export const notUsedPlaceholders = (
+  items?: ElementModelType[]
+  // @ts-expect-error: Temporary
+): ElementModelType[] => (items ? items.filter((item) => !item?.wasUsed) : []);
 
 const cleanUsedPlaceholders = (_id: number, items?: ElementModel[]): void => {
   if (items && items.every((item) => item.wasUsed)) {
@@ -353,12 +359,12 @@ export const getDefaultGridItems = ({
 }: {
   gridAspectRatio?: string;
   gridColumn?: number;
-  items?: ElementModel[];
+  items?: ElementModelType[];
   lightBox?: Value["lightBox"];
   node: HTMLElement | null;
   v: Value;
   cW?: number;
-}): ElementModel[] => {
+}): ElementModelType[] => {
   const {
     gridAspectRatio: oldGridAspectRatio,
     gridColumn: oldGridColumn,
@@ -369,7 +375,7 @@ export const getDefaultGridItems = ({
     const { width } = node.getBoundingClientRect();
     const containerWidth = cW ?? width;
 
-    const _newItems = (items ?? oldItems).map((el: ElementModel) => {
+    const _newItems = (items ?? oldItems).map((el) => {
       const value = el.value as Value;
 
       const [x, y] = (gridAspectRatio ?? oldGridAspectRatio).split("/");
@@ -424,7 +430,7 @@ export const getDefaultGridItems = ({
         tabletSizeType: null,
         mobileSizeType: null,
         ...(lightBox && mergeLinkType(lightBox))
-      }) as ElementModel;
+      }) as ElementModelType;
     });
 
     return _newItems;
@@ -451,13 +457,13 @@ export const adjustImagesByHeight = ({
   width?: number;
   heightKey?: string;
   widthKey?: string;
-  items: ElementModel[];
+  items: ElementModelType[];
   isChanged?: SizeChangedType;
   cW?: number;
   node: HTMLElement | null;
   responsiveGridColumn: number;
   v: Value;
-}): { items: ElementModel[]; height: number } => {
+}): { items: ElementModelType[]; height: number } => {
   if (node) {
     const { gridColumn } = v;
     const { width: nodeWidth } = node.getBoundingClientRect();
@@ -466,8 +472,8 @@ export const adjustImagesByHeight = ({
     const _height = height ?? containerWidth / gridColumn;
     let vHeight = _height;
 
-    const newItems = items.map((image: ElementModel) => {
-      const value = image.value as Value;
+    const newItems = items.map((image) => {
+      const value = image.value;
 
       if (value.clonedFromGallery) {
         return image;
@@ -507,8 +513,8 @@ export const adjustImagesByHeight = ({
               [widthKey ?? "width"]: width
             }
           : {})
-      });
-    }) as ElementModel[];
+      }) as ElementModelType;
+    });
 
     return {
       items: newItems,

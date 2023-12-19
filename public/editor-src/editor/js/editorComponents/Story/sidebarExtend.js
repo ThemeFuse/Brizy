@@ -36,7 +36,7 @@ export function getItems({ context }) {
               display: "block",
               helper: {
                 content:
-                  "Add your custom class without the .dot, example: my-class"
+                  t("Add your custom class without the .dot, example: my-class")
               },
               config: richTextDC,
               option: {

@@ -85,4 +85,8 @@
   & > .brz-ed-control__tabs-wrapper {
     width: 100%;
   }
+
+  & .brz-ed-control__tabs-wrapper .brz-ed-control__backgroundColor {
+    width: $toolbar_tooltip__md-width;
+  }
 }

@@ -7,6 +7,7 @@ import Config from "visual/global/Config";
 import { updateUI } from "visual/redux/actions2";
 import { currentLanguageSelector } from "visual/redux/selectors";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
+import { t } from "visual/utils/i18n";
 
 export interface Props {
   label: string;
@@ -28,7 +29,7 @@ export const Languages = (props: Props): ReactElement => {
     const config = Config.getAll();
 
     const languageOptions = [
-      { value: "default", title: "Default" },
+      { value: "default", title: t("Default") },
       ...getLanguagesChoices(config)
     ];
 

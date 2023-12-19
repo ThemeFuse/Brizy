@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import {
-  NumberSlider,
-  Props as NP
+  Props as NP,
+  NumberSlider
 } from "visual/component/Controls/NumberSlider";
 import { OptionLabel } from "visual/component/OptionLabel";
-import { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
+import { OnChange } from "visual/component/Options/Type";
 import { Literal } from "visual/utils/types/Literal";
 
 export type Props<U> = {

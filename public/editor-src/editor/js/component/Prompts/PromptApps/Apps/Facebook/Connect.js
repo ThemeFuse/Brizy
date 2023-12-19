@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
+import { Context } from "../../../common/GlobalApps/Context";
 import { Connect } from "../../../common/GlobalApps/StepsView";
 import { addAccount, deleteAccount } from "../../../common/GlobalApps/api";
-import { Context } from "../../../common/GlobalApps/Context";
 import validation from "./validation";
-import { pendingRequest } from "visual/utils/api";
 
 const apiKeys = [{ name: "appid", title: "App ID" }];
 
@@ -54,12 +54,12 @@ class FacebookConnect extends Component {
       error: null
     });
 
-    if (keysValue.some(key => !key)) {
+    if (keysValue.some((key) => !key)) {
       // Emitted fake request
       await pendingRequest();
 
       this.setState({
-        error: "Fields are empty",
+        error: t("Fields are empty"),
         nextLoading: false
       });
     } else {
@@ -70,7 +70,7 @@ class FacebookConnect extends Component {
       if (!isValidate) {
         this.setState({
           isValidate: false,
-          error: "Your AppId is no valid, re check and try again",
+          error: t("Your AppId is no valid, re check and try again"),
           nextLoading: false
         });
 

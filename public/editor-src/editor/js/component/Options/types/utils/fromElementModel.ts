@@ -1,3 +1,4 @@
+import { ElementModel } from "visual/component/Elements/Types";
 import { FromElementModel } from "visual/component/Options/Type";
 import type { OptionName, OptionValue } from "visual/component/Options/types";
 import { fromElementModel as population } from "visual/component/Options/types/common/Population/converters";
@@ -49,7 +50,14 @@ import { fromElementModel as textarea } from "visual/component/Options/types/dev
 import { fromElementModel as toggle } from "visual/component/Options/types/dev/Toggle/converters";
 import { fromElementModel as transform } from "visual/component/Options/types/dev/Transform/converters";
 import { fromElementModel as typography } from "visual/component/Options/types/dev/Typography/converters";
+import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { BreakpointsNames } from "visual/utils/breakpoints/types";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { NORMAL, State } from "visual/utils/stateMode";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
 import { applyDefaultValueToOption } from "./defaultValue";
+import { toElementModel } from "./toElementModel";
 
 type FromElementModelFns = {
   [K in OptionName]: FromElementModel<K>;
@@ -121,4 +129,63 @@ export const fromElementModel = <T extends OptionName>(
       type
     );
   };
+};
+
+export const getOptionModel = ({
+  type,
+  id,
+  v,
+  breakpoint,
+  state = NORMAL
+}: {
+  type: OptionName;
+  id: string;
+  v: ElementModel;
+  breakpoint: BreakpointsNames;
+  state?: State;
+}) => {
+  const getModel = fromElementModel(type);
+  const get = (k: string): MValue<Literal> => {
+    const key = createOptionId(id, k);
+    return defaultValueValue({
+      v,
+      device: breakpoint,
+      state,
+      key
+    });
+  };
+
+  return getModel(get);
+};
+
+export const getElementModel = ({
+  id,
+  type,
+  v,
+  breakpoint,
+  state = NORMAL
+}: {
+  id: string;
+  type: OptionName;
+  v: ElementModel;
+  breakpoint: BreakpointsNames;
+  state?: State;
+}): ElementModel => {
+  const optionModel = getOptionModel({ id, type, v, breakpoint, state });
+
+  const getKey = (id: string, key: string) => {
+    return id === "tabsState"
+      ? id
+      : defaultValueKey({
+          key: createOptionId(id, key),
+          device: breakpoint,
+          state
+        });
+  };
+
+  const elementModel = toElementModel<typeof type>(type, (key) =>
+    getKey(id, key)
+  );
+
+  return elementModel(optionModel);
 };

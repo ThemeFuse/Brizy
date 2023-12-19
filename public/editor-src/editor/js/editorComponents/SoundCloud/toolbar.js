@@ -29,7 +29,10 @@ export function getItems({ v, device, state }) {
           label: t("Link"),
           type: "inputText-dev",
           devices: "desktop",
-          placeholder: t("SoundCloud Link")
+          placeholder: t("SoundCloud Link"),
+          config: {
+            size: "medium"
+          }
         },
         {
           id: "autoPlay",
@@ -49,7 +52,7 @@ export function getItems({ v, device, state }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

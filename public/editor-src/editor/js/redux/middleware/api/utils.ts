@@ -14,6 +14,7 @@ import {
 } from "visual/utils/api";
 import { Data, Output, getCompile } from "visual/utils/compiler";
 import * as Obj from "visual/utils/reader/object";
+import { Literal } from "visual/utils/types/Literal";
 
 export {
   apiPublish,
@@ -63,7 +64,7 @@ class debounceById<T> {
     this.cancelId = id;
   };
 
-  async set(id: number, ...rest: Array<unknown>) {
+  async set(id: Literal, ...rest: Array<unknown>) {
     const promise = await this._debounce(id, ...rest);
 
     return promise;
@@ -134,13 +135,9 @@ interface OnUpdateData extends Data {
   onDone: (html: Output) => void;
 }
 
-export const onUpdate = async ({
-  project,
-  page,
-  config,
-  onDone
-}: OnUpdateData) => {
-  const html = await getCompile({ project, page, config });
+export const onUpdate = async (data: OnUpdateData) => {
+  const { project, page, config, globalBlocks, onDone } = data;
+  const html = await getCompile({ project, page, globalBlocks, config });
 
   onDone(html);
 };

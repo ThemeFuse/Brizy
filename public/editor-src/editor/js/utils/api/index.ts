@@ -280,6 +280,10 @@ export function createGlobalBlock(
     });
 }
 
+export function createGlobalPopup(globalPopup: GlobalBlock) {
+  return createGlobalBlock(globalPopup);
+}
+
 export function updateGlobalBlock(
   uid: string,
   globalBlock: GlobalBlock,

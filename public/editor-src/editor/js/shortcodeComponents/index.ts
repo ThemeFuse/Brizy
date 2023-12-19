@@ -3,7 +3,12 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Shortcodes } from "visual/types";
 import { isPro } from "visual/utils/env";
-import { CloudShortCodes, ProShortCodes, WPShortCodes } from "./Shortcodes";
+import {
+  CloudShortCodes,
+  ProShortCodes,
+  ShortCodesKeywords,
+  WPShortCodes
+} from "./Shortcodes";
 
 const _config = Config.getAll();
 
@@ -22,7 +27,9 @@ const normalizeShortCodes = (config: ConfigCommon) => {
         component:
           CloudShortCodes[component as keyof typeof CloudShortCodes] ||
           WPShortCodes[component as keyof typeof WPShortCodes],
-        pro: ProShortCodes[component as keyof typeof ProShortCodes]
+        pro: ProShortCodes[component as keyof typeof ProShortCodes],
+        keywords:
+          ShortCodesKeywords[component as keyof typeof ShortCodesKeywords]
       }))
       .filter(
         (element) =>

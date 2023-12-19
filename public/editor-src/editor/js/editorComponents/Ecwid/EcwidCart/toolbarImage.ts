@@ -29,7 +29,7 @@ export function getItems({
       type: "popover-dev",
       position: 10,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

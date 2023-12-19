@@ -59,7 +59,7 @@ class ApiConnect extends Component {
 
     if (!status || status >= 400) {
       data = [];
-      onError("Something went wrong");
+      onError(t("Something went wrong"));
     }
 
     onChange(id, { ...appData, accountApiKeys: data });

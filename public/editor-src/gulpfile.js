@@ -546,7 +546,6 @@ function proExportLibsCSS() {
 function config() {
   const src = [
     paths.editor + "/js/config/googleFonts.json",
-    paths.editor + "/js/config/integrations.json",
     path.resolve(__dirname, "./backend/config/defaults.json")
   ];
   const dest = paths.build;

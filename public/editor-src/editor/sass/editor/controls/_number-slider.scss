@@ -6,6 +6,21 @@
   flex: 1 1 auto;
   justify-content: space-between;
 
+  &--short {
+    min-width: 130px;
+    max-width: 130px;
+  }
+
+  &--medium {
+    min-width: 145px;
+    max-width: 145px;
+  }
+
+  &--large {
+    min-width: 155px;
+    max-width: 155px;
+  }
+
   .brz-ed__control--number-unit {
     margin-left: $space__between__controls;
     flex: none;

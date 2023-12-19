@@ -2,6 +2,7 @@ import React, { FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
+import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
@@ -49,7 +50,11 @@ export const SidebarTabs: FC<Props> = ({ tabs, toolbar }) => {
         nextAlign,
         (alignment) =>
           updateUI("rightSidebar", { alignment, isOpen, lock, activeTab }),
-        dispatch
+        dispatch,
+        () => {
+          const tooltip = getCurrentTooltip();
+          tooltip?.close();
+        }
       )(),
     [dispatch, alignment, isOpen, lock, activeTab]
   );

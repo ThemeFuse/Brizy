@@ -1,9 +1,7 @@
 import { match } from "fp-utilities";
 import Config from "visual/global/Config";
-import { urlContainsQueryString, objectToQueryString } from "visual/utils/url";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { t } from "visual/utils/i18n";
-import * as Obj from "visual/utils/reader/object";
+import { objectToQueryString, urlContainsQueryString } from "visual/utils/url";
 import { BlockTypes } from "../types";
 
 export const isBlock = (type: BlockTypes): type is "BLOCK" => type === "BLOCK";
@@ -55,36 +53,4 @@ export const getExportBlocksUrls = (
   });
 
   return urlContainsQueryString(url) ? `${url}&${params}` : `${url}?${params}`;
-};
-
-interface WPErrResponse {
-  success: false;
-  data: string;
-}
-
-interface CloudErrResponse {
-  errors: {
-    message: string;
-    uid: string;
-  }[];
-}
-
-const isWPError = (e: unknown): e is WPErrResponse => {
-  return Obj.isObject(e) && "data" in e;
-};
-
-const isCloudError = (e: unknown): e is CloudErrResponse => {
-  return Obj.isObject(e) && "errors" in e && Array.isArray(e.errors);
-};
-
-export const getError = (e: unknown): string => {
-  if (isWPError(e)) {
-    return e.data;
-  }
-
-  if (isCloudError(e)) {
-    return e.errors[0].message;
-  }
-
-  return t("Something went wrong");
 };

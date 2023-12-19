@@ -549,7 +549,8 @@ export function tmpCSSFromCache() {
 }
 
 export function replacePlaceholders(styles, className) {
-  return styles.replace(/&&/gm, `.${className}`);
+  const s = styles.replace(/{{WRAPPER}}/gm, `.${className}`);
+  return s.replace(/&&/gm, `.${className}`);
 }
 
 function insertStyleNodeIntoDOM(styleType, styleNode) {

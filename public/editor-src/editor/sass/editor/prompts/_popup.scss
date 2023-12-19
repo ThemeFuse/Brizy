@@ -254,6 +254,9 @@ $popup_content_padding_bottom: 45px;
   font-weight: 600;
   letter-spacing: 0.25px;
   text-transform: uppercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .brz-ed-popup-content {

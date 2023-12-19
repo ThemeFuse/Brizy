@@ -1,17 +1,23 @@
+import { t } from "visual/utils/i18n";
+
 export function toolbarImageTags({ devices = "all", gallery, enableTags }) {
   const { inGallery = false } = gallery || {};
 
   return {
-    label: "Tags",
+    label: t("Tags"),
     id: "tags",
     type: "inputText-dev",
     helper: {
       enabled: true,
-      content:
-        "Enter the tags, separated by a comma (art, sport, nature, etc).",
+      content: t(
+        "Enter the tags, separated by a comma (art, sport, nature, etc)."
+      ),
       position: "top-end"
     },
-    placeholder: "art, nature, etc.",
+    config: {
+      size: "large"
+    },
+    placeholder: t("art, nature, etc."),
     devices,
     disabled: !inGallery || !enableTags
   };

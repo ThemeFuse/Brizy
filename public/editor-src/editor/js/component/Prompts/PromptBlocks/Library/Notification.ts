@@ -2,7 +2,7 @@ import { ToastNotification } from "visual/component/Notifications";
 import {
   SavedBlockImport,
   SavedLayoutImport
-} from "visual/global/Config/types/configs/ConfigCommon";
+} from "visual/global/Config/types/configs/blocks/SavedBlocks";
 import { SavedBlock, SavedLayout } from "visual/types";
 import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
 import { BlockTypes } from "../types";

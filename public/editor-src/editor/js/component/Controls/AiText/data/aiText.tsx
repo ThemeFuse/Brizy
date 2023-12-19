@@ -14,7 +14,7 @@ export const data: DropdownButtonData[] = [
     ],
     icon: <Icon source={Microphone} color="inherit" />,
     label: t("Tone"),
-    width: "97px"
+    width: "fit-content"
   },
   {
     data: [

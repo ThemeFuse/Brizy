@@ -194,7 +194,7 @@ export function getItemsSimple({ v, device, state }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -252,7 +252,7 @@ export function getItemsSimple({ v, device, state }) {
       id: "subMenuToolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -452,7 +452,7 @@ export function getItemsMMenu({ v, device, state, context }) {
       id: "mMenuToolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

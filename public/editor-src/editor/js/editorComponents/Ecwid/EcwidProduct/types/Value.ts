@@ -1,4 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { Switch } from "../../utils/Value";
 
 export enum EcwidProductThumb {
   ImgFeed = "IMAGE_FEED",
@@ -16,22 +17,41 @@ export enum EcwidProductColumns {
 export interface Value extends ElementModel {
   productId: string;
   customCSS: string;
-  nameDisplay: "on" | "off";
-  breadcrumbsDisplay: "on" | "off";
-  skuDisplay: "on" | "off";
-  priceDisplay: "on" | "off";
-  subtitleDisplay: "on" | "off";
-  optionsDisplay: "on" | "off";
-  stockLabelDisplay: "on" | "off";
-  numberInStockDisplay: "on" | "off";
-  quantityDisplay: "on" | "off";
-  wholesalePricesDisplay: "on" | "off";
-  attributesDisplay: "on" | "off";
-  weightDisplay: "on" | "off";
-  descriptionDisplay: "on" | "off";
-  favoritesButtonsDisplay: "on" | "off";
-  shareButtonsDisplay: "on" | "off";
-  footerDisplay: "on" | "off";
+
+  positionName: number;
+  positionBreadcrumbs: number;
+  positionPrice: number;
+  positionAddToBag: number;
+  positionDescription: number;
+  positionTitle2: number;
+  positionShareTitle: number;
+
+  attributesDisplay: Switch;
+  breadcrumbsDisplay: Switch;
+  carouselImage: Switch;
+  cutProductDescription: Switch;
+  descriptionDisplay: Switch;
+  favoritesButtonsDisplay: Switch;
+  footerDisplay: Switch;
+  galleryHoverZoom: Switch;
+  nameDisplay: Switch;
+  nameFirstMobile: Switch;
+  numberInStockDisplay: Switch;
+  optionsDisplay: Switch;
+  priceDisplay: Switch;
+  previewAdditionalImages: Switch;
+  quantityDisplay: Switch;
+  shareButtonsDisplay: Switch;
+  showFacebookShareBtn: Switch;
+  showPinterestShareBtn: Switch;
+  showTwitterShareBtn: Switch;
+  showVkShareBtn: Switch;
+  skuDisplay: Switch;
+  stockLabelDisplay: Switch;
+  subtitleDisplay: Switch;
+  wholesalePricesDisplay: Switch;
+  weightDisplay: Switch;
+
   descriptionPosition: "belowImage" | "besideImage";
   thumbnailAspectRatio:
     | "AUTO"
@@ -44,25 +64,10 @@ export interface Value extends ElementModel {
     | EcwidProductThumb.ImgFeed
     | EcwidProductThumb.ImgThumbHorizontal
     | EcwidProductThumb.ImgThumbVertical;
-  nameFirstMobile: "on" | "off";
-  galleryHoverZoom: "on" | "off";
-  positionName: number;
-  positionBreadcrumbs: number;
-  positionPrice: number;
-  positionAddToBag: number;
-  positionDescription: number;
-  positionTitle2: number;
-  positionShareTitle: number;
+
   columns:
     | EcwidProductColumns.TwoLeft
     | EcwidProductColumns.TwoRight
     | EcwidProductColumns.ThreeRight
     | EcwidProductColumns.ThreeLeft;
-  showFacebookShareBtn: "on" | "off";
-  showPinterestShareBtn: "on" | "off";
-  showTwitterShareBtn: "on" | "off";
-  showVkShareBtn: "on" | "off";
-  carouselImage: "on" | "off";
-  cutProductDescription: "on" | "off";
-  previewAdditionalImages: "on" | "off";
 }

@@ -139,7 +139,7 @@ export function getItems({
       type: "popover-dev",
       position: 80,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -254,7 +254,10 @@ export function getItems({
                   option: {
                     id: "linkExternal",
                     type: "inputText-dev",
-                    placeholder: "http://"
+                    placeholder: "http://",
+                    config: {
+                      size: "medium"
+                    }
                   }
                 },
                 {

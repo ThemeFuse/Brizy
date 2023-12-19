@@ -159,7 +159,6 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
         <Wrapper<Props> {...this.makeWrapperProps({ className })}>
           <form
             className="brz-form brz-protected-form"
-            {...makeDataAttr({ name: "action", value: "/" })}
             {...makeDataAttr({
               name: "messages",
               value: messages,

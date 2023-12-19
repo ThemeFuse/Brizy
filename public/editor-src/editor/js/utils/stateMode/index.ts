@@ -1,13 +1,13 @@
-import { pass, pipe } from "visual/utils/fp";
-import { onNullish } from "visual/utils/value";
-import * as Str from "visual/utils/string/specs";
 import { mPipe } from "fp-utilities";
+import { pass, pipe } from "visual/utils/fp";
+import * as Str from "visual/utils/string/specs";
+import { onNullish } from "visual/utils/value";
 
 export type State = "normal" | "hover" | "active";
 
-export const NORMAL: State = "normal";
-export const HOVER: State = "hover";
-export const ACTIVE: State = "active";
+export const NORMAL: Extract<State, "normal"> = "normal";
+export const HOVER: Extract<State, "hover"> = "hover";
+export const ACTIVE: Extract<State, "active"> = "active";
 
 /**
  * Returns all states list, with the default state as first element

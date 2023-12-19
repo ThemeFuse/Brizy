@@ -46,16 +46,22 @@ export function getItems({
       type: "inputText-dev",
       position: 20,
       label: isDate ? t("Min Date") : t("Min Time"),
-      placeholder: isDate ? "YYYY-MM-DD" : "HH:MM",
-      devices: "desktop"
+      placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
+      devices: "desktop",
+      config: {
+        size: "medium"
+      }
     },
     {
       id: "max",
       type: "inputText-dev",
       position: 30,
       label: isDate ? t("Max Date") : t("Max Time"),
-      placeholder: isDate ? "YYYY-MM-DD" : "HH:MM",
-      devices: "desktop"
+      placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
+      devices: "desktop",
+      config: {
+        size: "medium"
+      }
     },
     {
       id: "nativeHtml",
@@ -128,7 +134,10 @@ export function getItems({
       position: 20,
       label: t("Min"),
       placeholder: t("Min"),
-      devices: "desktop"
+      devices: "desktop",
+      config: {
+        size: "medium"
+      }
     },
     {
       id: "max",
@@ -136,7 +145,10 @@ export function getItems({
       position: 30,
       label: t("Max"),
       placeholder: t("Max"),
-      devices: "desktop"
+      devices: "desktop",
+      config: {
+        size: "medium"
+      }
     }
   ];
   const hiddenOptions = (): ToolbarItemType[] => [
@@ -249,37 +261,49 @@ export function getItems({
                   id: "fileSizeErrorMessage",
                   type: "inputText-dev",
                   position: 15,
-                  label: "File size error message",
-                  placeholder: "..type error message",
+                  label: t("File size error message"),
+                  placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isFileUpload
+                  disabled: !isFileUpload,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "fileTypeErrorMessage",
                   type: "inputText-dev",
                   position: 15,
-                  label: "File type error message",
-                  placeholder: "..type error message",
+                  label: t("File type error message"),
+                  placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isFileUpload
+                  disabled: !isFileUpload,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "numberMinMessage",
                   type: "inputText-dev",
                   position: 15,
-                  label: "Min number error message",
-                  placeholder: "..type error message",
+                  label: t("Min number error message"),
+                  placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isNumber
+                  disabled: !isNumber,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "numberMaxMessage",
                   type: "inputText-dev",
                   position: 15,
-                  label: "Max number error message",
-                  placeholder: "..type error message",
+                  label: t("Max number error message"),
+                  placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isNumber
+                  disabled: !isNumber,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 ...(isDateOrTime ? dateOrTimeOptions() : []),
                 ...(isCheckboxOrRadio ? checkboxOrRadioOptions() : []),

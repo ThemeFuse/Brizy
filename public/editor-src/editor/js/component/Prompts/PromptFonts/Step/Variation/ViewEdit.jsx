@@ -58,7 +58,11 @@ class ViewEdit extends Component {
       );
     });
 
-    return <Scrollbar autoHeightMax="255px" theme="light">{options}</Scrollbar>;
+    return (
+      <Scrollbar autoHeightMax="280px" theme="light">
+        {options}
+      </Scrollbar>
+    );
   }
 
   render() {

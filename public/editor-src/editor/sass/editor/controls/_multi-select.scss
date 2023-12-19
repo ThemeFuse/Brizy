@@ -6,16 +6,18 @@
 
   &--size {
     &-short {
-      width: $control__sm-width;
-      min-width: 85px;
+      min-width: $control__sm-width;
+      max-width: $control__sm-width;
     }
 
     &-medium {
-      width: $control__md-width;
+      min-width: $control__md-width;
+      max-width: $control__md-width;
     }
 
     &-large {
-      width: $control__lg-width;
+      min-width: $control__lg-width;
+      max-width: $control__lg-width;
     }
 
     &-auto {
@@ -47,7 +49,7 @@
       position: static;
       flex: none;
       top: unset;
-      margin: 0 0 0 5px;
+      margin: 0 0 0 3px;
     }
 
     .brz-ed-control__multiSelect--placeholder {
@@ -94,7 +96,7 @@
       align-items: center;
     }
 
-    &>.brz-icon-svg {
+    & > .brz-icon-svg {
       cursor: pointer;
       font-size: 10px;
       margin-left: 4px;
@@ -122,6 +124,7 @@
     background: $control-bg;
     min-width: 100%;
     transform: none !important;
+    max-width: 350px;
   }
 
   &__option {
@@ -170,14 +173,13 @@
   }
 
   &.brz-slider__select {
-    width: 50px;
+    min-width: 50px;
 
     .brz-ed-control__multiSelect--value-container {
       background: transparent;
       transition: 0.2s color linear;
 
       &:hover {
-
         .brz-ed-control__multiSelect--tag--value,
         .brz-control__select--arrow {
           color: $brand__primary;

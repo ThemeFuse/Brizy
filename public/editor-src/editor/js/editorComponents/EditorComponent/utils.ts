@@ -1,19 +1,22 @@
 import { getIn } from "timm";
 import { intersection } from "underscore";
-import Shortcodes from "visual/shortcodeComponents";
-import * as Obj from "visual/utils/reader/object";
-import { camelCase } from "visual/utils/string";
-import * as Responsive from "visual/utils/responsiveMode";
-import * as Device from "visual/utils/devices";
-import { getDevice, supportsMode } from "visual/utils/devices";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Dictionary } from "visual/types/utils";
-import { DeviceMode } from "visual/types";
+import {
+  ElementDefaultValue,
+  ElementModel
+} from "visual/component/Elements/Types";
 import {
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
+import Shortcodes from "visual/shortcodeComponents";
+import { DeviceMode } from "visual/types";
+import { Dictionary } from "visual/types/utils";
+import * as Device from "visual/utils/devices";
+import { getDevice, supportsMode } from "visual/utils/devices";
 import { IS_PRO } from "visual/utils/env";
+import * as Obj from "visual/utils/reader/object";
+import * as Responsive from "visual/utils/responsiveMode";
+import { camelCase } from "visual/utils/string";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 
 /**
@@ -134,20 +137,22 @@ export const makeToolbarPropsFromConfigDefaults = (
 };
 
 interface FlattenDefaultValueFn {
-  (keys: string[]): (defaultValue: ElementModel) => ElementModel;
+  (keys: string[]): (defaultValue: ElementDefaultValue) => ElementModel;
 }
-export const flattenDefaultValue_: FlattenDefaultValueFn = keys => {
+export const flattenDefaultValue_: FlattenDefaultValueFn = (keys) => {
   const keysMap: Dictionary<boolean> = keys.reduce((acc, k) => {
     acc[k] = true;
     return acc;
   }, {} as Dictionary<boolean>);
 
-  return function inner(defaultValue: ElementModel): ElementModel {
+  return function inner(
+    defaultValue: ElementDefaultValue | ElementModel
+  ): ElementModel {
     const ret: ElementModel = {};
 
     for (const [k, v] of Object.entries(defaultValue)) {
       if (keysMap[k] && Obj.isObject(v)) {
-        Object.assign(ret, inner(v as ElementModel));
+        Object.assign(ret, inner(v));
       } else {
         ret[k] = v;
       }
@@ -168,37 +173,35 @@ export const flattenDefaultValue = flattenDefaultValue_([
   "toolbar"
 ]);
 
-export const filterToolbarItems = (deviceMode: DeviceMode, role: string) => <
-  T extends ToolbarItemType
->(
-  item: T
-): boolean => {
-  const { type, disabled, devices, roles } = item;
+export const filterToolbarItems =
+  (deviceMode: DeviceMode, role: string) =>
+  <T extends ToolbarItemType>(item: T): boolean => {
+    const { type, disabled, devices, roles } = item;
 
-  if (!type) {
-    return false;
-  }
-
-  if (disabled === true) {
-    return false;
-  }
-
-  if (devices && devices !== "all") {
-    if (devices === "desktop" && deviceMode !== "desktop") {
+    if (!type) {
       return false;
     }
 
-    if (devices === "responsive" && deviceMode === "desktop") {
+    if (disabled === true) {
       return false;
     }
-  }
 
-  if (Array.isArray(roles) && !roles.includes(role)) {
-    return false;
-  }
+    if (devices && devices !== "all") {
+      if (devices === "desktop" && deviceMode !== "desktop") {
+        return false;
+      }
 
-  return true;
-};
+      if (devices === "responsive" && deviceMode === "desktop") {
+        return false;
+      }
+    }
+
+    if (Array.isArray(roles) && !roles.includes(role)) {
+      return false;
+    }
+
+    return true;
+  };
 
 export const getProTitle = (
   type: NoEmptyString,
@@ -206,12 +209,12 @@ export const getProTitle = (
 ): string | undefined => {
   const element = Object.values(Shortcodes)
     .flat()
-    .filter(item => item.pro)
-    .map(item => ({
+    .filter((item) => item.pro)
+    .map((item) => ({
       title: item.component.title,
       type: getIn(item.component.resolve, ["value", "items", 0, "type"]) ?? ""
     }))
-    .filter(item => {
+    .filter((item) => {
       if (item.type === "Image") {
         return (
           Array.isArray(model._styles) &&
@@ -220,7 +223,7 @@ export const getProTitle = (
       }
       return true;
     })
-    .find(item => item.type === type);
+    .find((item) => item.type === type);
 
   if (element !== undefined && !IS_PRO) {
     return element.title;

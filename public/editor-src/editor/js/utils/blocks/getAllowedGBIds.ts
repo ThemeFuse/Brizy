@@ -52,11 +52,11 @@ interface FieldsReferences {
   fieldId: string;
 }
 
-export const getAllowedGBIds = (
+export function getAllowedGBIds(
   pageBlocksIds: Page["id"][],
   globalBlocks: ReduxState["globalBlocks"],
   page: ReduxState["page"]
-): string[] => {
+): string[] {
   return Object.entries(globalBlocks).reduce<string[]>(
     (acc, [currentGlobalBlockId, globalBlock]) => {
       const isInPage = pageBlocksIds.includes(currentGlobalBlockId);
@@ -69,7 +69,7 @@ export const getAllowedGBIds = (
     },
     []
   );
-};
+}
 
 export function canUseCondition(globalBlock: GlobalBlock, page: Page): boolean {
   if (isPopup(globalBlock.data)) {

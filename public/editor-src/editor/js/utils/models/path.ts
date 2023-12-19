@@ -1,11 +1,11 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import { ElementModelType } from "visual/component/Elements/Types";
 import { isModel } from "visual/utils/models";
 import { findDeep } from "visual/utils/object";
 
 // This function create a full path from [uid of element]
 // To ["items", 0, "value"] to element
 export const createFullModelPath = (
-  model: ElementModel,
+  model: ElementModelType,
   path: string[]
 ): string[] => {
   const [uid, ..._path] = path;

@@ -1,4 +1,7 @@
-import type { ElementModel } from "visual/component/Elements/Types";
+import type {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import type { ComponentsMeta } from "visual/editorComponents/EditorComponent";
 import type { WithClassName } from "visual/utils/options/attributes";
 import { Unit } from "../Image/types";
@@ -11,7 +14,7 @@ export interface Value extends ElementModel {
   gridColumn: number;
   tabletGridColumn: number;
   mobileGridColumn: number;
-  items: ElementModel[];
+  items: Array<ElementModelType>;
   itemsOption: ElementModel[];
   gridAspectRatio: string;
   tags: string;

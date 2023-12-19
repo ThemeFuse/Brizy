@@ -4,6 +4,7 @@ import { NumberSlider } from "visual/component/Controls/NumberSlider";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OnChange } from "visual/component/Options/Type";
+import { sliderSizeClassName } from "visual/component/Options/types/utils/sliderSizeClassName";
 import { useDebouncedOnChange } from "visual/component/hooks";
 import { t } from "visual/utils/i18n";
 import { EffectProps } from "../types/EffectProps";
@@ -104,6 +105,7 @@ export const Scale: JSXElementConstructor<EffectProps<V>> = ({
       <OptionWrapper className={"brz-ed-option"}>
         <OptionLabel label={t("Speed")} />
         <NumberSlider<"">
+          className={sliderSizeClassName("medium")}
           value={{ number: speed, unit: "" }}
           onChange={({ number }) => handleSpeedChange(number)}
           step={1}

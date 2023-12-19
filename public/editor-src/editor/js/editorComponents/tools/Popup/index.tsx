@@ -7,7 +7,10 @@ type Value = {
   linkLightBox: string;
 };
 
-export const shouldRenderPopup = (v: Value, globalBlocks: Block[]): boolean => {
+export const shouldRenderPopup = (
+  v: Value,
+  globalBlocks: Record<string, Block>
+): boolean => {
   const { popups, linkType, linkPopup, linkLightBox } = v;
 
   const _linkType = linkLightBox === "on" ? "lightBox" : linkType;
@@ -16,7 +19,7 @@ export const shouldRenderPopup = (v: Value, globalBlocks: Block[]): boolean => {
     const normalizePopups: Block[] = popups.reduce((acc: Block[], popup) => {
       let itemData: Block = popup;
 
-      if (itemData.type === "GlobalBlock") {
+      if (itemData.type === "GlobalBlock" && itemData.value._id) {
         // TODO: some kind of error handling
         itemData = globalBlocks[itemData.value._id];
       }

@@ -273,7 +273,10 @@ export function getItems({
                   type: "inputText-dev",
                   devices: "desktop",
                   disabled: !embedType || postEmbedType,
-                  population: linkDC
+                  population: linkDC,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "facebookEmbedVideoHref",
@@ -281,7 +284,10 @@ export function getItems({
                   type: "inputText-dev",
                   disabled: !embedType || videoEmbedType,
                   devices: "desktop",
-                  population: linkDC
+                  population: linkDC,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "facebookPageHref",
@@ -289,7 +295,10 @@ export function getItems({
                   type: "inputText-dev",
                   disabled: !pageType,
                   devices: "desktop",
-                  population: linkDC
+                  population: linkDC,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "pageTabs",
@@ -310,7 +319,10 @@ export function getItems({
                   type: "inputText-dev",
                   disabled: !groupType,
                   devices: "desktop",
-                  population: linkDC
+                  population: linkDC,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "skin",
@@ -434,7 +446,7 @@ export function getItems({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -517,7 +529,10 @@ export function getItems({
           disabled: !buttonType || dvv("targetUrl") === "current",
           devices: "desktop",
           placeholder: "http://",
-          population: linkDC
+          population: linkDC,
+          config: {
+            size: "medium"
+          }
         }
       ]
     },

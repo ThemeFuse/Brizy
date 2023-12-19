@@ -28,7 +28,7 @@ export function styleColumn(v, vs, vd) {
     motion.mouseTrack ||
     motion.mouseTilt;
 
-  const innerDivFromMotion = enabledMotion ? "div > " : "";
+  const innerDivFromMotion = enabledMotion ? "div[data-scroll-motion] > " : "";
   const hoverSelector =
     hoverName === "none" ? "" : ".brz-hover-animation__container > ";
 
@@ -42,9 +42,6 @@ export function styleColumn(v, vs, vd) {
       ]
     },
     ".brz && .brz-columns__scroll-effect": {
-      standart: ["cssStyleFlexColumnVerticalAlign"]
-    },
-    ".brz &&:hover .brz-hover-animation__container": {
       standart: ["cssStyleFlexColumnVerticalAlign"]
     },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg`]: {

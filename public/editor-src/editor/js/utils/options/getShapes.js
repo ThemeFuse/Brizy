@@ -1,8 +1,10 @@
+import { t } from "../i18n";
+
 const shapeClassName = "brz-ed-shape brz-ed-shape--";
 
 export const getShapes = () => [
   {
-    title: "None",
+    title: t("None"),
     value: "none"
   },
   {

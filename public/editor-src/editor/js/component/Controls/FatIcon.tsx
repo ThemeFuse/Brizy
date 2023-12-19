@@ -30,6 +30,7 @@ export const FatIcon = ({
 
   return (
     <div
+      title={label}
       className={classNames(
         className,
         "brz-ed--fat-icon text-center w-[60px] cursor-pointer",

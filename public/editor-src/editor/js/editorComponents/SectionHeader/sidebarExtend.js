@@ -64,7 +64,7 @@ export function getItems({ context }) {
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content: "Add your custom block name, example: my-block"
+                        content: t("Add your custom block name, example: my-block")
                       },
                       config: richTextDC,
                       option: {
@@ -81,7 +81,7 @@ export function getItems({ context }) {
                       display: "block",
                       helper: {
                         content:
-                          "Add your custom class without the .dot, example: my-class"
+                          t("Add your custom class without the .dot, example: my-class")
                       },
                       config: richTextDC,
                       option: {
@@ -100,7 +100,7 @@ export function getItems({ context }) {
                       devices: "desktop",
                       helper: {
                         content:
-                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
                       },
                       population: richTextDC
                     },

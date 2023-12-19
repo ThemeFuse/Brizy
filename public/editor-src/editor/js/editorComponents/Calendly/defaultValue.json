@@ -1,5 +1,7 @@
 {
-  "link": "https://calendly.com/calendly-demo-test/30min",
+  "link": {
+    "link": "https://calendly.com/calendly-demo-test/30min"
+  },
 
   "style": {
     "width": 100,

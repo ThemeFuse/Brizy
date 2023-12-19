@@ -1,19 +1,22 @@
+import { reduxBatch } from "@manaflair/redux-batch";
 import {
-  createStore as reduxCreateStore,
   applyMiddleware,
   compose,
+  createStore as reduxCreateStore,
+  Middleware,
   Store as RStore
 } from "redux";
-import { reduxBatch } from "@manaflair/redux-batch";
-import rootReducer from "./reducers";
-import { ReduxState } from "visual/redux/types";
 import { ReduxAction } from "visual/redux/actions2";
+import { ReduxState } from "visual/redux/types";
+import rootReducer from "./reducers";
 
 export type Store = RStore<ReduxState, ReduxAction>;
 
 let store: Store;
 
-export function createStore({ middleware = [] } = {}): Store {
+export function createStore(
+  { middleware = [] }: { middleware: Middleware[] } = { middleware: [] }
+): Store {
   if (store) {
     throw new Error("store is already created");
   }

@@ -14,7 +14,7 @@ import {
   isAllRule,
   isCollectionItemRule,
   isCollectionTypeRule
-} from "visual/utils/blocks";
+} from "visual/utils/blocks/guards";
 import { PageError } from "visual/utils/errors";
 import { mPipe } from "visual/utils/fp/mPipe";
 import { pipe } from "visual/utils/fp/pipe";
@@ -34,7 +34,7 @@ import { BlogSourceItem, CollectionSourceItem, Rule } from "./types";
 
 export * from "./adapter-legacy";
 
-// saved blocks | layout
+//#region Saved blocks | Saved layout
 
 export const makeBlockMeta = (
   block: SavedBlock | SavedLayout | GlobalBlock

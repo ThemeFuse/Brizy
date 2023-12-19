@@ -84,6 +84,12 @@
     "borderBottomRightRadius": 0,
     "borderBottomLeftRadius": 0,
 
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
     "tempBorderRadius": 0,
     "tempBorderTopLeftRadius": 0,
     "tempBorderTopRightRadius": 0,

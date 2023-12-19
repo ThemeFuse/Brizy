@@ -72,7 +72,10 @@ export function getItems({
                   type: "inputText-dev",
                   disabled: customType,
                   placeholder: t("SoundCloud Link"),
-                  population: linkDC
+                  population: linkDC,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 // @ts-expect-error old option
                 toolbarElementSoundCloudStyle({
@@ -91,7 +94,7 @@ export function getItems({
             },
             {
               id: "soundCloudAppearenceOptions",
-              label: t("Appearence"),
+              label: t("Appearance"),
               options: [
                 {
                   id: "artWork",
@@ -157,7 +160,7 @@ export function getItems({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

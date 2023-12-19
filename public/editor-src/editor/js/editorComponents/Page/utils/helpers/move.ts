@@ -1,6 +1,9 @@
 import { getIn, setIn } from "timm";
 import { every, isEqual, some } from "underscore";
-import { ElementModel } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
 import { setIds } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
@@ -9,11 +12,11 @@ import { addIn, removeIn } from "./addRemove";
 //#region Normalize Column Widths
 
 export const normalizeColumnsWidths = (
-  value: ElementModel,
+  value: ElementModelType,
   path: string[],
   from?: { containerType?: string; containerPath?: string[] }
-): ElementModel => {
-  const targetColumns = getIn(value, path) as MValue<ElementModel[]>;
+): ElementModelType => {
+  const targetColumns = getIn(value, path) as MValue<ElementModelType[]>;
   const { containerType, containerPath } = from ?? {};
   const inCarousel =
     containerType === "carousel" && isEqual(containerPath, path);
@@ -26,7 +29,11 @@ export const normalizeColumnsWidths = (
     return value;
   }
 
-  return setIn(value, path, normalizeRowColumns(targetColumns)) as ElementModel;
+  return setIn(
+    value,
+    path,
+    normalizeRowColumns(targetColumns)
+  ) as ElementModelType;
 };
 
 //#endregion
@@ -38,11 +45,11 @@ const isSourceFirst = (fromPath: string[], toPath: string[]): boolean => {
 };
 
 const moveElement = (
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   from: { itemPath: string[]; containerPath: string[]; containerType: string },
   to: { itemPath: string[]; containerPath: string[] },
-  newValue: ElementModel
-): MValue<ElementModel> => {
+  newValue: ElementModelType
+): MValue<ElementModelType> => {
   let value;
   if (isSourceFirst(from.itemPath, to.itemPath)) {
     const valueAdded = addIn(oldValue, to.itemPath, newValue);
@@ -73,14 +80,14 @@ const moveElement = (
 };
 
 const moveColumns = (
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   from: { itemPath: string[]; containerPath: string[]; containerType: string },
   to: { itemPath: string[]; containerPath: string[] },
-  newValue: ElementModel
-): MValue<ElementModel> => {
+  newValue: ElementModelType
+): MValue<ElementModelType> => {
   const sourceColumnPath = from.containerPath;
   const sourceColumns = getIn(oldValue, sourceColumnPath) as MValue<
-    ElementModel[]
+    ElementModelType[]
   >;
 
   // if row is empty, we should delete it
@@ -114,7 +121,7 @@ const moveColumns = (
 const createNewItem = (
   type: string,
   value: ElementModel = {}
-): ElementModel => {
+): ElementModelType => {
   return setIds({ type, value });
 };
 
@@ -123,11 +130,11 @@ const createNewItem = (
 //#region SimpleMove
 
 export const simpleMove = (
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   from: { itemPath: string[] },
   to: { itemPath: string[] },
-  movedElement = getIn(oldValue, from.itemPath) as MValue<ElementModel>
-): MValue<ElementModel> => {
+  movedElement = getIn(oldValue, from.itemPath) as MValue<ElementModelType>
+): MValue<ElementModelType> => {
   let value;
 
   if (!movedElement) {
@@ -158,18 +165,18 @@ export const simpleMove = (
 //#region Move Addable to [section, row, column]
 
 export const moveAddableToSection = (
-  oldValue: ElementModel,
-  from: { itemData: ElementModel },
+  oldValue: ElementModelType,
+  from: { itemData: ElementModelType },
   to: { itemPath: string[] }
-): MValue<ElementModel> => {
+): MValue<ElementModelType> => {
   return addIn(oldValue, to.itemPath, from.itemData);
 };
 
 export const moveAddableToRow = (
-  oldValue: ElementModel,
-  from: { itemData: ElementModel },
+  oldValue: ElementModelType,
+  from: { itemData: ElementModelType },
   to: { itemPath: string[]; containerPath: string[] }
-): MValue<ElementModel> => {
+): MValue<ElementModelType> => {
   const { itemData } = from;
   const items = itemData.type !== "Row" ? [itemData] : [];
 
@@ -187,10 +194,10 @@ export const moveAddableToRow = (
 };
 
 export const moveAddableToColumn = (
-  oldValue: ElementModel,
-  from: { itemData: ElementModel },
+  oldValue: ElementModelType,
+  from: { itemData: ElementModelType },
   to: { itemPath: string[] }
-): MValue<ElementModel> => {
+): MValue<ElementModelType> => {
   return addIn(oldValue, to.itemPath, from.itemData);
 };
 
@@ -199,15 +206,15 @@ export const moveAddableToColumn = (
 //#region Move Column to [section, row]
 
 export const moveColumnToSection = (
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   from: {
     itemPath: string[];
     containerPath: string[];
     containerType: string;
   },
   to: { itemPath: string[] }
-): MValue<ElementModel> => {
-  const movedColumn = getIn(oldValue, from.itemPath) as ElementModel;
+): MValue<ElementModelType> => {
+  const movedColumn = getIn(oldValue, from.itemPath) as ElementModelType;
   const newRow = createNewItem("Row", {
     _styles: ["row", "hide-row-borders", "padding-0"],
     items: normalizeRowColumns([movedColumn])
@@ -221,11 +228,14 @@ export const moveColumnToSection = (
 };
 
 export const moveColumnToAnotherRow = (
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   from: { itemPath: string[]; containerPath: string[]; containerType: string },
   to: { itemPath: string[]; containerPath: string[] }
-): MValue<ElementModel> => {
-  const movedColumn = getIn(oldValue, from.itemPath) as MValue<ElementModel>;
+): MValue<ElementModelType> => {
+  const movedColumn = getIn(
+    oldValue,
+    from.itemPath
+  ) as MValue<ElementModelType>;
 
   if (movedColumn) {
     return moveColumns(oldValue, from, to, movedColumn);
@@ -239,22 +249,22 @@ export const moveColumnToAnotherRow = (
 //#region Move Shortcode to [section, row]
 
 export const moveShortcodeToSection = (
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   from: { itemPath: string[] },
   to: { itemPath: string[] },
-  movedShortcode: ElementModel
-): MValue<ElementModel> => {
+  movedShortcode: ElementModelType
+): MValue<ElementModelType> => {
   const value = removeIn(oldValue, from.itemPath);
 
   return value ? addIn(value, to.itemPath, movedShortcode) : undefined;
 };
 
 export const moveShortcodeToRow = (
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   from: { itemPath: string[]; containerPath: string[]; containerType: string },
   to: { itemPath: string[]; containerPath: string[] },
-  movedShortcode: ElementModel
-): MValue<ElementModel> => {
+  movedShortcode: ElementModelType
+): MValue<ElementModelType> => {
   const newColumn = createNewItem("Column", {
     _styles: ["column"],
     items: [movedShortcode]
