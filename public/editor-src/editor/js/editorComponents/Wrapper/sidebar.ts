@@ -71,9 +71,9 @@ export const getItems: GetItems = ({ v, device, context }) => {
                           label: t("Position"),
                           type: "select-dev",
                           choices: [
-                            { value: "relative", title: "None" },
-                            { value: "absolute", title: "Absolute" },
-                            { value: "fixed", title: "Fixed" }
+                            { value: "relative", title: t("None") },
+                            { value: "absolute", title: t("Absolute") },
+                            { value: "fixed", title: t("Fixed") }
                           ]
                         },
                         {
@@ -160,8 +160,9 @@ export const getItems: GetItems = ({ v, device, context }) => {
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
+                        content: t(
                           "Add your custom ID without the #pound, example: my-id"
+                        )
                       },
                       config: richTextDC,
                       option: {
@@ -177,8 +178,9 @@ export const getItems: GetItems = ({ v, device, context }) => {
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
+                        content: t(
                           "Add your custom class without the .dot, example: my-class"
+                        )
                       },
                       config: richTextDC,
                       option: {
@@ -195,8 +197,9 @@ export const getItems: GetItems = ({ v, device, context }) => {
                       placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       helper: {
-                        content:
+                        content: t(
                           "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                        )
                       },
                       population: richTextDC
                     }

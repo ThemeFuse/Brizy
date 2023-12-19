@@ -10,7 +10,10 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { BlockMetaType } from "visual/types";
-import { blockThumbnailData } from "visual/utils/blocks";
+import {
+  blockThumbnailData,
+  createGlobalBlockSymbol
+} from "visual/utils/blocks";
 import { normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import {
@@ -70,11 +73,7 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
 
   handleAdd = async ({ uid }: Thumbnail): Promise<void> => {
     const { globalBlocks, projectFonts, onAddBlocks, onClose } = this.props;
-    const block = {
-      blockId: "Kit2Blank000Light",
-      type: "GlobalBlock",
-      value: { _id: uid }
-    };
+    const block = createGlobalBlockSymbol({ id: uid });
     const fontsDiff = getBlocksStylesFonts(
       getUsedModelsFonts({ models: block, globalBlocks }),
       projectFonts

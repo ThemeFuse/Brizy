@@ -6,6 +6,7 @@ import {
   updateSavedLayout,
   uploadSaveLayouts
 } from "../api";
+import { getErrorMessage } from "../api/utils";
 import { SavedLayoutMeta, SavedLayouts } from "../types/SavedBlocks";
 import { createUpload } from "../utils/createUpload";
 import { t } from "../utils/i18n";
@@ -94,7 +95,10 @@ export const savedLayouts: SavedLayouts = {
       res(data);
     } catch (e) {
       console.error("API Client savedLayout handlerImport:", e);
-      rej(t("Failed to import saved layouts"));
+      const message =
+        getErrorMessage(e)?.data ?? t("Failed to import saved layouts");
+
+      rej(message);
     }
   }
 };

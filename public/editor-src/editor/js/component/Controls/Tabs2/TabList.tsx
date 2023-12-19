@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
 import classNames from "classnames";
+import React, { ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
 import { Props as TabProps } from "./Tab";
@@ -36,7 +36,7 @@ export function TabList<T>({
     return (
       <li
         key={index}
-        title={title}
+        title={title ?? label}
         className={className}
         onClick={(): void => onChange(value)}
       >

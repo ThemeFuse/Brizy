@@ -1,5 +1,5 @@
-import { t } from "visual/utils/i18n";
 import { tabEffects } from "visual/component/Options/types/dev/Animation/utils";
+import { t } from "visual/utils/i18n";
 
 export function getItems() {
   return [
@@ -17,6 +17,13 @@ export function getItems() {
               type: "padding-dev",
               label: t("Padding"),
               position: 50
+            },
+            {
+              id: "border",
+              type: "corners-dev",
+              label: t("Corner"),
+              devices: "desktop",
+              position: 65
             }
           ]
         },

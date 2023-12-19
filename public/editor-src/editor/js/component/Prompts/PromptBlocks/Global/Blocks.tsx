@@ -12,6 +12,7 @@ import { Control as Select } from "../common/Select";
 import { ALL_CAT, UNCATEGORISED_CAT } from "../types";
 import { Empty } from "./controls/Empty";
 import { Grid } from "./controls/Grid";
+import { Loading } from "./controls/Loading";
 import { Filter, Thumbnail } from "./types";
 import { filterFn, getMessage, getSrc, getTags } from "./utils";
 
@@ -22,6 +23,7 @@ export interface Props<T extends Thumbnail> {
   showSearch?: boolean;
   showSidebar?: boolean;
   showTitle?: boolean;
+  loading?: boolean;
   onAdd: (data: T) => void;
   onRemove?: (data: T) => void;
   onUpdate?: (data: T) => void;
@@ -40,6 +42,7 @@ export const Blocks = <T extends Thumbnail>(props: Props<T>): ReactElement => {
     showTitle,
     showSidebar,
     HeaderSlotLeft,
+    loading,
     onAdd,
     onRemove,
     onUpdate
@@ -101,7 +104,9 @@ export const Blocks = <T extends Thumbnail>(props: Props<T>): ReactElement => {
               </Sidebar>
             )}
 
-            {filteredData.length === 0 ? (
+            {loading ? (
+              <Loading />
+            ) : filteredData.length === 0 ? (
               <Empty
                 search={currentFilter.search}
                 message={getMessage(messageType)}

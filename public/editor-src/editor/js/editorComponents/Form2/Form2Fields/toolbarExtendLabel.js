@@ -1,10 +1,10 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const { hex: labelColorHex } = getOptionColorHexByPalette(
     dvv("labelColorHex"),
     dvv("labelColorPalette")
@@ -16,7 +16,8 @@ export function getItems({ v, device }) {
       type: "popover-dev",
       config: {
         icon: "nc-form-left",
-        title: t("Field")
+        title: t("Field"),
+        size: "medium"
       },
       position: 60,
       options: [

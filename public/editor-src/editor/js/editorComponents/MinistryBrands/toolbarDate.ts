@@ -48,7 +48,7 @@ export const getItems = <
       devices: "desktop",
       config: {
         title: t("Colors"),
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor: hexToRgba(dateColorHex, dvv("dateColorOpacity"))

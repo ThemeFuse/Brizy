@@ -19,7 +19,12 @@ class Brizy_Admin_Feedback {
 	        return;
         }
 
+        if ( get_transient( 'brizy_admin_notice' ) !== false ) {
+            return;
+        }
+
 		?>
+
 		<div class="brz-notice notice is-dismissible">
 			<div class="brz-notice-container">
 				<div class="brz-notice-image">

@@ -76,11 +76,11 @@ export function getItems({ v, device }) {
           label: t("Rows"),
           type: "slider-dev",
           devices: "desktop",
-          config:{
-            min:1,
-            max:10
+          config: {
+            min: 1,
+            max: 10
           },
-          dependencies: ({rows})=>{
+          dependencies: ({ rows }) => {
             const [tableHead, tableBody] = v.items;
             const rowBody = getIn(tableBody, ["value", "items"]);
 
@@ -111,7 +111,7 @@ export function getItems({ v, device }) {
             return {
               rows
             };
-          },
+          }
         },
         {
           id: "columns",
@@ -122,7 +122,7 @@ export function getItems({ v, device }) {
             min: 1,
             max: 10
           },
-          dependencies:({columns})=>{
+          dependencies: ({ columns }) => {
             const [tableHead, tableBody] = v.items;
             const rowBody = getIn(tableBody, ["value", "items"]);
             const rowHead = getIn(tableHead, ["value", "items"]);
@@ -145,7 +145,9 @@ export function getItems({ v, device }) {
                 return acc;
               }, []);
               const nHeadCols = setIds(
-                Array(columns - (needAddNewColHead.length - 1)).fill(TableColHead)
+                Array(columns - (needAddNewColHead.length - 1)).fill(
+                  TableColHead
+                )
               );
               const nRowHead = setIn(
                 rowHead,
@@ -164,7 +166,7 @@ export function getItems({ v, device }) {
             return {
               columns
             };
-          },
+          }
         },
         {
           id: "width",
@@ -182,7 +184,7 @@ export function getItems({ v, device }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor:

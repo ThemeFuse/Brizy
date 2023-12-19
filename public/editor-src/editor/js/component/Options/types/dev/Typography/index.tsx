@@ -189,8 +189,8 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       sizeMin={sizeMin}
       sizeMax={sizeMax}
       sizeStep={1}
-      letterSpacingLabel={t("Letter Sp.")}
-      lineHeightLabel={t("Line Hgt.")}
+      letterSpacingLabel={t("Letter Space")}
+      lineHeightLabel={t("Line Height")}
       sizeLabel={t("Size")}
       styleLabel={t("Typography")}
       weightLabel={t("Weight")}

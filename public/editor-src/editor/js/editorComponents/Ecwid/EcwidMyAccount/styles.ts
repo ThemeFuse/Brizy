@@ -13,7 +13,7 @@ export function style(
         "cssStyleElementEcwidMyAccountParentBgGradient"
       ]
     },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--my-account":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--my-account":
       {
         standart: [
           "cssStyleElementEcwidMyAccountFooterTypographyFontFamily",
@@ -24,7 +24,7 @@ export function style(
           "cssStyleElementEcwidMyAccountFooterColor"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--track-order":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--track-order":
       {
         standart: [
           "cssStyleElementEcwidMyAccountFooterTypographyFontFamily",
@@ -35,7 +35,7 @@ export function style(
           "cssStyleElementEcwidMyAccountFooterColor"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--shopping-cart":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--shopping-cart":
       {
         standart: [
           "cssStyleElementEcwidMyAccountFooterTypographyFontFamily",
@@ -46,7 +46,7 @@ export function style(
           "cssStyleElementEcwidMyAccountFooterColor"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.ec-link.ec-link--muted":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.ec-link.ec-link--muted":
       {
         standart: [
           "cssStyleElementEcwidMyAccountFooterTypographyFontFamily",
@@ -57,11 +57,11 @@ export function style(
           "cssStyleElementEcwidMyAccountFooterColor"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon":
       {
         standart: ["cssStyleElementEcwidMyAccountFooterIconSpacing"]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon:hover svg":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon:hover svg":
       {
         standart: [
           "cssStyleElementEcwidMyAccountFooterIconSize",
@@ -72,7 +72,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .page-title__name.ec-header-h1":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .page-title__name.ec-header-h1":
       {
         standart: [
           "cssStyleElementEcwidMyAccountTitleTypographyFontFamily",
@@ -85,7 +85,7 @@ export function style(
           "cssStyleElementEcwidMyAccountTitleSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-page-title .page-title__name.ec-header-h4":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-page-title .page-title__name.ec-header-h4":
       {
         standart: [
           "cssStyleElementEcwidMyAccountTitle2TypographyFontFamily",
@@ -98,7 +98,7 @@ export function style(
           "cssStyleElementEcwidMyAccountTitle2Spacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__text":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__text":
       {
         standart: [
           "cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily",
@@ -110,14 +110,14 @@ export function style(
           "cssStyleElementEcwidMyAccountDescriptionAlign"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input":
       {
         standart: [
           "cssStyleElementEcwidMyAccountInputSpacing",
           "cssStyleElementEcwidMyAccountDescriptionSpacingTop"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input .form-control:hover .form-control__text":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input .form-control:hover .form-control__text":
       {
         standart: [
           "cssStyleElementEcwidMyAccountInputHeight",
@@ -139,7 +139,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input .form-control:hover .form-control__text:-webkit-autofill":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input .form-control:hover .form-control__text:-webkit-autofill":
       {
         standart: ["cssStyleElementEcwidCartInputColorAutofill"],
         interval: [
@@ -147,7 +147,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input .form-control:hover .form-control__placeholder .form-control__placeholder-inner":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart-email .ec-cart-email__input .form-control:hover .form-control__placeholder .form-control__placeholder-inner":
       {
         standart: [
           "cssStyleElementEcwidMyAccountInputPlaceholderDisplay",
@@ -163,7 +163,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__agreement":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__agreement":
       {
         standart: [
           "cssStyleElementEcwidMyAccountAgreementTypographyFontFamily",
@@ -176,9 +176,9 @@ export function style(
           "cssStyleElementEcwidMyAccountAgreementSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__buttons .form-control":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__buttons .form-control":
       { standart: ["cssStyleElementEcwidMyAccountButtonAlign"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__buttons .form-control .form-control__button:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__buttons .form-control .form-control__button:hover":
       {
         standart: [
           "cssStyleElementEcwidMyAccountButtonSize",
@@ -195,7 +195,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__buttons .form-control .form-control__button .form-control__button-text":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-signin-form .ec-cart__checkout .ec-cart__buttons .form-control .form-control__button .form-control__button-text":
       {
         standart: [
           "cssStyleElementEcwidMyAccountButtonTypographyFontFamily",
@@ -205,11 +205,11 @@ export function style(
           "cssStyleElementEcwidMyAccountButtonTypographyLetterSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__title.ec-header-h6 ":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__title.ec-header-h6 ":
       {
         standart: ["cssStyleElementEcwidMyAccountAccountTitleSpacing"]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__title.ec-header-h6":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__title.ec-header-h6":
       {
         standart: [
           "cssStyleElementEcwidMyAccountAccountTitleTypographyFontFamily",
@@ -221,11 +221,11 @@ export function style(
           "cssStyleElementEcwidMyAccountAccountTitleAlign"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section":
       {
         standart: ["cssStyleElementEcwidMyAccountConnectLinkAlign"]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart-step__text":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart-step__text":
       {
         standart: [
           "cssStyleElementEcwidMyAccountConnectTypographyFontFamily",
@@ -236,7 +236,7 @@ export function style(
           "cssStyleElementEcwidMyAccountConnectColor"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart-step__change.ec-link:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart-step__change.ec-link:hover":
       {
         standart: [
           "cssStyleElementEcwidMyAccountConnectLinkTypographyFontFamily",
@@ -251,7 +251,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products .ec-cart-item .ec-cart-item__sum .ec-cart-item-sum.ec-cart-item-sum--items":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products .ec-cart-item .ec-cart-item__sum .ec-cart-item-sum.ec-cart-item-sum--items":
       {
         standart: [
           "cssStyleElementEcwidMyAccountProductsTypographyFontFamily",
@@ -262,9 +262,9 @@ export function style(
           "cssStyleElementEcwidMyAccountProductsColor"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products":
       { standart: ["cssStyleElementEcwidMyAccountSummaryLinkAlign"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products .ec-cart-item .ec-cart-item__sum .ec-cart-item-sum.ec-cart-item-sum--cta .ec-link:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products .ec-cart-item .ec-cart-item__sum .ec-cart-item-sum.ec-cart-item-sum--cta .ec-link:hover":
       {
         standart: [
           "cssStyleElementEcwidMyAccountSummaryLinkTypographyFontFamily",
@@ -279,7 +279,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart__step .ec-cart-step__block .ec-cart-step__icon.ec-cart-step__icon--custom":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart__step .ec-cart-step__block .ec-cart-step__icon.ec-cart-step__icon--custom":
       {
         standart: [
           "cssStyleElementEcwidMyAccountUserSize",
@@ -292,9 +292,9 @@ export function style(
           "cssStyleElementEcwidMyAccountUserSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart__step .ec-cart-step__block .ec-cart-step__icon.ec-cart-step__icon--custom svg":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__account-info .ec-cart__step .ec-cart-step__block .ec-cart-step__icon.ec-cart-step__icon--custom svg":
       { standart: ["cssStyleElementEcwidMyAccountUserSize"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart-step .ec-cart-step__wrap .ec-cart-step__title.ec-header-h4":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart-step .ec-cart-step__wrap .ec-cart-step__title.ec-header-h4":
       {
         standart: [
           "cssStyleElementEcwidMyAccountShopTitleTypographyFontFamily",
@@ -307,9 +307,9 @@ export function style(
           "cssStyleElementEcwidMyAccountShopTitleAlign"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section":
       { standart: ["cssStyleElementEcwidMyAccountEmptyAlign"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart-step__text.ec-text-muted":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart-step__text.ec-text-muted":
       {
         standart: [
           "cssStyleElementEcwidMyAccountEmptyTypographyFontFamily",
@@ -320,7 +320,7 @@ export function style(
           "cssStyleElementEcwidMyAccountEmptyColor"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products .ec-cart__products-inner .ec-cart-item .ec-cart-item__image .ec-cart-item__picture:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__step .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart__products .ec-cart__products-inner .ec-cart-item .ec-cart-item__image .ec-cart-item__picture:hover":
       {
         standart: [
           "cssStyleElementEcwidCartImageWidth",
@@ -333,14 +333,14 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs":
       {
         standart: [
           "cssStyleElementEcwidProductBreadcrumbsAlign",
           "cssStyleElementEcwidProductBreadcrumbsSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs .breadcrumbs__link:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs .breadcrumbs__link:hover":
       {
         standart: [
           "cssStyleElementEcwidProductBreadcrumbsColor",
@@ -351,7 +351,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-loader-wrapper div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs .breadcrumbs__delimiter.ec-text-muted:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs .breadcrumbs__delimiter.ec-text-muted:hover":
       {
         standart: [
           "cssStyleElementEcwidProductBreadcrumbsColor",

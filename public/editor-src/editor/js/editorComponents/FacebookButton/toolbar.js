@@ -55,7 +55,10 @@ export function getItems({ v, device, state }) {
                   type: "inputText-dev",
                   devices: "desktop",
                   disabled: dvv("targetUrl") === "current",
-                  placeholder: "http://"
+                  placeholder: "http://",
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "type",
@@ -141,7 +144,7 @@ export function getItems({ v, device, state }) {
       id: "popoverColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

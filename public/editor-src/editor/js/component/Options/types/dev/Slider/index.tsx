@@ -1,21 +1,12 @@
+import classNames from "classnames";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import { Unit } from "visual/component/Controls/NumberUnit/types";
 import * as Option from "visual/component/Options/Type";
 import { useThrottleEffect } from "visual/component/hooks";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { Config } from "./types/Config";
 import { Value, eq } from "./types/Value";
-
-export type Config = {
-  min?: number;
-  max?: number;
-  step?: number;
-  debounceUpdate?: boolean;
-  updateRate?: number;
-  inputMin?: number;
-  inputMax?: number;
-  units?: Unit<string>[];
-};
+import { sliderClassName } from "./utils";
 
 export type Props = Option.Props<Value> & WithConfig<Config> & WithClassName;
 
@@ -34,7 +25,8 @@ export const Slider: FC<Props> = ({
     inputMin,
     inputMax,
     step = 1,
-    units = []
+    units = [],
+    size
   } = config ?? {};
 
   const onEdit = debounceUpdate ?? false;
@@ -69,11 +61,13 @@ export const Slider: FC<Props> = ({
     }
   }, [value]);
 
+  const cls = classNames(sliderClassName(label, size), className);
+
   return (
     <>
       {label}
       <NumberSlider
-        className={className}
+        className={cls}
         min={min}
         max={max}
         inputMin={inputMin}

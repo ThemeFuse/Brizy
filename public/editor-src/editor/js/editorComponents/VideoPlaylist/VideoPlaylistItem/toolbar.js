@@ -27,7 +27,7 @@ export function getItems({ v, device }) {
         id: "toolbarColor",
         type: "popover-dev",
         config: {
-          size: "auto",
+          size: "medium",
           title: t("Colors"),
           icon: {}
         },
@@ -101,6 +101,9 @@ export function getItems({ v, device }) {
                   label: t("Link"),
                   type: "inputText-dev",
                   devices: "desktop",
+                  config: {
+                    size: "large"
+                  },
                   placeholder:
                     type === "youtube"
                       ? t("YouTube")

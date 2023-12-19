@@ -51,6 +51,15 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                   label: t("Advanced"),
                   options: [
                     {
+                      id: "showOnDesktop",
+                      label: t("Show on Desktop"),
+                      type: "switch-dev",
+                      disabled: IS_STORY,
+                      position: 10,
+                      closeTooltip: true,
+                      devices: "desktop"
+                    },
+                    {
                       id: "cssID",
                       label: t("CSS ID"),
                       type: "population-dev",
@@ -58,8 +67,9 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
+                        content: t(
                           "Add your custom ID without the #pound, example: my-id"
+                        )
                       },
                       config: richTextDC,
                       option: {
@@ -75,8 +85,9 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
+                        content: t(
                           "Add your custom class without the .dot, example: my-class"
+                        )
                       },
                       config: richTextDC,
                       option: {

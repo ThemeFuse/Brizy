@@ -11,7 +11,6 @@ import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
 import Config, { isWp } from "visual/global/Config";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
-import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
 import { validateEmail } from "../common/utils";
@@ -51,7 +50,7 @@ const fields: AuthorizationField[] = [
 interface SignUpState {
   nextLoading: boolean;
   loading: boolean;
-  data: null | { img: string; signUpDescription: string };
+  data: null | { signUpDescription: string };
   notice: null | { message: string; type: "error" | "success" };
   formData: {
     [k: string]: unknown;
@@ -93,13 +92,11 @@ class SignUp extends Component<SingUpProps, SignUpState> {
   };
 
   async componentDidMount(): Promise<void> {
-    const url = assetUrl("integrations.json");
-    const r = await fetch(url);
-    const { cloudAuthorization } = await r.json();
     const { onLoading } = this.props;
+    const { Integrations } = await import("visual/config/integrations");
 
     this.setState({
-      data: cloudAuthorization,
+      data: Integrations.cloudAuthorization,
       loading: false
     });
     onLoading && onLoading(false);

@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.4.35
+ * Version: 2.4.36
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,10 +19,10 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
 
 define('BRIZY_DEVELOPMENT', false );
 define('BRIZY_LOG', false );
-define('BRIZY_VERSION', '2.4.35');
+define('BRIZY_VERSION', '2.4.36');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
-define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '274-wp' );
-define('BRIZY_SYNC_VERSION', '274');
+define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '275-wp' );
+define('BRIZY_SYNC_VERSION', '275');
 define('BRIZY_FILE', __FILE__);
 define('BRIZY_PLUGIN_BASE', plugin_basename(BRIZY_FILE));
 define('BRIZY_PLUGIN_PATH', dirname(BRIZY_FILE));
@@ -118,6 +118,7 @@ function brizy_install()
     Brizy_Logger::install();
     add_option('brizy-regenerate-permalinks', 1);
     do_action('brizy-activated');
+    set_transient( 'brizy_admin_notice', true, 7200 );
 }
 
 function brizy_clean()

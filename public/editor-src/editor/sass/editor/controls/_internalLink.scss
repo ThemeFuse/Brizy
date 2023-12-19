@@ -1,6 +1,6 @@
 .brz-ed-control__internalLink {
   font-family: $default-font-family;
-  width: 136px;
+  width: $control__lg-width;
   position: relative;
 
   &__value {

@@ -36,7 +36,7 @@ module.exports = (options = {}) => {
         "./editor/js/bootstraps/editor/webpack-public-path.js",
         "./editor/js/bootstraps/initBrizyGlobal.js",
         "./editor/js/bootstraps/registerEditorParts.ts",
-        "./editor/js/bootstraps/editor/index.js"
+        "./editor/js/bootstraps/editor/index.tsx"
       ]
     },
     output: {

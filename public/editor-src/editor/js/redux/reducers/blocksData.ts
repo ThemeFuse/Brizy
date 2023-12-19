@@ -2,6 +2,7 @@ import produce from "immer";
 import { setIn } from "timm";
 import Config from "visual/global/Config";
 import { Block } from "visual/types";
+import { createGlobalBlockSymbol } from "visual/utils/blocks";
 import {
   insertItemsBatch,
   isModel,
@@ -112,18 +113,15 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       };
     }
 
-    case "MAKE_POPUP_TO_GLOBAL_BLOCK": {
+    case "MAKE_POPUP_TO_GLOBAL_POPUP": {
       const { data } = action.payload;
 
       const newState = mapModels((block: Block) => {
         if (block.value._id === data.value._id) {
-          return {
+          return createGlobalBlockSymbol({
             blockId: block.blockId,
-            type: "GlobalBlock",
-            value: {
-              _id: data.value._id
-            }
-          };
+            id: data.value._id
+          });
         }
 
         return block;
@@ -134,7 +132,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       });
     }
 
-    case "MAKE_GLOBAL_BLOCK_TO_POPUP": {
+    case "MAKE_GLOBAL_POPUP_TO_POPUP": {
       const { block: blockData, fromBlockId, parentId } = action.payload;
 
       if (isPopup(Config.getAll())) {
@@ -173,7 +171,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       return mapParent(state);
     }
 
-    case "MAKE_GLOBAL_TO_NORMAL_BLOCK": {
+    case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { block } = action.payload;
 
       return {
@@ -182,7 +180,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       };
     }
 
-    case "MAKE_NORMAL_TO_GLOBAL_BLOCK": {
+    case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
       const { data } = action.payload;
 
       return produce<BlocksData>(state, (draft) => {

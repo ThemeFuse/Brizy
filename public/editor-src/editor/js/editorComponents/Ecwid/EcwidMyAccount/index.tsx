@@ -11,29 +11,28 @@ import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { makeDataAttr } from "visual/utils/i18n/attribute";
+import * as sidebarExtendParent from "../sidebar";
+import * as sidebarButton from "../sidebarButton";
+import * as sidebarDisable from "../sidebarDisable";
+import * as sidebarImage from "../sidebarImage";
+import * as sidebarInput from "../sidebarInput";
+import * as toolbarBreadcrumbs from "../toolbarBreadcrumbs";
+import * as toolbarConnectLink from "../toolbarConnectLink";
+import * as toolbarFooter from "../toolbarFooter";
+import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarTitle2 from "../toolbarTitle2";
 import defaultValue from "./defaultValue.json";
-import * as sidebarExtendParent from "./sidebar";
-import * as sidebarButton from "./sidebarButton";
-import * as sidebarDisable from "./sidebarDisable";
-import * as sidebarImage from "./sidebarImage";
-import * as sidebarInput from "./sidebarInput";
 import * as sidebarUser from "./sidebarUser";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbar";
 import * as toolbarAccountTitle from "./toolbarAccountTitle";
 import * as toolbarAgreement from "./toolbarAgreement";
-import * as toolbarBreadcrumbs from "./toolbarBreadcrumbs";
 import * as toolbarButton from "./toolbarButton";
-import * as toolbarConnectLink from "./toolbarConnectLink";
 import * as toolbarDescription from "./toolbarDescription";
 import * as toolbarEmpty from "./toolbarEmpty";
-import * as toolbarFooter from "./toolbarFooter";
 import * as toolbarInput from "./toolbarInput";
 import * as toolbarProducts from "./toolbarProducts";
 import * as toolbarShopTitle from "./toolbarShopTitle";
-import * as toolbarTitle from "./toolbarTitle";
-import * as toolbarTitle2 from "./toolbarTitle2";
 import * as toolbarUser from "./toolbarUser";
 import { Value } from "./types/Value";
 import { valueToEciwdConfig } from "./utils";
@@ -492,10 +491,7 @@ export class EcwidMyAccount extends EditorComponent<Value> {
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
-        <div
-          className="brz-ecwid-my-account"
-          {...makeDataAttr({ name: "store-id", value: storeId })}
-        />
+        <div className="brz-ecwid-my-account" data-store-id={storeId} />
       </Wrapper>
     );
   }

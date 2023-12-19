@@ -67,24 +67,16 @@ export type ActionUpdateBlocks = {
   };
 };
 
-export type ActionMakeNormalToGlobalBlock = {
-  type: "MAKE_NORMAL_TO_GLOBAL_BLOCK";
+//#region Global Blocks
+
+export type ActionMakeBlockToGlobalBlock = {
+  type: "MAKE_BLOCK_TO_GLOBAL_BLOCK";
   payload: GlobalBlockNormal;
 };
 
-export type ActionMakeGlobalToNormalBlock = {
-  type: "MAKE_GLOBAL_TO_NORMAL_BLOCK";
+export type ActionMakeGlobalBlockToBlock = {
+  type: "MAKE_GLOBAL_BLOCK_TO_BLOCK";
   payload: { block: Block; fromBlockId: string };
-};
-
-export type ActionMakePopupToGlobalBlock = {
-  type: "MAKE_POPUP_TO_GLOBAL_BLOCK";
-  payload: GlobalBlockPopup;
-};
-
-export type ActionMakeGlobalBlockToPopup = {
-  type: "MAKE_GLOBAL_BLOCK_TO_POPUP";
-  payload: { block: Block; fromBlockId: string; parentId: string };
 };
 
 export type ActionUpdateGlobalBlock = {
@@ -100,6 +92,63 @@ export type ActionUpdateGlobalBlock = {
     is_autosave: 0 | 1;
   };
 };
+
+export const ADD_GLOBAL_BLOCK = "ADD_GLOBAL_BLOCK";
+
+export type ActionAddGlobalBlock = {
+  type: typeof ADD_GLOBAL_BLOCK;
+  payload: {
+    block: Block;
+    fonts: FontsPayload;
+    extraFontStyles?: ReduxState["extraFontStyles"];
+  };
+  meta: {
+    insertIndex: number;
+  };
+};
+
+export type ActionDeleteGlobalBlock = {
+  type: "DELETE_GLOBAL_BLOCK";
+  payload: {
+    id: string;
+  };
+};
+
+//#endregion
+
+//#region Global Popup
+
+export type ActionMakePopupToGlobalPopup = {
+  type: "MAKE_POPUP_TO_GLOBAL_POPUP";
+  payload: GlobalBlockPopup;
+};
+
+export type ActionMakeGlobalPopupToPopup = {
+  type: "MAKE_GLOBAL_POPUP_TO_POPUP";
+  payload: { block: Block; fromBlockId: string; parentId: string };
+};
+
+export const ADD_GLOBAL_POPUP = "ADD_GLOBAL_POPUP";
+
+export type ActionAddGlobalPopup = {
+  type: typeof ADD_GLOBAL_POPUP;
+  payload: {
+    block: Block;
+    fonts: FontsPayload;
+    extraFontStyles?: ReduxState["extraFontStyles"];
+  };
+  meta: {
+    insertIndex: number;
+  };
+};
+
+export type ActionUpdatePopupRules = {
+  type: "UPDATE_POPUP_RULES";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  payload: any; // TODO need change any to normal value @Alex T
+};
+
+//#endregion
 
 export const UPDATE_DISABLED_ELEMENTS = "UPDATE_DISABLED_ELEMENTS";
 
@@ -144,39 +193,12 @@ export type ActionUpdateTriggers = {
   };
 };
 
-export type ActionUpdatePopupRules = {
-  type: "UPDATE_POPUP_RULES";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload: any; // TODO need change any to normal value @Alex T
-};
-
 type ActionUpdateUITmp<K extends keyof UIState> = {
   type: "UPDATE_UI";
   key: K;
   value: UIState[K];
 };
 export type ActionUpdateUI = ActionUpdateUITmp<keyof UIState>;
-
-export const ADD_GLOBAL_BLOCK = "ADD_GLOBAL_BLOCK";
-
-export type ActionAddGlobalBlock = {
-  type: typeof ADD_GLOBAL_BLOCK;
-  payload: {
-    block: Block;
-    fonts: FontsPayload;
-    extraFontStyles?: ReduxState["extraFontStyles"];
-  };
-  meta: {
-    insertIndex: number;
-  };
-};
-
-export type ActionDeleteGlobalBlock = {
-  type: "DELETE_GLOBAL_BLOCK";
-  payload: {
-    id: string;
-  };
-};
 
 export type ActionAddBlock = {
   type: "ADD_BLOCK";
@@ -250,16 +272,17 @@ export type ReduxAction =
   | ActionImportStory
   | ActionAddBlock
   | ActionAddGlobalBlock
+  | ActionAddGlobalPopup
   | ActionDeleteGlobalBlock
   | ActionRemoveBlock
   | ActionUpdateGBRules
   | ActionRemoveBlocks
   | ActionReorderBlocks
   | ActionUpdateBlocks
-  | ActionMakeNormalToGlobalBlock
-  | ActionMakeGlobalToNormalBlock
-  | ActionMakePopupToGlobalBlock
-  | ActionMakeGlobalBlockToPopup
+  | ActionMakeBlockToGlobalBlock
+  | ActionMakeGlobalBlockToBlock
+  | ActionMakePopupToGlobalPopup
+  | ActionMakeGlobalPopupToPopup
   | ActionStoreWasChanged
   | ActionUpdatePageTitle
   | AddNewGlobalStyle
@@ -339,9 +362,9 @@ export { redo, undo } from "./history/actions";
 
 export function makeNormalToGlobalBlock(
   globalBlock: GlobalBlockNormal
-): ActionMakeNormalToGlobalBlock {
+): ActionMakeBlockToGlobalBlock {
   return {
-    type: "MAKE_NORMAL_TO_GLOBAL_BLOCK",
+    type: "MAKE_BLOCK_TO_GLOBAL_BLOCK",
     payload: globalBlock
   };
 }
@@ -352,9 +375,9 @@ export function makeGlobalToNormalBlock({
 }: {
   fromBlockId: string;
   block: Block;
-}): ActionMakeGlobalToNormalBlock {
+}): ActionMakeGlobalBlockToBlock {
   return {
-    type: "MAKE_GLOBAL_TO_NORMAL_BLOCK",
+    type: "MAKE_GLOBAL_BLOCK_TO_BLOCK",
     payload: {
       fromBlockId,
       block
@@ -364,9 +387,9 @@ export function makeGlobalToNormalBlock({
 
 export function makePopupToGlobalBlock(
   globalBlock: GlobalBlockPopup
-): ActionMakePopupToGlobalBlock {
+): ActionMakePopupToGlobalPopup {
   return {
-    type: "MAKE_POPUP_TO_GLOBAL_BLOCK",
+    type: "MAKE_POPUP_TO_GLOBAL_POPUP",
     payload: globalBlock
   };
 }
@@ -379,9 +402,9 @@ export function makeGlobalBlockToPopup({
   fromBlockId: string;
   block: Block;
   parentId: string;
-}): ActionMakeGlobalBlockToPopup {
+}): ActionMakeGlobalPopupToPopup {
   return {
-    type: "MAKE_GLOBAL_BLOCK_TO_POPUP",
+    type: "MAKE_GLOBAL_POPUP_TO_POPUP",
     payload: {
       fromBlockId,
       parentId,
@@ -611,6 +634,17 @@ export function addGlobalBlock(
 ): ActionAddGlobalBlock {
   return {
     type: "ADD_GLOBAL_BLOCK",
+    payload: block,
+    meta
+  };
+}
+
+export function addGlobalPopup(
+  block: { block: Block; fonts: FontsPayload },
+  meta = { insertIndex: 0 }
+): ActionAddGlobalPopup {
+  return {
+    type: "ADD_GLOBAL_POPUP",
     payload: block,
     meta
   };

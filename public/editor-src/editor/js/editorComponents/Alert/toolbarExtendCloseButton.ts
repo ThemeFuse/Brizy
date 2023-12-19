@@ -1,11 +1,11 @@
-import { defaultValueValue } from "visual/utils/onChange";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { Value } from "./index";
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { ToolbarItemType } from "../ToolbarItemType";
+import { Value } from "./index";
 
 export function getItems({
   v,
@@ -140,7 +140,7 @@ export function getItems({
       type: "popover-dev",
       devices: "desktop",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

@@ -16,7 +16,8 @@ export const extraFontStyles: RExtraFontStyles = (state = [], action) => {
     }
     case ActionTypes.IMPORT_TEMPLATE:
     case "ADD_BLOCK":
-    case "ADD_GLOBAL_BLOCK": {
+    case "ADD_GLOBAL_BLOCK":
+    case "ADD_GLOBAL_POPUP": {
       const { extraFontStyles } = action.payload;
 
       if (!extraFontStyles || extraFontStyles.length === 0) {

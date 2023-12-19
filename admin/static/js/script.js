@@ -215,7 +215,7 @@ jQuery(document).ready(function ($) {
                     if (gutenbergIframe.length > 0) {
                         gutenbergIframe.on('load', function () {
 
-                            var gutenbergContentHide = gutenbergIframe.contents().find('.is-root-container.is-layout-flow.wp-block-post-content-is-layout-flow.wp-block-post-content.block-editor-block-list__layout');
+                            var gutenbergContentHide = gutenbergIframe.contents().find('body > .is-root-container.is-layout-flow');
                             if (gutenbergContentHide.length > 0) {
                                 gutenbergContentHide.hide();
 

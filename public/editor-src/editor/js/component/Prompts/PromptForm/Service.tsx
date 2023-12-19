@@ -1,6 +1,5 @@
 import produce from "immer";
 import Config from "visual/global/Config";
-import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import {
@@ -11,7 +10,7 @@ import {
   FormField
 } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
-import { getForm, createForm, getIntegration, createIntegration } from "./api";
+import { createForm, createIntegration, getForm, getIntegration } from "./api";
 
 const IS_PRO = Config.get("pro");
 
@@ -26,16 +25,13 @@ type Context = BaseIntegrationContext & {
 };
 
 class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
-  appsData = [];
+  appsData: AppData[] = [];
   appsComponent = AppsComponent;
   proExceptions = !IS_PRO;
 
   async componentDidMount(): Promise<void> {
-    const url = assetUrl("integrations.json");
-    const r = await fetch(url);
-    const { services } = await r.json();
-
-    this.appsData = services;
+    const { Integrations } = await import("visual/config/integrations");
+    this.appsData = Integrations.services;
     await this.getData();
   }
 
@@ -111,7 +107,7 @@ class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
     }
 
     this.setState(
-      produce(draft => {
+      produce((draft) => {
         draft.appError = null;
         draft.stages = stages;
         draft.connectedApp = id;

@@ -3,12 +3,17 @@
 
 // Gallery
 .brz-ed-control__gallery {
-  width: 100%;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(42px, 1fr));
   justify-content: start;
   gap: 7px;
-  min-width: 140px;
+
+
+  &--fixed {
+    width: 100%;
+    min-width: 140px;
+  }
 
   &__draggable {
     pointer-events: all !important;

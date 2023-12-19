@@ -32,11 +32,15 @@ export function getItems() {
                   label: t("Tags"),
                   helper: {
                     enabled: true,
-                    content:
+                    content: t(
                       "Enter the tags, separated by a comma (art, sport, nature, etc)."
+                    )
                   },
-                  placeholder: "art, nature, etc.",
-                  devices: "desktop"
+                  placeholder: t("art, nature, etc."),
+                  devices: "desktop",
+                  config: {
+                    size: "medium"
+                  }
                 }
               ]
             }

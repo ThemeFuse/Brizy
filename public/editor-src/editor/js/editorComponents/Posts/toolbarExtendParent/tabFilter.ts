@@ -56,7 +56,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
 
   return {
     id: "filter",
-    label: "Filter",
+    label: t("Filter"),
     options: [
       {
         id: "source",

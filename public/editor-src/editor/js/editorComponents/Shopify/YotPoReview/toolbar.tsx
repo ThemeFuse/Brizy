@@ -187,7 +187,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
       id: "popoverColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

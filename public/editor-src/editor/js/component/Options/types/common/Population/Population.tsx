@@ -215,6 +215,8 @@ export const Population: FC<Props> = ({
     ];
   }, [config, handlerChoices, iconOnly]);
 
+  const existChoices = choices.length > 0;
+
   const handlePopulationChange = useCallback<OnChange<Value>>(
     (v) => pipe(parsePopulation, onChange)(v),
     [onChange]
@@ -287,17 +289,21 @@ export const Population: FC<Props> = ({
       <Options
         data={[option]}
         wrapOptions={false}
-        optionClassName="brz-ed-option-population"
+        optionClassName={"brz-ed-option-population"}
       />
     ) : null;
   }
 
+  const cls = classNames(className, "brz-ed-control__population", {
+    "brz-ed-control-grid--gap": existChoices
+  });
+
   return (
     <>
       {label}
-      <div className="brz-ed-control__population">
+      <div className={cls}>
         {input}
-        {choices.length > 0 ? (
+        {existChoices ? (
           <_Select
             className={_className}
             choices={choices}

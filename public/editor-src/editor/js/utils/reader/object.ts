@@ -77,3 +77,6 @@ export const readKey =
 
 export const length = (obj: Record<string, unknown>): number =>
   Object.keys(obj).length;
+
+export const isEmpty = (obj: Record<string, unknown>): boolean =>
+  length(obj) === 0;

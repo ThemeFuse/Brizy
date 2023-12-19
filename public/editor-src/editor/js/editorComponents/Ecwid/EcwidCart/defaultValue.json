@@ -44,6 +44,24 @@
       "SKUTypographyFontFamily": "lato"
     },
 
+    "parentBgColorType": "solid",
+
+    "parentBgColorHex": "#ffffff",
+    "parentBgColorOpacity": 0,
+    "parentBgColorPalette": "",
+
+    "parentGradientActivePointer": "startPointer",
+    "parentGradientStartPointer": 0,
+    "parentGradientFinishPointer": 100,
+
+    "parentGradientColorHex": "#009900",
+    "parentGradientColorOpacity": 0.8,
+    "parentGradientColorPalette": "",
+
+    "parentGradientType": "linear",
+    "parentGradientLinearDegree": 90,
+    "parentGradientRadialDegree": 90,
+
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
     "titleTypographyFontSize": 30,

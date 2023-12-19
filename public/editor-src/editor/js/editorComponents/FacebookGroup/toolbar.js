@@ -28,7 +28,10 @@ export function getItems({ v, device, state }) {
           label: t("Link"),
           type: "inputText-dev",
           devices: "desktop",
-          placeholder: "https://www.facebook.com/groups/brizy/"
+          placeholder: "https://www.facebook.com/groups/brizy/",
+          config: {
+            size: "medium"
+          }
         },
         {
           id: "skin",
@@ -58,7 +61,7 @@ export function getItems({ v, device, state }) {
       id: "popoverColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

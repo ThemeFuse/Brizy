@@ -28,13 +28,13 @@ export function styleRow(v, vs, vd) {
     motion.scale ||
     motion.mouseTrack ||
     motion.mouseTilt;
-  const innerDivFromMotion = enabledMotion ? "div > " : "";
+  const innerDivFromMotion = enabledMotion ? "div[data-scroll-motion] > " : "";
+
   const hoverContainer =
     hoverName === "none" ? "" : ".brz-hover-animation__container > ";
-  const hoverSelector =
-    hoverName === "none" ? "" : " > .brz-hover-animation__container";
+
   const styles = {
-    [`.brz &&:hover ${hoverSelector}`]: {
+    ".brz &&:hover": {
       interval: ["cssStyleRowMinHeight", "cssStyleDisplayFlex"],
       standart: [
         "cssStyleMargin",
@@ -43,18 +43,19 @@ export function styleRow(v, vs, vd) {
       ]
     },
 
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg`]: {
-      standart: [
-        "cssStyleBorder",
-        "cssStyleBorderRadius",
-        ...(maskShape === "none"
-          ? ["cssStyleBoxShadow"]
-          : ["cssStyleMaskDropShadow"]),
-        "cssStyleSizeMaxWidthSize",
-        "cssStyleBlendMode"
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-    },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg`]:
+      {
+        standart: [
+          "cssStyleBorder",
+          "cssStyleBorderRadius",
+          ...(maskShape === "none"
+            ? ["cssStyleBoxShadow"]
+            : ["cssStyleMaskDropShadow"]),
+          "cssStyleSizeMaxWidthSize",
+          "cssStyleBlendMode"
+        ],
+        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
       {
         standart: [
@@ -96,24 +97,23 @@ export function styleRow(v, vs, vd) {
         standart: ["cssStyleFilter", "cssStyleBgMediaVideo"],
         interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]: {
-      standart: ["cssStyleBorderTransparentColor"],
-      interval: [
-        "cssStyleRowReverseColumn",
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransition"
-      ]
-    }
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]:
+      {
+        standart: ["cssStyleBorderTransparentColor"],
+        interval: [
+          "cssStyleRowReverseColumn",
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransition"
+        ]
+      }
   };
 
   if (IS_EDITOR) {
-    styles[`.brz &&:hover ${hoverSelector}`].interval.push(
+    styles[".brz &&:hover"].interval.push(
       "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
     );
   } else {
-    styles[`.brz &&:hover ${hoverSelector}`].interval.push(
-      "cssStyleVisible|||preview"
-    );
+    styles[".brz &&:hover"].interval.push("cssStyleVisible|||preview");
   }
 
   return renderStyles({ v, vs, vd, styles });

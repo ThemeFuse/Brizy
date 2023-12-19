@@ -317,13 +317,11 @@ function turnPositionsIntoObject(
 // this method is calling from redux/globalBlocks
 // we can't get pageId from config because -
 // if there is are not pages we create one on client side.
-export const getCurrentRule = (
-  page = pageSelector(getStore().getState())
-): {
+export function getCurrentRule(page = pageSelector(getStore().getState())): {
   group: CollectionTypeRule["appliedFor"];
   type: CollectionTypeRule["entityType"];
   id: Page["id"] | EcwidCategoryId | EcwidProductId;
-} => {
+} {
   const config = Config.getAll();
   let group = PAGES_GROUP_ID;
   let type = "page";
@@ -369,12 +367,12 @@ export const getCurrentRule = (
       : ("page" as NoEmptyString.NoEmptyString),
     id
   };
-};
+}
 
-export const getSurroundedConditions = (
+export function getSurroundedConditions(
   pageBlocksIds: PB,
   globalBlocksIds: GBIds
-): SurroundedConditionsIds => {
+): SurroundedConditionsIds {
   const surroundedConditionsIds: SurroundedConditionsIds = {
     top: [],
     bottom: []
@@ -405,13 +403,13 @@ export const getSurroundedConditions = (
   }
 
   return surroundedConditionsIds;
-};
+}
 
-export const getBlockAlignment = (
+export function getBlockAlignment(
   pageBlocksIds: PB,
   index: number,
   globalBlockIds: GBIds
-): AlignsList => {
+): AlignsList {
   const prevBlockId = pageBlocksIds[index - 1];
   const nextBlockId = pageBlocksIds[index + 1];
 
@@ -434,13 +432,13 @@ export const getBlockAlignment = (
   }
 
   return align;
-};
+}
 
-export const changeRule = (
+export function changeRule(
   globalBlock: GlobalBlock,
   shouldAddIncludeCondition: boolean,
   page: Page
-): GlobalBlock => {
+): GlobalBlock {
   const currentRule = getCurrentRule(page);
 
   const newGlobalBlock = {
@@ -471,24 +469,24 @@ export const changeRule = (
   }
 
   return newGlobalBlock;
-};
+}
 
-export const createEntityValueAll = (c: {
+export function createEntityValueAll(c: {
   fieldId: string;
-}): CloudReferenceAllEntity => {
+}): CloudReferenceAllEntity {
   return c.fieldId as CloudReferenceAllEntity;
-};
+}
 
-export const createEntityValue = (c: {
+export function createEntityValue(c: {
   fieldId: string;
   collectionId: string;
-}): CloudReferenceEntity => {
+}): CloudReferenceEntity {
   return `${c.fieldId}:${c.collectionId}` as CloudReferenceEntity;
-};
+}
 
-export const getEntityValue = (
+export function getEntityValue(
   s: string
-): { fieldId: string; collectionId?: string } | undefined => {
+): { fieldId: string; collectionId?: string } | undefined {
   const [fieldId, collectionId] = s.split(":");
 
   if (fieldId) {
@@ -496,4 +494,4 @@ export const getEntityValue = (
   }
 
   return undefined;
-};
+}

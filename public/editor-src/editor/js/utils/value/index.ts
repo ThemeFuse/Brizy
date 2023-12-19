@@ -140,6 +140,7 @@ export function mCompose<R>(...fns: Array<MFn<any, any>>): MFn<any, R> {
  * Check whenever an potential maybe value is empty or not
  */
 export const isT = <T>(t: MNullish<T>): t is T => !isNullish(t);
+export const isAllT = <T>(t: MNullish<T>): t is T => !isNullish(t) && t !== "";
 
 /**
  * Check whenever a list of values has undefined values or not

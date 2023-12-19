@@ -5,6 +5,7 @@ import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
 import { clamp } from "visual/utils/math";
 import { WithClassName } from "visual/utils/options/attributes";
+import { attachRef } from "visual/utils/react";
 
 const TOOLBAR_MARGIN = 14;
 
@@ -69,6 +70,7 @@ export class TooltipContent extends React.Component<Props, State> {
 
   isRepositioning: boolean;
   contentRef: React.RefObject<HTMLDivElement>;
+  popperUpdateFunctionRef = React.createRef<VoidFunction>();
 
   constructor(props: Props) {
     super(props);
@@ -98,17 +100,18 @@ export class TooltipContent extends React.Component<Props, State> {
    * and it seems unnecessary because when commented nothing seems changes visually.
    * Will leave here for a number of releases and potentially remove in the future
    */
-  // componentDidUpdate() {
-  //   if (this.isRepositioning) {
-  //     return;
-  //   }
+  componentDidUpdate() {
+    const updateFn = this.popperUpdateFunctionRef.current;
 
-  //   const { toolbar } = this.props;
+    if (typeof updateFn === "function") {
+      requestAnimationFrame(updateFn);
+    }
 
-  //   if (toolbar) {
-  //     this.repositionByToolbar(toolbar);
-  //   }
-  // }
+    // const { toolbar } = this.props;
+    // if (toolbar && !this.isRepositioning) {
+    //   this.repositionByToolbar(toolbar);
+    // }
+  }
 
   repositionByToolbar(toolbar: ToolbarItemsInstance): void {
     const { toolbarRef, toolbarCSSPosition, toolbarItemIndex } = toolbar;
@@ -295,8 +298,15 @@ export class TooltipContent extends React.Component<Props, State> {
           }
         ]}
       >
-        {({ ref, style, arrowProps, placement }): ReactElement => (
-          <div ref={ref} className={className} style={style}>
+        {({ ref, style, arrowProps, placement, forceUpdate }): ReactElement => (
+          <div
+            ref={(r) => {
+              attachRef(r, ref);
+              attachRef(forceUpdate, this.popperUpdateFunctionRef);
+            }}
+            className={className}
+            style={style}
+          >
             {arrow && (
               <div
                 className={`brz-ed-arrow brz-ed-arrow--${placement}`}

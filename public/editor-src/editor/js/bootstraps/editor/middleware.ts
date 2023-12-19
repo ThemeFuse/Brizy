@@ -1,3 +1,4 @@
+import { Middleware } from "redux";
 import thunk from "redux-thunk";
 import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
@@ -23,7 +24,7 @@ const isScreenshotSupported = async (): Promise<boolean> => {
   }
 };
 
-export default async function getMiddleware() {
+export default async function getMiddleware(): Promise<Array<Middleware>> {
   const screenshotsSupported = await isScreenshotSupported();
 
   return [

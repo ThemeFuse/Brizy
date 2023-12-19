@@ -115,7 +115,7 @@ class Icon extends EditorComponent<Value, Props> {
 
         const { blockId } = itemData;
 
-        if (itemData.type === "GlobalBlock") {
+        if (itemData.type === "GlobalBlock" && itemData.value._id) {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
           const blockData = globalBlocks[itemData.value._id];

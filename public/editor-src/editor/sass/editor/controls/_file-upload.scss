@@ -1,10 +1,12 @@
+$imageSize: 48px;
+
 .brz-ed-control__file-upload {
   &__wrapper {
     position: relative;
     overflow: hidden;
     font-weight: bold;
-    width: 48px;
-    height: 48px;
+    min-width: $imageSize;
+    min-height: $imageSize;
     border: 1px dashed $file__upload-border;
     background-color: $file__upload-bg;
     color: $file__upload__icon-color;
@@ -43,6 +45,7 @@
     grid-template-columns: 1fr 16px;
     gap: 10px;
     align-items: center;
+    max-width: 175px;
 
     &--title {
       overflow: hidden;

@@ -644,7 +644,10 @@ const getItems =
                       id: "linkExternal",
                       type: "inputText-dev",
                       placeholder: "http://",
-                      devices: "desktop"
+                      devices: "desktop",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   },
                   {

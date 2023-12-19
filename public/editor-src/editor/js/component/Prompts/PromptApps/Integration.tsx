@@ -1,5 +1,4 @@
 import produce from "immer";
-import { assetUrl } from "visual/utils/asset";
 import { pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { getAccounts } from "../common/GlobalApps/api";
@@ -16,11 +15,8 @@ class Apps extends BaseIntegration<Props> {
   appsComponent = AppsComponent;
 
   async componentDidMount(): Promise<void> {
-    const url = assetUrl("integrations.json");
-    const r = await fetch(url);
-    const data = await r.json();
-
-    this.appsData = data.facebook;
+    const { Integrations } = await import("visual/config/integrations");
+    this.appsData = Integrations.facebook;
 
     await this.getData();
   }
@@ -34,7 +30,7 @@ class Apps extends BaseIntegration<Props> {
       const { services } = integrationData;
 
       this.setState(
-        produce(draft => {
+        produce((draft) => {
           draft.data[services] = {
             data: integrationData
           };
@@ -56,7 +52,7 @@ class Apps extends BaseIntegration<Props> {
     await pendingRequest();
 
     this.setState(
-      produce(draft => {
+      produce((draft) => {
         draft.stages = stages;
         draft.connectedApp = appId;
         Object.assign(draft.data[appId], appData);

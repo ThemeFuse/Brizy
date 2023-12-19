@@ -1,10 +1,10 @@
-import React, { Component } from "react";
 import classnames from "classnames";
-import Fixed from "visual/component/Prompts/Fixed";
+import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import Fixed from "visual/component/Prompts/Fixed";
 import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
 import { IS_PRO } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
 import items from "./items";
 
 const ConfigUrls = Config.get("urls");
@@ -20,13 +20,13 @@ export default class PromptConditions extends Component {
     activeTab: this.props.options[0].type
   };
 
-  handleTabChange = activeTab => this.setState({ activeTab });
+  handleTabChange = (activeTab) => this.setState({ activeTab });
 
   renderIcons() {
     const { options } = this.props;
     const { activeTab } = this.state;
 
-    return options.map(option => {
+    return options.map((option) => {
       const className = classnames(
         "brz-ed-popup-tab-item",
         "brz-ed-popup-tab-item-conditions",
@@ -44,7 +44,9 @@ export default class PromptConditions extends Component {
           <div className="brz-ed-popup-tab-icon">
             <EditorIcon icon={option.icon} />
           </div>
-          <div className="brz-ed-popup-tab-name">{option.label}</div>
+          <div className="brz-ed-popup-tab-name" title={option.label}>
+            {option.label}
+          </div>
         </div>
       );
     });

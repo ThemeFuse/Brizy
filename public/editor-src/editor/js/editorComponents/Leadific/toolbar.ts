@@ -108,7 +108,7 @@ export const getItems: GetItems<Value, Props> = ({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -193,7 +193,10 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Link to"),
                   placeholder: "https://",
                   devices: "desktop",
-                  population: linkDC
+                  population: linkDC,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "linkExternalBlank",

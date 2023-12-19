@@ -1,3 +1,4 @@
+import { t } from "visual/utils/i18n";
 import Input from "../common/Input";
 import Scroll from "../common/Scroll";
 import Showing from "../common/Showing";
@@ -17,14 +18,14 @@ import SpecificPopup from "../common/SpecificPopup";
 export default [
   {
     id: "pageLoad",
-    title: "On Page Load",
+    title: t("On Page Load"),
     type: "number",
-    placeholder: "After (sec)",
+    placeholder: t("After (sec)"),
     Component: Input
   },
   {
     id: "scrolling",
-    title: "On Scroll",
+    title: t("On Scroll"),
     defaultValue: {
       value: "down",
       within: "",
@@ -35,26 +36,26 @@ export default [
   },
   {
     id: "click",
-    title: "On Click",
+    title: t("On Click"),
     type: "number",
-    placeholder: "clicks",
+    placeholder: t("clicks"),
     Component: Input
   },
   {
     id: "inactivity",
-    title: "After Inactivity",
+    title: t("After Inactivity"),
     type: "number",
-    placeholder: "After (sec)",
+    placeholder: t("After (sec)"),
     Component: Input
   },
   {
     id: "exitIntent",
-    title: "On Page Exit Intent",
+    title: t("On Page Exit Intent"),
     defaultValue: true
   },
   {
     id: "showing",
-    title: "Show After X",
+    title: t("Show After X"),
     defaultValue: {
       value: "views",
       type: "equals",
@@ -66,7 +67,7 @@ export default [
   },
   {
     id: "referrer",
-    title: "Arriving From",
+    title: t("Arriving From"),
     defaultValue: {
       type: "is",
       value: "show",
@@ -78,7 +79,7 @@ export default [
   },
   {
     id: "loggedIn",
-    title: "Hide for logged in users",
+    title: t("Hide for logged in users"),
     defaultValue: {
       value: "all",
       user: undefined
@@ -88,14 +89,14 @@ export default [
   },
   {
     id: "devices",
-    title: "Show on devices",
+    title: t("Show on devices"),
     defaultValue: "desktop",
     duplicatesAmount: 3,
     Component: Devices
   },
   {
     id: "currentUrl",
-    title: "Current Page URL",
+    title: t("Current Page URL"),
     defaultValue: {
       type: "matches",
       value: ""
@@ -105,7 +106,7 @@ export default [
   },
   {
     id: "currentDate",
-    title: "Current Date",
+    title: t("Current Date"),
     defaultValue: {
       type: "matches",
       value: ""
@@ -115,7 +116,7 @@ export default [
   },
   {
     id: "lastVisitDate",
-    title: "Last Visit Date",
+    title: t("Last Visit Date"),
     defaultValue: {
       type: "matches",
       value: ""
@@ -125,7 +126,7 @@ export default [
   },
   {
     id: "timeFrom",
-    title: "Time From",
+    title: t("Time From"),
     defaultValue: {
       type: "greater",
       visit: "first",
@@ -137,7 +138,7 @@ export default [
   },
   {
     id: "cookie",
-    title: "Cookie",
+    title: t("Cookie"),
     defaultValue: {
       type: "matches",
       param: "",
@@ -148,7 +149,7 @@ export default [
   },
   {
     id: "os",
-    title: "Operating System",
+    title: t("Operating System"),
     defaultValue: {
       type: "is",
       value: "windows"
@@ -158,7 +159,7 @@ export default [
   },
   {
     id: "otherPopups",
-    title: "No other popup",
+    title: t("No other popup"),
     defaultValue: {
       type: "was",
       value: "page"
@@ -168,7 +169,7 @@ export default [
   },
   {
     id: "specificPopup",
-    title: "Other specific popup",
+    title: t("Other specific popup"),
     defaultValue: {
       type: "was",
       value: ""

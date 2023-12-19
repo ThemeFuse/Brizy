@@ -5,10 +5,11 @@ import { copiedElementNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { detectOS } from "visual/utils/dom/detectOS";
 import { Literal } from "visual/utils/types/Literal";
+import { ElementModelType } from "visual/component/Elements/Types";
 
 type CopiedElementRef = {
   path: string[];
-  value: { items: object[] };
+  value: ElementModelType;
 };
 
 type InnerElementType = {

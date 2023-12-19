@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_MediaProvider implements Brizy_Editor_Edi
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'media', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'media', 'brizy' ), [
 				"ImageGallery",
 				"Video",
 				"Audio",

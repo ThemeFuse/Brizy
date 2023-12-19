@@ -5,8 +5,9 @@ import {
 import { mapBlockElements } from "visual/editorComponents/RichText/utils";
 import { classNamesToV } from "visual/editorComponents/RichText/utils/transforms";
 import {
-  Fonts,
+  Block,
   FontStyle,
+  Fonts,
   GlobalBlock,
   GoogleFont,
   SystemFont,
@@ -24,8 +25,10 @@ import {
   unSplitFont
 } from "./common";
 
+type Models = Block | ElementModel | Array<ElementModelType>;
+
 type GetUsedModelsFonts = (data: {
-  models: ElementModel | Array<ElementModel>;
+  models: Models;
   globalBlocks?: Record<string, GlobalBlock>;
 }) => Font[];
 
@@ -36,7 +39,7 @@ export const getUsedModelsFonts: GetUsedModelsFonts = ({
   const fontFamilies = new Set<string>();
 
   const DCFontFamily = ({ type, value }: ElementModelType): void => {
-    const defaultStyle = getComponentDefaultValue(type).style || {};
+    const defaultStyle = getComponentDefaultValue(type)?.style || {};
     const style = { ...defaultStyle, ...value };
 
     Object.entries(defaultStyle.families || {}).forEach((fontKeys) => {
@@ -67,7 +70,7 @@ export const getUsedModelsFonts: GetUsedModelsFonts = ({
     },
 
     RichText({ type, value }: ElementModelType) {
-      const defaultValue = getComponentDefaultValue(type).content || {};
+      const defaultValue = getComponentDefaultValue(type)?.content || {};
 
       const style = { ...defaultValue, ...value };
       const text = value.text || defaultValue.text;

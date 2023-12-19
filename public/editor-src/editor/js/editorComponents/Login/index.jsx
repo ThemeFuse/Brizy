@@ -34,6 +34,7 @@ import * as toolbarExtendCheckbox from "./toolbarExtendCheckbox";
 import * as toolbarExtendLabel from "./toolbarExtendLabel";
 import * as toolbarExtendLostPasswordConfig from "./toolbarExtendLostPassword";
 import toolbarExtendParentFn from "./toolbarExtendParent";
+import { t } from "visual/utils/i18n";
 
 class Login extends EditorComponent {
   static get componentId() {
@@ -146,7 +147,7 @@ class Login extends EditorComponent {
       );
     }
 
-    return <span className="brz-login__authorized-link"> Logout</span>;
+    return <span className="brz-login__authorized-link"> {t("Logout")}</span>;
   }
 
   renderLoginFields(v) {

@@ -125,7 +125,7 @@ export function getItems({ v, device, context }) {
                   id: "suffixLabelRadial",
                   label: t("Suffix"),
                   type: "inputText-dev",
-                  placeholder: "Suffix",
+                  placeholder: t("Suffix"),
                   disabled: !isRadial,
                   config: {
                     size: "medium"
@@ -136,7 +136,7 @@ export function getItems({ v, device, context }) {
                   id: "prefixLabel",
                   label: t("Prefix"),
                   type: "inputText-dev",
-                  placeholder: "Prefix",
+                  placeholder: t("Prefix"),
                   disabled: !isSimple,
                   config: {
                     size: "medium"
@@ -147,7 +147,7 @@ export function getItems({ v, device, context }) {
                   id: "suffixLabel",
                   label: t("Suffix"),
                   type: "inputText-dev",
-                  placeholder: "Suffix",
+                  placeholder: t("Suffix"),
                   disabled: !isSimple,
                   config: {
                     size: "medium"
@@ -195,7 +195,7 @@ export function getItems({ v, device, context }) {
       id: "popoverColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

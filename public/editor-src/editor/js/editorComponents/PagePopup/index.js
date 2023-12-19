@@ -9,7 +9,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import UIEvents from "visual/global/UIEvents";
 import { updateTriggers } from "visual/redux/actions";
-import { addBlock, addGlobalBlock } from "visual/redux/actions2";
+import { addBlock, addGlobalPopup } from "visual/redux/actions2";
 import { triggersAmountSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { setIds, stripSystemKeys } from "visual/utils/models";
@@ -66,19 +66,20 @@ class PagePopup extends EditorComponent {
     this.props.onChange(newValue);
   };
 
+  handleAddGlobalPopup = (data) => {
+    const { dispatch } = getStore();
+    const meta = { insertIndex: 0 };
+    dispatch(addGlobalPopup(data, meta));
+  };
+
   handleBlocksAdd = (data) => {
     const { dispatch } = getStore();
     const meta = { insertIndex: 0 };
     const { block, ...rest } = data;
+    const blockStripped = stripSystemKeys(block);
+    const blockWithIds = setIds(blockStripped);
 
-    if (block.type === "GlobalBlock") {
-      dispatch(addGlobalBlock(data, meta));
-    } else {
-      const blockStripped = stripSystemKeys(block);
-      const blockWithIds = setIds(blockStripped);
-
-      dispatch(addBlock({ block: blockWithIds, ...rest }, meta));
-    }
+    dispatch(addBlock({ block: blockWithIds, ...rest }, meta));
   };
 
   handlePromptOpen = () => {
@@ -91,7 +92,7 @@ class PagePopup extends EditorComponent {
         blocksType: false,
         globalSearch: false,
         onChangeBlocks: this.handleBlocksAdd,
-        onChangeGlobal: this.handleBlocksAdd,
+        onChangeGlobal: this.handleAddGlobalPopup,
         onChangeSaved: this.handleAddSavedBlock
       }
     };
@@ -115,7 +116,7 @@ class PagePopup extends EditorComponent {
       return (
         <>
           <FirstPopupBlockAdder
-            insertIndex={0}
+            onAddGlobalPopup={this.handleAddGlobalPopup}
             onAddBlock={this.handleBlocksAdd}
           />
           <HotKeys

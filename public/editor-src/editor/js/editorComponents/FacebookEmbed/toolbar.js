@@ -57,14 +57,20 @@ export function getItems({ v, device, state }) {
                   id: "postHref",
                   type: "inputText-dev",
                   devices: "desktop",
-                  disabled: dvv("type") === "post" ? false : true
+                  disabled: dvv("type") === "post" ? false : true,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   label: t("Link"),
                   id: "videoHref",
                   type: "inputText-dev",
                   devices: "desktop",
-                  disabled: dvv("type") === "video" ? false : true
+                  disabled: dvv("type") === "video" ? false : true,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "postAndVideoShowText",
@@ -109,7 +115,7 @@ export function getItems({ v, device, state }) {
       id: "popoverColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

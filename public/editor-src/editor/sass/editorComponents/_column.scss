@@ -17,27 +17,32 @@
     width: 100%;
     top: 0;
     left: 0;
-
-
   }
 
-  & > .brz-wrapper__scrollmotion > .brz-bg,
+  & > div[data-scroll-motion] > .brz-hover-animation__container > .brz-bg,
+  & > :is(div[data-scroll-motion], .brz-hover-animation__container) > .brz-bg,
+  & > div[data-scroll-motion] > .brz-bg,
+  & > .brz-hover-animation__container > .brz-bg,
   & > .brz-bg {
     width: auto;
     height: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
   }
-}
 
-.brz-column__items {
-  flex-direction: column;
-  flex: 0 1 auto;
+  div[data-scroll-motion] {
+    display: inherit;
+    flex-direction: inherit;
+    height: 100%;
+  }
 
-  > div:not(.brz-ed-sortable--empty) {
+  .brz-column__items {
+    flex-direction: column;
+    justify-content: inherit;
     flex: 0 1 auto;
-    min-width: 0;
+
+    > div:not(.brz-ed-sortable--empty) {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
   }
 }

@@ -1,15 +1,17 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { Switch } from "../../utils/Value";
 
 export interface Value extends ElementModel {
   productId: string;
   customCSS: string;
-  footerDisplay: "on" | "off";
-  qtyDisplay: "on" | "off";
-  skuDisplay: "on" | "off";
-  weightDisplay: "on" | "off";
-  inputDisplay: "on" | "off";
-  addressDisplay: "on" | "off";
-  collapse: "on" | "off";
-  collapseDesktop: "on" | "off";
-  breadcrumbsDisplay: "on" | "off";
+
+  footerDisplay: Switch;
+  qtyDisplay: Switch;
+  skuDisplay: Switch;
+  weightDisplay: Switch;
+  inputDisplay: Switch;
+  addressDisplay: Switch;
+  collapse: Switch;
+  collapseDesktop: Switch;
+  breadcrumbsDisplay: Switch;
 }

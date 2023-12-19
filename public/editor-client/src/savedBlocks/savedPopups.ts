@@ -6,6 +6,7 @@ import {
   updateSavedBlock,
   uploadSaveBlocks
 } from "../api";
+import { getErrorMessage } from "../api/utils";
 import { SavedBlockMeta, SavedPopups } from "../types/SavedBlocks";
 import { createUpload } from "../utils/createUpload";
 import { t } from "../utils/i18n";
@@ -89,7 +90,10 @@ export const savedPopups: SavedPopups = {
       res(data);
     } catch (e) {
       console.error("API Client savedPopups handlerImport:", e);
-      rej(t("Failed to import saved popups"));
+      const message =
+        getErrorMessage(e)?.data ?? t("Failed to import saved popups");
+
+      rej(message);
     }
   }
 };

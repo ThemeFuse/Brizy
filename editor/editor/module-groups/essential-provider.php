@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_EssentialProvider implements Brizy_Editor
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'essentials', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'essentials', 'brizy' ), [
 				"Text",
 				"Image",
 				"Button",

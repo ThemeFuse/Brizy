@@ -1,5 +1,6 @@
 import EditorComponents from "visual/global/Editor";
-import { Block } from "visual/types";
+import { MValue } from "visual/utils/value";
+import { ElementDefaultValue } from "visual/component/Elements/Types";
 
 export type FontType = "google" | "upload" | "system" | "unknowns";
 
@@ -16,7 +17,9 @@ export const unSplitFont = (font: string): Font => {
   return { type, family } as Font;
 };
 
-export const getComponentDefaultValue = (type: string): Block["value"] => {
+export const getComponentDefaultValue = (
+  type: string
+): MValue<ElementDefaultValue> => {
   const component = EditorComponents.getComponent(type);
-  return component ? component.defaultValue : {};
+  return component ? component.defaultValue : undefined;
 };

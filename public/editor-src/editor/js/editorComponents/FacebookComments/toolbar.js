@@ -85,7 +85,10 @@ export function getItems({ v, device, state }) {
           label: t("Shortname"),
           disabled: type !== "disqus",
           devices: "desktop",
-          placeholder: "shortname"
+          placeholder: "shortname",
+          config: {
+            size: "medium"
+          }
         },
         {
           id: "logoSize",
@@ -204,7 +207,7 @@ export function getItems({ v, device, state }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -333,7 +336,10 @@ export function getItems({ v, device, state }) {
           type: "inputText-dev",
           placeholder: "http://",
           disabled: dvv("targetUrl") === "current",
-          devices: "desktop"
+          devices: "desktop",
+          config: {
+            size: "medium"
+          }
         }
       ]
     }

@@ -1,4 +1,4 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import { ElementModelType } from "visual/component/Elements/Types";
 
 export type ElementTypes = "shortcode" | "column" | "row" | "addable";
 
@@ -105,7 +105,7 @@ interface FromRow {
 interface FromAddableBase {
   from: {
     itemType: "addable";
-    itemData: ElementModel;
+    itemData: ElementModelType;
   };
 }
 

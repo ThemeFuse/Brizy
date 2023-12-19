@@ -4,8 +4,8 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { ToolbarItemType } from "../ToolbarItemType";
 import { Params } from "../EditorComponent/types";
+import { ToolbarItemType } from "../ToolbarItemType";
 
 export const toolbarParentColors = <
   M extends ElementModel,
@@ -32,7 +32,7 @@ export const toolbarParentColors = <
       position: 70,
       config: {
         title: t("Colors"),
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor: hexToRgba(

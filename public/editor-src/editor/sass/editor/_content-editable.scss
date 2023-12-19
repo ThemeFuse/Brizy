@@ -41,6 +41,8 @@ div[contenteditable] {
 
   // Data Population Ribons
   span[data-population] {
+    border-radius: 4px;
+    padding: 2px 4px;
     background-color: color-mix(in srgb, currentColor 20%, transparent);
   }
 }

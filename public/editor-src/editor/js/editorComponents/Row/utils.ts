@@ -1,5 +1,8 @@
 import { setIn } from "timm";
-import { ElementModel } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import {
   wInBoxedPage,
   wInMobilePage,
@@ -12,12 +15,13 @@ import {
   ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
-import { MValue } from "visual/utils/value";
 
 const ROW_WIDTH = 100; // percent
 const truncate = (num: number) => Number(num.toFixed(1));
 
-export function normalizeRowColumns(columns: MValue<ElementModel[]>) {
+export function normalizeRowColumns(
+  columns: ElementModelType[]
+): Array<ElementModelType> {
   if (!columns || columns.length === 0) {
     return columns;
   }
@@ -31,7 +35,7 @@ export function normalizeRowColumns(columns: MValue<ElementModel[]>) {
     const width =
       index !== columns.length - 1 ? nonLastColumnWidth : lastColumnWidth;
 
-    return setIn(column, ["value", "width"], width);
+    return setIn(column, ["value", "width"], width) as ElementModelType;
   });
 }
 

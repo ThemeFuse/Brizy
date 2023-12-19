@@ -81,7 +81,9 @@ class Tabs extends Component {
               <img className="brz-img" src={img} alt={title} />
             </div>
           ) : (
-            <div className="brz-ed-popup-tab-name">{title}</div>
+            <div className="brz-ed-popup-tab-name" title={title}>
+              {title}
+            </div>
           )}
         </div>
       );

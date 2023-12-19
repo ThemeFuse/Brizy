@@ -1,6 +1,7 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { t } from "visual/utils/i18n";
 import { capitalize } from "visual/utils/string";
 
 export default function ItemWrapper({
@@ -10,17 +11,20 @@ export default function ItemWrapper({
   onChange,
   onRemove
 }) {
-  const ruleActive = active ? "include" : "exclude";
   const ruleActiveIcon = active ? (
     <EditorIcon icon="nc-include" />
   ) : (
     <EditorIcon icon="nc-none" />
   );
 
+  const ruleActive = active ? "include" : "exclude";
+
   const className = classnames(
     "brz-ed-popup-conditions__type",
     `brz-ed-popup-conditions__type-${ruleActive}`
   );
+
+  const text = active ? t("include") : t("exclude");
 
   return (
     <div className="brz-ed-popup-conditions__condition brz-d-xs-flex">
@@ -31,7 +35,7 @@ export default function ItemWrapper({
         >
           <span className="brz-ed-popup-conditions__type-text">
             {ruleActiveIcon}
-            {capitalize(ruleActive)}
+            {capitalize(text)}
           </span>
         </div>
       )}

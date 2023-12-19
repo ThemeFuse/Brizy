@@ -3,7 +3,7 @@ import classnames from "classnames";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
-const validate = v => v !== null && v !== undefined;
+const validate = (v) => v !== null && v !== undefined;
 
 export function List(props) {
   const { lists = [], counters = {}, value = "", onChange = () => {} } = props;
@@ -28,7 +28,7 @@ export function List(props) {
             </span>
           )}
           <span className="brz-span brz-ed-popup-two-sidebar-list__span-text">
-            {title}
+            {t(title)}
           </span>
           <span className="brz-span brz-ed-popup-two-sidebar-list__span-new">
             new

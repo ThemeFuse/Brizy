@@ -1,16 +1,17 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
 import EditorIcon from "visual/component/EditorIcon";
 import { redo } from "visual/redux/actions2";
 import { ReduxStateWithHistory } from "visual/redux/types";
 import { BottomPanelItem } from "./Item";
+import { t } from "visual/utils/i18n";
 
 type History = ReduxStateWithHistory["history"];
 
 export const RedoButton: React.FC = () => {
   const canRedo = useSelector<ReduxStateWithHistory, History["canRedo"]>(
-    state => state.history.canRedo
+    (state) => state.history.canRedo
   );
   const dispatch = useDispatch();
 
@@ -24,7 +25,7 @@ export const RedoButton: React.FC = () => {
         paddingSize="medium"
         active={canRedo}
         pointer={canRedo}
-        title="Redo (ctrl+shift+Z)"
+        title={t("Redo (ctrl+shift+Z)")}
         onClick={handleRedo}
       >
         <EditorIcon icon="nc-redo" />

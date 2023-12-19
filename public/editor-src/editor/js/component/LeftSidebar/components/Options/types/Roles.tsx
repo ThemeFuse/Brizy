@@ -7,6 +7,7 @@ import Config from "visual/global/Config";
 import { updateUI } from "visual/redux/actions2";
 import { currentRoleSelector } from "visual/redux/selectors";
 import { getMembershipRoles } from "visual/utils/membership";
+import { t } from "visual/utils/i18n";
 
 export interface Props {
   label: string;
@@ -27,9 +28,9 @@ export const Roles = (props: Props): ReactElement => {
     const config = Config.getAll();
 
     const membershipRoles = [
-      { role: "default", name: "Default" },
-      { role: "not_logged", name: "Not logged" },
-      { role: "logged", name: "Logged" },
+      { role: "default", name: t("Default") },
+      { role: "not_logged", name: t("Not logged") },
+      { role: "logged", name: t("Logged") },
       ...getMembershipRoles(config)
     ];
 

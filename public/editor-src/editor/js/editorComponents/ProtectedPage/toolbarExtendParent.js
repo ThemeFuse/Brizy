@@ -14,23 +14,32 @@ export function getItems() {
         {
           id: "emptyMessage",
           type: "inputText-dev",
-          label: "Empty message",
-          placeholder: "..type error message",
-          devices: "desktop"
+          label: t("Empty message"),
+          placeholder: t("..type error message"),
+          devices: "desktop",
+          config: {
+            size: "medium"
+          }
         },
         {
           id: "invalidMessage",
           type: "inputText-dev",
-          label: "Invalid message",
-          placeholder: "..type error message",
-          devices: "desktop"
+          label: t("Invalid message"),
+          placeholder: t("..type error message"),
+          devices: "desktop",
+          config: {
+            size: "medium"
+          }
         },
         {
           id: "failMessage",
           type: "inputText-dev",
-          label: "Fail message",
-          placeholder: "..type error message",
-          devices: "desktop"
+          label: t("Fail message"),
+          placeholder: t("..type error message"),
+          devices: "desktop",
+          config: {
+            size: "medium"
+          }
         }
       ]
     },

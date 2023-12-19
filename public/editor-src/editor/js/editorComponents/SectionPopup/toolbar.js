@@ -81,7 +81,7 @@ export function getItems({ v, device, component, context }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

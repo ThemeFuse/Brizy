@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_StoryProvider implements Brizy_Editor_Edi
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'essentials', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'essentials', 'brizy' ), [
 				"StoryButton",
 				"StoryIcon",
 				"StoryEmbed",
@@ -25,7 +25,7 @@ class Brizy_Editor_Editor_ModuleGroups_StoryProvider implements Brizy_Editor_Edi
 				"StoryStarRating",
 				"StoryLottie"
 			], 600 ),
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'media', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'media', 'brizy' ), [
                 "StoryImage",
                 "StoryVideo"
             ], 650 ),

@@ -104,7 +104,13 @@
       "wholesalePriceTypographyFontFamily": "lato",
       "wholesaleNoteTypographyFontFamily": "lato",
       "wholesaleTitleTypographyFontFamily": "lato",
-      "wholesaleTableHeaderTypographyFontFamily": "lato"
+      "wholesaleTableHeaderTypographyFontFamily": "lato",
+      "relatedTitleTypographyFontFamily": "lato",
+      "gridTitleTypographyFontFamily": "lato",
+      "gridSubtitleTypographyFontFamily": "lato",
+      "gridSKUInnerTypographyFontFamily": "lato",
+      "gridPriceTypographyFontFamily": "lato",
+      "gridBuyNowTypographyFontFamily": "lato"
     },
 
     "positionName": 100,
@@ -1095,7 +1101,7 @@
     "mobileGalleryWidthSpacing": 100,
     "mobileGalleryWidthSpacingSuffix": "%",
 
-    "thumbStyle": "IMAGE_SINGLE_THUMBNAILS_HORIZONTAL",
+    "thumbStyle": "IMAGE_SINGLE_THUMBNAILS_VERTICAL",
 
     "betweenThumbnail": 10,
     "betweenThumbnailSuffix": "px",
@@ -1870,6 +1876,235 @@
 
     "wholesaleTableBodySpacing": 15,
     "wholesaleTableBodySpacingSuffix": "px",
+
+    "relatedTitleTypographyFontStyle": "",
+    "relatedTitleTypographyFontFamilyType": "google",
+    "relatedTitleTypographyFontSize": 24,
+    "relatedTitleTypographyFontSizeSuffix": "px",
+    "relatedTitleTypographyFontWeight": 400,
+    "relatedTitleTypographyLetterSpacing": 1.3,
+    "relatedTitleTypographyLineHeight": 1,
+
+    "relatedTitleColorHex": "#000000",
+    "relatedTitleColorOpacity": 1,
+    "relatedTitleColorPalette": "",
+
+    "relatedTitleHorizontalAlign": "left",
+
+    "relatedTitleSpacing": 15,
+    "relatedTitleSpacingSuffix": "px",
+
+    "gridTitleTypographyFontStyle": "",
+    "gridTitleTypographyFontFamilyType": "google",
+    "gridTitleTypographyFontSize": 14,
+    "gridTitleTypographyFontSizeSuffix": "px",
+    "gridTitleTypographyFontWeight": 400,
+    "gridTitleTypographyLetterSpacing": 1.3,
+    "gridTitleTypographyLineHeight": 1,
+
+    "gridTitleColorHex": "#333333",
+    "gridTitleColorOpacity": 1,
+    "gridTitleColorPalette": "",
+
+    "gridTitleHorizontalAlign": "center",
+
+    "gridTitleSpacing": 2,
+    "gridTitleSpacingSuffix": "px",
+
+    "gridSubtitleTypographyFontStyle": "",
+    "gridSubtitleTypographyFontFamilyType": "google",
+    "gridSubtitleTypographyFontSize": 12,
+    "gridSubtitleTypographyFontSizeSuffix": "px",
+    "gridSubtitleTypographyFontWeight": 400,
+    "gridSubtitleTypographyLetterSpacing": 1.3,
+    "gridSubtitleTypographyLineHeight": 1,
+
+    "gridSubtitleColorHex": "#757575",
+    "gridSubtitleColorOpacity": 1,
+    "gridSubtitleColorPalette": "",
+
+    "gridSubtitleHorizontalAlign": "center",
+
+    "gridSubtitleSpacing": 2,
+    "gridSubtitleSpacingSuffix": "px",
+
+    "gridSKUInnerTypographyFontStyle": "",
+    "gridSKUInnerTypographyFontFamilyType": "google",
+    "gridSKUInnerTypographyFontSize": 12,
+    "gridSKUInnerTypographyFontSizeSuffix": "px",
+    "gridSKUInnerTypographyFontWeight": 400,
+    "gridSKUInnerTypographyLetterSpacing": 1.3,
+    "gridSKUInnerTypographyLineHeight": 1,
+
+    "gridSKUInnerColorHex": "#757575",
+    "gridSKUInnerColorOpacity": 1,
+    "gridSKUInnerColorPalette": "",
+
+    "gridSKUInnerHorizontalAlign": "center",
+
+    "gridSKUInnerSpacing": 2,
+    "gridSKUInnerSpacingSuffix": "px",
+
+    "gridPriceTypographyFontStyle": "",
+    "gridPriceTypographyFontFamilyType": "google",
+    "gridPriceTypographyFontSize": 14,
+    "gridPriceTypographyFontSizeSuffix": "px",
+    "gridPriceTypographyFontWeight": 400,
+    "gridPriceTypographyLetterSpacing": 1.3,
+    "gridPriceTypographyLineHeight": 1,
+
+    "gridPriceColorHex": "#333333",
+    "gridPriceColorOpacity": 1,
+    "gridPriceColorPalette": "",
+
+    "gridPriceHorizontalAlign": "center",
+
+    "gridPriceSpacing": 2,
+    "gridPriceSpacingSuffix": "px",
+
+    "gridBuyNowHeight": 30,
+    "gridBuyNowHeightSuffix": "px",
+
+    "gridBuyNowWidth": 100,
+    "gridBuyNowWidthSuffix": "px",
+
+    "gridBuyNowTypographyFontStyle": "",
+    "gridBuyNowTypographyFontFamilyType": "google",
+    "gridBuyNowTypographyFontSize": 14,
+    "gridBuyNowTypographyFontSizeSuffix": "px",
+    "gridBuyNowTypographyFontWeight": 400,
+    "gridBuyNowTypographyLetterSpacing": 1.3,
+    "gridBuyNowTypographyLineHeight": 1,
+
+    "gridBuyNowColorHex": "#333333",
+    "gridBuyNowColorOpacity": 1,
+    "gridBuyNowColorPalette": "",
+
+    "gridBuyNowBgColorType": "solid",
+
+    "gridBuyNowGradientActivePointer": "startPointer",
+    "gridBuyNowGradientStartPointer": 0,
+    "gridBuyNowGradientFinishPointer": 100,
+
+    "gridBuyNowBgColorHex": "#ffffff",
+    "gridBuyNowBgColorOpacity": 1,
+    "gridBuyNowBgColorPalette": "",
+
+    "gridBuyNowGradientColorHex": "#009900",
+    "gridBuyNowGradientColorOpacity": 0.8,
+    "gridBuyNowGradientColorPalette": "",
+
+    "gridBuyNowGradientType": "linear",
+
+    "gridBuyNowGradientLinearDegree": 90,
+    "gridBuyNowGradientRadialDegree": 90,
+
+    "gridBuyNowBorderStyle": "solid",
+
+    "gridBuyNowBorderColorHex": "#cccccc",
+    "gridBuyNowBorderColorOpacity": 1,
+    "gridBuyNowBorderColorPalette": "",
+
+    "gridBuyNowBorderRadiusType": "grouped",
+
+    "gridBuyNowBorderRadius": 3,
+    "gridBuyNowBorderRadiusSuffix": "px",
+
+    "gridBuyNowBorderWidthType": "grouped",
+
+    "gridBuyNowBorderWidth": 1,
+    "gridBuyNowBorderTopWidth": 1,
+    "gridBuyNowBorderRightWidth": 1,
+    "gridBuyNowBorderBottomWidth": 1,
+    "gridBuyNowBorderLeftWidth": 1,
+
+    "gridBuyNowBorderTopLeftRadius": 3,
+    "gridBuyNowBorderTopRightRadius": 3,
+    "gridBuyNowBorderBottomRightRadius": 3,
+    "gridBuyNowBorderBottomLeftRadius": 3,
+
+    "gridBuyNowBorderTopLeftRadiusSuffix": "px",
+    "gridBuyNowBorderTopRightRadiusSuffix": "px",
+    "gridBuyNowBorderBottomRightRadiusSuffix": "px",
+    "gridBuyNowBorderBottomLeftRadiusSuffix": "px",
+
+    "gridBuyNowBoxShadow": "none",
+
+    "gridBuyNowBoxShadowColorHex": "#000000",
+    "gridBuyNowBoxShadowColorOpacity": 0,
+    "gridBuyNowBoxShadowColorPalette": "",
+
+    "gridBuyNowBoxShadowBlur": 0,
+    "gridBuyNowBoxShadowSpread": 0,
+    "gridBuyNowBoxShadowVertical": 0,
+    "gridBuyNowBoxShadowHorizontal": 0,
+
+    "gridBuyNowHorizontalAlign": "center",
+
+    "gridBuyNowSpacing": 10,
+    "gridBuyNowSpacingSuffix": "px",
+
+    "gridBgColorType": "solid",
+
+    "gridGradientActivePointer": "startPointer",
+    "gridGradientStartPointer": 0,
+    "gridGradientFinishPointer": 100,
+
+    "gridBgColorHex": "#ffffff",
+    "gridBgColorOpacity": 1,
+    "gridBgColorPalette": "",
+
+    "gridGradientColorHex": "#009900",
+    "gridGradientColorOpacity": 0.8,
+    "gridGradientColorPalette": "",
+
+    "gridGradientType": "linear",
+
+    "gridGradientLinearDegree": 90,
+    "gridGradientRadialDegree": 90,
+
+    "gridBorderStyle": "solid",
+
+    "gridBorderColorHex": "#e6e6e6",
+    "gridBorderColorOpacity": 1,
+    "gridBorderColorPalette": "",
+
+    "gridBorderRadiusType": "grouped",
+
+    "gridBorderRadius": 3,
+    "gridBorderRadiusSuffix": "px",
+
+    "gridBorderWidthType": "grouped",
+
+    "gridBorderWidth": 1,
+    "gridBorderTopWidth": 1,
+    "gridBorderRightWidth": 1,
+    "gridBorderBottomWidth": 1,
+    "gridBorderLeftWidth": 1,
+
+    "gridBorderTopLeftRadius": 3,
+    "gridBorderTopRightRadius": 3,
+    "gridBorderBottomRightRadius": 3,
+    "gridBorderBottomLeftRadius": 3,
+
+    "gridBorderTopLeftRadiusSuffix": "px",
+    "gridBorderTopRightRadiusSuffix": "px",
+    "gridBorderBottomRightRadiusSuffix": "px",
+    "gridBorderBottomLeftRadiusSuffix": "px",
+
+    "gridBoxShadow": "solid",
+
+    "gridBoxShadowColorHex": "#000000",
+    "gridBoxShadowColorOpacity": 0.1,
+    "gridBoxShadowColorPalette": "",
+
+    "gridBoxShadowBlur": 0,
+    "gridBoxShadowSpread": 0,
+    "gridBoxShadowVertical": 0,
+    "gridBoxShadowHorizontal": 0,
+
+    "gridSpacing": 10,
+    "gridSpacingSuffix": "px",
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": ""
