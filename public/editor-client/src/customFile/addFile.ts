@@ -1,7 +1,6 @@
-import { getAttachmentById } from "../api";
 import { AddFileData } from "../types/File";
 import { t } from "../utils/i18n";
-import { validateByComponent } from "./utils";
+import { handleGetAttachmentById, validateByComponent } from "./utils";
 
 export const addFile: AddFileData = {
   label: "Image",
@@ -48,18 +47,13 @@ export const addFile: AddFileData = {
           .then((res) => res.blob())
           .then((blob) => {
             const file = new File([blob], filename, { type: mimeType });
-            validateByComponent(file, componentId).catch((e) => rej(e.message));
+            validateByComponent(file, componentId)
+              .then(() => handleGetAttachmentById(res, attachment))
+              .catch((e) => rej(e.message));
           });
+      } else {
+        handleGetAttachmentById(res, attachment);
       }
-
-      getAttachmentById(attachment.get("id"))
-        .then(({ uid }) => {
-          const filename = attachment.get("filename");
-          res({ uid, filename });
-        })
-        .catch((e: unknown) => {
-          console.error("failed to get attachment uid", e);
-        });
     });
 
     frame.on("escape", () => {
