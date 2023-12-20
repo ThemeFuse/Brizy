@@ -1,8 +1,8 @@
-import { Style } from "visual/types";
 import {
   LayoutsWithThumbs,
   StoriesWithThumbs
-} from "visual/global/Config/types/configs/templates";
+} from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
+import { Style } from "visual/types";
 
 export interface Filter {
   category: string;

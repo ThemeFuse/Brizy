@@ -21,7 +21,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
       type: "popover-dev",
       devices: "desktop",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

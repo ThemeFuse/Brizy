@@ -1,8 +1,11 @@
 import produce from "immer";
 import _ from "underscore";
-import { mapModels, setIds } from "visual/utils/models";
-import { ElementModel } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import { MenuItem } from "visual/global/Config/types/configs/ConfigCommon";
+import { mapModels, setIds } from "visual/utils/models";
 
 const configKeys = [
   "id",
@@ -33,8 +36,8 @@ export function symbolsToItems(
   items: ElementModel[],
   symbols: Record<string, ElementModel>
 ): ElementModel[] {
-  return items.map(item =>
-    produce(item, draft => {
+  return items.map((item) =>
+    produce(item, (draft) => {
       // @ts-expect-error: Need to specific model value
       Object.assign(draft.value, symbols[item.value.id]);
 
@@ -55,19 +58,17 @@ export function symbolsToItems(
   );
 }
 
-export function itemsToSymbols(items: ElementModel[]): ElementModel {
-  return items.reduce(
-    (acc, item) => ({
+export function itemsToSymbols(items: ElementModelType[]): ElementModel {
+  return items.reduce((acc, item) => {
+    return {
       ...acc,
-      // @ts-expect-error: Need to specific model value
-      [item.value.id]: _.omit(item.value, [
+      [item.value.id as string]: _.omit(item.value, [
         // megaMenuItems should stay
-        ...configKeys.filter(k => k !== "megaMenuItems"),
+        ...configKeys.filter((k) => k !== "megaMenuItems"),
         "_id"
       ]),
-      // @ts-expect-error: Need to specific model value
-      ...(item.value.items.length > 0 ? itemsToSymbols(item.value.items) : {})
-    }),
-    {} as Record<string, ElementModel>
-  );
+      // @ts-expect-error: Object possible to be undefined
+      ...(item.value.items?.length > 0 ? itemsToSymbols(item.value.items) : {})
+    };
+  }, {});
 }

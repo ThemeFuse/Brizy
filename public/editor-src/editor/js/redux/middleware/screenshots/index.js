@@ -11,6 +11,7 @@ import {
 import { updateScreenshot } from "visual/redux/actions";
 import {
   ADD_GLOBAL_BLOCK,
+  ADD_GLOBAL_POPUP,
   UPDATE_EXTRA_FONT_STYLES
 } from "visual/redux/actions2";
 import { REDO, UNDO } from "visual/redux/history/types";
@@ -79,6 +80,7 @@ export default (store) => (next) => (action) => {
     action.type === UPDATE_BLOCKS ||
     action.type === ADD_BLOCK ||
     action.type === ADD_GLOBAL_BLOCK ||
+    action.type === ADD_GLOBAL_POPUP ||
     action.type === UPDATE_GLOBAL_BLOCK ||
     action.type === UNDO ||
     action.type === REDO

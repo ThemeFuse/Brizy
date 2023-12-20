@@ -24,10 +24,10 @@ export const getItems =
     const dvv = (key) => defaultValueValue({ v, key, device });
 
     const typeChoices = [
-      { value: "login", title: "Login" },
-      { value: "authorized", title: "Authorized" },
-      ...(canRegister ? [{ value: "register", title: "Register" }] : []),
-      { value: "forgot", title: "Forgot Password" }
+      { value: "login", title: t("Login") },
+      { value: "authorized", title: t("Authorized") },
+      ...(canRegister ? [{ value: "register", title: t("Register") }] : []),
+      { value: "forgot", title: t("Forgot Password") }
     ];
 
     const type = dvv("type");
@@ -68,7 +68,7 @@ export const getItems =
                     type: "multiSelect-dev",
                     label: t("Default Roles"),
                     devices: "desktop",
-                    placeholder: "none",
+                    placeholder: t("none"),
                     disabled: !isRegister || IS_WP,
                     choices: getMembershipChoices(config)
                   }

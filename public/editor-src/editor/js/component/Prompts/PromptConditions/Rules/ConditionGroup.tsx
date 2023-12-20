@@ -7,8 +7,9 @@ import { Rule } from "visual/types";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
-} from "visual/utils/blocks";
-import { isLegacyRuleListItem, RuleList, RuleListItem } from "./types";
+} from "visual/utils/blocks/guards";
+import { t } from "visual/utils/i18n";
+import { RuleList, RuleListItem, isLegacyRuleListItem } from "./types";
 import { getRulesListIndexByRule } from "./utils";
 
 export interface Props {
@@ -22,7 +23,7 @@ class ConditionGroup extends React.Component<Props> {
   renderGroupOptions(options: RuleList[]): JSX.Element[] {
     const allOption = (
       <SelectItem key="all" value={null}>
-        All
+        {t("All")}
       </SelectItem>
     );
     const newOptions = options.map(({ title, value, groupValue, disabled }) => (
@@ -41,7 +42,7 @@ class ConditionGroup extends React.Component<Props> {
   renderTypeOptions(items: RuleListItem[]): JSX.Element[] {
     const allOption = (
       <SelectItem key="all" value={null}>
-        All
+        {t("All")}
       </SelectItem>
     );
 

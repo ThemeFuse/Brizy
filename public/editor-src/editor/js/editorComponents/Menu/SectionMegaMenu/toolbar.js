@@ -51,7 +51,7 @@ export function getItems({ v, device, context }) {
       type: "popover-dev",
       config: {
         title: t("Colors"),
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))

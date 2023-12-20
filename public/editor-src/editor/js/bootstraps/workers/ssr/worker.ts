@@ -1,8 +1,8 @@
-import { Output } from "visual/bootstraps/workers/ssr/components/Editor";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, DataCommon as Page, Project } from "visual/types";
+import { Block, DataCommon as Page, Project } from "visual/types";
 import { assetUrl } from "visual/utils/asset";
 import { MValue } from "visual/utils/value";
+import { Output } from "./components/Editor";
 
 // Note: Workers are build in a separated files
 // See webpack.config.worker.js
@@ -16,18 +16,19 @@ const initWorker = (config: ConfigCommon): Worker => {
   return new Worker(getWorkerUrl(config));
 };
 
-interface Data {
+//#region Compile Page
+
+interface PageData {
   page: Page;
-  globalBlocks: Record<string, GlobalBlock>;
   project: Project;
   config: ConfigCommon;
 }
 
-type Compile = (d: Data) => Promise<MValue<Output>>;
+type CompilePage = (d: PageData) => Promise<MValue<Output>>;
 
-export const compile: Compile = (data) => {
+export const compilePage: CompilePage = (data) => {
   return new Promise((res, rej) => {
-    const { config, page, globalBlocks, project } = data;
+    const { config, page, project } = data;
     const worker = initWorker(config);
 
     worker.addEventListener("message", (e) => {
@@ -36,7 +37,42 @@ export const compile: Compile = (data) => {
     });
     worker.addEventListener("messageerror", rej);
 
-    const msg = JSON.stringify({ page, globalBlocks, project, config });
+    const msg = JSON.stringify({ page, project, config });
     worker.postMessage(msg);
   });
 };
+
+//#endregion
+
+//#region Compile Block
+
+interface BlockData {
+  block: Block;
+  project: Project;
+  config: ConfigCommon;
+}
+
+type CompileBlock = (d: BlockData) => Promise<MValue<Output>>;
+
+export const compileBlock: CompileBlock = (data) => {
+  return new Promise((res, rej) => {
+    const { config, block, project } = data;
+    const worker = initWorker(config);
+    const page = {
+      data: { items: [block] }
+    };
+
+    worker.addEventListener("message", (e) => {
+      res(e.data);
+      worker.terminate();
+    });
+    worker.addEventListener("messageerror", rej);
+
+    const msg = JSON.stringify({ page, project, config });
+    worker.postMessage(msg);
+  });
+};
+
+//#endregion
+
+export type { Output };

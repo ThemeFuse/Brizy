@@ -45,7 +45,7 @@ describe("Testing 'placeholderObjToStr' function", () => {
         content: "22",
         attr: { placeholder: "This is O'reilly book" }
       },
-      `{{placeholder content='${c}' placeholder='This%20is%20O%27reilly%20book'}}`
+      `{{placeholder content='${c}' placeholder='This is O&#x27;reilly book'}}`
     ],
     [
       {

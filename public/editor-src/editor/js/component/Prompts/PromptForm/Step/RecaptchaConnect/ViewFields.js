@@ -82,6 +82,10 @@ class ViewFields extends Component {
   }
 
   renderDescriptions() {
+    const description = t(
+      "I have deselected \"Verify the origins of reCAPTCHA solutions and clicked \"Save Changes\" under \"Key Settings > Advanced Settings\" in my Google reCAPTCHA page"
+    );
+
     return (
       /* eslint-disable react/no-unescaped-entities */
       <div className="brz-ed-popup-recaptcha__confirmation">
@@ -92,11 +96,7 @@ class ViewFields extends Component {
             value={this.props.confirmed}
             onChange={this.handleConfirmation}
           />
-          I have deselected "Verify the origins of reCAPTCHA solu-
-          <br className="brz-br" />
-          tions and clicked "Save Changes" under "Key Settings &gt;
-          <br className="brz-br" />
-          Advanced Settings" in my Google reCAPTCHA page
+          <span dangerouslySetInnerHTML={{ __html: description }} />
         </label>
       </div>
       /* eslint-enabled react/no-unescaped-entities */

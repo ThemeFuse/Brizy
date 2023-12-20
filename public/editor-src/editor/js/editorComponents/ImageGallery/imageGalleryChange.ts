@@ -1,6 +1,9 @@
 import produce from "immer";
 import { getIn, insert, mergeIn } from "timm";
-import type { ElementModel } from "visual/component/Elements/Types";
+import type {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import { setIds } from "visual/utils/models";
 import * as Num from "visual/utils/reader/number";
 import type { V as ImageValue, Unit } from "../Image/types";
@@ -74,13 +77,14 @@ export const patchOnColumnChange = (
 export const patchOnLightBox = (newV: Value): Value => {
   const { lightBox, layout } = newV;
 
-  const items = newV.items.map((el) =>
-    mergeIn(el, ["value"], {
-      linkType:
-        lightBox === "on" && layout !== "bigImage" ? "lightBox" : "external",
-      linkLightBox: layout !== "bigImage" ? lightBox : ""
-    })
-  ) as ElementModel[];
+  const items = newV.items.map(
+    (el) =>
+      mergeIn(el, ["value"], {
+        linkType:
+          lightBox === "on" && layout !== "bigImage" ? "lightBox" : "external",
+        linkLightBox: layout !== "bigImage" ? lightBox : ""
+      }) as ElementModelType
+  );
 
   return produce(newV, (draft) => {
     draft.items = items;
@@ -172,7 +176,7 @@ export const patchOnJustifiedLayout = (
   const { lightBox } = newValue;
   const { heightKey, heightSuffixKey, rowHeight } = extraData;
 
-  const newItems = newValue.items.map((el: ElementModel) =>
+  const newItems = newValue.items.map((el) =>
     mergeIn(el, ["value"], {
       sizeType: "original",
       tabletSizeType: null,
@@ -181,7 +185,7 @@ export const patchOnJustifiedLayout = (
       [heightSuffixKey]: "px",
       ...mergeLinkType(lightBox)
     })
-  ) as ElementModel[];
+  ) as ElementModelType[];
 
   return produce(newValue, (draft) => {
     draft.items = newItems;
@@ -192,7 +196,7 @@ export const patchOnGridItemsChange = (
   node: HTMLElement | null,
   newValue: Value,
   oldValue: Value,
-  newItems: ElementModel[]
+  newItems: ElementModelType[]
 ): Value =>
   produce(newValue, (draft) => {
     draft.items = getDefaultGridItems({
@@ -246,15 +250,16 @@ export const patchOnBigImageChange = (newValue: Value): Value => {
 export const patchOnMasonryLayout = (newValue: Value): Value => {
   const { lightBox } = newValue;
 
-  const newItems = newValue.items.map((image: ElementModel) =>
-    mergeIn(image, ["value"], {
-      ...(image.value as Value),
-      sizeType: "custom",
-      tabletSizeType: null,
-      mobileSizeType: null,
-      ...mergeLinkType(lightBox)
-    })
-  ) as ElementModel[];
+  const newItems = newValue.items.map(
+    (image) =>
+      mergeIn(image, ["value"], {
+        ...(image.value as Value),
+        sizeType: "custom",
+        tabletSizeType: null,
+        mobileSizeType: null,
+        ...mergeLinkType(lightBox)
+      }) as ElementModelType
+  );
 
   return produce(newValue, (draft) => {
     draft.items = newItems;

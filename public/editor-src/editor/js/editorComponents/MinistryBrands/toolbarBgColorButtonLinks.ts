@@ -48,7 +48,7 @@ export const getItems = <
       type: "popover-dev",
       config: {
         title: t("Colors"),
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor: hexToRgba(

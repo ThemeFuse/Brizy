@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import ViewFields from "./ViewFields";
 import { Context } from "../../../common/GlobalApps/Context";
 import { deleteAccount } from "../../../common/GlobalApps/api";
-import { pendingRequest } from "visual/utils/api";
+import ViewFields from "./ViewFields";
 import { validation } from "./validation";
 
 const apiKeys = [
@@ -49,7 +49,7 @@ class RecaptchaConnect extends Component {
     }));
   };
 
-  handleConfirmation = confirmed => {
+  handleConfirmation = (confirmed) => {
     this.setState({
       confirmed
     });
@@ -65,12 +65,12 @@ class RecaptchaConnect extends Component {
       error: null
     });
 
-    if (keysValue.some(key => !key)) {
+    if (keysValue.some((key) => !key)) {
       // Emitted fake request
       await pendingRequest();
 
       this.setState({
-        error: "Fields are empty",
+        error: t("Fields are empty"),
         nextLoading: false
       });
     } else {

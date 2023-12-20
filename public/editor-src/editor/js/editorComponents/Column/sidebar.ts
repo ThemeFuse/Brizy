@@ -135,7 +135,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       display: "block",
                       helper: {
                         content:
-                          "Add your custom ID without the #pound, example: my-id"
+                          t("Add your custom ID without the #pound, example: my-id")
                       },
                       config: richTextDC,
                       option: {
@@ -152,7 +152,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       display: "block",
                       helper: {
                         content:
-                          "Add your custom class without the .dot, example: my-class"
+                          t("Add your custom class without the .dot, example: my-class")
                       },
                       config: richTextDC,
                       option: {
@@ -171,7 +171,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       devices: "desktop",
                       helper: {
                         content:
-                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
                       },
                       population: richTextDC
                     },

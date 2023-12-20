@@ -194,16 +194,17 @@ $control__popup_light-active: var(--active-color, $blue-21);
 $control__dropdown-box-shadow: var(--control__dropdown-box-shadow, rgba($black, 0.1));
 $control-font-size: 13px;
 $control__arrow-size: 8px;
+$control__fixed-multiselect-width: 114px;
 $control-letter-spacing: 0.25px;
 $control-border-radius: 4px;
 $control-height: 30px;
 $control-padding: 10px;
 $control__sm-width: 62px;
-$control__md-width: 112px;
+$control__md-width: 114px;
 $control__lg-width: 136px;
 
 // Spacing
-$space__between__controls: 15px;
+$space__between__controls: 8px;
 
 // Options
 //
@@ -429,10 +430,10 @@ $toolbar__fonts__separator-bg: var(--toolbar__fonts__separator-bg, rgba($white, 
 //
 // Sizes
 $toolbar_tooltip__sm-width: 171px !default;
-$toolbar_tooltip__md-width: 255px !default;
+$toolbar_tooltip__md-width: 260px !default;
 $toolbar_tooltip__lg-width: 305px !default;
-$toolbar_tooltip__typo-width: 420px;
-$toolbar_tooltip__typo-width-no-population: 385px;
+$toolbar_tooltip__typo-width: 460px;
+$toolbar_tooltip__typo-width-no-population: 425px;
 
 // Bottom Toolbar Color
 $bottom_toolbar-color: var(--secondary-white, $white);

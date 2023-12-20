@@ -1,6 +1,6 @@
-import { isNullish, MValue, onUndefined, ToValue } from "visual/utils/value";
 import { toArray } from "visual/utils/array";
 import { toObject } from "visual/utils/object";
+import { MValue, ToValue, isNullish, onUndefined } from "visual/utils/value";
 
 export type Getter<V, M> = (m: M, orElse?: V) => MValue<V>;
 export type Getter2<V, M> = (m: M) => V;

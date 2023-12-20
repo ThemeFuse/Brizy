@@ -7,14 +7,14 @@ import {
   getTerms
 } from "visual/utils/api/index.wp";
 import {
-  isCollectionItemRule,
-  isCollectionTypeRule
-} from "visual/utils/blocks";
-import {
   CATEGORIES_GROUP_ID,
   PAGES_GROUP_ID,
   TEMPLATES_GROUP_ID
 } from "visual/utils/blocks/blocksConditions";
+import {
+  isCollectionItemRule,
+  isCollectionTypeRule
+} from "visual/utils/blocks/guards";
 import { RuleList } from "./types";
 import {
   disableAlreadyUsedRules,

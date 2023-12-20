@@ -8,7 +8,7 @@ import { getDynamicContentOption } from "visual/utils/options";
 
 export const title = t("Popup Close Icon");
 const helperHTML = `
-<p class="brz-p">You can use the following selectors to create targeted CSS.</p>
+<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -56,7 +56,7 @@ export function getItems({
                       display: "block",
                       helper: {
                         content:
-                          "Add your custom ID without the #pound, example: my-id"
+                          t("Add your custom ID without the #pound, example: my-id")
                       },
                       config: richTextDC,
                       option: {
@@ -73,7 +73,7 @@ export function getItems({
                       display: "block",
                       helper: {
                         content:
-                          "Add your custom class without the .dot, example: my-class"
+                          t("Add your custom class without the .dot, example: my-class")
                       },
                       config: richTextDC,
                       option: {
@@ -92,7 +92,7 @@ export function getItems({
                       devices: "desktop",
                       helper: {
                         content:
-                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
                       },
                       population: richTextDC
                     },
@@ -104,7 +104,7 @@ export function getItems({
                       display: "block",
                       devices: "desktop",
                       helper: { content: helperHTML },
-                      placeholder: "element { CSS goes here }"
+                      placeholder: `element { ${t("CSS goes here")} }`
                     },
                     {
                       id: "hoverTransition",

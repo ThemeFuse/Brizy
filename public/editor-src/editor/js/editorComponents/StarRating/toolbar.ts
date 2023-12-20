@@ -125,6 +125,7 @@ export function getItems({
                   config: {
                     min: 0,
                     max: ratingScale,
+                    size: "short",
                     step: 0.1,
                     inputMin: 0,
                     inputMax: ratingScale,
@@ -251,7 +252,7 @@ export function getItems({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

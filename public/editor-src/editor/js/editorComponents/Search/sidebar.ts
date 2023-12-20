@@ -4,7 +4,7 @@ import { ToolbarItemType } from "../ToolbarItemType";
 export const title = t("Search");
 
 const helperHTML = `
-<p class="brz-p">You can use the following selectors to create targeted CSS.</p>
+<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -66,7 +66,7 @@ export function getItems(): ToolbarItemType[] {
                       display: "block",
                       devices: "desktop",
                       helper: { content: helperHTML },
-                      placeholder: "element { CSS goes here }"
+                      placeholder: `element { ${t("CSS goes here")} }`
                     },
                     {
                       id: "hoverTransition",

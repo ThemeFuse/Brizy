@@ -77,8 +77,8 @@ export const getItems: GetItems<ElementModel> = ({
           label: t("Context Type"),
           devices: "desktop",
           choices: [
-            { value: "auto", title: "Auto" },
-            { value: "profile", title: "Profile" }
+            { value: "auto", title: t("Auto") },
+            { value: "profile", title: t("Profile") }
           ]
         }
       ]
@@ -138,7 +138,7 @@ export const getItems: GetItems<ElementModel> = ({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -220,7 +220,10 @@ export const getItems: GetItems<ElementModel> = ({
                     id: "linkExternal",
                     type: "inputText-dev",
                     placeholder: "http://",
-                    devices: "desktop"
+                    devices: "desktop",
+                    config: {
+                      size: "medium"
+                    }
                   }
                 },
                 {

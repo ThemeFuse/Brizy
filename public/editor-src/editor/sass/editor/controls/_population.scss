@@ -3,11 +3,12 @@
 .brz-ed-control__population {
   display: grid;
   grid-template-columns: minmax(20%, 100%) auto;
-  gap: 10px;
   align-items: center;
   justify-content: flex-end;
-  min-width: 0;
-  width: 100%;
+
+  &--fixed {
+    grid-template-columns: 120px auto;
+  }
 
   &__input {
     font-family: $default-font-family;
@@ -18,6 +19,7 @@
     background: $control-bg none;
     color: $control__variant-color;
     min-width: $control__md-width;
+    max-width: $control__md-width;
     height: $control-height;
     padding: 0 5px 0 10px;
     border-radius: $control-border-radius;
@@ -51,6 +53,10 @@
       margin-left: 0;
     }
   }
+}
+
+.brz-ed-control-grid--gap {
+  gap: 10px;
 }
 
 .brz-ed-control__population--wrapper {

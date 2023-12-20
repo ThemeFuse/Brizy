@@ -19,11 +19,7 @@ self.onmessage = async (e: MessageEvent) => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { Editor } = require("./components/Editor");
 
-  const data = await Editor({
-    page: page,
-    project,
-    globalBlocks
-  });
+  const data = await Editor({ page, project, globalBlocks });
 
   postMessage(data);
 };

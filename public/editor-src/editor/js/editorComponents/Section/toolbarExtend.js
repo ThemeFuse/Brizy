@@ -121,7 +121,7 @@ export function getItems({ v, device, component }) {
                       id: "membershipRoles",
                       label: t("Show to"),
                       type: "multiSelect-dev",
-                      placeholder: "Select",
+                      placeholder: t("Select"),
                       disabled: dvv("membership") === "off",
                       choices: getAllMembershipChoices(config)
                     }
@@ -142,7 +142,7 @@ export function getItems({ v, device, component }) {
                       id: "translationsLangs",
                       label: t("Show If Language"),
                       type: "multiSelect-dev",
-                      placeholder: "Select",
+                      placeholder: t("Select"),
                       disabled: dvv("translations") === "off",
                       choices: getLanguagesChoices(config)
                     }
@@ -205,7 +205,7 @@ export function getItems({ v, device, component }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto"
+        size: "medium"
       },
       position: 90,
       devices: "desktop",

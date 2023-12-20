@@ -63,6 +63,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
           config: {
             min: 1,
             max: 100,
+            size: "short",
             units: [{ value: "%", title: "%" }]
           },
           population: richTextDC
@@ -199,7 +200,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

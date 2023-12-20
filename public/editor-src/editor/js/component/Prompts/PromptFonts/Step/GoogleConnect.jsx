@@ -1,15 +1,15 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { fontsSelector } from "visual/redux/selectors";
+import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
+import { Fields } from "visual/component/Prompts/common/GlobalApps/StepsView/Fields";
 import { addFonts } from "visual/redux/actions2";
+import { fontsSelector } from "visual/redux/selectors";
+import { pendingRequest } from "visual/utils/api";
 import {
   getGoogleFontDetails,
   getGoogleFonts,
   getGroupFontsById
 } from "visual/utils/fonts";
-import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
-import { pendingRequest } from "visual/utils/api";
-import { Fields } from "visual/component/Prompts/common/GlobalApps/StepsView/Fields";
 import { t } from "visual/utils/i18n";
 
 class GoogleConnect extends Component {
@@ -112,15 +112,15 @@ class GoogleConnect extends Component {
     const { selectedFont, prevLoading, nextLoading, error } = this.state;
 
     const fonts = app.data.fonts
-      .filter(font => {
+      .filter((font) => {
         const { id } = getGoogleFontDetails(font);
 
-        return !this.usedFonts.some(uFont => {
+        return !this.usedFonts.some((uFont) => {
           const { id: uFontId, deleted } = getGoogleFontDetails(uFont);
           return deleted !== true && uFontId === id;
         });
       })
-      .map(font => ({
+      .map((font) => ({
         value: font.family,
         label: font.family
       }));
@@ -132,7 +132,7 @@ class GoogleConnect extends Component {
         value: selectedFont
       }
     ];
-    const description = (
+    const descriptions = (
       <Fragment>
         {t("Tip: You can browse the Google font library")}{" "}
         <a
@@ -152,7 +152,7 @@ class GoogleConnect extends Component {
         {...app}
         data={data}
         headTitle={t("ADD GOOGLE FONT")}
-        description={description}
+        descriptions={descriptions}
         prevLoading={prevLoading}
         nextLoading={nextLoading}
         error={error}
@@ -164,7 +164,7 @@ class GoogleConnect extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fonts: fontsSelector(state)
 });
 const mapDispatchToProps = {

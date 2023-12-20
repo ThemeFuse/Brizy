@@ -22,6 +22,22 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "visual/utils/style2/types";
 import { styleColor } from "../style2/styleColor";
 
+export function cssStyleElementEcwidCartParentBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "parentBg" });
+}
+
+export function cssStyleElementEcwidCartParentBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "parent" });
+}
+
 // Style Title
 export function cssStyleElementEcwidCartTitleColor({
   v,

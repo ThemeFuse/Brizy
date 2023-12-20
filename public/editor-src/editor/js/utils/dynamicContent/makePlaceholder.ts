@@ -1,5 +1,6 @@
 import { mPipe } from "fp-utilities";
 import { Base64 } from "js-base64";
+import { escape } from "underscore";
 import * as Str from "visual/utils/reader/string";
 import { isPlaceholderStart } from "./common";
 import {

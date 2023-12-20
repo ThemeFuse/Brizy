@@ -1,20 +1,21 @@
-import React, { Component, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
+import React, { Component, useEffect, useRef, useState } from "react";
 import _ from "underscore";
-import Config from "visual/global/Config";
-import Fixed from "visual/component/Prompts/Fixed";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import SmartGrid from "visual/component/Prompts/common/SmartGrid";
 import EditorIcon from "visual/component/EditorIcon";
 import { PromiseComponent } from "visual/component/PromiseComponent";
+import Fixed from "visual/component/Prompts/Fixed";
 import { loadFonts } from "visual/component/Prompts/PromptIcon/utils";
+import SmartGrid from "visual/component/Prompts/common/SmartGrid";
 import {
-  getTypes,
   getCategories,
   getIconClassName,
-  getIcons
+  getIcons,
+  getTypes
 } from "visual/config/icons";
+import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
 
 const TYPES = getTypes();
 
@@ -32,7 +33,7 @@ export default class PromptIcon extends Component {
   };
 
   state = {
-    typeId: (TYPES.find(t => t.name === this.props.type) ?? TYPES[0]).id,
+    typeId: (TYPES.find((t) => t.name === this.props.type) ?? TYPES[0]).id,
     categoryId: "*",
     search: ""
   };
@@ -48,7 +49,7 @@ export default class PromptIcon extends Component {
     }
   }
 
-  onIconClick = icon => {
+  onIconClick = (icon) => {
     this.props.onClose();
 
     // leave a little breathing room for the browser
@@ -58,7 +59,7 @@ export default class PromptIcon extends Component {
   };
 
   renderTabs() {
-    const tabs = TYPES.map(item => (
+    const tabs = TYPES.map((item) => (
       <div
         key={item.id}
         className={classNames("brz-ed-popup-tab-item", {
@@ -69,7 +70,9 @@ export default class PromptIcon extends Component {
         <div className="brz-ed-popup-tab-icon">
           <EditorIcon icon={item.icon} />
         </div>
-        <div className="brz-ed-popup-tab-name">{item.title}</div>
+        <div className="brz-ed-popup-tab-name" title={item.title}>
+          {item.title}
+        </div>
       </div>
     ));
 
@@ -87,7 +90,7 @@ export default class PromptIcon extends Component {
       {
         id: "*",
         name: "all",
-        title: "All Categories"
+        title: t("All Categories")
       },
       ...getCategories(typeId)
     ];
@@ -100,21 +103,23 @@ export default class PromptIcon extends Component {
             defaultValue={categoryId}
             maxItems={10}
             itemHeight={30}
-            onChange={id => this.setState({ categoryId: id })}
+            onChange={(id) => this.setState({ categoryId: id })}
           >
-            {categories.map(({ id, title }) => (
-              <SelectItem key={id} value={id}>
-                {title}
-              </SelectItem>
-            ))}
+            {categories.map(({ id, title }) => {
+              return (
+                <SelectItem key={id} value={id}>
+                  {title}
+                </SelectItem>
+              );
+            })}
           </Select>
         </div>
         <div className="brz-ed-popup__search">
           <input
             type="text"
             className="brz-input brz-ed-popup__input"
-            placeholder="Enter Search Keyword"
-            onChange={e =>
+            placeholder={t("Enter Search Keyword")}
+            onChange={(e) =>
               this.setState({
                 search: e.target.value
               })
@@ -163,8 +168,8 @@ export default class PromptIcon extends Component {
               </div>
               <div className="brz brz-ed-popup-icons__grid">
                 <PromiseComponent
-                  getPromise={() => getIcons(getTypes().map(t => t.id))}
-                  renderResolved={icons => {
+                  getPromise={() => getIcons(getTypes().map((t) => t.id))}
+                  renderResolved={(icons) => {
                     const filteredIcons = this.filterIcons(icons);
 
                     return (
@@ -190,7 +195,7 @@ export default class PromptIcon extends Component {
 function IconGrid({ icons, value, onChange }) {
   const [gridSize, setGridSize] = useState(null);
   const node = useRef(null);
-  const activeIconIndex = icons.findIndex(icon => icon.name === value.name);
+  const activeIconIndex = icons.findIndex((icon) => icon.name === value.name);
   const rowCount = Math.floor(icons.length / 8) + 1;
   const activeRowIndex = Math.floor(activeIconIndex / 8);
   const prettyRowIndex = activeRowIndex === 0 ? 0 : activeRowIndex - 1;

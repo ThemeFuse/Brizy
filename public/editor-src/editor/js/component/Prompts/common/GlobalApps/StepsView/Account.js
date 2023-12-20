@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
-import EditorIcon from "visual/component/EditorIcon";
+import _ from "underscore";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
+import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../Button";
 
@@ -41,7 +41,7 @@ class Account extends Component {
         {name ? name : `Account ${id}`}
         {id === usedAccount && completed && (
           <div
-            title="Disconnect"
+            title={t("Disconnect")}
             className="brz-ed-popup-integrations--delete"
             onClick={onDisconnect}
           >

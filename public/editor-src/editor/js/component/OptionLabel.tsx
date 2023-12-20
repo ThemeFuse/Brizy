@@ -31,7 +31,7 @@ export const OptionLabel = ({
         <EditorIcon className={"brz-ed-option__label__icon"} icon={icon} />
       ) : null}
       {label ? (
-        <span className={labelClassName}>
+        <span title={label} className={labelClassName}>
           {/*Prevent CSS from braking words on hyphen character*/}
           {label?.replace("-", "\u2011")}
         </span>

@@ -3,6 +3,7 @@
 
 // --- Input Control
 .brz-ed-control__input2 {
+
   input {
     font-family: $default-font-family;
     font-size: $control-font-size;
@@ -47,14 +48,14 @@
   }
 
   &--large input {
-    max-width: $control__lg-width;
+   width: $control__lg-width;
   }
 
   &--medium input {
-    max-width: $control__md-width;
+    width: $control__md-width;
   }
 
   &--short input {
-    max-width: $control__sm-width;
+    width: $control__sm-width;
   }
 }

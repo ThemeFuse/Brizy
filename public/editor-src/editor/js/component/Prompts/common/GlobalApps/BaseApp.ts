@@ -15,6 +15,10 @@ export type BaseAppElementTypes = Omit<
 type BaseAppSteps = undefined | ElementType | BaseAppElementTypes;
 
 class BaseApp {
+  static disconnect: BaseAppSteps = undefined;
+  static client: BaseAppSteps = undefined;
+  static upload: BaseAppSteps = undefined;
+  static variation: BaseAppSteps = undefined;
   static connect: BaseAppSteps = undefined;
   static account: BaseAppSteps = undefined;
   static fields: BaseAppSteps = undefined;

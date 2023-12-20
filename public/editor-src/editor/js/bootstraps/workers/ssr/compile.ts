@@ -1,33 +1,7 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, PageCommon, Project } from "visual/types";
-import { MValue } from "visual/utils/value";
 import { assetManager } from "./assetManager";
+import { GetCompileHTML, GlobalBlockOutput } from "./types";
 import { getDemoPage } from "./utils/demo";
-import { compile } from "./worker";
-
-interface Data {
-  project: Project;
-  page: PageCommon;
-  globalBlocks?: Array<{ uid: string; block: GlobalBlock }>;
-  config: ConfigCommon;
-}
-
-interface Output {
-  html: string;
-  styles: Array<string>;
-  scripts: Array<string>;
-}
-
-interface GlobalBlockOutput extends Output {
-  uid: string;
-}
-
-type Compile = {
-  page: MValue<Output>;
-  globalBlocks?: Array<GlobalBlockOutput>;
-};
-
-type GetCompileHTML = (d: Data) => Promise<Compile>;
+import { getHTML } from "./utils/getHTML";
 
 export const getCompileHTML: GetCompileHTML = async ({
   page,
@@ -42,18 +16,19 @@ export const getCompileHTML: GetCompileHTML = async ({
   }
 
   if (auth.token === "demo") {
-    const pageHTML = await compile({
+    const pageHTML = await getHTML({
+      type: "page",
       config,
       project,
-      page: getDemoPage(),
-      globalBlocks: {}
+      page: getDemoPage()
     });
+    const compile = pageHTML.compile;
 
-    if (pageHTML?.html) {
-      const asset = assetManager(pageHTML.assets);
+    if (compile) {
+      const asset = assetManager(compile.assets);
       return {
         page: {
-          html: pageHTML.html,
+          html: compile.html,
           scripts: asset.scripts,
           styles: asset.styles
         }
@@ -63,51 +38,39 @@ export const getCompileHTML: GetCompileHTML = async ({
     return { page: undefined };
   }
 
-  const promises = [
-    compile({
-      config,
-      page,
-      project,
-      globalBlocks: {}
-    })
-  ];
+  const pageCompile = await getHTML({ type: "page", config, page, project });
+  const globalBlocksHTML: Array<GlobalBlockOutput> = [];
 
-  globalBlocks.forEach((block) => {
-    promises.push(
-      compile({
+  for (const block of globalBlocks) {
+    try {
+      const globalBlock = await getHTML({
+        type: "globalBlock",
         config,
-        page: { ...page, data: { items: [block.block.data] } },
         project,
-        globalBlocks: {}
-      })
-    );
-  });
+        block
+      });
 
-  const [_pageHTML, ..._globalBlocksHTML] = await Promise.all(promises);
-  const globalBlocksHTML: Array<GlobalBlockOutput> = _globalBlocksHTML.reduce(
-    (acc, gb) => {
-      if (gb?.html) {
-        const asset = assetManager(gb.assets);
-        const block = {
-          uid: "",
-          html: gb.html,
+      if (globalBlock.compile) {
+        const asset = assetManager(globalBlock.compile.assets);
+        const data: GlobalBlockOutput = {
+          id: block.id,
+          html: globalBlock.compile.html,
           scripts: asset.scripts,
           styles: asset.styles
         };
-        return [...acc, block];
+        globalBlocksHTML.push(data);
       }
-
-      return acc;
-    },
-    [] as Array<GlobalBlockOutput>
-  );
+    } catch (e) {
+      console.error("Fail to compile global block", e);
+    }
+  }
 
   let pageHTML = undefined;
 
-  if (_pageHTML?.html) {
-    const asset = assetManager(_pageHTML.assets);
+  if (pageCompile.compile?.html) {
+    const asset = assetManager(pageCompile.compile.assets);
     pageHTML = {
-      html: _pageHTML.html,
+      html: pageCompile.compile.html,
       scripts: asset.scripts,
       styles: asset.styles
     };

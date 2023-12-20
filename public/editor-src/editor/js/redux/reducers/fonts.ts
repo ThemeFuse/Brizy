@@ -26,7 +26,8 @@ export const fonts: RFonts = (state = {}, action) => {
     case ActionTypes.IMPORT_TEMPLATE:
     case ActionTypes.IMPORT_KIT:
     case "ADD_BLOCK":
-    case "ADD_GLOBAL_BLOCK": {
+    case "ADD_GLOBAL_BLOCK":
+    case "ADD_GLOBAL_POPUP": {
       const { fonts } = action.payload;
 
       if (!fonts || fonts.length === 0) {

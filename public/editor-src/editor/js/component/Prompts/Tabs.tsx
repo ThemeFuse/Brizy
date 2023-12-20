@@ -48,7 +48,7 @@ export function Tabs<T extends Key>({
                   <div className="brz-ed-popup-tab-icon">
                     <EditorIcon icon={icon} />
                   </div>
-                  <div className="brz-ed-popup-tab-name">{title}</div>
+                  <div className="brz-ed-popup-tab-name" title={title}>{title}</div>
                 </div>
               );
             })}

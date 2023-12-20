@@ -14,12 +14,13 @@ import {
   StoriesWithThumbs,
   TemplateWithPageProps,
   TemplateWithThumbs
-} from "visual/global/Config/types/configs/templates";
+} from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
 import {
   defaultLayoutsMeta,
   defaultStoriesData,
   defaultStoriesMeta
 } from "visual/utils/api";
+import { isBlock } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
@@ -30,7 +31,6 @@ import { Data as ThumbnailData } from "../common/ThumbnailGrid";
 import { PromptBlockTemplate } from "../types";
 import Details from "./Details";
 import { Category, Filter, Page, isStoryData } from "./types";
-import { isBlock } from "visual/utils/api/common";
 
 interface Data extends ThumbnailData, TemplateWithPageProps {}
 
@@ -238,7 +238,7 @@ export default class List extends Component<Props, State> {
 
             {showSidebar && (
               <Sidebar>
-                <SidebarOption title="CATEGORIES">
+                <SidebarOption title={t("CATEGORIES")}>
                   <SidebarList
                     lists={categories}
                     value={currentFilter.category}

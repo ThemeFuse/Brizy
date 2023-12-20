@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import {
   Account as ViewAccount,
   Disconnect as ViewDisconnect
 } from "../../common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api";
+import { updateIntegration } from "../api";
 
 class Account extends Component {
   static contextType = Context;
@@ -30,7 +30,7 @@ class Account extends Component {
     return app.usedAccount || accounts;
   }
 
-  handleActive = active => {
+  handleActive = (active) => {
     this.setState({ active });
   };
 
@@ -171,6 +171,10 @@ class Account extends Component {
   render() {
     const { app } = this.context;
 
+    const disconnectDescriptions = `${t(
+      "Subscribers are automatically synced to your"
+    )} ${app.title}`;
+
     return this.state.mode === "account" ? (
       <ViewAccount
         {...app}
@@ -186,7 +190,7 @@ class Account extends Component {
       <ViewDisconnect
         {...app}
         {...this.state}
-        descriptions={`Subscribers are automatically synced to your ${app.title} list`}
+        descriptions={disconnectDescriptions}
         onPrev={this.handleAccountMode}
         onNext={this.handleDisconnect}
       />

@@ -305,7 +305,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
       type: "popover-dev",
       devices: "desktop",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -438,7 +438,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   option: {
                     id: "linkExternal",
                     type: "inputText-dev",
-                    placeholder: "http://"
+                    placeholder: "http://",
+                    config: {
+                      size: "medium"
+                    }
                   }
                 },
                 {

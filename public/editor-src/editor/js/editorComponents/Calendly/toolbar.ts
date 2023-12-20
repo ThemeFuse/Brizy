@@ -32,7 +32,10 @@ export function getItems({
           id: "link",
           type: "inputText-dev",
           label: t("Link"),
-          placeholder: "https://calendly.com/user/event"
+          placeholder: "https://calendly.com/user/event",
+          config: {
+            size: "large"
+          }
         }
       ]
     },
@@ -41,7 +44,7 @@ export function getItems({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

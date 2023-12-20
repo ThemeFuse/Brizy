@@ -157,7 +157,7 @@
     font-size: $options__item-font-size;
     color: $options__label-color;
     font-weight: 600;
-    margin-right: 17px;
+    margin-right: 10px;
     display: flex;
     line-height: 1.3;
     word-break: normal;
@@ -183,14 +183,6 @@
   &.brz-ed-grid:last-child {
     padding-top: 0;
     padding-bottom: 0;
-  }
-
-  &-type__slider-dev {
-    .brz-ed-option__label .brz-ed-option__label__text {
-      &--small {
-        white-space: nowrap;
-      }
-    }
   }
 }
 
@@ -219,16 +211,21 @@
   }
 }
 
+.brz-ed-option__label span{
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
 .brz-ed-option__label {
   flex: 1 1 auto;
 
   &__icon {
     font-size: 16px;
     color: $right_sidebar__icon-color;
-  }
-
-  &__text {
-    word-break: keep-all;
   }
 
   // Cannot use `&__icon + &__text` as `.brz-ed-option__label__text` !== `&__text`

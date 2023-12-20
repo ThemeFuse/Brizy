@@ -2,7 +2,7 @@ import { ComponentType } from "react";
 import {
   SavedBlockAPIMeta,
   SavedLayoutAPIMeta
-} from "visual/global/Config/types/configs/ConfigCommon";
+} from "visual/global/Config/types/configs/blocks/SavedBlocks";
 import { FontsPayload } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { BlockMetaType, ExtraFontStyle } from "visual/types";

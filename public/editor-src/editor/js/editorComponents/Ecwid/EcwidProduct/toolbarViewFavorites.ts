@@ -101,7 +101,7 @@ export function getItems({
       type: "popover-dev",
       position: 30,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

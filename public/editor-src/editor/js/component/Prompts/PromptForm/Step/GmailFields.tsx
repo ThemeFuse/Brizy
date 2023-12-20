@@ -25,8 +25,9 @@ const apiKeys = [
     name: "emailTo",
     title: t("Email To"),
     required: true,
-    helper: `<p class="brz-p">If you need to have multiple emails you can separate them by commas:</p>
-             <p class="brz-p"><span class="brz-span">me@email.com,</span> <span class="brz-span">hi@email.com</span></p>`
+    helper: `<p class="brz-p">${t(
+      "If you need to have multiple emails you can separate them by commas"
+    )}:</p><p class="brz-p"><span class="brz-span">me@email.com,</span> <span class="brz-span">hi@email.com</span></p>`
   },
   {
     name: "subject",
@@ -60,11 +61,11 @@ const apiKeys = [
     type: "search",
     multiple: true,
     choices: [
-      { title: "TIME", value: "time" },
-      { title: "Page URL", value: "pageUrl" },
-      { title: "User Agent", value: "userAgent" },
-      { title: "Remote IP", value: "remoteIp" },
-      { title: "Credit", value: "credit" }
+      { title: t("TIME"), value: "time" },
+      { title: t("Page URL"), value: "pageUrl" },
+      { title: t("User Agent"), value: "userAgent" },
+      { title: t("Remote IP"), value: "remoteIp" },
+      { title: t("Credit"), value: "credit" }
     ]
   },
   { name: "username", title: t("Username"), required: true },

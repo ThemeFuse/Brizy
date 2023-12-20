@@ -2,7 +2,7 @@ import classnames from "classnames";
 import produce from "immer";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import { connect, ConnectedProps } from "react-redux";
+import { ConnectedProps, connect } from "react-redux";
 import { noop } from "underscore";
 import { Alert } from "visual/component/Alert";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
@@ -13,7 +13,6 @@ import { validateEmail } from "visual/component/Prompts/common/utils";
 import Config, { isWp } from "visual/global/Config";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
 import { pendingRequest } from "visual/utils/api";
-import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
 import { checkCompatibility, recoveryEmail, signIn } from "./api";
@@ -30,7 +29,7 @@ interface SignInState {
     password: string;
     recoverEmail: string;
   };
-  data: null | { img: string; signInDescription: string };
+  data: null | { signInDescription: string };
   notice: null | { message: string; type: "error" | "success" };
 }
 
@@ -78,13 +77,11 @@ class SignIn extends Component<SingInProps, SignInState> {
   };
 
   async componentDidMount(): Promise<void> {
-    const url = assetUrl("integrations.json");
-    const r = await fetch(url);
-    const { cloudAuthorization } = await r.json();
     const { onLoading } = this.props;
+    const { Integrations } = await import("visual/config/integrations");
 
     this.setState({
-      data: cloudAuthorization,
+      data: Integrations.cloudAuthorization,
       loading: false
     });
 

@@ -12,10 +12,6 @@ export {
   canUseConditionInTemplates,
   getAllowedGBIds
 } from "./getAllowedGBIds";
-export {
-  isAllRule,
-  isCollectionItemRule,
-  isCollectionTypeRule
-} from "./guards";
 export { isPopup } from "./isPopup";
 export { placeholderBlockThumbnailUrl } from "./placeholderBlockThumbnailUrl";
+export { createGlobalBlockSymbol } from "./createGlobalBlockSymbol";

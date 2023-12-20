@@ -16,14 +16,13 @@ import {
   pageSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
+import { Block, GlobalBlock, Screenshot } from "visual/types";
+import { isGlobalPopup } from "visual/types/utils";
 import {
-  Block,
-  GlobalBlock,
-  GlobalBlockNormal,
-  GlobalBlockPopup,
-  Screenshot
-} from "visual/types";
-import { createGlobalBlock, pendingRequest } from "visual/utils/api";
+  createGlobalBlock,
+  createGlobalPopup,
+  pendingRequest
+} from "visual/utils/api";
 import { changeRule, isPopup } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { getBlockData, setIds } from "visual/utils/models";
@@ -108,59 +107,47 @@ export const GlobalBlockOption: Component = ({
           globalBlock = changeRule(globalBlock, true, page);
         }
 
-        await createGlobalBlock(globalBlock)
-          .then((r): void => {
-            if (!(r && r.data)) {
-              throw r;
-            }
+        if (isGlobalPopup(globalBlock)) {
+          try {
+            const popup = await createGlobalPopup(globalBlock);
 
-            PortalLoading.close(loading);
+            if (popup.data) {
+              const popupId = blockType === "popup" && getOpenedPopupId();
 
-            switch (blockType) {
-              case "popup":
-              case "externalPopup": {
-                const popupId = blockType === "popup" && getOpenedPopupId();
+              dispatch(makePopupToGlobalBlock(globalBlock));
+              popupId && openPopupById(popupId);
 
-                dispatch(
-                  makePopupToGlobalBlock(globalBlock as GlobalBlockPopup)
-                );
-                popupId && openPopupById(popupId);
-
-                if (blockType === "externalPopup") {
-                  openPromptCondition({ type: "popup", _id });
-                }
-                break;
+              if (blockType === "externalPopup") {
+                openPromptCondition({ type: "popup", _id });
               }
-              case "normal": {
-                dispatch(
-                  makeNormalToGlobalBlock(globalBlock as GlobalBlockNormal)
-                );
-                openPromptCondition({ type: "block", _id });
-                break;
-              }
+            } else {
+              switchKey.current = uuid(4);
+              ToastNotification.error(t("Could not Create Global Popup"));
             }
-          })
-          .catch((err: unknown): void => {
-            PortalLoading.close(loading);
-
+          } catch (e) {
+            console.error(e);
             switchKey.current = uuid(4);
+            ToastNotification.error(t("Could not Create Global Popup"));
+          }
+        } else {
+          try {
+            const block = await createGlobalBlock(globalBlock);
 
-            switch (blockType) {
-              case "popup":
-              case "externalPopup": {
-                ToastNotification.error(t("Could not Create Global Popup"));
-                break;
-              }
-              case "normal": {
-                ToastNotification.error(t("Could not Create Global Block"));
-                break;
-              }
+            if (block.data) {
+              dispatch(makeNormalToGlobalBlock(globalBlock));
+              openPromptCondition({ type: "block", _id });
+            } else {
+              switchKey.current = uuid(4);
+              ToastNotification.error(t("Could not Create Global Block"));
             }
+          } catch (e) {
+            console.error(e);
+            switchKey.current = uuid(4);
+            ToastNotification.error(t("Could not Create Global Block"));
+          }
+        }
 
-            if (process.env.NODE_ENV === "development") {
-              console.error(err);
-            }
-          });
+        PortalLoading.close(loading);
       }
     } else {
       await pendingRequest();

@@ -10,12 +10,13 @@ import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { css } from "visual/utils/cssStyle";
-import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import * as sidebarButton from "../sidebarButton";
+import * as sidebarDisable from "../sidebarDisable";
+import * as toolbarFooter from "../toolbarFooter";
+import * as toolbarSKU from "../toolbarSKU";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendParent from "./sidebar";
-import * as sidebarButton from "./sidebarButton";
-import * as sidebarDisable from "./sidebarDisable";
 import * as sidebarLabel from "./sidebarLabel";
 import * as sidebarPagination from "./sidebarPagination";
 import * as sidebarSortingOption from "./sidebarSortingOption";
@@ -24,10 +25,8 @@ import * as toolbarExtendParent from "./toolbar";
 import * as toolbarButton from "./toolbarButton";
 import * as toolbarCountPages from "./toolbarCountPages";
 import * as toolbarFeaturedProducts from "./toolbarFeaturedProducts";
-import * as toolbarFooter from "./toolbarFooter";
 import * as toolbarGallery from "./toolbarGallery";
 import * as toolbarPagination from "./toolbarPagination";
-import * as toolbarSKU from "./toolbarSKU";
 import * as toolbarShopTitle from "./toolbarShopTitle";
 import * as toolbarSortingOption from "./toolbarSortingOption";
 import * as toolbarSubtitle from "./toolbarSubtitle";
@@ -424,13 +423,10 @@ export class EcwidProducts extends EditorComponent<Value> {
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
           className="brz-ecwid-products"
-          {...makeDataAttr({ name: "store-id", value: storeId })}
-          {...makeDataAttr({
-            name: "storefront",
-            value: encodeURIComponent(
-              JSON.stringify(valueToEciwdConfigProducts(v))
-            )
-          })}
+          data-store-id={storeId}
+          data-storefront={encodeURIComponent(
+            JSON.stringify(valueToEciwdConfigProducts(v))
+          )}
         />
       </Wrapper>
     );

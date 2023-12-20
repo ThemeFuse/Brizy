@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import React, {
   ReactElement,
   Reducer,
@@ -140,11 +141,15 @@ export function Gallery<I extends Image.Image>({
 
   const canDeleteLast = config?.canDeleteLast ?? true;
   const _onRemove = canDeleteLast || items.length > 1 ? onRemove : undefined;
+  const className = classnames({
+    "brz-ed-control__gallery--fixed": items.length
+  });
 
   return (
     <>
       {label}
       <Control<number>
+        className={className}
         onSort={onSort}
         onAdd={onAdd}
         items={items.map(Item.toGalleryItem)}

@@ -5,6 +5,8 @@
     "textPopulationEntityType": "",
     "textPopulationEntityId": "",
 
+    "showOnDesktop": "on",
+
     "type": "link",
 
     "iconName": "tail-right",

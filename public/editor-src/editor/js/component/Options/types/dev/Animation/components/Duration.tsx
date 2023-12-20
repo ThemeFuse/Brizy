@@ -1,12 +1,12 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
+import {
+  Props as NSProps,
+  NumberSlider
+} from "visual/component/Controls/NumberSlider";
+import { OptionLabel } from "visual/component/OptionLabel";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
-import {
-  NumberSlider,
-  Props as NSProps
-} from "visual/component/Controls/NumberSlider";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OptionLabel } from "visual/component/OptionLabel";
 
 export interface Props {
   value: number;
@@ -20,11 +20,12 @@ export const Duration = ({ value, onChange }: Props): ReactElement => {
     () => ({ number: value / 1000, unit: "s" }),
     [value]
   );
-  const _onChange = useCallback(v => onChange(v.number * 1000), [onChange]);
+  const _onChange = useCallback((v) => onChange(v.number * 1000), [onChange]);
   return (
     <OptionWrapper display={"inline"} className={"brz-ed-option"}>
       <OptionLabel label={t("Duration")} />
       <NumberSlider<"s">
+        className={"brz-ed__control--number-slider--medium"}
         value={v}
         onChange={_onChange}
         step={0.1}

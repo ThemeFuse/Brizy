@@ -58,19 +58,17 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "ADD_BLOCK": {
       return state;
     }
+
     case "ADD_GLOBAL_BLOCK": {
       const { _id } = action.payload.block.value;
 
-      if (!isPopup(state[_id].data)) {
-        return {
-          ...state,
-          [_id]: changeRule(state[_id], true, allState?.page)
-        };
-      }
-
-      return state;
+      return {
+        ...state,
+        [_id]: changeRule(state[_id], true, allState?.page)
+      };
     }
-    case "MAKE_POPUP_TO_GLOBAL_BLOCK": {
+
+    case "MAKE_POPUP_TO_GLOBAL_POPUP": {
       const { id, data, status, meta, rules, position } = action.payload;
 
       return produce(state, (draft) => {
@@ -84,7 +82,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
         };
       });
     }
-    case "MAKE_NORMAL_TO_GLOBAL_BLOCK": {
+    case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
       const { id, data, status, meta, rules, position } = action.payload;
 
       return produce(state, (draft) => {
@@ -114,7 +112,9 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       }
 
       return produce(state, (draft) => {
-        draft[id].title = title;
+        if (title.length > 0) {
+          draft[id].title = title;
+        }
         draft[id].tags = tags;
       });
     }
@@ -136,7 +136,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       return state;
     }
 
-    case "MAKE_GLOBAL_TO_NORMAL_BLOCK": {
+    case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { fromBlockId } = action.payload;
 
       const globalBlock = changeRule(state[fromBlockId], false, allState?.page);

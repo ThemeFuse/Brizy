@@ -1,4 +1,3 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { checkValue2 } from "visual/utils/checkValue";
 import {
   cssStyleDisplayBlock,
@@ -1298,7 +1297,7 @@ export const cssStyleElementTimelineHorizontalStyle3GridTemplateColumns = ({
   const style = dvv("timelineStyle");
 
   if (isStyle3Horizontal(orientation, style)) {
-    const itemsNumber = (v.items as ElementModel[]).length;
+    const itemsNumber = v.items?.length ?? 1;
     const columnsNumber = dvv("tabsCount");
 
     return `grid-template-columns: repeat(${itemsNumber}, ${

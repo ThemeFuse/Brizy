@@ -8,8 +8,8 @@ import { objectTraverse2 } from "visual/utils/object";
 import {
   COPY_ELEMENT,
   HYDRATE,
-  MAKE_NORMAL_TO_GLOBAL_BLOCK,
-  MAKE_POPUP_TO_GLOBAL_BLOCK,
+  MAKE_BLOCK_TO_GLOBAL_BLOCK,
+  MAKE_POPUP_TO_GLOBAL_POPUP,
   REMOVE_BLOCK,
   REMOVE_BLOCKS,
   UPDATE_ERROR,
@@ -183,8 +183,8 @@ export function screenshots(
         draft[blockId] = data;
       });
     }
-    case MAKE_POPUP_TO_GLOBAL_BLOCK:
-    case MAKE_NORMAL_TO_GLOBAL_BLOCK: {
+    case MAKE_POPUP_TO_GLOBAL_POPUP:
+    case MAKE_BLOCK_TO_GLOBAL_BLOCK: {
       const {
         data: {
           value: { _id }
@@ -266,7 +266,6 @@ export default historyReducerEnhancer(
       "currentStyleId",
       "currentStyle",
       "extraFontStyles",
-      "globalBlocksUpdates",
       "storeWasChanged"
     ],
     onBeforeUpdate: (state, action, history) => {

@@ -13,7 +13,7 @@ class Brizy_Editor_Editor_ModuleGroups_SingleProvider implements Brizy_Editor_Ed
     public function collect($context)
     {
         return [
-            new Brizy_Editor_Editor_ModuleGroups_ModuleGroup('single', [
+            new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'single', 'brizy' ), [
                 "WPFeaturedImage",
                 "PostTitle",
                 "PostExcerpt",

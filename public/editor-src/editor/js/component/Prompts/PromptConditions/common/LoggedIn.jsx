@@ -2,6 +2,7 @@ import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
 
 export default function LoggedIn(props) {
   const { value: triggerValue = {}, onChange = () => {} } = props;
@@ -18,7 +19,7 @@ export default function LoggedIn(props) {
           className="brz-control__select--light"
           itemHeight={30}
           defaultValue={triggerValue.user}
-          onChange={value => onChange({ ...triggerValue, user: value })}
+          onChange={(value) => onChange({ ...triggerValue, user: value })}
         >
           {availableRoles.map(({ role, name }) => (
             <SelectItem key={role} value={role}>
@@ -39,10 +40,10 @@ export default function LoggedIn(props) {
         onChange={handleValueChange}
       >
         <SelectItem key="all" value="all">
-          All users
+          {t("All users")}
         </SelectItem>
         <SelectItem key="custom" value="custom">
-          Custom
+          {t("Custom")}
         </SelectItem>
       </Select>
       {content}

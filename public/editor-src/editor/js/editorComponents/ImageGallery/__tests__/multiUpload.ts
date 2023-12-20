@@ -1,4 +1,4 @@
-import type { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModelType } from "visual/component/Elements/Types";
 import {
   getPatchExtraData,
   imagesSrc,
@@ -23,7 +23,7 @@ const patchItemUid2 = "ffd3016adba33fba.jpg";
 
 const patchItemCommonSizes = { imageWidth: 300, imageHeight: 242 };
 
-const mockImage: ElementModel = {
+const mockImage: ElementModelType = {
   type: "Image",
   value: {
     bgColor: "#000000",
@@ -44,17 +44,17 @@ const commonSizes = {
   height: 242
 };
 
-const mockImageOnlyImageSrc: ElementModel = {
+const mockImageOnlyImageSrc: ElementModelType = {
   type: "Image",
   value: { imageSrc: fakeImageUrl }
 };
 
-const mockImageWithoutImageSrc: ElementModel = {
+const mockImageWithoutImageSrc: ElementModelType = {
   type: "Image",
   value: { imageSrc: undefined }
 };
 
-const mockImageWithColors: ElementModel = {
+const mockImageWithColors: ElementModelType = {
   type: "Image",
   value: {
     bgColor: "#000000",
@@ -62,7 +62,7 @@ const mockImageWithColors: ElementModel = {
   }
 };
 
-const mockImageWithColorsRedBlue: ElementModel = {
+const mockImageWithColorsRedBlue: ElementModelType = {
   type: "Image",
   value: {
     bgColor: "red",
@@ -70,9 +70,10 @@ const mockImageWithColorsRedBlue: ElementModel = {
   }
 };
 
-const usedPlaceholderImage: ElementModel = {
+const usedPlaceholderImage: ElementModelType = {
   type: "Image",
   value: {},
+  // @ts-expect-error: Temporary
   wasUsed: true
 };
 
@@ -125,7 +126,7 @@ const patchItem2 = {
   height: 500
 };
 
-const emptyItems: ElementModel[] = [];
+const emptyItems: ElementModelType[] = [];
 
 // Test "notUsedPlaceholders"
 describe("Testing utils function that return not used placeholders", () => {

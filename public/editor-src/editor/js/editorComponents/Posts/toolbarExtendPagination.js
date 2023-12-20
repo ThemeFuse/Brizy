@@ -1,11 +1,11 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { HOVER, NORMAL, ACTIVE } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const { hex: paginationColorHex } = getOptionColorHexByPalette(
     dvv("paginationColorHex"),
     dvv("paginationColorPalette")
@@ -37,7 +37,7 @@ export function getItems({ v, device }) {
       type: "popover-dev",
       config: {
         title: t("Colors"),
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor: hexToRgba(

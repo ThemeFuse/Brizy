@@ -113,7 +113,11 @@ export default class CreateList extends Component {
       );
     });
 
-    return <Scrollbar autoHeightMax="255px" theme="light">{fields}</Scrollbar>;
+    return (
+      <Scrollbar autoHeightMax="280px" theme="light">
+        {fields}
+      </Scrollbar>
+    );
   }
 
   render() {

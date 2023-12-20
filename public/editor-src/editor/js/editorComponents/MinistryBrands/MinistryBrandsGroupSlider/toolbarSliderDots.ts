@@ -20,7 +20,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       devices: "desktop",
       config: {
         title: t("Bg"),
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor: hexToRgba(
