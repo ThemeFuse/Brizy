@@ -43,7 +43,10 @@ export function getItems({ v, device }) {
               type: "inputText-dev",
               disabled: dvv("logoutRedirectType") !== "custom",
               devices: "desktop",
-              placeholder: "http://"
+              placeholder: "http://",
+              config: {
+                size: "medium"
+              }
             }
           ]
         }
@@ -72,7 +75,7 @@ export function getItems({ v, device }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

@@ -37,13 +37,14 @@ import { blockThumbnailData } from "visual/utils/blocks";
 import { IS_WP } from "visual/utils/env";
 import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
+import * as Str from "visual/utils/string/specs";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts,
   getUsedStylesFonts
 } from "visual/utils/traverse";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
-import { getError, isBlock, isLayout, isPopup } from "../common/utils";
+import { isBlock, isLayout, isPopup } from "../common/utils";
 import { BlockTypes } from "../types";
 import Blocks from "./Blocks";
 import { ShowSuccessError } from "./Notification";
@@ -518,8 +519,7 @@ class Library extends Component<
 
       if (!this.unMount) {
         this.setState({ importLoading: false }, () => {
-          const message = getError(e);
-
+          const message = Str.read(e) ?? t("Failed to import saved layouts");
           ToastNotification.error(message);
         });
       }

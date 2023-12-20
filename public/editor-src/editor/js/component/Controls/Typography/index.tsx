@@ -116,7 +116,7 @@ export class Typography extends PureComponent<Props> {
               </div>
             ) : (
               <>
-                <Label>{styleLabel}</Label>
+                <Label title={styleLabel}>{styleLabel}</Label>
                 <FontStyle
                   styles={styles}
                   openSettings={styleOpenSettings}
@@ -128,10 +128,10 @@ export class Typography extends PureComponent<Props> {
           </div>
           <div className="brz-ed__col brz-ed__col-1-2">
             {IS_STORY ? (
-              <Label>{sizeLabel}</Label>
+              <Label title={sizeLabel}>{sizeLabel}</Label>
             ) : (
               <div className="brz-control__typography-suffix">
-                <Label>{sizeLabel}</Label>
+                <Label title={sizeLabel}>{sizeLabel}</Label>
                 <Select2<SizeSuffix>
                   value={sizeSuffix}
                   onChange={this.onFontSizeSuffix}
@@ -155,7 +155,7 @@ export class Typography extends PureComponent<Props> {
             />
           </div>
           <div className="brz-ed__col brz-ed__col-1-2">
-            <Label>{weightLabel}</Label>
+            <Label title={weightLabel}>{weightLabel}</Label>
             <Select2<Weight>
               value={weight}
               onChange={this.onFontWeight}
@@ -170,7 +170,7 @@ export class Typography extends PureComponent<Props> {
             </Select2>
           </div>
           <div className="brz-ed__col brz-ed__col-1-2">
-            <Label>{lineHeightLabel}</Label>
+            <Label title={lineHeightLabel}>{lineHeightLabel}</Label>
             <Stepper
               min={lineHeightMin}
               max={lineHeightMax}
@@ -180,7 +180,7 @@ export class Typography extends PureComponent<Props> {
             />
           </div>
           <div className="brz-ed__col brz-ed__col-1-2">
-            <Label>{letterSpacingLabel}</Label>
+            <Label title={letterSpacingLabel}>{letterSpacingLabel}</Label>
             <Stepper
               min={letterSpacingMin}
               max={letterSpacingMax}

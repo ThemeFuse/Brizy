@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_ArchiveProvider implements Brizy_Editor_E
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'archive', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'archive', 'brizy' ), [
 				"Archive",
 				"PostTitle",
 				"PostExcerpt",

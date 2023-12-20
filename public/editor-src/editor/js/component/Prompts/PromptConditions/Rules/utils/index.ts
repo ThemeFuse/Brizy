@@ -1,16 +1,15 @@
 import { setIn } from "timm";
-
-import {
-  PAGES_GROUP_ID,
-  CATEGORIES_GROUP_ID
-} from "visual/utils/blocks/blocksConditions";
 import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
-import { RuleList } from "../types";
+import {
+  CATEGORIES_GROUP_ID,
+  PAGES_GROUP_ID
+} from "visual/utils/blocks/blocksConditions";
 import {
   isAllRule,
   isCollectionItemRule,
   isCollectionTypeRule
-} from "visual/utils/blocks";
+} from "visual/utils/blocks/guards";
+import { RuleList } from "../types";
 
 export function getRulesListIndexByRule(
   rulesList: RuleList[],
@@ -28,7 +27,7 @@ export function disableAlreadyUsedRules(
   if (rulesList.length === 0) return rulesList;
 
   let newRuleList = rulesList;
-  rules.forEach(rule => {
+  rules.forEach((rule) => {
     if (!isCollectionItemRule(rule)) {
       return;
     }
@@ -72,7 +71,7 @@ export function getUniqRules(rules: Rule[]): Rule[] {
   // for example if "page all" rule was added twice
 
   const rulesAsObject = new Map<string, Rule>();
-  rules.forEach(rule => {
+  rules.forEach((rule) => {
     let ruleKey: string | null = null;
     if (isAllRule(rule)) {
       ruleKey = `type|${rule.type}`;

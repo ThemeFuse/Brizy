@@ -28,7 +28,7 @@ export const FontStyle: FC<Props> = ({
         value={value}
         onChange={onChange}
         editable={false}
-        size="medium"
+        size="auto"
       >
         {styles.map(({ id, title }) => (
           <Item<string> key={id} value={id}>

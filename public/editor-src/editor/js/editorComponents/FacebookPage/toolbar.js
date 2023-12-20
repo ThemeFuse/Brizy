@@ -36,7 +36,10 @@ export function getItems({ v, device, state }) {
                   label: t("Link"),
                   type: "inputText-dev",
                   devices: "desktop",
-                  placeholder: "https://facebook.com/brizy.io"
+                  placeholder: "https://facebook.com/brizy.io",
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "pageTabs",
@@ -96,7 +99,7 @@ export function getItems({ v, device, state }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

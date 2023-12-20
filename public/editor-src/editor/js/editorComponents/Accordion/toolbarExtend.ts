@@ -100,42 +100,42 @@ export function getItems({
                   choices: [
                     {
                       value: "none",
-                      title: "None",
+                      title: t("None"),
                       icon: {
                         name: "nc-none"
                       }
                     },
                     {
                       value: "thin",
-                      title: "Thin",
+                      title: t("Thin"),
                       icon: {
                         name: "nc-down-arrow-thin"
                       }
                     },
                     {
                       value: "heavy",
-                      title: "Heavy",
+                      title: t("Heavy"),
                       icon: {
                         name: "nc-down-arrow-heavy"
                       }
                     },
                     {
                       value: "tail",
-                      title: "Tail",
+                      title: t("Tail"),
                       icon: {
                         name: "nc-down-arrow-tail"
                       }
                     },
                     {
                       value: "filled",
-                      title: "Round",
+                      title: t("Round"),
                       icon: {
                         name: "nc-down-arrow-filled"
                       }
                     },
                     {
                       value: "outline",
-                      title: "Outline",
+                      title: t("Outline"),
                       icon: {
                         name: "nc-down-arrow-outline"
                       }
@@ -205,7 +205,7 @@ export function getItems({
       id: "popoverColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

@@ -2,6 +2,7 @@ import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { t } from "visual/utils/i18n";
 
 const SEARCH_ENGINES = {
   search_engines: "Any Search Engine",
@@ -27,8 +28,8 @@ const SOCIAL_NETWORKS = {
 };
 
 const OTHER = {
-  external: "External Links",
-  internal: "Internal Links"
+  external: t("External Links"),
+  internal: t("Internal Links")
 };
 
 export default function Referrer(props) {
@@ -40,19 +41,19 @@ export default function Referrer(props) {
         className="brz-control__select--light"
         itemHeight={30}
         defaultValue={triggerValue.value}
-        onChange={value => onChange({ ...triggerValue, value })}
+        onChange={(value) => onChange({ ...triggerValue, value })}
       >
         <SelectItem key="show" value="show">
-          Show
+          {t("Show")}
         </SelectItem>
         <SelectItem key="hide" value="hide">
-          Hide
+          {t("Hide")}
         </SelectItem>
         <SelectItem key="regex" value="regex">
-          Regex
+          {t("Regex")}
         </SelectItem>
         <SelectItem key="source" value="source">
-          Source
+          {t("Source")}
         </SelectItem>
       </Select>
       {triggerValue.value === "source" ? (
@@ -62,13 +63,13 @@ export default function Referrer(props) {
             className="brz-control__select--light"
             itemHeight={30}
             defaultValue={triggerValue.type}
-            onChange={type => onChange({ ...triggerValue, type })}
+            onChange={(type) => onChange({ ...triggerValue, type })}
           >
             <SelectItem key="is" value="is">
-              is
+              {t("is")}
             </SelectItem>
             <SelectItem key="is not" value="is not">
-              is not
+              {t("is not")}
             </SelectItem>
           </Select>,
           <Select
@@ -76,25 +77,25 @@ export default function Referrer(props) {
             key="source"
             itemHeight={30}
             defaultValue={triggerValue.source}
-            onChange={value => onChange({ ...triggerValue, source: value })}
+            onChange={(value) => onChange({ ...triggerValue, source: value })}
           >
             <SelectOptgroup
               key="Organic"
-              title="Organic"
+              title={t("Organic")}
               items={renderSelectChoices(SEARCH_ENGINES)}
             >
               <span className="brz-span">Organic</span>
             </SelectOptgroup>
             <SelectOptgroup
               key="Social Networks"
-              title="Social Networks"
+              title={t("Social Networks")}
               items={renderSelectChoices(SOCIAL_NETWORKS)}
             >
               <span className="brz-span">Networks</span>
             </SelectOptgroup>
             <SelectOptgroup
               key="Other"
-              title="Other"
+              title={t("Other")}
               items={renderSelectChoices(OTHER)}
             >
               <span className="brz-span">Other</span>
@@ -106,7 +107,7 @@ export default function Referrer(props) {
           <input
             className="brz-input"
             type="text"
-            placeholder="URL"
+            placeholder={t("URL")}
             value={triggerValue.url}
             onChange={({ target: { value } }) =>
               onChange({ ...triggerValue, url: value })

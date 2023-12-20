@@ -203,7 +203,7 @@ describe("Testing 'getDCObjPreview' function", () => {
         value: {
           a: `{{${placeholderName} content='${Base64.encode(
             "{{post_author}}"
-          )}' _fallback='King%20Arthur'}}`
+          )}' _fallback='King Arthur'}}`
         },
         details: {
           a: {
@@ -211,7 +211,7 @@ describe("Testing 'getDCObjPreview' function", () => {
             staticValue: "a static",
             dcValue: `{{${placeholderName} content='${Base64.encode(
               "{{post_author}}"
-            )}' _fallback='King%20Arthur'}}`
+            )}' _fallback='King Arthur'}}`
           }
         }
       }
@@ -232,7 +232,7 @@ describe("Testing 'getDCObjPreview' function", () => {
         value: {
           a: `{{${placeholderName} content='${Base64.encode(
             "{{post_author att='history'}}"
-          )}' _fallback='King%20Arthur'}}`
+          )}' _fallback='King Arthur'}}`
         },
         details: {
           a: {
@@ -240,7 +240,7 @@ describe("Testing 'getDCObjPreview' function", () => {
             staticValue: "a static",
             dcValue: `{{${placeholderName} content='${Base64.encode(
               "{{post_author att='history'}}"
-            )}' _fallback='King%20Arthur'}}`
+            )}' _fallback='King Arthur'}}`
           }
         }
       }
@@ -262,7 +262,7 @@ describe("Testing 'getDCObjPreview' function", () => {
         value: {
           a: `{{${placeholderName} content='${Base64.encode(
             "{{  post_author       att=\"history\"        att2='England'      }}"
-          )}' _fallback='King%20Arthur'}}`
+          )}' _fallback='King Arthur'}}`
         },
         details: {
           a: {
@@ -270,7 +270,7 @@ describe("Testing 'getDCObjPreview' function", () => {
             staticValue: "a static",
             dcValue: `{{${placeholderName} content='${Base64.encode(
               "{{  post_author       att=\"history\"        att2='England'      }}"
-            )}' _fallback='King%20Arthur'}}`
+            )}' _fallback='King Arthur'}}`
           }
         }
       }
@@ -294,7 +294,7 @@ describe("Testing 'getDCObjPreview' function", () => {
         value: {
           a: `{{${placeholderName} content='${Base64.encode(
             "{{post_author}}"
-          )}' _fallback='King%20Arthur' a='qwerty'}}`
+          )}' _fallback='King Arthur' a='qwerty'}}`
         },
         details: {
           a: {
@@ -302,7 +302,7 @@ describe("Testing 'getDCObjPreview' function", () => {
             staticValue: "a static",
             dcValue: `{{${placeholderName} content='${Base64.encode(
               "{{post_author}}"
-            )}' _fallback='King%20Arthur' a='qwerty'}}`
+            )}' _fallback='King Arthur' a='qwerty'}}`
           }
         }
       }
@@ -323,7 +323,7 @@ describe("Testing 'getDCObjPreview' function", () => {
         value: {
           a: `{{${placeholderName} content='${Base64.encode(
             "{{post_author att='history'}}"
-          )}' _fallback='King%20Arthur' a='123' att='changed' b='abc'}}`
+          )}' _fallback='King Arthur' a='123' att='changed' b='abc'}}`
         },
         details: {
           a: {
@@ -331,7 +331,7 @@ describe("Testing 'getDCObjPreview' function", () => {
             staticValue: "a static",
             dcValue: `{{${placeholderName} content='${Base64.encode(
               "{{post_author att='history'}}"
-            )}' _fallback='King%20Arthur' a='123' att='changed' b='abc'}}`
+            )}' _fallback='King Arthur' a='123' att='changed' b='abc'}}`
           }
         }
       }
@@ -366,7 +366,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           )}'}}`,
           b: `{{${placeholderName} content='${Base64.encode(
             "{{post_author att='history'}}"
-          )}' _fallback='King%20Arthur' y='tho'}}`
+          )}' _fallback='King Arthur' y='tho'}}`
         },
         details: {
           a: {
@@ -381,7 +381,7 @@ describe("Testing 'getDCObjPreview' function", () => {
             staticValue: "b static",
             dcValue: `{{${placeholderName} content='${Base64.encode(
               "{{post_author att='history'}}"
-            )}' _fallback='King%20Arthur' y='tho'}}`
+            )}' _fallback='King Arthur' y='tho'}}`
           }
         }
       }

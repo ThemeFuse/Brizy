@@ -23,6 +23,7 @@ import {
   cssStyleSizeWidth,
   cssStyleSizeWidthHeight,
   cssStyleSpacing,
+  cssStyleSpacingWithPadding,
   cssStyleTextAlign,
   getAllCssStyleTypography
 } from "visual/utils/cssStyle";
@@ -31,7 +32,11 @@ import * as Num from "visual/utils/reader/number";
 import { styleAlignHorizontal, styleColor } from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
 import { ACTIVE } from "../stateMode";
-import { getSize } from "./cssStyleSize";
+import {
+  cssStyleSizeMinHeightPx,
+  cssStyleSizeMinWidth,
+  getSize
+} from "./cssStyleSize";
 
 const getThumbs = checkValue<EcwidProductThumb>([
   EcwidProductThumb.ImgFeed,
@@ -2849,5 +2854,443 @@ export function cssStyleElementEcwidProductWholesaleTableBodySpacing({
     state,
     prefix: "wholesaleTableBody",
     direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidProductRelatedTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "relatedTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidProductRelatedColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "relatedTitleColor"
+  });
+}
+
+export function cssStyleElementEcwidProductRelatedAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "relatedTitle"
+  });
+}
+
+export function cssStyleElementEcwidProductRelatedSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "relatedTitle",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidProductGridTitleTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "gridTitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidProductGridTitleColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "gridTitleColor"
+  });
+}
+
+export function cssStyleElementEcwidProductGridTitleAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "gridTitle"
+  });
+}
+
+export function cssStyleElementEcwidProductGridTitleSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "gridTitle",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSubtitleTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "gridSubtitleTypography"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSubtitleColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "gridSubtitleColor"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSubtitleAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "gridSubtitle"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSubtitleSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "gridSubtitle",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSKUInnerTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "gridSKUInnerTypography"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSKUInnerColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "gridSKUInnerColor"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSKUInnerAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "gridSKUInner"
+  });
+}
+
+export function cssStyleElementEcwidProductGridSKUInnerSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "gridSKUInner",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidProductGridPriceTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "gridPriceTypography"
+  });
+}
+
+export function cssStyleElementEcwidProductGridPriceColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "gridPriceColor"
+  });
+}
+
+export function cssStyleElementEcwidProductGridPriceAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "gridPrice"
+  });
+}
+
+export function cssStyleElementEcwidProductGridPriceSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "gridPrice",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowHight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMinHeightPx({
+    v,
+    device,
+    state,
+    prefix: "gridBuyNow"
+  });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowWith({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMinWidth({
+    v,
+    device,
+    state,
+    prefix: "gridBuyNow"
+  });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "gridBuyNowTypography"
+  });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "gridBuyNowColor"
+  });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "gridBuyNowBg" });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "gridBuyNow" });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowBorder({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "gridBuyNow" });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowBorderRadius({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix: "gridBuyNow" });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "gridBuyNow" });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "gridBuyNow"
+  });
+}
+
+export function cssStyleElementEcwidProductGridBuyNowSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacing({
+    v,
+    device,
+    state,
+    prefix: "gridBuyNow",
+    direction: "bottom"
+  });
+}
+
+export function cssStyleElementEcwidProductGridBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "gridBg" });
+}
+
+export function cssStyleElementEcwidProductGridBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "grid" });
+}
+
+export function cssStyleElementEcwidProductGridBorder({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorder({ v, device, state, prefix: "grid" });
+}
+
+export function cssStyleElementEcwidProductGridBorderRadius({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadius({ v, device, state, prefix: "grid" });
+}
+
+export function cssStyleElementEcwidProductGridBoxShadow({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBoxShadow({ v, device, state, prefix: "grid" });
+}
+
+export function cssStyleElementEcwidProductGridSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSpacingWithPadding({
+    v,
+    device,
+    state,
+    prefix: "grid",
+    direction: "all"
   });
 }

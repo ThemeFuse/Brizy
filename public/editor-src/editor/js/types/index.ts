@@ -433,6 +433,7 @@ export type Shortcode = {
     position?: number;
     hidden?: boolean;
   };
+  keywords?: string;
   pro: boolean;
 };
 

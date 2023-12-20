@@ -2,7 +2,8 @@
 
 .brz-ed-control__multiSelect2 {
   font-family: $default-font-family;
-  width: 136px;
+  min-width: $control__fixed-multiselect-width;
+  max-width: $control__fixed-multiselect-width;
 
   &__value {
     display: flex;

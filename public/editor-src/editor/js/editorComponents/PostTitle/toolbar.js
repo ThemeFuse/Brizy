@@ -99,7 +99,7 @@ export function getItems({ v, device, component, context }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -219,7 +219,10 @@ export function getItems({ v, device, component, context }) {
                     id: "linkExternal",
                     type: "inputText-dev",
                     placeholder: "http://",
-                    devices: "desktop"
+                    devices: "desktop",
+                    config: {
+                      size: "medium"
+                    }
                   }
                 },
                 {

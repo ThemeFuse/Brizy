@@ -47,7 +47,7 @@ export interface Props {
   id: string;
   headTitle?: string;
   headDescription?: string;
-  description?: string;
+  descriptions?: string;
   data: AllData[];
   nextLoading: null | boolean;
   prevLoading: null | boolean;

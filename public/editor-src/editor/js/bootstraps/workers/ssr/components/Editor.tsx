@@ -44,7 +44,7 @@ import { parseFonts } from "../utils/parseFonts";
 interface Props {
   page: PageCommon;
   project: Project;
-  globalBlocks: Record<string, GlobalBlock>;
+  globalBlocks?: Array<GlobalBlock>;
 }
 
 export interface Output {
@@ -60,10 +60,11 @@ export interface Output {
 export type SSREditor = (p: Props) => Promise<MValue<Output>>;
 
 export const Editor: SSREditor = async (props) => {
-  const { page, project, globalBlocks } = props;
+  const { page, project } = props;
   const { fonts, font: projectDefaultFontId } = project.data;
   const store = createStore();
   const config = Config.getAll();
+  const globalBlocks = {};
 
   const blocks = getBlocksInPage(page, globalBlocks);
 

@@ -1,5 +1,5 @@
 import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./index";
+import { Value } from "./types/Value";
 
 export function style(
   v: Value,

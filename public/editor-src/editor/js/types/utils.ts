@@ -1,5 +1,8 @@
 import {
   EntityTypeRule,
+  GlobalBlock,
+  GlobalBlockNormal,
+  GlobalBlockPopup,
   SavedBlock,
   SavedLayout,
   WPReferenceAllAuthor,
@@ -37,7 +40,7 @@ export const isReferenceAllAuthor = (
     return false;
   }
 
-  const [_, authorId] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [, authorId] = t.split("|");
 
   return authorId === "";
 };
@@ -53,7 +56,7 @@ export const isReferenceSpecificAuthor = (
     return false;
   }
 
-  const [_, authorId] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [, authorId] = t.split("|");
 
   return authorId !== "";
 };
@@ -69,7 +72,7 @@ export const isReferenceAllIn = (
     return false;
   }
 
-  const [_, taxonomy, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [, taxonomy, id] = t.split("|");
 
   return taxonomy !== "" && id === undefined;
 };
@@ -85,7 +88,7 @@ export const isReferenceSpecificIn = (
     return false;
   }
 
-  const [_, taxonomy, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [, taxonomy, id] = t.split("|");
 
   return taxonomy !== "" && id !== undefined;
 };
@@ -101,7 +104,7 @@ export const isReferenceAllChild = (
     return false;
   }
 
-  const [_, category, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [, category, id] = t.split("|");
 
   return category !== "" && id === undefined;
 };
@@ -117,9 +120,21 @@ export const isReferenceSpecificChild = (
     return false;
   }
 
-  const [_, category, id] = t.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [, category, id] = t.split("|");
 
   return category !== "" && id !== undefined;
+};
+
+//#endregion
+
+//#region Global Blocks
+
+export const isGlobalBlock = (b: GlobalBlock): b is GlobalBlockNormal => {
+  return b.meta.type === "normal";
+};
+
+export const isGlobalPopup = (b: GlobalBlock): b is GlobalBlockPopup => {
+  return b.meta.type === "popup";
 };
 
 //#endregion

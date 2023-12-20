@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_SocialProvider implements Brizy_Editor_Ed
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'social', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'social', 'brizy' ), [
                 "Facebook",
                 "Twitter",
                 "FacebookComments"

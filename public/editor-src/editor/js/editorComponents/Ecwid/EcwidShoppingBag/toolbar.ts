@@ -5,7 +5,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
-import { Value } from "./index";
+import { Value } from "./types/Value";
 
 export function getItems({
   v,

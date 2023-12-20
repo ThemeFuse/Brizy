@@ -38,7 +38,10 @@ export function style(
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStylePropertyHoverTransitionColor",
+        "cssStyleVisibleMode|||editor",
+        "cssStyleVisibleMode|||preview",
+        "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
       ]
     },
     ".brz &&.brz-btn.brz-btn-submit:hover": {

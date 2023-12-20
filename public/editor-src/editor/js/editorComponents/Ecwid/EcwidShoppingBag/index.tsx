@@ -2,7 +2,6 @@ import classNames from "classnames";
 import React, { ReactNode } from "react";
 import { uniqueId } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
@@ -10,7 +9,6 @@ import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { css } from "visual/utils/cssStyle";
-import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as sidebarParent from "./sidebar";
@@ -18,11 +16,7 @@ import * as sidebarIcon from "./sidebarIcon";
 import { style } from "./styles";
 import * as toolbarParent from "./toolbar";
 import * as toolbarIcon from "./toolbarIcon";
-
-export interface Value extends ElementModel {
-  productId: string;
-  customCSS: string;
-}
+import { Value } from "./types/Value";
 
 export class EcwidShoppingBag extends EditorComponent<Value> {
   static get componentId(): "EcwidShoppingBag" {
@@ -120,7 +114,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
           className={classNames("ec-cart-widget", "brz-ecwid-shopping-bag")}
-          {...makeDataAttr({ name: "store-id", value: storeId })}
+          data-store-id={storeId}
         />
       </Wrapper>
     );

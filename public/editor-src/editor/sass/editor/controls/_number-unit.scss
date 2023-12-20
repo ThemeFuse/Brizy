@@ -39,8 +39,8 @@
   }
 
   .brz-ed-control__multiSelect.brz-ed-control__multiSelect--size-medium.brz-slider__select.brz-ed-control__select-single {
-    width: 31px;
-    margin-left: 5px;
+    min-width: 25px;
+    margin-left: 3px;
   }
   .brz-ed-control__multiSelect--value-container.brz-ed-control__multiSelect--value-container {
     padding: 0;

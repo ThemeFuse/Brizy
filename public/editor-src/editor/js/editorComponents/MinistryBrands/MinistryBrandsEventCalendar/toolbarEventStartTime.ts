@@ -37,7 +37,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

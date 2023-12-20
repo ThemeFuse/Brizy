@@ -10,7 +10,7 @@ class Brizy_Editor_Editor_ModuleGroups_WooArchiveProvider implements Brizy_Edito
 
 	public function collect( $context ) {
 		return [
-			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( 'archive', [
+			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'archive', 'brizy' ), [
 				"WOOArchives",
 				"PostTitle",
 				"PostExcerpt",

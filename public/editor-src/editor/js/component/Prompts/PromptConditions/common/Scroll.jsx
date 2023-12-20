@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { t } from "visual/utils/i18n";
 
 export default function Scroll(props) {
   const { value: triggerValue = "", onChange = () => {} } = props;
@@ -11,16 +12,16 @@ export default function Scroll(props) {
         className="brz-control__select--light"
         itemHeight={30}
         defaultValue={triggerValue.value}
-        onChange={value => onChange({ ...triggerValue, value })}
+        onChange={(value) => onChange({ ...triggerValue, value })}
       >
         <SelectItem key="down" value="down">
-          Down
+          {t("Down")}
         </SelectItem>
         <SelectItem key="up" value="up">
-          Up
+          {t("Up")}
         </SelectItem>
         <SelectItem key="toElement" value="toElement">
-          To element
+          {t("To element")}
         </SelectItem>
       </Select>
       {triggerValue.value === "down" && (
@@ -28,7 +29,7 @@ export default function Scroll(props) {
           <input
             className="brz-input"
             type="number"
-            placeholder="% of page height"
+            placeholder={t("% of page height")}
             value={triggerValue.within}
             onChange={({ target: { value: within } }) =>
               onChange({ ...triggerValue, within })
@@ -41,7 +42,7 @@ export default function Scroll(props) {
           <input
             className="brz-input"
             type="text"
-            placeholder=".my-class"
+            placeholder={t(".my-class")}
             value={triggerValue.toElement || ""}
             onChange={({ target: { value: toElement } }) =>
               onChange({

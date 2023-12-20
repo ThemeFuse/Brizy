@@ -34,6 +34,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
         action.payload.page
       );
     }
+    case "ADD_GLOBAL_POPUP":
     case "ADD_GLOBAL_BLOCK":
     case "ADD_BLOCK": {
       const { block } = action.payload;
@@ -60,7 +61,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
       return [];
     }
 
-    case "MAKE_GLOBAL_BLOCK_TO_POPUP": {
+    case "MAKE_GLOBAL_POPUP_TO_POPUP": {
       if (isPopup(Config.getAll())) {
         const { block, fromBlockId } = action.payload;
 
@@ -73,7 +74,8 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
 
       return state;
     }
-    case "MAKE_GLOBAL_TO_NORMAL_BLOCK": {
+
+    case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { block, fromBlockId } = action.payload;
 
       return replaceAt(

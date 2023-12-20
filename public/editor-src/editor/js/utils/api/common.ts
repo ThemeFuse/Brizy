@@ -10,22 +10,8 @@ import { Config } from "visual/global/Config";
 import {
   AutoSave,
   ConfigCommon,
-  CreateSavedBlock,
-  CreateSavedLayout,
-  DeleteSavedBlock,
-  DeleteSavedLayout,
-  OnChange,
-  SavedBlockAPIMeta,
-  SavedBlockFilter,
-  SavedBlockImport,
-  SavedLayoutAPIMeta,
-  SavedLayoutFilter,
-  SavedLayoutImport,
-  UpdateSavedBlock,
-  UpdateSavedLayout
+  OnChange
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { ScreenshotData } from "visual/global/Config/types/configs/common";
-import { EkklesiaFields } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
 import {
   BlocksArray,
   DefaultBlock,
@@ -34,7 +20,23 @@ import {
   LayoutsWithThumbs,
   PopupsWithThumbs,
   StoriesWithThumbs
-} from "visual/global/Config/types/configs/templates";
+} from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
+import {
+  CreateSavedBlock,
+  CreateSavedLayout,
+  DeleteSavedBlock,
+  DeleteSavedLayout,
+  SavedBlockAPIMeta,
+  SavedBlockFilter,
+  SavedBlockImport,
+  SavedLayoutAPIMeta,
+  SavedLayoutFilter,
+  SavedLayoutImport,
+  UpdateSavedBlock,
+  UpdateSavedLayout
+} from "visual/global/Config/types/configs/blocks/SavedBlocks";
+import { ScreenshotData } from "visual/global/Config/types/configs/common";
+import { EkklesiaFields } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
 import {
   PageCommon,
   Project,

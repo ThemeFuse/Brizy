@@ -72,13 +72,13 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             new Brizy_Content_Placeholders_ImageTitleAttribute('Internal Title Attributes', 'brizy_dc_image_title')
         );
         $this->registerPlaceholder(
-            new Brizy_Content_Placeholders_ImageAltAttribute('Internal Alt Attributes', 'brizy_dc_image_alt')
+            new Brizy_Content_Placeholders_ImageAltAttribute( __( 'Internal Alt Attributes', 'brizy' ), 'brizy_dc_image_alt')
         );
         $this->registerPlaceholder(
-            new Brizy_Content_Placeholders_UniquePageUrl('Uniquer page url', 'brizy_dc_current_page_unique_url')
+            new Brizy_Content_Placeholders_UniquePageUrl(__( 'Uniquer page url', 'brizy' ), 'brizy_dc_current_page_unique_url')
         );
         $this->registerPlaceholder(
-            new Brizy_Content_Placeholders_Simple('WP Language', 'brizy_dc_page_language', get_locale())
+            new Brizy_Content_Placeholders_Simple(__( 'WP Language', 'brizy' ), 'brizy_dc_page_language', get_locale())
         );
         $this->registerPlaceholder(
             new Brizy_Content_Placeholders_Simple('Ajax Url', 'brizy_dc_ajax_url', admin_url('admin-ajax.php'))
@@ -171,7 +171,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
         );
         $this->registerPlaceholder(
             new Brizy_Content_Placeholders_Simple(
-                'Product Page',
+                __( 'Product Page', 'brizy' ),
                 'editor_product_page',
                 function ($context, $contentPlaceholder) {
 

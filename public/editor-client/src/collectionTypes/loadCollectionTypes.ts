@@ -12,7 +12,7 @@ export const loadCollectionTypes = {
         return rej(t("Missing collectionTypes in config"));
       }
 
-      const items = [{ title: "None", value: "" }, ...collectionTypes];
+      const items = [{ title: t("None"), value: "" }, ...collectionTypes];
 
       res(items);
     } catch (e) {

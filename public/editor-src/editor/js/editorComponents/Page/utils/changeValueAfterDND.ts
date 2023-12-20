@@ -1,6 +1,9 @@
 import { getIn, setIn } from "timm";
 import _ from "underscore";
-import { ElementModel } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import Config from "visual/global/Config";
 import { globalBlocksAssembledSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
@@ -27,12 +30,18 @@ import {
 import { normalizeFromTo } from "./helpers/path";
 import { FromTo, isAddable, isColumn, isRow, isShortcode } from "./types";
 
-function getValue(value: ElementModel, fromTo: FromTo): MValue<ElementModel> {
+function getValue(
+  value: ElementModelType,
+  fromTo: FromTo
+): MValue<ElementModelType> {
   let oldValue = value;
 
   if (isShortcode(fromTo)) {
     const { from, to } = fromTo;
-    let movedElement = getIn(oldValue, from.itemPath) as MValue<ElementModel>;
+    let movedElement = getIn(
+      oldValue,
+      from.itemPath
+    ) as MValue<ElementModelType>;
 
     if (movedElement === undefined) {
       return undefined;
@@ -68,7 +77,7 @@ function getValue(value: ElementModel, fromTo: FromTo): MValue<ElementModel> {
         }
       }
 
-      const withNewIds: MValue<ElementModel> = setIds(
+      const withNewIds: MValue<ElementModelType> = setIds(
         setIn(parentElement, ["value", "items"], [movedElement])
       );
 
@@ -96,7 +105,7 @@ function getValue(value: ElementModel, fromTo: FromTo): MValue<ElementModel> {
     const parentElement = getIn(
       oldValue,
       from.itemPath.slice(0, -3)
-    ) as MValue<ElementModel>;
+    ) as MValue<ElementModelType>;
 
     if (parentElement === undefined) {
       return undefined;
@@ -105,10 +114,9 @@ function getValue(value: ElementModel, fromTo: FromTo): MValue<ElementModel> {
     if (
       from.containerType === "posts" ||
       (from.containerType === "carousel" &&
-        //@ts-expect-error: Object is of type 'unknown'.
         parentElement.value.dynamic === "on")
     ) {
-      let model = getIn(oldValue, from.itemPath) as MValue<ElementModel>;
+      let model = getIn(oldValue, from.itemPath) as MValue<ElementModelType>;
 
       if (model) {
         model = addIn(oldValue, from.itemPath, setIds(model));
@@ -167,9 +175,9 @@ function getValue(value: ElementModel, fromTo: FromTo): MValue<ElementModel> {
 }
 
 export default function changeValueAfterDND(
-  oldValue: ElementModel,
+  oldValue: ElementModelType,
   _fromTo: FromTo
-): ElementModel {
+): ElementModelType {
   const config = Config.getAll();
   const { getState, dispatch } = getStore();
   const globalBlocks = globalBlocksAssembledSelector(getState());

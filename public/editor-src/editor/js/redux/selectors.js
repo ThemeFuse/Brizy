@@ -6,6 +6,7 @@ import {
   getPositions,
   getSurroundedGBIds
 } from "visual/utils/blocks/blocksConditions";
+import { createGlobalBlockSymbol } from "visual/utils/blocks/createGlobalBlockSymbol";
 import { canUseCondition } from "visual/utils/blocks/getAllowedGBIds";
 import { mapModels } from "visual/utils/models";
 import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
@@ -478,12 +479,7 @@ export const pageBlocksSelector = createSelector(
 
     return blocksOrder.map((id) => {
       if (globalBlocksIds.includes(id)) {
-        return {
-          type: "GlobalBlock",
-          value: {
-            _id: id
-          }
-        };
+        return createGlobalBlockSymbol({ id });
       }
 
       return blocksData[id];
@@ -501,12 +497,7 @@ export const pageBlocksRawSelector = createSelector(
 
     return blocksRawOrder.map((id) => {
       if (globalBlocksIds.includes(id)) {
-        return {
-          type: "GlobalBlock",
-          value: {
-            _id: id
-          }
-        };
+        return createGlobalBlockSymbol({ id });
       }
 
       return blocksData[id];

@@ -287,7 +287,7 @@ export function getItems({ v, device, state, context }) {
       id: "popoverColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -413,7 +413,10 @@ export function getItems({ v, device, state, context }) {
                   disabled: dvv("actions") != "showMessage",
                   placeholder: t("Message sent"),
                   population: richTextDC,
-                  devices: "desktop"
+                  devices: "desktop",
+                  config: {
+                    size: "medium"
+                  }
                 }
               ]
             },
@@ -427,7 +430,10 @@ export function getItems({ v, device, state, context }) {
                   type: "inputText-dev",
                   devices: "desktop",
                   placeholder: "http://",
-                  population: linkDC
+                  population: linkDC,
+                  config: {
+                    size: "medium"
+                  }
                 }
               ]
             }

@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 
 export interface Props {
@@ -7,13 +8,18 @@ export interface Props {
   onClick: VoidFunction;
 }
 
-export const Icon = ({ icon, title, onClick }: Props): ReactElement => {
-  return (
-    <div className="brz-ed-control__right-sidebar-tabs__icon">
-      <EditorIcon icon={icon} onClick={onClick} />
+export const Icon = ({ icon, title, onClick }: Props): ReactElement => (
+  <Tooltip
+    overlay={
       <div className="brz-ed-control__right-sidebar-tabs__icon__tooltip">
         {title}
       </div>
-    </div>
-  );
-};
+    }
+    openOnClick={false}
+    size="auto"
+    placement="bottom"
+    className="brz-ed-control__right-sidebar-tabs__icon"
+  >
+    <EditorIcon onClick={onClick} icon={icon} />
+  </Tooltip>
+);

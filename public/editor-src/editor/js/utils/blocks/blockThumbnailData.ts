@@ -53,7 +53,7 @@ export const blockThumbnailData = (
 };
 
 const getScreenshots = (block: Thumbnail): Partial<Screenshot> =>
-  block.meta || block.value || {};
+  block.meta || (block.value as Partial<Screenshot>) || {};
 
 function blockScreenshotData(block: Thumbnail, options: Options): Data | null {
   const blockId = readStr(block.value?._id);

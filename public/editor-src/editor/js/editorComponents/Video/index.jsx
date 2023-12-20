@@ -31,6 +31,7 @@ import {
   styleWrapper
 } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import { containsShorts } from "./utils";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -106,10 +107,12 @@ class Video extends EditorComponent {
       intro = 1;
     }
 
+    const updatedControls = controls === "on" && !containsShorts(video);
+
     return videoSrc
       ? getVideoUrl(videoSrc, {
           autoplay: !!coverImageSrc || autoplay === "on",
-          controls: controls === "on",
+          controls: updatedControls,
           branding,
           intro,
           suggestedVideo,
@@ -164,13 +167,15 @@ class Video extends EditorComponent {
     const videoSrc = this.getVideoSrc(v);
     const _end = loop === "on" && end ? end + 1 : end;
 
+    const updatedControls = controls === "on" && !containsShorts(video);
+
     const videoDataElem = (
       <div
         key="url"
         className="brz-video-data brz-hidden"
         data-src={videoSrc}
         data-population={videoPopulation}
-        data-controls={controls === "on"}
+        data-controls={updatedControls}
         data-branding={branding === "on"}
         data-intro={intro === "on"}
         data-start={start}
@@ -289,11 +294,13 @@ class Video extends EditorComponent {
       ? this.renderCover(v)
       : this.renderPlaceholder();
 
+    const updatedControls = controls === "on" && !containsShorts(video);
+
     return (
       <>
         <div className={classNameWrapper}>{content}</div>
         <div className={classNameVideo}>
-          {controls === "on" && (
+          {updatedControls && (
             <div className="brz-video-custom-video-controls">
               <div className="brz-video-custom-play-pause-btn">
                 <ThemeIcon
@@ -369,7 +376,10 @@ class Video extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { type, ratio, controls, loop, muted, customCSS, hoverName } = v;
+    const { type, ratio, controls, loop, muted, customCSS, hoverName, video } =
+      v;
+
+    const updatedControls = containsShorts(video) ? "off" : controls;
 
     const restrictions = {
       size: {
@@ -409,7 +419,7 @@ class Video extends EditorComponent {
       { "brz-custom-video": type === "custom" || type === "url" },
       { "brz-youtube-video": type === "youtube" },
       { "brz-vimeo-video": type === "vimeo" },
-      `brz-video-${controls}-controls-hidden`,
+      `brz-video-${updatedControls}-controls-hidden`,
       css(
         `${this.constructor.componentId}`,
         `${this.getId()}`,

@@ -62,7 +62,10 @@ export function getItems({
                   label: t("Address"),
                   type: "inputText-dev",
                   placeholder: t("Enter address"),
-                  population: richTextDC
+                  population: richTextDC,
+                  config: {
+                    size: "medium"
+                  }
                 },
                 {
                   id: "zoom",
@@ -83,7 +86,7 @@ export function getItems({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

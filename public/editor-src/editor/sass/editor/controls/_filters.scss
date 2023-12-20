@@ -1,6 +1,8 @@
 @import "../mixins/shadow-dom";
 
 .brz-ed-control__filters {
+  width: $toolbar_tooltip__md-width;
+
   &__hue {
     @include slider-track(
       (

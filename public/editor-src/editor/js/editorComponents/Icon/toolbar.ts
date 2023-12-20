@@ -192,7 +192,7 @@ export function getItems({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -321,7 +321,10 @@ export function getItems({
                   option: {
                     id: "linkExternal",
                     type: "inputText-dev",
-                    placeholder: "http://"
+                    placeholder: "http://",
+                    config: {
+                      size: "medium"
+                    }
                   }
                 },
                 {

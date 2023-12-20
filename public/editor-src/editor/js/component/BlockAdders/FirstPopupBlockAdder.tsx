@@ -1,19 +1,17 @@
-import React, { Component, ReactElement } from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { noop } from "underscore";
+import React, { ReactElement, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
-import {
-  PromptBlock,
-  PromptBlockTemplate
-} from "visual/component/Prompts/PromptBlocks/types";
+import { PromptGlobalBlock } from "visual/component/Prompts/PromptBlocks/Global/types";
+import { PromptBlock } from "visual/component/Prompts/PromptBlocks/types";
 import { rolesHOC } from "visual/component/Roles";
-import RoundPlus from "visual/component/RoundPlus";
-import { ActionUpdateUI, setDeviceMode } from "visual/redux/actions2";
+import Config from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types";
+import { isShopify } from "visual/global/Config/types/configs/Cloud";
+import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import { t } from "visual/utils/i18n";
+import { First as Control } from "./Controls/First";
 
 interface TextsDevice {
   title: string;
@@ -23,6 +21,7 @@ interface TextsDevice {
 interface Props {
   deviceMode: DeviceMode;
   onAddBlock: (data: PromptBlock) => void;
+  onAddGlobalPopup: (data: PromptGlobalBlock<"popup">) => void;
   setDeviceMode: (device: DeviceMode) => void;
 }
 
@@ -49,27 +48,26 @@ const getDeviceTexts = (device: DeviceMode): TextsDevice => {
   }
 };
 
-class FirstPopupBlockAdder extends Component<Props> {
-  static defaultProps: Props = {
-    deviceMode: "desktop",
-    onAddBlock: noop,
-    setDeviceMode: noop
-  };
+const FirstPopupBlockAdder = (props: Props): ReactElement => {
+  const { onAddBlock, onAddGlobalPopup } = props;
+  const dispatch = useDispatch();
+  const deviceMode = useSelector(deviceModeSelector);
+  const { title, description } = getDeviceTexts(deviceMode);
+  const icon =
+    deviceMode === "mobile" || deviceMode === "tablet"
+      ? "nc-desktop"
+      : undefined;
+  const iconClassName =
+    deviceMode === "mobile" || deviceMode === "tablet"
+      ? "floating-action-button--icon"
+      : undefined;
 
-  handleAddSavedBlock = (data: PromptBlockTemplate): void => {
-    const { fonts, blocks, extraFontStyles } = data;
-
-    this.props.onAddBlock({
-      fonts,
-      extraFontStyles,
-      block: blocks[0]
-    });
-  };
-
-  handleOpen = (): void => {
-    const { deviceMode, setDeviceMode, onAddBlock } = this.props;
-
+  const handleOpen = useCallback((): void => {
     if (deviceMode === "desktop") {
+      const config = Config.getAll();
+      ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
+      const showGlobal = !(isCloud(config) && isShopify(config));
+
       const data: PromptsProps<"popup"> = {
         prompt: "blocks",
         mode: "single",
@@ -78,58 +76,34 @@ class FirstPopupBlockAdder extends Component<Props> {
           showTemplate: false,
           blocksType: false,
           globalSearch: false,
+          showGlobal,
           onChangeBlocks: onAddBlock,
-          onChangeGlobal: onAddBlock,
-          onChangeSaved: this.handleAddSavedBlock
+          onChangeGlobal: onAddGlobalPopup,
+          onChangeSaved: (data) => {
+            const { fonts, blocks, extraFontStyles } = data;
+            onAddBlock({ fonts, extraFontStyles, block: blocks[0] });
+          }
         }
       };
       Prompts.open(data);
     } else {
-      setDeviceMode("desktop");
+      dispatch(setDeviceMode("desktop"));
     }
-  };
+  }, [deviceMode, dispatch, onAddBlock, onAddGlobalPopup]);
 
-  render(): ReactElement {
-    const { deviceMode } = this.props;
-    const { title, description } = getDeviceTexts(deviceMode);
-    const roundPlusProps = {
-      icon:
-        deviceMode === "mobile" || deviceMode === "tablet"
-          ? "nc-desktop"
-          : null,
-      className:
-        deviceMode === "mobile" || deviceMode === "tablet"
-          ? "floating-action-button--icon"
-          : null
-    };
-
-    return (
-      <div className="brz-ed-wrap-block-wrap brz-ed-wrap-block-wrap--first">
-        <div className="brz-ed-wrap-block-empty-page" onClick={this.handleOpen}>
-          <div className="brz-ed-wrap-block-empty-page-heading">{title}</div>
-          <RoundPlus {...roundPlusProps} />
-          <div className="brz-ed-wrap-block-empty-page-heading2">
-            {description}
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state: ReduxState): { deviceMode: DeviceMode } => ({
-  deviceMode: deviceModeSelector(state)
-});
-
-const mapDispatchToProps = (
-  dispatch: Dispatch
-): { setDeviceMode: (d: DeviceMode) => ActionUpdateUI } => ({
-  setDeviceMode: (device: DeviceMode): ActionUpdateUI =>
-    dispatch(setDeviceMode(device))
-});
+  return (
+    <Control
+      onClick={handleOpen}
+      title={title}
+      description={description}
+      iconClassName={iconClassName}
+      icon={icon}
+    />
+  );
+};
 
 export default rolesHOC({
   allow: ["admin"],
-  component: connect(mapStateToProps, mapDispatchToProps)(FirstPopupBlockAdder),
-  fallbackRender: undefined
+  fallbackRender: undefined,
+  component: FirstPopupBlockAdder
 });

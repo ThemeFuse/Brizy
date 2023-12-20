@@ -9,6 +9,7 @@ import ImagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import Lottie from "lottie-web";
 import Scrollbars from "perfect-scrollbar";
+import { Store } from "visual/redux/store";
 import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
 import Gallery from "../libs/gallery";
@@ -94,6 +95,7 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Brz: Record<string, any>;
     brizyProducts?: BrizyProducts;
+    brzStore: Store;
 
     // Check this types on documentations of twitter
     // https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites

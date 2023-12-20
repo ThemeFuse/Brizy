@@ -3,6 +3,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import Config from "visual/global/Config";
 import { BottomPanelItem } from "./Item";
+import { t } from "visual/utils/i18n";
 
 const hotKeysForPreview = [
   "ctrl+shift+P",
@@ -42,7 +43,7 @@ export function PreviewButton(): ReactElement | null {
         paddingSize="none"
         pointer={true}
         className="brz-ed-fixed-bottom-panel__preview"
-        title="Preview (ctrl+shift+P)"
+        title={t("Preview (ctrl+shift+P)")}
       >
         <a
           href={href}

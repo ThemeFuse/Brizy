@@ -1,8 +1,10 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { Switch } from "../../utils/Value";
 
 export interface Value extends ElementModel {
   productId: string;
   customCSS: string;
+
   ratio:
     | "PORTRAIT_0667"
     | "PORTRAIT_075"
@@ -17,9 +19,10 @@ export interface Value extends ElementModel {
   horizontalAlign: "CENTER" | "LEFT" | "RIGHT" | "JUSTIFY";
   galleryWidth: "SMALL" | "MEDIUM" | "LARGE";
   displayMode: "AUTO" | "COVER" | "FIT";
-  productCardFrame: "on" | "off";
-  mainProductImage: "on" | "off";
-  darkenImage: "on" | "off";
-  additionalImage: "on" | "off";
-  footerDisplay: "on" | "off";
+
+  productCardFrame: Switch;
+  mainProductImage: Switch;
+  darkenImage: Switch;
+  additionalImage: Switch;
+  footerDisplay: Switch;
 }

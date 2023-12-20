@@ -168,7 +168,10 @@ class ControlInner extends Component<Props, State> {
       (shortcode) =>
         isEditMode || (!isEditMode && !disabledElements[shortcode.component.id])
     );
-    const searcher = new FuzzySearch(filteredShortcodes, ["component.title"]);
+    const searcher = new FuzzySearch(filteredShortcodes, [
+      "component.title",
+      "keywords"
+    ]);
 
     return searcher.search(inputValue);
   }

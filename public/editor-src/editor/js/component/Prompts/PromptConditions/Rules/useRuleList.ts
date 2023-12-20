@@ -11,16 +11,16 @@ import { Products } from "visual/libs/EcwidSdk/products";
 import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
 import { getCollectionItems } from "visual/utils/api/cms";
 import {
-  isCollectionItemRule,
-  isCollectionTypeRule
-} from "visual/utils/blocks";
-import {
   CUSTOMER_TYPE,
   ECWID_PRODUCT_CATEGORY_TYPE,
   ECWID_PRODUCT_TYPE,
   createEntityValue,
   createEntityValueAll
 } from "visual/utils/blocks/blocksConditions";
+import {
+  isCollectionItemRule,
+  isCollectionTypeRule
+} from "visual/utils/blocks/guards";
 import { isOneOf } from "visual/utils/fp/isOneOf";
 import { t } from "visual/utils/i18n";
 import { CmsListItem, RuleList, RuleListItem } from "./types";

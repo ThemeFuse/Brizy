@@ -55,10 +55,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                       label: t("Layout"),
                       devices: "desktop",
                       choices: [
-                        { title: "Grid", value: "grid" },
-                        { title: "Justified", value: "justified" },
-                        { title: "Masonry", value: "masonry" },
-                        { title: "Big Image", value: "bigImage" }
+                        { title: t("Grid"), value: "grid" },
+                        { title: t("Justified"), value: "justified" },
+                        { title: t("Masonry"), value: "masonry" },
+                        { title: t("Big Image"), value: "bigImage" }
                       ]
                     },
                     {

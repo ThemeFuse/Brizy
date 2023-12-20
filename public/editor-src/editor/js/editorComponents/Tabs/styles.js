@@ -62,6 +62,9 @@ export function styleTabs(v, vs, vd) {
           "cssStyleElementTabsActiveShadow"
         ]
       },
+    ".brz && > .brz-tabs__nav .brz-tabs__nav--item .brz-tabs__nav--button": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz && > .brz-tabs__nav .brz-tabs__nav--button:hover": {
       standart: [
         "cssStyleElementTabsBtnIconPosition",

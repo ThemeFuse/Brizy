@@ -5,6 +5,7 @@ import {
   OptionValue
 } from "visual/component/Options/types";
 import { UserRole } from "visual/types";
+import { OptionStyle } from "visual/utils/cssStyle/types";
 import { Device } from "visual/utils/devices";
 import { Disabled } from "visual/utils/disabled";
 import {
@@ -41,6 +42,8 @@ export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
     position?: number;
     roles?: UserRole[]; //TODO: Make sure that roles are a concrete type, not string
     isPro?: boolean;
+    style?: OptionStyle;
+    selector?: string;
   };
 
 type ToolbarItemsTypes = { [P in OptionName]: GenericToolbarItemType<P> };

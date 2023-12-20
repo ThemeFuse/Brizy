@@ -10,7 +10,10 @@ import React, {
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
-import { ElementModel } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import {
   disabledHoverForElements,
@@ -74,7 +77,7 @@ import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
 
 export interface Value extends ElementModel, CssId {
-  items: ElementModel[];
+  items: ElementModelType[];
 }
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 type Props = {

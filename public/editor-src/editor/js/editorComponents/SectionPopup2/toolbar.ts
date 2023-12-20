@@ -44,7 +44,8 @@ export const getItems: GetItems<Value> = ({
   });
 
   const config = Config.getAll();
-
+  const disabledSavedBlock =
+    typeof config.api?.savedPopups?.create !== "function";
   const popupSettings = config.ui?.popupSettings ?? {};
   const IS_GLOBAL_POPUP = isPopup(config);
 
@@ -299,7 +300,7 @@ export const getItems: GetItems<Value> = ({
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -344,6 +345,7 @@ export const getItems: GetItems<Value> = ({
       type: "savedBlock-dev",
       devices: "desktop",
       position: 90,
+      disabled: disabledSavedBlock,
       config: {
         icon: "nc-save-section",
         blockType: "popup",

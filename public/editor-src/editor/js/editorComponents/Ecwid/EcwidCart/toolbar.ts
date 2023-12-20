@@ -1,6 +1,8 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { Value } from "./types/Value";
 
@@ -12,6 +14,11 @@ export function getItems({
   device: ResponsiveMode;
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+
+  const { hex: parentBgColorHex } = getOptionColorHexByPalette(
+    dvv("parentBgColorHex"),
+    dvv("parentBgColorPalette")
+  );
 
   return [
     {
@@ -83,6 +90,30 @@ export function getItems({
           label: t("Footer"),
           devices: "desktop",
           type: "switch-dev"
+        }
+      ]
+    },
+    {
+      id: "toolbarColor",
+      type: "popover-dev",
+      devices: "desktop",
+      config: {
+        size: "auto",
+        title: t("Colors"),
+        icon: {
+          style: {
+            backgroundColor: hexToRgba(
+              parentBgColorHex,
+              dvv("parentBgColorOpacity")
+            )
+          }
+        }
+      },
+      position: 20,
+      options: [
+        {
+          id: "parent",
+          type: "backgroundColor-dev"
         }
       ]
     },

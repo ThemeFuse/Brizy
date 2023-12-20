@@ -21,7 +21,8 @@ export function getItems({ v, device }) {
       type: "popover-dev",
       config: {
         icon: "nc-form-left",
-        title: t("Field")
+        title: t("Field"),
+        size: "large"
       },
       position: 60,
       options: [
@@ -60,7 +61,7 @@ export function getItems({ v, device }) {
       id: "toolbarColor",
       type: "popover-dev",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

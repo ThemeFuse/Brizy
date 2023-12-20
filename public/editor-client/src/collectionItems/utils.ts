@@ -23,7 +23,7 @@ export const getCollectionSourceItems = async (id: string) => {
     .then((r) => r.json())
     .then((result) => {
       if (!result?.data) {
-        throw "Something went wrong";
+        throw t("Something went wrong");
       }
 
       return result.data;

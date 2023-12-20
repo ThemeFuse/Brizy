@@ -239,7 +239,7 @@ export function getItems({
       type: "popover-dev",
       disabled: IS_SIMPLE,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

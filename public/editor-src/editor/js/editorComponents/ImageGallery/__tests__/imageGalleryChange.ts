@@ -1,4 +1,4 @@
-import type { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModelType } from "visual/component/Elements/Types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
   patchOnBigImageAsCurrLayout,
@@ -74,29 +74,29 @@ export const mockValue: Value = {
   _id: "1"
 };
 
-export const emptyImage: ElementModel = { type: "Image", value: {} };
+export const emptyImage: ElementModelType = { type: "Image", value: {} };
 
-const emptyClonedImage: ElementModel = {
+const emptyClonedImage: ElementModelType = {
   type: "Image",
   value: { clonedFromGallery: true }
 };
 
-const imageWithMockTestKey: ElementModel = {
+const imageWithMockTestKey: ElementModelType = {
   type: "Image",
   value: { testK: 1 }
 };
 
-const imageLinkExternal: ElementModel = {
+const imageLinkExternal: ElementModelType = {
   type: "Image",
   value: { linkType: "external", linkLightBox: "" }
 };
 
-export const lightBoxDisabledOutput: ElementModel = {
+export const lightBoxDisabledOutput: ElementModelType = {
   type: "Image",
   value: { linkLightBox: disabled, linkType: "external" }
 };
 
-const lightBoxEnabledOutput: ElementModel = {
+const lightBoxEnabledOutput: ElementModelType = {
   type: "Image",
   value: { linkType: "lightBox", linkLightBox: enabled }
 };
@@ -116,7 +116,7 @@ const horizontalThumbStyleDataOutputValue = {
   mobileWidthSuffix: "px"
 };
 
-const horizontalThumbStyleDataOutput: ElementModel = {
+const horizontalThumbStyleDataOutput: ElementModelType = {
   type: "Image",
   value: horizontalThumbStyleDataOutputValue
 };
@@ -132,12 +132,12 @@ const bigImageImagesThumbSizeChangeOutputValue = {
   tabletSizeType: null
 };
 
-const bigImageImagesThumbSizeChangeOutput: ElementModel = {
+const bigImageImagesThumbSizeChangeOutput: ElementModelType = {
   type: ElementTypes.Image,
   value: bigImageImagesThumbSizeChangeOutputValue
 };
 
-const gridItemsThreeColumnsOuptput: ElementModel = {
+const gridItemsThreeColumnsOuptput: ElementModelType = {
   type: "Image",
   value: {
     height: 100,
@@ -153,7 +153,7 @@ const gridItemsThreeColumnsOuptput: ElementModel = {
   }
 };
 
-const gridItemsThreeColumnsRatio1Output: ElementModel = {
+const gridItemsThreeColumnsRatio1Output: ElementModelType = {
   type: "Image",
   value: {
     height: 133.33333333333331,
@@ -169,7 +169,7 @@ const gridItemsThreeColumnsRatio1Output: ElementModel = {
   }
 };
 
-const gridItemsSixColumnsOutput: ElementModel = {
+const gridItemsSixColumnsOutput: ElementModelType = {
   type: "Image",
   value: {
     height: 99.9969112923153,
@@ -196,7 +196,7 @@ const bigImageLayoutPatchValue = {
   tabletSizeType: null
 };
 
-const bigImageLayoutPatch: ElementModel = {
+const bigImageLayoutPatch: ElementModelType = {
   type: "Image",
   value: bigImageLayoutPatchValue
 };
@@ -239,7 +239,7 @@ const bigImageAsCurrentLayoutStaticData = {
   size: 100
 };
 
-const bigImageAsCurrentLayoutStaticItems: ElementModel[] = [
+const bigImageAsCurrentLayoutStaticItems: ElementModelType[] = [
   { type: "Image", value: { color: "red", imageSrc: "1.jpg" } },
   { type: "Image", value: { color: "green", imageSrc: "2.jpg" } },
   { type: "Image", value: { color: "blue", imageSrc: "3.jpg" } }
@@ -276,27 +276,27 @@ const patchOnBigImageLayoutStaticHeight = {
   bigImageImagesHeightSuffix: "px"
 };
 
-const patchOnBigImageAsPrevLayoutStaticData: ElementModel[] = [
+const patchOnBigImageAsPrevLayoutStaticData: ElementModelType[] = [
   { type: "Image", value: { key: 1 } },
   { type: "Image", value: { key: 2 } },
   { type: "Image", value: { key: 3 } }
 ];
 
-const imageColorGreen: ElementModel = {
+const imageColorGreen: ElementModelType = {
   type: "Image",
   value: {
     color: "green"
   }
 };
 
-const imageColorBlue: ElementModel = {
+const imageColorBlue: ElementModelType = {
   type: "Image",
   value: {
     color: "blue"
   }
 };
 
-const imageColorRed: ElementModel = {
+const imageColorRed: ElementModelType = {
   type: "Image",
   value: {
     color: "red"
@@ -338,12 +338,12 @@ const adjustImageByHeightOutputCommonData = {
   widthSuffix: "px"
 };
 
-const itemWithMasonryStaticData: ElementModel = {
+const itemWithMasonryStaticData: ElementModelType = {
   type: "Image",
   value: patchOnMasonryLayoutStaticData
 };
 
-const patchOnMasonryLayoutOutput: ElementModel = {
+const patchOnMasonryLayoutOutput: ElementModelType = {
   type: "Image",
   value: patchOnMasonryLayoutStaticData
 };

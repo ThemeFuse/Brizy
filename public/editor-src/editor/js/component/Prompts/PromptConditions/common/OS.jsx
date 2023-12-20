@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { t } from "visual/utils/i18n";
 
 const OS = {
   android: "Android",
@@ -23,20 +24,20 @@ export default function OperatingSystem(props) {
         className="brz-control__select--light"
         itemHeight={30}
         defaultValue={triggerValue.type}
-        onChange={type => onChange({ ...triggerValue, type })}
+        onChange={(type) => onChange({ ...triggerValue, type })}
       >
         <SelectItem key="is" value="is">
-          is
+          {t("is")}
         </SelectItem>
         <SelectItem key="is not" value="is not">
-          is not
+          {t("is not")}
         </SelectItem>
       </Select>
       <Select
         className="brz-control__select--light"
         itemHeight={30}
         defaultValue={triggerValue.value}
-        onChange={value => onChange({ ...triggerValue, value })}
+        onChange={(value) => onChange({ ...triggerValue, value })}
       >
         {renderSelectChoices(OS)}
       </Select>

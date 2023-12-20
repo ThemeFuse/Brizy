@@ -91,7 +91,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
       type: "popover-dev",
       position: 30,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {

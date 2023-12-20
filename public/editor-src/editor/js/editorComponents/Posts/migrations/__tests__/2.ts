@@ -144,13 +144,13 @@ describe("testing m2 migration", () => {
       {
         type: "posts",
         _id: "abcde",
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       },
       {
         ...postsBase,
         _id: "abcde",
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       }
     ],
@@ -216,12 +216,12 @@ describe("testing m2 migration", () => {
     [
       {
         _styles: ["posts--archives"],
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       },
       {
         ...archiveBase,
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       }
     ]
@@ -371,13 +371,13 @@ describe("testing m2 migration", () => {
       {
         type: "products",
         _id: "abcde",
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       },
       {
         ...productsBase,
         _id: "abcde",
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       }
     ],
@@ -466,12 +466,12 @@ describe("testing m2 migration", () => {
     [
       {
         _styles: ["posts--archives-product"],
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       },
       {
         ...productArchiveBase,
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       }
     ]
@@ -510,12 +510,12 @@ describe("testing m2 migration", () => {
     [
       {
         type: "upsell",
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       },
       {
         ...upsellBase,
-        items: ["item 1", "item 2"],
+        choices: ["item 1", "item 2"],
         _thumbnail: "http://thumbnail.com/123"
       }
     ]

@@ -125,7 +125,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       type: "popover-dev",
       config: {
         title: t("Colors"),
-        size: "auto",
+        size: "medium",
         icon: {
           style: {
             backgroundColor: hexToRgba(
