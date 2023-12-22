@@ -1,10 +1,10 @@
-import { getAttachmentById } from "../api";
 import { AddFileData } from "../types/File";
 import { t } from "../utils/i18n";
+import { handleGetAttachmentById, validateByComponent } from "./utils";
 
 export const addFile: AddFileData = {
   label: "Image",
-  handler(res, rej) {
+  handler(res, rej, { componentId }) {
     const wp = window.wp || window.parent.wp;
 
     if (!wp) {
@@ -38,14 +38,22 @@ export const addFile: AddFileData = {
     frame.on("select", () => {
       const attachment = frame.state().get("selection").first();
 
-      getAttachmentById(attachment.get("id"))
-        .then(({ uid }) => {
-          const filename = attachment.get("filename");
-          res({ uid, filename });
-        })
-        .catch((e: unknown) => {
-          console.error("failed to get attachment uid", e);
-        });
+      if (componentId) {
+        const url = attachment.get("url");
+        const filename = attachment.get("title");
+        const mimeType = attachment.get("mime");
+
+        fetch(url)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const file = new File([blob], filename, { type: mimeType });
+            validateByComponent(file, componentId)
+              .then(() => handleGetAttachmentById(res, attachment))
+              .catch((e) => rej(e.message));
+          });
+      } else {
+        handleGetAttachmentById(res, attachment);
+      }
     });
 
     frame.on("escape", () => {
