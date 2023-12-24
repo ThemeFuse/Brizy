@@ -1,10 +1,6 @@
 <?php
 
-<<<<<<<< HEAD:public/editor-build/274-wp/texts.php
-class Brizy_Public_EditorBuild_274Wp_Texts {
-========
 class Brizy_Public_EditorBuild_275Wp_Texts {
->>>>>>>> origin/release-editor-275-wp:public/editor-build/275-wp/texts.php
 	public static function get_editor_texts() {
 		return apply_filters('brizy_editor_config_texts', array(
 			"#popup-id" => __("#popup-id", "brizy"),
