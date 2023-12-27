@@ -75,6 +75,12 @@ pipeline {
             }
         }
 
+        stage('Prepare i18n files') {
+            steps {
+                sh "./jenkins/i18n.sh"
+            }
+        }
+
         stage('Prepare changelog') {
             when {
                 expression { return params.svnCommit }
@@ -86,7 +92,6 @@ pipeline {
                  sh "rm -rf changelog.txt changelog.md"
             }
         }
-
 
         stage('Make a copy and clean the plugin') {
             steps {
