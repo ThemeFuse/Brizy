@@ -108,11 +108,11 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			return $originalPath;
 		}
 
-		$pathinfo     = pathinfo( $originalPath );
-		$size         = strtolower( $size );
-		$size         = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
-		$size         = str_replace( '&', 'x', $size );
-		$name         = $pathinfo['filename'] . '-' . $size . 'x' . filemtime( $originalPath ) . '.' . $pathinfo['extension'];
+		$pathinfo = pathinfo( $originalPath );
+		$size     = strtolower( $size );
+		$size     = str_replace( [ 'iw=', 'ih=', 'ox=', 'oy=', 'cw=', 'ch=' ], '', $size );
+		$size     = str_replace( '&', 'x', $size );
+		$name     = $pathinfo['filename'] . '-' . $size . 'x' . filemtime( $originalPath ) . '.' . $pathinfo['extension'];
 
 		return $this->buildPath( $this->url_builder->brizy_upload_path( 'imgs' ), $name );
 	}
@@ -177,7 +177,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 			throw new Exception( sprintf( 'There is no image with the uid "%s"', $uid ) );
 		}
 
-		self::$imgs[ $uid ] = (object)[ 'ID' => $imgId ];
+		self::$imgs[ $uid ] = (object) [ 'ID' => $imgId ];
 
 		return $imgId;
 	}
@@ -196,7 +196,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		global $wpdb;
 
-		$uids = array_filter( $uids, function( $uid ) { return ! is_numeric( $uid ); } );
+		$uids = array_filter( $uids, function ( $uid ) {
+			return ! is_numeric( $uid );
+		} );
 		$uids = array_diff( array_unique( $uids ), array_keys( self::$imgs ) );
 
 		if ( ! $uids ) {
@@ -218,8 +220,13 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 * @throws Exception
 	 */
 	private function getImgUrlByWpSize( $uid, $size ) {
-		$size   = $size == 'original' ? 'full' : $size;
-		$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
+		$size = $size == 'original' ? 'full' : $size;
+
+		if ( $size == 'full' ) {
+			$imgUrl = wp_get_attachment_url( $this->getAttachmentId( $uid ) );
+		} else {
+			$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
+		}
 
 		if ( ! $imgUrl && $size != 'full' ) {
 			$imgUrl = $this->getImgUrlByWpSize( $uid, 'full' );

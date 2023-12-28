@@ -28,7 +28,7 @@ export const doAiRequest = async (
       case Action.Extend:
         conversation.push({
           role: Role.User,
-          content: "Expand the following text: "
+          content: "Expand the following text by 2 times: "
         });
         conversation.push({
           role: Role.Assistant,
