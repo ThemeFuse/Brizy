@@ -112,14 +112,14 @@ abstract class Brizy_Editor_Accounts_AbstractAccount extends Brizy_Admin_Seriali
 	 * @return array|mixed|null
 	 */
 	public function jsonSerialize() {
-		return $this->data;
+		return (array)$this->data;
 	}
 
 	/**
 	 * @return array|null
 	 */
 	public function convertToOptionValue() {
-		return $this->data;
+		return (array)$this->data;
 	}
 
 

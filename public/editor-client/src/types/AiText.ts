@@ -1,5 +1,5 @@
 export enum RequestOptions {
-  Model = "gpt-3.5-turbo-1106",
+  Model = "gpt-3.5-turbo",
 }
 
 export enum Role {

@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.4.2
 Requires PHP: 7.0.0
-Stable tag: 2.4.36
+Stable tag: 2.4.38
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,12 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.38 - 2023-12-28 =
+* Fixed: Small layout fixes in templates
+
+= 2.4.37 - 2023-12-28 =
+* New: Added 16 new templates.
 
 = 2.4.36 - 2023-12-19 =
 * New: Added corner radius styling for tabs in Tab Element
