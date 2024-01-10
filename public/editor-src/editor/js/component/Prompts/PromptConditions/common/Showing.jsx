@@ -14,10 +14,10 @@ export default function Showing(props) {
         defaultValue={triggerValue.value}
         onChange={(value) => onChange({ ...triggerValue, value })}
       >
-        <SelectItem key="views" value="views">
+        <SelectItem key="views" value="views" title={t("viewed pages")}>
           {t("viewed pages")}
         </SelectItem>
-        <SelectItem key="sessions" value="sessions">
+        <SelectItem key="sessions" value="sessions" title={t("Sessions")}>
           {t("Sessions")}
         </SelectItem>
       </Select>
@@ -27,13 +27,13 @@ export default function Showing(props) {
         defaultValue={triggerValue.type}
         onChange={(type) => onChange({ ...triggerValue, type })}
       >
-        <SelectItem key="is fewer" value="is fewer">
+        <SelectItem key="is fewer" value="is fewer" title={t("is fewer than")}>
           {t("is fewer than")}
         </SelectItem>
-        <SelectItem key="equals" value="equals">
+        <SelectItem key="equals" value="equals" title={t("equals")}>
           {t("equals")}
         </SelectItem>
-        <SelectItem key="is more" value="is more">
+        <SelectItem key="is more" value="is more" title={t("is more than")}>
           {t("is more than")}
         </SelectItem>
       </Select>

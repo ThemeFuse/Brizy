@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarWPCustomShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-wp-shortcode",
         size: "large"
@@ -25,14 +25,14 @@ export function getItems() {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       roles: ["admin"],
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -41,7 +41,7 @@ export function getItems() {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -50,7 +50,7 @@ export function getItems() {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -65,7 +65,7 @@ export function getItems() {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

@@ -20,7 +20,7 @@ export function getItems({
   return [
     {
       id: "toolbarCalendly",
-      type: "popover-dev",
+      type: "popover",
       position: 90,
       devices: "desktop",
       config: {
@@ -30,7 +30,7 @@ export function getItems({
       options: [
         {
           id: "link",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Link"),
           placeholder: "https://calendly.com/user/event",
           config: {
@@ -42,7 +42,7 @@ export function getItems({
 
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -57,7 +57,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -65,7 +65,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -76,7 +76,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -87,7 +87,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -99,7 +99,7 @@ export function getItems({
 
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       position: 110,
       config: {
         icon: "nc-cog",
@@ -109,7 +109,7 @@ export function getItems({
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -122,7 +122,7 @@ export function getItems({
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 150,
             max: 1000,
@@ -131,7 +131,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -141,7 +141,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -155,7 +155,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -170,7 +170,7 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      type: "sidebarTabsButton-dev",
+      type: "sidebarTabsButton",
       disabled: !isStory(Config.getAll()),
       position: 110
     }

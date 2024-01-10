@@ -13,7 +13,7 @@ import * as State from "visual/utils/stateMode/index";
  */
 const hasStates = (item: ToolbarItemType): boolean => {
   const _item = filter(
-    (o) => !["tabs", "tabs-dev", "popover", "popover-dev"].includes(o.type),
+    (o) => !["tabs", "legacy-popover", "popover"].includes(o.type),
     item
   );
 
@@ -42,9 +42,9 @@ export const bindStateToOption = <T extends ToolbarItemType>(
 
   switch (option.type) {
     // @ts-expect-error, need to support old popover
-    case "popover":
-    case "popover-dev": {
-      const options = (option as GenericToolbarItemType<"popover-dev">).options;
+    case "legacy-popover":
+    case "popover": {
+      const options = (option as GenericToolbarItemType<"popover">).options;
       return {
         ...option,
         options: options?.some(hasStates)
@@ -53,33 +53,28 @@ export const bindStateToOption = <T extends ToolbarItemType>(
                 id: "tabsState",
                 type: "stateMode-dev",
                 states: statesList,
-                options: (option as GenericToolbarItemType<"popover-dev">)
-                  .options
+                options: (option as GenericToolbarItemType<"popover">).options
               }
             ]
           : options
       };
     }
-    // @ts-expect-error, need to support old tabs
     case "tabs":
-    case "tabs-dev":
       return {
         ...option,
-        tabs: (option as GenericToolbarItemType<"tabs-dev">).tabs?.map(
-          (tab) => ({
-            ...tab,
-            options: tab.options?.some(hasStates)
-              ? [
-                  {
-                    id: "tabsState",
-                    type: "stateMode-dev",
-                    states: statesList,
-                    options: tab.options
-                  }
-                ]
-              : tab.options
-          })
-        )
+        tabs: (option as GenericToolbarItemType<"tabs">).tabs?.map((tab) => ({
+          ...tab,
+          options: tab.options?.some(hasStates)
+            ? [
+                {
+                  id: "tabsState",
+                  type: "stateMode-dev",
+                  states: statesList,
+                  options: tab.options
+                }
+              ]
+            : tab.options
+        }))
       };
     default:
       return option;

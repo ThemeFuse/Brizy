@@ -74,7 +74,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-play",
         title: t("Video")
@@ -83,7 +83,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -92,7 +92,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: "type",
                   label: t("Type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("YouTube"), value: "youtube" },
@@ -104,7 +104,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: "ratio",
                   label: t("Ratio"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: "1:1", value: "1:1" },
@@ -117,7 +117,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 },
                 {
                   id: "custom",
-                  type: "fileUpload-dev",
+                  type: "fileUpload",
                   label: t("File"),
                   config: {
                     allowedExtensions: ["video/*"]
@@ -128,7 +128,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: "video",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   population: videoDynamicContentChoices,
                   disabled: customType,
@@ -159,27 +159,27 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: "autoplay",
                   label: t("Autoplay"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: offControls || !noCover
                 },
                 {
                   id: "muted",
                   label: t("Muted"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: (noCover && offControls) || (noCover && onAutoplay)
                 },
                 {
                   id: "loop",
                   label: t("Loop"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "suggestedVideos",
                   label: t("Suggested Videos"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: !youtubeType,
                   choices: [
@@ -225,13 +225,13 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   label: t("Cover Image"),
                   id: "cover",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop"
                 },
                 {
                   id: "coverZoom",
                   label: t("Zoom"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   disabled: noCover,
                   config: {
@@ -243,7 +243,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: "iconSize",
                   label: t("Play"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   disabled: noCover,
                   config: {
@@ -256,18 +256,18 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 },
                 {
                   id: "groupSettings",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "controls",
                       label: t("Controls"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: containsShorts
                     },
                     {
                       id: "controlsIconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       label: t("Size"),
                       disabled: !customType || dvv("controls") !== "on",
                       config: {
@@ -281,28 +281,28 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: "branding",
                   label: t("Branding"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: offControls || !youtubeType || containsShorts
                 },
                 {
                   id: "intro",
                   label: t("Intro"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: !vimeoType
                 },
                 {
                   id: "lazyLoad",
                   label: t("Lazy Load"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: !youtubeType
                 },
                 {
                   id: "privacyMode",
                   label: t("Privacy Mode"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: !youtubeType
                 }
@@ -314,7 +314,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -325,7 +325,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
       options: [
         {
           id: "typography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: "desktop" === device
           }
@@ -334,7 +334,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -351,7 +351,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabIcon",
@@ -359,7 +359,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "iconControlsColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: !customType || offControls
                 }
@@ -371,7 +371,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "controlsBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: !customType || offControls
                 }
@@ -383,7 +383,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "bg2Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: !customType || offControls
                 }
@@ -395,7 +395,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: noCover || onAutoplay
                 }
@@ -407,7 +407,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: noCover || onAutoplay
                 }
@@ -419,7 +419,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "padding",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -430,7 +430,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -441,7 +441,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -452,7 +452,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -464,7 +464,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
           id: "size",
           label: t("Size"),
           position: 80,
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: dvv("sizeSuffix") === "px" ? 1000 : 100,
@@ -476,7 +476,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -485,7 +485,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -500,7 +500,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -515,7 +515,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110,
       disabled: !IS_STORY,
       icon: "nc-cog",

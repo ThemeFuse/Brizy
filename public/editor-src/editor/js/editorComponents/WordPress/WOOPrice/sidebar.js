@@ -3,7 +3,9 @@ import { t } from "visual/utils/i18n";
 export const title = t("Product Price");
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -14,7 +16,7 @@ export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -23,7 +25,7 @@ export function getItems() {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },

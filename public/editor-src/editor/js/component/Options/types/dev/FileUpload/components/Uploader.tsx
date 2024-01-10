@@ -9,6 +9,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { WithValue } from "visual/component/Options/types/dev/FileUpload/types/Value";
 import Config from "visual/global/Config";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
   FileUploadData,
   Response
@@ -37,12 +38,18 @@ export interface Props {
   value: Value;
   extensions: string[];
   onChange: (v: Value | undefined) => void;
+  componentId?: ElementTypes;
 }
 
 const valueToState = (v: Value): State =>
   v ? { type: "WithFile", file: v } : { type: "Empty" };
 
-export function Uploader({ value, extensions, onChange }: Props): ReactElement {
+export function Uploader({
+  value,
+  extensions,
+  componentId,
+  onChange
+}: Props): ReactElement {
   const [state, dispatch] = useReducer(
     (s: State, a: Actions): State => {
       switch (a.type) {
@@ -98,10 +105,11 @@ export function Uploader({ value, extensions, onChange }: Props): ReactElement {
       };
 
       customFile.addFile.handler(response, reject, {
-        acceptedExtensions: extensions
+        acceptedExtensions: extensions,
+        componentId
       });
     }
-  }, [isLoading, extensions]);
+  }, [isLoading, extensions, componentId]);
 
   useEffect(() => {
     if (isWithFile) {

@@ -259,7 +259,7 @@ class RowItems extends EditorArrayComponent {
         const columnWidthConfig = !isOnly
           ? {
               id: "toolbarSettings",
-              type: "popover-dev",
+              type: "popover",
               config: {
                 icon: "nc-cog",
                 title: t("Settings")
@@ -268,7 +268,7 @@ class RowItems extends EditorArrayComponent {
                 {
                   id: "width",
                   label: t("Width"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min,
                     max,
@@ -322,7 +322,7 @@ class RowItems extends EditorArrayComponent {
             ? [
                 {
                   id: "emptyItem",
-                  type: "button",
+                  type: "legacy-button",
                   icon: "nc-add",
                   title: t("Add New Column"),
                   position: 100,
@@ -332,7 +332,7 @@ class RowItems extends EditorArrayComponent {
                 },
                 {
                   id: "duplicate",
-                  type: "button",
+                  type: "legacy-button",
                   icon: "nc-duplicate",
                   title: t("Duplicate"),
                   position: 200,
@@ -344,7 +344,7 @@ class RowItems extends EditorArrayComponent {
             : []),
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             title: t("Delete"),
             icon: "nc-trash",
             disabled: isOnly && insidePopup && !isInner,

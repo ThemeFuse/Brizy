@@ -145,9 +145,15 @@ export function cssStyleElementVideoCoverPaddingBG({
     p.paddingTop === p.paddingLeft &&
     p.paddingTop > 0;
 
-  const bottomMarginGrouped = v.controls === "on" ? "margin-bottom:0;" : "";
+  const isCustomVideo = v.type === "custom";
+
+  const bottomMarginGrouped =
+    v.controls === "on" && isCustomVideo ? "margin-bottom:0;" : "";
+
   const bottomMarginUngrouped =
-    v.controls === "on" ? 0 : `${p.paddingBottom}${p.paddingBottomSuffix}`;
+    v.controls === "on" && isCustomVideo
+      ? 0
+      : `${p.paddingBottom}${p.paddingBottomSuffix}`;
 
   return noEmptyGrouped
     ? `margin: ${p.paddingTop}${p.paddingTopSuffix};${bottomMarginGrouped}`

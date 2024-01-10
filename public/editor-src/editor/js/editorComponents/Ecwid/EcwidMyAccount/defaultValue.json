@@ -89,6 +89,10 @@
     "breadcrumbsColorOpacity": 1,
     "breadcrumbsColorPalette": "color7",
 
+    "hoverBreadcrumbsColorHex": "#0da1cd",
+    "hoverBreadcrumbsColorOpacity": 1,
+    "hoverBreadcrumbsColorPalette": "",
+
     "breadcrumbsHorizontalAlign": "left",
 
     "breadcrumbsSpacing": 10,

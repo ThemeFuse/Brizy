@@ -4,7 +4,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       disabled: true,
       tabs: []
     }

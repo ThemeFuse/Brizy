@@ -10,13 +10,13 @@ export type Map<T extends OptionName> = (
 ) => ToolbarItemType;
 
 export const withOptions = <
-  T extends "popover-dev" | "stateMode-dev" | "group-dev"
+  T extends "popover" | "stateMode-dev" | "group"
 >(
   f: (t: ToolbarItemType) => ToolbarItemType,
   t: GenericToolbarItemType<T>
 ): GenericToolbarItemType<T> => ({ ...t, options: t.options?.map(f) });
 
-export const withTabs = <T extends "tabs-dev" | "sidebarTabs-dev">(
+export const withTabs = <T extends "tabs" | "sidebarTabs">(
   f: (t: ToolbarItemType) => ToolbarItemType,
   t: GenericToolbarItemType<T>
 ): GenericToolbarItemType<T> => ({
@@ -24,7 +24,7 @@ export const withTabs = <T extends "tabs-dev" | "sidebarTabs-dev">(
   tabs: t.tabs?.map((tab) => ({ ...tab, options: tab.options?.map(f) }))
 });
 
-export const withColumns = <T extends "grid-dev">(
+export const withColumns = <T extends "grid">(
   f: (t: ToolbarItemType) => ToolbarItemType,
   t: GenericToolbarItemType<T>
 ): GenericToolbarItemType<T> => ({

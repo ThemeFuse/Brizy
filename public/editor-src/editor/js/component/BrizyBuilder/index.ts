@@ -1,1 +1,6 @@
-export { Metafield, Vendor } from "@brizy/builder-ui";
+export {
+  AlphaMetafield as Metafield,
+  AlphaVendor as Vendor,
+  AlphaPostInfoReact as PostInfoEditor,
+  AlphaPostInfoHtml as PostInfoHtml
+} from "@brizy/builder-ui";

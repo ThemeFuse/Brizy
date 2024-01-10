@@ -1,6 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
-import { getCollectionTypes } from "visual/utils/api";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
@@ -27,7 +26,7 @@ export const getItems: GetItems<Value, Props> = ({
   return [
     {
       id: "toolbarEventLayout",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "t2-event-layout",
         title: t("Event Layout")
@@ -36,7 +35,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -76,13 +75,13 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "featuredViewGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "showFeaturedView",
                       label: t("Featured View"),
-                      type: "switch-dev",
+                      type: "switch",
                       devices: "desktop"
                     },
                     {
@@ -104,44 +103,44 @@ export const getItems: GetItems<Value, Props> = ({
                     {
                       id: "featuredViewHeading",
                       label: t("Heading"),
-                      type: "inputText-dev",
+                      type: "inputText",
                       disabled: isNotFeaturedView
                     },
                     {
                       id: "showFeaturedImages",
                       label: t("Images"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: isNotFeaturedView
                     },
                     {
                       id: "showFeaturedPreview",
                       label: t("Preview"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: isNotFeaturedView
                     },
                     {
                       id: "showFeaturedTitle",
                       label: t("Title"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: isNotFeaturedView
                     },
                     {
                       id: "showFeaturedDate",
                       label: t("Date"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: isNotFeaturedView
                     }
                   ]
                 },
                 {
                   id: "listViewGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "showListView",
                       label: t("List View"),
-                      type: "switch-dev",
+                      type: "switch",
                       devices: "desktop"
                     },
                     {
@@ -163,20 +162,20 @@ export const getItems: GetItems<Value, Props> = ({
                     {
                       id: "listViewHeading",
                       label: t("Heading"),
-                      type: "inputText-dev",
+                      type: "inputText",
                       disabled: isNotListView
                     }
                   ]
                 },
                 {
                   id: "calendarViewGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "showCalendarView",
                       label: t("Calendar View"),
-                      type: "switch-dev",
+                      type: "switch",
                       devices: "desktop"
                     },
                     {
@@ -198,7 +197,7 @@ export const getItems: GetItems<Value, Props> = ({
                     {
                       id: "calendarViewHeading",
                       label: t("Heading"),
-                      type: "inputText-dev",
+                      type: "inputText",
                       disabled: isNotCalendarView
                     }
                   ]
@@ -216,33 +215,14 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Page"),
               options: [
                 {
-                  id: "source",
-                  type: "select-dev",
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  },
-                  helper: {
-                    content: t(
-                      'URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the "Event Detail" widget to be placed on a page and that page url/slug placed in this field.'
-                    )
-                  }
-                },
-                {
                   id: "eventDetailPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Item"),
                   devices: "desktop",
-                  disabled: !v.source,
                   config: {
-                    postType: v.source
+                    helper: t(
+                      'URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the "Event Detail" widget to be placed on a page and that page url/slug placed in this field.'
+                    )
                   }
                 }
               ]
@@ -254,7 +234,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "parentCategory",
                   label: t("Parent Category"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: getEkklesiaChoiches(config, {
                     key: "eventsLvl",
@@ -268,18 +248,18 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "categoryGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "showCategoryFilter",
-                      type: "switch-dev",
+                      type: "switch",
                       label: t("Category"),
                       devices: "desktop"
                     },
                     {
                       id: "categoryFilterParent",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotCategoryFilter,
@@ -295,7 +275,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "categoryFilterList",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotCategoryFilter,
@@ -307,7 +287,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "categoryFilterHeading",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
                       disabled: isNotCategoryFilter
@@ -316,18 +296,18 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "showGroupGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "showGroupFilter",
-                      type: "switch-dev",
+                      type: "switch",
                       label: t("Group"),
                       devices: "desktop"
                     },
                     {
                       id: "groupFilterHeading",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
                       disabled: v.showGroupFilter === "off"
@@ -336,18 +316,18 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "showGroupSearch",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "showSearch",
-                      type: "switch-dev",
+                      type: "switch",
                       label: t("Search"),
                       devices: "desktop"
                     },
                     {
                       id: "searchPlaceholder",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("Placeholder"),
                       devices: "desktop",
                       disabled: v.showSearch === "off"
@@ -362,18 +342,18 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "addCategoryGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "addCategoryFilter",
-                      type: "switch-dev",
+                      type: "switch",
                       label: t("Add Category Filter"),
                       devices: "desktop"
                     },
                     {
                       id: "addCategoryFilterParent",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory1Filter,
@@ -390,7 +370,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "addCategoryFilterList",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotExtraCategory1Filter,
@@ -402,7 +382,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "addCategoryFilterHeading",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
                       disabled: isNotExtraCategory1Filter
@@ -411,18 +391,18 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "addCategoryGroup2",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "addCategoryFilter2",
-                      type: "switch-dev",
+                      type: "switch",
                       label: t("Add Category Filter 2"),
                       devices: "desktop"
                     },
                     {
                       id: "addCategoryFilterParent2",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory2Filter,
@@ -438,7 +418,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "addCategoryFilterList2",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotExtraCategory2Filter,
@@ -450,7 +430,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "addCategoryFilterHeading2",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
                       disabled: isNotExtraCategory2Filter
@@ -460,18 +440,18 @@ export const getItems: GetItems<Value, Props> = ({
 
                 {
                   id: "addCategoryGroup3",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "addCategoryFilter3",
-                      type: "switch-dev",
+                      type: "switch",
                       label: t("Add Category Filter 3"),
                       devices: "desktop"
                     },
                     {
                       id: "addCategoryFilterParent3",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Parent"),
                       devices: "desktop",
                       disabled: isNotExtraCategory3Filter,
@@ -487,7 +467,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "addCategoryFilterList3",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotExtraCategory3Filter,
@@ -499,7 +479,7 @@ export const getItems: GetItems<Value, Props> = ({
                     },
                     {
                       id: "addCategoryFilterHeading3",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
                       disabled: isNotExtraCategory3Filter
@@ -521,13 +501,13 @@ export const getItems: GetItems<Value, Props> = ({
     }),
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "itemHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 80,
       disabled: isNotFeaturedView,
       choices: [
@@ -538,7 +518,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -549,7 +529,7 @@ export const getItems: GetItems<Value, Props> = ({
         {
           id: "itemSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -558,7 +538,7 @@ export const getItems: GetItems<Value, Props> = ({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -568,7 +548,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -582,7 +562,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -597,7 +577,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110,
       disabled: !isNotFeaturedView
     }

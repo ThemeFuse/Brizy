@@ -491,13 +491,13 @@ class Library extends Component<
         this.setState(
           produce((state: LibraryState) => {
             if (blocks.length > 0) {
-              state.data.BLOCK = [...(state.data.BLOCK ?? []), ...blocks];
+              state.data.BLOCK = [...blocks, ...(state.data.BLOCK ?? [])];
             }
             if (popups.length > 0) {
-              state.data.POPUP = [...(state.data.POPUP ?? []), ...popups];
+              state.data.POPUP = [...popups, ...(state.data.POPUP ?? [])];
             }
             if (layouts.length > 0) {
-              state.data.LAYOUT = [...(state.data.LAYOUT ?? []), ...layouts];
+              state.data.LAYOUT = [...layouts, ...(state.data.LAYOUT ?? [])];
             }
           })
         );

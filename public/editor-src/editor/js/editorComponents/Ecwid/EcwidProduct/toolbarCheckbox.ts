@@ -1,21 +1,12 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ACTIVE, HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: checkboxBgColorHex } = getOptionColorHexByPalette(
@@ -26,7 +17,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-check-square-on",
@@ -35,12 +26,12 @@ export function getItems({
       options: [
         {
           id: "groupSize",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "checkboxSize",
               label: t("Size"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "small", icon: "nc-small" },
                 { value: "medium", icon: "nc-medium" },
@@ -51,7 +42,7 @@ export function getItems({
             {
               id: "checkboxCustomSize",
               disabled: dvv("checkboxSize") !== "custom",
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 16,
                 max: 100,
@@ -63,7 +54,7 @@ export function getItems({
         {
           id: "checkboxRightSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -74,7 +65,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       position: 20,
       config: {
         icon: "nc-font",
@@ -84,7 +75,7 @@ export function getItems({
       options: [
         {
           id: "tabsToolbarTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCheckbox",
@@ -92,7 +83,7 @@ export function getItems({
               options: [
                 {
                   id: "checkboxTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: { fontFamily: device === "desktop" }
                 }
               ]
@@ -103,7 +94,7 @@ export function getItems({
               options: [
                 {
                   id: "surchargeTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: { fontFamily: device === "desktop" }
                 }
               ]
@@ -114,7 +105,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 30,
       config: {
         size: "auto",
@@ -132,7 +123,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -140,7 +131,7 @@ export function getItems({
               options: [
                 {
                   id: "checkboxColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -151,7 +142,7 @@ export function getItems({
               options: [
                 {
                   id: "checkbox",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -162,7 +153,7 @@ export function getItems({
               options: [
                 {
                   id: "checkboxBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -173,7 +164,7 @@ export function getItems({
               options: [
                 {
                   id: "checkboxBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -184,7 +175,7 @@ export function getItems({
               options: [
                 {
                   id: "surchargeColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             }
@@ -194,7 +185,7 @@ export function getItems({
     },
     {
       id: "checkboxHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 40,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -204,14 +195,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 50,
       options: [
         {
           id: "checkboxBottomSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -220,7 +211,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",
@@ -232,4 +223,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

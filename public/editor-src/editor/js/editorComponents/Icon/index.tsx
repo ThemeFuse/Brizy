@@ -2,7 +2,6 @@ import classnames from "classnames";
 import React, { Fragment, ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
@@ -32,51 +31,11 @@ import * as sidebarConfig from "./sidebar";
 import { style, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { Patch, PatchValue, Props, Value } from "./types";
-
-const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
-
-const resizerTransformValue = (v: Value): ElementModel => {
-  const {
-    customSize,
-    tabletCustomSize,
-    mobileCustomSize,
-    customSizeSuffix,
-    tabletCustomSizeSuffix,
-    mobileCustomSizeSuffix,
-    ...rest
-  } = v;
-
-  return {
-    ...rest,
-    size: customSize,
-    tabletSize: tabletCustomSize,
-    mobileSize: mobileCustomSize,
-    sizeSuffix: customSizeSuffix,
-    tabletSizeSuffix: tabletCustomSizeSuffix,
-    mobileSizeSuffix: mobileCustomSizeSuffix
-  };
-};
-
-const resizerTransformPatch = (patch: Patch): Patch => {
-  let newPatch = patch;
-
-  if ("size" in patch) {
-    const { size, ..._patch } = patch;
-    newPatch = { ..._patch, customSize: size };
-  }
-
-  if ("tabletSize" in patch) {
-    const { tabletSize, ..._patch } = patch;
-    newPatch = { ..._patch, tabletCustomSize: tabletSize };
-  }
-
-  if ("mobileSize" in patch) {
-    const { mobileSize, ..._patch } = patch;
-    newPatch = { ..._patch, mobileCustomSize: mobileSize };
-  }
-
-  return newPatch;
-};
+import {
+  resizerPoints,
+  resizerTransformPatch,
+  resizerTransformValue
+} from "./utils";
 
 const config = Config.getAll();
 const IS_STORY = isStory(config);
@@ -220,7 +179,6 @@ class Icon extends EditorComponent<Value, Props> {
     return (
       <Fragment>
         <Toolbar
-          // @ts-expect-error: Need transform to ts
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
           <CustomCSS selectorName={this.getId()} css={customCSS}>

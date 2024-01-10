@@ -14,8 +14,6 @@
 
     "breadcrumbsDisplay": "off",
 
-    "collapse": "on",
-
     "collapseDesktop": "on"
   },
 
@@ -41,7 +39,17 @@
       "connectTypographyFontFamily": "lato",
       "connectLinkTypographyFontFamily": "lato",
       "qtyTypographyFontFamily": "lato",
-      "SKUTypographyFontFamily": "lato"
+      "SKUTypographyFontFamily": "lato",
+      "gridTitleTypographyFontFamily": "lato",
+      "gridSubtitleTypographyFontFamily": "lato",
+      "gridSKUInnerTypographyFontFamily": "lato",
+      "gridPriceTypographyFontFamily": "lato",
+      "cartTotalProductsCountTypographyFontFamily": "lato",
+      "subtotalTitleTypographyFontFamily": "lato",
+      "subtotalPriceTypographyFontFamily": "lato",
+      "taxesTitleTypographyFontFamily": "lato",
+      "taxesPriceTypographyFontFamily": "lato",
+      "summaryNoteTypographyFontFamily": "lato"
     },
 
     "parentBgColorType": "solid",
@@ -90,6 +98,10 @@
     "breadcrumbsColorHex": "#000000",
     "breadcrumbsColorOpacity": 1,
     "breadcrumbsColorPalette": "color7",
+
+    "hoverBreadcrumbsColorHex": "#0da1cd",
+    "hoverBreadcrumbsColorOpacity": 1,
+    "hoverBreadcrumbsColorPalette": "",
 
     "breadcrumbsHorizontalAlign": "left",
 
@@ -586,6 +598,9 @@
     "closeBoxShadowVertical": 0,
     "closeBoxShadowHorizontal": 0,
 
+    "closeSpacing": 5,
+    "closeSpacingSuffix": "px",
+
     "SKUTypographyFontStyle": "",
     "SKUTypographyFontFamilyType": "google",
     "SKUTypographyFontSize": 12,
@@ -602,6 +617,214 @@
 
     "SKUSpacing": 10,
     "SKUSpacingSuffix": "px",
+
+    "gridBgColorType": "solid",
+
+    "gridGradientActivePointer": "startPointer",
+    "gridGradientStartPointer": 0,
+    "gridGradientFinishPointer": 100,
+
+    "gridBgColorHex": "#ffffff",
+    "gridBgColorOpacity": 1,
+    "gridBgColorPalette": "",
+
+    "gridGradientColorHex": "#009900",
+    "gridGradientColorOpacity": 0.8,
+    "gridGradientColorPalette": "",
+
+    "gridGradientType": "linear",
+
+    "gridGradientLinearDegree": 90,
+    "gridGradientRadialDegree": 90,
+
+    "gridTitleTypographyFontStyle": "",
+    "gridTitleTypographyFontFamilyType": "google",
+    "gridTitleTypographyFontSize": 14,
+    "gridTitleTypographyFontSizeSuffix": "px",
+    "gridTitleTypographyFontWeight": 400,
+    "gridTitleTypographyLetterSpacing": 1.3,
+    "gridTitleTypographyLineHeight": 1,
+
+    "gridTitleColorHex": "#333333",
+    "gridTitleColorOpacity": 1,
+    "gridTitleColorPalette": "",
+
+    "gridTitleHorizontalAlign": "center",
+
+    "gridTitleSpacing": 2,
+    "gridTitleSpacingSuffix": "px",
+
+    "gridSubtitleTypographyFontStyle": "",
+    "gridSubtitleTypographyFontFamilyType": "google",
+    "gridSubtitleTypographyFontSize": 12,
+    "gridSubtitleTypographyFontSizeSuffix": "px",
+    "gridSubtitleTypographyFontWeight": 400,
+    "gridSubtitleTypographyLetterSpacing": 1.3,
+    "gridSubtitleTypographyLineHeight": 1,
+
+    "gridSubtitleColorHex": "#757575",
+    "gridSubtitleColorOpacity": 1,
+    "gridSubtitleColorPalette": "",
+
+    "gridSubtitleHorizontalAlign": "center",
+
+    "gridSubtitleSpacing": 2,
+    "gridSubtitleSpacingSuffix": "px",
+
+    "gridSKUInnerTypographyFontStyle": "",
+    "gridSKUInnerTypographyFontFamilyType": "google",
+    "gridSKUInnerTypographyFontSize": 12,
+    "gridSKUInnerTypographyFontSizeSuffix": "px",
+    "gridSKUInnerTypographyFontWeight": 400,
+    "gridSKUInnerTypographyLetterSpacing": 1.3,
+    "gridSKUInnerTypographyLineHeight": 1,
+
+    "gridSKUInnerColorHex": "#757575",
+    "gridSKUInnerColorOpacity": 1,
+    "gridSKUInnerColorPalette": "",
+
+    "gridSKUInnerHorizontalAlign": "center",
+
+    "gridSKUInnerSpacing": 2,
+    "gridSKUInnerSpacingSuffix": "px",
+
+    "gridPriceTypographyFontStyle": "",
+    "gridPriceTypographyFontFamilyType": "google",
+    "gridPriceTypographyFontSize": 14,
+    "gridPriceTypographyFontSizeSuffix": "px",
+    "gridPriceTypographyFontWeight": 400,
+    "gridPriceTypographyLetterSpacing": 1.3,
+    "gridPriceTypographyLineHeight": 1,
+
+    "gridPriceColorHex": "#333333",
+    "gridPriceColorOpacity": 1,
+    "gridPriceColorPalette": "",
+
+    "gridPriceHorizontalAlign": "center",
+
+    "gridPriceSpacing": 2,
+    "gridPriceSpacingSuffix": "px",
+
+    "gridSpacing": 10,
+    "gridSpacingSuffix": "px",
+
+    "collapsedImageBorderStyle": "none",
+
+    "collapsedImageBorderColorHex": "#239ddb",
+    "collapsedImageBorderColorOpacity": 0,
+    "collapsedImageBorderColorPalette": "",
+
+    "collapsedImageBorderRadiusType": "grouped",
+
+    "collapsedImageBorderRadius": 0,
+    "collapsedImageBorderRadiusSuffix": "px",
+
+    "collapsedImageBorderWidthType": "grouped",
+
+    "collapsedImageBorderWidth": 2,
+    "collapsedImageBorderTopWidth": 2,
+    "collapsedImageBorderRightWidth": 2,
+    "collapsedImageBorderBottomWidth": 2,
+    "collapsedImageBorderLeftWidth": 2,
+
+    "collapsedImageBorderTopLeftRadius": 0,
+    "collapsedImageBorderTopRightRadius": 0,
+    "collapsedImageBorderBottomRightRadius": 0,
+    "collapsedImageBorderBottomLeftRadius": 0,
+
+    "collapsedImageBorderTopLeftRadiusSuffix": "px",
+    "collapsedImageBorderTopRightRadiusSuffix": "px",
+    "collapsedImageBorderBottomRightRadiusSuffix": "px",
+    "collapsedImageBorderBottomLeftRadiusSuffix": "px",
+
+    "collapsedImageBoxShadow": "none",
+
+    "collapsedImageBoxShadowColorHex": "#000000",
+    "collapsedImageBoxShadowColorOpacity": 0,
+    "collapsedImageBoxShadowColorPalette": "",
+
+    "collapsedImageBoxShadowBlur": 0,
+    "collapsedImageBoxShadowSpread": 0,
+    "collapsedImageBoxShadowVertical": 0,
+    "collapsedImageBoxShadowHorizontal": 0,
+
+    "collapsedImageWidth": 80,
+    "collapsedImageWidthSuffix": "px",
+
+    "collapsedImageSpacing": 16,
+    "collapsedImageSpacingSuffix": "px",
+
+    "cartTotalProductsCountTypographyFontStyle": "",
+    "cartTotalProductsCountTypographyFontFamilyType": "google",
+    "cartTotalProductsCountTypographyFontSize": 16,
+    "cartTotalProductsCountTypographyFontSizeSuffix": "px",
+    "cartTotalProductsCountTypographyFontWeight": 400,
+    "cartTotalProductsCountTypographyLetterSpacing": 1.3,
+    "cartTotalProductsCountTypographyLineHeight": 1,
+
+    "cartTotalProductsCountColorHex": "#000000",
+    "cartTotalProductsCountColorOpacity": 1,
+    "cartTotalProductsCountColorPalette": "",
+
+    "subtotalTitleColorHex": "#333333",
+    "subtotalTitleColorOpacity": 1,
+    "subtotalTitleColorPalette": "",
+
+    "subtotalTitleTypographyFontStyle": "",
+    "subtotalTitleTypographyFontFamilyType": "google",
+    "subtotalTitleTypographyFontSize": 16,
+    "subtotalTitleTypographyFontSizeSuffix": "px",
+    "subtotalTitleTypographyFontWeight": 400,
+    "subtotalTitleTypographyLetterSpacing": 1.3,
+    "subtotalTitleTypographyLineHeight": 1.4,
+
+    "subtotalPriceColorHex": "#333333",
+    "subtotalPriceColorOpacity": 1,
+    "subtotalPriceColorPalette": "",
+
+    "subtotalPriceTypographyFontStyle": "",
+    "subtotalPriceTypographyFontFamilyType": "google",
+    "subtotalPriceTypographyFontSize": 16,
+    "subtotalPriceTypographyFontSizeSuffix": "px",
+    "subtotalPriceTypographyFontWeight": 400,
+    "subtotalPriceTypographyLetterSpacing": 1.3,
+    "subtotalPriceTypographyLineHeight": 1.4,
+
+    "taxesTitleColorHex": "#333333",
+    "taxesTitleColorOpacity": 1,
+    "taxesTitleColorPalette": "",
+
+    "taxesTitleTypographyFontStyle": "",
+    "taxesTitleTypographyFontFamilyType": "google",
+    "taxesTitleTypographyFontSize": 16,
+    "taxesTitleTypographyFontSizeSuffix": "px",
+    "taxesTitleTypographyFontWeight": 400,
+    "taxesTitleTypographyLetterSpacing": 1.3,
+    "taxesTitleTypographyLineHeight": 1.4,
+
+    "taxesPriceColorHex": "#333333",
+    "taxesPriceColorOpacity": 1,
+    "taxesPriceColorPalette": "",
+
+    "taxesPriceTypographyFontStyle": "",
+    "taxesPriceTypographyFontFamilyType": "google",
+    "taxesPriceTypographyFontSize": 16,
+    "taxesPriceTypographyFontSizeSuffix": "px",
+    "taxesPriceTypographyFontWeight": 400,
+    "taxesPriceTypographyLetterSpacing": 1.3,
+    "taxesPriceTypographyLineHeight": 1.4,
+
+    "summaryNoteColorHex": "#757575",
+    "summaryNoteColorOpacity": 1,
+    "summaryNoteColorPalette": "",
+
+    "summaryNoteTypographyFontStyle": "",
+    "summaryNoteTypographyFontFamilyType": "google",
+    "summaryNoteTypographyFontSize": 14,
+    "summaryNoteTypographyFontSizeSuffix": "px",
+    "summaryNoteTypographyFontWeight": 400,
+    "summaryNoteTypographyLetterSpacing": 1.3,
+    "summaryNoteTypographyLineHeight": 1.4,
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": ""

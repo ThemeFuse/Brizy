@@ -20,11 +20,11 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "background",
@@ -47,7 +47,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -57,7 +57,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -66,7 +66,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypographyCheckbox",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -76,7 +76,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "checkbox",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -86,7 +86,7 @@ export function getItems({ v, device }) {
 
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -101,7 +101,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -109,7 +109,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -120,7 +120,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -131,7 +131,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -142,7 +142,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -153,7 +153,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColorCheckbox",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -171,7 +171,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "checkboxColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     }

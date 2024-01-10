@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Toolbar from "visual/component/Toolbar";
+import { t } from "visual/utils/i18n";
 
 class ColorPalette extends React.Component {
   static defaultProps = {
@@ -65,7 +66,7 @@ class ColorPalette extends React.Component {
       const getToolbarItems = () => [
         {
           id: "settings",
-          type: "popover",
+          type: "legacy-popover",
           icon: "nc-cog",
           display: "inside",
           size: "auto",
@@ -74,8 +75,8 @@ class ColorPalette extends React.Component {
           options: [
             {
               id: "backgroundColor",
-              type: "colorPicker-dev",
-              label: "Color HEX",
+              type: "colorPicker",
+              label: t("Color HEX"),
               config: {
                 opacity: false,
                 isPaletteHidden: true

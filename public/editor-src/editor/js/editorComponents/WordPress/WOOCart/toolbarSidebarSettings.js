@@ -1,10 +1,10 @@
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
     dvv("sidebarBgColorHex"),
@@ -14,7 +14,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "cartHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: dvv("sidebarWidth") >= 100 && dvv("sidebarWidthSuffix") === "%",
       position: 90,
       choices: [
@@ -25,7 +25,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "cartVerticalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled:
         dvv("sidebarHeightStyle") === "fullHeight" ||
         (dvv("sidebarHeight") >= 100 &&
@@ -40,7 +40,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -55,20 +55,20 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "sidebarBgColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       roles: ["admin"],
       position: 110,
       options: [
         {
           id: "sidebarWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: dvv("sidebarWidthSuffix") === "px" ? 500 : 100,
@@ -80,13 +80,13 @@ export function getItems({ v, device }) {
         },
         {
           id: "groupHeight",
-          type: "group-dev",
+          type: "group",
           position: 100,
           options: [
             {
               id: "sidebarHeightStyle",
               label: t("Height"),
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: t("Auto"), value: "auto" },
                 { title: t("Custom"), value: "custom" },
@@ -95,7 +95,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "sidebarHeight",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("sidebarHeightStyle") !== "custom",
               config: {
                 min: 20,

@@ -17,7 +17,7 @@ describe("Testing 'bindPopulation' function", function () {
   };
   const option: ToolbarItemType = {
     id: "test",
-    type: "imageUpload-dev"
+    type: "imageUpload"
   };
   const withPopulation = { ...option, population: { choices: [method] } };
   const choices: (Choices<string | number> | OptGroup<string | number>)[] = [
@@ -43,7 +43,7 @@ describe("Testing 'bindPopulation' function", function () {
   test("If population is not defined, return original option", () => {
     const i: ToolbarItemType = {
       id: "test",
-      type: "imageUpload-dev"
+      type: "imageUpload"
     };
 
     expect(bindPopulation(i)).toEqual(i);
@@ -52,7 +52,7 @@ describe("Testing 'bindPopulation' function", function () {
   test("If option is not in development, return original option", () => {
     const i: ToolbarItemType = {
       id: "test",
-      type: "imageUpload-dev"
+      type: "imageUpload"
     };
 
     expect(bindPopulation(i)).toEqual(i);
@@ -61,7 +61,7 @@ describe("Testing 'bindPopulation' function", function () {
   test("Wrap option in a population option type", () => {
     const option: ToolbarItemType = {
       id: "test",
-      type: "imageUpload-dev"
+      type: "imageUpload"
     };
     const withPopulation = {
       ...option,

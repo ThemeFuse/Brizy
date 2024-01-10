@@ -32,8 +32,11 @@ export default function (config: ConfigCommon) {
                             {
                               type: "Image",
                               value: {
-                                _styles: ["image", "image--dynamic"],
+                                _styles: ["image"],
                                 imagePopulation:
+                                  config?.contentDefaults?.[
+                                    ElementTypes.ShopifyImage
+                                  ]?.imagePopulation ??
                                   "{{ brizy_dc_img_featured_image }}"
                               }
                             }
@@ -58,7 +61,8 @@ export default function (config: ConfigCommon) {
                                   "postTitle-posts",
                                   "postTitle-posts-posts"
                                 ],
-                                linkPopulation: "{{brizy_dc_url_post}}"
+                                linkPopulation: "{{brizy_dc_url_post}}",
+                                linkExternalType: "linkPopulation"
                               }
                             }
                           ]

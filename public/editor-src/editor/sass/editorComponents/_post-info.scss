@@ -1,0 +1,30 @@
+.brz-post-info {
+  display: flex;
+  width: 100%;
+
+  .brz-ui-ed-list .brz-ui-ed-list-items {
+    display: flex;
+    flex-wrap: wrap;
+    word-break: break-all;
+
+    .brz-ui-ed-list-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      border-bottom: 0;
+      padding: 0;
+
+      svg {
+        margin-right: 0.5em;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

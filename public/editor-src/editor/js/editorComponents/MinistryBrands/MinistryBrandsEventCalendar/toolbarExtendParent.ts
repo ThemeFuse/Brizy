@@ -1,6 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
-import { getCollectionTypes } from "visual/utils/api";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
@@ -17,7 +16,7 @@ export const getItems: GetItems<Value, Props> = ({
   return [
     {
       id: "toolbarEventDetail",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "t2-event-calendar",
         title: t("Event Calendar")
@@ -26,7 +25,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -40,7 +39,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "category",
                   label: t("Category"),
-                  type: "select-dev",
+                  type: "select",
                   choices: getEkklesiaChoiches(config, {
                     key: "event"
                   })
@@ -48,7 +47,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "group",
                   label: t("Group"),
-                  type: "select-dev",
+                  type: "select",
                   choices: getEkklesiaChoiches(config, {
                     key: "groups"
                   })
@@ -80,33 +79,14 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Page"),
               options: [
                 {
-                  id: "source",
-                  type: "select-dev",
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  },
-                  helper: {
-                    content: t(
-                      "URL of event detail page. If used will add a link to the calendar titles to take the user to the event detail page. Requires the 'Event Detail' widget to be placed on a page and that page url/slug placed in this field."
-                    )
-                  }
-                },
-                {
                   id: "detailPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Item"),
                   devices: "desktop",
-                  disabled: !v.source,
                   config: {
-                    postType: v.source
+                    helper: t(
+                      "URL of event detail page. If used will add a link to the calendar titles to take the user to the event detail page. Requires the 'Event Detail' widget to be placed on a page and that page url/slug placed in this field."
+                    )
                   }
                 }
               ]
@@ -117,7 +97,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "features",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Featured"),
                   helper: {
                     content: t(
@@ -127,7 +107,7 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "nonfeatures",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Non Featured"),
                   helper: {
                     content: t(
@@ -137,13 +117,13 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "showEventTime",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Event Start Time"),
                   devices: "desktop"
                 },
                 {
                   id: "showSubscribeToCalendarButton",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Subscribe to Calendar"),
                   devices: "desktop"
                 }
@@ -156,7 +136,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "borderSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 100,
@@ -176,6 +156,6 @@ export const getItems: GetItems<Value, Props> = ({
       context,
       component
     }),
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] }
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] }
   ];
 };

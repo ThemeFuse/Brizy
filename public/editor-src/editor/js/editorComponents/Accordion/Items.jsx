@@ -94,7 +94,7 @@ class AccordionItems extends EditorArrayComponent {
         },
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-duplicate",
           title: t("Duplicate"),
@@ -105,7 +105,7 @@ class AccordionItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-trash",
           title: t("Delete"),

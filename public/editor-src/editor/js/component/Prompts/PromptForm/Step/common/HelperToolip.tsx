@@ -1,7 +1,8 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { FormField } from "../../../common/GlobalApps/type";
 import { copyTextToClipboard } from "visual/component/Prompts/common/utils";
+import { t } from "visual/utils/i18n";
+import { FormField } from "../../../common/GlobalApps/type";
 
 export interface Props {
   fields: FormField[];
@@ -35,7 +36,7 @@ export const HelperCopy = (props: Props): ReactElement => {
       {fields.map((field, index) => (
         <p
           key={index}
-          title="Click to copy"
+          title={t("Click to copy")}
           className="brz-p brz-helper__copy--fields"
           onClick={(): void => {
             handleCopy(field.label);

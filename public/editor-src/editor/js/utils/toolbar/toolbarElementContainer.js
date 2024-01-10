@@ -8,13 +8,13 @@ export function toolbarElementContainerTypeImageMap({
   state,
   states
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("media"),
     label: t("Type"),
-    type: "radioGroup",
+    type: "legacy-radioGroup",
     devices,
     states,
     choices: [

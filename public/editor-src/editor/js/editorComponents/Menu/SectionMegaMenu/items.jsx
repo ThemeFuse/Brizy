@@ -1,11 +1,11 @@
 import React from "react";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component/Sortable";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
+import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
-import { ContextMenuExtend } from "visual/component/ContextMenu";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 class SectionMegaMenuItems extends EditorArrayComponent {
@@ -23,7 +23,7 @@ class SectionMegaMenuItems extends EditorArrayComponent {
       getItems: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-duplicate",
           title: t("Duplicate"),
@@ -34,7 +34,7 @@ class SectionMegaMenuItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-trash",
           title: t("Delete"),

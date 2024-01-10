@@ -5,7 +5,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -21,18 +21,18 @@ export function getItems({ v, device }) {
     }),
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTab",
               options: [
                 {
                   id: "itemPadding",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Spacing"),
                   roles: ["admin"],
                   position: 350,

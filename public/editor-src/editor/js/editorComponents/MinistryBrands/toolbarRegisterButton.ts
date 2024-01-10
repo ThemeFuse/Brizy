@@ -26,7 +26,7 @@ export const getItems = <
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -36,7 +36,7 @@ export const getItems = <
       options: [
         {
           id: "registerButtonTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -45,7 +45,7 @@ export const getItems = <
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Colors"),
         size: "medium",
@@ -63,7 +63,7 @@ export const getItems = <
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBgColor",
@@ -71,7 +71,7 @@ export const getItems = <
               options: [
                 {
                   id: "registerButton",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -82,7 +82,7 @@ export const getItems = <
               options: [
                 {
                   id: "registerButtonColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -94,7 +94,7 @@ export const getItems = <
               options: [
                 {
                   id: "registerButtonBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -106,7 +106,7 @@ export const getItems = <
               options: [
                 {
                   id: "registerButtonBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]

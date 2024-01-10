@@ -16,68 +16,66 @@ type Filters = {
 
 const fns: Filters = {
   "aiText-dev": undefined,
-  "alert-dev": undefined,
-  "animation-dev": undefined,
-  "backgroundColor-dev": undefined,
-  "border-dev": undefined,
-  "boxShadow-dev": undefined,
+  alert: undefined,
+  animation: undefined,
+  backgroundColor: undefined,
+  border: undefined,
+  boxShadow: undefined,
   "button-dev": undefined,
   "codeMirror-dev": undefined,
-  "colorPicker-dev": undefined,
-  "corners-dev": undefined,
-  "fileUpload-dev": undefined,
+  colorPicker: undefined,
+  corners: undefined,
+  fileUpload: undefined,
   "filters-dev": undefined,
-  "gallery-dev": undefined,
-  "gallery-for-gallery-dev": undefined,
-  "grid-dev": withColumns,
-  "group-dev": withOptions,
-  "iconPicker-dev": undefined,
-  "iconsPicker-dev": undefined,
-  "iconSetter-dev": undefined,
-  "imageUpload-dev": undefined,
-  "inputText-dev": undefined,
-  "internalLink-dev": undefined,
-  "margin-dev": undefined,
-  "motion-dev": undefined,
-  "multiSelect-dev": undefined,
+  gallery: undefined,
+  "gallery-for-gallery": undefined,
+  grid: withColumns,
+  group: withOptions,
+  iconPicker: undefined,
+  iconsPicker: undefined,
+  iconSetter: undefined,
+  imageUpload: undefined,
+  inputText: undefined,
+  internalLink: undefined,
+  margin: undefined,
+  motion: undefined,
+  multiSelect: undefined,
   "number-dev": undefined,
   "order-dev": undefined,
-  "padding-dev": undefined,
+  padding: undefined,
   "paypal-dev": undefined,
-  "popover-dev": withOptions,
+  popover: withOptions,
   "population-dev": undefined,
-  "radioGroup-dev": undefined,
-  "range-dev": undefined,
-  "select-dev": undefined,
-  "sidebarTabs-dev": withTabs,
-  "sidebarTabsButton-dev": undefined,
-  "slider-dev": undefined,
+  radioGroup: undefined,
+  range: undefined,
+  select: undefined,
+  sidebarTabs: withTabs,
+  sidebarTabsButton: undefined,
+  slider: undefined,
   "stateMode-dev": withOptions,
-  "switch-dev": undefined,
-  "tabs-dev": withTabs,
-  "textarea-dev": undefined,
-  "textShadow-dev": undefined,
-  "toggle-dev": undefined,
-  "typography-dev": undefined,
-  "transform-dev": undefined,
-  "savedBlock-dev": undefined,
-  "globalBlock-dev": undefined,
-  "formApps-dev": undefined,
-  // @ts-expect-error Old option, here should not be "tabs" option, it will be removed when all toolbars will work with "tabs-dev"
+  switch: undefined,
   tabs: withTabs,
-  // Old option, here should not be "grid" option, it will be removed when all toolbars will work with "grid-dev"
-  grid: withColumns,
-  // Old option, here should not be "popover" option, it will be removed when all toolbars will work with "popover-dev"
-  popover: withOptions
+  textarea: undefined,
+  textShadow: undefined,
+  toggle: undefined,
+  typography: undefined,
+  transform: undefined,
+  "savedBlock-dev": undefined,
+  globalBlock: undefined,
+  formApps: undefined,
+  // @ts-expect-error Old option, here should not be "grid" option, it will be removed when all toolbars will work with "grid-dev"
+  "legacy-grid": withColumns,
+  // Old option, here should not be "popover" option, it will be removed when all toolbars will work with "popover"
+  "legacy-popover": withOptions
 };
 
 const getFilter = <T extends OptionName>(
   t: T
 ):
   | ((
-  f: (t: ToolbarItemType) => ToolbarItemType | undefined,
-  t: GenericToolbarItemType<T>
-) => GenericToolbarItemType<T>)
+      f: (t: ToolbarItemType) => ToolbarItemType | undefined,
+      t: GenericToolbarItemType<T>
+    ) => GenericToolbarItemType<T>)
   | undefined =>
   // @ts-expect-error, Need to find a way to filter better options with filters
   fns[t];

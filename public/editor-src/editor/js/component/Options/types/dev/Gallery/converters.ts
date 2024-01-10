@@ -10,12 +10,12 @@ import { isT, onNullish } from "visual/utils/value";
 import { Image, fromRecord } from "./types/Image";
 
 export const defaultValue: Image[] = [];
-export const fromElementModel: FromElementModel<"gallery-dev"> = pipe(
+export const fromElementModel: FromElementModel<"gallery"> = pipe(
   mPipe(callGetter("value"), Json.read, pass(Array.isArray), (vs): Image[] =>
     vs.filter(isObject).map(fromRecord).filter(isT)
   ),
   onNullish<Image[]>([])
 );
-export const toElementModel: ToElementModel<"gallery-dev"> = (v) => ({
+export const toElementModel: ToElementModel<"gallery"> = (v) => ({
   value: JSON.stringify(v)
 });

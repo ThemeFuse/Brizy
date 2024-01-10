@@ -15,7 +15,7 @@ export const getItems = ({ v, device, state }) => {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -25,7 +25,7 @@ export const getItems = ({ v, device, state }) => {
       options: [
         {
           id: "typography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -34,7 +34,7 @@ export const getItems = ({ v, device, state }) => {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -49,7 +49,7 @@ export const getItems = ({ v, device, state }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -57,7 +57,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -69,7 +69,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "buttonColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -81,7 +81,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "buttonBorder",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -93,7 +93,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -105,7 +105,7 @@ export const getItems = ({ v, device, state }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog"
       },
@@ -114,7 +114,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -124,7 +124,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -133,7 +133,7 @@ export const getItems = ({ v, device, state }) => {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -142,7 +142,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -157,7 +157,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

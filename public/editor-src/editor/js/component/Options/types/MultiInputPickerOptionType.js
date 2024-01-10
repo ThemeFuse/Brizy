@@ -1,19 +1,20 @@
+import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import EditorIcon from "visual/component/EditorIcon";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
+import EditorIcon from "visual/component/EditorIcon";
 import {
   GROUPED,
   UNGROUPED
 } from "visual/component/Options/types/dev/Border/entities/widthType";
+import { t } from "visual/utils/i18n";
 
 class MultiInputPickerOptionType extends React.Component {
   static defaultProps = {
     className: "",
     display: "inline",
     icon: "nc-combined-shape",
-    label: "Size",
+    label: t("Size"),
     min: -9999,
     max: 9999,
     step: 1,
@@ -92,7 +93,7 @@ class MultiInputPickerOptionType extends React.Component {
             max={max}
             step={step}
             value={v}
-            onChange={v => this.handleInputValueChange(index, v)}
+            onChange={(v) => this.handleInputValueChange(index, v)}
           />
         ))}
         <button className={buttonClassName} onClick={this.handleClick}>

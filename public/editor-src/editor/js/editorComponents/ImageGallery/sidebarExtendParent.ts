@@ -11,7 +11,9 @@ import type { Props, Value } from "./types";
 export const title = t("Gallery");
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -27,7 +29,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -36,7 +38,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -66,7 +68,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -86,7 +88,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -102,7 +104,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       devices: "desktop",
                       disabled: IS_STORY,
                       config: {

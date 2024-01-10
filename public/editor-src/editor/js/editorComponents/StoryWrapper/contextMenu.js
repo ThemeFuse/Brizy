@@ -67,7 +67,7 @@ function getItems(v) {
   const { essentials } = Editor.getShortcodes();
 
   const { icon = "" } =
-    essentials.find(
+    essentials?.find(
       (item) => item.component.resolve.value.items?.type === v.items[0].type
     ) || {};
 

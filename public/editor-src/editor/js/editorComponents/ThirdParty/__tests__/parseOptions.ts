@@ -19,13 +19,13 @@ const testCase: Array<testCase> = [
     options: [
       {
         id: "toolbarSettings",
-        type: "popover-dev",
+        type: "popover",
         position: 1,
         options: [
           {
             id: "price",
             label: "Price",
-            type: "inputText-dev"
+            type: "inputText"
           }
         ]
       }
@@ -39,24 +39,24 @@ const testCase: Array<testCase> = [
     options: [
       {
         id: "toolbarSettings",
-        type: "popover-dev",
+        type: "popover",
         position: 1,
         options: [
           {
             id: "price",
             label: "Price",
-            type: "inputText-dev"
+            type: "inputText"
           }
         ]
       },
       {
         id: "toolbarSettings2",
-        type: "popover-dev",
+        type: "popover",
         position: 2,
         options: [
           {
             id: "tabsCurrentElement",
-            type: "tabs-dev",
+            type: "tabs",
             tabs: [
               {
                 id: "tabCurrentElementUpload",
@@ -65,7 +65,7 @@ const testCase: Array<testCase> = [
                   {
                     id: "url",
                     label: "Link",
-                    type: "inputText-dev",
+                    type: "inputText",
                     placeholder: "SoundCloud Link"
                   },
                   {
@@ -93,18 +93,18 @@ const testCase: Array<testCase> = [
     options: [
       {
         id: "toolbarSettings",
-        type: "popover-dev",
+        type: "popover",
         position: 3,
         options: [
           {
             id: "price",
             label: "Price",
-            type: "inputText-dev"
+            type: "inputText"
           },
           {
             id: "discount",
             label: "Discount",
-            type: "inputText-dev"
+            type: "inputText"
           }
         ]
       }

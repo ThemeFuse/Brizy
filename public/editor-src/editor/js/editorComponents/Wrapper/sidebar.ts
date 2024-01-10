@@ -21,7 +21,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -30,7 +30,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -45,13 +45,13 @@ export const getItems: GetItems = ({ v, device, context }) => {
                     {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
-                      type: "switch-dev",
+                      type: "switch",
                       position: 10,
                       closeTooltip: true
                     },
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50
                     },
@@ -59,17 +59,17 @@ export const getItems: GetItems = ({ v, device, context }) => {
                       id: "margin",
                       devices: "desktop",
                       label: t("Margin"),
-                      type: "margin-dev",
+                      type: "margin",
                       position: 60
                     },
                     {
                       id: "groupPosition",
-                      type: "group-dev",
+                      type: "group",
                       options: [
                         {
                           id: "elementPosition",
                           label: t("Position"),
-                          type: "select-dev",
+                          type: "select",
                           choices: [
                             { value: "relative", title: t("None") },
                             { value: "absolute", title: t("Absolute") },
@@ -79,7 +79,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                         {
                           id: "width",
                           label: t("Width"),
-                          type: "slider-dev",
+                          type: "slider",
                           disabled: isRelative,
                           config: {
                             min: 0,
@@ -93,7 +93,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                         {
                           id: "offsetXAlignment",
                           label: t("Horizontal Offset"),
-                          type: "radioGroup-dev",
+                          type: "radioGroup",
                           disabled: isRelative,
                           choices: [
                             { value: "left", icon: "nc-align-left" },
@@ -102,7 +102,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                         },
                         {
                           id: "offsetX",
-                          type: "slider-dev",
+                          type: "slider",
                           disabled: isRelative,
                           config: {
                             min: dvv("offsetXSuffix") === "px" ? -1200 : -100,
@@ -116,7 +116,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                         {
                           id: "offsetYAlignment",
                           label: t("Vertical Offset"),
-                          type: "radioGroup-dev",
+                          type: "radioGroup",
                           disabled: isRelative,
                           choices: [
                             { value: "top", icon: "nc-align-top" },
@@ -125,7 +125,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                         },
                         {
                           id: "offsetY",
-                          type: "slider-dev",
+                          type: "slider",
                           disabled: isRelative,
                           config: {
                             min: -1200,
@@ -144,7 +144,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                   options: [
                     {
                       id: "zIndex",
-                      type: "slider-dev",
+                      type: "slider",
                       position: 20,
                       label: t("Z-index"),
                       config: {
@@ -167,7 +167,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                       config: richTextDC,
                       option: {
                         id: "customID",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -185,7 +185,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                       config: richTextDC,
                       option: {
                         id: "customClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -209,7 +209,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
             },
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               position: 50
@@ -218,18 +218,18 @@ export const getItems: GetItems = ({ v, device, context }) => {
               id: "margin",
               devices: "responsive",
               label: t("Margin"),
-              type: "margin-dev",
+              type: "margin",
               position: 60
             },
             {
               id: "groupPosition",
-              type: "group-dev",
+              type: "group",
               devices: "responsive",
               options: [
                 {
                   id: "elementPosition",
                   label: t("Position"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { value: "relative", title: "None" },
                     { value: "absolute", title: "Absolute" },
@@ -239,7 +239,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                 {
                   id: "width",
                   label: t("Width"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: isRelative,
                   config: {
                     min: 0,
@@ -253,7 +253,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                 {
                   id: "offsetXAlignment",
                   label: t("Horizontal Offset"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: isRelative,
                   choices: [
                     { value: "left", icon: "nc-align-left" },
@@ -262,7 +262,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                 },
                 {
                   id: "offsetX",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: isRelative,
                   config: {
                     min: dvv("offsetXSuffix") === "px" ? -1200 : -100,
@@ -276,7 +276,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                 {
                   id: "offsetYAlignment",
                   label: t("Vertical Offset"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: isRelative,
                   choices: [
                     { value: "top", icon: "nc-align-top" },
@@ -285,7 +285,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                 },
                 {
                   id: "offsetY",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: isRelative,
                   config: {
                     min: -1200,
@@ -304,7 +304,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -315,7 +315,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev"
+                      type: "animation"
                     }
                   ]
                 },
@@ -325,7 +325,7 @@ export const getItems: GetItems = ({ v, device, context }) => {
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       devices: "desktop",
                       config: {
                         types: hoverEffects,

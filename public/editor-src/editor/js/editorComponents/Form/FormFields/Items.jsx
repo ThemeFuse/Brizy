@@ -1,5 +1,5 @@
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
 
 export default class FormItemItems extends EditorArrayComponent {
@@ -16,7 +16,7 @@ export default class FormItemItems extends EditorArrayComponent {
       getItems: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-duplicate",
           title: t("Duplicate"),
@@ -29,7 +29,7 @@ export default class FormItemItems extends EditorArrayComponent {
           ? [
               {
                 id: "remove",
-                type: "button",
+                type: "legacy-button",
                 devices: "desktop",
                 icon: "nc-trash",
                 title: t("Delete"),

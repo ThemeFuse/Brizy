@@ -306,7 +306,7 @@ export const multiUpload = (
 
   const { imageSrc, imageFileName, imageExtension } = items[0].value;
 
-  // gallery-dev option does not know that we have cloned image and when we change something from toolbar we lose that cloned image
+  // gallery option does not know that we have cloned image and when we change something from toolbar we lose that cloned image
   const newItem =
     layout === "bigImage"
       ? setIds({

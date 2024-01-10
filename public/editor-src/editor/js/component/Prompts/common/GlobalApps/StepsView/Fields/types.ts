@@ -16,7 +16,7 @@ export interface InputData extends BaseData {
 }
 
 export interface SelectData extends BaseData {
-  type: "select";
+  type: "legacy-select";
   value: string | null;
   choices: {
     title: string;
@@ -62,7 +62,7 @@ export const isInput = (o: AllData): o is InputData => {
 };
 
 export const isSelect = (o: AllData): o is SelectData => {
-  return o.type === "select";
+  return o.type === "legacy-select";
 };
 
 export const isSwitch = (o: AllData): o is SwitchData => {

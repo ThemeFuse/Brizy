@@ -61,7 +61,7 @@ export function getItems({ v, component, device, context }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -70,7 +70,7 @@ export function getItems({ v, component, device, context }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -79,7 +79,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "media",
                   label: t("Type"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   devices: "desktop",
                   choices: [
                     { value: "image", icon: "nc-media-image" },
@@ -90,14 +90,14 @@ export function getItems({ v, component, device, context }) {
                 {
                   label: t("Image"),
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   disabled: dvv("media") !== "image",
                   population: imageDynamicContentChoices
                 },
                 {
                   id: "bgVideoType",
                   label: t("Video type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: videoMedia,
                   choices: [
@@ -110,7 +110,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "bgVideo",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: videoMedia || customType,
                   placeholder: youtubeType
@@ -131,7 +131,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "bgVideoCustom",
                   label: t("File"),
-                  type: "fileUpload-dev",
+                  type: "fileUpload",
                   config: {
                     allowedExtensions: ["video/*"]
                   },
@@ -141,7 +141,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "bgVideoLoop",
                   label: t("Loop"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: dvv("media") !== "video"
                 },
@@ -163,7 +163,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "bgMapAddress",
                   label: t("Address"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: t("Enter address"),
                   devices: "desktop",
                   disabled: dvv("media") !== "map"
@@ -171,7 +171,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "bgMapZoom",
                   label: t("Zoom"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: dvv("media") !== "map",
                   config: {
                     min: 1,
@@ -189,13 +189,13 @@ export function getItems({ v, component, device, context }) {
                   id: "maskShape",
                   label: t("Shape"),
                   devices: "desktop",
-                  type: "select-dev",
+                  type: "select",
                   choices: MaskShapes,
                   disabled: disableMaskTab
                 },
                 {
                   id: "maskCustomUpload",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop",
                   label: t("Image"),
                   config: {
@@ -210,18 +210,18 @@ export function getItems({ v, component, device, context }) {
                 },
                 {
                   id: "groupSize",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskSize",
                       label: t("Size"),
-                      type: "select-dev",
+                      type: "select",
                       choices: MaskSizes
                     },
                     {
                       id: "maskScale",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskSize !== "custom",
                       config: {
                         min: 1,
@@ -236,19 +236,19 @@ export function getItems({ v, component, device, context }) {
                 },
                 {
                   id: "groupPosition",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskPosition",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Position"),
                       choices: MaskPositions
                     },
                     {
                       id: "maskPositionx",
                       label: t("X"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -259,7 +259,7 @@ export function getItems({ v, component, device, context }) {
                     {
                       id: "maskPositiony",
                       label: t("Y"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -272,7 +272,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "maskRepeat",
                   label: t("Repeat"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
                   choices: MaskRepeat
                 }
@@ -284,7 +284,7 @@ export function getItems({ v, component, device, context }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -299,7 +299,7 @@ export function getItems({ v, component, device, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabOverlay",
@@ -307,7 +307,7 @@ export function getItems({ v, component, device, context }) {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev"
+                  type: "backgroundColor"
                 }
               ]
             },
@@ -317,7 +317,7 @@ export function getItems({ v, component, device, context }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             },
@@ -327,7 +327,7 @@ export function getItems({ v, component, device, context }) {
               options: [
                 {
                   id: "maskShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER],
                   disabled: maskShapeIsDisabled
                 }
@@ -354,7 +354,7 @@ export function getItems({ v, component, device, context }) {
 
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],

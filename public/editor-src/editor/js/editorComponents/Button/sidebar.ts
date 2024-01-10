@@ -27,7 +27,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -36,7 +36,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -51,7 +51,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                     {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: IS_STORY,
                       position: 10,
                       closeTooltip: true,
@@ -72,7 +72,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                       config: richTextDC,
                       option: {
                         id: "customID",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -90,7 +90,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                       config: richTextDC,
                       option: {
                         id: "customClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -99,7 +99,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                       disabled: IS_STORY,
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -119,7 +119,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -131,7 +131,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       disabled: IS_STORY,
                       devices: "desktop",
                       config: {

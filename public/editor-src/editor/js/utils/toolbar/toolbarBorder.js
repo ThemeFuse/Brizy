@@ -50,7 +50,7 @@ export function toolbarBorderWidthFourFields2({
   return {
     devices,
     id: dvk(width),
-    type: "multiInputPicker",
+    type: "legacy-multiInputPicker",
     states,
     label: dvv(type) === "grouped" && t("Size"),
     value: {

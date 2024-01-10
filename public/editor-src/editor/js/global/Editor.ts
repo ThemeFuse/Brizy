@@ -76,8 +76,12 @@ const Editor = {
       throw new Error("Invalid third party element config");
     }
 
-    if (!shortcodes["customComponent"]) {
-      shortcodes["customComponent"] = [];
+    const { category } = config;
+
+    const shortcodeCategory = category ?? "customComponent";
+
+    if (!shortcodes[shortcodeCategory]) {
+      shortcodes[shortcodeCategory] = [];
     }
 
     const shortcodeConfig: Shortcode = {
@@ -103,7 +107,7 @@ const Editor = {
       }
     };
 
-    shortcodes["customComponent"].push(shortcodeConfig);
+    shortcodes[shortcodeCategory].push(shortcodeConfig);
     const { component, ...options } = config;
     thirdPartyShortcodes[config.id] = {
       component: component,

@@ -1,9 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { DCGroup } from "visual/global/Config/types/DynamicContent";
-import { getCollectionTypes } from "visual/utils/api";
+import { DCGroup, DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
@@ -36,11 +34,8 @@ export const getItems: GetItems<ElementModel> = ({
 
   const config = Config.getAll();
 
-  const collectionTypesHandler =
-    config?.api?.collectionTypes?.loadCollectionTypes.handler;
   const IS_GLOBAL_POPUP = isPopup(config);
 
-  const linkSource = dvv("linkSource");
   const activeChoice = config?.contentDefaults?.PostExcerpt?.textPopulation;
   const disablePredefinedPopulation =
     config.elements?.postExcerpt?.predefinedPopulation === false;
@@ -62,7 +57,7 @@ export const getItems: GetItems<ElementModel> = ({
   return [
     {
       id: "posts",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-wp-post-excerpt",
         size: "auto",
@@ -73,7 +68,7 @@ export const getItems: GetItems<ElementModel> = ({
       options: [
         {
           id: "sourceType",
-          type: "select-dev",
+          type: "select",
           label: t("Context Type"),
           devices: "desktop",
           choices: [
@@ -85,7 +80,7 @@ export const getItems: GetItems<ElementModel> = ({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "xlarge" : "auto",
@@ -96,7 +91,7 @@ export const getItems: GetItems<ElementModel> = ({
       options: [
         {
           id: "gridTypography",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -106,7 +101,7 @@ export const getItems: GetItems<ElementModel> = ({
               options: [
                 {
                   id: "",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -121,7 +116,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "text",
                   devices: "desktop",
-                  type: "predefinedPopulation-dev",
+                  type: "predefinedPopulation",
                   disabled: disablePredefinedPopulation || !activeChoice,
                   config: {
                     activeChoice,
@@ -136,7 +131,7 @@ export const getItems: GetItems<ElementModel> = ({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -152,14 +147,14 @@ export const getItems: GetItems<ElementModel> = ({
       options: [
         {
           id: "color",
-          type: "colorPicker-dev",
+          type: "colorPicker",
           states: [NORMAL, HOVER]
         }
       ]
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         size: "medium",
@@ -169,7 +164,7 @@ export const getItems: GetItems<ElementModel> = ({
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true,
             showSingle: true
@@ -180,30 +175,10 @@ export const getItems: GetItems<ElementModel> = ({
               label: t("Page"),
               options: [
                 {
-                  id: "linkSource",
-                  type: "select-dev",
-                  disabled: !collectionTypesHandler,
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  }
-                },
-                {
                   id: "linkPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Find Page"),
-                  devices: "desktop",
-                  disabled: !linkSource,
-                  config: {
-                    postType: linkSource
-                  }
+                  devices: "desktop"
                 }
               ]
             },
@@ -218,7 +193,7 @@ export const getItems: GetItems<ElementModel> = ({
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText-dev",
+                    type: "inputText",
                     placeholder: "http://",
                     devices: "desktop",
                     config: {
@@ -229,13 +204,13 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -274,10 +249,10 @@ export const getItems: GetItems<ElementModel> = ({
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", choices: [], disabled: true },
+    { id: "horizontalAlign", type: "toggle", choices: [], disabled: true },
     {
       id: "contentHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -288,7 +263,7 @@ export const getItems: GetItems<ElementModel> = ({
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
       title: t("Settings"),

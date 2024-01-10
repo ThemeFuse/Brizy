@@ -1,21 +1,11 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: checkbox2BgColorHex } = getOptionColorHexByPalette(
@@ -26,7 +16,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-check-square-on",
@@ -35,18 +25,18 @@ export function getItems({
       options: [
         {
           id: "columnGroup",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "checkbox2ColumnSwitch",
-              type: "switch-dev",
+              type: "switch",
               label: t("Columns")
             },
             {
               id: "checkbox2Columns",
               label: t("Type"),
               disabled: dvv("checkbox2ColumnSwitch") === "off",
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: "1", value: 1 },
                 { title: "2", value: 2 },
@@ -62,7 +52,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       position: 20,
       config: {
         icon: "nc-font",
@@ -72,7 +62,7 @@ export function getItems({
       options: [
         {
           id: "tabsToolbarTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCheckbox2",
@@ -80,7 +70,7 @@ export function getItems({
               options: [
                 {
                   id: "checkbox2Typography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: { fontFamily: device === "desktop" }
                 }
               ]
@@ -91,7 +81,7 @@ export function getItems({
               options: [
                 {
                   id: "surchargeTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: { fontFamily: device === "desktop" }
                 }
               ]
@@ -102,7 +92,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 30,
       config: {
         size: "medium",
@@ -120,7 +110,7 @@ export function getItems({
       options: [
         {
           id: "tabsToolbarColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "checkbox2Color",
@@ -128,7 +118,7 @@ export function getItems({
               options: [
                 {
                   id: "checkbox2BgColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -138,7 +128,7 @@ export function getItems({
               options: [
                 {
                   id: "surchargeColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             }
@@ -148,14 +138,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 40,
       options: [
         {
           id: "checkbox2Spacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -165,4 +155,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

@@ -60,7 +60,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
     options: [
       {
         id: "source",
-        type: "select-dev",
+        type: "select",
         label: t("Source"),
         devices: "desktop",
         choices: sourceChoices,
@@ -68,7 +68,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
       },
       {
         id: "querySource",
-        type: "select-dev",
+        type: "select",
         label: t("Query Source"),
         devices: "desktop",
         choices: collectionChoices,
@@ -85,7 +85,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
       },
       {
         id: "orderBy",
-        type: "select-dev",
+        type: "select",
         label: t("Order By"),
         devices: "desktop",
         choices: orderByChoices,
@@ -93,7 +93,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
       },
       {
         id: "order",
-        type: "radioGroup-dev",
+        type: "radioGroup",
         label: t("Order"),
         devices: "desktop",
         choices: [
@@ -132,7 +132,7 @@ function getIncludeExclude({
 
   const lvl1Option: ToolbarItemType = {
     id: `symbol_${source}_${prefix}By`,
-    type: "multiSelect-dev",
+    type: "multiSelect",
     label: include ? t("Include by") : t("Exclude by"),
     devices: "desktop",
     placeholder: multiSelectPlaceholder,
@@ -163,7 +163,7 @@ function getIncludeExclude({
       return {
         id,
         label,
-        type: "multiSelect-dev",
+        type: "multiSelect",
         devices: "desktop",
         placeholder: multiSelectPlaceholder,
         choices: {
@@ -195,7 +195,7 @@ function getIncludeExclude({
       lvl2Options.push({
         id: `symbol_${source}_${prefix}_manual`,
         label: t("Manual"),
-        type: "multiSelect-dev",
+        type: "multiSelect",
         devices: "desktop",
         placeholder: multiSelectPlaceholder,
         choices: {
@@ -208,13 +208,13 @@ function getIncludeExclude({
 
   return {
     id: `${prefix}By-group`,
-    type: "group-dev",
+    type: "group",
     options: [
       lvl1Option,
       ...lvl2Options,
       {
         id: "excludeCurrentProduct",
-        type: "switch-dev",
+        type: "switch",
         label: t("Exclude Current"),
         devices: "desktop",
         disabled: !vd?.excludeCurrentProductOption,

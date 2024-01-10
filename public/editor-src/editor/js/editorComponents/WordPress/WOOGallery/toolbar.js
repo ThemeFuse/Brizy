@@ -1,11 +1,11 @@
+import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { NORMAL, HOVER } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     defaultValueValue({ v, key: "borderColorHex", device, state }),
@@ -15,7 +15,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -32,7 +32,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBorder",
@@ -40,7 +40,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -52,7 +52,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -64,7 +64,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -73,7 +73,7 @@ export function getItems({ v, device, state }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 100,
           config: {
             min: 5,
@@ -86,7 +86,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -95,7 +95,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -110,7 +110,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

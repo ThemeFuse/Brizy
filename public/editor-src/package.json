@@ -5,7 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.12",
     "@brizy/builder-icons": "*",
-    "@brizy/builder-ui": "^1.0.3",
+    "@brizy/builder-ui": "^1.0.4",
     "@brizy/builder-ui-components": "*",
     "@brizy/component": "*",
     "@brizy/motion": "^0.1.1",

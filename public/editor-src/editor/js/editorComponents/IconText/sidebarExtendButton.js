@@ -1,13 +1,13 @@
 import {
-  toolbarDisabledPadding,
-  toolbarDisabledMargin
+  toolbarDisabledMargin,
+  toolbarDisabledPadding
 } from "visual/utils/toolbar";
 
 export function getItems({ device, state }) {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       disabled: true
     },
     toolbarDisabledPadding({ device, state }),

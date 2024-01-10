@@ -99,8 +99,8 @@ class DrawerComponent extends React.Component<Props> {
     const options = [
       {
         id: "currentStyle",
-        label: "Current Style",
-        type: "select-dev",
+        label: t("Current Style"),
+        type: "select",
         choices: stylesChoices,
         display: "block",
         value: { value: id },
@@ -108,7 +108,7 @@ class DrawerComponent extends React.Component<Props> {
       },
       {
         id: "colorPalette",
-        type: "colorPaletteEditor",
+        type: "legacy-colorPaletteEditor",
         attr: {
           className: "brz-ed-sidebar-option__color-palette-editor"
         },
@@ -117,7 +117,7 @@ class DrawerComponent extends React.Component<Props> {
       },
       {
         id: "fontStyles",
-        type: "fontStyleEditor",
+        type: "legacy-fontStyleEditor",
         value: { extraFontStyles, fontStyles },
         onChange: this.handleFontStylesChange
       }

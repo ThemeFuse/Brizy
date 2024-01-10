@@ -11,7 +11,7 @@ export function getItems({ context }) {
   return [
     {
       id: "settingsTabs",
-      type: "tabs-dev",
+      type: "tabs",
       config: {
         align: "start"
       },
@@ -35,13 +35,14 @@ export function getItems({ context }) {
               devices: "desktop",
               display: "block",
               helper: {
-                content:
-                  t("Add your custom class without the .dot, example: my-class")
+                content: t(
+                  "Add your custom class without the .dot, example: my-class"
+                )
               },
               config: richTextDC,
               option: {
                 id: "customClassName",
-                type: "inputText-dev"
+                type: "inputText"
               }
             }
           ]

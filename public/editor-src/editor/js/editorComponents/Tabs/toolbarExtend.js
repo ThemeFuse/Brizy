@@ -23,7 +23,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-tabs",
         title: t("Tabs")
@@ -34,7 +34,7 @@ export function getItems({ v, device }) {
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -44,7 +44,7 @@ export function getItems({ v, device }) {
                 {
                   id: "verticalMode",
                   label: t("Orientation"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   devices: "desktop",
                   choices: [
                     { value: "on", icon: "nc-vertical-items" },
@@ -54,7 +54,7 @@ export function getItems({ v, device }) {
                 {
                   id: "navStyle",
                   label: t("Style"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   devices: "desktop",
                   choices:
                     dvv("verticalMode") === "off"
@@ -72,7 +72,7 @@ export function getItems({ v, device }) {
                 {
                   id: "action",
                   label: t("Activate Tab"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("On Click"), value: "click" },
@@ -81,7 +81,7 @@ export function getItems({ v, device }) {
                 },
                 {
                   id: "spacingAfter",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Content Gap"),
                   disabled: navStyle !== "style-2",
                   devices: "desktop",
@@ -92,7 +92,7 @@ export function getItems({ v, device }) {
                 },
                 {
                   id: "spacing",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Spacing"),
                   devices: "desktop",
                   config: {
@@ -109,7 +109,7 @@ export function getItems({ v, device }) {
                 {
                   id: "iconPosition",
                   label: t("Position"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { value: "left", icon: "nc-align-left" },
                     { value: "top", icon: "nc-align-top" },
@@ -119,12 +119,12 @@ export function getItems({ v, device }) {
                 },
                 {
                   id: "groupIconSizesPicker",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "iconSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -134,7 +134,7 @@ export function getItems({ v, device }) {
                     },
                     {
                       id: "iconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("iconSize") !== "custom",
                       config: {
                         min: 8,
@@ -147,7 +147,7 @@ export function getItems({ v, device }) {
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 100
@@ -161,7 +161,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -171,7 +171,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -180,7 +180,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -198,7 +198,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "bg",
@@ -206,7 +206,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -217,7 +217,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -228,7 +228,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -239,7 +239,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -250,7 +250,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       devices: "desktop",
       disabled: isVerticalMode,
       position: 100,
@@ -263,7 +263,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "verticalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       devices: "desktop",
       position: 90,
       disabled: !isVerticalMode,
@@ -274,7 +274,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       roles: ["admin"],
       position: 110,

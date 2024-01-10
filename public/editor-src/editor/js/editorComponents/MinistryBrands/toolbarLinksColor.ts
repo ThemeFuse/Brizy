@@ -26,7 +26,7 @@ export const getItems = <
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         title: t("Colors"),
@@ -44,7 +44,7 @@ export const getItems = <
       options: [
         {
           id: "metaLinksColor",
-          type: "colorPicker-dev",
+          type: "colorPicker",
           states: [NORMAL, HOVER]
         }
       ]

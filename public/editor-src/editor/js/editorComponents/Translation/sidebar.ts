@@ -1,8 +1,10 @@
-import { t } from "visual/utils/i18n";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { t } from "visual/utils/i18n";
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -13,7 +15,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -22,7 +24,7 @@ export function getItems(): ToolbarItemType[] {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -52,7 +54,7 @@ export function getItems(): ToolbarItemType[] {
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,

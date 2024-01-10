@@ -40,7 +40,7 @@ export const getItems =
     return [
       {
         id: "toolbarCurrentElement",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-form-left",
           title: t("Forms")
@@ -49,7 +49,7 @@ export const getItems =
         options: [
           {
             id: "tabsCurrentElementFields",
-            type: "tabs-dev",
+            type: "tabs",
             config: { showSingle: true },
             tabs: [
               {
@@ -58,14 +58,14 @@ export const getItems =
                 options: [
                   {
                     id: "type",
-                    type: "select-dev",
+                    type: "select",
                     label: t("Type"),
                     devices: "desktop",
                     choices: typeChoices
                   },
                   {
                     id: "defaultRoles",
-                    type: "multiSelect-dev",
+                    type: "multiSelect",
                     label: t("Default Roles"),
                     devices: "desktop",
                     placeholder: t("none"),
@@ -83,11 +83,11 @@ export const getItems =
                     label: t("Remember me"),
                     devices: "desktop",
                     disabled: !isLogin,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showName",
-                    type: "switch-dev",
+                    type: "switch",
                     label: t("Full name"),
                     devices: "desktop",
                     disabled: !isAuthorized
@@ -97,56 +97,56 @@ export const getItems =
                     label: t("First Name"),
                     devices: "desktop",
                     disabled: !isRegister || IS_WP,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showLastName",
                     label: t("Last Name"),
                     devices: "desktop",
                     disabled: !isRegister || IS_WP,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showUsername",
                     label: t("Username"),
                     devices: "desktop",
                     disabled: !isRegister || IS_WP,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showPhoneNumber",
                     label: t("Phone Number"),
                     devices: "desktop",
                     disabled: !isRegister || IS_WP,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showRegisterInfo",
                     label: t("Register Info"),
                     devices: "desktop",
                     disabled: !isRegister || IS_CLOUD,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showLoginLink",
                     label: getShowLinkLabel(type),
                     devices: "desktop",
                     disabled: !isRegister && !isForgot,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showLostPassword",
                     label: t("Lost Password"),
                     devices: "desktop",
                     disabled: !isRegister && !isLogin,
-                    type: "switch-dev"
+                    type: "switch"
                   },
                   {
                     id: "showRegisterLink",
                     label: t("Register"),
                     devices: "desktop",
                     disabled: (!isForgot && !isLogin) || !canRegister,
-                    type: "switch-dev"
+                    type: "switch"
                   }
                 ]
               }
@@ -154,6 +154,6 @@ export const getItems =
           }
         ]
       },
-      { id: "horizontalAlign", type: "toggle-dev", disabled: true }
+      { id: "horizontalAlign", type: "toggle", disabled: true }
     ];
   };

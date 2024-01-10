@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "toolbarTypographyProducts",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -36,7 +36,7 @@ export function getItems({
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabsTypographyProducts",
@@ -44,7 +44,7 @@ export function getItems({
               options: [
                 {
                   id: "productsTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -57,7 +57,7 @@ export function getItems({
               options: [
                 {
                   id: "summaryLinkTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -70,7 +70,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -88,7 +88,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabProductsColor",
@@ -96,7 +96,7 @@ export function getItems({
               options: [
                 {
                   id: "productsColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -106,7 +106,7 @@ export function getItems({
               options: [
                 {
                   id: "summaryLinkColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -117,7 +117,7 @@ export function getItems({
               options: [
                 {
                   id: "imageBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -128,7 +128,7 @@ export function getItems({
               options: [
                 {
                   id: "imageBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -139,7 +139,7 @@ export function getItems({
     },
     {
       id: "summaryLinkHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -149,14 +149,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 40,
       options: [
         {
           id: "imageWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -165,7 +165,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

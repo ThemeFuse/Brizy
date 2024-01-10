@@ -21,7 +21,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-form-left",
         title: t("Field")
@@ -30,7 +30,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsCurrentElementFields",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabsCurrentElementField",
@@ -42,7 +42,7 @@ export function getItems({ v, device }) {
                 }),
                 {
                   id: "fieldPadding",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Spacing"),
                   config: {
                     min: 0,
@@ -60,13 +60,13 @@ export function getItems({ v, device }) {
                   id: "showLabel",
                   label: t("Label"),
                   devices: "desktop",
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "showPlaceholder",
                   label: t("Placeholder"),
                   devices: "desktop",
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             }
@@ -76,7 +76,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -86,7 +86,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: "desktop" === device
           }
@@ -95,7 +95,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -114,7 +114,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabInput",
@@ -122,7 +122,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -133,7 +133,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -144,7 +144,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -155,7 +155,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -166,13 +166,13 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 110,
       options: [
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import _ from "underscore";
 import { connect } from "react-redux";
+import _ from "underscore";
+import { createFont } from "visual/component/Prompts/PromptFonts/api";
+import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { addFonts } from "visual/redux/actions2";
-import { uuid } from "visual/utils/uuid";
 import { pendingRequest } from "visual/utils/api";
 import { weightTypes } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
-import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
-import { createFont } from "visual/component/Prompts/PromptFonts/api";
+import { uuid } from "visual/utils/uuid";
 import ViewAdd from "./ViewAdd";
 import ViewEdit from "./ViewEdit";
 
-const getWeights = _.memoize(weights => {
+const getWeights = _.memoize((weights) => {
   return Object.entries(weights).map(([name, title]) => ({
     title,
     name
@@ -47,7 +47,7 @@ class Variation extends Component {
       {
         title: t("Font weight"),
         name: "weight",
-        type: "select",
+        type: "legacy-select",
         value: weight,
         choices: getWeights(weightTypes)
       },
@@ -95,7 +95,7 @@ class Variation extends Component {
       data: { fontName, weights }
     } = this.context.app;
 
-    return weights.map(weight => ({
+    return weights.map((weight) => ({
       id: weight,
       title: fontName,
       type: weightTypes[weight]
@@ -139,7 +139,7 @@ class Variation extends Component {
 
     await pendingRequest();
 
-    if (!Object.values(files).some(file => Boolean(file))) {
+    if (!Object.values(files).some((file) => Boolean(file))) {
       this.setState({
         nextLoading: false,
         error: t("You must be have one font added")
@@ -163,7 +163,7 @@ class Variation extends Component {
     });
   };
 
-  handleRemoveFonts = id => {
+  handleRemoveFonts = (id) => {
     const {
       app: { id: appId, data },
       onChange

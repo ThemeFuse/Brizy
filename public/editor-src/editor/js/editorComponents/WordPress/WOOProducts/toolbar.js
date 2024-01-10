@@ -1,16 +1,16 @@
 import { t } from "visual/utils/i18n";
 
-export default taxonomies => {
+export default (taxonomies) => {
   return {
     getItems: getItems(taxonomies)
   };
 };
 
-const getItems = taxonomies => () => {
+const getItems = (taxonomies) => () => {
   return [
     {
       id: "toolbarWOOProducts",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-products",
         title: t("Shop Products")
@@ -20,7 +20,7 @@ const getItems = taxonomies => () => {
       options: [
         {
           id: "WOOProductsTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "layoutTab",
@@ -29,7 +29,7 @@ const getItems = taxonomies => () => {
                 {
                   id: "columns",
                   label: t("Columns"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 1,
                     max: 6,
@@ -40,7 +40,7 @@ const getItems = taxonomies => () => {
                 {
                   id: "limit",
                   label: t("Products Count"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   config: {
                     size: "short"
@@ -55,14 +55,14 @@ const getItems = taxonomies => () => {
                 {
                   id: "category",
                   label: t("Categories"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
                       title: t("All"),
                       value: ""
                     },
-                    ...taxonomies.map(item => ({
+                    ...taxonomies.map((item) => ({
                       title: item.name,
                       value: item.slug
                     }))
@@ -71,7 +71,7 @@ const getItems = taxonomies => () => {
                 {
                   id: "orderBy",
                   label: t("Filter By"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("Random"), value: "name" },
@@ -88,7 +88,7 @@ const getItems = taxonomies => () => {
                   id: "order",
                   devices: "desktop",
                   label: t("Order"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { value: "ASC", icon: "nc-up" },
                     { value: "DESC", icon: "nc-down" }
@@ -102,7 +102,7 @@ const getItems = taxonomies => () => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog"
       },
@@ -111,7 +111,7 @@ const getItems = taxonomies => () => {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -120,7 +120,7 @@ const getItems = taxonomies => () => {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -129,7 +129,7 @@ const getItems = taxonomies => () => {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -144,7 +144,7 @@ const getItems = taxonomies => () => {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

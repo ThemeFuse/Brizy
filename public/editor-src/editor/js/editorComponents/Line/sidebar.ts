@@ -16,7 +16,7 @@ export function getItems({
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -25,7 +25,7 @@ export function getItems({
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -37,7 +37,7 @@ export function getItems({
                   options: [
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       devices: "desktop"
                     }
@@ -52,7 +52,7 @@ export function getItems({
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -64,7 +64,7 @@ export function getItems({
                       label: t("HTML Tag"),
                       disabled: dvv("style") !== "text",
                       devices: "desktop",
-                      type: "select-dev",
+                      type: "select",
                       choices: [
                         { title: "Span", value: "span" },
                         { title: "Div", value: "div" },
@@ -84,7 +84,7 @@ export function getItems({
             },
             {
               id: "border",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               position: 65,
               devices: "responsive"

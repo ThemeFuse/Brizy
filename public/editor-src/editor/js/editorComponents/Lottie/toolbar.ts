@@ -1,8 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Block } from "visual/types";
-import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
@@ -11,11 +12,8 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
-import { toolbarLinkAnchor, toolbarStoryAnchor } from "visual/utils/toolbar";
-import EditorComponent from "../EditorComponent";
-import { ToolbarItemType } from "../ToolbarItemType";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
 
 export interface Value extends ElementModel {
   bgColorHex: string;
@@ -23,18 +21,9 @@ export interface Value extends ElementModel {
   bgColorOpacity: number;
 }
 
-export function getItems({
-  v,
-  device,
-  component
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-  component: EditorComponent<Value>;
-}): ToolbarItemType[] {
+// @ts-expect-error old option
+export const getItems: GetItems<Value> = ({ v, device, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
-
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
@@ -44,21 +33,18 @@ export function getItems({
   );
 
   const config = Config.getAll();
-  const collectionTypesHandler =
-    config?.api?.collectionTypes?.loadCollectionTypes.handler;
   const IS_STORY = isStory(config);
   const IS_GLOBAL_POPUP = isPopup(config);
-
-  const linkSource = dvv("linkSource");
 
   const linkDC = getDynamicContentOption({
     options: component.context.dynamicContent.config,
     type: DCTypes.link
   });
+
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-lottie",
         title: t("Lottie")
@@ -69,7 +55,7 @@ export function getItems({
         {
           id: "animationLink",
           label: t("Lottie Link"),
-          type: "inputText-dev",
+          type: "inputText",
           devices: "desktop",
           placeholder: "lottie link",
           disabled: dvv("animationFile") !== "",
@@ -85,15 +71,16 @@ export function getItems({
         {
           id: "animationFile",
           label: t("Lottie File"),
-          type: "fileUpload-dev",
+          type: "fileUpload",
           config: {
-            allowedExtensions: [".json"]
+            allowedExtensions: [".json"],
+            componentId: ElementTypes.Lottie
           },
           devices: "desktop"
         },
         {
           id: "renderer",
-          type: "select-dev",
+          type: "select",
           label: t("Renderer"),
           choices: [
             { title: "SVG", value: "svg" },
@@ -103,12 +90,12 @@ export function getItems({
         {
           id: "autoplay",
           label: t("Autoplay"),
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "direction",
           label: t("Reverse"),
-          type: "switch-dev",
+          type: "switch",
           disabled: dvv("autoplay") === "off",
           config: {
             on: "-1",
@@ -118,12 +105,12 @@ export function getItems({
         {
           id: "loop",
           label: t("Loop"),
-          type: "switch-dev",
+          type: "switch",
           disabled: dvv("autoplay") === "off"
         },
         {
           id: "speed",
-          type: "slider-dev",
+          type: "slider",
           label: t("Speed"),
           devices: "desktop",
           config: {
@@ -136,7 +123,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 80,
       config: {
         size: "medium",
@@ -151,7 +138,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -159,7 +146,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -170,7 +157,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -182,7 +169,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -194,7 +181,7 @@ export function getItems({
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         size: "medium",
@@ -205,7 +192,7 @@ export function getItems({
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -215,30 +202,10 @@ export function getItems({
               label: t("Page"),
               options: [
                 {
-                  id: "linkSource",
-                  type: "select-dev",
-                  disabled: !collectionTypesHandler,
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  }
-                },
-                {
                   id: "linkPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Find Page"),
-                  devices: "desktop",
-                  disabled: !linkSource,
-                  config: {
-                    postType: linkSource
-                  }
+                  devices: "desktop"
                 }
               ]
             },
@@ -253,7 +220,7 @@ export function getItems({
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText-dev",
+                    type: "inputText",
                     placeholder: "http://",
                     config: {
                       size: "medium"
@@ -263,12 +230,12 @@ export function getItems({
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             },
@@ -286,8 +253,8 @@ export function getItems({
               options: [
                 {
                   id: "linkPopup",
-                  // @ts-expect-error: Old option
-                  type: "promptAddPopup",
+                  // need to remove Old option in #24935
+                  type: "legacy-promptAddPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
                   label: t("Popup"),
                   popupKey: `${component.getId()}_${dvv("linkPopup")}`,
@@ -311,8 +278,18 @@ export function getItems({
             {
               id: "story",
               label: t("Slides"),
-              // @ts-expect-error: Old option
-              options: [toolbarStoryAnchor({ disabled: !IS_STORY })]
+              options: [
+                {
+                  id: "linkToSlide",
+                  type: "number-dev",
+                  label: t("Slide"),
+                  disabled: !IS_STORY,
+                  config: {
+                    min: 1,
+                    max: 1000000
+                  }
+                }
+              ]
             }
           ]
         }
@@ -320,7 +297,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings"),
         icon: "nc-cog"
@@ -330,7 +307,7 @@ export function getItems({
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -342,7 +319,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -351,7 +328,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -366,7 +343,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -380,4 +357,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

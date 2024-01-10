@@ -16,7 +16,7 @@ export const defaultValue: Value = {
   populationEntityId: undefined
 };
 
-export const fromElementModel: FromElementModel<"predefinedPopulation-dev"> =
+export const fromElementModel: FromElementModel<"predefinedPopulation"> =
   parseStrict<FromElementModelGetter, Value>({
     population: optional(mPipe(callGetter("population"), Str.read, fromString)),
     populationEntityType: optional(
@@ -27,6 +27,5 @@ export const fromElementModel: FromElementModel<"predefinedPopulation-dev"> =
     )
   });
 
-export const toElementModel: ToElementModel<"predefinedPopulation-dev"> = (
-  value
-) => value;
+export const toElementModel: ToElementModel<"predefinedPopulation"> = (value) =>
+  value;

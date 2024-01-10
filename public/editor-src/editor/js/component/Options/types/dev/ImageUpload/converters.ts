@@ -17,7 +17,7 @@ export const defaultValue: Value = {
   sizeType: "custom"
 };
 
-export const fromElementModel: FromElementModel<"imageUpload-dev"> = (get) => ({
+export const fromElementModel: FromElementModel<"imageUpload"> = (get) => ({
   src: String.toString(get("imageSrc")),
   fileName: String.toString(get("imageFileName")),
   extension: String.toString(get("imageExtension")),
@@ -28,7 +28,7 @@ export const fromElementModel: FromElementModel<"imageUpload-dev"> = (get) => ({
   sizeType: String.toString(get("sizeType")) ?? defaultValue.sizeType
 });
 
-export const toElementModel: Option.ToElementModel<"imageUpload-dev"> = match(
+export const toElementModel: Option.ToElementModel<"imageUpload"> = match(
   [
     Patch.isImageDataPatch,
     (v) => ({

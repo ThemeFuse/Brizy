@@ -6,7 +6,7 @@ export function getItems() {
   return [
     {
       id: "settingsTabs",
-      type: "tabs-dev",
+      type: "tabs",
       config: {
         align: "start"
       },

@@ -29,7 +29,7 @@ export function getItems({ v, device, context }) {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "xlarge" : "auto",
@@ -40,7 +40,7 @@ export function getItems({ v, device, context }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTypographyParagraph",
@@ -48,7 +48,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: { separator: true },
                   columns: [
                     {
@@ -58,7 +58,7 @@ export function getItems({ v, device, context }) {
                       options: [
                         {
                           id: "paragraph",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: device === "desktop"
                           }
@@ -75,7 +75,7 @@ export function getItems({ v, device, context }) {
                           devices: "desktop",
                           disabled:
                             disablePredefinedPopulation || !activeChoice,
-                          type: "predefinedPopulation-dev",
+                          type: "predefinedPopulation",
                           config: {
                             activeChoice,
                             choices: predefinedChoices
@@ -93,7 +93,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: { separator: true },
                   columns: [
                     {
@@ -103,7 +103,7 @@ export function getItems({ v, device, context }) {
                       options: [
                         {
                           id: "h1",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: device === "desktop"
                           }
@@ -118,7 +118,7 @@ export function getItems({ v, device, context }) {
                         {
                           id: "text",
                           devices: "desktop",
-                          type: "predefinedPopulation-dev",
+                          type: "predefinedPopulation",
                           disabled:
                             disablePredefinedPopulation || !activeChoice,
                           config: {
@@ -138,7 +138,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: { separator: true },
                   columns: [
                     {
@@ -148,7 +148,7 @@ export function getItems({ v, device, context }) {
                       options: [
                         {
                           id: "h2",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: device === "desktop"
                           }
@@ -163,7 +163,7 @@ export function getItems({ v, device, context }) {
                         {
                           id: "text",
                           devices: "desktop",
-                          type: "predefinedPopulation-dev",
+                          type: "predefinedPopulation",
                           disabled:
                             disablePredefinedPopulation || !activeChoice,
                           config: {
@@ -183,7 +183,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: { separator: true },
                   columns: [
                     {
@@ -193,7 +193,7 @@ export function getItems({ v, device, context }) {
                       options: [
                         {
                           id: "h3",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: device === "desktop"
                           }
@@ -208,7 +208,7 @@ export function getItems({ v, device, context }) {
                         {
                           id: "text",
                           devices: "desktop",
-                          type: "predefinedPopulation-dev",
+                          type: "predefinedPopulation",
                           disabled:
                             disablePredefinedPopulation || !activeChoice,
                           config: {
@@ -228,7 +228,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: { separator: true },
                   columns: [
                     {
@@ -238,7 +238,7 @@ export function getItems({ v, device, context }) {
                       options: [
                         {
                           id: "h4",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: device === "desktop"
                           }
@@ -253,7 +253,7 @@ export function getItems({ v, device, context }) {
                         {
                           id: "text",
                           devices: "desktop",
-                          type: "predefinedPopulation-dev",
+                          type: "predefinedPopulation",
                           disabled:
                             disablePredefinedPopulation || !activeChoice,
                           config: {
@@ -273,7 +273,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: { separator: true },
                   columns: [
                     {
@@ -283,7 +283,7 @@ export function getItems({ v, device, context }) {
                       options: [
                         {
                           id: "h5",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: device === "desktop"
                           }
@@ -298,7 +298,7 @@ export function getItems({ v, device, context }) {
                         {
                           id: "text",
                           devices: "desktop",
-                          type: "predefinedPopulation-dev",
+                          type: "predefinedPopulation",
                           disabled:
                             disablePredefinedPopulation || !activeChoice,
                           config: {
@@ -318,7 +318,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: { separator: true },
                   columns: [
                     {
@@ -328,7 +328,7 @@ export function getItems({ v, device, context }) {
                       options: [
                         {
                           id: "h6",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: device === "desktop"
                           }
@@ -343,7 +343,7 @@ export function getItems({ v, device, context }) {
                         {
                           id: "text",
                           devices: "desktop",
-                          type: "predefinedPopulation-dev",
+                          type: "predefinedPopulation",
                           disabled:
                             disablePredefinedPopulation || !activeChoice,
                           config: {
@@ -363,7 +363,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -379,7 +379,7 @@ export function getItems({ v, device, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabParagraph",
@@ -387,7 +387,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "paragraphColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -397,7 +397,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "h1Color",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -407,7 +407,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "h2Color",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -417,7 +417,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "h3Color",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -427,7 +427,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "h4Color",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -437,7 +437,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "h5Color",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -447,7 +447,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "h6Color",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             }
@@ -457,7 +457,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "contentHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -467,12 +467,12 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110,
       title: t("Settings"),
       roles: ["admin"],

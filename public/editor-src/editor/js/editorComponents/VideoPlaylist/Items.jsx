@@ -1,7 +1,7 @@
 import { removeAt } from "timm";
 import { noop } from "underscore";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar/index";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
 
 class VideoPlaylistItems extends EditorArrayComponent {
@@ -32,7 +32,7 @@ class VideoPlaylistItems extends EditorArrayComponent {
                 : itemIndex === items.length - 1
                 ? "next"
                 : undefined,
-            onChange: v => {
+            onChange: (v) => {
               switch (v) {
                 case "prev":
                   this.reorderItem(itemIndex, itemIndex - 1);
@@ -46,7 +46,7 @@ class VideoPlaylistItems extends EditorArrayComponent {
         },
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-duplicate",
           title: t("Duplicate"),
@@ -57,7 +57,7 @@ class VideoPlaylistItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-trash",
           title: t("Delete"),

@@ -14,6 +14,7 @@
   "link": {
     "linkPage": "",
     "linkPageTitle": "",
+    "linkPageSource": null,
     "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
@@ -143,7 +144,7 @@
     "tempHoverBorderColorOpacity": 1,
     "tempHoverBorderColorPalette": "color3",
 
-    "borderRadiusType": "",
+    "borderRadiusType": "square",
     "borderRadiusSuffix": "px",
 
     "tempBorderRadiusType": "rounded",

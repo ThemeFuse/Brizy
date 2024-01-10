@@ -1,6 +1,7 @@
 import { OptionName, OptionValue } from "visual/component/Options/types";
 import { defaultValue as population } from "visual/component/Options/types/common/Population/converters";
 import { defaultValue as stateMode } from "visual/component/Options/types/common/StateMode/converters";
+import { defaultValue as ai } from "visual/component/Options/types/dev/AiText/converters";
 import { defaultValue as alert } from "visual/component/Options/types/dev/Alert/converters";
 import { defaultValue as animation } from "visual/component/Options/types/dev/Animation/converters";
 import { defaultValue as backgroundColor } from "visual/component/Options/types/dev/BackgroundColor/converters";
@@ -45,7 +46,6 @@ import { defaultValue as textarea } from "visual/component/Options/types/dev/Tex
 import { defaultValue as toggle } from "visual/component/Options/types/dev/Toggle/converters";
 import { defaultValue as transform } from "visual/component/Options/types/dev/Transform/converters";
 import { defaultValue as typography } from "visual/component/Options/types/dev/Typography/converters";
-import { defaultValue as ai } from "visual/component/Options/types/dev/AiText/converters";
 
 type DefaultValues = {
   [K in OptionName]: OptionValue<K>;
@@ -53,54 +53,54 @@ type DefaultValues = {
 
 export const defaultValues: DefaultValues = {
   "aiText-dev": ai,
-  "alert-dev": alert,
-  "animation-dev": animation,
-  "backgroundColor-dev": backgroundColor,
-  "border-dev": border,
-  "boxShadow-dev": boxShadow,
+  alert: alert,
+  animation: animation,
+  backgroundColor: backgroundColor,
+  border: border,
+  boxShadow: boxShadow,
   "button-dev": button,
   "codeMirror-dev": codeMirror,
-  "colorPicker-dev": colorPicker,
-  "corners-dev": corners,
+  colorPicker: colorPicker,
+  corners: corners,
   "filters-dev": filters,
-  "fileUpload-dev": fileUpload,
-  "gallery-dev": gallery,
-  "gallery-for-gallery-dev": galleryForGallery,
-  "grid-dev": grid,
-  "group-dev": group,
-  "iconPicker-dev": iconPicker,
-  "iconsPicker-dev": iconsPicker,
-  "iconSetter-dev": iconSetter,
-  "imageUpload-dev": imageUpload,
-  "inputText-dev": inputText,
-  "internalLink-dev": internalLink,
-  "margin-dev": margin,
-  "motion-dev": motion,
-  "multiSelect-dev": multiSelect,
+  fileUpload: fileUpload,
+  gallery: gallery,
+  "gallery-for-gallery": galleryForGallery,
+  grid: grid,
+  group: group,
+  iconPicker: iconPicker,
+  iconsPicker: iconsPicker,
+  iconSetter: iconSetter,
+  imageUpload: imageUpload,
+  inputText: inputText,
+  internalLink: internalLink,
+  margin: margin,
+  motion: motion,
+  multiSelect: multiSelect,
   "number-dev": number,
   "order-dev": order,
-  "padding-dev": padding,
+  padding: padding,
   "paypal-dev": paypal,
-  "popover-dev": popover,
+  popover: popover,
   "population-dev": population,
-  "predefinedPopulation-dev": population,
-  "radioGroup-dev": radioGroup,
-  "range-dev": range,
-  "select-dev": select,
-  "sidebarTabs-dev": sidebarTabs,
-  "sidebarTabsButton-dev": sidebarTabs,
-  "slider-dev": slider,
+  predefinedPopulation: population,
+  radioGroup: radioGroup,
+  range: range,
+  select: select,
+  sidebarTabs: sidebarTabs,
+  sidebarTabsButton: sidebarTabs,
+  slider: slider,
   "stateMode-dev": stateMode,
-  "switch-dev": _switch,
-  "tabs-dev": tabs,
-  "textarea-dev": textarea,
-  "textShadow-dev": textShadow,
-  "toggle-dev": toggle,
-  "transform-dev": transform,
-  "typography-dev": typography,
+  switch: _switch,
+  tabs: tabs,
+  textarea: textarea,
+  textShadow: textShadow,
+  toggle: toggle,
+  transform: transform,
+  typography: typography,
   "savedBlock-dev": savedBlock,
-  "globalBlock-dev": globalBlock,
-  "formApps-dev": formApps
+  globalBlock: globalBlock,
+  formApps: formApps
 };
 
 export function applyDefaultValueToOption<T>(values: T, type: OptionName): T {

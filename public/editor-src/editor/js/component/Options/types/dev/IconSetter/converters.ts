@@ -1,19 +1,19 @@
+import { mPipe, parse, pass } from "fp-utilities";
 import {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { mPipe, parse, pass } from "fp-utilities";
-import { pipe } from "visual/utils/fp";
 import { call } from "visual/component/Options/types/dev/Animation/utils";
-import * as Str from "visual/utils/string/specs";
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import {
   Value,
   WithValue
 } from "visual/component/Options/types/dev/IconSetter/types/Value";
+import { pipe } from "visual/utils/fp";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+import * as Str from "visual/utils/string/specs";
 
-export const fromElementModel: FromElementModel<"iconSetter-dev"> = parse<
+export const fromElementModel: FromElementModel<"iconSetter"> = parse<
   FromElementModelGetter,
   WithValue
 >({
@@ -21,7 +21,7 @@ export const fromElementModel: FromElementModel<"iconSetter-dev"> = parse<
   type: pipe(mPipe(call("type"), Str.read, pass(NoEmptyString.is)))
 });
 
-export const toElementModel: ToElementModel<"iconSetter-dev"> = v => ({
+export const toElementModel: ToElementModel<"iconSetter"> = (v) => ({
   name: v?.name ?? null,
   type: v?.type ?? null
 });

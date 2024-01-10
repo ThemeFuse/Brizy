@@ -34,7 +34,7 @@ export function getItems({ v, device, context }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         icon: "nc-counter-outline",
@@ -44,7 +44,7 @@ export function getItems({ v, device, context }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -56,7 +56,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "type",
                   label: t("Style"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   devices: "desktop",
                   choices: [
                     { value: "simple", icon: "nc-counter-style-1" },
@@ -95,7 +95,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "duration",
                   label: t("Duration"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   config: {
                     min: 0,
@@ -113,7 +113,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "prefixLabelRadial",
                   label: t("Prefix"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: "Prefix",
                   disabled: !isRadial,
                   config: {
@@ -124,7 +124,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "suffixLabelRadial",
                   label: t("Suffix"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: t("Suffix"),
                   disabled: !isRadial,
                   config: {
@@ -135,7 +135,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "prefixLabel",
                   label: t("Prefix"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: t("Prefix"),
                   disabled: !isSimple,
                   config: {
@@ -146,7 +146,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "suffixLabel",
                   label: t("Suffix"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: t("Suffix"),
                   disabled: !isSimple,
                   config: {
@@ -157,7 +157,7 @@ export function getItems({ v, device, context }) {
                 {
                   id: "separator",
                   label: t("Separator"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: ",",
                   disabled: isEmpty || isPie,
                   config: {
@@ -173,7 +173,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -184,7 +184,7 @@ export function getItems({ v, device, context }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -193,7 +193,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -208,7 +208,7 @@ export function getItems({ v, device, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -216,7 +216,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: isEmpty || isPie
                 }
@@ -228,7 +228,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "fillColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: isSimple,
                   states: [NORMAL, HOVER]
                 }
@@ -240,13 +240,13 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "strokeColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: !isPie,
                   states: [NORMAL, HOVER]
                 },
                 {
                   id: "stroke",
-                  type: "border-dev",
+                  type: "border",
                   disabled: isSimple || isPie,
                   states: [NORMAL, HOVER],
                   config: {
@@ -262,7 +262,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "textShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   disabled: !isSimple && !isRadial,
                   states: [NORMAL, HOVER]
                 }
@@ -274,7 +274,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -285,7 +285,7 @@ export function getItems({ v, device, context }) {
         {
           id: "width",
           label: t("Size"),
-          type: "slider-dev",
+          type: "slider",
           disabled: isSimple,
           config: {
             min: 1,
@@ -298,7 +298,7 @@ export function getItems({ v, device, context }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -307,7 +307,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -322,7 +322,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -337,7 +337,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
       disabled: !isSimple && !IS_STORY,

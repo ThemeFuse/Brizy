@@ -17,7 +17,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   return [
     {
       id: "toolbarArrow",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Arrow")
@@ -26,12 +26,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "sizeGroup",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "arrowIconSize",
               label: t("Size"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "small", icon: "nc-16" },
                 { value: "medium", icon: "nc-24" },
@@ -41,7 +41,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
             },
             {
               id: "arrowIconCustomSize",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("arrowIconSize") !== "custom",
               config: {
                 min: 1,
@@ -54,7 +54,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         {
           id: "arrowPosition",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -65,7 +65,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         title: t("Colors"),
@@ -80,7 +80,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "arrowColor",
-          type: "colorPicker-dev",
+          type: "colorPicker",
           states: [NORMAL, HOVER]
         }
       ]

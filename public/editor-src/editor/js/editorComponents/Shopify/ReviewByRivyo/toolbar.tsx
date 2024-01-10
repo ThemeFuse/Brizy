@@ -11,7 +11,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
   return [
     {
       id: "toolbarReviewByRivyo",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -22,7 +22,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "reviewType",
           label: t("Review Type"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Widget", value: "reviewWidget" },
             { title: "All Store", value: "allStore" },
@@ -32,17 +32,17 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "productSource",
           label: t("Product Source"),
-          type: "select-dev",
+          type: "select",
           disabled: reviewType === "allStore",
           choices: [{ title: "Auto", value: "auto" }]
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] },
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

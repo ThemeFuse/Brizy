@@ -26,7 +26,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   return [
     {
       id: "toolbarImage",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-img",
         title: t("Image")
@@ -35,7 +35,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "media",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabImage",
@@ -44,7 +44,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "thumbStyle",
                   label: t("Style"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: layout !== "bigImage",
                   devices: "desktop",
                   position: 10,
@@ -66,12 +66,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                   id: "imagesMaskShape",
                   label: t("Shape"),
                   devices: "desktop",
-                  type: "select-dev",
+                  type: "select",
                   choices: MaskShapes
                 },
                 {
                   id: "imagesMaskCustomUpload",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop",
                   label: t("Image"),
                   config: {
@@ -87,18 +87,18 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 },
                 {
                   id: "groupSize",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "imagesMaskSize",
                       label: t("Size"),
-                      type: "select-dev",
+                      type: "select",
                       choices: MaskSizes
                     },
                     {
                       id: "imagesMaskScale",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskSize !== "custom",
                       config: {
                         min: 1,
@@ -113,19 +113,19 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 },
                 {
                   id: "groupPosition",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "imagesMaskPosition",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Position"),
                       choices: MaskPositions
                     },
                     {
                       id: "imagesMaskPositionx",
                       label: t("X"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -136,7 +136,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                     {
                       id: "imagesMaskPositiony",
                       label: t("Y"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -149,7 +149,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "imagesMaskRepeat",
                   label: t("Repeat"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
                   choices: MaskRepeat
                 }
@@ -161,7 +161,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "toolbarGallerySettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -172,7 +172,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         {
           id: "thumbWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           disabled: v.thumbStyle !== "left" && v.thumbStyle !== "right",
           config: {
             min: 0,
@@ -182,7 +182,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         },
         {
           id: "bigImageImagesHeight",
-          type: "slider-dev",
+          type: "slider",
           label: t("Height"),
           disabled: layout !== "bigImage",
           config: {
@@ -193,7 +193,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         },
         {
           id: "spacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           config: {
             min: 0,
@@ -203,7 +203,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         },
         {
           id: "bigImageSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Indent"),
           disabled: layout !== "bigImage",
           config: {
@@ -212,7 +212,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

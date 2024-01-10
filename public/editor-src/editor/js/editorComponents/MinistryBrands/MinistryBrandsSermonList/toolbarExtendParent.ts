@@ -1,6 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
-import { getCollectionTypes } from "visual/utils/api";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -22,7 +21,7 @@ export const getItems: GetItems<Value, Props> = ({
   return [
     {
       id: "toolbarSermonList",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "t2-sermon-list",
         title: t("Sermon List")
@@ -31,7 +30,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -43,7 +42,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "category",
                   label: t("Category"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: getEkklesiaChoiches(config, {
                     key: "sermon"
@@ -52,7 +51,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "group",
                   label: t("Group"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: getEkklesiaChoiches(config, {
                     key: "groups"
@@ -61,7 +60,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "series",
                   label: t("Series"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: getEkklesiaChoiches(config, {
                     key: "series"
@@ -103,13 +102,13 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "showTitle",
                   label: t("Title"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showVideo",
                   label: t("Video"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   helper: {
                     content: t(
@@ -120,79 +119,79 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "showImages",
                   label: t("Images"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showAudio",
                   label: t("Audio"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showMeta",
                   label: t("Meta"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showDate",
                   label: t("Date"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showCategory",
                   label: t("Category"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showGroup",
                   label: t("Group"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showPreacher",
                   label: t("Preacher"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showPassages",
                   label: t("Passages"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showSeries",
                   label: t("Series"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showMedia",
                   label: t("Media"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showPreview",
                   label: t("Preview"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showPagination",
                   label: t("Pagination"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "features",
                   label: t("Featured"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   helper: {
                     content: t(
@@ -203,7 +202,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "nonfeatures",
                   label: t("Non Featured"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   helper: {
                     content: t(
@@ -218,39 +217,20 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Page"),
               options: [
                 {
-                  id: "source",
-                  type: "select-dev",
-                  label: t("Type"),
+                  id: "detailPage",
+                  type: "internalLink",
+                  label: t("Item"),
                   devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
                   config: {
-                    size: "large"
-                  },
-                  helper: {
-                    content: t(
+                    helper: t(
                       "URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the 'Sermon Detail' widget to be placed on a page and that page url/slug placed in this field ."
                     )
                   }
                 },
                 {
-                  id: "detailPage",
-                  type: "internalLink-dev",
-                  label: t("Item"),
-                  devices: "desktop",
-                  disabled: !v.source,
-                  config: {
-                    postType: v.source
-                  }
-                },
-                {
                   id: "detailPageButton",
                   devices: "desktop",
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: t("Button text..."),
                   label: t("Button"),
                   disabled: !dvv("detailUrl"),
@@ -275,7 +255,7 @@ export const getItems: GetItems<Value, Props> = ({
     }),
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -285,7 +265,7 @@ export const getItems: GetItems<Value, Props> = ({
         {
           id: "itemSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -294,7 +274,7 @@ export const getItems: GetItems<Value, Props> = ({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -304,7 +284,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -318,7 +298,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -333,18 +313,18 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     },
     {
       id: "itemHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 80,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

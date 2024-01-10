@@ -15,12 +15,12 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true
     },
     {
       id: "popoverCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-facebook",
         title: t("Embed")
@@ -30,7 +30,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -39,7 +39,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "type",
                   label: t("Embed"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -55,7 +55,7 @@ export function getItems({ v, device, state }) {
                 {
                   label: t("Link"),
                   id: "postHref",
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: dvv("type") === "post" ? false : true,
                   config: {
@@ -65,7 +65,7 @@ export function getItems({ v, device, state }) {
                 {
                   label: t("Link"),
                   id: "videoHref",
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: dvv("type") === "video" ? false : true,
                   config: {
@@ -75,7 +75,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "postAndVideoShowText",
                   label: t("Include Full Post"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -87,21 +87,21 @@ export function getItems({ v, device, state }) {
                 {
                   id: "videoAllowFullScreen",
                   label: t("Full Screen"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: dvv("type") === "video" ? false : true
                 },
                 {
                   id: "videoAutoPlay",
                   label: t("AutoPlay"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: dvv("type") === "video" ? false : true
                 },
                 {
                   id: "videoCaptions",
                   label: t("Captions"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: dvv("type") === "video" ? false : true
                 }
@@ -113,7 +113,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -131,7 +131,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -142,7 +142,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -153,7 +153,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -165,7 +165,7 @@ export function getItems({ v, device, state }) {
     {
       id: "advancedSettings",
       devices: "desktop",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       roles: ["admin"],
       icon: "nc-cog",
       position: 110

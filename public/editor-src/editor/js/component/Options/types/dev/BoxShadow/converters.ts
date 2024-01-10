@@ -39,7 +39,7 @@ export const defaultValue: Value = {
  * @param get
  * @return {object}
  */
-export const fromElementModel: FromElementModel<"boxShadow-dev"> = get => {
+export const fromElementModel: FromElementModel<"boxShadow"> = get => {
   const partial = {
     type: mPipe(() => get("value"), Str.read, fromLegacyType)() ?? T.empty,
     opacity:
@@ -93,7 +93,7 @@ export const fromElementModel: FromElementModel<"boxShadow-dev"> = get => {
 /**
  * Converts box shadow model to db model
  */
-export const toElementModel: ToElementModel<"boxShadow-dev"> = m => {
+export const toElementModel: ToElementModel<"boxShadow"> = m => {
   return {
     value: toLegacyType(m.type),
     tempValue: toLegacyType(m.tempType),

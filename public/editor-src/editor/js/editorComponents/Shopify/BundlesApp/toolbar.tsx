@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarBundlesApp",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -16,7 +16,7 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "widgetType",
           label: t("Widget Type"),
-          type: "select-dev",
+          type: "select",
           placeholder: t("Select"),
           choices: [
             { title: "Combo Product", value: "combo" },
@@ -30,14 +30,14 @@ export const getItems = (): ToolbarItemType[] => {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

@@ -12,7 +12,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
   return [
     {
       id: "toolbarOkendoReview",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Reviews"),
@@ -24,7 +24,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "reviewType",
           label: t("Review Type"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Stars", value: "star" },
             { title: "Widget", value: "widget" },
@@ -37,33 +37,33 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "includeQA",
           label: t("Include Q & A"),
-          type: "switch-dev",
+          type: "switch",
           disabled: reviewType !== "widget",
           helper: { content: t("Works with PRO Plan") }
         },
         {
           id: "showHeader",
           label: t("Show Heading"),
-          type: "switch-dev",
+          type: "switch",
           disabled: reviewType !== "reviewCarousel"
         },
         {
           id: "headingText",
           label: t("Heading Text"),
           config: { size: "medium" },
-          type: "inputText-dev",
+          type: "inputText",
           disabled: reviewType !== "reviewCarousel" || showHeader !== "on"
         },
         {
           id: "autoPlay",
           label: "Autoplay",
-          type: "switch-dev",
+          type: "switch",
           disabled: reviewType !== "mediaCarousel"
         },
         {
           id: "arrowPosition",
           label: t("Arrow Position"),
-          type: "toggle-dev",
+          type: "toggle",
           disabled: reviewType !== "mediaCarousel",
           choices: [
             { title: t("Inside"), icon: "nc-position-in", value: "inside" },
@@ -73,7 +73,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "imageLinkText",
           label: t("Image Link Text"),
-          type: "inputText-dev",
+          type: "inputText",
           config: { size: "medium" },
           disabled: reviewType !== "mediaCarousel",
           placeholder: t("Enter text here...")
@@ -81,7 +81,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "slideSize",
           label: t("Slide Size"),
-          type: "select-dev",
+          type: "select",
           disabled: reviewType !== "mediaCarousel",
           choices: [
             { title: t("Extra Small"), value: "x-small" },
@@ -94,7 +94,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "linkText",
           label: t("Link Text"),
-          type: "inputText-dev",
+          type: "inputText",
           config: { size: "medium" },
           disabled: reviewType !== "mediaGrid",
           placeholder: t("Enter text here...")
@@ -102,7 +102,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "gapSize",
           label: t("Gap Size"),
-          type: "slider-dev",
+          type: "slider",
           disabled: reviewType !== "mediaGrid",
           config: {
             min: 0,
@@ -114,19 +114,19 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "hideLoadMoreArrow",
           label: t("Hide Load More Arrow"),
-          type: "switch-dev",
+          type: "switch",
           disabled: reviewType !== "mediaGrid"
         },
         {
           id: "loadMoreOnScoll",
           label: t("Load More On Scroll"),
-          type: "switch-dev",
+          type: "switch",
           disabled: reviewType !== "mediaGrid"
         },
         {
           id: "desktopGridStyle",
           label: t("Desktop Grid Style"),
-          type: "select-dev",
+          type: "select",
           disabled: reviewType !== "mediaGrid",
           choices: [
             { title: t("Default"), value: "default" },
@@ -138,7 +138,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "mobileGridStyle",
           label: t("Mobile Grid Style"),
-          type: "select-dev",
+          type: "select",
           disabled: reviewType !== "mediaGrid",
           choices: [
             { title: t("Default"), value: "default-mobile" },
@@ -149,7 +149,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "badgePosition",
           label: t("Badge Position"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           disabled: reviewType !== "badge",
           choices: [
             { value: "left", icon: "nc-align-left" },
@@ -160,7 +160,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "badgeSize",
           label: t("Badge Size"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           disabled: reviewType !== "badge",
           choices: [
             { value: "large", icon: "nc-large" },
@@ -170,7 +170,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "linkToPage",
           label: t("Link To Page"),
-          type: "inputText-dev",
+          type: "inputText",
           config: { size: "medium" },
           disabled: reviewType !== "badge",
           placeholder: t("Enter text here...")
@@ -180,7 +180,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

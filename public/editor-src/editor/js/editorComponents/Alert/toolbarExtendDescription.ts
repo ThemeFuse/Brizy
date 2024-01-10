@@ -37,7 +37,7 @@ export function getItems({
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "xlarge" : "auto",
@@ -47,7 +47,7 @@ export function getItems({
       options: [
         {
           id: "gridTypographyParagraph",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -59,7 +59,7 @@ export function getItems({
               options: [
                 {
                   id: "description",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: "desktop" === device
                   }
@@ -85,7 +85,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         size: "medium",
@@ -100,7 +100,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabDescription",
@@ -108,7 +108,7 @@ export function getItems({
               options: [
                 {
                   id: "descriptionColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -119,7 +119,7 @@ export function getItems({
               options: [
                 {
                   id: "descriptionTextShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -130,7 +130,7 @@ export function getItems({
     },
     {
       id: "descriptionHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -140,7 +140,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -150,7 +150,7 @@ export function getItems({
         {
           id: "gap",
           label: t("Gap"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,

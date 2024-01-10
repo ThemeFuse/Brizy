@@ -1,7 +1,6 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
@@ -19,11 +18,7 @@ import {
 } from "visual/utils/options";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  toolbarImageTags,
-  toolbarLinkAnchor,
-  toolbarStoryAnchor
-} from "visual/utils/toolbar";
+import { toolbarImageTags, toolbarLinkAnchor } from "visual/utils/toolbar";
 import { getImageDCSize } from "./utils";
 
 export default ({
@@ -79,8 +74,7 @@ export const getItems =
     );
 
     const _enableTags = enableTags && !isBigImageFromGallery;
-    const collectionTypesHandler =
-      config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
     const borderColorOpacity = dvv("borderColorOpacity");
 
     const maskShape = readString(dvv("maskShape")) ?? "none";
@@ -103,8 +97,6 @@ export const getItems =
       type: DCTypes.image
     });
 
-    const linkSource = dvv("linkSource");
-
     const imageExtension = dvv("imageExtension");
     const imagePopulation = dvv("imagePopulation");
     const linkPopup = dvv("linkPopup");
@@ -118,7 +110,7 @@ export const getItems =
     return [
       {
         id: "toolbarImage",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-img",
           title: t("Image")
@@ -127,14 +119,14 @@ export const getItems =
         options: [
           {
             id: "media",
-            type: "tabs-dev",
+            type: "tabs",
             tabs: [
               {
                 id: "tabImage",
                 label: t("Image"),
                 options: [
-                  // Use population-dev option type instead of using the `population` config for imageUpload-dev,
-                  // because the population id and imageUpload-dev id are different.
+                  // Use population-dev option type instead of using the `population` config for imageUpload,
+                  // because the population id and imageUpload id are different.
                   {
                     id: "image",
                     type: "population-dev",
@@ -153,11 +145,11 @@ export const getItems =
                         : undefined,
                     fallback: {
                       id: keyToDCFallback2Key("image"),
-                      type: "imageUpload-dev"
+                      type: "imageUpload"
                     },
                     option: {
                       id: "",
-                      type: "imageUpload-dev",
+                      type: "imageUpload",
                       config: {
                         edit: device === "desktop",
                         disableSizes: inGallery && layout === "justified"
@@ -167,7 +159,7 @@ export const getItems =
                   {
                     id: "zoom",
                     label: t("Zoom"),
-                    type: "slider-dev",
+                    type: "slider",
                     disabled:
                       Boolean(imagePopulation) ||
                       isSVGExtension(imageExtension) ||
@@ -184,7 +176,7 @@ export const getItems =
                   {
                     id: "linkLightBox",
                     label: t("Open in Lightbox"),
-                    type: "switch-dev",
+                    type: "switch",
                     disabled:
                       inGallery ||
                       isSVGExtension(imageExtension) ||
@@ -207,12 +199,12 @@ export const getItems =
                           id: "maskShape",
                           label: t("Shape"),
                           devices: "desktop",
-                          type: "select-dev",
+                          type: "select",
                           choices: MaskShapes
                         },
                         {
                           id: "maskCustomUpload",
-                          type: "imageUpload-dev",
+                          type: "imageUpload",
                           devices: "desktop",
                           label: t("Image"),
                           config: {
@@ -228,18 +220,18 @@ export const getItems =
                         },
                         {
                           id: "groupSize",
-                          type: "group-dev",
+                          type: "group",
                           disabled: maskShapeIsDisabled,
                           options: [
                             {
                               id: "maskSize",
                               label: t("Size"),
-                              type: "select-dev",
+                              type: "select",
                               choices: MaskSizes
                             },
                             {
                               id: "maskScale",
-                              type: "slider-dev",
+                              type: "slider",
                               disabled: maskSize !== "custom",
                               config: {
                                 min: 1,
@@ -254,19 +246,19 @@ export const getItems =
                         },
                         {
                           id: "groupPosition",
-                          type: "group-dev",
+                          type: "group",
                           disabled: maskShapeIsDisabled,
                           options: [
                             {
                               id: "maskPosition",
-                              type: "select-dev",
+                              type: "select",
                               label: t("Position"),
                               choices: MaskPositions
                             },
                             {
                               id: "maskPositionx",
                               label: t("X"),
-                              type: "slider-dev",
+                              type: "slider",
                               disabled: maskPosition !== "custom",
                               config: {
                                 min: 1,
@@ -277,7 +269,7 @@ export const getItems =
                             {
                               id: "maskPositiony",
                               label: t("Y"),
-                              type: "slider-dev",
+                              type: "slider",
                               disabled: maskPosition !== "custom",
                               config: {
                                 min: 1,
@@ -290,7 +282,7 @@ export const getItems =
                         {
                           id: "maskRepeat",
                           label: t("Repeat"),
-                          type: "select-dev",
+                          type: "select",
                           disabled: maskShapeIsDisabled || maskSize === "cover",
                           choices: MaskRepeat
                         }
@@ -314,7 +306,7 @@ export const getItems =
       },
       {
         id: "toolbarColor",
-        type: "popover-dev",
+        type: "popover",
         devices: "desktop",
         config: {
           size: "medium",
@@ -330,7 +322,7 @@ export const getItems =
         options: [
           {
             id: "tabsColor",
-            type: "tabs-dev",
+            type: "tabs",
             tabs: [
               {
                 id: "tabOverlay",
@@ -338,7 +330,7 @@ export const getItems =
                 options: [
                   {
                     id: "",
-                    type: "backgroundColor-dev",
+                    type: "backgroundColor",
                     states: [NORMAL, HOVER]
                   }
                 ]
@@ -349,7 +341,7 @@ export const getItems =
                 options: [
                   {
                     id: "border",
-                    type: "border-dev",
+                    type: "border",
                     states: [NORMAL, HOVER]
                   }
                 ]
@@ -360,7 +352,7 @@ export const getItems =
                 options: [
                   {
                     id: "boxShadow",
-                    type: "boxShadow-dev",
+                    type: "boxShadow",
                     states: [NORMAL, HOVER],
                     disabled: !maskShapeIsDisabled
                   }
@@ -372,7 +364,7 @@ export const getItems =
                 options: [
                   {
                     id: "maskShadow",
-                    type: "textShadow-dev",
+                    type: "textShadow",
                     states: [NORMAL, HOVER],
                     disabled: maskShapeIsDisabled
                   }
@@ -384,7 +376,7 @@ export const getItems =
       },
       {
         id: "toolbarLink",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-link",
           size: "medium",
@@ -395,7 +387,7 @@ export const getItems =
         options: [
           {
             id: "linkType",
-            type: "tabs-dev",
+            type: "tabs",
             config: {
               saveTab: true,
               showSingle: true
@@ -406,30 +398,10 @@ export const getItems =
                 label: t("Page"),
                 options: [
                   {
-                    id: "linkSource",
-                    type: "select-dev",
-                    disabled: !collectionTypesHandler,
-                    label: t("Type"),
-                    devices: "desktop",
-                    choices: {
-                      load: () => getCollectionTypes(config),
-                      emptyLoad: {
-                        title: t("There are no choices")
-                      }
-                    },
-                    config: {
-                      size: "large"
-                    }
-                  },
-                  {
                     id: "linkPage",
-                    type: "internalLink-dev",
+                    type: "internalLink",
                     label: t("Find Page"),
-                    devices: "desktop",
-                    disabled: !linkSource,
-                    config: {
-                      postType: linkSource
-                    }
+                    devices: "desktop"
                   }
                 ]
               },
@@ -444,7 +416,7 @@ export const getItems =
                     config: linkDC,
                     option: {
                       id: "linkExternal",
-                      type: "inputText-dev",
+                      type: "inputText",
                       placeholder: "http://",
                       disabled: inGallery,
                       devices: "desktop",
@@ -456,13 +428,13 @@ export const getItems =
                   {
                     id: "linkExternalBlank",
                     label: t("Open In New Tab"),
-                    type: "switch-dev",
+                    type: "switch",
                     devices: "desktop"
                   },
                   {
                     id: "linkExternalRel",
                     label: t("Make it Nofollow"),
-                    type: "switch-dev",
+                    type: "switch",
                     devices: "desktop"
                   }
                 ]
@@ -484,7 +456,7 @@ export const getItems =
                 options: [
                   {
                     id: "linkPopup",
-                    type: "promptAddPopup",
+                    type: "legacy-promptAddPopup",
                     disabled:
                       isStory(config) ||
                       (device === "desktop"
@@ -507,7 +479,18 @@ export const getItems =
               {
                 id: "story",
                 label: t("Slides"),
-                options: [toolbarStoryAnchor({ disabled: !isStory(config) })]
+                options: [
+                  {
+                    id: "linkToSlide",
+                    type: "number-dev",
+                    label: t("Slide"),
+                    disabled: !isStory(config),
+                    config: {
+                      min: 1,
+                      max: 1000000
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -515,7 +498,7 @@ export const getItems =
       },
       {
         id: "toolbarSettings",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-cog",
           title: t("Settings")
@@ -527,7 +510,7 @@ export const getItems =
           {
             id: "width",
             label: isSvgOrGif ? t("Size") : t("Width"),
-            type: "slider-dev",
+            type: "slider",
             disabled: !isCustomSizeType && !isSvgOrGif,
             config: {
               min: 5,
@@ -542,7 +525,7 @@ export const getItems =
           {
             id: "height",
             label: t("Height"),
-            type: "slider-dev",
+            type: "slider",
             disabled: !isCustomSizeType || isSvgOrGif,
             config: {
               min: 5,
@@ -558,7 +541,7 @@ export const getItems =
           {
             id: "size",
             label: t("Size"),
-            type: "slider-dev",
+            type: "slider",
             disabled: isCustomSizeType || isSvgOrGif,
             config: {
               min: 5,
@@ -568,7 +551,7 @@ export const getItems =
           },
           {
             id: "grid",
-            type: "grid-dev",
+            type: "grid",
             config: {
               separator: true
             },
@@ -579,7 +562,7 @@ export const getItems =
                 options: [
                   {
                     id: "styles",
-                    type: "sidebarTabsButton-dev",
+                    type: "sidebarTabsButton",
                     config: {
                       tabId: "styles",
                       text: t("Styling"),
@@ -594,7 +577,7 @@ export const getItems =
                 options: [
                   {
                     id: "effects",
-                    type: "sidebarTabsButton-dev",
+                    type: "sidebarTabsButton",
                     config: {
                       tabId: "effects",
                       text: t("Effects"),
@@ -609,7 +592,7 @@ export const getItems =
       },
       {
         id: "advancedSettings",
-        type: "advancedSettings",
+        type: "legacy-advancedSettings",
         icon: "nc-cog",
         disabled: !isStory(config),
         position: 110

@@ -1,12 +1,12 @@
+import { mPipe, or, parseStrict } from "fp-utilities";
 import {
-  callGetter,
   FromElementModel,
   FromElementModelGetter,
-  ToElementModel
+  ToElementModel,
+  callGetter
 } from "visual/component/Options/Type";
-import { mPipe, or, parseStrict } from "fp-utilities";
-import * as Num from "visual/utils/math/number";
 import { always } from "visual/utils/fp";
+import * as Num from "visual/utils/math/number";
 import { Value } from "./types/Value";
 
 export const defaultValue: Value = {
@@ -14,7 +14,7 @@ export const defaultValue: Value = {
   to: 100
 };
 
-export const fromElementModel: FromElementModel<"range-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"range"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -22,4 +22,4 @@ export const fromElementModel: FromElementModel<"range-dev"> = parseStrict<
   to: or(mPipe(callGetter("to"), Num.read), always(defaultValue.to))
 });
 
-export const toElementModel: ToElementModel<"range-dev"> = v => ({ ...v });
+export const toElementModel: ToElementModel<"range"> = (v) => ({ ...v });

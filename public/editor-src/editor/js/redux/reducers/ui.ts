@@ -11,6 +11,7 @@ const defaultState: UIState = {
     drawerContentType: undefined
   },
   rightSidebar: {
+    type: "options",
     isOpen: false,
     lock: undefined,
     alignment: "right",

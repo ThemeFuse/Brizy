@@ -14,7 +14,11 @@ import {
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
 import { IS_WP } from "visual/utils/env";
-import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
+import {
+  makeAttr,
+  makeDataAttr,
+  makeDataAttrString
+} from "visual/utils/i18n/attribute";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { getLoopName, stringifyAttributes } from "./utils.common";
@@ -64,11 +68,11 @@ export default class Items extends EditorArrayComponent {
 
   handleSortableAcceptElements = (from) => {
     const meta = this.props.meta;
-    const sortableType = makeDataAttr({
+    const sortableType = makeDataAttrString({
       name: "sortable-type",
       value: "row"
     });
-    const sortableElement = makeDataAttr({
+    const sortableElement = makeDataAttrString({
       name: "sortable-element",
       value: "true"
     });
@@ -89,7 +93,7 @@ export default class Items extends EditorArrayComponent {
       if (from.elementType === "row" || from.elementType === "column") {
         return (
           from.elementNode.querySelector(
-            `[${sortableType}][${sortableElement}]`
+            `${sortableType}${sortableElement}`
           ) === null // hasn't inner row (thus avoiding level 3 columns)
         );
       }

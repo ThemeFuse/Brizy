@@ -2,14 +2,12 @@ import { mPipe, optional, parseStrict, pass } from "fp-utilities";
 import { findDCChoiceByPlaceholder } from "visual/component/Options/types/common/Population/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isHex } from "visual/utils/color";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import { pipe } from "visual/utils/fp";
 import { getDynamicContentChoices } from "visual/utils/options";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { decodeFromString, encodeToString } from "visual/utils/string";
-import { capByPrefix } from "visual/utils/string";
+import { capByPrefix, decodeFromString } from "visual/utils/string";
 import { isNullish, onNullish, throwOnNullish } from "visual/utils/value";
 import { classNamesToV } from "./transforms";
 
@@ -67,24 +65,40 @@ const getCSSVarValue = (cssVar) => {
   return getComputedStyle(document.documentElement).getPropertyValue(cssVar);
 };
 
+const getColorValues = (str, regex) => {
+  const [, cssVar, opacity, horizontal, vertical, blur] = regex.exec(str) ?? [];
+
+  const hex = getCSSVarValue(cssVar);
+  const rgba = `rgba(${hex}, ${opacity})`;
+  const result = rgbaTohex(rgba);
+
+  if (hex && result) {
+    return {
+      hex: result.hex ?? "#000000",
+      opacity: result.opacity ?? 1,
+      vertical: parseInt(vertical ?? 5),
+      horizontal: parseInt(horizontal ?? 5),
+      blur: parseInt(blur ?? 5)
+    };
+  }
+
+  return undefined;
+};
+
 export const parseShadow = (str = "") => {
   if (str.includes("var")) {
     const regExp =
       /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)+\s+(\d+px)\s?(\d+px)\s?(\d+px)/;
-    const [, cssVar, opacity, horizontal, vertical, blur] =
-      regExp.exec(str) ?? [];
+    const values = getColorValues(str, regExp);
 
-    const hex = getCSSVarValue(cssVar);
-    const rgba = `rgba(${hex}, ${opacity})`;
-    const result = rgbaTohex(rgba);
-
-    if (hex && result) {
+    if (values) {
+      const { hex, opacity, vertical, horizontal, blur } = values;
       return {
-        textShadowColorHex: result.hex ?? "#000000",
-        textShadowColorOpacity: result.opacity ?? 1,
-        textShadowVertical: parseInt(vertical ?? 5),
-        textShadowHorizontal: parseInt(horizontal ?? 5),
-        textShadowBlur: parseInt(blur ?? 5)
+        textShadowColorHex: hex,
+        textShadowColorOpacity: opacity,
+        textShadowVertical: vertical,
+        textShadowHorizontal: horizontal,
+        textShadowBlur: blur
       };
     }
 
@@ -116,6 +130,38 @@ export const parseShadow = (str = "") => {
     textShadowVertical,
     textShadowHorizontal,
     textShadowBlur
+  };
+};
+
+export const parseColor = (color, opacity) => {
+  if (color.includes("var")) {
+    const regExp = /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)/;
+    const values = getColorValues(color, regExp);
+
+    if (values) {
+      const { hex, opacity } = values;
+
+      return {
+        hex: hex ?? "#000000",
+        opacity: opacity ?? 1
+      };
+    }
+
+    return {};
+  }
+
+  let hex = "#000000";
+
+  if (color) {
+    let { hex: _hex, opacity: _opacity } = rgbaTohex(color);
+
+    hex = _hex;
+    opacity = !isNaN(parseFloat(_opacity)) ? _opacity : opacity;
+  }
+
+  return {
+    hex,
+    opacity
   };
 };
 
@@ -151,7 +197,8 @@ const getLink = (value = "{}") => {
     externalType = "page",
     popup = "",
     upload = "",
-    linkToSlide = 1
+    linkToSlide = 1,
+    pageSource = null
   } = decodeFromString(value);
 
   return {
@@ -168,7 +215,8 @@ const getLink = (value = "{}") => {
     linkUpload: upload,
     linkToSlide,
     linkPage: internal,
-    linkPageTitle: pageTitle
+    linkPageTitle: pageTitle,
+    linkPageSource: pageSource
   };
 };
 
@@ -291,14 +339,9 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
         }
       };
 
-  let hex = format.color ? format.color : cssColor;
-
-  if (!isHex(hex)) {
-    hex = rgbaTohex(hex).hex;
-  }
-
-  const opacity = format.opacity || cssOpacity;
-  const colorOpacity = !isNaN(opacity) ? opacity : 1;
+  const _hex = format.color ? format.color : cssColor;
+  const _opacity = format.opacity || cssOpacity;
+  const { hex, opacity } = parseColor(_hex, _opacity);
 
   // it's only for situations when colorPalette contain this data - "color2, color3" (normally it should never happen)
   const palette = format.colorPalette ? format.colorPalette.split(",")[0] : "";
@@ -309,7 +352,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
 
   const bgColorOpacity = format.backgroundGradient
     ? format.backgroundGradient.startOpacity
-    : colorOpacity;
+    : opacity;
 
   return {
     ...v,
@@ -322,7 +365,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
 
     color: {
       hex,
-      opacity: colorOpacity
+      opacity
     },
     colorPalette: palette,
     bgColorPalette: palette,
@@ -365,24 +408,4 @@ export const dcItemOptionParser = parseStrict({
 
 export const createLabel = (label) => {
   return `✦${label}`;
-};
-
-export const handleChangePage = (v, value) => {
-  const { linkPage, linkPageTitle } = value;
-  return encodeToString({
-    type: v.linkType,
-    anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-    internal: linkPage,
-    pageTitle: linkPageTitle,
-    external: v.linkExternal,
-    externalBlank: v.linkExternalBlank,
-    externalRel: v.linkExternalRel,
-    externalType: v.linkExternalType,
-    population: v.linkPopulation,
-    populationEntityId: v.linkPopulationEntityId,
-    populationEntityType: v.linkPopulationEntityType,
-    popup: v.linkPopup ? `#${v.linkPopup}` : "",
-    upload: v.linkUpload,
-    linkToSlide: v.linkToSlide
-  });
 };

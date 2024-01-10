@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-toggle",
         title: t("Accordion")
@@ -13,7 +13,7 @@ export function getItems() {
       options: [
         {
           id: "media",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "accordion",
@@ -28,7 +28,7 @@ export function getItems() {
               options: [
                 {
                   id: "tags",
-                  type: "inputText-dev",
+                  type: "inputText",
                   label: t("Tags"),
                   helper: {
                     enabled: true,

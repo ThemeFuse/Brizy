@@ -24,7 +24,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-play",
         title: t("Video")
@@ -34,7 +34,7 @@ export function getItems({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElementCover",
@@ -44,7 +44,7 @@ export function getItems({
                   id: "coverZoom",
                   label: t("Zoom"),
                   devices: "desktop",
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 100,
                     max: 300,
@@ -54,7 +54,7 @@ export function getItems({
                 {
                   id: "iconSize",
                   label: t("Play"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   roles: ["admin"],
                   config: {
@@ -84,7 +84,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -95,7 +95,7 @@ export function getItems({
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTitle",
@@ -103,7 +103,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: "desktop" === device
                   }
@@ -116,7 +116,7 @@ export function getItems({
               options: [
                 {
                   id: "subTitle",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: "desktop" === device
                   }
@@ -129,7 +129,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -146,7 +146,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabPlay",
@@ -155,7 +155,7 @@ export function getItems({
               options: [
                 {
                   id: "iconBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -167,7 +167,7 @@ export function getItems({
               options: [
                 {
                   id: "iconColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -178,7 +178,7 @@ export function getItems({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -189,7 +189,7 @@ export function getItems({
               options: [
                 {
                   id: "subTitleColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -200,7 +200,7 @@ export function getItems({
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -211,7 +211,7 @@ export function getItems({
               options: [
                 {
                   id: "itemBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -222,7 +222,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -233,7 +233,7 @@ export function getItems({
         {
           id: "widthImage",
           label: t("Size"),
-          type: "slider-dev",
+          type: "slider",
           position: 10,
           config: {
             min: 0,
@@ -244,7 +244,7 @@ export function getItems({
         {
           id: "verticalAlign",
           label: t("Content"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           disabled: dvv("positionItem") === "vertical",
           position: 10,

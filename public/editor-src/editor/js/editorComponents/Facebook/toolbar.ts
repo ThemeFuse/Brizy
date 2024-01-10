@@ -78,14 +78,14 @@ export function getItems({
   const settings = (): ToolbarItemType[] => [
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 110,
       options: [
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           disabled: !pageType,
           devices: "desktop",
           config: {
@@ -98,7 +98,7 @@ export function getItems({
         {
           id: pageType ? "pageWidth" : "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           disabled: embedType || buttonType,
           devices: "desktop",
           config: {
@@ -110,7 +110,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           devices: "desktop",
           config: { separator: true },
           columns: [
@@ -120,7 +120,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -135,7 +135,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -154,32 +154,32 @@ export function getItems({
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110
     }
   ];
 
   const disabledToolbarSettings = (): ToolbarItemType[] => [
-    { id: "toolbarSettings", type: "popover-dev", disabled: true }
+    { id: "toolbarSettings", type: "popover", disabled: true }
   ];
 
   const disableAdvancedSettings = (): ToolbarItemType[] => [
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     }
   ];
 
   const disableAlign = (): ToolbarItemType[] => [
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] }
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] }
   ];
 
   const align = (): ToolbarItemType[] => [
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -192,7 +192,7 @@ export function getItems({
   const pageAlign = (): ToolbarItemType[] => [
     {
       id: "pageHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -206,7 +206,7 @@ export function getItems({
   return [
     {
       id: "popoverCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-facebook",
         title: t("Facebook")
@@ -216,7 +216,7 @@ export function getItems({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -225,7 +225,7 @@ export function getItems({
                 {
                   id: "facebookType",
                   label: t("Facebook"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("Button"), value: "button" },
@@ -236,7 +236,7 @@ export function getItems({
                 },
                 {
                   id: "facebookButtonType",
-                  type: "select-dev",
+                  type: "select",
                   label: t("Type"),
                   disabled: !buttonType,
                   devices: "desktop",
@@ -248,7 +248,7 @@ export function getItems({
                 {
                   id: "layout",
                   label: t("Layout"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: !buttonType,
                   choices: [
@@ -258,7 +258,7 @@ export function getItems({
                 },
                 {
                   id: "facebookEmbedType",
-                  type: "select-dev",
+                  type: "select",
                   label: t("Type"),
                   disabled: !embedType,
                   devices: "desktop",
@@ -270,7 +270,7 @@ export function getItems({
                 {
                   id: "facebookEmbedPostHref",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: !embedType || postEmbedType,
                   population: linkDC,
@@ -281,7 +281,7 @@ export function getItems({
                 {
                   id: "facebookEmbedVideoHref",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   disabled: !embedType || videoEmbedType,
                   devices: "desktop",
                   population: linkDC,
@@ -292,7 +292,7 @@ export function getItems({
                 {
                   id: "facebookPageHref",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   disabled: !pageType,
                   devices: "desktop",
                   population: linkDC,
@@ -303,7 +303,7 @@ export function getItems({
                 {
                   id: "pageTabs",
                   label: t("Layout"),
-                  type: "multiSelect-dev",
+                  type: "multiSelect",
                   placeholder: t("0 Selected"),
                   devices: "desktop",
                   disabled: !pageType,
@@ -316,7 +316,7 @@ export function getItems({
                 {
                   id: "facebookGroupHref",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   disabled: !groupType,
                   devices: "desktop",
                   population: linkDC,
@@ -327,7 +327,7 @@ export function getItems({
                 {
                   id: "skin",
                   label: t("Skin"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: !groupType,
                   choices: [
@@ -346,7 +346,7 @@ export function getItems({
                   label: t("Size"),
                   disabled: !buttonType,
                   devices: "desktop",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { icon: "nc-small", value: "small" },
                     { icon: "nc-large", value: "large" }
@@ -356,41 +356,41 @@ export function getItems({
                   id: "share",
                   disabled: !buttonType,
                   label: t("Include Share Button"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showCounter",
                   label: t("Show Button Counter"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !buttonType || boxedLayout,
                   devices: "desktop"
                 },
                 {
                   id: "showFriends",
                   label: t("Show Friend's Faces"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !buttonType || boxedLayout,
                   devices: "desktop"
                 },
                 {
                   id: "facebookEmbedVideoAllowFullScreen",
                   label: t("Full Screen"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !embedType || videoEmbedType,
                   devices: "desktop"
                 },
                 {
                   id: "facebookEmbedVideoAutoPlay",
                   label: t("AutoPlay"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !embedType || videoEmbedType,
                   devices: "desktop"
                 },
                 {
                   id: "facebookEmbedVideoCaptions",
                   label: t("Captions"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !embedType || videoEmbedType,
                   devices: "desktop"
                 },
@@ -398,41 +398,41 @@ export function getItems({
                   id: "postAndVideoShowText",
                   label: t("Include Full Post"),
                   disabled: !embedType,
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "smallHeader",
                   label: t("Use Small Header"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: !pageType
                 },
                 {
                   id: "hideCover",
                   label: t("Hide Cover Photo"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !pageType,
                   devices: "desktop"
                 },
                 {
                   id: "showFacepile",
                   label: t("Show Friend's Faces"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !pageType,
                   devices: "desktop"
                 },
                 {
                   id: "showSocialContext",
                   label: t("Show Social Context"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !groupType,
                   devices: "desktop"
                 },
                 {
                   id: "showMetaData",
                   label: t("Show Meta Data"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !groupType,
                   devices: "desktop"
                 }
@@ -444,7 +444,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -461,7 +461,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -469,7 +469,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -481,7 +481,7 @@ export function getItems({
                 {
                   id: "border",
                   disabled: buttonType,
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -492,7 +492,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -503,7 +503,7 @@ export function getItems({
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Link"),
@@ -514,7 +514,7 @@ export function getItems({
         {
           id: "targetUrl",
           label: t("Target URL"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           disabled: !buttonType,
           choices: [
@@ -524,7 +524,7 @@ export function getItems({
         },
         {
           id: "href",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Link"),
           disabled: !buttonType || dvv("targetUrl") === "current",
           devices: "desktop",

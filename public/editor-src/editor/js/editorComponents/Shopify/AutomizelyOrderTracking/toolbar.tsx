@@ -31,7 +31,7 @@ export const getItems = ({
   return [
     {
       id: "toolbarAutomizelyOT",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Content"),
@@ -43,7 +43,7 @@ export const getItems = ({
         {
           id: "lookupOption",
           label: t("Lookup Options"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Tracking Number", value: "tracking-number" },
             { title: "Order Number & Email", value: "order-number-and-email" },
@@ -53,12 +53,12 @@ export const getItems = ({
         {
           id: "buttonText",
           label: t("Button text"),
-          type: "inputText-dev"
+          type: "inputText"
         },
         {
           id: "domain",
           label: t("Tracking Page URL"),
-          type: "inputText-dev",
+          type: "inputText",
           helper: {
             content: t(
               "Get your tracking page URL in the Tracking pages section of AfterShip application."
@@ -68,12 +68,12 @@ export const getItems = ({
         {
           id: "hideIcon",
           label: t("Hide Aftership Icon"),
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "size",
           label: t("Size"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           choices: [
             { value: "small", icon: "nc-small" },
             { value: "medium", icon: "nc-medium" },
@@ -84,7 +84,7 @@ export const getItems = ({
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -102,7 +102,7 @@ export const getItems = ({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabButton",
@@ -110,7 +110,7 @@ export const getItems = ({
               options: [
                 {
                   id: "buttonColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -120,7 +120,7 @@ export const getItems = ({
               options: [
                 {
                   id: "textColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             }
@@ -131,7 +131,7 @@ export const getItems = ({
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

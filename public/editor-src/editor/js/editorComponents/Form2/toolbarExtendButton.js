@@ -9,7 +9,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "popoverLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Link"),
@@ -19,7 +19,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "linkForm",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "message",
@@ -28,7 +28,7 @@ export function getItems({ v, device }) {
                 {
                   id: "messageSuccess",
                   label: t("Success"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   placeholder: t("Message sent"),
                   config: {
@@ -38,7 +38,7 @@ export function getItems({ v, device }) {
                 {
                   id: "messageError",
                   label: t("Error"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   placeholder: t("Message not sent"),
                   config: {
@@ -54,7 +54,7 @@ export function getItems({ v, device }) {
                 {
                   id: "messageRedirect",
                   label: t("Go to"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   placeholder: "http://",
                   config: {
@@ -69,7 +69,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -79,7 +79,7 @@ export function getItems({ v, device }) {
         {
           id: "submitWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -89,7 +89,7 @@ export function getItems({ v, device }) {
         {
           id: "submitHeight",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           disabled: !IS_STORY,
           config: {
             min: 1,
@@ -99,7 +99,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",
@@ -112,7 +112,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

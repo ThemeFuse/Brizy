@@ -33,7 +33,19 @@ const shadowToString = (value, config) => {
   })} ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
 };
 
-const changeColor = (value) => {
+const hexToString = (value, config) => {
+  if (value.palette) {
+    const { palette, opacity } = value;
+    return `rgba(var(${makeStylePaletteCSSVar(palette, config)}),${opacity})`;
+  }
+
+  return `${getColorValue({
+    hex: value.hex,
+    opacity: value.opacity
+  })}`;
+};
+
+const changeColor = (value, config) => {
   const DEFAULT_GRADIENT = {
     type: "linear-gradient",
     radialPosition: 90,
@@ -77,15 +89,25 @@ const changeColor = (value) => {
       colorPalette: value.bgColorPalette,
       bgColorType: "gradient"
     };
-  } else
+  } else {
+    const rgbColor = hexToString(
+      {
+        palette: value.bgColorPalette,
+        hex: value.bgColorHex,
+        opacity: String(value.bgColorOpacity)
+      },
+      config
+    );
+
     return {
       ...value,
       bgColorType: "solid",
       backgroundGradient: null,
-      color: !value.bgColorPalette ? value.bgColorHex : null,
-      opacity: String(value.bgColorOpacity),
+      opacity: null,
+      color: rgbColor,
       colorPalette: value.bgColorPalette
     };
+  }
 };
 
 function getPopulationTabs({ populationColor }, onChange) {
@@ -105,7 +127,7 @@ function getPopulationTabs({ populationColor }, onChange) {
     options: [
       {
         id: `paragraphColor${value}`,
-        type: "colorPicker-dev",
+        type: "colorPicker",
         dependencies: (data) =>
           onChange({
             ...data,
@@ -120,7 +142,7 @@ function getPopulationColorOptions({ populationColor }, onChange) {
   return [
     {
       id: "colorTabs",
-      type: "tabs-dev",
+      type: "tabs",
       tabs: getPopulationTabs({ populationColor }, onChange)
     }
   ];
@@ -193,7 +215,7 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
   return [
     {
       id: "colorTabs",
-      type: "tabs-dev",
+      type: "tabs",
       tabs: [
         {
           id: "tabText",
@@ -201,16 +223,12 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
           options: [
             {
               id: "",
-              type: "backgroundColor-dev",
+              type: "backgroundColor",
               states: [NORMAL],
               config: {
                 withNone: false
               },
               dependencies: (value) => {
-                const bgColorPalette =
-                  value.bgColorPalette !== v.bgColorPalette
-                    ? value.bgColorPalette
-                    : "";
                 const bgColorHex =
                   value.bgColorPalette !== v.bgColorPalette &&
                   getColorPaletteColor(value.bgColorPalette)
@@ -221,12 +239,14 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
                   ? getColorPaletteColor(value.gradientColorPalette).hex
                   : value.gradientColorHex;
                 onChange(
-                  changeColor({
-                    ...value,
-                    bgColorHex,
-                    gradientColorHex,
-                    bgColorPalette
-                  })
+                  changeColor(
+                    {
+                      ...value,
+                      bgColorHex,
+                      gradientColorHex
+                    },
+                    config
+                  )
                 );
               }
             }
@@ -238,7 +258,7 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
           options: [
             {
               id: "textShadow",
-              type: "textShadow-dev",
+              type: "textShadow",
               icon: "nc-bold",
               title: t("Text Shadow"),
               dependencies: ({
@@ -276,8 +296,8 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
           id: "tabImage",
           label: t("Mask"),
           options: [
-            // Use population-dev option type instead of using the `population` config for imageUpload-dev,
-            // because the population id and imageUpload-dev id are different.
+            // Use population-dev option type instead of using the `population` config for imageUpload,
+            // because the population id and imageUpload id are different.
             {
               id: "image",
               type: "population-dev",
@@ -285,11 +305,11 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
               config: imageDynamicContentChoices,
               fallback: {
                 id: keyToDCFallback2Key("image"),
-                type: "imageUpload-dev"
+                type: "imageUpload"
               },
               option: {
                 id: "",
-                type: "imageUpload-dev",
+                type: "imageUpload",
                 config: {
                   edit: device === "desktop",
                   disableSizes: true
@@ -316,7 +336,7 @@ function getTextPopulationOptions() {
     {
       id: "tabsColor",
       className: "",
-      type: "tabs-dev",
+      type: "tabs",
       tabs: [
         {
           id: "tabText",
@@ -324,7 +344,7 @@ function getTextPopulationOptions() {
           options: [
             {
               id: "",
-              type: "backgroundColor-dev",
+              type: "backgroundColor",
               states: [NORMAL]
             }
           ]
@@ -335,7 +355,7 @@ function getTextPopulationOptions() {
           options: [
             {
               id: "textShadow",
-              type: "textShadow-dev"
+              type: "textShadow"
             }
           ]
         },
@@ -345,7 +365,7 @@ function getTextPopulationOptions() {
           options: [
             {
               id: "bg",
-              type: "imageUpload-dev"
+              type: "imageUpload"
             }
           ]
         }
@@ -380,7 +400,7 @@ const getColorToolbar = (v, { device, context }, onChange) => {
 
   return {
     id: "toolbarColor",
-    type: "popover-dev",
+    type: "popover",
     config: {
       size: "medium",
       title: t("Colors"),

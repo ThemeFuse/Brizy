@@ -39,7 +39,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
   return [
     {
       id: "toolbarProgressBar",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Progress"),
         icon: "nc-progress-bar"
@@ -50,7 +50,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
         {
           id: "progressBarStyle",
           label: t("Style"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           choices: [
             { value: "style1", icon: "nc-progress-bar-style-1" },
             { value: "style2", icon: "nc-progress-bar-style-2" }
@@ -59,7 +59,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
         {
           id: "percentage",
           label: t("Fill"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -70,20 +70,20 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
         },
         {
           id: "showText",
-          type: "switch-dev",
+          type: "switch",
           label: t("Title"),
           disabled: style2
         },
         {
           id: "showPercentage",
-          type: "switch-dev",
+          type: "switch",
           label: t("Percentage")
         }
       ]
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "xlarge" : "auto",
@@ -94,7 +94,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -105,7 +105,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: {
                     separator: true
                   },
@@ -116,7 +116,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       options: [
                         {
                           id: "typography",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: "desktop" === device
                           },
@@ -152,7 +152,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "gridTypography",
-                  type: "grid-dev",
+                  type: "grid",
                   config: {
                     separator: true
                   },
@@ -164,7 +164,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       options: [
                         {
                           id: "",
-                          type: "typography-dev",
+                          type: "typography",
                           config: {
                             fontFamily: "desktop" === device
                           }
@@ -198,7 +198,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -213,7 +213,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -221,7 +221,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "labelColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: textOff || style2
                 }
@@ -233,7 +233,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: percentageOff
                 }
@@ -245,7 +245,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -256,7 +256,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "bg2Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -267,7 +267,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -278,7 +278,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -290,7 +290,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 100,
           config: {
             min: 1,
@@ -304,7 +304,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
         {
           id: "style1Height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           disabled: style2,
           config: {
             min: 10,
@@ -315,7 +315,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
         {
           id: "style2Height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           disabled: progressBarStyle === "style1",
           config: {
             min: 10,
@@ -325,7 +325,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -334,7 +334,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -349,7 +349,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -364,7 +364,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: !IS_STORY,
       position: 110,
       devices: "desktop",

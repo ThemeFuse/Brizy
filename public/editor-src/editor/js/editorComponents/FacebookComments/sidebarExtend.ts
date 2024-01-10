@@ -6,7 +6,9 @@ export const title = ({ v }: { v: ElementModel }): string =>
   v.review === "true" ? t("Review") : t("Comments");
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -17,7 +19,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -26,7 +28,7 @@ export function getItems(): ToolbarItemType[] {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -38,19 +40,19 @@ export function getItems(): ToolbarItemType[] {
                   options: [
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       disabled: true
                     },
                     {
                       id: "bgPadding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50
                     },
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       position: 65
                     }
@@ -73,7 +75,7 @@ export function getItems(): ToolbarItemType[] {
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      type: "slider-dev",
+                      type: "slider",
                       devices: "desktop",
                       position: 100,
                       config: {
@@ -88,21 +90,21 @@ export function getItems(): ToolbarItemType[] {
             },
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               disabled: true
             },
             {
               id: "bgPadding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               position: 50
             },
             {
               id: "border",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               position: 65,
               devices: "responsive"

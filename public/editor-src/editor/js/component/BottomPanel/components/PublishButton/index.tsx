@@ -216,6 +216,7 @@ class PublishButton extends Component<Props, State> {
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
+          Prompts.close("pageRules");
         },
         onCancel: (): void => {
           this.setState({ [loading]: false });
@@ -244,6 +245,7 @@ class PublishButton extends Component<Props, State> {
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
+          Prompts.close("pageTemplate");
         },
         onCancel: (): void => {
           this.setState({ [loading]: false });
@@ -276,6 +278,7 @@ class PublishButton extends Component<Props, State> {
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
+          Prompts.close("pageArticle");
         },
         onCancel: (): void => {
           this.setState({ [loading]: false });
@@ -591,6 +594,7 @@ class PublishButton extends Component<Props, State> {
                   return this.draft("updateLoading");
               }
             }}
+            status={this.props.page.status}
             loading={this.state.updateLoading}
           >
             {this.getLabel()}

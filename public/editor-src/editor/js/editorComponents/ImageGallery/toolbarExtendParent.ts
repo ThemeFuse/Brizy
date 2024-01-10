@@ -15,13 +15,13 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   return [
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "toolbarGallery",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-gallery",
         title: t("Gallery")
@@ -30,7 +30,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
       options: [
         {
           id: "galleryTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabGallery",
@@ -38,7 +38,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "items",
-                  type: "gallery-for-gallery-dev",
+                  type: "gallery-for-gallery",
                   label: t("Images"),
                   devices: "desktop",
                   config: {
@@ -47,11 +47,11 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 },
                 {
                   id: "groupLayout",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "layout",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Layout"),
                       devices: "desktop",
                       choices: [
@@ -63,7 +63,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                     },
                     {
                       id: "gridAspectRatio",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Aspect Ratio"),
                       devices: "desktop",
                       disabled: layout !== "grid",
@@ -78,7 +78,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                     },
                     {
                       id: "rowHeight",
-                      type: "slider-dev",
+                      type: "slider",
                       label: t("Height"),
                       disabled: layout !== "justified",
                       config: {
@@ -92,14 +92,14 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "enableTags",
                   label: t("Enable Tags"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: layout === "bigImage"
                 },
                 {
                   id: "lightBox",
                   label: t("Open in Lightbox"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -110,7 +110,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "gridColumn",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Columns"),
                   disabled:
                     layout === "justified" ||
@@ -122,7 +122,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 },
                 {
                   id: "spacing",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Spacing"),
                   disabled: layout === "bigImage",
                   config: {

@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -36,14 +36,14 @@ export function getItems({
       options: [
         {
           id: "checkboxTypography",
-          type: "typography-dev",
+          type: "typography",
           config: { fontFamily: device === "desktop" }
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -61,13 +61,13 @@ export function getItems({
       options: [
         {
           id: "checkboxColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       devices: "desktop",
       position: 30,
@@ -75,7 +75,7 @@ export function getItems({
         {
           id: "checkboxSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
