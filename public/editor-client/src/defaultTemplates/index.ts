@@ -1,6 +1,8 @@
+import { Json } from "@brizy/readers";
 import { Config } from "../config";
 import {
   BlocksArray,
+  CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
@@ -9,7 +11,9 @@ import {
   KitItem,
   Kits,
   KitsWithThumbs,
-  Layouts,
+  LayoutsDefaultTemplate,
+  LayoutsPageAPI,
+  LayoutsPages,
   LayoutsWithThumbs,
   Popups,
   PopupsWithThumbs,
@@ -17,7 +21,8 @@ import {
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
-import { tempConverterKit } from "./tempComverters";
+import { tempConverterKit } from "./tempConverters";
+import { convertLayouts, convertToCategories, fetchAllLayouts1 } from "./utils";
 
 const defaultKits = (
   config: Config
@@ -243,30 +248,28 @@ const defaultStories = (
 
 const defaultLayouts = (
   config: Config
-): DefaultTemplate<LayoutsWithThumbs, BlocksArray<DefaultBlockWithID>> => {
+): LayoutsDefaultTemplate<
+  LayoutsWithThumbs,
+  BlocksArray<DefaultBlockWithID>,
+  LayoutsPages
+> => {
+  // @ts-expect-error: temporary solution, wait until new API will come via config
   const { layoutsUrl } = config.api.templates;
+  const imageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
+  const apiLayoutsUrl1 =
+    "https://phplaravel-1109775-4184176.cloudwaysapps.com/api";
+  const apiLayoutsUrl = "https://j6dfq8pl41.b-cdn.net/api";
 
   return {
     async getMeta(res, rej) {
       try {
-        const meta: Layouts = await fetch(`${layoutsUrl}/meta.json`).then((r) =>
-          r.json()
+        const meta = await fetchAllLayouts1(
+          `${apiLayoutsUrl1}/get-layouts-chunk`
         );
 
-        const data = {
-          ...meta,
-          templates: meta.templates.map((item) => {
-            return {
-              ...item,
-              thumbnailSrc: `${layoutsUrl}/thumbs/${item.pages[0].id}.jpg`,
-              pages: item.pages.map((page) => {
-                return {
-                  ...page,
-                  thumbnailSrc: `${layoutsUrl}/thumbs/${page.id}.jpg`
-                };
-              })
-            };
-          })
+        const data: LayoutsWithThumbs = {
+          templates: convertLayouts(meta.templates, `${imageUrl}`),
+          categories: convertToCategories(meta.categories)
         };
 
         res(data);
@@ -274,15 +277,51 @@ const defaultLayouts = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, { id, layoutId }) {
       try {
-        const data = await fetch(`${layoutsUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
-        );
+        const data = await fetch(
+          `${apiLayoutsUrl}/get-layouts-page?project_id=${layoutId}&page_slug=${id}`
+        ).then((r) => r.json());
 
-        res(data);
+        const pageData = Json.read(data[0].pageData) as {
+          items: DefaultBlockWithID[];
+        };
+
+        const result: BlocksArray<DefaultBlockWithID> = {
+          blocks: [...pageData.items]
+        };
+
+        res(result);
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    },
+    async getPages(res, rej, id) {
+      try {
+        const data = await fetch(
+          `${apiLayoutsUrl}/get-layouts-pages?project_id=${id}&per_page=20`
+        ).then((r) => r.json());
+
+        const parsedData: CustomTemplatePage[] = data.collections.map(
+          ({
+            slug,
+            title,
+            thumbnailHeight,
+            thumbnailWidth,
+            thumbs
+          }: LayoutsPageAPI) => ({
+            id: slug,
+            title,
+            thumbnailWidth,
+            thumbnailHeight,
+            thumbnailSrc: `${imageUrl}${thumbs}`,
+            layoutId: id
+          })
+        );
+
+        res({ pages: parsedData, styles: [data.styles] });
+      } catch (e) {
+        rej(t("Failed to load pages for selected Layout"));
       }
     }
   };
