@@ -5,7 +5,6 @@ import {
   CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
-  DefaultTemplate,
   DefaultTemplateKits,
   DefaultTemplatePopup,
   KitItem,
@@ -17,12 +16,18 @@ import {
   LayoutsWithThumbs,
   Popups,
   PopupsWithThumbs,
-  Stories,
-  StoriesWithThumbs
+  StoriesWithThumbs,
+  StoryPages
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
 import { tempConverterKit } from "./tempConverters";
-import { convertLayouts, convertToCategories, fetchAllLayouts1 } from "./utils";
+import {
+  convertLayouts,
+  convertStories,
+  convertToCategories,
+  fetchAllLayouts1,
+  fetchAllStories1
+} from "./utils";
 
 const defaultKits = (
   config: Config
@@ -202,30 +207,26 @@ const defaultPopups = (
 
 const defaultStories = (
   config: Config
-): DefaultTemplate<StoriesWithThumbs, BlocksArray<DefaultBlock>> => {
+): LayoutsDefaultTemplate<
+  StoriesWithThumbs,
+  BlocksArray<DefaultBlock>,
+  LayoutsPages
+> => {
+  // @ts-expect-error: temporary solution, wait until new API will come via config
   const { storiesUrl } = config.api.templates;
+  const apiLayoutsUrl =
+    "https://phplaravel-1109775-4184176.cloudwaysapps.com/api";
+  const imageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
 
   return {
     async getMeta(res, rej) {
       try {
-        const meta: Stories = await fetch(`${storiesUrl}/meta.json`).then((r) =>
-          r.json()
-        );
+        const meta = await fetchAllStories1(`${apiLayoutsUrl}/get-story-chunk`);
 
+        console.log("gegg");
         const data = {
-          ...meta,
-          stories: meta.stories.map((story) => {
-            return {
-              ...story,
-              thumbnailSrc: `${storiesUrl}/thumbs/${story.pages[0].id}.jpg`,
-              pages: story.pages.map((page) => {
-                return {
-                  ...page,
-                  thumbnailSrc: `${storiesUrl}/thumbs/${page.id}.jpg`
-                };
-              })
-            };
-          })
+          stories: convertStories(meta.templates, `${imageUrl}`),
+          categories: convertToCategories(meta.categories)
         };
 
         res(data);
@@ -233,14 +234,45 @@ const defaultStories = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, kit) {
       try {
-        const data = await fetch(`${storiesUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
-        );
-        res(data);
+        const data = await fetch(
+          `${apiLayoutsUrl}/get-story-page-data?project_id=${kit.layoutId}&page_slug=${kit.id}`
+        ).then((r) => r.json());
+
+        const pageData = Json.read(data.collection) as {
+          blocks: DefaultBlock[];
+        };
+
+        res({ blocks: pageData.blocks });
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    },
+    async getPages(res, rej, id) {
+      try {
+        const data = await fetch(
+          `${apiLayoutsUrl}/get-story-page?project_id=${id}}&per_page=20`
+        ).then((r) => r.json());
+        const parsedData: CustomTemplatePage[] = data.collections.map(
+          ({
+            slug,
+            thumbnailHeight,
+            thumbnailWidth,
+            thumbnail
+          }: StoryPages) => ({
+            id: slug,
+            title: slug,
+            thumbnailWidth,
+            thumbnailHeight,
+            thumbnailSrc: `${imageUrl}${thumbnail}`,
+            layoutId: id
+          })
+        );
+
+        res({ pages: parsedData, styles: [data.styles] });
+      } catch (e) {
+        rej(t("Failed to load pages for selected Stories"));
       }
     }
   };
