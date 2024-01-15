@@ -113,7 +113,7 @@ class Brizy_Public_AssetEnqueueManager {
 
 		wp_register_script( 'brizy-preview', '' );
 		wp_enqueue_script( 'brizy-preview' );
-		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = ${config_json};", 'before' );
+		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = $config_json;", 'before' );
 	}
 
 	public function enqueueStyles() {
