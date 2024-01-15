@@ -13,6 +13,9 @@ interface DefaultTemplates {
   popupsUrl: string;
   storiesUrl: string;
   layoutsUrl: string;
+  layoutDataUrl: string;
+  layoutsChunkUrl: string;
+  layoutsPagesUrl: string;
   templatesUrl: string;
 }
 
@@ -100,6 +103,18 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   ),
   layoutsUrl: pipe(
     mPipe(Obj.readKey("layoutsUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutDataUrl: pipe(
+    mPipe(Obj.readKey("layoutDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsChunkUrl: pipe(
+    mPipe(Obj.readKey("layoutsChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsPagesUrl: pipe(
+    mPipe(Obj.readKey("layoutsPagesUrl"), Str.read),
     throwOnNullish("Invalid API Config: layouts")
   ),
   popupsUrl: pipe(

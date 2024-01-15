@@ -1,3 +1,4 @@
+import { Literal } from "@/utils/types";
 import { Response } from "./Response";
 
 export interface DefaultBlock {
@@ -24,21 +25,12 @@ export interface DefaultTemplate<T1, T2> {
   ) => void;
 }
 
-export interface Layouts {
-  templates: Array<Template>;
-  categories: Pick<Categories, "id" | "title">;
-}
-
 export interface DefaultBlockWithID extends DefaultBlock {
   blockId: string;
 }
 
 export interface BlocksArray<T> {
   blocks: Array<T>;
-}
-
-export interface LayoutsWithThumbs extends Omit<Layouts, "templates"> {
-  templates: Array<TemplateWithThumbs>;
 }
 
 export interface Stories {
@@ -85,16 +77,17 @@ export interface TemplateWithThumbs extends Omit<Template, "pages"> {
 export interface TemplatePage {
   id: string;
   title: string;
-  keywords: string;
-  cat: Array<number>;
   thumbnailWidth: number;
   thumbnailHeight: number;
-  pro: boolean;
 }
 
 export interface TemplatePageWithThumbs extends TemplatePage {
   thumbnailSrc: string;
 }
+
+export type CustomTemplatePage = TemplatePageWithThumbs & {
+  [key: string]: Literal;
+};
 
 export interface Categories {
   id: number | string;
@@ -209,4 +202,67 @@ export interface Popups {
 export interface PopupsWithThumbs extends Omit<Popups, "blocks"> {
   blocks: Array<BlockWithThumbs>;
 }
+// endregion
+
+// region Layouts
+export interface LayoutsDefaultTemplate<T1, T2, T3> {
+  label?: string;
+  getMeta: (res: Response<T1>, rej: Response<string>) => void;
+  getData: (
+    res: Response<T2>,
+    rej: Response<string>,
+    page: CustomTemplatePage
+  ) => void;
+  getPages: (res: Response<T3>, rej: Response<string>, id: string) => void;
+}
+
+export interface LayoutTemplate {
+  blank?: boolean;
+  name: string;
+  cat: Array<number | string>;
+  pagesCount: number;
+  layoutId: string;
+  pro: boolean;
+  keywords: string;
+}
+
+export interface Layouts {
+  templates: Array<LayoutTemplateWithThumbs>;
+  categories: Pick<Categories, "id" | "title">[];
+}
+
+export interface LayoutsPages {
+  pages: CustomTemplatePage[];
+  styles: Style[];
+}
+
+export interface LayoutsWithThumbs extends Omit<Layouts, "templates"> {
+  templates: Array<LayoutTemplateWithThumbs>;
+}
+
+export interface LayoutTemplateWithThumbs extends LayoutTemplate {
+  thumbnailSrc: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+export type LayoutsPageAPI = {
+  title: string;
+  slug: string;
+  thumbs: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+};
+
+export type LayoutsAPI = {
+  title: string;
+  pro: string;
+  categories: string;
+  pagesCount: string;
+  slug: string;
+  thumbnail: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+  keywords: string;
+};
 // endregion

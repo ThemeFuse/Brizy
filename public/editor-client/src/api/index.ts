@@ -1,5 +1,13 @@
 import { Config, getConfig } from "@/config";
-import { DefaultBlock, Kit, KitItem, Style } from "@/types/DefaultTemplate";
+import {
+  DefaultBlock,
+  DefaultBlockWithID,
+  Kit,
+  KitItem,
+  LayoutsAPI,
+  LayoutsPageAPI,
+  Style
+} from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { IconUploadData } from "@/types/Icon";
@@ -17,7 +25,8 @@ import {
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
-import { Arr, Obj, Str } from "@brizy/readers";
+import { Arr, Json, Obj, Str } from "@brizy/readers";
+import { isT, mPipe } from "fp-utilities";
 import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
@@ -1495,6 +1504,92 @@ export const getKitsList = async (url: string): Promise<KitItem[]> => {
   }
 
   throw new Error(t("Failed to load kits"));
+};
+
+export const getDefaultLayouts = async (
+  url: string
+): Promise<{
+  templates: LayoutsAPI[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (res.collections && res.categories) {
+      return { templates: res.collections, categories: res.categories };
+    }
+  }
+
+  throw new Error(t("Failed to load layouts"));
+};
+
+export const getDefaultLayoutsPages = async (
+  url: string,
+  id: string
+): Promise<{
+  collections: LayoutsPageAPI[];
+  paginationInfo: {
+    itemsPerPage: number;
+    lastPage: number;
+    totalCount: number;
+  };
+  styles: Style;
+}> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id,
+    per_page: "20"
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    return response.json();
+  }
+
+  throw new Error(t("Failed to load layouts"));
+};
+
+export const getDefaultLayoutData = async (
+  url: string,
+  layoutId: Literal,
+  id: string
+): Promise<{
+  items: DefaultBlockWithID[];
+}> => {
+  const fullUrl = makeUrl(url, {
+    project_id: layoutId as string,
+    page_slug: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    const parsedResult = mPipe(
+      Arr.read,
+      (res) => res[0] as { pageData: string },
+      Obj.readKey("pageData"),
+      (r) =>
+        Json.read(r) as {
+          items: DefaultBlockWithID[];
+        }
+    )(res);
+
+    if (isT(parsedResult)) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load layouts"));
 };
 
 //#endregion

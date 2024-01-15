@@ -1,11 +1,18 @@
+import { Num } from "@brizy/readers";
 import { flatten, uniq, upperFirst } from "lodash";
 import {
   BlockWithThumbs,
   Categories,
+  CustomTemplatePage,
   Kit,
-  KitType
+  KitType,
+  LayoutsAPI,
+  LayoutsPageAPI,
+  LayoutTemplateWithThumbs
 } from "../types/DefaultTemplate";
 import { pipe } from "../utils/fp/pipe";
+
+const PRO = "PRO";
 
 export const getUniqueKitTypes = (collections: Kit[]): KitType[] =>
   pipe(
@@ -47,7 +54,6 @@ export const converterKit = (
       theme
     }) => ({
       id: slug,
-      // cat: categories.split(",").map((item) => item.trim()),
       cat: categories.split(",").map((item) => item.trim().toLowerCase()),
       title: slug,
       type: theme
@@ -58,7 +64,7 @@ export const converterKit = (
       thumbnailHeight,
       thumbnailWidth,
       thumbnailSrc: `${url}${thumbnail}`,
-      pro: pro === "PRO",
+      pro: pro === PRO,
       kitId,
       blank
     })
@@ -69,6 +75,58 @@ export const converterKit = (
     types
   };
 };
+
+export const convertLayouts = (
+  collections: LayoutsAPI[],
+  thumbUrl: string
+): LayoutTemplateWithThumbs[] =>
+  collections.map(
+    ({
+      title,
+      categories,
+      pagesCount,
+      pro,
+      keywords,
+      thumbnailWidth,
+      thumbnailHeight,
+      thumbnail,
+      slug
+    }) => {
+      return {
+        name: title,
+        cat: categories.split(",").map((item) => item.trim().toLowerCase()),
+        pagesCount: Num.read(pagesCount) ?? 0,
+        pro: pro === PRO,
+        keywords,
+        thumbnailWidth,
+        thumbnailHeight,
+        thumbnailSrc: `${thumbUrl}${thumbnail}`,
+        layoutId: slug
+      };
+    }
+  );
+
+export const convertLayoutPages = (
+  layouts: LayoutsPageAPI[],
+  templatesImageUrl: string,
+  id: string
+): CustomTemplatePage[] =>
+  layouts.map(
+    ({
+      slug,
+      title,
+      thumbnailHeight,
+      thumbnailWidth,
+      thumbs
+    }: LayoutsPageAPI) => ({
+      id: slug,
+      title,
+      thumbnailWidth,
+      thumbnailHeight,
+      thumbnailSrc: `${templatesImageUrl}${thumbs}`,
+      layoutId: id
+    })
+  );
 
 export function convertToCategories(
   obj: { slug: string; title: string }[]
