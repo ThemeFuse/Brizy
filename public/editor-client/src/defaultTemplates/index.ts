@@ -1,7 +1,10 @@
 import {
   getDefaultLayoutData,
   getDefaultLayouts,
-  getDefaultLayoutsPages
+  getDefaultLayoutsPages,
+  getDefaultStories,
+  getDefaultStory,
+  getDefaultStoryPages
 } from "@/api";
 import { Config } from "../config";
 import {
@@ -9,7 +12,6 @@ import {
   CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
-  DefaultTemplate,
   DefaultTemplateKits,
   DefaultTemplatePopup,
   KitItem,
@@ -21,12 +23,11 @@ import {
   LayoutsWithThumbs,
   Popups,
   PopupsWithThumbs,
-  Stories,
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
 import { tempConverterKit } from "./tempConverters";
-import { convertLayouts, convertToCategories } from "./utils";
+import { convertLayouts, convertStories, convertToCategories } from "./utils";
 
 const defaultKits = (
   config: Config
@@ -206,30 +207,25 @@ const defaultPopups = (
 
 const defaultStories = (
   config: Config
-): DefaultTemplate<StoriesWithThumbs, BlocksArray<DefaultBlock>> => {
+): LayoutsDefaultTemplate<
+  StoriesWithThumbs,
+  BlocksArray<DefaultBlock>,
+  LayoutsPages
+> => {
+  // @ts-expect-error: temporary solution, wait until new API will come via config
   const { storiesUrl } = config.api.templates;
+  const apiLayoutsUrl =
+    "https://phplaravel-1109775-4184176.cloudwaysapps.com/api";
+  const imageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
 
   return {
     async getMeta(res, rej) {
       try {
-        const meta: Stories = await fetch(`${storiesUrl}/meta.json`).then((r) =>
-          r.json()
-        );
+        const meta = await getDefaultStories(apiLayoutsUrl);
 
         const data = {
-          ...meta,
-          stories: meta.stories.map((story) => {
-            return {
-              ...story,
-              thumbnailSrc: `${storiesUrl}/thumbs/${story.pages[0].id}.jpg`,
-              pages: story.pages.map((page) => {
-                return {
-                  ...page,
-                  thumbnailSrc: `${storiesUrl}/thumbs/${page.id}.jpg`
-                };
-              })
-            };
-          })
+          stories: convertStories(meta.templates, `${imageUrl}`),
+          categories: convertToCategories(meta.categories)
         };
 
         res(data);
@@ -237,14 +233,36 @@ const defaultStories = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, { layoutId, id }) {
       try {
-        const data = await fetch(`${storiesUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
-        );
-        res(data);
+        const { blocks } = await getDefaultStory(apiLayoutsUrl, layoutId, id);
+
+        res({ blocks });
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    },
+    async getPages(res, rej, id) {
+      try {
+        const { collections, styles } = await getDefaultStoryPages(
+          apiLayoutsUrl,
+          id
+        );
+
+        const parsedData: CustomTemplatePage[] = collections.map(
+          ({ slug, thumbnailHeight, thumbnailWidth, thumbnail }) => ({
+            id: slug,
+            title: slug,
+            thumbnailSrc: `${imageUrl}${thumbnail}`,
+            thumbnailHeight,
+            thumbnailWidth,
+            layoutId: id
+          })
+        );
+
+        res({ pages: parsedData, styles: [styles] });
+      } catch (e) {
+        rej(t("Failed to load pages for selected Stories"));
       }
     }
   };
