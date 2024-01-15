@@ -191,7 +191,7 @@ class Brizy_Editor_Editor_Editor
                 ),
             ),
             'ui' => [
-                'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL)
+                //'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL)
             ],
             'server' => array(
                 'maxUploadFileSize' => $this->fileUploadMaxSize(),
