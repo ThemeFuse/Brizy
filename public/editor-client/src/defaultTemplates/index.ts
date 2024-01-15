@@ -4,7 +4,6 @@ import {
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
-  Kits,
   KitsWithThumbs,
   Layouts,
   LayoutsWithThumbs,
@@ -14,41 +13,66 @@ import {
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
+import {fetchAllElements, converterKit, getStyles} from "./utils"
 
-const defaultKits = (
-  config: Config
-): DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock> => {
-  const { kitsUrl } = config.api.templates;
+export type Kit = {
+  categories: string;
+  pro: string;
+  theme: string;
+  slug: string;
+  thumbs: string;
+  keywords: string;
+  thumbnailHeight: number;
+  thumbnailWidth: number;
+};
+
+export type KitType = {
+  title: string;
+  id: string;
+  name: string;
+  icon: string;
+};
+
+const defaultKits = (): DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock> => {
+  const apiKitUrl = "https://af9b-87-255-68-163.ngrok-free.app/api";
+  const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
 
   return {
     async getMeta(res, rej) {
       try {
-        const meta: Array<Kits> = await fetch(`${kitsUrl}/meta.json`).then(
-          (r) => r.json()
+        const allElements = await fetchAllElements<Kit>(
+            `${apiKitUrl}/get-collection`,
+            100
         );
 
-        const data = meta.map((kit) => {
-          return {
-            ...kit,
-            blocks: kit.blocks.map((item) => {
-              return {
-                ...item,
-                thumbnailSrc: `${kitsUrl}/thumbs/${item.id}.jpg`
-              };
-            })
-          };
-        });
+        const { types, blocks, categories } = converterKit(
+            allElements,
+            apiImageUrl
+        );
 
-        res(data);
+        const customKit: KitsWithThumbs = {
+          id: "kit-1",
+          blocks: blocks,
+          categories: categories,
+          types: types,
+          name: "Kit #69",
+          styles: getStyles(),
+        };
+
+        res([customKit]);
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
     },
     async getData(res, rej, id) {
       try {
-        const data = await fetch(`${kitsUrl}/resolves/${id}.json`).then((r) =>
-          r.json()
-        );
+        const data = await fetch(
+            `${apiKitUrl}/get-item?slug=${id.replace("custom-kit-", "")}`
+        )
+            .then((r) => r.json())
+            .then((data) => data.pop())
+            .then((d) => JSON.parse(d.pageData).items.pop());
+
         res(data);
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));

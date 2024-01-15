@@ -44,7 +44,7 @@ const api = {
   savedPopups,
   savedLayouts,
   popupConditions,
-  defaultKits: defaultKits(config),
+  defaultKits: defaultKits(),
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),
   defaultLayouts: defaultLayouts(config),

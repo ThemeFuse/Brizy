@@ -63,20 +63,20 @@ export interface StoriesWithThumbs extends Omit<Stories, "stories"> {
   stories: Array<TemplateWithThumbs>;
 }
 
-interface Block {
+export interface Block {
   id: string;
-  cat: Array<number>;
+  cat: Array<number | string>;
   title: string;
   keywords: string;
   thumbnailWidth: number;
   thumbnailHeight: number;
-  type: number;
+  type: number | string;
   blank?: string;
   position?: number;
   pro?: boolean;
 }
 
-interface BlockWithThumbs extends Block {
+export interface BlockWithThumbs extends Block {
   thumbnailSrc: string;
 }
 
@@ -108,15 +108,15 @@ export interface TemplatePageWithThumbs extends TemplatePage {
   thumbnailSrc: string;
 }
 
-interface Categories {
-  id: number;
+export interface Categories {
+  id: number | string;
   slug: string;
   title: string;
   hidden?: boolean;
 }
 
-interface Style {
-  id: string;
+export interface Style {
+  id: string | number;
   title: string;
   colorPalette: Array<Palette>;
   fontStyles: Array<FontStyle>;
@@ -130,7 +130,7 @@ interface Palette {
 type fontSizeUnits = "px" | "%";
 
 interface FontStyle {
-  id: number;
+  id: string | number;
   title: string;
   deletable: "on" | "off";
   fontFamily: string;
