@@ -14,24 +14,39 @@ interface Value {
   linkToSlide: number;
   linkPopulationEntityId: string;
   linkPopulationEntityType: string;
+  linkPage: string;
+  linkPageTitle: string;
+  linkPageSource: string;
 }
 
 type Patch = Partial<Value>;
 
-export const handleChangeLink = (v: Value, value: Patch) => ({
-  link: encodeToString({
-    type: v.linkType,
-    anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-    external: value.linkExternal ?? v.linkExternal,
-    externalBlank: value.linkExternalBlank ?? v.linkExternalBlank,
-    externalRel: value.linkExternalRel ?? v.linkExternalRel,
-    externalType: value.linkPopulation ? "population" : "external",
-    population: value.linkPopulation ?? v.linkPopulation,
-    popup: v.linkPopup ? `#${v.linkPopup}` : "",
-    upload: v.linkUpload,
-    linkToSlide: v.linkToSlide
-  })
-});
+export const handleChangeLink = (v: Value, value: Patch) => {
+  const linkAnchor = value.linkAnchor ?? v.linkAnchor;
+  const linkPopup = value.linkPopup ?? v.linkPopup;
+
+  return {
+    link: encodeToString({
+      type: value.linkType ?? v.linkType,
+      anchor: linkAnchor ? `#${linkAnchor}` : "",
+      external: value.linkExternal ?? v.linkExternal,
+      externalBlank: value.linkExternalBlank ?? v.linkExternalBlank,
+      externalRel: value.linkExternalRel ?? v.linkExternalRel,
+      externalType: value.linkPopulation ? "population" : "external",
+      population: value.linkPopulation ?? v.linkPopulation,
+      populationEntityId:
+        value.linkPopulationEntityId ?? v.linkPopulationEntityId,
+      populationEntityType:
+        value.linkPopulationEntityType ?? v.linkPopulationEntityType,
+      popup: linkPopup ? `#${linkPopup}` : "",
+      upload: value.linkUpload ?? v.linkUpload,
+      linkToSlide: value.linkToSlide ?? v.linkToSlide,
+      internal: value.linkPage ?? v.linkPage,
+      pageTitle: value.linkPageTitle ?? v.linkPageTitle,
+      pageSource: value.linkPageSource ?? v.linkPageSource
+    })
+  };
+};
 
 interface PopulationColor {
   [k: string]: {

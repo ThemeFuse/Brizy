@@ -4,7 +4,7 @@ import { capByPrefix } from "visual/utils/string";
 export function toolbarDisabledToolbarSettings({ devices = "all" }) {
   return {
     id: "toolbarSettings",
-    type: "popover-dev",
+    type: "popover",
     devices,
     disabled: true
   };
@@ -13,7 +13,7 @@ export function toolbarDisabledToolbarSettings({ devices = "all" }) {
 export function toolbarDisabledShowOnTablet({ devices = "responsive" }) {
   return {
     id: "showOnTablet",
-    type: "toggle",
+    type: "legacy-toggle",
     disabled: true,
     devices
   };
@@ -22,7 +22,7 @@ export function toolbarDisabledShowOnTablet({ devices = "responsive" }) {
 export function toolbarDisabledShowOnMobile({ devices = "responsive" }) {
   return {
     id: "showOnMobile",
-    type: "toggle",
+    type: "legacy-toggle",
     disabled: true,
     devices
   };
@@ -44,7 +44,7 @@ export function toolbarDisabledShowOnResponsive({ device }) {
 export function toolbarDisabledDuplicate({ device, devices = "all" }) {
   return {
     id: defaultValueKey({ key: "duplicate", device }),
-    type: "button",
+    type: "legacy-button",
     devices,
     disabled: true
   };
@@ -53,7 +53,7 @@ export function toolbarDisabledDuplicate({ device, devices = "all" }) {
 export function toolbarDisabledRemove({ device, devices = "all" }) {
   return {
     id: defaultValueKey({ key: "remove", device }),
-    type: "button",
+    type: "legacy-button",
     devices,
     disabled: true
   };
@@ -65,7 +65,7 @@ export function toolbarDisabledPadding({ prefix = "", devices = "all" }) {
   return {
     devices,
     id: padding,
-    type: "group-dev",
+    type: "group",
     disabled: true
   };
 }
@@ -74,7 +74,7 @@ export function toolbarDisabledMargin({ devices = "all" }) {
   return {
     devices,
     id: "margin",
-    type: "group-dev",
+    type: "group",
     disabled: true
   };
 }

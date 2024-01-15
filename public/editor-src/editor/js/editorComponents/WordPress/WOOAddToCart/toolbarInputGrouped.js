@@ -17,7 +17,7 @@ export const getItems = ({ v, device, state }) => {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -27,7 +27,7 @@ export const getItems = ({ v, device, state }) => {
       options: [
         {
           id: "input",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -36,7 +36,7 @@ export const getItems = ({ v, device, state }) => {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -52,7 +52,7 @@ export const getItems = ({ v, device, state }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "inputColorTab",
@@ -60,7 +60,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -72,7 +72,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -84,7 +84,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputBorder",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -96,7 +96,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -108,7 +108,7 @@ export const getItems = ({ v, device, state }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog"
       },
@@ -117,7 +117,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "inputWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 20,
             max: 100,
@@ -133,7 +133,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "inputHeight",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 20,
             max: 100,
@@ -142,7 +142,7 @@ export const getItems = ({ v, device, state }) => {
         },
         {
           id: "advancedSettings",
-          type: "advancedSettings",
+          type: "legacy-advancedSettings",
           devices: "desktop",
           label: t("More Settings"),
           icon: "nc-cog"

@@ -14,7 +14,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -24,7 +24,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "loginLink",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -33,7 +33,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -51,14 +51,14 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "loginLinkColor",
-          type: "colorPicker-dev",
+          type: "colorPicker",
           states: [NORMAL, HOVER]
         }
       ]
     },
     {
       id: "loginLinkHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

@@ -1,11 +1,12 @@
 import { isT, mPipe, pass } from "fp-utilities";
 import { UploadData } from "visual/component/Options/types/dev/FileUpload/types/Value";
-import {
-  ChoicesAsync,
-  ChoicesSync
-} from "visual/component/Options/types/dev/MultiSelect2/types";
+import { ChoicesAsync } from "visual/component/Options/types/dev/MultiSelect2/types";
+import { Choice } from "visual/component/Options/types/dev/Select/types";
 import Config from "visual/global/Config";
-import { isShopifyShop } from "visual/global/Config/types/configs/Base";
+import {
+  isEcwidShop,
+  isShopifyShop
+} from "visual/global/Config/types/configs/Base";
 import {
   Cloud,
   Shopify,
@@ -13,24 +14,20 @@ import {
 } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { GlobalBlock } from "visual/types";
 import * as Arr from "visual/utils/array";
-import { GlobalBlocksError } from "visual/utils/errors";
 import { pipe } from "visual/utils/fp";
 import * as ArrReader from "visual/utils/reader/array";
 import { read } from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
+import { t } from "../i18n";
 import {
   parseBlogSourceItem,
   parseCollectionSourceItem,
-  parseGlobalBlock,
-  parsePageRules,
-  stringifyGlobalBlock
+  parsePageRules
 } from "./adapter";
 import { GetCollectionTypesWithFields } from "./cms/graphql/types/GetCollectionTypesWithFields";
-import { paginationData } from "./const";
 import {
   BlogSourceItem,
   CollectionSourceItem,
@@ -42,7 +39,7 @@ import {
   Rule,
   SelectedItem
 } from "./types";
-import { makeFormEncode, makeUrl } from "./utils";
+import { makeUrl } from "./utils";
 
 export {
   autoSave,
@@ -82,7 +79,10 @@ export {
   getSourceIds,
   createBlockScreenshot,
   updateBlockScreenshot,
-  defaultPostsSources
+  defaultPostsSources,
+  createGlobalBlock,
+  createGlobalPopup,
+  getLeadificCustomFields
 } from "./common";
 
 export * from "./cms";
@@ -187,207 +187,33 @@ export function removeProjectLockedSendBeacon(): boolean {
 
 //#endregion
 
-//#region Global Blocks
-
-const uidToApiId: Record<string, number> = {};
-
-export function getGlobalBlocks(): Promise<Record<string, GlobalBlock>> {
-  const {
-    project: { id },
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const url = makeUrl(`${api}/global_blocks`, {
-    page: `${paginationData.page}`,
-    count: `${paginationData.count}`,
-    project: `${id}`
-  });
-  type GlobalBlocks = Array<{
-    data: string;
-    meta: string;
-    rules: string;
-    position: string;
-    status: string;
-  }>;
-
-  return persistentRequest<GlobalBlocks>(url, {
-    method: "GET"
-  })
-    .then((r) => {
-      return r.data.map(parseGlobalBlock).reduce((acc, block) => {
-        const { id, uid, title, tags, data, meta, rules, position, status } =
-          block;
-        // map uids to ids to use them in updates
-        uidToApiId[uid] = id;
-
-        acc[uid] = {
-          id: uid,
-          title,
-          tags,
-          data,
-          meta,
-          rules,
-          position,
-          status
-        };
-
-        return acc;
-      }, {});
-    })
-    .catch(() => {
-      throw new GlobalBlocksError("Failed to get Global blocks");
-    });
-}
-
-export function createGlobalBlock(
-  globalBlock: GlobalBlock
-): Promise<{ data: string; meta: string; dataVersion: string; id: number }> {
-  const uid = globalBlock.data.value._id;
-  const { title, tags, data, rules, meta, status } =
-    stringifyGlobalBlock(globalBlock);
-  const {
-    project: { id },
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const requestData = new URLSearchParams({
-    project: `${id}`,
-    is_autosave: `${0}`,
-    uid,
-    status,
-    data,
-    rules,
-    meta,
-    title,
-    tags
-  });
-  type GlobalBlock = {
-    data: string;
-    meta: string;
-    dataVersion: string;
-    id: number;
-  };
-
-  return persistentRequest<GlobalBlock>(`${api}/global_blocks`, {
-    method: "POST",
-    body: requestData
-  })
-    .then((r) => {
-      // map our uid to the newly created block's id
-      uidToApiId[uid] = r.data.id;
-      return r.data;
-    })
-    .catch(() => {
-      throw new GlobalBlocksError("Failed to create Global Block");
-    });
-}
-
-export function createGlobalPopup(globalPopup: GlobalBlock) {
-  return createGlobalBlock(globalPopup);
-}
-
-export function updateGlobalBlock(
-  uid: string,
-  globalBlock: GlobalBlock,
-  extraMeta: { is_autosave?: 1 | 0 } = {}
-): Promise<unknown> {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  // const uid = globalBlock.data.value._id;
-
-  const { title, tags, data, rules, meta } = stringifyGlobalBlock(globalBlock);
-  if (uidToApiId[uid]) {
-    const { is_autosave = 1 } = extraMeta;
-    const requestData = new URLSearchParams({
-      uid,
-      data,
-      rules,
-      meta,
-      ...(title && { title }),
-      ...(tags && { tags }),
-      is_autosave: `${is_autosave}`
-    });
-
-    return persistentRequest(`${api}/global_blocks/${uidToApiId[uid]}`, {
-      method: "PUT",
-      body: requestData
-    })
-      .then((r) => r.data)
-      .catch(() => {
-        throw new GlobalBlocksError("Failed to update Global Blocks");
-      });
-  } else {
-    // need some kind of retry mechanism
-    return Promise.reject("not implemented yet");
-  }
-}
-
-export function updateGlobalBlocks(
-  globalBlocks: Record<string, GlobalBlock>,
-  extraMeta: { is_autosave?: 1 | 0 } = {}
-): Promise<unknown> {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
-  const { is_autosave = 1 } = extraMeta;
-  const data = Object.entries(globalBlocks).reduce(
-    (acc, [uid, globalBlock]) => {
-      const { title, tags, data, rules, position, meta, status } =
-        stringifyGlobalBlock(globalBlock);
-
-      acc.push({
-        id: uidToApiId[uid],
-        status,
-        data,
-        ...(title && { title }),
-        ...(tags && { tags }),
-        position: JSON.stringify(position),
-        rules,
-        meta
-      });
-
-      return acc;
-    },
-    [] as {
-      id: number;
-      title?: string;
-      tags?: string;
-      status: string;
-      data: string;
-      position: string;
-      rules: string;
-      meta: string;
-    }[]
-  );
-  const body = new URLSearchParams(makeFormEncode({ data, is_autosave }));
-
-  return persistentRequest(`${api}/global_block/bulk`, {
-    method: "PUT",
-    body
-  })
-    .then((r) => r.data)
-    .catch(() => {
-      throw new GlobalBlocksError("Failed to update Global Blocks");
-    });
-}
-
-//#endregion
-
 //#region Fonts
 
-export function getUploadedFonts(): Promise<unknown> {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
+export async function getUploadedFonts(): Promise<unknown> {
+  try {
+    const {
+      urls: { api }
+    } = Config.getAll() as Cloud;
 
-  // mapped uid cloud to font id what used in models
-  return (
-    request(`${api}/fonts`, {
+    const r = await request(`${api}/fonts`, {
       method: "GET"
-    })
-      .then((r) => r.json())
-      //@ts-expect-error: need to check this
-      .then((r) => r.map(({ uid, ...data }) => ({ ...data, id: uid })))
-  );
+    });
+
+    if (!r.ok) {
+      throw new Error(t("Failed to fetch fonts"));
+    }
+
+    const responseData = await r.json();
+
+    if (!Array.isArray(responseData)) {
+      throw new Error(t("Invalid response format. Expected an array."));
+    }
+
+    return responseData.map(({ uid, ...data }) => ({ ...data, id: uid }));
+  } catch (error) {
+    console.error(t("Error fetching fonts:"), error);
+    return [];
+  }
 }
 
 //#endregion
@@ -860,16 +686,21 @@ export const searchCollectionItems = (
   };
 };
 
-export const getLeadificCustomFields = (
-  config: ConfigCommon
-): Promise<ChoicesSync> => {
-  const { handler } = config?.api?.modules?.leadific?.getCustomFields ?? {};
+//#region Ecwid
+
+export const getEcwidProducts = (config: ConfigCommon): Promise<Choice[]> => {
+  const get =
+    isCloud(config) && isEcwidShop(config?.modules?.shop)
+      ? config?.modules?.shop?.api?.getEcwidProducts?.handler
+      : undefined;
 
   return new Promise((res, rej) => {
-    if (typeof handler === "function") {
-      handler(res, rej);
+    if (typeof get === "function") {
+      get(res, rej);
     } else {
-      rej("Missing api handler in config");
+      rej("Missing getEcwidProducts api handler in config");
     }
   });
 };
+
+//#endregion

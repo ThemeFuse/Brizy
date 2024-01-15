@@ -3,7 +3,9 @@ import { t } from "visual/utils/i18n";
 export const title = t("Menu");
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -14,7 +16,7 @@ export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -23,7 +25,7 @@ export function getItems() {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: { align: "start" },
               devices: "desktop",
               tabs: [
@@ -42,8 +44,8 @@ export function getItems() {
                     {
                       id: "customCSS",
                       label: t("Custom CSS"),
-                      type: "codeMirror-dev",
-                      position: 45,
+                      type: "codeMirror",
+                      position: 50,
                       display: "block",
                       devices: "desktop",
                       helper: { content: helperHTML },
@@ -54,7 +56,7 @@ export function getItems() {
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,

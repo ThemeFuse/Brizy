@@ -10,40 +10,42 @@ export default (level, isMMenu) => {
 
 export const title = t("Menu Items");
 
-export const getItemsSimple = level => ({ device, state }) => {
-  return [
-    ...(level < 1
-      ? [
-          {
-            id: "borderRadiusPicker",
-            type: "group-dev",
-            devices: "desktop",
-            disabled: true
-          }
-        ]
-      : []),
-    ...(level >= 1
-      ? [
-          {
-            id: "sidebarTabs",
-            type: "sidebarTabs-dev",
-            disabled: true
-          },
-          toolbarDisabledPadding({ device, state, prefix: "menu" })
-        ]
-      : [])
-  ];
-};
+export const getItemsSimple =
+  (level) =>
+  ({ device, state }) => {
+    return [
+      ...(level < 1
+        ? [
+            {
+              id: "borderRadiusPicker",
+              type: "group",
+              devices: "desktop",
+              disabled: true
+            }
+          ]
+        : []),
+      ...(level >= 1
+        ? [
+            {
+              id: "sidebarTabs",
+              type: "sidebarTabs",
+              disabled: true
+            },
+            toolbarDisabledPadding({ device, state, prefix: "menu" })
+          ]
+        : [])
+    ];
+  };
 
 // eslint-disable-next-line no-unused-vars
-export const getItemsMMenu = _ => ({ device, state }) => {
-  return [
-    {
-      id: "borderRadiusPicker",
-      type: "group-dev",
-      devices: "desktop",
-      disabled: true
-    },
-    toolbarDisabledPadding({ device, state, prefix: "menu" })
-  ];
-};
+export const getItemsMMenu = (_) => ({ device, state }) => {
+    return [
+      {
+        id: "borderRadiusPicker",
+        type: "group",
+        devices: "desktop",
+        disabled: true
+      },
+      toolbarDisabledPadding({ device, state, prefix: "menu" })
+    ];
+  };

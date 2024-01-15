@@ -373,7 +373,8 @@ class SectionPopup2 extends EditorComponent {
       scrollPage,
       clickOutsideToClose,
       showCloseButtonAfter,
-      customCSS
+      customCSS,
+      popupId
     } = v;
     const config = Config.getAll();
 
@@ -464,8 +465,8 @@ class SectionPopup2 extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div
           className={classNamePopup}
-          id={this.instanceKey}
-          {...makeDataAttr({ name: "popup", value: this.instanceKey })}
+          id={popupId}
+          {...makeDataAttr({ name: "popup", value: popupId })}
           {...attr}
           {...parseCustomAttributes(customAttributes)}
         >

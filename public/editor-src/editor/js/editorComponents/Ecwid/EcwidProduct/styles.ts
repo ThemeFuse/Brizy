@@ -28,11 +28,7 @@ export function style(
       {
         standart: [
           "cssStyleElementEcwidCartTitleColor",
-          "cssStyleElementEcwidCartTitleTypographyFontFamily",
-          "cssStyleElementEcwidCartTitleTypographyFontSize",
-          "cssStyleElementEcwidCartTitleTypographyLineHeight",
-          "cssStyleElementEcwidCartTitleTypographyFontWeight",
-          "cssStyleElementEcwidCartTitleTypographyLetterSpacing",
+          "cssStyleElementEcwidCartTitleTypography",
           "cssStyleElementEcwidCartTitleAlign",
           "cssStyleElementEcwidCartTitleSpacing"
         ]
@@ -41,11 +37,7 @@ export function style(
       {
         standart: [
           "cssStyleElementEcwidCartTitleColor",
-          "cssStyleElementEcwidCartTitleTypographyFontFamily",
-          "cssStyleElementEcwidCartTitleTypographyFontSize",
-          "cssStyleElementEcwidCartTitleTypographyLineHeight",
-          "cssStyleElementEcwidCartTitleTypographyFontWeight",
-          "cssStyleElementEcwidCartTitleTypographyLetterSpacing",
+          "cssStyleElementEcwidCartTitleTypography",
           "cssStyleElementEcwidCartTitleAlign",
           "cssStyleElementEcwidCartTitleSpacing"
         ]
@@ -54,11 +46,7 @@ export function style(
       {
         standart: [
           "cssStyleElementEcwidCartTitleColor",
-          "cssStyleElementEcwidCartTitleTypographyFontFamily",
-          "cssStyleElementEcwidCartTitleTypographyFontSize",
-          "cssStyleElementEcwidCartTitleTypographyLineHeight",
-          "cssStyleElementEcwidCartTitleTypographyFontWeight",
-          "cssStyleElementEcwidCartTitleTypographyLetterSpacing",
+          "cssStyleElementEcwidCartTitleTypography",
           "cssStyleElementEcwidCartTitleAlign",
           "cssStyleElementEcwidCartTitleSpacing"
         ]
@@ -67,57 +55,52 @@ export function style(
       {
         standart: [
           "cssStyleElementEcwidCartTitleColor",
-          "cssStyleElementEcwidCartTitleTypographyFontFamily",
-          "cssStyleElementEcwidCartTitleTypographyFontSize",
-          "cssStyleElementEcwidCartTitleTypographyLineHeight",
-          "cssStyleElementEcwidCartTitleTypographyFontWeight",
-          "cssStyleElementEcwidCartTitleTypographyLetterSpacing",
+          "cssStyleElementEcwidCartTitleTypography",
           "cssStyleElementEcwidCartTitleAlign",
           "cssStyleElementEcwidCartTitleSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .ec-breadcrumbs":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsAlign",
-          "cssStyleElementEcwidProductBreadcrumbsSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__description .ec-breadcrumbs":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsAlign",
-          "cssStyleElementEcwidProductBreadcrumbsSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__top .ec-breadcrumbs":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsAlign",
-          "cssStyleElementEcwidProductBreadcrumbsSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .ec-breadcrumbs .breadcrumbs__link":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation":
+      { standart: ["cssStyleElementEcwidProductBreadcrumbsSpacing"] },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .ec-breadcrumbs .breadcrumbs__link:hover":
       {
         standart: [
           "cssStyleElementEcwidProductBreadcrumbsColor",
           "cssStyleElementEcwidProductBreadcrumbsTypography"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__description .ec-breadcrumbs .breadcrumbs__link":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .product-details__navigation":
       {
         standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
+          "cssStyleElementEcwidProductArrowBorder",
+          "cssStyleElementEcwidProductArrowBorderRadius",
+          "cssStyleElementEcwidProductArrowBoxShadow"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__top .ec-breadcrumbs .breadcrumbs__link":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .product-details__navigation .product-details__navigation--arrow-left:hover":
       {
         standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
+          "cssStyleElementEcwidProductArrowColor",
+          "cssStyleElementEcwidProductArrowBgColor",
+          "cssStyleElementEcwidProductArrowBgGradient"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .product-details__navigation .product-details__navigation--arrow-right:hover":
+      {
+        standart: [
+          "cssStyleElementEcwidProductArrowColor",
+          "cssStyleElementEcwidProductArrowBgColor",
+          "cssStyleElementEcwidProductArrowBgGradient"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .product-details__navigation .product-details__navigation--arrow-left svg":
+      { standart: ["cssStyleElementEcwidProductArrowHeight"] },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .product-details__navigation .product-details__navigation--arrow-right svg":
+      { standart: ["cssStyleElementEcwidProductArrowHeight"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__product-price.ec-price-item":
       {
         standart: [
@@ -146,17 +129,15 @@ export function style(
           "cssStyleElementEcwidProductInStockTypography"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control.form-control--button.form-control--large":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more":
       {
         standart: [
           "cssStyleElementEcwidMyAccountButtonWidth",
           "cssStyleElementEcwidMyAccountButtonAlign",
-          "cssStyleElementEcwidCartButtonSpacing"
+          "cssStyleElementEcwidProducButtonSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control.form-control--button.form-control--large.form-control--secondary.form-control--flexible.form-control--animated.details-product-purchase__add-more":
-      { standart: ["cssStyleElementEcwidProductButtonRightSpacing"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control.form-control--button.form-control--large .form-control__button":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidMyAccountButtonSize",
@@ -168,26 +149,18 @@ export function style(
           "cssStyleElementEcwidMyAccountButtonBorderRadius"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control.form-control--button.form-control--large .form-control__button .form-control__button-text":
-      {
-        standart: [
-          "cssStyleElementEcwidMyAccountButtonTypographyFontFamily",
-          "cssStyleElementEcwidMyAccountButtonTypographyFontSize",
-          "cssStyleElementEcwidMyAccountButtonTypographyLineHeight",
-          "cssStyleElementEcwidMyAccountButtonTypographyFontWeight",
-          "cssStyleElementEcwidMyAccountButtonTypographyLetterSpacing"
-        ]
-      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more .form-control__button .form-control__button-text":
+      { standart: ["cssStyleElementEcwidMyAccountButtonTypography"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls":
       {
         standart: [
           "cssStyleElementEcwidProductCheckoutSpacing",
-          "cssStyleElementEcwidMyAccountButtonAlign"
+          "cssStyleElementEcwidProductCheckoutAlign"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control.form-control--button.form-control--large.form-control--primary.form-control--flexible.details-product-purchase__checkout":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control--button.details-product-purchase__checkout":
       { standart: ["cssStyleElementEcwidProductCheckoutWidth"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control.form-control--button.form-control--large.form-control--primary.form-control--flexible.details-product-purchase__checkout:hover .form-control__button":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control--button.details-product-purchase__checkout:hover .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidProductCheckoutSize",
@@ -203,13 +176,18 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control.form-control--button.form-control--large.form-control--primary.form-control--flexible.details-product-purchase__checkout .form-control__button .form-control__button-text":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control--button.details-product-purchase__checkout .form-control__button .form-control__button-text":
       { standart: ["cssStyleElementEcwidProductCheckoutTypography"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons":
       { standart: ["cssStyleElementEcwidMyAccountButtonAlign"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control.form-control--button.form-control--large.form-control--primary.form-control--flexible.form-control--animated.details-product-purchase__add-to-bag.form-control__button--icon-center.form-control--done":
-      { standart: ["cssStyleElementEcwidProductAddToBagWidth"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control.form-control--button.form-control--large.form-control--primary.form-control--flexible.form-control--animated.details-product-purchase__add-to-bag.form-control__button--icon-center.form-control--done:hover .form-control__button":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-to-bag":
+      {
+        standart: [
+          "cssStyleElementEcwidProductAddToBagWidth",
+          "cssStyleElementEcwidProductAddToBagSpacing"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-to-bag:hover .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidProductAddToBagSize",
@@ -225,7 +203,7 @@ export function style(
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control.form-control--button.form-control--large.form-control--primary.form-control--flexible.form-control--animated.details-product-purchase__add-to-bag.form-control__button--icon-center.form-control--done .form-control__button .form-control__button-text":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control.details-product-purchase__add-to-bag .form-control__button .form-control__button-text":
       { standart: ["cssStyleElementEcwidProductAddToBagTypography"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__general-info .product-details-module__title.ec-header-h6":
       {
@@ -372,6 +350,8 @@ export function style(
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea":
       { standart: ["cssStyleElementEcwidProductTextareaSpacing"] },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content":
+      { standart: ["cssStyleElementEcwidProductTextareaAlign"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea .form-control__placeholder":
       { standart: ["cssStyleElementEcwidProductTextareaSize"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea:hover .form-control__textarea":
@@ -544,11 +524,7 @@ export function style(
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__general-info .product-details-module__content .product-details__product-description":
       {
         standart: [
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontSize",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLineHeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontWeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLetterSpacing",
+          "cssStyleElementEcwidMyAccountDescriptionTypography",
           "cssStyleElementEcwidMyAccountDescriptionColor",
           "cssStyleElementEcwidMyAccountDescriptionAlign",
           "cssStyleElementEcwidMyAccountDescriptionSpacing"
@@ -557,57 +533,29 @@ export function style(
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__description .product-details-module.product-details__general-info .product-details-module__content .product-details__product-description":
       {
         standart: [
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontSize",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLineHeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontWeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLetterSpacing",
+          "cssStyleElementEcwidMyAccountDescriptionTypography",
           "cssStyleElementEcwidMyAccountDescriptionColor",
           "cssStyleElementEcwidMyAccountDescriptionAlign",
           "cssStyleElementEcwidMyAccountDescriptionSpacing"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__general-info .product-details-module__content .product-details__product-description div p strong":
-      {
-        standart: [
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontSize",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLineHeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontWeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLetterSpacing"
-        ]
-      },
+      { standart: ["cssStyleElementEcwidMyAccountDescriptionTypography"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__description .product-details-module.product-details__general-info .product-details__product-description":
       {
         standart: [
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontSize",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLineHeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontWeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLetterSpacing",
+          "cssStyleElementEcwidMyAccountDescriptionTypography",
           "cssStyleElementEcwidMyAccountDescriptionColor",
           "cssStyleElementEcwidMyAccountDescriptionAlign",
           "cssStyleElementEcwidMyAccountDescriptionSpacing"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__description .product-details-module.product-details__general-info .product-details__product-description div p":
-      {
-        standart: [
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontSize",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLineHeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyFontWeight",
-          "cssStyleElementEcwidMyAccountDescriptionTypographyLetterSpacing"
-        ]
-      },
+      { standart: ["cssStyleElementEcwidMyAccountDescriptionTypography"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__title.ec-header-h6.favorite-product__title":
       {
         standart: [
-          "cssStyleElementEcwidMyAccountTitle2TypographyFontFamily",
-          "cssStyleElementEcwidMyAccountTitle2TypographyFontSize",
-          "cssStyleElementEcwidMyAccountTitle2TypographyLineHeight",
-          "cssStyleElementEcwidMyAccountTitle2TypographyFontWeight",
-          "cssStyleElementEcwidMyAccountTitle2TypographyLetterSpacing",
+          "cssStyleElementEcwidMyAccountTitle2Typography",
           "cssStyleElementEcwidMyAccountTitle2Color",
           "cssStyleElementEcwidMyAccountTitle2Align",
           "cssStyleElementEcwidMyAccountTitle2Spacing"
@@ -616,12 +564,7 @@ export function style(
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__content":
       { standart: ["cssStyleElementEcwidProductCheckboxAlign"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__content .form-control--checkbox-button":
-      {
-        standart: [
-          "cssStyleElementEcwidProductCheckboxSpacingRight",
-          "cssStyleElementEcwidProductCheckboxSpacingBottom"
-        ]
-      },
+      { standart: ["cssStyleElementEcwidProductCheckboxSpacing"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__content .form-control--checkbox-button .form-control__inline-label label:hover":
       {
         standart: [
@@ -668,44 +611,28 @@ export function style(
       {
         standart: [
           "cssStyleElementEcwidCartFooterColor",
-          "cssStyleElementEcwidCartFooterTypographyFontFamily",
-          "cssStyleElementEcwidCartFooterTypographyFontSize",
-          "cssStyleElementEcwidCartFooterTypographyLineHeight",
-          "cssStyleElementEcwidCartFooterTypographyFontWeight",
-          "cssStyleElementEcwidCartFooterTypographyLetterSpacing"
+          "cssStyleElementEcwidCartFooterTypography"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--track-order":
       {
         standart: [
           "cssStyleElementEcwidCartFooterColor",
-          "cssStyleElementEcwidCartFooterTypographyFontFamily",
-          "cssStyleElementEcwidCartFooterTypographyFontSize",
-          "cssStyleElementEcwidCartFooterTypographyLineHeight",
-          "cssStyleElementEcwidCartFooterTypographyFontWeight",
-          "cssStyleElementEcwidCartFooterTypographyLetterSpacing"
+          "cssStyleElementEcwidCartFooterTypography"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.footer__link--shopping-cart":
       {
         standart: [
           "cssStyleElementEcwidCartFooterColor",
-          "cssStyleElementEcwidCartFooterTypographyFontFamily",
-          "cssStyleElementEcwidCartFooterTypographyFontSize",
-          "cssStyleElementEcwidCartFooterTypographyLineHeight",
-          "cssStyleElementEcwidCartFooterTypographyFontWeight",
-          "cssStyleElementEcwidCartFooterTypographyLetterSpacing"
+          "cssStyleElementEcwidCartFooterTypography"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.ec-link.ec-link--muted":
       {
         standart: [
           "cssStyleElementEcwidCartFooterColor",
-          "cssStyleElementEcwidCartFooterTypographyFontFamily",
-          "cssStyleElementEcwidCartFooterTypographyFontSize",
-          "cssStyleElementEcwidCartFooterTypographyLineHeight",
-          "cssStyleElementEcwidCartFooterTypographyFontWeight",
-          "cssStyleElementEcwidCartFooterTypographyLetterSpacing"
+          "cssStyleElementEcwidCartFooterTypography"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon":
@@ -816,8 +743,6 @@ export function style(
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-view .form-control__button .form-control__button-text":
       { standart: ["cssStyleElementEcwidProductViewFavoritesTypography"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-share.details-product-share .product-details-module .product-details-module__content.product-details-module__content--indented .ec-likely.details-product-share__buttons .ec-likely__wrapper .ec-likely__widget .ec-likely__button":
-      { standart: ["cssStyleElementEcwidProductShareButtonsTypography"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-share.details-product-share .product-details-module .product-details-module__content.product-details-module__content--indented .ec-likely.details-product-share__buttons .ec-likely__wrapper .ec-likely__widget .ec-likely__icon":
       {
         standart: [
@@ -841,7 +766,8 @@ export function style(
           "cssStyleElementEcwidProductShareButtonsBorderRadius",
           "cssStyleElementEcwidProductShareButtonsBoxShadow",
           "cssStyleElementEcwidProductShareButtonsSpacing",
-          "cssStyleElementEcwidProductShareButtonsSpacingRight"
+          "cssStyleElementEcwidProductShareButtonsSpacingRight",
+          "cssStyleElementEcwidProductShareButtonsTypography"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -967,11 +893,7 @@ export function style(
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty label .details-product-purchase__qty-label:hover":
       {
         standart: [
-          "cssStyleElementEcwidCartQtyTypographyFontFamily",
-          "cssStyleElementEcwidCartQtyTypographyFontSize",
-          "cssStyleElementEcwidCartQtyTypographyLineHeight",
-          "cssStyleElementEcwidCartQtyTypographyFontWeight",
-          "cssStyleElementEcwidCartQtyTypographyLetterSpacing",
+          "cssStyleElementEcwidCartQtyTypography",
           "cssStyleElementEcwidProductQtyColor",
           "cssStyleElementEcwidProductQtySpacingRight"
         ],
@@ -983,11 +905,7 @@ export function style(
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control:hover .form-control__placeholder":
       {
         standart: [
-          "cssStyleElementEcwidCartQtyTypographyFontFamily",
-          "cssStyleElementEcwidCartQtyTypographyFontSize",
-          "cssStyleElementEcwidCartQtyTypographyLineHeight",
-          "cssStyleElementEcwidCartQtyTypographyFontWeight",
-          "cssStyleElementEcwidCartQtyTypographyLetterSpacing",
+          "cssStyleElementEcwidCartQtyTypography",
           "cssStyleElementEcwidProductQtyColor"
         ],
         interval: [
@@ -998,11 +916,7 @@ export function style(
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control:hover .form-control__placeholder .form-control__placeholder-inner":
       {
         standart: [
-          "cssStyleElementEcwidCartQtyTypographyFontFamily",
-          "cssStyleElementEcwidCartQtyTypographyFontSize",
-          "cssStyleElementEcwidCartQtyTypographyLineHeight",
-          "cssStyleElementEcwidCartQtyTypographyFontWeight",
-          "cssStyleElementEcwidCartQtyTypographyLetterSpacing",
+          "cssStyleElementEcwidCartQtyTypography",
           "cssStyleElementEcwidProductQtyColor"
         ],
         interval: [
@@ -1030,11 +944,7 @@ export function style(
       {
         standart: [
           "cssStyleElementEcwidProductQtyHeight",
-          "cssStyleElementEcwidCartQtyTypographyFontFamily",
-          "cssStyleElementEcwidCartQtyTypographyFontSize",
-          "cssStyleElementEcwidCartQtyTypographyLineHeight",
-          "cssStyleElementEcwidCartQtyTypographyFontWeight",
-          "cssStyleElementEcwidCartQtyTypographyLetterSpacing",
+          "cssStyleElementEcwidCartQtyTypography",
           "cssStyleElementEcwidProductQtyColor"
         ]
       },
@@ -1116,11 +1026,7 @@ export function style(
       {
         standart: [
           "cssStyleElementEcwidCartSubtitleColor",
-          "cssStyleElementEcwidCartSubtitleTypographyFontFamily",
-          "cssStyleElementEcwidCartSubtitleTypographyFontSize",
-          "cssStyleElementEcwidCartSubtitleTypographyLineHeight",
-          "cssStyleElementEcwidCartSubtitleTypographyFontWeight",
-          "cssStyleElementEcwidCartSubtitleTypographyLetterSpacing",
+          "cssStyleElementEcwidCartSubtitleTypography",
           "cssStyleElementEcwidCartSubtitleAlign"
         ]
       },
@@ -1146,6 +1052,15 @@ export function style(
           "cssStyleElementEcwidProductWholesalePriceColor",
           "cssStyleElementEcwidProductWholesalePriceTypography",
           "cssStyleElementEcwidProductWholesalePriceColumn"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__product-price-taxes":
+      {
+        standart: [
+          "cssStyleElementEcwidProductTaxesColor",
+          "cssStyleElementEcwidProductTaxesTypography",
+          "cssStyleElementEcwidProductTaxesAlign",
+          "cssStyleElementEcwidProductTaxesSpacing"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__product-price-wholesale-note":

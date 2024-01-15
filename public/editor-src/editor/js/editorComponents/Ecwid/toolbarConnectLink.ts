@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "toolbarTypographyConnectLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -36,7 +36,7 @@ export function getItems({
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabsTypographyConnect",
@@ -44,7 +44,7 @@ export function getItems({
               options: [
                 {
                   id: "connectTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -57,7 +57,7 @@ export function getItems({
               options: [
                 {
                   id: "connectLinkTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -70,7 +70,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -88,7 +88,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabConnectColor",
@@ -96,7 +96,7 @@ export function getItems({
               options: [
                 {
                   id: "connectColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -106,7 +106,7 @@ export function getItems({
               options: [
                 {
                   id: "connectLinkColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -117,7 +117,7 @@ export function getItems({
     },
     {
       id: "connectLinkHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

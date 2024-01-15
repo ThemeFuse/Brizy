@@ -2,7 +2,7 @@ export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       disabled: true
     }
   ];

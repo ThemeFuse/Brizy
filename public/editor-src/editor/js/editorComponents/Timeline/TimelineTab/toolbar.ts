@@ -28,14 +28,14 @@ export const getItems = ({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-timeline", title: t("Timeline") },
       position: 70,
       options: [
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -45,7 +45,7 @@ export const getItems = ({
                 {
                   id: "",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   devices: "desktop"
                 }
               ]
@@ -56,7 +56,7 @@ export const getItems = ({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -75,7 +75,7 @@ export const getItems = ({
       options: [
         {
           id: "color",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "bg",
@@ -83,7 +83,7 @@ export const getItems = ({
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -93,7 +93,7 @@ export const getItems = ({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -103,7 +103,7 @@ export const getItems = ({
               options: [
                 {
                   id: "border",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             },
@@ -113,7 +113,7 @@ export const getItems = ({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow"
                 }
               ]
             }

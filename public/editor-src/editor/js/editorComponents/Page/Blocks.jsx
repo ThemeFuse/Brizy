@@ -9,8 +9,12 @@ import HotKeys from "visual/component/HotKeys";
 import Prompts from "visual/component/Prompts";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { addBlock, importTemplate } from "visual/redux/actions2";
-import { addGlobalBlock, removeBlock } from "visual/redux/actions2";
+import {
+  addBlock,
+  addGlobalBlock,
+  importTemplate,
+  removeBlock
+} from "visual/redux/actions2";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
@@ -81,7 +85,7 @@ class Blocks extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-duplicate",
           title: t("Duplicate"),
           position: 200,
@@ -92,7 +96,7 @@ class Blocks extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-trash",
           title: t("Delete"),
           position: 250,

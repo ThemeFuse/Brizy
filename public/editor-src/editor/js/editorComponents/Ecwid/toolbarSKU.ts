@@ -24,7 +24,7 @@ export function getItems({
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -34,7 +34,7 @@ export function getItems({
       options: [
         {
           id: "SKUTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -43,7 +43,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -58,13 +58,13 @@ export function getItems({
       options: [
         {
           id: "SKUColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "SKUHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -74,7 +74,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       devices: "desktop",
       position: 40,
@@ -82,7 +82,7 @@ export function getItems({
         {
           id: "SKUSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,

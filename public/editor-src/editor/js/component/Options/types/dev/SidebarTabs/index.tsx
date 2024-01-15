@@ -7,7 +7,7 @@ import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
-import { uiSelector } from "visual/redux/selectors-new";
+import { uiSelector } from "visual/redux/selectors";
 import { always, pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
 import { WithClassName, WithId } from "visual/utils/options/attributes";
@@ -31,17 +31,23 @@ export interface Props extends OptionProps<undefined> {
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
 export const SidebarTabs: FC<Props> = ({ tabs, toolbar }) => {
-  const { alignment, lock, isOpen, activeTab } = useSelector(selector);
+  const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
   const dispatch = useDispatch();
   const onLock = useCallback(
     () =>
       pipe(
         () => (lock ? undefined : "manual"),
         (lock) =>
-          updateUI("rightSidebar", { alignment, isOpen, lock, activeTab }),
+          updateUI("rightSidebar", {
+            alignment,
+            isOpen,
+            lock,
+            activeTab,
+            type
+          }),
         dispatch
       )(),
-    [dispatch, alignment, isOpen, lock, activeTab]
+    [dispatch, alignment, isOpen, lock, activeTab, type]
   );
   const onAlign = useCallback(
     () =>
@@ -49,23 +55,29 @@ export const SidebarTabs: FC<Props> = ({ tabs, toolbar }) => {
         always(alignment),
         nextAlign,
         (alignment) =>
-          updateUI("rightSidebar", { alignment, isOpen, lock, activeTab }),
+          updateUI("rightSidebar", { alignment, isOpen, lock, activeTab, type }),
         dispatch,
         () => {
           const tooltip = getCurrentTooltip();
           tooltip?.close();
         }
       )(),
-    [dispatch, alignment, isOpen, lock, activeTab]
+    [dispatch, alignment, isOpen, lock, activeTab, type]
   );
   const onChange = useCallback(
     (x0: string) =>
       pipe(
         (activeTab: string) =>
-          updateUI("rightSidebar", { alignment, isOpen, lock, activeTab }),
+          updateUI("rightSidebar", {
+            alignment,
+            isOpen,
+            lock,
+            activeTab,
+            type
+          }),
         dispatch
       )(x0),
-    [dispatch, alignment, isOpen, lock]
+    [dispatch, alignment, isOpen, lock, type]
   );
 
   return (

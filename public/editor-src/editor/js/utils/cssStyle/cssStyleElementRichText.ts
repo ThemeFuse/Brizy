@@ -11,17 +11,18 @@ import {
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
+import { read as readNum } from "visual/utils/reader/number";
 import { State } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import {
   styleAlignHorizontal,
   styleBgImage,
   styleExportBgImage,
+  styleTypography2FontFamily,
   styleTypography2FontSizeSuffix
 } from "visual/utils/style2";
 import {
   styleElementRichTextDCGradient,
-  styleElementRichTextFontFamily,
   styleElementRichTextGradient
 } from "visual/utils/style2/styleElementRichText";
 import { styleState, styleTypography2FontSize } from "../style2";
@@ -87,10 +88,13 @@ export function cssStyleElementRichTextFontSize(d: CSSValue): string {
       // Keys is lowercase because have problems in backend export HTML
       return `font-size:var(--brz-${fontStyle}StoryFontSize);`.toLowerCase();
     } else {
-      const fontSize = styleTypography2FontSize({
-        ...d,
-        prefix: "typography"
-      });
+      const fontSize =
+        readNum(
+          styleTypography2FontSize({
+            ...d,
+            prefix: "typography"
+          })
+        ) ?? 1;
       const suffix = styleTypography2FontSizeSuffix({
         ...d,
         prefix: "typography"
@@ -142,7 +146,7 @@ export function cssStyleElementRichTextFontFamily({
   prefix = "typography",
   state
 }: CSSValue): string {
-  return `font-family:${styleElementRichTextFontFamily({
+  return `font-family:${styleTypography2FontFamily({
     v,
     device,
     prefix,

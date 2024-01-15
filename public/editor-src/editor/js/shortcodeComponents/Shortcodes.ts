@@ -60,6 +60,7 @@ import WOOPages from "./WOOPages";
 import WPCustomShortcode from "./WPCustomShortcode";
 import getFeaturedImage from "./WPFeaturedImage";
 import WPSidebar from "./WPSidebar";
+import Breadcrumbs from "./pro/Breadcrumbs";
 import Calendly from "./pro/Calendly";
 import Carousel from "./pro/Carousel";
 import Facebook from "./pro/Facebook";
@@ -68,6 +69,8 @@ import ImageGallery from "./pro/ImageGallery";
 import Login from "./pro/Login";
 import getLottie from "./pro/Lottie";
 import Menu from "./pro/Menu";
+import PostInfo from "./pro/PostInfo";
+import PostNavigation from "./pro/PostNavigation";
 import Products from "./pro/Products";
 import ResetPassword from "./pro/ResetPassword";
 import Review from "./pro/Review.js";
@@ -181,7 +184,10 @@ export const ProShortCodes = {
 
   Posts: isWp(Config.getAll()),
   PostTitle: isWp(Config.getAll()),
+  PostInfo: true,
+  PostNavigation: true,
   AssetsPosts: false,
+  Breadcrumbs: true,
 
   UserFirstName: false,
   UserLastName: false,
@@ -317,6 +323,8 @@ export const ShortCodesKeywords = {
   ResetPassword: "reset password authentication security",
   Posts: "posts articles blog",
   PostTitle: "post title article heading headline",
+  PostInfo: "post information, details, metadata",
+  PostNavigation: "post navigation, previous, next",
   AssetsPosts: "assets posts media posts blog assets",
   UserFirstName: "user first name personalization customization",
   UserLastName: "user last name personalization customization",
@@ -382,9 +390,9 @@ export const ShortCodesKeywords = {
   PostExcerpt: "post excerpt, summary, highlight",
   WPPostContent: "post content, body, text",
   WPPostInfo: "post information, details, metadata",
+  Breadcrumbs: "breadcrumbs, navigation, path",
   WPBreadcrumbs: "breadcrumbs, navigation, path",
   WPPostNavigation: "post navigation, previous, next",
-
   WOOProductTitle: "product title, name, identifier",
   WOOExcerpt: "product excerpt, summary, highlight",
   WOOProductContent: "product content, description, details",
@@ -502,7 +510,10 @@ export const CloudShortCodes = {
 
   Leadific,
 
-  Product
+  Product,
+  PostInfo,
+  PostNavigation,
+  Breadcrumbs
 };
 
 export const WPShortCodes = {

@@ -23,19 +23,18 @@ const fromRecord = parse<Record<string, unknown>, Value>({
 });
 
 export const defaultValue: Value[] = [];
-export const fromElementModel: FromElementModel<"gallery-for-gallery-dev"> =
-  pipe(
-    mPipe(callGetter("value"), pass(Array.isArray), (vs): Value[] => {
-      return vs
-        .filter(isObject)
-        .filter(isNotClonedFromGallery)
-        .map((v) => v.value)
-        .filter(isObject)
-        .map(fromRecord)
-        .filter(isT);
-    }),
-    onNullish<Image[]>([])
-  );
-export const toElementModel: ToElementModel<"gallery-for-gallery-dev"> = (
+export const fromElementModel: FromElementModel<"gallery-for-gallery"> = pipe(
+  mPipe(callGetter("value"), pass(Array.isArray), (vs): Value[] => {
+    return vs
+      .filter(isObject)
+      .filter(isNotClonedFromGallery)
+      .map((v) => v.value)
+      .filter(isObject)
+      .map(fromRecord)
+      .filter(isT);
+  }),
+  onNullish<Image[]>([])
+);
+export const toElementModel: ToElementModel<"gallery-for-gallery"> = (
   value: Array<Value | Image>
 ) => ({ option: value });

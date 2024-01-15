@@ -16,7 +16,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarWOOProductPage",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-meta",
         title: t("Product Meta")
@@ -25,7 +25,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "elementType",
-          type: "select-dev",
+          type: "select",
           label: t("Type"),
           devices: "desktop",
           choices: [
@@ -45,7 +45,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "topSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Between"),
           disabled: elementType === "inline",
           config: {
@@ -57,7 +57,7 @@ export function getItems({ v, device }) {
         {
           id: "rightSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -68,7 +68,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -78,7 +78,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTypographyCategory",
@@ -86,7 +86,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "category",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -99,7 +99,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "value",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -112,7 +112,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -127,7 +127,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCategory",
@@ -135,7 +135,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "categoryColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "dekstop"
                 }
               ]
@@ -146,7 +146,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "valueColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop"
                 }
               ]
@@ -158,7 +158,7 @@ export function getItems({ v, device }) {
                 {
                   id: "dividersColor",
                   disabled: elementType === "inline",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop"
                 }
               ]
@@ -169,7 +169,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       roles: ["admin"],
       position: 110,
       devices: "desktop",

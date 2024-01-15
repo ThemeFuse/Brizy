@@ -21,13 +21,13 @@ export default function CurrentDate(props) {
         defaultValue={triggerValue.type}
         onChange={(type) => onChange({ ...triggerValue, type })}
       >
-        <SelectItem key="before" value="before">
+        <SelectItem key="before" value="before" title={t("is before")}>
           {t("is before")}
         </SelectItem>
-        <SelectItem key="matches" value="matches">
+        <SelectItem key="matches" value="matches" title={t("matches")}>
           {t("matches")}
         </SelectItem>
-        <SelectItem key="after" value="after">
+        <SelectItem key="after" value="after" title={t("is after")}>
           {t("is after")}
         </SelectItem>
       </Select>

@@ -6,7 +6,6 @@ import { Project } from "../Project";
 import { Rule } from "../Rule";
 import { TemplateType } from "../TemplateType";
 import { Urls } from "../Urls";
-import { User } from "../User";
 import { Config } from "../index";
 import { ConfigCommon } from "./ConfigCommon";
 
@@ -78,7 +77,6 @@ export interface WP extends ConfigCommon {
   prefix?: string;
   dynamicContent: DynamicContent<"wp">;
   pro?: Pro<"wp">;
-  user: User;
   urls: Urls<"wp">;
   project: Project<"wp">;
   template_type?: TemplateType;

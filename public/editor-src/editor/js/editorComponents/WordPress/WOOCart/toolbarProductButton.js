@@ -15,7 +15,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "popoverCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-cart",
         title: t("Shop Cart")
@@ -25,7 +25,7 @@ export function getItems({ v, device }) {
         {
           id: "buttonDirection",
           label: t("Buttons"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           choices: [
             { value: "inline", icon: "nc-cart-inline" },
@@ -34,13 +34,13 @@ export function getItems({ v, device }) {
         },
         {
           id: "borderRadiusTypeGroup",
-          type: "group-dev",
+          type: "group",
           devices: "desktop",
           options: [
             {
               id: "buttonBorderRadiusType",
               label: t("Corner"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "square", icon: "nc-corners-square" },
                 { value: "rounded", icon: "nc-corners-round" },
@@ -49,7 +49,7 @@ export function getItems({ v, device }) {
             },
             {
               id: "buttonBorderRadius",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("buttonBorderRadiusType") !== "custom",
               config: {
                 min: 0,
@@ -62,7 +62,7 @@ export function getItems({ v, device }) {
         {
           id: "buttonSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           config: {
             min: 5,
@@ -74,7 +74,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -84,7 +84,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "button",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -93,7 +93,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor2",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -108,7 +108,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsToolbarColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "buttonColorTab",
@@ -116,7 +116,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "buttonColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -128,7 +128,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "buttonBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }

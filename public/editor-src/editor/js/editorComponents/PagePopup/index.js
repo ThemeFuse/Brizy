@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import React from "react";
 import { FirstPopupBlockAdder } from "visual/component/BlockAdders";
 import HotKeys from "visual/component/HotKeys";
@@ -144,11 +143,7 @@ class PagePopup extends EditorComponent {
   }
 
   renderForView() {
-    const className = classnames(
-      "brz-root__container brz-root__container-popup brz-reset-all",
-      this.props.className
-    );
-    return <div className={className}>{this.renderItems()}</div>;
+    return this.renderItems();
   }
 }
 

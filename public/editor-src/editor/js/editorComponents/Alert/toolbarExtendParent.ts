@@ -20,7 +20,7 @@ export function getItems({
   return [
     {
       id: "toolbarShowHideButton",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-alert",
         title: t("Alert")
@@ -29,18 +29,18 @@ export function getItems({
       options: [
         {
           id: "groupShowCloseButton",
-          type: "group-dev",
+          type: "group",
           devices: "desktop",
           options: [
             {
               id: "closeButtonState",
-              type: "switch-dev",
+              type: "switch",
               label: t("Display Close Button")
             },
             {
               id: "showCloseButtonAfter",
               label: t("Delay"),
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("closeButtonState") !== "on",
               config: {
                 min: 0,
@@ -52,7 +52,7 @@ export function getItems({
         },
         {
           id: "descriptionState",
-          type: "switch-dev",
+          type: "switch",
           label: t("Display Description"),
           devices: "desktop"
         }
@@ -60,7 +60,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         size: "medium",
@@ -75,7 +75,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -83,7 +83,7 @@ export function getItems({
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -94,7 +94,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -105,7 +105,7 @@ export function getItems({
               options: [
                 {
                   id: "containerBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -116,7 +116,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -126,7 +126,7 @@ export function getItems({
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: dvv("widthSuffix") === "px" ? 200 : 15,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -138,7 +138,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -148,7 +148,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -162,7 +162,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -178,7 +178,7 @@ export function getItems({
     {
       id: "advancedSettings",
       //@ts-expect-error Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     }
   ];

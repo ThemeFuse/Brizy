@@ -30,7 +30,7 @@ export function getItems({ v, device, context }) {
     }),
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -40,7 +40,7 @@ export function getItems({ v, device, context }) {
         {
           label: t("Image"),
           id: "bg",
-          type: "imageUpload-dev",
+          type: "imageUpload",
           states: [NORMAL, HOVER],
           population: imageDynamicContentChoices
         }
@@ -48,7 +48,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Colors"),
         size: "medium",
@@ -62,7 +62,7 @@ export function getItems({ v, device, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabOverlay",
@@ -70,7 +70,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -81,7 +81,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -92,7 +92,7 @@ export function getItems({ v, device, context }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -103,7 +103,7 @@ export function getItems({ v, device, context }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -111,13 +111,13 @@ export function getItems({ v, device, context }) {
       options: [
         {
           id: "groupToolbarContainerTypeAndHeight",
-          type: "group-dev",
+          type: "group",
           position: 100,
           options: [
             {
               id: "sectionHeightStyle",
               label: t("Height"),
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: t("Auto"), value: "auto" },
                 { title: t("Custom"), value: "custom" }
@@ -125,7 +125,7 @@ export function getItems({ v, device, context }) {
             },
             {
               id: "sectionHeight",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("sectionHeightStyle") !== "custom",
               config: {
                 min: 20,
@@ -141,7 +141,7 @@ export function getItems({ v, device, context }) {
         {
           id: "verticalAlign",
           label: t("Content"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           disabled: dvv("sectionHeightStyle") === "auto",
           position: 110,
@@ -153,7 +153,7 @@ export function getItems({ v, device, context }) {
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           config: {
             tabId: "styles",
             text: t("Styling"),

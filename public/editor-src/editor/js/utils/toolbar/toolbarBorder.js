@@ -12,7 +12,7 @@ export function toolbarBorderWidthOneField2({ devices = "all", prefix = "" }) {
 
   return {
     id: width,
-    type: "number-dev",
+    type: "number",
     label: t("Size"),
     config: {
       min: 0,
@@ -50,7 +50,7 @@ export function toolbarBorderWidthFourFields2({
   return {
     devices,
     id: dvk(width),
-    type: "multiInputPicker",
+    type: "legacy-multiInputPicker",
     states,
     label: dvv(type) === "grouped" && t("Size"),
     value: {

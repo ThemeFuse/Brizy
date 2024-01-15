@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         size: "medium",
@@ -44,7 +44,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBorder",
@@ -52,7 +52,7 @@ export function getItems({
               options: [
                 {
                   id: "imageBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -63,7 +63,7 @@ export function getItems({
               options: [
                 {
                   id: "imageBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -74,14 +74,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 20,
       options: [
         {
           id: "imageWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -91,7 +91,7 @@ export function getItems({
         {
           id: "imageSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -100,7 +100,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

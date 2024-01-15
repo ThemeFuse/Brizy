@@ -102,7 +102,7 @@ class FontStyle extends Component<FontStyleProps, FontStyleState> {
     const getToolbarItems = () => [
       {
         id: "toolbarTypography",
-        type: "popover",
+        type: "legacy-popover",
         icon: "nc-font",
         size: "large",
         display: "inside",
@@ -110,7 +110,7 @@ class FontStyle extends Component<FontStyleProps, FontStyleState> {
         options: [
           {
             id: "",
-            type: "typography-dev",
+            type: "typography",
             config: {
               icons: ["nc-desktop", "nc-tablet", "nc-phone"]
             },

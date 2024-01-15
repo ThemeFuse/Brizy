@@ -1,11 +1,12 @@
 import { t } from "visual/utils/i18n";
+
 export const title = t("Gallery Tags");
 
 export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -14,7 +15,7 @@ export function getItems() {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -26,7 +27,7 @@ export function getItems() {
                   options: [
                     {
                       id: "filterPadding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50,
                       config: {
@@ -35,7 +36,7 @@ export function getItems() {
                     },
                     {
                       id: "filterBorder",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       position: 65
                     }

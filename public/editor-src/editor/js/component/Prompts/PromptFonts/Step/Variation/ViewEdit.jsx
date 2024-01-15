@@ -46,7 +46,7 @@ class ViewEdit extends Component {
             {type}
           </p>
           <div
-            title="Disconnect"
+            title={t("Disconnect")}
             className="brz-ed-popup-integrations--delete"
             onClick={() => {
               onActive(id);

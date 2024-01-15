@@ -6,7 +6,7 @@ export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -15,7 +15,7 @@ export function getItems() {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -27,7 +27,7 @@ export function getItems() {
                   options: [
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50,
                       config: {

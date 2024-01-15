@@ -1,48 +1,33 @@
 import Config from "visual/global/Config";
-import {
-  getFontById,
-  getFontCssStyle,
-  makeStyleCSSVar
-} from "visual/utils/fonts";
+import { getFontCssStyle } from "visual/utils/fonts";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
-import { DESKTOP } from "visual/utils/responsiveMode";
+import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
+import { read as readStr } from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
 import { isNullish } from "visual/utils/value";
-import { FONT_INITIAL } from "../fonts/utils";
 
 export function styleTypography2FontFamily({ v, device, state, prefix = "" }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const fontFamilyKey = capByPrefix(prefix, "fontFamily");
   const fontFamilyTypeKey = capByPrefix(prefix, "fontFamilyType");
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
-  const fontStyle = dvv(fontStyleKey);
+  const fontStyle = readStr(dvv(fontStyleKey));
+  const family = readStr(v[fontFamilyKey]);
+  const familyType = readStr(v[fontFamilyTypeKey]);
 
-  if (fontStyle && fontStyle !== "custom") {
-    return `var(${makeStyleCSSVar({
-      id: fontStyle,
-      device: DESKTOP,
-      key: "fontFamily",
-      config: Config.getAll()
-    })}, ${FONT_INITIAL})`;
-  } else {
-    const fontFamily = getOptionFontByGlobal(
-      "fontFamily",
-      v[fontFamilyKey],
-      dvv(fontStyleKey)
-    );
-    const fontFamilyType = getOptionFontByGlobal(
-      "fontFamilyType",
-      v[fontFamilyTypeKey],
-      dvv(fontStyleKey)
-    );
-
-    if (isNullish(fontFamily) || isNullish(fontFamilyType)) {
-      return;
-    }
-
-    return getFontById({ type: fontFamilyType, family: fontFamily }).family;
+  if (isNullish(family) || isNullish(familyType)) {
+    return "";
   }
+
+  return getDetailsModelFontFamily(
+    {
+      family,
+      familyType,
+      style: fontStyle
+    },
+    Config.getAll()
+  );
 }
 
 export function styleTypography2FontSize({ v, device, state, prefix = "" }) {

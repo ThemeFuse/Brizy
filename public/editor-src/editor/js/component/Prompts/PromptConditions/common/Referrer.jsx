@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "visual/component/Controls/Select";
-import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import { t } from "visual/utils/i18n";
 
 const SEARCH_ENGINES = {
@@ -43,16 +43,16 @@ export default function Referrer(props) {
         defaultValue={triggerValue.value}
         onChange={(value) => onChange({ ...triggerValue, value })}
       >
-        <SelectItem key="show" value="show">
+        <SelectItem key="show" value="show" title={t("Show")}>
           {t("Show")}
         </SelectItem>
-        <SelectItem key="hide" value="hide">
+        <SelectItem key="hide" value="hide" title={t("Hide")}>
           {t("Hide")}
         </SelectItem>
-        <SelectItem key="regex" value="regex">
+        <SelectItem key="regex" value="regex" title={t("Regex")}>
           {t("Regex")}
         </SelectItem>
-        <SelectItem key="source" value="source">
+        <SelectItem key="source" value="source" title={t("Source")}>
           {t("Source")}
         </SelectItem>
       </Select>
@@ -65,10 +65,10 @@ export default function Referrer(props) {
             defaultValue={triggerValue.type}
             onChange={(type) => onChange({ ...triggerValue, type })}
           >
-            <SelectItem key="is" value="is">
+            <SelectItem key="is" value="is" title={t("is")}>
               {t("is")}
             </SelectItem>
-            <SelectItem key="is not" value="is not">
+            <SelectItem key="is not" value="is not" title={t("is not")}>
               {t("is not")}
             </SelectItem>
           </Select>,

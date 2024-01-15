@@ -13,8 +13,8 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import { t } from "visual/utils/i18n";
-import { handleLinkChange } from "visual/utils/patch/Link";
 import { getLinkData } from "visual/utils/models/link";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -102,11 +102,9 @@ class Lottie extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

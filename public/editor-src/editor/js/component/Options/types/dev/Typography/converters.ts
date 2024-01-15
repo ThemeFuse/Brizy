@@ -1,21 +1,21 @@
-import { Value } from "./types/Value";
-import * as FontType from "visual/utils/fonts/familyType";
-import * as Positive from "visual/utils/math/Positive";
-import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
-import * as FontWeight from "visual/utils/fonts/Weight";
 import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
+import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
+import * as FontWeight from "visual/utils/fonts/Weight";
+import * as FontType from "visual/utils/fonts/familyType";
 import { mPipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
+import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
+import * as Str from "visual/utils/string/specs";
 import {
   isFontFamily,
   isFontSettings,
   isFontStyle,
   isFullFont
 } from "./types/Patch";
+import { Value } from "./types/Value";
 
 export const defaultValue: Value = {
   fontFamily: "",
@@ -32,7 +32,7 @@ export const defaultValue: Value = {
  * @param {function(k:string):string|number} get
  * @return {Typography}
  */
-export const fromElementModel: FromElementModel<"typography-dev"> = get => {
+export const fromElementModel: FromElementModel<"typography"> = (get) => {
   return {
     fontFamily:
       mPipe(() => get("fontFamily"), Str.read)() ?? defaultValue.fontFamily,
@@ -59,7 +59,7 @@ export const fromElementModel: FromElementModel<"typography-dev"> = get => {
   };
 };
 
-export const toElementModel: ToElementModel<"typography-dev"> = v => {
+export const toElementModel: ToElementModel<"typography"> = (v) => {
   if (isFullFont(v)) {
     return {
       fontStyle: "",

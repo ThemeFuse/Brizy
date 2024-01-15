@@ -26,7 +26,7 @@ export const getItems: GetItems<Value> = ({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Icon")
@@ -35,7 +35,7 @@ export const getItems: GetItems<Value> = ({
       options: [
         {
           id: "toolbarCurrentElementTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "toolbarCurrentElementTabClose",
@@ -43,12 +43,12 @@ export const getItems: GetItems<Value> = ({
               options: [
                 {
                   id: "groupCloseSize",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "closeIconSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -58,7 +58,7 @@ export const getItems: GetItems<Value> = ({
                     },
                     {
                       id: "closeIconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("closeIconSize") !== "custom",
                       config: {
                         min: 8,
@@ -76,7 +76,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -90,7 +90,7 @@ export const getItems: GetItems<Value> = ({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabIcon",
@@ -98,7 +98,7 @@ export const getItems: GetItems<Value> = ({
               options: [
                 {
                   id: "closeColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -109,7 +109,7 @@ export const getItems: GetItems<Value> = ({
               options: [
                 {
                   id: "closeBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -121,7 +121,7 @@ export const getItems: GetItems<Value> = ({
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",

@@ -33,8 +33,7 @@ export class TextEditor extends Component<Props, State> {
 
   shouldComponentUpdate(nextProps: Props): boolean {
     return (
-      (this.lastNotifiedValue !== undefined &&
-        this.lastNotifiedValue !== nextProps.value) ||
+      this.lastNotifiedValue !== nextProps.value ||
       this.props.tagName !== nextProps.tagName ||
       this.props.className !== nextProps.className
     );
@@ -44,6 +43,7 @@ export class TextEditor extends Component<Props, State> {
     const element = this.contentRef.current;
 
     if (element !== null) {
+      this.lastNotifiedValue = this.props.value;
       element.addEventListener("input", this.handleInput);
     }
   }

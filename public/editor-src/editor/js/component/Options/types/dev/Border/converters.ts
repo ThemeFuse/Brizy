@@ -3,16 +3,9 @@ import {
   ToElementModel
 } from "visual/component/Options/Type";
 import { Value } from "visual/component/Options/types/dev/Border/entities/Value";
-import { mPipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
 import * as Style from "visual/component/Options/types/dev/Border/entities/style";
-import * as Num from "visual/utils/math/number";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as WidthType from "visual/component/Options/types/dev/Border/entities/widthType";
 import * as Width from "visual/component/Options/types/dev/Border/entities/width";
-import * as Hex from "visual/utils/color/Hex";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
-import { Black } from "visual/utils/color/Hex";
+import * as WidthType from "visual/component/Options/types/dev/Border/entities/widthType";
 import {
   getBottomWidth,
   getLeftWidth,
@@ -21,6 +14,13 @@ import {
   getWidth,
   getWidthType
 } from "visual/component/Options/types/dev/Border/model";
+import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import * as Hex from "visual/utils/color/Hex";
+import { Black } from "visual/utils/color/Hex";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { mPipe } from "visual/utils/fp";
+import * as Num from "visual/utils/math/number";
+import * as Str from "visual/utils/string/specs";
 
 export const defaultValue: Value = {
   style: Style.empty,
@@ -78,7 +78,7 @@ export const isEmptyWidth = (
  * @param {function(k:string):string|number} get
  * @return {Border}
  */
-export const fromElementModel: FromElementModel<"border-dev"> = get => {
+export const fromElementModel: FromElementModel<"border"> = (get) => {
   const partial = {
     style:
       mPipe(() => get("style"), Str.read, Style.fromString)() ??
@@ -156,7 +156,7 @@ export const fromElementModel: FromElementModel<"border-dev"> = get => {
   };
 };
 
-export const toElementModel: ToElementModel<"border-dev"> = m => {
+export const toElementModel: ToElementModel<"border"> = (m) => {
   return {
     style: m.style,
     tempStyle: m.tempStyle,

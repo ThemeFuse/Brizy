@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star"
       },
@@ -12,7 +12,7 @@ export function getItems() {
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -21,7 +21,7 @@ export function getItems() {
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   position: 70,
                   config: {
                     min: 0,
@@ -37,7 +37,7 @@ export function getItems() {
     },
     {
       id: "iconPosition",
-      type: "toggle-dev",
+      type: "toggle",
       position: 90,
       devices: "desktop",
       choices: [
@@ -55,7 +55,7 @@ export function getItems() {
     },
     {
       id: "verticalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 90,
       devices: "desktop",
       choices: [
@@ -78,7 +78,7 @@ export function getItems() {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     }
   ];

@@ -30,7 +30,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarWOOGalleryThumbnail",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-woo-gallery"
@@ -38,12 +38,12 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "groupThumbStyle",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "thumbStyle",
               label: t("Style"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               devices: "desktop",
               choices: [
                 { value: "bottom", icon: "nc-woo-gallery-bottom" },
@@ -55,7 +55,7 @@ export function getItems({ v, device, state }) {
             {
               id: "thumbWidth",
               label: t("Width"),
-              type: "slider-dev",
+              type: "slider",
               disabled: !leftThumbStyle && rightThumbStyle,
               config: {
                 min: 0,
@@ -68,7 +68,7 @@ export function getItems({ v, device, state }) {
         {
           id: "spacing",
           label: spacingLabel,
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -78,7 +78,7 @@ export function getItems({ v, device, state }) {
         {
           id: "thumbPerRowTB",
           label: t("Columns"),
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           disabled: topThumbStyle && bottomThumbStyle,
           config: {
@@ -89,7 +89,7 @@ export function getItems({ v, device, state }) {
         {
           id: "thumbPerRowRL",
           label: t("Columns"),
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           disabled: !leftThumbStyle && rightThumbStyle,
           config: {
@@ -100,7 +100,7 @@ export function getItems({ v, device, state }) {
         {
           id: "betweenThumbnail",
           label: t("Between"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -111,7 +111,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -128,7 +128,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBorder",
@@ -136,7 +136,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "thumbnailBorder",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -148,7 +148,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "thumbnailBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -160,7 +160,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110,
       devices: "desktop",
       icon: "nc-cog"

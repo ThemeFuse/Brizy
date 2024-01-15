@@ -5,7 +5,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "toolbarJudgeReview",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -15,7 +15,7 @@ export function getItems(): ToolbarItemType[] {
       options: [
         {
           id: "widgetType",
-          type: "select-dev",
+          type: "select",
           label: t("Widget"),
           helper: {
             content: t(
@@ -30,7 +30,7 @@ export function getItems(): ToolbarItemType[] {
         {
           id: "embedCode",
           label: t("Short Code"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: "Insert code here..."
         }
       ]

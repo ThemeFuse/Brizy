@@ -1,10 +1,10 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
   const { hex: selectBgColorHex } = getOptionColorHexByPalette(
     dvv("selectColorHex"),
     dvv("selectColorPalette")
@@ -13,7 +13,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarColorSelect",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -31,7 +31,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsSelectColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabSelectText",
@@ -39,7 +39,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "selectColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -49,7 +49,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "selectBgColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -59,7 +59,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "selectBorder",
-                  type: "border-dev",
+                  type: "border",
                   config: {
                     width: ["grouped"]
                   }
@@ -72,7 +72,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "selectBoxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow"
                 }
               ]
             }

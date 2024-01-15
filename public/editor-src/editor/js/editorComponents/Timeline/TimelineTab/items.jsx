@@ -63,7 +63,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
         return [
           {
             id: "duplicate",
-            type: "button",
+            type: "legacy-button",
             title: t("Duplicate"),
             icon: "nc-duplicate",
             devices: "desktop",
@@ -74,7 +74,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
           },
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             title: t("Delete"),
             icon: "nc-trash",
             devices: "desktop",

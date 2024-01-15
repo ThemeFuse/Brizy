@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { ReactNode, createRef } from "react";
+import React, { createRef, ReactNode } from "react";
 import { uniqueId } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -38,16 +38,14 @@ import { Value } from "./types/Value";
 import { valueToEciwdConfig } from "./utils";
 
 export class EcwidMyAccount extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
   private uniqueId = `${EcwidMyAccount.componentId}-${uniqueId()}`;
-
   private containerRef = createRef<HTMLDivElement>();
-
   private ecwid: EcwidService | undefined;
 
   static get componentId(): "EcwidMyAccount" {
     return "EcwidMyAccount";
   }
-  static defaultValue = defaultValue;
 
   componentDidMount(): void {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -322,8 +320,18 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                                                                                                     (
                                                                                                       e.target as HTMLElement | null
                                                                                                     )?.closest(
-                                                                                                      ".ec-cart-step__text, .ec-cart-step__change.ec-link"
-                                                                                                    )
+                                                                                                      ".ec-cart-step__change.ec-link"
+                                                                                                    ) ||
+                                                                                                    (e.target &&
+                                                                                                      e.target instanceof
+                                                                                                        HTMLElement &&
+                                                                                                      (
+                                                                                                        e
+                                                                                                          .target
+                                                                                                          .nextSibling as HTMLElement | null
+                                                                                                      )?.classList?.contains(
+                                                                                                        "ec-link"
+                                                                                                      ))
                                                                                                   ) {
                                                                                                     openConnectLink(
                                                                                                       e.nativeEvent

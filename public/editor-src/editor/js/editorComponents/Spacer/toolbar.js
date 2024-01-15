@@ -2,12 +2,12 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   return [
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -16,7 +16,7 @@ export function getItems({ v, device }) {
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: dvv("heightSuffix") === "px" ? 10 : 1,
             max: dvv("heightSuffix") === "px" ? 200 : 100,
@@ -31,7 +31,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true
     }
   ];

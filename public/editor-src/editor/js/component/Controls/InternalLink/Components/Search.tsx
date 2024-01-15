@@ -6,7 +6,7 @@ import { SearchProps } from "./types";
 
 export const Search: React.FC<SearchProps> = ({ loading, onChange }) => {
   const spinnerClassName = classNames("brz-ed-control__internalLink__spinner", {
-    "brz-ed-control__internalLink__spinner--hidden": !loading,
+    "brz-invisible": !loading,
     "brz-ed-animated--spin": loading
   });
 

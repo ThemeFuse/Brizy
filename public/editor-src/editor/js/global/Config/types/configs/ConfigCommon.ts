@@ -1,3 +1,7 @@
+import {
+  Output,
+  ProjectOutput
+} from "visual/bootstraps/compiler/browser/types";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
   ChoicesAsync,
@@ -12,12 +16,18 @@ import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
-import { PageCommon, Project, Rule } from "visual/types";
+import { GlobalBlock, PageCommon, Project, Rule } from "visual/types";
 import { PostsSources } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
-import type { Compiler } from "./Compiler";
+import { User } from "../User";
+import { Compiler } from "./Compiler";
 import { ElementTypes } from "./ElementTypes";
 import { ThirdPartyComponents } from "./ThirdParty";
+import {
+  Block as APIGlobalBlock,
+  APIGlobalBlocks,
+  APIGlobalPopups
+} from "./blocks/GlobalBlocks";
 import {
   BlocksArray,
   DefaultBlock,
@@ -117,31 +127,36 @@ export interface PopupSettings {
   backgroundPreviewUrl?: string;
 }
 
+export interface PublishedProject extends Project {
+  compiled?: ProjectOutput;
+}
+
+export interface PublishedPage extends PageCommon {
+  compiled?: Output;
+}
+
+export interface PublishedGlobalBlock extends APIGlobalBlock {
+  compiled?: Output;
+}
+
 export interface PublishData {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
-  projectData?: Project;
-  pageData?: PageCommon;
-  html?: string;
-  styles?: Array<string>;
-  scripts?: Array<string>;
-  // globalBlocks: Array<GlobalBlock>;
+  is_autosave: 1 | 0;
+  projectData?: PublishedProject;
+  pageData?: PublishedPage;
+  globalBlocks?: Array<PublishedGlobalBlock>;
+  error?: string;
 }
 
 export interface AutoSave {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlock?: APIGlobalBlock;
 }
 
 export interface OnChange {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlock?: APIGlobalBlock;
 }
 
 export interface Theme {
@@ -160,8 +175,36 @@ export interface Theme {
   };
 }
 
+export interface Video {
+  category: string;
+  id: string;
+  items: {
+    id: string;
+    title: string;
+    url: string;
+  }[];
+}
+
+export interface Header {
+  src: string;
+  url: string;
+}
+
 export const isElementTypes = (type: string): type is ElementTypes => {
   return Object.values(ElementTypes).includes(type as ElementTypes);
+};
+
+export enum HelpVideos {
+  addElementsHelpVideo = "addElementsHelpVideo",
+  blocksLayoutsHelpVideo = "blocksLayoutsHelpVideo",
+  fontsHelpVideo = "fontsHelpVideo",
+  formHelpVideo = "formHelpVideo"
+}
+
+type HelpVideosKeys = keyof typeof HelpVideos;
+
+export type HelpVideosData = {
+  [k in HelpVideosKeys]: string;
 };
 
 interface _ConfigCommon<Mode> {
@@ -170,6 +213,8 @@ interface _ConfigCommon<Mode> {
   auth?: {
     token: string;
   };
+
+  user: User;
 
   branding: {
     name: string;
@@ -197,12 +242,13 @@ interface _ConfigCommon<Mode> {
 
   pageData?: PageCommon;
 
+  globalBlocks?: Array<GlobalBlock>;
+
   cloud?: {
     isSyncAllowed: boolean;
   };
 
-  // HTML Compilation: inside Browser or External Server
-
+  // HTML Compilation
   compiler?: Compiler;
 
   //#region Third Party
@@ -261,6 +307,9 @@ interface _ConfigCommon<Mode> {
 
     help?: {
       showIcon?: boolean;
+      video?: Video[];
+      header: Header;
+      idHelpVideosIcons: HelpVideosData;
     };
 
     //#endregion
@@ -414,6 +463,12 @@ interface _ConfigCommon<Mode> {
     // SavedPopups
     savedPopups?: APISavedPopups;
 
+    // GlobalBlocks
+    globalBlocks?: APIGlobalBlocks;
+
+    // GlobalPopups
+    globalPopups?: APIGlobalPopups;
+
     defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
     defaultLayouts?: DefaultTemplate<
@@ -489,15 +544,7 @@ interface _ConfigCommon<Mode> {
       linkSource?: string;
       linkType?: string;
     };
-    ProductImage?: {
-      imagePopulation?: string;
-      imagePopulationEntityType?: string;
-    };
-    BlogPostImage?: {
-      imagePopulation?: string;
-      imagePopulationEntityType?: string;
-    };
-    CollectionImage?: {
+    ShopifyImage?: {
       imagePopulation?: string;
       imagePopulationEntityType?: string;
     };
@@ -545,36 +592,12 @@ interface _ConfigCommon<Mode> {
     Variant?: {
       sourceType?: string;
     };
-    BlogTitle?: {
-      linkSource?: string;
-      linkType?: string;
+    ShopifyDescription?: {
       textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;
     };
-    BlogDescription?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-    };
-    CollectionDescription?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-    };
-    CollectionTitle?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-      linkSource?: string;
-      linkType?: string;
-    };
-    ProductDescription?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-    };
-    ProductTitle?: {
+    ShopifyTitle?: {
       textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;

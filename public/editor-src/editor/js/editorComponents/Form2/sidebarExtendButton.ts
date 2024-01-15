@@ -4,7 +4,9 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { GetItems } from "../EditorComponent/types";
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -19,7 +21,7 @@ export const getItems: GetItems = ({ context }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -28,7 +30,7 @@ export const getItems: GetItems = ({ context }) => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -40,22 +42,23 @@ export const getItems: GetItems = ({ context }) => {
                     {
                       id: "customAttributes",
                       label: t("Custom Attributes"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       // eslint-disable-next-line
                       placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       devices: "desktop",
                       helper: {
-                        content:
-                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
+                        content: t(
+                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                        )
                       },
                       population: richTextDC
                     },
                     {
                       id: "customCSS",
                       label: t("Custom CSS"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       display: "block",
                       devices: "desktop",
@@ -73,14 +76,14 @@ export const getItems: GetItems = ({ context }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               tabs: [
                 {
                   id: "tabHover",
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       disabled: true
                     }
                   ]

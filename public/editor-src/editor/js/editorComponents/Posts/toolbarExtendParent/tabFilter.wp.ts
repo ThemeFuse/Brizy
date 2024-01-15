@@ -48,7 +48,7 @@ export function tabFilter(v: V, context: Context): TabOptionType | undefined {
 
   return {
     id: "filter",
-    label: "Filter",
+    label: t("Filter"),
     options: [
       source,
       includeBy,
@@ -56,19 +56,19 @@ export function tabFilter(v: V, context: Context): TabOptionType | undefined {
       {
         id: "offset",
         label: t("Offset"),
-        type: "number-dev",
+        type: "number",
         devices: "desktop"
       },
       {
         id: "orderBy",
-        type: "select-dev",
+        type: "select",
         label: t("Order By"),
         devices: "desktop",
         choices: orderByChoices
       },
       {
         id: "order",
-        type: "radioGroup-dev",
+        type: "radioGroup",
         label: t("Order"),
         devices: "desktop",
         choices: [
@@ -91,7 +91,7 @@ function getSource(vd: VDecoded, context: Context): ToolbarItemType {
 
   return {
     id: "source",
-    type: "select-dev",
+    type: "select",
     label: t("Source"),
     devices: "desktop",
     choices: sourceChoices,
@@ -133,7 +133,7 @@ function getIncludeExclude(
 
   const lvl1Option: ToolbarItemType = {
     id: `symbol_${source}_${prefix}By`,
-    type: "multiSelect-dev",
+    type: "multiSelect",
     label: include ? t("Include by") : t("Exclude by"),
     devices: "desktop",
     placeholder: multiSelectPlaceholder,
@@ -149,7 +149,7 @@ function getIncludeExclude(
       return {
         id,
         label,
-        type: "multiSelect-dev",
+        type: "multiSelect",
         devices: "desktop",
         placeholder: multiSelectPlaceholder,
         choices: {
@@ -161,7 +161,7 @@ function getIncludeExclude(
 
   return {
     id: `${prefix}By-group`,
-    type: "group-dev",
+    type: "group",
     options: [lvl1Option, ...lvl2Options],
     disabled
   };

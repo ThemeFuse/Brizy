@@ -1,13 +1,12 @@
 import _ from "underscore";
+import Config from "visual/global/Config";
 import {
   globalBlocksAssembledSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { mPipe } from "visual/utils/fp";
-import { readKey, read as readObj } from "visual/utils/reader/object";
 import { ReduxAction } from "../../actions2";
-import { apiUpdateGlobalBlock, debouncedApiUpdateGlobalBlock } from "./utils";
+import { apiAutoSave, apiOnChange } from "./utils";
 
 interface Data {
   action: ReduxAction;
@@ -19,26 +18,35 @@ interface Data {
   ) => void;
 }
 
-const getMeta = mPipe(readKey("meta"), readObj);
-
 export function handleGlobalBlocks({ action, state }: Data): void {
   switch (action.type) {
     case "ADD_GLOBAL_BLOCK":
     case "ADD_GLOBAL_POPUP": {
       const { _id } = action.payload.block.value;
-
+      const config = Config.getAll();
       const globalBlock = globalBlocksSelector(state)[_id];
 
-      debouncedApiUpdateGlobalBlock.set(_id, _id, globalBlock, action.meta);
+      apiAutoSave({ globalBlock }, config);
       break;
     }
-    case "UPDATE_GLOBAL_BLOCK":
     case "REMOVE_BLOCK": {
       const { id } = action.payload;
       const globalBlock = globalBlocksAssembledSelector(state)[id];
+      const config = Config.getAll();
 
       if (globalBlock) {
-        debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, getMeta(action));
+        apiAutoSave({ globalBlock }, config);
+      }
+      break;
+    }
+
+    case "UPDATE_GLOBAL_BLOCK": {
+      const { uid } = action.payload;
+      const globalBlock = globalBlocksAssembledSelector(state)[uid];
+      const config = Config.getAll();
+
+      if (globalBlock) {
+        apiAutoSave({ globalBlock }, config);
       }
       break;
     }
@@ -46,31 +54,25 @@ export function handleGlobalBlocks({ action, state }: Data): void {
       const { id } = action.payload;
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
       const globalBlock = globalBlocksSelector(state)[id];
+      const config = Config.getAll();
 
-      apiUpdateGlobalBlock(id, globalBlock, { is_autosave: 0 })
-        .then(syncSuccess as (t: unknown) => unknown)
-        .catch(syncFail);
+      apiOnChange({ globalBlock }, config).then(syncSuccess).catch(syncFail);
       break;
     }
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { fromBlockId } = action.payload;
       const globalBlock = globalBlocksAssembledSelector(state)[fromBlockId];
+      const config = Config.getAll();
 
-      debouncedApiUpdateGlobalBlock.set(
-        fromBlockId,
-        fromBlockId,
-        globalBlock,
-        getMeta(action)
-      );
+      apiAutoSave({ globalBlock }, config);
       break;
     }
     case "DELETE_GLOBAL_BLOCK": {
       const { id } = action.payload;
       const globalBlock = globalBlocksSelector(state)[id];
+      const config = Config.getAll();
 
-      debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, {
-        is_autosave: 0
-      });
+      apiOnChange({ globalBlock }, config);
       break;
     }
   }

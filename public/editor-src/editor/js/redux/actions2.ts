@@ -82,7 +82,7 @@ export type ActionMakeGlobalBlockToBlock = {
 export type ActionUpdateGlobalBlock = {
   type: "UPDATE_GLOBAL_BLOCK";
   payload: {
-    id: string;
+    uid: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: any;
     title?: string;
@@ -414,13 +414,13 @@ export function makeGlobalBlockToPopup({
 }
 
 export function updateGlobalBlock({
-  id,
+  uid,
   data,
   title,
   tags,
   meta
 }: {
-  id: string;
+  uid: string;
   data: GlobalBlock["data"];
   title?: string;
   tags?: string;
@@ -431,7 +431,7 @@ export function updateGlobalBlock({
 }): ActionUpdateGlobalBlock {
   return {
     type: "UPDATE_GLOBAL_BLOCK",
-    payload: { id, data, title, tags },
+    payload: { uid, data, title, tags },
     meta: {
       is_autosave: 1,
       ...meta

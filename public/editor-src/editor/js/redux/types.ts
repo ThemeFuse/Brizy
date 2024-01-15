@@ -7,6 +7,7 @@ import {
   GlobalBlock,
   Page,
   Project,
+  Screenshot,
   Style,
   SyncAllowed,
   UserRole
@@ -17,6 +18,13 @@ export enum StoreChanged {
   pending = "pending",
   changed = "changed",
   unchanged = "unchanged"
+}
+
+interface Screenshots {
+  [k: string]: Screenshot | { [k: string]: Screenshot };
+  _published: {
+    [k: string]: Screenshot;
+  };
 }
 
 // WARNING: this is a work in progress.
@@ -41,6 +49,7 @@ export type ReduxState = {
       drawerContentType: string | null | undefined; // TODO: converted to a union of actual drawer type later
     };
     rightSidebar: {
+      type: "options" | "help";
       isOpen: boolean;
       lock: "manual" | "auto" | undefined;
       alignment: "right" | "left";
@@ -61,6 +70,7 @@ export type ReduxState = {
     };
   };
   storeWasChanged: StoreChanged;
+  screenshots: Screenshots;
 
   // below any are temporary and needed for ReduxStateWithHistory
   // they will be removed once we finish with ReduxState types
@@ -69,6 +79,7 @@ export type ReduxState = {
   currentStyleId: any;
   currentStyle: any;
   globalBlocksUpdates: any;
+  error: unknown;
   /* eslint-enable  @typescript-eslint/no-explicit-any */
 };
 

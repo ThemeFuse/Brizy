@@ -16,7 +16,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-additional",
         title: t("Product Attributes")
@@ -26,7 +26,7 @@ export function getItems({ v, device }) {
         {
           id: "titleSpacing",
           label: t("Title"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -36,7 +36,7 @@ export function getItems({ v, device }) {
         {
           id: "style",
           label: t("Style"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           choices: [
             { value: "table", icon: "nc-attributes-table" },
@@ -46,7 +46,7 @@ export function getItems({ v, device }) {
         {
           id: "spacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -55,7 +55,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "between",
-          type: "slider-dev",
+          type: "slider",
           label: t("Between"),
           config: {
             min: 0,
@@ -67,7 +67,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -77,7 +77,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -88,7 +88,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "title",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: titleEnabled,
                   config: {
                     fontFamily: device === "desktop"
@@ -102,7 +102,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "attributes",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -115,7 +115,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -130,7 +130,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTitle",
@@ -138,7 +138,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "titleColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: titleEnabled,
                   devices: "desktop"
                 }
@@ -150,7 +150,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "attributeColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop"
                 }
               ]
@@ -161,7 +161,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   config: {
                     width: ["grouped"],
                     styles: ["solid", "dashed", "dotted"]
@@ -175,7 +175,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -186,7 +186,7 @@ export function getItems({ v, device }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 100,
           config: {
             min: 1,
@@ -199,7 +199,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -208,7 +208,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -223,7 +223,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

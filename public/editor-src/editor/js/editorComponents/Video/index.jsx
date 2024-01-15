@@ -111,7 +111,7 @@ class Video extends EditorComponent {
 
     return videoSrc
       ? getVideoUrl(videoSrc, {
-          autoplay: !!coverImageSrc || autoplay === "on",
+          autoplay: IS_PREVIEW && (!!coverImageSrc || autoplay === "on"),
           controls: updatedControls,
           branding,
           intro,

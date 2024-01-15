@@ -26,7 +26,7 @@ export function getItems({
     {
       id: "duplicate",
       // @ts-expect-error: Need transform to ts
-      type: "button",
+      type: "legacy-button",
       devices: "desktop",
       icon: "nc-duplicate",
       title: t("Duplicate"),
@@ -43,7 +43,7 @@ export function getItems({
       ? [
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             devices: "desktop",
             title: t("Delete"),
             roles: ["admin"],

@@ -1,11 +1,12 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { t } from "visual/utils/i18n";
 import { DeviceMode } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { NORMAL, HOVER, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL, State } from "visual/utils/stateMode";
 import { Value } from "./types";
+
 export const getItems = ({
   v,
   device
@@ -24,7 +25,7 @@ export const getItems = ({
   return [
     {
       id: "toolbarCart",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Product"),
@@ -36,7 +37,7 @@ export const getItems = ({
         {
           id: "itemId",
           label: "Select product",
-          type: "select-dev",
+          type: "select",
           config: {
             search: true
           },
@@ -51,7 +52,7 @@ export const getItems = ({
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -61,7 +62,7 @@ export const getItems = ({
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -70,7 +71,7 @@ export const getItems = ({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -85,7 +86,7 @@ export const getItems = ({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -93,7 +94,7 @@ export const getItems = ({
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -104,7 +105,7 @@ export const getItems = ({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -115,7 +116,7 @@ export const getItems = ({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -126,7 +127,7 @@ export const getItems = ({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -137,7 +138,7 @@ export const getItems = ({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -147,7 +148,7 @@ export const getItems = ({
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 100,
           config: {
             min: 1,
@@ -161,7 +162,7 @@ export const getItems = ({
         {
           id: "advancedSettings",
           // @ts-expect-error: Type '"advancedSettings"' is not assignable to type
-          type: "advancedSettings",
+          type: "legacy-advancedSettings",
           label: t("More Settings"),
           devices: "desktop",
           position: 110

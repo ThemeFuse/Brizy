@@ -10,16 +10,13 @@ export type Reduce<K extends OptionName> = <T>(
   item: GenericToolbarItemType<K>
 ) => T;
 
-export const withOptions = <
-  K extends "popover-dev" | "stateMode-dev" | "group-dev",
-  T
->(
+export const withOptions = <K extends "popover" | "stateMode" | "group", T>(
   fn: (acc: T, item: ToolbarItemType) => T,
   t0: T,
   item: GenericToolbarItemType<K>
 ): T => item.options?.reduce(fn, t0) ?? t0;
 
-export const withTabs = <K extends "tabs-dev" | "sidebarTabs-dev", T>(
+export const withTabs = <K extends "tabs" | "sidebarTabs", T>(
   fn: (acc: T, item: ToolbarItemType) => T,
   t0: T,
   item: GenericToolbarItemType<K>
@@ -31,7 +28,7 @@ export const withTabs = <K extends "tabs-dev" | "sidebarTabs-dev", T>(
   );
 };
 
-export const withColumns = <K extends "grid-dev", T>(
+export const withColumns = <K extends "grid", T>(
   fn: (acc: T, item: ToolbarItemType) => T,
   t0: T,
   item: GenericToolbarItemType<K>

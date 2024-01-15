@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-button",
@@ -35,12 +35,12 @@ export function getItems({
       options: [
         {
           id: "groupSize",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "buttonSize",
               label: t("Size"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "small", icon: "nc-small" },
                 { value: "medium", icon: "nc-medium" },
@@ -52,7 +52,7 @@ export function getItems({
               id: "buttonHeight",
               label: t("Height"),
               disabled: dvv("buttonSize") !== "custom",
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 0,
                 max: 100,
@@ -63,7 +63,7 @@ export function getItems({
               id: "buttonWidth",
               label: t("Width"),
               disabled: dvv("buttonSize") !== "custom",
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 0,
                 max: 100,
@@ -79,7 +79,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       position: 20,
       config: {
         icon: "nc-font",
@@ -89,7 +89,7 @@ export function getItems({
       options: [
         {
           id: "buttonTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -98,7 +98,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 30,
       config: {
         size: "auto",
@@ -116,7 +116,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -124,7 +124,7 @@ export function getItems({
               options: [
                 {
                   id: "buttonColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -135,7 +135,7 @@ export function getItems({
               options: [
                 {
                   id: "button",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -146,7 +146,7 @@ export function getItems({
               options: [
                 {
                   id: "buttonBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -157,7 +157,7 @@ export function getItems({
               options: [
                 {
                   id: "buttonBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -168,7 +168,7 @@ export function getItems({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 40,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "CENTER" },
@@ -179,14 +179,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 50,
       options: [
         {
           id: "buttonSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -195,7 +195,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

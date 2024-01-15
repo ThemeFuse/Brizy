@@ -1,9 +1,3 @@
-interface Browser {
-  type: "browser";
+export interface Compiler {
+  assets?: "html" | "json";
 }
-
-interface Server {
-  type: "server";
-}
-
-export type Compiler = Browser | Server;

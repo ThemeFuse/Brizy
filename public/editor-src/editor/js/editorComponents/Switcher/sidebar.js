@@ -7,7 +7,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -16,7 +16,7 @@ export function getItems({ v, device }) {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -27,7 +27,7 @@ export function getItems({ v, device }) {
                   options: [
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50,
                       disabled: dvv("switcherStyle") === "style-2"
@@ -35,7 +35,7 @@ export function getItems({ v, device }) {
 
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       position: 65
                     }
@@ -52,7 +52,7 @@ export function getItems({ v, device }) {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -63,7 +63,7 @@ export function getItems({ v, device }) {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev"
+                      type: "animation"
                     }
                   ]
                 }

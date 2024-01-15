@@ -20,7 +20,7 @@ export function getItems({ v, device, context }) {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -29,7 +29,7 @@ export function getItems({ v, device, context }) {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -42,7 +42,7 @@ export function getItems({ v, device, context }) {
                   options: [
                     {
                       id: "zIndex",
-                      type: "slider-dev",
+                      type: "slider",
                       position: 20,
                       label: t("Z-index"),
                       config: {
@@ -52,7 +52,7 @@ export function getItems({ v, device, context }) {
                     },
                     {
                       id: "rotate",
-                      type: "slider-dev",
+                      type: "slider",
                       position: 21,
                       label: t("Rotate"),
                       config: {
@@ -64,48 +64,51 @@ export function getItems({ v, device, context }) {
                     {
                       id: "cssID",
                       label: t("CSS ID"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
-                          t("Add your custom ID without the #pound, example: my-id")
+                        content: t(
+                          "Add your custom ID without the #pound, example: my-id"
+                        )
                       },
                       config: cssIDDynamicContentChoices,
                       option: {
                         id: "customID",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
                       id: "cssClass",
                       label: t("CSS Class"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
-                          t("Add your custom class without the .dot, example: my-class")
+                        content: t(
+                          "Add your custom class without the .dot, example: my-class"
+                        )
                       },
                       config: cssIDDynamicContentChoices,
                       option: {
                         id: "customClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
                       id: "customAttributes",
                       label: t("Custom Attributes"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       // eslint-disable-next-line
                       placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       helper: {
-                        content:
-                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
+                        content: t(
+                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                        )
                       }
                     }
                   ]
@@ -121,7 +124,7 @@ export function getItems({ v, device, context }) {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -132,7 +135,7 @@ export function getItems({ v, device, context }) {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev"
+                      type: "animation"
                     }
                   ]
                 }

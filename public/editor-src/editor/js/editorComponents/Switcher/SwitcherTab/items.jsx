@@ -61,7 +61,7 @@ class SwitcherTab extends EditorArrayComponent {
         return [
           {
             id: "duplicate",
-            type: "button",
+            type: "legacy-button",
             title: t("Duplicate"),
             icon: "nc-duplicate",
             position: 200,
@@ -71,7 +71,7 @@ class SwitcherTab extends EditorArrayComponent {
           },
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             title: t("Delete"),
             icon: "nc-trash",
             position: 210,

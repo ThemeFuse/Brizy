@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarGrowaveReview",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -15,7 +15,7 @@ export const getItems = (): ToolbarItemType[] => {
       options: [
         {
           id: "reviewType",
-          type: "select-dev",
+          type: "select",
           label: t("Reviews Type"),
           config: {
             size: "large"
@@ -28,7 +28,7 @@ export const getItems = (): ToolbarItemType[] => {
         },
         {
           id: "productSource",
-          type: "select-dev",
+          type: "select",
           label: t("Product Source"),
           config: {
             size: "large"
@@ -40,7 +40,7 @@ export const getItems = (): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

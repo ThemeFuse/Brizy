@@ -1,15 +1,15 @@
 .brz-ecwid-wrapper {
-  .ecwid,
-  #EcwidShoppingBag-1,
-  .ec-minicart {
-    padding: 0 !important;
-    display: flex !important;
-    align-content: center !important;
+  .ec-cart-widget {
+    .ec-storefront-v2.ec-minicart {
+        display: flex !important;
+        align-content: center !important;
 
-    .ec-minicart__body,
-    .ec-minicart__wrap,
-    .ec-minicart__counter {
-      min-width: 0 !important;
-    }
+        .ec-minicart__body,
+        .ec-minicart__wrap,
+        .ec-minicart__counter {
+          min-width: 0 !important;
+        }
+      }
+
   }
 }

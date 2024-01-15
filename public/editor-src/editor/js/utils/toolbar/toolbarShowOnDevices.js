@@ -8,7 +8,7 @@ export function toolbarShowOnTablet({
 }) {
   return {
     id: "showOnTablet",
-    type: "toggle",
+    type: "legacy-toggle",
     devices,
     position,
     closeTooltip,
@@ -36,7 +36,7 @@ export function toolbarShowOnMobile({
 }) {
   return {
     id: "showOnMobile",
-    type: "toggle",
+    type: "legacy-toggle",
     devices,
     position,
     closeTooltip,

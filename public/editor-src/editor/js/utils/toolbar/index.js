@@ -14,11 +14,7 @@ export {
 export { toolbarBoxShadowFields2 } from "./toolbarBoxShadow";
 
 // Anchor and URL
-export {
-  toolbarLinkAnchor,
-  toolbarStoryAnchor,
-  toolbarLinkPopup
-} from "./toolbarLink";
+export { toolbarLinkAnchor, toolbarLinkPopup } from "./toolbarLink";
 
 // Show on Devices
 export {
@@ -39,9 +35,6 @@ export {
   toolbarDisabledRemove
 } from "./toolbarDisabled";
 
-// Element Containers
-export { toolbarElementContainerTypeImageMap } from "./toolbarElementContainer";
-
 // Element Section
 export { getInstanceParentId } from "./toolbarElementSection";
 
@@ -51,10 +44,7 @@ export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
 // Element Image
 export { toolbarImageTags } from "./toolbarElementImage";
 
-export {
-  toolbarElementForm2Apps,
-  toolbarElementForm2Size
-} from "./toolbarElementForm2";
+export { toolbarElementForm2Apps } from "./toolbarElementForm2";
 
 // Shape
 export { toolbarShapeTopFlip, toolbarShapeBottomFlip } from "./toolbarShape";

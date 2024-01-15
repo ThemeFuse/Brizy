@@ -11,11 +11,7 @@ import {
   cssStyleSizePadding,
   cssStyleSpacing,
   cssStyleTextAlign,
-  cssStyleTypography3FontFamily,
-  cssStyleTypography3FontSize,
-  cssStyleTypography3FontWeight,
-  cssStyleTypography3LetterSpacing,
-  cssStyleTypography3LineHeight
+  getAllCssStyleTypography
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "visual/utils/style2/types";
@@ -32,57 +28,15 @@ export function cssStyleElementEcwidProductsSortingDisplay({
     : cssStyleDisplayFlex();
 }
 
-export function cssStyleElementEcwidProductsSortingTypographyFontFamily({
+export function cssStyleElementEcwidProductsSortingTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "sortingTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSortingTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "sortingTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSortingTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "sortingTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSortingTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "sortingTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSortingTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "sortingTypography"
   });
 }
@@ -244,57 +198,15 @@ export function cssStyleElementEcwidProductsGalleryBottomSpacing({
 }
 
 // Style SKU
-export function cssStyleElementEcwidProductsSKUTypographyFontFamily({
+export function cssStyleElementEcwidProductsSKUTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "skuTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSKUTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "skuTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSKUTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "skuTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSKUTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "skuTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsSKUTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "skuTypography"
   });
 }
@@ -336,57 +248,15 @@ export function cssStyleElementEcwidProductsSubtitleSpacing({
 }
 
 // Style Count pages
-export function cssStyleElementEcwidProductsCountPagesTypographyFontFamily({
+export function cssStyleElementEcwidProductsCountPagesTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "countPagesTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsCountPagesTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "countPagesTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsCountPagesTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "countPagesTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsCountPagesTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "countPagesTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsCountPagesTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "countPagesTypography"
   });
 }
@@ -422,57 +292,15 @@ export function cssStyleElementEcwidProductsCountPagesSpacing({
 }
 
 // Style Pagination
-export function cssStyleElementEcwidProductsPaginationTypographyFontFamily({
+export function cssStyleElementEcwidProductsPaginationTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "paginationTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsPaginationTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "paginationTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsPaginationTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "paginationTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsPaginationTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "paginationTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsPaginationTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "paginationTypography"
   });
 }
@@ -492,57 +320,15 @@ export function cssStyleElementEcwidProductsPaginationSpacing({
 }
 
 // Style Featured Products Title
-export function cssStyleElementEcwidProductsFeaturedProductsTypographyFontFamily({
+export function cssStyleElementEcwidProductsFeaturedProductsTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "featuredProductsTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsFeaturedProductsTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "featuredProductsTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsFeaturedProductsTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "featuredProductsTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsFeaturedProductsTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "featuredProductsTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsFeaturedProductsTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "featuredProductsTypography"
   });
 }
@@ -578,57 +364,15 @@ export function cssStyleElementEcwidProductsFeaturedProductsSpacing({
 }
 
 // Style Label
-export function cssStyleElementEcwidProductsLabelTypographyFontFamily({
+export function cssStyleElementEcwidProductsLabelTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "labelTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsLabelTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "labelTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsLabelTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "labelTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsLabelTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "labelTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductsLabelTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "labelTypography"
   });
 }

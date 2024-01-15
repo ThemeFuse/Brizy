@@ -1,1 +1,1 @@
-export { Price } from "@brizy/builder-ui/lib/elements/Price";
+export { AlphaPrice as Price } from "@brizy/builder-ui/lib/elements/AlphaPrice";

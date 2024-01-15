@@ -52,7 +52,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-table-element"
       },
@@ -62,19 +62,19 @@ export function getItems({ v, device }) {
         {
           id: "tableHead",
           label: t("Head"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop"
         },
         {
           id: "tableAside",
           label: t("Sidebar"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop"
         },
         {
           id: "rows",
           label: t("Rows"),
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           config: {
             min: 1,
@@ -116,7 +116,7 @@ export function getItems({ v, device }) {
         {
           id: "columns",
           label: t("Columns"),
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           config: {
             min: 1,
@@ -171,7 +171,7 @@ export function getItems({ v, device }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -182,7 +182,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         icon: {
@@ -201,7 +201,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -209,7 +209,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, ACTIVE]
                 }
               ]
@@ -220,7 +220,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             },
@@ -230,7 +230,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow"
                 }
               ]
             }
@@ -240,7 +240,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true
     }
   ];

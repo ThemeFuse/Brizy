@@ -13,7 +13,10 @@ export type OnChange<T> = (v: T) => void;
 
 export type SimpleValue<T> = { value: T };
 
-export type FromElementModelGetter = (k: string) => MValue<Literal>;
+export type FromElementModelGetter = (
+  k: string,
+  withoutId?: boolean
+) => MValue<Literal>;
 
 export const callGetter =
   (s: string) =>

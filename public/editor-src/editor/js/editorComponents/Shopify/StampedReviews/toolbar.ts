@@ -43,7 +43,7 @@ export function getItems({
   return [
     {
       id: "toolbarStampedReview",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -53,7 +53,7 @@ export function getItems({
       options: [
         {
           id: "reviewType",
-          type: "select-dev",
+          type: "select",
           label: t("Reviews Type"),
           choices: [
             { title: "Main Widget", value: "standard" },
@@ -67,7 +67,7 @@ export function getItems({
         },
         {
           id: "feedType",
-          type: "select-dev",
+          type: "select",
           label: t("Feed Type"),
           placeholder: t("Feed Type"),
           disabled: reviewType !== "visualGallery",
@@ -78,7 +78,7 @@ export function getItems({
         },
         {
           id: "feedHeight",
-          type: "slider-dev",
+          type: "slider",
           label: t("Height"),
           disabled: reviewType !== "visualGallery" || feedType !== "carousel",
           config: {
@@ -90,7 +90,7 @@ export function getItems({
         },
         {
           id: "hoverOpacity",
-          type: "slider-dev",
+          type: "slider",
           label: t("Hover Opacity"),
           disabled:
             reviewType !== "visualGallery" && reviewType !== "wallPhotos",
@@ -103,36 +103,36 @@ export function getItems({
         {
           id: "carouselTitle",
           label: t("Title"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: reviewType !== "carousel",
           placeholder: t("Insert Title...")
         },
         {
           id: "labelSubtitle",
           label: t("Label Subtitle"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: reviewType !== "fullPage",
           placeholder: t("Based on Reviews")
         },
         {
           id: "productImage",
-          type: "switch-dev",
+          type: "switch",
           label: t("Show Product Image"),
           disabled: reviewType !== "fullPage"
         },
         {
           id: "groupOptions",
-          type: "group-dev",
+          type: "group",
           disabled: IS_STRICT_CAROUSEL,
           options: [
             {
               id: "autoSlide",
-              type: "switch-dev",
+              type: "switch",
               label: t("Auto Slide")
             },
             {
               id: "autoPlaySpeed",
-              type: "slider-dev",
+              type: "slider",
               label: t("Interval"),
               config: {
                 min: 300,
@@ -145,7 +145,7 @@ export function getItems({
         {
           id: "reviewIDs",
           label: t("Review IDs"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: IS_SIMPLE,
           placeholder: t("Insert IDs..."),
           helper: { content: t("Filter by multiple review IDs") }
@@ -153,7 +153,7 @@ export function getItems({
         {
           id: "productIDs",
           label: t("Product IDs"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: reviewType === "standard",
           placeholder: t("Insert IDs..."),
           helper: { content: t("Filter by multiple product IDs") }
@@ -161,7 +161,7 @@ export function getItems({
         {
           id: "productType",
           label: t("Product Type"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: IS_SIMPLE,
           placeholder: t("Insert Type..."),
           helper: { content: t("Filter by product category") }
@@ -169,7 +169,7 @@ export function getItems({
         {
           id: "productVendor",
           label: t("Product Vendor"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: IS_SIMPLE,
           placeholder: t("Insert Vendor..."),
           helper: { content: t("Filter by product vendor") }
@@ -177,14 +177,14 @@ export function getItems({
         {
           id: "feedTags",
           label: t("Feed Tags"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: IS_SIMPLE,
           placeholder: t("Insert Types..."),
           helper: { content: t("Filter by reviews tags") }
         },
         {
           id: "limitWords",
-          type: "slider-dev",
+          type: "slider",
           label: t("Limit Words"),
           helper: {
             content: t("Limit the max number of words for review body")
@@ -198,7 +198,7 @@ export function getItems({
         },
         {
           id: "minimumRating",
-          type: "select-dev",
+          type: "select",
           label: t("Minimum Rating"),
           helper: {
             content: t("Show only reviews above the selected minimum rating")
@@ -214,7 +214,7 @@ export function getItems({
         },
         {
           id: "fillEmpty",
-          type: "switch-dev",
+          type: "switch",
           label: t("Fill Empty"),
           disabled: IS_SIMPLE,
           helper: {
@@ -225,7 +225,7 @@ export function getItems({
         },
         {
           id: "randomizer",
-          type: "switch-dev",
+          type: "switch",
           label: t("Random"),
           helper: {
             content: t("Randomize the reviews results")
@@ -236,7 +236,7 @@ export function getItems({
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       disabled: IS_SIMPLE,
       config: {
         size: "medium",
@@ -255,7 +255,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTitle",
@@ -263,7 +263,7 @@ export function getItems({
               options: [
                 {
                   id: "titleColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: reviewType !== "carousel"
                 }
               ]
@@ -274,7 +274,7 @@ export function getItems({
               options: [
                 {
                   id: "starColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -284,7 +284,7 @@ export function getItems({
               options: [
                 {
                   id: "textColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled:
                     reviewType === "visualGallery" ||
                     reviewType === "wallPhotos" ||
@@ -298,7 +298,7 @@ export function getItems({
               options: [
                 {
                   id: "linkColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled:
                     reviewType === "visualGallery" ||
                     reviewType === "wallPhotos"
@@ -311,7 +311,7 @@ export function getItems({
               options: [
                 {
                   id: "verifiedColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: reviewType !== "fullPage"
                 }
               ]
@@ -322,7 +322,7 @@ export function getItems({
               options: [
                 {
                   id: "hoverColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled:
                     reviewType !== "visualGallery" &&
                     reviewType !== "wallPhotos"
@@ -333,11 +333,11 @@ export function getItems({
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] },
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

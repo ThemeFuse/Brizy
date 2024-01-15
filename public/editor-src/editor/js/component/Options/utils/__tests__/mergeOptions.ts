@@ -2,18 +2,18 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { mergeOptions } from "../mergeOptions";
 
 describe("Testing 'mergeOptions' function", () => {
-  test("merge options from grid-dev", () => {
+  test("merge options from grid", () => {
     const i1: ToolbarItemType[] = [
       {
         id: "test",
-        type: "grid-dev",
+        type: "grid",
         columns: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 config: {
                   size: "short",
                   lines: 10
@@ -26,7 +26,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -40,14 +40,14 @@ describe("Testing 'mergeOptions' function", () => {
     const i2: ToolbarItemType[] = [
       {
         id: "test",
-        type: "grid-dev",
+        type: "grid",
         columns: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 disabled: true
               }
             ]
@@ -57,7 +57,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   max: 100,
@@ -66,7 +66,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -80,14 +80,14 @@ describe("Testing 'mergeOptions' function", () => {
     const r: ToolbarItemType[] = [
       {
         id: "test",
-        type: "grid-dev",
+        type: "grid",
         columns: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 disabled: true,
                 config: {
                   size: "short",
@@ -101,7 +101,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -109,7 +109,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -123,18 +123,18 @@ describe("Testing 'mergeOptions' function", () => {
 
     expect(mergeOptions(i1, i2)).toStrictEqual(r);
   });
-  test("merge options from tabs-dev", () => {
+  test("merge options from tabs", () => {
     const i1: ToolbarItemType[] = [
       {
         id: "test",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 config: {
                   size: "short",
                   lines: 10
@@ -147,7 +147,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -161,14 +161,14 @@ describe("Testing 'mergeOptions' function", () => {
     const i2: ToolbarItemType[] = [
       {
         id: "test",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 disabled: true
               }
             ]
@@ -178,7 +178,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   max: 100,
@@ -187,7 +187,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -201,14 +201,14 @@ describe("Testing 'mergeOptions' function", () => {
     const r: ToolbarItemType[] = [
       {
         id: "test",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 disabled: true,
                 config: {
                   size: "short",
@@ -222,7 +222,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -230,7 +230,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -244,18 +244,18 @@ describe("Testing 'mergeOptions' function", () => {
 
     expect(mergeOptions(i1, i2)).toStrictEqual(r);
   });
-  test("merge options from sidebarTabs-dev", () => {
+  test("merge options from sidebarTabs", () => {
     const i1: ToolbarItemType[] = [
       {
         id: "test",
-        type: "sidebarTabs-dev",
+        type: "sidebarTabs",
         tabs: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 config: {
                   size: "short",
                   lines: 10
@@ -268,7 +268,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -282,14 +282,14 @@ describe("Testing 'mergeOptions' function", () => {
     const i2: ToolbarItemType[] = [
       {
         id: "test",
-        type: "sidebarTabs-dev",
+        type: "sidebarTabs",
         tabs: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 disabled: true
               }
             ]
@@ -299,7 +299,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   max: 100,
@@ -308,7 +308,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -322,14 +322,14 @@ describe("Testing 'mergeOptions' function", () => {
     const r: ToolbarItemType[] = [
       {
         id: "test",
-        type: "sidebarTabs-dev",
+        type: "sidebarTabs",
         tabs: [
           {
             id: "col1",
             options: [
               {
                 id: "o1",
-                type: "textarea-dev",
+                type: "textarea",
                 disabled: true,
                 config: {
                   size: "short",
@@ -343,7 +343,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -351,7 +351,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -365,15 +365,15 @@ describe("Testing 'mergeOptions' function", () => {
 
     expect(mergeOptions(i1, i2)).toStrictEqual(r);
   });
-  test("merge options from group-dev", () => {
+  test("merge options from group", () => {
     const i1: ToolbarItemType[] = [
       {
         id: "test",
-        type: "group-dev",
+        type: "group",
         options: [
           {
             id: "o1",
-            type: "textarea-dev",
+            type: "textarea",
             config: {
               size: "short",
               lines: 10
@@ -381,7 +381,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o2",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false
@@ -393,16 +393,16 @@ describe("Testing 'mergeOptions' function", () => {
     const i2: ToolbarItemType[] = [
       {
         id: "test",
-        type: "group-dev",
+        type: "group",
         options: [
           {
             id: "o1",
-            type: "textarea-dev",
+            type: "textarea",
             disabled: true
           },
           {
             id: "o2",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               max: 100,
@@ -411,7 +411,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o3",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false
@@ -423,11 +423,11 @@ describe("Testing 'mergeOptions' function", () => {
     const r: ToolbarItemType[] = [
       {
         id: "test",
-        type: "group-dev",
+        type: "group",
         options: [
           {
             id: "o1",
-            type: "textarea-dev",
+            type: "textarea",
             disabled: true,
             config: {
               size: "short",
@@ -436,7 +436,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o2",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false
@@ -444,7 +444,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o3",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false

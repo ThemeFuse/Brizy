@@ -14,13 +14,13 @@ export default function Scroll(props) {
         defaultValue={triggerValue.value}
         onChange={(value) => onChange({ ...triggerValue, value })}
       >
-        <SelectItem key="down" value="down">
+        <SelectItem key="down" value="down" title={t("Down")}>
           {t("Down")}
         </SelectItem>
-        <SelectItem key="up" value="up">
+        <SelectItem key="up" value="up" title={t("Up")}>
           {t("Up")}
         </SelectItem>
-        <SelectItem key="toElement" value="toElement">
+        <SelectItem key="toElement" value="toElement" title={t("To element")}>
           {t("To element")}
         </SelectItem>
       </Select>

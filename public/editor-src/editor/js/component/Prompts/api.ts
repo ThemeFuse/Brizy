@@ -9,5 +9,8 @@ export const Prompt = {
     props?: ComponentProps<PromptTypes[K]>;
   }): void {
     UIState.set("prompt", data);
+  },
+  close(promptName: PromptKey) {
+    UIState.set("closePrompt", promptName);
   }
 };

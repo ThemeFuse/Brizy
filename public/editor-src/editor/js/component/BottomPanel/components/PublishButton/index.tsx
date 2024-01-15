@@ -26,7 +26,7 @@ import {
   storeWasChangedSelector
 } from "visual/redux/selectors";
 import { ReduxState, StoreChanged } from "visual/redux/types";
-import { SavedLayout } from "visual/types";
+import { SavedLayout, Style } from "visual/types";
 import {
   createBlockScreenshot,
   createSavedLayout,
@@ -69,6 +69,7 @@ const mapState = (
   extraFontStyles: ReduxState["extraFontStyles"];
   mode: "withRules" | "withTemplate" | "withArticle" | undefined;
   storeWasChanged: StoreChanged;
+  currentStyle: Style;
 } => {
   const config = Config.getAll();
   return {
@@ -77,7 +78,8 @@ const mapState = (
     extraFontStyles: extraFontStylesSelector(state),
 
     storeWasChanged: storeWasChangedSelector(state),
-    mode: _getMode(config)
+    mode: _getMode(config),
+    currentStyle: state.currentStyle
   };
 };
 const mapDispatch = {
@@ -216,6 +218,7 @@ class PublishButton extends Component<Props, State> {
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
+          Prompts.close("pageRules");
         },
         onCancel: (): void => {
           this.setState({ [loading]: false });
@@ -244,6 +247,7 @@ class PublishButton extends Component<Props, State> {
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
+          Prompts.close("pageTemplate");
         },
         onCancel: (): void => {
           this.setState({ [loading]: false });
@@ -276,6 +280,7 @@ class PublishButton extends Component<Props, State> {
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
+          Prompts.close("pageArticle");
         },
         onCancel: (): void => {
           this.setState({ [loading]: false });
@@ -336,7 +341,7 @@ class PublishButton extends Component<Props, State> {
   }
 
   handleSavePage = async (): Promise<void> => {
-    const { pageData, extraFontStyles } = this.props;
+    const { pageData, extraFontStyles, currentStyle } = this.props;
 
     if (this.state.layoutLoading || pageData.items.length === 0) {
       return;
@@ -382,11 +387,18 @@ class PublishButton extends Component<Props, State> {
       }
     }
 
+    const layoutId = uuid();
+
     const data = {
       meta,
       data: pageData,
       dataVersion: 1,
-      uid: uuid()
+      uid: layoutId,
+      globalStyles: {
+        ...currentStyle,
+        id: layoutId,
+        title: currentStyle.title + "-" + layoutId.slice(0, 4)
+      }
     };
     const config = Config.getAll();
     await createSavedLayout(data, config).catch((e) => {
@@ -591,6 +603,7 @@ class PublishButton extends Component<Props, State> {
                   return this.draft("updateLoading");
               }
             }}
+            status={this.props.page.status}
             loading={this.state.updateLoading}
           >
             {this.getLabel()}

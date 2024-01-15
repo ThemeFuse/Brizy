@@ -18,7 +18,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-form-left",
         title: t("Field"),
@@ -28,7 +28,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "padding",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           config: {
             min: 0,
@@ -40,7 +40,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         title: t("Typography"),
@@ -50,7 +50,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -59,7 +59,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -76,7 +76,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "color",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "bgColor",
@@ -84,7 +84,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop"
                 }
               ]
@@ -95,7 +95,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop"
                 }
               ]
@@ -106,7 +106,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop"
                 }
               ]

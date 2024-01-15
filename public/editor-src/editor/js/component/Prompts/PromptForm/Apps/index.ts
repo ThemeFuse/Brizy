@@ -1,7 +1,8 @@
 export { default as email } from "./Email";
 export { default as wordpress } from "./Wordpress";
 export { default as mailchimp } from "./Mailchimp";
-export { default as sendinblue } from "./SendinBlue";
+// check issue #24534 why is sendingblue and Brevo
+export { default as sendinblue } from "./Brevo";
 export { default as zapier } from "./Zapier";
 export { default as campaignmonitor } from "./CampaignMonitor";
 export { default as convertkit } from "./Convertkit";

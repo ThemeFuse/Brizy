@@ -2,7 +2,7 @@ import * as Option from "visual/component/Options/Type";
 
 export const defaultValue = undefined;
 
-export const fromElementModel: Option.FromElementModel<"popover-dev"> = () =>
+export const fromElementModel: Option.FromElementModel<"popover"> = () =>
   undefined;
 
-export const toElementModel: Option.ToElementModel<"popover-dev"> = () => ({});
+export const toElementModel: Option.ToElementModel<"popover"> = () => ({});

@@ -8,7 +8,9 @@ import { getDynamicContentOption } from "visual/utils/options";
 
 export const title = t("Popup Close Icon");
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -29,7 +31,7 @@ export function getItems({
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -38,7 +40,7 @@ export function getItems({
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -50,56 +52,59 @@ export function getItems({
                     {
                       id: "cssID",
                       label: t("CSS ID"),
-                      type: "population-dev",
+                      type: "population",
                       position: 30,
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
-                          t("Add your custom ID without the #pound, example: my-id")
+                        content: t(
+                          "Add your custom ID without the #pound, example: my-id"
+                        )
                       },
                       config: richTextDC,
                       option: {
                         id: "closeCustomID",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
                       id: "cssClass",
                       label: t("CSS Class"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
-                          t("Add your custom class without the .dot, example: my-class")
+                        content: t(
+                          "Add your custom class without the .dot, example: my-class"
+                        )
                       },
                       config: richTextDC,
                       option: {
                         id: "closeCustomClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
                       id: "closeCustomAttributes",
                       label: t("Custom Attributes"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       // eslint-disable-next-line
                       placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       devices: "desktop",
                       helper: {
-                        content:
-                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
+                        content: t(
+                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                        )
                       },
                       population: richTextDC
                     },
                     {
                       id: "closeCustomCSS",
                       label: t("Custom CSS"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       display: "block",
                       devices: "desktop",
@@ -112,7 +117,7 @@ export function getItems({
                       disabled: IS_STORY,
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,

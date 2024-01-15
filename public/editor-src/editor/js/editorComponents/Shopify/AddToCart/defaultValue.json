@@ -12,6 +12,9 @@
     "mobileFontFamily": null
   },
   "style": {
+    "size": "medium",
+    "fillType": "filled",
+
     "iconPosition": "left",
 
     "iconSize": "custom",
@@ -73,29 +76,9 @@
     "gradientLinearDegree": 90,
     "gradientRadialDegree": 90,
 
-    "borderRadiusType": "grouped",
-
+    "borderRadiusType": "square",
     "borderRadius": 0,
-    "borderTopLeftRadius": 2,
-    "borderTopRightRadius": 2,
-    "borderBottomLeftRadius": 2,
-    "borderBottomRightRadius": 2,
-
-    "tempBorderTopRightRadius": 2,
-    "tempBorderBottomRightRadius": 2,
-    "tempBorderBottomLeftRadius": 2,
-    "tempBorderTopLeftRadius": 2,
-
     "borderRadiusSuffix": "px",
-    "borderTopLeftRadiusSuffix": "px",
-    "borderTopRightRadiusSuffix": "px",
-    "borderBottomLeftRadiusSuffix": "px",
-    "borderBottomRightRadiusSuffix": "px",
-
-    "tempBorderTopRightRadiusSuffix": "px",
-    "tempBorderBottomRightRadiusSuffix": "px",
-    "tempBorderBottomLeftRadiusSuffix": "px",
-    "tempBorderTopLeftRadiusSuffix": "px",
 
     "colorHex": "#ffffff",
     "colorOpacity": 1,
@@ -107,7 +90,7 @@
     "tempBorderStyle": "solid",
 
     "borderColorHex": "#239ddb",
-    "borderColorOpacity": 0,
+    "borderColorOpacity": 1,
     "borderColorPalette": "color3",
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "color3",

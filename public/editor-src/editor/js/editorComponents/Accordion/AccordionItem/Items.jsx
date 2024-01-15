@@ -25,7 +25,7 @@ class AccordionItemItems extends EditorArrayComponent {
 
     const sortableType = makeDataAttrString({
       name: "sortable-type",
-      value: "'row'"
+      value: "row"
     });
 
     const sortableElement = makeDataAttrString({
@@ -49,7 +49,7 @@ class AccordionItemItems extends EditorArrayComponent {
       if (from.elementType === "row" || from.elementType === "column") {
         return (
           from.elementNode.querySelector(
-            `${sortableType}${sortableElement}}`
+            `${sortableType}${sortableElement}`
           ) === null // hasn't inner row (thus avoiding level 3 columns)
         );
       }
@@ -63,7 +63,7 @@ class AccordionItemItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           title: t("Duplicate"),
           icon: "nc-duplicate",
           position: 200,
@@ -73,7 +73,7 @@ class AccordionItemItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           title: t("Delete"),
           icon: "nc-trash",
           position: 210,

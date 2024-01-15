@@ -68,7 +68,7 @@ export const setOptionPrefix = (
  * @return {boolean}
  */
 export const inDevelopment = (type: string): boolean =>
-  String(type).endsWith("-dev");
+  !String(type).startsWith("legacy-");
 
 /**
  * Checks if the option supports provided responsive mode

@@ -2,7 +2,6 @@ import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { Pro } from "visual/global/Config/types/Pro";
 import { Project } from "visual/global/Config/types/Project";
 import { Urls } from "visual/global/Config/types/Urls";
-import { User } from "visual/global/Config/types/User";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
@@ -78,7 +77,6 @@ export interface Base<Platform> extends ConfigCommon, WithId<number> {
   platform: Platform;
   dynamicContent: DynamicContent<"cloud">;
   pro: Pro<"cloud">;
-  user: User;
   urls: Urls<"cloud">;
   project: Project<"cloud">;
   whiteLabel?: WhiteLabel;

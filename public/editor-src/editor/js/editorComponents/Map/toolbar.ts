@@ -41,7 +41,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-pin",
         title: t("Map")
@@ -51,7 +51,7 @@ export function getItems({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -60,7 +60,7 @@ export function getItems({
                 {
                   id: "address",
                   label: t("Address"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: t("Enter address"),
                   population: richTextDC,
                   config: {
@@ -70,7 +70,7 @@ export function getItems({
                 {
                   id: "zoom",
                   label: t("Zoom"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 1,
                     max: 21
@@ -84,7 +84,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -103,7 +103,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -111,7 +111,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -122,7 +122,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -134,7 +134,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -146,7 +146,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -157,7 +157,7 @@ export function getItems({
         {
           id: "size",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 80,
           config: {
             min: 1,
@@ -171,7 +171,7 @@ export function getItems({
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 5,
             max: dvv("heightSuffix") === "%" ? 100 : 500,
@@ -183,7 +183,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -194,7 +194,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -209,7 +209,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -225,7 +225,7 @@ export function getItems({
     {
       id: "advancedSettings",
       // @ts-expect-error: Missing in new option-types
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       icon: "nc-cog",
       position: 110,

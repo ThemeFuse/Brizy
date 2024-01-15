@@ -1,10 +1,9 @@
 import React, { ReactElement } from "react";
-import { t } from "visual/utils/i18n";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import Editor from "visual/global/Editor";
-
+import { t } from "visual/utils/i18n";
 import { Control, Props } from "./Control";
 import { Header } from "./Header";
-import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 
 const BaseDrawer = (props: Props): ReactElement => {
   return <Control {...props} shortcodes={Editor.getShortcodes()} />;

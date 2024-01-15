@@ -27,7 +27,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
   return [
     {
       id: "toolbarYotPoReview",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -37,7 +37,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
       options: [
         {
           id: "reviewType",
-          type: "select-dev",
+          type: "select",
           label: t("Reviews Type"),
           config: {
             size: "large"
@@ -54,7 +54,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         {
           id: "appKey",
           label: t("Application Key"),
-          type: "inputText-dev",
+          type: "inputText",
           disabled: reviewType !== "bottomLine",
           placeholder: t("Insert AppKey"),
           helper: {
@@ -65,7 +65,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "reviewLogic",
-          type: "select-dev",
+          type: "select",
           label: t("Review Logic"),
           disabled: reviewType !== "yotpo-reviews-carousel",
           choices: [
@@ -75,7 +75,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "showReviews",
-          type: "select-dev",
+          type: "select",
           label: t("Show"),
           disabled: reviewType !== "yotpo-reviews-carousel",
           choices: [
@@ -87,7 +87,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "reviewsNumber",
-          type: "slider-dev",
+          type: "slider",
           label: t("Number of Reviews"),
           disabled: reviewType !== "yotpo-reviews-carousel",
           config: {
@@ -98,7 +98,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "showTotalReviewsCount",
-          type: "switch-dev",
+          type: "switch",
           label: t("Show Total Reviews"),
           helper: {
             content: t("Show Total Reviews Count And Average Ratings")
@@ -107,17 +107,17 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "groupSettings",
-          type: "group-dev",
+          type: "group",
           disabled: reviewType !== "yotpo-reviews-carousel",
           options: [
             {
               id: "autoPlay",
-              type: "switch-dev",
+              type: "switch",
               label: t("Autoplay")
             },
             {
               id: "autoplaySpeed",
-              type: "slider-dev",
+              type: "slider",
               label: t("Speed"),
               disabled: autoPlay === "off",
               config: {
@@ -130,25 +130,25 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "showNavigation",
-          type: "switch-dev",
+          type: "switch",
           label: t("Show Navigation"),
           disabled: reviewType !== "yotpo-reviews-carousel"
         },
         {
           id: "bgColorSwitch",
-          type: "switch-dev",
+          type: "switch",
           label: t("Enable Background Color"),
           disabled: reviewType !== "yotpo-reviews-carousel"
         },
         {
           id: "headerCustomisation",
-          type: "switch-dev",
+          type: "switch",
           label: t("Header Customisation"),
           disabled: reviewType !== "yotpo-reviews-carousel"
         },
         {
           id: "headerText",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Text"),
           disabled:
             reviewType !== "yotpo-reviews-carousel" ||
@@ -157,7 +157,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "fontSize",
-          type: "slider-dev",
+          type: "slider",
           label: t("Font Size"),
           disabled:
             reviewType !== "yotpo-reviews-carousel" ||
@@ -171,7 +171,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         },
         {
           id: "textAlign",
-          type: "select-dev",
+          type: "select",
           label: t("Align Text"),
           disabled:
             reviewType !== "yotpo-reviews-carousel" ||
@@ -185,7 +185,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -203,7 +203,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -211,7 +211,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled:
                     reviewType !== "yotpo-reviews-carousel" ||
                     bgColorSwitch === "off"
@@ -224,7 +224,7 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled:
                     headerCustomisation === "off" ||
                     reviewType !== "yotpo-reviews-carousel"
@@ -235,11 +235,11 @@ export function getItems({ v }: { v: Value }): ToolbarItemType[] {
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] },
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

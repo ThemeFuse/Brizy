@@ -9,8 +9,7 @@ import {
   cssStyleDisplayNone,
   cssStylePositionLeft,
   cssStylePositionTop,
-  cssStyleSizeSpacingHeight,
-  cssStyleSizeSpacingWidth
+  cssStyleSizeIconSizes
 } from "visual/utils/cssStyle/index";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "visual/utils/style2/types";
@@ -84,30 +83,12 @@ export function cssStyleElementEcwidShoppingBagIconDisplay({
   }
 }
 
-export function cssStyleElementEcwidShoppingBagIconSpacingWidth({
+export function cssStyleElementEcwidShoppingBagIconSizes({
   v,
   device,
   state
 }: CSSValue): string {
-  return cssStyleSizeSpacingWidth({
-    v,
-    device,
-    state,
-    prefix: "icon"
-  });
-}
-
-export function cssStyleElementEcwidShoppingBagIconSpacingHeight({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleSizeSpacingHeight({
-    v,
-    device,
-    state,
-    prefix: "icon"
-  });
+  return cssStyleSizeIconSizes({ v, device, state, prefix: "icon" });
 }
 
 export function cssStyleElementEcwidShoppingBagIconPositionTop({

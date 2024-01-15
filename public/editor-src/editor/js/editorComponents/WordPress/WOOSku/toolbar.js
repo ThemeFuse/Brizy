@@ -1,10 +1,10 @@
-import { t } from "visual/utils/i18n";
 import { hexToRgba } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 
 export function getItems({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device, state: "normal" });
+  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   // Typography
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -15,7 +15,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -26,7 +26,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -35,7 +35,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -51,14 +51,14 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "color",
-          type: "colorPicker-dev",
+          type: "colorPicker",
           devices: "desktop"
         }
       ]
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       icon: "nc-cog",
       position: 110

@@ -25,32 +25,32 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: { title: t("My Account"), icon: "nc-user" },
       position: 10,
       devices: "desktop",
       options: [
         {
-          id: "footerDisplay",
-          label: t("Footer"),
-          type: "switch-dev"
+          id: "breadcrumbs",
+          label: t("Breadcrumbs"),
+          type: "switch"
         },
         {
           id: "signinLink",
           label: t("Sign in link"),
-          type: "switch-dev",
+          type: "switch",
           disabled: dvv("footerDisplay") === "off"
         },
         {
-          id: "breadcrumbs",
-          label: t("Breadcrumbs"),
-          type: "switch-dev"
+          id: "footerDisplay",
+          label: t("Footer"),
+          type: "switch"
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -68,14 +68,14 @@ export function getItems({
       options: [
         {
           id: "parent",
-          type: "backgroundColor-dev"
+          type: "backgroundColor"
         }
       ]
     },
     {
       id: "advancedSettings",
       // @ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       position: 30,
       icon: "nc-cog",
@@ -83,7 +83,7 @@ export function getItems({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     }

@@ -23,19 +23,19 @@ const getItems =
     const disableIconOptions = (): ToolbarItemType[] => [
       {
         id: "iconPosition",
-        type: "radioGroup-dev",
+        type: "radioGroup",
         disabled: true,
         choices: []
       },
       {
         id: "groupIconSize",
-        type: "group-dev",
+        type: "group",
         disabled: true,
         options: []
       },
       {
         id: "iconSpacing",
-        type: "slider-dev",
+        type: "slider",
         disabled: true
       }
     ];
@@ -43,7 +43,7 @@ const getItems =
     return [
       {
         id: "toolbarCurrentShortcode",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-star",
           title: t("Table")
@@ -53,7 +53,7 @@ const getItems =
           {
             id: "currentShortcodeTabs",
             className: "",
-            type: "tabs-dev",
+            type: "tabs",
             tabs: [
               {
                 id: "currentShortcodeTab",
@@ -63,7 +63,7 @@ const getItems =
                   {
                     id: "",
                     label: t("Icon"),
-                    type: "iconSetter-dev",
+                    type: "iconSetter",
                     devices: "desktop",
                     config: { canDelete: true }
                   },
@@ -79,12 +79,12 @@ const getItems =
         ? [
             {
               id: "toolbarSettings",
-              type: "popover-dev",
+              type: "popover",
               disabled: true
             },
             {
               id: "advancedSettings",
-              type: "advancedSettings",
+              type: "legacy-advancedSettings",
               sidebarLabel: t("More Settings"),
               roles: ["admin"],
               position: 110,
@@ -96,7 +96,7 @@ const getItems =
         : [
             {
               id: "toolbarSettings",
-              type: "popover-dev",
+              type: "popover",
               config: {
                 icon: "nc-cog",
                 title: t("Settings")
@@ -107,7 +107,7 @@ const getItems =
                 {
                   id: "headerWidth",
                   label: t("Width"),
-                  type: "slider-dev",
+                  type: "slider",
                   position: 100,
                   disabled: widthType === "off" || isFromBody,
                   config: {
@@ -118,12 +118,12 @@ const getItems =
                 },
                 !!isFromBody && {
                   id: "widthType",
-                  type: "select-dev",
+                  type: "select",
                   disabled: true
                 },
                 !isFromBody && {
                   id: "asideWidth",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: true
                 }
               ]

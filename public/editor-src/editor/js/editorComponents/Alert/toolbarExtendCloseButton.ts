@@ -25,7 +25,7 @@ export function getItems({
   return [
     {
       id: "toolbarCloseButtonIcon",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Icon")
@@ -34,7 +34,7 @@ export function getItems({
       options: [
         {
           id: "toolbarCloseButtonIconTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabIcon",
@@ -43,7 +43,7 @@ export function getItems({
                 {
                   id: "closeHorizontalPosition",
                   label: t("Lateral"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 50,
@@ -53,7 +53,7 @@ export function getItems({
                 {
                   id: "closeVerticalPosition",
                   label: t("Vertical"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 50,
@@ -62,12 +62,12 @@ export function getItems({
                 },
                 {
                   id: "groupCloseSize",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "closeSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -77,7 +77,7 @@ export function getItems({
                     },
                     {
                       id: "closeCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("closeSize") !== "custom",
                       config: {
                         min: 8,
@@ -96,7 +96,7 @@ export function getItems({
                 {
                   id: "closeBgSize",
                   label: t("Size"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 30,
@@ -105,12 +105,12 @@ export function getItems({
                 },
                 {
                   id: "groupCloseBorderRadiusShape",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "closeBorderRadiusShape",
                       label: t("Corner"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "square", icon: "nc-corners-square" },
                         { value: "rounded", icon: "nc-corners-round" },
@@ -119,7 +119,7 @@ export function getItems({
                     },
                     {
                       id: "closeBorderRadius",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("closeBorderRadiusShape") !== "custom",
                       config: {
                         min: 0,
@@ -137,7 +137,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         size: "medium",
@@ -152,7 +152,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabIcon",
@@ -160,7 +160,7 @@ export function getItems({
               options: [
                 {
                   id: "closeColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -171,7 +171,7 @@ export function getItems({
               options: [
                 {
                   id: "closeBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -182,7 +182,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
