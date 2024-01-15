@@ -1,6 +1,12 @@
+import {
+  getDefaultLayoutData,
+  getDefaultLayouts,
+  getDefaultLayoutsPages
+} from "@/api";
 import { Config } from "../config";
 import {
   BlocksArray,
+  CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
@@ -9,7 +15,9 @@ import {
   KitItem,
   Kits,
   KitsWithThumbs,
-  Layouts,
+  LayoutsDefaultTemplate,
+  LayoutsPageAPI,
+  LayoutsPages,
   LayoutsWithThumbs,
   Popups,
   PopupsWithThumbs,
@@ -17,7 +25,8 @@ import {
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
-import { tempConverterKit } from "./tempComverters";
+import { tempConverterKit } from "./tempConverters";
+import { convertLayouts, convertToCategories } from "./utils";
 
 const defaultKits = (
   config: Config
@@ -243,30 +252,27 @@ const defaultStories = (
 
 const defaultLayouts = (
   config: Config
-): DefaultTemplate<LayoutsWithThumbs, BlocksArray<DefaultBlockWithID>> => {
-  const { layoutsUrl } = config.api.templates;
+): LayoutsDefaultTemplate<
+  LayoutsWithThumbs,
+  BlocksArray<DefaultBlockWithID>,
+  LayoutsPages
+> => {
+  const { templatesUrl } = config.api.templates;
+  console.log("TESTING:FIX THIS BEFORE MERGE", templatesUrl);
+  const imageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
+  const apiLayoutsUrl1 =
+    "https://phplaravel-1109775-4184176.cloudwaysapps.com/api";
 
   return {
     async getMeta(res, rej) {
       try {
-        const meta: Layouts = await fetch(`${layoutsUrl}/meta.json`).then((r) =>
-          r.json()
+        const { templates, categories } = await getDefaultLayouts(
+          apiLayoutsUrl1
         );
 
-        const data = {
-          ...meta,
-          templates: meta.templates.map((item) => {
-            return {
-              ...item,
-              thumbnailSrc: `${layoutsUrl}/thumbs/${item.pages[0].id}.jpg`,
-              pages: item.pages.map((page) => {
-                return {
-                  ...page,
-                  thumbnailSrc: `${layoutsUrl}/thumbs/${page.id}.jpg`
-                };
-              })
-            };
-          })
+        const data: LayoutsWithThumbs = {
+          templates: convertLayouts(templates, `${imageUrl}`),
+          categories: convertToCategories(categories)
         };
 
         res(data);
@@ -274,15 +280,52 @@ const defaultLayouts = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, { id, layoutId }) {
       try {
-        const data = await fetch(`${layoutsUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
+        const data = await getDefaultLayoutData(
+          apiLayoutsUrl1,
+          // `${templatesUrl}/api`,
+          layoutId,
+          id
         );
 
-        res(data);
+        const result: BlocksArray<DefaultBlockWithID> = {
+          blocks: [...data.items]
+        };
+
+        res(result);
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    },
+    async getPages(res, rej, id) {
+      try {
+        const { collections, styles } = await getDefaultLayoutsPages(
+          apiLayoutsUrl1,
+          // `${templatesUrl}/api`,
+          id
+        );
+
+        const parsedData: CustomTemplatePage[] = collections.map(
+          ({
+            slug,
+            title,
+            thumbnailHeight,
+            thumbnailWidth,
+            thumbs
+          }: LayoutsPageAPI) => ({
+            id: slug,
+            title,
+            thumbnailWidth,
+            thumbnailHeight,
+            thumbnailSrc: `${imageUrl}${thumbs}`,
+            layoutId: id
+          })
+        );
+
+        res({ pages: parsedData, styles: [styles] });
+      } catch (e) {
+        rej(t("Failed to load pages for selected Layout"));
       }
     }
   };

@@ -1,11 +1,16 @@
-import { Arr, Obj, Str } from "@brizy/readers";
 import { Config, getConfig } from "@/config";
+import {
+  DefaultBlockWithID,
+  LayoutsAPI,
+  LayoutsPageAPI,
+  Style
+} from "@/types/DefaultTemplate";
+import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
 import { ResponseWithBody } from "@/types/Response";
-import { ConfigDCItem } from "@/types/DynamicContent";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -15,8 +20,9 @@ import {
   SavedLayoutMeta
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
-import { Dictionary } from "../types/utils";
 import { t } from "@/utils/i18n";
+import { Arr, Json, Obj, Str } from "@brizy/readers";
+import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
   GetCollections,
@@ -1261,4 +1267,52 @@ export const updateGlobalBlocks = async (
   }
 };
 
+//#endregion
+
+//#region Default Templates
+export const getDefaultLayouts = async (
+  url: string
+): Promise<{
+  templates: LayoutsAPI[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const res = await fetch(`${url}/get-layouts-chunk`).then((r) => r.json());
+
+  return { templates: res.collections, categories: res.categories };
+};
+
+export const getDefaultLayoutsPages = async (
+  url: string,
+  id: string
+): Promise<{
+  collections: LayoutsPageAPI[];
+  paginationInfo: {
+    itemsPerPage: number;
+    lastPage: number;
+    totalCount: number;
+  };
+  styles: Style;
+}> => {
+  const data = await fetch(
+    `${url}/get-layouts-pages?project_id=${id}&per_page=20`
+  ).then((r) => r.json());
+
+  return data;
+};
+
+export const getDefaultLayoutData = async (
+  url: string,
+  layoutId: Literal,
+  id: string
+): Promise<{
+  items: DefaultBlockWithID[];
+}> => {
+  const data = await fetch(
+    `${url}/get-layouts-page?project_id=${layoutId}&page_slug=${id}`
+  ).then((r) => r.json());
+
+  return Json.read(data[0].pageData) as {
+    items: DefaultBlockWithID[];
+  };
+};
 //#endregion
