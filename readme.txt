@@ -136,9 +136,9 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 = 2.4.39 - 2024-01-17 =
  * New: Add Right Click Context Menu to Tabs Element 
  * New: Added tooltip message when saving draft pages 
- * Improvement: Speed when searching pages URL for Links 
- * Improvement: Reduced file size of the Client API 
- * Improvement: UI Translation 
+ * Improved: Speed when searching pages URL for Links
+ * Improved: Reduced file size of the Client API
+ * Improved: UI Translation
  * Fixed: Link To option loses focus 
  * Fixed: Icon Background corner is not active 
  * Fixed: Save selected Page in Link option on any Text element

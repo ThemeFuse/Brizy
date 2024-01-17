@@ -139,13 +139,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 ### 2.4.39 - 2024-01-17
  * New: Add Right Click Context Menu to Tabs Element 
  * New: Added tooltip message when saving draft pages 
- * Improvement: Speed when searching pages URL for Links 
- * Improvement: Reduced file size of the Client API 
- * Improvement: UI Translation 
+ * Improved: Speed when searching pages URL for Links 
+ * Improved: Reduced file size of the Client API 
+ * Improved: UI Translation 
  * Fixed: Link To option loses focus 
  * Fixed: Icon Background corner is not active 
  * Fixed: Save selected Page in Link option on any Text element
- * Fixed: Scroll in toolbara and typography is not working when parallax effect is set 
+ * Fixed: Scroll in toolbar and typography is not working when parallax effect is set 
  * Fixed: Some Saved Blocks thumbnails are not displayed 
  * Fixed: Styling Dividers Show thin line on some mobile devices 
  * Fixed: Background color on hover "Get a pro Plan" button 
