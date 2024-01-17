@@ -48,7 +48,8 @@ export const handleCreateSaveBlock = async ({
 }: HandleCreateBlock): Promise<void> => {
   const meta: SavedBlock["meta"] = {
     extraFontStyles,
-    type: blockType
+    type: blockType,
+    ...block.meta
   };
 
   const config = Config.getAll();

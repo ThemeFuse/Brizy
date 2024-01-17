@@ -27,7 +27,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-form-left",
@@ -37,7 +37,7 @@ export function getItems({
         {
           id: "sortingSize",
           label: t("Size"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -46,7 +46,7 @@ export function getItems({
         },
         {
           id: "sortingRightSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           config: {
             min: 0,
@@ -58,7 +58,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -68,7 +68,7 @@ export function getItems({
       options: [
         {
           id: "sortingTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -77,7 +77,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -92,7 +92,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -100,7 +100,7 @@ export function getItems({
               options: [
                 {
                   id: "sortingColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -111,7 +111,7 @@ export function getItems({
               options: [
                 {
                   id: "sorting",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -122,7 +122,7 @@ export function getItems({
               options: [
                 {
                   id: "sortingBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -133,7 +133,7 @@ export function getItems({
               options: [
                 {
                   id: "sortingBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -144,7 +144,7 @@ export function getItems({
     },
     {
       id: "sortingHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 40,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -154,13 +154,13 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 50,
       options: [
         {
           id: "sortingSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           config: {
             min: 0,
@@ -170,7 +170,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

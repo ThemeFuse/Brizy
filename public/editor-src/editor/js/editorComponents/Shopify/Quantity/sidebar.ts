@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "settingsTabs",
-      type: "tabs-dev",
+      type: "tabs",
       config: {
         align: "start"
       },
@@ -18,7 +18,7 @@ export const getItems = (): ToolbarItemType[] => {
             {
               id: "border",
               label: t("Corner"),
-              type: "corners-dev"
+              type: "corners"
             }
           ]
         },
@@ -31,7 +31,7 @@ export const getItems = (): ToolbarItemType[] => {
               label: t("Hover Transition"),
               devices: "desktop",
               position: 100,
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 0,
                 max: 99,

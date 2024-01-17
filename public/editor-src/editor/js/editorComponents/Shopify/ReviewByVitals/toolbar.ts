@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarVitalsReview",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Reviews"),
@@ -17,7 +17,7 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "widgetType",
           label: "Select Widget",
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Review Widget", value: "default" },
             { title: "Trust Seals & Badges", value: "sealsBadges" },
@@ -31,7 +31,7 @@ export const getItems = (): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

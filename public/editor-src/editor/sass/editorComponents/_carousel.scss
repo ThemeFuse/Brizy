@@ -5,12 +5,12 @@
 
   &__slider:not(.slick-initialized) {
     display: flex;
-    flex-wrap: wrap;
     visibility: hidden;
   }
 
   &__slider.slick-initialized {
     visibility: visible;
+    flex-wrap: wrap;
   }
 
   > .slick-slider {
@@ -46,13 +46,5 @@
   .brz-rich-text *,
   .brz-icon-svg {
     backface-visibility: hidden;
-  }
-}
-
-// Setup min-width and min-height and fixed carousel bug for width
-@include media-breakpoint-down(ms) {
-  // Only Preview
-  &.brz:not(.brz-ed) .slick-slider * {
-    min-width: 0;
   }
 }

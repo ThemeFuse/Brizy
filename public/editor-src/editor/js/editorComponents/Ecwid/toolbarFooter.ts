@@ -28,7 +28,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Icon"),
         icon: "nc-user"
@@ -37,12 +37,12 @@ export function getItems({
       options: [
         {
           id: "groupSize",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "footerIconSize",
               label: t("Size"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "small", icon: "nc-16" },
                 { value: "medium", icon: "nc-24" },
@@ -52,7 +52,7 @@ export function getItems({
             },
             {
               id: "footerIconCustomSize",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("footerIconSize") !== "custom",
               config: {
                 min: 8,
@@ -66,7 +66,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -76,7 +76,7 @@ export function getItems({
       options: [
         {
           id: "footerTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -85,7 +85,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -100,7 +100,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabColorFooter",
@@ -108,7 +108,7 @@ export function getItems({
               options: [
                 {
                   id: "footerColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -118,7 +118,7 @@ export function getItems({
               options: [
                 {
                   id: "footerIconColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             }
@@ -128,13 +128,13 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 40,
       options: [
         {
           id: "footerSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           config: {
             min: 0,

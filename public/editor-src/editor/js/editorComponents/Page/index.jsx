@@ -1,6 +1,4 @@
-import classnames from "classnames";
 import React from "react";
-import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import UIEvents from "visual/global/UIEvents";
 import { uuid } from "visual/utils/uuid";
@@ -45,36 +43,11 @@ class Page extends EditorComponent {
   };
 
   renderForEdit() {
-    const className = classnames(
-      "brz-root__container brz-reset-all",
-      this.props.className
-    );
     const blocksProps = this.makeSubcomponentProps({
       bindWithKey: "items"
     });
 
-    return (
-      <div className={className}>
-        <Blocks {...blocksProps} />
-        <DraggableOverlay />
-      </div>
-    );
-  }
-
-  renderForView() {
-    const className = classnames(
-      "brz-root__container brz-reset-all",
-      this.props.className
-    );
-    const blocksProps = this.makeSubcomponentProps({
-      bindWithKey: "items"
-    });
-
-    return (
-      <div className={className}>
-        <Blocks {...blocksProps} />
-      </div>
-    );
+    return <Blocks {...blocksProps} />;
   }
 }
 

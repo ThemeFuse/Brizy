@@ -59,23 +59,18 @@ export default function ($node) {
 
   // append the popup to body to avoid problems with z-index
   const rootBody = root.ownerDocument.body;
-  const globalPopupsProcessed = {};
 
   root
-    .querySelectorAll(
-      makeDataAttrString({ name: "link-type", value: "'popup'" })
-    )
+    .querySelectorAll(makeDataAttrString({ name: "link-type", value: "popup" }))
     .forEach((node) => {
       const popupId = node.getAttribute("href").slice(1); // without the `#`
-      let parent = node.parentElement;
-      let popup;
 
-      // Link with reference to a global popup
-      // Global Block Popup exist only 1 in all page
-      if (globalPopupsProcessed[popupId]) {
-        node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
+      if (!popupId) {
         return;
       }
+
+      let parent = node.parentElement;
+      let popup;
 
       while (parent) {
         popup = [...parent.children].find(
@@ -89,19 +84,12 @@ export default function ($node) {
         parent = parent.parentElement;
       }
 
-      // append the popup to body to avoid problems with z-index
-      // need to regenerate ids for popups for Dynamic Content
-      if (popup && popup.parentElement !== rootBody) {
+      if (popup) {
+        // Need to generate a new UID to resolve problems with global popup.
+        // The global popup doesn't need to be removed because the popup can be inside a post loop.
         const newId = uuid();
-        const isGlobal = popup.getAttribute("id").includes("global_");
-
         node.setAttribute("href", `#${newId}`);
         popup.setAttribute(makeAttr("popup"), newId);
-
-        if (isGlobal) {
-          globalPopupsProcessed[popupId] = newId;
-        }
-
         rootBody.append(popup);
       }
     });

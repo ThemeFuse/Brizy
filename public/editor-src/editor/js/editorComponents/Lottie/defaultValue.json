@@ -20,6 +20,7 @@
   "link": {
     "linkPage": "",
     "linkPageTitle": "",
+    "linkPageSource": null,
     "linkSource": "",
     "linkType": "external",
     "linkExternal": "",

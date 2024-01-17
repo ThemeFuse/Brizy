@@ -7,7 +7,7 @@ import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
-import { parsePageCommon } from "./common";
+import { parseGlobalBlocks, parsePageCommon } from "./common";
 import { withDefaultConfig } from "./default";
 
 const tParser = parseStrict<unknown, Rule>({
@@ -50,6 +50,7 @@ export const readConfig = (_config: Record<string, unknown>): WP => {
   const config = {
     ..._config,
     pageData: parsePageCommon(_config.pageData),
+    globalBlocks: parseGlobalBlocks(_config.globalBlocks),
     wp: {
       ...wp,
       ruleMatches: t(wp.ruleMatches)

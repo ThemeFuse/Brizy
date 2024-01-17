@@ -24,7 +24,6 @@ export function style(
     ".brz &&:hover .brz-breadcrumbs .brz-icon-svg": {
       standart: [
         "cssStyleSizeTextSpacing",
-        "cssStyleElementBreadcrumbsArrowSize",
         "cssStyleElementBreadcrumbsColorArrows"
       ]
     },

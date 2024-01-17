@@ -1,6 +1,5 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -19,7 +18,6 @@ import {
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
 import {
-  toolbarElementContainerTypeImageMap,
   toolbarLinkAnchor,
   toolbarLinkPopup,
   toolbarShowOnResponsive
@@ -27,9 +25,6 @@ import {
 
 export function getItems({ v, device, component, context, state }) {
   const config = Config.getAll();
-
-  const collectionTypesHandler =
-    config?.api?.collectionTypes?.loadCollectionTypes.handler;
 
   const IS_GLOBAL_POPUP = isPopup(config);
   const inPopup = Boolean(component.props.meta.sectionPopup);
@@ -57,8 +52,6 @@ export function getItems({ v, device, component, context, state }) {
     (maskShape === "custom" && !maskCustomUploadImageSrc) ||
     disableMaskTab;
 
-  const linkSource = dvv("linkSource");
-
   const customVideo = isPro(config)
     ? [
         {
@@ -83,11 +76,13 @@ export function getItems({ v, device, component, context, state }) {
   const video = dvv("media") !== "video";
   const map = dvv("media") !== "map";
 
+  const isDesktop = device === "desktop";
+
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -96,7 +91,7 @@ export function getItems({ v, device, component, context, state }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -105,24 +100,19 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "media",
                   label: t("Type"),
-                  type: "radioGroup-dev",
-                  devices: "desktop",
+                  type: "radioGroup",
                   choices: [
                     { value: "image", icon: "nc-media-image" },
-                    { value: "video", icon: "nc-media-video" },
+                    ...(isDesktop
+                      ? [{ value: "video", icon: "nc-media-video" }]
+                      : []),
                     { value: "map", icon: "nc-media-map" }
                   ]
                 },
-                toolbarElementContainerTypeImageMap({
-                  v,
-                  device,
-                  devices: "responsive",
-                  state
-                }),
                 {
                   label: t("Image"),
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
@@ -131,7 +121,7 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   label: t("Image"),
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "responsive",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
@@ -140,7 +130,7 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "bgVideoType",
                   label: t("Video type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: videoMedia,
                   choices: [
@@ -153,7 +143,7 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "bgVideo",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: videoMedia || customType,
                   placeholder: youtubeType
@@ -177,7 +167,7 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "bgVideoCustom",
                   label: t("File"),
-                  type: "fileUpload-dev",
+                  type: "fileUpload",
                   config: {
                     allowedExtensions: ["video/*"]
                   },
@@ -187,14 +177,14 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "bgVideoLoop",
                   label: t("Loop"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: video
                 },
                 {
                   id: "bgMapAddress",
                   label: t("Address"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: map,
                   placeholder: t("Enter address"),
@@ -205,7 +195,7 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "bgMapZoom",
                   label: t("Zoom"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: map || device !== "desktop",
                   config: {
                     min: 1,
@@ -223,13 +213,13 @@ export function getItems({ v, device, component, context, state }) {
                   id: "maskShape",
                   label: t("Shape"),
                   devices: "desktop",
-                  type: "select-dev",
+                  type: "select",
                   choices: MaskShapes,
                   disabled: disableMaskTab
                 },
                 {
                   id: "maskCustomUpload",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop",
                   label: t("Image"),
                   config: {
@@ -244,18 +234,18 @@ export function getItems({ v, device, component, context, state }) {
                 },
                 {
                   id: "groupSize",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskSize",
                       label: t("Size"),
-                      type: "select-dev",
+                      type: "select",
                       choices: MaskSizes
                     },
                     {
                       id: "maskScale",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskSize !== "custom",
                       config: {
                         min: 1,
@@ -270,19 +260,19 @@ export function getItems({ v, device, component, context, state }) {
                 },
                 {
                   id: "groupPosition",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskPosition",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Position"),
                       choices: MaskPositions
                     },
                     {
                       id: "maskPositionx",
                       label: t("X"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -293,7 +283,7 @@ export function getItems({ v, device, component, context, state }) {
                     {
                       id: "maskPositiony",
                       label: t("Y"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -306,7 +296,7 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "maskRepeat",
                   label: t("Repeat"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
                   choices: MaskRepeat
                 }
@@ -318,7 +308,7 @@ export function getItems({ v, device, component, context, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -332,7 +322,7 @@ export function getItems({ v, device, component, context, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabOverlay",
@@ -340,7 +330,7 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -351,7 +341,7 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -362,7 +352,7 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER],
                   disabled: !maskShapeIsDisabled
                 }
@@ -374,7 +364,7 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "maskShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER],
                   disabled: maskShapeIsDisabled
                 }
@@ -386,7 +376,7 @@ export function getItems({ v, device, component, context, state }) {
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Link"),
@@ -400,7 +390,7 @@ export function getItems({ v, device, component, context, state }) {
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -410,30 +400,10 @@ export function getItems({ v, device, component, context, state }) {
               label: t("Page"),
               options: [
                 {
-                  id: "linkSource",
-                  type: "select-dev",
-                  disabled: !collectionTypesHandler,
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  }
-                },
-                {
                   id: "linkPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Find Page"),
-                  devices: "desktop",
-                  disabled: !linkSource,
-                  config: {
-                    postType: linkSource
-                  }
+                  devices: "desktop"
                 }
               ]
             },
@@ -443,13 +413,13 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
 
                   option: {
                     id: "linkExternal",
-                    type: "inputText-dev",
+                    type: "inputText",
                     placeholder: "http://",
                     config: {
                       size: "medium"
@@ -460,13 +430,13 @@ export function getItems({ v, device, component, context, state }) {
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -507,7 +477,7 @@ export function getItems({ v, device, component, context, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -516,13 +486,13 @@ export function getItems({ v, device, component, context, state }) {
       options: [
         {
           id: "groupHeight",
-          type: "group-dev",
+          type: "group",
           position: 110,
           options: [
             {
               id: "heightStyle",
               label: t("Height"),
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: t("Auto"), value: "auto" },
                 { title: t("Custom"), value: "custom" }
@@ -530,7 +500,7 @@ export function getItems({ v, device, component, context, state }) {
             },
             {
               id: "height",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("heightStyle") !== "custom",
               config: {
                 min: 20,
@@ -543,7 +513,7 @@ export function getItems({ v, device, component, context, state }) {
         {
           id: "verticalAlign",
           label: t("Content"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           position: 120,
           choices: [
             { value: "top", icon: "nc-align-top" },
@@ -555,7 +525,9 @@ export function getItems({ v, device, component, context, state }) {
         {
           id: "grid",
           type: "grid",
-          separator: true,
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",
@@ -563,7 +535,7 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -578,7 +550,7 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

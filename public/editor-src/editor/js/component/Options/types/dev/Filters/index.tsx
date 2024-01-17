@@ -2,6 +2,7 @@ import { mPipe } from "fp-utilities";
 import React, { FC } from "react";
 import { Slider } from "visual/component/Controls/Spacing/Slider";
 import * as Option from "visual/component/Options/Type";
+import { t } from "visual/utils/i18n";
 import { fromNumber } from "visual/utils/math/Positive";
 import { FilterSlider } from "./FilterSlider";
 import { Value } from "./types/Value";
@@ -21,28 +22,28 @@ export const Filters: FC<Option.Props<Value>> = ({ value, onChange }) => {
         step={1}
         min={0}
         max={360}
-        title="Hue"
+        title={t("Hue")}
       />
       <FilterSlider
         className="brz-ed-control__filters__saturation"
         icon="nc-saturation"
         value={value.saturation}
         onChange={mPipe(fromNumber, set("saturation", value), onChange)}
-        title="Saturation"
+        title={t("Saturation")}
       />
       <FilterSlider
         className="brz-ed-control__filters__brightness"
         icon="nc-brightness"
         value={value.brightness}
         onChange={mPipe(fromNumber, set("brightness", value), onChange)}
-        title="Brightness"
+        title={t("Brightness")}
       />
       <FilterSlider
         className="brz-ed-control__filters__contrast"
         icon="nc-contrast"
         value={value.contrast}
         onChange={mPipe(fromNumber, set("contrast", value), onChange)}
-        title="Contrast"
+        title={t("Contrast")}
       />
     </div>
   );

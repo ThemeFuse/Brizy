@@ -15,7 +15,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -34,7 +34,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -45,7 +45,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -56,7 +56,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -67,7 +67,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -78,7 +78,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -89,7 +89,7 @@ export function getItems({ v, device, state }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -99,7 +99,9 @@ export function getItems({ v, device, state }) {
         {
           id: "grid",
           type: "grid",
-          separator: true,
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",
@@ -107,7 +109,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -122,7 +124,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -137,7 +139,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     }
   ];

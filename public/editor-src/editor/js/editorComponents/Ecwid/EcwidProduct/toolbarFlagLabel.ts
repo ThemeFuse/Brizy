@@ -1,21 +1,12 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: flagLabelColorHex } = getOptionColorHexByPalette(
@@ -26,7 +17,7 @@ export function getItems({
   return [
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-font",
@@ -36,7 +27,7 @@ export function getItems({
       options: [
         {
           id: "flagLabelTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -45,7 +36,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 20,
       config: {
         size: "auto",
@@ -63,7 +54,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -71,7 +62,7 @@ export function getItems({
               options: [
                 {
                   id: "flagLabelColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -82,7 +73,7 @@ export function getItems({
               options: [
                 {
                   id: "flagBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -93,7 +84,7 @@ export function getItems({
     },
     {
       id: "flagLabelHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -103,14 +94,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 40,
       options: [
         {
           id: "flagLabelSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -120,4 +111,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

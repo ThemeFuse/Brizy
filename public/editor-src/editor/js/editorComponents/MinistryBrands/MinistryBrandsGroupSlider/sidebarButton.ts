@@ -6,7 +6,7 @@ export const getItems: GetItems<Value, Props> = () => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -15,7 +15,7 @@ export const getItems: GetItems<Value, Props> = () => {
           options: [
             {
               id: "buttonBorder",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner")
             }
           ]

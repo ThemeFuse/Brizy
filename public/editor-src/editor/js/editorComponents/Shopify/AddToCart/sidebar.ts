@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -14,23 +14,12 @@ export const getItems = (): ToolbarItemType[] => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
               devices: "desktop",
               tabs: [
-                {
-                  id: "settingsStyling",
-                  label: t("Basic"),
-                  options: [
-                    {
-                      id: "border",
-                      type: "corners-dev",
-                      label: t("Corner")
-                    }
-                  ]
-                },
                 {
                   id: "moreSettingsAdvanced",
                   label: t("Advanced"),
@@ -40,7 +29,7 @@ export const getItems = (): ToolbarItemType[] => {
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,

@@ -17,7 +17,7 @@ describe("Testing 'bindPopulation' function", function () {
   };
   const option: ToolbarItemType = {
     id: "test",
-    type: "imageUpload-dev"
+    type: "imageUpload"
   };
   const withPopulation = { ...option, population: { choices: [method] } };
   const choices: (Choices<string | number> | OptGroup<string | number>)[] = [
@@ -43,7 +43,7 @@ describe("Testing 'bindPopulation' function", function () {
   test("If population is not defined, return original option", () => {
     const i: ToolbarItemType = {
       id: "test",
-      type: "imageUpload-dev"
+      type: "imageUpload"
     };
 
     expect(bindPopulation(i)).toEqual(i);
@@ -52,7 +52,7 @@ describe("Testing 'bindPopulation' function", function () {
   test("If option is not in development, return original option", () => {
     const i: ToolbarItemType = {
       id: "test",
-      type: "imageUpload-dev"
+      type: "imageUpload"
     };
 
     expect(bindPopulation(i)).toEqual(i);
@@ -61,7 +61,7 @@ describe("Testing 'bindPopulation' function", function () {
   test("Wrap option in a population option type", () => {
     const option: ToolbarItemType = {
       id: "test",
-      type: "imageUpload-dev"
+      type: "imageUpload"
     };
     const withPopulation = {
       ...option,
@@ -70,7 +70,7 @@ describe("Testing 'bindPopulation' function", function () {
 
     const result: ToolbarItemType = {
       id: "test",
-      type: "population-dev",
+      type: "population",
       config: { choices: [method] },
       fallback: { ...option, id: keyToDCFallback2Key(o.id) },
       option: option
@@ -92,7 +92,7 @@ describe("Testing 'bindPopulation' function", function () {
       content: "Test helper"
     }
   };
-  const r = bindPopulation(o) as GenericToolbarItemType<"population-dev">;
+  const r = bindPopulation(o) as GenericToolbarItemType<"population">;
 
   test.each(["label", "helper", "position"])(
     "If option has %s, remove it from option and add to population",

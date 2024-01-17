@@ -24,7 +24,7 @@ export function getItems({
   return [
     {
       id: "toolbarStampedBadges",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -34,7 +34,7 @@ export function getItems({
       options: [
         {
           id: "badgeType",
-          type: "select-dev",
+          type: "select",
           label: t("Badge Type"),
           choices: [
             { title: "Standard", value: "standard" },
@@ -43,7 +43,7 @@ export function getItems({
         },
         {
           id: "feedHeight",
-          type: "slider-dev",
+          type: "slider",
           label: t("Height"),
           disabled: badgeType !== "standard",
           config: {
@@ -56,17 +56,17 @@ export function getItems({
         {
           id: "headerTitle",
           label: t("Text"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: t("Insert Text...")
         },
         {
           id: "sizeGroup",
-          type: "group-dev",
+          type: "group",
           label: t("Size"),
           options: [
             {
               id: "textSize",
-              type: "slider-dev",
+              type: "slider",
               label: t("Text"),
               config: {
                 min: 10,
@@ -77,7 +77,7 @@ export function getItems({
             },
             {
               id: "starSize",
-              type: "slider-dev",
+              type: "slider",
               label: t("Star"),
               disabled: badgeType === "standard",
               config: {
@@ -92,41 +92,41 @@ export function getItems({
         {
           id: "reviewIDs",
           label: t("Review IDs"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: t("Insert IDs..."),
           helper: { content: t("Filter by multiple review IDs") }
         },
         {
           id: "productIDs",
           label: t("Product IDs"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: t("Insert IDs..."),
           helper: { content: t("Filter by multiple product IDs") }
         },
         {
           id: "productType",
           label: t("Product Type"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: t("Insert Type..."),
           helper: { content: t("Filter by product category") }
         },
         {
           id: "productVendor",
           label: t("Product Vendor"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: t("Insert Vendor..."),
           helper: { content: t("Filter by product vendor") }
         },
         {
           id: "feedTags",
           label: t("Feed Tags"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: t("Insert Types..."),
           helper: { content: t("Filter by reviews tags") }
         },
         {
           id: "limitWords",
-          type: "slider-dev",
+          type: "slider",
           label: t("Limit Words"),
           helper: {
             content: t("Limit the max number of words for review body")
@@ -139,7 +139,7 @@ export function getItems({
         },
         {
           id: "minimumRating",
-          type: "select-dev",
+          type: "select",
           label: t("Minimum Rating"),
           helper: {
             content: t("Show only reviews above the selected minimum rating")
@@ -154,7 +154,7 @@ export function getItems({
         },
         {
           id: "fillEmpty",
-          type: "switch-dev",
+          type: "switch",
           label: t("Fill Empty"),
           helper: {
             content: t(
@@ -164,7 +164,7 @@ export function getItems({
         },
         {
           id: "randomizer",
-          type: "switch-dev",
+          type: "switch",
           label: t("Random"),
           helper: {
             content: t("Randomize the reviews results")
@@ -174,7 +174,7 @@ export function getItems({
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -192,7 +192,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -200,7 +200,7 @@ export function getItems({
               options: [
                 {
                   id: "textColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -210,7 +210,7 @@ export function getItems({
               options: [
                 {
                   id: "starColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -220,7 +220,7 @@ export function getItems({
               options: [
                 {
                   id: "ribbonColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: badgeType !== "standard"
                 }
               ]
@@ -231,7 +231,7 @@ export function getItems({
               options: [
                 {
                   id: "ribbonInnerColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: badgeType !== "standard"
                 }
               ]
@@ -242,7 +242,7 @@ export function getItems({
               options: [
                 {
                   id: "ribbonOuterColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: badgeType !== "standard"
                 }
               ]
@@ -251,11 +251,11 @@ export function getItems({
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] },
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

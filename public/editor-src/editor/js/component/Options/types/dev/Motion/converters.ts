@@ -32,7 +32,7 @@ export const defaultValue: Value = {
   transparency: undefined
 };
 
-export const fromElementModel: FromElementModel<"motion-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"motion"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -61,7 +61,7 @@ export const fromElementModel: FromElementModel<"motion-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"motion-dev"> = (patch) => {
+export const toElementModel: ToElementModel<"motion"> = (patch) => {
   switch (patch.type) {
     case Type.active:
       return {

@@ -5,11 +5,11 @@ import * as L from "visual/utils/types/Literal";
 
 export const defaultValue: SimpleValue<Literal> = { value: "" };
 
-export const fromElementModel: O.FromElementModel<"radioGroup-dev"> = get => ({
+export const fromElementModel: O.FromElementModel<"radioGroup"> = (get) => ({
   value: L.read(get("value"))
 });
 
-export const toElementModel: O.ToElementModel<"radioGroup-dev"> = values => {
+export const toElementModel: O.ToElementModel<"radioGroup"> = (values) => {
   return {
     value: values.value
   };

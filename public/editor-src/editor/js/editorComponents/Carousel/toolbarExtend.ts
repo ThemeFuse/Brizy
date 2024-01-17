@@ -21,12 +21,13 @@ export function getItems({
     defaultValueValue({ v, key, device, state: "normal" });
   const columns = dvv("columns");
   const slidesToShow = dvv("slidesToShow");
+  const dynamic = dvv("dynamic");
 
   return [
     {
       id: "duplicate",
       // @ts-expect-error: Need transform to ts
-      type: "button",
+      type: "legacy-button",
       devices: "desktop",
       icon: "nc-duplicate",
       title: t("Duplicate"),
@@ -39,11 +40,11 @@ export function getItems({
       }
     },
     // @ts-expect-error: Need transform to ts
-    ...(columns > slidesToShow && device === "desktop"
+    ...(dynamic === "on" && columns > slidesToShow && device === "desktop"
       ? [
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             devices: "desktop",
             title: t("Delete"),
             roles: ["admin"],

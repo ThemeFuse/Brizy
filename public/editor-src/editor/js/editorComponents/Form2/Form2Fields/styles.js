@@ -25,23 +25,26 @@ export function styleFormFields(v, vs, vd) {
     ".brz && .brz-forms2__field-label": {
       standart: ["cssStyleElementForm2FieldsLabelPadding"]
     },
-    ".brz &&:hover .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)": {
-      standart: [
-        "cssStyleColor",
-        "cssStyleBgColor",
-        "cssStyleBorder",
-        "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
-        "cssStyleElementForm2FieldsLineHeight"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    },
-    ".brz &&.brz-forms2__item--error .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)": {
-      standart: ["cssStyleElementForm2FieldsBorderRequired"]
-    },
-    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox):not(.brz-forms2__field-select)": {
-      standart: ["cssStylePaddingFourFields"]
-    },
+    ".brz &&:hover .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
+      {
+        standart: [
+          "cssStyleColor",
+          "cssStyleBgColor",
+          "cssStyleBorder",
+          "cssStyleBorderRadius",
+          "cssStyleBoxShadow",
+          "cssStyleElementForm2FieldsLineHeight"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz &&.brz-forms2__item--error .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
+      {
+        standart: ["cssStyleElementForm2FieldsBorderRequired"]
+      },
+    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox):not(.brz-forms2__field-select)":
+      {
+        standart: ["cssStyleElementFieldsInputSize"]
+      },
     ".brz && .brz-forms2__field-paragraph": {
       standart: ["cssStyleTypography2LineHeight"]
     },
@@ -82,7 +85,7 @@ export function styleFormFields(v, vs, vd) {
 export function styleFormSelect(v, vs, vd) {
   const styleSelectEdit = {
     ".brz && .brz-forms2__select-current": {
-      standart: ["cssStylePaddingFourFields"]
+      standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]
     },
     ".brz &&:hover .brz-forms2__select-list": {
       standart: [

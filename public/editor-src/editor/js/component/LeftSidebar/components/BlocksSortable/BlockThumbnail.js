@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { blockThumbnailData } from "visual/utils/blocks";
-import { preloadImage } from "visual/utils/image";
 import { t } from "visual/utils/i18n";
+import { preloadImage } from "visual/utils/image";
 
 export default class BlockThumbnail extends Component {
   static defaultProps = {
@@ -88,7 +88,10 @@ export default class BlockThumbnail extends Component {
         </div>
         {imageFetched && <img className="brz-img" src={url} />}
         <div className="brz-ed-sidebar-block-layout">
-          <span className="brz-span brz-ed-sidebar-block-drag">
+          <span
+            className="brz-span brz-ed-sidebar-block-drag"
+            title={t("Drag to reorder")}
+          >
             {t("Drag to reorder")}
           </span>
         </div>

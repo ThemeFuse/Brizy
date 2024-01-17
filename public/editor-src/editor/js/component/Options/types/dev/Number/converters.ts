@@ -4,11 +4,11 @@ import { NumberSpec } from "visual/utils/math/number";
 
 export const defaultValue: SimpleValue<number> = { value: 0 };
 
-export const fromElementModel: Option.FromElementModel<"number-dev"> = get => ({
+export const fromElementModel: Option.FromElementModel<"number"> = (get) => ({
   value: NumberSpec.read(get("value"))
 });
 
-export const toElementModel: Option.ToElementModel<"number-dev"> = values => {
+export const toElementModel: Option.ToElementModel<"number"> = (values) => {
   return {
     value: values.value
   };

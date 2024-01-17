@@ -13,7 +13,7 @@ import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
 
-export const fromElementModel: FromElementModel<"margin-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"margin"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -73,7 +73,7 @@ export const fromElementModel: FromElementModel<"margin-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"margin-dev"> = (v) => {
+export const toElementModel: ToElementModel<"margin"> = (v) => {
   return {
     type: v.type,
     value: v.value,

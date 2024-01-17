@@ -16,7 +16,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -26,7 +26,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "eventsTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -35,7 +35,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         title: t("Colors"),
@@ -53,7 +53,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "colorTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabColor",
@@ -61,7 +61,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "eventsColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]

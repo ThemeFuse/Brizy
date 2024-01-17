@@ -52,7 +52,7 @@ export function cssStyleElementPostNavigation2TitleLetterSpacing({
     v,
     device,
     prefix: "titleTypography"
-  })}px;`;
+  })}`;
 }
 
 export function cssStyleElementPostNavigation2PostFontFamily({ v, device }) {
@@ -94,7 +94,7 @@ export function cssStyleElementPostNavigation2PostLetterSpacing({ v, device }) {
     v,
     device,
     prefix: "postTypography"
-  })}px;`;
+  })};`;
 }
 
 export function cssStyleElementPostNavigationColorTitle({ v, device, state }) {

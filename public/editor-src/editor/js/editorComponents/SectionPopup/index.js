@@ -21,7 +21,7 @@ import { triggersSelector } from "visual/redux/selectors";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import { makeDataAttr, makeAttr } from "visual/utils/i18n/attribute";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -269,7 +269,7 @@ class SectionPopup extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName, customCSS } = v;
+    const { className, customClassName, customCSS, popupId } = v;
     const triggers = triggersSelector(getStore().getState());
 
     let attr = {};
@@ -319,8 +319,8 @@ class SectionPopup extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div
           className={classNameClose}
-          id={this.instanceKey}
-          {...makeDataAttr({ name: "popup", value: this.instanceKey })}
+          id={popupId}
+          {...makeDataAttr({ name: "popup", value: popupId })}
           {...attr}
         >
           <div className="brz-popup__close">

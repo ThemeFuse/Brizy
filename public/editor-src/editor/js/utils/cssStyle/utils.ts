@@ -40,11 +40,11 @@ const optionsStyleFunctions: Record<
   OptionsStyleFunctions,
   (d: CSSValue) => string
 > = {
-  "border-dev": cssStyleBorder,
-  "backgroundColor-dev": cssStyleBgColor,
-  "colorPicker-dev": cssStyleColor,
-  "boxShadow-dev": cssStyleBoxShadow,
-  "corners-dev": cssStyleBorderRadius
+  border: cssStyleBorder,
+  backgroundColor: cssStyleBgColor,
+  colorPicker: cssStyleColor,
+  boxShadow: cssStyleBoxShadow,
+  corners: cssStyleBorderRadius
 };
 
 export const getUniqueCSS = (

@@ -7,7 +7,7 @@ export function style(
   vd: Value
 ): [string, string, string] {
   const styles = {
-    ".brz &&:hover": {
+    ".brz && .ec-cart-widget.brz-ecwid-shopping-bag:hover": {
       standart: [
         "cssStyleBgColor",
         "cssStyleBgGradient",
@@ -42,9 +42,8 @@ export function style(
           "cssStyleElementEcwidShoppingBagIconDisplay",
           "cssStyleElementEcwidShoppingBagIconPositionTop",
           "cssStyleElementEcwidShoppingBagIconPositionLeft",
-          "cssStyleElementEcwidShoppingBagIconSpacingWidth",
-          "cssStyleElementEcwidShoppingBagIconSpacingHeight",
-          "cssStyleElementEcwidShoppingBagIconColor"
+          "cssStyleElementEcwidShoppingBagIconColor",
+          "cssStyleElementEcwidShoppingBagIconSizes"
         ],
         interval: [
           "cssStyleHoverTransition",

@@ -5,7 +5,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "toolbarRefferalCandy",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -16,7 +16,7 @@ export function getItems(): ToolbarItemType[] {
         {
           id: "embedCode",
           label: t("Embed Code"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: "Insert code here..."
         }
       ]
@@ -24,7 +24,7 @@ export function getItems(): ToolbarItemType[] {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

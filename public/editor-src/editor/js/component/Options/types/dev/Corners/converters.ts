@@ -14,7 +14,7 @@ import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
 
-export const fromElementModel: FromElementModel<"corners-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"corners"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -96,7 +96,7 @@ export const fromElementModel: FromElementModel<"corners-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"corners-dev"> = (v) => {
+export const toElementModel: ToElementModel<"corners"> = (v) => {
   return {
     radiusType: v.type,
     radius: v.value,

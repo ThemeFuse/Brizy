@@ -137,7 +137,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
     }
 
     return Promise.reject();
-  }, [pageTitle, value]);
+  }, [pageTitle, value, templateType]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,

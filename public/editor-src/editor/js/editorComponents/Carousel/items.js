@@ -138,7 +138,7 @@ class Items extends EditorArrayComponent {
         getItemsForDesktop: () => [
           {
             id: "emptyItem",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-add",
             title: t("Add New Column"),
             position: 100,
@@ -148,7 +148,7 @@ class Items extends EditorArrayComponent {
           },
           {
             id: "duplicate",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-duplicate",
             title: t("Duplicate"),
             position: 200,
@@ -158,7 +158,7 @@ class Items extends EditorArrayComponent {
           },
           {
             id: "order",
-            type: "order-dev",
+            type: "order",
             devices: "desktop",
             position: 95,
             roles: ["admin"],
@@ -188,7 +188,7 @@ class Items extends EditorArrayComponent {
             ? [
                 {
                   id: "remove",
-                  type: "button",
+                  type: "legacy-button",
                   title: t("Delete"),
                   icon: "nc-trash",
                   position: 250,

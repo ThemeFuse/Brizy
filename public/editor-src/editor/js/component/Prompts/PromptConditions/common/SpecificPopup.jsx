@@ -14,10 +14,10 @@ export default function SpecificPopup(props) {
         defaultValue={triggerValue.type}
         onChange={(type) => onChange({ ...triggerValue, type })}
       >
-        <SelectItem key="was" value="was">
+        <SelectItem key="was" value="was" title={t("was shown")}>
           {t("was shown")}
         </SelectItem>
-        <SelectItem key="was not" value="was not">
+        <SelectItem key="was not" value="was not" title={t("was not shown")}>
           {t("was not shown")}
         </SelectItem>
       </Select>

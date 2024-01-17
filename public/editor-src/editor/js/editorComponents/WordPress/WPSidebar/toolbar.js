@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 
-export default sidebars => {
-  const sidebarsList = sidebars.map(sidebar => ({
+export default (sidebars) => {
+  const sidebarsList = sidebars.map((sidebar) => ({
     title: sidebar.title,
     value: sidebar.id
   }));
@@ -13,18 +13,18 @@ export default sidebars => {
   };
 };
 
-const getItemsForDesktop = sidebars => () => {
+const getItemsForDesktop = (sidebars) => () => {
   return [
     {
       id: "toolbarWPSidebar",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-wp-shortcode" },
       position: 90,
       options: [
         {
           id: "sidebar",
           label: t("Sidebar"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           choices: sidebars
         }
@@ -32,14 +32,14 @@ const getItemsForDesktop = sidebars => () => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       roles: ["admin"],
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -49,7 +49,9 @@ const getItemsForDesktop = sidebars => () => {
         {
           id: "grid",
           type: "grid",
-          separator: true,
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",
@@ -57,7 +59,7 @@ const getItemsForDesktop = sidebars => () => {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -72,7 +74,7 @@ const getItemsForDesktop = sidebars => () => {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -92,14 +94,14 @@ const getItemsForTablet = () => {
   return [
     {
       id: "tabletToolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       roles: ["admin"],
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -115,14 +117,14 @@ const getItemsForMobile = () => {
   return [
     {
       id: "mobileToolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       roles: ["admin"],
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,

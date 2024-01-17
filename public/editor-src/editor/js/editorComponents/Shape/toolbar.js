@@ -14,7 +14,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -28,7 +28,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -36,7 +36,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev"
+                  type: "backgroundColor"
                 }
               ]
             },
@@ -46,7 +46,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             },
@@ -56,7 +56,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow"
                 }
               ]
             }
@@ -66,7 +66,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       position: 110,
       icon: "nc-cog"

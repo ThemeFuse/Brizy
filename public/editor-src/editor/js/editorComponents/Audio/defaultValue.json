@@ -28,6 +28,9 @@
       "coverImageSrc": ""
     },
 
+    "coverImageFileName": "",
+    "coverImageExtension": "",
+
     "coverSizeType": "custom",
 
     "coverImageWidth": 0,

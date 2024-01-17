@@ -16,7 +16,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -29,7 +29,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       devices: "desktop",
       position: 10,
       options: [
-        { id: "empty", type: "backgroundColor-dev", states: [NORMAL, HOVER] }
+        { id: "empty", type: "backgroundColor", states: [NORMAL, HOVER] }
       ]
     }
   ];

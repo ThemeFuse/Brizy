@@ -9,7 +9,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -18,7 +18,7 @@ export function getItems(): ToolbarItemType[] {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -30,13 +30,13 @@ export function getItems(): ToolbarItemType[] {
                   options: [
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       disabled: true
                     },
                     {
                       id: "bgPadding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50
                     }
@@ -52,7 +52,7 @@ export function getItems(): ToolbarItemType[] {
                       disabled: isStory(Config.getAll()),
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -65,14 +65,14 @@ export function getItems(): ToolbarItemType[] {
             },
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               disabled: true
             },
             {
               id: "bgPadding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               position: 50

@@ -87,11 +87,12 @@ export interface CollectionItemRule extends AllRule {
 export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
 
 interface GlobalBlockBase {
-  id: string;
+  uid: string;
   data: Block & { deleted?: boolean };
   status: "draft" | "publish";
   rules: Rule[];
   position: GlobalBlockPosition | null;
+  dataVersion: number;
   title?: string;
   tags?: string;
 }
@@ -148,6 +149,7 @@ export type SavedLayout = {
     _thumbnailHeight?: number;
     _thumbnailTime?: number;
   };
+  globalStyles?: Style;
 };
 
 export type GlobalBlockPosition = {
@@ -412,6 +414,10 @@ export interface Style {
   fontStyles: FontStyle[];
   colorPalette: Palette[];
 }
+
+export const isStyle = (item: unknown): item is Style =>
+  Obj.isObject(item) &&
+  Obj.hasKeys(["id", "title", "fontStyles", "colorPalette"], item);
 
 export interface ExtraFontStyle extends FontStyle {
   deletable: "on";

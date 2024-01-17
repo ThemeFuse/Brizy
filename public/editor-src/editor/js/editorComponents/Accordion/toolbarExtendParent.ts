@@ -7,7 +7,7 @@ export const getItems: GetItems<Value> = () => {
   return [
     {
       id: "toolbarAccordion",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-toggle",
         title: t("Accordion")
@@ -17,19 +17,19 @@ export const getItems: GetItems<Value> = () => {
         {
           id: "enableTags",
           label: t("Enable tags"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop"
         }
       ]
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       devices: "desktop",
       roles: ["admin"],

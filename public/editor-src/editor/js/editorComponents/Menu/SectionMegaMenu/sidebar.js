@@ -23,7 +23,7 @@ export function getItems({ context }) {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -32,7 +32,7 @@ export function getItems({ context }) {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -47,12 +47,12 @@ export function getItems({ context }) {
                       label: t("Show on Desktop"),
                       position: 10,
                       closeTooltip: true,
-                      type: "switch-dev",
+                      type: "switch",
                       devices: "desktop"
                     },
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50,
                       config: {
@@ -61,7 +61,7 @@ export function getItems({ context }) {
                     },
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       position: 65
                     }
@@ -76,48 +76,52 @@ export function getItems({ context }) {
                     {
                       id: "cssID",
                       label: t("Block Name"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content: t("Add your custom block name, example: my-block")
+                        content: t(
+                          "Add your custom block name, example: my-block"
+                        )
                       },
                       config: richTextDC,
                       option: {
                         id: "anchorName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
                       id: "cssClass",
                       label: t("CSS Class"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
-                          t("Add your custom class without the .dot, example: my-class")
+                        content: t(
+                          "Add your custom class without the .dot, example: my-class"
+                        )
                       },
                       config: richTextDC,
                       option: {
                         id: "customClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
                       id: "customAttributes",
                       label: t("Custom Attributes"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       // eslint-disable-next-line
                       placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       devices: "desktop",
                       helper: {
-                        content:
-                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
+                        content: t(
+                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                        )
                       },
                       population: richTextDC
                     },
@@ -126,7 +130,7 @@ export function getItems({ context }) {
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 60,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -136,7 +140,7 @@ export function getItems({ context }) {
                     {
                       id: "tagName",
                       label: t("HTML Tag"),
-                      type: "select-dev",
+                      type: "select",
                       devices: "desktop",
                       choices: toolbarTagsChoices
                     }

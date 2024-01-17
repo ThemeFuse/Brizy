@@ -7,7 +7,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "popoverLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Link"),
@@ -17,11 +17,11 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "redirectGroup",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "redirectType",
-              type: "select-dev",
+              type: "select",
               label: t("Redirect After Login"),
               devices: "desktop",
               choices: [
@@ -32,7 +32,7 @@ export function getItems({ v, device }) {
             {
               id: "messageRedirect",
               label: t("URL"),
-              type: "inputText-dev",
+              type: "inputText",
               disabled: dvv("redirectType") !== "custom",
               devices: "desktop",
               placeholder: "http://",
@@ -46,7 +46,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -56,7 +56,7 @@ export function getItems({ v, device }) {
         {
           id: "submitWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -67,7 +67,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

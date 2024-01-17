@@ -9,9 +9,7 @@ import {
 
 export function cssStyleTypography2FontFamily({ v, device, prefix = "" }) {
   const fontFamily = styleTypography2FontFamily({ v, device, prefix });
-  return fontFamily
-    ? `font-family:${styleTypography2FontFamily({ v, device, prefix })};`
-    : "";
+  return fontFamily ? `font-family:${fontFamily};` : "";
 }
 
 export function cssStyleTypography2FontSize({ v, device, prefix = "" }) {

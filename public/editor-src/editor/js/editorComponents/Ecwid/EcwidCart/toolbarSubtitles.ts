@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -36,7 +36,7 @@ export function getItems({
       options: [
         {
           id: "subtitleTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -45,7 +45,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -63,13 +63,13 @@ export function getItems({
       options: [
         {
           id: "subtitleColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "subtitleHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

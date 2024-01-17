@@ -10,7 +10,7 @@ export const getItems: GetItems<Value, Props> = () => {
   return [
     {
       id: "toolbarGroupDetail",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "t2-group-detail",
         title: t("Form Widget")
@@ -19,7 +19,7 @@ export const getItems: GetItems<Value, Props> = () => {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -32,7 +32,7 @@ export const getItems: GetItems<Value, Props> = () => {
                 {
                   id: "form",
                   label: t("Forms"),
-                  type: "select-dev",
+                  type: "select",
                   choices: getEkklesiaChoiches(config, {
                     key: "forms"
                   })

@@ -1,18 +1,18 @@
-import { Value } from "./entities/Value";
-import * as Hex from "visual/utils/color/Hex";
-import * as Opacity from "visual/utils/cssProps/opacity";
 import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import * as Type from "./entities/Type";
-import { mPipe } from "visual/utils/fp";
-import * as Str from "visual/utils/string/specs";
-import * as Num from "visual/utils/math/number";
 import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
-import * as GradientType from "./entities/GradientType";
+import * as Hex from "visual/utils/color/Hex";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { mPipe } from "visual/utils/fp";
 import * as Math from "visual/utils/math";
+import * as Num from "visual/utils/math/number";
+import * as Str from "visual/utils/string/specs";
 import * as GradientActivePointer from "./entities/GradientActivePointer";
+import * as GradientType from "./entities/GradientType";
+import * as Type from "./entities/Type";
+import { Value } from "./entities/Value";
 
 export const defaultValue: Value = {
   type: "none",
@@ -35,7 +35,7 @@ export const defaultValue: Value = {
   radialDegree: 0
 };
 
-export const fromElementModel: FromElementModel<"backgroundColor-dev"> = get => {
+export const fromElementModel: FromElementModel<"backgroundColor"> = (get) => {
   const v = get("gradientActivePointer");
   const pointer =
     v === "startPointer" ? "start" : v === "finishPointer" ? "end" : v;
@@ -98,7 +98,7 @@ export const fromElementModel: FromElementModel<"backgroundColor-dev"> = get => 
   };
 };
 
-export const toElementModel: ToElementModel<"backgroundColor-dev"> = v => {
+export const toElementModel: ToElementModel<"backgroundColor"> = (v) => {
   const pointer = v.active === "start" ? "startPointer" : "finishPointer";
   return {
     bgColorType: v.type,

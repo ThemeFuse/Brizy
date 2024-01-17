@@ -1,127 +1,130 @@
-.brz-ed-control__internalLink {
-  font-family: $default-font-family;
-  width: $control__lg-width;
-  position: relative;
+.brz-ed-control__internalLink-wrapper {
+  display: flex;
+  align-items: center;
 
-  &__value {
-    display: flex;
-    align-items: center;
-    min-height: $control-height;
-    padding: 0 $control-padding;
-    border-radius: $control-border-radius;
-    background-color: $options__control-bg;
-    font-size: $control-font-size;
-    letter-spacing: $control-letter-spacing;
-    color: #fff;
-    cursor: pointer;
+  .brz-ed-control__internalLink {
+    font-family: $default-font-family;
+    width: $control__lg-width;
+    position: relative;
 
-    &--loading {
-      justify-content: center;
-    }
-
-    &--placeholder {
-      color: rgba(255, 255, 255, 0.4);
-    }
-
-    .brz-span {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .brz-ed-icon-svg {
-      cursor: pointer;
-      min-width: 13px;
-      margin-left: auto;
-    }
-  }
-
-  &__option {
-    display: flex;
-    align-items: center;
-    height: $control-height;
-    margin: 0;
-    padding: 0 $control-padding;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    font-size: $control-font-size;
-    letter-spacing: $control-letter-spacing;
-    line-height: $control-height;
-    color: rgba(255, 255, 255, 0.85);
-    transition: color 0.15s linear;
-    cursor: pointer;
-    justify-content: space-between;
-
-    &:last-child {
-      border-bottom-color: transparent;
-    }
-
-    &--active,
-    &:hover {
-      color: $brand__primary;
-    }
-
-    &--disabled {
-      cursor: initial;
-      color: rgba(255, 255, 255, 0.4);
-
-      &:hover {
-        color: rgba(255, 255, 255, 0.4);
-      }
-    }
-
-    &-text {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  }
-
-  &__search {
-    display: flex;
-    align-items: center;
-    padding: 0 $control-padding;
-
-    .brz-input {
-      width: 100%;
-      height: $control-height;
-      outline: 0;
-      border: none;
-      background: transparent;
+    &__value {
+      display: flex;
+      align-items: center;
+      min-height: $control-height;
+      padding: 0 $control-padding;
+      border-radius: $control-border-radius;
+      background-color: $options__control-bg;
+      font-size: $control-font-size;
+      letter-spacing: $control-letter-spacing;
       color: #fff;
+      cursor: pointer;
 
-      &::placeholder {
+      &--loading {
+        justify-content: center;
+      }
+
+      &--placeholder {
         color: rgba(255, 255, 255, 0.4);
-        font-style: italic;
+      }
+
+      .brz-span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .brz-ed-icon-svg {
+        cursor: pointer;
+        min-width: 13px;
+        margin-left: auto;
       }
     }
 
-    .brz-ed-control__internalLink__spinner {
-      margin-left: 5px;
+    &__option {
+      display: flex;
+      align-items: center;
+      height: $control-height;
+      margin: 0;
+      padding: 0 $control-padding;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: $control-font-size;
+      letter-spacing: $control-letter-spacing;
+      line-height: $control-height;
+      color: rgba(255, 255, 255, 0.85);
+      transition: color 0.15s linear;
+      cursor: pointer;
+      justify-content: space-between;
 
-      &--hidden {
-        visibility: hidden;
+      &:last-child {
+        border-bottom-color: transparent;
       }
+
+      &--active,
+      &:hover {
+        color: $brand__primary;
+      }
+
+      &--disabled {
+        cursor: initial;
+        color: rgba(255, 255, 255, 0.4);
+
+        &:hover {
+          color: rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      &-text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    &__search {
+      display: flex;
+      align-items: center;
+      padding: 0 $control-padding;
+
+      .brz-input {
+        width: 100%;
+        height: $control-height;
+        outline: 0;
+        border: none;
+        background: transparent;
+        color: #fff;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+          font-style: italic;
+        }
+      }
+
+      .brz-ed-control__internalLink__spinner {
+        margin-left: 5px;
+
+      }
+    }
+
+    &__dropdown {
+      z-index: z("select-portal");
+      width: 100%;
+      margin-top: 3px;
+      border-radius: $control-border-radius;
+      background: $options__control-bg;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+      transform: none !important;
+
+      &--with-search {
+        .brz-ed-control__multiSelect2__option:first-child {
+          border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+      }
+    }
+
+    &__spinner {
+      font-size: 12px;
+      color: #818a91;
     }
   }
 
-  &__dropdown {
-    z-index: z("select-portal");
-    width: 100%;
-    margin-top: 3px;
-    border-radius: $control-border-radius;
-    background: $options__control-bg;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-    transform: none !important;
-
-    &--with-search {
-      .brz-ed-control__multiSelect2__option:first-child {
-        border-top: 1px solid rgba(255, 255, 255, 0.07);
-      }
-    }
-  }
-
-  &__spinner {
-    font-size: 12px;
-    color: #818a91;
-  }
 }

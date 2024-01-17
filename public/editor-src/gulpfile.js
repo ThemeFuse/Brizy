@@ -222,25 +222,7 @@ function editorIcons() {
 function editorKitIcons() {
   const src = paths.editor + "/icons/**/*";
   const dest = paths.build + "/editor/icons";
-  const { encrypt } = require(paths.editor +
-    "/js/component/ThemeIcon/utils-node.js");
-
-  const svgEncrypt = (content) => {
-    const base64 = Buffer.from(content).toString("base64");
-
-    return encrypt(base64);
-  };
-  const svgRename = (path) => {
-    if (path.extname) {
-      path.extname = ".txt";
-    }
-  };
-
-  return gulp
-    .src(src)
-    .pipe(gulpPlugins.change(svgEncrypt))
-    .pipe(gulpPlugins.rename(svgRename))
-    .pipe(gulp.dest(dest));
+  return gulp.src(src).pipe(gulp.dest(dest));
 }
 function editorImg() {
   const src = paths.editor + "/img/*";
@@ -284,16 +266,16 @@ function exportJS(done) {
 
   if (!ANALYZE_EXPORT && !ANALYZE_PREVIEW) {
     config.push(
-      webpackConfigExport(options),
+      webpackConfigExport.node(options),
       webpackConfigPreview.preview(options),
-      webpackConfigPreview.libs(options)
-      // webpackConfigWorker.ssr(options)
+      webpackConfigPreview.libs(options),
+      webpackConfigExport.browser(options)
     );
   } else {
     if (ANALYZE_EXPORT) {
       config.push(
-        webpackConfigExport(options)
-        // webpackConfigWorker.ssr(options)
+        webpackConfigExport.node(options),
+        webpackConfigExport.browser(options)
       );
     }
     if (ANALYZE_PREVIEW) {
@@ -303,13 +285,17 @@ function exportJS(done) {
 
   let doneCalled = false;
   webpack(config, (err, stats) => {
-    if (stats.hasErrors() || stats.hasWarnings()) {
+    if (err) {
+      gulpPlugins.util.log("[webpack export]", err);
+    }
+
+    if (stats && (stats.hasErrors() || stats.hasWarnings())) {
       gulpPlugins.util.log(
-        `[webpack] ${stats.hasErrors() ? "error" : "warning"}`,
+        `[webpack export] ${stats.hasErrors() ? "error" : "warning"}`,
         stats.toString("errors-warnings")
       );
     } else {
-      gulpPlugins.util.log("[webpack] success");
+      gulpPlugins.util.log("[webpack export] success");
 
       if (ANALYZE_EXPORT) {
         fs.writeFileSync(
@@ -435,7 +421,6 @@ function proJS(done) {
 
   if (IS_EXPORT) {
     config.push(
-      webpackConfigPro.export(options),
       webpackConfigPro.preview(options),
       webpackConfigPro.libs(options)
     );
@@ -1060,6 +1045,8 @@ exports.libs = gulp.series.apply(undefined, [
 
 exports.analyze_export = gulp.series(clean, exportJS);
 
-exports.analyze_preview = gulp.series(clean, exportJS);
+exports.compilerWorker = gulp.series(clean, exportJS);
 
 exports.translation = gulp.series(wpTranslations);
+
+exports.editorKitIcons = gulp.series(editorKitIcons);

@@ -69,53 +69,59 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     }
 
     case "MAKE_POPUP_TO_GLOBAL_POPUP": {
-      const { id, data, status, meta, rules, position } = action.payload;
+      const { uid, data, status, meta, rules, position, dataVersion } =
+        action.payload;
 
-      return produce(state, (draft) => {
-        draft[data.value._id] = {
-          id,
+      return produce(state, (draft) => ({
+        [data.value._id]: {
+          uid,
+          dataVersion,
           meta,
           data,
           status,
           rules,
           position
-        };
-      });
+        },
+        ...draft
+      }));
     }
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
-      const { id, data, status, meta, rules, position } = action.payload;
+      const { uid, data, status, meta, rules, dataVersion, position } =
+        action.payload;
 
-      return produce(state, (draft) => {
-        draft[data.value._id] = {
-          id,
+      return produce(state, (draft) => ({
+        [data.value._id]: {
+          uid,
+          dataVersion,
           meta,
           data,
           status,
           rules,
           position
-        };
-      });
+        },
+        ...draft
+      }));
     }
 
     // if block is a slider & globalBlock and we remove
     // last slide - then instead of REMOVE_BLOCK action we get
     // UPDATE_GLOBAL_BLOCK - with payload.data.value = null
     case "UPDATE_GLOBAL_BLOCK": {
-      const { id, data, title = "", tags = "" } = action.payload;
+      const { uid, data, title = "", tags = "" } = action.payload;
 
-      if (data.value === null && !isPopup(state[id].data)) {
-        const globalBlock = changeRule(state[id], false, allState?.page);
+      if (data.value === null && !isPopup(state[uid].data)) {
+        const globalBlock = changeRule(state[uid], false, allState?.page);
         return {
           ...state,
-          [id]: globalBlock
+          [uid]: globalBlock
         };
       }
 
       return produce(state, (draft) => {
         if (title.length > 0) {
-          draft[id].title = title;
+          draft[uid].title = title;
         }
-        draft[id].tags = tags;
+        draft[uid].tags = tags;
       });
     }
 
@@ -262,11 +268,14 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
       return Object.entries(allGlobalBlocks).reduce((acc, [key, block]) => {
         acc[key] = produce(block, (draft) => {
-          draft.position = positions[key] || null;
-
           const isPopup =
             block.data.type === "SectionPopup" ||
             block.data.type === "SectionPopup2";
+
+          // The Popup doesn't have any positions on the page
+          if (!isPopup) {
+            draft.position = positions[key] || null;
+          }
 
           if (globalBlocksInPage[key] || changedGBData[key] || isPopup) {
             draft.status = "publish";

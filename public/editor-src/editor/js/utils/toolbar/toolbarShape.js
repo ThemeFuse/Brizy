@@ -14,7 +14,7 @@ export function toolbarShapeTopFlip({
   return {
     id: dvk("shapeTopFlip"),
     label: t("Flip"),
-    type: "checkGroup",
+    type: "legacy-checkGroup",
     disabled,
     devices,
     choices: [
@@ -47,7 +47,7 @@ export function toolbarShapeBottomFlip({
   return {
     id: dvk("shapeBottomFlip"),
     label: t("Flip"),
-    type: "checkGroup",
+    type: "legacy-checkGroup",
     devices,
     disabled,
     choices: [

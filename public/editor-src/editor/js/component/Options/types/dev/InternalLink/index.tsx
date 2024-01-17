@@ -2,8 +2,8 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
-  useState
+  useReducer,
+  useRef
 } from "react";
 import _ from "underscore";
 import { Control } from "visual/component/Controls/InternalLink";
@@ -12,7 +12,10 @@ import { ToastNotification } from "visual/component/Notifications";
 import Config from "visual/global/Config";
 import type { ChoiceWithPermalink, DebouncedSearch, Props } from "./types";
 import { ChoicesSync } from "./types";
-import { normalizeItems } from "./utils";
+import { getCollectionChoices, normalizeItems } from "./utils";
+import { Literal } from "visual/utils/types/Literal";
+import { read } from "visual/utils/reader/string";
+import { ActionTypes, reducer, State } from "./reducer";
 
 export const InternalLink: React.FC<Props> = ({
   className,
@@ -22,35 +25,80 @@ export const InternalLink: React.FC<Props> = ({
   placeholder,
   config
 }) => {
-  const { postType = "" } = config ?? {};
-
-  const { handler } = useMemo(() => {
+  const { handler, choices } = useMemo(() => {
     const editorConfig = Config.getAll();
     const { handler } =
       editorConfig?.api?.collectionItems?.searchCollectionItems ?? {};
 
-    return { handler };
+    const choices = getCollectionChoices(editorConfig);
+    return { handler, choices };
   }, []);
 
-  const lastPostType = useRef<string>();
+  const source = value?.source ?? "";
+
+  const lastPostType = useRef<string>(source);
   const debouncedSearch = useRef<DebouncedSearch>();
-  const [items, setItems] = useState<ChoicesSync>(value ? [value] : []);
-  const [status, setStatus] = useState<Status>(Status.INITIAL);
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const [state, dispatch] = useReducer(reducer, {
+    items: value ? [value] : [],
+    status: Status.INITIAL,
+    loading: false,
+    postType: source
+  });
+
+  const dispatchLoading = useCallback(
+    (loading: boolean) => {
+      dispatch({
+        type: ActionTypes.SET_LOADING,
+        payload: loading
+      });
+    },
+    [dispatch]
+  );
+
+  const dispatchMultiple = useCallback(
+    (payload: Partial<State>) => {
+      dispatch({
+        type: ActionTypes.SET_MULTIPLE,
+        payload
+      });
+    },
+    [dispatch]
+  );
+
+  const { items, status, loading, postType } = state;
 
   const _onChange = useCallback(
     (v: ChoiceWithPermalink) =>
-      onChange({ title: v.title, value: String(v.value) }),
-    [onChange]
+      onChange({
+        title: v.title,
+        value: String(v.value),
+        source: postType
+      }),
+    [onChange, postType]
   );
 
   const resetValue = useCallback(() => {
-    setItems([]);
-    _onChange({ title: "", value: "" });
-  }, [_onChange]);
+    dispatch({
+      type: ActionTypes.SET_ITEMS,
+      payload: []
+    });
+    _onChange({ title: "", value: "", source: postType });
+  }, [_onChange, postType, dispatch]);
+
+  const onChangePostType = useCallback(
+    ({ value }: { value: Literal }) => {
+      const _value = read(value) ?? "";
+      dispatch({
+        type: ActionTypes.SET_POST_TYPE,
+        payload: _value
+      });
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    if (postType && lastPostType.current !== postType) {
+    if (lastPostType.current !== postType) {
       resetValue();
       lastPostType.current = postType;
     }
@@ -59,22 +107,29 @@ export const InternalLink: React.FC<Props> = ({
   useEffect(() => {
     debouncedSearch.current = _.debounce((search: string) => {
       if (postType && search && search.trim() !== "" && handler) {
-        setLoading(true);
+        dispatchLoading(true);
 
         const res = (r: ChoicesSync) => {
           if (r.length > 0) {
-            setItems(r);
-            setStatus(Status.SUCCESS);
+            dispatchMultiple({
+              items: r,
+              status: Status.SUCCESS
+            });
           } else {
-            setItems([]);
-            setStatus(Status.NO_RESULT);
+            dispatchMultiple({
+              items: [],
+              status: Status.NO_RESULT
+            });
           }
-          setLoading(false);
+          dispatchLoading(false);
         };
 
         const rej = (errMsg: string) => {
-          setLoading(false);
-          setStatus(Status.ERROR);
+          dispatchMultiple({
+            loading: false,
+            status: Status.ERROR
+          });
+
           ToastNotification.error(errMsg);
         };
 
@@ -88,32 +143,40 @@ export const InternalLink: React.FC<Props> = ({
     return () => {
       debouncedSearch.current?.cancel();
     };
-  }, [postType, handler]);
+  }, [postType, handler, dispatchLoading, dispatchMultiple]);
 
-  const onSearchChange = useCallback((searchValue: string): void => {
-    debouncedSearch?.current?.(searchValue);
-    if (!searchValue) {
-      setItems([]);
-      setStatus(Status.INITIAL);
-    }
-  }, []);
+  const onSearchChange = useCallback(
+    (searchValue: string): void => {
+      debouncedSearch?.current?.(searchValue);
+      if (!searchValue) {
+        dispatchMultiple({
+          status: Status.INITIAL,
+          items: []
+        });
+      }
+    },
+    [dispatchMultiple]
+  );
 
   const _items = normalizeItems(items);
 
   return (
-    <>
-      {label}
-      <Control
-        className={className ?? ""}
-        value={value}
-        placeholder={placeholder}
-        resetValue={resetValue}
-        items={_items}
-        status={status}
-        loading={loading}
-        onChange={_onChange}
-        onSearch={onSearchChange}
-      />
-    </>
+    <Control
+      className={className ?? ""}
+      value={value}
+      label={label}
+      placeholder={placeholder}
+      resetValue={resetValue}
+      items={_items}
+      source={postType}
+      sourceHelper={config?.helper}
+      sourceLabel={config?.sourceLabel}
+      choices={choices}
+      status={status}
+      loading={loading}
+      onChange={_onChange}
+      onSearch={onSearchChange}
+      onSourceChange={onChangePostType}
+    />
   );
 };

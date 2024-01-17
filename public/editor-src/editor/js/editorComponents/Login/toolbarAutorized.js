@@ -15,7 +15,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "popoverLogout",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Logout"),
@@ -25,11 +25,11 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "redirectGroup",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "logoutRedirectType",
-              type: "select-dev",
+              type: "select",
               label: t("Redirect After Logout"),
               devices: "desktop",
               choices: [
@@ -40,7 +40,7 @@ export function getItems({ v, device }) {
             {
               id: "logoutRedirect",
               label: t("URL"),
-              type: "inputText-dev",
+              type: "inputText",
               disabled: dvv("logoutRedirectType") !== "custom",
               devices: "desktop",
               placeholder: "http://",
@@ -54,7 +54,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -64,7 +64,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "text",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: "desktop" === device
           }
@@ -73,7 +73,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -89,7 +89,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -97,7 +97,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "textColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -108,7 +108,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "linkColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -119,7 +119,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "autorizedHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

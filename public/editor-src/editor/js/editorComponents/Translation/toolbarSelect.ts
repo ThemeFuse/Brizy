@@ -18,7 +18,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
   return [
     {
       id: "toolbarColorSelect",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         size: "medium",
@@ -35,7 +35,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
       options: [
         {
           id: "color",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -43,7 +43,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "selectColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -54,7 +54,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "selectBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -65,7 +65,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "selectBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -76,7 +76,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "selectBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -87,7 +87,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "selectHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
         { icon: "nc-text-align-center", title: t("Align"), value: "center" },
@@ -96,18 +96,18 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "duplicate",
-      type: "button",
+      type: "legacy-button",
       disabled: true
     },
     {
       id: "remove",
-      type: "button",
+      type: "legacy-button",
       disabled: true
     }
   ];

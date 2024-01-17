@@ -1,9 +1,10 @@
 import { t } from "visual/utils/i18n";
+
 export function getItems() {
   return [
     {
       id: "reverseColumns",
-      type: "toggle-dev",
+      type: "toggle",
       devices: "responsive",
       position: 20,
       choices: [

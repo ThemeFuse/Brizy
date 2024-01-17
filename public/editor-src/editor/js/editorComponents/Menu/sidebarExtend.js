@@ -11,7 +11,7 @@ export function getItemsSimple() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -20,7 +20,7 @@ export function getItemsSimple() {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -46,11 +46,11 @@ export function getItemsSimple() {
     },
     {
       id: "borderRadiusPicker",
-      type: "group-dev",
+      type: "group",
       options: [
         {
           id: "border",
-          type: "corners-dev",
+          type: "corners",
           label: t("Corner"),
           position: 65
         }
@@ -58,7 +58,7 @@ export function getItemsSimple() {
     },
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -67,7 +67,7 @@ export function getItemsSimple() {
           options: [
             {
               id: "menuPadding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               position: 50,
               config: {
@@ -76,7 +76,7 @@ export function getItemsSimple() {
             },
             {
               id: "menuBorder",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               position: 65
             }
@@ -91,7 +91,7 @@ export function getItemsMMenu() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -100,7 +100,7 @@ export function getItemsMMenu() {
           options: [
             {
               id: "mMenuPadding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               position: 50,
               config: {

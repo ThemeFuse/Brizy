@@ -57,7 +57,7 @@ export function getItems({
   return [
     {
       id: "toolbarCarousel",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-carousel",
         title: t("Carousel")
@@ -66,7 +66,7 @@ export function getItems({
       options: [
         {
           id: "toolbarCarouselTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "carousel",
@@ -74,18 +74,18 @@ export function getItems({
               options: [
                 {
                   id: "groupSettings",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "sliderAutoPlay",
                       label: t("Autoplay"),
-                      type: "switch-dev"
+                      type: "switch"
                     },
                     {
                       id: "transitionSpeed",
                       label: t("Speed"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("sliderAutoPlay") !== "on",
                       config: {
                         min: 1,
@@ -97,7 +97,7 @@ export function getItems({
                     {
                       id: "sliderAutoPlaySpeed",
                       label: t("Stop Time"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("sliderAutoPlay") !== "on",
                       config: {
                         min: 1,
@@ -110,7 +110,7 @@ export function getItems({
                 {
                   id: "slidesToShow",
                   label: t("Columns"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: device === "mobile",
                   config: {
                     min: 1,
@@ -120,7 +120,7 @@ export function getItems({
                 {
                   id: "spacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 1,
                     max: 100,
@@ -130,7 +130,7 @@ export function getItems({
                 {
                   id: "sliderArrowsSpacing",
                   label: t("Arrows Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: dvv("sliderArrows") === "none",
                   devices: "responsive",
                   config: {
@@ -147,19 +147,19 @@ export function getItems({
               options: [
                 {
                   id: "groupSettings",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   options: [
                     {
                       id: "sliderArrows",
                       label: t("Arrows"),
-                      type: "select-dev",
+                      type: "select",
                       choices: sliderArrowsChoices
                     },
                     {
                       id: "sliderArrowsSpacing",
                       label: t("Spacing"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("sliderArrows") === "none",
                       config: {
                         min: 0,
@@ -172,7 +172,7 @@ export function getItems({
                 {
                   id: "sliderDots",
                   label: t("Dots"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -205,7 +205,7 @@ export function getItems({
     },
     {
       id: "dynamicToolbarCarousel",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-dynamic",
         title: t("Dynamic Content")
@@ -217,7 +217,7 @@ export function getItems({
         {
           id: "dynamic",
           label: t("Dynamic Content"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop"
         },
 
@@ -226,7 +226,7 @@ export function getItems({
           label: t("Categories"),
           disabled: dvv("dynamic") === "off",
           devices: "desktop",
-          type: "select-dev",
+          type: "select",
           choices: getCategories(),
           //@ts-expect-error: Old function
           dependencies: ({ taxonomy }: { taxonomy: string }) => {
@@ -242,7 +242,7 @@ export function getItems({
           label: t("Filter By"),
           devices: "desktop",
           disabled: dvv("dynamic") === "off",
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: t("ID"), value: "ID" },
             { title: t("Title"), value: "title" },
@@ -254,7 +254,7 @@ export function getItems({
         {
           id: "order",
           label: t("Order"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           disabled: dvv("dynamic") === "off",
           choices: [
@@ -266,7 +266,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -284,7 +284,7 @@ export function getItems({
       options: [
         {
           id: "colorTabs",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -295,7 +295,7 @@ export function getItems({
               options: [
                 {
                   id: "sliderArrowsColor",
-                  type: "colorPicker-dev"
+                  type: "colorPicker"
                 }
               ]
             },
@@ -305,7 +305,7 @@ export function getItems({
               options: [
                 {
                   id: "sliderDotsColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: dvv("slider") === "off"
                 }
               ]
@@ -314,11 +314,11 @@ export function getItems({
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true, choices: [] },
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "advancedSettings",
       // @ts-expect-error: Need transform to ts
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
       title: t("Settings"),

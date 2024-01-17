@@ -7,7 +7,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -16,7 +16,7 @@ export function getItems(): ToolbarItemType[] {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -28,7 +28,7 @@ export function getItems(): ToolbarItemType[] {
                   options: [
                     {
                       id: "itemBorder",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner")
                     }
                   ]

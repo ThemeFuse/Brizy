@@ -18,13 +18,19 @@ import { uuid } from "visual/utils/uuid";
 import { styleHeading } from "./styles";
 import { createLabel, getFormats, mapBlockElements } from "./utils";
 import bindings from "./utils/bindings";
-import Quill from "./utils/quill";
+import Quill, { Parchment } from "./utils/quill";
 import {
   classNamesToV2,
   currentBlockValues,
   formatVToQuilValue,
   getDefaultValues
 } from "./utils/transforms";
+
+interface _Quill extends Quill {
+  selection: {
+    savedRange: RangeStatic;
+  };
+}
 
 const instances: QuillComponent[] = [];
 
@@ -84,15 +90,16 @@ class QuillComponent extends React.Component<Props> {
     const { value, forceUpdate, onSelectionChange, isToolbarOpen } = this.props;
     const reinitForFonts = !_.isEqual(fonts, this.props.fonts);
     const reinitForValue = value !== this.lastUpdatedValue || forceUpdate;
+    const quill = this.quill as _Quill;
 
-    if ((reinitForValue || reinitForFonts) && this.quill) {
+    if ((reinitForValue || reinitForFonts) && quill) {
       this.reinitPluginWithValue(value);
 
       // If toolbar is opened need synchronize the state
       if (reinitForValue && !isStory(Config.getAll()) && isToolbarOpen()) {
         onSelectionChange(
           this.getSelectionFormat(),
-          this.getCoords(this.quill.getSelection(true))
+          this.getCoords(quill.selection.savedRange)
         );
       }
     }
@@ -128,7 +135,7 @@ class QuillComponent extends React.Component<Props> {
     }
     const node = this.content.current as HTMLDivElement;
     const { top, left } = node.getBoundingClientRect();
-    const bounds = (this.quill as Quill).getBounds(range.index, range.length);
+    const bounds = (this.quill as _Quill).getBounds(range.index, range.length);
 
     return {
       ...bounds,
@@ -149,7 +156,7 @@ class QuillComponent extends React.Component<Props> {
     this.initPlugin();
 
     if (options?.restoreSelectionIndex) {
-      (this.quill as Quill).setSelection(options.restoreSelectionIndex, 0);
+      (this.quill as _Quill).setSelection(options.restoreSelectionIndex, 0);
     }
   }
 
@@ -166,7 +173,7 @@ class QuillComponent extends React.Component<Props> {
           matchVisual: false
         }
       }
-    });
+    }) as _Quill;
 
     quill.on("selection-change", (range: RangeStatic | null, oldRange) => {
       this.currentSelection = range;
@@ -179,9 +186,8 @@ class QuillComponent extends React.Component<Props> {
       }
     });
     quill.on("text-change", () => {
-      const range = quill.getSelection(true) as RangeStatic | null;
+      const range = quill.selection.savedRange;
       const format = this.getSelectionFormat();
-      // console.log("format", format);
       this.props.onSelectionChange(format, this.getCoords(range));
       this.save(quill.root.innerHTML);
     });
@@ -207,7 +213,7 @@ class QuillComponent extends React.Component<Props> {
   }
 
   restoreSelection({ index, length }: RangeStatic): void {
-    const quill = this.quill as Quill;
+    const quill = this.quill as _Quill;
 
     const lines = quill.getLines(index, length);
     const line = quill.getLine(index);
@@ -218,16 +224,16 @@ class QuillComponent extends React.Component<Props> {
   }
 
   getSelectionFormat(): Formats {
-    const quill = this.quill as Quill;
+    const quill = this.quill as _Quill;
 
-    const selection = quill.getSelection(true);
+    const selection = quill.selection.savedRange;
     // it's small hack.sometimes null may be returned(if we select 2 paragraph and start write text)
     if (!selection) return getDefaultValues();
 
     const sValue = quill.getText(selection.index, selection.length);
     this.props.selectedValue(sValue);
 
-    const { index, length } = quill.getSelection(true);
+    const { index, length } = quill.selection.savedRange;
     // it's small hack for triple click
     this.restoreSelection({ index, length });
     const [
@@ -235,7 +241,7 @@ class QuillComponent extends React.Component<Props> {
         parent: { domNode: $selectedDomNode }
       }
     ] = quill.getLeaf(index + length);
-    const quillFormat = quill.getFormat();
+    const quillFormat = quill.getFormat(quill.selection.savedRange);
     return getFormats(jQuery($selectedDomNode), quillFormat);
   }
 
@@ -254,7 +260,7 @@ class QuillComponent extends React.Component<Props> {
 
   handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (triggerCodes.includes(event.key)) {
-      (this.quill as Quill).format("prepopulation", "visible");
+      (this.quill as _Quill).format("prepopulation", "visible");
     }
   };
 
@@ -382,7 +388,7 @@ class QuillComponent extends React.Component<Props> {
   }
 
   setGeneratedCss(): void {
-    const lines = (this.quill as Quill).getLines();
+    const lines = (this.quill as _Quill).getLines();
     const existingIds: string[] = [];
 
     lines.forEach((line) => {
@@ -430,8 +436,8 @@ class QuillComponent extends React.Component<Props> {
       label = _label;
     }
 
-    const quill = this.quill as Quill;
-    const selection = quill.getSelection(true);
+    const quill = this.quill as _Quill;
+    const selection = quill.selection.savedRange;
     const [leafBlot, offset] = quill.getLeaf(selection.index);
     const lineBlot = quill.getLine(selection.index)[0];
     const formats = quill.getFormat();
@@ -489,9 +495,8 @@ class QuillComponent extends React.Component<Props> {
   };
 
   format = (type: string, value: QuillValue): void => {
-    const quill = this.quill as Quill;
-    const selection = quill.getSelection(true);
-    const lineBlot = quill.getLine(selection.index)[0];
+    const quill = this.quill as _Quill;
+    const selection = quill.selection.savedRange;
 
     if (!selection.length) {
       if (type === "link") {
@@ -506,7 +511,7 @@ class QuillComponent extends React.Component<Props> {
       }
 
       const newValue = value || false;
-
+      const lineBlot = quill.getLine(selection.index)[0];
       let offset = lineBlot.offset();
 
       if (lineBlot.domNode.tagName.toLowerCase() === "li") {
@@ -517,7 +522,11 @@ class QuillComponent extends React.Component<Props> {
       return;
     }
 
-    quill.format(type, value);
+    if (Parchment.query(type, Parchment.Scope.BLOCK)) {
+      quill.formatLine(selection.index, selection.length, { [type]: value });
+    } else {
+      quill.formatText(selection.index, selection.length, { [type]: value });
+    }
   };
 
   formatMultiple(values: Formats): void {

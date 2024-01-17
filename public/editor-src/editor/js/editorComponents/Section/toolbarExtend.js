@@ -13,6 +13,8 @@ export function getItems({ v, device, component }) {
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalBlocks?.create !== "function";
 
   const isMultiLanguageDisabled =
     config.elements?.section?.multilanguage === false;
@@ -64,7 +66,7 @@ export function getItems({ v, device, component }) {
     }),
     {
       id: "toolbarSlider",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         icon: "nc-block-switch",
@@ -74,7 +76,7 @@ export function getItems({ v, device, component }) {
       options: [
         {
           id: "sliders",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "sliderOption1",
@@ -83,13 +85,13 @@ export function getItems({ v, device, component }) {
               options: [
                 {
                   id: "groupSettings",
-                  type: "group-dev",
+                  type: "group",
+                  disabled: disabledGlobalBlock,
                   options: [
                     {
                       id: "makeItGlobal",
                       label: t("Make it Global"),
-                      type: "globalBlock-dev",
-                      disabled: isCloud(config) && isShopify(config),
+                      type: "globalBlock",
                       config: {
                         _id: component.getId(),
                         parentId: getInstanceParentId(
@@ -102,25 +104,25 @@ export function getItems({ v, device, component }) {
                       id: "gbConditions",
                       disabled: !component.props.meta.globalBlockId,
                       value: component.props.meta.globalBlockId,
-                      type: "gbConditions",
+                      type: "legacy-gbConditions",
                       context: "block"
                     }
                   ]
                 },
                 {
                   id: "membershipGroup",
-                  type: "group-dev",
+                  type: "group",
                   disabled: isCloud(config) && isShopify(config),
                   options: [
                     {
                       id: "membership",
                       label: t("Membership"),
-                      type: "switch-dev"
+                      type: "switch"
                     },
                     {
                       id: "membershipRoles",
                       label: t("Show to"),
-                      type: "multiSelect-dev",
+                      type: "multiSelect",
                       placeholder: t("Select"),
                       disabled: dvv("membership") === "off",
                       choices: getAllMembershipChoices(config)
@@ -129,19 +131,19 @@ export function getItems({ v, device, component }) {
                 },
                 {
                   id: "translationsGroup",
-                  type: "group-dev",
+                  type: "group",
                   disabled: isWp(config),
                   options: [
                     {
                       id: "translations",
                       label: t("Multi-Language"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: isMultiLanguageDisabled
                     },
                     {
                       id: "translationsLangs",
                       label: t("Show If Language"),
-                      type: "multiSelect-dev",
+                      type: "multiSelect",
                       placeholder: t("Select"),
                       disabled: dvv("translations") === "off",
                       choices: getLanguagesChoices(config)
@@ -151,7 +153,7 @@ export function getItems({ v, device, component }) {
                 {
                   id: "slider",
                   label: t("Make it a Slider"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             },
@@ -162,17 +164,17 @@ export function getItems({ v, device, component }) {
                   options: [
                     {
                       id: "sliderAutoPlayGroup",
-                      type: "group-dev",
+                      type: "group",
                       options: [
                         {
                           id: "sliderAutoPlay",
                           label: t("Autoplay"),
-                          type: "switch-dev"
+                          type: "switch"
                         },
                         {
                           id: "sliderAutoPlaySpeed",
                           label: t("Speed"),
-                          type: "slider-dev",
+                          type: "slider",
                           disabled: dvv("sliderAutoPlay") !== "on",
                           config: {
                             min: 1,
@@ -185,13 +187,13 @@ export function getItems({ v, device, component }) {
                     {
                       id: "sliderDots",
                       label: t("Dots"),
-                      type: "select-dev",
+                      type: "select",
                       choices: sliderDotsChoices
                     },
                     {
                       id: "sliderArrows",
                       label: t("Arrows"),
-                      type: "select-dev",
+                      type: "select",
                       choices: sliderArrowsChoices
                     }
                   ]
@@ -203,7 +205,7 @@ export function getItems({ v, device, component }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium"
       },
@@ -212,7 +214,7 @@ export function getItems({ v, device, component }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs:
             slider === "off"
               ? []
@@ -223,7 +225,7 @@ export function getItems({ v, device, component }) {
                     options: [
                       {
                         id: "sliderDotsColor",
-                        type: "colorPicker-dev",
+                        type: "colorPicker",
                         states: [NORMAL, HOVER],
                         disabled: slider === "off"
                       }
@@ -235,7 +237,7 @@ export function getItems({ v, device, component }) {
                     options: [
                       {
                         id: "sliderArrowsColor",
-                        type: "colorPicker-dev",
+                        type: "colorPicker",
                         states: [NORMAL, HOVER],
                         disabled: slider === "off"
                       }
@@ -247,7 +249,7 @@ export function getItems({ v, device, component }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,
@@ -261,17 +263,17 @@ export function getItems({ v, device, component }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       options: [
         {
           id: "toolbarContainerTypeAndHeight",
-          type: "group-dev",
+          type: "group",
           position: 100,
           options: [
             {
               id: "fullHeight",
               label: t("Height"),
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: t("Auto"), value: "off" },
                 { title: t("Custom"), value: "custom" },
@@ -280,7 +282,7 @@ export function getItems({ v, device, component }) {
             },
             {
               id: "sectionHeight",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("fullHeight") !== "custom",
               config: {
                 min: 20,
@@ -296,7 +298,7 @@ export function getItems({ v, device, component }) {
         {
           id: "verticalAlign",
           label: t("Content"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           disabled: dvv("fullHeight") === "off",
           position: 110,
           choices: [

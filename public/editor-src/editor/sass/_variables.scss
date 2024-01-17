@@ -11,6 +11,7 @@ $white-6: #eff0f1;
 $white-7: #d4d5d7;
 $white-8: #fffae3;
 $white-9: #f3f3f3;
+$white-10: #d5d9db;
 $black: #000000;
 $black-1: #03080f;
 $black-2: #15191f;
@@ -139,6 +140,7 @@ $color_palette-border: var(--color_palette-border, $gray-25);
 $color_palette-border--active: var(--color_palette-border--active, $white);
 $color_palette__icon-color: var(--color_palette__icon-color, $gray-2);
 $color_palette__icon-color--hover: var(--active-color, $blue-21);
+$help_video__icon-color: var(--color_palette__icon-color, $white-10);
 
 // Bottom Inputs (Hex Color, Border Size)
 $picker__input-color: var(--primary-gray, $gray-2);

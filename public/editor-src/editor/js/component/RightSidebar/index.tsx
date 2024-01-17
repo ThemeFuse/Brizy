@@ -1,22 +1,25 @@
+import { Sidebar } from "@brizy/builder-ui-components";
 import classnames from "classnames";
 import React from "react";
 import { ConnectedProps, connect } from "react-redux";
-import EditorIcon from "visual/component/EditorIcon";
-import Options from "visual/component/Options";
+import { RenderEmpty } from "visual/component/RightSidebar/Components/RenderEmpty";
+import { RenderItems } from "visual/component/RightSidebar/Components/RenderItems";
+import { CLEAR_ITEMS_TIMEOUT } from "visual/component/RightSidebar/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
 import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
-import { Scrollbar } from "../Scrollbar";
-import { Animation } from "./Animation";
+import { HelpSidebar } from "./HelpSidebar";
 
 export let instance: RightSidebarInner | undefined;
 
 const mapStateToProps = (state: ReduxState) => {
-  const { isOpen, lock, alignment, activeTab } = uiSelector(state).rightSidebar;
+  const { isOpen, lock, alignment, activeTab, type } =
+    uiSelector(state).rightSidebar;
 
   return {
+    type,
     isOpen,
     lock,
     alignment,
@@ -30,6 +33,7 @@ type Props = ConnectedProps<typeof connector>;
 
 export class RightSidebarInner extends React.Component<Props> {
   static defaultProps: Props = {
+    type: "options",
     isOpen: false,
     lock: undefined,
     alignment: "right",
@@ -64,9 +68,10 @@ export class RightSidebarInner extends React.Component<Props> {
   }
 
   onLockClick = (): void => {
-    const { isOpen, lock, alignment, activeTab } = this.props;
+    const { isOpen, lock, alignment, activeTab, type } = this.props;
     const items = this.getItems !== undefined ? this.getItems() : undefined;
     const newStore = {
+      type,
       activeTab,
       alignment,
       lock: lock === "manual" ? undefined : ("manual" as const),
@@ -91,7 +96,7 @@ export class RightSidebarInner extends React.Component<Props> {
   }
 
   clearItems(): void {
-    const { lock, alignment, dispatch, activeTab } = this.props;
+    const { lock, alignment, dispatch, activeTab, type } = this.props;
 
     if (lock) {
       // items are cleared after a timeout to prevent switching unnecessarily to empty state
@@ -102,12 +107,13 @@ export class RightSidebarInner extends React.Component<Props> {
         this.getTitle = undefined;
 
         this.forceUpdate();
-      }, 150);
+      }, CLEAR_ITEMS_TIMEOUT);
     } else {
       this.getItems = undefined;
       this.getTitle = undefined;
 
       const newStore = {
+        type,
         isOpen: false,
         lock,
         alignment,
@@ -118,35 +124,32 @@ export class RightSidebarInner extends React.Component<Props> {
     }
   }
 
-  renderEmpty(message: string): React.ReactNode {
-    return (
-      <div className="brz-ed-sidebar__right__empty">
-        <EditorIcon
-          icon="nc-settings"
-          className="brz-ed-sidebar__right__empty-icon"
-        />
-        <div className="brz-ed-sidebar__right__empty-text">{message}</div>
-      </div>
-    );
-  }
+  getRenderItems(type: "options" | "help", items?: OptionDefinition[]) {
+    if (type === "options" && items && items.length > 0) {
+      return <RenderItems items={items} />;
+    }
 
-  renderItems(items: OptionDefinition[]): React.ReactNode {
+    if (type === "help") {
+      return (
+        <div className="brz-ed-sidebar__main brz-ed-sidebar__right__options brz-ed-content">
+          <HelpSidebar />
+        </div>
+      );
+    }
+
     return (
-      <div className="brz-ed-sidebar__main brz-ed-sidebar__right__options">
-        <Scrollbar theme="dark">
-          <Options
-            className="brz-ed-sidebar__right__tabs"
-            optionClassName="brz-ed-sidebar__right__option"
-            data={items}
-            location="rightSidebar"
-          />
-        </Scrollbar>
-      </div>
+      <RenderEmpty
+        message={
+          items?.length === 0
+            ? t("The element you have selected doesn't have more settings")
+            : t("Select an element on the page to display more settings")
+        }
+      />
     );
   }
 
   render(): React.ReactNode {
-    const { isOpen, alignment } = this.props;
+    const { isOpen, alignment, type } = this.props;
     const sidebarClassName = classnames(
       "brz-ed-sidebar",
       "brz-ed-sidebar__right",
@@ -155,26 +158,13 @@ export class RightSidebarInner extends React.Component<Props> {
         "brz-ed-sidebar__right--align-left": alignment === "left"
       }
     );
-
     const _items = this.getItems !== undefined ? this.getItems() : undefined;
-    const items =
-      _items && _items.length > 0
-        ? this.renderItems(_items)
-        : this.renderEmpty(
-            _items?.length === 0
-              ? t("The element you have selected doesn't have more settings")
-              : t("Select an element on the page to display more settings")
-          );
-
+    const renderData = this.getRenderItems(type, _items);
     return (
       <div className={sidebarClassName}>
-        <Animation
-          className="brz-ed-sidebar__content"
-          alignment={alignment}
-          play={isOpen}
-        >
-          {items}
-        </Animation>
+        <Sidebar isOpen={isOpen} alignment={alignment}>
+          <div className="brz-ed-sidebar__right__content">{renderData}</div>
+        </Sidebar>
       </div>
     );
   }

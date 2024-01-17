@@ -42,7 +42,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-toggle",
         title: t("Accordion")
@@ -51,7 +51,7 @@ export function getItems({
       options: [
         {
           id: "media",
-          type: "tabs-dev",
+          type: "tabs",
           position: 60,
           tabs: [
             {
@@ -62,11 +62,11 @@ export function getItems({
                   id: "collapsible",
                   label: t("Collapsible"),
                   devices: "desktop",
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "animDuration",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Duration"),
                   config: {
                     min: 0,
@@ -77,7 +77,7 @@ export function getItems({
                 },
                 {
                   id: "spacing",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Spacing"),
                   config: {
                     min: 0,
@@ -95,7 +95,7 @@ export function getItems({
                 {
                   id: "navIcon",
                   label: t("Icon"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -144,13 +144,13 @@ export function getItems({
                 },
                 {
                   id: "groupSettings",
-                  type: "group-dev",
+                  type: "group",
                   disabled: dvv("navIcon") === "none",
                   options: [
                     {
                       id: "navIconSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -160,7 +160,7 @@ export function getItems({
                     },
                     {
                       id: "navIconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("navIconSize") !== "custom",
                       config: {
                         min: 8,
@@ -184,7 +184,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -194,7 +194,7 @@ export function getItems({
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -203,7 +203,7 @@ export function getItems({
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -221,7 +221,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -229,7 +229,7 @@ export function getItems({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -240,7 +240,7 @@ export function getItems({
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -251,7 +251,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -262,7 +262,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -273,7 +273,7 @@ export function getItems({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -284,7 +284,7 @@ export function getItems({
     {
       id: "advancedSettings",
       // @ts-expect-error: Need transform to ts
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],

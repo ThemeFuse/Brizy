@@ -15,15 +15,16 @@ export function style(v, vs, vd) {
     ".brz && .brz-login__authorized": {
       standart: ["cssStyleElementLoginAutorizedAlign"]
     },
-    ".brz && .brz-login__authorized p,.brz && .brz-login__authorized a,.brz && .brz-login__authorized span": {
-      standart: [
-        "cssStyleElementLoginTextTypography2FontFamily",
-        "cssStyleElementLoginTextTypography2FontSize",
-        "cssStyleElementLoginTextTypography2LineHeight",
-        "cssStyleElementLoginTextTypography2FontWeight",
-        "cssStyleElementLoginTextTypography2LetterSpacing"
-      ]
-    },
+    ".brz && .brz-login__authorized p,.brz && .brz-login__authorized a,.brz && .brz-login__authorized span":
+      {
+        standart: [
+          "cssStyleElementLoginTextTypography2FontFamily",
+          "cssStyleElementLoginTextTypography2FontSize",
+          "cssStyleElementLoginTextTypography2LineHeight",
+          "cssStyleElementLoginTextTypography2FontWeight",
+          "cssStyleElementLoginTextTypography2LetterSpacing"
+        ]
+      },
     ".brz && .brz-login__authorized p:hover": {
       standart: ["cssStyleElementLoginTextColor"]
     },
@@ -35,6 +36,7 @@ export function style(v, vs, vd) {
     },
     ".brz && .brz-login-form .brz-input:hover": {
       standart: [
+        "cssStyleElementFieldsInputSize",
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",

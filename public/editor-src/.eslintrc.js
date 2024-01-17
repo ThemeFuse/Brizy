@@ -10,6 +10,7 @@ module.exports = {
     IS_EDITOR: "readonly",
     IS_PREVIEW: "readonly",
     IS_EXPORT: "readonly",
+    COMPILER_TYPE: "readonly",
     AUTHORIZATION_URL: "readonly",
     __CONFIG__: "readonly",
     YT: "readonly",

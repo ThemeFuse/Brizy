@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarWOOProductPage",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-2"
       },
@@ -14,7 +14,7 @@ export function getItems() {
         {
           id: "productID",
           label: t("Product ID"),
-          type: "inputText-dev",
+          type: "inputText",
           devices: "desktop",
           placeholder: t("Product ID or SKU")
         }
@@ -22,13 +22,13 @@ export function getItems() {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -38,7 +38,9 @@ export function getItems() {
         {
           id: "grid",
           type: "grid",
-          separator: true,
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",
@@ -46,7 +48,7 @@ export function getItems() {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -61,7 +63,7 @@ export function getItems() {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

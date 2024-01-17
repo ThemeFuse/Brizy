@@ -5,8 +5,11 @@ import { toObject } from "visual/utils/object";
 import { String } from "visual/utils/string/specs";
 import { Reader } from "visual/utils/types/Type";
 import { mCompose } from "visual/utils/value";
-import { Choice } from "../Select/types";
-import { ChoiceWithPermalink, ChoicesSync } from "./types";
+import { Choice, ChoicesAsync } from "../Select/types";
+import { ChoicesSync, ChoiceWithPermalink } from "./types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { getCollectionTypes } from "visual/utils/api";
+import { t } from "visual/utils/i18n";
 
 const readPost: Reader<ChoiceWithPermalink> = (v) => {
   type _Post = {
@@ -42,3 +45,10 @@ export const normalizeItems = (items: ChoicesSync): Choice[] => {
 
   return items.map(normalizeItem);
 };
+
+export const getCollectionChoices = (config: ConfigCommon): ChoicesAsync => ({
+  load: () => getCollectionTypes(config),
+  emptyLoad: {
+    title: t("There are no choices")
+  }
+});

@@ -12,6 +12,8 @@ export function getItems({ v, device, component }) {
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalBlocks?.create !== "function";
 
   const isMultiLanguageDisabled =
     config.elements?.header?.multilanguage === false;
@@ -27,7 +29,7 @@ export function getItems({ v, device, component }) {
     }),
     {
       id: "toolbarSticky",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-sticky-menu",
         title: t("Menu")
@@ -38,7 +40,7 @@ export function getItems({ v, device, component }) {
         {
           id: "type",
           label: t("Header"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           choices: [
             { title: t("Static"), value: "static" },
@@ -48,14 +50,14 @@ export function getItems({ v, device, component }) {
         },
         {
           id: "groupSettings",
-          type: "group-dev",
+          type: "group",
+          disabled: disabledGlobalBlock,
           options: [
             {
               id: "makeItGlobal",
               label: t("Make it Global"),
-              type: "globalBlock-dev",
+              type: "globalBlock",
               devices: "desktop",
-              disabled: isCloud(config) && isShopify(config),
               config: {
                 _id: component.getId(),
                 parentId: getInstanceParentId(component.props.instanceKey),
@@ -66,25 +68,25 @@ export function getItems({ v, device, component }) {
               id: "gbConditions",
               disabled: !component.props.meta.globalBlockId,
               value: component.props.meta.globalBlockId,
-              type: "gbConditions",
+              type: "legacy-gbConditions",
               context: "block"
             }
           ]
         },
         {
           id: "membershipGroup",
-          type: "group-dev",
+          type: "group",
           disabled: isCloud(config) && isShopify(config),
           options: [
             {
               id: "membership",
               label: t("Membership"),
-              type: "switch-dev"
+              type: "switch"
             },
             {
               id: "membershipRoles",
               label: t("Show to"),
-              type: "multiSelect-dev",
+              type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("membership") === "off",
               choices: getAllMembershipChoices(config)
@@ -93,19 +95,19 @@ export function getItems({ v, device, component }) {
         },
         {
           id: "translationsGroup",
-          type: "group-dev",
+          type: "group",
           disabled: isWp(config),
           options: [
             {
               id: "translations",
               label: t("Multi-Language"),
-              type: "switch-dev",
+              type: "switch",
               disabled: isMultiLanguageDisabled
             },
             {
               id: "translationsLangs",
               label: t("Show If Language"),
-              type: "multiSelect-dev",
+              type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("translations") === "off",
               choices: getLanguagesChoices(config)
@@ -116,7 +118,7 @@ export function getItems({ v, device, component }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,

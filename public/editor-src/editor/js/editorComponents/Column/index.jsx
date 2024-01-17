@@ -8,6 +8,7 @@ import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
+import Link from "visual/component/Link";
 import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
@@ -23,6 +24,7 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -40,8 +42,6 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleColumn, styleItems } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { getLinkData } from "visual/utils/models/link";
-import Link from "visual/component/Link";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -299,11 +299,9 @@ class Column extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

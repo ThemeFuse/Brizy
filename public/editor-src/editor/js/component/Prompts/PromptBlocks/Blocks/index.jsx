@@ -94,7 +94,7 @@ class BlocksContainer extends Component {
     };
   }
 
-  addPopupMeta({ thumbnailSrc, thumbnailWidth, thumbnailHeight }) {
+  addThumbData({ thumbnailSrc, thumbnailWidth, thumbnailHeight }) {
     return {
       _thumbnailSrc: thumbnailSrc,
       _thumbnailWidth: thumbnailWidth,
@@ -148,13 +148,13 @@ class BlocksContainer extends Component {
   }
 
   handleThumbnailAdd = async (thumbnailData) => {
-    const { projectFonts, onAddBlocks, onClose, type } = this.props;
+    const { projectFonts, onAddBlocks, onClose } = this.props;
     const blockData = await this.getBlockResolve(thumbnailData.id);
 
     const resolve = {
       ...blockData,
       blockId: thumbnailData.id,
-      ...(type === "popup" && { meta: this.addPopupMeta(thumbnailData) })
+      meta: this.addThumbData(thumbnailData)
     };
     const fontsDiff = getBlocksStylesFonts(
       getUsedModelsFonts({ models: resolve }),

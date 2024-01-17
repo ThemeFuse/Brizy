@@ -12,7 +12,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
   return [
     {
       id: "toolbarWiserUpsell",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -23,7 +23,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "upsellType",
           label: t("Upsell Type"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Related Products", value: "related" },
             { title: "Recommended Products", value: "recommended" },
@@ -46,7 +46,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

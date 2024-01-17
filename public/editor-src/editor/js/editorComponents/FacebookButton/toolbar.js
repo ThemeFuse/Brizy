@@ -17,7 +17,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "popoverCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-facebook",
         title: t("Button")
@@ -27,7 +27,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -36,7 +36,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "targetUrl",
                   label: t("Target URL"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -52,7 +52,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "href",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: dvv("targetUrl") === "current",
                   placeholder: "http://",
@@ -63,7 +63,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "type",
                   label: t("Type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -79,7 +79,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "layout",
                   label: t("Layout"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -96,7 +96,7 @@ export function getItems({ v, device, state }) {
                   id: "size",
                   label: t("Size"),
                   devices: "desktop",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { icon: "nc-small", value: "small" },
                     { icon: "nc-large", value: "large" }
@@ -105,7 +105,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "share",
                   label: t("Include Share Button"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -117,21 +117,21 @@ export function getItems({ v, device, state }) {
                 {
                   id: "showCounter",
                   label: t("Show Button Counter"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: boxedLayout,
                   devices: "desktop"
                 },
                 {
                   id: "showFriends",
                   label: t("Show Friend's Faces"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: boxedLayout,
                   devices: "desktop"
                 }
                 // {
                 //   id: "darkScheme",
                 //   label: t("Dark Scheme"),
-                //   type: "switch-dev",
+                //   type: "switch",
                 //   devices: "desktop"
                 // }
               ]
@@ -142,7 +142,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -160,7 +160,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           hideHandlesWhenOne: false,
           tabs: [
             {
@@ -169,7 +169,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -181,7 +181,7 @@ export function getItems({ v, device, state }) {
     {
       id: "advancedSettings",
       devices: "desktop",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       roles: ["admin"],
       position: 110,
       icon: "nc-cog"

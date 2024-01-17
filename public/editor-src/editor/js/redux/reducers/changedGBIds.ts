@@ -41,9 +41,9 @@ export const changedGBIds: RChangedGBIds = (state = [], action, allState) => {
       return state.filter((id) => !GBIdsInPages.includes(id));
     }
     case "UPDATE_GLOBAL_BLOCK": {
-      const { id } = action.payload;
+      const { uid } = action.payload;
 
-      return !state.includes(id) ? [...state, id] : state;
+      return !state.includes(uid) ? [...state, uid] : state;
     }
 
     case "FETCH_PAGE_SUCCESS": {

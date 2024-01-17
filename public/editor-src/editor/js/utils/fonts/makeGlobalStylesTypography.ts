@@ -1,5 +1,6 @@
 import { once } from "underscore";
-import Conf, { Config } from "visual/global/Config";
+import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontStyle as _FontStyle } from "visual/types";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { isExternalPopup } from "visual/utils/models/modes";
@@ -24,7 +25,7 @@ export const makeStyleCSSVar = (data: {
   id: string;
   key: string;
   device: ResponsiveMode;
-  config: Config;
+  config: ConfigCommon;
 }): string => {
   const { id, key, device, config } = data;
   const _device = device === "desktop" ? "" : device;
@@ -43,7 +44,7 @@ export const makeStyleCSSVar = (data: {
 };
 
 export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
-  const config = Conf.getAll();
+  const config = Config.getAll();
 
   const vars = fontStyles
     .map((style) => {

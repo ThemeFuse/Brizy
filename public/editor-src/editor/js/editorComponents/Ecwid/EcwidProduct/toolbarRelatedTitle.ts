@@ -16,7 +16,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -26,14 +26,14 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       options: [
         {
           id: "relatedTitleTypography",
-          type: "typography-dev",
+          type: "typography",
           config: { fontFamily: device === "desktop" }
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -51,13 +51,13 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       options: [
         {
           id: "relatedTitleColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "relatedTitleHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -67,7 +67,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       devices: "desktop",
       position: 40,
@@ -75,7 +75,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         {
           id: "relatedTitleSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,

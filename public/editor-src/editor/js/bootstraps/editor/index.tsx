@@ -9,7 +9,6 @@ import { createStore } from "visual/redux/store";
 import { Font } from "visual/types";
 import {
   addProjectLockedBeacon,
-  getGlobalBlocks,
   removeProjectLockedSendBeacon
 } from "visual/utils/api";
 import { flatMap } from "visual/utils/array";
@@ -17,6 +16,7 @@ import { getBlocksInPage } from "visual/utils/blocks";
 import { PageError, ProjectError } from "visual/utils/errors";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
+import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts,
@@ -24,8 +24,8 @@ import {
 } from "visual/utils/traverse";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
 import { systemFont } from "../../utils/fonts/utils";
+import { readPageData } from "../common/adapter";
 import getMiddleware from "./middleware";
-import { readPageData } from "./utils/adapter";
 import { showError } from "./utils/errors";
 
 const appDiv = document.querySelector("#brz-ed-root");
@@ -66,7 +66,7 @@ const _systemFont = {
     }
 
     const page = readPageData(_page);
-    const globalBlocks = await getGlobalBlocks();
+    const globalBlocks = parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
 
     /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {

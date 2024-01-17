@@ -30,6 +30,8 @@ export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalBlocks?.create !== "function";
   const isMultiLanguageDisabled =
     config.elements?.footer?.multilanguage === false;
 
@@ -63,7 +65,7 @@ export function getItems({ v, device, component, context }) {
     }),
     {
       id: "toolbarFooter",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-footer",
         title: t("Footer")
@@ -73,14 +75,14 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "groupSettings",
-          type: "group-dev",
+          type: "group",
+          disabled: disabledGlobalBlock,
           options: [
             {
               id: "makeItGlobal",
               label: t("Make it Global"),
-              type: "globalBlock-dev",
+              type: "globalBlock",
               devices: "desktop",
-              disabled: isCloud(config) && isShopify(config),
               config: {
                 _id: component.getId(),
                 parentId: getInstanceParentId(component.props.instanceKey),
@@ -91,25 +93,25 @@ export function getItems({ v, device, component, context }) {
               id: "gbConditions",
               disabled: !component.props.meta.globalBlockId,
               value: component.props.meta.globalBlockId,
-              type: "gbConditions",
+              type: "legacy-gbConditions",
               context: "block"
             }
           ]
         },
         {
           id: "membershipGroup",
-          type: "group-dev",
+          type: "group",
           disabled: isCloud(config) && isShopify(config),
           options: [
             {
               id: "membership",
               label: t("Membership"),
-              type: "switch-dev"
+              type: "switch"
             },
             {
               id: "membershipRoles",
               label: t("Show to"),
-              type: "multiSelect-dev",
+              type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("membership") === "off",
               choices: getAllMembershipChoices(config)
@@ -118,19 +120,19 @@ export function getItems({ v, device, component, context }) {
         },
         {
           id: "translationsGroup",
-          type: "group-dev",
+          type: "group",
           disabled: isWp(config),
           options: [
             {
               id: "translations",
               label: t("Multi-Language"),
-              type: "switch-dev",
+              type: "switch",
               disabled: isMultiLanguageDisabled
             },
             {
               id: "translationsLangs",
               label: t("Show If Language"),
-              type: "multiSelect-dev",
+              type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("translations") === "off",
               choices: getLanguagesChoices(config)
@@ -141,7 +143,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -150,7 +152,7 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -159,7 +161,7 @@ export function getItems({ v, device, component, context }) {
                 {
                   label: t("Image"),
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices
                 }
@@ -174,12 +176,12 @@ export function getItems({ v, device, component, context }) {
                   id: "maskShape",
                   label: t("Shape"),
                   devices: "desktop",
-                  type: "select-dev",
+                  type: "select",
                   choices: MaskShapes
                 },
                 {
                   id: "maskCustomUpload",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop",
                   label: t("Image"),
                   config: {
@@ -194,18 +196,18 @@ export function getItems({ v, device, component, context }) {
                 },
                 {
                   id: "groupSize",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskSize",
                       label: t("Size"),
-                      type: "select-dev",
+                      type: "select",
                       choices: MaskSizes
                     },
                     {
                       id: "maskScale",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskSize !== "custom",
                       config: {
                         min: 1,
@@ -220,19 +222,19 @@ export function getItems({ v, device, component, context }) {
                 },
                 {
                   id: "groupPosition",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskPosition",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Position"),
                       choices: MaskPositions
                     },
                     {
                       id: "maskPositionx",
                       label: t("X"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -243,7 +245,7 @@ export function getItems({ v, device, component, context }) {
                     {
                       id: "maskPositiony",
                       label: t("Y"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -256,7 +258,7 @@ export function getItems({ v, device, component, context }) {
                 {
                   id: "maskRepeat",
                   label: t("Repeat"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
                   choices: MaskRepeat
                 }
@@ -268,7 +270,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -282,7 +284,7 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabOverlay",
@@ -290,7 +292,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -301,7 +303,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -312,7 +314,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER],
                   disabled: !maskShapeIsDisabled
                 }
@@ -324,7 +326,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "maskShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER],
                   disabled: maskShapeIsDisabled
                 }
@@ -336,7 +338,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,
@@ -350,7 +352,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -358,14 +360,14 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "containerTypeGroup",
-          type: "group-dev",
+          type: "group",
           position: 10,
           options: [
             {
               id: "containerType",
               label: t("Width"),
               devices: "desktop",
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: t("Boxed"), value: "boxed" },
                 { title: t("Full"), value: "fullWidth" }
@@ -374,7 +376,7 @@ export function getItems({ v, device, component, context }) {
             {
               id: "containerSize",
               label: device === "desktop" ? "" : t("Width"),
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("containerType") !== "boxed",
               config: {
                 min: getMinContainerSuffix({ v, device }),
@@ -389,14 +391,14 @@ export function getItems({ v, device, component, context }) {
         },
         {
           id: "toolbarContainerTypeAndHeight",
-          type: "group-dev",
+          type: "group",
           devices: "desktop",
           position: 100,
           options: [
             {
               id: "fullHeight",
               label: t("Height"),
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: t("Auto"), value: "off" },
                 { title: t("Custom"), value: "custom" },
@@ -405,7 +407,7 @@ export function getItems({ v, device, component, context }) {
             },
             {
               id: "sectionHeight",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("fullHeight") !== "custom",
               config: {
                 min: 20,
@@ -421,7 +423,7 @@ export function getItems({ v, device, component, context }) {
         {
           id: "verticalAlign",
           label: t("Content"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           disabled: dvv("fullHeight") === "off",
           position: 110,
@@ -434,7 +436,9 @@ export function getItems({ v, device, component, context }) {
         {
           id: "grid",
           type: "grid",
-          separator: true,
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",
@@ -442,7 +446,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -457,7 +461,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

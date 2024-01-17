@@ -10,7 +10,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-switcher",
         title: t("Switcher")
@@ -19,7 +19,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "currentShortcodeSwitcher",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeIcon",
@@ -28,7 +28,7 @@ export function getItems({ v, device }) {
                 {
                   id: "icon",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   devices: "desktop",
                   config: { canDelete: true }
                 },
@@ -37,17 +37,17 @@ export function getItems({ v, device }) {
                   : [
                       {
                         id: "iconPosition",
-                        type: "radioGroup-dev",
+                        type: "radioGroup",
                         disabled: true
                       },
                       {
                         id: "groupIconSizesPicker",
-                        type: "group-dev",
+                        type: "group",
                         disabled: true
                       },
                       {
                         id: "iconSpacing",
-                        type: "slider-dev",
+                        type: "slider",
                         disabled: true
                       }
                     ])

@@ -35,6 +35,20 @@ export function cssStyleElementLoginFieldPadding({ v, device, state }) {
       ${padding / 2}${paddingSuffix};`;
 }
 
+export function cssStyleElementFieldsInputSize({ v, device, state }) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const size = dvv("size");
+
+  const sizeToPadding = {
+    small: dvv("sizeSmallPadding"),
+    medium: dvv("sizeMediumPadding"),
+    large: dvv("sizeLargePadding")
+  };
+
+  return `padding: ${sizeToPadding[size]}px ${sizeToPadding[size] + 10}px;`;
+}
+
 // Style Typography Lost Password
 export function cssStyleElementLoginLostPasswordTypography2FontFamily({
   v,

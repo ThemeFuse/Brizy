@@ -29,7 +29,7 @@ class Items extends EditorArrayComponent {
         return [
           {
             id: "order",
-            type: "order-dev",
+            type: "order",
             devices: "desktop",
             position: 105,
             roles: ["admin"],
@@ -56,7 +56,7 @@ class Items extends EditorArrayComponent {
           },
           {
             id: "duplicate",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-duplicate",
             title: t("Duplicate"),
             position: 200,
@@ -68,7 +68,7 @@ class Items extends EditorArrayComponent {
           },
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-trash",
             title: t("Delete"),
             position: 250,

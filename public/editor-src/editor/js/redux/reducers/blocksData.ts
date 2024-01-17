@@ -120,7 +120,7 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
         if (block.value._id === data.value._id) {
           return createGlobalBlockSymbol({
             blockId: block.blockId,
-            id: data.value._id
+            uid: data.value._id
           });
         }
 
@@ -234,13 +234,13 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     // last slide - then instead of REMOVE_BLOCK action we get
     // UPDATE_GLOBAL_BLOCK - with payload.data.value = null
     case "UPDATE_GLOBAL_BLOCK": {
-      const { id, data } = action.payload;
+      const { uid, data } = action.payload;
 
       if (data.value === null) {
         return state;
       }
 
-      return { ...state, [id]: data };
+      return { ...state, [uid]: data };
     }
 
     case ActionTypes.IMPORT_TEMPLATE:

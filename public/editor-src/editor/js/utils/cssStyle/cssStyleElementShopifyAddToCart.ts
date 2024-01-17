@@ -1,4 +1,5 @@
-import { cssStyleBorder, cssStyleBorderRadius, cssStyleColor } from ".";
+import { getButtonSizes, getSize } from "visual/utils/cssStyle/cssStyleSize";
+import { defaultValueValue } from "visual/utils/onChange";
 import { styleSizeHeight, styleSizeWidth } from "../style2/styleSize";
 import { CSSValue } from "../style2/types";
 
@@ -7,34 +8,20 @@ export function cssStyleElementShopifyAddToCartSize({
   device,
   state
 }: CSSValue): string {
-  const width = styleSizeWidth({ v, device, state });
-  const height = styleSizeHeight({ v, device, state });
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
-  return width === undefined || height === undefined
-    ? ""
-    : `padding: ${height}px ${width}px;`;
-}
+  const size = getSize(dvv("size"));
 
-export function cssStyleElementShopifyAddToCartBorderRadius({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state });
-}
+  if (!size) {
+    return "";
+  }
 
-export function cssStyleElementShopifyAddToCartBorderBorder({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBorder({ v, device, prefix: "button", state });
-}
+  const { width: _width = 0, height: _height = 0 } = getButtonSizes(size) ?? {};
 
-export function cssStyleElementShopifyAddToCartButtonColor({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "buttonColor" });
+  const width =
+    size === "custom" ? styleSizeWidth({ v, device, state }) : _width;
+  const height =
+    size === "custom" ? styleSizeHeight({ v, device, state }) : _height;
+
+  return `padding: ${height}px ${width}px;`;
 }

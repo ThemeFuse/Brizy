@@ -13,6 +13,11 @@
       left: $sidebar-size;
       right: auto;
     }
+
+    .brz-ui-modal__sidebar {
+      left: 48px;
+      text-align: start;
+    }
   }
 
   &.brz-ed-sidebar__right--align-right {
@@ -59,11 +64,11 @@
     font-size: 0px;
     cursor: pointer;
 
-    &>.brz-icon-svg {
+    & > .brz-icon-svg {
       font-size: 12px;
     }
 
-    &>.brz-ed-sidebar__right__icon-tooltip {
+    & > .brz-ed-sidebar__right__icon-tooltip {
       top: calc(100% + 8px);
 
       &:after {
@@ -76,7 +81,7 @@
     &:hover {
       color: $brand__primary;
 
-      &>.brz-ed-sidebar__right__icon-tooltip {
+      & > .brz-ed-sidebar__right__icon-tooltip {
         opacity: 1;
         visibility: visible;
         transition-delay: 750ms;
@@ -132,7 +137,6 @@
     padding: 15px 0;
 
     .brz-ed-option-type__colorPicker {
-
       &,
       &-dev {
         padding: 15px;
@@ -168,10 +172,10 @@
     }
   }
 
-  &__tabs>.brz-ed-option {
+  &__tabs > .brz-ed-option {
     padding: 23px 30px 30px;
 
-    &.brz-ed-option-type__sidebarTabs-dev {
+    &.brz-ed-option-type__sidebarTabs {
       padding: 0;
     }
   }
@@ -179,4 +183,34 @@
 
 .brz-scrollColor__dark {
   background-color: $scrollbar__sidebar-color;
+}
+
+.brz-video-help > .brz-ui-modal-root .brz-ui-modal {
+  height: auto;
+}
+
+
+.brz-ed-content .brz-ed-control__tab__content{
+  padding: 0;
+}
+
+.brz-ui-menu.brz-ui-menu__sidebar.brz-ui-menu-dark .brz-ui-menu__sidebar-item.brz-ui-menu-item-selected .brz-video-help .brz-ui-icon__svg:first-child svg {
+  color: $help_video__icon-color;
+  cursor: pointer;
+  &:hover {
+    color: $white;
+  }
+}
+.brz-ui-menu .brz-video-help .brz-ui-modal-wrap {
+  cursor: auto;
+}
+
+.brz-video-help .brz-ui-video-player video {
+  display: block;
+}
+
+.brz-sidebar-item__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

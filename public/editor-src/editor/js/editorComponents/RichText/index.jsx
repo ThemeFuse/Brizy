@@ -55,11 +55,7 @@ class RichText extends EditorComponent {
 
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
-
-  handleResizerChange = (patch) => this.patchValue(patch);
-
   prepopulation = null;
-
   state = {
     formats: {},
     prepopulation: null,
@@ -67,15 +63,13 @@ class RichText extends EditorComponent {
     selectionCoords: null,
     selectedValue: null
   };
-
   quillRef = React.createRef();
-
   toolbarRef = React.createRef();
-
   toolbarOpen = false;
-
   // Can be enabled by Config
   renderDC = !Config.getAll().dynamicContent?.liveInBuilder || IS_PREVIEW;
+
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   componentDidMount() {
     // TODO NEED review and exclude ReactDOM.findDOMNode
@@ -145,8 +139,9 @@ class RichText extends EditorComponent {
 
     const extra = {
       ...(keyCode && { keyCode }),
-      ...(formats.population?.population && {
-        placeholder: formats.population.population
+      ...(formats.population && {
+        placeholder: formats.population.population,
+        label: formats.population.label
       })
     };
 
@@ -448,7 +443,10 @@ class RichText extends EditorComponent {
       };
     }
 
-    if ("linkPopulation" in patch || "linkExternal" in patch) {
+    if (
+      ("linkPopulation" in patch || "linkExternal" in patch) &&
+      !this.getValue().textPopulation
+    ) {
       const link = handleChangeLink(this.getValue2().v, patch);
       this.quillRef.current.formatMultiple(link);
     }
@@ -558,11 +556,9 @@ class RichText extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

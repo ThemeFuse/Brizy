@@ -1,5 +1,5 @@
-import { uuid } from "visual/utils/uuid";
 import deepMerge from "deepmerge";
+import { uuid } from "visual/utils/uuid";
 
 export default function perfHugeBlock(data) {
   return deepMerge(
@@ -34,8 +34,7 @@ export const pageData = {
                         value: {
                           _styles: ["richText"],
                           _id: "ywccunroam",
-                          text:
-                            '<h6 class="brz-tp-gwrbzfpyge brz-text-lg-center"><span style="color: rgb(5, 178, 230);">FREE vs PRO</span></h6>'
+                          text: '<h6 class="brz-tp-gwrbzfpyge brz-text-lg-center"><span style="color: rgb(5, 178, 230);">FREE vs PRO</span></h6>'
                         }
                       }
                     ],
@@ -52,8 +51,7 @@ export const pageData = {
                         value: {
                           _styles: ["richText"],
                           _id: "xvvocyhmvu",
-                          text:
-                            '<h3 class="brz-text-lg-center brz-tp-heading3"><strong style="color: rgb(24, 28, 37);">See why the PRO is better</strong></h3>'
+                          text: '<h3 class="brz-text-lg-center brz-tp-heading3"><strong style="color: rgb(24, 28, 37);">See why the PRO is better</strong></h3>'
                         }
                       }
                     ],
@@ -383,8 +381,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "wwdjiyrrok",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Drag &amp; Drop</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Drag &amp; Drop</span></h6>'
                                                 }
                                               }
                                             ],
@@ -540,8 +537,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "kmjsvdyewe",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Real Time Editing</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Real Time Editing</span></h6>'
                                                 }
                                               }
                                             ],
@@ -700,8 +696,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "iwkveimxit",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">26 Builder Elements</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">26 Builder Elements</span></h6>'
                                                 }
                                               }
                                             ],
@@ -857,8 +852,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "pirpxuzufi",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Responsive Control</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Responsive Control</span></h6>'
                                                 }
                                               }
                                             ],
@@ -1014,8 +1008,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "hvpopsvbhm",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Contact Forms</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Contact Forms</span></h6>'
                                                 }
                                               }
                                             ],
@@ -1171,8 +1164,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "mqcpzubkbq",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Sliders</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Sliders</span></h6>'
                                                 }
                                               }
                                             ],
@@ -1328,8 +1320,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "nhgylpwcir",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Global Blocks</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Global Blocks</span></h6>'
                                                 }
                                               }
                                             ],
@@ -1488,8 +1479,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "gtjeltimgg",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Saved Blocks</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Saved Blocks</span></h6>'
                                                 }
                                               }
                                             ],
@@ -1645,8 +1635,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "adubkuwsby",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Reorder Blocks</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Reorder Blocks</span></h6>'
                                                 }
                                               }
                                             ],
@@ -1802,8 +1791,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "wradsjppuq",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Undo / Redo</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Undo / Redo</span></h6>'
                                                 }
                                               }
                                             ],
@@ -1959,8 +1947,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "zektcebhlu",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Autosave</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Autosave</span></h6>'
                                                 }
                                               }
                                             ],
@@ -2116,8 +2103,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "roozubkrny",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Right Click Menu</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Right Click Menu</span></h6>'
                                                 }
                                               }
                                             ],
@@ -2273,8 +2259,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "xpzafuoqlg",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Paddings &amp; Margins</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Paddings &amp; Margins</span></h6>'
                                                 }
                                               }
                                             ],
@@ -2431,8 +2416,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "chroytjumw",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Resize Columns</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Resize Columns</span></h6>'
                                                 }
                                               }
                                             ],
@@ -2588,8 +2572,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "yvsrviigxi",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Headers &amp; Footers</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Headers &amp; Footers</span></h6>'
                                                 }
                                               }
                                             ],
@@ -2745,8 +2728,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "pughlgclhn",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pop-up Builder</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pop-up Builder</span></h6>'
                                                 }
                                               }
                                             ],
@@ -2902,8 +2884,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "oejkgsicxp",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Mega Menu </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Mega Menu </span></h6>'
                                                 }
                                               }
                                             ],
@@ -3060,8 +3041,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "tsqshmkxea",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Role Manager</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Role Manager</span></h6>'
                                                 }
                                               }
                                             ],
@@ -3542,8 +3522,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "kqyywwsfll",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Global Styling</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Global Styling</span></h6>'
                                                 }
                                               }
                                             ],
@@ -3699,8 +3678,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "xuktzkjvfq",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pre-made Blocks</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pre-made Blocks</span></h6>'
                                                 }
                                               }
                                             ],
@@ -3856,8 +3834,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "llxxxtgumx",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Video Backgrounds</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Video Backgrounds</span></h6>'
                                                 }
                                               }
                                             ],
@@ -4016,8 +3993,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "buvtyvpmmo",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Shadows</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Shadows</span></h6>'
                                                 }
                                               }
                                             ],
@@ -4173,8 +4149,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "xwlncroytv",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Border &amp; Corner Radius</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Border &amp; Corner Radius</span></h6>'
                                                 }
                                               }
                                             ],
@@ -4330,8 +4305,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "asdokwcyje",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Entrance Animations</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Entrance Animations</span></h6>'
                                                 }
                                               }
                                             ],
@@ -4487,8 +4461,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "orqpvmawsm",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Image Focus &amp; Zoom</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Image Focus &amp; Zoom</span></h6>'
                                                 }
                                               }
                                             ],
@@ -4644,8 +4617,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "evtehbpvwu",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">4000+ Vector Icons</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">4000+ Vector Icons</span></h6>'
                                                 }
                                               }
                                             ],
@@ -4801,8 +4773,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "hzuagbnrvp",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">150+ Premium Layouts &amp; Blocks</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">150+ Premium Layouts &amp; Blocks</span></h6>'
                                                 }
                                               }
                                             ],
@@ -4958,8 +4929,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "ywdwymgszw",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">12 PRO Elements</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">12 PRO Elements</span></h6>'
                                                 }
                                               }
                                             ],
@@ -5115,8 +5085,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "jjzkowcyvl",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Shape Dividers</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Shape Dividers</span></h6>'
                                                 }
                                               }
                                             ],
@@ -5272,8 +5241,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "usxbfwnabr",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Image &amp; Video Filters</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Image &amp; Video Filters</span></h6>'
                                                 }
                                               }
                                             ],
@@ -5429,8 +5397,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "jawoxudady",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Custom Fonts </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Custom Fonts </span></h6>'
                                                 }
                                               }
                                             ],
@@ -5590,8 +5557,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "bahhrupksj",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Typekit Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Typekit Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -5751,8 +5717,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "rzleenzbee",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Premium Icon Sets </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Premium Icon Sets </span></h6>'
                                                 }
                                               }
                                             ],
@@ -5909,8 +5874,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "ezizsofsar",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Google Maps Styling </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Google Maps Styling </span></h6>'
                                                 }
                                               }
                                             ],
@@ -6070,8 +6034,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "nubkkzatzw",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Upload Own Videos </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Upload Own Videos </span></h6>'
                                                 }
                                               }
                                             ],
@@ -6228,8 +6191,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "zflhyzmxdp",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Unsplash Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Unsplash Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -6719,8 +6681,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "nrseuxrwgv",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Wordpress Templates</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Wordpress Templates</span></h6>'
                                                 }
                                               }
                                             ],
@@ -6876,8 +6837,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "iikhgiotpd",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Dynamic Content WordPress</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Dynamic Content WordPress</span></h6>'
                                                 }
                                               }
                                             ],
@@ -7033,8 +6993,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "vkkomzlzgn",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Text</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Text</span></h6>'
                                                 }
                                               }
                                             ],
@@ -7193,8 +7152,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "xjnbwwykek",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Images</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Images</span></h6>'
                                                 }
                                               }
                                             ],
@@ -7353,8 +7311,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "ijppzrzjbz",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Videos</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Videos</span></h6>'
                                                 }
                                               }
                                             ],
@@ -7513,8 +7470,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "htzuvqhjcx",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Maps </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Maps </span></h6>'
                                                 }
                                               }
                                             ],
@@ -7674,8 +7630,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "usoentorra",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">ACF Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">ACF Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -7831,8 +7786,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "rqjfueqbdr",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Toolset Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Toolset Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -7988,8 +7942,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "jkzgvrotrg",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pods Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pods Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -8145,8 +8098,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "tpqqrsoeno",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Metabox Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Metabox Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -8302,8 +8254,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "pnjmmjzpub",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Posts Element</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Posts Element</span></h6>'
                                                 }
                                               }
                                             ],
@@ -8459,8 +8410,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "lwvfpqctzw",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Menu Element</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Menu Element</span></h6>'
                                                 }
                                               }
                                             ],
@@ -8616,8 +8566,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "scqmjptziw",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Sticky Header Functionality</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Sticky Header Functionality</span></h6>'
                                                 }
                                               }
                                             ],
@@ -8773,8 +8722,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "znffisuuft",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Block Conditions </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Block Conditions </span></h6>'
                                                 }
                                               }
                                             ],
@@ -9259,8 +9207,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "ediunsucwu",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">WordPress eMail Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">WordPress eMail Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -9416,8 +9363,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "aukasopyxa",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">WordPress Leads</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">WordPress Leads</span></h6>'
                                                 }
                                               }
                                             ],
@@ -9576,8 +9522,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "gwvpmmwfgz",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pop-up Builder </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Pop-up Builder </span></h6>'
                                                 }
                                               }
                                             ],
@@ -9733,8 +9678,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "lxovlclfdc",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">14 Premium popup designs</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">14 Premium popup designs</span></h6>'
                                                 }
                                               }
                                             ],
@@ -9890,8 +9834,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "vfsxmmitrl",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Advanced Contact Form Element </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Advanced Contact Form Element </span></h6>'
                                                 }
                                               }
                                             ],
@@ -10048,8 +9991,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "iotjwmuffu",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">White Label Options</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">White Label Options</span></h6>'
                                                 }
                                               }
                                             ],
@@ -10205,8 +10147,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "hfbwdvqluz",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">A/B Split Testing </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">A/B Split Testing </span></h6>'
                                                 }
                                               }
                                             ],
@@ -10363,8 +10304,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "ocvmkusqkc",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">ConvertKit Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">ConvertKit Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -10520,8 +10460,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "qnafaukacw",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Drip Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Drip Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -10677,8 +10616,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "vjbnoxiqlg",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Mailchimp Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Mailchimp Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -10834,8 +10772,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "loepagcuix",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Sendinblue Integration</span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Brevo Integration</span></h6>'
                                                 }
                                               }
                                             ],
@@ -10991,8 +10928,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "nrnswawylv",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Zapier Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Zapier Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -11151,8 +11087,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "fstdeyvmsl",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Campaign Monitor Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Campaign Monitor Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -11311,8 +11246,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "qqsqllhedx",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">ConvertKit Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">ConvertKit Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -11471,8 +11405,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "sftopthzwa",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Active Campaign Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Active Campaign Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -11628,8 +11561,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "ckhluflyin",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Get Response Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Get Response Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -11788,8 +11720,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "relyorsfjw",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">MailJet Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">MailJet Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -11948,8 +11879,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "qhlldbwjwb",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">e-goi Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">e-goi Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -12108,8 +12038,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "rhmshvykua",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Hubspot Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">Hubspot Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -12268,8 +12197,7 @@ export const pageData = {
                                                 value: {
                                                   _styles: ["richText"],
                                                   _id: "vpmgwfgbnm",
-                                                  text:
-                                                    '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">MailerLite Integration </span></h6>'
+                                                  text: '<h6 class="brz-tp-xdabhchuid"><span style="color: rgb(128, 131, 147);">MailerLite Integration </span></h6>'
                                                 }
                                               }
                                             ],
@@ -12508,8 +12436,7 @@ export const pageData = {
                         value: {
                           _styles: ["richText"],
                           _id: "goexiigknk",
-                          text:
-                            '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
+                          text: '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
                         }
                       }
                     ],
@@ -12684,8 +12611,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "mkvjxtsdln",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Drag &amp; Drop</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Position anything on the page by dragging &amp; dropping elements, columns, rows.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Drag &amp; Drop</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Position anything on the page by dragging &amp; dropping elements, columns, rows.</span></p>'
                                           }
                                         }
                                       ],
@@ -12745,8 +12671,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "hfmpspgisv",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Real Time Editing</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Edit everything in real time right in front of your eyes directly on the front end.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Real Time Editing</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Edit everything in real time right in front of your eyes directly on the front end.</span></p>'
                                           }
                                         }
                                       ],
@@ -12802,8 +12727,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "inqmjxhmsy",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">26 Builder Elements</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy comes with 26 free builder elements that you can use to create your website. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">26 Builder Elements</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy comes with 26 free builder elements that you can use to create your website. </span></p>'
                                           }
                                         }
                                       ],
@@ -12865,8 +12789,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "ifotdcaysj",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Responsive Control</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">You have 100% control on how your website will look on mobiles and tablets.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Responsive Control</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">You have 100% control on how your website will look on mobiles and tablets.</span></p>'
                                           }
                                         }
                                       ],
@@ -12967,8 +12890,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "svjguhqptm",
-                                            text:
-                                              '<h5 class="brz-ls-xs-im-1 brz-ls-sm-im-NaN brz-ls-lg-0 brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></h5><h5 class="brz-tp-unbroxaxnj brz-mt-lg-10 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Contact Forms</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use the free Contact Form element to create as many contact forms as you like.</span></p>'
+                                            text: '<h5 class="brz-ls-xs-im-1 brz-ls-sm-im-NaN brz-ls-lg-0 brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></h5><h5 class="brz-tp-unbroxaxnj brz-mt-lg-10 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Contact Forms</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use the free Contact Form element to create as many contact forms as you like.</span></p>'
                                           }
                                         }
                                       ],
@@ -13031,8 +12953,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "czltkejcvw",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Sliders</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Any block in Brizy can be transformed into a slider at a press of a button. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Sliders</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Any block in Brizy can be transformed into a slider at a press of a button. </span></p>'
                                           }
                                         }
                                       ],
@@ -13092,8 +13013,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "eqkgrdzjov",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Global Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Modify global blocks on more pages at the same time. Great for repeating content.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Global Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Modify global blocks on more pages at the same time. Great for repeating content.</span></p>'
                                           }
                                         }
                                       ],
@@ -13152,8 +13072,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "bpafezjhay",
-                                            text:
-                                              '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Saved Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Save any block for later use on a different page. Great for repeating content.</span></p>'
+                                            text: '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Saved Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Save any block for later use on a different page. Great for repeating content.</span></p>'
                                           }
                                         }
                                       ],
@@ -13255,8 +13174,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "sunvpdwkpb",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Reorder Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Drag-and-drop between live representations of your blocks to reorder your content.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Reorder Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Drag-and-drop between live representations of your blocks to reorder your content.</span></p>'
                                           }
                                         }
                                       ],
@@ -13315,8 +13233,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "hbfrqqkccb",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Undo / Redo</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Go back to a previous state with our Undo functionality. Or, redo steps to work faster.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Undo / Redo</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Go back to a previous state with our Undo functionality. Or, redo steps to work faster.</span></p>'
                                           }
                                         }
                                       ],
@@ -13375,8 +13292,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "jxiauohubd",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Autosave</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Never lose your draft work again! The Autosave option allows for cloud versioning.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Autosave</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Never lose your draft work again! The Autosave option allows for cloud versioning.</span></p>'
                                           }
                                         }
                                       ],
@@ -13435,8 +13351,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "dkmnxtzuvv",
-                                            text:
-                                              '<h5 class="brz-tp-unbroxaxnj brz-ls-lg-0 brz-ls-sm-im-NaN brz-ls-xs-im-1"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></h5><h5 class="brz-mb-lg-5 brz-mt-lg-10 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Right-Click Menu</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Quickly access shortcuts and selection tools with just a right click on your mouse button.</span></p>'
+                                            text: '<h5 class="brz-tp-unbroxaxnj brz-ls-lg-0 brz-ls-sm-im-NaN brz-ls-xs-im-1"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></h5><h5 class="brz-mb-lg-5 brz-mt-lg-10 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Right-Click Menu</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Quickly access shortcuts and selection tools with just a right click on your mouse button.</span></p>'
                                           }
                                         }
                                       ],
@@ -13541,8 +13456,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "kpuotrblkl",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Padding &amp; Margin</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Have full control over your layout with the built in padding &amp; margin options. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Padding &amp; Margin</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Have full control over your layout with the built in padding &amp; margin options. </span></p>'
                                           }
                                         }
                                       ],
@@ -13598,8 +13512,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "jvjgqjlirb",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Resize Columns</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Drag the handle to resize any column on the page to your liking. The content will adjust.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Resize Columns</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Drag the handle to resize any column on the page to your liking. The content will adjust.</span></p>'
                                           }
                                         }
                                       ],
@@ -13659,8 +13572,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "iehigwgccq",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Header &amp; Footer</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">A bunch of headers and footers that have unique options like sticky or hamburger menu.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Header &amp; Footer</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">A bunch of headers and footers that have unique options like sticky or hamburger menu.</span></p>'
                                           }
                                         }
                                       ],
@@ -13720,8 +13632,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "lyupmxpgey",
-                                            text:
-                                              '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up Builder</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Build any popup you can imagine using the same tools you already know and love.</span></p>'
+                                            text: '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up Builder</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Build any popup you can imagine using the same tools you already know and love.</span></p>'
                                           }
                                         }
                                       ],
@@ -13823,8 +13734,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "xuhntmkxdi",
-                                            text:
-                                              '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Mega Menu </strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Super useful for header menus that are complex and multi-columned.</span></p>'
+                                            text: '<p class="brz-text-lg-left brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Mega Menu </strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Super useful for header menus that are complex and multi-columned.</span></p>'
                                           }
                                         }
                                       ],
@@ -13884,8 +13794,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "wlwotvppbf",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Role Manager</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Allow or restrict the levels of access users can have when editing content.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Role Manager</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Allow or restrict the levels of access users can have when editing content.</span></p>'
                                           }
                                         }
                                       ],
@@ -14004,8 +13913,7 @@ export const pageData = {
                         value: {
                           _styles: ["richText"],
                           _id: "yxqyugnaax",
-                          text:
-                            '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
+                          text: '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
                         }
                       }
                     ],
@@ -14181,8 +14089,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "fipqcptjvx",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Global Styling</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Change fonts and colors across your website in seconds. A great time saver feature.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Global Styling</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Change fonts and colors across your website in seconds. A great time saver feature.</span></p>'
                                           }
                                         }
                                       ],
@@ -14242,8 +14149,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "zdjsaxcuzv",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Pre-made Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use over 200 pre-made blocks to create a website in a matter of minutes.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(144, 147, 161); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Pre-made Blocks</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use over 200 pre-made blocks to create a website in a matter of minutes.</span></p>'
                                           }
                                         }
                                       ],
@@ -14299,8 +14205,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "poemcpsxoc",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Video Backgrounds</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use any YouTube or Vimeo videos as a loopable background to any block.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Video Backgrounds</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use any YouTube or Vimeo videos as a loopable background to any block.</span></p>'
                                           }
                                         }
                                       ],
@@ -14356,8 +14261,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "hjxeuwggfc",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Shadows</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Add box-shadows to any element, including columns and rows.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Shadows</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Add box-shadows to any element, including columns and rows.</span></p>'
                                           }
                                         }
                                       ],
@@ -14455,8 +14359,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "jxyvsnufpv",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.7; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Borders &amp; Corners</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Further stylize your content by rounding corners or adding borders.&nbsp;</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.7; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Borders &amp; Corners</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Further stylize your content by rounding corners or adding borders.&nbsp;</span></p>'
                                           }
                                         }
                                       ],
@@ -14517,8 +14420,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "vrvanpwyyg",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Animations</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Entry animations that bring pizzaz and interaction are always a good idea to have.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Animations</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Entry animations that bring pizzaz and interaction are always a good idea to have.</span></p>'
                                           }
                                         }
                                       ],
@@ -14574,8 +14476,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "atysvrmofa",
-                                            text:
-                                              '<h5 class="brz-tp-unbroxaxnj brz-ls-lg-0 brz-ls-sm-im-NaN brz-ls-xs-im-1"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></h5><h5 class="brz-mb-lg-5 brz-mt-lg-10 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Image Focus &amp; Zoom</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Zoom in a photo and pan it around with our unique Focus point functionality.</span></p>'
+                                            text: '<h5 class="brz-tp-unbroxaxnj brz-ls-lg-0 brz-ls-sm-im-NaN brz-ls-xs-im-1"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></h5><h5 class="brz-mb-lg-5 brz-mt-lg-10 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Image Focus &amp; Zoom</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Zoom in a photo and pan it around with our unique Focus point functionality.</span></p>'
                                           }
                                         }
                                       ],
@@ -14634,8 +14535,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "fdyvdbmyvz",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">4k+ Vector Icons</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use over 4000+ vector icons in 27 categories. There is nothing you can\'t find. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">4k+ Vector Icons</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use over 4000+ vector icons in 27 categories. There is nothing you can\'t find. </span></p>'
                                           }
                                         }
                                       ],
@@ -14733,8 +14633,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "bxtjakwktx",
-                                            text:
-                                              '<h5 class="brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0"><strong style="color: rgb(24, 28, 37);">Premium Layouts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">We\'ve added over 150+ premium layouts and blocks. Upgrade to PRO to use all today.</span></p>'
+                                            text: '<h5 class="brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0"><strong style="color: rgb(24, 28, 37);">Premium Layouts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">We\'ve added over 150+ premium layouts and blocks. Upgrade to PRO to use all today.</span></p>'
                                           }
                                         }
                                       ],
@@ -14796,8 +14695,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "hcbhpkvwoz",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">PRO Elements</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Brizy PRO comes with a bunch of exclusive design elements.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">PRO Elements</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Brizy PRO comes with a bunch of exclusive design elements.</span></p>'
                                           }
                                         }
                                       ],
@@ -14960,8 +14858,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "ztfwajnqbd",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Shape Dividers</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">The shape dividers option will let you create interesting and creative client websites. </span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Shape Dividers</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">The shape dividers option will let you create interesting and creative client websites. </span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -15200,8 +15097,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "ibwshbmszg",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Filters</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Improve the way your media looks with our non-destructive filters.</span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Filters</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Improve the way your media looks with our non-destructive filters.</span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -15479,8 +15375,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "hmrrnhnhua",
-                                            text:
-                                              '<h5 class="brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0"><strong style="color: rgb(24, 28, 37);">Custom Fonts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Upload and use your own custom fonts inside Brizy. A great option for client corporate fonts.</span></p>',
+                                            text: '<h5 class="brz-tp-unbroxaxnj brz-ls-sm-im-NaN brz-ls-lg-0 brz-mt-lg-48 brz-lh-xs-2 brz-fs-xs-20 brz-ls-xs-0"><strong style="color: rgb(24, 28, 37);">Custom Fonts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Upload and use your own custom fonts inside Brizy. A great option for client corporate fonts.</span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -15721,8 +15616,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "uqosibigtn",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Typekit Fonts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Sync your Typekit premium fonts directly in Brizy in an instant.</span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.7;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Typekit Fonts</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Sync your Typekit premium fonts directly in Brizy in an instant.</span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -15958,8 +15852,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "eacoacorof",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Premium Icons</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use one of the multiple premium icon sets included in Brizy PRO.</span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Premium Icons</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use one of the multiple premium icon sets included in Brizy PRO.</span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -16198,8 +16091,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "irkshxkkvc",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Map Styling</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Give your Google map a new style &amp; make it your own with our built-in styling options </span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Map Styling</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Give your Google map a new style &amp; make it your own with our built-in styling options </span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -16477,8 +16369,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "ffuoiehvtr",
-                                            text:
-                                              '<h5 class="brz-ls-xs-0 brz-fs-xs-20 brz-lh-xs-2 brz-mt-lg-48 brz-ls-lg-0 brz-ls-sm-im-NaN brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Upload Videos</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use your own videos in Brizy without the need to upload them on Vimeo or Youtube.</span></p>',
+                                            text: '<h5 class="brz-ls-xs-0 brz-fs-xs-20 brz-lh-xs-2 brz-mt-lg-48 brz-ls-lg-0 brz-ls-sm-im-NaN brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Upload Videos</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 1; color: rgb(144, 147, 161);">Use your own videos in Brizy without the need to upload them on Vimeo or Youtube.</span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -16719,8 +16610,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "mvdxvnzjmd",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.7; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Unsplash </strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use Unsplash images directly in Brizy. A great time saver for any freelancer or designer.</span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.7; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Unsplash </strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 1;">Use Unsplash images directly in Brizy. A great time saver for any freelancer or designer.</span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -16909,8 +16799,7 @@ export const pageData = {
                         value: {
                           _styles: ["richText"],
                           _id: "ksmcmkslkg",
-                          text:
-                            '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
+                          text: '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
                         }
                       }
                     ],
@@ -17088,8 +16977,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "ljsmqwpklr",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">WP Templates</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create custom page templates that can be applied dynamically. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">WP Templates</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create custom page templates that can be applied dynamically. </span></p>'
                                           }
                                         }
                                       ],
@@ -17146,8 +17034,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "dgnmehxrji",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>WP Content</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use the power of dynamic content to populate your pages with WP dynamic content.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>WP Content</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use the power of dynamic content to populate your pages with WP dynamic content.</span></p>'
                                           }
                                         }
                                       ],
@@ -17209,8 +17096,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "nwusicxzns",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Text</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The text element can now be populated with dynamic content. Just type </span><span style="color: rgb(144, 147, 161);" class="brz-pre-population-visible">#.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Text</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The text element can now be populated with dynamic content. Just type </span><span style="color: rgb(144, 147, 161);" class="brz-pre-population-visible">#.</span></p>'
                                           }
                                         }
                                       ],
@@ -17270,8 +17156,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "nnpgecwoud",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Images</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The image element can be populated dynamically based on your needs.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Images</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The image element can be populated dynamically based on your needs.</span></p>'
                                           }
                                         }
                                       ],
@@ -17368,8 +17253,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "glzbxmtvjg",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Video</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The video element can be populated dynamically based on your specifications</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Dynamic Video</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The video element can be populated dynamically based on your specifications</span></p>'
                                           }
                                         }
                                       ],
@@ -17532,8 +17416,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "dksbxepqye",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Dynamic Maps</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The map element can be populated dynamically based on your specifications </span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Dynamic Maps</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The map element can be populated dynamically based on your specifications </span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -17663,8 +17546,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "elsvznixkw",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">ACF</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy PRO plays nice with one of the most popular custom fields plugin in the market.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">ACF</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy PRO plays nice with one of the most popular custom fields plugin in the market.</span></p>'
                                           }
                                         }
                                       ],
@@ -17724,8 +17606,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "dsslwemxwc",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Toolset</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Toolset lets you build your own listing sites, directories, membership sites.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Toolset</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Toolset lets you build your own listing sites, directories, membership sites.</span></p>'
                                           }
                                         }
                                       ],
@@ -17819,8 +17700,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "uijoqputzg",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Pods</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Allows you to manage all your custom content needs in one location.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Pods</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Allows you to manage all your custom content needs in one location.</span></p>'
                                           }
                                         }
                                       ],
@@ -17877,8 +17757,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "evarnqdnfb",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Metabox</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Instantly generate expert meta boxes and custom fields in WordPress. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Metabox</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Instantly generate expert meta boxes and custom fields in WordPress. </span></p>'
                                           }
                                         }
                                       ],
@@ -17935,8 +17814,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "quhgalhrmt",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Posts Element</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Lets you dynamically design custom WordPress post listings. Sky is the limit.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Posts Element</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Lets you dynamically design custom WordPress post listings. Sky is the limit.</span></p>'
                                           }
                                         }
                                       ],
@@ -17996,8 +17874,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "glltdygrjm",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Menu Element</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Build beautiful dynamic WordPress menus for your headers and footers.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Menu Element</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Build beautiful dynamic WordPress menus for your headers and footers.</span></p>'
                                           }
                                         }
                                       ],
@@ -18091,8 +17968,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "ruucjennca",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Sticky Header</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create sticky or animated headers to make your website stand out. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><span style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</span></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Sticky Header</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create sticky or animated headers to make your website stand out. </span></p>'
                                           }
                                         }
                                       ],
@@ -18255,8 +18131,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "uejivwgzdt",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Conditions</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use Block conditions to display blocks on multiple pages dynamically. </span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">Conditions</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Use Block conditions to display blocks on multiple pages dynamically. </span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -18454,8 +18329,7 @@ export const pageData = {
                         value: {
                           _styles: ["richText"],
                           _id: "fepmejvyjn",
-                          text:
-                            '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
+                          text: '<h6 class="brz-text-sm-center brz-text-lg-left brz-tp-gwrbzfpyge brz-text-xs-center"><span style="color: rgb(128, 131, 147);">LEARN MORE ABOUT</span></h6>'
                         }
                       }
                     ],
@@ -18633,8 +18507,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "nvcicyevud",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">WP Email</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Connect your contact form with WordPress to receive the leads on your email.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(144, 147, 161);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">WP Email</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Connect your contact form with WordPress to receive the leads on your email.</span></p>'
                                           }
                                         }
                                       ],
@@ -18691,8 +18564,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "grhoefbucm",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>WP Leads</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Besides sending them on your email, Brizy saves your leads in WP admin for later access.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>WP Leads</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Besides sending them on your email, Brizy saves your leads in WP admin for later access.</span></p>'
                                           }
                                         }
                                       ],
@@ -18754,8 +18626,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "lulewavguf",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up Builder</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create pop-ups right in the page, with the same tools you know and love.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 0.8;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up Builder</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Create pop-ups right in the page, with the same tools you know and love.</span></p>'
                                           }
                                         }
                                       ],
@@ -18815,8 +18686,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "kfdstmwplz",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up designs</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy PRO comes with a bunch of ready made premium popups to use. </span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong>Pop-up designs</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brizy PRO comes with a bunch of ready made premium popups to use. </span></p>'
                                           }
                                         }
                                       ],
@@ -19019,8 +18889,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "rfxrmlmdwh",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Advanced Form</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The ultimate contact form element. It comes with toggles, file uploads, more. </span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><span style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</span></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong>Advanced Form</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">The ultimate contact form element. It comes with toggles, file uploads, more. </span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -19150,8 +19019,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "ofzxrnyhma",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">White Label</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brand Brizy as your own for all your clients. Great for web agencies.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">White Label</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Brand Brizy as your own for all your clients. Great for web agencies.</span></p>'
                                           }
                                         }
                                       ],
@@ -19314,8 +19182,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "rrucjiefnt",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">A/B Testing</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Test with multiple variations of a page to find out what works best. Great for marketers. </span></p>',
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 0.8; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">A/B Testing</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161);">Test with multiple variations of a page to find out what works best. Great for marketers. </span></p>',
                                             customCSS: ""
                                           }
                                         }
@@ -19448,8 +19315,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "gbilltsvth",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">ConvertKit</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 0.8; color: rgb(144, 147, 161);">Connect your Brizy contact form with your ConvertKit account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="opacity: 1; color: rgb(24, 28, 37);">&nbsp;</strong></p><h5 class="brz-tp-unbroxaxnj brz-mt-lg-5 brz-mb-lg-5"><strong style="color: rgb(24, 28, 37);">ConvertKit</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="opacity: 0.8; color: rgb(144, 147, 161);">Connect your Brizy contact form with your ConvertKit account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19543,8 +19409,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "hcrgtapdel",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Drip</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Drip account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Drip</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Drip account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19601,8 +19466,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "aagguzrcal",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Mailchimp</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Mailchimp account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Mailchimp</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Mailchimp account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19659,8 +19523,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "moftgzsawu",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Sendinblue</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Sendinblue account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Brevo</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Brevo account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19720,8 +19583,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "tsleasyzbp",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Zapier</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Zapier account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Zapier</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Zapier account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19815,8 +19677,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "wozjhkerkg",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Campaign M.</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Campaign Monitor account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Campaign M.</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Campaign Monitor account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19873,8 +19734,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "tosyflyqxd",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">A. Campaign</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your A. Campaign account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">A. Campaign</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your A. Campaign account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19931,8 +19791,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "luzxjgxybo",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Get Response</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Get Response account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Get Response</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Get Response account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -19992,8 +19851,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "eixtoobton",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">MailJet</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your MailJet account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">MailJet</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your MailJet account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -20087,8 +19945,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "gprjysnhlb",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">e-goi</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your e-goi account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">e-goi</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your e-goi account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -20145,8 +20002,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "trmptwsprc",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Hubspot</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Hubspot account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">Hubspot</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your Hubspot account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -20203,8 +20059,7 @@ export const pageData = {
                                           value: {
                                             _styles: ["text", "iconText--text"],
                                             _id: "nzwdzhxzze",
-                                            text:
-                                              '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">MailerLite</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your MailerLite account in seconds.</span></p>'
+                                            text: '<p class="brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37); opacity: 1;">&nbsp;</strong></p><h5 class="brz-mb-lg-5 brz-mt-lg-5 brz-tp-unbroxaxnj"><strong style="color: rgb(24, 28, 37);">MailerLite</strong></h5><p class="brz-tp-yfzzsitrfm"><span style="color: rgb(144, 147, 161); opacity: 0.8;">Connect your Brizy contact form with your MailerLite account in seconds.</span></p>'
                                           }
                                         }
                                       ],
@@ -21000,14 +20855,10 @@ export const project = {
             version: "v15",
             lastModified: "2019-03-26",
             files: {
-              "100":
-                "http://fonts.gstatic.com/s/lato/v15/S6u8w4BMUTPHh30wWyWrFCbw7A.ttf",
-              "300":
-                "http://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh7USew-FGC_p9dw.ttf",
-              "700":
-                "http://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh6UVew-FGC_p9dw.ttf",
-              "900":
-                "http://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh50Xew-FGC_p9dw.ttf",
+              100: "http://fonts.gstatic.com/s/lato/v15/S6u8w4BMUTPHh30wWyWrFCbw7A.ttf",
+              300: "http://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh7USew-FGC_p9dw.ttf",
+              700: "http://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh6UVew-FGC_p9dw.ttf",
+              900: "http://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh50Xew-FGC_p9dw.ttf",
               "100italic":
                 "http://fonts.gstatic.com/s/lato/v15/S6u-w4BMUTPHjxsIPy-vNiPg7MU0.ttf",
               "300italic":
@@ -21073,22 +20924,14 @@ export const project = {
             version: "v13",
             lastModified: "2019-03-26",
             files: {
-              "100":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTUQjIg1_i6t8kCHKm45_QphziTn89dtpQ.ttf",
-              "200":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_aZA7g7J_950vCo.ttf",
-              "300":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_cJD7g7J_950vCo.ttf",
-              "500":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_ZpC7g7J_950vCo.ttf",
-              "600":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_bZF7g7J_950vCo.ttf",
-              "700":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_dJE7g7J_950vCo.ttf",
-              "800":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_c5H7g7J_950vCo.ttf",
-              "900":
-                "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_epG7g7J_950vCo.ttf",
+              100: "http://fonts.gstatic.com/s/montserrat/v13/JTUQjIg1_i6t8kCHKm45_QphziTn89dtpQ.ttf",
+              200: "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_aZA7g7J_950vCo.ttf",
+              300: "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_cJD7g7J_950vCo.ttf",
+              500: "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_ZpC7g7J_950vCo.ttf",
+              600: "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_bZF7g7J_950vCo.ttf",
+              700: "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_dJE7g7J_950vCo.ttf",
+              800: "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_c5H7g7J_950vCo.ttf",
+              900: "http://fonts.gstatic.com/s/montserrat/v13/JTURjIg1_i6t8kCHKm45_epG7g7J_950vCo.ttf",
               "100italic":
                 "http://fonts.gstatic.com/s/montserrat/v13/JTUOjIg1_i6t8kCHKm459WxZqi7j0dJ9pTOi.ttf",
               "200italic":
@@ -21129,8 +20972,7 @@ export const project = {
             version: "v7",
             lastModified: "2019-02-21",
             files: {
-              "700":
-                "http://fonts.gstatic.com/s/notoserif/v7/ga6Law1J5X9T9RW6j9bNdOwzTRCUcM1IKoY.ttf",
+              700: "http://fonts.gstatic.com/s/notoserif/v7/ga6Law1J5X9T9RW6j9bNdOwzTRCUcM1IKoY.ttf",
               regular:
                 "http://fonts.gstatic.com/s/notoserif/v7/ga6Iaw1J5X9T9RW6j9bNTFAcaRi_bMQ.ttf",
               italic:
@@ -21156,10 +20998,8 @@ export const project = {
             version: "v14",
             lastModified: "2019-02-21",
             files: {
-              "700":
-                "http://fonts.gstatic.com/s/playfairdisplay/v14/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9pWkU5xxiJKY.ttf",
-              "900":
-                "http://fonts.gstatic.com/s/playfairdisplay/v14/nuFlD-vYSZviVYUb_rj3ij__anPXBb__pWkU5xxiJKY.ttf",
+              700: "http://fonts.gstatic.com/s/playfairdisplay/v14/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9pWkU5xxiJKY.ttf",
+              900: "http://fonts.gstatic.com/s/playfairdisplay/v14/nuFlD-vYSZviVYUb_rj3ij__anPXBb__pWkU5xxiJKY.ttf",
               regular:
                 "http://fonts.gstatic.com/s/playfairdisplay/v14/nuFiD-vYSZviVYUb_rj3ij__anPXPTvSgWE_-xU.ttf",
               italic:
@@ -21201,16 +21041,11 @@ export const project = {
             version: "v19",
             lastModified: "2019-03-26",
             files: {
-              "100":
-                "http://fonts.gstatic.com/s/roboto/v19/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf",
-              "300":
-                "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmSU5vAx05IsDqlA.ttf",
-              "500":
-                "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmEU9vAx05IsDqlA.ttf",
-              "700":
-                "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmWUlvAx05IsDqlA.ttf",
-              "900":
-                "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmYUtvAx05IsDqlA.ttf",
+              100: "http://fonts.gstatic.com/s/roboto/v19/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf",
+              300: "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmSU5vAx05IsDqlA.ttf",
+              500: "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmEU9vAx05IsDqlA.ttf",
+              700: "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmWUlvAx05IsDqlA.ttf",
+              900: "http://fonts.gstatic.com/s/roboto/v19/KFOlCnqEu92Fr1MmYUtvAx05IsDqlA.ttf",
               "100italic":
                 "http://fonts.gstatic.com/s/roboto/v19/KFOiCnqEu92Fr1Mu51QrIzcXLsnzjYk.ttf",
               "300italic":

@@ -60,27 +60,42 @@ export function style(v, vs, vd) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button": {
+    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+      {
+        standart: [
+          "cssStyleElementWOOAddToCartBorderRadius",
+          "cssStyleElementWOOAddToCartButtonColor",
+          "cssStyleBgColor",
+          "cssStyleBgGradient",
+          "cssStyleElementWOOAddToCartBorder",
+          "cssStyleBoxShadow",
+          "cssStyleElementWOOAddToCartSize",
+          "cssStyleTypography3FontFamily",
+          "cssStyleTypography3FontSize",
+          "cssStyleTypography3LineHeight",
+          "cssStyleTypography3FontWeight",
+          "cssStyleTypography3LetterSpacing"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz &&:hover td label": {
       standart: [
-        "cssStyleElementWOOAddToCartBorderRadius",
-        "cssStyleElementWOOAddToCartButtonColor",
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
-        "cssStyleElementWOOAddToCartBorder",
-        "cssStyleBoxShadow",
-        "cssStyleElementWOOAddToCartSize",
-        "cssStyleTypography3FontFamily",
-        "cssStyleTypography3FontSize",
-        "cssStyleTypography3LineHeight",
-        "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing"
+        "cssStyleElementWOOAddToCartLabelColor",
+        "cssStyleElementWOOAddToCartLabelFontFamily",
+        "cssStyleElementWOOAddToCartLabelFontSize",
+        "cssStyleElementWOOAddToCartLabelLineHeight",
+        "cssStyleElementWOOAddToCartLabelFontWeight",
+        "cssStyleElementWOOAddToCartLabelLetterSpacing"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover td label": {
+    ".brz &&:hover th label": {
       standart: [
         "cssStyleElementWOOAddToCartLabelColor",
         "cssStyleElementWOOAddToCartLabelFontFamily",

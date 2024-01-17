@@ -19,7 +19,7 @@ class Form2FieldsItems extends EditorArrayComponent {
       getItems: () => [
         {
           id: "order",
-          type: "order-dev",
+          type: "order",
           devices: "desktop",
           position: 105,
           roles: ["admin"],
@@ -46,7 +46,7 @@ class Form2FieldsItems extends EditorArrayComponent {
         },
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-duplicate",
           title: t("Duplicate"),
@@ -59,7 +59,7 @@ class Form2FieldsItems extends EditorArrayComponent {
           ? [
               {
                 id: "remove",
-                type: "button",
+                type: "legacy-button",
                 devices: "desktop",
                 icon: "nc-trash",
                 title: t("Delete"),
