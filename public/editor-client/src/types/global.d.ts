@@ -8,6 +8,7 @@ import {
   DefaultBlockWithID,
   DefaultTemplate,
   DefaultTemplateKits,
+  DefaultTemplatePopup,
   KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
@@ -121,7 +122,7 @@ export interface VISUAL_CONFIG {
       DefaultBlock,
       Array<KitItem>
     >;
-    defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
+    defaultPopups?: DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID>;
     defaultLayouts?: DefaultTemplate<
       LayoutsWithThumbs,
       BlocksArray<DefaultBlockWithID>
