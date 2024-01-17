@@ -1,12 +1,12 @@
 import React from "react";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
+import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
-import { ContextMenuExtend } from "visual/component/ContextMenu";
-import HotKeys from "visual/component/HotKeys";
-import contextMenuExtendConfigFn from "./contextMenuExtend";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 class SectionFooterItems extends EditorArrayComponent {
   static get componentId() {
@@ -24,7 +24,7 @@ class SectionFooterItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-duplicate",
           title: t("Duplicate"),
           position: 200,
@@ -34,7 +34,7 @@ class SectionFooterItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-trash",
           title: t("Delete"),
           position: 250,

@@ -30,7 +30,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-wp-post-info",
         title: t("Post info")
@@ -39,7 +39,7 @@ export function getItems({
       options: [
         {
           id: "postElements",
-          type: "multiSelect-dev",
+          type: "multiSelect",
           label: t("Elements"),
           placeholder: t("0 Selected"),
           devices: "desktop",
@@ -53,7 +53,7 @@ export function getItems({
         {
           id: "large",
           label: t("Orientation"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           choices: [
             { value: "inline", icon: "nc-horizontal-items" },
@@ -63,7 +63,7 @@ export function getItems({
         {
           id: "textSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -74,7 +74,7 @@ export function getItems({
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -85,7 +85,7 @@ export function getItems({
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -94,7 +94,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -108,7 +108,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -116,7 +116,7 @@ export function getItems({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop"
                 }
               ]
@@ -127,7 +127,7 @@ export function getItems({
               options: [
                 {
                   id: "iconsColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop"
                 }
               ]
@@ -139,7 +139,7 @@ export function getItems({
     {
       id: "advancedSettings",
       // @ts-expect-error: old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       icon: "nc-cog",
       position: 150

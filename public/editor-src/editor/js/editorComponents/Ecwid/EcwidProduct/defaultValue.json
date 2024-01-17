@@ -16,7 +16,7 @@
 
     "optionsDisplay": "on",
 
-    "stockLabelDisplay": "on",
+    "stockLabelDisplay": "off",
 
     "numberInStockDisplay": "off",
 
@@ -110,7 +110,8 @@
       "gridSubtitleTypographyFontFamily": "lato",
       "gridSKUInnerTypographyFontFamily": "lato",
       "gridPriceTypographyFontFamily": "lato",
-      "gridBuyNowTypographyFontFamily": "lato"
+      "gridBuyNowTypographyFontFamily": "lato",
+      "taxesTypographyFontFamily": "lato"
     },
 
     "positionName": 100,
@@ -226,9 +227,11 @@
     "breadcrumbsColorOpacity": 1,
     "breadcrumbsColorPalette": "color7",
 
-    "breadcrumbsHorizontalAlign": "left",
+    "hoverBreadcrumbsColorHex": "#0da1cd",
+    "hoverBreadcrumbsColorOpacity": 1,
+    "hoverBreadcrumbsColorPalette": "",
 
-    "breadcrumbsSpacing": 10,
+    "breadcrumbsSpacing": 20,
     "breadcrumbsSpacingSuffix": "px",
 
     "SKUTypographyFontStyle": "",
@@ -497,6 +500,8 @@
     "checkoutBoxShadowVertical": 0,
     "checkoutBoxShadowHorizontal": 0,
 
+    "checkoutHorizontalAlign": "left",
+
     "checkoutSpacing": 35,
     "checkoutSpacingSuffix": "px",
 
@@ -577,6 +582,8 @@
     "addToBagBoxShadowSpread": 0,
     "addToBagBoxShadowVertical": 0,
     "addToBagBoxShadowHorizontal": 0,
+
+    "addToBagHorizontalAlign": "left",
 
     "addToBagSpacing": 10,
     "addToBagSpacingSuffix": "px",
@@ -1363,6 +1370,8 @@
     "textareaSpacing": 10,
     "textareaSpacingSuffix": "px",
 
+    "textareaHorizontalAlign": "left",
+
     "datepickerSize": "medium",
 
     "datepickerTypographyFontStyle": "",
@@ -2105,6 +2114,98 @@
 
     "gridSpacing": 10,
     "gridSpacingSuffix": "px",
+
+    "arrowColorHex": "#757575",
+    "arrowColorOpacity": 1,
+    "arrowColorPalette": "",
+
+    "hoverArrowColorHex": "#145485",
+    "hoverArrowColorOpacity": 1,
+    "hoverArrowColorPalette": "",
+
+    "arrowBgColorType": "none",
+
+    "arrowGradientActivePointer": "startPointer",
+    "arrowGradientStartPointer": 0,
+    "arrowGradientFinishPointer": 100,
+
+    "arrowBgColorHex": "#ffffff",
+    "arrowBgColorOpacity": 0,
+    "arrowBgColorPalette": "",
+
+    "hoverArrowBgColorHex": "#e6e6e6",
+    "hoverArrowBgColorOpacity": 1,
+    "hoverArrowBgColorPalette": "",
+
+    "arrowGradientColorHex": "#009900",
+    "arrowGradientColorOpacity": 0.8,
+    "arrowGradientColorPalette": "",
+
+    "arrowGradientType": "linear",
+
+    "arrowGradientLinearDegree": 90,
+    "arrowGradientRadialDegree": 90,
+
+    "arrowBorderStyle": "solid",
+
+    "arrowBorderColorHex": "#e6e6e6",
+    "arrowBorderColorOpacity": 1,
+    "arrowBorderColorPalette": "",
+
+    "arrowBorderRadiusType": "grouped",
+
+    "arrowBorderRadius": 34,
+    "arrowBorderRadiusSuffix": "px",
+
+    "arrowBorderWidthType": "grouped",
+
+    "arrowBorderWidth": 1,
+
+    "arrowBorderTopWidth": 1,
+    "arrowBorderRightWidth": 1,
+    "arrowBorderBottomWidth": 1,
+    "arrowBorderLeftWidth": 1,
+
+    "arrowBorderTopLeftRadius": 34,
+    "arrowBorderTopRightRadius": 34,
+    "arrowBorderBottomRightRadius": 34,
+    "arrowBorderBottomLeftRadius": 34,
+
+    "arrowBorderTopLeftRadiusSuffix": "px",
+    "arrowBorderTopRightRadiusSuffix": "px",
+    "arrowBorderBottomRightRadiusSuffix": "px",
+    "arrowBorderBottomLeftRadiusSuffix": "px",
+
+    "arrowBoxShadow": "none",
+
+    "arrowBoxShadowColorHex": "#000000",
+    "arrowBoxShadowColorOpacity": 0,
+    "arrowBoxShadowColorPalette": "",
+
+    "arrowBoxShadowBlur": 0,
+    "arrowBoxShadowSpread": 0,
+    "arrowBoxShadowVertical": 0,
+    "arrowBoxShadowHorizontal": 0,
+
+    "arrowHeight": 11,
+    "arrowHeightSuffix": "px",
+
+    "taxesColorHex": "#757575",
+    "taxesColorOpacity": 1,
+    "taxesColorPalette": "",
+
+    "taxesTypographyFontStyle": "",
+    "taxesTypographyFontFamilyType": "google",
+    "taxesTypographyFontSize": 14,
+    "taxesTypographyFontSizeSuffix": "px",
+    "taxesTypographyFontWeight": 400,
+    "taxesTypographyLetterSpacing": 1.3,
+    "taxesTypographyLineHeight": 1.4,
+
+    "taxesHorizontalAlign": "left",
+
+    "taxesSpacing": 10,
+    "taxesSpacingSuffix": "px",
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": ""

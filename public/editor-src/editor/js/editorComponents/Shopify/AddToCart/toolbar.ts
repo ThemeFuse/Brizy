@@ -1,24 +1,16 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
-import { DeviceMode } from "visual/types";
 import { getSourceIds } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import * as Str from "visual/utils/reader/string";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from ".";
 
-export const getItems = ({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: DeviceMode;
-  state: State;
-}): ToolbarItemType[] => {
+// @ts-expect-error using legacy-option
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const config = Config.getAll();
 
   const dvv = (key: string): unknown =>
@@ -35,10 +27,14 @@ export const getItems = ({
   const sourceItemsHandler =
     config?.api?.collectionItems?.getCollectionItemsIds?.handler;
 
+  const isCustomSize = dvv("size") === "custom";
+  const isDefaultFillType = dvv("fillType") === "default";
+  const isCustomBorderRadius = dvv("borderRadiusType") === "custom";
+
   return [
     {
       id: "toolbarCart",
-      type: "popover-dev",
+      type: "popover",
       position: 50,
       config: {
         size: "auto",
@@ -49,12 +45,12 @@ export const getItems = ({
       options: [
         {
           id: "groupProduct",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "itemId",
               label: t("Product"),
-              type: "select-dev",
+              type: "select",
               disabled: !sourceItemsHandler || sourceType === "",
               choices: {
                 load: () => getSourceIds(sourceType, config),
@@ -68,32 +64,119 @@ export const getItems = ({
       ]
     },
     {
-      id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      id: "toolbarButtonAndIconOptions",
+      type: "popover",
       config: {
-        icon: "nc-star",
-        title: t("Icon")
+        icon: "nc-button",
+        title: t("Button")
       },
       position: 60,
       options: [
         {
-          id: "currentShortcodeTabs",
-          type: "tabs-dev",
+          id: "",
+          type: "tabs",
           tabs: [
             {
-              id: "currentShortcodeIconTab",
+              id: "tabButton",
+              label: t("Button"),
+              options: [
+                {
+                  id: "sizeGroup",
+                  type: "group",
+                  position: 10,
+                  options: [
+                    {
+                      id: "size",
+                      label: t("Size"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "small", icon: "nc-small" },
+                        { value: "medium", icon: "nc-medium" },
+                        { value: "large", icon: "nc-large" },
+                        { value: "custom", icon: "nc-more" }
+                      ]
+                    },
+                    {
+                      id: "width",
+                      label: t("Width"),
+                      type: "slider",
+                      disabled: !isCustomSize,
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "px", title: "px" }]
+                      }
+                    },
+                    {
+                      id: "height",
+                      label: t("Height"),
+                      type: "slider",
+                      disabled: !isCustomSize,
+                      config: {
+                        min: 1,
+                        max: 100,
+                        units: [{ value: "px", title: "px" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "fillType",
+                  label: t("Fill"),
+                  devices: "desktop",
+                  type: "radioGroup",
+                  position: 20,
+                  choices: [
+                    { value: "filled", icon: "nc-circle" },
+                    { value: "outline", icon: "nc-outline" },
+                    { value: "default", icon: "nc-close" }
+                  ]
+                },
+                {
+                  id: "borderRadiusTypeGroup",
+                  type: "group",
+                  devices: "desktop",
+                  disabled: isDefaultFillType,
+                  position: 30,
+                  options: [
+                    {
+                      id: "borderRadiusType",
+                      label: t("Corner"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "square", icon: "nc-corners-square" },
+                        { value: "rounded", icon: "nc-corners-round" },
+                        { value: "custom", icon: "nc-more" }
+                      ]
+                    },
+                    {
+                      id: "borderRadius",
+                      type: "slider",
+                      disabled: !isCustomBorderRadius,
+                      config: {
+                        min: 0,
+                        max: 100,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "tabIcon",
               label: t("Icon"),
               options: [
                 {
                   id: "icon",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   config: { canDelete: true }
                 },
                 {
                   id: "iconPosition",
                   label: t("Position"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: iconName === "",
                   choices: [
                     { value: "left", icon: "nc-align-left" },
@@ -103,7 +186,7 @@ export const getItems = ({
                 {
                   id: "iconCustomSize",
                   label: t("Size"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: iconName === "",
                   config: {
                     min: 1,
@@ -114,7 +197,7 @@ export const getItems = ({
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: iconName === "",
                   config: {
                     min: 0,
@@ -130,7 +213,7 @@ export const getItems = ({
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -140,7 +223,7 @@ export const getItems = ({
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -149,7 +232,7 @@ export const getItems = ({
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -164,7 +247,7 @@ export const getItems = ({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -172,7 +255,7 @@ export const getItems = ({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -184,7 +267,7 @@ export const getItems = ({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -196,7 +279,7 @@ export const getItems = ({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -208,7 +291,7 @@ export const getItems = ({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -219,43 +302,9 @@ export const getItems = ({
       ]
     },
     {
-      id: "toolbarSettings",
-      type: "popover-dev",
-      config: {
-        icon: "nc-cog",
-        title: t("Settings")
-      },
-      position: 110,
-      options: [
-        {
-          id: "width",
-          label: t("Width"),
-          type: "slider-dev",
-          config: {
-            min: 1,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
-        },
-        {
-          id: "height",
-          label: t("Height"),
-          type: "slider-dev",
-          config: {
-            min: 1,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
-        },
-        {
-          id: "advancedSettings",
-          // @ts-expect-error old option
-          type: "advancedSettings",
-          devices: "desktop",
-          label: t("More Settings"),
-          icon: "nc-cog"
-        }
-      ]
+      id: "advancedSettings",
+      type: "legacy-advancedSettings",
+      position: 110
     }
   ];
 };

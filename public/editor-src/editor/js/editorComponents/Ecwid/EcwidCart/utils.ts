@@ -18,7 +18,6 @@ export function valueToEciwdConfig(v: Value): EcwidConfig {
     shopping_cart_show_weight: onOffToBool(v.weightDisplay),
     checkout_show_state_input: onOffToBool(v.inputDisplay),
     checkout_show_address_line_2: onOffToBool(v.addressDisplay),
-    shopping_cart_products_collapsed_on_mobile: onOffToBool(v.collapse),
     shopping_cart_products_collapsed_on_desktop: onOffToBool(v.collapseDesktop),
     show_breadcrumbs: onOffToBool(v.breadcrumbsDisplay)
   };

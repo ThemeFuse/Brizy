@@ -43,7 +43,7 @@ export function getItems({
   const dateOrTimeOptions = (): ToolbarItemType[] => [
     {
       id: "min",
-      type: "inputText-dev",
+      type: "inputText",
       position: 20,
       label: isDate ? t("Min Date") : t("Min Time"),
       placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
@@ -54,7 +54,7 @@ export function getItems({
     },
     {
       id: "max",
-      type: "inputText-dev",
+      type: "inputText",
       position: 30,
       label: isDate ? t("Max Date") : t("Max Time"),
       placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
@@ -65,7 +65,7 @@ export function getItems({
     },
     {
       id: "nativeHtml",
-      type: "switch-dev",
+      type: "switch",
       position: 40,
       label: t("Native HTML5"),
       devices: "desktop"
@@ -75,7 +75,7 @@ export function getItems({
     {
       id: "columns",
       label: t("Columns"),
-      type: "select-dev",
+      type: "select",
       position: 20,
       choices: [
         { title: "1", value: 1 },
@@ -91,7 +91,7 @@ export function getItems({
     {
       id: "fileMaxSize",
       label: t("Max. File Size"),
-      type: "select-dev",
+      type: "select",
       devices: "desktop",
       position: 20,
       helper: {
@@ -104,7 +104,7 @@ export function getItems({
     {
       id: "fileTypes",
       label: t("Allowed File Types"),
-      type: "inputText-dev",
+      type: "inputText",
       devices: "desktop",
       position: 30,
       config: {
@@ -121,7 +121,7 @@ export function getItems({
     {
       id: "multipleSelection",
       label: t("Multiple Selection"),
-      type: "switch-dev",
+      type: "switch",
       position: 20,
       disabled: !isSelect,
       devices: "desktop"
@@ -130,7 +130,7 @@ export function getItems({
   const numberOptions = (): ToolbarItemType[] => [
     {
       id: "min",
-      type: "inputText-dev",
+      type: "inputText",
       position: 20,
       label: t("Min"),
       placeholder: t("Min"),
@@ -141,7 +141,7 @@ export function getItems({
     },
     {
       id: "max",
-      type: "inputText-dev",
+      type: "inputText",
       position: 30,
       label: t("Max"),
       placeholder: t("Max"),
@@ -155,7 +155,7 @@ export function getItems({
     {
       id: "required",
       label: t("Required"),
-      type: "switch-dev",
+      type: "switch",
       position: 100,
       disabled: isHidden,
       devices: "desktop"
@@ -164,27 +164,27 @@ export function getItems({
   const checkboxOrRadioAdvanced = (): ToolbarItemType[] => [
     {
       id: "placeholder",
-      type: "switch-dev",
+      type: "switch",
       disabled: true
     }
   ];
   const checkboxOrRadioBg = (): ToolbarItemType[] => [
     {
       id: "size",
-      type: "radioGroup-dev",
+      type: "radioGroup",
       disabled: true,
       choices: []
     },
     {
       id: "borderRadius",
-      type: "slider-dev",
+      type: "slider",
       disabled: true
     }
   ];
   const checkboxOrRadioSize = (): ToolbarItemType[] => [
     {
       id: "size",
-      type: "radioGroup-dev",
+      type: "radioGroup",
       disabled: true,
       choices: []
     }
@@ -192,24 +192,24 @@ export function getItems({
   const checkboxOrRadioPopover = (): ToolbarItemType[] => [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       disabled: true
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       disabled: true
     }
   ];
   const checkboxPopover = (): ToolbarItemType[] => [
     {
       id: "toolbarTypographyCheckbox",
-      type: "popover-dev",
+      type: "popover",
       disabled: true
     },
     {
       id: "toolbarColorCheckbox",
-      type: "popover-dev",
+      type: "popover",
       disabled: true
     }
   ];
@@ -217,7 +217,7 @@ export function getItems({
     {
       id: "height",
       label: t("Height"),
-      type: "slider-dev",
+      type: "slider",
       devices: "desktop",
       position: 40,
       config: {
@@ -231,7 +231,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-form-left",
         title: t("Field")
@@ -240,7 +240,7 @@ export function getItems({
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "field",
@@ -249,7 +249,7 @@ export function getItems({
                 {
                   id: "type",
                   label: t("Type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   position: 10,
                   choices: _.map(types, (item) => ({
@@ -259,7 +259,7 @@ export function getItems({
                 },
                 {
                   id: "fileSizeErrorMessage",
-                  type: "inputText-dev",
+                  type: "inputText",
                   position: 15,
                   label: t("File size error message"),
                   placeholder: t("..type error message"),
@@ -271,7 +271,7 @@ export function getItems({
                 },
                 {
                   id: "fileTypeErrorMessage",
-                  type: "inputText-dev",
+                  type: "inputText",
                   position: 15,
                   label: t("File type error message"),
                   placeholder: t("..type error message"),
@@ -283,7 +283,7 @@ export function getItems({
                 },
                 {
                   id: "numberMinMessage",
-                  type: "inputText-dev",
+                  type: "inputText",
                   position: 15,
                   label: t("Min number error message"),
                   placeholder: t("..type error message"),
@@ -295,7 +295,7 @@ export function getItems({
                 },
                 {
                   id: "numberMaxMessage",
-                  type: "inputText-dev",
+                  type: "inputText",
                   position: 15,
                   label: t("Max number error message"),
                   placeholder: t("..type error message"),
@@ -331,7 +331,7 @@ export function getItems({
     ...(isCheckboxOrRadio ? checkboxOrRadioPopover() : checkboxPopover()),
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -342,7 +342,7 @@ export function getItems({
           id: "width",
           label: t("Width"),
           position: 30,
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -352,7 +352,7 @@ export function getItems({
         ...(isParagraph ? heightOption() : []),
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

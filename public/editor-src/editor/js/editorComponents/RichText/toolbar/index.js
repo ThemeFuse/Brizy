@@ -1,13 +1,10 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
-import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
-import { encodeToString } from "visual/utils/string";
 import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
-import { handleChangePage } from "../utils";
+import { handleChangeLink } from "../utils/dependencies";
 import getColorToolbar from "./color";
 import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
 
@@ -51,8 +48,7 @@ const getItems =
   (v, onChange) =>
   ({ device, component, context }) => {
     const config = Config.getAll();
-    const collectionTypesHandler =
-      config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
     const IS_STORY = isStory(config);
     const IS_GLOBAL_POPUP = isPopup(config);
     const inPopup = Boolean(component.props.meta?.sectionPopup);
@@ -95,9 +91,6 @@ const getItems =
       return !checkTextIncludeTag(text, tag);
     };
 
-    const dvv = (key) => defaultValueValue({ key, v, device });
-    const linkSource = dvv("linkSource");
-
     const linkDC = getDynamicContentOption({
       options: context.dynamicContent.config,
       type: DCTypes.link
@@ -111,7 +104,7 @@ const getItems =
     return [
       {
         id: "aiText",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "t2-star-shapes",
           size: "auto",
@@ -132,7 +125,7 @@ const getItems =
       },
       {
         id: "toolbarFont",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-font",
           size: device === "desktop" ? "xlarge" : "auto",
@@ -144,7 +137,7 @@ const getItems =
         options: [
           {
             id: "tabsTypography",
-            type: "tabs-dev",
+            type: "tabs",
             config: {
               showSingle: v.textPopulation
             },
@@ -155,7 +148,7 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyParagraph",
-                    type: "grid-dev",
+                    type: "grid",
                     config: {
                       separator: true
                     },
@@ -167,7 +160,7 @@ const getItems =
                         options: [
                           {
                             id: "typography",
-                            type: "typography-dev",
+                            type: "typography",
                             config: {
                               fontFamily: "desktop" === device
                             },
@@ -199,7 +192,7 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH1",
-                    type: "grid-dev",
+                    type: "grid",
                     config: {
                       separator: true
                     },
@@ -212,7 +205,7 @@ const getItems =
                         options: [
                           {
                             id: "h1",
-                            type: "typography-dev",
+                            type: "typography",
                             config: {
                               fontFamily: "desktop" === device
                             },
@@ -244,7 +237,7 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH2",
-                    type: "grid-dev",
+                    type: "grid",
                     disabled: disableHeadingTags(v, "h2"),
                     columns: [
                       {
@@ -254,7 +247,7 @@ const getItems =
                         options: [
                           {
                             id: "h2",
-                            type: "typography-dev",
+                            type: "typography",
                             config: {
                               fontFamily: "desktop" === device
                             },
@@ -286,7 +279,7 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH3",
-                    type: "grid-dev",
+                    type: "grid",
                     disabled: disableHeadingTags(v, "h3"),
                     columns: [
                       {
@@ -296,7 +289,7 @@ const getItems =
                         options: [
                           {
                             id: "h3",
-                            type: "typography-dev",
+                            type: "typography",
                             config: {
                               fontFamily: "desktop" === device
                             },
@@ -328,7 +321,7 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH4",
-                    type: "grid-dev",
+                    type: "grid",
                     disabled: disableHeadingTags(v, "h4"),
                     columns: [
                       {
@@ -338,7 +331,7 @@ const getItems =
                         options: [
                           {
                             id: "h4",
-                            type: "typography-dev",
+                            type: "typography",
                             config: {
                               fontFamily: "desktop" === device
                             },
@@ -370,7 +363,7 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH5",
-                    type: "grid-dev",
+                    type: "grid",
                     disabled: disableHeadingTags(v, "h5"),
                     columns: [
                       {
@@ -380,7 +373,7 @@ const getItems =
                         options: [
                           {
                             id: "h5",
-                            type: "typography-dev",
+                            type: "typography",
                             config: {
                               fontFamily: "desktop" === device
                             },
@@ -412,7 +405,7 @@ const getItems =
                 options: [
                   {
                     id: "gridTypographyH6",
-                    type: "grid-dev",
+                    type: "grid",
                     disabled: disableHeadingTags(v, "h6"),
                     columns: [
                       {
@@ -422,7 +415,7 @@ const getItems =
                         options: [
                           {
                             id: "h6",
-                            type: "typography-dev",
+                            type: "typography",
                             config: {
                               fontFamily: "desktop" === device
                             },
@@ -454,7 +447,7 @@ const getItems =
       },
       {
         id: "dynamicTextCapitalize",
-        type: "button",
+        type: "legacy-button",
         icon: "nc-tp-capitalize",
         title: t("Uppercase"),
         position: 75,
@@ -470,13 +463,13 @@ const getItems =
       // is needed to disabled wrapper align
       {
         id: "horizontalAlign",
-        type: "toggle-dev",
+        type: "toggle",
         disabled: true
       },
       {
         // put a different id to not conflict with `horizontalAlign` from Wrapper
         id: "contentHorizontalAlign",
-        type: "toggle-dev",
+        type: "toggle",
         position: 30,
         disabled: isPopulationBlock,
         choices: [
@@ -505,7 +498,7 @@ const getItems =
       },
       {
         id: "list",
-        type: "toggle-dev",
+        type: "toggle",
         position: 40,
         disabled: disableButtons,
         choices: [
@@ -529,7 +522,7 @@ const getItems =
       },
       {
         id: "bold",
-        type: "button",
+        type: "legacy-button",
         icon: "nc-bold",
         title: t("Bold"),
         position: 50,
@@ -539,7 +532,7 @@ const getItems =
       },
       {
         id: "italic",
-        type: "button",
+        type: "legacy-button",
         icon: "nc-italic",
         title: t("Italic"),
         position: 60,
@@ -549,7 +542,7 @@ const getItems =
       },
       {
         id: "underline",
-        type: "button",
+        type: "legacy-button",
         icon: "nc-tp-underline",
         title: t("Underline"),
         position: 65,
@@ -559,7 +552,7 @@ const getItems =
       },
       {
         id: "strike",
-        type: "button",
+        type: "legacy-button",
         icon: "nc-tp-strike",
         title: t("Strike"),
         position: 70,
@@ -569,7 +562,7 @@ const getItems =
       },
       {
         id: "capitalize",
-        type: "button",
+        type: "legacy-button",
         icon: "nc-tp-capitalize",
         title: t("Uppercase"),
         position: 75,
@@ -579,7 +572,7 @@ const getItems =
       },
       {
         id: "toolbarLink",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-link",
           size: "medium",
@@ -600,34 +593,14 @@ const getItems =
                 label: t("Page"),
                 options: [
                   {
-                    id: "linkSource",
-                    type: "select-dev",
-                    disabled: !collectionTypesHandler,
-                    label: t("Type"),
-                    devices: "desktop",
-                    choices: {
-                      load: () => getCollectionTypes(config),
-                      emptyLoad: {
-                        title: t("There are no choices")
-                      }
-                    },
-                    config: {
-                      size: "large"
-                    }
-                  },
-                  {
                     id: "linkPage",
-                    type: "internalLink-dev",
+                    type: "internalLink",
                     label: t("Find Page"),
                     devices: "desktop",
-                    disabled: !linkSource,
-                    config: {
-                      postType: linkSource
-                    },
                     dependencies: (value) =>
                       v.textPopulation
                         ? value
-                        : onChange({ link: handleChangePage(v, value) })
+                        : onChange(handleChangeLink(v, value))
                   }
                 ]
               },
@@ -642,69 +615,42 @@ const getItems =
                     config: linkDC,
                     option: {
                       id: "linkExternal",
-                      type: "inputText-dev",
+                      type: "inputText",
                       placeholder: "http://",
                       devices: "desktop",
                       config: {
                         size: "medium"
                       }
-                    }
+                    },
+                    dependencies: (value) => ({
+                      ...value,
+                      linkExternalType: value.linkPopulation
+                        ? "linkPopulation"
+                        : "linkExternal"
+                    })
                   },
                   {
                     id: "linkExternalBlank",
-                    type: "switch-dev",
+                    type: "switch",
                     label: t("Open In New Tab"),
                     disabled: device !== "desktop",
                     ...(v.textPopulation
                       ? {}
                       : {
-                          dependencies: ({ linkExternalBlank }) => {
-                            onChange({
-                              link: encodeToString({
-                                type: v.linkType,
-                                anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                                external: v.linkExternal,
-                                externalBlank: linkExternalBlank,
-                                externalRel: v.linkExternalRel,
-                                externalType: v.linkExternalType,
-                                population: v.linkPopulation,
-                                populationEntityId: v.linkPopulationEntityId,
-                                populationEntityType:
-                                  v.linkPopulationEntityType,
-                                popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                                upload: v.linkUpload,
-                                linkToSlide: v.linkToSlide
-                              })
-                            });
-                          }
+                          dependencies: ({ linkExternalBlank }) =>
+                            onChange(handleChangeLink(v, { linkExternalBlank }))
                         })
                   },
                   {
                     id: "linkExternalRel",
-                    type: "switch-dev",
+                    type: "switch",
                     label: t("Make it Nofollow"),
                     disabled: device !== "desktop",
                     ...(v.textPopulation
                       ? {}
                       : {
                           dependencies: ({ linkExternalRel }) =>
-                            onChange({
-                              link: encodeToString({
-                                type: v.linkType,
-                                anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                                external: v.linkExternal,
-                                externalBlank: v.linkExternalBlank,
-                                externalRel: linkExternalRel,
-                                externalType: v.linkExternalType,
-                                population: v.linkPopulation,
-                                populationEntityId: v.linkPopulationEntityId,
-                                populationEntityType:
-                                  v.linkPopulationEntityType,
-                                popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                                upload: v.linkUpload,
-                                linkToSlide: v.linkToSlide
-                              })
-                            })
+                            onChange(handleChangeLink(v, { linkExternalRel }))
                         })
                   }
                 ]
@@ -723,23 +669,7 @@ const getItems =
                       ? {}
                       : {
                           onChange: (linkAnchor) =>
-                            onChange({
-                              link: encodeToString({
-                                type: v.linkType,
-                                anchor: linkAnchor ? `#${linkAnchor}` : "",
-                                external: v.linkExternal,
-                                externalBlank: v.linkExternalBlank,
-                                externalRel: v.linkExternalRel,
-                                externalType: v.linkExternalType,
-                                population: v.linkPopulation,
-                                populationEntityId: v.linkPopulationEntityId,
-                                populationEntityType:
-                                  v.linkPopulationEntityType,
-                                popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                                upload: v.linkUpload,
-                                linkToSlide: v.linkToSlide
-                              })
-                            })
+                            onChange(handleChangeLink(v, { linkAnchor }))
                         })
                   }
                 ]
@@ -752,30 +682,13 @@ const getItems =
                   {
                     id: "linkUpload",
                     label: t("File"),
-                    type: "fileUpload-dev",
+                    type: "fileUpload",
                     disabled: !proEnabled || device !== "desktop",
                     ...(v.textPopulation
                       ? {}
                       : {
-                          dependencies: ({ linkUpload }) => {
-                            onChange({
-                              link: encodeToString({
-                                type: v.linkType,
-                                anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                                external: v.linkExternal,
-                                externalBlank: v.linkExternalBlank,
-                                externalRel: v.linkExternalRel,
-                                externalType: v.linkExternalType,
-                                population: v.linkPopulation,
-                                populationEntityId: v.linkPopulationEntityId,
-                                populationEntityType:
-                                  v.linkPopulationEntityType,
-                                popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                                upload: linkUpload,
-                                linkToSlide: v.linkToSlide
-                              })
-                            });
-                          }
+                          dependencies: ({ linkUpload }) =>
+                            onChange(handleChangeLink(v, { linkUpload }))
                         })
                   }
                 ]
@@ -796,21 +709,7 @@ const getItems =
                       : {
                           onChange: ({ value: linkPopup, popups }) =>
                             onChange({
-                              link: encodeToString({
-                                type: v.linkType,
-                                anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                                external: v.linkExternal,
-                                externalBlank: v.linkExternalBlank,
-                                externalRel: v.linkExternalRel,
-                                externalType: v.linkExternalType,
-                                population: v.linkPopulation,
-                                populationEntityId: v.linkPopulationEntityId,
-                                populationEntityType:
-                                  v.linkPopulationEntityType,
-                                popup: linkPopup ? `#${linkPopup}` : "",
-                                upload: v.linkUpload,
-                                linkToSlide: v.linkToSlide
-                              }),
+                              ...handleChangeLink(v, { linkPopup }),
                               popups
                             })
                         })
@@ -830,48 +729,17 @@ const getItems =
                       min: 1,
                       max: 1000000
                     },
-                    dependencies: ({ linkToSlide }) => {
-                      onChange({
-                        link: encodeToString({
-                          type: v.linkType,
-                          anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                          external: v.linkExternal,
-                          externalBlank: v.linkExternalBlank,
-                          externalRel: v.linkExternalRel,
-                          externalType: v.linkExternalType,
-                          population: v.linkPopulation,
-                          populationEntityId: v.linkPopulationEntityId,
-                          populationEntityType: v.linkPopulationEntityType,
-                          popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                          linkToSlide: linkToSlide
-                        })
-                      });
-                    }
+                    dependencies: ({ linkToSlide }) =>
+                      onChange(handleChangeLink(v, { linkToSlide }))
                   }
                 ]
               }
             ],
-            value: v.linkType,
             ...(v.textPopulation
               ? {}
               : {
-                  onChange: (linkType) => {
-                    onChange({
-                      link: encodeToString({
-                        type: linkType,
-                        anchor: v.linkAnchor ? `#${v.linkAnchor}` : "",
-                        external: v.linkExternal,
-                        externalBlank: v.linkExternalBlank,
-                        externalRel: v.linkExternalRel,
-                        externalType: v.linkExternalType,
-                        population: v.linkPopulation,
-                        populationEntityId: v.linkPopulationEntityId,
-                        populationEntityType: v.linkPopulationEntityType,
-                        popup: v.linkPopup ? `#${v.linkPopup}` : "",
-                        upload: v.linkUpload,
-                        linkToSlide: v.linkToSlide
-                      })
-                    });
+                  dependencies: ({ linkType }) => {
+                    onChange(handleChangeLink(v, { linkType }));
                   }
                 })
           }
@@ -879,7 +747,7 @@ const getItems =
       },
       {
         id: "advancedSettings",
-        type: "advancedSettings",
+        type: "legacy-advancedSettings",
         icon: "nc-cog",
         disabled: !v.textPopulation,
         title: t("Settings"),
@@ -888,7 +756,7 @@ const getItems =
       },
       {
         id: "toolbarSettings",
-        type: "popover-dev",
+        type: "popover",
         config: {
           title: t("Settings")
         },
@@ -899,7 +767,7 @@ const getItems =
           {
             id: "marginTop",
             label: t("Gap Above"),
-            type: "slider-dev",
+            type: "slider",
             disabled: IS_STORY,
             config: {
               min: 0,
@@ -912,7 +780,7 @@ const getItems =
           {
             id: "marginBottom",
             label: t("Gap Below"),
-            type: "slider-dev",
+            type: "slider",
             disabled: IS_STORY,
             config: {
               min: 0,
@@ -925,7 +793,7 @@ const getItems =
           {
             id: "tag",
             label: t("HTML Tag"),
-            type: "select-dev",
+            type: "select",
             className: "brz-control__select--small",
             disabled: isPopulationBlock,
             choices: [
@@ -942,7 +810,7 @@ const getItems =
           },
           {
             id: "grid",
-            type: "grid-dev",
+            type: "grid",
             config: {
               separator: true
             },
@@ -952,7 +820,7 @@ const getItems =
                 options: [
                   {
                     id: "styles",
-                    type: "sidebarTabsButton-dev",
+                    type: "sidebarTabsButton",
                     config: {
                       tabId: "styles",
                       text: t("Styling"),
@@ -967,7 +835,7 @@ const getItems =
                 options: [
                   {
                     id: "effects",
-                    type: "sidebarTabsButton-dev",
+                    type: "sidebarTabsButton",
                     config: {
                       tabId: "effects",
                       text: t("Effects"),

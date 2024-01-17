@@ -7,12 +7,12 @@ export function getItems({ v }) {
   return [
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     },
     {
       id: "toolbarFormLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Link"),
@@ -22,7 +22,7 @@ export function getItems({ v }) {
       options: [
         {
           id: "formLink",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "message",
@@ -30,7 +30,7 @@ export function getItems({ v }) {
               options: [
                 {
                   id: "messageSuccess",
-                  type: "inputText-dev",
+                  type: "inputText",
                   label: t("Success"),
                   placeholder: t("Message sent"),
                   devices: "desktop",
@@ -40,7 +40,7 @@ export function getItems({ v }) {
                 },
                 {
                   id: "messageError",
-                  type: "inputText-dev",
+                  type: "inputText",
                   label: t("Error"),
                   placeholder: t("Message not sent"),
                   devices: "desktop",
@@ -56,7 +56,7 @@ export function getItems({ v }) {
               options: [
                 {
                   id: "messageRedirect",
-                  type: "inputText-dev",
+                  type: "inputText",
                   label: t("Go to"),
                   placeholder: "http://",
                   devices: "desktop",
@@ -72,7 +72,7 @@ export function getItems({ v }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -82,7 +82,7 @@ export function getItems({ v }) {
     },
     {
       id: "apps",
-      type: "formApps-dev",
+      type: "formApps",
       devices: "desktop",
       config: {
         id: v._id,

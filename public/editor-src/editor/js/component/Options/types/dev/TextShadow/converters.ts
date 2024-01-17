@@ -80,10 +80,10 @@ export const elementModelToEmpty = parseStrict<FromElementModelGetter, Empty>({
   )
 });
 
-export const fromElementModel: FromElementModel<"textShadow-dev"> = (g) =>
+export const fromElementModel: FromElementModel<"textShadow"> = (g) =>
   elementModelToNoEmpty(g) ?? elementModelToEmpty(g);
 
-export const toElementModel: ToElementModel<"textShadow-dev"> = match(
+export const toElementModel: ToElementModel<"textShadow"> = match(
   [
     isEmpty,
     (v): ElementModel => ({

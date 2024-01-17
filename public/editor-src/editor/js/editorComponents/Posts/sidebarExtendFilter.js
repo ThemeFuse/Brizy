@@ -25,7 +25,7 @@ export function getItems() {
   return [
     {
       id: "filterPadding",
-      type: "padding-dev",
+      type: "padding",
       label: t("Padding"),
       position: 50,
       config: {
@@ -34,7 +34,7 @@ export function getItems() {
     },
     {
       id: "filterBorder",
-      type: "corners-dev",
+      type: "corners",
       label: t("Corner"),
       position: 65
     }

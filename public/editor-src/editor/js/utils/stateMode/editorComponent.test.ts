@@ -12,23 +12,17 @@ jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Button.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ButtonTooltip.jsx", () => undefined);
 jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ColorFields.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/ColorPaletteEditor.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/ColorPicker2.jsx", () => undefined);
-jest.mock("visual/component/Options/types/FontFamily.jsx", () => undefined);
-jest.mock("visual/component/Options/types/FontStyle.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/FontStyleEditor/index.tsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/FormApps.js", () => undefined);
 jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
 jest.mock("visual/component/Options/types/Grid.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Input.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/IntegrationsApps.js",
   () => undefined
@@ -37,19 +31,14 @@ jest.mock(
   "visual/component/Options/types/MultiInputPickerOptionType.js",
   () => undefined
 );
-jest.mock("visual/component/Options/types/MultiPicker.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Popover.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/PopupConditions.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/PromptIcon.jsx", () => undefined);
 jest.mock("visual/component/Options/types/RadioGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Range2.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Select.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Stepper.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Tabs.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));
@@ -69,7 +58,7 @@ describe("Testing `bindStateToOption` function", () => {
     },
     {
       id: "test2",
-      type: "inputText-dev"
+      type: "inputText"
     }
   ];
 
@@ -80,14 +69,14 @@ describe("Testing `bindStateToOption` function", () => {
     },
     {
       id: "test2",
-      type: "inputText-dev",
+      type: "inputText",
       states: ["normal", "hover"]
     }
   ];
 
   const tabsWithState: ToolbarItemType = {
     id: "test",
-    type: "tabs-dev",
+    type: "tabs",
     tabs: [
       {
         id: "1",
@@ -102,7 +91,7 @@ describe("Testing `bindStateToOption` function", () => {
 
   const gridWithState: ToolbarItemType = {
     id: "test",
-    type: "grid-dev",
+    type: "grid",
     columns: [
       {
         id: "col-1",
@@ -125,7 +114,7 @@ describe("Testing `bindStateToOption` function", () => {
   test("Always return same option if it is not `tabs` or `popover` type", () => {
     const option: ToolbarItemType = {
       id: "test",
-      type: "group-dev",
+      type: "group",
       options: [
         {
           id: "test-2",
@@ -141,13 +130,13 @@ describe("Testing `bindStateToOption` function", () => {
     test("If popover has options that support 2 or more state modes, wrap them in `stateMode` option", () => {
       const popover: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options: optionsWithState
       };
 
       const resultPopover: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options: [wrapInState(optionsWithState)]
       };
 
@@ -159,13 +148,13 @@ describe("Testing `bindStateToOption` function", () => {
     test("If popover has options that do not support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const popover: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options
       };
 
       const resultPopover: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options
       };
 
@@ -177,11 +166,11 @@ describe("Testing `bindStateToOption` function", () => {
     test("If popover has other popover as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const popover: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options: [
           {
             id: "my-option",
-            type: "popover-dev",
+            type: "popover",
             options: optionsWithState
           }
         ]
@@ -195,7 +184,7 @@ describe("Testing `bindStateToOption` function", () => {
     test("If popover has tabs as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const popover: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options: [tabsWithState]
       };
 
@@ -207,7 +196,7 @@ describe("Testing `bindStateToOption` function", () => {
     test("If tabs has an option as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const input: ToolbarItemType = {
         id: "my-option",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "1",
@@ -219,7 +208,7 @@ describe("Testing `bindStateToOption` function", () => {
 
       const result: ToolbarItemType = {
         id: "my-option",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "1",
@@ -237,7 +226,7 @@ describe("Testing `bindStateToOption` function", () => {
     test("If tabs has options that support 2 or more state modes, wrap them in `stateMode` option", () => {
       const input: ToolbarItemType = {
         id: "my-option",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           { id: "1", options: optionsWithState },
           { id: "2", options }
@@ -246,7 +235,7 @@ describe("Testing `bindStateToOption` function", () => {
 
       const result: ToolbarItemType = {
         id: "my-option",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "1",
@@ -269,7 +258,7 @@ describe("Testing `bindStateToOption` function", () => {
     test("If tabs has options that do not support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const input: ToolbarItemType = {
         id: "my-option",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           { id: "1", options },
           { id: "2", options }
@@ -282,14 +271,14 @@ describe("Testing `bindStateToOption` function", () => {
     test("If tabs has popover as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const input: ToolbarItemType = {
         id: "my-option",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "1",
             options: [
               {
                 id: "my-option",
-                type: "popover-dev",
+                type: "popover",
                 options: optionsWithState
               }
             ]
@@ -304,7 +293,7 @@ describe("Testing `bindStateToOption` function", () => {
     test("If tabs has other tabs as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const input: ToolbarItemType = {
         id: "my-option",
-        type: "tabs-dev",
+        type: "tabs",
         tabs: [
           {
             id: "1",
@@ -320,13 +309,13 @@ describe("Testing `bindStateToOption` function", () => {
     test("If popover has an option as children that has options that support support 2 or more state modes, don't wrap them in `stateMode` option", () => {
       const input: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options: [gridWithState]
       };
 
       const result: ToolbarItemType = {
         id: "my-option",
-        type: "popover-dev",
+        type: "popover",
         options: [wrapInState([gridWithState])]
       };
 

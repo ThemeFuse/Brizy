@@ -1,6 +1,6 @@
+import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
-import { hideToolbar } from "visual/component/Toolbar";
 
 export default class TimelineItems extends EditorArrayComponent {
   static get componentId() {
@@ -38,7 +38,7 @@ export default class TimelineItems extends EditorArrayComponent {
                   : itemIndex === items.length - 1
                   ? "next"
                   : undefined,
-              onChange: v => {
+              onChange: (v) => {
                 switch (v) {
                   case "prev":
                     this.reorderItem(itemIndex, itemIndex - 1);
@@ -52,7 +52,7 @@ export default class TimelineItems extends EditorArrayComponent {
           },
           {
             id: "duplicate",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-duplicate",
             title: t("Duplicate"),
             devices: "desktop",
@@ -63,7 +63,7 @@ export default class TimelineItems extends EditorArrayComponent {
           },
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-trash",
             title: t("Delete"),
             devices: "desktop",

@@ -12,12 +12,12 @@ export function getItems({ v, device }) {
     : [
         {
           id: "coverZoom",
-          type: "slider-dev",
+          type: "slider",
           disabled: true
         },
         {
           id: "iconSize",
-          type: "slider-dev",
+          type: "slider",
           disabled: true
         }
       ];
@@ -25,7 +25,7 @@ export function getItems({ v, device }) {
     ? {}
     : {
         id: "toolbarColor",
-        type: "popover-dev",
+        type: "popover",
         config: {
           size: "medium",
           title: t("Colors"),
@@ -37,7 +37,7 @@ export function getItems({ v, device }) {
         options: [
           {
             id: "tabsColor",
-            type: "tabs-dev",
+            type: "tabs",
             tabs: [
               {
                 id: "tabPlay",
@@ -46,7 +46,7 @@ export function getItems({ v, device }) {
                 options: [
                   {
                     id: "iconBgColor",
-                    type: "colorPicker-dev",
+                    type: "colorPicker",
                     disabled: true
                   }
                 ]
@@ -58,7 +58,7 @@ export function getItems({ v, device }) {
                 options: [
                   {
                     id: "iconColor",
-                    type: "colorPicker-dev",
+                    type: "colorPicker",
                     disabled: true
                   }
                 ]
@@ -71,7 +71,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-play",
         title: t("Video")
@@ -81,7 +81,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -90,7 +90,7 @@ export function getItems({ v, device }) {
                 {
                   id: "type",
                   label: t("Type"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { value: "youtube", title: "YouTube" },
                     { value: "vimeo", title: "Vimeo" }
@@ -99,7 +99,7 @@ export function getItems({ v, device }) {
                 {
                   id: "video",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   config: {
                     size: "large"
@@ -120,28 +120,28 @@ export function getItems({ v, device }) {
                 {
                   id: "controls",
                   label: t("Controls"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: type === "vimeo"
                 },
                 {
                   id: "branding",
                   label: t("Branding"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: dvv("controls") !== "on" || type !== "youtube"
                 },
                 {
                   id: "intro",
                   label: t("Intro"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: type !== "vimeo"
                 },
                 {
                   id: "loop",
                   label: t("Loop"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
@@ -182,7 +182,7 @@ export function getItems({ v, device }) {
                 {
                   label: t("Cover"),
                   id: "cover",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop"
                 },
                 ...disabledZoomPlaySize
@@ -195,7 +195,7 @@ export function getItems({ v, device }) {
     disabledPlayIconColor,
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -204,7 +204,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           config: {
             tabId: "styles",
             text: t("Styling"),

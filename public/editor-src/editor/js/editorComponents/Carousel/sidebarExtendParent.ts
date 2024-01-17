@@ -5,7 +5,9 @@ import { Value } from "./toolbarExtend";
 export const title = t("Carousel");
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -16,7 +18,7 @@ export const getItems: GetItems<Value> = () => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -25,19 +27,19 @@ export const getItems: GetItems<Value> = () => {
           options: [
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               disabled: true
             },
             {
               id: "sliderPadding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               position: 50
             },
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -50,12 +52,12 @@ export const getItems: GetItems<Value> = () => {
                   options: [
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       disabled: true
                     },
                     {
                       id: "sliderPadding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       devices: "desktop",
                       position: 50

@@ -34,7 +34,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: review ? "nc-woo-review" : "nc-comments",
         title: review ? t("Review") : t("Comments")
@@ -43,7 +43,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "type",
-          type: "select-dev",
+          type: "select",
           label: t("Comments"),
           devices: "desktop",
           disabled: review,
@@ -52,7 +52,7 @@ export function getItems({ v, device, state }) {
         {
           id: "skin",
           label: t("Skin"),
-          type: "select-dev",
+          type: "select",
           disabled: WPComments,
           devices: "desktop",
           choices: [
@@ -65,7 +65,7 @@ export function getItems({ v, device, state }) {
         {
           id: "numPosts",
           label: t("Posts"),
-          type: "slider-dev",
+          type: "slider",
           disabled: type !== "facebook" && WPComments,
           devices: "desktop",
           config: {
@@ -76,12 +76,12 @@ export function getItems({ v, device, state }) {
         },
         // {
         //   id: "darkScheme",
-        //   type: "switch-dev",
+        //   type: "switch",
         //   label: t("Dark Scheme")
         // },
         {
           id: "disqusShortname",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Shortname"),
           disabled: type !== "disqus",
           devices: "desktop",
@@ -93,7 +93,7 @@ export function getItems({ v, device, state }) {
         {
           id: "logoSize",
           label: t("Avatar"),
-          type: "slider-dev",
+          type: "slider",
           disabled: WPComments,
           config: {
             min: 10,
@@ -104,7 +104,7 @@ export function getItems({ v, device, state }) {
         {
           id: "starsSize",
           label: t("Rating"),
-          type: "slider-dev",
+          type: "slider",
           disabled: WPComments || !review,
           config: {
             min: 5,
@@ -116,7 +116,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -127,7 +127,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTypographyName",
@@ -135,7 +135,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "name",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: WPComments,
                   config: {
                     fontFamily: device === "desktop"
@@ -149,7 +149,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "comment",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: WPComments,
                   config: {
                     fontFamily: device === "desktop"
@@ -163,7 +163,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "date",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: WPComments,
                   config: {
                     fontFamily: device === "desktop"
@@ -177,7 +177,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "reply",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: WPComments || review,
                   config: {
                     fontFamily: device === "desktop"
@@ -191,7 +191,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "postButton",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: WPComments,
                   config: {
                     fontFamily: device === "desktop"
@@ -205,7 +205,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -223,7 +223,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -235,7 +235,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "nameColor",
                   disabled: WPComments,
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -247,7 +247,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "commentsColor",
                   disabled: WPComments,
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -258,7 +258,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "postButtonColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: WPComments,
                   states: [NORMAL, HOVER]
                 }
@@ -270,7 +270,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "postButtonBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: WPComments,
                   states: [NORMAL, HOVER]
                 }
@@ -282,7 +282,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "starsColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: WPComments || !review,
                   states: [NORMAL, HOVER]
                 }
@@ -294,7 +294,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "starsBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: WPComments || !review,
                   states: [NORMAL, HOVER]
                 }
@@ -306,7 +306,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Link"),
@@ -317,7 +317,7 @@ export function getItems({ v, device, state }) {
         {
           id: "targetUrl",
           label: t("Target URL"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           choices: [
             {
@@ -333,7 +333,7 @@ export function getItems({ v, device, state }) {
         {
           id: "href",
           label: t("Link"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: "http://",
           disabled: dvv("targetUrl") === "current",
           devices: "desktop",
@@ -345,7 +345,7 @@ export function getItems({ v, device, state }) {
     }
     /*{
       id: "apps",
-      type: "integrationsApps",
+      type: "legacy-integrationsApps",
       position: 120,
       icon: "nc-extensions-2",
       value: {

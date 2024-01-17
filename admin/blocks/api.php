@@ -202,7 +202,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
         try {
             $fields = $this->param('fields') ? $this->param('fields') : [];
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-            $blocks = $bockManager->getEntities(['post_status' => 'any']);
+            $blocks = $bockManager->getEntities([
+                'post_status' => 'any',
+                'order' => $this->param('order') ?: 'DESC',
+                'orderby' => $this->param('orderby') ?: 'ID'
+            ]);
             $this->success($bockManager->createResponseForEntities($blocks, $fields));
         } catch (Exception $exception) {
             $this->error(400, $exception->getMessage());

@@ -12,7 +12,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
   return [
     {
       id: "toolbarLimeSpot",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -23,7 +23,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "upsellType",
           label: t("Upsell"),
-          type: "select-dev",
+          type: "select",
           placeholder: t("Select"),
           choices: [
             { title: "Most Popular", value: "popular" },
@@ -63,7 +63,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

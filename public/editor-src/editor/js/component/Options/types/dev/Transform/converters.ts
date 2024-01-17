@@ -17,7 +17,7 @@ export const defaultValue: Value = {
   rotate: undefined
 };
 
-export const fromElementModel: FromElementModel<"transform-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"transform"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -27,7 +27,7 @@ export const fromElementModel: FromElementModel<"transform-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"transform-dev"> = (patch) => {
+export const toElementModel: ToElementModel<"transform"> = (patch) => {
   switch (patch.type) {
     case Type.active:
       return {

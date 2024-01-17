@@ -11,7 +11,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
   return [
     {
       id: "toolbarLooxReview",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -22,7 +22,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "reviewType",
           label: t("Review Type"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Gallery", value: "gallery" },
             { title: "Custom Product", value: "custom" },
@@ -32,7 +32,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "productID",
           label: t("Product"),
-          type: "select-dev",
+          type: "select",
           disabled: reviewType === "gallery",
           placeholder: t("Select Product"),
           choices: [{ title: "112233", value: "112233" }]
@@ -40,13 +40,13 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "reviewLimit",
           label: t("Reviews Limit"),
-          type: "slider-dev",
+          type: "slider",
           disabled: reviewType === "star"
         },
         {
           id: "withImage",
           label: t("Reviews with Photo"),
-          type: "switch-dev",
+          type: "switch",
           disabled: reviewType === "star"
         }
       ]
@@ -54,7 +54,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

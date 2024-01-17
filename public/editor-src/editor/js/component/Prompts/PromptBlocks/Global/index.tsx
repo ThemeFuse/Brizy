@@ -50,7 +50,12 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
     );
 
     return blocks.map((block) => {
-      const { url, width, height } = blockThumbnailData(block.data);
+      const { url, width, height } = blockThumbnailData({
+        type: "",
+        value: {},
+        meta: block.meta
+      });
+
       const { id, title = t("Untitled"), tags } = block;
       const inactive = type === "normal" && !!globalBlocksInPage[id];
 

@@ -6,17 +6,17 @@ export const getItems: GetItems<ElementModel> = () => {
   return [
     {
       id: "list",
-      type: "toggle",
+      type: "legacy-toggle",
       devices: "desktop",
       disabled: true
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       options: [
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           disabled: true
         }
       ]

@@ -14,24 +14,10 @@ export function toolbarLinkAnchor({
   return {
     id: dvk("linkAnchor"),
     label: t("Block"),
-    type: "blockThumbnail",
+    type: "legacy-blockThumbnail",
     devices,
     disabled,
     value: dvv("linkAnchor")
-  };
-}
-
-export function toolbarStoryAnchor({ disabled = false, devices = "all" }) {
-  return {
-    id: "linkToSlide",
-    type: "number-dev",
-    label: t("Slide"),
-    disabled,
-    devices,
-    config: {
-      min: 1,
-      max: 1000000
-    }
   };
 }
 
@@ -49,7 +35,7 @@ export function toolbarLinkPopup({
 
   return {
     id: dvk("linkPopup"),
-    type: "promptAddPopup",
+    type: "legacy-promptAddPopup",
     label: t("Popup"),
     canDelete,
     disabled,

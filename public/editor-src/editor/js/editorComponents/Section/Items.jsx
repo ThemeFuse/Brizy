@@ -1,10 +1,10 @@
+import classnames from "classnames";
 import React from "react";
 import SlickSlider from "react-slick";
-import classnames from "classnames";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
 
 // className is added by react-slick
@@ -77,7 +77,7 @@ class SectionItems extends EditorArrayComponent {
                   : itemIndex === items.length - 1
                   ? "next"
                   : undefined,
-              onChange: v => {
+              onChange: (v) => {
                 switch (v) {
                   case "prev":
                     this.reorderItem(itemIndex, itemIndex - 1);
@@ -91,7 +91,7 @@ class SectionItems extends EditorArrayComponent {
           },
           {
             id: "duplicate",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-duplicate",
             title: t("Duplicate"),
             position: 225,
@@ -101,7 +101,7 @@ class SectionItems extends EditorArrayComponent {
           },
           {
             id: "remove",
-            type: "button",
+            type: "legacy-button",
             icon: "nc-trash",
             title: t("Delete"),
             position: 250,
@@ -146,7 +146,7 @@ class SectionItems extends EditorArrayComponent {
         ret = (
           <SlickSlider
             className={`brz-slick-slider brz-slick-slider--${sliderAnimation}`}
-            ref={el => {
+            ref={(el) => {
               this.slider = el;
             }}
             slidesToShow={1}

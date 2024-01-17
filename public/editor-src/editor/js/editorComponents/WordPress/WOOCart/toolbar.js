@@ -22,7 +22,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "popoverCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-cart",
         title: t("Shop Cart")
@@ -31,7 +31,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -40,18 +40,18 @@ export function getItems({ v, device }) {
                 {
                   id: "subtotal",
                   label: t("Subtotal"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "purchases",
                   label: t("Cart Items"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "purchasesType",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   label: t("Style"),
                   devices: "desktop",
                   disabled: purchasesOff,
@@ -76,7 +76,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "iconCustomSize",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Size"),
                   config: {
                     min: 0,
@@ -86,7 +86,7 @@ export function getItems({ v, device }) {
                 },
                 {
                   id: "spacing",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: subtotal === "off" && purchasesOff,
                   label: t("Spacing"),
                   config: {
@@ -104,7 +104,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -115,7 +115,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabsTypographyPrice",
@@ -123,7 +123,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "typography",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: subtotal !== "on",
                   config: {
                     fontFamily: device === "desktop"
@@ -137,7 +137,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "purchases",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: purchasesOff || plainType,
                   config: {
                     fontFamily: device === "desktop"
@@ -151,7 +151,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -166,7 +166,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsToolbarColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "BgColorTab",
@@ -174,7 +174,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -186,7 +186,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   disabled: subtotal !== "on",
                   states: [NORMAL, HOVER]
@@ -199,7 +199,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "iconColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -211,7 +211,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "purchasesColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   disabled: purchasesOff || plainType,
                   states: [NORMAL, HOVER]
@@ -224,7 +224,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -236,7 +236,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bubbleColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: purchasesOff || bubbleType,
                   devices: "desktop",
                   states: [NORMAL, HOVER]
@@ -249,7 +249,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bubbleBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: purchasesOff || bubbleType,
                   devices: "desktop",
                   states: [NORMAL, HOVER]
@@ -262,7 +262,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "sidebar",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         {
@@ -279,7 +279,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110,
       devices: "desktop"
     }

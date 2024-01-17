@@ -21,7 +21,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-gallery",
         title: t("Gallery")
@@ -31,12 +31,12 @@ export function getItems({
         {
           id: "editLabel",
           label: t("Label"),
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "displayMode",
           label: t("Display Mode"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { value: "AUTO", title: "Auto" },
             { value: "COVER", title: "Cover" },
@@ -46,7 +46,7 @@ export function getItems({
         {
           id: "ratio",
           label: t("Ratio"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { value: "PORTRAIT_0667", title: "2:3" },
             { value: "PORTRAIT_075", title: "3:4" },
@@ -57,12 +57,12 @@ export function getItems({
         },
         {
           id: "groupSize",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "galleryWidth",
               label: t("Size"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "SMALL", icon: "nc-small" },
                 { value: "MEDIUM", icon: "nc-medium" },
@@ -73,7 +73,7 @@ export function getItems({
             {
               id: "galleryCustomSize",
               disabled: dvv("galleryWidth") !== "custom",
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 1,
                 max: 6
@@ -85,7 +85,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       disabled: disableLabel,
       config: {
         icon: "nc-font",
@@ -96,7 +96,7 @@ export function getItems({
       options: [
         {
           id: "labelTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -105,14 +105,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 30,
       options: [
         {
           id: "galleryBottomSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -121,7 +121,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           disabled: disableLabel,
           devices: "desktop",
           config: {

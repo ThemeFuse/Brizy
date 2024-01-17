@@ -14,11 +14,7 @@ import {
   cssStyleSizeWidthHeight,
   cssStyleSpacing,
   cssStyleTextAlign,
-  cssStyleTypography3FontFamily,
-  cssStyleTypography3FontSize,
-  cssStyleTypography3FontWeight,
-  cssStyleTypography3LetterSpacing,
-  cssStyleTypography3LineHeight
+  getAllCssStyleTypography
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "visual/utils/style2/types";
@@ -48,53 +44,15 @@ export function cssStyleElementEcwidMyAccountTitleColor({
   return cssStyleColor({ v, device, state, prefix: "titleColor" });
 }
 
-export function cssStyleElementEcwidMyAccountTitleTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountTitleTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "titleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountTitleTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({ v, device, prefix: "titleTypography" });
-}
-
-export function cssStyleElementEcwidMyAccountTitleTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "titleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountTitleTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "titleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountTitleTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "titleTypography"
   });
 }
@@ -130,57 +88,15 @@ export function cssStyleElementEcwidMyAccountDescriptionColor({
   return cssStyleColor({ v, device, state, prefix: "descriptionColor" });
 }
 
-export function cssStyleElementEcwidMyAccountDescriptionTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountDescriptionTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "descriptionTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountDescriptionTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "descriptionTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountDescriptionTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "descriptionTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountDescriptionTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "descriptionTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountDescriptionTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "descriptionTypography"
   });
 }
@@ -212,20 +128,6 @@ export function cssStyleElementEcwidMyAccountDescriptionSpacing({
   });
 }
 
-export function cssStyleElementEcwidMyAccountDescriptionSpacingTop({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    prefix: "description",
-    direction: "top"
-  });
-}
-
 // Style Input
 export function cssStyleElementEcwidMyAccountInputColor({
   v,
@@ -235,53 +137,15 @@ export function cssStyleElementEcwidMyAccountInputColor({
   return cssStyleColor({ v, device, state, prefix: "inputColor" });
 }
 
-export function cssStyleElementEcwidMyAccountInputTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountInputTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "inputTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountInputTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({ v, device, prefix: "inputTypography" });
-}
-
-export function cssStyleElementEcwidMyAccountInputTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "inputTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountInputTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "inputTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountInputTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "inputTypography"
   });
 }
@@ -347,13 +211,15 @@ export function cssStyleElementEcwidMyAccountInputSpacing({
   device,
   state
 }: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    prefix: "input",
-    direction: "bottom"
-  });
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const spacingTop = dvv("descriptionSpacing");
+  const spacingTopSuffix = dvv("descriptionSpacingSuffix");
+  const spacingBottom = dvv("inputSpacing");
+  const spacingBottomSuffix = dvv("inputSpacingSuffix");
+
+  return `margin:${spacingTop}${spacingTopSuffix} 0 ${spacingBottom}${spacingBottomSuffix} 0;`;
 }
 
 // Style Agreement
@@ -365,57 +231,15 @@ export function cssStyleElementEcwidMyAccountAgreementColor({
   return cssStyleColor({ v, device, state, prefix: "agreementColor" });
 }
 
-export function cssStyleElementEcwidMyAccountAgreementTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountAgreementTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "agreementTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAgreementTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "agreementTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAgreementTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "agreementTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAgreementTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "agreementTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAgreementTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "agreementTypography"
   });
 }
@@ -469,57 +293,15 @@ export function cssStyleElementEcwidMyAccountAccountTitleAlign({
   });
 }
 
-export function cssStyleElementEcwidMyAccountAccountTitleTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountAccountTitleTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "accountTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAccountTitleTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "accountTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAccountTitleTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "accountTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAccountTitleTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "accountTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountAccountTitleTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "accountTitleTypography"
   });
 }
@@ -547,57 +329,15 @@ export function cssStyleElementEcwidMyAccountProductsColor({
   return cssStyleColor({ v, device, state, prefix: "productsColor" });
 }
 
-export function cssStyleElementEcwidMyAccountProductsTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountProductsTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "productsTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountProductsTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "productsTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountProductsTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "productsTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountProductsTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "productsTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountProductsTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "productsTypography"
   });
 }
@@ -619,57 +359,15 @@ export function cssStyleElementEcwidMyAccountShopTitleAlign({
   return cssStyleTextAlign({ v, device, state, prefix: "shopTitle" });
 }
 
-export function cssStyleElementEcwidMyAccountShopTitleTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountShopTitleTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "shopTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountShopTitleTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "shopTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountShopTitleTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "shopTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountShopTitleTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "shopTitleTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountShopTitleTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "shopTitleTypography"
   });
 }
@@ -699,55 +397,13 @@ export function cssStyleElementEcwidMyAccountEmptyColor({
 
 export function cssStyleElementEcwidMyAccountEmptyTypographyFontFamily({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "emptyTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountEmptyTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "emptyTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountEmptyTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "emptyTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountEmptyTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "emptyTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountEmptyTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "emptyTypography"
   });
 }
@@ -792,57 +448,15 @@ export function cssStyleElementEcwidMyAccountSummaryLinkAlign({
   });
 }
 
-export function cssStyleElementEcwidMyAccountSummaryLinkTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountSummaryLinkTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "summaryLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountSummaryLinkTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "summaryLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountSummaryLinkTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "summaryLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountSummaryLinkTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "summaryLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountSummaryLinkTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "summaryLinkTypography"
   });
 }
@@ -869,57 +483,15 @@ export function cssStyleElementEcwidMyAccountConnectLinkAlign({
   });
 }
 
-export function cssStyleElementEcwidMyAccountConnectTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountConnectTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "connectTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "connectTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "connectTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "connectTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "connectTypography"
   });
 }
@@ -937,57 +509,15 @@ export function cssStyleElementEcwidMyAccountConnectLinkColor({
   });
 }
 
-export function cssStyleElementEcwidMyAccountConnectLinkTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountConnectLinkTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "connectLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectLinkTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "connectLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectLinkTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "connectLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectLinkTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "connectLinkTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountConnectLinkTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "connectLinkTypography"
   });
 }
@@ -1072,57 +602,15 @@ export function cssStyleElementEcwidMyAccountTitle2Color({
   return cssStyleColor({ v, device, state, prefix: "title2Color" });
 }
 
-export function cssStyleElementEcwidMyAccountTitle2TypographyFontFamily({
+export function cssStyleElementEcwidMyAccountTitle2Typography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "title2Typography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountTitle2TypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({
-    v,
-    device,
-    prefix: "title2Typography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountTitle2TypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "title2Typography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountTitle2TypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "title2Typography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountTitle2TypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "title2Typography"
   });
 }
@@ -1160,53 +648,15 @@ export function cssStyleElementEcwidMyAccountInputPlaceholderDisplay({
 }
 
 // Style Button
-export function cssStyleElementEcwidMyAccountButtonTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountButtonTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
-    prefix: "buttonTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountButtonTypographyFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontSize({ v, device, prefix: "buttonTypography" });
-}
-
-export function cssStyleElementEcwidMyAccountButtonTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "buttonTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountButtonTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "buttonTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountButtonTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
+    state,
     prefix: "buttonTypography"
   });
 }
@@ -1327,53 +777,23 @@ export function cssStyleElementEcwidMyAccountFooterColor({
   return cssStyleColor({ v, device, state, prefix: "footerColor" });
 }
 
-export function cssStyleElementEcwidMyAccountFooterTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountFooterTypography({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontFamily({
+  return getAllCssStyleTypography({
     v,
     device,
+    state,
     prefix: "footerTypography"
   });
 }
 
-export function cssStyleElementEcwidMyAccountFooterTypographyFontSize({
+export function cssStyleElementEcwidMyAccountBreadcrumbsAlign({
   v,
-  device
+  device,
+  state
 }: CSSValue): string {
-  return cssStyleTypography3FontSize({ v, device, prefix: "footerTypography" });
-}
-
-export function cssStyleElementEcwidMyAccountFooterTypographyLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LineHeight({
-    v,
-    device,
-    prefix: "footerTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountFooterTypographyFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3FontWeight({
-    v,
-    device,
-    prefix: "footerTypography"
-  });
-}
-
-export function cssStyleElementEcwidMyAccountFooterTypographyLetterSpacing({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography3LetterSpacing({
-    v,
-    device,
-    prefix: "footerTypography"
-  });
+  return cssStyleTextAlign({ v, device, state, prefix: "breadcrumbs" });
 }

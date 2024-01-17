@@ -20,7 +20,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -30,7 +30,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "subscribeToCalendarTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -39,7 +39,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "toolbarEventCalendarSubscribeButton",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Icon")
@@ -48,7 +48,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "eventCalendarSubscribeButtonTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "eventCalendarSubscribeButtonTab",
@@ -57,7 +57,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "icon",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   devices: "desktop",
                   config: { canDelete: true }
                 },
@@ -65,7 +65,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                   id: "iconPosition",
                   label: t("Position"),
                   devices: "desktop",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: isDisabledIcon,
                   choices: [
                     { value: "left", icon: "nc-align-left" },
@@ -74,14 +74,14 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 },
                 {
                   id: "iconSizeGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   disabled: isDisabledIcon,
                   options: [
                     {
                       id: "iconSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -91,7 +91,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                     },
                     {
                       id: "iconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("iconSize") !== "custom",
                       config: {
                         min: 1,
@@ -104,7 +104,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   roles: ["admin"],
                   disabled: isDisabledIcon,
@@ -122,7 +122,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Colors"),
         size: "medium",
@@ -140,7 +140,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBgColor",
@@ -148,7 +148,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "subscribeToCalendar",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -159,7 +159,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "subscribeToCalendarColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -171,7 +171,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "subscribeToCalendarBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -183,7 +183,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "subscribeToCalendarBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -194,7 +194,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "subscribeToCalendarHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -204,7 +204,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -214,13 +214,13 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         {
           id: "subscribeToCalendarText",
           label: t("Text"),
-          type: "inputText-dev",
+          type: "inputText",
           devices: "desktop"
         },
         {
           id: "subscribeToCalendarWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -233,7 +233,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         {
           id: "subscribeToCalendarHeight",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 15,
             max: 500,

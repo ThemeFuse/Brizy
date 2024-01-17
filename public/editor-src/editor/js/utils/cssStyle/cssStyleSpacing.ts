@@ -39,7 +39,7 @@ export function cssStyleSpacing({
     case "right":
       return `margin: 0 ${spacing}${spacingSuffix} 0 0;`;
     case "bottom":
-      return `margin:0 0 ${spacing}${spacingSuffix} 0;`;
+      return `margin: 0 0 ${spacing}${spacingSuffix} 0;`;
     case "left":
       return `margin: 0 0 0 ${spacing}${spacingSuffix};`;
     case "horizontal":
@@ -71,7 +71,7 @@ export function cssStyleSpacingWithPadding({
     case "right":
       return `padding: 0 ${spacing}${spacingSuffix} 0 0;`;
     case "bottom":
-      return `padding:0 0 ${spacing}${spacingSuffix} 0;`;
+      return `padding: 0 0 ${spacing}${spacingSuffix} 0;`;
     case "left":
       return `padding: 0 0 0 ${spacing}${spacingSuffix};`;
     case "horizontal":

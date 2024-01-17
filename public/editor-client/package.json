@@ -19,7 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "fp-utilities": "^1.1.4",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "franc": "^6.1.0"
   },
   "devDependencies": {
     "@babel/parser": "^7.21.8",

@@ -264,43 +264,43 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       );
 
       return (
-        <ContainerBorder type="wrapper" color="grey" borderStyle="dotted">
-          {({
-            ref: containerBorderRef,
-            attr: containerBorderAttr,
-            border: ContainerBorderBorder
-          }: {
-            ref: Ref<HTMLDivElement>;
-            border: ReactElement;
-            attr: HTMLAttributes<Element>;
-          }): ReactElement => (
-            <Animation<"div">
-              ref={(v: HTMLDivElement | null): void => {
-                attachRef(v, containerBorderRef);
-                attachRef(v, ref || null);
-              }}
-              component="div"
-              className={classNames(
-                this.getWrapperClassName(v, vs, vd),
-                className
-              )}
-              animationId={this.getId()}
-              animationClass={this.getAnimationClassName(v, vs, vd)}
-              componentProps={{
-                ...Attr.mRead(customAttributes),
-                ...containerBorderAttr,
-                ...extraAttr,
-                id: cssId
-              }}
-            >
-              <ContextMenuExtend
-                // @ts-expect-error: Need to convert contextMenuConfig to TS
-                {...this.makeContextMenuProps(contextMenuConfigPro)}
-              >
-                <ContextMenu
-                  // @ts-expect-error: Need to convert contextMenuConfig to TS
-                  {...this.makeContextMenuProps(contextMenuConfig)}
-                  componentId={v?.items[0]?.type}
+        <ContextMenuExtend
+          // @ts-expect-error: Need to convert contextMenuConfig to TS
+          {...this.makeContextMenuProps(contextMenuConfigPro)}
+        >
+          <ContextMenu
+            // @ts-expect-error: Need to convert contextMenuConfig to TS
+            {...this.makeContextMenuProps(contextMenuConfig)}
+            componentId={v?.items[0]?.type}
+          >
+            <ContainerBorder type="wrapper" color="grey" borderStyle="dotted">
+              {({
+                ref: containerBorderRef,
+                attr: containerBorderAttr,
+                border: ContainerBorderBorder
+              }: {
+                ref: Ref<HTMLDivElement>;
+                border: ReactElement;
+                attr: HTMLAttributes<Element>;
+              }): ReactElement => (
+                <Animation<"div">
+                  ref={(v: HTMLDivElement | null): void => {
+                    attachRef(v, containerBorderRef);
+                    attachRef(v, ref || null);
+                  }}
+                  component="div"
+                  className={classNames(
+                    this.getWrapperClassName(v, vs, vd),
+                    className
+                  )}
+                  animationId={this.getId()}
+                  animationClass={this.getAnimationClassName(v, vs, vd)}
+                  componentProps={{
+                    ...Attr.mRead(customAttributes),
+                    ...containerBorderAttr,
+                    ...extraAttr,
+                    id: cssId
+                  }}
                 >
                   <Roles
                     allow={["admin"]}
@@ -315,11 +315,11 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                     )}
                     {ContainerBorderBorder}
                   </Roles>
-                </ContextMenu>
-              </ContextMenuExtend>
-            </Animation>
-          )}
-        </ContainerBorder>
+                </Animation>
+              )}
+            </ContainerBorder>
+          </ContextMenu>
+        </ContextMenuExtend>
       );
     }
 
@@ -345,47 +345,47 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     );
 
     return (
-      <ContainerBorder
-        type="wrapper"
-        color="grey"
-        borderStyle="dotted"
-        buttonPosition="topRight"
-        renderButtonWrapper={this.renderToolbar}
+      <ContextMenu
+        // @ts-expect-error: Need to convert contextMenuConfig to TS
+        {...this.makeContextMenuProps(contextMenuConfig)}
+        componentId={v?.items[0]?.type}
       >
-        {({
-          ref: containerBorderRef,
-          attr: containerBorderAttr,
-          button: ContainerBorderButton,
-          border: ContainerBorderBorder
-        }: {
-          ref: Ref<HTMLDivElement>;
-          button: ReactElement;
-          border: ReactElement;
-          attr: HTMLAttributes<Element>;
-        }): ReactElement => (
-          <Animation<"div">
-            ref={(v: HTMLDivElement | null): void => {
-              attachRef(v, containerBorderRef);
-              attachRef(v, ref || null);
-            }}
-            animationId={this.getId()}
-            component="div"
-            className={classNames(
-              this.getWrapperClassName(v, vs, vd),
-              className
-            )}
-            animationClass={this.getAnimationClassName(v, vs, vd)}
-            componentProps={{
-              ...Attr.mRead(customAttributes),
-              ...containerBorderAttr,
-              ...extraAttr,
-              id: cssId
-            }}
-          >
-            <ContextMenu
-              // @ts-expect-error: Need to convert contextMenuConfig to TS
-              {...this.makeContextMenuProps(contextMenuConfig)}
-              componentId={v?.items[0]?.type}
+        <ContainerBorder
+          type="wrapper"
+          color="grey"
+          borderStyle="dotted"
+          buttonPosition="topRight"
+          renderButtonWrapper={this.renderToolbar}
+        >
+          {({
+            ref: containerBorderRef,
+            attr: containerBorderAttr,
+            button: ContainerBorderButton,
+            border: ContainerBorderBorder
+          }: {
+            ref: Ref<HTMLDivElement>;
+            button: ReactElement;
+            border: ReactElement;
+            attr: HTMLAttributes<Element>;
+          }): ReactElement => (
+            <Animation<"div">
+              ref={(v: HTMLDivElement | null): void => {
+                attachRef(v, containerBorderRef);
+                attachRef(v, ref || null);
+              }}
+              animationId={this.getId()}
+              component="div"
+              className={classNames(
+                this.getWrapperClassName(v, vs, vd),
+                className
+              )}
+              animationClass={this.getAnimationClassName(v, vs, vd)}
+              componentProps={{
+                ...Attr.mRead(customAttributes),
+                ...containerBorderAttr,
+                ...extraAttr,
+                id: cssId
+              }}
             >
               <Roles
                 allow={["admin"]}
@@ -403,10 +403,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                 )}
                 {ContainerBorderBorder}
               </Roles>
-            </ContextMenu>
-          </Animation>
-        )}
-      </ContainerBorder>
+            </Animation>
+          )}
+        </ContainerBorder>
+      </ContextMenu>
     );
   }
 

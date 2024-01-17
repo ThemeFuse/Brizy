@@ -81,7 +81,7 @@ class Blocks extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-duplicate",
           title: t("Duplicate"),
           position: 200,
@@ -92,7 +92,7 @@ class Blocks extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-trash",
           title: t("Delete"),
           position: 250,

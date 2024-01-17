@@ -4,6 +4,10 @@
   display: inherit;
   justify-content: inherit;
 
+  > a[data-brz-link-type] {
+    display: flex;
+  }
+
   svg {
     backface-visibility: hidden;
   }

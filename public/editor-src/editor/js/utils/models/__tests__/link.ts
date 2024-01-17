@@ -24,7 +24,6 @@ describe("Testing 'getLinkData' function", () => {
     [
       {
         linkType: "page",
-        linkSource: "source",
         linkPage: "http://localhost"
       },
       {

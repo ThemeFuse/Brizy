@@ -28,7 +28,7 @@ export function getItemsSimple({ v, device, state }) {
   return [
     {
       id: "toolbarMenuSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-menu-3",
         title: t("Menu")
@@ -37,7 +37,7 @@ export function getItemsSimple({ v, device, state }) {
       options: [
         {
           id: "menuSize",
-          type: "slider-dev",
+          type: "slider",
           label: t("Size"),
           position: 20,
           disabled: dvv("verticalMode") === "horizontal",
@@ -51,7 +51,7 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "toolbarMenuItem",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Icon")
@@ -61,7 +61,7 @@ export function getItemsSimple({ v, device, state }) {
         {
           id: "iconPosition",
           label: t("Position"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           position: 10,
           choices: [
             { value: "left", icon: "nc-align-left" },
@@ -70,7 +70,7 @@ export function getItemsSimple({ v, device, state }) {
         },
         {
           id: "iconSize",
-          type: "slider-dev",
+          type: "slider",
           label: t("Size"),
           position: 20,
           config: {
@@ -86,7 +86,7 @@ export function getItemsSimple({ v, device, state }) {
         },
         {
           id: "iconSpacing",
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           label: t("Spacing"),
           roles: ["admin"],
@@ -106,7 +106,7 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "subMenuToolbarMenuItem",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Icon")
@@ -116,7 +116,7 @@ export function getItemsSimple({ v, device, state }) {
         {
           id: "subMenuIconPosition",
           label: t("Position"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           position: 10,
           choices: [
             { value: "left", icon: "nc-align-left" },
@@ -125,7 +125,7 @@ export function getItemsSimple({ v, device, state }) {
         },
         {
           id: "subMenuIconSize",
-          type: "slider-dev",
+          type: "slider",
           label: t("Size"),
           position: 20,
           config: {
@@ -136,7 +136,7 @@ export function getItemsSimple({ v, device, state }) {
         },
         {
           id: "subMenuIconSpacing",
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           label: t("Spacing"),
           roles: ["admin"],
@@ -151,7 +151,7 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === DESKTOP ? "large" : "auto",
@@ -162,7 +162,7 @@ export function getItemsSimple({ v, device, state }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === DESKTOP
           }
@@ -171,7 +171,7 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "subMenuToolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === DESKTOP ? "large" : "auto",
@@ -182,7 +182,7 @@ export function getItemsSimple({ v, device, state }) {
       options: [
         {
           id: "subMenu",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === DESKTOP
           }
@@ -192,7 +192,7 @@ export function getItemsSimple({ v, device, state }) {
 
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -208,7 +208,7 @@ export function getItemsSimple({ v, device, state }) {
       options: [
         {
           id: "color",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -216,7 +216,7 @@ export function getItemsSimple({ v, device, state }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -227,7 +227,7 @@ export function getItemsSimple({ v, device, state }) {
               options: [
                 {
                   id: "menuBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -238,7 +238,7 @@ export function getItemsSimple({ v, device, state }) {
               options: [
                 {
                   id: "menuBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -250,7 +250,7 @@ export function getItemsSimple({ v, device, state }) {
 
     {
       id: "subMenuToolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -269,7 +269,7 @@ export function getItemsSimple({ v, device, state }) {
       options: [
         {
           id: "subMenuColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -277,7 +277,7 @@ export function getItemsSimple({ v, device, state }) {
               options: [
                 {
                   id: "subMenuColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -288,7 +288,7 @@ export function getItemsSimple({ v, device, state }) {
               options: [
                 {
                   id: "subMenuBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -299,7 +299,7 @@ export function getItemsSimple({ v, device, state }) {
               options: [
                 {
                   id: "subMenuBorder",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             },
@@ -309,7 +309,7 @@ export function getItemsSimple({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -320,7 +320,7 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       roles: ["admin"],
       position: 110,
@@ -345,7 +345,7 @@ export function getItemsMMenu({ v, device, state, context }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -354,7 +354,7 @@ export function getItemsMMenu({ v, device, state, context }) {
       options: [
         {
           id: "toolbarbackgroundTab",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "imageFilter",
@@ -363,7 +363,7 @@ export function getItemsMMenu({ v, device, state, context }) {
                 {
                   label: t("Image"),
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   population: imageDynamicContentChoices
                 }
               ]
@@ -385,7 +385,7 @@ export function getItemsMMenu({ v, device, state, context }) {
     },
     {
       id: "mMenuToolbarMenuItem",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Icon")
@@ -395,7 +395,7 @@ export function getItemsMMenu({ v, device, state, context }) {
         {
           id: "mMenuIconPosition",
           label: t("Position"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           position: 10,
           choices: [
             { value: "left", icon: "nc-align-left" },
@@ -404,7 +404,7 @@ export function getItemsMMenu({ v, device, state, context }) {
         },
         {
           id: "mMenuIconSize",
-          type: "slider-dev",
+          type: "slider",
           label: t("Size"),
           roles: ["admin"],
           position: 20,
@@ -416,7 +416,7 @@ export function getItemsMMenu({ v, device, state, context }) {
         },
         {
           id: "mMenuIconSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           roles: ["admin"],
           position: 30,
@@ -430,7 +430,7 @@ export function getItemsMMenu({ v, device, state, context }) {
     },
     {
       id: "mMenuToolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         title: t("Typography"),
@@ -441,7 +441,7 @@ export function getItemsMMenu({ v, device, state, context }) {
       options: [
         {
           id: "mMenu",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === DESKTOP
           }
@@ -450,7 +450,7 @@ export function getItemsMMenu({ v, device, state, context }) {
     },
     {
       id: "mMenuToolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -465,7 +465,7 @@ export function getItemsMMenu({ v, device, state, context }) {
       options: [
         {
           id: "mMenuColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -473,7 +473,7 @@ export function getItemsMMenu({ v, device, state, context }) {
               options: [
                 {
                   id: "mMenuColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -484,7 +484,7 @@ export function getItemsMMenu({ v, device, state, context }) {
               options: [
                 {
                   id: "mMenu",
-                  type: "backgroundColor-dev"
+                  type: "backgroundColor"
                 }
               ]
             },
@@ -494,7 +494,7 @@ export function getItemsMMenu({ v, device, state, context }) {
               options: [
                 {
                   id: "mMenuBorder",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             }
@@ -504,7 +504,7 @@ export function getItemsMMenu({ v, device, state, context }) {
     },
     {
       id: "mMenuItemHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -514,7 +514,7 @@ export function getItemsMMenu({ v, device, state, context }) {
     },
     {
       id: "mMenuAdvancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       roles: ["admin"],
       position: 110,

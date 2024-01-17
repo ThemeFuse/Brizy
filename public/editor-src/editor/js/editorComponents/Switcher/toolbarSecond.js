@@ -19,7 +19,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-switcher",
         title: t("Switcher")
@@ -28,7 +28,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "currentShortcodeSwitcher",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeSwitcher",
@@ -38,7 +38,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "switcherStyle",
                   label: t("Style"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { value: "style-1", icon: "nc-switcher-style-1" },
                     { value: "style-2", icon: "nc-switcher-style-2" }
@@ -46,7 +46,7 @@ export function getItems({ v, device, state }) {
                 },
                 {
                   id: "spacing",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Spacing"),
                   config: {
                     min: 0,
@@ -64,7 +64,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "secondIcon",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   devices: "desktop",
                   config: { canDelete: true }
                 },
@@ -73,7 +73,7 @@ export function getItems({ v, device, state }) {
                       {
                         id: "iconPosition",
                         label: t("Position"),
-                        type: "radioGroup-dev",
+                        type: "radioGroup",
                         choices: [
                           { value: "left", icon: "nc-align-left" },
                           { value: "top", icon: "nc-align-top" },
@@ -83,12 +83,12 @@ export function getItems({ v, device, state }) {
                       },
                       {
                         id: "groupIconSizesPicker",
-                        type: "group-dev",
+                        type: "group",
                         options: [
                           {
                             id: "iconSize",
                             label: t("Size"),
-                            type: "radioGroup-dev",
+                            type: "radioGroup",
                             choices: [
                               { value: "small", icon: "nc-16" },
                               { value: "medium", icon: "nc-24" },
@@ -98,7 +98,7 @@ export function getItems({ v, device, state }) {
                           },
                           {
                             id: "iconCustomSize",
-                            type: "slider-dev",
+                            type: "slider",
                             disabled: dvv("iconSize") !== "custom",
                             config: {
                               min: 8,
@@ -111,7 +111,7 @@ export function getItems({ v, device, state }) {
                       {
                         id: "iconSpacing",
                         label: t("Spacing"),
-                        type: "slider-dev",
+                        type: "slider",
                         config: {
                           min: 0,
                           max: 100,
@@ -129,7 +129,7 @@ export function getItems({ v, device, state }) {
 
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -140,7 +140,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "typography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: "desktop" === device
           }
@@ -149,7 +149,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -165,7 +165,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "color",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "bg",
@@ -173,7 +173,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, ACTIVE]
                 }
               ]
@@ -184,7 +184,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, ACTIVE]
                 }
               ]
@@ -195,7 +195,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             },
@@ -205,7 +205,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow"
                 }
               ]
             }
@@ -215,7 +215,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -225,7 +225,7 @@ export function getItems({ v, device, state }) {
         {
           id: "navStyle2Size",
           label: t("Size"),
-          type: "slider-dev",
+          type: "slider",
           disabled: switcherStyle === "style-1",
           config: {
             min: 25,
@@ -236,7 +236,7 @@ export function getItems({ v, device, state }) {
         {
           id: "navStyle1Width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           disabled: switcherStyle === "style-2",
           config: {
             min: 0,
@@ -246,7 +246,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -255,7 +255,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -270,7 +270,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

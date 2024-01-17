@@ -18,7 +18,7 @@ export const getItems: GetItems<Value, Props> = ({
   return [
     {
       id: "toolbarGroupDetail",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "t2-group-detail",
         title: t("Sermon Detail")
@@ -27,7 +27,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -40,7 +40,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "groupsRecent",
                   label: t("Recent Groups"),
-                  type: "select-dev",
+                  type: "select",
                   choices: getEkklesiaChoiches(config, {
                     key: "smallgroups"
                   })
@@ -53,62 +53,62 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "showImage",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Image")
                 },
                 {
                   id: "showTitle",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Title")
                 },
                 {
                   id: "showCategory",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Category")
                 },
                 {
                   id: "showGroup",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Group")
                 },
                 {
                   id: "showMetaHeadings",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Meta Headings")
                 },
                 {
                   id: "showDay",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Day")
                 },
                 {
                   id: "showTimes",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Times")
                 },
                 {
                   id: "showStatus",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Status")
                 },
                 {
                   id: "showChildcare",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Childcare")
                 },
                 {
                   id: "showResourceLink",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Resource Link")
                 },
                 {
                   id: "showContent",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Content")
                 },
                 {
                   id: "showPreviousPage",
-                  type: "switch-dev",
+                  type: "switch",
                   label: t("Previous Page")
                 }
               ]
@@ -126,7 +126,7 @@ export const getItems: GetItems<Value, Props> = ({
     }),
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -136,7 +136,7 @@ export const getItems: GetItems<Value, Props> = ({
         {
           id: "itemSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -145,7 +145,7 @@ export const getItems: GetItems<Value, Props> = ({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -155,7 +155,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -169,7 +169,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -184,18 +184,18 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     },
     {
       id: "itemHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 80,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

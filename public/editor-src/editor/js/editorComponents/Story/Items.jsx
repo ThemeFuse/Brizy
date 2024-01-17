@@ -119,7 +119,7 @@ class StoryItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-duplicate",
           title: t("Duplicate"),
           position: 200,
@@ -129,7 +129,7 @@ class StoryItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-trash",
           title: t("Delete"),
           disabled: dbValue.length === 1,
@@ -141,19 +141,19 @@ class StoryItems extends EditorArrayComponent {
         },
         {
           id: "toolbarStories",
-          type: "popover-dev",
+          type: "popover",
           disabled: true,
           options: []
         },
         {
           id: "toolbarColor",
-          type: "popover-dev",
+          type: "popover",
           disabled: true,
           options: []
         },
         {
           id: "toolbarAutoplay",
-          type: "popover-dev",
+          type: "popover",
           disabled: true,
           options: []
         }
@@ -169,12 +169,12 @@ class StoryItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           disabled: true
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           disabled: true
         }
       ],

@@ -15,7 +15,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-facebook",
         title: t("Page")
@@ -26,7 +26,7 @@ export function getItems({ v, device, state }) {
         {
           id: "href",
           label: t("Link"),
-          type: "inputText-dev",
+          type: "inputText",
           devices: "desktop",
           placeholder: "https://www.facebook.com/groups/brizy/",
           config: {
@@ -36,7 +36,7 @@ export function getItems({ v, device, state }) {
         {
           id: "skin",
           label: t("Skin"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           choices: [
             { title: t("Light"), value: "light" },
@@ -46,20 +46,20 @@ export function getItems({ v, device, state }) {
         {
           id: "showSocialContext",
           label: t("Show Social Context"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop"
         },
         {
           id: "showMetaData",
           label: t("Show Meta Data"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop"
         }
       ]
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -77,7 +77,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           state,
           config: {
             showSingle: true
@@ -89,7 +89,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -100,7 +100,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -111,7 +111,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -121,7 +121,7 @@ export function getItems({ v, device, state }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           devices: "desktop",
           config: {
             min: 180,
@@ -132,7 +132,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -141,7 +141,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -156,7 +156,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

@@ -1,12 +1,14 @@
 import React, { FC, useEffect, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { ChoicesAsync, ChoicesSync, Props } from "./types";
-import { Sync } from "./Sync";
 import { t } from "visual/utils/i18n";
+import { Sync } from "./Sync";
+import { ChoicesAsync, ChoicesSync, Props } from "./types";
 
-export const Async: FC<Omit<Props, "choices"> & {
-  choices: ChoicesAsync;
-}> = props => {
+export const Async: FC<
+  Omit<Props, "choices"> & {
+    choices: ChoicesAsync;
+  }
+> = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [choices, setChoices] = useState<ChoicesSync>([]);
   const [hasError, setHasError] = useState(false);
@@ -16,7 +18,7 @@ export const Async: FC<Omit<Props, "choices"> & {
 
     props.choices
       .load(controller.signal)
-      .then(r => {
+      .then((r) => {
         if (!controller.signal.aborted) {
           setIsLoaded(true);
           setChoices(r);
@@ -35,10 +37,10 @@ export const Async: FC<Omit<Props, "choices"> & {
 
   if (!isLoaded) {
     return (
-      <div className="brz-ed-option-type__select-dev__spinner-container">
+      <div className="brz-ed-option-type__select__spinner-container">
         <EditorIcon
           icon="nc-circle-02"
-          className="brz-ed-option-type__select-dev__spinner brz-ed-animated--spin"
+          className="brz-ed-option-type__select__spinner brz-ed-animated--spin"
         />
       </div>
     );

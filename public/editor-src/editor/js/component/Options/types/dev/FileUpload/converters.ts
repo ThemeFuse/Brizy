@@ -9,11 +9,13 @@ import * as Str from "visual/utils/string/specs";
 
 export const defaultValue = undefined;
 
-export const fromElementModel: Option.FromElementModel<"fileUpload-dev"> =
-  parse<FromElementModelGetter, WithValue>({
-    id: mPipe(callGetter("value"), Str.read, (s) => s.split("|||")[0]),
-    name: mPipe(callGetter("value"), Str.read, (s) => s.split("|||")[1])
-  });
+export const fromElementModel: Option.FromElementModel<"fileUpload"> = parse<
+  FromElementModelGetter,
+  WithValue
+>({
+  id: mPipe(callGetter("value"), Str.read, (s) => s.split("|||")[0]),
+  name: mPipe(callGetter("value"), Str.read, (s) => s.split("|||")[1])
+});
 
-export const toElementModel: Option.ToElementModel<"fileUpload-dev"> = (v) =>
+export const toElementModel: Option.ToElementModel<"fileUpload"> = (v) =>
   v ? { value: `${v.id}|||${v.name}` } : { value: "" };

@@ -6,7 +6,7 @@ export const getItems: GetItems<Value, Props> = () => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -15,7 +15,7 @@ export const getItems: GetItems<Value, Props> = () => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -27,12 +27,12 @@ export const getItems: GetItems<Value, Props> = () => {
                   options: [
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       disabled: true
                     },
                     {
                       id: "thumbnailBorder",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       position: 70
                     }
@@ -43,7 +43,7 @@ export const getItems: GetItems<Value, Props> = () => {
                   options: [
                     {
                       id: "hoverTransition",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: true
                     },
                     {
@@ -58,7 +58,7 @@ export const getItems: GetItems<Value, Props> = () => {
                   options: [
                     {
                       id: "transform",
-                      type: "transform-dev",
+                      type: "transform",
                       disabled: true
                     }
                   ]
@@ -67,7 +67,7 @@ export const getItems: GetItems<Value, Props> = () => {
             },
             {
               id: "settingsTabsResponsive",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -84,7 +84,7 @@ export const getItems: GetItems<Value, Props> = () => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               disabled: true,
               tabs: [
                 {
@@ -93,7 +93,7 @@ export const getItems: GetItems<Value, Props> = () => {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev"
+                      type: "animation"
                     }
                   ]
                 }

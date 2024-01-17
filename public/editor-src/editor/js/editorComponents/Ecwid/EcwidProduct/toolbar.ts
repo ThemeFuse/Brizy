@@ -1,21 +1,13 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EcwidProductColumns, Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+// @ts-expect-error "advancedSettings" old option
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -36,14 +28,14 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: { title: t("Product"), icon: "nc-woo-related-products" },
       devices: "desktop",
       position: 10,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -52,7 +44,7 @@ export function getItems({
                 {
                   id: "columns",
                   label: t("Columns"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     {
                       title: "Two columns on the left",
@@ -76,7 +68,7 @@ export function getItems({
                   id: "descriptionPosition",
                   label: t("Description"),
                   disabled: twoColumnsRight,
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { title: "Below image", value: "belowImage" },
                     { title: "Beside image", value: "besideImage" }
@@ -85,7 +77,7 @@ export function getItems({
                 {
                   id: "between",
                   label: t("Between"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 100,
@@ -101,13 +93,13 @@ export function getItems({
                 {
                   id: "nameDisplay",
                   label: t("Name"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "nameFirstMobile",
                   disabled: dvv("nameDisplay") === "off",
                   label: t("Name - First on Mobile"),
-                  type: "switch-dev",
+                  type: "switch",
                   helper: {
                     content:
                       "The product name always shows on top on the mobile version."
@@ -116,66 +108,66 @@ export function getItems({
                 {
                   id: "breadcrumbsDisplay",
                   label: t("Breadcrumbs"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "skuDisplay",
                   label: t("SKU"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "priceDisplay",
                   label: t("Price"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "subtitleDisplay",
                   label: t("Subtitle"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "optionsDisplay",
                   label: t("Options"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "stockLabelDisplay",
                   label: t("Stock Availability labels"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "numberInStockDisplay",
                   label: t("Number of items in stock"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "quantityDisplay",
                   label: t("Quantity"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "wholesalePricesDisplay",
                   label: t("Wholesale Prices"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "attributesDisplay",
                   label: t("Attributes"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "weightDisplay",
                   label: t("Weight"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "descriptionOptions",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "descriptionDisplay",
                       label: t("Description"),
-                      type: "switch-dev"
+                      type: "switch"
                     },
                     {
                       id: "cutProductDescription",
@@ -185,7 +177,7 @@ export function getItems({
                         position ||
                         threeColumnsRight ||
                         threeColumnsLeft,
-                      type: "switch-dev",
+                      type: "switch",
                       helper: {
                         content:
                           'Cuts long product description and displays only one paragraph and "Show more" link to see full info.'
@@ -196,7 +188,7 @@ export function getItems({
                 {
                   id: "footerDisplay",
                   label: t("Footer"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             },
@@ -206,35 +198,35 @@ export function getItems({
               options: [
                 {
                   id: "groupShareButtons",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "shareButtonsDisplay",
                       label: t("Share Buttons"),
-                      type: "switch-dev"
+                      type: "switch"
                     },
                     {
                       id: "showFacebookShareBtn",
                       label: t("Facebook"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: disableShareBtn
                     },
                     {
                       id: "showPinterestShareBtn",
                       label: t("Pinterest"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: disableShareBtn
                     },
                     {
                       id: "showTwitterShareBtn",
                       label: t("Twitter"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: disableShareBtn
                     },
                     {
                       id: "showVkShareBtn",
                       label: t("VK"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: disableShareBtn
                     }
                   ]
@@ -242,7 +234,7 @@ export function getItems({
                 {
                   id: "favoritesButtonsDisplay",
                   label: t("Favorites Buttons"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             }
@@ -252,7 +244,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 20,
       config: {
         size: "auto",
@@ -267,7 +259,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -275,7 +267,7 @@ export function getItems({
               options: [
                 {
                   id: "product",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -286,7 +278,7 @@ export function getItems({
               options: [
                 {
                   id: "productBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -297,7 +289,7 @@ export function getItems({
               options: [
                 {
                   id: "productBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -308,18 +300,17 @@ export function getItems({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 20,
       devices: "desktop",
       icon: "nc-cog",
       title: t("Settings")
     }
   ];
-}
+};

@@ -16,7 +16,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Field"),
         icon: "nc-form-left"
@@ -26,7 +26,7 @@ export function getItems({ v, device }) {
         {
           id: "type",
           label: t("Field Type"),
-          type: "select-dev",
+          type: "select",
           position: 10,
           devices: "desktop",
           choices: getTypeChoices
@@ -34,14 +34,14 @@ export function getItems({ v, device }) {
         {
           id: "required",
           label: t("Required"),
-          type: "switch-dev",
+          type: "switch",
           position: 20,
           devices: "desktop"
         },
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -51,7 +51,7 @@ export function getItems({ v, device }) {
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           disabled: dvv("type") !== "Paragraph",
           config: {
             min: 1,

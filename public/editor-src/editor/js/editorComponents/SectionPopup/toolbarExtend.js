@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       cofnig: {
         icon: "nc-cog",
         title: t("Settings")
@@ -14,7 +14,7 @@ export function getItems() {
         {
           id: "containerSize",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 100,
           config: {
             min: 35,

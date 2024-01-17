@@ -8,13 +8,13 @@ export function toolbarElementSoundCloudStyle({
   disabled = false,
   state
 }) {
-  const dvk = key => defaultValueKey({ key, device, state });
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvk = (key) => defaultValueKey({ key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   return {
     id: dvk("style"),
     label: t("Style"),
-    type: "radioGroup",
+    type: "legacy-radioGroup",
     devices,
     disabled,
     choices: [
@@ -28,7 +28,7 @@ export function toolbarElementSoundCloudStyle({
       }
     ],
     value: dvv("style"),
-    onChange: value => ({
+    onChange: (value) => ({
       [dvk("style")]: value,
       [dvk("showArtwork")]: value === "basic" ? "off" : "on",
       [dvk("height")]:

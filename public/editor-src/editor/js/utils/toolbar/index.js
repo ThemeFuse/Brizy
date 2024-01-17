@@ -14,11 +14,7 @@ export {
 export { toolbarBoxShadowFields2 } from "./toolbarBoxShadow";
 
 // Anchor and URL
-export {
-  toolbarLinkAnchor,
-  toolbarStoryAnchor,
-  toolbarLinkPopup
-} from "./toolbarLink";
+export { toolbarLinkAnchor, toolbarLinkPopup } from "./toolbarLink";
 
 // Show on Devices
 export {

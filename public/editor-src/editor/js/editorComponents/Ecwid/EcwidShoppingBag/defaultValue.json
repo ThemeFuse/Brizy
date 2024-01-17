@@ -83,13 +83,13 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "iconPositionLeft": 20,
+    "iconPositionLeft": 15,
     "iconPositionLeftSuffix": "px",
 
-    "iconPositionTop": 0,
+    "iconPositionTop": -7,
     "iconPositionTopSuffix": "px",
 
-    "iconSpacing": 18,
+    "iconSpacing": 7,
     "iconSpacingSuffix": "px",
 
     "families": {
@@ -159,6 +159,9 @@
     "iconBoxShadowBlur": 0,
     "iconBoxShadowSpread": 0,
     "iconBoxShadowVertical": 0,
-    "iconBoxShadowHorizontal": 0
+    "iconBoxShadowHorizontal": 0,
+
+    "tabletCustomSizeSuffix": "px",
+    "mobileCustomSizeSuffix": "px"
   }
 }

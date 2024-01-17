@@ -44,7 +44,7 @@ export function getItems({ v, device, context }) {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -53,7 +53,7 @@ export function getItems({ v, device, context }) {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -68,12 +68,12 @@ export function getItems({ v, device, context }) {
                       label: t("Show on Desktop"),
                       position: 10,
                       closeTooltip: true,
-                      type: "switch-dev",
+                      type: "switch",
                       devices: "desktop"
                     },
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50,
                       config: {
@@ -83,23 +83,23 @@ export function getItems({ v, device, context }) {
                     {
                       id: "margin",
                       label: t("Margin"),
-                      type: "margin-dev",
+                      type: "margin",
                       position: 60
                     },
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       position: 65
                     },
                     {
                       id: "shapeDividersGroup",
-                      type: "group-dev",
+                      type: "group",
                       options: [
                         {
                           id: "shape",
                           label: t("Dividers"),
-                          type: "radioGroup-dev",
+                          type: "radioGroup",
                           choices: [
                             { value: "top", icon: "nc-dividers-top" },
                             { value: "bottom", icon: "nc-dividers-bottom" }
@@ -107,18 +107,18 @@ export function getItems({ v, device, context }) {
                         },
                         {
                           id: "shapeTopDividersGroup",
-                          type: "group-dev",
+                          type: "group",
                           disabled: dvv("shape") !== "top",
                           options: [
                             {
                               id: "shapeTopType",
                               label: t("Type"),
-                              type: "select-dev",
+                              type: "select",
                               choices: getShapes()
                             },
                             {
                               id: "shapeTopColors",
-                              type: "popover-dev",
+                              type: "popover",
                               label: t("Color"),
                               config: {
                                 size: "auto",
@@ -134,12 +134,12 @@ export function getItems({ v, device, context }) {
                               },
                               disabled: dvv("shapeTopType") === "none",
                               options: [
-                                { id: "shapeTopColor", type: "colorPicker-dev" }
+                                { id: "shapeTopColor", type: "colorPicker" }
                               ]
                             },
                             {
                               id: "shapeTopHeight",
-                              type: "slider-dev",
+                              type: "slider",
                               icon: "nc-height",
                               disabled: dvv("shapeTopType") === "none",
                               config: {
@@ -162,7 +162,7 @@ export function getItems({ v, device, context }) {
                             }),
                             {
                               id: "shapeTopIndex",
-                              type: "radioGroup-dev",
+                              type: "radioGroup",
                               label: t("Arrangement"),
                               disabled: dvv("shapeTopType") === "none",
                               choices: [
@@ -174,19 +174,19 @@ export function getItems({ v, device, context }) {
                         },
                         {
                           id: "shapeBottomDividersGroup",
-                          type: "group-dev",
+                          type: "group",
                           disabled: dvv("shape") !== "bottom",
                           options: [
                             {
                               id: "shapeBottomType",
                               label: t("Type"),
-                              type: "select-dev",
+                              type: "select",
                               choices: getShapes(),
                               iconClassName: "brz-ed-shape icon--bottom"
                             },
                             {
                               id: "shapeBottomColors",
-                              type: "popover-dev",
+                              type: "popover",
                               label: t("Color"),
                               config: {
                                 size: "auto",
@@ -204,13 +204,13 @@ export function getItems({ v, device, context }) {
                               options: [
                                 {
                                   id: "shapeBottomColor",
-                                  type: "colorPicker-dev"
+                                  type: "colorPicker"
                                 }
                               ]
                             },
                             {
                               id: "shapeBottomHeight",
-                              type: "slider-dev",
+                              type: "slider",
                               icon: "nc-height",
                               disabled: dvv("shapeBottomType") === "none",
                               config: {
@@ -233,7 +233,7 @@ export function getItems({ v, device, context }) {
                             }),
                             {
                               id: "shapeBottomIndex",
-                              type: "radioGroup-dev",
+                              type: "radioGroup",
                               label: t("Arrangement"),
                               disabled: dvv("shapeBottomType") === "none",
                               choices: [
@@ -255,7 +255,7 @@ export function getItems({ v, device, context }) {
                   options: [
                     {
                       id: "zIndex",
-                      type: "slider-dev",
+                      type: "slider",
                       position: 20,
                       label: t("Z-index"),
                       devices: "desktop",
@@ -277,7 +277,7 @@ export function getItems({ v, device, context }) {
                       config: richTextDC,
                       option: {
                         id: "anchorName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -294,7 +294,7 @@ export function getItems({ v, device, context }) {
                       config: richTextDC,
                       option: {
                         id: "customClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -317,7 +317,7 @@ export function getItems({ v, device, context }) {
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 60,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -327,7 +327,7 @@ export function getItems({ v, device, context }) {
                     {
                       id: "tagName",
                       label: t("HTML Tag"),
-                      type: "select-dev",
+                      type: "select",
                       devices: "desktop",
                       choices: toolbarTagsChoices
                     }
@@ -344,7 +344,7 @@ export function getItems({ v, device, context }) {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -355,7 +355,7 @@ export function getItems({ v, device, context }) {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev"
+                      type: "animation"
                     }
                   ]
                 }

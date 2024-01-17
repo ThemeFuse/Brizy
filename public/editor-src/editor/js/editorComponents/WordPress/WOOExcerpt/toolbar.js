@@ -15,7 +15,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -25,7 +25,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsToolbarTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabP",
@@ -33,7 +33,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "paragraph",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -46,7 +46,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h1",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -59,7 +59,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h2",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -72,7 +72,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h3",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -85,7 +85,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h4",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -98,7 +98,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h5",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -111,7 +111,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h6",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -124,7 +124,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -143,7 +143,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabParagraph",
@@ -151,7 +151,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "paragraphColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -163,7 +163,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h1Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -175,7 +175,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h2Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -187,7 +187,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h3Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -199,7 +199,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h4Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -211,7 +211,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h5Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -223,7 +223,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "h6Color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -239,7 +239,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "excerptHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -249,12 +249,12 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110,
       title: t("Settings"),
       roles: ["admin"],

@@ -16,6 +16,7 @@
     "source": "",
     "detailPage": "",
     "detailPageTitle": "",
+    "detailPageSource": null,
 
     "showPagination": "on",
     "showDay": "on",

@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarBISStock",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -16,14 +16,14 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "buttonName",
           label: t("Button Name"),
-          type: "inputText-dev"
+          type: "inputText"
         }
       ]
     },
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

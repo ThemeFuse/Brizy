@@ -52,7 +52,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCountdown",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-countdown",
         title: t("Countdown")
@@ -62,7 +62,7 @@ export function getItems({ v, device, state }) {
         {
           id: "date",
           label: t("Date"),
-          type: "inputText-dev",
+          type: "inputText",
           config: {
             size: "medium",
             placeholder: "dd/mm/yyyy"
@@ -71,7 +71,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "hours",
-          type: "select-dev",
+          type: "select",
           label: t("Hour"),
           devices: "desktop",
           choices: _.times(24, (index) => {
@@ -86,7 +86,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "minutes",
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           label: t("Minutes"),
           choices: _.times(6, (index) => {
@@ -100,14 +100,14 @@ export function getItems({ v, device, state }) {
         {
           id: "timeZone",
           label: t("Time Zone"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           choices: timeZoneChoices
         },
         {
           id: "language",
           label: t("Language"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           choices: languageChoices
         }
@@ -115,7 +115,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -126,7 +126,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -135,7 +135,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -151,13 +151,13 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "color",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -168,7 +168,7 @@ export function getItems({ v, device, state }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -177,7 +177,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -186,7 +186,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -201,7 +201,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

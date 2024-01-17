@@ -50,8 +50,8 @@ export function cssStyleShapeTopFlip({ v, device, state }) {
 
   return `transform: ${
     shapeTopFlip === "on"
-      ? "rotateX(0deg) rotateY(-180deg)"
-      : "rotateX(0deg) rotateY(0deg)"
+      ? "scale(1.02) rotateX(0deg) rotateY(-180deg)"
+      : "scale(1.02) rotateX(0deg) rotateY(0deg)"
   };`;
 }
 
@@ -97,8 +97,8 @@ export function cssStyleShapeBottomFlip({ v, device, state }) {
 
   return `transform: ${
     shapeBottomFlip === "on"
-      ? "rotateX(-180deg) rotateY(0deg)"
-      : "rotateX(-180deg) rotateY(-180deg)"
+      ? "scale(1.02) rotateX(-180deg) rotateY(0deg)"
+      : "scale(1.02) rotateX(-180deg) rotateY(-180deg)"
   };`;
 }
 

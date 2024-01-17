@@ -120,7 +120,7 @@ class ViewAdd extends Component {
               </Tooltip>
             )}
           </div>
-          {type === "select" && this.renderSelect(option)}
+          {type === "legacy-select" && this.renderSelect(option)}
           {type === "upload" && this.renderUpload(option)}
         </div>
       );

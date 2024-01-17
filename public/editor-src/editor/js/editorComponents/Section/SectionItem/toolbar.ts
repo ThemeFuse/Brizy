@@ -82,7 +82,7 @@ export const getItems: GetItems<ElementModel> = ({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -91,7 +91,7 @@ export const getItems: GetItems<ElementModel> = ({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -100,7 +100,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "media",
                   label: t("Type"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   devices: "desktop",
                   choices: [
                     { value: "image", icon: "nc-media-image" },
@@ -118,7 +118,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   label: t("Image"),
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   states:
                     // https://github.com/bagrinsergiu/blox-editor/issues/9032
                     imageMedia ? [NORMAL, HOVER] : undefined,
@@ -128,7 +128,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgSize",
                   label: t("Size"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: !imageMedia,
                   choices: [
                     { title: t("Cover"), value: "cover" },
@@ -139,13 +139,13 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgRepeat",
                   label: t("Repeat"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !imageMedia || coverBg
                 },
                 {
                   id: "bgAttachment",
                   label: t("Parallax"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: !imageMedia || !coverBg || inSlider,
                   choices: [
@@ -157,7 +157,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgVideoType",
                   label: t("Video type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: videoMedia,
                   choices: [
@@ -170,7 +170,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgVideo",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: videoMedia || customType,
                   placeholder: youtubeType
@@ -194,7 +194,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgVideoCustom",
                   label: t("File"),
-                  type: "fileUpload-dev",
+                  type: "fileUpload",
                   config: {
                     allowedExtensions: ["video/*"]
                   },
@@ -204,7 +204,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgVideoLoop",
                   label: t("Loop"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   disabled: videoMedia
                 },
@@ -226,7 +226,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgMapAddress",
                   label: t("Address"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   placeholder: t("Enter address"),
                   devices: "desktop",
                   disabled: mapMedia,
@@ -237,7 +237,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "bgMapZoom",
                   label: t("Zoom"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: mapMedia,
                   config: {
                     min: 1,
@@ -255,13 +255,13 @@ export const getItems: GetItems<ElementModel> = ({
                   id: "maskShape",
                   label: t("Shape"),
                   devices: "desktop",
-                  type: "select-dev",
+                  type: "select",
                   choices: MaskShapes,
                   disabled: disableMaskTab
                 },
                 {
                   id: "maskCustomUpload",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop",
                   label: t("Image"),
                   config: {
@@ -276,18 +276,18 @@ export const getItems: GetItems<ElementModel> = ({
                 },
                 {
                   id: "groupSize",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskSize",
                       label: t("Size"),
-                      type: "select-dev",
+                      type: "select",
                       choices: MaskSizes
                     },
                     {
                       id: "maskScale",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskSize !== "custom",
                       config: {
                         min: 1,
@@ -302,19 +302,19 @@ export const getItems: GetItems<ElementModel> = ({
                 },
                 {
                   id: "groupPosition",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskPosition",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Position"),
                       choices: MaskPositions
                     },
                     {
                       id: "maskPositionx",
                       label: t("X"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -325,7 +325,7 @@ export const getItems: GetItems<ElementModel> = ({
                     {
                       id: "maskPositiony",
                       label: t("Y"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -338,7 +338,7 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "maskRepeat",
                   label: t("Repeat"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
                   choices: MaskRepeat
                 }
@@ -350,7 +350,7 @@ export const getItems: GetItems<ElementModel> = ({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -364,7 +364,7 @@ export const getItems: GetItems<ElementModel> = ({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabOverlay",
@@ -372,7 +372,7 @@ export const getItems: GetItems<ElementModel> = ({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -383,7 +383,7 @@ export const getItems: GetItems<ElementModel> = ({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -394,7 +394,7 @@ export const getItems: GetItems<ElementModel> = ({
               options: [
                 {
                   id: "maskShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER],
                   disabled: maskShapeIsDisabled
                 }
@@ -406,7 +406,7 @@ export const getItems: GetItems<ElementModel> = ({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -415,14 +415,14 @@ export const getItems: GetItems<ElementModel> = ({
       options: [
         {
           id: "containerTypeGroup",
-          type: "group-dev",
+          type: "group",
           position: 10,
           options: [
             {
               id: "containerType",
               label: t("Width"),
               devices: "desktop",
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: t("Boxed"), value: "boxed" },
                 { title: t("Full"), value: "fullWidth" }
@@ -431,7 +431,7 @@ export const getItems: GetItems<ElementModel> = ({
             {
               id: "containerSize",
               label: device === "desktop" ? "" : t("Width"),
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("containerType") !== "boxed",
               config: {
                 min: getMinContainerSuffix({ v, device }),
@@ -446,7 +446,7 @@ export const getItems: GetItems<ElementModel> = ({
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -455,7 +455,7 @@ export const getItems: GetItems<ElementModel> = ({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -470,7 +470,7 @@ export const getItems: GetItems<ElementModel> = ({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

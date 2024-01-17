@@ -1,17 +1,17 @@
 import {
-  ElementModelValue,
-  Value
-} from "visual/component/Options/types/dev/MultiSelect2/types";
-import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
+import {
+  ElementModelValue,
+  Value
+} from "visual/component/Options/types/dev/MultiSelect2/types";
 import * as Str from "visual/utils/reader/string";
 import { read as readLiteral } from "visual/utils/types/Literal";
 
 export const defaultValue: ElementModelValue = { value: [] };
 
-export const fromElementModel: FromElementModel<"multiSelect-dev"> = get => {
+export const fromElementModel: FromElementModel<"multiSelect"> = (get) => {
   let value: Value;
   try {
     value = JSON.parse(Str.read(get("value")) ?? "[]");
@@ -36,7 +36,7 @@ export const fromElementModel: FromElementModel<"multiSelect-dev"> = get => {
   return { value: v };
 };
 
-export const toElementModel: ToElementModel<"multiSelect-dev"> = value => {
+export const toElementModel: ToElementModel<"multiSelect"> = (value) => {
   return {
     value: JSON.stringify(value.value)
   };

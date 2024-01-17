@@ -14,13 +14,13 @@ export default function Devices(props) {
         defaultValue={triggerValue}
         onChange={(value) => onChange(value)}
       >
-        <SelectItem key="desktop" value="desktop">
+        <SelectItem key="desktop" value="desktop" title={t("Desktop")}>
           {t("Desktop")}
         </SelectItem>
-        <SelectItem key="tablet" value="tablet">
+        <SelectItem key="tablet" value="tablet" title={t("Tablet")}>
           {t("Tablet")}
         </SelectItem>
-        <SelectItem key="mobile" value="mobile">
+        <SelectItem key="mobile" value="mobile" title={t("Mobile")}>
           {t("Mobile")}
         </SelectItem>
       </Select>

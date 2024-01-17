@@ -27,7 +27,7 @@ export function getItems({ v, device, component, context }) {
   return [
     {
       id: "toolbarPopup",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-popup",
         title: "Popup"
@@ -38,7 +38,7 @@ export function getItems({ v, device, component, context }) {
         {
           id: "makeItGlobal",
           label: t("Make it Global"),
-          type: "globalBlock-dev",
+          type: "globalBlock",
           devices: "desktop",
           disabled: isCloud(config) && isShopify(config),
           config: {
@@ -51,7 +51,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "toolbarMedia",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -60,7 +60,7 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "tabsMedia",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabMedia",
@@ -68,7 +68,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   population: imageDynamicContentChoices
                 }
               ]
@@ -79,7 +79,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -93,7 +93,7 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabOverlay",
@@ -101,7 +101,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev"
+                  type: "backgroundColor"
                 }
               ]
             },
@@ -111,7 +111,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]

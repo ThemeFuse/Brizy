@@ -1,8 +1,4 @@
-import { match, mPipe, optional, parse, pass } from "fp-utilities";
-import { prop } from "visual/utils/object/get";
-import * as Str from "visual/utils/string/specs";
-import * as Bool from "visual/utils/bool";
-import * as Arr from "visual/utils/array";
+import { mPipe, match, optional, parse, pass } from "fp-utilities";
 import {
   AllData,
   HelperFn,
@@ -11,8 +7,12 @@ import {
   SelectData,
   SwitchData
 } from "visual/component/Prompts/common/GlobalApps/StepsView/Fields/types";
-import { readWithParser } from "visual/utils/reader/readWithParser";
+import * as Arr from "visual/utils/array";
+import * as Bool from "visual/utils/bool";
 import { pipe } from "visual/utils/fp";
+import { prop } from "visual/utils/object/get";
+import { readWithParser } from "visual/utils/reader/readWithParser";
+import * as Str from "visual/utils/string/specs";
 
 type RecordNever = Record<string, never>;
 
@@ -31,7 +31,7 @@ const isValidHelper = (v: unknown): boolean => {
 };
 
 const readInput = readWithParser<Record<string, unknown>, InputData>({
-  type: r => {
+  type: (r) => {
     return r.type === "input" || r.type === undefined ? "input" : undefined;
   },
   value: pipe(
@@ -50,8 +50,8 @@ const readInput = readWithParser<Record<string, unknown>, InputData>({
 });
 
 const readSelect = parse<Record<string, unknown>, SelectData>({
-  type: r => (r.type === "select" ? "select" : undefined),
-  choices: mPipe(prop("choices"), v => Arr.toArray(v)),
+  type: (r) => (r.type === "legacy-select" ? "legacy-select" : undefined),
+  choices: mPipe(prop("choices"), (v) => Arr.toArray(v)),
   value: pipe(
     prop("value"),
     pass((v): v is string | null => typeof v === "string" || v === null)
@@ -68,7 +68,7 @@ const readSelect = parse<Record<string, unknown>, SelectData>({
 });
 
 const readSwitch = parse<Record<string, unknown>, SwitchData>({
-  type: r => (r.type === "switch" ? "switch" : undefined),
+  type: (r) => (r.type === "switch" ? "switch" : undefined),
   title: mPipe(prop("title"), Str.read),
   value: pipe(prop("value"), (v): boolean => (Bool.is(v) ? v : false)),
   name: mPipe(prop("name"), Str.read),
@@ -82,8 +82,8 @@ const readSwitch = parse<Record<string, unknown>, SwitchData>({
 });
 
 const readSearch = parse<Record<string, unknown>, SearchData>({
-  type: r => (r.type === "search" ? "search" : undefined),
-  choices: mPipe(prop("choices"), v => Arr.toArray(v)),
+  type: (r) => (r.type === "search" ? "search" : undefined),
+  choices: mPipe(prop("choices"), (v) => Arr.toArray(v)),
   value: pipe(
     prop("value"),
     pass((v): v is string | null => isStringOrNull(v))
@@ -102,8 +102,8 @@ const readSearch = parse<Record<string, unknown>, SearchData>({
 
 const isInput = (r: Record<string, unknown>): r is { type: "input" } =>
   r.type === "input" || r.type === undefined;
-const isSelect = (r: Record<string, unknown>): r is { type: "select" } =>
-  r.type === "select";
+const isSelect = (r: Record<string, unknown>): r is { type: "legacy-select" } =>
+  r.type === "legacy-select";
 const isSwitch = (r: Record<string, unknown>): r is { type: "switch" } =>
   r.type === "switch";
 const isSearch = (r: Record<string, unknown>): r is { type: "search" } =>

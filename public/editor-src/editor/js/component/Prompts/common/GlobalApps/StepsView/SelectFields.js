@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
+import _ from "underscore";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { t } from "visual/utils/i18n";
 import { Button } from "../../Button";
 import { isMaxFields } from "../../utils";
-import { t } from "visual/utils/i18n";
 
 class SelectFields extends Component {
   static defaultProps = {
@@ -28,7 +28,7 @@ class SelectFields extends Component {
   renderSelect(id, target) {
     const { formFields, fields, restrictions, onActive } = this.props;
     const busyFields = _.pluck(formFields, "target");
-    let newFields = fields.filter(item => {
+    let newFields = fields.filter((item) => {
       return busyFields.indexOf(item.slug) === -1 || item.slug === target;
     });
 
@@ -43,7 +43,7 @@ class SelectFields extends Component {
       )
     ) {
       newFields.unshift({
-        name: "Auto Generate",
+        name: t("Auto Generate"),
         required: false,
         slug: "_auto_generate"
       });
@@ -65,7 +65,7 @@ class SelectFields extends Component {
         maxItems="6"
         itemHeight="30"
         inPortal={true}
-        onChange={itemTarget => {
+        onChange={(itemTarget) => {
           onActive(id, itemTarget);
         }}
       >

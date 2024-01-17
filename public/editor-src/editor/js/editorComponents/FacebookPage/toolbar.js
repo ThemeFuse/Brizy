@@ -15,7 +15,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-facebook",
         title: t("Page")
@@ -25,7 +25,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -34,7 +34,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "href",
                   label: t("Link"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   placeholder: "https://facebook.com/brizy.io",
                   config: {
@@ -44,7 +44,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "pageTabs",
                   label: t("Tabs"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("Timeline"), value: "timeline" },
@@ -55,7 +55,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "height",
                   label: t("Height"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   config: {
                     min: 70,
@@ -69,24 +69,24 @@ export function getItems({ v, device, state }) {
             {
               id: "tabAdvanced",
               label: t("Advanced"),
-              type: "tabs-dev",
+              type: "tabs",
               options: [
                 {
                   id: "smallHeader",
                   label: t("Use Small Header"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "hideCover",
                   label: t("Hide Cover Photo"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showFacepile",
                   label: t("Show Friend's Faces"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -97,7 +97,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -115,7 +115,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             showSingle: true
           },
@@ -126,7 +126,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -137,7 +137,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -149,12 +149,12 @@ export function getItems({ v, device, state }) {
     {
       id: "advancedSettings",
       devices: "desktop",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
       icon: "nc-cog"
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true }
+    { id: "horizontalAlign", type: "toggle", disabled: true }
   ];
 }

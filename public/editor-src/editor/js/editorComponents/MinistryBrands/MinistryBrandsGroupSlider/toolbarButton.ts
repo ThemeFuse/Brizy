@@ -18,7 +18,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-button",
@@ -27,12 +27,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
       options: [
         {
           id: "groupSize",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "buttonSize",
               label: t("Size"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "small", icon: "nc-small" },
                 { value: "medium", icon: "nc-medium" },
@@ -44,7 +44,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               id: "buttonHeight",
               label: t("Height"),
               disabled: dvv("buttonSize") !== "custom",
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 0,
                 max: 100,
@@ -55,7 +55,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               id: "buttonWidth",
               label: t("Width"),
               disabled: dvv("buttonSize") !== "custom",
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 0,
                 max: 100,
@@ -71,7 +71,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       position: 20,
       config: {
         icon: "nc-font",
@@ -81,14 +81,14 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
       options: [
         {
           id: "buttonTypography",
-          type: "typography-dev",
+          type: "typography",
           config: { fontFamily: device === "desktop" }
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 30,
       config: {
         size: "medium",
@@ -106,7 +106,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabButtonBg",
@@ -114,7 +114,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "button",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -125,7 +125,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "buttonColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -136,7 +136,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "buttonBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -147,7 +147,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "buttonBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -158,7 +158,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       position: 110,
       icon: "nc-cog"

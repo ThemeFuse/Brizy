@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarKiwiChart",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -16,7 +16,7 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "displayMode",
           label: t("Display Mode"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Link Modal", value: "1" },
             { title: "Button Modal", value: "2" },
@@ -28,7 +28,7 @@ export const getItems = (): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

@@ -21,7 +21,7 @@ export function getItems({ v, device }) {
     }),
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         {

@@ -9,6 +9,7 @@ export interface UploadData {
 
 export interface AddFileExtra {
   acceptedExtensions: Array<string>;
+  componentId?: string;
 }
 
 export type AddFileData = {

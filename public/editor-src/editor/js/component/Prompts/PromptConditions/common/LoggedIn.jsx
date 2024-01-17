@@ -39,10 +39,10 @@ export default function LoggedIn(props) {
         defaultValue={triggerValue.value}
         onChange={handleValueChange}
       >
-        <SelectItem key="all" value="all">
+        <SelectItem key="all" value="all" title={t("All users")}>
           {t("All users")}
         </SelectItem>
-        <SelectItem key="custom" value="custom">
+        <SelectItem key="custom" value="custom" title={t("Custom")}>
           {t("Custom")}
         </SelectItem>
       </Select>

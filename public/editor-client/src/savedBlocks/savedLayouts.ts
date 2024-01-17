@@ -23,7 +23,7 @@ export const savedLayouts: SavedLayouts = {
       const get = async (page: number): Promise<void> => {
         const data = await getSavedLayouts({
           page,
-          order: "ASC",
+          order: "DESC",
           count: TOTAL_COUNT
         });
         const normalBlocks = data.filter((item) => item.meta.type === "normal");

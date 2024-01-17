@@ -17,7 +17,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -32,7 +32,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabEvenBg",
@@ -40,7 +40,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "month9Even",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -51,7 +51,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "month9Odd",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -62,7 +62,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "tableBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]

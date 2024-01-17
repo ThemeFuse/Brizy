@@ -24,7 +24,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -33,7 +33,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -47,7 +47,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                     {
                       id: "border",
                       label: t("Corner"),
-                      type: "corners-dev"
+                      type: "corners"
                     }
                   ]
                 },
@@ -60,7 +60,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -69,17 +69,18 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                     },
                     {
                       id: "alt",
-                      type: "inputText-dev",
+                      type: "inputText",
                       label: t("Alt Title"),
                       display: "block",
                       helper: {
-                        content:
-                          t("Specify an alternate text for the image, if it cannot be displayed.")
+                        content: t(
+                          "Specify an alternate text for the image, if it cannot be displayed."
+                        )
                       }
                     },
                     {
                       id: "showOriginalImage",
-                      type: "switch-dev",
+                      type: "switch",
                       label: t("Show Original image"),
                       disabled:
                         !IS_WP ||
@@ -100,7 +101,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -116,7 +117,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       devices: "desktop",
                       disabled: IS_STORY,
                       config: {

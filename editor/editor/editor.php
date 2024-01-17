@@ -191,7 +191,7 @@ class Brizy_Editor_Editor_Editor
                 ),
             ),
             'ui' => [
-                'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL)
+                //'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL)
             ],
             'server' => array(
                 'maxUploadFileSize' => $this->fileUploadMaxSize(),
@@ -2175,7 +2175,7 @@ class Brizy_Editor_Editor_Editor
 
         $editorHelpVideos = ['video' => []];
 
-        $nextId = 1;
+        $nextId = 0;
 
         foreach ($categoryVideos as $title => $videos) {
 
@@ -2184,17 +2184,24 @@ class Brizy_Editor_Editor_Editor
                 $nextId++;
             }
 
-            $editorHelpVideos['video'][] = [
-                'id' => (string)count($editorHelpVideos['video']).'c', // we make the id different from the id of the videos. It is an issue in the react component
-                'category' => $title,
-                'items' => $videos
-            ];
+	        $editorHelpVideos['video'][] = [
+		        'id'       => count( $editorHelpVideos['video'] ) . 'c', // we make the id different from the id of the videos. It is an issue in the react component
+		        'category' => $title,
+		        'items'    => $videos,
+	        ];
         }
 
         $editorHelpVideos['header'] = [
             'src' => $sourceUrl . '/Getting-started-video-thumb.jpg',
             'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4'
         ];
+
+	    $editorHelpVideos['idHelpVideosIcons'] = [
+		    'addElementsHelpVideo'   => '7',
+		    'blocksLayoutsHelpVideo' => '6',
+		    'fontsHelpVideo'         => '11',
+		    'formHelpVideo'          => '21',
+	    ];
 
         return $editorHelpVideos;
     }

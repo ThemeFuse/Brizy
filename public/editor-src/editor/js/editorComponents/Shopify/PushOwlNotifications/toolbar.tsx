@@ -12,7 +12,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
   return [
     {
       id: "toolbarVideoShopping",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -23,7 +23,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "buttonType",
           label: t("Button Type"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Subscription", value: "subscribe" },
             { title: "Back In Stock", value: "bis" },
@@ -36,15 +36,15 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
                 : ""
           }
         },
-        { id: "buttonName", type: "inputText-dev", label: t("Button Name") },
+        { id: "buttonName", type: "inputText", label: t("Button Name") },
         {
           id: "subMessage",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Post Subscription Text")
         },
         {
           id: "preDisplay",
-          type: "select-dev",
+          type: "select",
           label: t("Pre-display"),
           helper: {
             content: t("The button's state before visitors have subscribed")
@@ -57,7 +57,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         },
         {
           id: "postDisplay",
-          type: "select-dev",
+          type: "select",
           label: t("Post-display Button"),
           helper: {
             content: t("The button's state after visitors have subscribed")
@@ -74,7 +74,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

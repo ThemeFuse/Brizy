@@ -5,7 +5,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabsIcon",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "stylesIcon",
@@ -14,7 +14,7 @@ export function getItems(): ToolbarItemType[] {
           options: [
             {
               id: "iconBorder",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               devices: "desktop"
             }
@@ -24,7 +24,7 @@ export function getItems(): ToolbarItemType[] {
     },
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       disabled: true,
       tabs: []
     }

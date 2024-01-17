@@ -10,9 +10,10 @@ export const read: Reader<ChoiceWithPermalink> = (v) => {
 
   const title = String.read((v as ChoiceWithPermalink)?.title);
   const value = String.read((v as ChoiceWithPermalink)?.value);
+  const source = String.read((v as ChoiceWithPermalink)?.source);
 
-  return title !== undefined && value !== undefined
-    ? { title, value }
+  return title !== undefined && value !== undefined && source !== undefined
+    ? { title, value, source }
     : undefined;
 };
 

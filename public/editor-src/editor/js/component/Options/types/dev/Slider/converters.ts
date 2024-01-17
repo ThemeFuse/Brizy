@@ -8,14 +8,14 @@ export const defaultValue: Value = {
   unit: ""
 };
 
-export const fromElementModel: Option.FromElementModel<"slider-dev"> = get => {
+export const fromElementModel: Option.FromElementModel<"slider"> = (get) => {
   return {
     value: NumberSpec.read(get("value")),
     unit: String.read(get("suffix"))
   };
 };
 
-export const toElementModel: Option.ToElementModel<"slider-dev"> = values => {
+export const toElementModel: Option.ToElementModel<"slider"> = (values) => {
   return {
     value: values.value,
     suffix: values.unit

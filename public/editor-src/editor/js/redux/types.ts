@@ -41,6 +41,7 @@ export type ReduxState = {
       drawerContentType: string | null | undefined; // TODO: converted to a union of actual drawer type later
     };
     rightSidebar: {
+      type: "options" | "help";
       isOpen: boolean;
       lock: "manual" | "auto" | undefined;
       alignment: "right" | "left";

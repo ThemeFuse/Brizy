@@ -59,6 +59,7 @@ const translationsMap = {
   Calendly: t("Calendly"),
 
   Alert: t("Alert"),
+  PostInfo: t("Post Info"),
 
   // WP
   WPSidebar: t("Sidebar"),
