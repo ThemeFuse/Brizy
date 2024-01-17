@@ -9,7 +9,9 @@ import { Value } from "./toolbar";
 export const title = t("Rating");
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -30,7 +32,7 @@ export function getItems({
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -39,7 +41,7 @@ export function getItems({
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: { align: "start" },
               devices: "desktop",
               tabs: [
@@ -49,7 +51,7 @@ export function getItems({
                   options: [
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       disabled: isStyle1
                     }
@@ -75,7 +77,7 @@ export function getItems({
                       disabled: isStory(Config.getAll()),
                       position: 70,
                       devices: "desktop",
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -88,7 +90,7 @@ export function getItems({
             },
             {
               id: "border",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               devices: "responsive",
               disabled: isStyle1

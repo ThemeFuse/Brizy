@@ -11,7 +11,6 @@ export interface Value extends ElementModel {
   weightDisplay: Switch;
   inputDisplay: Switch;
   addressDisplay: Switch;
-  collapse: Switch;
   collapseDesktop: Switch;
   breadcrumbsDisplay: Switch;
 }

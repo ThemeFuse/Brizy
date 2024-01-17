@@ -29,7 +29,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Table")
@@ -39,7 +39,7 @@ export function getItems({
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -49,7 +49,7 @@ export function getItems({
                 {
                   id: "iconPosition",
                   label: t("Position"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { value: "left", icon: "nc-align-left" },
                     { value: "right", icon: "nc-align-right" }
@@ -57,12 +57,12 @@ export function getItems({
                 },
                 {
                   id: "groupIconSize",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "iconSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -72,7 +72,7 @@ export function getItems({
                     },
                     {
                       id: "iconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("iconSize") !== "custom",
                       config: {
                         min: 8,
@@ -85,7 +85,7 @@ export function getItems({
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 50,
@@ -100,7 +100,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Typography"),
         icon: "nc-font",
@@ -111,7 +111,7 @@ export function getItems({
       options: [
         {
           id: "typography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -120,7 +120,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -139,7 +139,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -147,7 +147,7 @@ export function getItems({
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, ACTIVE]
                 }
               ]
@@ -158,7 +158,7 @@ export function getItems({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, ACTIVE]
                 }
               ]
@@ -169,7 +169,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             }
@@ -179,7 +179,7 @@ export function getItems({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       devices: "desktop",
       choices: [
@@ -190,7 +190,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings"),
         icon: "nc-cog"
@@ -200,7 +200,7 @@ export function getItems({
         {
           id: "advancedSettings",
           //@ts-expect-error Old option doesn't work
-          type: "advancedSettings",
+          type: "legacy-advancedSettings",
           label: t("Styling"),
           icon: "nc-cog",
           devices: "desktop"

@@ -10,14 +10,16 @@ import * as Literal from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import { Value } from "./types";
 
-export const fromElementModel: FromElementModel<"iconsPicker-dev"> =
-  parseStrict<(k: string) => MValue<Literal.Literal>, Value>({
-    value: (get) =>
-      Arr.fromString(Literal.read, Str.read(get("value")) ?? "") ?? [],
-    active: optional((get) => Literal.read(get("active")))
-  });
+export const fromElementModel: FromElementModel<"iconsPicker"> = parseStrict<
+  (k: string) => MValue<Literal.Literal>,
+  Value
+>({
+  value: (get) =>
+    Arr.fromString(Literal.read, Str.read(get("value")) ?? "") ?? [],
+  active: optional((get) => Literal.read(get("active")))
+});
 
-export const toElementModel: ToElementModel<"iconsPicker-dev"> = ({
+export const toElementModel: ToElementModel<"iconsPicker"> = ({
   value,
   active
 }) => ({ value: JSON.stringify(value), active });

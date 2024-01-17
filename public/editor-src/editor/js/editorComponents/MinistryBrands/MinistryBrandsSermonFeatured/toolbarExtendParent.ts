@@ -1,6 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
-import { getCollectionTypes } from "visual/utils/api";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -24,7 +23,7 @@ export const getItems: GetItems<Value, Props> = ({
   return [
     {
       id: "toolbarSermonFeatured",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "t2-sermon-featured",
         title: t("Sermon Featured")
@@ -33,7 +32,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -44,7 +43,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "sermonLatest",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Show Latest"),
                   helper: {
@@ -57,7 +56,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "category",
                   devices: "desktop",
                   label: t("Category"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: !sermonLatestActive,
                   choices: getEkklesiaChoiches(config, {
                     key: "sermon"
@@ -70,7 +69,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "group",
                   devices: "desktop",
                   label: t("Group"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: !sermonLatestActive,
                   choices: getEkklesiaChoiches(config, {
                     key: "groups"
@@ -83,7 +82,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "series",
                   devices: "desktop",
                   label: t("Series"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: !sermonLatestActive,
                   choices: getEkklesiaChoiches(config, {
                     key: "series"
@@ -95,7 +94,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "sermonRecentList",
                   label: t("Recent Sermons"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: sermonLatestActive,
                   choices: getEkklesiaChoiches(config, {
@@ -109,7 +108,7 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "sermonSlug",
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   disabled: sermonLatestActive,
                   label: t("Slug"),
@@ -122,7 +121,7 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "features",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Featured"),
                   disabled: !sermonLatestActive || dvv("nonfeatures") === "on",
@@ -134,7 +133,7 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "nonfeatures",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Non Featured"),
                   disabled: !sermonLatestActive || dvv("features") === "on",
@@ -152,7 +151,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "showImage",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Image"),
                   helper: {
@@ -163,7 +162,7 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "showVideo",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Video"),
                   helper: {
@@ -174,73 +173,73 @@ export const getItems: GetItems<Value, Props> = ({
                 },
                 {
                   id: "showAudio",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Audio")
                 },
                 {
                   id: "showTitle",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Title")
                 },
                 {
                   id: "showDate",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Date")
                 },
                 {
                   id: "showCategory",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Category")
                 },
                 {
                   id: "showGroup",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Group")
                 },
                 {
                   id: "showSeries",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Series")
                 },
                 {
                   id: "showPreacher",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Preacher")
                 },
                 {
                   id: "showPassage",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Passage")
                 },
                 {
                   id: "showMetaHeadings",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Meta Headings")
                 },
                 {
                   id: "showContent",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Content")
                 },
                 {
                   id: "showMediaLinks",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Media Links")
                 },
                 {
                   id: "showPreview",
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop",
                   label: t("Preview")
                 }
@@ -251,38 +250,19 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Page"),
               options: [
                 {
-                  id: "source",
-                  type: "select-dev",
-                  label: t("Type"),
+                  id: "detailPage",
+                  type: "internalLink",
+                  label: t("Item"),
                   devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
                   config: {
-                    size: "large"
-                  },
-                  helper: {
-                    content: t(
+                    helper: t(
                       "URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the 'Sermon Detail' widget to be placed on a page and that page url/slug placed in this field ."
                     )
                   }
                 },
                 {
-                  id: "detailPage",
-                  type: "internalLink-dev",
-                  label: t("Item"),
-                  devices: "desktop",
-                  disabled: !v.source,
-                  config: {
-                    postType: v.source
-                  }
-                },
-                {
                   id: "detailPageButtonText",
-                  type: "inputText-dev",
+                  type: "inputText",
                   label: t("Button"),
                   devices: "desktop",
                   placeholder: t("Button Text..."),
@@ -303,7 +283,7 @@ export const getItems: GetItems<Value, Props> = ({
     }),
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -313,7 +293,7 @@ export const getItems: GetItems<Value, Props> = ({
         {
           id: "itemSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -322,7 +302,7 @@ export const getItems: GetItems<Value, Props> = ({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -332,7 +312,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -346,7 +326,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -361,18 +341,18 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     },
     {
       id: "itemHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 80,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

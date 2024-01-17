@@ -53,7 +53,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-starrating",
         title: t("Rating")
@@ -62,7 +62,7 @@ export function getItems({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           roles: ["admin"],
           tabs: [
             {
@@ -72,7 +72,7 @@ export function getItems({
                 {
                   id: "ratingScale",
                   label: t("Rating scale"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("0-5"), value: 5 },
@@ -82,7 +82,7 @@ export function getItems({
                 {
                   id: "ratingStyle",
                   label: t("Style"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   devices: "desktop",
                   choices: [
                     { value: "style1", icon: "nc-rating-style-1" },
@@ -91,12 +91,12 @@ export function getItems({
                 },
                 {
                   id: "groupStyle",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "label",
                       label: t("Label"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       devices: "desktop",
                       choices: [
                         { value: "on", icon: "nc-align-left" },
@@ -107,7 +107,7 @@ export function getItems({
                     {
                       id: "spacing",
                       label: t("Spacing"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: labelOff,
                       config: {
                         min: 0,
@@ -120,7 +120,7 @@ export function getItems({
                 {
                   id: "rating",
                   label: t("Rating"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   config: {
                     min: 0,
@@ -147,19 +147,19 @@ export function getItems({
                 {
                   id: "icon",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   devices: "desktop",
                   disabled: !isStyle1 && labelOff
                 },
                 {
                   id: "groupSettings",
-                  type: "group-dev",
+                  type: "group",
                   disabled: !isStyle1 && labelOff,
                   options: [
                     {
                       id: "iconSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -169,7 +169,7 @@ export function getItems({
                     },
                     {
                       id: "iconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("iconSize") !== "custom",
                       config: {
                         min: 8,
@@ -182,7 +182,7 @@ export function getItems({
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: !isStyle1,
                   config: {
                     min: 0,
@@ -198,7 +198,7 @@ export function getItems({
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "xlarge" : "auto",
@@ -209,7 +209,7 @@ export function getItems({
       options: [
         {
           id: "gridTypography",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -219,7 +219,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "typography-dev",
+                  type: "typography",
                   disabled: labelOff && isStyle1,
                   config: {
                     fontFamily: device === "desktop"
@@ -250,7 +250,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -267,7 +267,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -275,7 +275,7 @@ export function getItems({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: labelOff && isStyle1,
                   states: [NORMAL, HOVER]
                 }
@@ -287,7 +287,7 @@ export function getItems({
               options: [
                 {
                   id: "ratingColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   disabled: !isStyle1,
                   states: [NORMAL, HOVER]
@@ -300,7 +300,7 @@ export function getItems({
               options: [
                 {
                   id: isStyle1 ? "ratingBackgroundColor" : "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -313,7 +313,7 @@ export function getItems({
     {
       id: "advancedSettings",
       //@ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("Styling"),
       roles: ["admin"],

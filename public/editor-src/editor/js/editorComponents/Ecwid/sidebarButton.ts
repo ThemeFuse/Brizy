@@ -1,11 +1,11 @@
-import { t } from "visual/utils/i18n";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { t } from "visual/utils/i18n";
 
 export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -14,7 +14,7 @@ export function getItems(): ToolbarItemType[] {
           options: [
             {
               id: "buttonBorder",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner")
             }
           ]

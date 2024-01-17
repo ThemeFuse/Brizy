@@ -1,7 +1,9 @@
 import { t } from "visual/utils/i18n";
 
 const helperHTML = `
-<p class="brz-p">${t("You can use the following selectors to create targeted CSS.")}</p>
+<p class="brz-p">${t(
+  "You can use the following selectors to create targeted CSS."
+)}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
@@ -12,7 +14,7 @@ export function getItems() {
   return [
     {
       id: "settingsTabs",
-      type: "tabs-dev",
+      type: "tabs",
       config: {
         align: "start"
       },
@@ -25,7 +27,7 @@ export function getItems() {
           options: [
             {
               id: "border",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               position: 65
             }
@@ -51,7 +53,7 @@ export function getItems() {
               label: t("Hover Transition"),
               devices: "desktop",
               position: 100,
-              type: "slider-dev",
+              type: "slider",
               config: {
                 min: 0,
                 max: 99,

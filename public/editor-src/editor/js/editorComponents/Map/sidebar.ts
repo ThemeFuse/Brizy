@@ -21,7 +21,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -30,7 +30,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -42,19 +42,19 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   options: [
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       disabled: true
                     },
                     {
                       id: "bgPadding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50
                     },
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       devices: "desktop",
                       position: 65
@@ -71,7 +71,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                       disabled: IS_STORY,
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -84,14 +84,14 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
             },
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               disabled: true
             },
             {
               id: "bgPadding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               position: 50
@@ -105,7 +105,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -121,7 +121,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       devices: "desktop",
                       disabled: IS_STORY,
                       config: {

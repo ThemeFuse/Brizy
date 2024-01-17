@@ -6,7 +6,7 @@ export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -15,7 +15,7 @@ export function getItems() {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -29,7 +29,7 @@ export function getItems() {
                     {
                       id: "blendMode",
                       label: t("Blending Mode"),
-                      type: "select-dev",
+                      type: "select",
                       devices: "desktop",
                       position: 80,
                       choices: [

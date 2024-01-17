@@ -5,7 +5,7 @@ export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -16,24 +16,24 @@ export function getItems() {
               id: "titlePadding",
               label: t("Title Padding"),
               position: 40,
-              type: "padding-dev"
+              type: "padding"
             },
             {
               id: "padding",
               label: t("Content Padding"),
               position: 50,
-              type: "padding-dev"
+              type: "padding"
             },
             {
               id: "border",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               position: 65
             },
             {
               id: "tagName",
               label: t("HTML Tag"),
-              type: "select-dev",
+              type: "select",
               choices: [
                 { title: "Span", value: "span" },
                 { title: "Div", value: "div" },
@@ -56,7 +56,7 @@ export function getItems() {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
 
               tabs: [
                 {
@@ -65,7 +65,7 @@ export function getItems() {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev",
+                      type: "animation",
                       config: {
                         types: tabEffects
                       }

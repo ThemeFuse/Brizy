@@ -25,23 +25,23 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: { title: t("Shopping Bag"), icon: "nc-woo-cart" },
       position: 10,
       options: [
         {
           id: "iconDisplay",
           label: t("Cart Quantity"),
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "groupSize",
-          type: "group-dev",
+          type: "group",
           options: [
             {
               id: "size",
               label: t("Size"),
-              type: "radioGroup-dev",
+              type: "radioGroup",
               choices: [
                 { value: "small", icon: "nc-16" },
                 { value: "medium", icon: "nc-24" },
@@ -51,7 +51,7 @@ export function getItems({
             },
             {
               id: "customSize",
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("size") !== "custom",
               config: {
                 min: 8,
@@ -63,8 +63,8 @@ export function getItems({
         },
         {
           id: "padding",
-          type: "slider-dev",
-          label: t("Size"),
+          type: "slider",
+          label: t("Padding"),
           config: {
             min: 0,
             max: 180,
@@ -75,7 +75,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -93,7 +93,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabColor",
@@ -101,7 +101,7 @@ export function getItems({
               options: [
                 {
                   id: "strokeColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -112,7 +112,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -123,7 +123,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -134,7 +134,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -146,7 +146,7 @@ export function getItems({
     {
       id: "advancedSettings",
       // @ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 30,
       icon: "nc-cog",
       devices: "desktop",

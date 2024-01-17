@@ -82,7 +82,7 @@ export const AiText: FC<Props> = ({
     <Card width="407px" size={cardSize} borderStyle="none" color="transparent">
       <Space spacing={controlsSpacing}>
         <Card size={cardSize} width="407px" height="16px">
-          <Inline spacing={15}>
+          <Inline spacing={20}>
             {actions.map((action, index) => (
               <AiActionButton
                 disabled={disabled}
@@ -107,7 +107,7 @@ export const AiText: FC<Props> = ({
           <LayoutSection span={23}>
             <Input.TextArea
               theme={theme}
-              placeholder={t("Tell AI what to write...")}
+              placeholder={t("Tell AI what to write in any language ...")}
               onChange={onChange}
               value={value}
               size="xsmall"

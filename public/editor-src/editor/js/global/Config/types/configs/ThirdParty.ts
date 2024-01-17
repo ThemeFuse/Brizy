@@ -18,6 +18,7 @@ export interface ThirdPartyComponentData {
   preview: Preview;
   icon?: string;
   options?: Array<ToolbarItemType>;
+  category?: string;
 }
 
 export type ThirdPartyComponents = Record<string, ThirdPartyComponentData>;

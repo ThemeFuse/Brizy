@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarCart",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -17,7 +17,7 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "itemId",
           label: "Select product",
-          type: "select-dev",
+          type: "select",
           config: {
             search: true
           },

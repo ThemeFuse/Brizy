@@ -12,7 +12,7 @@
   .product-details,
   .product-details--top-title-navigation {
     &__sidebar {
-      .product-details__product-sku.ec-text-muted {
+      .product-details__product-sku {
         margin-top: 0 !important;
       }
 
@@ -84,19 +84,22 @@
         }
 
         .product-details-module.details-product-option.details-product-option--textarea
-          .product-details-module__content
+          .product-details-module__content {
+          display: flex !important;
+
           .form-control--textarea {
-          background-color: transparent !important;
-          border: none !important;
+            background-color: transparent !important;
+            border: none !important;
 
-          .form-control__textarea {
-            resize: none !important;
-            min-height: 0 !important;
-            z-index: 0 !important;
-          }
+            .form-control__textarea {
+              resize: none !important;
+              min-height: 0 !important;
+              z-index: 0 !important;
+            }
 
-          .form-control__textarea:-webkit-autofill {
-            transition: background-color 500000s ease !important;
+            .form-control__textarea:-webkit-autofill {
+              transition: background-color 500000s ease !important;
+            }
           }
         }
 
@@ -170,6 +173,7 @@
 
               .form-control {
                 display: flex !important;
+                margin-top: 0 !important;
 
                 .form-control__button {
                   min-height: 0 !important;
@@ -289,6 +293,10 @@
                 min-height: 1px !important;
               }
             }
+
+            .details-product-purchase__add-more {
+              position: relative !important;
+            }
           }
         }
       }
@@ -407,7 +415,7 @@
 @media (max-width: 767px) {
   .brz-ecwid-wrapper
     .ecwid
-    .ec-loader-wrapper
+    .ec-storefront-v2
     div
     .ecwid-productBrowser
     div
@@ -440,7 +448,7 @@
 @media (min-width: 767px) {
   .brz-ecwid-wrapper
     .ecwid
-    .ec-loader-wrapper
+    .ec-storefront-v2
     div
     .ecwid-productBrowser
     div

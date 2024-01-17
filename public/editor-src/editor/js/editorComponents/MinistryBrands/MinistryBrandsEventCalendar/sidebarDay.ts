@@ -1,12 +1,12 @@
-import { t } from "visual/utils/i18n";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { Value, Props } from "./types";
+import { t } from "visual/utils/i18n";
+import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = () => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -15,12 +15,12 @@ export const getItems: GetItems<Value, Props> = () => {
           options: [
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               disabled: true
             },
             {
               id: "dayBorder",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner")
             }
           ]

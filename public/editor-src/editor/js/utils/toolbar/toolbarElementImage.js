@@ -6,7 +6,7 @@ export function toolbarImageTags({ devices = "all", gallery, enableTags }) {
   return {
     label: t("Tags"),
     id: "tags",
-    type: "inputText-dev",
+    type: "inputText",
     helper: {
       enabled: true,
       content: t(

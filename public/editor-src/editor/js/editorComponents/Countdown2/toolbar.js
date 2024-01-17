@@ -38,7 +38,7 @@ export function getItems({ v, device, state, context }) {
   return [
     {
       id: "toolbarCountdown",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-countdown",
         title: t("Countdown")
@@ -47,7 +47,7 @@ export function getItems({ v, device, state, context }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTimerElementTimer",
@@ -56,7 +56,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "style",
                   label: t("Styles"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   position: 20,
                   devices: "desktop",
                   choices: [
@@ -68,7 +68,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "date",
                   label: t("Date"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   placeholder: "dd/mm/yyyy",
                   config: {
@@ -79,7 +79,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "hours",
                   label: t("Hour"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: _.times(24, (index) => {
                     const hour = (index + 12) % 12 || 12;
@@ -94,7 +94,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "minutes",
                   label: t("Minutes"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: _.times(6, (index) => {
                     const current = index * 10;
@@ -109,7 +109,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "timeZone",
                   label: t("Time Zone"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -197,25 +197,25 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "showDays",
                   label: t("Days"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showHours",
                   label: t("Hours"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showMinutes",
                   label: t("Minutes"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "showSeconds",
                   label: t("Seconds"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -226,7 +226,7 @@ export function getItems({ v, device, state, context }) {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -236,7 +236,7 @@ export function getItems({ v, device, state, context }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabsTypographyNumber",
@@ -244,7 +244,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "number",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: "desktop" === device
                   }
@@ -258,7 +258,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "title",
                   disabled: style === "style3",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: "desktop" === device
                   }
@@ -272,7 +272,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "message",
                   disabled: actions !== "showMessage",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: "desktop" === device
                   }
@@ -285,7 +285,7 @@ export function getItems({ v, device, state, context }) {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -300,7 +300,7 @@ export function getItems({ v, device, state, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabNumber",
@@ -308,7 +308,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "numberColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -319,7 +319,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "titleColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: style === "style3",
                   states: [NORMAL, HOVER]
                 }
@@ -331,7 +331,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "messageColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: actions !== "showMessage",
                   states: [NORMAL, HOVER]
                 }
@@ -343,7 +343,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -354,7 +354,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -365,7 +365,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -376,7 +376,7 @@ export function getItems({ v, device, state, context }) {
     },
     {
       id: "popoverLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         title: t("Link"),
@@ -386,7 +386,7 @@ export function getItems({ v, device, state, context }) {
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -398,7 +398,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "actions",
                   label: t("When Finished"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("None"), value: "none" },
@@ -409,7 +409,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "messageText",
                   label: t("Message"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   disabled: dvv("actions") != "showMessage",
                   placeholder: t("Message sent"),
                   population: richTextDC,
@@ -427,7 +427,7 @@ export function getItems({ v, device, state, context }) {
                 {
                   id: "messageRedirect",
                   label: t("URL"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   placeholder: "http://",
                   population: linkDC,
@@ -443,7 +443,7 @@ export function getItems({ v, device, state, context }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -452,7 +452,7 @@ export function getItems({ v, device, state, context }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           disabled: IS_STORY,
           config: {
             min: 1,
@@ -466,7 +466,7 @@ export function getItems({ v, device, state, context }) {
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           disabled: noBorder && !IS_STORY,
           config: {
             min: dvv("heightSuffix") === "%" ? 5 : 50,
@@ -480,7 +480,7 @@ export function getItems({ v, device, state, context }) {
         {
           id: "spacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           disabled: noBorder,
           config: {
             min: 0,
@@ -490,7 +490,7 @@ export function getItems({ v, device, state, context }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -499,7 +499,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -514,7 +514,7 @@ export function getItems({ v, device, state, context }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

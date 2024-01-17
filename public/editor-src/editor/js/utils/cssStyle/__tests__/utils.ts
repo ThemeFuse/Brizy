@@ -73,7 +73,7 @@ export const generatedCSSSameStylesDoubledData: GeneratedCSS<string> = {
 
 export const heightOptionWithStyle = {
   id: "height",
-  type: "slider-dev" as const,
+  type: "slider" as const,
   style: (data: ElementModel) => ({
     "{{WRAPPER}}": {
       height: `${data.value}${data.unit}`
@@ -83,7 +83,7 @@ export const heightOptionWithStyle = {
 
 export const widthOptionWithStyle = {
   id: "width",
-  type: "slider-dev" as const,
+  type: "slider" as const,
   style: (data: ElementModel) => ({
     "{{WRAPPER}}": {
       width: `${data.value}${data.unit}`
@@ -93,7 +93,7 @@ export const widthOptionWithStyle = {
 
 export const fontSizeOptionWithStyle = {
   id: "fontSize",
-  type: "slider-dev" as const,
+  type: "slider" as const,
   style: (data: ElementModel) => ({
     "{{WRAPPER}}": {
       "font-size": `${data.value}${data.unit}`
@@ -109,7 +109,7 @@ const heightElementModel = {
 export const borderOptionWithSelector = {
   id: "border",
   label: t("Border"),
-  type: "border-dev" as const,
+  type: "border" as const,
   selector: "{{WRAPPER}} .list .list-item"
 };
 
@@ -129,7 +129,7 @@ export const borderElementModel: ElementModel = {
 export const backgroundOptionWithSelector = {
   id: "",
   label: t("Background"),
-  type: "backgroundColor-dev" as const,
+  type: "backgroundColor" as const,
   selector: "{{WRAPPER}}"
 };
 
@@ -533,13 +533,13 @@ describe("Testing getCSSByState that should return CSS for hover state", () => {
     ).toBe(undefined);
   });
 
-  test("slider-dev option with 'style' as height, should return CSS for hover", () => {
+  test("slider option with 'style' as height, should return CSS for hover", () => {
     expect(
       getCSSByState({ v, breakpoint: "desktop", option, state: HOVER })
     ).toStrictEqual([{ css: "height:50px;", selector: "{{WRAPPER}}:hover" }]);
   });
 
-  test("border-dev option with 'selector', should return CSS for hover", () => {
+  test("border option with 'selector', should return CSS for hover", () => {
     const v = {
       ...borderElementModel,
       hoverBorderWidth: 10
@@ -565,7 +565,7 @@ describe("Testing getCSSByState that should return CSS for hover state", () => {
     ]);
   });
 
-  test("backgroundColor-dev option with 'selector', should return CSS for hover", () => {
+  test("backgroundColor option with 'selector', should return CSS for hover", () => {
     const v = {
       ...backgroundColorElementModel,
       hoverBgColorOpacity: 0
@@ -662,13 +662,13 @@ describe("Testing getCSSByState that should return CSS for active state", () => 
     ).toBe(undefined);
   });
 
-  test("slider-dev option with 'style' as height, should return CSS for hover", () => {
+  test("slider option with 'style' as height, should return CSS for hover", () => {
     expect(
       getCSSByState({ v, breakpoint: "desktop", option, state: ACTIVE })
     ).toStrictEqual([{ css: "height:50px;", selector: "{{WRAPPER}}.active" }]);
   });
 
-  test("border-dev option with 'selector', should return CSS for active", () => {
+  test("border option with 'selector', should return CSS for active", () => {
     const v = {
       ...borderElementModel,
       activeBorderWidth: 10
@@ -694,7 +694,7 @@ describe("Testing getCSSByState that should return CSS for active state", () => 
     ]);
   });
 
-  test("backgroundColor-dev option with 'selector', should return CSS for hover", () => {
+  test("backgroundColor option with 'selector', should return CSS for hover", () => {
     const v = {
       ...backgroundColorElementModel,
       activeBgColorOpacity: 0
@@ -926,7 +926,7 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
       getCSSObjectFromStyle({
         v: {},
         breakpoint: "desktop",
-        option: { id: "asd", type: "slider-dev" }
+        option: { id: "asd", type: "slider" }
       })
     ).toStrictEqual(undefined);
   });

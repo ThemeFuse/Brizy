@@ -12,12 +12,12 @@ export const defaultValue: Value = {
   infiniteAnimation: false
 };
 
-export const fromElementModel: Option.FromElementModel<"animation-dev"> = pipe(
+export const fromElementModel: Option.FromElementModel<"animation"> = pipe(
   mPipe(LegacyModel.fromElementModel, fromLegacyModel),
   (v) => v ?? { type: EffectType.None }
 );
 
-export const toElementModel: Option.ToElementModel<"animation-dev"> = pipe(
+export const toElementModel: Option.ToElementModel<"animation"> = pipe(
   toLegacyModel,
   LegacyModel.toElementModel
 );

@@ -8,8 +8,7 @@ const getItems = () => [
   {
     id: "main",
     type: "group",
-    title: t("Tabs"),
-    icon: "nc-tabs",
+    title: t("Accordion"),
     disabled: (item, meta) => meta.isInSubMenu,
     items: []
   }

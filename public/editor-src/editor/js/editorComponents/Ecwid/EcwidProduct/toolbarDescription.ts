@@ -1,20 +1,12 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { EcwidProductColumns, Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
-  const dvv = (key: string) =>
-    defaultValueValue({ v, key, device, state: "normal" });
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: descriptionColorHex } = getOptionColorHexByPalette(
     dvv("descriptionColorHex"),
@@ -26,7 +18,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: { icon: "nc-woo-related-products", title: t("Description") },
       devices: "desktop",
@@ -34,7 +26,7 @@ export function getItems({
         {
           id: "positionDescription",
           label: t("Position"),
-          type: "slider-dev",
+          type: "slider",
           disabled:
             columns === EcwidProductColumns.ThreeLeft ||
             columns === EcwidProductColumns.ThreeRight ||
@@ -49,7 +41,7 @@ export function getItems({
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -59,14 +51,14 @@ export function getItems({
       options: [
         {
           id: "descriptionTypography",
-          type: "typography-dev",
+          type: "typography",
           config: { fontFamily: device === "desktop" }
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -84,13 +76,13 @@ export function getItems({
       options: [
         {
           id: "descriptionColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "descriptionHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 40,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -100,14 +92,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 50,
       options: [
         {
           id: "descriptionSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -117,4 +109,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

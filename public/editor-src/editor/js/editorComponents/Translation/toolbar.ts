@@ -17,7 +17,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         icon: "nc-multi-languages",
@@ -27,7 +27,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElementLanguages",
@@ -36,13 +36,13 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                 {
                   id: "showName",
                   label: t("Name"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "nameDisplay",
                   label: t("Display"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: dvv("showName") === "off",
                   choices: [
@@ -54,7 +54,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                   id: "textSpacing",
                   label: t("Spacing"),
                   disabled: dvv("showName") === "off",
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 100,
@@ -70,18 +70,18 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                 {
                   id: "showFlags",
                   label: t("Flags"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "groupSettings",
-                  type: "group-dev",
+                  type: "group",
                   disabled: dvv("showFlags") === "off",
                   options: [
                     {
                       id: "flagSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -91,7 +91,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                     },
                     {
                       id: "flagCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("flagSize") !== "custom",
                       config: {
                         min: 8,
@@ -105,7 +105,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                   id: "flagSpacing",
                   label: t("Spacing"),
                   disabled: dvv("showFlags") === "off",
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 100,
@@ -120,7 +120,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -130,7 +130,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
       options: [
         {
           id: "",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -139,7 +139,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -154,7 +154,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
       options: [
         {
           id: "color",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -162,7 +162,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -173,7 +173,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -184,7 +184,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -195,7 +195,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -206,7 +206,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -215,7 +215,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -228,7 +228,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 500,
@@ -237,7 +237,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: {
             separator: true
           },
@@ -248,7 +248,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -263,7 +263,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

@@ -9,11 +9,11 @@ export function toolbarElementForm2Apps({ v, device, state, devices = "all" }) {
   return {
     devices,
     id: dvk("apps"),
-    type: "formApps-dev", 
-    config: { 
-      id: v._id, 
-      fields, 
-      icon: "nc-extensions-2" 
+    type: "formApps",
+    config: {
+      id: v._id,
+      fields,
+      icon: "nc-extensions-2"
     }
   };
 }
@@ -30,7 +30,7 @@ export function toolbarElementForm2Size({ v, device, state, devices = "all" }) {
     devices,
     id: dvk("size"),
     label: t("Size"),
-    type: "radioGroup",
+    type: "legacy-radioGroup",
     position: 17,
     choices: [
       { icon: "nc-small", value: "small" },

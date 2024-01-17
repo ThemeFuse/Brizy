@@ -17,7 +17,7 @@ export const getItems = ({ v, device, state }) => {
   return [
     {
       id: "toolbarWOOProductPage",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-add-to-cart",
         title: t("Add to cart")
@@ -27,7 +27,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "inputPosition",
           label: t("Position"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           choices: [
             { value: "left", icon: "nc-align-left" },
@@ -40,7 +40,7 @@ export const getItems = ({ v, device, state }) => {
           id: "inputVerticalAlign",
           label: t("Align"),
           disabled: inputPosition === "top" || inputPosition === "bottom",
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           choices: [
             { value: "top", icon: "nc-align-top" },
@@ -52,7 +52,7 @@ export const getItems = ({ v, device, state }) => {
           id: "inputHorizontalAlign",
           label: t("Align"),
           disabled: inputPosition === "left" || inputPosition === "right",
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           choices: [
             { value: "left", icon: "nc-text-align-left" },
@@ -63,7 +63,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "spacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -74,7 +74,7 @@ export const getItems = ({ v, device, state }) => {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -84,7 +84,7 @@ export const getItems = ({ v, device, state }) => {
       options: [
         {
           id: "input",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -93,7 +93,7 @@ export const getItems = ({ v, device, state }) => {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -109,7 +109,7 @@ export const getItems = ({ v, device, state }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "inputColorTab",
@@ -117,7 +117,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -129,7 +129,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -141,7 +141,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputBorder",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -153,7 +153,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "inputBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -165,7 +165,7 @@ export const getItems = ({ v, device, state }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog"
       },
@@ -174,7 +174,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "inputWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 20,
             max: 100,
@@ -190,7 +190,7 @@ export const getItems = ({ v, device, state }) => {
         {
           id: "inputHeight",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 20,
             max: 100,
@@ -199,7 +199,7 @@ export const getItems = ({ v, device, state }) => {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           columns: [
             {
               id: "grid-settings",
@@ -207,7 +207,7 @@ export const getItems = ({ v, device, state }) => {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),

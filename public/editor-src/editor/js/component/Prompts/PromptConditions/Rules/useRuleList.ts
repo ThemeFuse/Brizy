@@ -345,7 +345,7 @@ async function fetchRuleListItems(
 
   const ruleList: RuleListItem[] = [
     {
-      title: `Specific ${collectionType.title}`,
+      title: `${t("Specific")} ${collectionType.title}`,
       value: collectionType.value,
       mode: "specific",
       items
@@ -360,7 +360,7 @@ async function fetchRuleListItems(
         async (ref: { title: string; fieldId: string; value: string }) => {
           const allReference = [
             {
-              title: `All ${ref.title}`,
+              title: `${t("All")} ${ref.title}`,
               value: createEntityValueAll({ fieldId: ref.fieldId })
             }
           ];

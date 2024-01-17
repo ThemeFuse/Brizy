@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarWPPosts",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-wp-shortcode"
       },
@@ -13,7 +13,7 @@ export function getItems() {
       options: [
         {
           id: "WPPostsTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "queryTab",
@@ -22,7 +22,7 @@ export function getItems() {
                 {
                   id: "postType",
                   label: t("Post Type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("Post"), value: "post" },
@@ -33,37 +33,37 @@ export function getItems() {
                 {
                   id: "numberPosts",
                   label: t("Number of posts"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop"
                 },
                 {
                   id: "category",
                   label: t("Category"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop"
                 },
                 {
                   id: "author",
                   label: t("Author"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop"
                 },
                 {
                   id: "include",
                   label: t("Include"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop"
                 },
                 {
                   id: "exclude",
                   label: t("Exclude"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop"
                 },
                 {
                   id: "postStatus",
                   label: t("Status"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("Publish"), value: "publish" },
@@ -79,25 +79,25 @@ export function getItems() {
                 {
                   id: "metaKey",
                   label: t("Meta Key"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop"
                 },
                 {
                   id: "metaValue",
                   label: t("Meta Value"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop"
                 }
               ]
             },
             {
               id: "layoutTab",
-              label: "Layout",
+              label: t("Layout"),
               options: [
                 {
                   id: "orderBy",
                   label: t("Order By"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("None"), value: "none" },
@@ -114,7 +114,7 @@ export function getItems() {
                 {
                   id: "order",
                   label: t("Order"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -135,14 +135,14 @@ export function getItems() {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       roles: ["admin"],
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -151,7 +151,7 @@ export function getItems() {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -160,7 +160,7 @@ export function getItems() {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -175,7 +175,7 @@ export function getItems() {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

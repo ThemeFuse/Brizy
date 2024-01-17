@@ -27,6 +27,7 @@
     "detailPage": "",
     "source": "",
     "detailPageTitle": "",
+    "detailPageSource": null,
 
     "detailPageButton": "Button"
   },

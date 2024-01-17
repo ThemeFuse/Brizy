@@ -10,6 +10,7 @@ import {
   migrate
 } from "visual/utils/migration";
 import { read as readNumber } from "visual/utils/reader/number";
+import { MValue } from "visual/utils/value";
 
 type DBMigration<M> = M & {
   _version: number;
@@ -32,12 +33,15 @@ export function withMigrations<
   class EditorComponentWithMigrations extends EditorComponent<M, P> {
     dbValueMigrated: DBMigration<Props<M, P>>["dbValue"] | undefined =
       undefined;
+    currentVersion: MValue<number> = undefined;
 
     constructor(props: Props<M, P>) {
       super(props);
 
       const currentVersion = readNumber(this.props.dbValue?._version) ?? 1;
       const foundMigrations = findMigrations(migrations, currentVersion);
+
+      this.currentVersion = currentVersion;
 
       if (foundMigrations.length > 0) {
         if (deps?.getValue) {
@@ -74,6 +78,16 @@ export function withMigrations<
     }
 
     getDBValue() {
+      const newVersion = this.props.dbValue._version;
+
+      if (
+        this.currentVersion &&
+        newVersion &&
+        this.currentVersion < newVersion
+      ) {
+        this.dbValueMigrated = undefined;
+      }
+
       if (this.dbValueMigrated) {
         const dbValue = super.getDBValue();
         return {

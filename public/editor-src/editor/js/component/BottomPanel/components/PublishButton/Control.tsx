@@ -10,6 +10,10 @@ import React, {
 import Tooltip, { TooltipItem } from "visual/component/Controls/Tooltip";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { Roles } from "visual/component/Roles";
+import { ReduxState } from "visual/redux/types";
+import { Label } from "./Label";
+
+type status = ReduxState["page"]["status"];
 
 interface Item {
   title: string;
@@ -24,6 +28,7 @@ export interface Props {
   children: ReactNode;
   addonAfter?: Item[];
   disabled?: boolean;
+  status: status;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -73,7 +78,7 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
 };
 
 export const Controls: FC<Props> = (props) => {
-  const { loading, children, addonAfter, disabled, onClick } = props;
+  const { loading, children, addonAfter, disabled, status, onClick } = props;
   const className = classnames("brz-ed-fixed-bottom-panel__btn", {
     "brz-ed-fixed-bottom-panel__btn-popover": addonAfter?.length,
     "brz-ed-fixed-bottom-panel__btn-disabled": disabled
@@ -92,7 +97,9 @@ export const Controls: FC<Props> = (props) => {
         onClick={onClick}
       >
         <EditorIcon icon="nc-circle-02" className={loadingClassName} />
-        <span className={labelClassName}>{children}</span>
+        <Label status={status}>
+          <span className={labelClassName}>{children}</span>
+        </Label>
       </div>
       {!!addonAfter?.length && addonAfter.length > 0 && (
         <Addons items={addonAfter} />

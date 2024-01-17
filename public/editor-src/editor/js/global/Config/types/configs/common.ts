@@ -1,3 +1,4 @@
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { NewType } from "visual/types/NewType";
 
 export type Response<R> = (r: R) => void;
@@ -20,6 +21,7 @@ export interface AddImageExtra {
 
 export interface AddFileExtra {
   acceptedExtensions: Array<string>;
+  componentId?: ElementTypes;
 }
 
 export enum SizeType {

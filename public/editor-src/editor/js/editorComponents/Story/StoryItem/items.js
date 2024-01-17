@@ -1,13 +1,13 @@
 import React from "react";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Sortable from "visual/component/Sortable";
-import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
+import Sortable from "visual/component/Sortable";
+import SortableEmpty from "visual/component/Sortable/SortableEmpty";
+import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { t } from "visual/utils/i18n";
 import { setOffsetsToElementFromWrapper } from "visual/utils/models";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
-import { t } from "visual/utils/i18n";
-import { hideToolbar } from "visual/component/Toolbar";
 
 class StoryItemItems extends EditorArrayComponent {
   static get componentId() {
@@ -25,7 +25,7 @@ class StoryItemItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-duplicate",
           title: t("Duplicate"),
           position: 200,
@@ -38,7 +38,7 @@ class StoryItemItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           icon: "nc-trash",
           title: t("Delete"),
           position: 250,

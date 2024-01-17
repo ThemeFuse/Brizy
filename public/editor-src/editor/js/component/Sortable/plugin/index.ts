@@ -257,6 +257,7 @@ export default class SortablePlugin {
   handlePendingEnd = (): void => {
     this.detachPendingEvents();
     this.resetDragInfo();
+    this.resetDragInfoClasses();
   };
 
   handleSortStart = (e: MouseEvent): void => {
@@ -556,7 +557,7 @@ export default class SortablePlugin {
       if (
         node.getAttribute(makeAttr("sortable-disabled")) === "true" ||
         node.closest(
-          makeDataAttrString({ name: "sortable-disabled", value: "true" })
+          makeDataAttrString({ name: "sortable-disabled", value: "'true'" })
         )
       ) {
         return false;
@@ -648,7 +649,7 @@ export default class SortablePlugin {
     if (isIntersecting) {
       globalState.sortableInViewPort.add(target);
 
-      if (globalState.dragInfo.source) {
+      if (globalState.dragInfo.source && !globalState.dragInfo.dragInProgress) {
         this.renderLines();
       }
     } else {

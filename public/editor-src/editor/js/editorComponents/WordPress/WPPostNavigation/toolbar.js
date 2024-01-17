@@ -23,7 +23,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-wp-post-navigation",
         title: t("Post Navigation")
@@ -32,7 +32,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -41,7 +41,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "height",
                   label: t("Separator"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   config: {
                     min: 50,
@@ -52,7 +52,7 @@ export function getItems({ v, device, state }) {
                 {
                   id: "spacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: showPost === "off" || showTitle === "off",
                   config: {
                     min: 0,
@@ -69,21 +69,21 @@ export function getItems({ v, device, state }) {
                 {
                   id: "showTitle",
                   label: t("Label"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: showPost === "off",
                   devices: "desktop"
                 },
                 {
                   id: "showPost",
                   label: t("Post"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: showTitle === "off",
                   devices: "desktop"
                 },
                 {
                   id: "showSeparation",
                   label: t("Separator"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -94,7 +94,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "dynamicToolbarCarousel",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-dynamic",
         title: t("Dynamic Content")
@@ -106,7 +106,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "categories",
-          type: "multiSelect-dev",
+          type: "multiSelect",
           label: t("Categories"),
           placeholder: t("0 Selected"),
           config: {
@@ -117,14 +117,14 @@ export function getItems({ v, device, state }) {
         {
           id: "post",
           label: t("Post"),
-          type: "select-dev",
+          type: "select",
           disabled: disabledTaxonomy(categories, "post"),
           choices: getTaxonomiesMultiOptionsSub("post")
         },
         {
           id: "product",
           label: t("Product"),
-          type: "select-dev",
+          type: "select",
           disabled: disabledTaxonomy(categories, "product"),
           choices: getTaxonomiesMultiOptionsSub("product")
         }
@@ -132,7 +132,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -142,7 +142,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTypographyTitle",
@@ -150,7 +150,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "titleTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -163,7 +163,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "postTypography",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -176,7 +176,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -192,7 +192,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabTitle",
@@ -200,7 +200,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "titleColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: dvv("showTitle") === "off",
                   states: [NORMAL, HOVER]
                 }
@@ -212,7 +212,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "postColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: dvv("showTitle") === "off",
                   states: [NORMAL, HOVER]
                 }
@@ -224,7 +224,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: dvv("showSeparation") === "off",
                   states: [NORMAL, HOVER]
                 }
@@ -236,7 +236,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Settings")
       },
@@ -245,7 +245,7 @@ export function getItems({ v, device, state }) {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -254,7 +254,7 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           columns: [
             {
@@ -263,7 +263,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -278,7 +278,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

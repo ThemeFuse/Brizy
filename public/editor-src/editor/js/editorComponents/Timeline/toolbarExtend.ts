@@ -21,7 +21,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-timeline",
         title: t("Timeline")
@@ -31,7 +31,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTimeline",
@@ -41,7 +41,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "verticalMode",
                   label: t("Orientation"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { value: "on", icon: "nc-vertical-items" },
                     { value: "off", icon: "nc-horizontal-items" }
@@ -50,7 +50,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "timelineStyle",
                   label: t("Style"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     ...(vertical
                       ? [
@@ -68,13 +68,13 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "enableText",
                   label: t("Titles"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "tabsCount",
                   label: t("Columns"),
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: !vertical,
                   config: {
                     min: 1,
@@ -84,7 +84,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "spacing",
                   label: vertical ? verticalLabel : horizontalLabel,
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 100
@@ -94,7 +94,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                   id: "verticalSpacing",
                   label: verticalLabel,
                   disabled: vertical,
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 200
@@ -104,7 +104,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                   id: "horizontalSpacing",
                   disabled: !vertical,
                   label: horizontalLabel,
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 200
@@ -119,12 +119,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "groupSize",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "size",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -134,7 +134,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                     },
                     {
                       id: "customSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("size") !== "custom",
                       config: {
                         min: 14,
@@ -153,12 +153,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "groupBorderRadius",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "borderRadiusType",
                       label: t("Corner"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       devices: "desktop",
                       choices: [
                         { value: "square", icon: "nc-corners-square" },
@@ -168,7 +168,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                     },
                     {
                       id: "borderRadius",
-                      type: "slider-dev",
+                      type: "slider",
                       devices: "desktop",
                       disabled: dvv("borderRadiusType") !== "custom",
                       config: {
@@ -182,7 +182,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "iconPadding",
                   label: t("Size"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: 180,
@@ -197,7 +197,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors")
@@ -207,7 +207,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
       options: [
         {
           id: "color",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "lineBorder",
@@ -215,7 +215,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               options: [
                 {
                   id: "lineBorder",
-                  type: "border-dev",
+                  type: "border",
                   config: {
                     width: ["grouped"]
                   }
@@ -228,14 +228,14 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { title: t("Settings") },
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 1000,
@@ -244,7 +244,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",

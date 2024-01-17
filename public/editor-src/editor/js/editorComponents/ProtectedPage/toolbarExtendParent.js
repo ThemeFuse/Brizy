@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-lock",
         title: t("Protected Page")
@@ -13,7 +13,7 @@ export function getItems() {
       options: [
         {
           id: "emptyMessage",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Empty message"),
           placeholder: t("..type error message"),
           devices: "desktop",
@@ -23,7 +23,7 @@ export function getItems() {
         },
         {
           id: "invalidMessage",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Invalid message"),
           placeholder: t("..type error message"),
           devices: "desktop",
@@ -33,7 +33,7 @@ export function getItems() {
         },
         {
           id: "failMessage",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Fail message"),
           placeholder: t("..type error message"),
           devices: "desktop",
@@ -45,7 +45,7 @@ export function getItems() {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -56,7 +56,7 @@ export function getItems() {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 10,
             max: 100,
@@ -65,14 +65,14 @@ export function getItems() {
         },
         {
           id: "advancedSettings",
-          type: "advancedSettings",
+          type: "legacy-advancedSettings",
           label: t("More Settings")
         }
       ]
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     }
   ];

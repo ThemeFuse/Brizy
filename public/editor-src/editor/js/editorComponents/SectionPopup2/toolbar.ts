@@ -85,7 +85,7 @@ export const getItems: GetItems<Value> = ({
   return [
     {
       id: "toolbarPopup",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-popup",
         title: "Popup"
@@ -96,7 +96,7 @@ export const getItems: GetItems<Value> = ({
       options: [
         {
           id: "tabsPopup",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabPopup",
@@ -105,7 +105,7 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "makeItGlobal",
                   label: t("Make it Global"),
-                  type: "globalBlock-dev",
+                  type: "globalBlock",
                   devices: "desktop",
                   disabled: isCloud(config) && isShopify(config),
                   config: {
@@ -120,13 +120,13 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "scrollPage",
                   label: t("Scroll Page Behind"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !enableScrollPageBehind,
                   position: 100
                 },
                 {
                   id: "popupConditions",
-                  type: "popupConditions",
+                  type: "legacy-popupConditions",
                   disabled: !enableDisplayCondition,
                   position: 150
                 }
@@ -139,22 +139,22 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "clickOutsideToClose",
                   label: t("Click Outside to Close"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: !enableclickOutsideToClose
                 },
                 {
                   id: "groupShowCloseButton",
-                  type: "group-dev",
+                  type: "group",
                   options: [
                     {
                       id: "showCloseButton",
                       label: t("Display Close Button"),
-                      type: "switch-dev"
+                      type: "switch"
                     },
                     {
                       id: "showCloseButtonAfter",
                       label: t("Delay"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("showCloseButton") !== "on",
                       config: {
                         min: 0,
@@ -172,7 +172,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "toolbarMedia",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-background",
         title: t("Background")
@@ -181,7 +181,7 @@ export const getItems: GetItems<Value> = ({
       options: [
         {
           id: "tabsMedia",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabMedia",
@@ -190,7 +190,7 @@ export const getItems: GetItems<Value> = ({
                 {
                   label: t("Image"),
                   id: "bg",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   population: imageDynamicContentChoices
                 }
               ]
@@ -204,12 +204,12 @@ export const getItems: GetItems<Value> = ({
                   id: "maskShape",
                   label: t("Shape"),
                   devices: "desktop",
-                  type: "select-dev",
+                  type: "select",
                   choices: MaskShapes
                 },
                 {
                   id: "maskCustomUpload",
-                  type: "imageUpload-dev",
+                  type: "imageUpload",
                   devices: "desktop",
                   label: t("Image"),
                   config: {
@@ -224,18 +224,18 @@ export const getItems: GetItems<Value> = ({
                 },
                 {
                   id: "groupSize",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskSize",
                       label: t("Size"),
-                      type: "select-dev",
+                      type: "select",
                       choices: MaskSizes
                     },
                     {
                       id: "maskScale",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskSize !== "custom",
                       config: {
                         min: 1,
@@ -250,19 +250,19 @@ export const getItems: GetItems<Value> = ({
                 },
                 {
                   id: "groupPosition",
-                  type: "group-dev",
+                  type: "group",
                   disabled: maskShapeIsDisabled,
                   options: [
                     {
                       id: "maskPosition",
-                      type: "select-dev",
+                      type: "select",
                       label: t("Position"),
                       choices: MaskPositions
                     },
                     {
                       id: "maskPositionx",
                       label: t("X"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -273,7 +273,7 @@ export const getItems: GetItems<Value> = ({
                     {
                       id: "maskPositiony",
                       label: t("Y"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: maskPosition !== "custom",
                       config: {
                         min: 1,
@@ -286,7 +286,7 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "maskRepeat",
                   label: t("Repeat"),
-                  type: "select-dev",
+                  type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
                   choices: MaskRepeat
                 }
@@ -298,7 +298,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -312,7 +312,7 @@ export const getItems: GetItems<Value> = ({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBgColor",
@@ -320,7 +320,7 @@ export const getItems: GetItems<Value> = ({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev"
+                  type: "backgroundColor"
                 }
               ]
             },
@@ -330,7 +330,7 @@ export const getItems: GetItems<Value> = ({
               options: [
                 {
                   id: "maskShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER],
                   disabled: maskShapeIsDisabled
                 }
@@ -356,7 +356,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: !enabledHorizontalAlign,
       position: 90,
       choices: [
@@ -367,7 +367,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "verticalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: columnsHeightStyle === "fullHeight" || !enabledVerticalAlign,
       position: 100,
       choices: [
@@ -378,7 +378,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -389,7 +389,7 @@ export const getItems: GetItems<Value> = ({
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 100,
           config: {
             min: widthSuffix === "px" ? 200 : 20,
@@ -402,18 +402,18 @@ export const getItems: GetItems<Value> = ({
         },
         {
           id: "groupHeight",
-          type: "group-dev",
+          type: "group",
           position: 100,
           options: [
             {
               id: "columnsHeightStyle",
               label: t("Height"),
-              type: "select-dev",
+              type: "select",
               choices: columnsHeightStylePicker
             },
             {
               id: "columnsHeight",
-              type: "slider-dev",
+              type: "slider",
               disabled: !(
                 columnsHeightStyle === "custom" ||
                 columnsHeightStyle === "custom2"
@@ -432,7 +432,7 @@ export const getItems: GetItems<Value> = ({
         {
           id: "popupRowVerticalAlign",
           label: t("Content"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           disabled: dvv("columnsHeightStyle") === "auto",
           position: 110,
@@ -444,7 +444,7 @@ export const getItems: GetItems<Value> = ({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           config: {
             tabId: "styles",
             text: t("Styling"),
@@ -456,7 +456,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "remove",
-      type: "button",
+      type: "legacy-button",
       disabled: !enableDelete,
       title: t("Delete"),
       icon: "nc-trash",

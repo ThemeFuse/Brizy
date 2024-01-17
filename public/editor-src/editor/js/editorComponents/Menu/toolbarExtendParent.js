@@ -41,7 +41,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarMenu",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-menu-3",
         title: t("Menu")
@@ -51,7 +51,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "menuSelected",
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           position: 10,
           label: t("Menu"),
@@ -59,17 +59,17 @@ export function getItems({ v, device }) {
         },
         {
           id: "groupSettings",
-          type: "group-dev",
+          type: "group",
           position: 20,
           options: [
             {
               id: "mMenu",
-              type: "switch-dev",
+              type: "switch",
               label: t("Make it Hamburger")
             },
             {
               id: "mMenuSize",
-              type: "slider-dev",
+              type: "slider",
               label: t("Size"),
               disabled: dvv("mMenu") !== "on",
               config: {
@@ -83,7 +83,7 @@ export function getItems({ v, device }) {
         {
           id: "verticalMode",
           label: t("Orientation"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           position: 30,
           disabled: dvv("mMenu") === "on",
           choices: [
@@ -94,7 +94,7 @@ export function getItems({ v, device }) {
         {
           id: "mMenuPosition",
           label: t("Drawer Position"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           disabled: dvv("mMenu") === "off",
           position: 40,
           choices: [
@@ -104,13 +104,13 @@ export function getItems({ v, device }) {
         },
         {
           id: "closeDrawerIcon",
-          type: "switch-dev",
+          type: "switch",
           disabled: dvv("mMenu") === "off",
           label: t("Close Drawer Icon")
         },
         {
           id: "itemPadding",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           roles: ["admin"],
           position: 50,
@@ -125,7 +125,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "mMenuColors",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Color"),
@@ -140,7 +140,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "mMenuIconColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     }

@@ -3,6 +3,9 @@ import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import MenuDropDown from "visual/component/MenuDropDown";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { ContextMenuExtend } from "visual/component/ContextMenu";
+import HotKeys from "visual/component/HotKeys";
+import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 const getPlacement = (level, mods) => ({
   [DESKTOP]:
@@ -75,8 +78,23 @@ class MenuItemItems extends EditorArrayComponent {
     const isMegaMenu = itemData.type === "SectionMegaMenu";
     const { megaMenu } = this.props;
 
+    const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
+
     if (megaMenu && !isMenuItem) {
-      return item;
+      return (
+        <ContextMenuExtend
+          key={itemKey}
+          {...this.makeContextMenuProps(contextMenuExtendConfig)}
+        >
+          <HotKeys
+            shortcutsTypes={["copy", "pasteStyles"]}
+            id={itemKey}
+            onKeyDown={this.handleKeyDown}
+          >
+            {item}
+          </HotKeys>
+        </ContextMenuExtend>
+      );
     }
 
     if (!megaMenu && !isMegaMenu) {

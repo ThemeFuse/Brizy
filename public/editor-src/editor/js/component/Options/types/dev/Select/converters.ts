@@ -2,14 +2,14 @@ import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { ElementModelValue } from "./types";
 import { read as readLiteral } from "visual/utils/types/Literal";
+import { ElementModelValue } from "./types";
 
-export const fromElementModel: FromElementModel<"select-dev"> = get => ({
+export const fromElementModel: FromElementModel<"select"> = (get) => ({
   value: readLiteral(get("value"))
 });
 
-export const toElementModel: ToElementModel<"select-dev"> = values => {
+export const toElementModel: ToElementModel<"select"> = (values) => {
   return {
     value: values.value
   };

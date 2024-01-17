@@ -1,21 +1,13 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ACTIVE, HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { EcwidProductThumb, Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+// @ts-expect-error "advancedSettings" old option
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
@@ -33,7 +25,7 @@ export function getItems({
   return [
     {
       id: "toolbarGalleryThumbnail",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: { title: t("Thumbnail"), icon: "nc-woo-gallery" },
       devices: "desktop",
@@ -41,7 +33,7 @@ export function getItems({
         {
           id: "galleryHoverZoom",
           label: t("Hover Zoom"),
-          type: "switch-dev",
+          type: "switch",
           helper: {
             content:
               "Enable or disable on hover zoom of a main product image in product details pages."
@@ -50,7 +42,7 @@ export function getItems({
         {
           id: "carouselImage",
           label: t("Carousel Image"),
-          type: "switch-dev",
+          type: "switch",
           helper: {
             content:
               "Adds the ability to scroll product images without opening full-screen image viewer."
@@ -59,7 +51,7 @@ export function getItems({
         {
           id: "previewAdditionalImages",
           label: t("Preview additional Images"),
-          type: "switch-dev",
+          type: "switch",
           helper: {
             content:
               "Shows the additional product image in the place of main product image when clicking on gallery thumbnail."
@@ -68,7 +60,7 @@ export function getItems({
         {
           id: "thumbStyle",
           label: t("Style"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           choices: [
             { value: EcwidProductThumb.ImgFeed, icon: "nc-grid-45" },
             {
@@ -84,7 +76,7 @@ export function getItems({
         {
           id: "thumbnailAspectRatio",
           label: t("Ratio"),
-          type: "select-dev",
+          type: "select",
           choices: [
             { value: "AUTO", title: "Auto" },
             { value: "PORTRAIT_0667", title: "2:3" },
@@ -97,7 +89,7 @@ export function getItems({
         {
           id: "thumbSpacing",
           label: spacingLabel,
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -108,7 +100,7 @@ export function getItems({
           id: "betweenThumbnail",
           label: t("Between"),
           disabled: imageFeed,
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -119,7 +111,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -136,7 +128,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBorder",
@@ -144,7 +136,7 @@ export function getItems({
               options: [
                 {
                   id: "thumbnailBorder",
-                  type: "border-dev",
+                  type: "border",
                   devices: "desktop",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
@@ -156,7 +148,7 @@ export function getItems({
               options: [
                 {
                   id: "thumbnailBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
@@ -168,7 +160,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       devices: "desktop",
       disabled: imageFeed || thumbVertical,
@@ -177,7 +169,7 @@ export function getItems({
         {
           id: "thumbnailWidthSpacing",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -186,7 +178,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",
@@ -199,8 +191,7 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      //@ts-expect-error Old option doesn't work
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: !imageFeed && !thumbVertical,
       position: 40,
       icon: "nc-cog",
@@ -208,4 +199,4 @@ export function getItems({
       title: t("Settings")
     }
   ];
-}
+};

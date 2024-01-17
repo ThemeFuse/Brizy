@@ -4,18 +4,18 @@ export function getItems() {
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "field",
               options: [
                 {
                   id: "padding",
-                  type: "slider-dev",
+                  type: "slider",
                   label: t("Spacing"),
                   config: {
                     min: 0,
@@ -31,14 +31,14 @@ export function getItems() {
                 {
                   id: "label",
                   label: t("Label"),
-                  type: "switch-dev",
+                  type: "switch",
                   position: 15,
                   devices: "desktop"
                 },
                 {
                   id: "placeholder",
                   label: t("Placeholder"),
-                  type: "switch-dev",
+                  type: "switch",
                   position: 16,
                   devices: "desktop"
                 }

@@ -8,11 +8,11 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
-import { Value } from "./types";
+import { Props, Value } from "./types";
 
 export const title = t("Icon");
 
-export const getItems: GetItems<Value> = ({ v, device, context }) => {
+export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const hoverName = readString(dvv("hoverName")) ?? "none";
 
@@ -26,7 +26,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -35,7 +35,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
           options: [
             {
               id: "settingsTabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -53,7 +53,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                     {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
-                      type: "switch-dev",
+                      type: "switch",
                       disabled: IS_STORY,
                       position: 10,
                       closeTooltip: true,
@@ -74,7 +74,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                       config: richTextDC,
                       option: {
                         id: "customID",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -92,7 +92,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                       config: richTextDC,
                       option: {
                         id: "customClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -100,7 +100,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                       label: t("Hover Transition"),
                       disabled: IS_STORY,
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -120,7 +120,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -131,7 +131,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       disabled: IS_STORY,
                       devices: "desktop",
                       config: {

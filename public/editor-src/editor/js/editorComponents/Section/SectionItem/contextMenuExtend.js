@@ -29,7 +29,7 @@ const getItems = itemIndex => (v, component) => {
           type: "button",
           title: t("Paste"),
           helperText: () => (isMac ? "⌘ + V" : "ctrl + V"),
-          inactive: !copiedElement,
+          inactive: !copiedElement || copiedElement.type === "SectionMegaMenu",
           onChange: () => component.paste(itemIndex)
         },
         {

@@ -1,8 +1,7 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { Block } from "visual/types";
-import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { DESKTOP } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
@@ -12,24 +11,17 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkAnchor, toolbarStoryAnchor } from "visual/utils/toolbar";
-import EditorComponent from "../EditorComponent";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { Value } from "./types";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { Props, Value } from "./types";
 
-export function getItems({
+//@ts-expect-error old option
+export const getItems: GetItems<Value, Props> = ({
   v,
   device,
   component,
   context
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  component: EditorComponent<Value>;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+}) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const { hex: colorHex } = getOptionColorHexByPalette(
@@ -41,13 +33,10 @@ export function getItems({
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const config = Config.getAll();
-  const collectionTypesHandler =
-    config?.api?.collectionTypes?.loadCollectionTypes.handler;
 
   const IS_STORY = isStory(config);
   const IS_GLOBAL_POPUP = isPopup(config);
 
-  const linkSource = dvv("linkSource");
   const linkDC = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.link
@@ -56,7 +45,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-star",
         title: t("Icon")
@@ -65,7 +54,7 @@ export function getItems({
       options: [
         {
           id: "currentShortcodeTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -74,20 +63,20 @@ export function getItems({
                 {
                   id: "",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   devices: DESKTOP,
                   position: 40
                 },
                 {
                   id: "sizeGroup",
-                  type: "group-dev",
+                  type: "group",
                   position: 60,
                   disabled: IS_STORY,
                   options: [
                     {
                       id: "size",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-32" },
                         { value: "medium", icon: "nc-48" },
@@ -97,7 +86,7 @@ export function getItems({
                     },
                     {
                       id: "customSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: dvv("size") !== "custom",
                       config: {
                         min: 14,
@@ -110,7 +99,7 @@ export function getItems({
                 {
                   id: "padding",
                   label: t("Bg Size"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "responsive",
                   config: {
                     min: 0,
@@ -128,7 +117,7 @@ export function getItems({
                 {
                   id: "fillType",
                   label: t("Fill"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   devices: "desktop",
                   choices: [
                     { value: "filled", icon: "nc-circle" },
@@ -138,7 +127,7 @@ export function getItems({
                 },
                 {
                   id: "borderRadiusTypeGroup",
-                  type: "group-dev",
+                  type: "group",
                   disabled:
                     dvv("fillType") === "default" ||
                     (dvv("borderStyle") === "none" &&
@@ -148,7 +137,7 @@ export function getItems({
                     {
                       id: "borderRadiusType",
                       label: t("Corner"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "square", icon: "nc-corners-square" },
                         { value: "rounded", icon: "nc-corners-round" },
@@ -157,7 +146,7 @@ export function getItems({
                     },
                     {
                       id: "borderRadius",
-                      type: "slider-dev",
+                      type: "slider",
                       devices: "desktop",
                       disabled: dvv("borderRadiusType") !== "custom",
                       config: {
@@ -173,7 +162,7 @@ export function getItems({
                   label: t("Size"),
                   devices: "desktop",
                   disabled: dvv("fillType") === "default",
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 0,
                     max: IS_STORY ? 50 : 180,
@@ -190,7 +179,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -205,7 +194,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -213,7 +202,7 @@ export function getItems({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -224,7 +213,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   devices: "desktop",
                   states: [NORMAL, HOVER],
                   disabled: dvv("fillType") !== "filled"
@@ -238,7 +227,7 @@ export function getItems({
                 {
                   id: "border",
                   devices: "desktop",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER],
                   disabled: dvv("fillType") === "default"
                 }
@@ -251,7 +240,7 @@ export function getItems({
                 {
                   id: "boxShadow",
                   devices: "desktop",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER],
                   disabled: dvv("fillType") === "default"
                 }
@@ -263,7 +252,7 @@ export function getItems({
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         size: "medium",
@@ -274,7 +263,7 @@ export function getItems({
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: { saveTab: true },
           tabs: [
             {
@@ -282,30 +271,10 @@ export function getItems({
               label: t("Page"),
               options: [
                 {
-                  id: "linkSource",
-                  type: "select-dev",
-                  disabled: !collectionTypesHandler,
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  }
-                },
-                {
                   id: "linkPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Find Page"),
-                  devices: "desktop",
-                  disabled: !linkSource,
-                  config: {
-                    postType: linkSource
-                  }
+                  devices: "desktop"
                 }
               ]
             },
@@ -320,7 +289,7 @@ export function getItems({
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText-dev",
+                    type: "inputText",
                     placeholder: "http://",
                     config: {
                       size: "medium"
@@ -330,12 +299,12 @@ export function getItems({
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             },
@@ -353,8 +322,8 @@ export function getItems({
               options: [
                 {
                   id: "linkPopup",
-                  //@ts-expect-error New option doesn't work
-                  type: "promptAddPopup",
+                  // need to remove Old option in #24935
+                  type: "legacy-promptAddPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
                   label: t("Popup"),
                   popupKey: `${component.getId()}_${dvv("linkPopup")}`,
@@ -378,8 +347,18 @@ export function getItems({
             {
               id: "story",
               label: t("Slides"),
-              //@ts-expect-error Old option doesn't work
-              options: [toolbarStoryAnchor({ disabled: !IS_STORY })]
+              options: [
+                {
+                  id: "linkToSlide",
+                  type: "number-dev",
+                  label: t("Slide"),
+                  disabled: !IS_STORY,
+                  config: {
+                    min: 1,
+                    max: 1000000
+                  }
+                }
+              ]
             }
           ]
         }
@@ -388,12 +367,12 @@ export function getItems({
     {
       id: "advancedSettings",
       devices: "desktop",
-      //@ts-expect-error Old option doesn't work
-      type: "advancedSettings",
+      //need to remove Old option in #24941
+      type: "legacy-advancedSettings",
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
       title: t("Settings")
     }
   ];
-}
+};

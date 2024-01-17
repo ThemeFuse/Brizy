@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarFastSimonUpsell",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -16,21 +16,21 @@ export const getItems = (): ToolbarItemType[] => {
         {
           id: "embededCode",
           label: t("Embeded Code"),
-          type: "inputText-dev",
+          type: "inputText",
           placeholder: "<div class='..'"
         }
       ]
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

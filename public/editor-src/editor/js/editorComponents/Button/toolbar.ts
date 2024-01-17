@@ -2,7 +2,6 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { Block } from "visual/types";
-import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
@@ -19,8 +18,6 @@ import { getMaxBorderRadius } from "./utils";
 // @ts-expect-error "advancedSettings" old option
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const config = Config.getAll();
-  const collectionTypesHandler =
-    config?.api?.collectionTypes?.loadCollectionTypes.handler;
 
   const IS_STORY = isStory(config);
   const IS_GLOBAL_POPUP = isPopup(config);
@@ -31,8 +28,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const context = component.context;
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const linkSource = dvv("linkSource");
 
   const maxBorderRadius = getMaxBorderRadius(v, device);
 
@@ -78,7 +73,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-button",
         title: t("Button")
@@ -88,7 +83,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
         {
           id: "currentShortcodeTabs",
           className: "",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "currentShortcodeTab",
@@ -97,14 +92,14 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "sizeGroup",
-                  type: "group-dev",
+                  type: "group",
                   position: 10,
                   disabled: IS_STORY,
                   options: [
                     {
                       id: "size",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-small" },
                         { value: "medium", icon: "nc-medium" },
@@ -115,7 +110,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                     {
                       id: "paddingRL",
                       label: t("Width"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: submitType || customSize,
                       config: {
                         min: 0,
@@ -126,7 +121,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                     {
                       id: "paddingTB",
                       label: t("Height"),
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: customSize,
                       config: {
                         min: 0,
@@ -140,7 +135,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "fillType",
                   label: t("Fill"),
                   devices: "desktop",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   position: 20,
                   choices: [
                     { value: "filled", icon: "nc-circle" },
@@ -150,7 +145,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 },
                 {
                   id: "borderRadiusTypeGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   disabled: searchType || fillTypeDefault,
                   position: 30,
@@ -158,7 +153,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                     {
                       id: "borderRadiusType",
                       label: t("Corner"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "square", icon: "nc-corners-square" },
                         { value: "rounded", icon: "nc-corners-round" },
@@ -167,7 +162,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                     },
                     {
                       id: "borderRadius",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: customBorderRadius,
                       config: {
                         min: 0,
@@ -186,7 +181,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 {
                   id: "icon",
                   label: t("Icon"),
-                  type: "iconSetter-dev",
+                  type: "iconSetter",
                   devices: "desktop",
                   config: { canDelete: true }
                 },
@@ -194,7 +189,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "iconPosition",
                   label: t("Position"),
                   devices: "desktop",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: disableIconOptions,
                   choices: [
                     { value: "left", icon: "nc-align-left" },
@@ -203,14 +198,14 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 },
                 {
                   id: "iconSizeGroup",
-                  type: "group-dev",
+                  type: "group",
                   devices: "desktop",
                   disabled: disableIconOptions,
                   options: [
                     {
                       id: "iconSize",
                       label: t("Size"),
-                      type: "radioGroup-dev",
+                      type: "radioGroup",
                       choices: [
                         { value: "small", icon: "nc-16" },
                         { value: "medium", icon: "nc-24" },
@@ -220,7 +215,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                     },
                     {
                       id: "iconCustomSize",
-                      type: "slider-dev",
+                      type: "slider",
                       disabled: customIconSize,
                       config: {
                         min: 1,
@@ -233,7 +228,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 {
                   id: "iconSpacing",
                   label: t("Spacing"),
-                  type: "slider-dev",
+                  type: "slider",
                   devices: "desktop",
                   roles: ["admin"],
                   disabled: disableIconOptions,
@@ -251,7 +246,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "xlarge" : "auto",
@@ -261,7 +256,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
       options: [
         {
           id: "gridTypography",
-          type: "grid-dev",
+          type: "grid",
           className: "brz-typography-grid",
           config: {
             separator: true
@@ -274,7 +269,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -302,7 +297,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         size: "medium",
@@ -322,7 +317,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
         {
           id: "tabsColor",
           className: "",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -330,7 +325,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER],
                   disabled: fillType !== "filled"
                 }
@@ -342,7 +337,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -353,7 +348,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER],
                   disabled: fillTypeDefault
                 }
@@ -365,7 +360,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER],
                   disabled: fillTypeDefault
                 }
@@ -377,7 +372,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         size: "medium",
@@ -389,7 +384,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -399,30 +394,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               label: t("Page"),
               options: [
                 {
-                  id: "linkSource",
-                  type: "select-dev",
-                  disabled: !collectionTypesHandler,
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  }
-                },
-                {
                   id: "linkPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Find Page"),
-                  devices: "desktop",
-                  disabled: !linkSource,
-                  config: {
-                    postType: linkSource
-                  }
+                  devices: "desktop"
                 }
               ]
             },
@@ -437,7 +412,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText-dev",
+                    type: "inputText",
                     placeholder: "http://",
                     config: {
                       size: "medium"
@@ -447,12 +422,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             },
@@ -471,7 +446,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 {
                   id: "linkPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
-                  type: "promptAddPopup",
+                  type: "legacy-promptAddPopup",
                   label: t("Popup"),
                   popupKey: `${component.getId()}_${linkPopup}`,
                   value: {
@@ -513,7 +488,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: submitType || searchType,
       roles: ["admin"],
       position: 110,

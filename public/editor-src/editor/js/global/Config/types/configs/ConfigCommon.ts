@@ -160,6 +160,21 @@ export interface Theme {
   };
 }
 
+export interface Video {
+  category: string;
+  id: string;
+  items: {
+    id: string;
+    title: string;
+    url: string;
+  }[];
+}
+
+export interface Header {
+  src: string;
+  url: string;
+}
+
 export const isElementTypes = (type: string): type is ElementTypes => {
   return Object.values(ElementTypes).includes(type as ElementTypes);
 };
@@ -261,6 +276,8 @@ interface _ConfigCommon<Mode> {
 
     help?: {
       showIcon?: boolean;
+      video?: Video[];
+      header: Header;
     };
 
     //#endregion
@@ -489,15 +506,7 @@ interface _ConfigCommon<Mode> {
       linkSource?: string;
       linkType?: string;
     };
-    ProductImage?: {
-      imagePopulation?: string;
-      imagePopulationEntityType?: string;
-    };
-    BlogPostImage?: {
-      imagePopulation?: string;
-      imagePopulationEntityType?: string;
-    };
-    CollectionImage?: {
+    ShopifyImage?: {
       imagePopulation?: string;
       imagePopulationEntityType?: string;
     };
@@ -545,36 +554,12 @@ interface _ConfigCommon<Mode> {
     Variant?: {
       sourceType?: string;
     };
-    BlogTitle?: {
-      linkSource?: string;
-      linkType?: string;
+    ShopifyDescription?: {
       textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;
     };
-    BlogDescription?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-    };
-    CollectionDescription?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-    };
-    CollectionTitle?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-      linkSource?: string;
-      linkType?: string;
-    };
-    ProductDescription?: {
-      textPopulationEntityType?: string;
-      textPopulation?: string;
-      textPopulationEntityId?: string;
-    };
-    ProductTitle?: {
+    ShopifyTitle?: {
       textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;

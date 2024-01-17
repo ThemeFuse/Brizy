@@ -283,7 +283,9 @@ export function getGlobalBlocks(): Promise<Record<string, GlobalBlock>> {
   const url = makeUrl(_url, {
     hash,
     action: getGlobalBlockList,
-    version: editorVersion
+    version: editorVersion,
+    orderBy: "id",
+    order: "DESC"
   });
   type GlobalBlocks = Array<{
     data: string;

@@ -71,7 +71,7 @@ export function Select<T extends Literal>({
   }, [] as ReactElement[]);
 
   // if no default value found add first children
-  if (tags.length === 0) {
+  if (tags.length === 0 && children.length) {
     const [first] = children;
     tags.push(
       <Tag

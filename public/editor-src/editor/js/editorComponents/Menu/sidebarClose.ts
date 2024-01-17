@@ -9,7 +9,7 @@ export const getItems: GetItems<Value> = () => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -18,7 +18,7 @@ export const getItems: GetItems<Value> = () => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -29,14 +29,14 @@ export const getItems: GetItems<Value> = () => {
                   options: [
                     {
                       id: "closePadding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       position: 50
                     },
                     {
                       id: "closeMargin",
                       label: t("Margin"),
-                      type: "margin-dev",
+                      type: "margin",
                       devices: "desktop",
                       position: 60
                     }
@@ -52,7 +52,7 @@ export const getItems: GetItems<Value> = () => {
                       disabled: IS_STORY,
                       devices: "desktop",
                       position: 100,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,

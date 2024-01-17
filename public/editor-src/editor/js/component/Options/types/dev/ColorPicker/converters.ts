@@ -2,16 +2,16 @@ import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Value } from "./entities/Value";
+import { getColorPaletteColors as paletteColors } from "visual/utils/color";
+import * as Hex from "visual/utils/color/Hex";
+import { Black } from "visual/utils/color/Hex";
+import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
+import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
+import { Value } from "./entities/Value";
 import * as Palette from "./entities/palette";
 import { paletteHex } from "./utils";
-import * as Hex from "visual/utils/color/Hex";
-import * as Num from "visual/utils/math/number";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import { Black } from "visual/utils/color/Hex";
-import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 
 export const defaultValue: Value = {
   hex: Black,
@@ -21,7 +21,7 @@ export const defaultValue: Value = {
   tempPalette: ""
 };
 
-export const fromElementModel: FromElementModel<"colorPicker-dev"> = get => {
+export const fromElementModel: FromElementModel<"colorPicker"> = (get) => {
   const palette =
     mPipe(() => get("palette"), Str.read, Palette.fromString)() ??
     defaultValue.palette;
@@ -44,7 +44,7 @@ export const fromElementModel: FromElementModel<"colorPicker-dev"> = get => {
   };
 };
 
-export const toElementModel: ToElementModel<"colorPicker-dev"> = values => {
+export const toElementModel: ToElementModel<"colorPicker"> = (values) => {
   return {
     hex: values.hex,
     opacity: values.opacity,

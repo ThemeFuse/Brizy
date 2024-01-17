@@ -71,30 +71,32 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "MAKE_POPUP_TO_GLOBAL_POPUP": {
       const { id, data, status, meta, rules, position } = action.payload;
 
-      return produce(state, (draft) => {
-        draft[data.value._id] = {
+      return produce(state, (draft) => ({
+        [data.value._id]: {
           id,
           meta,
           data,
           status,
           rules,
           position
-        };
-      });
+        },
+        ...draft
+      }));
     }
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
       const { id, data, status, meta, rules, position } = action.payload;
 
-      return produce(state, (draft) => {
-        draft[data.value._id] = {
+      return produce(state, (draft) => ({
+        [data.value._id]: {
           id,
           meta,
           data,
           status,
           rules,
           position
-        };
-      });
+        },
+        ...draft
+      }));
     }
 
     // if block is a slider & globalBlock and we remove

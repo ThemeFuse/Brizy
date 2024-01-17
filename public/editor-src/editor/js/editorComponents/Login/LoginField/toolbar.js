@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       roles: ["admin"],
       position: 110,
@@ -12,7 +12,7 @@ export function getItems() {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,

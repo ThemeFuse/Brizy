@@ -22,23 +22,17 @@ jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Button.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ButtonTooltip.jsx", () => undefined);
 jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ColorFields.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/ColorPaletteEditor.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/ColorPicker2.jsx", () => undefined);
-jest.mock("visual/component/Options/types/FontFamily.jsx", () => undefined);
-jest.mock("visual/component/Options/types/FontStyle.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/FontStyleEditor/index.tsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/FormApps.js", () => undefined);
 jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
 jest.mock("visual/component/Options/types/Grid.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Input.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/IntegrationsApps.js",
   () => undefined
@@ -47,19 +41,14 @@ jest.mock(
   "visual/component/Options/types/MultiInputPickerOptionType.js",
   () => undefined
 );
-jest.mock("visual/component/Options/types/MultiPicker.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Popover.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/PopupConditions.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/PromptIcon.jsx", () => undefined);
 jest.mock("visual/component/Options/types/RadioGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Range2.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Select.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Stepper.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Tabs.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));
@@ -116,14 +105,12 @@ describe("Testing 'setOptionPrefix' function", () => {
 });
 
 describe("Testing 'inDevelopment' function", () => {
-  test("Return 'true' if type name ends with '-dev'", () => {
-    expect(inDevelopment("test-dev")).toBe(true);
+  test("Return 'true' if type name doesn't start with 'legacy-'", () => {
+    expect(inDevelopment("test")).toBe(true);
   });
 
-  test("Return 'false' if type name doesn't end with '-dev'", () => {
-    ["", "test", "test-Dev"].forEach((type) =>
-      expect(inDevelopment(type)).toBe(false)
-    );
+  test("Return 'false' if type name start with 'legacy-'", () => {
+    expect(inDevelopment("legacy-test")).toBe(false);
   });
 });
 

@@ -4,7 +4,7 @@ export const getItems = () => {
   return [
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog"
       },
@@ -14,7 +14,7 @@ export const getItems = () => {
         {
           id: "widthType",
           label: t("Width Type"),
-          type: "select-dev",
+          type: "select",
           position: 90,
           choices: [
             { title: t("Auto"), value: "off" },
@@ -24,7 +24,7 @@ export const getItems = () => {
         {
           id: "asideWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           position: 100,
           config: {
             min: 0,

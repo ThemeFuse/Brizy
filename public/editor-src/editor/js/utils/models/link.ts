@@ -128,7 +128,6 @@ export const getLinkData = <T extends Value>(v: T): Link => {
     linkPopup,
     linkUpload,
     linkPage,
-    linkSource,
     linkType: _linkType
   } = v;
 
@@ -136,7 +135,7 @@ export const getLinkData = <T extends Value>(v: T): Link => {
   const type = LinkType.mRead(linkType);
 
   const data = {
-    page: Str.read(linkSource) ? Str.read(linkPage) : undefined,
+    page: Str.read(linkPage),
     anchor: Str.read(linkAnchor),
     story: isNan(linkToSlide) ? "" : `slide-${linkToSlide}`,
     external: getExternal(v),

@@ -52,7 +52,7 @@ export const getItems: GetItems<Value, Props> = ({
   return [
     {
       id: "toolbarLeadific",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-leadific",
         title: t("Leadific")
@@ -61,7 +61,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabSettings",
@@ -71,7 +71,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "leadificCustomFields",
                   devices: "desktop",
                   label: t("Custom Fields"),
-                  type: "select-dev",
+                  type: "select",
                   choices: {
                     load: () => getLeadificCustomFields(config),
                     emptyLoad: {
@@ -87,7 +87,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -97,7 +97,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "typography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -106,7 +106,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -122,7 +122,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -130,7 +130,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -141,7 +141,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "textStrokeBorder",
-                  type: "border-dev",
+                  type: "border",
                   config: {
                     width: ["grouped"],
                     styles: ["none", "solid"]
@@ -156,7 +156,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "textShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -167,7 +167,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         size: "medium",
@@ -178,7 +178,7 @@ export const getItems: GetItems<Value, Props> = ({
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true
           },
@@ -189,7 +189,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "linkExternal",
-                  type: "inputText-dev",
+                  type: "inputText",
                   label: t("Link to"),
                   placeholder: "https://",
                   devices: "desktop",
@@ -201,12 +201,12 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             },
@@ -229,7 +229,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "linkPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
-                  type: "promptAddPopup",
+                  type: "legacy-promptAddPopup",
                   label: t("Popup"),
                   popupKey: `${component.getId()}_${linkPopup}`,
                   value: {
@@ -255,7 +255,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         {
@@ -277,7 +277,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
       title: t("Settings"),

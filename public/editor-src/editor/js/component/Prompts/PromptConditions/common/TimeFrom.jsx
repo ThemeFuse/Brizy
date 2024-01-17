@@ -14,10 +14,10 @@ export default function TimeFrom(props) {
         defaultValue={triggerValue.visit}
         onChange={(visit) => onChange({ ...triggerValue, visit })}
       >
-        <SelectItem key="first" value="first">
+        <SelectItem key="first" value="first" title={t("the first visit")}>
           {t("the first visit")}
         </SelectItem>
-        <SelectItem key="last" value="last">
+        <SelectItem key="last" value="last" title={t("the last visit")}>
           {t("the last visit")}
         </SelectItem>
       </Select>
@@ -27,10 +27,10 @@ export default function TimeFrom(props) {
         defaultValue={triggerValue.type}
         onChange={(type) => onChange({ ...triggerValue, type })}
       >
-        <SelectItem key="greater" value="greater">
+        <SelectItem key="greater" value="greater" title={t("is greater than")}>
           {t("is greater than")}
         </SelectItem>
-        <SelectItem key="less" value="less">
+        <SelectItem key="less" value="less" title={t("is less than")}>
           {t("is less than")}
         </SelectItem>
       </Select>
@@ -51,10 +51,10 @@ export default function TimeFrom(props) {
         defaultValue={triggerValue.time}
         onChange={(time) => onChange({ ...triggerValue, time })}
       >
-        <SelectItem key="days" value="days">
+        <SelectItem key="days" value="days" title={t("days")}>
           {t("days")}
         </SelectItem>
-        <SelectItem key="hours" value="hours">
+        <SelectItem key="hours" value="hours" title={t("hours")}>
           {t("hours")}
         </SelectItem>
       </Select>

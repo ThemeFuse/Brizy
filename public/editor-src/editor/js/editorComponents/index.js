@@ -90,6 +90,7 @@ import Video from "./Video";
 import VideoPlaylist from "./VideoPlaylist";
 import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Wrapper from "./Wrapper";
+import PostInfo from "./PostInfo";
 
 export default {
   Page,
@@ -180,6 +181,7 @@ export default {
   // DC
   PostTitle,
   PostExcerpt,
+  PostInfo,
   Posts,
   WPPostContent,
 

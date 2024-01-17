@@ -1,6 +1,6 @@
 import { removeAt } from "timm";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { hideToolbar } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
 
 export default class TabsItems extends EditorArrayComponent {
@@ -43,7 +43,7 @@ export default class TabsItems extends EditorArrayComponent {
                 : itemIndex === items.length - 1
                 ? "next"
                 : undefined,
-            onChange: v => {
+            onChange: (v) => {
               switch (v) {
                 case "prev":
                   this.reorderItem(itemIndex, itemIndex - 1);
@@ -57,7 +57,7 @@ export default class TabsItems extends EditorArrayComponent {
         },
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           devices: "desktop",
           icon: "nc-duplicate",
           title: t("Duplicate"),
@@ -70,7 +70,7 @@ export default class TabsItems extends EditorArrayComponent {
           ? [
               {
                 id: "remove",
-                type: "button",
+                type: "legacy-button",
                 devices: "desktop",
                 icon: "nc-trash",
                 title: t("Delete"),

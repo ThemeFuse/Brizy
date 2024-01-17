@@ -14,7 +14,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       position: 70,
       roles: ["admin"],
       config: {
@@ -25,7 +25,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "pagination",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: "desktop" === device
           }
@@ -34,7 +34,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Colors"),
         size: "medium",
@@ -53,7 +53,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBackground",
@@ -61,7 +61,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "paginationBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -72,7 +72,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "paginationColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -83,7 +83,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "paginationBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -94,7 +94,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       icon: "nc-cog",
       position: 110,
       roles: ["admin"],

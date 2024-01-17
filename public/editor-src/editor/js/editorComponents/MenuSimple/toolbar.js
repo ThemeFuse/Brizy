@@ -28,7 +28,7 @@ const getItems =
     return [
       {
         id: "toolbarCurrentElement",
-        type: "popover-dev",
+        type: "popover",
         position: 60,
         config: {
           icon: "nc-menu-3"
@@ -36,7 +36,7 @@ const getItems =
         options: [
           {
             id: "toggleMenu",
-            type: "switch-dev",
+            type: "switch",
             label: t("Toggle Menu"),
             devices: "responsive"
           },
@@ -44,13 +44,13 @@ const getItems =
             id: "menuName",
             label: t("Menu"),
             devices: "desktop",
-            type: "select-dev",
+            type: "select",
             choices: menuList
           },
           {
             id: "itemPadding",
             label: t("Spacing"),
-            type: "slider-dev",
+            type: "slider",
             config: {
               min: 1,
               max: 100,
@@ -61,7 +61,7 @@ const getItems =
       },
       {
         id: "toolbarTypography",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-font",
           size: device === "desktop" ? "large" : "auto",
@@ -72,7 +72,7 @@ const getItems =
         options: [
           {
             id: "",
-            type: "typography-dev",
+            type: "typography",
             config: {
               fontFamily: device === "desktop"
             }
@@ -81,7 +81,7 @@ const getItems =
       },
       {
         id: "toolbarColor",
-        type: "popover-dev",
+        type: "popover",
         config: {
           title: t("Colors"),
           size: "auto",
@@ -97,14 +97,14 @@ const getItems =
         options: [
           {
             id: "color",
-            type: "colorPicker-dev",
+            type: "colorPicker",
             states: [NORMAL, HOVER]
           }
         ]
       },
       {
         id: "advancedSettings",
-        type: "advancedSettings",
+        type: "legacy-advancedSettings",
         sidebarLabel: t("More Settings"),
         devices: "desktop",
         icon: "nc-cog",

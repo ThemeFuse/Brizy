@@ -17,7 +17,7 @@ const getItemsSimple =
     return [
       {
         id: "toolbarMenuSettings",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-menu-3",
           title: t("Menu")
@@ -27,7 +27,7 @@ const getItemsSimple =
         options: [
           {
             id: "megaMenu",
-            type: "switch-dev",
+            type: "switch",
             devices: "desktop",
             label: t("Mega Menu")
           }
@@ -35,7 +35,7 @@ const getItemsSimple =
       },
       {
         id: "toolbarMenuItem",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-star",
           title: t("Icon")
@@ -45,7 +45,7 @@ const getItemsSimple =
         options: [
           {
             id: "icon",
-            type: "iconSetter-dev",
+            type: "iconSetter",
             devices: "desktop",
             label: t("Icon"),
             config: { canDelete: true },
@@ -55,17 +55,17 @@ const getItemsSimple =
             ? [
                 {
                   id: "iconPosition",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: true
                 },
                 {
                   id: "iconSize",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: true
                 },
                 {
                   id: "iconSpacing",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: true
                 }
               ]
@@ -74,7 +74,7 @@ const getItemsSimple =
       },
       {
         id: "subMenuToolbarMenuItem",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-star",
           title: t("Icon")
@@ -84,7 +84,7 @@ const getItemsSimple =
         options: [
           {
             id: "icon",
-            type: "iconSetter-dev",
+            type: "iconSetter",
             devices: "desktop",
             label: t("Icon"),
             position: 10,
@@ -94,17 +94,17 @@ const getItemsSimple =
             ? [
                 {
                   id: "subMenuIconPosition",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: true
                 },
                 {
                   id: "subMenuIconSize",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: true
                 },
                 {
                   id: "subMenuIconSpacing",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: true
                 }
               ]
@@ -115,13 +115,13 @@ const getItemsSimple =
         ? [
             {
               id: "subMenuToolbarTypography",
-              type: "popover-dev",
+              type: "popover",
               disabled: true,
               options: []
             },
             {
               id: "subMenuToolbarColor",
-              type: "popover-dev",
+              type: "popover",
               disabled: true,
               options: []
             }
@@ -131,18 +131,18 @@ const getItemsSimple =
         ? [
             {
               id: "advancedSettings",
-              type: "advancedSettings",
+              type: "legacy-advancedSettings",
               devices: "desktop"
             },
             {
               id: "toolbarTypography",
-              type: "popover-dev",
+              type: "popover",
               disabled: true,
               options: []
             },
             {
               id: "toolbarColor",
-              type: "popover-dev",
+              type: "popover",
               disabled: true,
               options: []
             }
@@ -162,7 +162,7 @@ const getItemsMMenu =
     return [
       {
         id: "mMenuToolbarMenuItem",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-star",
           title: t("Icon")
@@ -171,7 +171,7 @@ const getItemsMMenu =
         options: [
           {
             id: "icon",
-            type: "iconSetter-dev",
+            type: "iconSetter",
             devices: "desktop",
             label: t("Icon"),
             config: { canDelete: true }
@@ -180,17 +180,17 @@ const getItemsMMenu =
             ? [
                 {
                   id: "mMenuIconPosition",
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled: true
                 },
                 {
                   id: "mMenuIconSize",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: true
                 },
                 {
                   id: "mMenuIconSpacing",
-                  type: "slider-dev",
+                  type: "slider",
                   disabled: true
                 }
               ]

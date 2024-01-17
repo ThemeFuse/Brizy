@@ -285,7 +285,7 @@
   &:hover,
   &:focus {
     border-color: transparent;
-    background-color: rgba($brand__primary__pro, 0.8);
+    opacity: 0.8;
   }
 }
 

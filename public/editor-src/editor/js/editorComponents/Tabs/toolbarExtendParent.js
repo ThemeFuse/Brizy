@@ -15,7 +15,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -33,7 +33,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "contentBg",
@@ -41,7 +41,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "contentBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -52,7 +52,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "contentBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -63,7 +63,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "contentBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -72,6 +72,6 @@ export function getItems({ v, device }) {
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true }
+    { id: "horizontalAlign", type: "toggle", disabled: true }
   ];
 }

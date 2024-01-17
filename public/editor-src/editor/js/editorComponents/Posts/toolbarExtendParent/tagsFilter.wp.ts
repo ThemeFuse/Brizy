@@ -14,18 +14,18 @@ export function tagsFilter(v: ElementModel): ToolbarItemType[] {
   return [
     {
       id: "filter-group",
-      type: "group-dev",
+      type: "group",
       disabled: !accepted.includes(vd.type),
       options: [
         {
           id: "filter",
-          type: "switch-dev",
+          type: "switch",
           label: t("Tags"),
           devices: "desktop"
         },
         {
           id: "tagsSource",
-          type: "select-dev",
+          type: "select",
           label: t("Source"),
           devices: "desktop",
           disabled: filtersIsOff,
@@ -37,7 +37,7 @@ export function tagsFilter(v: ElementModel): ToolbarItemType[] {
         },
         {
           id: "masonryFilter",
-          type: "switch-dev",
+          type: "switch",
           label: t("Masonry Arrangement"),
           devices: "desktop",
           disabled: filtersIsOff
