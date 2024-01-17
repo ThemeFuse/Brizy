@@ -5,11 +5,11 @@ import { State } from "visual/utils/stateMode";
 import { BreakpointsNames } from "../breakpoints/types";
 
 export type OptionsStyleFunctions =
-  | "border-dev"
-  | "backgroundColor-dev"
-  | "colorPicker-dev"
-  | "boxShadow-dev"
-  | "corners-dev";
+  | "border"
+  | "backgroundColor"
+  | "colorPicker"
+  | "boxShadow"
+  | "corners";
 
 export type AllCSSKeys = BreakpointsNames | Exclude<State, "normal">;
 

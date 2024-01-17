@@ -15,12 +15,12 @@ const getItems =
     return [
       {
         id: "horizontalAlign",
-        type: "toggle-dev",
+        type: "toggle",
         disabled: true
       },
       {
         id: "popoverCurrentElement",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: popoverIcon,
           title: popoverTitle
@@ -30,7 +30,7 @@ const getItems =
         options: [
           {
             id: "tabsCurrentElement",
-            type: "tabs-dev",
+            type: "tabs",
             tabs: [
               ...(tabCurrentElement_ ? [tabCurrentElement_] : []),
               ...(tabFilter_ ? [tabFilter_] : []),
@@ -88,7 +88,7 @@ const tabCurrentElement = (v, device) => {
     options: [
       {
         id: "gridColumn",
-        type: "slider-dev",
+        type: "slider",
         label: t("Columns"),
         devices: "desktop",
         config: {
@@ -101,7 +101,7 @@ const tabCurrentElement = (v, device) => {
       },
       {
         id: "gridRow",
-        type: "slider-dev",
+        type: "slider",
         label: t("Rows"),
         devices: "desktop",
         config: {
@@ -115,7 +115,7 @@ const tabCurrentElement = (v, device) => {
       {
         id: "padding",
         label: t("Spacing"),
-        type: "slider-dev",
+        type: "slider",
         config: {
           min: 0,
           max: 100,
@@ -142,19 +142,19 @@ function tabNavigation(v) {
       ...filters,
       {
         id: "groupPagination",
-        type: "group-dev",
+        type: "group",
         devices: "desktop",
         options: [
           {
             id: "pagination",
             label: t("Pagination"),
-            type: "switch-dev",
+            type: "switch",
             disabled: disableNavigation(v)
           },
           {
             id: "paginationSpacing",
             label: t("Spacing"),
-            type: "slider-dev",
+            type: "slider",
             disabled: v.pagination !== "on",
             config: {
               min: 0,

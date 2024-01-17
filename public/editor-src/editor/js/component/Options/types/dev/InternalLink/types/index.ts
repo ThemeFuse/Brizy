@@ -8,7 +8,8 @@ import { MValue } from "visual/utils/value";
 import { Choice } from "../../Select/types";
 
 interface Config extends WithSize {
-  postType?: string;
+  helper?: string;
+  sourceLabel?: string;
 }
 
 type OnChange = (s: string) => void;
@@ -24,6 +25,7 @@ export type Props = Option.Props<MValue<ChoiceWithPermalink>> &
 export interface ChoiceWithPermalink extends Choice {
   populationPermalink?: string;
   id?: string;
+  source?: string;
 }
 
 export type ChoicesSync = ChoiceWithPermalink[];

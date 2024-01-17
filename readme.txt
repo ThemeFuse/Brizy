@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.4.2
 Requires PHP: 7.0.0
-Stable tag: 2.4.38
+Stable tag: 2.4.39
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,23 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.4.39 - 2024-01-17 =
+ * New: Add Right Click Context Menu to Tabs Element 
+ * New: Added tooltip message when saving draft pages 
+ * Improvement: Speed when searching pages URL for Links 
+ * Improvement: Reduced file size of the Client API 
+ * Improvement: UI Translation 
+ * Fixed: Link To option loses focus 
+ * Fixed: Icon Background corner is not active 
+ * Fixed: Save selected Page in Link option on any Text element
+ * Fixed: Scroll in toolbara and typography is not working when parallax effect is set 
+ * Fixed: Some Saved Blocks thumbnails are not displayed 
+ * Fixed: Styling Dividers Show thin line on some mobile devices 
+ * Fixed: Background color on hover "Get a pro Plan" button 
+ * Fixed: Drag & Drop for Posts, Accordion Tab elements 
+ * Fixed: Drag & Drop Lines remain active randomly
+ * Fixed: Padding bottom for Video with Cover Image 
 
 = 2.4.38 - 2023-12-28 =
 * Fixed: Small layout fixes in templates

@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "toolbarTypographyDescription",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -36,7 +36,7 @@ export function getItems({
       options: [
         {
           id: "descriptionTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -45,7 +45,7 @@ export function getItems({
     },
     {
       id: "toolbarColorDescription",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -63,13 +63,13 @@ export function getItems({
       options: [
         {
           id: "descriptionColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     },
     {
       id: "descriptionHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 30,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -79,14 +79,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 40,
       options: [
         {
           id: "descriptionSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,

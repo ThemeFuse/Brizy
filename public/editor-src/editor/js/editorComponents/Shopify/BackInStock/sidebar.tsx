@@ -4,7 +4,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       devices: "desktop",
       tabs: []
     }

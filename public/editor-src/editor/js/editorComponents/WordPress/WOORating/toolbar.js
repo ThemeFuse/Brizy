@@ -11,7 +11,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-rating",
         title: t("Product Rating")
@@ -22,11 +22,11 @@ export function getItems({ v, device }) {
           id: "text",
           label: t("Text"),
           devices: "desktop",
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "ratingSize",
-          type: "slider-dev",
+          type: "slider",
           label: t("Size"),
           config: {
             min: 0,
@@ -36,7 +36,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "spacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           disabled: isTextDisabled,
           config: {
@@ -49,7 +49,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -59,7 +59,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "typography",
-          type: "typography-dev",
+          type: "typography",
           disabled: isTextDisabled,
           config: {
             fontFamily: "desktop" === device
@@ -69,7 +69,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -84,7 +84,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabStarColor",
@@ -92,7 +92,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -103,7 +103,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgStarColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -114,7 +114,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "textColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   disabled: isTextDisabled,
                   states: [NORMAL, HOVER]
                 }
@@ -126,7 +126,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       roles: ["admin"],
       position: 110,
       devices: "desktop",

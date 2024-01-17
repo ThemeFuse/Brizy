@@ -26,10 +26,10 @@ export default function OperatingSystem(props) {
         defaultValue={triggerValue.type}
         onChange={(type) => onChange({ ...triggerValue, type })}
       >
-        <SelectItem key="is" value="is">
+        <SelectItem key="is" value="is" title={t("is")}>
           {t("is")}
         </SelectItem>
-        <SelectItem key="is not" value="is not">
+        <SelectItem key="is not" value="is not" title={t("is not")}>
           {t("is not")}
         </SelectItem>
       </Select>

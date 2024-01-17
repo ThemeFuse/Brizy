@@ -7,11 +7,13 @@ describe("Testing 'read' function", function () {
   const valid = [
     {
       value: 1,
-      title: "Test"
+      title: "Test",
+      source: "pages"
     },
     {
       value: "2",
-      title: "Test 2"
+      title: "Test 2",
+      source: "posts"
     }
   ];
   const invalid = [undefined, null, [], "", 3, {}];

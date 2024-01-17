@@ -24,7 +24,7 @@ class TabItems extends EditorArrayComponent {
 
     const sortableType = makeDataAttrString({
       name: "sortable-type",
-      value: "'row'"
+      value: "row"
     });
 
     const sortableElement = makeDataAttrString({
@@ -62,7 +62,7 @@ class TabItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "button",
+          type: "legacy-button",
           title: t("Duplicate"),
           icon: "nc-duplicate",
           position: 200,
@@ -72,7 +72,7 @@ class TabItems extends EditorArrayComponent {
         },
         {
           id: "remove",
-          type: "button",
+          type: "legacy-button",
           title: t("Delete"),
           icon: "nc-trash",
           position: 210,

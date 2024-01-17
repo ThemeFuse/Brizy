@@ -6,6 +6,7 @@
     position: absolute;
     top: 7px;
   }
+
   > .brz-ed-control__tabs {
     border-bottom: 0;
     justify-content: flex-end;
@@ -27,6 +28,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
       }
+
       &:after {
         width: 1px;
         height: 100%;
@@ -38,18 +40,22 @@
         top: 0;
         right: 0;
       }
+
       &.active {
         background-color: $brand__primary;
       }
+
       &:first-child {
         border-radius: 3px 0 0 3px;
       }
+
       &:last-child {
         border-radius: 0 3px 3px 0;
       }
     }
   }
 }
+
 .brz-ed-tabs__option--inline,
 .brz-ed-tabs__options {
   flex: 1 1 auto;
@@ -73,12 +79,11 @@
     margin-bottom: 5px;
   }
 }
+
 .brz-ed-control__popover--content
-  .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs,
+.brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs,
 .brz-ed-control__popover--content
-  .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs-dev,
-.brz-ed-control__popover--content
-  .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__stateMode-dev {
+.brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__stateMode-dev {
   padding: 0;
 
   &,

@@ -17,7 +17,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -27,7 +27,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "layoutViewTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -36,7 +36,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         title: t("Colors"),
@@ -53,7 +53,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabViewBg",
@@ -61,7 +61,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "view",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -72,7 +72,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "viewColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -83,7 +83,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
               options: [
                 {
                   id: "viewBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -94,7 +94,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     },
     {
       id: "tabHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 80,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },

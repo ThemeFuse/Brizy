@@ -84,4 +84,5 @@ if (IS_EDITOR) {
 
 export const Delta = Quill.import("delta");
 export const Keyboard = Quill.import("modules/keyboard");
+export const Parchment = Quill.import("parchment")
 export default Quill;

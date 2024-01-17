@@ -23,14 +23,14 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentElement",
-      type: "popover-dev",
+      type: "popover",
       config: { title: t("Cart"), icon: "nc-woo-add-to-cart" },
       position: 10,
       options: [
         {
           id: "collapseDesktop",
           label: t("Collapse"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop",
           helper: {
             content:
@@ -38,64 +38,55 @@ export function getItems({
           }
         },
         {
-          id: "collapse",
-          label: t("Collapse"),
-          type: "switch-dev",
-          devices: "responsive",
-          helper: {
-            content: "Cart items list is shown in collapsed view on mobile."
-          }
-        },
-        {
           id: "breadcrumbsDisplay",
           label: t("Breadcrumbs"),
           devices: "desktop",
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "qtyDisplay",
           label: t("Show QTY"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop",
-          disabled: dvv("collapse") === "on"
+          disabled: dvv("collapseDesktop") === "on"
         },
         {
           id: "skuDisplay",
           label: t("SKU"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop",
-          disabled: dvv("collapse") === "on"
+          disabled: dvv("collapseDesktop") === "on"
         },
         {
           id: "weightDisplay",
           label: t("Weight"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop",
-          disabled: dvv("collapse") === "on"
+          disabled: dvv("collapseDesktop") === "on"
         },
         {
           id: "inputDisplay",
           label: t("Input"),
           devices: "desktop",
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "addressDisplay",
           devices: "desktop",
           label: t("Address line"),
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "footerDisplay",
           label: t("Footer"),
           devices: "desktop",
-          type: "switch-dev"
+          type: "switch"
         }
       ]
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         size: "auto",
@@ -113,25 +104,25 @@ export function getItems({
       options: [
         {
           id: "parent",
-          type: "backgroundColor-dev"
+          type: "backgroundColor"
         }
       ]
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
       // @ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { title: t("Settings") },
       position: 110,
       devices: "desktop",
@@ -139,7 +130,7 @@ export function getItems({
         {
           id: "cartWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -148,7 +139,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -157,7 +148,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -172,7 +163,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

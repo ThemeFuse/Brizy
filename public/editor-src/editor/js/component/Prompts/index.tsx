@@ -85,16 +85,32 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
     Prompt.open(data);
   }
 
+  static close(promptName: PromptKey): void {
+    Prompt.close(promptName);
+  }
+
   componentDidMount(): void {
     UIState.addChangeListener("prompt", this.onUIStateChange);
+    UIState.addChangeListener("closePrompt", this.onUIStateClosePrompt);
   }
 
   componentWillUnmount(): void {
     UIState.removeChangeListener("prompt", this.onUIStateChange);
+    UIState.removeChangeListener("closePrompt", this.onUIStateClosePrompt);
   }
 
   onUIStateChange = (data: unknown): void => {
     this.open(data as PromptsProps);
+  };
+
+  onUIStateClosePrompt = (promptName: unknown) => {
+    const position = this.state.prompts.findIndex(
+      ({ prompt }) => prompt === promptName
+    );
+
+    if (position !== -1) {
+      this.close(position);
+    }
   };
 
   close(position: number): void {

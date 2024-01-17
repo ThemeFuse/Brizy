@@ -27,7 +27,7 @@ export const getItems = <
   return [
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -37,7 +37,7 @@ export const getItems = <
       options: [
         {
           id: "filterTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -46,7 +46,7 @@ export const getItems = <
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       config: {
         title: t("Colors"),
@@ -64,7 +64,7 @@ export const getItems = <
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabFilterBg",
@@ -72,7 +72,7 @@ export const getItems = <
               options: [
                 {
                   id: "filter",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -83,7 +83,7 @@ export const getItems = <
               options: [
                 {
                   id: "input",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -94,7 +94,7 @@ export const getItems = <
               options: [
                 {
                   id: "input",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -105,7 +105,7 @@ export const getItems = <
               options: [
                 {
                   id: "inputBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -117,7 +117,7 @@ export const getItems = <
     {
       id: "advancedSettings",
       // @ts-expect-error advancedSettings is old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop"
     }
   ];

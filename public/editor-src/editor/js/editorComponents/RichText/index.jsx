@@ -39,7 +39,7 @@ import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
-import { TypographyTags, tagId } from "./toolbar/utils";
+import { tagId, TypographyTags } from "./toolbar/utils";
 import { dcItemOptionParser, parseShadow } from "./utils";
 import { getInnerElement, getStyles } from "./utils/ContextMenu";
 import { handleChangeLink } from "./utils/dependencies";
@@ -55,11 +55,7 @@ class RichText extends EditorComponent {
 
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
-
-  handleResizerChange = (patch) => this.patchValue(patch);
-
   prepopulation = null;
-
   state = {
     formats: {},
     prepopulation: null,
@@ -67,15 +63,13 @@ class RichText extends EditorComponent {
     selectionCoords: null,
     selectedValue: null
   };
-
   quillRef = React.createRef();
-
   toolbarRef = React.createRef();
-
   toolbarOpen = false;
-
   // Can be enabled by Config
   renderDC = !Config.getAll().dynamicContent?.liveInBuilder || IS_PREVIEW;
+
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   componentDidMount() {
     // TODO NEED review and exclude ReactDOM.findDOMNode
@@ -145,8 +139,9 @@ class RichText extends EditorComponent {
 
     const extra = {
       ...(keyCode && { keyCode }),
-      ...(formats.population?.population && {
-        placeholder: formats.population.population
+      ...(formats.population && {
+        placeholder: formats.population.population,
+        label: formats.population.label
       })
     };
 
@@ -448,7 +443,10 @@ class RichText extends EditorComponent {
       };
     }
 
-    if ("linkPopulation" in patch || "linkExternal" in patch) {
+    if (
+      ("linkPopulation" in patch || "linkExternal" in patch) &&
+      !this.getValue().textPopulation
+    ) {
       const link = handleChangeLink(this.getValue2().v, patch);
       this.quillRef.current.formatMultiple(link);
     }

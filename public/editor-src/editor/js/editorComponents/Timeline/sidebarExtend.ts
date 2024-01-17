@@ -7,7 +7,7 @@ export function getItems(): ToolbarItemType[] {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       devices: "desktop",
       tabs: [
         {
@@ -17,7 +17,7 @@ export function getItems(): ToolbarItemType[] {
           options: [
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               position: 50
             }

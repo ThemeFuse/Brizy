@@ -229,9 +229,13 @@ export const inlineValues: Values = {
     }
   },
   style: {
+    color: {
+      prefix: "color",
+      defaultValue: ""
+    },
     opacity: {
       prefix: "opacity",
-      defaultValue: 1
+      defaultValue: ""
     },
     shadow: {
       prefix: "text-shadow",

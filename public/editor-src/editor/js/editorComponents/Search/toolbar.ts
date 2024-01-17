@@ -25,7 +25,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-search",
         title: t("Additionals")
@@ -35,7 +35,7 @@ export function getItems({
         {
           id: "searchStyle",
           label: t("Style"),
-          type: "select-dev",
+          type: "select",
           devices: "desktop",
           choices: [
             { title: t("Classic"), value: "classic" },
@@ -46,7 +46,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -57,7 +57,7 @@ export function getItems({
       options: [
         {
           id: "typography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -66,7 +66,7 @@ export function getItems({
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -82,7 +82,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -90,7 +90,7 @@ export function getItems({
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -101,7 +101,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -112,7 +112,7 @@ export function getItems({
               options: [
                 {
                   id: "border",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -123,7 +123,7 @@ export function getItems({
               options: [
                 {
                   id: "boxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -134,7 +134,7 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog",
         title: t("Settings")
@@ -145,7 +145,7 @@ export function getItems({
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -158,7 +158,7 @@ export function getItems({
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           disabled: dvv("searchStyle") !== "minimal",
           config: {
             min: 10,
@@ -173,7 +173,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -182,7 +182,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -197,7 +197,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

@@ -20,7 +20,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarFilter",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-tags",
         title: t("Tags")
@@ -30,7 +30,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "filterStyle",
-          type: "radioGroup-dev",
+          type: "radioGroup",
           label: t("Style"),
           devices: "desktop",
           choices: [
@@ -40,7 +40,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "filterSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           config: {
             min: 0,
@@ -50,7 +50,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "afterFilterSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Content Gap"),
           config: {
             min: 0,
@@ -62,7 +62,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         title: t("Typography"),
@@ -73,7 +73,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "filter",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: "desktop" === device
           }
@@ -82,7 +82,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         title: t("Colors"),
         size: "medium",
@@ -101,7 +101,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -109,7 +109,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -120,7 +120,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -131,7 +131,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -142,7 +142,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -153,7 +153,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "filterHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       devices: "desktop",
       position: 100,
       choices: [
@@ -164,7 +164,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       icon: "nc-cog",
       roles: ["admin"],
       position: 110,

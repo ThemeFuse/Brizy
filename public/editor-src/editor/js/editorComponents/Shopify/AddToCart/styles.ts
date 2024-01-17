@@ -10,18 +10,16 @@ export function style(
     ".brz &&:hover": {
       standart: [
         "cssStyleColor",
-        "cssStyleBgColor",
+        "cssStyleElementButtonBgColor",
         "cssStyleBgGradient",
         "cssStyleBoxShadow",
         "cssStyleBorder",
-        "cssStyleBorderRadius",
-
+        "cssStyleBorderRadiusType",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-
         "cssStyleElementShopifyAddToCartSize",
         "cssStyleElementButtonIconPosition"
       ],

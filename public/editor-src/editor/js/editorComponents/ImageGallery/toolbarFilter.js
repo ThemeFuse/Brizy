@@ -20,7 +20,7 @@ export function getItems({ v, device }) {
   return [
     {
       id: "toolbarGallery",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-tags",
         title: t("Tags")
@@ -30,13 +30,13 @@ export function getItems({ v, device }) {
         {
           id: "sortTags",
           label: t("Sort alphabetically"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop"
         },
         {
           id: "filterStyle",
           label: t("Style"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           devices: "desktop",
           choices: [
             { value: "style-1", icon: "nc-tags-style-2" },
@@ -45,7 +45,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "filterSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Spacing"),
           config: {
             min: 0,
@@ -55,7 +55,7 @@ export function getItems({ v, device }) {
         },
         {
           id: "afterFilterSpacing",
-          type: "slider-dev",
+          type: "slider",
           label: t("Content Gap"),
           config: {
             min: 0,
@@ -67,7 +67,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: "auto",
@@ -77,7 +77,7 @@ export function getItems({ v, device }) {
       options: [
         {
           id: "filter",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: "desktop" === device
           }
@@ -86,7 +86,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -106,7 +106,7 @@ export function getItems({ v, device }) {
         {
           id: "tabsColor",
           className: "",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -114,7 +114,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -125,7 +125,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -136,7 +136,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -147,7 +147,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "filterBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -158,7 +158,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "filterHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       devices: "desktop",
       position: 100,
       choices: [
@@ -170,12 +170,12 @@ export function getItems({ v, device }) {
     {
       id: "advancedSettings",
       devices: "desktop",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       roles: ["admin"],
       position: 110,
       icon: "nc-cog",
       title: t("Settings")
     },
-    { id: "toolbarSettings", type: "popover-dev", disabled: true }
+    { id: "toolbarSettings", type: "popover", disabled: true }
   ];
 }

@@ -26,7 +26,7 @@ const getItems =
     return [
       {
         id: "toolbarWOOPages",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-woo-pages",
           title: t("Shop Pages")
@@ -37,7 +37,7 @@ const getItems =
           {
             id: "shortcode",
             label: t("Page"),
-            type: "select-dev",
+            type: "select",
             devices: "desktop",
             choices: [
               { title: t("Cart"), value: "woocommerce_cart" },
@@ -54,7 +54,7 @@ const getItems =
           {
             id: "productID",
             label: t("Product ID"),
-            type: "inputText-dev",
+            type: "inputText",
             devices: "desktop",
             disabled: shortcode !== "product",
             placeholder: t("Product ID or SKU")
@@ -62,7 +62,7 @@ const getItems =
           {
             id: "columns",
             label: t("Columns"),
-            type: "slider-dev",
+            type: "slider",
             devices: "desktop",
             disabled: disShortcodeProd,
             config: {
@@ -75,7 +75,7 @@ const getItems =
           {
             id: "limit",
             label: t("Products Count"),
-            type: "inputText-dev",
+            type: "inputText",
             devices: "desktop",
             disabled: disShortcodeProd,
             config: {
@@ -85,7 +85,7 @@ const getItems =
           {
             id: "category",
             label: t("Categories"),
-            type: "select-dev",
+            type: "select",
             devices: "desktop",
             disabled: disShortcodeProd,
             choices: [
@@ -102,7 +102,7 @@ const getItems =
           {
             id: "orderBy",
             label: t("Filter By"),
-            type: "select-dev",
+            type: "select",
             devices: "desktop",
             disabled: disShortcodeProd,
             choices: [
@@ -119,7 +119,7 @@ const getItems =
           {
             id: "order",
             label: t("Order"),
-            type: "radioGroup-dev",
+            type: "radioGroup",
             devices: "desktop",
             disabled: disShortcodeProd,
             choices: [
@@ -131,7 +131,7 @@ const getItems =
       },
       {
         id: "toolbarColor",
-        type: "popover-dev",
+        type: "popover",
         config: {
           size: "auto",
           title: t("Colors"),
@@ -145,7 +145,7 @@ const getItems =
         options: [
           {
             id: "tabsColor",
-            type: "tabs-dev",
+            type: "tabs",
             tabs: [
               {
                 id: "tabBackground",
@@ -153,7 +153,7 @@ const getItems =
                 options: [
                   {
                     id: "",
-                    type: "backgroundColor-dev",
+                    type: "backgroundColor",
                     states: [NORMAL, HOVER]
                   }
                 ]
@@ -164,7 +164,7 @@ const getItems =
                 options: [
                   {
                     id: "border",
-                    type: "border-dev",
+                    type: "border",
                     devices: "desktop",
                     states: [NORMAL, HOVER]
                   }
@@ -176,7 +176,7 @@ const getItems =
                 options: [
                   {
                     id: "boxShadow",
-                    type: "boxShadow-dev",
+                    type: "boxShadow",
                     devices: "desktop",
                     states: [NORMAL, HOVER]
                   }
@@ -188,7 +188,7 @@ const getItems =
       },
       {
         id: "toolbarSettings",
-        type: "popover-dev",
+        type: "popover",
         config: {
           icon: "nc-cog"
         },
@@ -197,7 +197,7 @@ const getItems =
           {
             id: "width",
             label: t("Width"),
-            type: "slider-dev",
+            type: "slider",
             config: {
               min: 1,
               max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -209,7 +209,7 @@ const getItems =
           },
           {
             id: "grid",
-            type: "grid",
+            type: "legacy-grid",
             separator: true,
             columns: [
               {
@@ -218,7 +218,7 @@ const getItems =
                 options: [
                   {
                     id: "styles",
-                    type: "sidebarTabsButton-dev",
+                    type: "sidebarTabsButton",
                     config: {
                       tabId: "styles",
                       text: t("Styling"),
@@ -233,7 +233,7 @@ const getItems =
                 options: [
                   {
                     id: "effects",
-                    type: "sidebarTabsButton-dev",
+                    type: "sidebarTabsButton",
                     config: {
                       tabId: "effects",
                       text: t("Effects"),

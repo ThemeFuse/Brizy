@@ -1,21 +1,12 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: datepickerBgColorHex } = getOptionColorHexByPalette(
@@ -26,7 +17,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrent",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         icon: "nc-grid-45",
@@ -36,12 +27,12 @@ export function getItems({
         {
           id: "datepickerPlaceholder",
           label: t("Placeholder"),
-          type: "switch-dev"
+          type: "switch"
         },
         {
           id: "datepickerSize",
           label: t("Size"),
-          type: "radioGroup-dev",
+          type: "radioGroup",
           choices: [
             { value: "small", icon: "nc-small" },
             { value: "medium", icon: "nc-medium" },
@@ -52,7 +43,7 @@ export function getItems({
     },
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       position: 20,
       config: {
         icon: "nc-font",
@@ -62,7 +53,7 @@ export function getItems({
       options: [
         {
           id: "datepickerTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -71,7 +62,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 30,
       config: {
         size: "auto",
@@ -89,7 +80,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -97,7 +88,7 @@ export function getItems({
               options: [
                 {
                   id: "datepickerColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -108,7 +99,7 @@ export function getItems({
               options: [
                 {
                   id: "datepicker",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -119,7 +110,7 @@ export function getItems({
               options: [
                 {
                   id: "datepickerBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -130,7 +121,7 @@ export function getItems({
               options: [
                 {
                   id: "datepickerBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -141,7 +132,7 @@ export function getItems({
     },
     {
       id: "datepickerHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 40,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -151,14 +142,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 50,
       options: [
         {
           id: "datepickerWidth",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -168,7 +159,7 @@ export function getItems({
         {
           id: "datepickerSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -177,7 +168,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",
@@ -189,4 +180,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

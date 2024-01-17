@@ -12,7 +12,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
   return [
     {
       id: "toolbarVitalsReview",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Reviews"),
@@ -24,7 +24,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "reviewType",
           label: "Review Type",
-          type: "select-dev",
+          type: "select",
           choices: [
             { title: "Widget", value: "default" },
             { title: "All Store", value: "allReviews" },
@@ -36,7 +36,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "badgeSize",
           label: "Badge Size",
-          type: "select-dev",
+          type: "select",
           disabled: reviewType !== "avgStoreReview",
           choices: [
             { title: "Wide Average", value: "average" },
@@ -49,7 +49,7 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

@@ -823,6 +823,7 @@ export class EditorComponent<
 
       //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
       const isDev = inDevelopment(type);
+
       const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
         v !== undefined ? ({ [id]: v } as Partial<M>) : null;
       const deps = option.dependencies || _.identity;

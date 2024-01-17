@@ -12,7 +12,7 @@ export function getItems({ v, device }) {
     }),
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         {
@@ -34,7 +34,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       title: t("Settings"),
       devices: "desktop",
       position: 110,

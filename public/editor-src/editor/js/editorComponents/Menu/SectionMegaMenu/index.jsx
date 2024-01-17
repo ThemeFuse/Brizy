@@ -3,6 +3,7 @@ import React from "react";
 import _ from "underscore";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import { CustomTag } from "visual/component/CustomTag";
 import { Roles } from "visual/component/Roles";
@@ -12,6 +13,7 @@ import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { DESKTOP, TABLET } from "visual/utils/responsiveMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import SectionMegaMenuItems from "./items";
 import * as sidebarConfig from "./sidebar";
@@ -139,43 +141,45 @@ class SectionMegaMenu extends EditorComponent {
     );
 
     return (
-      <ContainerBorder
-        type="mega__menu"
-        color="grey"
-        activeBorderStyle="dotted"
-        activateOnContentClick={false}
-        buttonPosition="topLeft"
-        renderButtonWrapper={this.renderToolbar}
-      >
-        {({
-          ref: containerBorderRef,
-          attr: containerBorderAttr,
-          button: ContainerBorderButton,
-          border: ContainerBorderBorder
-        }) => (
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <div
-              ref={containerBorderRef}
-              id={this.getId()}
-              className={classNameSection}
-              data-block-id={this.props.blockId}
-              {...parseCustomAttributes(customAttributes)}
-              {...containerBorderAttr}
-            >
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderItems(v, vs, vd)}
+      <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+        <ContainerBorder
+          type="mega__menu"
+          color="grey"
+          activeBorderStyle="dotted"
+          activateOnContentClick={false}
+          buttonPosition="topLeft"
+          renderButtonWrapper={this.renderToolbar}
+        >
+          {({
+            ref: containerBorderRef,
+            attr: containerBorderAttr,
+            button: ContainerBorderButton,
+            border: ContainerBorderBorder
+          }) => (
+            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+              <div
+                ref={containerBorderRef}
+                id={this.getId()}
+                className={classNameSection}
+                data-block-id={this.props.blockId}
+                {...parseCustomAttributes(customAttributes)}
+                {...containerBorderAttr}
               >
-                <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                  {this.renderItems(v, vs, vd)}
-                </ToolbarExtend>
-                {ContainerBorderButton}
-                {ContainerBorderBorder}
-              </Roles>
-            </div>
-          </CustomCSS>
-        )}
-      </ContainerBorder>
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={() => this.renderItems(v, vs, vd)}
+                >
+                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                    {this.renderItems(v, vs, vd)}
+                  </ToolbarExtend>
+                  {ContainerBorderButton}
+                  {ContainerBorderBorder}
+                </Roles>
+              </div>
+            </CustomCSS>
+          )}
+        </ContainerBorder>
+      </ContextMenu>
     );
   }
 

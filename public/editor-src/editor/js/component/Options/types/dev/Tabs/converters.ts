@@ -4,11 +4,11 @@ import { Literal, read } from "visual/utils/types/Literal";
 
 export const defaultValue: SimpleValue<Literal> = { value: "" };
 
-export const fromElementModel: Option.FromElementModel<"tabs-dev"> = get => ({
+export const fromElementModel: Option.FromElementModel<"tabs"> = get => ({
   value: read(get("value"))
 });
 
-export const toElementModel: Option.ToElementModel<"tabs-dev"> = values => {
+export const toElementModel: Option.ToElementModel<"tabs"> = values => {
   return {
     value: values.value
   };

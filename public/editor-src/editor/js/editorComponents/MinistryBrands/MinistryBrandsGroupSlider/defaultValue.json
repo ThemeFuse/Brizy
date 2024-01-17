@@ -22,7 +22,8 @@
     "detailPageButton": "Button",
     "source": "",
     "detailPage": "",
-    "detailPageTitle": ""
+    "detailPageTitle": "",
+    "detailPageSource": null
   },
   "style": {
     "families": {

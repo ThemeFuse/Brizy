@@ -25,14 +25,14 @@ export function getItems({
   return [
     {
       id: "toolbarElementProducts",
-      type: "popover-dev",
+      type: "popover",
       config: { title: t("Products"), icon: "nc-woo-products" },
       devices: "desktop",
       position: 10,
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -41,7 +41,7 @@ export function getItems({
                 {
                   id: "productName",
                   label: t("Name"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { value: "SHOW", title: "Show" },
                     { value: "HIDE", title: "Hide" },
@@ -51,7 +51,7 @@ export function getItems({
                 {
                   id: "productSubtitle",
                   label: t("Subtitle"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { value: "SHOW", title: "Show" },
                     { value: "HIDE", title: "Hide" },
@@ -61,7 +61,7 @@ export function getItems({
                 {
                   id: "productPrice",
                   label: t("Price"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { value: "SHOW", title: "Show" },
                     { value: "HIDE", title: "Hide" },
@@ -71,7 +71,7 @@ export function getItems({
                 {
                   id: "productSKU",
                   label: t("SKU"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { value: "SHOW", title: "Show" },
                     { value: "HIDE", title: "Hide" },
@@ -81,7 +81,7 @@ export function getItems({
                 {
                   id: "buyNowButton",
                   label: t("Buy now"),
-                  type: "select-dev",
+                  type: "select",
                   choices: [
                     { value: "SHOW", title: "Show" },
                     { value: "HIDE", title: "Hide" },
@@ -97,32 +97,32 @@ export function getItems({
                 {
                   id: "productCardFrame",
                   label: t("Card frame"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "darkenImage",
                   label: t("Darken image background"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "additionalImage",
                   label: t("Additional image on hover"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "mainProductImage",
                   label: t("Main product image"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "sortingOptions",
                   label: t("Sorting Options"),
-                  type: "switch-dev"
+                  type: "switch"
                 },
                 {
                   id: "footerDisplay",
                   label: t("Footer"),
-                  type: "switch-dev"
+                  type: "switch"
                 }
               ]
             }
@@ -132,7 +132,7 @@ export function getItems({
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -150,7 +150,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabBg",
@@ -158,7 +158,7 @@ export function getItems({
               options: [
                 {
                   id: "products",
-                  type: "backgroundColor-dev"
+                  type: "backgroundColor"
                 }
               ]
             },
@@ -168,7 +168,7 @@ export function getItems({
               options: [
                 {
                   id: "productsBorder",
-                  type: "border-dev"
+                  type: "border"
                 }
               ]
             },
@@ -178,7 +178,7 @@ export function getItems({
               options: [
                 {
                   id: "productsBoxShadow",
-                  type: "boxShadow-dev"
+                  type: "boxShadow"
                 }
               ]
             }
@@ -188,14 +188,14 @@ export function getItems({
     },
     {
       id: "horizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       disabled: true,
       choices: []
     },
     {
       id: "advancedSettings",
       // @ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       position: 110,
       icon: "nc-cog",
       title: t("Settings")

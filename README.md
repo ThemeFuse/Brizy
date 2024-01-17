@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.4.2<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.38<br>
+Stable tag: 2.4.39<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,23 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.39 - 2024-01-17
+ * New: Add Right Click Context Menu to Tabs Element 
+ * New: Added tooltip message when saving draft pages 
+ * Improvement: Speed when searching pages URL for Links 
+ * Improvement: Reduced file size of the Client API 
+ * Improvement: UI Translation 
+ * Fixed: Link To option loses focus 
+ * Fixed: Icon Background corner is not active 
+ * Fixed: Save selected Page in Link option on any Text element
+ * Fixed: Scroll in toolbara and typography is not working when parallax effect is set 
+ * Fixed: Some Saved Blocks thumbnails are not displayed 
+ * Fixed: Styling Dividers Show thin line on some mobile devices 
+ * Fixed: Background color on hover "Get a pro Plan" button 
+ * Fixed: Drag & Drop for Posts, Accordion Tab elements 
+ * Fixed: Drag & Drop Lines remain active randomly
+ * Fixed: Padding bottom for Video with Cover Image 
 
 ### 2.4.38 - 2023-12-28
 * Fixed: Small layout fixes in templates

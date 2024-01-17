@@ -1,21 +1,12 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: gridBgColorHex } = getOptionColorHexByPalette(
@@ -26,7 +17,7 @@ export function getItems({
   return [
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       config: {
         size: "auto",
@@ -44,7 +35,7 @@ export function getItems({
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabgridBg",
@@ -52,7 +43,7 @@ export function getItems({
               options: [
                 {
                   id: "grid",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -63,7 +54,7 @@ export function getItems({
               options: [
                 {
                   id: "gridBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -74,7 +65,7 @@ export function getItems({
               options: [
                 {
                   id: "gridBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -85,14 +76,14 @@ export function getItems({
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 20,
       options: [
         {
           id: "gridSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -101,7 +92,7 @@ export function getItems({
         },
         {
           id: "styles",
-          type: "sidebarTabsButton-dev",
+          type: "sidebarTabsButton",
           devices: "desktop",
           config: {
             tabId: "styles",
@@ -113,4 +104,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

@@ -1,6 +1,5 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getCollectionTypes } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
@@ -15,8 +14,7 @@ import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
-  const collectionTypesHandler =
-    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+
   const IS_GLOBAL_POPUP = isPopup(config);
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
@@ -37,8 +35,6 @@ export function getItems({ v, device, component, context }) {
     DCTypes.richText
   );
 
-  const linkSource = dvv("linkSource");
-
   const linkDC = getDynamicContentOption({
     options: component.context.dynamicContent.config,
     type: DCTypes.link
@@ -46,7 +42,7 @@ export function getItems({ v, device, component, context }) {
   return [
     {
       id: "popoverTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "xlarge" : "auto",
@@ -57,7 +53,7 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "gridTypography",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -67,7 +63,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -83,7 +79,7 @@ export function getItems({ v, device, component, context }) {
                   id: "text",
                   devices: "desktop",
                   disabled: disablePredefinedPopulation || !activeChoice,
-                  type: "predefinedPopulation-dev",
+                  type: "predefinedPopulation",
                   config: {
                     activeChoice,
                     choices: predefinedChoices
@@ -97,7 +93,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "toolbarColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -113,7 +109,7 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabText",
@@ -121,7 +117,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -132,7 +128,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "textStrokeBorder",
-                  type: "border-dev",
+                  type: "border",
                   config: {
                     width: ["grouped"],
                     styles: ["none", "solid"]
@@ -147,7 +143,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "textShadow",
-                  type: "textShadow-dev",
+                  type: "textShadow",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -158,7 +154,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "toolbarLink",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-link",
         size: "medium",
@@ -168,7 +164,7 @@ export function getItems({ v, device, component, context }) {
       options: [
         {
           id: "linkType",
-          type: "tabs-dev",
+          type: "tabs",
           config: {
             saveTab: true,
             showSingle: true
@@ -179,30 +175,10 @@ export function getItems({ v, device, component, context }) {
               label: t("Page"),
               options: [
                 {
-                  id: "linkSource",
-                  type: "select-dev",
-                  disabled: !collectionTypesHandler,
-                  label: t("Type"),
-                  devices: "desktop",
-                  choices: {
-                    load: () => getCollectionTypes(config),
-                    emptyLoad: {
-                      title: t("There are no choices")
-                    }
-                  },
-                  config: {
-                    size: "large"
-                  }
-                },
-                {
                   id: "linkPage",
-                  type: "internalLink-dev",
+                  type: "internalLink",
                   label: t("Find Page"),
-                  devices: "desktop",
-                  disabled: !linkSource,
-                  config: {
-                    postType: linkSource
-                  }
+                  devices: "desktop"
                 }
               ]
             },
@@ -217,7 +193,7 @@ export function getItems({ v, device, component, context }) {
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText-dev",
+                    type: "inputText",
                     placeholder: "http://",
                     devices: "desktop",
                     config: {
@@ -228,13 +204,13 @@ export function getItems({ v, device, component, context }) {
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch-dev",
+                  type: "switch",
                   devices: "desktop"
                 }
               ]
@@ -273,10 +249,10 @@ export function getItems({ v, device, component, context }) {
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle-dev", disabled: true },
+    { id: "horizontalAlign", type: "toggle", disabled: true },
     {
       id: "contentHorizontalAlign",
-      type: "toggle-dev",
+      type: "toggle",
       position: 100,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
@@ -287,7 +263,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "advancedSettings",
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       position: 110,
       title: t("Settings"),

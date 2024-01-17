@@ -27,7 +27,7 @@ export const toolbarParentColors = <
   return [
     {
       id: "toolbarParentColors",
-      type: "popover-dev",
+      type: "popover",
       devices: "desktop",
       position: 70,
       config: {
@@ -45,7 +45,7 @@ export const toolbarParentColors = <
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabParentBg",
@@ -53,7 +53,7 @@ export const toolbarParentColors = <
               options: [
                 {
                   id: "parent",
-                  type: "backgroundColor-dev",
+                  type: "backgroundColor",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -64,7 +64,7 @@ export const toolbarParentColors = <
               options: [
                 {
                   id: "parentBorder",
-                  type: "border-dev",
+                  type: "border",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -75,7 +75,7 @@ export const toolbarParentColors = <
               options: [
                 {
                   id: "parentBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   states: [NORMAL, HOVER]
                 }
               ]

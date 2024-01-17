@@ -39,34 +39,22 @@ import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
 import Button from "./Button";
 import CheckGroup from "./CheckGroup";
-import ColorFields from "./ColorFields";
 import ColorPalette2 from "./ColorPalette2";
 import ColorPaletteEditor from "./ColorPaletteEditor";
-import ColorPicker2 from "./ColorPicker2";
-import FontFamily from "./FontFamily";
-import FontStyle from "./FontStyle";
 import FontStyleEditor from "./FontStyleEditor";
-import FormApps from "./FormApps";
 import GBConditions from "./GBConditions";
 import Grid from "./Grid";
-import Input from "./Input";
 import IntegrationsApps from "./IntegrationsApps";
 import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
-import MultiPicker from "./MultiPicker";
 import Popover from "./Popover";
 import PopupConditions from "./PopupConditions";
 import PromptAddPopup from "./PromptAddPopup";
-import PromptIcon from "./PromptIcon";
 import RadioGroup from "./RadioGroup";
-import Range2 from "./Range2";
 import Select from "./Select";
-import Slider from "./Slider";
-import Stepper from "./Stepper";
-import Tabs from "./Tabs";
 import Toggle from "./Toggle";
 import { StateMode } from "./common/StateMode";
-import { Alert } from "./dev/Alert";
 import { Ai } from "./dev/AiText";
+import { Alert } from "./dev/Alert";
 import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
 import { FormApps as FormAppsDev } from "./dev/FormApps";
 import { GlobalBlockOption as GlobalBlockDev } from "./dev/GlobalBlock";
@@ -82,86 +70,74 @@ import { Toggle as ToggleDev } from "./dev/Toggle";
 
 const newTypes = {
   "aiText-dev": Ai,
-  "alert-dev": Alert,
-  "animation-dev": Animation,
-  "backgroundColor-dev": BackgroundColor,
+  alert: Alert,
+  animation: Animation,
+  backgroundColor: BackgroundColor,
   "button-dev": ButtonDev,
   "order-dev": Order,
   "codeMirror-dev": CodeMirrorDev,
-  "colorPicker-dev": ColorPickerDev,
-  "corners-dev": Corners,
-  "boxShadow-dev": BoxShadow,
-  "border-dev": Border,
+  colorPicker: ColorPickerDev,
+  corners: Corners,
+  boxShadow: BoxShadow,
+  border: Border,
   "filters-dev": Filters,
-  "fileUpload-dev": FileUploadDev,
-  "group-dev": Group,
-  "grid-dev": GridDev,
-  "imageUpload-dev": ImageUpload,
-  "iconPicker-dev": IconPicker,
-  "iconsPicker-dev": IconsPicker,
-  "iconSetter-dev": IconSetterDev,
-  "inputText-dev": InputText,
-  "internalLink-dev": InternalLink,
-  "margin-dev": Margin,
-  "motion-dev": Motion,
-  "multiSelect-dev": MultiSelect,
+  fileUpload: FileUploadDev,
+  group: Group,
+  grid: GridDev,
+  imageUpload: ImageUpload,
+  iconPicker: IconPicker,
+  iconsPicker: IconsPicker,
+  iconSetter: IconSetterDev,
+  inputText: InputText,
+  internalLink: InternalLink,
+  margin: Margin,
+  motion: Motion,
+  multiSelect: MultiSelect,
   "number-dev": Number,
-  "textarea-dev": TextareaDev,
-  "radioGroup-dev": RadioGroupDev,
-  "range-dev": RangeDev,
-  "padding-dev": Padding,
+  textarea: TextareaDev,
+  radioGroup: RadioGroupDev,
+  range: RangeDev,
+  padding: Padding,
   "paypal-dev": PayPal,
-  "popover-dev": PopoverDev,
+  popover: PopoverDev,
   "population-dev": Population,
-  "predefinedPopulation-dev": PredefinedPopulation,
-  "select-dev": SelectDev,
-  "sidebarTabs-dev": SidebarTabs,
-  "sidebarTabsButton-dev": SidebarTabsButton,
-  "slider-dev": SliderDev,
-  "switch-dev": SwitchDev,
-  "tabs-dev": TabsDev,
-  "toggle-dev": ToggleDev,
-  "typography-dev": Typography,
-  "textShadow-dev": TextShadow,
-  "gallery-dev": Gallery,
-  "gallery-for-gallery-dev": GalleryForGallery,
+  predefinedPopulation: PredefinedPopulation,
+  select: SelectDev,
+  sidebarTabs: SidebarTabs,
+  sidebarTabsButton: SidebarTabsButton,
+  slider: SliderDev,
+  switch: SwitchDev,
+  tabs: TabsDev,
+  toggle: ToggleDev,
+  typography: Typography,
+  textShadow: TextShadow,
+  gallery: Gallery,
+  "gallery-for-gallery": GalleryForGallery,
   "stateMode-dev": StateMode,
-  "transform-dev": Transform,
+  transform: Transform,
   "savedBlock-dev": SavedBlockDev,
-  "globalBlock-dev": GlobalBlockDev,
-  "formApps-dev": FormAppsDev
+  globalBlock: GlobalBlockDev,
+  formApps: FormAppsDev
 };
 
 const oldTypes = {
-  advancedSettings: AdvancedSettings,
-  blockThumbnail: BlockThumbnail,
-  button: Button,
-  colorFields: ColorFields,
-  colorPaletteEditor: ColorPaletteEditor,
-  colorPalette2: ColorPalette2,
-  colorPicker2: ColorPicker2,
-  fontFamily: FontFamily,
-  fontStyle: FontStyle,
-  fontStyleEditor: FontStyleEditor,
-  formApps: FormApps,
-  grid: Grid,
-  input: Input,
-  multiInputPicker: MultiInputPickerOptionType,
-  multiPicker: MultiPicker,
-  popover: Popover,
-  popupConditions: PopupConditions,
-  gbConditions: GBConditions,
-  promptAddPopup: PromptAddPopup,
-  promptIcon: PromptIcon,
-  radioGroup: RadioGroup,
-  checkGroup: CheckGroup,
-  select: Select,
-  slider: Slider,
-  stepper: Stepper,
-  toggle: Toggle,
-  tabs: Tabs,
-  range2: Range2,
-  integrationsApps: IntegrationsApps
+  "legacy-advancedSettings": AdvancedSettings,
+  "legacy-blockThumbnail": BlockThumbnail,
+  "legacy-button": Button,
+  "legacy-colorPaletteEditor": ColorPaletteEditor,
+  "legacy-colorPalette2": ColorPalette2,
+  "legacy-fontStyleEditor": FontStyleEditor,
+  "legacy-grid": Grid,
+  "legacy-multiInputPicker": MultiInputPickerOptionType,
+  "legacy-popover": Popover,
+  "legacy-popupConditions": PopupConditions,
+  "legacy-gbConditions": GBConditions,
+  "legacy-promptAddPopup": PromptAddPopup,
+  "legacy-radioGroup": RadioGroup,
+  "legacy-checkGroup": CheckGroup,
+  "legacy-select": Select,
+  "legacy-toggle": Toggle,
+  "legacy-integrationsApps": IntegrationsApps
 } as const;
 
 export const types = { ...oldTypes, ...newTypes };

@@ -1,4 +1,5 @@
 // --- Sidebar
+@import "@brizy/builder-ui-components/src/HelpSidebar/style/index";
 .brz-ed-sidebar {
   font-family: $default-font-family;
   position: fixed;
@@ -227,6 +228,16 @@
     }
   }
 
+  &__right__content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: $sidebar-color;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -267,7 +278,7 @@
   // Popover
   &__popover {
     &-content {
-      max-width: 190px;
+      max-width: fit-content;
       min-width: 190px;
       border-radius: $toolbar-border-radius;
       background-color: $sidebar__popover-bg;
@@ -505,6 +516,9 @@
         top: 50%;
         left: 0;
         right: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
     }
 

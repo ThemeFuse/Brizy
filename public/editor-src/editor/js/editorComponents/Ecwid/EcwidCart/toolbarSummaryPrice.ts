@@ -26,7 +26,7 @@ export function getItems({
   return [
     {
       id: "toolbarTypographysummaryPrice",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -36,7 +36,7 @@ export function getItems({
       options: [
         {
           id: "summaryPriceTypography",
-          type: "typography-dev",
+          type: "typography",
           config: {
             fontFamily: device === "desktop"
           }
@@ -45,7 +45,7 @@ export function getItems({
     },
     {
       id: "toolbarColorsummaryPrice",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -63,7 +63,7 @@ export function getItems({
       options: [
         {
           id: "summaryPriceColor",
-          type: "colorPicker-dev"
+          type: "colorPicker"
         }
       ]
     }

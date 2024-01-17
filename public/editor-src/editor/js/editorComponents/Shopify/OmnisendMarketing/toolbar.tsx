@@ -5,7 +5,7 @@ export const getItems = (): ToolbarItemType[] => {
   return [
     {
       id: "toolbarOmnisendMarketing",
-      type: "popover-dev",
+      type: "popover",
       position: 10,
       devices: "desktop",
       config: {
@@ -15,7 +15,7 @@ export const getItems = (): ToolbarItemType[] => {
       options: [
         {
           id: "pageLink",
-          type: "inputText-dev",
+          type: "inputText",
           label: t("Landing Page Link"),
           placeholder: "https://..."
         }
@@ -24,7 +24,7 @@ export const getItems = (): ToolbarItemType[] => {
     {
       id: "advancedSettings",
       // @ts-expect-error: Old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       devices: "desktop",
       sidebarLabel: t("More Settings"),
       position: 110,

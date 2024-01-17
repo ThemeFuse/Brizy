@@ -8,6 +8,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { updateTriggers } from "visual/redux/actions";
 import { triggersSelector } from "visual/redux/selectors";
+import { pendingRequest } from "visual/utils/api";
 import { IS_PRO } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import Buttons from "../Buttons";
@@ -40,7 +41,8 @@ class Triggers extends React.Component {
         value: triggerOnce
       };
 
-      this.setState({ loading: true }, () => {
+      this.setState({ loading: true }, async () => {
+        await pendingRequest(300);
         const meta = {
           syncSuccess: () =>
             this.setState({
@@ -182,7 +184,7 @@ class Triggers extends React.Component {
     const currentId = values[index].id;
     const triggersList = this.getAvailableItems(currentId).map(
       ({ id, title }, index) => (
-        <SelectItem key={index} value={id}>
+        <SelectItem key={index} value={id} title={title}>
           {title}
         </SelectItem>
       )

@@ -96,6 +96,7 @@ import WOOUpsell from "./pro/WOOUpsell.js";
 import WPBreadcrumbs from "./pro/WPBreadcrumbs";
 import getPostContent from "./pro/WPPostContent";
 import WPPostInfo from "./pro/WPPostInfo";
+import PostInfo from "./pro/PostInfo";
 import WPPostNavigation from "./pro/WPPostNavigation";
 import StoryLottie from "./pro/story/StoryLottie";
 import StoryStarRating from "./pro/story/StoryStarRating";
@@ -181,6 +182,7 @@ export const ProShortCodes = {
 
   Posts: isWp(Config.getAll()),
   PostTitle: isWp(Config.getAll()),
+  PostInfo: true,
   AssetsPosts: false,
 
   UserFirstName: false,
@@ -317,6 +319,7 @@ export const ShortCodesKeywords = {
   ResetPassword: "reset password authentication security",
   Posts: "posts articles blog",
   PostTitle: "post title article heading headline",
+  PostInfo: "post information, details, metadata",
   AssetsPosts: "assets posts media posts blog assets",
   UserFirstName: "user first name personalization customization",
   UserLastName: "user last name personalization customization",
@@ -502,7 +505,8 @@ export const CloudShortCodes = {
 
   Leadific,
 
-  Product
+  Product,
+  PostInfo
 };
 
 export const WPShortCodes = {

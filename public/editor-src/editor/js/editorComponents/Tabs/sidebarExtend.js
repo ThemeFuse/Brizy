@@ -5,7 +5,7 @@ export function getItems() {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -14,13 +14,13 @@ export function getItems() {
           options: [
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               position: 50
             },
             {
               id: "border",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               devices: "desktop",
               position: 65
@@ -34,7 +34,7 @@ export function getItems() {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
 
               tabs: [
                 {
@@ -43,7 +43,7 @@ export function getItems() {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev",
+                      type: "animation",
                       config: {
                         types: tabEffects
                       }

@@ -14,7 +14,7 @@ import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
 
-export const fromElementModel: FromElementModel<"padding-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"padding"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -104,7 +104,7 @@ export const fromElementModel: FromElementModel<"padding-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"padding-dev"> = (v) => {
+export const toElementModel: ToElementModel<"padding"> = (v) => {
   return {
     type: v.type,
     value: v.value,

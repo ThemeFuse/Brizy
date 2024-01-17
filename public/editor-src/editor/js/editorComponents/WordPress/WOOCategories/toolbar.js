@@ -4,7 +4,7 @@ export function getItems() {
   return [
     {
       id: "toolbarWOOCategories",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-categories",
         title: t("Shop Categories")
@@ -14,7 +14,7 @@ export function getItems() {
       options: [
         {
           id: "WOOCategoriesTabs",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "layoutTab",
@@ -23,7 +23,7 @@ export function getItems() {
                 {
                   id: "columns",
                   label: t("Columns"),
-                  type: "slider-dev",
+                  type: "slider",
                   config: {
                     min: 1,
                     max: 6,
@@ -34,7 +34,7 @@ export function getItems() {
                 {
                   id: "number",
                   label: t("Categories Count"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   config: {
                     size: "short"
@@ -49,7 +49,7 @@ export function getItems() {
                 {
                   id: "orderBy",
                   label: t("Filter By"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     { title: t("Name"), value: "name" },
@@ -62,7 +62,7 @@ export function getItems() {
                   id: "order",
                   devices: "desktop",
                   label: t("Order"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   choices: [
                     { value: "ASC", icon: "nc-up" },
                     { value: "DESC", icon: "nc-down" }
@@ -76,7 +76,7 @@ export function getItems() {
     },
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-cog"
       },
@@ -85,7 +85,7 @@ export function getItems() {
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -94,7 +94,7 @@ export function getItems() {
         },
         {
           id: "grid",
-          type: "grid",
+          type: "legacy-grid",
           separator: true,
           devices: "desktop",
           columns: [
@@ -104,7 +104,7 @@ export function getItems() {
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -119,7 +119,7 @@ export function getItems() {
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),

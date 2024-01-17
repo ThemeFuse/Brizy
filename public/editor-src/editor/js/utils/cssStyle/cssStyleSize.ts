@@ -1,5 +1,6 @@
 import Config from "visual/global/Config";
 import * as Num from "visual/utils/math/number";
+import * as N from "visual/utils/math/number";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
@@ -21,6 +22,32 @@ import { checkValue } from "../checkValue";
 type Get = (k: string) => MValue<unknown>;
 type Size = "small" | "medium" | "large" | "custom";
 export const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
+
+export function getButtonSizes(size: Size): MValue<{
+  width: number;
+  height: number;
+}> {
+  switch (size) {
+    case "small": {
+      return {
+        width: 26,
+        height: 11
+      };
+    }
+    case "medium": {
+      return {
+        width: 42,
+        height: 14
+      };
+    }
+    case "large": {
+      return {
+        width: 44,
+        height: 19
+      };
+    }
+  }
+}
 
 export function cssStyleSizeWidth({
   v,
@@ -313,18 +340,18 @@ export function cssStyleSizeSpacingWidth({
   return size === undefined ? "" : `width:${size}${suffix};`;
 }
 
-export function cssStyleSizeSpacingHeight({
-  v,
-  device,
-  state,
-  prefix = ""
-}: CSSValue): string {
-  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
+export function cssStyleSizeIconSizes({ v, device }: CSSValue): string {
+  const dvv: Get = (key: string) => defaultValueValue({ v, key, device });
+  const size = N.read(dvv("typographyFontSize"));
+  const iconSpacing = N.read(dvv("iconSpacing"));
+  const suffix = Str.read(dvv("typographyFontSizeSuffix")) || "";
 
-  const size = styleSizeSpacing({ v, device, state, prefix });
-  const suffix = Str.read(dvv(capByPrefix(prefix, "spacingSuffix"))) || "";
+  const res =
+    size === undefined || iconSpacing === undefined
+      ? ""
+      : `${size + iconSpacing}${suffix}`;
 
-  return size === undefined ? "" : `height:${size}${suffix};`;
+  return `width:${res};height:${res};`;
 }
 
 export function cssStyleSizeFontSize({
@@ -452,6 +479,31 @@ export function cssStyleSizePadding({
       return "padding: 14px 42px 14px 42px;";
     case "large":
       return "padding: 19px 44px 19px 44px;";
+    case "custom":
+      return `padding: ${height}${heightSuffix};`;
+    case undefined:
+      return "";
+  }
+}
+
+export function cssStyleSizePaddingSelect({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv: Get = (key) => defaultValueValue({ v, key, device, state });
+  const size = getSize(dvv(capByPrefix(prefix, "size")));
+  const height = styleSizeHeight({ v, device, state, prefix });
+  const heightSuffix = Str.read(dvv(capByPrefix(prefix, "heightSuffix")));
+
+  switch (size) {
+    case "small":
+      return "padding: 11px 10px;";
+    case "medium":
+      return "padding: 14px 10px;";
+    case "large":
+      return "padding: 19px 10px;";
     case "custom":
       return `padding: ${height}${heightSuffix};`;
     case undefined:

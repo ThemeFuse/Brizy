@@ -1,9 +1,23 @@
+import { hasScroll } from "./utils";
+import { throttle } from "underscore";
+
 type Emit = (e: Event) => void;
 
 const nodeStack = new Map<HTMLElement, Emit>();
 
+const hasThrottledScroll = throttle(
+  (element: HTMLElement) => hasScroll(element),
+  1000
+);
+
 const handleWheel = (e: Event) => {
   const count = nodeStack.size;
+  const element = e.target instanceof HTMLElement ? e.target : null;
+
+  if (element && hasThrottledScroll(element)) {
+    return;
+  }
+
   const [_, nodeCb] = [...nodeStack][count - 1]; // eslint-disable-line @typescript-eslint/no-unused-vars
   nodeCb?.(e);
 };

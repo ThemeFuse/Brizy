@@ -52,14 +52,14 @@ export function getItems({
   const enableToolbarSettings = (): ToolbarItemType[] => [
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },
       position: 110,
       options: [
         {
           id: "width",
           label: t("Width"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 1,
             max: 100,
@@ -69,7 +69,7 @@ export function getItems({
         {
           id: "height",
           label: t("Height"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 200,
             max: 700,
@@ -80,7 +80,7 @@ export function getItems({
         },
         {
           id: "grid",
-          type: "grid-dev",
+          type: "grid",
           config: { separator: true },
           columns: [
             {
@@ -89,7 +89,7 @@ export function getItems({
               options: [
                 {
                   id: "styles",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "styles",
                     text: t("Styling"),
@@ -104,7 +104,7 @@ export function getItems({
               options: [
                 {
                   id: "effects",
-                  type: "sidebarTabsButton-dev",
+                  type: "sidebarTabsButton",
                   config: {
                     tabId: "effects",
                     text: t("Effects"),
@@ -122,7 +122,7 @@ export function getItems({
   const disableToolbarSetting = (): ToolbarItemType[] => [
     {
       id: "toolbarSettings",
-      type: "popover-dev",
+      type: "popover",
       devices: "all",
       disabled: true
     }
@@ -132,7 +132,7 @@ export function getItems({
     {
       id: "advancedSettings",
       // @ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       disabled: true
     }
   ];
@@ -141,7 +141,7 @@ export function getItems({
     {
       id: "advancedSettings",
       // @ts-expect-error old option
-      type: "advancedSettings",
+      type: "legacy-advancedSettings",
       sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
@@ -153,7 +153,7 @@ export function getItems({
   return [
     {
       id: "toolbarCurrentShortcode",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-twitter",
         title: t("Twitter")
@@ -163,7 +163,7 @@ export function getItems({
       options: [
         {
           id: "tabsCurrentElement",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabCurrentElement",
@@ -172,7 +172,7 @@ export function getItems({
                 {
                   id: "twitterUsername",
                   label: t("Username"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   devices: "desktop",
                   placeholder: t("username"),
                   population: richTextDC,
@@ -183,7 +183,7 @@ export function getItems({
                 {
                   id: "twitter",
                   label: t("Twitter"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: [
                     {
@@ -200,7 +200,7 @@ export function getItems({
                 {
                   id: "twitterType",
                   label: t("Type"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   choices: choicesTwitterType,
                   disabled: choicesTwitterType.length <= 1
@@ -209,7 +209,7 @@ export function getItems({
                 {
                   id: "twitterTheme",
                   label: t("Theme"),
-                  type: "select-dev",
+                  type: "select",
                   devices: "desktop",
                   disabled: twitter !== "embed",
                   choices: [
@@ -226,7 +226,7 @@ export function getItems({
                 {
                   id: "buttonLarge",
                   label: t("Button Size"),
-                  type: "radioGroup-dev",
+                  type: "radioGroup",
                   disabled:
                     twitterType !== "followButton" &&
                     twitterType !== "mentionButton",
@@ -239,21 +239,21 @@ export function getItems({
                 {
                   id: "buttonShowCount",
                   label: t("Followers"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: twitterType !== "followButton",
                   devices: "desktop"
                 },
                 {
                   id: "buttonShowScreenName",
                   label: t("Handle"),
-                  type: "switch-dev",
+                  type: "switch",
                   disabled: twitterType !== "followButton",
                   devices: "desktop"
                 },
                 {
                   id: "tweet",
                   label: t("Tweet"),
-                  type: "inputText-dev",
+                  type: "inputText",
                   disabled: twitterType !== "mentionButton",
                   devices: "desktop",
                   placeholder: t("this is my tweet"),

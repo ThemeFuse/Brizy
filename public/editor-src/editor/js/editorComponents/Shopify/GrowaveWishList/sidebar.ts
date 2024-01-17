@@ -9,7 +9,7 @@ export const getItems = ({
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       disabled: device !== "desktop",
       tabs: []
     }

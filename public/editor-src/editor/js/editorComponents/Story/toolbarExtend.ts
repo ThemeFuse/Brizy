@@ -16,7 +16,7 @@ export function getItems({
   return [
     {
       id: "toolbarAutoplay",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-play",
         title: t("Autoplay")
@@ -25,18 +25,18 @@ export function getItems({
       options: [
         {
           id: "sliderAutoPlayGroup",
-          type: "group-dev",
+          type: "group",
           devices: "desktop",
           options: [
             {
               id: "sliderAutoPlay",
               label: t("Autoplay"),
-              type: "switch-dev"
+              type: "switch"
             },
             {
               id: "sliderAutoPlaySpeed",
               label: t("Speed"),
-              type: "slider-dev",
+              type: "slider",
               disabled: dvv("sliderAutoPlay") !== "on",
               config: {
                 min: 1,
@@ -50,7 +50,7 @@ export function getItems({
         {
           id: "sliderLoop",
           label: t("Loop"),
-          type: "switch-dev",
+          type: "switch",
           devices: "desktop",
           disabled: dvv("sliderAutoPlay") !== "on"
         }

@@ -8,6 +8,7 @@ import {
   cssStyleStrokeWidth,
   getFillType
 } from "visual/utils/cssStyle";
+import { getButtonSizes } from "visual/utils/cssStyle/cssStyleSize";
 import { defaultValueValue } from "visual/utils/onChange";
 import { isStory } from "../models";
 import { CSSValue } from "../style2/types";
@@ -52,21 +53,14 @@ export function cssStyleElementButtonSize({ v, device }: CSSValue): string {
   const size = getSize(dvv("size"));
   const fillType = getFillType(dvv("fillType"));
 
-  const widths = {
-    small: 26,
-    medium: 42,
-    large: 44,
-    custom: paddingRL
-  };
-  const heights = {
-    small: 11,
-    medium: 14,
-    large: 19,
-    custom: paddingTB
-  };
+  if (!size) {
+    return "";
+  }
 
-  const width = size ? widths[size] : 0;
-  const height = size ? heights[size] : 0;
+  const { width: _width = 0, height: _height = 0 } = getButtonSizes(size) ?? {};
+
+  const width = size === "custom" ? paddingRL : _width;
+  const height = size === "custom" ? paddingTB : _height;
 
   switch (fillType) {
     case "filled":

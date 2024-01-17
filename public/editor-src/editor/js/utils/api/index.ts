@@ -22,6 +22,7 @@ import { read } from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
+import { t } from "../i18n";
 import {
   parseBlogSourceItem,
   parseCollectionSourceItem,
@@ -199,7 +200,8 @@ export function getGlobalBlocks(): Promise<Record<string, GlobalBlock>> {
   const url = makeUrl(`${api}/global_blocks`, {
     page: `${paginationData.page}`,
     count: `${paginationData.count}`,
-    project: `${id}`
+    project: `${id}`,
+    "orderBy[id]": "DESC"
   });
   type GlobalBlocks = Array<{
     data: string;
@@ -374,20 +376,31 @@ export function updateGlobalBlocks(
 
 //#region Fonts
 
-export function getUploadedFonts(): Promise<unknown> {
-  const {
-    urls: { api }
-  } = Config.getAll() as Cloud;
+export async function getUploadedFonts(): Promise<unknown> {
+  try {
+    const {
+      urls: { api }
+    } = Config.getAll() as Cloud;
 
-  // mapped uid cloud to font id what used in models
-  return (
-    request(`${api}/fonts`, {
+    const r = await request(`${api}/fonts`, {
       method: "GET"
-    })
-      .then((r) => r.json())
-      //@ts-expect-error: need to check this
-      .then((r) => r.map(({ uid, ...data }) => ({ ...data, id: uid })))
-  );
+    });
+
+    if (!r.ok) {
+      throw new Error(t("Failed to fetch fonts"));
+    }
+
+    const responseData = await r.json();
+
+    if (!Array.isArray(responseData)) {
+      throw new Error(t("Invalid response format. Expected an array."));
+    }
+
+    return responseData.map(({ uid, ...data }) => ({ ...data, id: uid }));
+  } catch (error) {
+    console.error(t("Error fetching fonts:"), error);
+    return [];
+  }
 }
 
 //#endregion

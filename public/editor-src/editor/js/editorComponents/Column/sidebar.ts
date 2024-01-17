@@ -36,7 +36,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
   return [
     {
       id: "sidebarTabs",
-      type: "sidebarTabs-dev",
+      type: "sidebarTabs",
       tabs: [
         {
           id: "styles",
@@ -45,7 +45,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -59,14 +59,14 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
-                      type: "switch-dev",
+                      type: "switch",
                       devices: "desktop",
                       closeTooltip: true,
                       position: 10
                     },
                     {
                       id: "padding",
-                      type: "padding-dev",
+                      type: "padding",
                       label: t("Padding"),
                       devices: "desktop",
                       position: 50
@@ -74,13 +74,13 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "margin",
                       label: t("Margin"),
-                      type: "margin-dev",
+                      type: "margin",
                       devices: "desktop",
                       position: 60
                     },
                     {
                       id: "border",
-                      type: "corners-dev",
+                      type: "corners",
                       label: t("Corner"),
                       devices: "desktop",
                       position: 65
@@ -88,7 +88,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "blendMode",
                       label: t("Blending Mode"),
-                      type: "select-dev",
+                      type: "select",
                       devices: "desktop",
                       position: 80,
                       choices: [
@@ -117,7 +117,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                   options: [
                     {
                       id: "zIndex",
-                      type: "slider-dev",
+                      type: "slider",
                       position: 20,
                       label: t("Z-index"),
                       devices: "desktop",
@@ -134,13 +134,14 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
-                          t("Add your custom ID without the #pound, example: my-id")
+                        content: t(
+                          "Add your custom ID without the #pound, example: my-id"
+                        )
                       },
                       config: richTextDC,
                       option: {
                         id: "customID",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -151,13 +152,14 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       devices: "desktop",
                       display: "block",
                       helper: {
-                        content:
-                          t("Add your custom class without the .dot, example: my-class")
+                        content: t(
+                          "Add your custom class without the .dot, example: my-class"
+                        )
                       },
                       config: richTextDC,
                       option: {
                         id: "customClassName",
-                        type: "inputText-dev"
+                        type: "inputText"
                       }
                     },
                     {
@@ -170,8 +172,9 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       display: "block",
                       devices: "desktop",
                       helper: {
-                        content:
-                          t("Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character.")
+                        content: t(
+                          "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+                        )
                       },
                       population: richTextDC
                     },
@@ -180,7 +183,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       label: t("Hover Transition"),
                       devices: "desktop",
                       position: 60,
-                      type: "slider-dev",
+                      type: "slider",
                       config: {
                         min: 0,
                         max: 99,
@@ -190,7 +193,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "tagName",
                       label: t("HTML Tag"),
-                      type: "select-dev",
+                      type: "select",
                       choices: toolbarTagsChoices
                     }
                   ]
@@ -199,7 +202,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
             },
             {
               id: "padding",
-              type: "padding-dev",
+              type: "padding",
               label: t("Padding"),
               devices: "responsive",
               position: 50
@@ -207,13 +210,13 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
             {
               id: "margin",
               label: t("Margin"),
-              type: "margin-dev",
+              type: "margin",
               devices: "responsive",
               position: 60
             },
             {
               id: "border",
-              type: "corners-dev",
+              type: "corners",
               label: t("Corner"),
               devices: "responsive",
               position: 65
@@ -227,7 +230,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
           options: [
             {
               id: "tabs",
-              type: "tabs-dev",
+              type: "tabs",
               config: {
                 align: "start"
               },
@@ -238,7 +241,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                   options: [
                     {
                       id: "animation",
-                      type: "animation-dev"
+                      type: "animation"
                     }
                   ]
                 },
@@ -248,7 +251,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                   options: [
                     {
                       id: "hover",
-                      type: "animation-dev",
+                      type: "animation",
                       disabled: IS_STORY,
                       devices: "desktop",
                       config: {

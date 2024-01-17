@@ -303,7 +303,7 @@ class SignIn extends Component<SingInProps, SignInState> {
               </Button>
             </div>
             <InputPlaceholder
-              title="Email to recover password"
+              title={t("Email to recover password")}
               icon="nc-right-arrow-tail"
               loading={recoverLoading}
               value={recoverEmail}

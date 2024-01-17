@@ -15,7 +15,7 @@ export function getItems({ v, device, state }) {
   return [
     {
       id: "toolbarWOOProductPage",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-woo-2",
         title: t("Add to cart")
@@ -25,7 +25,7 @@ export function getItems({ v, device, state }) {
         {
           id: "tableSpacing",
           label: t("Spacing"),
-          type: "slider-dev",
+          type: "slider",
           config: {
             min: 0,
             max: 100,
@@ -36,7 +36,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "toolbarTypography",
-      type: "popover-dev",
+      type: "popover",
       config: {
         icon: "nc-font",
         size: device === "desktop" ? "large" : "auto",
@@ -46,7 +46,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsToolbarTypography",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "tabLabel",
@@ -54,7 +54,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "label",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -67,7 +67,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "value",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -80,7 +80,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "clear",
-                  type: "typography-dev",
+                  type: "typography",
                   config: {
                     fontFamily: device === "desktop"
                   }
@@ -93,7 +93,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "popoverColor",
-      type: "popover-dev",
+      type: "popover",
       config: {
         size: "medium",
         title: t("Colors"),
@@ -109,7 +109,7 @@ export function getItems({ v, device, state }) {
       options: [
         {
           id: "tabsColor",
-          type: "tabs-dev",
+          type: "tabs",
           tabs: [
             {
               id: "inputColorTab",
@@ -117,7 +117,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "inputColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -129,7 +129,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "labelColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -141,7 +141,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "labelBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -153,7 +153,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "valueColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -165,7 +165,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "tableBgColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -177,7 +177,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "clearColor",
-                  type: "colorPicker-dev",
+                  type: "colorPicker",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
@@ -189,7 +189,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "tableBorder",
-                  type: "border-dev",
+                  type: "border",
                   config: {
                     width: ["grouped"]
                   }
@@ -202,7 +202,7 @@ export function getItems({ v, device, state }) {
               options: [
                 {
                   id: "tableBoxShadow",
-                  type: "boxShadow-dev",
+                  type: "boxShadow",
                   devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
