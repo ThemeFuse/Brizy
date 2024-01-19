@@ -19,6 +19,10 @@ class Brizy_SiteUrlReplacer {
 
 	static public function restoreSiteUrl( $content, $url = null ) {
 
+		if ( empty($content) ) {
+			return $content;
+		}
+
 		if ( ! $url ) {
 			$url = home_url();
 		}
