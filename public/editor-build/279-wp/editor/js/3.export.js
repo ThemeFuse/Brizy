@@ -3,7 +3,11 @@ exports.id = 3;
 exports.ids = [3];
 exports.modules = {
 
+<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/3.export.js
 /***/ 7716:
+========
+/***/ 7730:
+>>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/3.export.js
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -11,9 +15,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "sass": () => (/* binding */ sass),
 /* harmony export */   "sassLanguage": () => (/* binding */ sassLanguage)
 /* harmony export */ });
+<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/3.export.js
 /* harmony import */ var _lezer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7717);
 /* harmony import */ var _codemirror_language__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6120);
 /* harmony import */ var _codemirror_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6203);
+========
+/* harmony import */ var _lezer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7731);
+/* harmony import */ var _codemirror_language__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6082);
+/* harmony import */ var _codemirror_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6165);
+>>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/3.export.js
 
 
 
@@ -67,15 +77,24 @@ function sass(config) {
 
 /***/ }),
 
+<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/3.export.js
 /***/ 7717:
+========
+/***/ 7731:
+>>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/3.export.js
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "parser": () => (/* binding */ parser)
 /* harmony export */ });
+<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/3.export.js
 /* harmony import */ var _lezer_lr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6195);
 /* harmony import */ var _lezer_highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6122);
+========
+/* harmony import */ var _lezer_lr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6157);
+/* harmony import */ var _lezer_highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6084);
+>>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/3.export.js
 
 
 

@@ -144,6 +144,7 @@ class Brizy_Editor_Editor_Editor
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
                 'assets' => $assetsUrl,
+                'worker' => $assetsUrl . '/editor/js/screenshots.worker.min.js?ver=' . BRIZY_EDITOR_VERSION,
                 'image' => $this->urlBuilder->external_media_url() . "",
                 'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
                 'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
@@ -1568,15 +1569,7 @@ class Brizy_Editor_Editor_Editor
      */
     private function getTexts()
     {
-        if (BRIZY_DEVELOPMENT) {
-            $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Dev_Texts';
-        } else {
-            $version = '';
-            foreach (explode('-', BRIZY_EDITOR_VERSION) as $tmp) {
-                $version .= ucfirst($tmp);
-            }
-            $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_'.$version.'_Texts';
-        }
+        $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Texts';
 
         if (!class_exists($brizy_public_editor_build_texts)) {
             if (BRIZY_DEVELOPMENT) {
