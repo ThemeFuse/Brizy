@@ -141,6 +141,7 @@ class Brizy_Editor_Editor_Editor
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
                 'assets' => $assetsUrl,
+                'worker' => $assetsUrl . '/editor/js/screenshots.worker.min.js?ver=' . BRIZY_EDITOR_VERSION,
                 'image' => $this->urlBuilder->external_media_url() . "",
                 'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
                 'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
@@ -208,9 +209,9 @@ class Brizy_Editor_Editor_Editor
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
-		if (!$this->isPopup($config) && !$this->isStory($config)) {
-			$config['ui']['help'] = $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL);
-		}
+        if (!$this->isPopup($config) && !$this->isStory($config)) {
+            $config['ui']['help'] = $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL);
+        }
 
         $config = $this->addRecaptchaAccounts($manager, $config, $context);
         $config = $this->addSocialAccounts($manager, $config, $context);
@@ -1553,15 +1554,7 @@ class Brizy_Editor_Editor_Editor
      */
     private function getTexts()
     {
-        if (BRIZY_DEVELOPMENT) {
-            $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Dev_Texts';
-        } else {
-            $version = '';
-            foreach (explode('-', BRIZY_EDITOR_VERSION) as $tmp) {
-                $version .= ucfirst($tmp);
-            }
-            $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_' . $version . '_Texts';
-        }
+        $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Texts';
 
         if (!class_exists($brizy_public_editor_build_texts)) {
             if (BRIZY_DEVELOPMENT) {
@@ -2184,11 +2177,11 @@ class Brizy_Editor_Editor_Editor
                 $nextId++;
             }
 
-	        $editorHelpVideos['video'][] = [
-		        'id'       => count( $editorHelpVideos['video'] ) . 'c', // we make the id different from the id of the videos. It is an issue in the react component
-		        'category' => $title,
-		        'items'    => $videos,
-	        ];
+            $editorHelpVideos['video'][] = [
+                'id' => count($editorHelpVideos['video']) . 'c', // we make the id different from the id of the videos. It is an issue in the react component
+                'category' => $title,
+                'items' => $videos,
+            ];
         }
 
         $editorHelpVideos['header'] = [
@@ -2196,12 +2189,12 @@ class Brizy_Editor_Editor_Editor
             'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4'
         ];
 
-	    $editorHelpVideos['idHelpVideosIcons'] = [
-		    'addElementsHelpVideo'   => '7',
-		    'blocksLayoutsHelpVideo' => '6',
-		    'fontsHelpVideo'         => '11',
-		    'formHelpVideo'          => '21',
-	    ];
+        $editorHelpVideos['idHelpVideosIcons'] = [
+            'addElementsHelpVideo' => '7',
+            'blocksLayoutsHelpVideo' => '6',
+            'fontsHelpVideo' => '11',
+            'formHelpVideo' => '21',
+        ];
 
         return $editorHelpVideos;
     }

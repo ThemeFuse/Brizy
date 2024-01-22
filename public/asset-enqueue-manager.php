@@ -163,7 +163,7 @@ class Brizy_Public_AssetEnqueueManager {
 					$handle,
 					$this->getAssetUrl( $asset ),
 					[],
-					apply_filters( 'brizy_asset_version', BRIZY_VERSION, $asset )
+					apply_filters( 'brizy_asset_version', BRIZY_EDITOR_VERSION, $asset )
 				);
 				wp_enqueue_style( $handle );
 			}
@@ -227,7 +227,7 @@ class Brizy_Public_AssetEnqueueManager {
 					$handle,
 					$this->getAssetUrl( $asset ),
 					[],
-					apply_filters( 'brizy_asset_version', BRIZY_VERSION, $asset ),
+					apply_filters( 'brizy_asset_version', BRIZY_EDITOR_VERSION, $asset ),
 					true
 				);
 				wp_enqueue_script( $handle );

@@ -29,8 +29,8 @@ class Brizy_Config {
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://www.brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
-    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
-	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/' . BRIZY_EDITOR_VERSION;
+    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build';
+	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
