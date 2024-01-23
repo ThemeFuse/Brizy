@@ -144,7 +144,6 @@ class Brizy_Editor_Editor_Editor
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
                 'assets' => $assetsUrl,
-                'worker' => $assetsUrl . '/editor/js/screenshots.worker.min.js?ver=' . BRIZY_EDITOR_VERSION,
                 'image' => $this->urlBuilder->external_media_url() . "",
                 'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
                 'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
