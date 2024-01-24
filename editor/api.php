@@ -433,7 +433,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$compiled = json_decode( stripslashes( $this->param( 'compiled' ) ), true );
 
-			if ( (int) $this->param( 'is_autosave' ) == 0 && is_null( $compiled ) ) {
+			if ( (int) $this->param( 'is_autosave' ) == 0 && is_null( $compiled ) && $this->post->getWpPost()->post_type!=Brizy_Admin_Popups_Main::CP_POPUP ) {
 				$this->error( 400, "The compiled data is invalid" );
 			}
 
