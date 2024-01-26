@@ -368,9 +368,12 @@ class Brizy_Editor {
 
 	public function brizy_content( $content, $project, $wpPost, $contentType = 'document' ) {
 
+		$context             = Brizy_Content_ContextFactory::createContext( $project, $wpPost );
+
 		if(!$this->mainProcessor) {
-			$context             = Brizy_Content_ContextFactory::createContext( $project, $wpPost );
 			$this->mainProcessor = new Brizy_Content_MainProcessor( $context );
+		} else {
+			$this->mainProcessor->setContext($context);
 		}
 
 		return $this->mainProcessor->process( $content );
