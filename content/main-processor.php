@@ -49,4 +49,10 @@ class Brizy_Content_MainProcessor {
 		return $content;
 	}
 
+	/**
+	 * @param Brizy_Content_Context $context
+	 */
+	public function setContext( $context ) {
+		$this->context = $context;
+	}
 }
