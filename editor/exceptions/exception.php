@@ -13,4 +13,12 @@ class Brizy_Editor_Exceptions_Exception extends Exception implements Serializabl
 		$this->code    = $data['code'];
 		$this->message = $data['message'];
 	}
+
+	public function __serialize() {
+		// TODO: Implement serialize() method.
+	}
+
+	public function __unserialize( $data ) {
+		// TODO: Implement unserialize() method.
+	}
 }
