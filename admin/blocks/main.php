@@ -249,10 +249,10 @@ class Brizy_Admin_Blocks_Main {
 					];
 				}, $template_rules );
 				$ruleMatches[]  = array(
-					'type'       => Brizy_Admin_Rule::TYPE_INCLUDE,
-					'applyFor'   => Brizy_Admin_Rule::BRIZY_TEMPLATE,
-					'entityType' => $wpPost->post_type,
-					'entityValues'     => array( $wpPost->ID ),
+					'type'         => Brizy_Admin_Rule::TYPE_INCLUDE,
+					'applyFor'     => Brizy_Admin_Rule::BRIZY_TEMPLATE,
+					'entityType'   => $wpPost->post_type,
+					'entityValues' => array( $wpPost->ID ),
 				);
 			} else {
 				$ruleMatches[] = [
@@ -263,11 +263,12 @@ class Brizy_Admin_Blocks_Main {
 			}
 		} else {
 			$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
+			$wpPost = Brizy_Editor_Post::get($ruleMatches[0]['entityValues'][0]);
 		}
 
 		$matching_blocks = $this->findMatchingBlocks( $ruleMatches );
 
-		return $globalBLocks = array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ) );
+		return $globalBLocks = array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $this->findReferencedInPage($wpPost) );
 	}
 
 	/**
@@ -348,6 +349,34 @@ class Brizy_Admin_Blocks_Main {
 					if ( $placeholderInstances[ $i ] instanceof Brizy_Content_Placeholders_GlobalBlock ) {
 						$globalPopups[ $attrs['uid'] ] = $block;
 					}
+				}
+			}
+		}
+
+		return $globalPopups;
+	}
+
+	private function findReferencedInPage( $wpPost ) {
+
+		if(!$wpPost) return [];
+
+		$context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $wpPost );
+		$placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider( $context );
+
+		$extractor    = new \BrizyPlaceholders\Extractor( $placeholderProvider );
+		$globalPopups = [];
+		$content1     = $wpPost->get_compiled_html();
+		list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $content1 );
+
+		foreach ( $placeholders as $i => $placeholder ) {
+			$attrs        = $placeholder->getAttributes();
+			$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+			if ( isset( $attrs['uid'] ) ) {
+				$block = $blockManager->getEntity( $attrs['uid'] );
+
+				// store global popups to be added in footer
+				if ( $placeholderInstances[ $i ] instanceof Brizy_Content_Placeholders_GlobalBlock ) {
+					$globalPopups[ $attrs['uid'] ] = $block;
 				}
 			}
 		}

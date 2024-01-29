@@ -427,7 +427,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$this->error( 400, "Invalid post type" );
 			}
 
-			if ( (int) $this->param( 'is_autosave' ) == 0 && is_null( $this->param( 'compiled' ) ) ) {
+			if ( (int) $this->param( 'is_autosave' ) == 0 && is_null( $this->param( 'compiled' ) )  && $this->post->getWpPost()->post_type!=Brizy_Admin_Popups_Main::CP_POPUP ) {
 				$this->error( 400, "The compiled data is missing" );
 			}
 

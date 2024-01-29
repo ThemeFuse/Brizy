@@ -43,7 +43,9 @@ class Brizy_Content_Placeholders_GlobalBlock extends Brizy_Content_Placeholders_
             return '';
         }
 
-        return $this->returnBlockContent($block);
+	    $return_block_content = $this->returnBlockContent( $block );
+		$content = apply_filters( 'brizy_content', $return_block_content, Brizy_Editor_Project::get(), $context->getWpPost() );
+	    return $content;
     }
 
 
@@ -64,7 +66,6 @@ class Brizy_Content_Placeholders_GlobalBlock extends Brizy_Content_Placeholders_
 <!-- END GLOBAL BLOCK [{$block->getWpPostId()}]-->
 \n
 HTML;
-
         return $content;
     }
 }
