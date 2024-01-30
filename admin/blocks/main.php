@@ -263,12 +263,12 @@ class Brizy_Admin_Blocks_Main {
 			}
 		} else {
 			$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
-			$wpPost = Brizy_Editor_Post::get($ruleMatches[0]['entityValues'][0]);
+			$wpPost = get_post($ruleMatches[0]['entityValues'][0]);
 		}
 
 		$matching_blocks = $this->findMatchingBlocks( $ruleMatches );
 
-		return $globalBLocks = array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $this->findReferencedInPage($wpPost) );
+		return $globalBLocks = array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $this->findReferencedInPage(Brizy_Editor_Post::get($wpPost)) );
 	}
 
 	/**
@@ -365,7 +365,7 @@ class Brizy_Admin_Blocks_Main {
 
 		$extractor    = new \BrizyPlaceholders\Extractor( $placeholderProvider );
 		$globalPopups = [];
-		$content1     = Brizy_Editor_Post::get($wpPost)->get_compiled_html();
+		$content1     = $wpPost->get_compiled_html();
 		list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $content1 );
 
 		foreach ( $placeholders as $i => $placeholder ) {
