@@ -365,7 +365,7 @@ class Brizy_Admin_Blocks_Main {
 
 		$extractor    = new \BrizyPlaceholders\Extractor( $placeholderProvider );
 		$globalPopups = [];
-		$content1     = $wpPost->get_compiled_html();
+		$content1     = Brizy_Editor_Post::get($wpPost)->get_compiled_html();
 		list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $content1 );
 
 		foreach ( $placeholders as $i => $placeholder ) {
