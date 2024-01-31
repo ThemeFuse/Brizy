@@ -125,9 +125,11 @@
     }
 
     &-text {
+      word-break: break-all;
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      flex-direction: column;
     }
   }
 

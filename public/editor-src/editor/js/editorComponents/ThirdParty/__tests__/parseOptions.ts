@@ -71,7 +71,7 @@ const testCase: Array<testCase> = [
                   {
                     id: "autoPlay",
                     label: "Autoplay",
-                    type: "number-dev"
+                    type: "number"
                   }
                 ]
               }

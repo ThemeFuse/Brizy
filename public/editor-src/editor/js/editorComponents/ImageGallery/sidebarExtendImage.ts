@@ -48,7 +48,7 @@ export const getItems: GetItems<Value, Props> = () => {
                     },
                     {
                       id: "customCSS",
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       disabled: true
                     }
                   ]

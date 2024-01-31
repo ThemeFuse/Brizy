@@ -59,7 +59,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "howmany",
                   label: t("Items"),
-                  type: "number-dev",
+                  type: "number",
                   config: {
                     min: 1,
                     max: 24,
@@ -69,7 +69,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "slidesToShow",
                   label: t("Columns"),
-                  type: "number-dev",
+                  type: "number",
                   config: {
                     min: 1,
                     max: 4,
@@ -160,6 +160,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Button text"),
                   disabled: !dvv("detailPage"),
                   placeholder: t("Button text..."),
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Button will display if text is entered and a detail page selected."

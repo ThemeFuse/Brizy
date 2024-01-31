@@ -32,6 +32,7 @@ import { Filter } from "./Filter";
 import { BlockData } from "./types";
 
 export interface Props {
+  activeType?: BlockCategory;
   type: "normal" | "popup";
   showSearch: boolean;
   showTitle: boolean;
@@ -92,8 +93,8 @@ class Blocks extends Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    const { types, filter: _filter } = this.props;
-    const type = types[0]?.id ?? "BLOCK";
+    const { types, filter: _filter, activeType } = this.props;
+    const type = activeType?.id ?? types[0]?.id ?? "BLOCK";
     const filter =
       _filter ?? this.getSidebarFilter(type)?.defaultSelected ?? "";
 

@@ -47,7 +47,7 @@ class Variation extends Component {
       {
         title: t("Font weight"),
         name: "weight",
-        type: "legacy-select",
+        type: "select",
         value: weight,
         choices: getWeights(weightTypes)
       },

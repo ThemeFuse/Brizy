@@ -10,6 +10,7 @@ import {
   cssStyleTextAlign,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -119,6 +120,10 @@ export function cssStyleElementForm2FieldsLabelLetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "label" });
 }
 
+export function cssStyleElementForm2FieldsLabelFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "label" });
+}
+
 export function cssStyleElementForm2FieldsLabelPadding({ v, device, state }) {
   return cssStylePaddingFourFields({ v, device, state, prefix: "label" });
 }
@@ -145,6 +150,10 @@ export function cssStyleElementForm2FieldsCheckboxLetterSpacing({ v, device }) {
 
 export function cssStyleElementForm2FieldsCheckboxLineHeight({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "checkbox" });
+}
+
+export function cssStyleElementForm2FieldsCheckboxFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "checkbox" });
 }
 
 export function cssStyleElementForm2FieldsSelectColor({ v, device, state }) {

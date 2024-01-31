@@ -29,6 +29,24 @@
     padding: $options__item-padding;
 
     .brz-ed-font__name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .brz-ed-font-variable-badge {
+        width: 60px;
+        color: $gray-5;
+        background-color: $black;
+        border-radius: 4px;
+        font-size: 10px;
+        font-family: $default-font-family;
+        font-weight: 700;
+        padding: 5px;
+        margin-right: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       &:first-child {
         padding-top: 0;
       }
@@ -128,6 +146,53 @@
 
     .brz-ed-control__stepper {
       width: 100%;
+    }
+
+    .brz-ed-control__typography-variation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $control-bg;
+      height: $control-height;
+      border-radius: $control-border-radius;
+      color: $control-color;
+      cursor: pointer;
+
+      &-title {
+        width: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      svg {
+        font-size: $control__arrow-size;
+      }
+
+      &-scrollbar {
+        z-index: 1;
+        width: 150px;
+        max-height: 180px;
+        min-height: 65px;
+        height: fit-content;
+        margin-top: 7px;
+        padding: 10px;
+        border-radius: $control-border-radius;
+        background-color: $control-bg;
+        box-shadow: 0 2px 13px $control__dropdown-box-shadow;
+
+        .brz-ed-component__label,
+        .brz-input {
+          color: $white;
+        }
+
+        .brz-input {
+          text-align: right;
+        }
+
+        .brz-ed-control__typography-variation-item:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
     }
   }
 }

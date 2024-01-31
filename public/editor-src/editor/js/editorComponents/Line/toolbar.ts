@@ -322,7 +322,7 @@ export function getItems({
                 {
                   id: "text",
                   devices: "desktop",
-                  type: "population-dev",
+                  type: "population",
                   config: richTextDC
                 }
               ]

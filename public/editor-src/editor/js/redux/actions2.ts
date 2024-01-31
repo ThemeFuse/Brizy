@@ -71,7 +71,7 @@ export type ActionUpdateBlocks = {
 
 export type ActionMakeBlockToGlobalBlock = {
   type: "MAKE_BLOCK_TO_GLOBAL_BLOCK";
-  payload: GlobalBlockNormal;
+  payload: { block: GlobalBlockNormal; fromBlockId: string };
 };
 
 export type ActionMakeGlobalBlockToBlock = {
@@ -120,7 +120,7 @@ export type ActionDeleteGlobalBlock = {
 
 export type ActionMakePopupToGlobalPopup = {
   type: "MAKE_POPUP_TO_GLOBAL_POPUP";
-  payload: GlobalBlockPopup;
+  payload: { block: GlobalBlockPopup; fromBlockId: string };
 };
 
 export type ActionMakeGlobalPopupToPopup = {
@@ -360,12 +360,19 @@ export type ActionUpdateExtraFontStyles = {
 
 export { redo, undo } from "./history/actions";
 
-export function makeNormalToGlobalBlock(
-  globalBlock: GlobalBlockNormal
-): ActionMakeBlockToGlobalBlock {
+export function makeNormalToGlobalBlock({
+  fromBlockId,
+  block
+}: {
+  fromBlockId: string;
+  block: GlobalBlockNormal;
+}): ActionMakeBlockToGlobalBlock {
   return {
     type: "MAKE_BLOCK_TO_GLOBAL_BLOCK",
-    payload: globalBlock
+    payload: {
+      fromBlockId,
+      block
+    }
   };
 }
 
@@ -385,12 +392,19 @@ export function makeGlobalToNormalBlock({
   };
 }
 
-export function makePopupToGlobalBlock(
-  globalBlock: GlobalBlockPopup
-): ActionMakePopupToGlobalPopup {
+export function makePopupToGlobalBlock({
+  fromBlockId,
+  block
+}: {
+  fromBlockId: string;
+  block: GlobalBlockPopup;
+}): ActionMakePopupToGlobalPopup {
   return {
     type: "MAKE_POPUP_TO_GLOBAL_POPUP",
-    payload: globalBlock
+    payload: {
+      fromBlockId,
+      block
+    }
   };
 }
 
@@ -478,7 +492,10 @@ export const addFonts: ThunkAddFonts =
       const [deletedFonts, normalFont] = _.partition(fonts, (font) =>
         Object.prototype.hasOwnProperty.call(font, "deleted")
       );
-      const newFonts = normalFont.map((font) => ({ ...font, brizyId: uuid() }));
+      const newFonts = normalFont.map((font) => ({
+        ...font,
+        brizyId: uuid()
+      }));
 
       // Make new Data, check deleted Font
       return {

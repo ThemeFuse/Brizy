@@ -151,3 +151,36 @@ export function styleTypography2LetterSpacing({
     )}${suffix}`
   );
 }
+
+export function styleTypography2FontVariation({
+  v,
+  device,
+  state,
+  prefix = ""
+}) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const fontStyleKey = capByPrefix(prefix, "fontStyle");
+  const variableFontWeightKey = capByPrefix(prefix, "variableFontWeight");
+  const fontWidthKey = capByPrefix(prefix, "fontWidth");
+  const fontSoftnessKey = capByPrefix(prefix, "fontSoftness");
+  const fontStyle = dvv(fontStyleKey);
+  const fontVariationKey = defaultValueKey({
+    key: "fontVariation",
+    device,
+    state
+  });
+  const globalSize = getFontCssStyle({
+    fontStyle,
+    key: "fontVariation",
+    device
+  });
+
+  const value = `"wght" ${dvv(variableFontWeightKey)}, "wdth" ${dvv(
+    fontWidthKey
+  )}, "SOFT" ${dvv(fontSoftnessKey)}`;
+
+  return (
+    globalSize ??
+    getOptionFontByGlobal(fontVariationKey, value, dvv(fontStyleKey))
+  );
+}

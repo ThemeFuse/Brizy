@@ -5,12 +5,12 @@
 
   &__slider:not(.slick-initialized) {
     display: flex;
-    flex-wrap: wrap;
     visibility: hidden;
   }
 
   &__slider.slick-initialized {
     visibility: visible;
+    flex-wrap: wrap;
   }
 
   > .slick-slider {

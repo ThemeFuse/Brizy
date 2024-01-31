@@ -1,10 +1,11 @@
-import { mPipe, optional, parseStrict, pass } from "fp-utilities";
+import { mPipe, optional, orElse, parseStrict, pass } from "fp-utilities";
 import {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel,
   callGetter
 } from "visual/component/Options/Type";
+import * as Unit from "visual/utils/math/Unit";
 import { capByPrefix } from "visual/utils/string";
 import * as Blur from "./types/Blur";
 import * as Horizontal from "./types/Horizontal";
@@ -17,19 +18,54 @@ import * as Scale from "./types/Scale";
 import * as Transparency from "./types/Transparency";
 import { Value, isActive } from "./types/Value";
 import * as Vertical from "./types/Vertical";
+import * as Viewport from "./types/Viewport";
 import { wrap } from "./types/utils";
 import { flattenObject, isEnabled } from "./utils";
 
 export const defaultValue: Value = {
   active: undefined,
-  vertical: undefined,
-  horizontal: undefined,
-  blur: undefined,
-  mouseTrack: undefined,
-  rotate: undefined,
-  scale: undefined,
-  mouseTilt: undefined,
-  transparency: undefined
+  blur: {
+    direction: "in",
+    level: Unit.Min,
+    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
+  },
+  horizontal: {
+    direction: "left",
+    speed: Unit.Min,
+    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
+  },
+  mouseTrack: {
+    direction: "direct",
+    speed: Unit.Min
+  },
+  rotate: {
+    direction: "left",
+    speed: Unit.Min,
+    x: "center",
+    y: "center",
+    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
+  },
+  scale: {
+    direction: "up",
+    speed: -10,
+    x: "center",
+    y: "center",
+    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
+  },
+  mouseTilt: {
+    direction: "direct",
+    speed: Unit.Min
+  },
+  transparency: {
+    direction: "in",
+    level: Unit.Min,
+    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
+  },
+  vertical: {
+    direction: "up",
+    speed: Unit.Min,
+    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
+  }
 };
 
 export const fromElementModel: FromElementModel<"motion"> = parseStrict<
@@ -38,26 +74,68 @@ export const fromElementModel: FromElementModel<"motion"> = parseStrict<
 >({
   active: optional(mPipe(callGetter("active"), pass(isActive))),
   vertical: optional(
-    mPipe(wrap("vertical"), pass(isEnabled), Vertical.fromElementModel)
+    mPipe(
+      wrap("vertical"),
+      pass(isEnabled),
+      Vertical.fromElementModel,
+      orElse(defaultValue.vertical)
+    )
   ),
   horizontal: optional(
-    mPipe(wrap("horizontal"), pass(isEnabled), Horizontal.fromElementModel)
+    mPipe(
+      wrap("horizontal"),
+      pass(isEnabled),
+      Horizontal.fromElementModel,
+      orElse(defaultValue.horizontal)
+    )
   ),
   transparency: optional(
-    mPipe(wrap("transparency"), pass(isEnabled), Transparency.fromElementModel)
+    mPipe(
+      wrap("transparency"),
+      pass(isEnabled),
+      Transparency.fromElementModel,
+      orElse(defaultValue.transparency)
+    )
   ),
-  blur: optional(mPipe(wrap("blur"), pass(isEnabled), Blur.fromElementModel)),
+  blur: optional(
+    mPipe(
+      wrap("blur"),
+      pass(isEnabled),
+      Blur.fromElementModel,
+      orElse(defaultValue.blur)
+    )
+  ),
   rotate: optional(
-    mPipe(wrap("rotate"), pass(isEnabled), Rotate.fromElementModel)
+    mPipe(
+      wrap("rotate"),
+      pass(isEnabled),
+      Rotate.fromElementModel,
+      orElse(defaultValue.rotate)
+    )
   ),
   scale: optional(
-    mPipe(wrap("scale"), pass(isEnabled), Scale.fromElementModel)
+    mPipe(
+      wrap("scale"),
+      pass(isEnabled),
+      Scale.fromElementModel,
+      orElse(defaultValue.scale)
+    )
   ),
   mouseTrack: optional(
-    mPipe(wrap("mouseTrack"), pass(isEnabled), MouseTrack.fromElementModel)
+    mPipe(
+      wrap("mouseTrack"),
+      pass(isEnabled),
+      MouseTrack.fromElementModel,
+      orElse(defaultValue.mouseTrack)
+    )
   ),
   mouseTilt: optional(
-    mPipe(wrap("mouseTilt"), pass(isEnabled), MouseTilt.fromElementModel)
+    mPipe(
+      wrap("mouseTilt"),
+      pass(isEnabled),
+      MouseTilt.fromElementModel,
+      orElse(defaultValue.mouseTilt)
+    )
   )
 });
 

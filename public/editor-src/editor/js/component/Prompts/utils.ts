@@ -10,9 +10,11 @@ import {
   tabs
 } from "visual/component/Prompts/common/PromptPage/types";
 import { Shopify } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { t } from "visual/utils/i18n";
 import * as Arr from "visual/utils/reader/array";
+import * as Str from "visual/utils/reader/string";
 import { MValue } from "visual/utils/value";
 
 export const getChoices = (config: Shopify): Layout[] =>
@@ -133,3 +135,11 @@ export const getRulesId = (rules: Record<string, boolean>): string[] =>
   Object.entries(rules)
     .filter(([, v]) => v)
     .map(([k]) => k);
+
+export const canSyncPage = (config: ConfigCommon): boolean => {
+  const currentPublishedPagesCount = Str.read(
+    config?.modules?.shop?.upgradeToProUrl
+  );
+
+  return !currentPublishedPagesCount;
+};

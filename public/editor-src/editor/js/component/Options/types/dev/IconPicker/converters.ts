@@ -3,9 +3,9 @@ import { Value } from "visual/component/Options/types/dev/IconPicker/types";
 import * as Str from "visual/utils/string/specs";
 
 export const fromElementModel: Option.FromElementModel<"iconPicker"> = (get) =>
-  Str.read(get("value"));
+  Str.read(get("value")) ?? defaultValue;
 export const toElementModel: Option.ToElementModel<"iconPicker"> = (value) => ({
   value
 });
 
-export const defaultValue: Value = undefined;
+export const defaultValue: Value = "";

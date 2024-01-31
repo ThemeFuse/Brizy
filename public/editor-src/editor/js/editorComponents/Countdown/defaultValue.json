@@ -22,6 +22,9 @@
     "fontWeight": 700,
     "lineHeight": 1.3,
     "letterSpacing": 0,
+    "variableFontWeight": 700,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "colorHex": "#73777f",
     "colorOpacity": 0.75,

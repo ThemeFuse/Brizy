@@ -14,7 +14,7 @@ export function getItems() {
       options: [
         {
           id: "shortcode",
-          type: "codeMirror-dev",
+          type: "codeMirror",
           devices: "desktop",
           placeholder: t("Example [gallery id='123' size='medium']"),
           config: {
@@ -41,8 +41,10 @@ export function getItems() {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

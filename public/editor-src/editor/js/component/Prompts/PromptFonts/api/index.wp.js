@@ -1,8 +1,10 @@
+import { flatten } from "underscore";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import Config from "visual/global/Config";
 import { request } from "visual/utils/api/index.wp";
+import { getFontVariation, normalizeFonts } from "./utils";
 
-export const createFont = ({ id, name, files }) => {
+export const createFont = async ({ id, name, files }) => {
   const { api } = Config.get("wp");
   const version = Config.get("editorVersion");
   const url = makeUrl(api.url, {
@@ -15,20 +17,28 @@ export const createFont = ({ id, name, files }) => {
   formData.append("id", id);
   formData.append("family", name);
 
-  Object.entries(files).forEach(([type, filesType]) => {
-    Object.entries(filesType).forEach(([fileType, file]) => {
-      if (file) {
-        formData.append(`fonts[${type}][${fileType}]`, file, file.name);
-      }
-    });
-  });
+  const variations = flatten(
+    await Promise.all(
+      Object.entries(files).map(async ([type, filesType]) => {
+        return Promise.all(
+          Object.entries(filesType).map(async ([fileType, file]) => {
+            if (file) {
+              formData.append(`fonts[${type}][${fileType}]`, file, file.name);
+
+              return getFontVariation(file);
+            }
+          })
+        );
+      })
+    )
+  ).filter(Boolean);
 
   return request(url, {
     method: "POST",
     body: formData
   })
     .then(parseJSON)
-    .then((res) => res);
+    .then((res) => normalizeFonts(res, variations));
 };
 
 export const deleteFont = (fontId) => {

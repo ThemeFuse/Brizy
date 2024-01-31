@@ -1,3 +1,5 @@
+import * as Num from "visual/utils/reader/number";
+
 // region EcwidStoreId
 declare const storeId: unique symbol;
 
@@ -8,6 +10,9 @@ export type EcwidStoreId = string & { [storeId]: "EcwidStoreId" };
 declare const productId: unique symbol;
 
 export type EcwidProductId = number & { [productId]: "EcwidProductId" };
+
+export const isEcwidProductId = (id: unknown): id is EcwidProductId =>
+  !!Num.read(id);
 // endregion
 
 // region EcwidCategoryId

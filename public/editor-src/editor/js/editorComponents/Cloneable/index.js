@@ -3,7 +3,10 @@ import React from "react";
 import _ from "underscore";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
+import { SortableElement } from "visual/component/Sortable/SortableElement";
+import SortableHandle from "visual/component/Sortable/SortableHandle";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
@@ -22,16 +25,13 @@ import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import Toolbar from "../../component/Toolbar";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
-import * as toolbarConfig from "./toolbar";
 import * as sidebarConfig from "./sidebar";
-
 import { style, styleAnimation, styleContainer } from "./styles";
+import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import Toolbar from "../../component/Toolbar";
-import CustomCSS from "visual/component/CustomCSS";
-import SortableHandle from "visual/component/Sortable/SortableHandle";
 
 export default class Cloneable extends EditorComponent {
   static get componentId() {
@@ -230,59 +230,65 @@ export default class Cloneable extends EditorComponent {
 
     if (showBorder) {
       return (
-        <Draggable
-          active={!isRelative}
-          onChange={this.handleDraggable}
-          hAlign={Position.getHAlign(this.dvv) ?? "left"}
-          vAlign={Position.getVAlign(this.dvv) ?? "top"}
-          xSuffix={Position.getHUnit(this.dvv) ?? "px"}
-          ySuffix={Position.getVUnit(this.dvv) ?? "px"}
-          getValue={() => ({
-            x: Position.getHOffset(this.dvv) ?? 0,
-            y: Position.getVOffset(this.dvv) ?? 0
-          })}
-          getContainerSizes={this.containerSize}
-        >
-          {(ref, draggableClassName) => {
+        <SortableElement type="shortcode">
+          {(extraAttr) => {
             return (
-              <ContainerBorder
-                ref={this.containerBorder}
-                type="wrapper__clone"
-                color="grey"
-                borderStyle="dotted"
-                renderButtonWrapper={this.renderToolbar}
+              <Draggable
+                active={!isRelative}
+                onChange={this.handleDraggable}
+                hAlign={Position.getHAlign(this.dvv) ?? "left"}
+                vAlign={Position.getVAlign(this.dvv) ?? "top"}
+                xSuffix={Position.getHUnit(this.dvv) ?? "px"}
+                ySuffix={Position.getVUnit(this.dvv) ?? "px"}
+                getValue={() => ({
+                  x: Position.getHOffset(this.dvv) ?? 0,
+                  y: Position.getVOffset(this.dvv) ?? 0
+                })}
+                getContainerSizes={this.containerSize}
               >
-                {({
-                  ref: containerBorderRef,
-                  attr: containerBorderAttr,
-                  button: ContainerBorderButton,
-                  border: ContainerBorderBorder
-                }) => (
-                  <Animation
-                    ref={(v) => {
-                      attachRef(v, containerBorderRef);
-                      attachRef(v, ref || null);
-                    }}
-                    component={"div"}
-                    componentProps={{
-                      ...parseCustomAttributes(customAttributes),
-                      ...containerBorderAttr,
-                      ...(id && { id }),
-
-                      className: classnames(className, draggableClassName)
-                    }}
-                    animationId={this.getId()}
-                    animationClass={animationClassName}
-                  >
-                    {this.renderContent(v, vs, vd)}
-                    {ContainerBorderButton}
-                    {ContainerBorderBorder}
-                  </Animation>
-                )}
-              </ContainerBorder>
+                {(ref, draggableClassName) => {
+                  return (
+                    <ContainerBorder
+                      ref={this.containerBorder}
+                      type="wrapper__clone"
+                      color="grey"
+                      borderStyle="dotted"
+                      renderButtonWrapper={this.renderToolbar}
+                    >
+                      {({
+                        ref: containerBorderRef,
+                        attr: containerBorderAttr,
+                        button: ContainerBorderButton,
+                        border: ContainerBorderBorder
+                      }) => (
+                        <Animation
+                          ref={(v) => {
+                            attachRef(v, containerBorderRef);
+                            attachRef(v, ref || null);
+                          }}
+                          component={"div"}
+                          componentProps={{
+                            ...parseCustomAttributes(customAttributes),
+                            ...containerBorderAttr,
+                            ...(id && { id }),
+                            ...extraAttr,
+                            className: classnames(className, draggableClassName)
+                          }}
+                          animationId={this.getId()}
+                          animationClass={animationClassName}
+                        >
+                          {this.renderContent(v, vs, vd)}
+                          {ContainerBorderButton}
+                          {ContainerBorderBorder}
+                        </Animation>
+                      )}
+                    </ContainerBorder>
+                  );
+                }}
+              </Draggable>
             );
           }}
-        </Draggable>
+        </SortableElement>
       );
     }
 

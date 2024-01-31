@@ -188,7 +188,7 @@ export function getItems({ v, device, component, context }) {
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
                   option: {

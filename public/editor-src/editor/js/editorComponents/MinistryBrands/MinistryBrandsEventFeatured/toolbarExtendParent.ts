@@ -124,6 +124,9 @@ export const getItems: GetItems<Value, Props> = ({
                   placeholder: t("Slug..."),
                   disabled: showLatestEvents,
                   label: t("Slug"),
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       'Slug of event (my-event-name). Use only if you are not selecting from the "Recent Events" above and "Show Latest" is set to "Off".'
@@ -256,6 +259,9 @@ export const getItems: GetItems<Value, Props> = ({
                   placeholder: t("Button Text..."),
                   label: t("Button"),
                   disabled: !dvv("detailPage"),
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Button will display if text is entered and a detail page selected."

@@ -65,7 +65,7 @@ export function getItems(): ToolbarItemType[] {
                     {
                       id: "customCSS",
                       label: t("Custom CSS"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       display: "block",
                       devices: "desktop",

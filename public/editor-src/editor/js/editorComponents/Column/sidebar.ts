@@ -129,7 +129,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "cssID",
                       label: t("CSS ID"),
-                      type: "population-dev",
+                      type: "population",
                       position: 30,
                       devices: "desktop",
                       display: "block",
@@ -147,7 +147,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "cssClass",
                       label: t("CSS Class"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
@@ -165,7 +165,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "customAttributes",
                       label: t("Custom Attributes"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       // eslint-disable-next-line
                       placeholder: 'key1:"value1"\nkey2:"value2"',

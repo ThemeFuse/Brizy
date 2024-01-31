@@ -60,7 +60,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                     {
                       id: "cssID",
                       label: t("CSS ID"),
-                      type: "population-dev",
+                      type: "population",
                       position: 30,
                       devices: "desktop",
                       display: "block",
@@ -78,7 +78,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                     {
                       id: "cssClass",
                       label: t("CSS Class"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",

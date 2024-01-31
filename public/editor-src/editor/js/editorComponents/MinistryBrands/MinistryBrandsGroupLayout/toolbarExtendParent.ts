@@ -44,7 +44,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "columnNumber",
                   label: t("Columns"),
-                  type: "number-dev",
+                  type: "number",
                   config: {
                     min: 1,
                     max: 6,
@@ -54,7 +54,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "countPerPage",
                   label: t("Items"),
-                  type: "number-dev",
+                  type: "number",
                   devices: "desktop",
                   config: {
                     min: 1,
@@ -152,6 +152,9 @@ export const getItems: GetItems<Value, Props> = ({
                   placeholder: t("Button name..."),
                   devices: "desktop",
                   disabled: !v.detailPage,
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Button will display if text is entered and a detail page selected."
@@ -213,7 +216,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotCategoryFilter
+                      disabled: isNotCategoryFilter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -233,7 +239,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: v.showGroupFilter === "off"
+                      disabled: v.showGroupFilter === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -253,7 +262,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Placeholder"),
                       devices: "desktop",
-                      disabled: v.showSearch === "off"
+                      disabled: v.showSearch === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 }
@@ -295,7 +307,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotExtraCategory1Filter
+                      disabled: isNotExtraCategory1Filter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -332,7 +347,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotExtraCategory2Filter
+                      disabled: isNotExtraCategory2Filter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -369,7 +387,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotExtraCategory3Filter
+                      disabled: isNotExtraCategory3Filter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 }

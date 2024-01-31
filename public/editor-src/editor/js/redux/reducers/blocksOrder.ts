@@ -74,6 +74,15 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
 
       return state;
     }
+    case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
+      const { block, fromBlockId } = action.payload;
+
+      return replaceAt(
+        state,
+        state.findIndex((_id) => _id === fromBlockId),
+        block.data.value._id
+      );
+    }
 
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { block, fromBlockId } = action.payload;

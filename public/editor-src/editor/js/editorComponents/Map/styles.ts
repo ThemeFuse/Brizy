@@ -4,7 +4,7 @@ import { Value } from "./index";
 export function style(v: Value, vs: Value, vd: Value): string[] {
   const { hoverName = "none" } = v;
   const hoverSelector =
-    hoverName === "none" ? ".brz-map_styles" : ` .brz-map-content`;
+    hoverName === "none" ? ".brz-map_styles" : ` .brz-ui-ed-map-content`;
   const styles = {
     ".brz &&:hover.brz-map": {
       standart: ["cssStyleSizeSize", "cssStyleSizeHeightPxOnly"]
@@ -19,7 +19,7 @@ export function style(v: Value, vs: Value, vd: Value): string[] {
     ".brz &&:hover > .brz-ed-box__resizer": {
       standart: IS_EDITOR ? ["cssStyleElementMapPropertyPositionFixed"] : []
     },
-    ".brz &&:hover .brz-map-content": {
+    ".brz &&:hover .brz-ui-ed-map-content": {
       standart: [
         "cssStyleBorderRadius",
         "cssStyleBoxShadow",
@@ -27,7 +27,7 @@ export function style(v: Value, vs: Value, vd: Value): string[] {
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover .brz-iframe": {
+    ".brz &&:hover .brz-ui-ed-iframe": {
       standart: [
         "cssStyleFilter",
         "cssStylePaddingBG",

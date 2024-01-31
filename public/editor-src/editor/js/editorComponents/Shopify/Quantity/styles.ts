@@ -1,5 +1,5 @@
-import { renderStyles } from "visual/utils/cssStyle";
 import { ElementModel } from "visual/component/Elements/Types";
+import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(
   v: ElementModel,
@@ -13,6 +13,7 @@ export function style(
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleColor",
         "cssStyleBorder",
         "cssStyleBgColor",

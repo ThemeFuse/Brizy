@@ -53,6 +53,7 @@ export function style(
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleElementLineSpacing",
         "cssStyleTextShadow"
       ]

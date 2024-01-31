@@ -284,9 +284,24 @@ export class EcwidService {
     this.openPage(EcwidWidget.products(el.id, 0 as EcwidCategoryId), node);
   }
 
-  public product(id: EcwidProductId, node: HTMLElement) {
+  public product(
+    id: EcwidProductId,
+    node: HTMLElement,
+    config?: { clearPrevious?: boolean }
+  ) {
     const el = this.setId(node);
+
+    if (config && config.clearPrevious) {
+      this.clearWidget(node);
+    }
+
     this.openPage(EcwidWidget.product(el.id, id), node);
+  }
+
+  public clearWidget(node: HTMLElement) {
+    // INFO: we need this method to clear HTML when we initialize the same widget with different content
+    // because this destroy method not working: https://api-docs.ecwid.com/reference/delayed-store-init#dynamic-embedding-of-ecwid-storefront-widget
+    node.innerHTML = "";
   }
 
   public cart(node: HTMLElement) {

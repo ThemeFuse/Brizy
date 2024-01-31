@@ -76,7 +76,10 @@ class FontStyle extends Component<FontStyleProps, FontStyleState> {
       fontSize: this.dvv("fontSize", deviceMode),
       fontWeight: this.dvv("fontWeight", deviceMode),
       lineHeight: this.dvv("lineHeight", deviceMode),
-      letterSpacing: this.dvv("letterSpacing", deviceMode)
+      letterSpacing: this.dvv("letterSpacing", deviceMode),
+      variableFontWeight: this.dvv("variableFontWeight", deviceMode) ?? 400,
+      fontWidth: this.dvv("fontWidth", deviceMode) ?? 100,
+      fontSoftness: this.dvv("fontSoftness", deviceMode) ?? 0
     };
   }
 
@@ -102,11 +105,13 @@ class FontStyle extends Component<FontStyleProps, FontStyleState> {
     const getToolbarItems = () => [
       {
         id: "toolbarTypography",
-        type: "legacy-popover",
+        type: "popover",
         icon: "nc-font",
         size: "large",
         display: "inside",
-        onOpenDirect: true,
+        config: {
+          onOpenDirect: true
+        },
         options: [
           {
             id: "",

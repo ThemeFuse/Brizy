@@ -18,7 +18,6 @@ import {
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
 import {
-  toolbarElementContainerTypeImageMap,
   toolbarLinkAnchor,
   toolbarLinkPopup,
   toolbarShowOnResponsive
@@ -82,6 +81,9 @@ export function getItems({ v, device, component, state, context }) {
   const image = dvv("media") !== "image";
   const video = dvv("media") !== "video";
   const map = dvv("media") !== "map";
+
+  const isDesktop = device === "desktop";
+
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
     {
@@ -112,12 +114,22 @@ export function getItems({ v, device, component, state, context }) {
                     { value: "map", icon: "nc-media-map" }
                   ]
                 },
-                toolbarElementContainerTypeImageMap({
-                  v,
-                  device,
-                  devices: "responsive",
-                  state
-                }),
+                {
+                  id: "media",
+                  label: t("Type"),
+                  type: "radioGroup",
+                  disabled: isDesktop,
+                  choices: [
+                    {
+                      value: "image",
+                      icon: "nc-media-image"
+                    },
+                    {
+                      value: "map",
+                      icon: "nc-media-map"
+                    }
+                  ]
+                },
                 {
                   label: t("Image"),
                   id: "bg",
@@ -424,7 +436,7 @@ export function getItems({ v, device, component, state, context }) {
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
                   option: {

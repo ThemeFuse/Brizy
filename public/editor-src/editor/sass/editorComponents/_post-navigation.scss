@@ -1,0 +1,41 @@
+
+.brz-post-navigation {
+  width: 100%;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    background: #a5aeb4;
+    margin: auto;
+    width: 1px;
+    inset: 0;
+  }
+
+  .brz-ui-ed-navigation-title,
+  .brz-ui-ed-navigation {
+    display: flex;
+    justify-content: space-between;
+
+    span, a {
+      max-width: 50%;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+  }
+
+  .brz-ui-ed-navigation .brz-ui-ed-typography {
+    cursor: pointer;
+  }
+
+  .brz-ui-ed-navigation-title {
+    word-wrap: break-word;
+
+    .brz-ui-ed-text-editor:focus {
+      outline: 0;
+    }
+  }
+}

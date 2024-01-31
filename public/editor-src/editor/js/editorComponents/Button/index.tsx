@@ -99,6 +99,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
     const className = classnames(
       "brz-btn",
+      { "brz-blocked": v.tabsState === "hover" },
       "brz-btn-submit",
       populationClassName,
       css(
@@ -146,6 +147,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
     const className = classnames(
       "brz-btn",
+      { "brz-blocked": v.tabsState === "hover" },
       _className,
       css(
         `${this.getComponentId()}-bg`,

@@ -4,17 +4,24 @@ import { uniqueId } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import { valueToEciwdConfig } from "visual/editorComponents/Ecwid/EcwidProduct/utils";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorComponent, {
+  Props
+} from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config, { Cloud } from "visual/global/Config";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { EcwidProductId, isEcwidProductId } from "visual/global/Ecwid";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { pageSelector } from "visual/redux/selectors";
 import { EcwidProductPage } from "visual/types";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import * as Str from "visual/utils/reader/string";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
 import * as sidebarExtendParent from "../sidebar";
 import * as sidebarButton from "../sidebarButton";
 import * as sidebarDisable from "../sidebarDisable";
@@ -97,11 +104,16 @@ export class EcwidProduct extends EditorComponent<Value> {
 
   private ecwid: EcwidService | undefined;
 
-  static get componentId(): "EcwidProduct" {
-    return "EcwidProduct";
+  static get componentId(): ElementTypes.EcwidProduct {
+    return ElementTypes.EcwidProduct;
   }
 
+  initialProductId: MValue<Literal> = undefined;
+  lastUsedProductId: MValue<Literal> = undefined;
+
   componentDidMount(): void {
+    const { productId: modelProductId } = this.getValue();
+
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarExtendParent,
@@ -131,19 +143,80 @@ export class EcwidProduct extends EditorComponent<Value> {
         this.getReduxState()
       ) as EcwidProductPage;
 
-      const _productId = productId ?? config.modules.shop.defaultProductId;
+      this.initialProductId =
+        config.modules.shop.productId ?? config.modules.shop.defaultProductId;
+
+      const configProductId = (productId ??
+        this.initialProductId) as EcwidProductId;
+
+      const _productId = (
+        modelProductId === "auto" ? configProductId : modelProductId
+      ) as EcwidProductId;
 
       this.ecwid = EcwidService.init(config.modules.shop.storeId, cnf);
       this.ecwid.product(_productId, this.containerRef.current);
+
+      this.lastUsedProductId = _productId;
     }
   }
 
-  componentDidUpdate(): void {
+  componentDidUpdate(prevProps: Props<Value, Record<string, unknown>>): void {
+    const { productId: _prevProductId } = prevProps.dbValue;
+    const { productId } = this.getValue();
+
+    const prevProductId = Str.read(_prevProductId);
+    const currentProductId = Str.read(productId) ?? "";
+
+    const node = this.containerRef.current;
+
     const newConfig = valueToEciwdConfig(this.getDBValue());
     const oldConfig = this.ecwid?.getConfig();
 
     if (!oldConfig || !eq(oldConfig, newConfig)) {
       this.ecwid?.updateConfig(newConfig);
+    }
+
+    if (node && this.ecwid) {
+      if (prevProductId !== currentProductId) {
+        ///// when is selected auto context
+        if (currentProductId === "auto") {
+          if (
+            this.initialProductId !== this.lastUsedProductId &&
+            isEcwidProductId(this.initialProductId)
+          ) {
+            this.ecwid.product(this.initialProductId, node, {
+              clearPrevious: true
+            });
+
+            this.lastUsedProductId = this.initialProductId;
+          }
+        } else {
+          ///// when is selected concrete product
+          if (prevProductId === undefined) {
+            if (
+              this.lastUsedProductId !== currentProductId &&
+              isEcwidProductId(currentProductId)
+            ) {
+              this.ecwid.product(currentProductId, node, {
+                clearPrevious: true
+              });
+
+              this.lastUsedProductId = currentProductId;
+            }
+          } else {
+            if (
+              prevProductId !== currentProductId &&
+              isEcwidProductId(currentProductId)
+            ) {
+              this.ecwid.product(currentProductId, node, {
+                clearPrevious: true
+              });
+
+              this.lastUsedProductId = currentProductId;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -1423,6 +1496,7 @@ export class EcwidProduct extends EditorComponent<Value> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
+    const { productId: modelProductId } = v;
     const config = Config.getAll() as Cloud;
     const shop = config.modules?.shop;
     const defaultProductId = isEcwidShop(shop) ? shop.defaultProductId : "";
@@ -1433,9 +1507,12 @@ export class EcwidProduct extends EditorComponent<Value> {
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
 
-    const productId = makePlaceholder({
+    const postIdPlaceholder = makePlaceholder({
       content: "{{brizy_dc_post_id}}"
     });
+
+    const productId =
+      modelProductId === "auto" ? postIdPlaceholder : modelProductId;
 
     const storeId = makePlaceholder({
       content: "{{ecwid_store_id}}"

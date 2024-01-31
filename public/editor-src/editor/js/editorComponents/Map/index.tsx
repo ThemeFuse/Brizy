@@ -1,7 +1,10 @@
-import { MapEditor, MapPreview } from "@brizy/component";
 import classnames from "classnames";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import {
+  AlphaMapEditor,
+  AlphaMapPreview
+} from "visual/component/BrizyBuilder/Map";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
@@ -189,10 +192,10 @@ class Map extends EditorComponent<Value> {
                 value={resizerTransformValue(v)}
                 onChange={this.handleResizerChange}
               >
-                <MapEditor
+                <AlphaMapEditor
                   address={address}
                   zoom={zoom}
-                  platform={IS_WP ? "WP" : "CLOUD"}
+                  className={IS_WP ? "intrinsic-ignore" : ""}
                 />
               </BoxResizer>
             </HoverAnimation>
@@ -229,10 +232,10 @@ class Map extends EditorComponent<Value> {
             options={options}
             isHidden={isHidden || IS_STORY}
           >
-            <MapPreview
+            <AlphaMapPreview
               address={address}
               zoom={zoom}
-              platform={IS_WP ? "WP" : "CLOUD"}
+              className={IS_WP ? "intrinsic-ignore" : ""}
             />
           </HoverAnimation>
         </Wrapper>

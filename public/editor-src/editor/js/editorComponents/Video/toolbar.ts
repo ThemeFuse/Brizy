@@ -50,6 +50,11 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     type: DCTypes.link
   });
 
+  const imageDynamicContentChoices = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.image
+  });
+
   const type = dvv("type");
   const noCover = !dvv("coverImageSrc");
 
@@ -189,7 +194,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 },
                 {
                   id: "start",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Start"),
                   devices: "desktop",
                   helper: {
@@ -203,7 +208,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 },
                 {
                   id: "end",
-                  type: "number-dev",
+                  type: "number",
                   label: t("End"),
                   devices: "desktop",
                   disabled: vimeoType,
@@ -222,11 +227,21 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               id: "tabCurrentElementPlayer",
               label: t("Player"),
               options: [
+                // Use population option type instead of using the `legacy-population` config for imageUpload,
+                // because the population id and imageUpload id are different.
                 {
+                  id: "coverImageSrc",
+                  type: "population",
                   label: t("Cover Image"),
-                  id: "cover",
-                  type: "imageUpload",
-                  devices: "desktop"
+                  config:
+                    device === "desktop" && imageDynamicContentChoices
+                      ? imageDynamicContentChoices
+                      : undefined,
+                  option: {
+                    id: "cover",
+                    type: "imageUpload",
+                    devices: "desktop"
+                  }
                 },
                 {
                   id: "coverZoom",

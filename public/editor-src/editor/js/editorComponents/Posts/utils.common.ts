@@ -74,6 +74,7 @@ export function decodeV(v: V): VDecoded {
     gridRow,
     gridColumn,
     source,
+    component: _component,
     querySource,
     offset,
     orderBy,
@@ -82,6 +83,8 @@ export function decodeV(v: V): VDecoded {
     excludeCurrentProduct,
     excludeCurrentProductOption
   } = v;
+
+  const component = Str.read(_component);
 
   return {
     type: Str.read(type) ?? "",
@@ -93,6 +96,7 @@ export function decodeV(v: V): VDecoded {
     orderBy: Str.read(orderBy) ?? "",
     order: Str.read(order) ?? "",
     symbols: Obj.readWithValueReader(readSymbol)(symbols) ?? {},
+    ...(component ? { component } : {}),
     ...(excludeCurrentProduct === "on" ? { excludeCurrentProduct } : {}),
     ...(excludeCurrentProductOption ? { excludeCurrentProductOption } : {})
 
