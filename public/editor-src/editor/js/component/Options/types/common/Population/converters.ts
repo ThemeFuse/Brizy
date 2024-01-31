@@ -16,7 +16,7 @@ export const defaultValue: Value = {
   populationEntityId: undefined
 };
 
-export const fromElementModel: FromElementModel<"population-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"population"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -29,5 +29,4 @@ export const fromElementModel: FromElementModel<"population-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"population-dev"> = (value) =>
-  value;
+export const toElementModel: ToElementModel<"population"> = (value) => value;

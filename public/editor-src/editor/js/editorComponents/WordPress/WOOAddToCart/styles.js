@@ -29,6 +29,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartInputLineHeight",
         "cssStyleElementWOOAddToCartInputFontWeight",
         "cssStyleElementWOOAddToCartInputLetterSpacing",
+        "cssStyleElementWOOAddToCartInputFontVariation",
         "cssStyleElementWOOAddToCartInputRadius",
         "cssStyleElementWOOAddToCartInputBg",
         "cssStyleElementWOOAddToCartInputBorder",
@@ -53,34 +54,52 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
-        "cssStyleElementWOOAddToCartValueLetterSpacing"
+        "cssStyleElementWOOAddToCartValueLetterSpacing",
+        "cssStyleElementWOOAddToCartValueFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button": {
-      standart: [
-        "cssStyleElementWOOAddToCartBorderRadius",
-        "cssStyleElementWOOAddToCartButtonColor",
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
-        "cssStyleElementWOOAddToCartBorder",
-        "cssStyleBoxShadow",
-        "cssStyleElementWOOAddToCartSize",
-        "cssStyleTypography3FontFamily",
-        "cssStyleTypography3FontSize",
-        "cssStyleTypography3LineHeight",
-        "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    },
+    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+      {
+        standart: [
+          "cssStyleElementWOOAddToCartBorderRadius",
+          "cssStyleElementWOOAddToCartButtonColor",
+          "cssStyleBgColor",
+          "cssStyleBgGradient",
+          "cssStyleElementWOOAddToCartBorder",
+          "cssStyleBoxShadow",
+          "cssStyleElementWOOAddToCartSize",
+          "cssStyleTypography3FontFamily",
+          "cssStyleTypography3FontSize",
+          "cssStyleTypography3LineHeight",
+          "cssStyleTypography3FontWeight",
+          "cssStyleTypography3LetterSpacing",
+          "cssStyleTypography3FontVariation"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz &&:hover td label": {
+      standart: [
+        "cssStyleElementWOOAddToCartLabelColor",
+        "cssStyleElementWOOAddToCartLabelFontFamily",
+        "cssStyleElementWOOAddToCartLabelFontSize",
+        "cssStyleElementWOOAddToCartLabelLineHeight",
+        "cssStyleElementWOOAddToCartLabelFontWeight",
+        "cssStyleElementWOOAddToCartLabelLetterSpacing",
+        "cssStyleElementWOOAddToCartLabelFontVariation"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz &&:hover th label": {
       standart: [
         "cssStyleElementWOOAddToCartLabelColor",
         "cssStyleElementWOOAddToCartLabelFontFamily",
@@ -101,7 +120,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartClearFontSize",
         "cssStyleElementWOOAddToCartClearLineHeight",
         "cssStyleElementWOOAddToCartClearFontWeight",
-        "cssStyleElementWOOAddToCartClearLetterSpacing"
+        "cssStyleElementWOOAddToCartClearLetterSpacing",
+        "cssStyleElementWOOAddToCartClearFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -137,7 +157,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
-        "cssStyleElementWOOAddToCartValueLetterSpacing"
+        "cssStyleElementWOOAddToCartValueLetterSpacing",
+        "cssStyleElementWOOAddToCartValueFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -154,7 +175,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
-        "cssStyleElementWOOAddToCartValueLetterSpacing"
+        "cssStyleElementWOOAddToCartValueLetterSpacing",
+        "cssStyleElementWOOAddToCartValueFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",

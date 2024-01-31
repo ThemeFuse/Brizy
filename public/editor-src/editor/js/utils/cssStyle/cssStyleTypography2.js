@@ -2,6 +2,7 @@ import {
   styleTypography2FontFamily,
   styleTypography2FontSize,
   styleTypography2FontSizeSuffix,
+  styleTypography2FontVariation,
   styleTypography2FontWeight,
   styleTypography2LetterSpacing,
   styleTypography2LineHeight
@@ -41,6 +42,11 @@ export function cssStyleTypography2LetterSpacing({
     state,
     prefix
   })};`;
+}
+
+export function cssStyleTypography2FontVariation({ v, device, prefix = "" }) {
+  const fontVariation = styleTypography2FontVariation({ v, device, prefix });
+  return fontVariation ? `font-variation-settings:${fontVariation};` : "";
 }
 
 export function cssStyleTypography3FontFamily({
@@ -83,6 +89,14 @@ export function cssStyleTypography3LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, prefix });
 }
 
+export function cssStyleTypography3FontVariation({
+  v,
+  device,
+  prefix = "typography"
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
 export function getAllCssStyleTypography({
   v,
   device,
@@ -120,5 +134,12 @@ export function getAllCssStyleTypography({
     prefix
   });
 
-  return `${fontFamily} ${fontSize} ${lineHeight} ${fontWeight} ${letterSpacing}`;
+  const fontVariation = cssStyleTypography2FontVariation({
+    v,
+    device,
+    state,
+    prefix
+  });
+
+  return `${fontFamily} ${fontSize} ${lineHeight} ${fontWeight} ${letterSpacing} ${fontVariation}`;
 }

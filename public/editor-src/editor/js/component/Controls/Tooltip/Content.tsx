@@ -3,6 +3,8 @@ import React, { CSSProperties, ReactElement } from "react";
 import { Popper } from "react-popper";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
+import { deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { clamp } from "visual/utils/math";
 import { WithClassName } from "visual/utils/options/attributes";
 import { attachRef } from "visual/utils/react";
@@ -163,7 +165,9 @@ export class TooltipContent extends React.Component<Props, State> {
     let placementStyle: CSSProperties = {};
 
     const getLeft = (): number => {
-      const padding = 31;
+      const deviceMode = deviceModeSelector(getStore().getState());
+      const isDesktop = deviceMode === "desktop";
+      const padding = isDesktop ? 31 : 0;
       const minX = padding;
       const maxX = viewportWidth - tooltipRect.width - padding;
       const x =

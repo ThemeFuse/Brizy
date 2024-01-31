@@ -18,7 +18,6 @@ import {
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
 import {
-  toolbarElementContainerTypeImageMap,
   toolbarLinkAnchor,
   toolbarLinkPopup,
   toolbarShowOnResponsive
@@ -77,6 +76,8 @@ export function getItems({ v, device, component, context, state }) {
   const video = dvv("media") !== "video";
   const map = dvv("media") !== "map";
 
+  const isDesktop = device === "desktop";
+
   return [
     toolbarShowOnResponsive({ v, device, devices: "responsive" }),
     {
@@ -100,19 +101,14 @@ export function getItems({ v, device, component, context, state }) {
                   id: "media",
                   label: t("Type"),
                   type: "radioGroup",
-                  devices: "desktop",
                   choices: [
                     { value: "image", icon: "nc-media-image" },
-                    { value: "video", icon: "nc-media-video" },
+                    ...(isDesktop
+                      ? [{ value: "video", icon: "nc-media-video" }]
+                      : []),
                     { value: "map", icon: "nc-media-map" }
                   ]
                 },
-                toolbarElementContainerTypeImageMap({
-                  v,
-                  device,
-                  devices: "responsive",
-                  state
-                }),
                 {
                   label: t("Image"),
                   id: "bg",
@@ -417,7 +413,7 @@ export function getItems({ v, device, component, context, state }) {
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
 
@@ -528,8 +524,10 @@ export function getItems({ v, device, component, context, state }) {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

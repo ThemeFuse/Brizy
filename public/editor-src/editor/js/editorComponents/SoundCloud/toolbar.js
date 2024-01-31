@@ -3,7 +3,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarElementSoundCloudStyle } from "visual/utils/toolbar";
 
 export function getItems({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -40,12 +39,21 @@ export function getItems({ v, device, state }) {
           type: "switch",
           devices: "desktop"
         },
-        toolbarElementSoundCloudStyle({
-          v,
-          device,
-          devices: "desktop",
-          state: "normal"
-        })
+        {
+          id: "style",
+          label: t("Style"),
+          type: "radioGroup",
+          choices: [
+            {
+              value: "basic",
+              icon: "nc-sndcloud-style-1"
+            },
+            {
+              value: "artwork",
+              icon: "nc-sndcloud-style-2"
+            }
+          ]
+        }
       ]
     },
     {
@@ -130,8 +138,10 @@ export function getItems({ v, device, state }) {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

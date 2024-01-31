@@ -18,7 +18,7 @@ export const changedGBIds: RChangedGBIds = (state = [], action, allState) => {
     }
     case "MAKE_POPUP_TO_GLOBAL_POPUP":
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
-      return [...state, action.payload.data.value._id];
+      return [...state, action.payload.block.data.value._id];
     }
     case "MAKE_GLOBAL_POPUP_TO_POPUP":
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {

@@ -39,8 +39,13 @@ import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
-import { tagId, TypographyTags } from "./toolbar/utils";
-import { dcItemOptionParser, parseShadow } from "./utils";
+import { TypographyTags, tagId } from "./toolbar/utils";
+import {
+  dcItemOptionParser,
+  getTextBackground,
+  parseColor,
+  parseShadow
+} from "./utils";
 import { getInnerElement, getStyles } from "./utils/ContextMenu";
 import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
@@ -286,21 +291,24 @@ class RichText extends EditorComponent {
       prevActive.focus && prevActive.focus();
     }
 
-    switch (values.typographyFontStyle) {
-      case "paragraph":
-      case "heading1":
-      case "heading2":
-      case "heading3":
-      case "heading4":
-      case "heading5":
-      case "heading6":
-        this.quillRef.current.formatMultiple(
-          this.handleBlockTag(values.typographyFontStyle)
-        );
-        break;
+    if (this.quillRef && this.quillRef.current) {
+      switch (values.typographyFontStyle) {
+        case "paragraph":
+        case "heading1":
+        case "heading2":
+        case "heading3":
+        case "heading4":
+        case "heading5":
+        case "heading6":
+          this.quillRef.current.formatMultiple(
+            this.handleBlockTag(values.typographyFontStyle)
+          );
+          break;
+      }
+
+      this.quillRef.current.formatMultiple(values);
     }
 
-    this.quillRef.current.formatMultiple(values);
     this.patchValue(values);
   };
 
@@ -349,6 +357,7 @@ class RichText extends EditorComponent {
       {
         notranslate: IS_EDITOR,
         "brz-rich-text__custom": !v.textPopulation,
+        "brz-rich-text__population": v.textPopulation,
         "brz-rich-text__population-cloud":
           v.textPopulation && isCloud(Config.getAll())
       },
@@ -438,7 +447,12 @@ class RichText extends EditorComponent {
         ...newPatch,
         ...v,
         ...parseShadow(formats.shadow),
-        bgColorHex: formats.color ?? null,
+        ...parseColor(formats.color, formats.opacity),
+        ...getTextBackground(
+          formats.background,
+          formats.textBackgroundGradient
+        ),
+        textBgColorPalette: formats.textBgColorPalette ?? null,
         bgColorPalette: formats.colorPalette ?? null
       };
     }
@@ -477,7 +491,8 @@ class RichText extends EditorComponent {
       population,
       selectionCoords: { left, top, height }
     } = this.state;
-    let currentPattern = population ? population.label : prepopulation;
+    const { label, population: placeholder } = population ?? {};
+    const currentPattern = label ?? prepopulation;
 
     const style = {
       left,
@@ -495,7 +510,9 @@ class RichText extends EditorComponent {
       currentPattern.substr(1).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
       "i"
     );
-    const filteredChoices = choices.filter(({ title }) => re.test(title));
+    const filteredChoices = choices.filter(
+      ({ title, value }) => re.test(title) || placeholder === value
+    );
 
     const content = (
       <ClickOutside onClickOutside={this.handlePopulationClickOutside}>
@@ -680,12 +697,12 @@ class RichText extends EditorComponent {
               ref={this.toolbarRef}
               {...toolbarOptions}
             >
-              <Wrapper
-                {...this.makeWrapperProps({
-                  className: this.getClassName(v, vs, vd)
-                })}
-              >
-                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+              <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+                <Wrapper
+                  {...this.makeWrapperProps({
+                    className: this.getClassName(v, vs, vd)
+                  })}
+                >
                   {isStory(config) ? (
                     <BoxResizer
                       points={resizerPoints}
@@ -702,8 +719,8 @@ class RichText extends EditorComponent {
                   ) : (
                     content
                   )}
-                </ContextMenu>
-              </Wrapper>
+                </Wrapper>
+              </ContextMenu>
             </Toolbar>
           </CustomCSS>
         </HotKeys>

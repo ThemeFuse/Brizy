@@ -14,6 +14,7 @@ export function style(
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
@@ -46,7 +47,8 @@ export function style(
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation"
       ]
     },
     // #region select css
@@ -154,6 +156,7 @@ export function styleDropdown(
           "cssStyleTypography2FontSize",
           "cssStyleTypography2LineHeight",
           "cssStyleTypography2LetterSpacing",
+          "cssStyleTypography2FontVariation",
           "cssStyleElementTranslationColor",
           "cssStyleElementTranslationBgColor",
           "cssStyleElementTranslationBorder",

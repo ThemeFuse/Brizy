@@ -57,6 +57,10 @@
     "paginationFontWeight": 400,
     "paginationLineHeight": 1.5,
     "paginationLetterSpacing": 0,
+    "paginationVariableFontWeight": 400,
+    "paginationFontWidth": 100,
+    "paginationFontSoftness": 0,
+
 
     "tabletPaginationFontStyle": "",
     "tabletPaginationFontFamilyType": null,
@@ -184,6 +188,9 @@
     "filterFontWeight": 400,
     "filterLineHeight": 1.5,
     "filterLetterSpacing": 0,
+    "filterVariableFontWeight": 400,
+    "filterFontWidth": 100,
+    "filterFontSoftness": 0,
 
     "tabletFilterFontStyle": "",
     "tabletFilterFontFamilyType": null,

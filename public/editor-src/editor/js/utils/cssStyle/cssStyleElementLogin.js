@@ -1,6 +1,7 @@
 import {
   cssStyleColor,
-  cssStyleFlexHorizontalAlign
+  cssStyleFlexHorizontalAlign,
+  cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
   cssStyleTypography2FontFamily,
@@ -35,6 +36,20 @@ export function cssStyleElementLoginFieldPadding({ v, device, state }) {
       ${padding / 2}${paddingSuffix};`;
 }
 
+export function cssStyleElementFieldsInputSize({ v, device, state }) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const size = dvv("size");
+
+  const sizeToPadding = {
+    small: dvv("sizeSmallPadding"),
+    medium: dvv("sizeMediumPadding"),
+    large: dvv("sizeLargePadding")
+  };
+
+  return `padding: ${sizeToPadding[size]}px ${sizeToPadding[size] + 10}px;`;
+}
+
 // Style Typography Lost Password
 export function cssStyleElementLoginLostPasswordTypography2FontFamily({
   v,
@@ -55,6 +70,13 @@ export function cssStyleElementLoginLostPasswordTypography2LineHeight({
   device
 }) {
   return cssStyleTypography2LineHeight({ v, device, prefix: "lost" });
+}
+
+export function cssStyleElementLoginLostPasswordTypography2FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "lost" });
 }
 
 export function cssStyleElementLoginLostPasswordTypography2FontWeight({
@@ -119,6 +141,13 @@ export function cssStyleElementLoginTextTypography2LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "text" });
 }
 
+export function cssStyleElementLoginTextTypography2FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "text" });
+}
+
 // Color Autorized
 export function cssStyleElementLoginTextColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "textColor" });
@@ -161,6 +190,17 @@ export function cssStyleElementLoginRegisterInfoTypography2LetterSpacing({
   device
 }) {
   return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    prefix: "registerInfo"
+  });
+}
+
+export function cssStyleElementLoginRegisterInfoTypography2FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
     v,
     device,
     prefix: "registerInfo"
@@ -214,6 +254,17 @@ export function cssStyleElementLoginRegisterLinkTypography2LetterSpacing({
   });
 }
 
+export function cssStyleElementLoginRegisterLinkTypography2FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "registerLink"
+  });
+}
+
 export function cssStyleElementLoginRegisterLinkColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "registerLinkColor" });
 }
@@ -261,6 +312,16 @@ export function cssStyleElementLoginLoginLinkTypography2LetterSpacing({
   });
 }
 
+export function cssStyleElementLoginLoginLinkTypography2FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "loginLink"
+  });
+}
 export function cssStyleElementLoginLoginLinkColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "loginLinkColor" });
 }

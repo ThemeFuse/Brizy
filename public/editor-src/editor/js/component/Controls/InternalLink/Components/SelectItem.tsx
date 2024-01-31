@@ -19,9 +19,13 @@ export const SelectItem = ({
 };
 
 export const SelectItemNoResults = (): ReactElement => {
+  const noResult = t("No results");
   return (
-    <li className="brz-ed-control__multiSelect2__option brz-ed-control__multiSelect2__option--disabled">
-      {t("No results")}
-    </li>
+    <span
+      title={noResult}
+      className="brz-ed-control__multiSelect2__option brz-ed-control__multiSelect2__option-text brz-ed-control__multiSelect2__option--disabled"
+    >
+      {noResult}
+    </span>
   );
 };

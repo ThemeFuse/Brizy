@@ -56,7 +56,7 @@ export const getGoogleFontDetails = (font) => {
 };
 
 export const getUploadFontDetails = (font) => {
-  const { id, family, weights, brizyId, deleted } = font;
+  const { id, family, weights, brizyId, deleted, variations } = font;
 
   return {
     id,
@@ -66,7 +66,8 @@ export const getUploadFontDetails = (font) => {
 
     // Extra Data
     ...(brizyId && { brizyId }),
-    ...(deleted && { deleted })
+    ...(deleted && { deleted }),
+    ...(variations && { variations })
   };
 };
 

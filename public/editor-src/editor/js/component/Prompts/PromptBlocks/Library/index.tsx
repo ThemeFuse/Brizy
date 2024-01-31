@@ -14,7 +14,7 @@ import {
   fontsSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { SavedBlock, SavedLayout } from "visual/types";
+import { SavedBlock, SavedLayout, isStyle } from "visual/types";
 import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
 import {
   deleteSavedBlock,
@@ -37,6 +37,7 @@ import { blockThumbnailData } from "visual/utils/blocks";
 import { IS_WP } from "visual/utils/env";
 import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
+import { read as JSONReader } from "visual/utils/reader/json";
 import * as Str from "visual/utils/string/specs";
 import {
   getBlocksStylesFonts,
@@ -47,6 +48,7 @@ import { getWhiteLabel } from "visual/utils/whiteLabel";
 import { isBlock, isLayout, isPopup } from "../common/utils";
 import { BlockTypes } from "../types";
 import Blocks from "./Blocks";
+import { Details } from "./Details";
 import { ShowSuccessError } from "./Notification";
 import {
   BLOCK,
@@ -60,7 +62,8 @@ import {
   Pagination,
   SavedBlockAPIMetaWithoutSync,
   SavedLayoutAPIMetaWithoutSync,
-  Thumbs
+  Thumbs,
+  isSavedLayoutWithThumbs
 } from "./types";
 import { getBlocksType } from "./utils/getBlocksType";
 
@@ -82,6 +85,8 @@ class Library extends Component<
   };
 
   state: LibraryState = {
+    activeType: undefined,
+    detailsData: undefined,
     search: "",
     filter: undefined,
     data: {
@@ -179,6 +184,7 @@ class Library extends Component<
         title: block.title,
         tags: block.tags,
         dataVersion: block.dataVersion,
+        globalStyles: block.globalStyles,
         synchronized: block.synchronized || false,
         synchronizable: block.synchronizable || false
       }));
@@ -234,15 +240,27 @@ class Library extends Component<
     };
   }
 
-  async handleAddLayout(uid: string): Promise<void> {
+  async handleAddLayout(uid: string, replaceStyle: boolean): Promise<void> {
     const { onAddBlocks, onClose } = this.props;
 
     try {
-      const { data, meta } = await getSavedLayoutById(uid, Config.getAll());
+      const { data, meta, globalStyles } = await getSavedLayoutById(
+        uid,
+        Config.getAll()
+      );
       const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
       if (!this.unMount) {
-        onAddBlocks({ fonts, extraFontStyles, blocks: data.items });
+        const readStyle = JSONReader(globalStyles);
+        const styles = isStyle(readStyle) ? [readStyle] : undefined;
+
+        onAddBlocks({
+          fonts,
+          extraFontStyles,
+          styles,
+          blocks: data.items,
+          currentStyleId: replaceStyle && styles ? styles[0].id : undefined
+        });
         onClose();
       }
     } catch (e) {
@@ -301,7 +319,10 @@ class Library extends Component<
     );
   }
 
-  handleAddItems = ({ type, uid }: BlockData): void => {
+  handleAddItems = (
+    { type, uid }: BlockData,
+    replaceStyle: boolean | undefined = false
+  ): void => {
     this.handleLoadingBlock(uid, type, true);
 
     switch (type) {
@@ -326,7 +347,7 @@ class Library extends Component<
         break;
       }
       case LAYOUT: {
-        this.handleAddLayout(uid).catch(() => {
+        this.handleAddLayout(uid, replaceStyle).catch(() => {
           this.handleLoadingBlock(uid, type, false);
 
           ToastNotification.error(
@@ -338,15 +359,27 @@ class Library extends Component<
     }
   };
 
+  goToDetails = (thumbnailData: LibraryState["detailsData"]): void => {
+    this.setState({ detailsData: thumbnailData });
+  };
+
   handleItemUpdate = async (data: BlockData): Promise<void> => {
     this.setState({ updateLoading: true });
     const { data: rollbackData } = this.state;
+
     const { type } = data;
+
+    const parsedStyle = isSavedLayoutWithThumbs(data) ? data.globalStyles : {};
+
+    const globalStyles = isStyle(parsedStyle) ? parsedStyle : {};
+    const newGlobalStyles = { ...globalStyles, title: data.title };
+
     const requestData = {
       uid: data.uid,
       title: data.title || "",
       tags: data.tags || "",
-      dataVersion: data.dataVersion
+      dataVersion: data.dataVersion,
+      globalStyles: JSON.stringify(newGlobalStyles)
     };
     const config = Config.getAll();
 
@@ -451,6 +484,8 @@ class Library extends Component<
           };
 
           if (isSavedLayout(block)) {
+            const gbs = JSONReader(block.globalStyles);
+
             layouts.push({
               ...this.makeThumbsData(block),
               uid: block.uid,
@@ -459,7 +494,8 @@ class Library extends Component<
               tags: block.tags,
               dataVersion: block.dataVersion,
               synchronized: false,
-              synchronizable: false
+              synchronizable: false,
+              ...(isStyle(gbs) ? { globalStyles: gbs } : {})
             });
           }
           if (isSavedBlock(block)) {
@@ -611,14 +647,45 @@ class Library extends Component<
     };
   }
 
+  handleDetailsBack = () => {
+    this.setState((stt) => ({
+      detailsData: undefined,
+      activeType: stt.types.find((item) => item.id === stt.detailsData?.type)
+    }));
+  };
+
+  changeHandler = (b: BlockData) =>
+    isSavedLayoutWithThumbs(b) ? this.goToDetails(b) : this.handleAddItems(b);
+
   render(): React.ReactElement {
-    const { loading, data, types, search, importLoading, exportLoading } =
-      this.state;
-    const { type, HeaderSlotLeft, showSearch, showTitle } = this.props;
+    const {
+      detailsData,
+      loading,
+      data,
+      types,
+      search,
+      importLoading,
+      exportLoading,
+      activeType,
+      filter
+    } = this.state;
+    const { type, HeaderSlotLeft, showSearch, showTitle, onClose } = this.props;
     const hasWhiteLabel = getWhiteLabel();
+
+    if (detailsData && isSavedLayoutWithThumbs(detailsData)) {
+      return (
+        <Details
+          data={detailsData}
+          onAddBlocks={this.handleAddItems}
+          onBack={this.handleDetailsBack}
+          onClose={onClose}
+        />
+      );
+    }
 
     return (
       <Blocks
+        activeType={activeType}
         type={type}
         loading={loading}
         items={data}
@@ -629,12 +696,12 @@ class Library extends Component<
         thumbnailSync={IS_WP}
         thumbnailDownload={this.withImportExport}
         search={search}
-        filter={this.state.filter}
+        filter={filter}
         importLoading={importLoading}
         exportLoading={exportLoading}
         HeaderSlotLeft={HeaderSlotLeft}
         onSuccessSync={this.handleSuccessSync}
-        onChange={this.handleAddItems}
+        onChange={this.changeHandler}
         onDelete={this.handleDeleteItem}
         onImport={this.withImportExport ? this.handleImport : undefined}
         onUpdate={this.handleItemUpdate}

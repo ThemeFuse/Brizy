@@ -148,6 +148,7 @@ export type SavedLayout = {
     _thumbnailHeight?: number;
     _thumbnailTime?: number;
   };
+  globalStyles?: Style;
 };
 
 export type GlobalBlockPosition = {
@@ -286,9 +287,16 @@ export type UploadedFont = {
   weights: string[];
   brizyId: string;
   deleted?: boolean;
+  variations?: VariationFont[];
 };
 
 export type Font = GoogleFont | UploadedFont | SystemFont;
+
+export type VariationFont = {
+  tag: string;
+  min: number;
+  max: number;
+};
 
 export interface Fonts {
   config?: {
@@ -366,14 +374,23 @@ export interface FontStyle {
   fontWeight: number;
   lineHeight: number;
   letterSpacing: number;
+  variableFontWeight?: number;
+  fontWidth?: number;
+  fontSoftness?: number;
   tabletFontSize: number;
   tabletFontWeight: number;
   tabletLineHeight: number;
   tabletLetterSpacing: number;
+  tabletVariableFontWeight?: number;
+  tabletFontWidth?: number;
+  tabletFontSoftness?: number;
   mobileFontSize: number;
   mobileFontWeight: number;
   mobileLineHeight: number;
   mobileLetterSpacing: number;
+  mobileVariableFontWeight?: number;
+  mobileFontWidth?: number;
+  mobileFontSoftness?: number;
 }
 
 export const isFontStyle = (item: unknown): item is ExtraFontStyle =>
@@ -412,6 +429,10 @@ export interface Style {
   fontStyles: FontStyle[];
   colorPalette: Palette[];
 }
+
+export const isStyle = (item: unknown): item is Style =>
+  Obj.isObject(item) &&
+  Obj.hasKeys(["id", "title", "fontStyles", "colorPalette"], item);
 
 export interface ExtraFontStyle extends FontStyle {
   deletable: "on";

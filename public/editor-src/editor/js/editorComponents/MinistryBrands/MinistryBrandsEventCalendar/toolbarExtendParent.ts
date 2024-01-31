@@ -55,7 +55,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "numberOfMonths",
                   label: t("Number of months"),
-                  type: "number-dev",
+                  type: "number",
                   config: {
                     min: 1,
                     max: 12,
@@ -65,7 +65,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "visibleMonth",
                   label: t("Visible Month"),
-                  type: "number-dev",
+                  type: "number",
                   config: {
                     min: 1,
                     max: 12,

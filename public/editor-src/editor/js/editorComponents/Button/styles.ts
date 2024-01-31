@@ -24,6 +24,7 @@ export function style(
         "cssStyleTypographyFontSize",
         "cssStyleTypographyLineHeight",
         "cssStyleTypographyLetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleColor",
         ...(hasSizing && IS_EDITOR && !submitType ? [] : ["cssStyleBorder"]),
         "cssStyleBorderRadiusType",

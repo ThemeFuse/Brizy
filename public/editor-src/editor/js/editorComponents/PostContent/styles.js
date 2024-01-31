@@ -12,7 +12,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H1FontSize",
         "cssStyleElementWPPostContentTypography2H1LineHeight",
         "cssStyleElementWPPostContentTypography2H1FontWeight",
-        "cssStyleElementWPPostContentTypography2H1LetterSpacing"
+        "cssStyleElementWPPostContentTypography2H1LetterSpacing",
+        "cssStyleElementWPPostContentTypography2H1FontVariation"
       ]
     },
     ".brz &&:hover h2": {
@@ -22,7 +23,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H2FontSize",
         "cssStyleElementWPPostContentTypography2H2LineHeight",
         "cssStyleElementWPPostContentTypography2H2FontWeight",
-        "cssStyleElementWPPostContentTypography2H2LetterSpacing"
+        "cssStyleElementWPPostContentTypography2H2LetterSpacing",
+        "cssStyleElementWPPostContentTypography2H2FontVariation"
       ]
     },
     ".brz &&:hover h3": {
@@ -32,7 +34,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H3FontSize",
         "cssStyleElementWPPostContentTypography2H3LineHeight",
         "cssStyleElementWPPostContentTypography2H3FontWeight",
-        "cssStyleElementWPPostContentTypography2H3LetterSpacing"
+        "cssStyleElementWPPostContentTypography2H3LetterSpacing",
+        "cssStyleElementWPPostContentTypography2H3FontVariation"
       ]
     },
     ".brz &&:hover h4": {
@@ -42,7 +45,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H4FontSize",
         "cssStyleElementWPPostContentTypography2H4LineHeight",
         "cssStyleElementWPPostContentTypography2H4FontWeight",
-        "cssStyleElementWPPostContentTypography2H4LetterSpacing"
+        "cssStyleElementWPPostContentTypography2H4LetterSpacing",
+        "cssStyleElementWPPostContentTypography2H4FontVariation"
       ]
     },
     ".brz &&:hover h5": {
@@ -52,7 +56,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H5FontSize",
         "cssStyleElementWPPostContentTypography2H5LineHeight",
         "cssStyleElementWPPostContentTypography2H5FontWeight",
-        "cssStyleElementWPPostContentTypography2H5LetterSpacing"
+        "cssStyleElementWPPostContentTypography2H5LetterSpacing",
+        "cssStyleElementWPPostContentTypography2H5FontVariation"
       ]
     },
     ".brz &&:hover h6": {
@@ -62,29 +67,34 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H6FontSize",
         "cssStyleElementWPPostContentTypography2H6LineHeight",
         "cssStyleElementWPPostContentTypography2H6FontWeight",
-        "cssStyleElementWPPostContentTypography2H6LetterSpacing"
+        "cssStyleElementWPPostContentTypography2H6LetterSpacing",
+        "cssStyleElementWPPostContentTypography2H6FontVariation"
       ]
     },
-    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):hover": {
-      standart: [
-        "cssStyleElementWPPostContentParagraphColor",
-        "cssStyleElementWPPostContentTypography2ParagraphFontFamily",
-        "cssStyleElementWPPostContentTypography2ParagraphFontSize",
-        "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
-        "cssStyleElementWPPostContentTypography2ParagraphFontWeight",
-        "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing"
-      ]
-    },
-    ".brz &&:hover strong *:not(strong):not(b), .brz &&:hover b *:not(strong):not(b)": {
-      standart: ["cssStyleElementWPPostContentFontWeightInherit"]
-    },
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):hover":
+      {
+        standart: [
+          "cssStyleElementWPPostContentParagraphColor",
+          "cssStyleElementWPPostContentTypography2ParagraphFontFamily",
+          "cssStyleElementWPPostContentTypography2ParagraphFontSize",
+          "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
+          "cssStyleElementWPPostContentTypography2ParagraphFontWeight",
+          "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing",
+          "cssStyleElementWPPostContentTypography2ParagraphFontVariation"
+        ]
+      },
+    ".brz &&:hover strong *:not(strong):not(b), .brz &&:hover b *:not(strong):not(b)":
+      {
+        standart: ["cssStyleElementWPPostContentFontWeightInherit"]
+      },
     ".brz &&:hover strong, .brz &&:hover b": {
       standart: [
         "cssStyleElementWPPostContentParagraphColor",
         "cssStyleElementWPPostContentTypography2ParagraphFontFamily",
         "cssStyleElementWPPostContentTypography2ParagraphFontSize",
         "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
-        "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing"
+        "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing",
+        "cssStyleElementWPPostContentTypography2ParagraphFontVariation"
       ]
     }
   };

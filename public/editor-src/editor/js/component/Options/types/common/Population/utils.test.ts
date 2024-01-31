@@ -70,7 +70,7 @@ describe("Testing 'bindPopulation' function", function () {
 
     const result: ToolbarItemType = {
       id: "test",
-      type: "population-dev",
+      type: "population",
       config: { choices: [method] },
       fallback: { ...option, id: keyToDCFallback2Key(o.id) },
       option: option
@@ -92,7 +92,7 @@ describe("Testing 'bindPopulation' function", function () {
       content: "Test helper"
     }
   };
-  const r = bindPopulation(o) as GenericToolbarItemType<"population-dev">;
+  const r = bindPopulation(o) as GenericToolbarItemType<"population">;
 
   test.each(["label", "helper", "position"])(
     "If option has %s, remove it from option and add to population",

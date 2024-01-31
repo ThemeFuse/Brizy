@@ -8,8 +8,8 @@ import { Component } from "./Type";
 import { generateTags, purifyTextContent } from "./utils";
 
 export const Ai: Component = (props) => {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [value, setValue] = useState<string>("");
 
   const config = Config.getAll();
 
@@ -82,6 +82,7 @@ export const Ai: Component = (props) => {
       onChange={setValue}
       submitRequest={handleSubmitRequest}
       loading={loading}
+      isTitleSelected={prompt.split(" ").length < 13}
     />
   );
 };

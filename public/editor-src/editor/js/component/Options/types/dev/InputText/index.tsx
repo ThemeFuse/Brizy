@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Input as Control } from "visual/component/Controls/Input";
 import { useDebouncedEffect } from "visual/component/hooks";
 import { Component } from "./Type";
@@ -15,6 +15,21 @@ export const InputText: Component = ({
   const lastUpdate = useRef(_value);
 
   useEffect(() => {
+    if (lastUpdate.current !== _value) {
+      lastUpdate.current = _value;
+    }
+  }, [_value]);
+
+  useEffect(() => {
+    return () => {
+      if (lastUpdate.current !== value) {
+        onChange({ value: lastUpdate.current });
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (lastUpdate.current !== value) {
       lastUpdate.current = value;
       setValue(value);
@@ -23,21 +38,18 @@ export const InputText: Component = ({
 
   useDebouncedEffect(
     () => {
-      if (lastUpdate.current !== _value) {
-        lastUpdate.current = _value;
-        onChange({ value: _value });
-      }
+      onChange({ value: _value });
     },
     1000,
     [onChange, _value]
   );
 
   const handleBlur = useCallback(() => {
-    if (lastUpdate.current !== _value) {
+    if (lastUpdate.current !== value) {
       lastUpdate.current = _value;
       onChange({ value: _value });
     }
-  }, [onChange, _value]);
+  }, [onChange, _value, value]);
 
   return (
     <>

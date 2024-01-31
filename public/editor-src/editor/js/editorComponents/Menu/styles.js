@@ -27,6 +27,7 @@ export function styleMenu(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ],
@@ -148,6 +149,7 @@ export function styleMenu(v, vs, vd) {
         "cssStyleElementMMenuFontWeight",
         "cssStyleElementMMenuLineHeight",
         "cssStyleElementMMenuLetterSpacing",
+        "cssStyleElementMMenuFontVariation",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ],
@@ -264,6 +266,7 @@ export function styleMenu(v, vs, vd) {
         "cssStyleElementMenuSubMenuFontWeight",
         "cssStyleElementMenuSubMenuLineHeight",
         "cssStyleElementMenuSubMenuLetterSpacing",
+        "cssStyleElementMenuSubMenuFontVariation",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ],

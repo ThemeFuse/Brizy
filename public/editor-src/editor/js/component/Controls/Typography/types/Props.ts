@@ -1,3 +1,5 @@
+import { OnChange } from "visual/component/Options/Type";
+import { VariationFont } from "visual/types";
 import { Font, FontFamily } from "./FontFamily";
 import { FontLetterSpacing } from "./FontLetterSpacing";
 import { FontLineHeight } from "./FontLineHeight";
@@ -25,6 +27,7 @@ export interface TypographyProps
   icons?: string[];
   activeIcon?: string;
   onIconClick: (icon: string) => void;
+  variations?: VariationFont[];
 }
 
 export interface FontStyleProps {
@@ -34,3 +37,18 @@ export interface FontStyleProps {
   onChange: (v: Value["fontStyle"]) => void;
   value: FontStyleType["style"];
 }
+
+export interface FontWeightProps extends FontWeight {
+  label?: string;
+  onFontWeightChange: OnChange<Value["fontWeight"]>;
+  onVariableFontWeightChange: OnChange<Value["variableFontWeight"]>;
+  onFontWidthChange: OnChange<Value["fontWidth"]>;
+  onSoftnessChange: OnChange<Value["fontSoftness"]>;
+  isVariable?: boolean;
+  variations?: VariationFont[];
+}
+
+export type FontVariationProps = Omit<
+  FontWeightProps,
+  "onFontWeightChange" | "weights" | "weight"
+>;

@@ -13,6 +13,7 @@ import {
   cssStyleSizeWidth,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -296,6 +297,17 @@ export function cssStyleElementImageGallery3LetterSpacing({
   return cssStyleTypography2LetterSpacing({
     v,
     state,
+    device,
+    prefix: "filter"
+  });
+}
+
+export function cssStyleElementImageGallery3FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
+    v,
     device,
     prefix: "filter"
   });

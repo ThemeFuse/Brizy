@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
-import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
-import { PostInfoEditor, PostInfoHtml } from "visual/component/BrizyBuilder";
+import { PostInfoEditor, PostInfoPreview } from "visual/component/BrizyBuilder";
 import Placeholder from "visual/component/Placeholder";
-import { getPlaceholder } from "./utils";
+import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
 import { Slug } from "./types";
+import { getPlaceholder } from "./utils";
 
 export const Content = ({
   postElements
@@ -20,7 +20,7 @@ export const Content = ({
   const date = useDC(datePlaceholder);
   const time = useDC(timePlaceholder);
 
-  const PostInfo = IS_EDITOR ? PostInfoEditor : PostInfoHtml;
+  const PostInfo = IS_EDITOR ? PostInfoEditor : PostInfoPreview;
 
   const res = [author, date, time];
   if (res.every((data) => data.status !== "success")) {

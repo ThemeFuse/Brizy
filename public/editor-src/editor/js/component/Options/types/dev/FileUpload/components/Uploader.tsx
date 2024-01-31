@@ -41,8 +41,15 @@ export interface Props {
   componentId?: ElementTypes;
 }
 
+const validateValue = (v: Value) => {
+  if (v?.id && v?.name) {
+    return { id: v.id, name: v.name };
+  }
+  return undefined;
+};
+
 const valueToState = (v: Value): State =>
-  v ? { type: "WithFile", file: v } : { type: "Empty" };
+  v && validateValue(v) ? { type: "WithFile", file: v } : { type: "Empty" };
 
 export function Uploader({
   value,
@@ -64,7 +71,9 @@ export function Uploader({
         case "Remove":
           return s.type === "WithFile" ? empty() : s;
         case "Reset":
-          return a.payload ? withFile(a.payload) : empty();
+          return a.payload && validateValue(a.payload)
+            ? withFile(a.payload)
+            : empty();
       }
     },
     value,

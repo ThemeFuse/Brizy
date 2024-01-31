@@ -10,6 +10,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleColor"
       ]
     },
@@ -19,6 +20,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleElementWOOPriceSpacingLast"
       ]
     },
@@ -30,6 +32,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOPriceSaleFontWeight",
         "cssStyleElementWOOPriceSaleLetterSpacing",
         "cssStyleElementWOOPriceColorSale",
+        "cssStyleElementWOOPriceSaleFontVariation",
         "cssStyleElementWOOPriceSpacingFirst"
       ]
     },

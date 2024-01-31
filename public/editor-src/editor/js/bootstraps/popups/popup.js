@@ -26,6 +26,8 @@ const makeDataAttr = (name, value) => {
       var hostDocument = document;
       var guestDocument;
 
+      var isEditor = hostDocument.querySelector(".brz-ed");
+
       if (this.readyState == 4 && this.status == 200) {
         var parser = new DOMParser();
         guestDocument = parser.parseFromString(xhttp.responseText, "text/html");
@@ -120,83 +122,89 @@ const makeDataAttr = (name, value) => {
 
         var promises = [];
 
-        if (guestLibCSS) {
-          var guestLibGroup = guestLibCSS.dataset.group || "";
-          var hostLibGroup = (hostLibCSS && hostLibCSS.dataset.group) || "";
+        if (!isEditor) {
+          if (guestLibCSS) {
+            var guestLibGroup = guestLibCSS.dataset.group || "";
+            var hostLibGroup = (hostLibCSS && hostLibCSS.dataset.group) || "";
 
-          if (
-            !hostLibCSS ||
-            (hostLibGroup !== "group-all" && guestLibGroup !== hostLibGroup)
-          ) {
-            loadingPromises["hostLibCSS"] = new Promise(function (res) {
-              guestLibCSS.onload = res;
-              hostDocument.head.appendChild(guestLibCSS);
-            });
-          } else {
-            if (!loadingPromises["hostLibCSS"]) {
-              loadingPromises["hostLibCSS"] = Promise.resolve();
+            if (
+              !hostLibCSS ||
+              (hostLibGroup !== "group-all" && guestLibGroup !== hostLibGroup)
+            ) {
+              loadingPromises["hostLibCSS"] = new Promise(function (res) {
+                guestLibCSS.onload = res;
+                hostDocument.head.appendChild(guestLibCSS);
+              });
+            } else {
+              if (!loadingPromises["hostLibCSS"]) {
+                loadingPromises["hostLibCSS"] = Promise.resolve();
+              }
             }
+
+            promises.push(loadingPromises["hostLibCSS"]);
           }
 
-          promises.push(loadingPromises["hostLibCSS"]);
-        }
+          if (guestLibProCSS) {
+            var guestLibProGroup = guestLibProCSS.dataset.group || "";
+            var hostLibProGroup =
+              (hostLibProCSS && hostLibProCSS.dataset.group) || "";
 
-        if (guestLibProCSS) {
-          var guestLibProGroup = guestLibProCSS.dataset.group || "";
-          var hostLibProGroup =
-            (hostLibProCSS && hostLibProCSS.dataset.group) || "";
-
-          if (
-            !hostLibProCSS ||
-            (hostLibProGroup !== "group-all" &&
-              guestLibProGroup !== hostLibProGroup)
-          ) {
-            loadingPromises["hostLibProCSS"] = new Promise(function (res) {
-              guestLibProCSS.onload = res;
-              hostDocument.head.appendChild(guestLibProCSS);
-            });
-          } else {
-            if (!loadingPromises["hostLibProCSS"]) {
-              loadingPromises["hostLibProCSS"] = Promise.resolve();
+            if (
+              !hostLibProCSS ||
+              (hostLibProGroup !== "group-all" &&
+                guestLibProGroup !== hostLibProGroup)
+            ) {
+              loadingPromises["hostLibProCSS"] = new Promise(function (res) {
+                guestLibProCSS.onload = res;
+                hostDocument.head.appendChild(guestLibProCSS);
+              });
+            } else {
+              if (!loadingPromises["hostLibProCSS"]) {
+                loadingPromises["hostLibProCSS"] = Promise.resolve();
+              }
             }
+
+            promises.push(loadingPromises["hostLibProCSS"]);
           }
 
-          promises.push(loadingPromises["hostLibProCSS"]);
-        }
-
-        if (guestPreviewCSS) {
-          if (!hostPreviewCSS && !hostPreviewProCSS) {
-            loadingPromises["hostPreviewCSS"] = new Promise(function (res) {
-              guestPreviewCSS.onload = res;
-              hostDocument.head.appendChild(guestPreviewCSS);
-            });
-          } else {
-            if (!loadingPromises["hostPreviewCSS"]) {
-              loadingPromises["hostPreviewCSS"] = Promise.resolve();
+          if (guestPreviewCSS) {
+            if (!hostPreviewCSS && !hostPreviewProCSS) {
+              loadingPromises["hostPreviewCSS"] = new Promise(function (res) {
+                guestPreviewCSS.onload = res;
+                hostDocument.head.appendChild(guestPreviewCSS);
+              });
+            } else {
+              if (!loadingPromises["hostPreviewCSS"]) {
+                loadingPromises["hostPreviewCSS"] = Promise.resolve();
+              }
             }
+
+            promises.push(loadingPromises["hostPreviewCSS"]);
           }
 
-          promises.push(loadingPromises["hostPreviewCSS"]);
-        }
-
-        if (guestPreviewProCSS) {
-          if (!hostPreviewProCSS) {
-            loadingPromises["hostPreviewProCSS"] = new Promise(function (res) {
-              guestPreviewProCSS.onload = res;
-              hostDocument.head.appendChild(guestPreviewProCSS);
-            });
-          } else {
-            if (!loadingPromises["hostPreviewProCSS"]) {
-              loadingPromises["hostPreviewProCSS"] = Promise.resolve();
+          if (guestPreviewProCSS) {
+            if (!hostPreviewProCSS) {
+              loadingPromises["hostPreviewProCSS"] = new Promise(function (
+                res
+              ) {
+                guestPreviewProCSS.onload = res;
+                hostDocument.head.appendChild(guestPreviewProCSS);
+              });
+            } else {
+              if (!loadingPromises["hostPreviewProCSS"]) {
+                loadingPromises["hostPreviewProCSS"] = Promise.resolve();
+              }
             }
+
+            promises.push(loadingPromises["hostPreviewProCSS"]);
           }
 
-          promises.push(loadingPromises["hostPreviewProCSS"]);
+          return Promise.all(promises).then(function () {
+            return data;
+          });
         }
 
-        return Promise.all(promises).then(function () {
-          return data;
-        });
+        return Promise.resolve(data);
       }
 
       function appendStyles(data) {

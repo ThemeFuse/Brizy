@@ -199,7 +199,7 @@ export const getItems = ({ v, device, state }) => {
         },
         {
           id: "grid",
-          type: "legacy-grid",
+          type: "grid",
           columns: [
             {
               id: "grid-settings",

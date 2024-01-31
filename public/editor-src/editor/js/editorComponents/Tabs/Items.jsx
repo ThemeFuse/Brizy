@@ -30,7 +30,7 @@ export default class TabsItems extends EditorArrayComponent {
       getItems: () => [
         {
           id: "order",
-          type: "order-dev",
+          type: "order",
           devices: "desktop",
           position: 105,
           roles: ["admin"],

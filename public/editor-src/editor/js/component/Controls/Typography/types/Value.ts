@@ -11,4 +11,7 @@ export interface Value {
   fontWeight: Weight;
   letterSpacing: number;
   lineHeight: number;
+  variableFontWeight: number;
+  fontWidth: number;
+  fontSoftness: number;
 }

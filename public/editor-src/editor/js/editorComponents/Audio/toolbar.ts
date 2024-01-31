@@ -9,7 +9,6 @@ import {
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarElementSoundCloudStyle } from "visual/utils/toolbar";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "../ToolbarItemType";
 
@@ -77,13 +76,22 @@ export function getItems({
                     size: "medium"
                   }
                 },
-                // @ts-expect-error old option
-                toolbarElementSoundCloudStyle({
-                  v,
-                  device,
+                {
+                  id: "style",
+                  label: t("Style"),
                   disabled: customType,
-                  state: "normal"
-                }),
+                  type: "radioGroup",
+                  choices: [
+                    {
+                      value: "basic",
+                      icon: "nc-sndcloud-style-1"
+                    },
+                    {
+                      value: "artwork",
+                      icon: "nc-sndcloud-style-2"
+                    }
+                  ]
+                },
                 {
                   id: "autoPlay",
                   label: t("Autoplay"),
