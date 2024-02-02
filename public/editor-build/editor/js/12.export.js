@@ -3,7 +3,7 @@ exports.id = 12;
 exports.ids = [12];
 exports.modules = {
 
-/***/ 7740:
+/***/ 7745:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -11,12 +11,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "angular": () => (/* binding */ angular),
 /* harmony export */   "angularLanguage": () => (/* binding */ angularLanguage)
 /* harmony export */ });
-/* harmony import */ var _codemirror_language__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6082);
-/* harmony import */ var _codemirror_lang_html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6163);
-/* harmony import */ var _codemirror_lang_javascript__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6158);
-/* harmony import */ var _lezer_highlight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6084);
-/* harmony import */ var _lezer_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6083);
-/* harmony import */ var _lezer_lr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6157);
+/* harmony import */ var _codemirror_language__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6051);
+/* harmony import */ var _codemirror_lang_html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6132);
+/* harmony import */ var _codemirror_lang_javascript__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6127);
+/* harmony import */ var _lezer_highlight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6053);
+/* harmony import */ var _lezer_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6052);
+/* harmony import */ var _lezer_lr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6126);
 
 
 

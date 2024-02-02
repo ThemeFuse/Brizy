@@ -485,6 +485,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 						'free' => $compiled['assets']['freeStyles'],
 						'pro'  => ( isset( $compiled['assets']['proStyles'] ) ? $compiled['assets']['proStyles'] : [] ),
 					] );
+					$block->set_compiler_version( BRIZY_EDITOR_VERSION );
+					// there is no need to make it true as we already receive the compiled html from editor
+					$block->set_needs_compile( false );
+					$block->set_compiler( Brizy_Editor_Entity::COMPILER_BROWSER );
 				}
 
 				if ( isset( $this->param( 'is_autosave' )[ $i ] ) && (int) $this->param( 'is_autosave' )[ $i ] === 1 ) {

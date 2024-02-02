@@ -231,7 +231,7 @@ class Brizy_Admin_Blocks_Main {
 
 		static $globalBLocks = null;
 
-		if ( is_array( $globalBLocks ) ) {
+		if ( $globalBLocks  ) {
 			return $globalBLocks;
 		}
 
@@ -240,20 +240,19 @@ class Brizy_Admin_Blocks_Main {
 			if ( $wpPost->post_type == 'editor-template' ) {
 				$rule_manager   = new Brizy_Admin_Rules_Manager();
 				$template_rules = $rule_manager->getRules( $wpPost->ID );
-				$ruleMatches    = array_map( function ( Brizy_Admin_Rule $r ) {
+				$ruleMatches    = array_merge( $ruleMatches, array_map( function ( Brizy_Admin_Rule $r ) {
 					return [
-						'type'         => $r->getType(),
+						//'type'         => $r->getType(),
 						'applyFor'     => $r->getAppliedFor(),
 						'entityType'   => $r->getEntityType(),
 						'entityValues' => $r->getEntityValues(),
 					];
-				}, $template_rules );
-				$ruleMatches[]  = array(
-					'type'         => Brizy_Admin_Rule::TYPE_INCLUDE,
+				}, $template_rules ) );
+				$ruleMatches[]  = [
 					'applyFor'     => Brizy_Admin_Rule::BRIZY_TEMPLATE,
 					'entityType'   => $wpPost->post_type,
-					'entityValues' => array( $wpPost->ID ),
-				);
+					'entityValues' => [ $wpPost->ID ],
+				];
 			} else {
 				$ruleMatches[] = [
 					'applyFor'     => Brizy_Admin_Rule::POSTS,
@@ -263,12 +262,12 @@ class Brizy_Admin_Blocks_Main {
 			}
 		} else {
 			$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
-			$wpPost = get_post($ruleMatches[0]['entityValues'][0]);
+			$wpPost      = get_post( $ruleMatches[0]['entityValues'][0] );
 		}
 
 		$matching_blocks = $this->findMatchingBlocks( $ruleMatches );
 
-		return $globalBLocks = array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $this->findReferencedInPage(Brizy_Editor_Post::get($wpPost)) );
+		return $globalBLocks = array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $this->findReferencedInPage( Brizy_Editor_Post::get( $wpPost ) ) );
 	}
 
 	/**
@@ -280,8 +279,8 @@ class Brizy_Admin_Blocks_Main {
 	 */
 	private function findMatchingBlocks( $ruleMatches ) {
 
-		$resultPopups = array();
-		$allPopups    = get_posts(
+		$resultBlocks = array();
+		$allBlocks    = get_posts(
 			array(
 				'post_type'   => self::CP_GLOBAL,
 				'numberposts' => - 1,
@@ -291,8 +290,8 @@ class Brizy_Admin_Blocks_Main {
 
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		$ruleSets    = [];
-		foreach ( $allPopups as $aPopup ) {
-			$ruleSets[ $aPopup->ID ] = $ruleManager->getRuleSet( $aPopup->ID );
+		foreach ( $allBlocks as $aBlock ) {
+			$ruleSets[ $aBlock->ID ] = $ruleManager->getRuleSet( $aBlock->ID );
 		}
 
 		foreach ( $ruleMatches as $ruleMatch ) {
@@ -300,8 +299,8 @@ class Brizy_Admin_Blocks_Main {
 			$entityType   = $ruleMatch['entityType'];
 			$entityValues = $ruleMatch['entityValues'];
 
-			$allPopups = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
-				$allPopups,
+			$allBlocks = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight(
+				$allBlocks,
 				[
 					'type'         => $applyFor,
 					'entityType'   => $entityType,
@@ -309,10 +308,12 @@ class Brizy_Admin_Blocks_Main {
 				]
 			);
 
-			foreach ( $allPopups as $aPopup ) {
+			foreach ( $allBlocks as $aBlock ) {
 				try {
-					if ( $ruleSets[ $aPopup->ID ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
-						$resultPopups[ $aPopup->ID ] = Brizy_Editor_Block::get( $aPopup );
+					if ( $ruleSets[ $aBlock->ID ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
+						$resultBlocks[ $aBlock->ID ] = Brizy_Editor_Block::get( $aBlock );
+					} else {
+						$t = 0;
 					}
 				} catch ( \Exception $e ) {
 					continue; // we catch here  the  exclusions
@@ -320,7 +321,7 @@ class Brizy_Admin_Blocks_Main {
 			}
 		}
 
-		return array_values( $resultPopups );
+		return array_values( $resultBlocks );
 	}
 
 	/**
@@ -358,7 +359,9 @@ class Brizy_Admin_Blocks_Main {
 
 	private function findReferencedInPage( $wpPost ) {
 
-		if(!$wpPost) return [];
+		if ( ! $wpPost ) {
+			return [];
+		}
 
 		$context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $wpPost );
 		$placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider( $context );

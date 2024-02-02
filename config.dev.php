@@ -90,7 +90,7 @@ class Brizy_Config {
 
 		$host = self::getEnvValue('COMPILER_DOWNLOAD_HOST');
 
-		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build/dev';
+		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build';
 	}
 
 	static public function getSupportUrl() {

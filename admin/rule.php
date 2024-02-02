@@ -152,7 +152,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 			}
 		}
 		// check if post is in a term
-		if ( isset( $entity_values[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 3 ) {
+		if ( isset( $entity_values[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 3 &&  isset($entityValues[0]) ) {
 
 			// POSTS
 			if ( $applyFor == self::POSTS && $this->getAppliedFor() == self::POSTS && $values[0] === 'in' ) {
@@ -214,6 +214,10 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 				// this means that the rule accept any value
 				if ( count( $ruleValues[ $i ] ) == 0 ) {
 					break;
+				}
+
+				if(count($checkValues[ $i ])==0 && count($ruleValues[ $i ])!=0) {
+					return false;
 				}
 
 				// check if the value is contained in this rule
