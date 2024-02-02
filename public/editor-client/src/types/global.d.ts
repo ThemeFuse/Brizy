@@ -1,3 +1,4 @@
+import { Action } from "./AiText";
 import { AutoSave } from "./AutoSave";
 import { ChoicesSync } from "./Choices";
 import { CollectionExtra, CollectionType } from "./Collections";
@@ -6,6 +7,8 @@ import {
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
+  DefaultTemplateKits,
+  KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
   PopupsWithThumbs,
@@ -19,7 +22,6 @@ import { Posts } from "./Posts";
 import { Data } from "./Publish";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 import { Screenshots } from "./Screenshots";
-import { Action } from "./AiText";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -114,7 +116,11 @@ export interface VISUAL_CONFIG {
     // Screenshots
     screenshots?: Screenshots;
 
-    defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
+    defaultKits?: DefaultTemplateKits<
+      KitsWithThumbs,
+      DefaultBlock,
+      Array<KitItem>
+    >;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
     defaultLayouts?: DefaultTemplate<
       LayoutsWithThumbs,
