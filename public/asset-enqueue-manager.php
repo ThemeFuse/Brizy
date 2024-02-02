@@ -175,19 +175,6 @@ class Brizy_Public_AssetEnqueueManager {
 				$handleStr = 'inline-handle-' . $i;
 				wp_register_style( $handleStr, false );
 				wp_enqueue_style( $handleStr );
-
-//				$parentHandle = null;
-//
-//				foreach ( $registered as $registeredAsset ) {
-//					if ( $registeredAsset->getScore() <= $asset->getScore() ) {
-//						$parentHandle = $this->getHandle( $registeredAsset );
-//					}
-//				}
-//
-//				if ( ! $parentHandle ) {
-//					$parentHandle = $this->getHandle( $registered[0] );
-//				}
-
 				wp_add_inline_style( $handleStr, $asset->getContent() );
 			}
 		}
