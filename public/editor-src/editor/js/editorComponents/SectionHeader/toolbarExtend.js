@@ -116,7 +116,7 @@ export function getItems({ v, device, component }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,

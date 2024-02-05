@@ -44,6 +44,9 @@
     "typographyFontWeight": 400,
     "typographyLetterSpacing": 0,
     "typographyLineHeight": 1,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
@@ -52,6 +55,9 @@
     "titleTypographyFontWeight": 700,
     "titleTypographyLetterSpacing": 0,
     "titleTypographyLineHeight": 1.1,
+    "titleTypographyVariableFontWeight": 700,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "dateTypographyFontStyle": "",
     "dateTypographyFontFamilyType": "google",
@@ -60,6 +66,9 @@
     "dateTypographyFontWeight": 700,
     "dateTypographyLetterSpacing": 0,
     "dateTypographyLineHeight": 1.1,
+    "dateTypographyVariableFontWeight": 700,
+    "dateTypographyFontWidth": 100,
+    "dateTypographyFontSoftness": 0,
 
     "previewTypographyFontStyle": "",
     "previewTypographyFontFamilyType": "google",
@@ -68,6 +77,9 @@
     "previewTypographyFontWeight": 400,
     "previewTypographyLetterSpacing": 0,
     "previewTypographyLineHeight": 1,
+    "previewTypographyVariableFontWeight": 400,
+    "previewTypographyFontWidth": 100,
+    "previewTypographyFontSoftness": 0,
 
     "paginationTypographyFontStyle": "",
     "paginationTypographyFontFamilyType": "google",
@@ -76,6 +88,9 @@
     "paginationTypographyFontWeight": 400,
     "paginationTypographyLetterSpacing": 0,
     "paginationTypographyLineHeight": 1,
+    "paginationTypographyVariableFontWeight": 400,
+    "paginationTypographyFontWidth": 100,
+    "paginationTypographyFontSoftness": 0,
 
     "metaLinksTypographyFontStyle": "",
     "metaLinksTypographyFontFamilyType": "google",
@@ -84,6 +99,9 @@
     "metaLinksTypographyFontWeight": 400,
     "metaLinksTypographyLetterSpacing": 0,
     "metaLinksTypographyLineHeight": 1,
+    "metaLinksTypographyVariableFontWeight": 400,
+    "metaLinksTypographyFontWidth": 100,
+    "metaLinksTypographyFontSoftness": 0,
 
     "detailButtonTypographyFontStyle": "",
     "detailButtonTypographyFontFamilyType": "google",
@@ -92,6 +110,9 @@
     "detailButtonTypographyFontWeight": 400,
     "detailButtonTypographyLetterSpacing": 0,
     "detailButtonTypographyLineHeight": 1,
+    "detailButtonTypographyVariableFontWeight": 400,
+    "detailButtonTypographyFontWidth": 100,
+    "detailButtonTypographyFontSoftness": 0,
 
     "registerButtonTypographyFontStyle": "",
     "registerButtonTypographyFontFamilyType": "google",
@@ -100,6 +121,9 @@
     "registerButtonTypographyFontWeight": 400,
     "registerButtonTypographyLetterSpacing": 0,
     "registerButtonTypographyLineHeight": 1,
+    "registerButtonTypographyVariableFontWeight": 400,
+    "registerButtonTypographyFontWidth": 100,
+    "registerButtonTypographyFontSoftness": 0,
 
     "colorHex": "#707070",
     "colorOpacity": 1,

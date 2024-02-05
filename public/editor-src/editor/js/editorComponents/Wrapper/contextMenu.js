@@ -55,11 +55,14 @@ const translationsMap = {
   Filters: t("Filters"),
   StarRating: t("Rating"),
   ProtectedPage: t("Protected Form"),
+  ResetPassword: t("Reset Password"),
   Translation: t("Translation"),
   Calendly: t("Calendly"),
 
   Alert: t("Alert"),
   PostInfo: t("Post Info"),
+  PostNavigation: t("Post Navigation"),
+  Breadcrumbs: t("Breadcrumbs"),
 
   // WP
   WPSidebar: t("Sidebar"),

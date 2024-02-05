@@ -1,11 +1,13 @@
 import { getIn } from "timm";
+import { ElementModelType } from "visual/component/Elements/Types";
 import { attachMenu } from "visual/editorComponents/Page/utils/helpers/normalize";
+import { hexToString } from "visual/editorComponents/RichText/toolbar/utils";
 import Config from "visual/global/Config";
 import { copiedElementNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { detectOS } from "visual/utils/dom/detectOS";
+import { read } from "visual/utils/reader/string";
 import { Literal } from "visual/utils/types/Literal";
-import { ElementModelType } from "visual/component/Elements/Types";
 
 type CopiedElementRef = {
   path: string[];
@@ -58,4 +60,23 @@ export const getStyles = (
     },
     {}
   );
+};
+
+export const convertStylesFromDCToCustom = (styles: {
+  [key: string]: Literal;
+}) => {
+  const config = Config.getAll();
+  const { bgColorPalette, bgColorOpacity, bgColorHex } = styles;
+
+  return {
+    ...styles,
+    color: hexToString(
+      {
+        palette: read(bgColorPalette) ?? "",
+        opacity: read(bgColorOpacity) ?? "",
+        hex: read(bgColorHex) ?? ""
+      },
+      config
+    )
+  };
 };

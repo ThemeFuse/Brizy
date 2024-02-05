@@ -30,6 +30,7 @@ export interface Value extends ElementModel {
 
   groupFilterHeading: string;
   categoryFilterHeading: string;
+  defaultCategory: string;
   seriesFilterHeading: string;
   speakerFilterHeading: string;
   searchFilterPlacehoder: string;

@@ -83,7 +83,8 @@ export {
   getSourceIds,
   createBlockScreenshot,
   updateBlockScreenshot,
-  defaultPostsSources
+  defaultPostsSources,
+  getEcwidProducts
 } from "./common";
 
 export * from "./cms";

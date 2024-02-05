@@ -22,7 +22,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing"
+        "cssStyleTypography3LetterSpacing",
+        "cssStyleTypography3FontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -44,7 +45,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartPurchasesFontSize",
         "cssStyleElementWOOCartPurchasesLineHeight",
         "cssStyleElementWOOCartPurchasesFontWeight",
-        "cssStyleElementWOOCartPurchasesLetterSpacing"
+        "cssStyleElementWOOCartPurchasesLetterSpacing",
+        "cssStyleElementWOOCartPurchasesFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -71,34 +73,38 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartSidebarBgColor"
       ]
     },
-    ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-name .brz-a:hover": {
-      standart: [
-        "cssStyleElementWOOCartTitleColor",
-        "cssStyleElementWOOCartTitleFontFamily",
-        "cssStyleElementWOOCartTitleFontSize",
-        "cssStyleElementWOOCartTitleLineHeight",
-        "cssStyleElementWOOCartTitleFontWeight",
-        "cssStyleElementWOOCartTitleLetterSpacing"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    },
-    ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-price-parent:hover": {
-      standart: [
-        "cssStyleElementWOOCartCostColor",
-        "cssStyleElementWOOCartCostFontFamily",
-        "cssStyleElementWOOCartCostFontSize",
-        "cssStyleElementWOOCartCostLineHeight",
-        "cssStyleElementWOOCartCostFontWeight",
-        "cssStyleElementWOOCartCostLetterSpacing"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    },
+    ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-name .brz-a:hover":
+      {
+        standart: [
+          "cssStyleElementWOOCartTitleColor",
+          "cssStyleElementWOOCartTitleFontFamily",
+          "cssStyleElementWOOCartTitleFontSize",
+          "cssStyleElementWOOCartTitleLineHeight",
+          "cssStyleElementWOOCartTitleFontWeight",
+          "cssStyleElementWOOCartTitleLetterSpacing",
+          "cssStyleElementWOOCartTitleFontVariation"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-price-parent:hover":
+      {
+        standart: [
+          "cssStyleElementWOOCartCostColor",
+          "cssStyleElementWOOCartCostFontFamily",
+          "cssStyleElementWOOCartCostFontSize",
+          "cssStyleElementWOOCartCostLineHeight",
+          "cssStyleElementWOOCartCostFontWeight",
+          "cssStyleElementWOOCartCostLetterSpacing",
+          "cssStyleElementWOOCartCostFontVariation"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar-subtotal:hover": {
       standart: [
         "cssStyleElementWOOCartSubtotalColor",
@@ -106,7 +112,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartSubtotalFontSize",
         "cssStyleElementWOOCartSubtotalLineHeight",
         "cssStyleElementWOOCartSubtotalFontWeight",
-        "cssStyleElementWOOCartSubtotalLetterSpacing"
+        "cssStyleElementWOOCartSubtotalLetterSpacing",
+        "cssStyleElementWOOCartSubtotalFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -123,7 +130,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartButtonFontSize",
         "cssStyleElementWOOCartButtonLineHeight",
         "cssStyleElementWOOCartButtonFontWeight",
-        "cssStyleElementWOOCartButtonLetterSpacing"
+        "cssStyleElementWOOCartButtonLetterSpacing",
+        "cssStyleElementWOOCartButtonFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",

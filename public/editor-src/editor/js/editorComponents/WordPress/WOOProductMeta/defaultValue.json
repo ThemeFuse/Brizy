@@ -32,6 +32,9 @@
     "categoryFontWeight": 300,
     "categoryLineHeight": 1.3,
     "categoryLetterSpacing": -1.5,
+    "categoryVariableFontWeight": 300,
+    "categoryFontWidth": 100,
+    "categoryFontSoftness": 0,
 
     "valueFontStyle": "",
     "valueFontFamilyType": "google",
@@ -40,6 +43,9 @@
     "valueFontWeight": 300,
     "valueLineHeight": 1.3,
     "valueLetterSpacing": -1.5,
+    "valueVariableFontWeight": 300,
+    "valueFontWidth": 100,
+    "valueFontSoftness": 0,
 
     "categoryColorHex": "#1c1c1c",
     "categoryColorOpacity": 1,

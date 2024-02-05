@@ -114,6 +114,9 @@
     "fontWeight": 700,
     "lineHeight": 1.8,
     "letterSpacing": 3,
+    "variableFontWeight": 700,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "customCSS": "",
 
@@ -375,6 +378,9 @@
     "subMenuFontWeight": 700,
     "subMenuLineHeight": 1.8,
     "subMenuLetterSpacing": 3,
+    "subMenuVariableFontWeight": 700,
+    "subMenuFontWidth": 100,
+    "subMenuFontSoftness": 0,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -438,6 +444,9 @@
     "mMenuFontWeight": 700,
     "mMenuLineHeight": 1.8,
     "mMenuLetterSpacing": 3,
+    "mMenuVariableFontWeight": 700,
+    "mMenuFontWidth": 100,
+    "mMenuFontSoftness": 0,
     "mMenuPosition": "left",
 
     "mMenuColorHex": "#ffffff",

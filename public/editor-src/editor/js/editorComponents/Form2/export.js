@@ -125,6 +125,20 @@ export default function ($node) {
       }
     });
 
+    const oldArrow = node.querySelector(".select2-selection__arrow");
+    const oldArrowMultiple = node.querySelector(
+      ".select2-selection.select2-selection--multiple"
+    );
+    const newArrow = node.querySelector(".brz-forms2__select--arrow");
+
+    if (oldArrow) {
+      oldArrow.parentNode.replaceChild(newArrow, oldArrow);
+    }
+
+    if (oldArrowMultiple) {
+      oldArrowMultiple.appendChild(newArrow);
+    }
+
     // Custom Scrollbars
     let scrollbars;
     $select.on("select2:opening", function () {

@@ -10,10 +10,7 @@ export type Reduce<K extends OptionName> = <T>(
   item: GenericToolbarItemType<K>
 ) => T;
 
-export const withOptions = <
-  K extends "popover" | "stateMode-dev" | "group",
-  T
->(
+export const withOptions = <K extends "popover" | "stateMode" | "group", T>(
   fn: (acc: T, item: ToolbarItemType) => T,
   t0: T,
   item: GenericToolbarItemType<K>

@@ -1,10 +1,12 @@
+import { foundUrl } from "@brizy/builder-ui-components";
 import classnames from "classnames";
 import React, { Component } from "react";
 import { noop } from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
+import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";
+import { getUrlVideoId } from "visual/component/Prompts/common/GlobalApps/utils";
 import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
 
 class Tabs extends Component {
   constructor(props) {
@@ -15,7 +17,8 @@ class Tabs extends Component {
     this.state = {
       loading: true,
       currentTab,
-      tabs
+      tabs,
+      isHelpVideoOpened: false
     };
   }
 
@@ -55,6 +58,12 @@ class Tabs extends Component {
     });
   }
 
+  handleHelpIconClick = () => {
+    this.setState((prevState) => ({
+      isHelpVideoOpened: !prevState.isHelpVideoOpened
+    }));
+  };
+
   renderHeader() {
     const { currentTab, tabs } = this.state;
     const { onClose } = this.props;
@@ -89,19 +98,25 @@ class Tabs extends Component {
       );
     });
 
-    const _config = Config.getAll();
-    const helpIcon = _config?.ui?.help?.showIcon;
+    const { video, idHelpVideosIcons } = Config.getAll().ui?.help ?? {};
+
+    const url = foundUrl(
+      video ?? [],
+      getUrlVideoId(currentTab, idHelpVideosIcons)
+    );
 
     return (
       <div className="brz-ed-popup-header">
         <div className="brz-ed-popup-header__tabs">{headerTabs}</div>
         <div className="brz-ed-popup-btn-close" onClick={onClose} />
-        {helpIcon && (
-          <div className="brz-ed-popup-btn-help">
-            <span title={t("Help")}>
-              <EditorIcon className="icon_helper" icon={"nc-help"} />
-            </span>
-          </div>
+        {video && url && (
+          <HelpIcon
+            handleHelpIconClick={this.handleHelpIconClick}
+            url={url}
+            containerClassName="brz-ed-popup-btn-help"
+            iconClassName="icon_helper"
+            isHelpVideoOpened={this.state.isHelpVideoOpened}
+          />
         )}
       </div>
     );

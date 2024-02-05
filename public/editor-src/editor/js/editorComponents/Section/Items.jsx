@@ -65,7 +65,7 @@ class SectionItems extends EditorArrayComponent {
       ? [
           {
             id: "order",
-            type: "order-dev",
+            type: "order",
             devices: "desktop",
             position: 105,
             roles: ["admin"],

@@ -83,6 +83,9 @@
     "layoutViewTypographyFontWeight": 400,
     "layoutViewTypographyLetterSpacing": 0,
     "layoutViewTypographyLineHeight": 1,
+    "layoutViewTypographyVariableFontWeight": 400,
+    "layoutViewTypographyFontWidth": 100,
+    "layoutViewTypographyFontSoftness": 0,
 
     "itemHorizontalAlign": "left",
     "tabHorizontalAlign": "center",
@@ -116,6 +119,9 @@
     "filterTypographyFontWeight": 400,
     "filterTypographyLetterSpacing": 0,
     "filterTypographyLineHeight": 1.1,
+    "filterTypographyVariableFontWeight": 400,
+    "filterTypographyFontWidth": 100,
+    "filterTypographyFontSoftness": 0,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -209,6 +215,9 @@
     "typographyFontWeight": 400,
     "typographyLetterSpacing": 0,
     "typographyLineHeight": 1,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
@@ -217,6 +226,9 @@
     "titleTypographyFontWeight": 700,
     "titleTypographyLetterSpacing": 0,
     "titleTypographyLineHeight": 1.1,
+    "titleTypographyVariableFontWeight": 700,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "previewTypographyFontStyle": "",
     "previewTypographyFontFamilyType": "google",
@@ -225,6 +237,9 @@
     "previewTypographyFontWeight": 400,
     "previewTypographyLetterSpacing": 0,
     "previewTypographyLineHeight": 1,
+    "previewTypographyVariableFontWeight": 400,
+    "previewTypographyFontWidth": 100,
+    "previewTypographyFontSoftness": 0,
 
     "paginationTypographyFontStyle": "",
     "paginationTypographyFontFamilyType": "google",
@@ -233,6 +248,9 @@
     "paginationTypographyFontWeight": 400,
     "paginationTypographyLetterSpacing": 0,
     "paginationTypographyLineHeight": 1,
+    "paginationTypographyVariableFontWeight": 400,
+    "paginationTypographyFontWidth": 100,
+    "paginationTypographyFontSoftness": 0,
 
     "metaLinksTypographyFontStyle": "",
     "metaLinksTypographyFontFamilyType": "google",
@@ -241,6 +259,9 @@
     "metaLinksTypographyFontWeight": 400,
     "metaLinksTypographyLetterSpacing": 0,
     "metaLinksTypographyLineHeight": 1,
+    "metaLinksTypographyVariableFontWeight": 400,
+    "metaLinksTypographyFontWidth": 100,
+    "metaLinksTypographyFontSoftness": 0,
 
     "dateTypographyFontStyle": "",
     "dateTypographyFontFamilyType": "google",
@@ -249,6 +270,9 @@
     "dateTypographyFontWeight": 400,
     "dateTypographyLetterSpacing": 0,
     "dateTypographyLineHeight": 1,
+    "dateTypographyVariableFontWeight": 400,
+    "dateTypographyFontWidth": 100,
+    "dateTypographyFontSoftness": 0,
 
     "listPaginationTypographyFontStyle": "",
     "listPaginationTypographyFontFamilyType": "google",
@@ -257,6 +281,9 @@
     "listPaginationTypographyFontWeight": 400,
     "listPaginationTypographyLetterSpacing": 0,
     "listPaginationTypographyLineHeight": 1,
+    "listPaginationTypographyVariableFontWeight": 400,
+    "listPaginationTypographyFontWidth": 100,
+    "listPaginationTypographyFontSoftness": 0,
 
     "listTitleTypographyFontStyle": "",
     "listTitleTypographyFontFamilyType": "google",
@@ -265,6 +292,9 @@
     "listTitleTypographyFontWeight": 400,
     "listTitleTypographyLetterSpacing": 0,
     "listTitleTypographyLineHeight": 1,
+    "listTitleTypographyVariableFontWeight": 400,
+    "listTitleTypographyFontWidth": 100,
+    "listTitleTypographyFontSoftness": 0,
 
     "listItemDateTypographyFontStyle": "",
     "listItemDateTypographyFontFamilyType": "google",
@@ -273,6 +303,9 @@
     "listItemDateTypographyFontWeight": 400,
     "listItemDateTypographyLetterSpacing": 0,
     "listItemDateTypographyLineHeight": 1,
+    "listItemDateTypographyVariableFontWeight": 400,
+    "listItemDateTypographyFontWidth": 100,
+    "listItemDateTypographyFontSoftness": 0,
 
     "listItemTitleTypographyFontStyle": "",
     "listItemTitleTypographyFontFamilyType": "google",
@@ -281,6 +314,9 @@
     "listItemTitleTypographyFontWeight": 600,
     "listItemTitleTypographyLetterSpacing": 0,
     "listItemTitleTypographyLineHeight": 1,
+    "listItemTitleTypographyVariableFontWeight": 600,
+    "listItemTitleTypographyFontWidth": 100,
+    "listItemTitleTypographyFontSoftness": 0,
 
     "listItemMetaTypographyFontStyle": "",
     "listItemMetaTypographyFontFamilyType": "google",
@@ -289,6 +325,9 @@
     "listItemMetaTypographyFontWeight": 400,
     "listItemMetaTypographyLetterSpacing": 0,
     "listItemMetaTypographyLineHeight": 1,
+    "listItemMetaTypographyVariableFontWeight": 400,
+    "listItemMetaTypographyFontWidth": 100,
+    "listItemMetaTypographyFontSoftness": 0,
 
     "calendarHeadingTypographyFontStyle": "",
     "calendarHeadingTypographyFontFamilyType": "google",
@@ -297,6 +336,9 @@
     "calendarHeadingTypographyFontWeight": 700,
     "calendarHeadingTypographyLetterSpacing": 0,
     "calendarHeadingTypographyLineHeight": 1,
+    "calendarHeadingTypographyVariableFontWeight": 700,
+    "calendarHeadingTypographyFontWidth": 100,
+    "calendarHeadingTypographyFontSoftness": 0,
 
     "calendarDaysTypographyFontStyle": "",
     "calendarDaysTypographyFontFamilyType": "google",
@@ -305,6 +347,10 @@
     "calendarDaysTypographyFontWeight": 400,
     "calendarDaysTypographyLetterSpacing": 0,
     "calendarDaysTypographyLineHeight": 1.5,
+    "calendarDaysTypographyVariableFontWeight": 400,
+    "calendarDaysTypographyFontWidth": 100,
+    "calendarDaysTypographyFontSoftness": 0,
+
 
     "eventsTypographyFontStyle": "",
     "eventsTypographyFontFamilyType": "google",
@@ -313,6 +359,9 @@
     "eventsTypographyFontWeight": 400,
     "eventsTypographyLetterSpacing": 0,
     "eventsTypographyLineHeight": 1.5,
+    "eventsTypographyVariableFontWeight": 400,
+    "eventsTypographyFontWidth": 100,
+    "eventsTypographyFontSoftness": 0,
 
     "colorHex": "#707070",
     "colorOpacity": 1,

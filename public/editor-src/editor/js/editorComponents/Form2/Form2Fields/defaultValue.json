@@ -57,6 +57,9 @@
     "labelFontWeight": 400,
     "labelLineHeight": 1.5,
     "labelLetterSpacing": 0,
+    "labelVariableFontWeight": 400,
+    "labelFontWidth": 100,
+    "labelFontSoftness": 0,
 
     "labelHorizontalAlign": "left",
 
@@ -101,6 +104,9 @@
     "fontWeight": 400,
     "lineHeight": 1.5,
     "letterSpacing": 0,
+    "variableFontWeight": 400,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "colorHex": "#73777f",
     "colorOpacity": 0.7,
@@ -123,6 +129,9 @@
     "checkboxFontWeight": 400,
     "checkboxLineHeight": 1.5,
     "checkboxLetterSpacing": 0,
+    "checkboxVariableFontWeight": 400,
+    "checkboxFontWidth": 100,
+    "checkboxFontSoftness": 0,
 
     "selectColorHex": "#73777f",
     "selectColorOpacity": 0.7,

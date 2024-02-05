@@ -10,12 +10,12 @@ import { Control } from "visual/component/Controls/InternalLink";
 import { Status } from "visual/component/Controls/InternalLink/types";
 import { ToastNotification } from "visual/component/Notifications";
 import Config from "visual/global/Config";
+import { read } from "visual/utils/reader/string";
+import { Literal } from "visual/utils/types/Literal";
+import { ActionTypes, State, reducer } from "./reducer";
 import type { ChoiceWithPermalink, DebouncedSearch, Props } from "./types";
 import { ChoicesSync } from "./types";
-import { getCollectionChoices, normalizeItems } from "./utils";
-import { Literal } from "visual/utils/types/Literal";
-import { read } from "visual/utils/reader/string";
-import { ActionTypes, reducer, State } from "./reducer";
+import { getCollectionChoices, isValidValue, normalizeItems } from "./utils";
 
 export const InternalLink: React.FC<Props> = ({
   className,
@@ -40,7 +40,7 @@ export const InternalLink: React.FC<Props> = ({
   const debouncedSearch = useRef<DebouncedSearch>();
 
   const [state, dispatch] = useReducer(reducer, {
-    items: value ? [value] : [],
+    items: value && isValidValue(value) ? [value] : [],
     status: Status.INITIAL,
     loading: false,
     postType: source
@@ -112,7 +112,7 @@ export const InternalLink: React.FC<Props> = ({
         const res = (r: ChoicesSync) => {
           if (r.length > 0) {
             dispatchMultiple({
-              items: r,
+              items: normalizeItems(r),
               status: Status.SUCCESS
             });
           } else {
@@ -158,8 +158,6 @@ export const InternalLink: React.FC<Props> = ({
     [dispatchMultiple]
   );
 
-  const _items = normalizeItems(items);
-
   return (
     <Control
       className={className ?? ""}
@@ -167,7 +165,7 @@ export const InternalLink: React.FC<Props> = ({
       label={label}
       placeholder={placeholder}
       resetValue={resetValue}
-      items={_items}
+      items={items}
       source={postType}
       sourceHelper={config?.helper}
       sourceLabel={config?.sourceLabel}

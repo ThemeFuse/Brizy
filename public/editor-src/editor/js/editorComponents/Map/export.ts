@@ -17,7 +17,9 @@ export default function ($node: JQuery): void {
   if (!node) return;
 
   node.querySelectorAll<HTMLElement>(".brz-map").forEach((item) => {
-    const mapWrapper = item.querySelector<HTMLElement>(".brz-map-content");
+    const mapWrapper = item.querySelector<HTMLElement>(
+      ".brz-ui-ed-map-content"
+    );
 
     if (mapWrapper) {
       setParentListeners(mapWrapper);

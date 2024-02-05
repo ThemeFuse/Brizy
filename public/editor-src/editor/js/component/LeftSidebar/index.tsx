@@ -49,7 +49,9 @@ export const LeftSidebar: FC = () => {
         ".brz-ed-toolbar",
         ".brz-ed-fixed-bottom-panel",
         ".brz-ed-animated",
-        ".brz-ed-eyeDropper"
+        ".brz-ed-eyeDropper",
+        ".brz-ui-modal-wrap",
+        ".brz-ui-modal-mask"
       ]}
     >
       <PointerEvents>

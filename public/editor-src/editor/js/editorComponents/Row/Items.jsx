@@ -294,7 +294,7 @@ class RowItems extends EditorArrayComponent {
         const cloneRemoveConfig = [
           {
             id: "order",
-            type: "order-dev",
+            type: "order",
             devices: "desktop",
             position: 105,
             roles: ["admin"],

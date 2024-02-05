@@ -284,7 +284,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
                   option: {
@@ -350,7 +350,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "linkToSlide",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Slide"),
                   disabled: !IS_STORY,
                   config: {

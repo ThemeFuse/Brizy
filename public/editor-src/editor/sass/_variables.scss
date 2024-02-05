@@ -21,6 +21,7 @@ $black-5: #1e232a;
 $black-6: #121419;
 $black-7: #141923;
 $black-8: #000001;
+$black-9: #212733;
 $blue: #0000ff;
 $blue-1: #0085ba;
 $blue-2: #3ebfe8;
@@ -243,7 +244,8 @@ $z-indexes: (
   "column-resize": 1055,
   "adder-block": 1051,
   "padding-resizer": 99,
-  "notifications": 1120
+  "notifications": 1120,
+  "helpVideo": 1100
 );
 
 // Sidebar
@@ -279,7 +281,7 @@ $right_sidebar__tooltip-box-shadow: var(--right_sidebar__tooltip-box-shadow, rgb
 $right_sidebar__tooltip-border: var(--right_sidebar__tooltip-border, $gray-5);
 $right_sidebar__header__tabs-color: var(--primary-white, $white);
 $right_sidebar__header__tabs-bg: var(--tertiary-dark, $gray-1);
-$right_sidebar__header__tabs-bg--active: var(--primary-dark, $gray-3);
+$right_sidebar__header__tabs-bg--active: var(--primary-dark, $black-9);
 
 // Left Sidebar window styling
 $left_sidebar__styling__palette-border: var(--left_sidebar__styling__palette-border, $black-5);
@@ -625,6 +627,7 @@ $popup__header__tabs__btn-color: var(--popup__header__tabs__btn__close-color, $g
 $popup__header__tabs__btn-color--hover: var(--popup__header__tabs__btn__close-color--hover, $white);
 $popup__header__tabs__item-color: var(--popup__header__tabs__item-color, rgba($white, 0.5));
 $popup__header__tabs__item-color--hover: var(--popup__header__tabs__item-color--hover, $white);
+$popup__header__tabs__item__content-heading: var(--popup__header__tabs__item__content-heading, $black-9);
 $popup__header__tabs__item-border-right-color: var(--popup__header__tabs__item-border-right-color, rgba($black, 0.7));
 $popup__header__tabs__item__before-border-right-color: var(--popup__header__tabs__item__before-border-right-color, rgba($white, 0.05));
 $popup__header__tabs__item-border-left-color: var(--popup__header__tabs__item-border-left-color, rgba($black, 0.7));

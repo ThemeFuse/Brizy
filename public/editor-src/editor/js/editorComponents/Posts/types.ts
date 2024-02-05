@@ -43,6 +43,7 @@ type V_ = {
   orderBy: string;
   order: string;
   symbols: Dictionary<string>;
+  component: string;
   excludeCurrentProduct: Switch;
   excludeCurrentProductOption?: boolean;
   [k: string]: unknown; // this is done to cover when symbols are being added to v
@@ -59,6 +60,7 @@ export type VDecoded = {
   orderBy: string;
   order: string;
   symbols: Dictionary<string[]>;
+  component?: string;
   excludeCurrentProduct?: Switch;
   excludeCurrentProductOption?: boolean;
 };

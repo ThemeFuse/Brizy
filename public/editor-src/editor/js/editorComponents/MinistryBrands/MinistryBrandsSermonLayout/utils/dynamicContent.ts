@@ -30,7 +30,8 @@ export const getPlaceholder = (v: Value) => {
     categoryFilterHeading,
     seriesFilterHeading,
     speakerFilterHeading,
-    searchFilterPlacehoder
+    searchFilterPlacehoder,
+    defaultCategory
   } = v;
 
   const attr = [
@@ -57,6 +58,7 @@ export const getPlaceholder = (v: Value) => {
     `detail_page_button_text='${detailPageButtonText}'`,
     `group_filter_heading='${groupFilterHeading}'`,
     `category_filter_heading='${categoryFilterHeading}'`,
+    `defaultCategory='${defaultCategory}'`,
     `series_filter_heading='${seriesFilterHeading}'`,
     `speaker_filter_heading='${speakerFilterHeading}'`,
     `search_placeholder='${searchFilterPlacehoder}'`,

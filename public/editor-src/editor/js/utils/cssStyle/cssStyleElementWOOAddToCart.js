@@ -8,6 +8,7 @@ import {
   cssStyleSizeWidth,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -109,6 +110,10 @@ export function cssStyleElementWOOAddToCartInputLetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "input" });
 }
 
+export function cssStyleElementWOOAddToCartInputFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "input" });
+}
+
 export function cssStyleElementWOOAddToCartInputColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "inputColor" });
 }
@@ -137,6 +142,10 @@ export function cssStyleElementWOOAddToCartLabelLetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "label" });
 }
 
+export function cssStyleElementWOOAddToCartLabelFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "label" });
+}
+
 export function cssStyleElementWOOAddToCartValueFontFamily({ v, device }) {
   return cssStyleTypography2FontFamily({ v, device, prefix: "value" });
 }
@@ -155,6 +164,10 @@ export function cssStyleElementWOOAddToCartValueFontWeight({ v, device }) {
 
 export function cssStyleElementWOOAddToCartValueLetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "value" });
+}
+
+export function cssStyleElementWOOAddToCartValueFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "value" });
 }
 
 export function cssStyleElementWOOAddToCartLabelColor({ v, device, state }) {
@@ -183,6 +196,10 @@ export function cssStyleElementWOOAddToCartClearFontWeight({ v, device }) {
 
 export function cssStyleElementWOOAddToCartClearLetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "clear" });
+}
+
+export function cssStyleElementWOOAddToCartClearFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "clear" });
 }
 
 export function cssStyleElementWOOAddToCartClearColor({ v, device, state }) {

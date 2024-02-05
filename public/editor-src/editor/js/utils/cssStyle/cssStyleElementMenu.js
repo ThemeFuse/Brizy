@@ -24,6 +24,7 @@ import {
   cssStyleTextAlign,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -36,14 +37,14 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuMode,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
-  styleElementMMenu,
-  styleElementMMenuIconPosition,
-  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
   styleItemMarginRight,
@@ -238,6 +239,10 @@ export function cssStyleElementMMenuFontWeight({ v, device }) {
 
 export function cssStyleElementMMenuLetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "mMenu" });
+}
+
+export function cssStyleElementMMenuFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "mMenu" });
 }
 
 export function cssStyleElementMMenuColor({ v, device, state }) {
@@ -486,6 +491,9 @@ export function cssStyleElementMenuSubMenuLetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "subMenu" });
 }
 
+export function cssStyleElementMenuSubMenuFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "subMenu" });
+}
 export function cssStyleElementMenuSubMenuColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "subMenuColor" });
 }

@@ -122,6 +122,7 @@ class Icon extends EditorComponent<Value, Props> {
     const classNameIcon = classnames(
       "brz-icon",
       "brz-span",
+      { "brz-blocked": v.tabsState === "hover" },
       customClassName,
       css(
         `${this.getComponentId()}-icon`,

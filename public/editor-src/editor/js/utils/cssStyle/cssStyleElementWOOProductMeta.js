@@ -1,4 +1,7 @@
-import { cssStyleColor } from "visual/utils/cssStyle";
+import {
+  cssStyleColor,
+  cssStyleTypography2FontVariation
+} from "visual/utils/cssStyle";
 import {
   styleColor,
   styleElementWOOProductMetaRightSpacing,
@@ -86,6 +89,18 @@ export function cssStyleElementWOOProductMetaCategoryLetterSpacing({
   })}px;`;
 }
 
+export function cssStyleElementWOOProductMetaCategoryFontVariation({
+  v,
+  device,
+  prefix = "category"
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix
+  });
+}
+
 export function cssStyleElementWOOProductMetaValueFontFamily({
   v,
   device,
@@ -146,6 +161,18 @@ export function cssStyleElementWOOProductMetaValueLetterSpacing({
     device,
     prefix
   })}px;`;
+}
+
+export function cssStyleElementWOOProductMetaValueFontVariation({
+  v,
+  device,
+  prefix = "value"
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix
+  });
 }
 
 export function cssStyleElementWOOProductMetaTopSpacing({ v, device, state }) {

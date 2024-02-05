@@ -12,7 +12,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation"
       ]
     },
     ".brz && > .brz-a.brz-a:not(.brz-btn):hover": {

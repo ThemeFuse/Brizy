@@ -40,6 +40,9 @@
     "titleTypographyFontWeight": 600,
     "titleTypographyLineHeight": 1.7,
     "titleTypographyLetterSpacing": 1.4,
+    "titleVariableFontWeight": 600,
+    "titleFontWidth": 100,
+    "titleFontSoftness": 0,
 
     "postTypographyFontStyle": "",
     "postTypographyFontFamilyType": "google",
@@ -48,6 +51,9 @@
     "postTypographyFontWeight": 600,
     "postTypographyLineHeight": 1.5,
     "postTypographyLetterSpacing": 0,
+    "postVariableFontWeight": 600,
+    "postFontWidth": 100,
+    "postFontSoftness": 0,
 
     "titleColorHex": "#818a91",
     "titleColorOpacity": 1,

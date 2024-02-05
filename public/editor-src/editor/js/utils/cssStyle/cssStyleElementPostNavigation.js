@@ -1,4 +1,7 @@
-import { cssStyleColor } from "visual/utils/cssStyle";
+import {
+  cssStyleColor,
+  cssStyleTypography2FontVariation
+} from "visual/utils/cssStyle";
 import {
   styleElementPostNavigationShowPost,
   styleElementPostNavigationShowSeparation,
@@ -52,7 +55,18 @@ export function cssStyleElementPostNavigation2TitleLetterSpacing({
     v,
     device,
     prefix: "titleTypography"
-  })}px;`;
+  })}`;
+}
+
+export function cssStyleElementPostNavigation2TitleFontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "titleTypography"
+  });
 }
 
 export function cssStyleElementPostNavigation2PostFontFamily({ v, device }) {
@@ -94,7 +108,15 @@ export function cssStyleElementPostNavigation2PostLetterSpacing({ v, device }) {
     v,
     device,
     prefix: "postTypography"
-  })}px;`;
+  })};`;
+}
+
+export function cssStyleElementPostNavigation2PostFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "postTypography"
+  });
 }
 
 export function cssStyleElementPostNavigationColorTitle({ v, device, state }) {

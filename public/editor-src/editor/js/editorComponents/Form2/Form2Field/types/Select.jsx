@@ -38,7 +38,10 @@ export default class Select extends TextField {
 
     return classnames(
       "brz-forms2__field brz-forms2__field-select",
-      { "brz-forms2__field-select--multiple": multipleSelection === "on" },
+      {
+        "brz-forms2__field-select--multiple": multipleSelection === "on",
+        "brz-forms2__field-select-opened": this.state.isOpen
+      },
       this.props.selectClassName
     );
   }
@@ -266,6 +269,11 @@ export default class Select extends TextField {
             </option>
           ))}
         </select>
+        <ThemeIcon
+          name="arrow-down"
+          type="editor"
+          className="brz-forms2__select--arrow"
+        />
       </div>
     ) : null;
   }

@@ -35,22 +35,13 @@ export {
   toolbarDisabledRemove
 } from "./toolbarDisabled";
 
-// Element Containers
-export { toolbarElementContainerTypeImageMap } from "./toolbarElementContainer";
-
 // Element Section
 export { getInstanceParentId } from "./toolbarElementSection";
-
-// Element SoundCloud
-export { toolbarElementSoundCloudStyle } from "./toolbarElementSoundCloud";
 
 // Element Image
 export { toolbarImageTags } from "./toolbarElementImage";
 
-export {
-  toolbarElementForm2Apps,
-  toolbarElementForm2Size
-} from "./toolbarElementForm2";
+export { toolbarElementForm2Apps } from "./toolbarElementForm2";
 
 // Shape
 export { toolbarShapeTopFlip, toolbarShapeBottomFlip } from "./toolbarShape";

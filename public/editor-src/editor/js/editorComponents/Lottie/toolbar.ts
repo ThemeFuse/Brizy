@@ -215,7 +215,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
                   option: {
@@ -281,7 +281,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
               options: [
                 {
                   id: "linkToSlide",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Slide"),
                   disabled: !IS_STORY,
                   config: {
