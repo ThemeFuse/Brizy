@@ -147,7 +147,7 @@ class Brizy_Editor_Editor_Editor
                 'image' => $this->urlBuilder->external_media_url() . "",
                 'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
                 'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
-                'templateIcons' => $assetsUrl . "/editor/icons",
+                'templateIcons' => $this->urlBuilder->editor_build_url() . "/editor/icons",
                 'templateFonts' => $this->urlBuilder->external_fonts_url(),
                 'editorFonts' => home_url('/'),
                 'pagePreview' => $preview_post_link,
