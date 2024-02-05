@@ -296,6 +296,12 @@ class Brizy_Admin_Templates {
 	public function getTemplateForCurrentPage() {
 		$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
+		$pid = Brizy_Editor::get()->currentPostId();
+
+		if($pid && Brizy_Editor_Post::isBrizyEnabled(get_post($pid))) {
+			return null;
+		}
+
 		$is_preview = is_preview();
 
 		$templates = get_posts(
