@@ -4,10 +4,12 @@ import { ChoicesSync } from "./Choices";
 import { CollectionExtra, CollectionType } from "./Collections";
 import {
   BlocksArray,
+  BlockWithThumbs,
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
   DefaultTemplateKits,
+  DefaultTemplatePopup,
   KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
@@ -121,7 +123,11 @@ export interface VISUAL_CONFIG {
       DefaultBlock,
       Array<KitItem>
     >;
-    defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
+    defaultPopups?: DefaultTemplatePopup<
+      PopupsWithThumbs,
+      DefaultBlockWithID,
+      BlockWithThumbs
+    >;
     defaultLayouts?: DefaultTemplate<
       LayoutsWithThumbs,
       BlocksArray<DefaultBlockWithID>

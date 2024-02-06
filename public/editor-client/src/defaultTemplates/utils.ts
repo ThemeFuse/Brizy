@@ -1,5 +1,6 @@
 import { flatten, uniq, upperFirst } from "lodash";
 import {
+  APIPopup,
   BlockWithThumbs,
   Categories,
   Kit,
@@ -8,10 +9,12 @@ import {
 } from "../types/DefaultTemplate";
 import { pipe } from "../utils/fp/pipe";
 
-export const getUniqueKitCategories = (collections: Kit[]): Categories[] =>
+type CatTypes = Kit | APIPopup;
+
+export const getUniqueKitCategories = (collections: CatTypes[]): Categories[] =>
   pipe(
-    (collections: Kit[]) =>
-      collections.map((collection: Kit) => collection.categories),
+    (collections: CatTypes[]) =>
+      collections.map((collection: CatTypes) => collection.categories),
     flatten,
     uniq,
     (cats) =>
@@ -75,6 +78,46 @@ export const converterKit = (
     blocks,
     categories,
     types
+  };
+};
+
+export const converterPopup = (
+  kit: APIPopup[],
+  url: string,
+  popupId: string
+): {
+  blocks: BlockWithThumbs[];
+  categories: Categories[];
+} => {
+  const categories = getUniqueKitCategories(kit);
+
+  const blocks: BlockWithThumbs[] = kit.map(
+    ({
+      id,
+      title,
+      categories,
+      pro,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight
+    }) => ({
+      id: id,
+      cat: [categories],
+      title: title,
+      thumbnailHeight,
+      thumbnailWidth,
+      thumbnailSrc: `${url}${thumbnail}`,
+      pro: pro === "true",
+      keywords: "popup2",
+      position: 1,
+      type: 0,
+      kitId: popupId
+    })
+  );
+
+  return {
+    blocks,
+    categories
   };
 };
 

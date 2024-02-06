@@ -5,6 +5,7 @@ import {
   DefaultBlockWithID,
   DefaultTemplate,
   DefaultTemplateKits,
+  DefaultTemplatePopup,
   KitItem,
   Kits,
   KitsWithThumbs,
@@ -132,7 +133,7 @@ const defaultKits = (
 
 const defaultPopups = (
   config: Config
-): DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID> => {
+): DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID> => {
   const { popupsUrl } = config.api.templates;
 
   return {
@@ -157,10 +158,10 @@ const defaultPopups = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, popup) {
       try {
-        const data = await fetch(`${popupsUrl}/resolves/${id}.json`).then((r) =>
-          r.json()
+        const data = await fetch(`${popupsUrl}/resolves/${popup.id}.json`).then(
+          (r) => r.json()
         );
         res(data);
       } catch (e) {
