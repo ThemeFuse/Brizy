@@ -15,15 +15,6 @@ export interface DefaultTemplate<T1, T2> {
   ) => void;
 }
 
-export interface Popups {
-  blocks: Array<Block>;
-  categories: Array<Categories>;
-}
-
-export interface PopupsWithThumbs extends Omit<Popups, "blocks"> {
-  blocks: Array<BlockWithThumbs>;
-}
-
 export interface Layouts {
   templates: Array<Template>;
   categories: Pick<Categories, "id" | "title">;
@@ -192,4 +183,35 @@ export type Kit = {
   thumbnailHeight: number;
   thumbnailWidth: number;
 };
+// endregion
+
+// region Popups
+export interface DefaultTemplatePopup<T1, T2> {
+  label?: string;
+  getMeta: (res: Response<T1>, rej: Response<string>) => void;
+  getData: (
+    res: Response<Promise<T2>>,
+    rej: Response<string>,
+    kit: BlockWithThumbs
+  ) => void;
+}
+
+export type APIPopup = {
+  id: string;
+  title: string;
+  categories: string;
+  pro: string;
+  thumbnail: string;
+  thumbnailHeight: number;
+  thumbnailWidth: number;
+};
+
+export interface Popups {
+  blocks: Array<Block>;
+  categories: Array<Categories>;
+}
+
+export interface PopupsWithThumbs extends Omit<Popups, "blocks"> {
+  blocks: Array<BlockWithThumbs>;
+}
 // endregion

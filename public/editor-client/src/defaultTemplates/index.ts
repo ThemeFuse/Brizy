@@ -5,6 +5,7 @@ import {
   DefaultBlockWithID,
   DefaultTemplate,
   DefaultTemplateKits,
+  DefaultTemplatePopup,
   KitItem,
   Kits,
   KitsWithThumbs,
@@ -132,12 +133,23 @@ const defaultKits = (
 
 const defaultPopups = (
   config: Config
-): DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID> => {
+): DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID> => {
   const { popupsUrl } = config.api.templates;
+  // const apiKitUrl = "https://b8dd-87-255-68-163.ngrok-free.app/api";
+  // const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
 
   return {
     async getMeta(res, rej) {
       try {
+        // region This is new logic
+        // const _meta = await fetch(`${apiKitUrl}/get-popups`).then((r) =>
+        //   r.json()
+        // );
+        //
+        // const data = converterPopup(_meta.collections, apiImageUrl);
+        // endregion
+
+        // region This in temporary / this is new logic with old source
         const meta: Popups = await fetch(`${popupsUrl}/meta.json`).then((r) =>
           r.json()
         );
@@ -151,17 +163,30 @@ const defaultPopups = (
             };
           })
         };
+        // endregion
 
         res(data);
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, kit) {
       try {
-        const data = await fetch(`${popupsUrl}/resolves/${id}.json`).then((r) =>
-          r.json()
+        // region This is new logic
+        // const data = await fetch(
+        //   `${apiKitUrl}/get-popup-data?project_id=${kit.id}`
+        // )
+        //   .then((r) => r.json())
+        //   .then((arr) => arr.pop())
+        //   .then((d) => JSON.parse(d.pageData).items.pop());
+        // endregion
+
+        // region This in temporary / this is new logic with old source
+        const data = await fetch(`${popupsUrl}/resolves/${kit.id}.json`).then(
+          (r) => r.json()
         );
+        // endregion
+
         res(data);
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
