@@ -9,10 +9,12 @@ class Brizy_Admin_Rules_Manager {
 	static function getCurrentPageGroupAndType() {
 		global $wp_query;
 
-		$ruleMatches = [];
+		static $ruleMatches = [];
+
+		if(count($ruleMatches))
+			return $ruleMatches;
 
 		if ( is_admin() ) {
-
 			$postID  = isset( $_GET['post'] ) ? $_GET['post'] : null;
 			$action  = isset( $_GET['action'] ) ? $_GET['action'] : null;
 			$pagenow = isset( $GLOBALS['pagenow'] ) ? $GLOBALS['pagenow'] : null;

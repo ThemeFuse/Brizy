@@ -531,15 +531,7 @@ class Brizy_Admin_Templates {
 			$brizyPost = get_post( $pid );
 		}
 
-		$content = $this->getTemplateContent();
-
-		return apply_filters(
-			'brizy_content',
-			$content,
-			Brizy_Editor_Project::get(),
-			$brizyPost,
-			'body'
-		);
+		return $this->getTemplateContent();
 	}
 
 	/**
