@@ -53,7 +53,7 @@ class Brizy_Admin_Blocks_Main {
 
 		add_filter( 'brizy_compiler_params', array( $this, 'brizyCompilerParams' ) );
 
-		if ( $is_view_page && $compiler == Brizy_Editor_Post::COMPILER_BROWSER ) {
+		if ( $is_view_page  ) {
 			add_action( 'wp_enqueue_scripts', [ $this, 'enqueueMatchedGlobalBlockAssets' ] );
 		}
 	}
