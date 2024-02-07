@@ -1,4 +1,5 @@
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { t } from "visual/utils/i18n";
 import { VDecoded } from "../types";
 
 export const createFieldCollectionId = (
@@ -25,4 +26,17 @@ export const useAsSimpleSelectConditions = (vd: VDecoded): boolean => {
       !symbols[lvl1SymbolId]?.includes("manual")) ||
     source === ShopifyTemplate.Article
   );
+};
+
+export const getManualTitle = (type?: string): string => {
+  switch (type) {
+    case "shopify-products":
+      return t("Products");
+    case "shopify-collections":
+      return t("Collections");
+    case "shopify-posts":
+      return t("Posts");
+    default:
+      return t("Manual");
+  }
 };

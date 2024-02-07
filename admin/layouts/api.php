@@ -182,13 +182,22 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             $this->error(400, 'Invalid media data provided');
         }
 
+        if (!$this->param('globalStyles')) {
+            $this->error(400, 'Invalid media data provided');
+        }
+
         try {
             $editorData = stripslashes($this->param('data'));
             $layoutManager = new Brizy_Admin_Layouts_Manager();
+
+	        /**
+	         * @var Brizy_Editor_Layout $layout;
+	         */
             $layout = $layoutManager->createEntity($this->param('uid'), 'publish');
 
             $layout->setMedia(stripslashes($this->param('media')));
             $layout->setMeta(stripslashes($this->param('meta')));
+            $layout->setGlobalStyles(stripslashes($this->param('globalStyles')));
             $layout->set_editor_data($editorData);
             $layout->set_needs_compile(true);
 
@@ -251,6 +260,10 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
             if ($this->param('tags')) {
                 $layout->setTags(stripslashes($this->param('tags')));
+            }
+
+            if ($this->param('globalStyles')) {
+                $layout->setGlobalStyles(stripslashes($this->param('globalStyles')));
             }
 
             $layout->setDataVersion($this->param('dataVersion'));

@@ -15,6 +15,7 @@ import {
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight,
@@ -105,6 +106,18 @@ export function cssStyleElementShopifyVariantLineHeightLabel({
   prefix = "label"
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
+    v,
+    device,
+    prefix
+  });
+}
+
+export function cssStyleElementShopifyVariantFontVariationLabel({
+  v,
+  device,
+  prefix = "label"
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
     v,
     device,
     prefix
@@ -226,6 +239,18 @@ export function cssStyleElementShopifyVariantLetterSpacingRadio({
     v,
     device,
     state,
+    prefix
+  });
+}
+
+export function cssStyleElementShopifyVariantFontVariationRadio({
+  v,
+  device,
+  prefix = "radioValue"
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
     prefix
   });
 }
@@ -362,6 +387,18 @@ export function cssStyleElementShopifyVariantLineHeightSelectedItem({
   prefix = "selectedItem"
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
+    v,
+    device,
+    prefix
+  });
+}
+
+export function cssStyleElementShopifyVariantFontVariationSelectedItem({
+  v,
+  device,
+  prefix = "selectedItem"
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
     v,
     device,
     prefix

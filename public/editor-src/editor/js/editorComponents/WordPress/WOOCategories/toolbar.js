@@ -94,8 +94,10 @@ export function getItems() {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           devices: "desktop",
           columns: [
             {

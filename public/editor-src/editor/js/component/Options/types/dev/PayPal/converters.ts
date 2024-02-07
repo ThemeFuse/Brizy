@@ -8,13 +8,11 @@ export const defaultValue: Model = {
   value: undefined
 };
 
-export const fromElementModel: Option.FromElementModel<"paypal-dev"> = (
-  get
-) => ({
+export const fromElementModel: Option.FromElementModel<"paypal"> = (get) => ({
   value: pass(NoEmptyStr.is)(Str.read(get("value")) ?? "")
 });
 
-export const toElementModel: Option.ToElementModel<"paypal-dev"> = (values) => {
+export const toElementModel: Option.ToElementModel<"paypal"> = (values) => {
   return {
     value: values.value
   };

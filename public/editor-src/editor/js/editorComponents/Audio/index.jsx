@@ -112,7 +112,6 @@ class Audio extends EditorComponent {
     const {
       url,
       autoPlay,
-      showArtwork,
       likeButton,
       buyButton,
       downloadButton,
@@ -122,7 +121,8 @@ class Audio extends EditorComponent {
       username,
       artWork,
       controlsHex,
-      controlsPalette
+      controlsPalette,
+      style
     } = v;
 
     const { hex: controlsColorHex } = getOptionColorHexByPalette(
@@ -135,7 +135,7 @@ class Audio extends EditorComponent {
       <SoundCloud
         src={url}
         isAutoPlay={autoPlay === "on"}
-        isVisual={showArtwork === "on"}
+        isVisual={style !== "basic"}
         showLikeButton={likeButton === "on"}
         showBuyButton={buyButton === "on"}
         showDownloadButton={downloadButton === "on"}

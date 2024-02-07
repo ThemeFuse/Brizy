@@ -1,4 +1,6 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import Config from "visual/global/Config";
+import { getEcwidProducts } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -8,6 +10,8 @@ import { EcwidProductColumns, Value } from "./types/Value";
 
 // @ts-expect-error "advancedSettings" old option
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
+  const config = Config.getAll();
+
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -41,6 +45,17 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
               id: "tabCurrentElement",
               label: t("Product"),
               options: [
+                {
+                  id: "productId",
+                  type: "select",
+                  label: t("Product"),
+                  choices: {
+                    load: () => getEcwidProducts(config),
+                    emptyLoad: {
+                      title: t("There are no choices")
+                    }
+                  }
+                },
                 {
                   id: "columns",
                   label: t("Columns"),

@@ -284,7 +284,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "text",
-                  type: "population-dev",
+                  type: "population",
                   disabled: richTextDC === undefined,
                   config: richTextDC,
                   devices: "desktop"
@@ -407,7 +407,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
                   option: {
@@ -472,7 +472,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "linkToSlide",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Slide"),
                   disabled: !IS_STORY,
                   config: {

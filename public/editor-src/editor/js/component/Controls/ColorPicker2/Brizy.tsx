@@ -60,7 +60,10 @@ class Brizy extends Component<Props> {
       onChange = _.noop
     } = this.props;
 
-    const _className = classnames("brz-ed-control__colorPicker2", className);
+    const _className = classnames(
+      "brz-ed-control__legacy-colorPicker2",
+      className
+    );
     return (
       <div className={_className} ref={this.props.domRef}>
         <div className="color-picker2-body">

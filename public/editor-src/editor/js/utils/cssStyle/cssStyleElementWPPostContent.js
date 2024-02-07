@@ -1,7 +1,8 @@
 import {
   cssStyleColor,
   cssStyleTextAlign,
-  cssStyleTypography2FontSize
+  cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
   styleTypography2FontFamily,
@@ -127,6 +128,17 @@ export function cssStyleElementWPPostContentTypography2ParagraphLetterSpacing({
   })};`;
 }
 
+export function cssStyleElementWPPostContentTypography2ParagraphFontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "paragraph"
+  });
+}
+
 export function cssStyleElementWPPostContentTypography2H1FontFamily({
   v,
   device
@@ -178,6 +190,17 @@ export function cssStyleElementWPPostContentTypography2H1LetterSpacing({
     device,
     prefix: "h1"
   })};`;
+}
+
+export function cssStyleElementWPPostContentTypography2H1FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "h1"
+  });
 }
 
 export function cssStyleElementWPPostContentTypography2H2FontFamily({
@@ -233,6 +256,17 @@ export function cssStyleElementWPPostContentTypography2H2LetterSpacing({
   })};`;
 }
 
+export function cssStyleElementWPPostContentTypography2H2FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "h2"
+  });
+}
+
 export function cssStyleElementWPPostContentTypography2H3FontFamily({
   v,
   device
@@ -284,6 +318,17 @@ export function cssStyleElementWPPostContentTypography2H3LetterSpacing({
     device,
     prefix: "h3"
   })};`;
+}
+
+export function cssStyleElementWPPostContentTypography2H3FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "h3"
+  });
 }
 
 export function cssStyleElementWPPostContentTypography2H4FontFamily({
@@ -339,6 +384,17 @@ export function cssStyleElementWPPostContentTypography2H4LetterSpacing({
   })};`;
 }
 
+export function cssStyleElementWPPostContentTypography2H4FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "h4"
+  });
+}
+
 export function cssStyleElementWPPostContentTypography2H5FontFamily({
   v,
   device
@@ -392,6 +448,16 @@ export function cssStyleElementWPPostContentTypography2H5LetterSpacing({
   })};`;
 }
 
+export function cssStyleElementWPPostContentTypography2H5FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "h5"
+  });
+}
 export function cssStyleElementWPPostContentTypography2H6FontFamily({
   v,
   device
@@ -443,6 +509,17 @@ export function cssStyleElementWPPostContentTypography2H6LetterSpacing({
     device,
     prefix: "h6"
   })};`;
+}
+
+export function cssStyleElementWPPostContentTypography2H6FontVariation({
+  v,
+  device
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "h6"
+  });
 }
 
 export function cssStyleElementWPPostContentFontWeightInherit() {

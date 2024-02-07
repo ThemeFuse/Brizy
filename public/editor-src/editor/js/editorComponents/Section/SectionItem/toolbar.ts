@@ -18,10 +18,8 @@ import {
 } from "visual/utils/options";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarElementContainerTypeImageMap } from "visual/utils/toolbar";
 import { getMaxContainerSuffix, getMinContainerSuffix } from "../utils";
 
-// @ts-expect-error old options
 export const getItems: GetItems<ElementModel> = ({
   v,
   device,
@@ -52,6 +50,7 @@ export const getItems: GetItems<ElementModel> = ({
     : [];
 
   const media = dvv("media");
+  const isDesktop = device === "desktop";
 
   const maskShape = readString(dvv("maskShape")) ?? "none";
   const maskPosition = readString(dvv("maskPosition")) ?? "center center";
@@ -108,13 +107,22 @@ export const getItems: GetItems<ElementModel> = ({
                     { value: "map", icon: "nc-media-map" }
                   ]
                 },
-                // @ts-expect-error need to change to new option
-                toolbarElementContainerTypeImageMap({
-                  v,
-                  device,
-                  devices: "responsive",
-                  state: "normal"
-                }),
+                {
+                  id: "media",
+                  label: t("Type"),
+                  type: "radioGroup",
+                  disabled: isDesktop,
+                  choices: [
+                    {
+                      value: "image",
+                      icon: "nc-media-image"
+                    },
+                    {
+                      value: "map",
+                      icon: "nc-media-map"
+                    }
+                  ]
+                },
                 {
                   label: t("Image"),
                   id: "bg",
@@ -210,7 +218,7 @@ export const getItems: GetItems<ElementModel> = ({
                 },
                 {
                   id: "bgVideoStart",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Start"),
                   devices: "desktop",
                   disabled: videoMedia,
@@ -446,8 +454,10 @@ export const getItems: GetItems<ElementModel> = ({
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

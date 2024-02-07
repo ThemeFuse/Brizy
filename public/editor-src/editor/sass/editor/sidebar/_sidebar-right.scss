@@ -185,7 +185,7 @@
   background-color: $scrollbar__sidebar-color;
 }
 
-.brz-video-help > .brz-ui-modal-root .brz-ui-modal {
+.brz-ui-modal-root .brz-ed-sidebar__video-help .brz-ui-modal {
   height: auto;
 }
 
@@ -194,19 +194,25 @@
   padding: 0;
 }
 
-.brz-ui-menu.brz-ui-menu__sidebar.brz-ui-menu-dark .brz-ui-menu__sidebar-item.brz-ui-menu-item-selected .brz-video-help .brz-ui-icon__svg:first-child svg {
+.brz-ui-menu.brz-ui-menu__sidebar.brz-ui-menu-dark .brz-ui-menu__sidebar-item.brz-ui-menu-item-selected .brz-ed-sidebar__video-help .brz-ui-icon__svg:first-child svg {
   color: $help_video__icon-color;
   cursor: pointer;
   &:hover {
     color: $white;
   }
 }
-.brz-ui-menu .brz-video-help .brz-ui-modal-wrap {
+.brz-ui-menu .brz-ed-sidebar__video-help .brz-ui-modal-wrap {
   cursor: auto;
 }
 
-.brz-video-help .brz-ui-video-player video {
+.brz-ed-sidebar__video-help .brz-ui-video-player video {
   display: block;
+}
+
+.brz-ed-sidebar__video-help,
+.brz-ui-modal-root > .brz-ui-modal-mask {
+  position: absolute;
+  z-index: z("helpVideo")
 }
 
 .brz-sidebar-item__title {

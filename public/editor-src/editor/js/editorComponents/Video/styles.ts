@@ -157,7 +157,8 @@ export function styleControls(
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing"
+        "cssStyleTypography3LetterSpacing",
+        "cssStyleTypography3FontVariation"
       ]
     }
   };

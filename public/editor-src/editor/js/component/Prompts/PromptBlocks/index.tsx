@@ -1,3 +1,4 @@
+import { foundUrl } from "@brizy/builder-ui-components";
 import classnames from "classnames";
 import React, {
   Component,
@@ -8,9 +9,13 @@ import React, {
 import ReactDOM from "react-dom";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
+import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";
 import Config from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConfigCommon,
+  HelpVideos
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { BlockMetaType } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
@@ -205,7 +210,8 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
   tabs = getTabs<T>(Config.getAll(), this.props.type);
 
   state: PromptBlocksState = {
-    currentTab: this.props.activeTab || "blocks"
+    currentTab: this.props.activeTab || "blocks",
+    isHelpVideoOpened: false
   };
 
   componentDidMount(): void {
@@ -237,6 +243,12 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
   handleTabChange(tabId: PromptTabsId): void {
     this.setState({ currentTab: tabId });
   }
+
+  handleHelpIconClick = (): void => {
+    this.setState((prevState) => ({
+      isHelpVideoOpened: !prevState.isHelpVideoOpened
+    }));
+  };
 
   handleChange = (block: OnChanges<T>[PromptTabsId]): void => {
     const { currentTab } = this.state;
@@ -301,8 +313,11 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
       );
     });
 
-    const _config = Config.getAll();
-    const helpIcon = _config?.ui?.help?.showIcon;
+    const { video, idHelpVideosIcons } = Config.getAll().ui?.help ?? {};
+
+    const idVideoBlocksLayout =
+      idHelpVideosIcons?.[HelpVideos.blocksLayoutsHelpVideo];
+    const url = foundUrl(video ?? [], idVideoBlocksLayout);
 
     return (
       <div className="brz-ed-popup-two-header">
@@ -313,12 +328,13 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
           className="brz-ed-popup-two-btn-close"
           onClick={this.props.onClose}
         />
-        {helpIcon && (
-          <div className="brz-ed-popup-two-btn-help">
-            <span title={t("Help")}>
-              <EditorIcon icon={"nc-help"} />
-            </span>
-          </div>
+        {video && idVideoBlocksLayout && (
+          <HelpIcon
+            handleHelpIconClick={this.handleHelpIconClick}
+            url={url}
+            containerClassName="brz-ed-popup-two-btn-help"
+            isHelpVideoOpened={this.state.isHelpVideoOpened}
+          />
         )}
       </div>
     );

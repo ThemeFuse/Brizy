@@ -8,6 +8,7 @@ import {
   cssStyleSizeFontSizeIcon,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -224,6 +225,17 @@ export function cssStyleElementAccordion3LetterSpacing({
     v,
     device,
     state,
+    prefix: "filter"
+  });
+}
+
+export function cssStyleElementAccordion3FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
     prefix: "filter"
   });
 }

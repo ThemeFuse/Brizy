@@ -433,6 +433,7 @@ export const getSavedLayouts = (
         "meta",
         "title",
         "tags",
+        "globalStyles",
         "dataVersion",
         "synchronized",
         "synchronizable"
@@ -482,7 +483,7 @@ export const createSavedLayout = (
     action: actions.createLayout,
     version: editorVersion
   });
-  const { data, dataVersion, title, tags, uid, meta, media } =
+  const { data, dataVersion, title, tags, uid, meta, media, globalStyles } =
     stringifySavedBlock<CreateSavedLayout>(block);
 
   const body = new URLSearchParams({
@@ -490,6 +491,7 @@ export const createSavedLayout = (
     data,
     meta,
     media,
+    globalStyles: globalStyles ?? "",
     ...(title && { title }),
     ...(tags && { tags }),
     dataVersion: `${dataVersion}`
@@ -517,7 +519,7 @@ export const updateSavedLayout = (
 
   const { editorVersion, url: _url, hash, actions } = config;
 
-  const { uid, title, dataVersion } = savedLayout;
+  const { uid, title, dataVersion, globalStyles } = savedLayout;
   let { tags } = savedLayout;
   // if empty string is passed backend doesn't remove tag
   // https://github.com/bagrinsergiu/blox-editor/issues/23277#issuecomment-1610911099
@@ -529,7 +531,8 @@ export const updateSavedLayout = (
     uid,
     ...(title && { title }),
     ...(tags && { tags }),
-    dataVersion: `${dataVersion}`
+    dataVersion: `${dataVersion}`,
+    globalStyles: globalStyles ?? ""
   });
   const url = makeUrl(_url, {
     hash,

@@ -4,7 +4,8 @@
 
   .brz-ed-control__internalLink {
     font-family: $default-font-family;
-    width: $control__lg-width;
+    min-width: $control__lg-width;
+    max-width: $control__lg-width;
     position: relative;
 
     &__value {
@@ -101,7 +102,6 @@
 
       .brz-ed-control__internalLink__spinner {
         margin-left: 5px;
-
       }
     }
 
@@ -126,5 +126,4 @@
       color: #818a91;
     }
   }
-
 }

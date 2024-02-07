@@ -188,7 +188,7 @@ export const getItems: GetItems<ElementModel> = ({
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
                   option: {

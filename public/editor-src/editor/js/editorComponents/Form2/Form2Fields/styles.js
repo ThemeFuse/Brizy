@@ -8,7 +8,8 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation"
       ]
     },
     ".brz &&:hover .brz-forms2__field-label": {
@@ -19,29 +20,33 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleElementForm2FieldsLabelFontWeight",
         "cssStyleElementForm2FieldsLabelLetterSpacing",
         "cssStyleElementForm2FieldsLabelAlign",
-        "cssStyleElementForm2FieldsLabelLineHeight"
+        "cssStyleElementForm2FieldsLabelLineHeight",
+        "cssStyleElementForm2FieldsLabelFontVariation"
       ]
     },
     ".brz && .brz-forms2__field-label": {
       standart: ["cssStyleElementForm2FieldsLabelPadding"]
     },
-    ".brz &&:hover .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)": {
-      standart: [
-        "cssStyleColor",
-        "cssStyleBgColor",
-        "cssStyleBorder",
-        "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
-        "cssStyleElementForm2FieldsLineHeight"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    },
-    ".brz &&.brz-forms2__item--error .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)": {
-      standart: ["cssStyleElementForm2FieldsBorderRequired"]
-    },
-    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox):not(.brz-forms2__field-select)": {
-      standart: ["cssStylePaddingFourFields"]
-    },
+    ".brz &&:hover .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
+      {
+        standart: [
+          "cssStyleColor",
+          "cssStyleBgColor",
+          "cssStyleBorder",
+          "cssStyleBorderRadius",
+          "cssStyleBoxShadow",
+          "cssStyleElementForm2FieldsLineHeight"
+        ],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz &&.brz-forms2__item--error .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
+      {
+        standart: ["cssStyleElementForm2FieldsBorderRequired"]
+      },
+    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox):not(.brz-forms2__field-select)":
+      {
+        standart: ["cssStyleElementFieldsInputSize"]
+      },
     ".brz && .brz-forms2__field-paragraph": {
       standart: ["cssStyleTypography2LineHeight"]
     },
@@ -52,7 +57,8 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleElementForm2FieldsCheckboxFontSize",
         "cssStyleElementForm2FieldsCheckboxFontWeight",
         "cssStyleElementForm2FieldsCheckboxLetterSpacing",
-        "cssStyleElementForm2FieldsCheckboxLineHeight"
+        "cssStyleElementForm2FieldsCheckboxLineHeight",
+        "cssStyleElementForm2FieldsCheckboxFontVariation"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -63,7 +69,8 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleElementForm2FieldsCheckboxFontSize",
         "cssStyleElementForm2FieldsCheckboxFontWeight",
         "cssStyleElementForm2FieldsCheckboxLetterSpacing",
-        "cssStyleElementForm2FieldsCheckboxLineHeight"
+        "cssStyleElementForm2FieldsCheckboxLineHeight",
+        "cssStyleElementForm2FieldsCheckboxFontVariation"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -82,7 +89,7 @@ export function styleFormFields(v, vs, vd) {
 export function styleFormSelect(v, vs, vd) {
   const styleSelectEdit = {
     ".brz && .brz-forms2__select-current": {
-      standart: ["cssStylePaddingFourFields"]
+      standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]
     },
     ".brz &&:hover .brz-forms2__select-list": {
       standart: [
@@ -91,6 +98,7 @@ export function styleFormSelect(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleElementForm2FieldsSelectColor",
         "cssStyleElementForm2FieldsSelectBgColor",
         "cssStyleElementForm2FieldsSelectBorderRadius",
@@ -112,6 +120,7 @@ export function styleFormSelect(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleElementForm2FieldsSelectColor",
         "cssStyleElementForm2FieldsSelectBgColor",
         "cssStyleElementForm2FieldsSelectBorderRadius"

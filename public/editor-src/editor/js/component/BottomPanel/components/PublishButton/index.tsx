@@ -5,6 +5,7 @@ import HotKeys from "visual/component/HotKeys";
 import { ToastNotification } from "visual/component/Notifications";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
 import {
+  canSyncPage,
   getPromptPageArticleHeadTitle,
   getPromptPageRulesHeadTitle
 } from "visual/component/Prompts/utils";
@@ -15,8 +16,10 @@ import {
   isShopify,
   isShopifyPage
 } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { getShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { updateError } from "visual/redux/actions";
 import { removeBlocks } from "visual/redux/actions2";
 import { fetchPageSuccess, updatePageStatus } from "visual/redux/actions2";
 import {
@@ -26,7 +29,7 @@ import {
   storeWasChangedSelector
 } from "visual/redux/selectors";
 import { ReduxState, StoreChanged } from "visual/redux/types";
-import { SavedLayout } from "visual/types";
+import { SavedLayout, Style } from "visual/types";
 import {
   createBlockScreenshot,
   createSavedLayout,
@@ -39,6 +42,7 @@ import {
   shopifyUnpublishPage
 } from "visual/utils/api";
 import { SelectedItem } from "visual/utils/api/types";
+import { SYNC_ERROR } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { isNumber } from "visual/utils/math";
 import { isPopup, isStory } from "visual/utils/models";
@@ -69,6 +73,7 @@ const mapState = (
   extraFontStyles: ReduxState["extraFontStyles"];
   mode: "withRules" | "withTemplate" | "withArticle" | undefined;
   storeWasChanged: StoreChanged;
+  currentStyle: Style;
 } => {
   const config = Config.getAll();
   return {
@@ -77,13 +82,15 @@ const mapState = (
     extraFontStyles: extraFontStylesSelector(state),
 
     storeWasChanged: storeWasChangedSelector(state),
-    mode: _getMode(config)
+    mode: _getMode(config),
+    currentStyle: state.currentStyle
   };
 };
 const mapDispatch = {
   updatePageStatus,
   removeBlocks,
-  fetchPageSuccess
+  fetchPageSuccess,
+  updateError
 };
 const PublishConnector = connect(mapState, mapDispatch);
 
@@ -339,7 +346,7 @@ class PublishButton extends Component<Props, State> {
   }
 
   handleSavePage = async (): Promise<void> => {
-    const { pageData, extraFontStyles } = this.props;
+    const { pageData, extraFontStyles, currentStyle } = this.props;
 
     if (this.state.layoutLoading || pageData.items.length === 0) {
       return;
@@ -385,11 +392,18 @@ class PublishButton extends Component<Props, State> {
       }
     }
 
+    const layoutId = uuid();
+
     const data = {
       meta,
       data: pageData,
       dataVersion: 1,
-      uid: uuid()
+      uid: layoutId,
+      globalStyles: {
+        ...currentStyle,
+        id: layoutId,
+        title: currentStyle.title + "-" + layoutId.slice(0, 4)
+      }
     };
     const config = Config.getAll();
     await createSavedLayout(data, config).catch((e) => {
@@ -413,7 +427,7 @@ class PublishButton extends Component<Props, State> {
 
   getSaveAndPublishOption() {
     const config = Config.getAll();
-    const { mode, page } = this.props;
+    const { mode, page, updateError } = this.props;
 
     return {
       title: t("Save & Publish"),
@@ -421,12 +435,26 @@ class PublishButton extends Component<Props, State> {
       loading: this.state.saveAndPublishLoading,
       onClick: async () => {
         if (isCloud(config) && isShopify(config) && isShopifyPage(page)) {
+          const canSync = canSyncPage(config);
+          const syncErrorData = {
+            upgradeToProUrl: (config as ConfigCommon)?.modules?.shop
+              ?.upgradeToProUrl
+          };
+
           this.setState({ updateLoading: true });
 
           try {
             switch (mode) {
               case "withTemplate": {
                 await this.handlePublish("saveAndPublishLoading");
+
+                if (!canSync) {
+                  updateError({
+                    code: SYNC_ERROR,
+                    data: syncErrorData
+                  });
+                  break;
+                }
 
                 const isHomePage = page.id === page?.layout?.isHomePage;
                 await shopifySyncPage(page.title, isHomePage);
@@ -446,6 +474,12 @@ class PublishButton extends Component<Props, State> {
 
                 if (items.length > 0) {
                   await this.handlePublish("saveAndPublishLoading");
+
+                  if (!canSync) {
+                    updateError({ code: SYNC_ERROR, data: syncErrorData });
+                    break;
+                  }
+
                   await shopifySyncRules(items, page.title);
                 } else {
                   this.handlePublishWithRules("saveAndPublishLoading");
@@ -464,6 +498,11 @@ class PublishButton extends Component<Props, State> {
 
                 if (selectedBlog?.id && selectedBlog?.title) {
                   await this.handlePublish("saveAndPublishLoading");
+
+                  if (!canSync) {
+                    updateError({ code: SYNC_ERROR, data: syncErrorData });
+                    break;
+                  }
 
                   await shopifySyncArticle(
                     selectedBlog.id,

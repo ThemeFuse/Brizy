@@ -8,6 +8,7 @@ import {
   cssStyleSizeWidth,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -99,6 +100,14 @@ export function cssStyleElementWOOCartPurchasesLetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, prefix });
 }
 
+export function cssStyleElementWOOCartPurchasesFontVariation({
+  v,
+  device,
+  prefix = "purchases"
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
 export function cssStyleElementWOOCartTitleFontFamily({
   v,
   device,
@@ -139,6 +148,13 @@ export function cssStyleElementWOOCartTitleLetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, prefix });
 }
 
+export function cssStyleElementWOOCartTitleFontVariation({
+  v,
+  device,
+  prefix = "title"
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
+}
 export function cssStyleElementWOOCartCostFontFamily({
   v,
   device,
@@ -177,6 +193,14 @@ export function cssStyleElementWOOCartCostLetterSpacing({
   prefix = "cost"
 }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix });
+}
+
+export function cssStyleElementWOOCartCostFontVariation({
+  v,
+  device,
+  prefix = "cost"
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalFontFamily({
@@ -219,6 +243,14 @@ export function cssStyleElementWOOCartSubtotalLetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, prefix });
 }
 
+export function cssStyleElementWOOCartSubtotalFontVariation({
+  v,
+  device,
+  prefix = "subtotal"
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
 export function cssStyleElementWOOCartButtonFontFamily({
   v,
   device,
@@ -257,6 +289,14 @@ export function cssStyleElementWOOCartButtonLetterSpacing({
   prefix = "button"
 }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix });
+}
+
+export function cssStyleElementWOOCartButtonFontVariation({
+  v,
+  device,
+  prefix = "button"
+}) {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
 }
 
 export function cssStyleElementWOOCartTitleColor({

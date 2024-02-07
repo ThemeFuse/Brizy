@@ -103,6 +103,9 @@
     "typographyFontWeight": 600,
     "typographyLetterSpacing": 1.3,
     "typographyLineHeight": 1,
+    "typographyVariableFontWeight": 600,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "iconColorHex": "#ffffff",
     "iconColorOpacity": 1,

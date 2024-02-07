@@ -37,6 +37,7 @@ export interface SavedBlockMetaFromApi {
   synchronizable: boolean;
   synchronized: boolean;
   isCloudEntity: boolean;
+  globalStyles?: string;
 }
 
 export type ParsedSavedBlockApi = Omit<SavedBlockFromApi, "data" | "meta"> & {
@@ -71,8 +72,9 @@ export const stringifySavedBlock = <
   const data = JSON.stringify(block.block.data);
   const meta = JSON.stringify(block.block.meta);
   const media = JSON.stringify(block.block.media);
+  const globalStyles = JSON.stringify(block.block.globalStyles);
 
-  return { ...block.block, data, meta, media };
+  return { ...block.block, data, meta, media, globalStyles };
 };
 
 export const parseMetaSavedBlock = (
@@ -81,6 +83,7 @@ export const parseMetaSavedBlock = (
   let meta;
   const title = savedBlock.title ?? "";
   let tags = savedBlock.tags ?? "";
+  let globalStyles: string;
 
   if (!savedBlock.meta) {
     meta = {};
@@ -92,11 +95,21 @@ export const parseMetaSavedBlock = (
     }
   }
 
+  if (!savedBlock.globalStyles) {
+    globalStyles = "";
+  } else {
+    try {
+      globalStyles = JSON.parse(savedBlock.globalStyles);
+    } catch (e) {
+      globalStyles = "";
+    }
+  }
+
   if (tags === ",") {
     tags = "";
   }
 
-  return { ...savedBlock, meta, title, tags };
+  return { ...savedBlock, meta, title, tags, globalStyles };
 };
 
 export const parseSavedBlock = (

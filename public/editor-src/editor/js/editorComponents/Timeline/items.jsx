@@ -22,7 +22,7 @@ export default class TimelineItems extends EditorArrayComponent {
         return [
           {
             id: "order",
-            type: "order-dev",
+            type: "order",
             devices: "desktop",
             position: 105,
             roles: ["admin"],

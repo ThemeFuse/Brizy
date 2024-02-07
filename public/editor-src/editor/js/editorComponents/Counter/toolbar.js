@@ -67,7 +67,7 @@ export function getItems({ v, device, context }) {
                 },
                 {
                   id: "start",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Start"),
                   devices: "desktop",
                   disabled: !isSimple,
@@ -81,7 +81,7 @@ export function getItems({ v, device, context }) {
                 },
                 {
                   id: "end",
-                  type: "number-dev",
+                  type: "number",
                   label: t("End"),
                   devices: "desktop",
                   config: {
@@ -298,8 +298,10 @@ export function getItems({ v, device, context }) {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

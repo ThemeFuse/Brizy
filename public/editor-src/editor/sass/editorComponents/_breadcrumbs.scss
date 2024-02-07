@@ -21,15 +21,48 @@
         cursor: pointer;
         transition-property: color;
       }
+
       .brz-icon-svg {
         margin-top: 1px;
+        font-size: 0.5em;
       }
+
       &:last-child .brz-a {
         margin-right: 0;
       }
     }
+
     .brz-li:not(:last-child) .brz-a {
       color: inherit;
+    }
+  }
+}
+
+.brz-ui-ed-breadcrumbs {
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    .brz-ui-ed-breadcrumb-separator {
+      display: flex;
+      align-items: center;
+      margin-left: 0;
+
+      svg {
+        font-size: 0.5em;
+      }
+    }
+
+    .brz-ui-ed-breadcrumb-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    li:last-child {
+      margin-right: 0;
     }
   }
 }

@@ -1,6 +1,9 @@
 import { ChoicesSync } from "visual/component/Options/types/dev/InternalLink/types";
 import { ChoicesSync as ChoiceSync } from "visual/component/Options/types/dev/MultiSelect2/types";
-import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
+import {
+  Choice,
+  ChoicesAsync
+} from "visual/component/Options/types/dev/Select/types";
 import {
   EkklesiaFieldMap,
   EkklesiaKeys,
@@ -709,7 +712,10 @@ export const updateBlockScreenshot = (
 
 export const defaultPostsSources = (
   config: ConfigCommon,
-  page: PageCommon
+  args: {
+    page: PageCommon;
+    filterManualId?: string;
+  }
 ): Promise<PostsSources> => {
   return new Promise((res, rej) => {
     const { elements } = config;
@@ -718,7 +724,7 @@ export const defaultPostsSources = (
       rej(t("Failed to load sources"));
     } else {
       const { handler } = elements.posts;
-      handler(res, rej, page);
+      handler(res, rej, args);
     }
   });
 };
@@ -799,3 +805,18 @@ export const sendToAi = (
 };
 
 //#endregion Ai-Text
+
+//#region Ecwid
+export const getEcwidProducts = (config: ConfigCommon): Promise<Choice[]> => {
+  const get = config?.modules?.shop?.api?.getEcwidProducts?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof get === "function") {
+      get(res, rej);
+    } else {
+      rej("Missing getEcwidProducts api handler in config");
+    }
+  });
+};
+
+//#endregion

@@ -190,9 +190,6 @@ class Brizy_Editor_Editor_Editor
                         ),
                 ),
             ),
-            'ui' => [
-                //'help' => $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL)
-            ],
             'server' => array(
                 'maxUploadFileSize' => $this->fileUploadMaxSize(),
             ),
@@ -205,6 +202,10 @@ class Brizy_Editor_Editor_Editor
             'l10n' => $this->getTexts(),
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
+
+		if (!$this->isPopup($config) && !$this->isStory($config)) {
+			$config['ui']['help'] = $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL);
+		}
 
         $config = $this->addRecaptchaAccounts($manager, $config, $context);
         $config = $this->addSocialAccounts($manager, $config, $context);
@@ -1922,7 +1923,6 @@ class Brizy_Editor_Editor_Editor
 
     private function getEditorHelpVideos($sourceUrl)
     {
-
         $categoryVideos = [
             __('Get Started', 'brizy') => [
                 [

@@ -1,6 +1,7 @@
 // Breadcrumbs
 .brz-breadcrumbs .brz-li .brz-a,
-.brz-breadcrumbs .brz-li .brz-span {
+.brz-breadcrumbs .brz-li .brz-span,
+.brz-ui-ed-breadcrumbs .brz-ui-ed-breadcrumb-link {
   pointer-events: none;
   user-select: none;
 }

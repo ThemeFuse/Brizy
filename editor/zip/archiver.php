@@ -23,17 +23,18 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
     protected $syncVersion;
 
     public function __construct(
-        Brizy_Editor_Project      $project,
+        Brizy_Editor_Project $project,
         Brizy_Admin_Fonts_Manager $fontManager,
-                                  $syncVersion
-    )
-    {
+        $syncVersion
+    ) {
         $this->project = $project;
         $this->fontManager = $fontManager;
         $this->syncVersion = $syncVersion;
 
         if (!class_exists('ZipArchive')) {
-            throw new InvalidArgumentException(__('Please install/enable php zip extension. Contact your hosting company for more info and help.'));
+            throw new InvalidArgumentException(
+                __('Please install/enable php zip extension. Contact your hosting company for more info and help.')
+            );
         }
     }
 
@@ -80,13 +81,16 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
     public function addEntityToZip(ZipArchive $z, Brizy_Editor_Zip_ArchiveItem $item)
     {
         // get block data
+        /**
+         * @var Brizy_Editor_Layout $block ;
+         */
         $block = $item->getPost();
         $data = array(
             'class' => get_class($block),
-            'title'         => $block->getTitle(),
-			'meta' => $block->getMeta(),
+            'title' => $block->getTitle(),
+            'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
-            'data' => $block->get_editor_data(),
+            'data' => $block->get_editor_data(true),
             'editorVersion' => $this->syncVersion,
             'files' => [
                 'images' => [],
@@ -94,14 +98,18 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
                 'screenshots' => [],
                 'fonts' => [],
             ],
-            'hasPro' => $item->isPro()
+            'hasPro' => $item->isPro(),
         );
 
-        if ( method_exists( $block, 'getTags' ) ) {
-			$data['tags'] = $block->getTags();
-		}
+        if($block instanceof Brizy_Editor_Layout) {
+			$data['globalStyles'] = $block->getGlobalStyles();
+        }
 
-		$z->addEmptyDir( $block->getUid() );
+        if (method_exists($block, 'getTags')) {
+            $data['tags'] = $block->getTags();
+        }
+
+        $z->addEmptyDir($block->getUid());
 
         $media = json_decode($block->getMedia());
         $meta = json_decode($block->getMeta());
@@ -113,7 +121,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         $data = $this->addFonts($z, $media, $data, $block->getUid());
         $data = $this->addScreenshot($z, $meta, $manager, $data, $block->getUid());
 
-        $z->addFromString($block->getUid() . "/data.json", json_encode($data));
+        $z->addFromString($block->getUid()."/data.json", json_encode($data));
     }
 
     public function createFromZip($zipPath)
@@ -169,7 +177,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
     private function createSingleFromZipPath(ZipArchive $z, $dir)
     {
 
-        $data = json_decode($z->getFromName($dir . '/data.json'));
+        $data = json_decode($z->getFromName($dir.'/data.json'));
         $hasPro = (bool)$data->hasPro;
 
         if ($hasPro && !Brizy_Compatibilities_BrizyProCompatibility::isPro()) {
@@ -189,23 +197,28 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         }
 
         /**
-         * @var Brizy_Editor_Block $block ;
+         * @var Brizy_Editor_Layout $block ;
          */
         $block = $this->getManager($entityClass)->createEntity(md5(random_bytes(10)), 'publish');
         $block->set_needs_compile(true);
         $block->set_editor_data($data->data);
         $block->setMeta($data->meta);
 
-		if ( $data->title ) {
-			$block->setTitle( $data->title );
-		}
+        if (isset($data->title)) {
+            $block->setTitle($data->title);
+        }
 
-		if ( method_exists( $entityClass, 'setTags' ) ) {
-			$block->setTags( $data->tags );
-		}
+        if (method_exists($entityClass, 'setTags') && isset($data->tags)) {
+            $block->setTags($data->tags);
+        }
 
         $block->setMedia($data->media);
         $block->set_editor_version($data->editorVersion);
+
+        if($block instanceof Brizy_Editor_Layout) {
+	        $block->setGlobalStyles( $data->globalStyles );
+        }
+
         $block->setDataVersion(1);
         $block->save();
 
@@ -221,20 +234,22 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         return $block;
     }
 
-    public function getSyncVersion() {
-	    return $this->syncVersion;
+    public function getSyncVersion()
+    {
+        return $this->syncVersion;
     }
 
     public function isVersionSupported($version)
     {
-	    $version = preg_replace("/-wp/i", "", $version);
-	    $version = preg_replace("/-cloud/i", "", $version);
+        $version = preg_replace("/-wp/i", "", $version);
+        $version = preg_replace("/-cloud/i", "", $version);
+
         return version_compare($this->getSyncVersion(), $version, '>=');
     }
 
     protected function prepareArchiveFilepath($fileName)
     {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
+        return sys_get_temp_dir().DIRECTORY_SEPARATOR.$fileName;
     }
 
     protected function storeImages($data, ZipArchive $z, Brizy_Editor_Post $block)
@@ -248,15 +263,17 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             }
 
             $basename = basename($path);
-            $original_asset_path = $urlBuilder->page_upload_path("/assets/images/" . $basename);
-            $original_asset_path_relative = $urlBuilder->page_upload_relative_path("/assets/images/" . $basename);
+            $original_asset_path = $urlBuilder->page_upload_path("/assets/images/".$basename);
+            $original_asset_path_relative = $urlBuilder->page_upload_relative_path("/assets/images/".$basename);
             wp_mkdir_p(dirname($original_asset_path));
             file_put_contents($original_asset_path, $z->getFromName($path));
 
-            Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment($original_asset_path,
+            Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment(
+                $original_asset_path,
                 $original_asset_path_relative,
                 $block->getWpPostId(),
-                $uid);
+                $uid
+            );
         }
     }
 
@@ -268,7 +285,12 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         $screens = (array)$data->files->screenshots;
 
         foreach ($screens as $uid => $filePath) {
-            $manager->saveScreenshot($uid, $this->getScreenshotType($data->class), $z->getFromName($filePath), $block->getWpPostId());
+            $manager->saveScreenshot(
+                $uid,
+                $this->getScreenshotType($data->class),
+                $z->getFromName($filePath),
+                $block->getWpPostId()
+            );
         }
 
     }
@@ -283,8 +305,10 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
             foreach ((array)$weights as $weight => $weightType) {
                 foreach ((array)$weightType as $type => $filePath) {
-                    $newWeights[$weight][$type] = $this->downloadFileToTemporaryFile(basename($filePath),
-                        $z->getFromName($filePath));
+                    $newWeights[$weight][$type] = $this->downloadFileToTemporaryFile(
+                        basename($filePath),
+                        $z->getFromName($filePath)
+                    );
                 }
             }
 
@@ -310,15 +334,17 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
                 continue;
             }
 
-            $original_asset_path = $urlBuilder->brizy_upload_path("/custom_files/" . $uploadName);
-            $original_asset_path_relative = $urlBuilder->brizy_upload_relative_path("/custom_files/" . $uploadName);
+            $original_asset_path = $urlBuilder->brizy_upload_path("/custom_files/".$uploadName);
+            $original_asset_path_relative = $urlBuilder->brizy_upload_relative_path("/custom_files/".$uploadName);
             wp_mkdir_p(dirname($original_asset_path));
             file_put_contents($original_asset_path, $z->getFromName($path));
 
-            Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment($original_asset_path,
+            Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment(
+                $original_asset_path,
                 $original_asset_path_relative,
                 $block->getWpPostId(),
-                $uid);
+                $uid
+            );
         }
     }
 
@@ -329,8 +355,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
         if ($result === false) {
             Brizy_Logger::instance()->error('Filed to write font content', ['filePath' => $filePath]);
-            throw new Exception(__('Failed to write font content', 'brizy' ) );
-		}
+            throw new Exception(__('Failed to write font content', 'brizy'));
+        }
 
         return array(
             'name' => $basename,
@@ -351,7 +377,9 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
         switch ($class) {
             case Brizy_Editor_Block::class:
-                return $managers[Brizy_Editor_Block::class] = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_SAVED);
+                return $managers[Brizy_Editor_Block::class] = new Brizy_Admin_Blocks_Manager(
+                    Brizy_Admin_Blocks_Main::CP_SAVED
+                );
             case Brizy_Editor_Layout::class:
                 return $managers[Brizy_Editor_Layout::class] = new Brizy_Admin_Layouts_Manager();
         }
@@ -368,7 +396,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
      */
     protected function addImages(ZipArchive $z, $media, array $data, $dir)
     {
-        $z->addEmptyDir($filesImagesPath = $dir . '/files/images');
+        $z->addEmptyDir($filesImagesPath = $dir.'/files/images');
 
         foreach ($media->images as $mediaUid) {
             $mediaId = (int)$this->getAttachmentByMediaName($mediaUid);
@@ -378,11 +406,11 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             $imagePath = get_attached_file($mediaId);
             $imageName = basename($imagePath);
             if (file_exists($imagePath)) {
-                $path = $filesImagesPath . "/" . $imageName;
+                $path = $filesImagesPath."/".$imageName;
                 $z->addFile($imagePath, $path);
                 $data['files']['images'][$mediaUid] = $path;
             } else {
-                Brizy_Logger::instance()->error('Archive object failed. The file ' . $imagePath . ' does not exist', []);
+                Brizy_Logger::instance()->error('Archive object failed. The file '.$imagePath.' does not exist', []);
                 //throw new Exception( __( 'Archive object failed. The file ' . $imagePath . ' does not exist' ) );
             }
         }
@@ -400,14 +428,14 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
     protected function addUploads(ZipArchive $z, $media, array $data, $dir)
     {
 
-        $z->addEmptyDir($filesUploadsPath = $dir . '/files/uploads');
+        $z->addEmptyDir($filesUploadsPath = $dir.'/files/uploads');
         foreach ($media->uploads as $mediaUpload) {
             list($uploadUid, $uploadName) = explode('|||', $mediaUpload);
             $mediaId = (int)$this->getAttachmentByMediaName($uploadUid);
             $filePath = get_attached_file($mediaId);
             $fileName = basename($filePath);
             if (file_exists($filePath)) {
-                $path = $filesUploadsPath . "/" . $fileName;
+                $path = $filesUploadsPath."/".$fileName;
                 $z->addFile($filePath, $path);
                 $data['files']['uploads'][$mediaUpload] = $path;
             }
@@ -427,7 +455,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
      */
     protected function addFonts(ZipArchive $z, $media, array $data, $dir)
     {
-        $z->addEmptyDir($filesFontsPath = $dir . '/files/fonts');
+        $z->addEmptyDir($filesFontsPath = $dir.'/files/fonts');
         foreach ($media->fonts as $fontUid) {
             $fontData = $this->fontManager->getFontForExport($fontUid);
             if (!$fontData) {
@@ -440,12 +468,12 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
                     $fontName = basename($file);
 
                     if (file_exists($file)) {
-                        $path = $filesFontsPath . "/" . $fontName;
+                        $path = $filesFontsPath."/".$fontName;
                         $z->addFile($file, $path);
                         $fontData['weights'][$weigth][$type] = $path;
                         $data['files']['fonts'][$fontUid] = $fontData;
                     } else {
-                        Brizy_Logger::instance()->error('Archive object failed. The file ' . $file . ' does not exist', []);
+                        Brizy_Logger::instance()->error('Archive object failed. The file '.$file.' does not exist', []);
                         //throw new Exception( __('Archive object failed. The file ' . $file . ' does not exist') );
                         continue;
                     }
@@ -472,12 +500,12 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
             $screenPath = $manager->getScreenshot($screenUid);
             if (!file_exists($screenPath)) {
-                Brizy_Logger::instance()->error('Archive object failed. The file ' . $screenPath . ' does not exist', []);
+                Brizy_Logger::instance()->error('Archive object failed. The file '.$screenPath.' does not exist', []);
 
                 //throw new Exception( __('Archive object failed. The file ' . $screenPath . ' does not exist') );
                 return;
             }
-            $zipScreenPath = $dir . "/files/screenshots/" . basename($screenPath);
+            $zipScreenPath = $dir."/files/screenshots/".basename($screenPath);
             $z->addFile($screenPath, $zipScreenPath);
             $data['files']['screenshots'][$screenUid] = $zipScreenPath;
         }

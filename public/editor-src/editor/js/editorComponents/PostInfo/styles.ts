@@ -1,5 +1,5 @@
-import type { Value } from "./types";
 import { renderStyles } from "visual/utils/cssStyle";
+import type { Value } from "./types";
 
 export const style = (
   v: Value,
@@ -25,6 +25,7 @@ export const style = (
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
         "cssStyleColor",
         "cssStyleElementPostInfoSpacingCloud"
       ]

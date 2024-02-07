@@ -4,10 +4,10 @@ import { FontFamily } from "visual/component/Controls/FontFamily";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import Stepper from "visual/component/Controls/Stepper";
+import { FontWeight } from "visual/component/Controls/Typography/FontWeight";
 import { Label } from "visual/component/Label";
 import Config from "visual/global/Config";
 import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
-import { Weight } from "visual/utils/fonts/Weight";
 import { isStory } from "visual/utils/models";
 import { FontStyle } from "./FontStyle";
 import { Icon } from "./TabIcon";
@@ -36,6 +36,15 @@ export class Typography extends PureComponent<Props> {
 
   onLetterSpacing = (v: Value["letterSpacing"]): void =>
     this.props.onChange(v, { isChanged: "letterSpacing" });
+
+  onVariableWeiqht = (v: Value["variableFontWeight"]): void =>
+    this.props.onChange(v, { isChanged: "variableFontWeight" });
+
+  onFontWidth = (v: Value["fontWidth"]): void =>
+    this.props.onChange(v, { isChanged: "fontWidth" });
+
+  onSoftness = (v: Value["fontSoftness"]): void =>
+    this.props.onChange(v, { isChanged: "fontSoftness" });
 
   render() {
     const {
@@ -68,9 +77,13 @@ export class Typography extends PureComponent<Props> {
       letterSpacingMin,
       letterSpacingStep,
       letterSpacingLabel,
+      variableFontWeight,
+      fontWidth,
+      fontSoftness,
       className,
       icons,
       activeIcon,
+      variations,
       onIconClick
     } = this.props;
 
@@ -154,21 +167,19 @@ export class Typography extends PureComponent<Props> {
               onChange={this.onFontSize}
             />
           </div>
-          <div className="brz-ed__col brz-ed__col-1-2">
-            <Label title={weightLabel}>{weightLabel}</Label>
-            <Select2<Weight>
-              value={weight}
-              onChange={this.onFontWeight}
-              editable={false}
-              size="auto"
-            >
-              {weights.map(({ value, title }) => (
-                <Item key={value} value={value}>
-                  {title}
-                </Item>
-              ))}
-            </Select2>
-          </div>
+          <FontWeight
+            label={weightLabel}
+            weight={weight}
+            variableFontWeight={variableFontWeight}
+            fontWidth={fontWidth}
+            fontSoftness={fontSoftness}
+            onFontWeightChange={this.onFontWeight}
+            onVariableFontWeightChange={this.onVariableWeiqht}
+            onFontWidthChange={this.onFontWidth}
+            onSoftnessChange={this.onSoftness}
+            variations={variations}
+            weights={weights}
+          />
           <div className="brz-ed__col brz-ed__col-1-2">
             <Label title={lineHeightLabel}>{lineHeightLabel}</Label>
             <Stepper

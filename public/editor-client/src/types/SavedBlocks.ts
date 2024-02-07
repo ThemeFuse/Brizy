@@ -53,6 +53,7 @@ interface Base {
   synchronizable?: boolean;
   synchronized?: boolean;
   isCloudEntity?: boolean;
+  globalStyles?: string;
   meta: {
     type: BlockMetaType;
     extraFontStyles: ExtraFontStyle[];

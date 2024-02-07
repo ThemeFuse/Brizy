@@ -43,7 +43,7 @@
   &-btn-help {
     position: absolute;
     color: $block_layout__btn-color;
-    top: 21px;
+    top: 19px;
     right: 41px;
     display: flex;
     align-items: center;
@@ -1144,6 +1144,9 @@
       bottom: 0;
       left: 0;
       z-index: 2;
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px 60px;
 
       &-grid {
         height: 100%;

@@ -13,6 +13,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 	const BRIZY_LAYOUT_META = 'brizy-meta';
 	const BRIZY_LAYOUT_MEDIA = 'brizy-media';
+	const BRIZY_LAYOUT_GLOBAL_STYLES = 'brizy-global-styles';
 
 	/**
 	 * @var string
@@ -23,6 +24,11 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 	 * @var string
 	 */
 	protected $media;
+
+	/**
+	 * @var string
+	 */
+	protected $globalStyles;
 
 	/**
 	 * @var Brizy_Editor_Layout
@@ -65,6 +71,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 				'tags',
 				'meta',
 				'data',
+				'globalStyles',
 				'status',
 				'dataVersion',
 				'synchronized',
@@ -86,6 +93,9 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		if ( in_array( 'tags', $fields ) ) {
 			$global['tags'] = $this->getTags();
+		}
+		if ( in_array( 'globalStyles', $fields ) ) {
+			$global['globalStyles'] = $this->getGlobalStyles();
 		}
 
 		if ( in_array( 'status', $fields ) ) {
@@ -177,6 +187,20 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getGlobalStyles() {
+		return $this->globalStyles;
+	}
+
+	/**
+	 * @param string $globalStyles
+	 */
+	public function setGlobalStyles( $globalStyles ) {
+		$this->globalStyles = $globalStyles;
+	}
+
 	public function getMedia() {
 		return $this->media;
 	}
@@ -217,6 +241,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$data['media'] = $this->getMedia();
 		$data['title'] = $this->getTitle();
 		$data['tags'] = $this->getTags();
+		$data['globalStyles'] = $this->getGlobalStyles();
 
 		unset( $data['wp_post'] );
 
@@ -238,6 +263,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		$this->meta  = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, true );
 		$this->media = get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, true );
+		$this->globalStyles = base64_decode(get_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_GLOBAL_STYLES, true ));
 
 		$this->loadInstanceTags();
 	}
@@ -246,6 +272,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		$data = parent::convertToOptionValue();
 
 		$data['media'] = $this->getMedia();
+		$data['globalStyles'] = $this->getGlobalStyles();
 		//$data['cloudId']        = $this->getCloudId();
 		//$data['cloudAccountId'] = $this->getCloudAccountId();
 		$data['synchronized']   = $this->isSynchronized( Brizy_Editor_Project::get()->getCloudAccountId() );
@@ -262,6 +289,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_META, $this->meta );
 		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_MEDIA, $this->media );
+		update_metadata( 'post', $this->getWpPostId(), self::BRIZY_LAYOUT_GLOBAL_STYLES, base64_encode($this->globalStyles) );
 
 		$this->saveInstanceTags();
 	}

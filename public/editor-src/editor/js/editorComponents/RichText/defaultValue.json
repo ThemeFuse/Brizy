@@ -81,6 +81,9 @@
     "typographyFontWeight": 400,
     "typographyLineHeight": 1.3,
     "typographyLetterSpacing": 0,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "h1FontStyle": "heading1",
     "h1FontFamilyType": "google",
@@ -89,6 +92,9 @@
     "h1FontWeight": 400,
     "h1LineHeight": 1.3,
     "h1LetterSpacing": 0,
+    "h1VariableFontWeight": 400,
+    "h1FontWidth": 100,
+    "h1FontSoftness": 0,
 
     "h2FontStyle": "heading2",
     "h2FontFamilyType": "google",
@@ -97,6 +103,9 @@
     "h2FontWeight": 400,
     "h2LineHeight": 1.3,
     "h2LetterSpacing": 0,
+    "h2VariableFontWeight": 400,
+    "h2FontWidth": 100,
+    "h2FontSoftness": 0,
 
     "h3FontStyle": "heading3",
     "h3FontFamilyType": "google",
@@ -105,6 +114,9 @@
     "h3FontWeight": 400,
     "h3LineHeight": 1.3,
     "h3LetterSpacing": 0,
+    "h3VariableFontWeight": 400,
+    "h3FontWidth": 100,
+    "h3FontSoftness": 0,
 
     "h4FontStyle": "heading4",
     "h4FontFamilyType": "google",
@@ -113,6 +125,9 @@
     "h4FontWeight": 400,
     "h4LineHeight": 1.3,
     "h4LetterSpacing": 0,
+    "h4VariableFontWeight": 400,
+    "h4FontWidth": 100,
+    "h4FontSoftness": 0,
 
     "h5FontStyle": "heading5",
     "h5FontFamilyType": "google",
@@ -121,6 +136,9 @@
     "h5FontWeight": 400,
     "h5LineHeight": 1.3,
     "h5LetterSpacing": 0,
+    "h5VariableFontWeight": 400,
+    "h5FontWidth": 100,
+    "h5FontSoftness": 0,
 
     "h6FontStyle": "heading6",
     "h6FontFamilyType": "google",
@@ -129,6 +147,9 @@
     "h6FontWeight": 400,
     "h6LineHeight": 1.3,
     "h6LetterSpacing": 0,
+    "h6VariableFontWeight": 400,
+    "h6FontWidth": 100,
+    "h6FontSoftness": 0,
 
     "colorHex": "",
     "colorOpacity": 1,
@@ -151,6 +172,29 @@
     "tempColorPalette": "color7",
     "tempGradientColorOpacity": 1,
     "tempGradientColorPalette": "",
+
+    "textGradientActivePointer": "startPointer",
+    "textGradientStartPointer": 0,
+    "textGradientFinishPointer": 100,
+
+    "textGradientType": "linear",
+
+    "textGradientLinearDegree": 90,
+    "textGradientRadialDegree": 90,
+
+    "textGradientColorHex": "#009900",
+    "textGradientColorOpacity": 1,
+    "textGradientColorPalette": "",
+    "textBgColorType": "none",
+    "textBgColorHex": "",
+    "textBgColorOpacity": 0,
+    "textBgColorPalette": "",
+
+    "tempTextColorOpacity": 1,
+    "tempTextColorPalette": "color7",
+    "tempTextGradientColorOpacity": 1,
+    "tempTextGradientColorPalette": "",
+    "tempTextBgColorType": "solid",
 
     "colorType": "solid",
     "tag": "p",

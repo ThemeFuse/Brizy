@@ -342,7 +342,7 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,

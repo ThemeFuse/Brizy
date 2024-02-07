@@ -43,6 +43,9 @@
     "typographyFontWeight": 400,
     "typographyLineHeight": 2.4,
     "typographyLetterSpacing": 0,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "colorHex": "#ffffff",
     "colorOpacity": 1,

@@ -167,6 +167,8 @@
 .brz-story {
   background-color: #222;
   min-height: 100vh;
+  display: flex !important;
+  align-items: center;
 
   .brz-container {
     font-size: 436px;
@@ -278,9 +280,6 @@
         max-height: 100%;
         transform: translateZ(0);
       }
-    }
-    > .brz-slick-slider {
-      padding-top: 160px;
     }
     > .slick-slider {
       > .slick-list > .slick-track > .slick-slide {

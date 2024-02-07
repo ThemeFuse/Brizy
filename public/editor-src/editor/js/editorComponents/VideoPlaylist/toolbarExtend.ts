@@ -73,7 +73,7 @@ export function getItems({
               options: [
                 {
                   id: "",
-                  type: "filters-dev",
+                  type: "filters",
                   states: [NORMAL, HOVER]
                 }
               ]
