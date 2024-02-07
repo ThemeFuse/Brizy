@@ -49,17 +49,17 @@ class Brizy_Editor_Compiler {
 
 		// process page data
 		$pageData        = $compilerResult['compiled']['page'];
-		$globalBlockData = $compilerResult['compiled']['globalBlocks'];
-		$projectData     = $compilerResult['compiled']['project'];
 
 		// update post
 		$this->updatePost( $post, $pageData );
 
 		// update project styles
-		$this->updateProjectStyles( $projectData );
+		if(isset($compilerResult['compiled']['project']))
+			$this->updateProjectStyles( $compilerResult['compiled']['project'] );
 
 		// update global blocks
-		$this->updateGlobalBLocks( $globalBlockData );
+		if(isset($compilerResult['compiled']['globalBlocks']))
+			$this->updateGlobalBLocks( $compilerResult['compiled']['globalBlocks'] );
 
 		return true;
 	}
@@ -104,7 +104,6 @@ class Brizy_Editor_Compiler {
 
 		$post->setCompiledScripts( $scripts );
 		$post->setCompiledStyles( $styles );
-
 		$post->set_needs_compile( false );
 		$post->set_compiler( Brizy_Editor_Post::COMPILER_BROWSER );
 		$post->set_compiler_version( BRIZY_EDITOR_VERSION );
