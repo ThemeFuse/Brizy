@@ -57,7 +57,7 @@ export interface Block {
   keywords: string;
   thumbnailWidth: number;
   thumbnailHeight: number;
-  type: number | string;
+  type: Array<number | string>;
   blank?: string;
   position?: number;
   pro?: boolean;
@@ -141,16 +141,11 @@ export interface FontStyle {
 }
 
 // region Kits
-export interface KitCategories {
-  id: number;
-  title: string;
-}
-
 export interface DefaultTemplateKits<T1, T2, T3> {
   label?: string;
   getMeta: (res: Response<T1>, rej: Response<string>, kit: KitItem) => void;
   getData: (
-    res: Response<Promise<T2>>,
+    res: Response<T2>,
     rej: Response<string>,
     kitId: BlockWithThumbs
   ) => void;
@@ -191,6 +186,7 @@ export type Kit = {
   keywords: string;
   thumbnailHeight: number;
   thumbnailWidth: number;
+  blank?: string;
 };
 // endregion
 
@@ -204,16 +200,6 @@ export interface DefaultTemplatePopup<T1, T2> {
     kit: BlockWithThumbs
   ) => void;
 }
-
-export type APIPopup = {
-  id: string;
-  title: string;
-  categories: string;
-  pro: string;
-  thumbnail: string;
-  thumbnailHeight: number;
-  thumbnailWidth: number;
-};
 
 export interface Popups {
   blocks: Array<Block>;

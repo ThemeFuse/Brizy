@@ -25,6 +25,7 @@ class Brizy_Config {
 
 	const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
     const EDITOR_TEMPLEATES_URL = "https://e-t-cloud.b-cdn.net/1.3.3-beta2/";
+    const EDITOR_NEW_TEMPLEATES_URL = "https://phplaravel-1109775-4184176.cloudwaysapps.com/";
     const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
@@ -114,6 +115,10 @@ class Brizy_Config {
 
     static public function getEditorTemplatesUrl( $directories ) {
         return apply_filters( 'brizy_editor_config_templates_url', self::EDITOR_TEMPLEATES_URL . $directories );
+    }
+
+    static public function getEditorNewTemplatesUrl( $directories ) {
+        return apply_filters( 'brizy_editor_config_templates_url', self::EDITOR_NEW_TEMPLEATES_URL . $directories );
     }
 
     static public function getTermsOfServiceUrl() {
