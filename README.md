@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.4.2<br>
+Tested up to: 6.4.3<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.39<br>
+Stable tag: 2.4.40<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,30 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.40 - 2024-02-07
+* New: Help video functionality inside the builder
+* New: Added variable fonts 
+* New: Text highlight color  
+* Improved: Custom Attributes position in the right sidebar
+* Improved: Include Global Style when saving layouts 
+* Improved: Toolbar options arrow position on Rows
+* Improved: Extract React from editor build, and add this as standalone script in HTML 
+* Improved: Disable shorten/extend actions for AI text in some cases
+* Improved: Drag and drop for Icons and Buttons 
+* Improved: Tabs UI colors in right sidebar
+* Fixed: Progress bar comes out of the wrapper 
+* Fixed: Text Link option pasted value doesn't save if instantly closing toolbar 
+* Fixed: Video player won't extend on mobile on IOS
+* Fixed: Form Select arrow 
+* Fixed: Column align when Effects are enabled 
+* Fixed: Writing long texts in Form fields 
+* Fixed: Video element crashed when imported with a block
+* Fixed: Column alignment doesn't work on Auto distribute option  
+* Fixed: Toolbar css issue when searching a Collection Type name
+* Fixed: Copy Styles don't apply for Dynamic Content Rich Text 
+* Fixed: Background button and icon hover color didn't match preview
+* Fixed: Video background for blocks and columns unable to pause
 
 ### 2.4.39 - 2024-01-17
  * New: Add Right Click Context Menu to Tabs Element 
