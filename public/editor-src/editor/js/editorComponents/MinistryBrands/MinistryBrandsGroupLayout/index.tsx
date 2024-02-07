@@ -13,6 +13,7 @@ import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarMeta from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
@@ -134,20 +135,31 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                   )}
                   selector=".brz-groupLayout--item__content-detailButton"
                 >
-                  <Wrapper
-                    {...this.makeWrapperProps({
-                      className
-                    })}
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarImage,
+                      undefined,
+                      {
+                        allowExtend: false
+                      }
+                    )}
+                    selector=".brz-ministryBrands__item--media"
                   >
-                    <DynamicContentHelper
-                      placeholder={getPlaceholder(v)}
-                      props={{
-                        className: "brz-ministryBrands brz-groupLayout"
-                      }}
-                      blocked={false}
-                      tagName="div"
-                    />
-                  </Wrapper>
+                    <Wrapper
+                      {...this.makeWrapperProps({
+                        className
+                      })}
+                    >
+                      <DynamicContentHelper
+                        placeholder={getPlaceholder(v)}
+                        props={{
+                          className: "brz-ministryBrands brz-groupLayout"
+                        }}
+                        blocked={false}
+                        tagName="div"
+                      />
+                    </Wrapper>
+                  </Toolbar>
                 </Toolbar>
               </Toolbar>
             </Toolbar>

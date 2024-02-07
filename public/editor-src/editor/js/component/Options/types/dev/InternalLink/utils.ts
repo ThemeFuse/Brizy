@@ -1,15 +1,15 @@
 import { partial, property } from "underscore";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { getCollectionTypes } from "visual/utils/api";
 import * as A from "visual/utils/array";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { t } from "visual/utils/i18n";
 import { toObject } from "visual/utils/object";
 import { String } from "visual/utils/string/specs";
 import { Reader } from "visual/utils/types/Type";
 import { mCompose } from "visual/utils/value";
 import { Choice, ChoicesAsync } from "../Select/types";
-import { ChoicesSync, ChoiceWithPermalink } from "./types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { getCollectionTypes } from "visual/utils/api";
-import { t } from "visual/utils/i18n";
+import { ChoiceWithPermalink, ChoicesSync } from "./types";
 
 const readPost: Reader<ChoiceWithPermalink> = (v) => {
   type _Post = {
@@ -52,3 +52,6 @@ export const getCollectionChoices = (config: ConfigCommon): ChoicesAsync => ({
     title: t("There are no choices")
   }
 });
+
+export const isValidValue = ({ title, value }: ChoiceWithPermalink): boolean =>
+  title !== "" && value !== "";

@@ -10,6 +10,7 @@ import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
 import * as toolbarMedia from "../toolbarMedia";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
@@ -118,18 +119,29 @@ export class MinistryBrandsSermonFeatured extends EditorComponent<
                   )}
                   selector=".brz-sermonFeatured__item--meta--preview"
                 >
-                  <Wrapper
-                    {...this.makeWrapperProps({
-                      className
-                    })}
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarImage,
+                      undefined,
+                      {
+                        allowExtend: false
+                      }
+                    )}
+                    selector=".brz-ministryBrands__item--media"
                   >
-                    <DynamicContentHelper
-                      placeholder={getPlaceholder(v)}
-                      props={{ className: "brz-sermonFeatured" }}
-                      blocked={false}
-                      tagName="div"
-                    />
-                  </Wrapper>
+                    <Wrapper
+                      {...this.makeWrapperProps({
+                        className
+                      })}
+                    >
+                      <DynamicContentHelper
+                        placeholder={getPlaceholder(v)}
+                        props={{ className: "brz-sermonFeatured" }}
+                        blocked={false}
+                        tagName="div"
+                      />
+                    </Wrapper>
+                  </Toolbar>
                 </Toolbar>
               </Toolbar>
             </Toolbar>

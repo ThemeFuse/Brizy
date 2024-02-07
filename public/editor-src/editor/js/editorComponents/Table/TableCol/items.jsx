@@ -64,21 +64,27 @@ class TableColItems extends EditorArrayComponent {
         return [
           {
             id: "duplicate",
-            type: "legacy-button",
-            title: t("Duplicate"),
-            icon: "nc-duplicate",
+            type: "button",
+            config: {
+              title: t("Duplicate"),
+              icon: "nc-duplicate",
+              reverseTheme: true
+            },
             position: 200,
-            onChange: () => {
+            onClick: () => {
               this.cloneItem(itemIndex);
             }
           },
           {
             id: "remove",
-            type: "legacy-button",
-            title: t("Delete"),
-            icon: "nc-trash",
+            type: "button",
+            config: {
+              title: t("Delete"),
+              icon: "nc-trash",
+              reverseTheme: true
+            },
             position: 210,
-            onChange: () => {
+            onClick: () => {
               hideToolbar();
               this.removeItem(itemIndex);
             }

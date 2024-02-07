@@ -10,6 +10,7 @@ import {
   cssStylePaddingFourFields,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -84,6 +85,19 @@ export function cssStyleElementPostsPaginationLetterSpacing({
   state
 }) {
   return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    prefix: "pagination"
+  });
+}
+
+export function cssStyleElementPostsPaginationFontVariation({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTypography2FontVariation({
     v,
     device,
     state,
@@ -207,6 +221,15 @@ export function cssStyleElementPostsFilterFontWeight({ v, device, state }) {
 
 export function cssStyleElementPostsFilterLetterSpacing({ v, device, state }) {
   return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    prefix: "filter"
+  });
+}
+
+export function cssStyleElementPostsFilterFontVariation({ v, device, state }) {
+  return cssStyleTypography2FontVariation({
     v,
     device,
     state,

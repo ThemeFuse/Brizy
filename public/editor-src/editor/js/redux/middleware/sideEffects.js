@@ -42,12 +42,13 @@ import {
   currentLanguageSelector,
   currentRoleSelector,
   currentStyleSelector,
+  defaultFontSelector,
+  extraFontStylesSelector,
   fontsSelector,
   getDefaultFontDetailsSelector,
   storeWasChangedSelector,
   unDeletedFontsSelector
 } from "../selectors";
-import { defaultFontSelector, extraFontStylesSelector } from "../selectors-new";
 
 export default (config) => (store) => (next) => (action) => {
   const callbacks = {

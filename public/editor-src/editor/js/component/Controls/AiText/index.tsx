@@ -41,6 +41,7 @@ interface Props {
   loading: boolean;
   submitRequest: (prompt: string, action?: string) => void;
   prompt: string;
+  isTitleSelected: boolean;
 }
 
 export const AiText: FC<Props> = ({
@@ -48,7 +49,8 @@ export const AiText: FC<Props> = ({
   value,
   loading,
   submitRequest,
-  prompt
+  prompt,
+  isTitleSelected
 }): ReactElement => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -85,6 +87,7 @@ export const AiText: FC<Props> = ({
           <Inline spacing={20}>
             {actions.map((action, index) => (
               <AiActionButton
+                isTitleSelected={isTitleSelected}
                 disabled={disabled}
                 key={index}
                 onClick={handleClick}

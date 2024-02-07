@@ -3,7 +3,7 @@ exports.id = 3;
 exports.ids = [3];
 exports.modules = {
 
-/***/ 7735:
+/***/ 7730:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -11,9 +11,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "sass": () => (/* binding */ sass),
 /* harmony export */   "sassLanguage": () => (/* binding */ sassLanguage)
 /* harmony export */ });
-/* harmony import */ var _lezer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7736);
-/* harmony import */ var _codemirror_language__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6051);
-/* harmony import */ var _codemirror_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6134);
+/* harmony import */ var _lezer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7731);
+/* harmony import */ var _codemirror_language__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6044);
+/* harmony import */ var _codemirror_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6127);
 
 
 
@@ -67,15 +67,15 @@ function sass(config) {
 
 /***/ }),
 
-/***/ 7736:
+/***/ 7731:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "parser": () => (/* binding */ parser)
 /* harmony export */ });
-/* harmony import */ var _lezer_lr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6126);
-/* harmony import */ var _lezer_highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6053);
+/* harmony import */ var _lezer_lr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6119);
+/* harmony import */ var _lezer_highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6046);
 
 
 

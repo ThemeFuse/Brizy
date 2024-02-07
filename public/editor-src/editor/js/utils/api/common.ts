@@ -1,6 +1,9 @@
 import { ChoicesSync } from "visual/component/Options/types/dev/InternalLink/types";
 import { ChoicesSync as ChoiceSync } from "visual/component/Options/types/dev/MultiSelect2/types";
-import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
+import {
+  Choice,
+  ChoicesAsync
+} from "visual/component/Options/types/dev/Select/types";
 import {
   EkklesiaFieldMap,
   EkklesiaKeys,
@@ -12,10 +15,13 @@ import {
   ConfigCommon,
   OnChange
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
+  BlockWithThumbs,
   BlocksArray,
   DefaultBlock,
   DefaultBlockWithID,
+  KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
   PopupsWithThumbs,
@@ -38,6 +44,9 @@ import {
 import { ScreenshotData } from "visual/global/Config/types/configs/common";
 import { EkklesiaFields } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
 import {
+  GlobalBlock,
+  GlobalBlockNormal,
+  GlobalBlockPopup,
   PageCommon,
   Project,
   Rule,
@@ -47,37 +56,50 @@ import {
 import { PostsSources } from "visual/utils/api/types";
 import { getCompile } from "visual/utils/compiler";
 import { t } from "visual/utils/i18n";
-import { editorRuleToApiRule, makeBlockMeta } from "./adapter";
+import {
+  editorRuleToApiRule,
+  makeBlockMeta,
+  stringifyGlobalBlock
+} from "./adapter";
+
+//#region Common
+
+export function pendingRequest(time = 650): Promise<boolean> {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res(true);
+    }, time);
+  });
+}
+
+//#endregion
 
 //#region Publish
 
 interface Data {
   page: PageCommon;
   project: Project;
+  globalBlocks: Array<GlobalBlock>;
 }
 
 interface Publish {
+  is_autosave: 1 | 0;
   config: ConfigCommon;
-  data: Partial<Data>;
-  requiredCompilerData: Data;
+  needToCompile: Partial<Data>;
+  state: Data;
 }
 
-export function publish(props: Publish): Promise<void> {
+export function publish(data: Publish): Promise<void> {
   return new Promise((res, rej) => {
-    const { config } = props;
+    const { is_autosave, config } = data;
     const { handler } = config.ui?.publish ?? {};
 
     if (!handler) {
       rej(t("API: No publish handler found."));
     } else {
-      const { data, requiredCompilerData } = props;
-
       (async () => {
-        const pageHTML = await getCompile({
-          ...requiredCompilerData,
-          config
-        });
-        handler(res, rej, { ...pageHTML, ...data });
+        const output = await getCompile(data);
+        handler(res, rej, { ...output, is_autosave });
       })();
     }
   });
@@ -87,9 +109,24 @@ export function publish(props: Publish): Promise<void> {
 
 //#region AutoSave
 
-export function autoSave(data: AutoSave, config: ConfigCommon): Promise<void> {
+type _AutoSave = Omit<AutoSave, "globalBlock">;
+type Save = _AutoSave & {
+  globalBlock?: GlobalBlock;
+};
+
+export function autoSave(data: Save, config: ConfigCommon): Promise<void> {
   return new Promise((res) => {
-    config.onAutoSave?.(data);
+    const onAutoSave = config.onAutoSave;
+
+    if (typeof onAutoSave === "function") {
+      const { globalBlock, ...other } = data;
+
+      onAutoSave({
+        ...other,
+        ...(globalBlock && { globalBlock: stringifyGlobalBlock(globalBlock) })
+      });
+    }
+
     res();
   });
 }
@@ -98,9 +135,25 @@ export function autoSave(data: AutoSave, config: ConfigCommon): Promise<void> {
 
 //#region OnChange
 
-export function onChange(data: OnChange, config: ConfigCommon): Promise<void> {
-  return new Promise((res) => {
-    config.onChange?.(data);
+type _OnChange = Omit<OnChange, "globalBlock">;
+type Change = _OnChange & {
+  globalBlock?: GlobalBlock;
+};
+
+export function onChange(data: Change, config: ConfigCommon): Promise<void> {
+  return new Promise(async (res) => {
+    const onChange = config.onChange;
+
+    if (onChange) {
+      const { globalBlock, ...other } = data;
+
+      onChange({
+        ...other,
+        ...(globalBlock && { globalBlock: stringifyGlobalBlock(globalBlock) })
+      });
+    }
+    await pendingRequest();
+
     res();
   });
 }
@@ -512,23 +565,36 @@ export function updatePopupRules(
 
 //#region default Templates
 
+export const defaultKits = (config: ConfigCommon): Promise<Array<KitItem>> => {
+  return new Promise((res, rej) => {
+    const { defaultKits } = config.api ?? {};
+    const getKits = defaultKits?.getKits;
+    if (!getKits) {
+      rej(t("API: No Kits getKits() found."));
+    } else {
+      getKits(res, rej);
+    }
+  });
+};
+
 export const defaultKitsMeta = (
-  config: ConfigCommon
-): Promise<Array<KitsWithThumbs>> => {
+  config: ConfigCommon,
+  id: string
+): Promise<KitsWithThumbs> => {
   return new Promise((res, rej) => {
     const { defaultKits } = config.api ?? {};
     const getMeta = defaultKits?.getMeta;
     if (!getMeta) {
       rej(t("API: No Kits getMeta() found."));
     } else {
-      getMeta(res, rej);
+      getMeta(res, rej, id);
     }
   });
 };
 
 export const defaultKitsData = (
   config: ConfigCommon,
-  blockID: string
+  kit: BlockWithThumbs
 ): Promise<DefaultBlock> => {
   return new Promise((res, rej) => {
     const { defaultKits } = config.api ?? {};
@@ -536,7 +602,7 @@ export const defaultKitsData = (
     if (!getData) {
       rej(t("API: No Kits getData() found."));
     } else {
-      getData(res, rej, blockID);
+      getData(res, rej, kit);
     }
   });
 };
@@ -725,7 +791,7 @@ export const defaultPostsSources = (
 
 //#endregion
 
-// #region Ministry Brands
+//#region Ministry Brands
 
 export const getEkklesiaChoiches = <
   T extends keyof EkklesiaFields = keyof EkklesiaFields
@@ -779,7 +845,25 @@ export const updateEkklesiaFields = async <
   );
 };
 
-// #endregion
+//#endregion
+
+//#region Leadific
+
+export const getLeadificCustomFields = (
+  config: ConfigCommon
+): Promise<ChoicesSync> => {
+  const { handler } = config?.api?.modules?.leadific?.getCustomFields ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej);
+    } else {
+      rej("Missing api handler in config");
+    }
+  });
+};
+
+//#endregion
 
 //#region Ai-Text
 
@@ -798,4 +882,62 @@ export const sendToAi = (
   });
 };
 
-//#endregion Ai-Text
+//#endregion
+
+//#region Ecwid
+
+export const getEcwidProducts = (config: ConfigCommon): Promise<Choice[]> => {
+  const get = config?.modules?.shop?.api?.getEcwidProducts?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof get === "function") {
+      get(res, rej);
+    } else {
+      rej(t("Missing getEcwidProducts api handler in config"));
+    }
+  });
+};
+
+//#endregion
+
+//#region Global Blocks
+
+export const createGlobalBlock = (
+  block: GlobalBlockNormal,
+  config: ConfigCommon
+): Promise<APIGlobalBlock> => {
+  return new Promise((res, rej) => {
+    const { globalBlocks } = config.api ?? {};
+    const create = globalBlocks?.create;
+
+    if (!create) {
+      rej(t("API: No globalBlocks create found."));
+    } else {
+      const data = stringifyGlobalBlock(block);
+      create(res, rej, data);
+    }
+  });
+};
+
+//#endregion
+
+//#region Global Popups
+
+export const createGlobalPopup = (
+  block: GlobalBlockPopup,
+  config: ConfigCommon
+): Promise<APIGlobalBlock> => {
+  return new Promise((res, rej) => {
+    const { globalPopups } = config.api ?? {};
+    const create = globalPopups?.create;
+
+    if (!create) {
+      rej(t("API: No globalPopups create found."));
+    } else {
+      const data = stringifyGlobalBlock(block);
+      create(res, rej, data);
+    }
+  });
+};
+
+//#endregion

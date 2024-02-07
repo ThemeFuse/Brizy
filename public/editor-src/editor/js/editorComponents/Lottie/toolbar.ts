@@ -59,9 +59,6 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
           devices: "desktop",
           placeholder: "lottie link",
           disabled: dvv("animationFile") !== "",
-          config: {
-            size: "medium"
-          },
           helper: {
             content: t(
               "This is Lottie .json URL. Get more from LottieFiles.com."
@@ -215,16 +212,13 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
               options: [
                 {
                   id: "link",
-                  type: "population-dev",
+                  type: "population",
                   label: t("Link to"),
                   config: linkDC,
                   option: {
                     id: "linkExternal",
                     type: "inputText",
-                    placeholder: "http://",
-                    config: {
-                      size: "medium"
-                    }
+                    placeholder: "http://"
                   }
                 },
                 {
@@ -281,7 +275,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
               options: [
                 {
                   id: "linkToSlide",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Slide"),
                   disabled: !IS_STORY,
                   config: {

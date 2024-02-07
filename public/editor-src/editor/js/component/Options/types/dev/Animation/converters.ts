@@ -14,7 +14,7 @@ export const defaultValue: Value = {
 
 export const fromElementModel: Option.FromElementModel<"animation"> = pipe(
   mPipe(LegacyModel.fromElementModel, fromLegacyModel),
-  (v) => v ?? { type: EffectType.None }
+  (v) => v ?? { type: defaultValue.type }
 );
 
 export const toElementModel: Option.ToElementModel<"animation"> = pipe(

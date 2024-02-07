@@ -25,17 +25,12 @@
           position: relative;
 
           .brz-groupSlider-info {
-            & > * {
-              margin-top: 0;
-              margin-left: 0;
-              margin-right: 0;
-            }
-
             overflow: hidden;
 
             h4,
             h6,
             p {
+              margin : 0;
               padding: 0;
             }
 

@@ -14,6 +14,7 @@ import { ReduxState } from "visual/redux/types";
 import { css1 } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { isStory } from "visual/utils/models";
+import * as Arr from "visual/utils/reader/array";
 import { uuid } from "visual/utils/uuid";
 import { styleHeading } from "./styles";
 import { createLabel, getFormats, mapBlockElements } from "./utils";
@@ -233,16 +234,22 @@ class QuillComponent extends React.Component<Props> {
     const sValue = quill.getText(selection.index, selection.length);
     this.props.selectedValue(sValue);
 
-    const { index, length } = quill.selection.savedRange;
+    const { index, length } = selection;
     // it's small hack for triple click
     this.restoreSelection({ index, length });
-    const [
-      {
-        parent: { domNode: $selectedDomNode }
-      }
-    ] = quill.getLeaf(index + length);
-    const quillFormat = quill.getFormat(quill.selection.savedRange);
-    return getFormats(jQuery($selectedDomNode), quillFormat);
+
+    const selectedDomNode = quill.getLeaf(index + length);
+
+    const _selectedDomNode = Arr.read(selectedDomNode)
+      ? selectedDomNode[0]?.parent?.domNode
+      : undefined;
+
+    if (_selectedDomNode) {
+      const quillFormat = quill.getFormat(selection);
+      return getFormats(jQuery(_selectedDomNode), quillFormat);
+    } else {
+      return {};
+    }
   }
 
   save = _.debounce((text: string) => {

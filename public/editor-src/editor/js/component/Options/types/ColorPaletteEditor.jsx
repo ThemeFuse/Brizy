@@ -66,11 +66,13 @@ class ColorPalette extends React.Component {
       const getToolbarItems = () => [
         {
           id: "settings",
-          type: "legacy-popover",
+          type: "popover",
           icon: "nc-cog",
           display: "inside",
           size: "auto",
-          onOpenDirect: true,
+          config: {
+            onOpenDirect: true
+          },
           position: 90,
           options: [
             {

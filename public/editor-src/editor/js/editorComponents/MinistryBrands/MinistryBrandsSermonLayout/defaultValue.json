@@ -28,6 +28,7 @@
     "seriesFilterHeading": "Series",
     "speakerFilterHeading": "Speaker",
     "searchFilterPlacehoder": "Search",
+    "defaultCategory" : "",
 
     "source": "",
     "detailPage": "",
@@ -35,7 +36,10 @@
     "detailPageSource": null,
     "detailPageButtonText": "Button",
 
-    "howmany": 9
+    "howmany": 9,
+
+    "maskCustomUploadImageFileName": "",
+    "maskCustomUploadImageSrc": ""
   },
 
   "style": {
@@ -57,6 +61,9 @@
     "filterTypographyFontWeight": 400,
     "filterTypographyLetterSpacing": 0,
     "filterTypographyLineHeight": 1.1,
+    "filterTypographyVariableFontWeight": 400,
+    "filterTypographyFontWidth": 100,
+    "filterTypographyFontSoftness": 0,
 
     "detailButtonTypographyFontStyle": "",
     "detailButtonTypographyFontFamilyType": "google",
@@ -65,6 +72,9 @@
     "detailButtonTypographyFontWeight": 400,
     "detailButtonTypographyLetterSpacing": 0,
     "detailButtonTypographyLineHeight": 1,
+    "detailButtonTypographyVariableFontWeight": 400,
+    "detailButtonTypographyFontWidth": 100,
+    "detailButtonTypographyFontSoftness": 0,
 
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
@@ -73,6 +83,9 @@
     "typographyFontWeight": 400,
     "typographyLetterSpacing": 0,
     "typographyLineHeight": 1,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
@@ -81,6 +94,9 @@
     "titleTypographyFontWeight": 700,
     "titleTypographyLetterSpacing": 0,
     "titleTypographyLineHeight": 1.1,
+    "titleTypographyVariableFontWeight": 700,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "previewTypographyFontStyle": "",
     "previewTypographyFontFamilyType": "google",
@@ -89,6 +105,9 @@
     "previewTypographyFontWeight": 400,
     "previewTypographyLetterSpacing": 0,
     "previewTypographyLineHeight": 1,
+    "previewTypographyVariableFontWeight": 400,
+    "previewTypographyFontWidth": 100,
+    "previewTypographyFontSoftness": 0,
 
     "paginationTypographyFontStyle": "",
     "paginationTypographyFontFamilyType": "google",
@@ -97,6 +116,9 @@
     "paginationTypographyFontWeight": 400,
     "paginationTypographyLetterSpacing": 0,
     "paginationTypographyLineHeight": 1,
+    "paginationTypographyVariableFontWeight": 400,
+    "paginationTypographyFontWidth": 100,
+    "paginationTypographyFontSoftness": 0,
 
     "metaLinksTypographyFontStyle": "",
     "metaLinksTypographyFontFamilyType": "google",
@@ -105,6 +127,9 @@
     "metaLinksTypographyFontWeight": 400,
     "metaLinksTypographyLetterSpacing": 0,
     "metaLinksTypographyLineHeight": 1,
+    "metaLinksTypographyVariableFontWeight": 400,
+    "metaLinksTypographyFontWidth": 100,
+    "metaLinksTypographyFontSoftness": 0,
 
     "mediaLinksTypographyFontStyle": "",
     "mediaLinksTypographyFontFamilyType": "google",
@@ -113,6 +138,9 @@
     "mediaLinksTypographyFontWeight": 400,
     "mediaLinksTypographyLetterSpacing": 0,
     "mediaLinksTypographyLineHeight": 1,
+    "mediaLinksTypographyVariableFontWeight": 400,
+    "mediaLinksTypographyFontWidth": 100,
+    "mediaLinksTypographyFontSoftness": 0,
 
     "colorHex": "#707070",
     "colorOpacity": 1,
@@ -134,10 +162,69 @@
     "paginationColorOpacity": 1,
     "paginationColorPalette": "",
 
+    "imgBgColorType": "none",
+    "imgBgColorHex": "#ffffff",
+    "imgBgColorOpacity": 0,
+    "imgBgColorPalette": "",
+
+    "imgGradientColorHex": "#009900",
+    "imgGradientColorOpacity": 1,
+    "imgGradientColorPalette": "",
+    "imgGradientType": "linear",
+    "imgGradientStartPointer": 0,
+    "imgGradientFinishPointer": 100,
+    "imgGradientActivePointer": "startPointer",
+    "imgGradientLinearDegree": 90,
+    "imgGradientRadialDegree": 90,
+
+    "tempImgBgColorType": "solid",
+
+    "imgBorderStyle": "none",
+    "tempImgBorderStyle": "solid",
+
+    "imgBorderColorHex": "#000000",
+
+    "imgBorderColorOpacity": 0,
+    "tempImgBorderColorOpacity": 1,
+
+    "imgBorderColorPalette": "",
+    "tempImgBorderColorPalette": "color3",
+
+    "imgBorderWidthType": "grouped",
+    "imgBorderWidth": 4,
+    "tempImgBorderWidth": 4,
+
+    "imgBorderTopWidth": 4,
+    "tempImgBorderTopWidth": 4,
+
+    "imgBorderRightWidth": 4,
+    "tempImgBorderRightWidth": 4,
+
+    "imgBorderBottomWidth": 4,
+    "tempImgBorderBottomWidth": 4,
+
+    "imgBorderLeftWidth": 4,
+    "tempImgBorderLeftWidth": 4,
+
+    "imgBoxShadow": "none",
+    "imgBoxShadowColorHex": "#000000",
+    "imgBoxShadowColorPalette": "",
+    "imgBoxShadowColorOpacity": 0,
+    "imgBoxShadowBlur": 0,
+    "imgBoxShadowSpread": 0,
+    "imgBoxShadowVertical": 0,
+    "imgBoxShadowHorizontal": 0,
+
     "itemHorizontalAlign": "left",
 
     "itemSpacing": 15,
     "itemSpacingSuffix": "px",
+
+    "imgWidth": 100,
+    "imgWidthSuffix": "%",
+
+    "imgHeight": 100,
+    "imgHeightSuffix": "%",
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -166,17 +253,12 @@
     "borderBottomLeftRadiusSuffix": "px",
 
     "filterBgColorType": "solid",
-    "tempFilterBgColorType": "solid",
     "filterBgColorHex": "#d9d9d9",
     "filterBgColorOpacity": 0.5,
-    "tempFilterBgColorOpacity": 1,
     "filterBgColorPalette": "",
-    "tempFilterBgColorPalette": "",
     "filterGradientColorHex": "#000000",
     "filterGradientColorOpacity": 1,
-    "tempFilterGradientColorOpacity": 1,
     "filterGradientColorPalette": "",
-    "tempFilterGradientColorPalette": "",
     "filterGradientType": "linear",
     "filterGradientStartPointer": 0,
     "filterGradientFinishPointer": 100,
@@ -242,9 +324,8 @@
     "parentBgColorType": "solid",
     "parentBgColorHex": "#ff0000",
     "parentBgColorOpacity": 0,
-    "tempParentBgColorOpacity": 1,
     "parentBgColorPalette": "",
-    "parentGradientColorHex": "#fasd43",
+    "parentGradientColorHex": "#000000",
     "parentGradientColorOpacity": 1,
     "parentGradientColorPalette": "",
     "parentGradientType": "linear",
@@ -257,7 +338,6 @@
     "parentBorderStyle": "solid",
     "parentBorderColorHex": "#000000",
     "parentBorderColorOpacity": 0,
-    "tempParentBorderColorOpacity": 1,
     "parentBorderColorPalette": "",
     "parentBorderWidthType": "grouped",
     "parentBorderWidth": 1,
@@ -267,8 +347,7 @@
     "parentBorderLeftWidth": 1,
 
     "parentBoxShadow": "none",
-    "tempParentBoxShadow": "on",
-    "parentBoxShadowColorHex": "#asd543",
+    "parentBoxShadowColorHex": "#000000",
     "parentBoxShadowColorPalette": "",
     "parentBoxShadowColorOpacity": 1,
     "parentBoxShadowBlur": 2,
@@ -315,8 +394,7 @@
     "detailButtonGradientRadialDegree": 0,
 
     "detailButtonBoxShadow": "none",
-    "tempDetailButtonBoxShadow": "on",
-    "detailButtonBoxShadowColorHex": "#asd543",
+    "detailButtonBoxShadowColorHex": "#000000",
     "detailButtonBoxShadowColorPalette": "",
     "detailButtonBoxShadowColorOpacity": 1,
     "detailButtonBoxShadowBlur": 2,
@@ -340,6 +418,36 @@
     "detailButtonBorderLeftWidth": 1,
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+
+    "imgMaskShadowColorHex": "#000000",
+    "imgMaskShadowColorOpacity": 0,
+    "imgMaskShadowColorPalette": "",
+
+    "imgMaskShadowBlur": 0,
+    "imgMaskShadowVertical": 0,
+    "imgMaskShadowHorizontal": 0,
+
+    "imgBrightness": 100,
+    "imgHue": 0,
+    "imgSaturation": 100,
+    "imgContrast": 100
   }
 }

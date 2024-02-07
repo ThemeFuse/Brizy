@@ -64,8 +64,6 @@ module.exports = function (argv) {
           "../../../wordpress/www/wp-content/plugins/brizy/public/editor-build"
         );
       }
-
-      r = path.resolve(r, "./dev");
     } else {
       if (BUILD_DIR) {
         r = path.isAbsolute(BUILD_DIR)
@@ -93,8 +91,6 @@ module.exports = function (argv) {
           "../../../wordpress/www/wp-content/plugins/brizy-pro/public/editor-build"
         );
       }
-
-      r = path.resolve(r, "./dev");
     } else {
       if (BUILD_DIR_PRO) {
         r = path.isAbsolute(BUILD_DIR_PRO)

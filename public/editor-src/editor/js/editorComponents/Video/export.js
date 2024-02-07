@@ -358,7 +358,7 @@ export default function ($node) {
         closeFullscreen();
       } else {
         fullscreenNode = $video;
-        openFullscreen($video.get(0));
+        openFullscreen($video.get(0), isIos);
       }
     });
 
@@ -600,8 +600,12 @@ function getVideoPopulationUrl(population, options) {
   return videoData ? getVideoUrl(videoData, options) : null;
 }
 
-function openFullscreen(elem) {
-  if (elem.requestFullscreen) {
+function openFullscreen(elem, isIos) {
+  if (isIos) {
+    /* IOS Mobile supports fullscreen mode only for video tag */
+    const video = elem.querySelector("video");
+    video?.webkitEnterFullscreen();
+  } else if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.mozRequestFullScreen) {
     /* Firefox */

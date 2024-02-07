@@ -33,20 +33,14 @@ export function getItems({ v }) {
                   type: "inputText",
                   label: t("Success"),
                   placeholder: t("Message sent"),
-                  devices: "desktop",
-                  config: {
-                    size: "large"
-                  }
+                  devices: "desktop"
                 },
                 {
                   id: "messageError",
                   type: "inputText",
                   label: t("Error"),
                   placeholder: t("Message not sent"),
-                  devices: "desktop",
-                  config: {
-                    size: "large"
-                  }
+                  devices: "desktop"
                 }
               ]
             },
@@ -59,10 +53,7 @@ export function getItems({ v }) {
                   type: "inputText",
                   label: t("Go to"),
                   placeholder: "http://",
-                  devices: "desktop",
-                  config: {
-                    size: "large"
-                  }
+                  devices: "desktop"
                 }
               ]
             }

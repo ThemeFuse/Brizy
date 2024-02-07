@@ -12,6 +12,7 @@ import {
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -126,6 +127,15 @@ export function cssStyleElementShopifyLetterSpacingPrice({
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix });
 }
+
+export function cssStyleElementShopifyFontVariationPrice({
+  v,
+  device,
+  prefix = "typographyPrice"
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
 export function cssStyleElementShopifyFontFamilyThroughPrice({
   v,
   device,
@@ -147,6 +157,15 @@ export function cssStyleElementShopifyLineHeightThroughPrice({
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({ v, device, prefix });
 }
+
+export function cssStyleElementShopifyFontVariationThroughPrice({
+  v,
+  device,
+  prefix = "typographyThroughPrice"
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
 export function cssStyleElementShopifyPaddingFourFieldsPrice({
   v,
   device,

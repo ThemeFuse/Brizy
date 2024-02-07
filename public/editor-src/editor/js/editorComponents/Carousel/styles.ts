@@ -1,5 +1,5 @@
 import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./toolbarExtend";
+import { Value } from "./types";
 
 export function style(
   v: Value,

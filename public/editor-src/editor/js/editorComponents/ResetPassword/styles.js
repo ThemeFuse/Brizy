@@ -23,7 +23,9 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2LineHeight",
+        "cssStyleTypography2FontVariation"
       ]
     },
     ".brz && .brz-reset-psw-form .brz-reset-psw-form__field": {
@@ -35,15 +37,17 @@ export function style(v, vs, vd) {
     ".brz &&:hover .brz-reset-psw-form .brz-reset-psw__field-label": {
       standart: ["cssStyleLabelColor", "cssStyleElementForm2FieldsLabelAlign"]
     },
-    ".brz &&:hover .brz-reset-psw-form .brz-reset-psw__field-label .brz-label": {
-      standart: [
-        "cssStyleElementForm2FieldsLabelFontFamily",
-        "cssStyleElementForm2FieldsLabelFontSize",
-        "cssStyleElementForm2FieldsLabelFontWeight",
-        "cssStyleElementForm2FieldsLabelLetterSpacing",
-        "cssStyleElementForm2FieldsLabelLineHeight"
-      ]
-    }
+    ".brz &&:hover .brz-reset-psw-form .brz-reset-psw__field-label .brz-label":
+      {
+        standart: [
+          "cssStyleElementForm2FieldsLabelFontFamily",
+          "cssStyleElementForm2FieldsLabelFontSize",
+          "cssStyleElementForm2FieldsLabelFontWeight",
+          "cssStyleElementForm2FieldsLabelLetterSpacing",
+          "cssStyleElementForm2FieldsLabelLineHeight",
+          "cssStyleElementForm2FieldsLabelFontVariation"
+        ]
+      }
   };
 
   return renderStyles({ v, vs, vd, styles });

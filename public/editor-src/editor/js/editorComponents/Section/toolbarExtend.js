@@ -13,6 +13,8 @@ export function getItems({ v, device, component }) {
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalBlocks?.create !== "function";
 
   const isMultiLanguageDisabled =
     config.elements?.section?.multilanguage === false;
@@ -55,6 +57,8 @@ export function getItems({ v, device, component }) {
     }
   ];
 
+  const globalBlockId = component.props.meta.globalBlockId;
+
   return [
     toolbarShowOnResponsive({
       v,
@@ -84,12 +88,12 @@ export function getItems({ v, device, component }) {
                 {
                   id: "groupSettings",
                   type: "group",
+                  disabled: disabledGlobalBlock,
                   options: [
                     {
                       id: "makeItGlobal",
                       label: t("Make it Global"),
                       type: "globalBlock",
-                      disabled: isCloud(config) && isShopify(config),
                       config: {
                         _id: component.getId(),
                         parentId: getInstanceParentId(
@@ -100,9 +104,11 @@ export function getItems({ v, device, component }) {
                     },
                     {
                       id: "gbConditions",
-                      disabled: !component.props.meta.globalBlockId,
-                      value: component.props.meta.globalBlockId,
-                      type: "legacy-gbConditions",
+                      disabled: !globalBlockId,
+                      config: {
+                        globalBlockId: globalBlockId
+                      },
+                      type: "gbCondition",
                       context: "block"
                     }
                   ]
@@ -183,6 +189,34 @@ export function getItems({ v, device, component }) {
                       ]
                     },
                     {
+                      id: "sliderAnimation",
+                      label: t("Animation"),
+                      type: "radioGroup",
+                      disabled: slider === "off",
+                      choices: [
+                        {
+                          icon: "nc-slider-horizontal",
+                          value: "none"
+                        },
+                        {
+                          icon: "nc-fade",
+                          value: "fade"
+                        }
+                      ]
+                    },
+                    {
+                      id: "sliderAnimationSpeed",
+                      label: t("Speed"),
+                      type: "slider",
+                      disabled: slider === "off",
+                      config: {
+                        min: 1,
+                        max: 10,
+                        step: 0.1,
+                        units: [{ title: "s", value: "s" }]
+                      }
+                    },
+                    {
                       id: "sliderDots",
                       label: t("Dots"),
                       type: "select",
@@ -247,7 +281,7 @@ export function getItems({ v, device, component }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,

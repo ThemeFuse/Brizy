@@ -11,6 +11,7 @@ import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
@@ -122,18 +123,29 @@ export class MinistryBrandsEventFeatured extends EditorComponent<Value, Props> {
                     )}
                     selector=".brz-eventFeatured__item--meta--preview *:not(:is(:has(a),a))"
                   >
-                    <Wrapper
-                      {...this.makeWrapperProps({
-                        className
-                      })}
+                    <Toolbar
+                      {...this.makeToolbarPropsFromConfig2(
+                        toolbarImage,
+                        undefined,
+                        {
+                          allowExtend: false
+                        }
+                      )}
+                      selector=".brz-ministryBrands__item--media"
                     >
-                      <DynamicContentHelper
-                        placeholder={getPlaceholder(v)}
-                        props={{ className: "brz-eventFeatured" }}
-                        blocked={false}
-                        tagName="div"
-                      />
-                    </Wrapper>
+                      <Wrapper
+                        {...this.makeWrapperProps({
+                          className
+                        })}
+                      >
+                        <DynamicContentHelper
+                          placeholder={getPlaceholder(v)}
+                          props={{ className: "brz-eventFeatured" }}
+                          blocked={false}
+                          tagName="div"
+                        />
+                      </Wrapper>
+                    </Toolbar>
                   </Toolbar>
                 </Toolbar>
               </Toolbar>

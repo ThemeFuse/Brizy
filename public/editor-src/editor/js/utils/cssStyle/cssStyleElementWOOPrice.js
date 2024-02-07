@@ -1,4 +1,7 @@
-import { cssStyleColor } from "visual/utils/cssStyle";
+import {
+  cssStyleColor,
+  cssStyleTypography2FontVariation
+} from "visual/utils/cssStyle";
 import {
   styleElementWOOPriceColumn,
   styleElementWOOPriceSpacing,
@@ -62,6 +65,14 @@ export function cssStyleElementWOOPriceSaleLetterSpacing({
     device,
     prefix
   })}px;`;
+}
+
+export function cssStyleElementWOOPriceSaleFontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "sale"
+  });
 }
 
 export function cssStyleElementWOOPriceColumn({ v, device, state }) {

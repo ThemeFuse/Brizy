@@ -6,6 +6,8 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -20,6 +22,53 @@ export function style(
         "cssStylementOfMinistryBrandsParentBorder",
         "cssStylementOfMinistryBrandsParentBoxShadow",
         "cssStyleBorderRadius"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleElementOfMinistryBrandsImgBorder",
+        ...(maskShape === "none"
+          ? []
+          : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat",
+        "cssStyleMinistryElementMediaBorderRadius",
+        ...(maskShape === "none"
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
+          : [])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgFilters",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -55,7 +104,7 @@ export function style(
       {
         standart: ["cssStyleElementOfMinistryBrandsSpacing"]
       },
-    ".brz &&:hover .brz-eventFeatured__item :is(iframe,video,img)": {
+    ".brz &&:hover .brz-ministryBrands__item--media :is(img,video,iframe)": {
       standart: ["cssStyleMinistryElementMediaBorderRadius"]
     },
     ".brz && :is(.brz-eventFeatured__item--meta--preview, .brz-eventFeatured__item--meta--preview *):hover":

@@ -63,6 +63,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
           config: {
             min: 1,
             max: 100,
+            inputMax: 100,
             size: "short",
             units: [{ value: "%", title: "%" }]
           },
@@ -131,7 +132,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       options: [
                         {
                           id: "text",
-                          type: "population-dev",
+                          type: "population",
                           config: {
                             ...richTextDC,
                             iconOnly: true
@@ -178,7 +179,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       options: [
                         {
                           id: "percentage",
-                          type: "population-dev",
+                          type: "population",
                           config: {
                             ...richTextDC,
                             iconOnly: true

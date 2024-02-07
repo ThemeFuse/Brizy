@@ -938,7 +938,7 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
         breakpoint: "desktop",
         option: heightOptionWithStyle
       })
-    ).toStrictEqual({ "{{WRAPPER}}": { height: "undefinedundefined" } });
+    ).toStrictEqual({ "{{WRAPPER}}": { height: "0" } });
   });
 
   test("Test with option with valid values", () => {

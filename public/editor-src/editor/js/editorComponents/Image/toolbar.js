@@ -125,11 +125,11 @@ export const getItems =
                 id: "tabImage",
                 label: t("Image"),
                 options: [
-                  // Use population-dev option type instead of using the `population` config for imageUpload,
+                  // Use population option type instead of using the `legacy-population` config for imageUpload,
                   // because the population id and imageUpload id are different.
                   {
                     id: "image",
-                    type: "population-dev",
+                    type: "population",
                     label: t("Image"),
                     disabled:
                       ((isSVGExtension(imageExtension) ||
@@ -411,7 +411,7 @@ export const getItems =
                 options: [
                   {
                     id: "link",
-                    type: "population-dev",
+                    type: "population",
                     label: t("Link to"),
                     config: linkDC,
                     option: {
@@ -419,10 +419,7 @@ export const getItems =
                       type: "inputText",
                       placeholder: "http://",
                       disabled: inGallery,
-                      devices: "desktop",
-                      config: {
-                        size: "medium"
-                      }
+                      devices: "desktop"
                     }
                   },
                   {
@@ -482,7 +479,7 @@ export const getItems =
                 options: [
                   {
                     id: "linkToSlide",
-                    type: "number-dev",
+                    type: "number",
                     label: t("Slide"),
                     disabled: !isStory(config),
                     config: {

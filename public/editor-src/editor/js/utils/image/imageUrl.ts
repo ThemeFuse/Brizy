@@ -1,5 +1,6 @@
 import Config from "visual/global/Config";
 import { defaultCrop } from "visual/global/Config/types/configs/common";
+import { isDynamicContent } from "visual/utils/dynamicContent";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import { isAbsoluteUrl } from "visual/utils/url";
 import { MValue } from "visual/utils/value";
@@ -12,7 +13,7 @@ export const getImageUrl = (data: Data): MValue<string> => {
     return undefined;
   }
 
-  if (isAbsoluteUrl(data.uid)) {
+  if (isAbsoluteUrl(data.uid) || isDynamicContent(data.uid)) {
     return data.uid;
   }
 

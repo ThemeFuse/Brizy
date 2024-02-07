@@ -18,6 +18,7 @@ import { fromElementModel as filters } from "visual/component/Options/types/dev/
 import { fromElementModel as formApps } from "visual/component/Options/types/dev/FormApps/converters";
 import { fromElementModel as gallery } from "visual/component/Options/types/dev/Gallery/converters";
 import { fromElementModel as galleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery/converters";
+import { fromElementModel as gbCondition } from "visual/component/Options/types/dev/GbCondition/converters";
 import { fromElementModel as globalBlock } from "visual/component/Options/types/dev/GlobalBlock/converters";
 import { fromElementModel as grid } from "visual/component/Options/types/dev/Grid/converters";
 import { fromElementModel as group } from "visual/component/Options/types/dev/Group/converters";
@@ -48,6 +49,7 @@ import { fromElementModel as tabs } from "visual/component/Options/types/dev/Tab
 import { fromElementModel as textShadow } from "visual/component/Options/types/dev/TextShadow/converters";
 import { fromElementModel as textarea } from "visual/component/Options/types/dev/Textarea/converters";
 import { fromElementModel as toggle } from "visual/component/Options/types/dev/Toggle/converters";
+import { fromElementModel as toggleButton } from "visual/component/Options/types/dev/ToggleButton/converters";
 import { fromElementModel as transform } from "visual/component/Options/types/dev/Transform/converters";
 import { fromElementModel as typography } from "visual/component/Options/types/dev/Typography/converters";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
@@ -64,17 +66,17 @@ type FromElementModelFns = {
 };
 
 const fns: FromElementModelFns = {
-  "aiText-dev": ai,
+  aiText: ai,
   alert: alert,
   animation: animation,
   backgroundColor: backgroundColor,
   border: border,
   boxShadow: boxShadow,
-  "button-dev": button,
-  "codeMirror-dev": codeMirror,
+  button: button,
+  codeMirror: codeMirror,
   colorPicker: colorPicker,
   corners: corners,
-  "filters-dev": filters,
+  filters: filters,
   fileUpload: fileUpload,
   gallery: gallery,
   "gallery-for-gallery": galleryForGallery,
@@ -89,12 +91,12 @@ const fns: FromElementModelFns = {
   margin: margin,
   motion: motion,
   multiSelect: multiSelect,
-  "number-dev": number,
-  "order-dev": order,
+  number: number,
+  order: order,
   padding: padding,
-  "paypal-dev": paypal,
+  paypal: paypal,
   popover: popover,
-  "population-dev": population,
+  population: population,
   predefinedPopulation: predefinedPopulation,
   radioGroup: radioGroup,
   range: range,
@@ -102,7 +104,7 @@ const fns: FromElementModelFns = {
   sidebarTabs: sidebarTabs,
   sidebarTabsButton: sidebarTabsButton,
   slider: slider,
-  "stateMode-dev": stateMode,
+  stateMode: stateMode,
   switch: _switch,
   tabs: tabs,
   textarea: textarea,
@@ -110,9 +112,11 @@ const fns: FromElementModelFns = {
   toggle: toggle,
   transform: transform,
   typography: typography,
-  "savedBlock-dev": savedBlock,
+  savedBlock: savedBlock,
   globalBlock: globalBlock,
-  formApps: formApps
+  formApps: formApps,
+  toggleButton: toggleButton,
+  gbCondition: gbCondition
 };
 
 /**

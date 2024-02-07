@@ -73,7 +73,7 @@ export function getItems({
               options: [
                 {
                   id: "title",
-                  type: "population-dev",
+                  type: "population",
                   config: richTextDC,
                   devices: "desktop"
                 }

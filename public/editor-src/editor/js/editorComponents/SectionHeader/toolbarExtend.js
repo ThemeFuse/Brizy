@@ -12,11 +12,15 @@ export function getItems({ v, device, component }) {
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalBlocks?.create !== "function";
 
   const isMultiLanguageDisabled =
     config.elements?.header?.multilanguage === false;
 
   const dvv = (key) => defaultValueValue({ v, key, device });
+
+  const globalBlockId = component.props.meta.globalBlockId;
 
   return [
     toolbarShowOnResponsive({
@@ -49,13 +53,13 @@ export function getItems({ v, device, component }) {
         {
           id: "groupSettings",
           type: "group",
+          disabled: disabledGlobalBlock,
           options: [
             {
               id: "makeItGlobal",
               label: t("Make it Global"),
               type: "globalBlock",
               devices: "desktop",
-              disabled: isCloud(config) && isShopify(config),
               config: {
                 _id: component.getId(),
                 parentId: getInstanceParentId(component.props.instanceKey),
@@ -64,9 +68,11 @@ export function getItems({ v, device, component }) {
             },
             {
               id: "gbConditions",
-              disabled: !component.props.meta.globalBlockId,
-              value: component.props.meta.globalBlockId,
-              type: "legacy-gbConditions",
+              disabled: !globalBlockId,
+              config: {
+                globalBlockId: globalBlockId
+              },
+              type: "gbCondition",
               context: "block"
             }
           ]
@@ -116,7 +122,7 @@ export function getItems({ v, device, component }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,

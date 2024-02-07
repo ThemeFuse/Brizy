@@ -1,6 +1,11 @@
 import { Sources } from "visual/editorComponents/Posts/types";
 import { Dictionary } from "visual/types/utils";
 
+export enum AutoSave {
+  publish = 0,
+  draft = 1
+}
+
 export interface ResponseWithBody<T> {
   status: number;
   ok: boolean;
@@ -129,6 +134,7 @@ export type GetRulePostsGroupList = (p: string) => Promise<
 >;
 
 //#region Posts
+
 export type GetPostsSourceRefId = Dictionary<
   Array<{ id: string; type: "single" | "multi" | "manual"; title: string }>
 >;

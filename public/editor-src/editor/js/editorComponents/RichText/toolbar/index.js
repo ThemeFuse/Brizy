@@ -115,7 +115,7 @@ const getItems =
         options: [
           {
             id: "text",
-            type: "aiText-dev",
+            type: "aiText",
             isPro: true,
             selectedValue: v.selectedValue,
             devices: "desktop"
@@ -175,7 +175,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -220,7 +220,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -262,7 +262,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -304,7 +304,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -346,7 +346,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -388,7 +388,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -430,7 +430,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -447,14 +447,16 @@ const getItems =
       },
       {
         id: "dynamicTextCapitalize",
-        type: "legacy-button",
-        icon: "nc-tp-capitalize",
-        title: t("Uppercase"),
+        type: "toggleButton",
+        config: {
+          icon: "nc-tp-capitalize",
+          title: t("Uppercase"),
+          reverseTheme: true
+        },
         position: 75,
-        disabled: disableButtonDynamicTextCapitalize,
-        value: v.dynamicTextCapitalize === "on",
-        onChange: (value) => ({ dynamicTextCapitalize: value ? "on" : "off" })
+        disabled: disableButtonDynamicTextCapitalize
       },
+
       getColorToolbar(
         { ...v, isPopulationBlock },
         { device, component, context },
@@ -522,53 +524,64 @@ const getItems =
       },
       {
         id: "bold",
-        type: "legacy-button",
-        icon: "nc-bold",
-        title: t("Bold"),
+        type: "toggleButton",
+        config: {
+          icon: "nc-bold",
+          title: t("Bold"),
+          reverseTheme: true
+        },
         position: 50,
         disabled: disableButtons,
-        value: v.bold,
-        onChange: (bold) => onChange({ bold })
+        dependencies: ({ bold }) => onChange({ bold })
       },
       {
         id: "italic",
-        type: "legacy-button",
-        icon: "nc-italic",
-        title: t("Italic"),
+        type: "toggleButton",
+        config: {
+          icon: "nc-italic",
+          title: t("Italic"),
+          reverseTheme: true
+        },
         position: 60,
         disabled: disableButtons,
-        value: v.italic,
-        onChange: (italic) => onChange({ italic })
+        dependencies: ({ italic }) => onChange({ italic })
       },
       {
         id: "underline",
-        type: "legacy-button",
-        icon: "nc-tp-underline",
-        title: t("Underline"),
+        type: "toggleButton",
+        config: {
+          icon: "nc-tp-underline",
+          title: t("Underline"),
+          reverseTheme: true
+        },
         position: 65,
         disabled: disableButtons,
-        value: v.underline,
-        onChange: (underline) => onChange({ underline })
+        dependencies: ({ underline }) => onChange({ underline })
       },
       {
         id: "strike",
-        type: "legacy-button",
-        icon: "nc-tp-strike",
-        title: t("Strike"),
+        type: "toggleButton",
+        config: {
+          icon: "nc-tp-strike",
+          title: t("Strike"),
+          reverseTheme: true
+        },
         position: 70,
         disabled: disableButtons,
-        value: v.strike,
-        onChange: (strike) => onChange({ strike })
+        dependencies: ({ strike }) => onChange({ strike })
       },
       {
         id: "capitalize",
-        type: "legacy-button",
-        icon: "nc-tp-capitalize",
-        title: t("Uppercase"),
+        type: "toggleButton",
+        config: {
+          icon: "nc-tp-capitalize",
+          title: t("Uppercase"),
+          reverseTheme: true
+        },
         position: 75,
         disabled: disableButtons,
-        value: v.capitalize,
-        onChange: (value) => onChange({ capitalize: value ? "on" : null })
+        dependencies: ({ capitalize }) =>
+          onChange({ capitalize: capitalize ? "on" : null })
       },
       {
         id: "toolbarLink",
@@ -610,7 +623,7 @@ const getItems =
                 options: [
                   {
                     id: "link",
-                    type: "population-dev",
+                    type: "population",
                     label: t("Link to"),
                     config: linkDC,
                     option: {
@@ -722,7 +735,7 @@ const getItems =
                 options: [
                   {
                     id: "linkToSlide",
-                    type: "number-dev",
+                    type: "number",
                     label: t("Slide"),
                     disabled: !IS_STORY,
                     config: {

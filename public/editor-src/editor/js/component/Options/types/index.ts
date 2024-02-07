@@ -13,6 +13,7 @@ import { FileUpload as FileUploadDev } from "visual/component/Options/types/dev/
 import { Filters } from "visual/component/Options/types/dev/Filters";
 import { Gallery } from "visual/component/Options/types/dev/Gallery";
 import { GalleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery";
+import { GbCondition } from "visual/component/Options/types/dev/GbCondition";
 import { Grid as GridDev } from "visual/component/Options/types/dev/Grid";
 import { Group } from "visual/component/Options/types/dev/Group";
 import { IconPicker } from "visual/component/Options/types/dev/IconPicker";
@@ -33,24 +34,17 @@ import { SidebarTabs } from "visual/component/Options/types/dev/SidebarTabs";
 import { SidebarTabsButton } from "visual/component/Options/types/dev/SidebarTabsButton";
 import { Switch as SwitchDev } from "visual/component/Options/types/dev/Switch";
 import { TextShadow } from "visual/component/Options/types/dev/TextShadow";
+import { ToggleButton } from "visual/component/Options/types/dev/ToggleButton";
 import { Transform } from "visual/component/Options/types/dev/Transform";
 import { Typography } from "visual/component/Options/types/dev/Typography";
 import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
-import Button from "./Button";
 import CheckGroup from "./CheckGroup";
 import ColorPalette2 from "./ColorPalette2";
 import ColorPaletteEditor from "./ColorPaletteEditor";
 import FontStyleEditor from "./FontStyleEditor";
-import GBConditions from "./GBConditions";
-import Grid from "./Grid";
-import IntegrationsApps from "./IntegrationsApps";
-import MultiInputPickerOptionType from "./MultiInputPickerOptionType";
-import Popover from "./Popover";
 import PopupConditions from "./PopupConditions";
 import PromptAddPopup from "./PromptAddPopup";
-import RadioGroup from "./RadioGroup";
-import Select from "./Select";
 import Toggle from "./Toggle";
 import { StateMode } from "./common/StateMode";
 import { Ai } from "./dev/AiText";
@@ -69,18 +63,19 @@ import { Textarea as TextareaDev } from "./dev/Textarea";
 import { Toggle as ToggleDev } from "./dev/Toggle";
 
 const newTypes = {
-  "aiText-dev": Ai,
+  aiText: Ai,
   alert: Alert,
   animation: Animation,
   backgroundColor: BackgroundColor,
-  "button-dev": ButtonDev,
-  "order-dev": Order,
-  "codeMirror-dev": CodeMirrorDev,
+  button: ButtonDev,
+  toggleButton: ToggleButton,
+  order: Order,
+  codeMirror: CodeMirrorDev,
   colorPicker: ColorPickerDev,
   corners: Corners,
   boxShadow: BoxShadow,
   border: Border,
-  "filters-dev": Filters,
+  filters: Filters,
   fileUpload: FileUploadDev,
   group: Group,
   grid: GridDev,
@@ -93,14 +88,14 @@ const newTypes = {
   margin: Margin,
   motion: Motion,
   multiSelect: MultiSelect,
-  "number-dev": Number,
+  number: Number,
   textarea: TextareaDev,
   radioGroup: RadioGroupDev,
   range: RangeDev,
   padding: Padding,
-  "paypal-dev": PayPal,
+  paypal: PayPal,
   popover: PopoverDev,
-  "population-dev": Population,
+  population: Population,
   predefinedPopulation: PredefinedPopulation,
   select: SelectDev,
   sidebarTabs: SidebarTabs,
@@ -113,31 +108,24 @@ const newTypes = {
   textShadow: TextShadow,
   gallery: Gallery,
   "gallery-for-gallery": GalleryForGallery,
-  "stateMode-dev": StateMode,
+  stateMode: StateMode,
   transform: Transform,
-  "savedBlock-dev": SavedBlockDev,
+  savedBlock: SavedBlockDev,
   globalBlock: GlobalBlockDev,
-  formApps: FormAppsDev
+  formApps: FormAppsDev,
+  gbCondition: GbCondition
 };
 
 const oldTypes = {
   "legacy-advancedSettings": AdvancedSettings,
   "legacy-blockThumbnail": BlockThumbnail,
-  "legacy-button": Button,
   "legacy-colorPaletteEditor": ColorPaletteEditor,
   "legacy-colorPalette2": ColorPalette2,
   "legacy-fontStyleEditor": FontStyleEditor,
-  "legacy-grid": Grid,
-  "legacy-multiInputPicker": MultiInputPickerOptionType,
-  "legacy-popover": Popover,
   "legacy-popupConditions": PopupConditions,
-  "legacy-gbConditions": GBConditions,
   "legacy-promptAddPopup": PromptAddPopup,
-  "legacy-radioGroup": RadioGroup,
   "legacy-checkGroup": CheckGroup,
-  "legacy-select": Select,
-  "legacy-toggle": Toggle,
-  "legacy-integrationsApps": IntegrationsApps
+  "legacy-toggle": Toggle
 } as const;
 
 export const types = { ...oldTypes, ...newTypes };

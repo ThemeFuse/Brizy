@@ -23,8 +23,12 @@
     "source": "",
     "detailPage": "",
     "detailPageTitle": "",
-    "detailPageSource": null
+    "detailPageSource": null,
+
+    "maskCustomUploadImageFileName": "",
+    "maskCustomUploadImageSrc": ""
   },
+
   "style": {
     "families": {
       "titleTypographyFontFamily": "lato",
@@ -77,6 +81,59 @@
     "parentBoxShadowVertical": 0,
     "parentBoxShadowHorizontal": 0,
 
+    "imgBgColorType": "none",
+    "imgBgColorHex": "#ffffff",
+    "imgBgColorOpacity": 0,
+    "imgBgColorPalette": "",
+
+    "imgGradientColorHex": "#009900",
+    "imgGradientColorOpacity": 1,
+    "imgGradientColorPalette": "",
+    "imgGradientType": "linear",
+    "imgGradientStartPointer": 0,
+    "imgGradientFinishPointer": 100,
+    "imgGradientActivePointer": "startPointer",
+    "imgGradientLinearDegree": 90,
+    "imgGradientRadialDegree": 90,
+
+    "tempImgBgColorType": "solid",
+
+    "imgBorderStyle": "none",
+    "tempImgBorderStyle": "solid",
+
+    "imgBorderColorHex": "#000000",
+
+    "imgBorderColorOpacity": 0,
+    "tempImgBorderColorOpacity": 1,
+
+    "imgBorderColorPalette": "",
+    "tempImgBorderColorPalette": "color3",
+
+    "imgBorderWidthType": "grouped",
+    "imgBorderWidth": 4,
+    "tempImgBorderWidth": 4,
+
+    "imgBorderTopWidth": 4,
+    "tempImgBorderTopWidth": 4,
+
+    "imgBorderRightWidth": 4,
+    "tempImgBorderRightWidth": 4,
+
+    "imgBorderBottomWidth": 4,
+    "tempImgBorderBottomWidth": 4,
+
+    "imgBorderLeftWidth": 4,
+    "tempImgBorderLeftWidth": 4,
+
+    "imgBoxShadow": "none",
+    "imgBoxShadowColorHex": "#000000",
+    "imgBoxShadowColorPalette": "",
+    "imgBoxShadowColorOpacity": 0,
+    "imgBoxShadowBlur": 0,
+    "imgBoxShadowSpread": 0,
+    "imgBoxShadowVertical": 0,
+    "imgBoxShadowHorizontal": 0,
+
     "borderRadiusType": "grouped",
 
     "borderRadius": 0,
@@ -97,6 +154,12 @@
     "itemsBetween": 10,
     "itemsBetweenSuffix": "px",
 
+    "imgWidth": 100,
+    "imgWidthSuffix": "%",
+
+    "imgHeight": 100,
+    "imgHeightSuffix": "%",
+
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
     "titleTypographyFontSize": 20,
@@ -104,6 +167,9 @@
     "titleTypographyFontWeight": 400,
     "titleTypographyLetterSpacing": 0,
     "titleTypographyLineHeight": 1,
+    "titleTypographyVariableFontWeight": 400,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
@@ -119,6 +185,9 @@
     "metaTypographyFontWeight": 400,
     "metaTypographyLetterSpacing": 0,
     "metaTypographyLineHeight": 1,
+    "metaTypographyVariableFontWeight": 400,
+    "metaTypographyFontWidth": 100,
+    "metaTypographyFontSoftness": 0,
 
     "metaColorHex": "#000000",
     "metaColorOpacity": 0.9,
@@ -169,6 +238,9 @@
     "buttonTypographyFontWeight": 400,
     "buttonTypographyLetterSpacing": 1.3,
     "buttonTypographyLineHeight": 1,
+    "buttonTypographyVariableFontWeight": 400,
+    "buttonTypographyFontWidth": 100,
+    "buttonTypographyFontSoftness": 0,
 
     "buttonColorHex": "#ffffff",
     "buttonColorOpacity": 1,
@@ -266,6 +338,36 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+
+    "imgMaskShadowColorHex": "#000000",
+    "imgMaskShadowColorOpacity": 0,
+    "imgMaskShadowColorPalette": "",
+
+    "imgMaskShadowBlur": 0,
+    "imgMaskShadowVertical": 0,
+    "imgMaskShadowHorizontal": 0,
+
+    "imgBrightness": 100,
+    "imgHue": 0,
+    "imgSaturation": 100,
+    "imgContrast": 100
   }
 }

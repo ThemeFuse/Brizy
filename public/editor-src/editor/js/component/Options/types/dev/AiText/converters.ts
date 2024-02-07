@@ -6,13 +6,11 @@ export const defaultValue: Model = {
   value: ""
 };
 
-export const fromElementModel: Option.FromElementModel<"aiText-dev"> = (
-  get
-) => ({
-  value: String.read(get("value"))
+export const fromElementModel: Option.FromElementModel<"aiText"> = (get) => ({
+  value: String.read(get("value")) ?? defaultValue.value
 });
 
-export const toElementModel: Option.ToElementModel<"aiText-dev"> = (values) => {
+export const toElementModel: Option.ToElementModel<"aiText"> = (values) => {
   return {
     value: values.value
   };

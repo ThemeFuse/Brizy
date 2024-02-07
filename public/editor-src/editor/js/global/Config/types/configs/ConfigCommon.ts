@@ -1,3 +1,7 @@
+import {
+  Output,
+  ProjectOutput
+} from "visual/bootstraps/compiler/browser/types";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
   ChoicesAsync,
@@ -12,17 +16,26 @@ import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
-import { PageCommon, Project, Rule } from "visual/types";
+import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
+import { GlobalBlock, PageCommon, Project, Rule } from "visual/types";
 import { PostsSources } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
-import type { Compiler } from "./Compiler";
+import { User } from "../User";
+import { Compiler } from "./Compiler";
 import { ElementTypes } from "./ElementTypes";
 import { ThirdPartyComponents } from "./ThirdParty";
+import {
+  Block as APIGlobalBlock,
+  APIGlobalBlocks,
+  APIGlobalPopups
+} from "./blocks/GlobalBlocks";
 import {
   BlocksArray,
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
+  DefaultTemplateKits,
+  KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
   PopupsWithThumbs,
@@ -41,7 +54,7 @@ import {
   Response,
   ScreenshotData
 } from "./common";
-import { EkklesiaFields } from "./modules/ekklesia/Ekklesia";
+import { EkklesiaFields, EkklesiaModules } from "./modules/ekklesia/Ekklesia";
 
 export enum Mode {
   page = "page",
@@ -117,31 +130,36 @@ export interface PopupSettings {
   backgroundPreviewUrl?: string;
 }
 
+export interface PublishedProject extends Project {
+  compiled?: ProjectOutput;
+}
+
+export interface PublishedPage extends PageCommon {
+  compiled?: Output;
+}
+
+export interface PublishedGlobalBlock extends APIGlobalBlock {
+  compiled?: Output;
+}
+
 export interface PublishData {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
-  projectData?: Project;
-  pageData?: PageCommon;
-  html?: string;
-  styles?: Array<string>;
-  scripts?: Array<string>;
-  // globalBlocks: Array<GlobalBlock>;
+  is_autosave: 1 | 0;
+  projectData?: PublishedProject;
+  pageData?: PublishedPage;
+  globalBlocks?: Array<PublishedGlobalBlock>;
+  error?: string;
 }
 
 export interface AutoSave {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlock?: APIGlobalBlock;
 }
 
 export interface OnChange {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlock?: APIGlobalBlock;
 }
 
 export interface Theme {
@@ -179,12 +197,27 @@ export const isElementTypes = (type: string): type is ElementTypes => {
   return Object.values(ElementTypes).includes(type as ElementTypes);
 };
 
+export enum HelpVideos {
+  addElementsHelpVideo = "addElementsHelpVideo",
+  blocksLayoutsHelpVideo = "blocksLayoutsHelpVideo",
+  fontsHelpVideo = "fontsHelpVideo",
+  formHelpVideo = "formHelpVideo"
+}
+
+type HelpVideosKeys = keyof typeof HelpVideos;
+
+export type HelpVideosData = {
+  [k in HelpVideosKeys]: string;
+};
+
 interface _ConfigCommon<Mode> {
   tokenV1?: string;
 
   auth?: {
     token: string;
   };
+
+  user: User;
 
   branding: {
     name: string;
@@ -212,12 +245,13 @@ interface _ConfigCommon<Mode> {
 
   pageData?: PageCommon;
 
+  globalBlocks?: Array<GlobalBlock>;
+
   cloud?: {
     isSyncAllowed: boolean;
   };
 
-  // HTML Compilation: inside Browser or External Server
-
+  // HTML Compilation
   compiler?: Compiler;
 
   //#region Third Party
@@ -278,6 +312,7 @@ interface _ConfigCommon<Mode> {
       showIcon?: boolean;
       video?: Video[];
       header: Header;
+      idHelpVideosIcons: HelpVideosData;
     };
 
     //#endregion
@@ -431,7 +466,17 @@ interface _ConfigCommon<Mode> {
     // SavedPopups
     savedPopups?: APISavedPopups;
 
-    defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
+    // GlobalBlocks
+    globalBlocks?: APIGlobalBlocks;
+
+    // GlobalPopups
+    globalPopups?: APIGlobalPopups;
+
+    defaultKits?: DefaultTemplateKits<
+      KitsWithThumbs,
+      DefaultBlock,
+      Array<KitItem>
+    >;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
     defaultLayouts?: DefaultTemplate<
       LayoutsWithThumbs,
@@ -667,6 +712,7 @@ interface _ConfigCommon<Mode> {
       offset?: boolean;
       orderBy?: boolean;
       order?: boolean;
+      querySource?: boolean;
       handler: (
         res: Response<PostsSources>,
         ref: Response<string>,
@@ -690,6 +736,76 @@ interface _ConfigCommon<Mode> {
   l10n?: Record<string, string>;
 
   // #endregion
+
+  //#region modules
+
+  modules?: {
+    shop?: {
+      type?: "shopify" | "ecwid";
+
+      //#region Ecwid
+
+      storeId?: EcwidStoreId;
+      defaultProductId?: EcwidProductId;
+      productId?: EcwidProductId;
+      subscriptionType?: "free" | "pro";
+      daysLeft?: number;
+      userSessionUrl?: string;
+      apiUrl?: string;
+      productCollectionTypeSlug?: string;
+      categoryCollectionTypeSlug?: string;
+      ecwidCategoryTypeId?: string;
+
+      //#endregion
+
+      //#region Shopify
+
+      publishedPages?: number;
+      maxPublishedPages?: number;
+      upgradeToProUrl?: string;
+
+      //#endregion
+
+      api?: {
+        //#region shopify api handlers
+
+        metafieldsLoad?: {
+          handler: (
+            res: Response<ChoicesSync>,
+            rej: Response<string>,
+            args: {
+              sourceType: string;
+            }
+          ) => void;
+        };
+        blogPostMetaLoad?: {
+          handler: (
+            res: Response<ChoicesSync>,
+            rej: Response<string>,
+            args: {
+              sourceType: string;
+            }
+          ) => void;
+        };
+
+        //#endregion
+
+        //#region ecwid api handlers
+
+        getEcwidProducts?: {
+          handler?: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+        };
+
+        //#endregion
+      };
+    };
+
+    //#endregion
+
+    ekklesia?: EkklesiaModules;
+
+    //#endregion
+  };
 }
 
 export type ConfigCommon = _ConfigCommon<Mode>;

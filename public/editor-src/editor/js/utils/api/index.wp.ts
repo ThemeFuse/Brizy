@@ -1,15 +1,9 @@
 import Config, { WP } from "visual/global/Config";
-import { GlobalBlock, Rule } from "visual/types";
-import { GlobalBlocksError, PageError } from "visual/utils/errors";
+import { Rule } from "visual/types";
 import * as Arr from "visual/utils/reader/array";
+import { apiRuleToEditorRule } from "visual/utils/reader/globalBlocks";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import {
-  apiRuleToEditorRule,
-  makeBlockMeta,
-  parseGlobalBlock,
-  stringifyGlobalBlock
-} from "./adapter";
 import {
   GetAuthors,
   GetDynamicContent,
@@ -20,8 +14,7 @@ import {
   GetTerms,
   GetTermsBy,
   GetWPCollectionSourceItems,
-  GetWPCollectionSourceTypes,
-  ResponseWithBody
+  GetWPCollectionSourceTypes
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
 
@@ -53,6 +46,7 @@ export {
   updateSavedPopup,
   defaultKitsMeta,
   defaultKitsData,
+  defaultKits,
   defaultPopupsMeta,
   defaultPopupsData,
   defaultLayoutsMeta,
@@ -63,12 +57,17 @@ export {
   getSourceIds,
   createBlockScreenshot,
   updateBlockScreenshot,
-  defaultPostsSources
+  defaultPostsSources,
+  getEcwidProducts,
+  createGlobalPopup,
+  createGlobalBlock,
+  getLeadificCustomFields,
+  pendingRequest
 } from "./common";
 
 export { makeFormEncode, makeUrl };
 
-//#region Common Utils Request & PersistentRequest
+//#region Common Utils Request
 
 export function request(
   url: string,
@@ -79,51 +78,6 @@ export function request(
   // In WP referer must be root window not iframe
   const { fetch } = window.parent || window;
   return fetch(url, config);
-}
-
-export function persistentRequest<T>(
-  url: string,
-  config: RequestInit = {}
-): Promise<ResponseWithBody<T>> {
-  return new Promise((resolve, reject) => {
-    let failedAttempts = 0;
-
-    const req = (url: string, config: RequestInit) => {
-      return request(url, config).then((r) => {
-        if (r.status === 500) {
-          // >= 500 - server unavailable
-          if (failedAttempts <= 5) {
-            failedAttempts++;
-            setTimeout(() => {
-              req(url, config);
-            }, 5000 * failedAttempts);
-          } else {
-            reject(r);
-          }
-        } else {
-          r.json()
-            .then((body) => {
-              resolve({
-                status: r.status,
-                ok: r.ok,
-                data: body.data
-              });
-            })
-            .catch(reject);
-        }
-      });
-    };
-
-    req(url, config);
-  });
-}
-
-export function pendingRequest(time = 650): Promise<boolean> {
-  return new Promise((res) => {
-    setTimeout(() => {
-      res(true);
-    }, time);
-  });
 }
 
 //#endregion
@@ -267,250 +221,6 @@ export async function getGroupList(type: "block" | "popup"): Promise<unknown> {
   } else {
     throw rj;
   }
-}
-
-//#endregion
-
-//#region Global Blocks
-
-export function getGlobalBlocks(): Promise<Record<string, GlobalBlock>> {
-  const {
-    wp: {
-      api: { url: _url, hash, getGlobalBlockList }
-    },
-    editorVersion
-  } = Config.getAll() as WP;
-  const url = makeUrl(_url, {
-    hash,
-    action: getGlobalBlockList,
-    version: editorVersion,
-    orderBy: "id",
-    order: "DESC"
-  });
-  type GlobalBlocks = Array<{
-    data: string;
-    meta: string;
-    rules: string;
-    position: string;
-    status: string;
-    title: string;
-    tags: string;
-  }>;
-
-  return persistentRequest<GlobalBlocks>(url, {
-    method: "GET"
-  })
-    .then(({ data }) => {
-      return data
-        .map(parseGlobalBlock)
-        .reduce(
-          (acc, { uid, title, tags, data, status, rules, position, meta }) => {
-            // was commented because of this cases:
-            // add block to page -> Update the page -> refresh it ->
-            // make block global -> refresh the page -> make the same block global again
-            // if (status === "draft") return acc;
-
-            acc[uid] = {
-              title,
-              tags,
-              data,
-              status,
-              meta,
-              rules,
-              position,
-              id: uid
-            };
-
-            return acc;
-          },
-          {}
-        );
-    })
-    .catch(() => {
-      throw new GlobalBlocksError("Failed to get Global blocks");
-    });
-}
-
-export function createGlobalBlock(
-  globalBlock: GlobalBlock
-): Promise<{ data: string; meta: string; dataVersion: string }> {
-  const {
-    wp: {
-      api: { url: _url, hash, createGlobalBlock }
-    },
-    editorVersion
-  } = Config.getAll() as WP;
-  const url = makeUrl(_url, {
-    hash,
-    action: createGlobalBlock,
-    version: editorVersion
-  });
-
-  const uid = globalBlock.data.value._id;
-  const {
-    title = "",
-    tags = "",
-    data,
-    rules,
-    meta
-  } = stringifyGlobalBlock(globalBlock);
-  const media = makeBlockMeta(globalBlock);
-  const body = new URLSearchParams({
-    uid,
-    data,
-    rules,
-    meta,
-    title,
-    tags,
-    media: JSON.stringify(media),
-    status: "draft"
-  });
-  type GlobalBlock = {
-    data: string;
-    meta: string;
-    dataVersion: string;
-    id: number;
-  };
-
-  return persistentRequest<GlobalBlock>(url, {
-    method: "POST",
-    body
-  })
-    .then((r) => r.data)
-    .catch(() => {
-      throw new GlobalBlocksError("Failed to create Global block");
-    });
-}
-
-export function createGlobalPopup(globalPopup: GlobalBlock) {
-  return createGlobalBlock(globalPopup);
-}
-
-export function updateGlobalBlock(
-  uid: string,
-  globalBlock: GlobalBlock,
-  extraMeta: { is_autosave?: 1 | 0 } = {}
-): Promise<unknown> {
-  const {
-    wp: {
-      api: { url: _url, hash, updateGlobalBlock }
-    },
-    editorVersion
-  } = Config.getAll() as WP;
-  const url = makeUrl(_url, {
-    hash,
-    action: updateGlobalBlock,
-    version: editorVersion
-  });
-
-  const { is_autosave = 1 } = extraMeta;
-  // const uid = globalBlock.data.value._id;
-  const {
-    title = "",
-    tags = "",
-    data,
-    rules,
-    meta,
-    status
-  } = stringifyGlobalBlock(globalBlock);
-  const body = new URLSearchParams({
-    uid,
-    status,
-    data,
-    rules,
-    meta,
-    title,
-    tags,
-    is_autosave: `${is_autosave}`
-  });
-
-  return persistentRequest(url, {
-    method: "POST",
-    body
-  }).catch(() => {
-    throw new PageError("Failed to update Global Block");
-  });
-}
-
-export function updateGlobalBlocks(
-  globalBlocks: Record<string, GlobalBlock>,
-  extraMeta: { is_autosave?: 1 | 0 } = {}
-): Promise<unknown> {
-  const {
-    wp: {
-      api: { url: _url, hash, updateGlobalBlocks }
-    },
-    editorVersion
-  } = Config.getAll() as WP;
-  const url = makeUrl(_url, {
-    hash,
-    action: updateGlobalBlocks,
-    version: editorVersion
-  });
-
-  const { is_autosave = 1 } = extraMeta;
-  const data = Object.entries(globalBlocks).reduce(
-    (acc, [uid, globalBlock]) => {
-      const {
-        title = "",
-        tags = "",
-        data,
-        position,
-        rules,
-        meta,
-        status
-      } = stringifyGlobalBlock(globalBlock);
-
-      acc.uid.push(uid);
-      acc.status.push(status);
-      acc.data.push(data ?? "");
-      acc.position.push(JSON.stringify(position));
-      acc.rules.push(rules);
-      acc.meta.push(meta);
-      acc.title.push(title);
-      acc.tags.push(tags);
-
-      return acc;
-    },
-    {
-      uid: [],
-      status: [],
-      data: [],
-      position: [],
-      rules: [],
-      meta: [],
-      title: [],
-      tags: []
-    } as {
-      uid: string[];
-      status: string[];
-      data: string[];
-      position: string[];
-      rules: string[];
-      meta: string[];
-      title: string[];
-      tags: string[];
-    }
-  );
-  const dataEncode = makeFormEncode({
-    uid: data.uid,
-    status: data.status,
-    data: data.data,
-    position: data.position,
-    rules: data.rules,
-    meta: data.meta,
-    title: data.title,
-    tags: data.tags,
-    is_autosave: `${is_autosave}`
-  });
-  const body = new URLSearchParams(dataEncode);
-
-  return persistentRequest(url, {
-    method: "POST",
-    body
-  }).catch(() => {
-    throw new PageError("Failed to update Global blocks");
-  });
 }
 
 //#endregion
@@ -1148,9 +858,24 @@ export const getPostsSourceRefs: GetPostsSourceRefs = () => {
   return Promise.reject("not implemented");
 };
 
+export const getCollectionTypesWithFields = () => {
+  return Promise.reject("not implemented");
+};
+
 //#endregion
 
-// is needed to pass webpack warnings
+//#region Pass webpack warnings
+
 export const uploadFile = (): Promise<string> => {
   return Promise.reject("Not implemented");
 };
+
+export const getMetafields = () => {
+  return Promise.reject("Not implemented");
+};
+
+export const getBlogPostMeta = () => {
+  return Promise.reject("Not implemented");
+};
+
+//#endregion

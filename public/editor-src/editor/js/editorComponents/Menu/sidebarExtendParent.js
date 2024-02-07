@@ -44,8 +44,8 @@ export function getItems() {
                     {
                       id: "customCSS",
                       label: t("Custom CSS"),
-                      type: "codeMirror-dev",
-                      position: 45,
+                      type: "codeMirror",
+                      position: 50,
                       display: "block",
                       devices: "desktop",
                       helper: { content: helperHTML },

@@ -9,9 +9,7 @@ export type Map<T extends OptionName> = (
   t: GenericToolbarItemType<T>
 ) => ToolbarItemType;
 
-export const withOptions = <
-  T extends "popover" | "stateMode-dev" | "group"
->(
+export const withOptions = <T extends "popover" | "stateMode" | "group">(
   f: (t: ToolbarItemType) => ToolbarItemType,
   t: GenericToolbarItemType<T>
 ): GenericToolbarItemType<T> => ({ ...t, options: t.options?.map(f) });

@@ -21,6 +21,9 @@
     "fontWeight": 600,
     "lineHeight": 1.3,
     "letterSpacing": 0,
+    "variableFontWeight": 400,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "colorHex": "#33344b",
     "colorOpacity": 1,

@@ -67,7 +67,7 @@ export function getItems({ v, device, context }) {
                 },
                 {
                   id: "start",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Start"),
                   devices: "desktop",
                   disabled: !isSimple,
@@ -81,7 +81,7 @@ export function getItems({ v, device, context }) {
                 },
                 {
                   id: "end",
-                  type: "number-dev",
+                  type: "number",
                   label: t("End"),
                   devices: "desktop",
                   config: {
@@ -116,9 +116,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: "Prefix",
                   disabled: !isRadial,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -127,9 +124,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: t("Suffix"),
                   disabled: !isRadial,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -138,9 +132,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: t("Prefix"),
                   disabled: !isSimple,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -149,9 +140,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: t("Suffix"),
                   disabled: !isSimple,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -160,9 +148,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: ",",
                   disabled: isEmpty || isPie,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 }
               ]
@@ -298,8 +283,10 @@ export function getItems({ v, device, context }) {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

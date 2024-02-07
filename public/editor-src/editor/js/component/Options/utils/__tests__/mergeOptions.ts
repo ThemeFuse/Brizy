@@ -26,7 +26,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -57,7 +57,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   max: 100,
@@ -66,7 +66,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -101,7 +101,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -109,7 +109,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -147,7 +147,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -178,7 +178,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   max: 100,
@@ -187,7 +187,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -222,7 +222,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -230,7 +230,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -268,7 +268,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -299,7 +299,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   max: 100,
@@ -308,7 +308,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -343,7 +343,7 @@ describe("Testing 'mergeOptions' function", () => {
             options: [
               {
                 id: "o2",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -351,7 +351,7 @@ describe("Testing 'mergeOptions' function", () => {
               },
               {
                 id: "o3",
-                type: "number-dev",
+                type: "number",
                 config: {
                   min: 10,
                   spinner: false
@@ -381,7 +381,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o2",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false
@@ -402,7 +402,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o2",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               max: 100,
@@ -411,7 +411,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o3",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false
@@ -436,7 +436,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o2",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false
@@ -444,7 +444,7 @@ describe("Testing 'mergeOptions' function", () => {
           },
           {
             id: "o3",
-            type: "number-dev",
+            type: "number",
             config: {
               min: 10,
               spinner: false

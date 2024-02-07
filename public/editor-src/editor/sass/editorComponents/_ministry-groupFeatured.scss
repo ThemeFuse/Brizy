@@ -10,6 +10,12 @@
     flex-direction: column;
     width: 100%;
 
+    &--meta--title {
+      a {
+        color: inherit;
+      }
+    }
+
     & > * {
       margin: 0;
     }

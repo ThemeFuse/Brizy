@@ -85,6 +85,9 @@
     "fontWeight": 700,
     "lineHeight": 1.8,
     "letterSpacing": 3,
+    "variableFontWeight": 700,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "bgColorType": "solid",
 

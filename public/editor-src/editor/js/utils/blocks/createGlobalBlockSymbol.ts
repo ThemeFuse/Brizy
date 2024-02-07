@@ -1,7 +1,7 @@
 import { ElementModelType } from "visual/component/Elements/Types";
 
 interface Data {
-  id: string;
+  uid: string;
   blockId?: string;
 }
 interface GlobalBlockSymbol extends ElementModelType {
@@ -14,6 +14,6 @@ export function createGlobalBlockSymbol(data: Data): GlobalBlockSymbol {
   return {
     blockId: data.blockId ?? "Kit2Blank000Light",
     type: "GlobalBlock",
-    value: { _id: data.id }
+    value: { _id: data.uid }
   };
 }

@@ -13,63 +13,111 @@ import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
 
+export const defaultValue: Value = {
+  type: "grouped",
+  value: 0,
+  tempValue: 0,
+  unit: "px",
+  tempUnit: "px",
+  top: 0,
+  tempTop: 0,
+  topUnit: "px",
+  tempTopUnit: "px",
+  right: 0,
+  tempRight: 0,
+  rightUnit: "px",
+  tempRightUnit: "px",
+  bottom: 0,
+  tempBottom: 0,
+  bottomUnit: "px",
+  tempBottomUnit: "px",
+  left: 0,
+  tempLeft: 0,
+  leftUnit: "px",
+  tempLeftUnit: "px"
+};
+
 export const fromElementModel: FromElementModel<"margin"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
   type: pipe(
     mPipe(callGetter("type"), Str.read, Type.fromString),
-    onNullish("grouped" as Type.Type)
+    onNullish(defaultValue.type)
   ),
-  value: pipe(mPipe(callGetter("value"), Num.read), onNullish(0)),
-  tempValue: pipe(mPipe(callGetter("tempValue"), Num.read), onNullish(0)),
+  value: pipe(
+    mPipe(callGetter("value"), Num.read),
+    onNullish(defaultValue.value)
+  ),
+  tempValue: pipe(
+    mPipe(callGetter("tempValue"), Num.read),
+    onNullish(defaultValue.tempValue)
+  ),
   unit: pipe(
     mPipe(callGetter("suffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.unit)
   ),
   tempUnit: pipe(
     mPipe(callGetter("tempSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.tempUnit)
   ),
-  top: pipe(mPipe(callGetter("top"), Num.read), onNullish(0)),
-  tempTop: pipe(mPipe(callGetter("tempTop"), Num.read), onNullish(0)),
+  top: pipe(mPipe(callGetter("top"), Num.read), onNullish(defaultValue.top)),
+  tempTop: pipe(
+    mPipe(callGetter("tempTop"), Num.read),
+    onNullish(defaultValue.tempTop)
+  ),
   topUnit: pipe(
     mPipe(callGetter("topSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.topUnit)
   ),
   tempTopUnit: pipe(
     mPipe(callGetter("tempTopSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.tempTopUnit)
   ),
-  right: pipe(mPipe(callGetter("right"), Num.read), onNullish(0)),
-  tempRight: pipe(mPipe(callGetter("tempRight"), Num.read), onNullish(0)),
+  right: pipe(
+    mPipe(callGetter("right"), Num.read),
+    onNullish(defaultValue.right)
+  ),
+  tempRight: pipe(
+    mPipe(callGetter("tempRight"), Num.read),
+    onNullish(defaultValue.tempRight)
+  ),
   rightUnit: pipe(
     mPipe(callGetter("rightSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.rightUnit)
   ),
   tempRightUnit: pipe(
     mPipe(callGetter("tempRightSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.tempRightUnit)
   ),
-  bottom: pipe(mPipe(callGetter("bottom"), Num.read), onNullish(0)),
-  tempBottom: pipe(mPipe(callGetter("tempBottom"), Num.read), onNullish(0)),
+  bottom: pipe(
+    mPipe(callGetter("bottom"), Num.read),
+    onNullish(defaultValue.bottom)
+  ),
+  tempBottom: pipe(
+    mPipe(callGetter("tempBottom"), Num.read),
+    onNullish(defaultValue.tempBottom)
+  ),
   bottomUnit: pipe(
     mPipe(callGetter("bottomSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.bottomUnit)
   ),
   tempBottomUnit: pipe(
     mPipe(callGetter("tempBottomSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.tempBottomUnit)
   ),
-  left: pipe(mPipe(callGetter("left"), Num.read), onNullish(0)),
-  tempLeft: pipe(mPipe(callGetter("tempLeft"), Num.read), onNullish(0)),
+  left: pipe(mPipe(callGetter("left"), Num.read), onNullish(defaultValue.left)),
+  tempLeft: pipe(
+    mPipe(callGetter("tempLeft"), Num.read),
+    onNullish(defaultValue.tempLeft)
+  ),
   leftUnit: pipe(
     mPipe(callGetter("leftSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.leftUnit)
   ),
   tempLeftUnit: pipe(
     mPipe(callGetter("tempLeftSuffix"), Str.read, Unit.fromString),
-    onNullish("px" as Unit.SpacingUnit)
+    onNullish(defaultValue.tempLeftUnit)
   )
 });
 
@@ -97,28 +145,4 @@ export const toElementModel: ToElementModel<"margin"> = (v) => {
     leftSuffix: v.leftUnit,
     tempLeftSuffix: v.tempLeftUnit
   };
-};
-
-export const defaultValue: Value = {
-  type: "grouped",
-  value: 0,
-  tempValue: 0,
-  unit: "px",
-  tempUnit: "px",
-  top: 0,
-  tempTop: 0,
-  topUnit: "px",
-  tempTopUnit: "px",
-  right: 0,
-  tempRight: 0,
-  rightUnit: "px",
-  tempRightUnit: "px",
-  bottom: 0,
-  tempBottom: 0,
-  bottomUnit: "px",
-  tempBottomUnit: "px",
-  left: 0,
-  tempLeft: 0,
-  leftUnit: "px",
-  tempLeftUnit: "px"
 };

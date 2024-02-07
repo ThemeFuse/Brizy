@@ -1,5 +1,7 @@
 {
   "content": {
+    "productId": "auto",
+
     "thumbnailAspectRatio": "AUTO",
 
     "columns": "TWO_COLUMNS_SIDEBAR_ON_THE_RIGHT",
@@ -188,6 +190,9 @@
     "titleTypographyFontWeight": 700,
     "titleTypographyLetterSpacing": 1.3,
     "titleTypographyLineHeight": 1,
+    "titleTypographyVariableFontWeight": 700,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
@@ -205,6 +210,9 @@
     "title2TypographyFontWeight": 400,
     "title2TypographyLetterSpacing": 1.3,
     "title2TypographyLineHeight": 1,
+    "title2TypographyVariableFontWeight": 400,
+    "title2TypographyFontWidth": 100,
+    "title2TypographyFontSoftness": 0,
 
     "title2ColorHex": "#000000",
     "title2ColorOpacity": 1,
@@ -222,6 +230,9 @@
     "breadcrumbsTypographyFontWeight": 400,
     "breadcrumbsTypographyLetterSpacing": 1.3,
     "breadcrumbsTypographyLineHeight": 1,
+    "breadcrumbsTypographyVariableFontWeight": 400,
+    "breadcrumbsTypographyFontWidth": 100,
+    "breadcrumbsTypographyFontSoftness": 0,
 
     "breadcrumbsColorHex": "#000000",
     "breadcrumbsColorOpacity": 1,
@@ -241,6 +252,9 @@
     "SKUTypographyFontWeight": 400,
     "SKUTypographyLetterSpacing": 1.3,
     "SKUTypographyLineHeight": 1,
+    "SKUTypographyVariableFontWeight": 400,
+    "SKUTypographyFontWidth": 100,
+    "SKUTypographyFontSoftness": 0,
 
     "SKUColorHex": "#000000",
     "SKUColorOpacity": 1,
@@ -258,6 +272,9 @@
     "priceTypographyFontWeight": 300,
     "priceTypographyLetterSpacing": 1.3,
     "priceTypographyLineHeight": 1,
+    "priceTypographyVariableFontWeight": 400,
+    "priceTypographyFontWidth": 100,
+    "priceTypographyFontSoftness": 0,
 
     "priceColorHex": "#000000",
     "priceColorOpacity": 1,
@@ -275,6 +292,9 @@
     "sizeTypographyFontWeight": 400,
     "sizeTypographyLetterSpacing": 1.3,
     "sizeTypographyLineHeight": 1,
+    "sizeTypographyVariableFontWeight": 400,
+    "sizeTypographyFontWidth": 100,
+    "sizeTypographyFontSoftness": 0,
 
     "sizeColorHex": "#000000",
     "sizeColorOpacity": 1,
@@ -292,6 +312,9 @@
     "inStockTypographyFontWeight": 400,
     "inStockTypographyLetterSpacing": 1.3,
     "inStockTypographyLineHeight": 1,
+    "inStockTypographyVariableFontWeight": 400,
+    "inStockTypographyFontWidth": 100,
+    "inStockTypographyFontSoftness": 0,
 
     "inStockColorHex": "#000000",
     "inStockColorOpacity": 1,
@@ -309,6 +332,9 @@
     "detailsTypographyFontWeight": 400,
     "detailsTypographyLetterSpacing": 1.3,
     "detailsTypographyLineHeight": 1,
+    "detailsTypographyVariableFontWeight": 400,
+    "detailsTypographyFontWidth": 100,
+    "detailsTypographyFontSoftness": 0,
 
     "detailsColorHex": "#000000",
     "detailsColorOpacity": 1,
@@ -326,6 +352,9 @@
     "descriptionTypographyFontWeight": 400,
     "descriptionTypographyLetterSpacing": 1.3,
     "descriptionTypographyLineHeight": 1,
+    "descriptionTypographyVariableFontWeight": 400,
+    "descriptionTypographyFontWidth": 100,
+    "descriptionTypographyFontSoftness": 0,
 
     "descriptionColorHex": "#000000",
     "descriptionColorOpacity": 1,
@@ -354,6 +383,9 @@
     "buttonTypographyFontWeight": 400,
     "buttonTypographyLetterSpacing": 1.3,
     "buttonTypographyLineHeight": 1,
+    "buttonTypographyVariableFontWeight": 400,
+    "buttonTypographyFontWidth": 100,
+    "buttonTypographyFontSoftness": 0,
 
     "buttonColorHex": "#000000",
     "buttonColorOpacity": 1,
@@ -437,6 +469,9 @@
     "checkoutTypographyFontWeight": 400,
     "checkoutTypographyLetterSpacing": 1.3,
     "checkoutTypographyLineHeight": 1,
+    "checkoutTypographyVariableFontWeight": 400,
+    "checkoutTypographyFontWidth": 100,
+    "checkoutTypographyFontSoftness": 0,
 
     "checkoutColorHex": "#ffffff",
     "checkoutColorOpacity": 1,
@@ -520,6 +555,9 @@
     "addToBagTypographyFontWeight": 400,
     "addToBagTypographyLetterSpacing": 1.3,
     "addToBagTypographyLineHeight": 1,
+    "addToBagTypographyVariableFontWeight": 400,
+    "addToBagTypographyFontWidth": 100,
+    "addToBagTypographyFontSoftness": 0,
 
     "addToBagColorHex": "#ffffff",
     "addToBagColorOpacity": 1,
@@ -600,6 +638,9 @@
     "checkboxTypographyFontWeight": 400,
     "checkboxTypographyLetterSpacing": 1.3,
     "checkboxTypographyLineHeight": 2.6,
+    "checkboxTypographyVariableFontWeight": 400,
+    "checkboxTypographyFontWidth": 100,
+    "checkboxTypographyFontSoftness": 0,
 
     "checkboxColorHex": "#ffffff",
     "checkboxColorOpacity": 1,
@@ -678,6 +719,9 @@
     "shareTitleTypographyFontWeight": 400,
     "shareTitleTypographyLetterSpacing": 1.3,
     "shareTitleTypographyLineHeight": 1,
+    "shareTitleTypographyVariableFontWeight": 400,
+    "shareTitleTypographyFontWidth": 100,
+    "shareTitleTypographyFontSoftness": 0,
 
     "shareTitleColorHex": "#000000",
     "shareTitleColorOpacity": 1,
@@ -711,6 +755,9 @@
     "favoriteTypographyFontWeight": 400,
     "favoriteTypographyLetterSpacing": 1.3,
     "favoriteTypographyLineHeight": 1,
+    "favoriteTypographyVariableFontWeight": 400,
+    "favoriteTypographyFontWidth": 100,
+    "favoriteTypographyFontSoftness": 0,
 
     "favoriteColorHex": "#ffffff",
     "favoriteColorOpacity": 1,
@@ -806,6 +853,9 @@
     "favoritedTypographyFontWeight": 400,
     "favoritedTypographyLetterSpacing": 1.3,
     "favoritedTypographyLineHeight": 1,
+    "favoritedTypographyVariableFontWeight": 400,
+    "favoritedTypographyFontWidth": 100,
+    "favoritedTypographyFontSoftness": 0,
 
     "favoritedColorHex": "#ffffff",
     "favoritedColorOpacity": 1,
@@ -896,6 +946,9 @@
     "viewFavoritesTypographyFontWeight": 400,
     "viewFavoritesTypographyLetterSpacing": 1.3,
     "viewFavoritesTypographyLineHeight": 1,
+    "viewFavoritesTypographyVariableFontWeight": 400,
+    "viewFavoritesTypographyFontWidth": 100,
+    "viewFavoritesTypographyFontSoftness": 0,
 
     "viewFavoritesColorHex": "#000000",
     "viewFavoritesColorOpacity": 1,
@@ -985,6 +1038,9 @@
     "shareButtonsTypographyFontWeight": 400,
     "shareButtonsTypographyLetterSpacing": 1.3,
     "shareButtonsTypographyLineHeight": 1,
+    "shareButtonsTypographyVariableFontWeight": 400,
+    "shareButtonsTypographyFontWidth": 100,
+    "shareButtonsTypographyFontSoftness": 0,
 
     "shareButtonsColorHex": "#000000",
     "shareButtonsColorOpacity": 1,
@@ -1165,6 +1221,9 @@
     "flagLabelTypographyFontWeight": 400,
     "flagLabelTypographyLetterSpacing": 1.3,
     "flagLabelTypographyLineHeight": 1.3,
+    "flagLabelTypographyVariableFontWeight": 400,
+    "flagLabelTypographyFontWidth": 100,
+    "flagLabelTypographyFontSoftness": 0,
 
     "flagLabelColorHex": "#ffffff",
     "flagLabelColorOpacity": 1,
@@ -1186,6 +1245,9 @@
     "radioTypographyFontWeight": 400,
     "radioTypographyLetterSpacing": 1.3,
     "radioTypographyLineHeight": 1,
+    "radioTypographyVariableFontWeight": 400,
+    "radioTypographyFontWidth": 100,
+    "radioTypographyFontSoftness": 0,
 
     "radioBgColorHex": "#000000",
     "radioBgColorOpacity": 1,
@@ -1201,6 +1263,9 @@
     "checkbox2TypographyFontWeight": 400,
     "checkbox2TypographyLetterSpacing": 1.3,
     "checkbox2TypographyLineHeight": 1.3,
+    "checkbox2TypographyVariableFontWeight": 400,
+    "checkbox2TypographyFontWidth": 100,
+    "checkbox2TypographyFontSoftness": 0,
 
     "checkbox2BgColorHex": "#000000",
     "checkbox2BgColorOpacity": 1,
@@ -1218,6 +1283,9 @@
     "textFieldTypographyFontWeight": 400,
     "textFieldTypographyLetterSpacing": 1.3,
     "textFieldTypographyLineHeight": 1,
+    "textFieldTypographyVariableFontWeight": 400,
+    "textFieldTypographyFontWidth": 100,
+    "textFieldTypographyFontSoftness": 0,
 
     "textFieldColorHex": "#000000",
     "textFieldColorOpacity": 1,
@@ -1298,6 +1366,9 @@
     "textareaTypographyFontWeight": 400,
     "textareaTypographyLetterSpacing": 1.3,
     "textareaTypographyLineHeight": 1.3,
+    "textareaTypographyVariableFontWeight": 400,
+    "textareaTypographyFontWidth": 100,
+    "textareaTypographyFontSoftness": 0,
 
     "textareaColorHex": "#000000",
     "textareaColorOpacity": 1,
@@ -1381,6 +1452,9 @@
     "datepickerTypographyFontWeight": 400,
     "datepickerTypographyLetterSpacing": 1.3,
     "datepickerTypographyLineHeight": 1.3,
+    "datePickerTypographyVariableFontWeight": 400,
+    "datePickerTypographyFontWidth": 100,
+    "datePickerTypographyFontSoftness": 0,
 
     "datepickerColorHex": "#000000",
     "datepickerColorOpacity": 1,
@@ -1461,6 +1535,9 @@
     "selectTypographyFontWeight": 400,
     "selectTypographyLetterSpacing": 1.3,
     "selectTypographyLineHeight": 1.3,
+    "selectTypographyVariableFontWeight": 400,
+    "selectTypographyFontWidth": 100,
+    "selectTypographyFontSoftness": 0,
 
     "selectColorHex": "#000000",
     "selectColorOpacity": 1,
@@ -1547,6 +1624,9 @@
     "filesTypographyFontWeight": 400,
     "filesTypographyLetterSpacing": 1.3,
     "filesTypographyLineHeight": 1,
+    "filesTypographyVariableFontWeight": 400,
+    "filesTypographyFontWidth": 100,
+    "filesTypographyFontSoftness": 0,
 
     "filesColorHex": "#ffffff",
     "filesColorOpacity": 1,
@@ -1622,6 +1702,9 @@
     "attributeTypographyFontWeight": 300,
     "attributeTypographyLetterSpacing": 1.3,
     "attributeTypographyLineHeight": 1,
+    "attributeTypographyVariableFontWeight": 300,
+    "attributeTypographyFontWidth": 100,
+    "attributeTypographyFontSoftness": 0,
 
     "attributeColorHex": "#000000",
     "attributeColorOpacity": 1,
@@ -1639,6 +1722,9 @@
     "showMoreTypographyFontWeight": 400,
     "showMoreTypographyLetterSpacing": 1.3,
     "showMoreTypographyLineHeight": 1,
+    "showMoreTypographyVariableFontWeight": 400,
+    "showMoreTypographyFontWidth": 100,
+    "showMoreTypographyFontSoftness": 0,
 
     "showMoreColorHex": "#1a7ac4",
     "showMoreColorOpacity": 1,
@@ -1661,6 +1747,9 @@
     "footerTypographyFontWeight": 400,
     "footerTypographyLetterSpacing": 1.3,
     "footerTypographyLineHeight": 1,
+    "footerTypographyVariableFontWeight": 400,
+    "footerTypographyFontWidth": 100,
+    "footerTypographyFontSoftness": 0,
 
     "footerColorHex": "#000000",
     "footerColorOpacity": 1,
@@ -1686,6 +1775,9 @@
     "qtyTypographyFontWeight": 400,
     "qtyTypographyLetterSpacing": 1.3,
     "qtyTypographyLineHeight": 1,
+    "qtyTypographyVariableFontWeight": 400,
+    "qtyTypographyFontWidth": 100,
+    "qtyTypographyFontSoftness": 0,
 
     "qtyColorHex": "#000000",
     "qtyColorOpacity": 1,
@@ -1769,6 +1861,9 @@
     "subtitleTypographyFontWeight": 400,
     "subtitleTypographyLetterSpacing": 1.3,
     "subtitleTypographyLineHeight": 1,
+    "subtitleTypographyVariableFontWeight": 400,
+    "subtitleTypographyFontWidth": 100,
+    "subtitleTypographyFontSoftness": 0,
 
     "subtitleHorizontalAlign": "left",
 
@@ -1792,6 +1887,9 @@
     "wholesalePriceTypographyFontWeight": 400,
     "wholesalePriceTypographyLetterSpacing": 1.3,
     "wholesalePriceTypographyLineHeight": 1,
+    "wholesalePriceTypographyVariableFontWeight": 400,
+    "wholesalePriceTypographyFontWidth": 100,
+    "wholesalePriceTypographyFontSoftness": 0,
 
     "wholesaleTypographyFontStyle": "",
     "wholesaleTypographyFontFamilyType": "google",
@@ -1800,6 +1898,9 @@
     "wholesaleTypographyFontWeight": 400,
     "wholesaleTypographyLetterSpacing": 1.3,
     "wholesaleTypographyLineHeight": 1,
+    "wholeSaleTypographyVariableFontWeight": 400,
+    "wholeSaleTypographyFontWidth": 100,
+    "wholeSaleTypographyFontSoftness": 0,
 
     "wholesalePriceHorizontalAlign": "left",
 
@@ -1820,6 +1921,9 @@
     "wholesaleNoteTypographyFontWeight": 400,
     "wholesaleNoteTypographyLetterSpacing": 1.3,
     "wholesaleNoteTypographyLineHeight": 1,
+    "wholesaleNoteTypographyVariableFontWeight": 400,
+    "wholesaleNoteTypographyFontWidth": 100,
+    "wholesaleNoteTypographyFontSoftness": 0,
 
     "wholesaleNoteHorizontalAlign": "left",
 
@@ -1837,6 +1941,9 @@
     "surchargeTypographyFontWeight": 400,
     "surchargeTypographyLetterSpacing": 1.3,
     "surchargeTypographyLineHeight": 1,
+    "surchargeTypographyVariableFontWeight": 400,
+    "surchargeTypographyFontWidth": 100,
+    "surchargeTypographyFontSoftness": 0,
 
     "wholesaleTitleColorHex": "#000000",
     "wholesaleTitleColorOpacity": 0.8,
@@ -1849,6 +1956,9 @@
     "wholesaleTitleTypographyFontWeight": 700,
     "wholesaleTitleTypographyLetterSpacing": 1.3,
     "wholesaleTitleTypographyLineHeight": 1,
+    "wholesaleTitleTypographyVariableFontWeight": 700,
+    "wholesaleTitleTypographyFontWidth": 100,
+    "wholesaleTitleTypographyFontSoftness": 0,
 
     "wholesaleTitleHorizontalAlign": "left",
 
@@ -1866,6 +1976,9 @@
     "wholesaleTableHeaderTypographyFontWeight": 700,
     "wholesaleTableHeaderTypographyLetterSpacing": 1.3,
     "wholesaleTableHeaderTypographyLineHeight": 1,
+    "wholesaleTableHeaderTypographyVariableFontWeight": 700,
+    "wholesaleTableHeaderTypographyFontWidth": 100,
+    "wholesaleTableHeaderTypographyFontSoftness": 0,
 
     "wholesaleTableHeaderHorizontalAlign": "left",
 
@@ -1880,6 +1993,9 @@
     "wholesaleTableBodyTypographyFontWeight": 400,
     "wholesaleTableBodyTypographyLetterSpacing": 1.3,
     "wholesaleTableBodyTypographyLineHeight": 1,
+    "wholesaleTableBodyTypographyVariableFontWeight": 400,
+    "wholesaleTableBodyTypographyFontWidth": 100,
+    "wholesaleTableBodyTypographyFontSoftness": 0,
 
     "wholesaleTableBodyHorizontalAlign": "left",
 
@@ -1893,6 +2009,9 @@
     "relatedTitleTypographyFontWeight": 400,
     "relatedTitleTypographyLetterSpacing": 1.3,
     "relatedTitleTypographyLineHeight": 1,
+    "relatedTitleTypographyVariableFontWeight": 400,
+    "relatedTitleTypographyFontWidth": 100,
+    "relatedTitleTypographyFontSoftness": 0,
 
     "relatedTitleColorHex": "#000000",
     "relatedTitleColorOpacity": 1,
@@ -1910,6 +2029,9 @@
     "gridTitleTypographyFontWeight": 400,
     "gridTitleTypographyLetterSpacing": 1.3,
     "gridTitleTypographyLineHeight": 1,
+    "gridTitleTypographyVariableFontWeight": 400,
+    "gridTitleTypographyFontWidth": 100,
+    "gridTitleTypographyFontSoftness": 0,
 
     "gridTitleColorHex": "#333333",
     "gridTitleColorOpacity": 1,
@@ -1927,6 +2049,9 @@
     "gridSubtitleTypographyFontWeight": 400,
     "gridSubtitleTypographyLetterSpacing": 1.3,
     "gridSubtitleTypographyLineHeight": 1,
+    "gridSubtitleTypographyVariableFontWeight": 400,
+    "gridSubtitleTypographyFontWidth": 100,
+    "gridSubtitleTypographyFontSoftness": 0,
 
     "gridSubtitleColorHex": "#757575",
     "gridSubtitleColorOpacity": 1,
@@ -1944,6 +2069,9 @@
     "gridSKUInnerTypographyFontWeight": 400,
     "gridSKUInnerTypographyLetterSpacing": 1.3,
     "gridSKUInnerTypographyLineHeight": 1,
+    "gridSKUInnerTypographyVariableFontWeight": 400,
+    "gridSKUInnerTypographyFontWidth": 100,
+    "gridSKUInnerTypographyFontSoftness": 0,
 
     "gridSKUInnerColorHex": "#757575",
     "gridSKUInnerColorOpacity": 1,
@@ -1961,6 +2089,9 @@
     "gridPriceTypographyFontWeight": 400,
     "gridPriceTypographyLetterSpacing": 1.3,
     "gridPriceTypographyLineHeight": 1,
+    "gridPriceTypographyVariableFontWeight": 400,
+    "gridPriceTypographyFontWidth": 100,
+    "gridPriceTypographyFontSoftness": 0,
 
     "gridPriceColorHex": "#333333",
     "gridPriceColorOpacity": 1,
@@ -1984,6 +2115,9 @@
     "gridBuyNowTypographyFontWeight": 400,
     "gridBuyNowTypographyLetterSpacing": 1.3,
     "gridBuyNowTypographyLineHeight": 1,
+    "gridBuyNowTypographyVariableFontWeight": 400,
+    "gridBuyNowTypographyFontWidth": 100,
+    "gridBuyNowTypographyFontSoftness": 0,
 
     "gridBuyNowColorHex": "#333333",
     "gridBuyNowColorOpacity": 1,
@@ -2201,6 +2335,9 @@
     "taxesTypographyFontWeight": 400,
     "taxesTypographyLetterSpacing": 1.3,
     "taxesTypographyLineHeight": 1.4,
+    "taxesTypographyVariableFontWeight": 400,
+    "taxesTypographyFontWidth": 100,
+    "taxesTypographyFontSoftness": 0,
 
     "taxesHorizontalAlign": "left",
 

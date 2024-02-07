@@ -9,7 +9,7 @@ export function cssStyleColumnHeight({ v, device, state }: CSSValue): string {
   if (heightStyle === "custom") {
     return cssStyleSizeMinHeightPx({ v, device, state });
   } else {
-    return "min-height:auto;";
+    return "min-height:100%;";
   }
 }
 

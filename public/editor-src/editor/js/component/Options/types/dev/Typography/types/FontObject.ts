@@ -1,3 +1,4 @@
+import { VariationFont } from "visual/types";
 import { Weight } from "visual/utils/fonts/Weight";
 
 export interface FontObject {
@@ -6,4 +7,5 @@ export interface FontObject {
   id: string;
   title: string;
   weights: Weight[];
+  variations?: VariationFont[];
 }

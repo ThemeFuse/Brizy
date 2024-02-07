@@ -21,7 +21,12 @@ export const styles: RStyles = (state = [], action) => {
         return state;
       }
 
-      return [...state, ...styles];
+      const doesStyleExists = state.find((item) => item.id === styles[0].id);
+      if (doesStyleExists) {
+        return state;
+      }
+
+      return [...styles, ...state];
     }
     case ActionTypes.ADD_NEW_GLOBAL_STYLE: {
       return [...state, action.payload];

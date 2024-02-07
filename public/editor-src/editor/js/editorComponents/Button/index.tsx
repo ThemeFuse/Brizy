@@ -99,6 +99,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
     const className = classnames(
       "brz-btn",
+      { "brz-blocked": v.tabsState === "hover" },
       "brz-btn-submit",
       populationClassName,
       css(
@@ -146,6 +147,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
     const className = classnames(
       "brz-btn",
+      { "brz-blocked": v.tabsState === "hover" },
       _className,
       css(
         `${this.getComponentId()}-bg`,
@@ -216,11 +218,9 @@ export default class Button extends EditorComponent<Value, Props> {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

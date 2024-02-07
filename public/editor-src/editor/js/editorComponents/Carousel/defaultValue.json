@@ -17,6 +17,7 @@
 
     "slidesToScroll": 1,
 
+    "sliderAnimation": "none",
     "sliderAutoPlay": "off",
     "sliderAutoPlaySpeed": 3,
     "sliderAutoPlaySpeedSuffix": "s",

@@ -57,7 +57,7 @@ async function extractFromEditor(paths) {
   for (const file of files) {
     const fileString = fs.readFileSync(file, "utf8");
 
-    for (const translation of extractTranslationsFromT(fileString)) {
+    for (const translation of extractTranslationsFromT(fileString, file)) {
       translations.add(translation);
     }
   }
@@ -65,33 +65,36 @@ async function extractFromEditor(paths) {
   return translations;
 }
 
-function extractTranslationsFromT(code) {
-  const ast = parser.parse(code, {
-    sourceType: "unambiguous",
-    plugins: ["classProperties", "jsx", "typescript"]
-  });
-
+function extractTranslationsFromT(code, file) {
   const t = new Set();
-  traverse(ast, {
-    CallExpression({ node }) {
-      if (
-        node.callee.name === "t" &&
-        // In rare cases the function is called with a variable instead of a string literal.
-        // Omit those here because those require to customize the build individually
-        node.arguments[0].type === "StringLiteral"
-      ) {
-        t.add(node.arguments[0].value);
+
+  try {
+    const ast = parser.parse(code, {
+      sourceType: "unambiguous",
+      plugins: ["classProperties", "jsx", "typescript"]
+    });
+
+    traverse(ast, {
+      CallExpression({ node }) {
+        if (
+          node.callee.name === "t" &&
+          // In rare cases the function is called with a variable instead of a string literal.
+          // Omit those here because those require to customize the build individually
+          node.arguments[0].type === "StringLiteral"
+        ) {
+          t.add(node.arguments[0].value);
+        }
       }
-    }
-  });
+    });
+  } catch (e) {
+    console.error("Syntax error inside: ", file);
+  }
 
   return t;
 }
 
-function generateWPFileContent({ translations, IS_PRODUCTION, VERSION }) {
-  const className = `Brizy_Public_EditorBuild_${
-    IS_PRODUCTION ? VERSION.split("-").map(capitalize).join("") : "Dev"
-  }_Texts`;
+function generateWPFileContent({ translations }) {
+  const className = "Brizy_Public_EditorBuild_Texts";
   const arrBody = translations
     .map((t) => {
       // eslint-disable-next-line
@@ -113,8 +116,4 @@ function generateWPFileContent({ translations, IS_PRODUCTION, VERSION }) {
   ].join("\n");
 
   return arr;
-}
-
-function capitalize(s) {
-  return s[0].toUpperCase() + s.slice(1);
 }

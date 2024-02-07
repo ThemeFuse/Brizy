@@ -10,6 +10,7 @@ import { EmptyContentWithDefaults } from "visual/component/Prompts/common/Prompt
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
 import {
+  canSyncPage,
   getAllOptionText,
   getChoices,
   getRulesId,
@@ -18,10 +19,12 @@ import {
 } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   ShopifyTemplate,
   getShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { updateError } from "visual/redux/actions";
 import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
 import {
   getCollectionSourceItemsById,
@@ -30,6 +33,7 @@ import {
 } from "visual/utils/api";
 import { SelectedItem } from "visual/utils/api/types";
 import { isNonEmptyArray } from "visual/utils/array/types";
+import { SYNC_ERROR } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import * as Obj from "visual/utils/reader/object";
 import { Button } from "../common/Button";
@@ -137,7 +141,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
     }
 
     return Promise.reject();
-  }, [pageTitle, value]);
+  }, [pageTitle, value, templateType]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -160,9 +164,26 @@ export const PromptPageRules = (props: Props): ReactElement => {
           color="teal"
           size={3}
           loading={state.type === "Saving"}
-          onClick={(): void => dispatchS(Actions.save())}
+          onClick={(): void => {
+            const configCommon = _config as ConfigCommon;
+            const canSync = canSyncPage(configCommon);
+
+            if (canSync) {
+              dispatchS(Actions.save());
+            } else {
+              dispatch(
+                updateError({
+                  code: SYNC_ERROR,
+                  data: {
+                    upgradeToProUrl:
+                      configCommon?.modules?.shop?.upgradeToProUrl
+                  }
+                })
+              );
+            }
+          }}
         >
-          {t("Save")}
+          {t("Publish")}
         </Button>
       </>
     ),

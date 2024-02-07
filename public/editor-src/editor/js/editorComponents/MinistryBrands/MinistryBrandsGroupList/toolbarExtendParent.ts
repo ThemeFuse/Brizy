@@ -66,7 +66,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "itemsNumber",
                   label: t("Items"),
-                  type: "number-dev",
+                  type: "number",
                   devices: "desktop",
                   config: {
                     min: 1,
@@ -77,7 +77,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "columnNumber",
                   label: t("Columns"),
-                  type: "number-dev",
+                  type: "number",
                   config: {
                     min: 1,
                     max: 6,
@@ -179,6 +179,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Button Text"),
                   disabled: !dvv("detailPage"),
                   placeholder: t("Button Text..."),
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Button will display if text is entered and a detail page selected."

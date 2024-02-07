@@ -56,7 +56,7 @@ export function tabFilter(v: V, context: Context): TabOptionType | undefined {
       {
         id: "offset",
         label: t("Offset"),
-        type: "number-dev",
+        type: "number",
         devices: "desktop"
       },
       {

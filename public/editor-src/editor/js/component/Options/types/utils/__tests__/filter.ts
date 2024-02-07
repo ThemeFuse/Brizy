@@ -7,7 +7,6 @@ jest.mock(
   () => undefined
 );
 jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Button.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ButtonTooltip.jsx", () => undefined);
 jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => undefined);
@@ -19,23 +18,10 @@ jest.mock(
   "visual/component/Options/types/FontStyleEditor/index.tsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
-jest.mock("visual/component/Options/types/Grid.jsx", () => undefined);
-jest.mock(
-  "visual/component/Options/types/IntegrationsApps.js",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/MultiInputPickerOptionType.js",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/Popover.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/PopupConditions.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/RadioGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Select.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
@@ -52,7 +38,7 @@ test("Return item back if it respects the predicate", () => {
   const predicate = (i: ToolbarItemType): boolean => i.devices === "desktop";
   const item: ToolbarItemType = {
     id: "test",
-    type: "number-dev",
+    type: "number",
     devices: "desktop"
   };
 
@@ -63,7 +49,7 @@ test("Return undefined back if item does not respect the predicate", () => {
   const predicate = (i: ToolbarItemType): boolean => i.devices === "responsive";
   const item: ToolbarItemType = {
     id: "test",
-    type: "number-dev",
+    type: "number",
     devices: "desktop"
   };
 
@@ -82,12 +68,12 @@ test("Apply filter on inner items", () => {
         options: [
           {
             id: "test11",
-            type: "number-dev",
+            type: "number",
             devices: "desktop"
           },
           {
             id: "test12",
-            type: "number-dev",
+            type: "number",
             devices: "responsive"
           }
         ]
@@ -97,12 +83,12 @@ test("Apply filter on inner items", () => {
         options: [
           {
             id: "test21",
-            type: "number-dev",
+            type: "number",
             devices: "responsive"
           },
           {
             id: "test22",
-            type: "number-dev",
+            type: "number",
             devices: "responsive"
           }
         ]
@@ -119,7 +105,7 @@ test("Apply filter on inner items", () => {
         options: [
           {
             id: "test11",
-            type: "number-dev",
+            type: "number",
             devices: "desktop"
           }
         ]

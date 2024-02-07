@@ -12,7 +12,10 @@
     "showResourceLink": "on",
     "showContent": "on",
     "showPreviousPage": "on",
-    "groupsRecent": ""
+    "groupsRecent": "",
+
+    "maskCustomUploadImageFileName": "",
+    "maskCustomUploadImageSrc": ""
   },
 
   "style": {
@@ -34,6 +37,9 @@
     "typographyFontWeight": 400,
     "typographyLetterSpacing": 0,
     "typographyLineHeight": 1,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
@@ -42,6 +48,9 @@
     "titleTypographyFontWeight": 700,
     "titleTypographyLetterSpacing": 0,
     "titleTypographyLineHeight": 1.1,
+    "titleTypographyVariableFontWeight": 700,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "dateTypographyFontStyle": "",
     "dateTypographyFontFamilyType": "google",
@@ -50,6 +59,9 @@
     "dateTypographyFontWeight": 400,
     "dateTypographyLetterSpacing": 0,
     "dateTypographyLineHeight": 1.1,
+    "dateTypographyVariableFontWeight": 400,
+    "dateTypographyFontWidth": 100,
+    "dateTypographyFontSoftness": 0,
 
     "previewTypographyFontStyle": "",
     "previewTypographyFontFamilyType": "google",
@@ -58,6 +70,9 @@
     "previewTypographyFontWeight": 400,
     "previewTypographyLetterSpacing": 0,
     "previewTypographyLineHeight": 1,
+    "previewTypographyVariableFontWeight": 400,
+    "previewTypographyFontWidth": 100,
+    "previewTypographyFontSoftness": 0,
 
     "metaLinksTypographyFontStyle": "",
     "metaLinksTypographyFontFamilyType": "google",
@@ -66,6 +81,9 @@
     "metaLinksTypographyFontWeight": 400,
     "metaLinksTypographyLetterSpacing": 0,
     "metaLinksTypographyLineHeight": 1,
+    "metaLinksTypographyVariableFontWeight": 400,
+    "metaLinksTypographyFontWidth": 100,
+    "metaLinksTypographyFontSoftness": 0,
 
     "paragraphTypographyFontStyle": "",
     "paragraphTypographyFontFamilyType": "google",
@@ -74,6 +92,9 @@
     "paragraphTypographyFontWeight": 400,
     "paragraphTypographyLetterSpacing": 0,
     "paragraphTypographyLineHeight": 1,
+    "paragraphTypographyVariableFontWeight": 400,
+    "paragraphTypographyFontWidth": 100,
+    "paragraphTypographyFontSoftness": 0,
 
     "h4TypographyFontStyle": "",
     "h4TypographyFontFamilyType": "google",
@@ -82,6 +103,9 @@
     "h4TypographyFontWeight": 700,
     "h4TypographyLetterSpacing": 0,
     "h4TypographyLineHeight": 2.8,
+    "h4TypographyVariableFontWeight": 700,
+    "h4TypographyFontWidth": 100,
+    "h4TypographyFontSoftness": 0,
 
     "listTypographyFontStyle": "",
     "listTypographyFontFamilyType": "google",
@@ -90,6 +114,9 @@
     "listTypographyFontWeight": 400,
     "listTypographyLetterSpacing": 0,
     "listTypographyLineHeight": 1.3,
+    "listTypographyVariableFontWeight": 400,
+    "listTypographyFontWidth": 100,
+    "listTypographyFontSoftness": 0,
 
     "colorHex": "#707070",
     "colorOpacity": 1,
@@ -123,10 +150,69 @@
     "listColorOpacity": 1,
     "listColorPalette": "",
 
+    "imgBgColorType": "none",
+    "imgBgColorHex": "#ffffff",
+    "imgBgColorOpacity": 0,
+    "imgBgColorPalette": "",
+
+    "imgGradientColorHex": "#009900",
+    "imgGradientColorOpacity": 1,
+    "imgGradientColorPalette": "",
+    "imgGradientType": "linear",
+    "imgGradientStartPointer": 0,
+    "imgGradientFinishPointer": 100,
+    "imgGradientActivePointer": "startPointer",
+    "imgGradientLinearDegree": 90,
+    "imgGradientRadialDegree": 90,
+
+    "tempImgBgColorType": "solid",
+
+    "imgBorderStyle": "none",
+    "tempImgBorderStyle": "solid",
+
+    "imgBorderColorHex": "#000000",
+
+    "imgBorderColorOpacity": 0,
+    "tempImgBorderColorOpacity": 1,
+
+    "imgBorderColorPalette": "",
+    "tempImgBorderColorPalette": "color3",
+
+    "imgBorderWidthType": "grouped",
+    "imgBorderWidth": 4,
+    "tempImgBorderWidth": 4,
+
+    "imgBorderTopWidth": 4,
+    "tempImgBorderTopWidth": 4,
+
+    "imgBorderRightWidth": 4,
+    "tempImgBorderRightWidth": 4,
+
+    "imgBorderBottomWidth": 4,
+    "tempImgBorderBottomWidth": 4,
+
+    "imgBorderLeftWidth": 4,
+    "tempImgBorderLeftWidth": 4,
+
+    "imgBoxShadow": "none",
+    "imgBoxShadowColorHex": "#000000",
+    "imgBoxShadowColorPalette": "",
+    "imgBoxShadowColorOpacity": 0,
+    "imgBoxShadowBlur": 0,
+    "imgBoxShadowSpread": 0,
+    "imgBoxShadowVertical": 0,
+    "imgBoxShadowHorizontal": 0,
+
     "itemHorizontalAlign": "left",
 
     "itemSpacing": 5,
     "itemSpacingSuffix": "px",
+
+    "imgWidth": 100,
+    "imgWidthSuffix": "%",
+
+    "imgHeight": 100,
+    "imgHeightSuffix": "%",
 
     "listType": "ordered",
 
@@ -184,7 +270,7 @@
     "parentBgColorHex": "#ff0000",
     "parentBgColorOpacity": 0,
     "parentBgColorPalette": "",
-    "parentGradientColorHex": "#fasd43",
+    "parentGradientColorHex": "#000000",
     "parentGradientColorOpacity": 1,
     "parentGradientColorPalette": "",
     "parentGradientType": "linear",
@@ -207,8 +293,7 @@
     "parentBorderLeftWidth": 0,
 
     "parentBoxShadow": "none",
-    "tempParentBoxShadow": "on",
-    "parentBoxShadowColorHex": "#asd543",
+    "parentBoxShadowColorHex": "#000000",
     "parentBoxShadowColorPalette": "",
     "parentBoxShadowColorOpacity": 1,
     "parentBoxShadowBlur": 2,
@@ -229,6 +314,36 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+
+    "imgMaskShadowColorHex": "#000000",
+    "imgMaskShadowColorOpacity": 0,
+    "imgMaskShadowColorPalette": "",
+
+    "imgMaskShadowBlur": 0,
+    "imgMaskShadowVertical": 0,
+    "imgMaskShadowHorizontal": 0,
+
+    "imgBrightness": 100,
+    "imgHue": 0,
+    "imgSaturation": 100,
+    "imgContrast": 100
   }
 }

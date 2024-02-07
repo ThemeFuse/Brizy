@@ -34,6 +34,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
         action.payload.page
       );
     }
+
     case "ADD_GLOBAL_POPUP":
     case "ADD_GLOBAL_BLOCK":
     case "ADD_BLOCK": {
@@ -74,6 +75,15 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
 
       return state;
     }
+    case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
+      const { block, fromBlockId } = action.payload;
+
+      return replaceAt(
+        state,
+        state.findIndex((_id) => _id === fromBlockId),
+        block.data.value._id
+      );
+    }
 
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { block, fromBlockId } = action.payload;
@@ -110,11 +120,10 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     // last slide - then instead of REMOVE_BLOCK action we get
     // UPDATE_GLOBAL_BLOCK - with payload.data.value = null
     case "UPDATE_GLOBAL_BLOCK": {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { id, data } = action.payload as { id: string; data: any };
+      const { uid, data } = action.payload;
 
       if (data.value === null) {
-        return state.filter((_id) => _id !== id);
+        return state.filter((_id) => _id !== uid);
       }
 
       return state;

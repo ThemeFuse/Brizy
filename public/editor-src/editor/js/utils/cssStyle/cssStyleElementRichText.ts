@@ -1,9 +1,11 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { readToggle } from "visual/component/Options/types/dev/ToggleButton/utils";
 import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -11,17 +13,20 @@ import {
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
+import { read as readNum } from "visual/utils/reader/number";
 import { State } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import {
   styleAlignHorizontal,
   styleBgImage,
+  styleColor,
   styleExportBgImage,
+  styleTypography2FontFamily,
   styleTypography2FontSizeSuffix
 } from "visual/utils/style2";
 import {
   styleElementRichTextDCGradient,
-  styleElementRichTextFontFamily,
+  styleElementRichTextDCGradientBackground,
   styleElementRichTextGradient
 } from "visual/utils/style2/styleElementRichText";
 import { styleState, styleTypography2FontSize } from "../style2";
@@ -87,10 +92,13 @@ export function cssStyleElementRichTextFontSize(d: CSSValue): string {
       // Keys is lowercase because have problems in backend export HTML
       return `font-size:var(--brz-${fontStyle}StoryFontSize);`.toLowerCase();
     } else {
-      const fontSize = styleTypography2FontSize({
-        ...d,
-        prefix: "typography"
-      });
+      const fontSize =
+        readNum(
+          styleTypography2FontSize({
+            ...d,
+            prefix: "typography"
+          })
+        ) ?? 1;
       const suffix = styleTypography2FontSizeSuffix({
         ...d,
         prefix: "typography"
@@ -142,7 +150,7 @@ export function cssStyleElementRichTextFontFamily({
   prefix = "typography",
   state
 }: CSSValue): string {
-  return `font-family:${styleElementRichTextFontFamily({
+  return `font-family:${styleTypography2FontFamily({
     v,
     device,
     prefix,
@@ -181,6 +189,16 @@ export function cssStyleElementRichTextDCColor({
   return cssStyleColor({ v, device, state, prefix: "bgColor" });
 }
 
+export function cssStyleElementRichTextDCBackground({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const background = styleColor({ v, device, state, prefix: "textBgColor" });
+
+  return background === undefined ? "" : `background-color:${background};`;
+}
+
 export function cssStyleElementRichTextDCGradient({
   v,
   device,
@@ -201,6 +219,22 @@ export function cssStyleElementRichTextDCGradient({
   ];
 
   return v.bgColorType === "gradient" ? styles.join(";") + ";" : "";
+}
+
+export function cssStyleElementRichTextDCGradientBackground({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dcGradient = styleElementRichTextDCGradientBackground({
+    v,
+    device,
+    state
+  });
+
+  return v.textBgColorType === "gradient"
+    ? `background-image: ${dcGradient};`
+    : "";
 }
 
 export function cssStyleElementRichTextH1FontFamily({
@@ -239,6 +273,13 @@ export function cssStyleElementRichTextH1LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h1" });
 }
 
+export function cssStyleElementRichTextH1FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h1" });
+}
+
 export function cssStyleElementRichTextH2FontFamily({
   v,
   device
@@ -273,6 +314,13 @@ export function cssStyleElementRichTextH2LetterSpacing({
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h2" });
+}
+
+export function cssStyleElementRichTextH2FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH3FontFamily({
@@ -311,6 +359,13 @@ export function cssStyleElementRichTextH3LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h3" });
 }
 
+export function cssStyleElementRichTextH3FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h3" });
+}
+
 export function cssStyleElementRichTextH4FontFamily({
   v,
   device
@@ -345,6 +400,13 @@ export function cssStyleElementRichTextH4LetterSpacing({
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h4" });
+}
+
+export function cssStyleElementRichTextH4FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH5FontFamily({
@@ -383,6 +445,13 @@ export function cssStyleElementRichTextH5LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h5" });
 }
 
+export function cssStyleElementRichTextH5FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h5" });
+}
+
 export function cssStyleElementRichTextH6FontFamily({
   v,
   device
@@ -419,6 +488,13 @@ export function cssStyleElementRichTextH6LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h6" });
 }
 
+export function cssStyleElementRichTextH6FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h6" });
+}
+
 export function cssStyleElementRichTextDCUppercase({
   v,
   device,
@@ -429,7 +505,7 @@ export function cssStyleElementRichTextDCUppercase({
 
   const capitalize = dvv("dynamicTextCapitalize");
 
-  return capitalize === "on" ? `text-transform : uppercase !important;` : "";
+  return readToggle(capitalize) ? `text-transform : uppercase !important;` : "";
 }
 
 export function cssStyleElementRichTextAlign({

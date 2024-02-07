@@ -159,6 +159,43 @@ export const blockValues: Values = {
       defaultValue: null
     },
 
+    typographyVariableFontWeight: {
+      prefix: "brz-vfw-lg",
+      defaultValue: 400
+    },
+    tabletTypographyVariableFontWeight: {
+      prefix: "brz-vfw-sm",
+      defaultValue: null
+    },
+    mobileTypographyVariableFontWeight: {
+      prefix: "brz-vfw-xs",
+      defaultValue: null
+    },
+    typographyFontWidth: {
+      prefix: "brz-fwdth-lg",
+      defaultValue: 100
+    },
+    tabletTypographyFontWidth: {
+      prefix: "brz-fwdth-sm",
+      defaultValue: null
+    },
+    mobileTypographyFontWidth: {
+      prefix: "brz-fwdth-xs",
+      defaultValue: null
+    },
+    typographyFontSoftness: {
+      prefix: "brz-fsft-lg",
+      defaultValue: 0
+    },
+    tabletTypographyFontSoftness: {
+      prefix: "brz-fsft-sm",
+      defaultValue: null
+    },
+    mobileTypographyFontSoftness: {
+      prefix: "brz-fsft-xs",
+      defaultValue: null
+    },
+
     contentHorizontalAlign: {
       prefix: "brz-text-lg",
       defaultValue: "left"
@@ -219,6 +256,10 @@ export const inlineValues: Values = {
       prefix: "brz-scp",
       defaultValue: ""
     },
+    textBgColorPalette: {
+      prefix: "brz-bgp",
+      defaultValue: ""
+    },
     prepopulation: {
       prefix: "brz-pre-population",
       defaultValue: ""
@@ -239,6 +280,10 @@ export const inlineValues: Values = {
     },
     shadow: {
       prefix: "text-shadow",
+      defaultValue: ""
+    },
+    background: {
+      prefix: "background-color",
       defaultValue: ""
     }
   },

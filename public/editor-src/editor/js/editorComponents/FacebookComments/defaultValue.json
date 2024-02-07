@@ -156,6 +156,9 @@
     "nameFontWeight": 600,
     "nameLineHeight": 1.3,
     "nameLetterSpacing": -0.1,
+    "nameVariableFontWeight": 600,
+    "nameFontWidth": 100,
+    "nameFontSoftness": 0,
 
     "commentFontStyle": "",
     "commentFontFamilyType": "google",
@@ -165,6 +168,9 @@
     "commentFontWeight": 400,
     "commentLineHeight": 1.9,
     "commentLetterSpacing": 0.5,
+    "commentVariableFontWeight": 400,
+    "commentFontWidth": 100,
+    "commentFontSoftness": 0,
 
     "dateFontStyle": "",
     "dateFontFamilyType": "google",
@@ -174,6 +180,9 @@
     "dateFontWeight": 500,
     "dateLineHeight": 1.3,
     "dateLetterSpacing": 0,
+    "dateVariableFontWeight": 500,
+    "dateFontWidth": 100,
+    "dateFontSoftness": 0,
 
     "replyFontStyle": "",
     "replyFontFamilyType": "google",
@@ -183,6 +192,9 @@
     "replyFontWeight": 600,
     "replyLineHeight": 1.3,
     "replyLetterSpacing": 0,
+    "replyVariableFontWeight": 600,
+    "replyFontWidth": 100,
+    "replyFontSoftness": 0,
 
     "postButtonFontStyle": "",
     "postButtonFontFamilyType": "google",
@@ -192,6 +204,9 @@
     "postButtonFontWeight": 600,
     "postButtonLineHeight": 1.0,
     "postButtonLetterSpacing": -0.1,
+    "postButtonVariableFontWeight": 600,
+    "postButtonFontWidth": 100,
+    "postButtonFontSoftness": 0,
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",

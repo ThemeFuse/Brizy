@@ -146,7 +146,7 @@ export function getItems({ v, device }) {
                 },
                 {
                   id: "start",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Start"),
                   devices: "desktop",
                   config: {
@@ -160,7 +160,7 @@ export function getItems({ v, device }) {
                 },
                 {
                   id: "end",
-                  type: "number-dev",
+                  type: "number",
                   label: t("End"),
                   devices: "desktop",
                   disabled: type === "vimeo",

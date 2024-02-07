@@ -50,7 +50,6 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
         {
           id: "headingText",
           label: t("Heading Text"),
-          config: { size: "medium" },
           type: "inputText",
           disabled: reviewType !== "reviewCarousel" || showHeader !== "on"
         },
@@ -74,7 +73,6 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
           id: "imageLinkText",
           label: t("Image Link Text"),
           type: "inputText",
-          config: { size: "medium" },
           disabled: reviewType !== "mediaCarousel",
           placeholder: t("Enter text here...")
         },
@@ -95,7 +93,6 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
           id: "linkText",
           label: t("Link Text"),
           type: "inputText",
-          config: { size: "medium" },
           disabled: reviewType !== "mediaGrid",
           placeholder: t("Enter text here...")
         },
@@ -171,7 +168,6 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
           id: "linkToPage",
           label: t("Link To Page"),
           type: "inputText",
-          config: { size: "medium" },
           disabled: reviewType !== "badge",
           placeholder: t("Enter text here...")
         }

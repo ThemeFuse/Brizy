@@ -6,7 +6,7 @@ import { RightSidebarTabs as Control } from "visual/component/Controls/RightSide
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
 import Config from "visual/global/Config";
 import { updateUI } from "visual/redux/actions2";
-import { uiSelector } from "visual/redux/selectors-new";
+import { uiSelector } from "visual/redux/selectors";
 import { always, pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { prop } from "visual/utils/object/get";

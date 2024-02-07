@@ -1,0 +1,45 @@
+{
+  "breadcrumbContent": "",
+
+  "style": {
+    "customCSS": "",
+
+    "textSpacing": 5,
+    "textSpacingSuffix": "px",
+
+    "families": {
+      "fontFamily": "lato"
+    },
+
+    "fontStyle": "",
+    "fontFamilyType": "google",
+    "fontSize": 16,
+    "fontSizeSuffix": "px",
+    "fontWeight": 400,
+    "lineHeight": 1.3,
+    "letterSpacing": 0,
+    "variableFontWeight": 400,
+    "fontWidth": 100,
+    "fontSoftness": 0,
+
+    "colorHex": "#ffffff",
+    "colorOpacity": 1,
+    "colorPalette": "color3",
+
+    "activeColorHex": "#239ddb",
+    "activeColorOpacity": 1,
+    "activeColorPalette": "color2",
+
+    "arrowsColorHex": "#239ddb",
+    "arrowsColorOpacity": 0.35,
+    "arrowsColorPalette": "color2",
+
+    "hoverColorHex": "#009900",
+    "hoverColorPalette": "color1",
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": ""
+
+
+  }
+}

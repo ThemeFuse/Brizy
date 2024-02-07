@@ -1,3 +1,5 @@
+import { DividedFonts } from "visual/component/Controls/Typography/types/FontFamily";
+import { VariationFont } from "visual/types";
 import { Weight } from "visual/utils/fonts/Weight";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 
@@ -15,7 +17,7 @@ export interface Props {
   value: string;
   className?: string;
   addFontLabel: string;
-  fonts: FontsBlock;
+  fonts: DividedFonts;
 }
 export interface FontSizes {
   default: string;
@@ -31,6 +33,7 @@ export interface FontObject {
   id: string;
   title: string;
   weights: number[];
+  variations?: VariationFont[];
 }
 
 export interface FontWithType {

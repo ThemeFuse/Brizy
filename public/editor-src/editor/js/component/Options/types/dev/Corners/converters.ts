@@ -14,85 +14,107 @@ import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
 
+export const defaultValue: Value = {
+  type: "grouped",
+  value: Positive.Zero,
+  unit: "px",
+  topLeft: Positive.Zero,
+  tempTopLeft: Positive.Zero,
+  topLeftUnit: "px",
+  tempTopLeftUnit: "px",
+  topRight: Positive.Zero,
+  tempTopRight: Positive.Zero,
+  topRightUnit: "px",
+  tempTopRightUnit: "px",
+  bottomRight: Positive.Zero,
+  tempBottomRight: Positive.Zero,
+  bottomRightUnit: "px",
+  tempBottomRightUnit: "px",
+  bottomLeft: Positive.Zero,
+  tempBottomLeft: Positive.Zero,
+  bottomLeftUnit: "px",
+  tempBottomLeftUnit: "px"
+};
+
 export const fromElementModel: FromElementModel<"corners"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
   type: pipe(
     mPipe(callGetter("radiusType"), Str.read, Type.fromString),
-    onNullish<Type.Type>("grouped")
+    onNullish<Type.Type>(defaultValue.type)
   ),
   value: pipe(
     mPipe(callGetter("radius"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.value)
   ),
   unit: pipe(
     mPipe(callGetter("radiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.unit)
   ),
   topLeft: pipe(
     mPipe(callGetter("topLeftRadius"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.topLeft)
   ),
   tempTopLeft: pipe(
     mPipe(callGetter("tempTopLeft"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.tempTopLeft)
   ),
   topLeftUnit: pipe(
     mPipe(callGetter("topLeftRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.topLeftUnit)
   ),
   tempTopLeftUnit: pipe(
     mPipe(callGetter("tempTopLeftRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.tempTopLeftUnit)
   ),
   topRight: pipe(
     mPipe(callGetter("topRightRadius"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.topRight)
   ),
   tempTopRight: pipe(
     mPipe(callGetter("tempTopRightRadius"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.tempTopRight)
   ),
   topRightUnit: pipe(
     mPipe(callGetter("topRightRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.topRightUnit)
   ),
   tempTopRightUnit: pipe(
     mPipe(callGetter("tempTopRightRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.tempTopRightUnit)
   ),
   bottomRight: pipe(
     mPipe(callGetter("bottomRightRadius"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.bottomRight)
   ),
   tempBottomRight: pipe(
     mPipe(callGetter("tempBottomRight"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.tempBottomRight)
   ),
   bottomRightUnit: pipe(
     mPipe(callGetter("bottomRightRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.bottomRightUnit)
   ),
   tempBottomRightUnit: pipe(
     mPipe(callGetter("tempBottomRightRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.tempBottomRightUnit)
   ),
   bottomLeft: pipe(
     mPipe(callGetter("bottomLeftRadius"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.bottomLeft)
   ),
   tempBottomLeft: pipe(
     mPipe(callGetter("tempBottomLeftRadius"), Num.read, Positive.fromNumber),
-    onNullish(Positive.Zero)
+    onNullish(defaultValue.tempBottomLeft)
   ),
   bottomLeftUnit: pipe(
     mPipe(callGetter("bottomLeftRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.bottomLeftUnit)
   ),
   tempBottomLeftUnit: pipe(
     mPipe(callGetter("tempBottomLeftRadiusSuffix"), Str.read, Unit.fromString),
-    onNullish<Unit.Unit>("px")
+    onNullish<Unit.Unit>(defaultValue.tempBottomLeftUnit)
   )
 });
 
@@ -118,26 +140,4 @@ export const toElementModel: ToElementModel<"corners"> = (v) => {
     bottomLeftRadiusSuffix: v.bottomLeftUnit,
     tempBottomLeftRadiusSuffix: v.tempBottomLeftUnit
   };
-};
-
-export const defaultValue: Value = {
-  type: "grouped",
-  value: Positive.Zero,
-  unit: "px",
-  topLeft: Positive.Zero,
-  tempTopLeft: Positive.Zero,
-  topLeftUnit: "px",
-  tempTopLeftUnit: "px",
-  topRight: Positive.Zero,
-  tempTopRight: Positive.Zero,
-  topRightUnit: "px",
-  tempTopRightUnit: "px",
-  bottomRight: Positive.Zero,
-  tempBottomRight: Positive.Zero,
-  bottomRightUnit: "px",
-  tempBottomRightUnit: "px",
-  bottomLeft: Positive.Zero,
-  tempBottomLeft: Positive.Zero,
-  bottomLeftUnit: "px",
-  tempBottomLeftUnit: "px"
 };

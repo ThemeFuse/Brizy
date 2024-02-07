@@ -51,12 +51,12 @@ export const elementModelToNoEmpty = readWithParser<
 });
 
 export const elementModelToEmpty = parseStrict<FromElementModelGetter, Empty>({
-  opacity: () => 0,
+  opacity: () => defaultValue.opacity,
   tempOpacity: pipe(
     mPipe(call("tempColorOpacity"), Num.read, Opacity.fromNumber, fromOpacity),
     onNullish(defaultValue.tempOpacity)
   ),
-  blur: () => 0,
+  blur: () => defaultValue.blur,
   tempBlur: pipe(
     mPipe(call("tempBlur"), Num.read, Blur.fromNumber, fromBlur),
     onNullish(defaultValue.tempBlur)
@@ -68,7 +68,7 @@ export const elementModelToEmpty = parseStrict<FromElementModelGetter, Empty>({
     mPipe(call("colorHex"), Str.read, Hex.fromString),
     onNullish(defaultValue.hex)
   ),
-  horizontal: () => 0,
+  horizontal: () => defaultValue.horizontal,
   tempHorizontal: pipe(
     mPipe(call("tempHorizontal"), Num.read),
     onNullish(defaultValue.tempHorizontal)

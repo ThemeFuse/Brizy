@@ -2,7 +2,7 @@ import {
   defaultFontSelector,
   fontsSelector,
   unDeletedFontsSelector
-} from "visual/redux/selectors-new";
+} from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
 import { Font } from "visual/types";

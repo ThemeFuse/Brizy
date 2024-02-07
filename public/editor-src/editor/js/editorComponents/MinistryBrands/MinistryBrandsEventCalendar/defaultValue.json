@@ -51,6 +51,9 @@
     "paginationTypographyFontWeight": 600,
     "paginationTypographyLetterSpacing": 0,
     "paginationTypographyLineHeight": 2.8,
+    "paginationTypographyVariableFontWeight": 600,
+    "paginationTypographyFontWidth": 100,
+    "paginationTypographyFontSoftness": 0,
 
     "paginationColorHex": "#000000",
     "paginationColorOpacity": 1,
@@ -68,6 +71,9 @@
     "weekdaysTypographyFontWeight": 700,
     "weekdaysTypographyLetterSpacing": 0,
     "weekdaysTypographyLineHeight": 1,
+    "weekdaysTypographyVariableFontWeight": 700,
+    "weekdaysTypographyFontWidth": 100,
+    "weekdaysTypographyFontSoftness": 0,
 
     "weekdaysColorHex": "#000000",
     "weekdaysColorOpacity": 1,
@@ -86,6 +92,9 @@
     "eventStartTimeTypographyFontWeight": 700,
     "eventStartTimeTypographyLetterSpacing": 0,
     "eventStartTimeTypographyLineHeight": 1,
+    "eventStartTimeTypographyVariableFontWeight": 700,
+    "eventStartTimeTypographyFontWidth": 100,
+    "eventStartTimeTypographyFontSoftness": 0,
 
     "dayTypographyFontStyle": "",
     "dayTypographyFontFamilyType": "google",
@@ -94,6 +103,10 @@
     "dayTypographyFontWeight": 700,
     "dayTypographyLetterSpacing": 0,
     "dayTypographyLineHeight": 1,
+    "dayTypographyVariableFontWeight": 700,
+    "dayTypographyFontWidth": 100,
+    "dayTypographyFontSoftness": 0,
+
 
     "subscribeToCalendarTypographyFontStyle": "",
     "subscribeToCalendarTypographyFontFamilyType": "google",
@@ -102,6 +115,9 @@
     "subscribeToCalendarTypographyFontWeight": 700,
     "subscribeToCalendarTypographyLetterSpacing": 0,
     "subscribeToCalendarTypographyLineHeight": 1,
+    "subscribeToCalendarTypographyVariableFontWeight": 700,
+    "subscribeToCalendarTypographyFontWidth": 100,
+    "subscribeToCalendarTypographyFontSoftness": 0,
 
     "dayColorHex": "#000000",
     "dayColorOpacity": 1,
@@ -322,6 +338,9 @@
     "titleTypographyFontWeight": 400,
     "titleTypographyLetterSpacing": 0,
     "titleTypographyLineHeight": 1,
+    "titleTypographyVariableFontWeight": 400,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,

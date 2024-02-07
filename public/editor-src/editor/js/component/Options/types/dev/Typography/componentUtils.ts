@@ -1,3 +1,6 @@
+import { flatten, partition } from "underscore";
+import { FontObject } from "visual/component/Controls/FontFamily/types";
+import { DividedFonts } from "visual/component/Controls/Typography/types/FontFamily";
 import { DeviceMode } from "visual/types";
 import { fontTransform, getFontStyle } from "visual/utils/fonts";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
@@ -29,7 +32,6 @@ export const getValue = (
   m: Value
 ): Value => {
   const v = getFontStyle(m.fontStyle) || m;
-
   const get = (key: string): MValue<Literal> =>
     key === "fontStyle" ? m.fontStyle : defaultValueValue({ key, v, device });
 
@@ -39,12 +41,22 @@ export const getValue = (
   };
 
   if (hasFont(fonts, model.fontFamily)) {
-    return model;
+    const _variations = flatten(Object.values(fonts)).find(
+      (font) => font.id === model.fontFamily
+    )?.variations;
+
+    const variations = _variations ? { variations: _variations } : {};
+
+    return {
+      ...model,
+      ...variations
+    };
   }
 
   const { group, font } = defaultFont;
   const getFont = fontTransform[group];
-  const family = getFont(font).id;
+
+  const { id: family, variations } = getFont(font);
 
   switch (group) {
     case "config":
@@ -60,7 +72,8 @@ export const getValue = (
       return {
         ...model,
         fontFamilyType: FontFamilyType.upload,
-        fontFamily: family
+        fontFamily: family,
+        variations
       };
     }
     case "system": {
@@ -72,3 +85,21 @@ export const getValue = (
     }
   }
 };
+
+const isVariableFont = (font: FontObject) => !!font.variations?.length;
+
+export const divideFonts = (fonts: FontsBlock): DividedFonts =>
+  Object.entries(fonts).reduce<DividedFonts>(
+    (acc, [fontName, fontData]) => {
+      const [variableFonts, normalFonts] = partition(fontData, isVariableFont);
+
+      return {
+        variableFonts: [...acc.variableFonts, ...variableFonts],
+        normalFonts: {
+          ...acc.normalFonts,
+          [fontName]: normalFonts
+        }
+      };
+    },
+    { variableFonts: [], normalFonts: {} }
+  );

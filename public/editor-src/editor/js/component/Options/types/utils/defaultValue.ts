@@ -16,6 +16,7 @@ import { defaultValue as filters } from "visual/component/Options/types/dev/Filt
 import { defaultValue as formApps } from "visual/component/Options/types/dev/FormApps/converters";
 import { defaultValue as gallery } from "visual/component/Options/types/dev/Gallery/converters";
 import { defaultValue as galleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery/converters";
+import { defaultValue as gbCondition } from "visual/component/Options/types/dev/GbCondition/converters";
 import { defaultValue as globalBlock } from "visual/component/Options/types/dev/GlobalBlock/converters";
 import { defaultValue as grid } from "visual/component/Options/types/dev/Grid/converters";
 import { defaultValue as group } from "visual/component/Options/types/dev/Group/converters";
@@ -44,6 +45,7 @@ import { defaultValue as tabs } from "visual/component/Options/types/dev/Tabs/co
 import { defaultValue as textShadow } from "visual/component/Options/types/dev/TextShadow/converters";
 import { defaultValue as textarea } from "visual/component/Options/types/dev/Textarea/converters";
 import { defaultValue as toggle } from "visual/component/Options/types/dev/Toggle/converters";
+import { defaultValue as toggleButton } from "visual/component/Options/types/dev/ToggleButton/converters";
 import { defaultValue as transform } from "visual/component/Options/types/dev/Transform/converters";
 import { defaultValue as typography } from "visual/component/Options/types/dev/Typography/converters";
 
@@ -52,17 +54,17 @@ type DefaultValues = {
 };
 
 export const defaultValues: DefaultValues = {
-  "aiText-dev": ai,
+  aiText: ai,
   alert: alert,
   animation: animation,
   backgroundColor: backgroundColor,
   border: border,
   boxShadow: boxShadow,
-  "button-dev": button,
-  "codeMirror-dev": codeMirror,
+  button: button,
+  codeMirror: codeMirror,
   colorPicker: colorPicker,
   corners: corners,
-  "filters-dev": filters,
+  filters: filters,
   fileUpload: fileUpload,
   gallery: gallery,
   "gallery-for-gallery": galleryForGallery,
@@ -77,12 +79,12 @@ export const defaultValues: DefaultValues = {
   margin: margin,
   motion: motion,
   multiSelect: multiSelect,
-  "number-dev": number,
-  "order-dev": order,
+  number: number,
+  order: order,
   padding: padding,
-  "paypal-dev": paypal,
+  paypal: paypal,
   popover: popover,
-  "population-dev": population,
+  population: population,
   predefinedPopulation: population,
   radioGroup: radioGroup,
   range: range,
@@ -90,7 +92,7 @@ export const defaultValues: DefaultValues = {
   sidebarTabs: sidebarTabs,
   sidebarTabsButton: sidebarTabs,
   slider: slider,
-  "stateMode-dev": stateMode,
+  stateMode: stateMode,
   switch: _switch,
   tabs: tabs,
   textarea: textarea,
@@ -98,9 +100,11 @@ export const defaultValues: DefaultValues = {
   toggle: toggle,
   transform: transform,
   typography: typography,
-  "savedBlock-dev": savedBlock,
+  savedBlock: savedBlock,
   globalBlock: globalBlock,
-  formApps: formApps
+  formApps: formApps,
+  gbCondition: gbCondition,
+  toggleButton: toggleButton
 };
 
 export function applyDefaultValueToOption<T>(values: T, type: OptionName): T {

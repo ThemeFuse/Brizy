@@ -84,11 +84,9 @@ class Icon extends EditorComponent<Value, Props> {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });
@@ -122,6 +120,7 @@ class Icon extends EditorComponent<Value, Props> {
     const classNameIcon = classnames(
       "brz-icon",
       "brz-span",
+      { "brz-blocked": v.tabsState === "hover" },
       customClassName,
       css(
         `${this.getComponentId()}-icon`,

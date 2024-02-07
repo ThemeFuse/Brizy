@@ -22,10 +22,6 @@ export function cssStyleMaskShape({
 
   const maskShape = readString(dvv(capByPrefix(prefix, "maskShape"))) ?? "none";
 
-  if (maskShape === "none") {
-    return "";
-  }
-
   switch (maskShape) {
     case "none":
       return `-webkit-mask-image: none;

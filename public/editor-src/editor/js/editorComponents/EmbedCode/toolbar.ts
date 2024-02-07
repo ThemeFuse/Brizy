@@ -40,7 +40,7 @@ export function getItems({
       options: [
         {
           id: "code",
-          type: "codeMirror-dev",
+          type: "codeMirror",
           placeholder: t("Paste your HTML code here..."),
           config: {
             language: "html"

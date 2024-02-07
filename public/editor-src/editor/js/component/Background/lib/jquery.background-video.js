@@ -65,6 +65,8 @@ function Youtube($iframe, settings) {
 
 $.extend(Youtube.prototype, {
   _init: function ($iframe) {
+    if (!$iframe.get(0)) return;
+
     this.player = new YT.Player($iframe.get(0), {
       events: {
         onReady: function (event) {

@@ -30,6 +30,8 @@ export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalBlocks?.create !== "function";
   const isMultiLanguageDisabled =
     config.elements?.footer?.multilanguage === false;
 
@@ -54,6 +56,8 @@ export function getItems({ v, device, component, context }) {
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
 
+  const globalBlockId = component.props.meta.globalBlockId;
+
   return [
     toolbarShowOnResponsive({
       v,
@@ -74,13 +78,13 @@ export function getItems({ v, device, component, context }) {
         {
           id: "groupSettings",
           type: "group",
+          disabled: disabledGlobalBlock,
           options: [
             {
               id: "makeItGlobal",
               label: t("Make it Global"),
               type: "globalBlock",
               devices: "desktop",
-              disabled: isCloud(config) && isShopify(config),
               config: {
                 _id: component.getId(),
                 parentId: getInstanceParentId(component.props.instanceKey),
@@ -89,9 +93,11 @@ export function getItems({ v, device, component, context }) {
             },
             {
               id: "gbConditions",
-              disabled: !component.props.meta.globalBlockId,
-              value: component.props.meta.globalBlockId,
-              type: "legacy-gbConditions",
+              disabled: !globalBlockId,
+              config: {
+                globalBlockId: globalBlockId
+              },
+              type: "gbCondition",
               context: "block"
             }
           ]
@@ -336,7 +342,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,
@@ -433,8 +439,10 @@ export function getItems({ v, device, component, context }) {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

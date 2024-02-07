@@ -18,14 +18,14 @@ export const defaultValue: Value = {
 };
 
 export const fromElementModel: FromElementModel<"imageUpload"> = (get) => ({
-  src: String.toString(get("imageSrc")),
-  fileName: String.toString(get("imageFileName")),
-  extension: String.toString(get("imageExtension")),
-  width: Math.toNonNegative(get("imageWidth")),
-  height: Math.toNonNegative(get("imageHeight")),
-  x: Math.toNonNegative(get("positionX")),
-  y: Math.toNonNegative(get("positionY")),
-  sizeType: String.toString(get("sizeType")) ?? defaultValue.sizeType
+  src: String.toString(get("imageSrc"), defaultValue.src),
+  fileName: String.toString(get("imageFileName"), defaultValue.fileName),
+  extension: String.toString(get("imageExtension"), defaultValue.extension),
+  width: Math.toNonNegative(get("imageWidth"), defaultValue.width),
+  height: Math.toNonNegative(get("imageHeight"), defaultValue.height),
+  x: Math.toNonNegative(get("positionX"), defaultValue.x),
+  y: Math.toNonNegative(get("positionY"), defaultValue.y),
+  sizeType: String.toString(get("sizeType"), defaultValue.sizeType)
 });
 
 export const toElementModel: Option.ToElementModel<"imageUpload"> = match(
