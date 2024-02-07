@@ -48,7 +48,7 @@ export interface Block {
   keywords: string;
   thumbnailWidth: number;
   thumbnailHeight: number;
-  type: number | string;
+  type: Array<number | string>;
   blank?: string;
   position?: number;
   pro?: boolean;
@@ -132,11 +132,6 @@ interface FontStyle {
 }
 
 // region Kits
-export interface KitCategories {
-  id: number;
-  title: string;
-}
-
 export interface DefaultTemplateKits<T1, T2, T3> {
   label?: string;
   getMeta: (res: Response<T1>, rej: Response<string>, kit: KitItem) => void;
@@ -182,6 +177,7 @@ export type Kit = {
   keywords: string;
   thumbnailHeight: number;
   thumbnailWidth: number;
+  blank?: string;
 };
 // endregion
 
