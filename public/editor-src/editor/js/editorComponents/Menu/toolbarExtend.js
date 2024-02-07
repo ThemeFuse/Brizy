@@ -374,7 +374,7 @@ export function getItemsMMenu({ v, device, state, context }) {
               options: [
                 {
                   id: "",
-                  type: "filters-dev",
+                  type: "filters",
                   states: [NORMAL, HOVER]
                 }
               ]

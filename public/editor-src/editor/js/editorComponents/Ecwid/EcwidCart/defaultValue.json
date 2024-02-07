@@ -77,6 +77,9 @@
     "titleTypographyFontWeight": 400,
     "titleTypographyLetterSpacing": 1.3,
     "titleTypographyLineHeight": 1,
+    "titleTypographyVariableFontWeight": 400,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
@@ -94,6 +97,9 @@
     "breadcrumbsTypographyFontWeight": 400,
     "breadcrumbsTypographyLetterSpacing": 1.3,
     "breadcrumbsTypographyLineHeight": 1,
+    "breadcrumbsTypographyVariableFontWeight": 400,
+    "breadcrumbsTypographyFontWidth": 100,
+    "breadcrumbsTypographyFontSoftness": 0,
 
     "breadcrumbsColorHex": "#000000",
     "breadcrumbsColorOpacity": 1,
@@ -119,6 +125,9 @@
     "subtitleTypographyFontWeight": 400,
     "subtitleTypographyLetterSpacing": 1.3,
     "subtitleTypographyLineHeight": 1,
+    "subtitleTypographyVariableFontWeight": 400,
+    "subtitleTypographyFontWidth": 100,
+    "subtitleTypographyFontSoftness": 0,
 
     "subtitleHorizontalAlign": "left",
 
@@ -129,6 +138,9 @@
     "emptyTypographyFontWeight": 400,
     "emptyTypographyLetterSpacing": 1.3,
     "emptyTypographyLineHeight": 1,
+    "emptyTypographyVariableFontWeight": 400,
+    "emptyTypographyFontWidth": 100,
+    "emptyTypographyFontSoftness": 0,
 
     "emptyColorHex": "#000000",
     "emptyColorOpacity": 1,
@@ -146,6 +158,9 @@
     "productNameTypographyFontWeight": 400,
     "productNameTypographyLetterSpacing": 1.3,
     "productNameTypographyLineHeight": 1,
+    "productNameTypographyVariableFontWeight": 400,
+    "productNameTypographyFontWidth": 100,
+    "productNameTypographyFontSoftness": 0,
 
     "productNameColorHex": "#000000",
     "productNameColorOpacity": 1,
@@ -160,6 +175,9 @@
     "productSizeTypographyFontWeight": 400,
     "productSizeTypographyLetterSpacing": 1.3,
     "productSizeTypographyLineHeight": 1,
+    "productSizeTypographyVariableFontWeight": 400,
+    "productSizeTypographyFontWidth": 100,
+    "productSizeTypographyFontSoftness": 0,
 
     "productSizeColorHex": "#000000",
     "productSizeColorOpacity": 1,
@@ -174,6 +192,9 @@
     "qtyTypographyFontWeight": 400,
     "qtyTypographyLetterSpacing": 1.3,
     "qtyTypographyLineHeight": 1,
+    "qtyTypographyVariableFontWeight": 400,
+    "qtyTypographyFontWidth": 100,
+    "qtyTypographyFontSoftness": 0,
 
     "qtyColorHex": "#000000",
     "qtyColorOpacity": 1,
@@ -186,6 +207,9 @@
     "priceTypographyFontWeight": 300,
     "priceTypographyLetterSpacing": 1.3,
     "priceTypographyLineHeight": 1,
+    "priceTypographyVariableFontWeight": 400,
+    "priceTypographyFontWidth": 100,
+    "priceTypographyFontSoftness": 0,
 
     "priceColorHex": "#000000",
     "priceColorOpacity": 1,
@@ -198,6 +222,9 @@
     "title2TypographyFontWeight": 400,
     "title2TypographyLetterSpacing": 1.3,
     "title2TypographyLineHeight": 1,
+    "title2TypographyVariableFontWeight": 400,
+    "title2TypographyFontWidth": 100,
+    "title2TypographyFontSoftness": 0,
 
     "title2ColorHex": "#000000",
     "title2ColorOpacity": 1,
@@ -220,6 +247,9 @@
     "buttonTypographyFontWeight": 400,
     "buttonTypographyLetterSpacing": 1.3,
     "buttonTypographyLineHeight": 1,
+    "buttonTypographyVariableFontWeight": 400,
+    "buttonTypographyFontWidth": 100,
+    "buttonTypographyFontSoftness": 0,
 
     "buttonColorHex": "#ffffff",
     "buttonColorOpacity": 1,
@@ -298,6 +328,9 @@
     "emailTypographyFontWeight": 400,
     "emailTypographyLetterSpacing": 1.3,
     "emailTypographyLineHeight": 1,
+    "emailTypographyVariableFontWeight": 400,
+    "emailTypographyFontWidth": 100,
+    "emailTypographyFontSoftness": 0,
 
     "emailHorizontalAlign": "left",
 
@@ -315,6 +348,9 @@
     "checkboxTypographyFontWeight": 400,
     "checkboxTypographyLetterSpacing": 1.3,
     "checkboxTypographyLineHeight": 1,
+    "checkboxTypographyVariableFontWeight": 400,
+    "checkboxTypographyFontWidth": 100,
+    "checkboxTypographyFontSoftness": 0,
 
     "checkboxSpacing": 20,
     "checkboxSpacingSuffix": "px",
@@ -330,6 +366,9 @@
     "nextTypographyFontWeight": 400,
     "nextTypographyLetterSpacing": 1.3,
     "nextTypographyLineHeight": 1,
+    "nextTypographyVariableFontWeight": 400,
+    "nextTypographyFontWidth": 100,
+    "nextTypographyFontSoftness": 0,
 
     "nextHorizontalAlign": "left",
 
@@ -344,6 +383,9 @@
     "paymentTypographyFontWeight": 400,
     "paymentTypographyLetterSpacing": 1.3,
     "paymentTypographyLineHeight": 1,
+    "paymentTypographyVariableFontWeight": 400,
+    "paymentTypographyFontWidth": 100,
+    "paymentTypographyFontSoftness": 0,
 
     "paymentHorizontalAlign": "left",
 
@@ -360,6 +402,9 @@
     "inputTypographyFontWeight": 400,
     "inputTypographyLetterSpacing": 1.3,
     "inputTypographyLineHeight": 1,
+    "inputTypographyVariableFontWeight": 400,
+    "inputTypographyFontWidth": 100,
+    "inputTypographyFontSoftness": 0,
 
     "inputColorHex": "#000000",
     "inputColorOpacity": 0.4,
@@ -479,6 +524,9 @@
     "summaryTitleTypographyFontWeight": 400,
     "summaryTitleTypographyLetterSpacing": 1.3,
     "summaryTitleTypographyLineHeight": 1,
+    "summaryTitleTypographyVariableFontWeight": 400,
+    "summaryTitleTypographyFontWidth": 100,
+    "summaryTitleTypographyFontSoftness": 0,
 
     "summaryTitleColorHex": "#000000",
     "summaryTitleColorOpacity": 1,
@@ -491,6 +539,9 @@
     "summaryPriceTypographyFontWeight": 400,
     "summaryPriceTypographyLetterSpacing": 1.3,
     "summaryPriceTypographyLineHeight": 1,
+    "summaryPriceTypographyVariableFontWeight": 400,
+    "summaryPriceTypographyFontWidth": 100,
+    "summaryPriceTypographyFontSoftness": 0,
 
     "summaryPriceColorHex": "#000000",
     "summaryPriceColorOpacity": 1,
@@ -503,6 +554,9 @@
     "connectTypographyFontWeight": 400,
     "connectTypographyLetterSpacing": 1.3,
     "connectTypographyLineHeight": 1,
+    "connectTypographyVariableFontWeight": 400,
+    "connectTypographyFontWidth": 100,
+    "connectTypographyFontSoftness": 0,
 
     "connectLinkTypographyFontStyle": "",
     "connectLinkTypographyFontFamilyType": "google",
@@ -511,6 +565,9 @@
     "connectLinkTypographyFontWeight": 400,
     "connectLinkTypographyLetterSpacing": 1.3,
     "connectLinkTypographyLineHeight": 1,
+    "connectLinkTypographyVariableFontWeight": 400,
+    "connectLinkTypographyFontWidth": 100,
+    "connectLinkTypographyFontSoftness": 0,
 
     "connectColorHex": "#000000",
     "connectColorOpacity": 0.8,
@@ -533,6 +590,9 @@
     "footerTypographyFontWeight": 400,
     "footerTypographyLetterSpacing": 1.3,
     "footerTypographyLineHeight": 1,
+    "footerTypographyVariableFontWeight": 400,
+    "footerTypographyFontWidth": 100,
+    "footerTypographyFontSoftness": 0,
 
     "footerColorHex": "#000000",
     "footerColorOpacity": 1,
@@ -608,6 +668,9 @@
     "SKUTypographyFontWeight": 400,
     "SKUTypographyLetterSpacing": 1.3,
     "SKUTypographyLineHeight": 1,
+    "SKUTypographyVariableFontWeight": 400,
+    "SKUTypographyFontWidth": 100,
+    "SKUTypographyFontSoftness": 0,
 
     "SKUColorHex": "#000000",
     "SKUColorOpacity": 1,
@@ -644,6 +707,9 @@
     "gridTitleTypographyFontWeight": 400,
     "gridTitleTypographyLetterSpacing": 1.3,
     "gridTitleTypographyLineHeight": 1,
+    "gridTitleTypographyVariableFontWeight": 400,
+    "gridTitleTypographyFontWidth": 100,
+    "gridTitleTypographyFontSoftness": 0,
 
     "gridTitleColorHex": "#333333",
     "gridTitleColorOpacity": 1,
@@ -661,6 +727,9 @@
     "gridSubtitleTypographyFontWeight": 400,
     "gridSubtitleTypographyLetterSpacing": 1.3,
     "gridSubtitleTypographyLineHeight": 1,
+    "gridSubtitleTypographyVariableFontWeight": 400,
+    "gridSubtitleTypographyFontWidth": 100,
+    "gridSubtitleTypographyFontSoftness": 0,
 
     "gridSubtitleColorHex": "#757575",
     "gridSubtitleColorOpacity": 1,
@@ -678,6 +747,9 @@
     "gridSKUInnerTypographyFontWeight": 400,
     "gridSKUInnerTypographyLetterSpacing": 1.3,
     "gridSKUInnerTypographyLineHeight": 1,
+    "gridSKUInnerTypographyVariableFontWeight": 400,
+    "gridSKUInnerTypographyFontWidth": 100,
+    "gridSKUInnerTypographyFontSoftness": 0,
 
     "gridSKUInnerColorHex": "#757575",
     "gridSKUInnerColorOpacity": 1,
@@ -695,6 +767,9 @@
     "gridPriceTypographyFontWeight": 400,
     "gridPriceTypographyLetterSpacing": 1.3,
     "gridPriceTypographyLineHeight": 1,
+    "gridPriceTypographyVariableFontWeight": 400,
+    "gridPriceTypographyFontWidth": 100,
+    "gridPriceTypographyFontSoftness": 0,
 
     "gridPriceColorHex": "#333333",
     "gridPriceColorOpacity": 1,
@@ -761,6 +836,10 @@
     "cartTotalProductsCountTypographyFontWeight": 400,
     "cartTotalProductsCountTypographyLetterSpacing": 1.3,
     "cartTotalProductsCountTypographyLineHeight": 1,
+    "cartTotalProductsCountTypographyVariableFontWeight": 400,
+    "cartTotalProductsCountTypographyFontWidth": 100,
+    "cartTotalProductsCountTypographyFontSoftness": 0,
+
 
     "cartTotalProductsCountColorHex": "#000000",
     "cartTotalProductsCountColorOpacity": 1,
@@ -777,6 +856,9 @@
     "subtotalTitleTypographyFontWeight": 400,
     "subtotalTitleTypographyLetterSpacing": 1.3,
     "subtotalTitleTypographyLineHeight": 1.4,
+    "subTotalTitleTypographyVariableFontWeight": 400,
+    "subTotalTitleTypographyFontWidth": 100,
+    "subTotalTitleTypographyFontSoftness": 0,
 
     "subtotalPriceColorHex": "#333333",
     "subtotalPriceColorOpacity": 1,
@@ -789,6 +871,9 @@
     "subtotalPriceTypographyFontWeight": 400,
     "subtotalPriceTypographyLetterSpacing": 1.3,
     "subtotalPriceTypographyLineHeight": 1.4,
+    "subTotalPriceTypographyVariableFontWeight": 400,
+    "subTotalPriceTypographyFontWidth": 100,
+    "subTotalPriceTypographyFontSoftness": 0,
 
     "taxesTitleColorHex": "#333333",
     "taxesTitleColorOpacity": 1,
@@ -801,6 +886,9 @@
     "taxesTitleTypographyFontWeight": 400,
     "taxesTitleTypographyLetterSpacing": 1.3,
     "taxesTitleTypographyLineHeight": 1.4,
+    "taxesTitleTypographyVariableFontWeight": 400,
+    "taxesTitleTypographyFontWidth": 100,
+    "taxesTitleTypographyFontSoftness": 0,
 
     "taxesPriceColorHex": "#333333",
     "taxesPriceColorOpacity": 1,
@@ -813,6 +901,9 @@
     "taxesPriceTypographyFontWeight": 400,
     "taxesPriceTypographyLetterSpacing": 1.3,
     "taxesPriceTypographyLineHeight": 1.4,
+    "taxesPriceTypographyVariableFontWeight": 400,
+    "taxesPriceTypographyFontWidth": 100,
+    "taxesPriceTypographyFontSoftness": 0,
 
     "summaryNoteColorHex": "#757575",
     "summaryNoteColorOpacity": 1,
@@ -825,6 +916,9 @@
     "summaryNoteTypographyFontWeight": 400,
     "summaryNoteTypographyLetterSpacing": 1.3,
     "summaryNoteTypographyLineHeight": 1.4,
+    "summaryNoteTypographyVariableFontWeight": 400,
+    "summaryNoteTypographyFontWidth": 100,
+    "summaryNoteTypographyFontSoftness": 0,
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": ""

@@ -10,6 +10,7 @@ import Pre from "./formats/Pre";
 import DCBlock from "./formats/DCBlock";
 import BackgroundImage from "./formats/BackgroundImage";
 import BackgroundGradient from "./formats/BackgroundGradient";
+import TextBackgroundGradient from "./formats/TextBackgroundGradient"
 
 import PlainClipboard from "./formats/PlainClipboard";
 
@@ -78,11 +79,12 @@ if (IS_EDITOR) {
   Quill.register(Pre, true);
   Quill.register(DCBlock, true);
   Quill.register(BackgroundGradient, true);
-
+  Quill.register(TextBackgroundGradient, true);
+  
   Quill.register("modules/clipboard", PlainClipboard, true);
 }
 
 export const Delta = Quill.import("delta");
 export const Keyboard = Quill.import("modules/keyboard");
-export const Parchment = Quill.import("parchment")
+export const Parchment = Quill.import("parchment");
 export default Quill;

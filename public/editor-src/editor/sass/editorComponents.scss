@@ -148,6 +148,9 @@
 // wpPostNavigation
 @import "editorComponents/postNavigation";
 
+// Post Navigation
+@import "editorComponents/post-navigation";
+
 // Search
 @import "editorComponents/search";
 
@@ -285,3 +288,6 @@
 
 // Shopify
 @import "editorComponents/shopify";
+
+// Builder Components
+@import "editorComponents/brizyBuilderUi/index";

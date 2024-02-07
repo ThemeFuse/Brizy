@@ -9,3 +9,14 @@ export type CSSValue<T extends ElementModel = ElementModel> = {
   prefix?: string;
   mode?: string;
 };
+
+export interface GradientCssDeclaration {
+  colorType?: string;
+  gradientType?: string;
+  gradientLinearDegree?: string;
+  gradientRadialDegree?: string;
+  gradientStartPointer?: string;
+  gradientFinishPointer?: string;
+  gradientColor?: string;
+  bgColor?: string;
+}

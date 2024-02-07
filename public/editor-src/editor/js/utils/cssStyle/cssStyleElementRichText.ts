@@ -4,6 +4,7 @@ import { hexToRgba } from "visual/utils/color";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -19,8 +20,10 @@ import {
   styleExportBgImage,
   styleTypography2FontSizeSuffix
 } from "visual/utils/style2";
+import { styleColor } from "visual/utils/style2";
 import {
   styleElementRichTextDCGradient,
+  styleElementRichTextDCGradientBackground,
   styleElementRichTextFontFamily,
   styleElementRichTextGradient
 } from "visual/utils/style2/styleElementRichText";
@@ -181,6 +184,16 @@ export function cssStyleElementRichTextDCColor({
   return cssStyleColor({ v, device, state, prefix: "bgColor" });
 }
 
+export function cssStyleElementRichTextDCBackground({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const background = styleColor({ v, device, state, prefix: "textBgColor" });
+
+  return background === undefined ? "" : `background-color:${background};`;
+}
+
 export function cssStyleElementRichTextDCGradient({
   v,
   device,
@@ -201,6 +214,22 @@ export function cssStyleElementRichTextDCGradient({
   ];
 
   return v.bgColorType === "gradient" ? styles.join(";") + ";" : "";
+}
+
+export function cssStyleElementRichTextDCGradientBackground({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dcGradient = styleElementRichTextDCGradientBackground({
+    v,
+    device,
+    state
+  });
+
+  return v.textBgColorType === "gradient"
+    ? `background-image: ${dcGradient};`
+    : "";
 }
 
 export function cssStyleElementRichTextH1FontFamily({
@@ -239,6 +268,13 @@ export function cssStyleElementRichTextH1LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h1" });
 }
 
+export function cssStyleElementRichTextH1FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h1" });
+}
+
 export function cssStyleElementRichTextH2FontFamily({
   v,
   device
@@ -273,6 +309,13 @@ export function cssStyleElementRichTextH2LetterSpacing({
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h2" });
+}
+
+export function cssStyleElementRichTextH2FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH3FontFamily({
@@ -311,6 +354,13 @@ export function cssStyleElementRichTextH3LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h3" });
 }
 
+export function cssStyleElementRichTextH3FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h3" });
+}
+
 export function cssStyleElementRichTextH4FontFamily({
   v,
   device
@@ -345,6 +395,13 @@ export function cssStyleElementRichTextH4LetterSpacing({
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h4" });
+}
+
+export function cssStyleElementRichTextH4FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH5FontFamily({
@@ -383,6 +440,13 @@ export function cssStyleElementRichTextH5LetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h5" });
 }
 
+export function cssStyleElementRichTextH5FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h5" });
+}
+
 export function cssStyleElementRichTextH6FontFamily({
   v,
   device
@@ -417,6 +481,13 @@ export function cssStyleElementRichTextH6LetterSpacing({
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h6" });
+}
+
+export function cssStyleElementRichTextH6FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextDCUppercase({

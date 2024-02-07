@@ -2,6 +2,7 @@ import Accordion from "./Accordion";
 import AccordionItem from "./Accordion/AccordionItem";
 import Alert from "./Alert";
 import Audio from "./Audio";
+import Breadcrumbs from "./Breadcrumbs";
 import Button from "./Button";
 import Calendly from "./Calendly";
 import Carousel from "./Carousel";
@@ -47,6 +48,8 @@ import PagePopup from "./PagePopup";
 import PageStory from "./PageStory";
 import WPPostContent from "./PostContent";
 import PostExcerpt from "./PostExcerpt";
+import PostInfo from "./PostInfo";
+import PostNavigation from "./PostNavigation";
 import PostTitle from "./PostTitle";
 import Posts from "./Posts";
 import ProgressBar from "./ProgressBar";
@@ -90,7 +93,6 @@ import Video from "./Video";
 import VideoPlaylist from "./VideoPlaylist";
 import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Wrapper from "./Wrapper";
-import PostInfo from "./PostInfo";
 
 export default {
   Page,
@@ -182,8 +184,10 @@ export default {
   PostTitle,
   PostExcerpt,
   PostInfo,
+  Breadcrumbs,
   Posts,
   WPPostContent,
+  PostNavigation,
 
   // Shopify
   ...Shopify,

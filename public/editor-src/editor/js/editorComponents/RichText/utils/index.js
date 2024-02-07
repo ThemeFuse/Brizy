@@ -133,9 +133,9 @@ export const parseShadow = (str = "") => {
   };
 };
 
-export const parseColor = (color, opacity) => {
+export const parseColor = (color = "", opacity) => {
   if (color.includes("var")) {
-    const regExp = /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)/;
+    const regExp = /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)/s;
     const values = getColorValues(color, regExp);
 
     if (values) {
@@ -255,6 +255,32 @@ const getBackground = (value) => {
   return { ...value, ...population };
 };
 
+export const getTextBackground = (background, textBackgroundGradient) => {
+  const defaultBgOpacity = background ? 1 : 0;
+  const _bgHex = background ?? "";
+  const { hex: bgHex, opacity: bgOpacity } = parseColor(
+    _bgHex,
+    defaultBgOpacity
+  );
+
+  const textBgColorHex = textBackgroundGradient
+    ? textBackgroundGradient.startHex
+    : bgHex;
+
+  const textBgColorOpacity = textBackgroundGradient
+    ? textBackgroundGradient.startOpacity
+    : bgOpacity;
+
+  return {
+    background: {
+      hex: textBgColorHex,
+      opacity: textBgColorOpacity
+    },
+    textBgColorHex,
+    textBgColorOpacity
+  };
+};
+
 // population
 const getPopulation = (value, $elem) => {
   if (isNullish(value)) {
@@ -339,12 +365,16 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
         }
       };
 
-  const _hex = format.color ? format.color : cssColor;
-  const _opacity = format.opacity || cssOpacity;
+  const _hex = format.color ?? cssColor;
+  const _opacity = format.opacity ?? cssOpacity;
+
   const { hex, opacity } = parseColor(_hex, _opacity);
 
   // it's only for situations when colorPalette contain this data - "color2, color3" (normally it should never happen)
   const palette = format.colorPalette ? format.colorPalette.split(",")[0] : "";
+  const textBgColorPalette = format.textBgColorPalette
+    ? format.textBgColorPalette.split(",")[0]
+    : "";
 
   const bgColor = format.backgroundGradient
     ? format.backgroundGradient.startHex
@@ -372,11 +402,13 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     bgColorOpacity: bgColorOpacity,
     bgColorHex: bgColor,
     ...parseShadow(format.shadow),
+    textBgColorPalette,
     textShadowColorPalette: format.shadowColorPalette || null,
 
+    ...getTextBackground(format.background, format.textBackgroundGradient),
     ...getBackground(format.backgroundImage),
     backgroundGradient: format.backgroundGradient || null,
-
+    textBackgroundGradient: format.textBackgroundGradient || null,
     ...getLink(format.link),
     ...populationColor,
     ...getPopulationColorFormat({ ...populationColor }),

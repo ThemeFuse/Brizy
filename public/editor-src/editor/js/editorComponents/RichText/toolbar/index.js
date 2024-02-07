@@ -115,7 +115,7 @@ const getItems =
         options: [
           {
             id: "text",
-            type: "aiText-dev",
+            type: "aiText",
             isPro: true,
             selectedValue: v.selectedValue,
             devices: "desktop"
@@ -175,7 +175,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -220,7 +220,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -262,7 +262,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -304,7 +304,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -346,7 +346,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -388,7 +388,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -430,7 +430,7 @@ const getItems =
                         options: [
                           {
                             id: "text",
-                            type: "population-dev",
+                            type: "population",
                             disabled: !richTextDC,
                             config: richTextDC,
                             devices: "desktop"
@@ -610,7 +610,7 @@ const getItems =
                 options: [
                   {
                     id: "link",
-                    type: "population-dev",
+                    type: "population",
                     label: t("Link to"),
                     config: linkDC,
                     option: {
@@ -722,7 +722,7 @@ const getItems =
                 options: [
                   {
                     id: "linkToSlide",
-                    type: "number-dev",
+                    type: "number",
                     label: t("Slide"),
                     disabled: !IS_STORY,
                     config: {

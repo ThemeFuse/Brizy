@@ -91,6 +91,9 @@
     "fontWeight": 400,
     "lineHeight": 1.1,
     "letterSpacing": 0,
+    "variableFontWeight": 400,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "textFontStyle": "",
     "textFontFamilyType": "google",
@@ -99,6 +102,9 @@
     "textFontWeight": 400,
     "textLineHeight": 1.1,
     "textLetterSpacing": 0,
+    "textVariableFontWeight": 400,
+    "textFontWidth": 100,
+    "textFontSoftness": 0,
 
     "registerInfoFontStyle": "",
     "registerInfoFontFamilyType": "google",
@@ -107,6 +113,9 @@
     "registerInfoFontWeight": 400,
     "registerInfoLineHeight": 1.5,
     "registerInfoLetterSpacing": 0,
+    "registerVariableFontWeight": 400,
+    "registerFontWidth": 100,
+    "registerFontSoftness": 0,
 
     "registerLinkFontStyle": "",
     "registerLinkFontFamilyType": "google",
@@ -115,6 +124,9 @@
     "registerLinkFontWeight": 400,
     "registerLinkLineHeight": 1,
     "registerLinkLetterSpacing": 0,
+    "registerLinkVariableFontWeight": 400,
+    "registerLinkFontWidth": 100,
+    "registerLinkFontSoftness": 0,
 
     "loginLinkFontStyle": "",
     "loginLinkFontFamilyType": "google",
@@ -123,6 +135,9 @@
     "loginLinkFontWeight": 400,
     "loginLinkLineHeight": 1,
     "loginLinkLetterSpacing": 0,
+    "loginLinkVariableFontWeight": 400,
+    "loginLinkFontWidth": 100,
+    "loginLinkFontSoftness": 0,
 
     "size": "medium",
     "sizeLargePadding": 20,
@@ -268,6 +283,9 @@
     "labelFontWeight": 400,
     "labelLineHeight": 1.5,
     "labelLetterSpacing": 0,
+    "labelVariableFontWeight": 400,
+    "labelFontWidth": 100,
+    "labelFontSoftness": 0,
 
     "labelColorHex": "#73777f",
     "labelColorOpacity": 0.7,
@@ -344,6 +362,9 @@
     "checkboxFontWeight": 400,
     "checkboxLineHeight": 1.5,
     "checkboxLetterSpacing": 0,
+    "checkboxVariableFontWeight": 400,
+    "checkboxFontWidth": 100,
+    "checkboxFontSoftness": 0,
 
     "lostFontStyle": "",
     "lostFontFamilyType": "google",
@@ -352,6 +373,9 @@
     "lostFontWeight": 400,
     "lostLineHeight": 1,
     "lostLetterSpacing": 0,
+    "lostVariableFontWeight": 400,
+    "lostFontWidth": 100,
+    "lostFontSoftness": 0,
 
     "boxShadow": "none",
 

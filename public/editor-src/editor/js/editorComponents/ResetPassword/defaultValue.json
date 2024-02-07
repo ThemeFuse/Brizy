@@ -48,6 +48,9 @@
     "fontWeight": 400,
     "lineHeight": 1.1,
     "letterSpacing": 0,
+    "variableFontWeight": 400,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "textFontStyle": "",
     "textFontFamilyType": "google",
@@ -56,6 +59,9 @@
     "textFontWeight": 400,
     "textLineHeight": 1.1,
     "textLetterSpacing": 0,
+    "textVariableFontWeight": 400,
+    "textFontWidth": 100,
+    "textFontSoftness": 0,
 
     "size": "medium",
     "sizeLargePadding": 20,
@@ -154,6 +160,9 @@
     "labelFontWeight": 400,
     "labelLineHeight": 1.5,
     "labelLetterSpacing": 0,
+    "labelVariableFontWeight": 400,
+    "labelFontWidth": 100,
+    "labelFontSoftness": 0,
 
     "labelColorHex": "#73777f",
     "labelColorOpacity": 0.7,

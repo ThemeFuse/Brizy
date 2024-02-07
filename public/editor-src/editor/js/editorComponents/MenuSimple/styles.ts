@@ -21,7 +21,8 @@ export function style(
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation"
       ],
       interval: ["cssStyleHoverTransition"]
     },

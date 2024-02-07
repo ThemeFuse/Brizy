@@ -1,5 +1,8 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import Config from "visual/global/Config";
+import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
 import type { Props, Value } from "./types";
 
@@ -11,6 +14,11 @@ export const getItems: GetItems<Value, Props> = ({
   component,
   context
 }) => {
+  const config = Config.getAll();
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const isDisabledFilterCategory = dvv("showCategoryFilter") === "off";
+
   return [
     {
       id: "toolbarSermonLayout",
@@ -34,7 +42,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "howmany",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Items"),
                   devices: "desktop",
                   config: {
@@ -46,7 +54,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "columnNumber",
                   label: t("Columns"),
-                  type: "number-dev",
+                  type: "number",
                   config: {
                     min: 1,
                     max: 6,
@@ -160,6 +168,7 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Item"),
                   devices: "desktop",
                   config: {
+                    size: "medium",
                     helper: t(
                       'URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the "Sermon Detail" widget to be placed on a page and that page url/slug placed in this field.'
                     )
@@ -172,6 +181,9 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   placeholder: t("Button Text..."),
                   disabled: !v.detailPage,
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Button will display if text is entered and a detail page selected."
@@ -198,7 +210,10 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "groupFilterHeading",
                       type: "inputText",
                       label: t("Heading"),
-                      disabled: v.showGroupFilter === "off"
+                      disabled: v.showGroupFilter === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -217,7 +232,15 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "categoryFilterHeading",
                       type: "inputText",
                       label: t("Heading"),
-                      disabled: v.showCategoryFilter === "off"
+                      disabled: isDisabledFilterCategory
+                    },
+                    {
+                      id: "defaultCategory",
+                      devices: "desktop",
+                      label: t("Default Category"),
+                      type: "select",
+                      disabled: isDisabledFilterCategory,
+                      choices: getEkklesiaChoiches(config, { key: "sermon" })
                     }
                   ]
                 },
@@ -236,7 +259,10 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "seriesFilterHeading",
                       type: "inputText",
                       label: t("Heading"),
-                      disabled: v.showSeriesFilter === "off"
+                      disabled: v.showSeriesFilter === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -255,7 +281,10 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "speakerFilterHeading",
                       type: "inputText",
                       label: t("Heading"),
-                      disabled: v.showSpeakerFilter === "off"
+                      disabled: v.showSpeakerFilter === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -273,7 +302,10 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "searchFilterPlacehoder",
                       type: "inputText",
                       label: t("Placeholder"),
-                      disabled: v.showSearchFilter === "off"
+                      disabled: v.showSearchFilter === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 }

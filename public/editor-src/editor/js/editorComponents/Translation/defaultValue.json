@@ -27,6 +27,9 @@
     "fontWeight": 700,
     "lineHeight": 1,
     "letterSpacing": 0,
+    "variableFontWeight": 700,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "textSpacing": 10,
     "textSpacingSuffix": "px",

@@ -147,7 +147,7 @@ export function getItems({ v, component, device, context }) {
                 },
                 {
                   id: "bgVideoStart",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Start"),
                   devices: "desktop",
                   disabled: dvv("media") !== "video",
@@ -339,7 +339,7 @@ export function getItems({ v, component, device, context }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: true,

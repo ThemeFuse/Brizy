@@ -45,8 +45,10 @@ export const GlobalBlockOption: Component = ({
   label,
   config
 }): ReactElement => {
-  const { extraFontStyles, pageBlocks, globalBlocks, blocksData, page } =
-    useSelector(selector, shallowEqual);
+  const { extraFontStyles, pageBlocks, globalBlocks, page } = useSelector(
+    selector,
+    shallowEqual
+  );
   const dispatch = useDispatch();
   const switchKey = useRef(uuid(4));
 
@@ -73,7 +75,7 @@ export const GlobalBlockOption: Component = ({
 
     const node: HTMLElement | null = document.querySelector(`[id='${_id}']`);
     const loading = PortalLoading.render(node);
-    const blockData = getBlockData(pageBlocks, _id);
+    const blockData: Block = setIds(getBlockData(pageBlocks, _id));
 
     if (checked) {
       if (node && blockData) {
@@ -102,6 +104,7 @@ export const GlobalBlockOption: Component = ({
           rules: [],
           position: { align: "bottom", top: 0, bottom: 0 }
         } as GlobalBlock;
+        const newBlockId = blockData.value._id;
 
         if (!isPopup(blockData) && page) {
           globalBlock = changeRule(globalBlock, true, page);
@@ -114,11 +117,16 @@ export const GlobalBlockOption: Component = ({
             if (popup.data) {
               const popupId = blockType === "popup" && getOpenedPopupId();
 
-              dispatch(makePopupToGlobalBlock(globalBlock));
+              dispatch(
+                makePopupToGlobalBlock({
+                  block: globalBlock,
+                  fromBlockId: _id
+                })
+              );
               popupId && openPopupById(popupId);
 
               if (blockType === "externalPopup") {
-                openPromptCondition({ type: "popup", _id });
+                openPromptCondition({ type: "popup", _id: newBlockId });
               }
             } else {
               switchKey.current = uuid(4);
@@ -134,8 +142,13 @@ export const GlobalBlockOption: Component = ({
             const block = await createGlobalBlock(globalBlock);
 
             if (block.data) {
-              dispatch(makeNormalToGlobalBlock(globalBlock));
-              openPromptCondition({ type: "block", _id });
+              dispatch(
+                makeNormalToGlobalBlock({
+                  block: globalBlock,
+                  fromBlockId: _id
+                })
+              );
+              openPromptCondition({ type: "block", _id: newBlockId });
             } else {
               switchKey.current = uuid(4);
               ToastNotification.error(t("Could not Create Global Block"));
@@ -153,12 +166,10 @@ export const GlobalBlockOption: Component = ({
       await pendingRequest();
 
       if (isGlobalBlock()) {
-        const block: Block = setIds(blocksData[_id]);
-
         PortalLoading.close(loading);
 
         const data = {
-          block,
+          block: blockData,
           fromBlockId: _id
         };
 

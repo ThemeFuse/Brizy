@@ -490,8 +490,10 @@ export function getItems({ v, device, state, context }) {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

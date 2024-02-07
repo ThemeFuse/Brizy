@@ -23,7 +23,7 @@ import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
 import { t } from "visual/utils/i18n";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { getValue } from "./componentUtils";
+import { divideFonts, getValue } from "./componentUtils";
 import { Config } from "./types/Config";
 import { Font } from "./types/Font";
 import { FontsBlock } from "./types/FontsBlocks";
@@ -100,7 +100,10 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
         case "fontWeight":
         case "letterSpacing":
         case "lineHeight":
-        case "fontSizeSuffix": {
+        case "fontSizeSuffix":
+        case "variableFontWeight":
+        case "fontWidth":
+        case "fontSoftness": {
           const value = withFontFamily
             ? Patch.fullFont({
                 ..._value,
@@ -140,6 +143,10 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     family: _value.fontFamily
   });
 
+  const variations = useMemo(() => _value.variations, [_value.variations]);
+
+  const dividedFonts = useMemo(() => divideFonts(fonts), [fonts]);
+
   const _setDeviceMode = useCallback(
     (device: DeviceMode) => {
       dispatch(setDeviceMode(device));
@@ -166,7 +173,7 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     <Control
       onChange={_onChange}
       showFontFamily={fontFamily}
-      fonts={fonts}
+      fonts={dividedFonts}
       font={_value.fontFamily}
       fontAdd={currentUserRole() === "admin" ? openFontsUploader : undefined}
       fontAddLabel={t("Add New Font")}
@@ -180,6 +187,9 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       weight={_value.fontWeight}
       lineHeight={_value.lineHeight}
       letterSpacing={_value.letterSpacing}
+      variableFontWeight={_value.variableFontWeight}
+      fontWidth={_value.fontWidth}
+      fontSoftness={_value.fontSoftness}
       letterSpacingMin={letterSpacingMin}
       letterSpacingMax={letterSpacingMax}
       letterSpacingStep={0.1}
@@ -197,6 +207,7 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       icons={icons}
       activeIcon={deviceIcons[device]}
       onIconClick={onIconClick}
+      variations={variations}
     />
   );
 };

@@ -26,6 +26,9 @@
     "typographyFontWeight": 700,
     "typographyLineHeight": 1,
     "typographyLetterSpacing": 1,
+    "typographyVariableFontWeight": 700,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "colorHex": "#ccc",
     "colorOpacity": 1,

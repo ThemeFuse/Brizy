@@ -90,8 +90,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             'title' => $block->getTitle(),
             'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
-            'data' => $block->get_editor_data(),
-            'globalStyles' => $block->getGlobalStyles(),
+            'data' => $block->get_editor_data(true),
             'editorVersion' => $this->syncVersion,
             'files' => [
                 'images' => [],
@@ -101,6 +100,10 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             ],
             'hasPro' => $item->isPro(),
         );
+
+        if($block instanceof Brizy_Editor_Layout) {
+			$data['globalStyles'] = $block->getGlobalStyles();
+        }
 
         if (method_exists($block, 'getTags')) {
             $data['tags'] = $block->getTags();
@@ -201,11 +204,11 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         $block->set_editor_data($data->data);
         $block->setMeta($data->meta);
 
-        if ($data->title) {
+        if (isset($data->title)) {
             $block->setTitle($data->title);
         }
 
-        if (method_exists($entityClass, 'setTags')) {
+        if (method_exists($entityClass, 'setTags') && isset($data->tags)) {
             $block->setTags($data->tags);
         }
 

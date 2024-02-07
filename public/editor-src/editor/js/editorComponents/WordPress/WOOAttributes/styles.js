@@ -11,21 +11,24 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAttributesAttributesFontSize",
         "cssStyleElementWOOAttributesAttributesFontWeight",
         "cssStyleElementWOOAttributesAttributesLetterSpacing",
+        "cssStyleElementWOOAttributesAttributesFontVariation",
         "cssStyleElementWOOAttributesAttributeColor"
       ]
     },
-    ".brz &&:hover .woocommerce-product-attributes-item .woocommerce-product-attributes-item__label": {
-      standart: [
-        "cssStyleElementWOOAttributesAttributesLineHeight",
-        "cssStyleElementWOOAttributesSpacing"
-      ]
-    },
-    ".brz &&:hover .woocommerce-product-attributes-item .woocommerce-product-attributes-item__value": {
-      standart: [
-        "cssStyleElementWOOAttributesAttributesLineHeight",
-        "cssStyleElementWOOAttributesSpacing"
-      ]
-    },
+    ".brz &&:hover .woocommerce-product-attributes-item .woocommerce-product-attributes-item__label":
+      {
+        standart: [
+          "cssStyleElementWOOAttributesAttributesLineHeight",
+          "cssStyleElementWOOAttributesSpacing"
+        ]
+      },
+    ".brz &&:hover .woocommerce-product-attributes-item .woocommerce-product-attributes-item__value":
+      {
+        standart: [
+          "cssStyleElementWOOAttributesAttributesLineHeight",
+          "cssStyleElementWOOAttributesSpacing"
+        ]
+      },
     ".brz &&:hover table th": {
       standart: ["cssStyleElementWOOAttributesBorder"]
     },
@@ -42,6 +45,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAdditionalTitleLineHeight",
         "cssStyleElementWOOAdditionalTitleFontWeight",
         "cssStyleElementWOOAdditionalTitleLetterSpacing",
+        "cssStyleElementWOOAdditionalTitleFontVariation",
         "cssStyleElementWOOAdditionalTitleColor",
         "cssStyleElementWOOAdditionalTitleSpacing"
       ]

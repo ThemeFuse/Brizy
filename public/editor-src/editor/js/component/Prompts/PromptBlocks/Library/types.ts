@@ -36,9 +36,13 @@ export type SavedLayoutAPIMetaWithoutSync = Omit<
   "synchronizable" | "synchronized"
 >;
 
-interface SavedLayoutWithThumbs extends LayoutData, Thumbs {
+export interface SavedLayoutWithThumbs extends LayoutData, Thumbs {
   type: "LAYOUT";
 }
+
+export const isSavedLayoutWithThumbs = (
+  item: BlockData
+): item is SavedLayoutWithThumbs => item.type === "LAYOUT";
 
 interface SavedBlockWithThumbs extends SavedData, Thumbs {
   type: "BLOCK" | "POPUP";
@@ -68,6 +72,8 @@ export type LibraryStateProps = {
 };
 
 export type LibraryState = {
+  activeType?: BlockCategory;
+  detailsData?: BlockData;
   search: string;
   filter?: string;
   loading: boolean;

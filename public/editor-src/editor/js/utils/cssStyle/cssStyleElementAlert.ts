@@ -5,6 +5,7 @@ import {
   cssStyleTextShadow2,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -218,6 +219,18 @@ export function cssStyleElementAlertTitleLetterSpacing({
     prefix: "title"
   });
 }
+
+export function cssStyleElementAlertTitleFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "title"
+  });
+}
+
 //#endregion
 
 //#region description
@@ -319,4 +332,16 @@ export function cssStyleElementAlertDescriptionLetterSpacing({
     prefix: "description"
   });
 }
+
+export function cssStyleElementAlertDescriptionFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "description"
+  });
+}
+
 //#endregion

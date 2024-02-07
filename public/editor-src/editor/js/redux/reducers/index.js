@@ -190,7 +190,7 @@ export function screenshots(
           value: { _id }
         },
         meta
-      } = action.payload;
+      } = action.payload.block;
       const screenshot = {
         _thumbnailSrc: meta._thumbnailSrc,
         _thumbnailWidth: meta._thumbnailWidth,

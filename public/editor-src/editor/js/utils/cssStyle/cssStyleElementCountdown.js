@@ -1,4 +1,7 @@
-import { cssStyleColor } from "visual/utils/cssStyle";
+import {
+  cssStyleColor,
+  cssStyleTypography2FontVariation
+} from "visual/utils/cssStyle";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -53,6 +56,10 @@ export function cssStyleNumberTypography2LetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "number" });
 }
 
+export function cssStyleNumberTypography2FontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "number" });
+}
+
 // Style Typography Title
 export function cssStyleTitleTypography2FontFamily({ v, device }) {
   return cssStyleTypography2FontFamily({ v, device, prefix: "title" });
@@ -74,6 +81,10 @@ export function cssStyleTitleTypography2LetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "title" });
 }
 
+export function cssStyleTitleTypography2FontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "title" });
+}
+
 // Style Typography Message
 export function cssStyleMessageTypography2FontFamily({ v, device }) {
   return cssStyleTypography2FontFamily({ v, device, prefix: "message" });
@@ -93,6 +104,10 @@ export function cssStyleMessageTypography2FontWeight({ v, device }) {
 
 export function cssStyleMessageTypography2LetterSpacing({ v, device }) {
   return cssStyleTypography2LetterSpacing({ v, device, prefix: "message" });
+}
+
+export function cssStyleMessageTypography2FontVariation({ v, device }) {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "message" });
 }
 
 // Color

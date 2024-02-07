@@ -78,7 +78,7 @@ export function getItems({
                     {
                       id: "cssID",
                       label: t("Block Name"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
@@ -96,7 +96,7 @@ export function getItems({
                     {
                       id: "cssClass",
                       label: t("CSS Class"),
-                      type: "population-dev",
+                      type: "population",
                       position: 40,
                       devices: "desktop",
                       display: "block",
@@ -114,7 +114,7 @@ export function getItems({
                     {
                       id: "customAttributes",
                       label: t("Custom Attributes"),
-                      type: "codeMirror-dev",
+                      type: "codeMirror",
                       position: 45,
                       // eslint-disable-next-line
                       placeholder: 'key1:"value1"\nkey2:"value2"',

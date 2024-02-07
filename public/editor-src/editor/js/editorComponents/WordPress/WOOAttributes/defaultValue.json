@@ -38,6 +38,9 @@
     "titleFontWeight": 300,
     "titleLineHeight": 1,
     "titleLetterSpacing": 1,
+    "titleVariableFontWeight": 300,
+    "titleFontWidth": 100,
+    "titleFontSoftness": 0,
 
     "tabletTitleFontStyle": "",
     "tabletTitleFontFamilyType": null,
@@ -69,6 +72,9 @@
     "attributesFontWeight": 300,
     "attributesLineHeight": 1.3,
     "attributesLetterSpacing": -0.1,
+    "attributesVariableFontWeight": 300,
+    "attributesFontWidth": 100,
+    "attributesFontSoftness": 0,
 
     "attributeColorHex": "#1c1c1c",
     "attributeColorOpacity": 1,

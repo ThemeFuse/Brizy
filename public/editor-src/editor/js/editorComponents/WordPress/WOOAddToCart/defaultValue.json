@@ -87,6 +87,9 @@
     "typographyFontWeight": 700,
     "typographyLineHeight": 1.5,
     "typographyLetterSpacing": 1,
+    "typographyVariableFontWeight": 700,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "inputFontStyle": "",
     "inputFontFamilyType": "google",
@@ -95,6 +98,9 @@
     "inputFontWeight": 400,
     "inputLineHeight": 1,
     "inputLetterSpacing": 0,
+    "inputVariableFontWeight": 400,
+    "inputFontWidth": 100,
+    "inputFontSoftness": 0,
 
     "labelFontStyle": "",
     "labelFontFamilyType": "google",
@@ -103,6 +109,9 @@
     "labelFontWeight": 400,
     "labelLineHeight": 1.3,
     "labelLetterSpacing": 0,
+    "labelVariableFontWeight": 400,
+    "labelFontWidth": 100,
+    "labelFontSoftness": 0,
 
     "valueFontStyle": "",
     "valueFontFamilyType": "google",
@@ -111,6 +120,9 @@
     "valueFontWeight": 400,
     "valueLineHeight": 1.3,
     "valueLetterSpacing": 0,
+    "valueVariableFontWeight": 400,
+    "valueFontWidth": 100,
+    "valueFontSoftness": 0,
 
     "clearFontStyle": "",
     "clearFontFamilyType": "google",
@@ -119,6 +131,9 @@
     "clearFontWeight": 400,
     "clearLineHeight": 1.3,
     "clearLetterSpacing": 0,
+    "clearVariableFontWeight": 400,
+    "clearFontWidth": 100,
+    "clearFontSoftness": 0,
 
     "inputColorHex": "#000000",
     "inputColorOpacity": 1,

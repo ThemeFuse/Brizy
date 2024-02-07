@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, {
   CSSProperties,
   ForwardRefRenderFunction,
@@ -10,9 +11,10 @@ import { Props } from "./types";
 import { getThumbStyles, getViewStyles, wrapperStyles } from "./utils";
 
 const _Scrollbar: ForwardRefRenderFunction<Scrollbars, Props> = (
-  { children, theme, autoHeightMax },
+  { children, theme, autoHeightMax, className },
   ref
 ) => {
+  const viewClasName = classNames("brz-scrollbar__view", className);
   const renderThumbs = useCallback(
     (props: { style: CSSProperties }): ReactElement => (
       <div
@@ -32,10 +34,10 @@ const _Scrollbar: ForwardRefRenderFunction<Scrollbars, Props> = (
           ...getViewStyles,
           ...(autoHeightMax !== undefined && { maxHeight: autoHeightMax })
         }}
-        className="brz-scrollbar__view"
+        className={viewClasName}
       />
     ),
-    [autoHeightMax]
+    [autoHeightMax, viewClasName]
   );
 
   return (

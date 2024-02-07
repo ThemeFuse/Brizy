@@ -24,7 +24,8 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsFilterFontSize",
         "cssStyleElementPostsFilterLineHeight",
         "cssStyleElementPostsFilterFontWeight",
-        "cssStyleElementPostsFilterLetterSpacing"
+        "cssStyleElementPostsFilterLetterSpacing",
+        "cssStyleElementPostsFilterFontVariation"
       ]
     },
     ".brz && .brz-posts__filter__item--style-1:hover": {
@@ -34,23 +35,25 @@ export function style(v, vs, vd) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-posts__filter__item--style-1.brz-posts-filter__item--active": {
-      standart: [
-        "cssStyleElementPostsFilterActiveColor",
-        "cssStyleElementPostsFilterActiveBgColor",
-        "cssStyleElementPostsFilterActiveBorder",
-        "cssStyleElementPostsFilterActiveShadow"
-      ]
-    },
-    ".brz && .brz-posts__filter__item--style-1:not(.brz-posts-filter__item--active):hover": {
-      standart: [
-        "cssStyleElementPostsFilterBgColor",
-        "cssStyleElementPostsFilterBorder",
-        "cssStyleElementPostsFilterShadow",
-        "cssStyleElementPostsFilterColor",
-        "cssStyleElementPostsFilterBorderRadius"
-      ]
-    },
+    ".brz && .brz-posts__filter__item--style-1.brz-posts-filter__item--active":
+      {
+        standart: [
+          "cssStyleElementPostsFilterActiveColor",
+          "cssStyleElementPostsFilterActiveBgColor",
+          "cssStyleElementPostsFilterActiveBorder",
+          "cssStyleElementPostsFilterActiveShadow"
+        ]
+      },
+    ".brz && .brz-posts__filter__item--style-1:not(.brz-posts-filter__item--active):hover":
+      {
+        standart: [
+          "cssStyleElementPostsFilterBgColor",
+          "cssStyleElementPostsFilterBorder",
+          "cssStyleElementPostsFilterShadow",
+          "cssStyleElementPostsFilterColor",
+          "cssStyleElementPostsFilterBorderRadius"
+        ]
+      },
     ".brz && .brz-posts__filter--style-2:hover": {
       standart: ["cssStyleElementPostsFilterPaddingFourFields"],
       interval: [
@@ -58,21 +61,24 @@ export function style(v, vs, vd) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-posts__filter__item--style-2.brz-posts-filter__item--active": {
-      standart: ["cssStyleElementPostsFilterActiveColor"]
-    },
-    ".brz && .brz-posts__filter__item--style-2:not(.brz-posts-filter__item--active):hover": {
-      standart: ["cssStyleElementPostsFilterColor"]
-    },
-    ".brz && .brz-posts__filter--style-2:not(.brz-posts-filter__item--active):hover": {
-      standart: [
-        "cssStyleElementPostsFilterBgColor",
-        "cssStyleElementPostsFilterBorder",
-        "cssStyleElementPostsFilterBorderRadius",
-        "cssStyleElementPostsFilterShadow",
-        "cssStyleDisplayInlineFlex"
-      ]
-    },
+    ".brz && .brz-posts__filter__item--style-2.brz-posts-filter__item--active":
+      {
+        standart: ["cssStyleElementPostsFilterActiveColor"]
+      },
+    ".brz && .brz-posts__filter__item--style-2:not(.brz-posts-filter__item--active):hover":
+      {
+        standart: ["cssStyleElementPostsFilterColor"]
+      },
+    ".brz && .brz-posts__filter--style-2:not(.brz-posts-filter__item--active):hover":
+      {
+        standart: [
+          "cssStyleElementPostsFilterBgColor",
+          "cssStyleElementPostsFilterBorder",
+          "cssStyleElementPostsFilterBorderRadius",
+          "cssStyleElementPostsFilterShadow",
+          "cssStyleDisplayInlineFlex"
+        ]
+      },
 
     // pagination
     ".brz && .brz-posts__pagination ul.page-numbers": {
@@ -85,23 +91,26 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsPaginationLineHeight",
         "cssStyleElementPostsPaginationFontWeight",
         "cssStyleElementPostsPaginationLetterSpacing",
+        "cssStyleElementPostsPaginationFontVariation",
         "cssStyleElementPostsPaginationBorderRadius"
       ]
     },
-    ".brz && .brz-posts__pagination ul.page-numbers li:hover .page-numbers:not(.current)": {
-      standart: [
-        "cssStyleElementPostsPaginationBgColor",
-        "cssStyleElementPostsPaginationBorder",
-        "cssStyleElementPostsPaginationColor"
-      ]
-    },
-    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers.current:hover": {
-      standart: [
-        "cssStyleElementPostsPaginationActiveColor",
-        "cssStyleElementPostsPaginationActiveBgColor",
-        "cssStyleElementPostsPaginationActiveBorder"
-      ]
-    }
+    ".brz && .brz-posts__pagination ul.page-numbers li:hover .page-numbers:not(.current)":
+      {
+        standart: [
+          "cssStyleElementPostsPaginationBgColor",
+          "cssStyleElementPostsPaginationBorder",
+          "cssStyleElementPostsPaginationColor"
+        ]
+      },
+    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers.current:hover":
+      {
+        standart: [
+          "cssStyleElementPostsPaginationActiveColor",
+          "cssStyleElementPostsPaginationActiveBgColor",
+          "cssStyleElementPostsPaginationActiveBorder"
+        ]
+      }
   };
 
   return renderStyles({ v, vs, vd, styles });

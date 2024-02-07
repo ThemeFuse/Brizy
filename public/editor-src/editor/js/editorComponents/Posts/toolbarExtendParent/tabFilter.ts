@@ -6,7 +6,11 @@ import { ArrayType } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
 import { Context, V, VDecoded } from "../types";
 import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
-import { createFieldCollectionId, useAsSimpleSelectConditions } from "./utils";
+import {
+  createFieldCollectionId,
+  getManualTitle,
+  useAsSimpleSelectConditions
+} from "./utils";
 import { orderByConverter } from "./utils.common";
 
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
@@ -21,7 +25,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
   const disableOffset = postsElement?.offset === false;
   const disableOrderBy = postsElement?.orderBy === false;
   const disableOrder = postsElement?.order === false;
-  const disableSource = v?.showSource === false;
+  const disableQuerySource = postsElement?.querySource === false;
 
   const vd = decodeV(v);
   const isPosts = vd.type === "posts";
@@ -64,7 +68,7 @@ export function tabFilter(v: V, context: Context): TabOptionType {
         label: t("Source"),
         devices: "desktop",
         choices: sourceChoices,
-        disabled: !isPosts || disableSource
+        disabled: !isPosts
       },
       {
         id: "querySource",
@@ -72,14 +76,24 @@ export function tabFilter(v: V, context: Context): TabOptionType {
         label: t("Query Source"),
         devices: "desktop",
         choices: collectionChoices,
-        disabled: !isCurrentQuery
+        disabled: disableQuerySource || !isCurrentQuery
       },
       includeBy,
+      {
+        id: "excludeCurrentProduct",
+        type: "switch",
+        label: t("Exclude Current"),
+        devices: "desktop",
+        disabled: !vd?.excludeCurrentProductOption,
+        helper: {
+          content: t("Works only in the product page")
+        }
+      },
       excludeBy,
       {
         id: "offset",
         label: t("Offset"),
-        type: "number-dev",
+        type: "number",
         devices: "desktop",
         disabled: disableOffset
       },
@@ -141,7 +155,7 @@ function getIncludeExclude({
         value: createFieldCollectionId(ref.id, ref.fieldId),
         title: ref.title
       }))
-      .concat([{ value: "manual", title: t("Manual") }]),
+      .concat([{ value: "manual", title: getManualTitle(vd.component) }]),
     config: {
       useAsSimpleSelect: includeQueryOneOption,
       showArrow: includeQueryOneOption
@@ -159,6 +173,8 @@ function getIncludeExclude({
       const _id = createFieldCollectionId(ref.id, ref.fieldId);
       const id = `symbol_${source}_${prefix}_${_id}`;
       const label = ref.title;
+
+      const useAsSimpleSelect = useAsSimpleSelectConditions(vd);
 
       return {
         id,
@@ -180,8 +196,8 @@ function getIncludeExclude({
           )
         },
         config: {
-          useAsSimpleSelect: useAsSimpleSelectConditions(vd),
-          showArrow: useAsSimpleSelectConditions(vd)
+          useAsSimpleSelect,
+          showArrow: useAsSimpleSelect
         }
       };
     });
@@ -209,20 +225,7 @@ function getIncludeExclude({
   return {
     id: `${prefix}By-group`,
     type: "group",
-    options: [
-      lvl1Option,
-      ...lvl2Options,
-      {
-        id: "excludeCurrentProduct",
-        type: "switch",
-        label: t("Exclude Current"),
-        devices: "desktop",
-        disabled: !vd?.excludeCurrentProductOption,
-        helper: {
-          content: t("Works only in the product page")
-        }
-      }
-    ],
+    options: [lvl1Option, ...lvl2Options],
     disabled
   };
 }

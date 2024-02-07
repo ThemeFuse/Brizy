@@ -8,7 +8,7 @@
   will-change: flex, max-width;
 
   .brz-hover-animation__container {
-    flex-direction: column;
+    flex-direction: inherit;
   }
 
   & .brz-container-link {

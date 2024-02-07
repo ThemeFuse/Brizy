@@ -41,6 +41,7 @@ class Video extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
 
   state = {
     isDragging: false,
@@ -111,7 +112,7 @@ class Video extends EditorComponent {
 
     return videoSrc
       ? getVideoUrl(videoSrc, {
-          autoplay: !!coverImageSrc || autoplay === "on",
+          autoplay: IS_PREVIEW && (!!coverImageSrc || autoplay === "on"),
           controls: updatedControls,
           branding,
           intro,

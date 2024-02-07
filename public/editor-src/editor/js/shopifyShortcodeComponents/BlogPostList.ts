@@ -5,7 +5,7 @@ import { t } from "visual/utils/i18n";
 export default function (config: ConfigCommon) {
   return {
     id: "Posts",
-    title: t("List"),
+    title: t("Posts"),
     icon: "t2-shopify-list",
     resolve: {
       type: "Wrapper",

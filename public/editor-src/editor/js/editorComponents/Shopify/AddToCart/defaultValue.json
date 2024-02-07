@@ -38,6 +38,9 @@
     "fontWeight": 700,
     "letterSpacing": 1,
     "lineHeight": 1.5,
+    "variableFontWeight": 700,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "tabletFontFamilyType": null,
     "tabletFontStyle": null,

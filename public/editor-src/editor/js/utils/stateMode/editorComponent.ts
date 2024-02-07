@@ -51,7 +51,7 @@ export const bindStateToOption = <T extends ToolbarItemType>(
           ? [
               {
                 id: "tabsState",
-                type: "stateMode-dev",
+                type: "stateMode",
                 states: statesList,
                 options: (option as GenericToolbarItemType<"popover">).options
               }
@@ -68,7 +68,7 @@ export const bindStateToOption = <T extends ToolbarItemType>(
             ? [
                 {
                   id: "tabsState",
-                  type: "stateMode-dev",
+                  type: "stateMode",
                   states: statesList,
                   options: tab.options
                 }

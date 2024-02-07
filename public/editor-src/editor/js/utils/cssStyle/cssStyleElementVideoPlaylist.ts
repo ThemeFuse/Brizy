@@ -6,6 +6,7 @@ import {
   cssStyleSizeWidthPrefix,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -52,6 +53,17 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2LetterSpacin
     v,
     device,
     state,
+    prefix: "subTitle"
+  });
+}
+
+export function cssStyleElementVideoPlaylistSubTitleVideoTypography2FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
     prefix: "subTitle"
   });
 }

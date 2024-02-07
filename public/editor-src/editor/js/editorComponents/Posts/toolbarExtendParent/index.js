@@ -74,8 +74,26 @@ const getTypeInfo = (v) => {
   }
 };
 
+/*
+component: "shopify-products" | "shopify-collections" | "shopify-posts"
+
+returnType: string | undefined;
+*/
+const getTitle = (component) => {
+  switch (component) {
+    case "shopify-products":
+      return t("Products");
+    case "shopify-collections":
+      return t("Collections");
+    case "shopify-posts":
+      return t("Posts");
+  }
+};
+
 const tabCurrentElement = (v, device) => {
-  const { title } = getTypeInfo(v);
+  const { title: _title } = getTypeInfo(v);
+
+  const title = getTitle(v.component) || _title;
 
   const dvv = (key) => defaultValueValue({ key, v, device });
 
@@ -109,7 +127,7 @@ const tabCurrentElement = (v, device) => {
           max: 15,
           step: 1,
           inputMin: 1,
-          inputMax: 50
+          inputMax: 100
         }
       },
       {
