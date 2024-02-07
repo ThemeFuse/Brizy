@@ -3,7 +3,6 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarElementForm2Size } from "visual/utils/toolbar";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
@@ -29,20 +28,21 @@ export function getItems({ v, device }) {
             {
               id: "background",
               options: [
-                toolbarElementForm2Size({
-                  v,
-                  device,
-                  devices: "desktop"
-                })
+                {
+                  id: "size",
+                  label: t("Size"),
+                  type: "radioGroup",
+                  position: 17,
+                  choices: [
+                    { icon: "nc-small", value: "small" },
+                    { icon: "nc-medium", value: "medium" },
+                    { icon: "nc-large", value: "large" }
+                  ]
+                }
               ]
             }
           ]
-        },
-        toolbarElementForm2Size({
-          v,
-          device,
-          devices: "responsive"
-        })
+        }
       ]
     },
     {

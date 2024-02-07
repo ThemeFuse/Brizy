@@ -30,7 +30,7 @@ export function getItems({ context }) {
             {
               id: "cssClass",
               label: t("CSS Class"),
-              type: "population-dev",
+              type: "population",
               position: 40,
               devices: "desktop",
               display: "block",

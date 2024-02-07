@@ -113,6 +113,9 @@ export const getItems: GetItems<Value, Props> = ({
                   disabled: sermonLatestActive,
                   label: t("Slug"),
                   placeholder: t("Sermon Slug..."),
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Slug of sermon (my-sermon-name). Use only if you are not selecting from the 'Recent Sermons' above and 'Show Latest' is set to 'Off'."
@@ -266,7 +269,10 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Button"),
                   devices: "desktop",
                   placeholder: t("Button Text..."),
-                  disabled: !dvv("detailPage")
+                  disabled: !dvv("detailPage"),
+                  config: {
+                    size: "medium"
+                  }
                 }
               ]
             }

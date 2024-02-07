@@ -16,9 +16,11 @@ import {
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import { getChoices } from "visual/component/Prompts/utils";
+import { canSyncPage, getChoices } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateError } from "visual/redux/actions";
 import {
   updatePageIsHomePage,
   updatePageLayout,
@@ -26,6 +28,7 @@ import {
 } from "visual/redux/actions2";
 import { shopifySyncPage } from "visual/utils/api";
 import { isNonEmptyArray } from "visual/utils/array/types";
+import { SYNC_ERROR } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { Button } from "../common/Button";
 import { Content } from "../common/Content";
@@ -37,6 +40,8 @@ import { Props } from "./types";
 import { Valid } from "./types";
 
 export const PromptPageTemplate = (props: Props): ReactElement => {
+  const _config = Config.getAll();
+
   const {
     pageId,
     headTitle,
@@ -111,9 +116,25 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
         color="teal"
         size={3}
         loading={state.type === "Saving"}
-        onClick={(): void => dispatchS(save())}
+        onClick={(): void => {
+          const configCommon = _config as ConfigCommon;
+          const canSync = canSyncPage(configCommon);
+
+          if (canSync) {
+            dispatchS(save());
+          } else {
+            dispatch(
+              updateError({
+                code: SYNC_ERROR,
+                data: {
+                  upgradeToProUrl: configCommon?.modules?.shop?.upgradeToProUrl
+                }
+              })
+            );
+          }
+        }}
       >
-        {t("Save")}
+        {t("Publish")}
       </Button>
     </>
   );

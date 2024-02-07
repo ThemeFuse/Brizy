@@ -60,6 +60,7 @@ export interface PromptBlocksProps<T extends BlockMetaType> {
 
 export type PromptBlocksState = {
   currentTab: PromptTabsId;
+  isHelpVideoOpened: boolean;
 };
 
 export type BlockTypes = "BLOCK" | "LAYOUT" | "POPUP";

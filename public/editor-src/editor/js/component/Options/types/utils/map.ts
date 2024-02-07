@@ -12,18 +12,18 @@ type Maps = {
 };
 
 const fns: Maps = {
-  "aiText-dev": undefined,
+  aiText: undefined,
   alert: undefined,
   animation: undefined,
   backgroundColor: undefined,
   border: undefined,
   boxShadow: undefined,
-  "button-dev": undefined,
-  "codeMirror-dev": undefined,
+  button: undefined,
+  codeMirror: undefined,
   colorPicker: undefined,
   corners: undefined,
   fileUpload: undefined,
-  "filters-dev": undefined,
+  filters: undefined,
   gallery: undefined,
   "gallery-for-gallery": undefined,
   grid: withColumns,
@@ -37,19 +37,19 @@ const fns: Maps = {
   margin: undefined,
   motion: undefined,
   multiSelect: undefined,
-  "number-dev": undefined,
-  "order-dev": undefined,
+  number: undefined,
+  order: undefined,
   padding: undefined,
-  "paypal-dev": undefined,
+  paypal: undefined,
   popover: withOptions,
-  "population-dev": undefined,
+  population: undefined,
   radioGroup: undefined,
   range: undefined,
   select: undefined,
   sidebarTabs: withTabs,
   sidebarTabsButton: undefined,
   slider: undefined,
-  "stateMode-dev": withOptions,
+  stateMode: withOptions,
   switch: undefined,
   tabs: withTabs,
   textarea: undefined,
@@ -57,12 +57,10 @@ const fns: Maps = {
   toggle: undefined,
   transform: undefined,
   typography: undefined,
-  "savedBlock-dev": undefined,
+  savedBlock: undefined,
   globalBlock: undefined,
   formApps: undefined,
-  // @ts-expect-error Old option, here should not be "grid" option, it will be removed when all toolbars will work with "grid-dev"
-  "legacy-grid": withColumns,
-  // Old option, here should not be "popover" option, it will be removed when all toolbars will work with "popover"
+  //@ts-expect-error Old option, here should not be "popover" option, it will be removed when all toolbars will work with "popover"
   "legacy-popover": withOptions
 };
 

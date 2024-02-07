@@ -1,40 +1,37 @@
-import React, { ComponentProps, FC, ReactElement } from "react";
-import {
-  Popover as Control,
-  Props as ControlProps
-} from "visual/component/Controls/Popover";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import classnames from "classnames";
+import React, { FC, useEffect } from "react";
+import { Popover as Control } from "visual/component/Controls/Popover";
+import { ToolbarItem } from "visual/component/Controls/Popover/types";
 import Options from "visual/component/Options";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { Html } from "./triggers/Html";
-import { Icon } from "./triggers/Icon";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { ToolbarItems } from "./ToolbarItem";
+import { Props } from "./types";
+import { getTrigger } from "./utils";
 
-type Icon = string | ComponentProps<typeof Html>;
+export const Popover: FC<Props> = ({
+  className,
+  config,
+  options,
+  toolbar,
+  id
+}) => {
+  const onOpenDirect = config?.onOpenDirect ?? false;
 
-export type Config = {
-  placement?: ControlProps["placement"];
-  size?: ControlProps["size"];
-  icon?: Icon;
-  title: string;
-};
+  useEffect(() => {
+    if (onOpenDirect) {
+      toolbar?.setItemsRenderer((items: ToolbarItem[]) => {
+        const toolbarItem = items.find(
+          ({ id: toolbarId }: { id: string }) => id === toolbarId
+        );
+        const className = classnames("brz-ed-popover__inner", {
+          [`brz-ed-tooltip--${toolbarItem?.size}`]: toolbarItem?.size
+        });
+        return (
+          <ToolbarItems className={className} options={toolbarItem?.options} />
+        );
+      });
+    }
+  }, [onOpenDirect, toolbar, id]);
 
-export type Props = OptionProps<undefined> &
-  WithConfig<Config> &
-  WithClassName & {
-    options?: ToolbarItemType[];
-  };
-
-export const getTrigger = (t: Icon): ReactElement => {
-  switch (typeof t) {
-    case "object":
-      return <Html {...t} />;
-    case "string":
-      return <Icon icon={t} />;
-  }
-};
-
-export const Popover: FC<Props> = ({ className, config, options, toolbar }) => {
   return options?.length ? (
     <Control
       title={config?.title}

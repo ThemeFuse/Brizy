@@ -1,7 +1,7 @@
-import * as FamilyType from "visual/utils/fonts/familyType";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { Weight } from "visual/utils/fonts/Weight";
+import * as FamilyType from "visual/utils/fonts/familyType";
+import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { Positive } from "visual/utils/math/Positive";
 import { Value } from "./Value";
 
@@ -40,6 +40,9 @@ export interface FontSettings {
   fontWeight: Weight;
   letterSpacing: number;
   lineHeight: Positive;
+  variableFontWeight: number;
+  fontWidth: number;
+  fontSoftness: number;
 }
 
 export const fontSettings = (v: Value): FontSettings => ({
@@ -47,7 +50,10 @@ export const fontSettings = (v: Value): FontSettings => ({
   fontWeight: v.fontWeight,
   fontSizeSuffix: v.fontSizeSuffix,
   letterSpacing: v.letterSpacing,
-  lineHeight: v.lineHeight
+  lineHeight: v.lineHeight,
+  variableFontWeight: v.variableFontWeight,
+  fontWidth: v.fontWidth,
+  fontSoftness: v.fontSoftness
 });
 
 export const isFontSettings = (p: Patch): p is FontSettings =>

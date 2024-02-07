@@ -336,7 +336,7 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "makeItSaved",
-      type: "savedBlock-dev",
+      type: "savedBlock",
       devices: "desktop",
       position: 90,
       disabled: disabledSavedBlock,
@@ -433,8 +433,10 @@ export function getItems({ v, device, component, context }) {
         },
         {
           id: "grid",
-          type: "legacy-grid",
-          separator: true,
+          type: "grid",
+          config: {
+            separator: true
+          },
           columns: [
             {
               id: "grid-settings",

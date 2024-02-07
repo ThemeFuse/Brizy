@@ -15,15 +15,17 @@ export function style(v, vs, vd) {
     ".brz && .brz-login__authorized": {
       standart: ["cssStyleElementLoginAutorizedAlign"]
     },
-    ".brz && .brz-login__authorized p,.brz && .brz-login__authorized a,.brz && .brz-login__authorized span": {
-      standart: [
-        "cssStyleElementLoginTextTypography2FontFamily",
-        "cssStyleElementLoginTextTypography2FontSize",
-        "cssStyleElementLoginTextTypography2LineHeight",
-        "cssStyleElementLoginTextTypography2FontWeight",
-        "cssStyleElementLoginTextTypography2LetterSpacing"
-      ]
-    },
+    ".brz && .brz-login__authorized p,.brz && .brz-login__authorized a,.brz && .brz-login__authorized span":
+      {
+        standart: [
+          "cssStyleElementLoginTextTypography2FontFamily",
+          "cssStyleElementLoginTextTypography2FontSize",
+          "cssStyleElementLoginTextTypography2LineHeight",
+          "cssStyleElementLoginTextTypography2FontWeight",
+          "cssStyleElementLoginTextTypography2LetterSpacing",
+          "cssStyleElementLoginTextTypography2FontVariation"
+        ]
+      },
     ".brz && .brz-login__authorized p:hover": {
       standart: ["cssStyleElementLoginTextColor"]
     },
@@ -35,6 +37,7 @@ export function style(v, vs, vd) {
     },
     ".brz && .brz-login-form .brz-input:hover": {
       standart: [
+        "cssStyleElementFieldsInputSize",
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
@@ -44,7 +47,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation"
       ]
     },
     ".brz && .brz-login-form .brz-login-form__field": {
@@ -62,7 +66,8 @@ export function style(v, vs, vd) {
         "cssStyleElementForm2FieldsLabelFontSize",
         "cssStyleElementForm2FieldsLabelFontWeight",
         "cssStyleElementForm2FieldsLabelLetterSpacing",
-        "cssStyleElementForm2FieldsLabelLineHeight"
+        "cssStyleElementForm2FieldsLabelLineHeight",
+        "cssStyleElementForm2FieldsLabelFontVariation"
       ]
     },
     ".brz && .brz-login-form .brz-login-form__field-lost-password:hover": {
@@ -73,6 +78,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginLostPasswordTypography2FontWeight",
         "cssStyleElementLoginLostPasswordTypography2LetterSpacing",
         "cssStyleElementLoginLostPasswordTypography2LineHeight",
+        "cssStyleElementLoginLostPasswordTypography2FontVariation",
         "cssStyleElementLoginLostPasswordAlign"
       ]
     },
@@ -84,6 +90,7 @@ export function style(v, vs, vd) {
         "cssStyleElementForm2FieldsCheckboxFontWeight",
         "cssStyleElementForm2FieldsCheckboxLetterSpacing",
         "cssStyleElementForm2FieldsCheckboxLineHeight",
+        "cssStyleElementForm2FieldsCheckboxFontVariation",
         "cssStyleElementLoginRememberMeAlign"
       ]
     },
@@ -94,6 +101,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginRegisterInfoTypography2LineHeight",
         "cssStyleElementLoginRegisterInfoTypography2FontWeight",
         "cssStyleElementLoginRegisterInfoTypography2LetterSpacing",
+        "cssStyleElementLoginRegisterInfoTypography2FontVariation",
         "cssStyleElementRegisterInfoColor",
         "cssStyleElementRegisterInfoAlign"
       ]
@@ -105,6 +113,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginRegisterLinkTypography2LineHeight",
         "cssStyleElementLoginRegisterLinkTypography2FontWeight",
         "cssStyleElementLoginRegisterLinkTypography2LetterSpacing",
+        "cssStyleElementLoginRegisterLinkTypography2FontVariation",
         "cssStyleElementLoginRegisterLinkColor",
         "cssStyleElementLoginRegisterLinkAlign"
       ]
@@ -116,6 +125,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginLoginLinkTypography2LineHeight",
         "cssStyleElementLoginLoginLinkTypography2FontWeight",
         "cssStyleElementLoginLoginLinkTypography2LetterSpacing",
+        "cssStyleElementLoginLoginLinkTypography2FontVariation",
         "cssStyleElementLoginLoginLinkColor",
         "cssStyleElementLoginLoginLinkAlign"
       ]

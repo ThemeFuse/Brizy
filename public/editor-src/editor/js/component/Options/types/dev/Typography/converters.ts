@@ -25,7 +25,10 @@ export const defaultValue: Value = {
   fontSizeSuffix: SizeSuffix.empty,
   fontWeight: FontWeight.empty,
   letterSpacing: 0.0,
-  lineHeight: Positive.unsafe(1)
+  lineHeight: Positive.unsafe(1),
+  variableFontWeight: FontWeight.empty,
+  fontWidth: 100,
+  fontSoftness: 0
 };
 
 /**
@@ -55,7 +58,14 @@ export const fromElementModel: FromElementModel<"typography"> = (get) => {
       defaultValue.letterSpacing,
     lineHeight:
       mPipe(() => get("lineHeight"), Num.read, Positive.fromNumber)() ??
-      defaultValue.lineHeight
+      defaultValue.lineHeight,
+    variableFontWeight:
+      mPipe(() => get("variableFontWeight"), Num.read)() ??
+      defaultValue.variableFontWeight,
+    fontWidth:
+      mPipe(() => get("fontWidth"), Num.read)() ?? defaultValue.fontWidth,
+    fontSoftness:
+      mPipe(() => get("fontSoftness"), Num.read)() ?? defaultValue.fontSoftness
   };
 };
 
@@ -69,7 +79,10 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
       fontSizeSuffix: v.fontSizeSuffix,
       fontWeight: v.fontWeight,
       letterSpacing: v.letterSpacing,
-      lineHeight: v.lineHeight
+      lineHeight: v.lineHeight,
+      variableFontWeight: v.variableFontWeight,
+      fontWidth: v.fontWidth,
+      fontSoftness: v.fontSoftness
     };
   }
 
@@ -89,7 +102,10 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
       fontSizeSuffix: v.fontSizeSuffix,
       fontWeight: v.fontWeight,
       letterSpacing: v.letterSpacing,
-      lineHeight: v.lineHeight
+      lineHeight: v.lineHeight,
+      variableFontWeight: v.variableFontWeight,
+      fontWidth: v.fontWidth,
+      fontSoftness: v.fontSoftness
     };
   }
 

@@ -15,6 +15,10 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case "REORDER_BLOCKS":
     case "UPDATE_BLOCKS":
     case "UPDATE_GLOBAL_BLOCK":
+    case "MAKE_BLOCK_TO_GLOBAL_BLOCK":
+    case "MAKE_POPUP_TO_GLOBAL_POPUP":
+    case "MAKE_GLOBAL_POPUP_TO_POPUP":
+    case "MAKE_GLOBAL_BLOCK_TO_BLOCK":
     case ActionTypes.UPDATE_CURRENT_STYLE_ID: // @ts-expect-error: don't have in ts
     case ActionTypes.UPDATE_CURRENT_STYLE:
     case "UPDATE_EXTRA_FONT_STYLES":

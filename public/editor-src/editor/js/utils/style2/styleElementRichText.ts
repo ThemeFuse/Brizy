@@ -3,9 +3,11 @@ import { getFontById } from "visual/utils/fonts";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { getOptionFontByGlobal } from "visual/utils/options";
+import * as Str from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
 import { styleTypography2FontFamily } from "visual/utils/style2";
 import { CSSValue } from "./types";
+import { gradientCssDeclaration } from "./utils";
 
 export function styleElementRichTextGradient({
   v,
@@ -15,8 +17,8 @@ export function styleElementRichTextGradient({
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
-  const colorType = dvv("colorType");
-  const gradientType = dvv("gradientType");
+  const colorType = Str.read(dvv("colorType"));
+  const gradientType = Str.read(dvv("gradientType"));
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("colorHex"),
@@ -31,29 +33,25 @@ export function styleElementRichTextGradient({
   const bgColorOpacity = dvv("colorOpacity");
   const gradientColorOpacity = dvv("gradientColorOpacity");
 
-  const gradientStartPointer = dvv("gradientStartPointer");
-  const gradientFinishPointer = dvv("gradientFinishPointer");
+  const gradientStartPointer = Str.read(dvv("gradientStartPointer"));
+  const gradientFinishPointer = Str.read(dvv("gradientFinishPointer"));
 
-  const gradientLinearDegree = dvv("gradientLinearDegree");
-  const gradientRadialDegree = dvv("gradientRadialDegree");
+  const gradientLinearDegree = Str.read(dvv("gradientLinearDegree"));
+  const gradientRadialDegree = Str.read(dvv("gradientRadialDegree"));
 
-  return colorType === "gradient"
-    ? gradientType === "linear"
-      ? `linear-gradient(${gradientLinearDegree}deg, ${hexToRgba(
-          bgColorHex,
-          bgColorOpacity
-        )} ${gradientStartPointer}%, ${hexToRgba(
-          gradientColorHex,
-          gradientColorOpacity
-        )} ${gradientFinishPointer}%)`
-      : `radial-gradient(circle ${gradientRadialDegree}px, ${hexToRgba(
-          bgColorHex,
-          bgColorOpacity
-        )} ${gradientStartPointer}%, ${hexToRgba(
-          gradientColorHex,
-          gradientColorOpacity
-        )} ${gradientFinishPointer}%)`
-    : "none";
+  const bgColor = hexToRgba(bgColorHex, bgColorOpacity);
+  const gradientColor = hexToRgba(gradientColorHex, gradientColorOpacity);
+
+  return gradientCssDeclaration({
+    colorType,
+    gradientType,
+    gradientLinearDegree,
+    gradientRadialDegree,
+    gradientStartPointer,
+    gradientFinishPointer,
+    gradientColor,
+    bgColor
+  });
 }
 
 export function styleElementRichTextDCGradient({
@@ -64,8 +62,8 @@ export function styleElementRichTextDCGradient({
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
-  const colorType = dvv("bgColorType");
-  const gradientType = dvv("gradientType");
+  const colorType = Str.read(dvv("bgColorType"));
+  const gradientType = Str.read(dvv("gradientType"));
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -84,11 +82,11 @@ export function styleElementRichTextDCGradient({
   const bgColorOpacity = dvv("bgColorOpacity");
   const gradientColorOpacity = dvv("gradientColorOpacity");
 
-  const gradientStartPointer = dvv("gradientStartPointer");
-  const gradientFinishPointer = dvv("gradientFinishPointer");
+  const gradientStartPointer = Str.read(dvv("gradientStartPointer"));
+  const gradientFinishPointer = Str.read(dvv("gradientFinishPointer"));
 
-  const gradientLinearDegree = dvv("gradientLinearDegree");
-  const gradientRadialDegree = dvv("gradientRadialDegree");
+  const gradientLinearDegree = Str.read(dvv("gradientLinearDegree"));
+  const gradientRadialDegree = Str.read(dvv("gradientRadialDegree"));
 
   const bgColor =
     bgColorHex === null
@@ -97,11 +95,61 @@ export function styleElementRichTextDCGradient({
 
   const gradientColor = hexToRgba(gradientColorHex, gradientColorOpacity);
 
-  return colorType === "gradient"
-    ? gradientType === "linear"
-      ? `linear-gradient(${gradientLinearDegree}deg, ${bgColor} ${gradientStartPointer}%, ${gradientColor} ${gradientFinishPointer}%)`
-      : `radial-gradient(circle ${gradientRadialDegree}px, ${bgColor} ${gradientStartPointer}%, ${gradientColor} ${gradientFinishPointer}%)`
-    : "none";
+  return gradientCssDeclaration({
+    colorType,
+    gradientType,
+    gradientLinearDegree,
+    gradientRadialDegree,
+    gradientStartPointer,
+    gradientFinishPointer,
+    gradientColor,
+    bgColor
+  });
+}
+
+export function styleElementRichTextDCGradientBackground({
+  v,
+  device,
+  state = "normal"
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const colorType = Str.read(dvv("textBgColorType"));
+  const gradientType = Str.read(dvv("textGradientType"));
+
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
+    dvv("textBgColorHex"),
+    dvv("textBgColorPalette")
+  );
+
+  const { hex: gradientColorHex } = getOptionColorHexByPalette(
+    dvv("textGradientColorHex"),
+    dvv("textGradientColorPalette")
+  );
+
+  const bgColorOpacity = dvv("textBgColorOpacity");
+  const gradientColorOpacity = dvv("textGradientColorOpacity");
+
+  const gradientStartPointer = Str.read(dvv("textGradientStartPointer"));
+  const gradientFinishPointer = Str.read(dvv("textGradientFinishPointer"));
+
+  const gradientLinearDegree = Str.read(dvv("textGradientLinearDegree"));
+  const gradientRadialDegree = Str.read(dvv("textGradientRadialDegree"));
+
+  const bgColor = hexToRgba(bgColorHex, bgColorOpacity);
+  const gradientColor = hexToRgba(gradientColorHex, gradientColorOpacity);
+
+  return gradientCssDeclaration({
+    colorType,
+    gradientType,
+    gradientLinearDegree,
+    gradientRadialDegree,
+    gradientStartPointer,
+    gradientFinishPointer,
+    gradientColor,
+    bgColor
+  });
 }
 
 export function styleElementRichTextFontFamily({

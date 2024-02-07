@@ -94,7 +94,8 @@ export function styleContents(
           "cssStyleTypography2FontSize",
           "cssStyleTypography2LetterSpacing",
           "cssStyleTypography2FontWeight",
-          "cssStyleTypography2LineHeight"
+          "cssStyleTypography2LineHeight",
+          "cssStyleTypography2FontVariation"
         ]
       },
     ".brz && .brz-video-playlist-video-item:not(.brz-video-playlist-video-item--active):hover .brz-video-playlist-title-video span:first-child":
@@ -116,7 +117,8 @@ export function styleContents(
           "cssStyleElementVideoPlaylistSubTitleVideoTypography2FontSize",
           "cssStyleElementVideoPlaylistSubTitleVideoTypography2LineHeight",
           "cssStyleElementVideoPlaylistSubTitleVideoTypography2FontWeight",
-          "cssStyleElementVideoPlaylistSubTitleVideoTypography2LetterSpacing"
+          "cssStyleElementVideoPlaylistSubTitleVideoTypography2LetterSpacing",
+          "cssStyleElementVideoPlaylistSubTitleVideoTypography2FontVariation"
         ]
       },
     ".brz && .brz-video-playlist-video-item:not(.brz-video-playlist-video-item--active):hover .brz-video-playlist-title-video span:last-child":

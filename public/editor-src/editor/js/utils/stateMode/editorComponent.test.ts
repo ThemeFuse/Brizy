@@ -22,22 +22,10 @@ jest.mock(
   () => undefined
 );
 jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
-jest.mock("visual/component/Options/types/Grid.jsx", () => undefined);
-jest.mock(
-  "visual/component/Options/types/IntegrationsApps.js",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/MultiInputPickerOptionType.js",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/Popover.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/PopupConditions.jsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/RadioGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Select.jsx", () => undefined);
 jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
@@ -54,7 +42,7 @@ describe("Testing `bindStateToOption` function", () => {
   const options: ToolbarItemType[] = [
     {
       id: "test1",
-      type: "number-dev"
+      type: "number"
     },
     {
       id: "test2",
@@ -65,7 +53,7 @@ describe("Testing `bindStateToOption` function", () => {
   const optionsWithState: ToolbarItemType[] = [
     {
       id: "test1",
-      type: "number-dev"
+      type: "number"
     },
     {
       id: "test2",
@@ -106,7 +94,7 @@ describe("Testing `bindStateToOption` function", () => {
 
   const wrapInState = (options: ToolbarItemType[]): ToolbarItemType => ({
     id: "tabsState",
-    type: "stateMode-dev",
+    type: "stateMode",
     states: states(),
     options
   });
@@ -118,7 +106,7 @@ describe("Testing `bindStateToOption` function", () => {
       options: [
         {
           id: "test-2",
-          type: "number-dev"
+          type: "number"
         }
       ]
     };
@@ -242,7 +230,7 @@ describe("Testing `bindStateToOption` function", () => {
             options: [
               {
                 id: "tabsState",
-                type: "stateMode-dev",
+                type: "stateMode",
                 states: states(),
                 options: optionsWithState
               }

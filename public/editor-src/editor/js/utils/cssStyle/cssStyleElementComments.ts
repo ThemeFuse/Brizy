@@ -3,6 +3,7 @@ import {
   cssStyleSizeFontSize,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -54,6 +55,13 @@ export function cssStyleElementCommentsNameLetterSpacing({
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "name" });
 }
 
+export function cssStyleElementCommentsNameFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "name" });
+}
+
 export function cssStyleElementCommentsCommentFontFamily({
   v,
   device
@@ -95,6 +103,13 @@ export function cssStyleElementCommentsCommentLetterSpacing({
   });
 }
 
+export function cssStyleElementCommentsCommentFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "comment" });
+}
+
 export function cssStyleElementCommentsDateFontFamily({
   v,
   device
@@ -129,6 +144,13 @@ export function cssStyleElementCommentsDateLetterSpacing({
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "date" });
+}
+
+export function cssStyleElementCommentsDateFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "date" });
 }
 
 export function cssStyleElementCommentsReplyFontFamily({
@@ -194,6 +216,13 @@ export function cssStyleElementCommentsReplyLetterSpacing({
   })}px !important;`;
 }
 
+export function cssStyleElementCommentsReplyFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "reply" });
+}
+
 export function cssStyleElementCommentsPostButtonFontFamily({
   v,
   device
@@ -255,6 +284,13 @@ export function cssStyleElementCommentsPostButtonLetterSpacing({
     state,
     prefix
   })}px !important;`;
+}
+
+export function cssStyleElementCommentsPostButtonFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "postButton" });
 }
 
 export function cssStyleElementCommentsLogoSize({

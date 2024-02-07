@@ -150,13 +150,18 @@ export class Posts extends EditorComponent {
 
     const toolbarContext = await (async () => {
       try {
+        // INFO: this "id" persists only in Shopify and arrive in "v" from shortcodes in next elements: ProductList, CollectionList, BlogPostList
+        const { collectionTypeId } = this.getValue();
         const state = this.getReduxState();
         const page = pageSelector(state);
         const config = Config.getAll();
 
         if (page) {
           return {
-            collectionTypesInfo: await defaultPostsSources(config, page)
+            collectionTypesInfo: await defaultPostsSources(config, {
+              page,
+              filterManualId: collectionTypeId
+            })
           };
         }
 

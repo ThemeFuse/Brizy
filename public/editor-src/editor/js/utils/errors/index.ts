@@ -60,3 +60,6 @@ export const IRREPARABLE_ERRORS = [
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR
 ];
+
+// Shopify sync error
+export const SYNC_ERROR = 4;

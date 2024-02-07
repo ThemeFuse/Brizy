@@ -234,7 +234,7 @@ export function getItems({
               options: [
                 {
                   id: "text",
-                  type: "population-dev",
+                  type: "population",
                   config: {
                     ...richTextDC,
                     iconOnly: true

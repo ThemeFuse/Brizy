@@ -114,16 +114,18 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     }
 
     case "MAKE_POPUP_TO_GLOBAL_POPUP": {
-      const { data } = action.payload;
+      const {
+        block: { data },
+        fromBlockId
+      } = action.payload;
 
       const newState = mapModels((block: Block) => {
-        if (block.value._id === data.value._id) {
+        if (block.value._id === fromBlockId) {
           return createGlobalBlockSymbol({
             blockId: block.blockId,
             id: data.value._id
           });
         }
-
         return block;
       }, state);
 
@@ -181,10 +183,14 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     }
 
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
-      const { data } = action.payload;
+      const {
+        block: { data },
+        fromBlockId
+      } = action.payload;
 
       return produce<BlocksData>(state, (draft) => {
         draft[data.value._id] = data;
+        delete draft[fromBlockId];
       });
     }
 

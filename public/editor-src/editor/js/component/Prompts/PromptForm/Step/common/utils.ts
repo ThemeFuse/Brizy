@@ -50,7 +50,7 @@ const readInput = readWithParser<Record<string, unknown>, InputData>({
 });
 
 const readSelect = parse<Record<string, unknown>, SelectData>({
-  type: (r) => (r.type === "legacy-select" ? "legacy-select" : undefined),
+  type: (r) => (r.type === "select" ? "select" : undefined),
   choices: mPipe(prop("choices"), (v) => Arr.toArray(v)),
   value: pipe(
     prop("value"),
@@ -102,8 +102,8 @@ const readSearch = parse<Record<string, unknown>, SearchData>({
 
 const isInput = (r: Record<string, unknown>): r is { type: "input" } =>
   r.type === "input" || r.type === undefined;
-const isSelect = (r: Record<string, unknown>): r is { type: "legacy-select" } =>
-  r.type === "legacy-select";
+const isSelect = (r: Record<string, unknown>): r is { type: "select" } =>
+  r.type === "select";
 const isSwitch = (r: Record<string, unknown>): r is { type: "switch" } =>
   r.type === "switch";
 const isSearch = (r: Record<string, unknown>): r is { type: "search" } =>

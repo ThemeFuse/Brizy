@@ -128,5 +128,10 @@ export enum ElementTypes {
   ShopifyImage = "ShopifyImage",
   BlogPostExcerpt = "BlogPostExcerpt",
   Variant = "Variant",
-  PostInfo = "PostInfo"
+  PostInfo = "PostInfo",
+  PostNavigation = "PostNavigation",
+  EcwidProduct = "EcwidProduct",
+  Breadcrumbs = "Breadcrumbs",
+  Radio = "Radio",
+  Checkbox = "Checkbox"
 }

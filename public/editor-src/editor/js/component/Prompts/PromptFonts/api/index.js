@@ -1,18 +1,10 @@
-import produce from "immer";
+import { flatten } from "underscore";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import Config from "visual/global/Config";
 import { request } from "visual/utils/api";
+import { getFontVariation, normalizeFonts } from "./utils";
 
-// uid for cloud is id in editor
-const normalizeFonts = (res) => {
-  return produce(res, (draft) => {
-    // renamed uid to id
-    draft.data.id = draft.data.uid;
-    delete draft.data.uid;
-  });
-};
-
-export const createFont = ({ id, name, files }) => {
+export const createFont = async ({ id, name, files }) => {
   const { api } = Config.get("urls");
   const { id: containerId } = Config.get("container");
   const formData = new FormData();
@@ -21,20 +13,27 @@ export const createFont = ({ id, name, files }) => {
   formData.append("uid", id);
   formData.append("family", name);
 
-  Object.entries(files).forEach(([type, filesType]) => {
-    Object.entries(filesType).forEach(([fileType, file]) => {
-      if (file) {
-        formData.append(`files[${type}][${fileType}]`, file, file.name);
-      }
-    });
-  });
+  const variations = flatten(
+    await Promise.all(
+      Object.entries(files).map(async ([type, filesType]) => {
+        return Promise.all(
+          Object.entries(filesType).map(async ([fileType, file]) => {
+            if (file) {
+              formData.append(`files[${type}][${fileType}]`, file, file.name);
+              return getFontVariation(file);
+            }
+          })
+        );
+      })
+    )
+  ).filter(Boolean);
 
   return request(`${api}/fonts`, {
     method: "POST",
     body: formData
   })
     .then(parseJSON)
-    .then(normalizeFonts);
+    .then((res) => normalizeFonts(res, variations));
 };
 
 export const deleteFont = (fontId) => {

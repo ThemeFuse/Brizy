@@ -46,6 +46,9 @@
     "fontWeight": 400,
     "lineHeight": 1.5,
     "letterSpacing": 0,
+    "variableFontWeight": 400,
+    "fontWidth": 100,
+    "fontSoftness": 0,
 
     "subTitleFontStyle": "",
     "subTitleFontFamilyType": "google",
@@ -54,6 +57,9 @@
     "subTitleFontWeight": 400,
     "subTitleLineHeight": 1.5,
     "subTitleLetterSpacing": 0,
+    "subTitleVariableFontWeight": 400,
+    "subTitleFontWidth": 100,
+    "subTitleFontSoftness": 0,
 
     "colorType": "solid",
 

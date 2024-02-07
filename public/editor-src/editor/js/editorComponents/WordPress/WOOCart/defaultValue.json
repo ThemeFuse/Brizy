@@ -171,6 +171,9 @@
     "typographyFontWeight": 700,
     "typographyLineHeight": 1.3,
     "typographyLetterSpacing": 0,
+    "typographyVariableFontWeight": 700,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
 
     "purchasesFontStyle": "",
     "purchasesFontFamilyType": "google",
@@ -179,6 +182,9 @@
     "purchasesFontWeight": 700,
     "purchasesLineHeight": 1.3,
     "purchasesLetterSpacing": 0,
+    "purchaseVariableFontWeight": 700,
+    "purchaseFontWidth": 100,
+    "purchaseFontSoftness": 0,
 
     "titleFontStyle": "",
     "titleFontFamilyType": "google",
@@ -187,6 +193,9 @@
     "titleFontWeight": 700,
     "titleLineHeight": 1.3,
     "titleLetterSpacing": 0,
+    "titleVariableFontWeight": 700,
+    "titleFontWidth": 100,
+    "titleFontSoftness": 0,
 
     "costFontStyle": "",
     "costFontFamilyType": "google",
@@ -195,6 +204,9 @@
     "costFontWeight": 700,
     "costLineHeight": 1.3,
     "costLetterSpacing": 0,
+    "costVariableFontWeight": 700,
+    "costFontWidth": 100,
+    "costFontSoftness": 0,
 
     "subtotalFontStyle": "",
     "subtotalFontFamilyType": "google",
@@ -203,6 +215,9 @@
     "subtotalFontWeight": 700,
     "subtotalLineHeight": 1.3,
     "subtotalLetterSpacing": 0,
+    "subtotalVariableFontWeight": 700,
+    "subtotalFontWidth": 100,
+    "subtotalFontSoftness": 0,
 
     "buttonFontStyle": "",
     "buttonFontFamilyType": "google",
@@ -211,6 +226,9 @@
     "buttonFontWeight": 700,
     "buttonLineHeight": 1.3,
     "buttonLetterSpacing": 0,
+    "buttonVariableFontWeight": 700,
+    "buttonFontWidth": 100,
+    "buttonFontSoftness": 0,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,

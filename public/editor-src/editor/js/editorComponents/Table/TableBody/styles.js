@@ -12,6 +12,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
+        "cssStyleTypography3FontVariation",
         "cssStyleBgColor",
         "cssStyleColor",
         "cssStyleBorder",

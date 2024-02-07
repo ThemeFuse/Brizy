@@ -29,7 +29,8 @@ export function style(
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
-        "cssStyleTypography3LetterSpacing"
+        "cssStyleTypography3LetterSpacing",
+        "cssStyleTypography3FontVariation"
       ]
     },
     ".brz && .brz-timeline__nav--icon": {

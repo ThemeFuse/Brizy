@@ -54,16 +54,25 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         fontWeight,
         letterSpacing,
         lineHeight,
+        variableFontWeight = 400,
+        fontWidth = 100,
+        fontSoftness = 0,
         mobileFontSize,
         mobileFontSizeSuffix,
         mobileFontWeight,
         mobileLetterSpacing,
         mobileLineHeight,
+        mobileVariableFontWeight = 400,
+        mobileFontSoftness = 0,
+        mobileFontWidth = 100,
         tabletFontSize,
         tabletFontSizeSuffix,
         tabletFontWeight,
         tabletLetterSpacing,
-        tabletLineHeight
+        tabletLineHeight,
+        tabletVariableFontWeight = 400,
+        tabletFontSoftness = 0,
+        tabletFontWidth = 100
       } = style;
       const id = _id.toLowerCase();
 
@@ -83,6 +92,10 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         tabletFontSizeSuffix ?? "px"
       }`;
       const storyFontSize = `${style.fontSize * 0.23}%`;
+
+      const fontVariation = `"wght" ${variableFontWeight}, "wdth" ${fontWidth}, "SOFT" ${fontSoftness}`;
+      const mobileFontVariation = `"wght" ${mobileVariableFontWeight}, "wdth" ${mobileFontWidth}, "SOFT" ${mobileFontSoftness}`;
+      const tabletFontVariation = `"wght" ${tabletVariableFontWeight}, "wdth" ${tabletFontWidth}, "SOFT" ${tabletFontSoftness}`;
 
       const fontFamilyKey = makeStyleCSSVar({
         id,
@@ -120,6 +133,12 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         key: "lineHeight",
         device: DESKTOP
       });
+      const fontVariationKey = makeStyleCSSVar({
+        id,
+        config,
+        key: "fontVariation",
+        device: DESKTOP
+      });
 
       const tabletFontSizeKey = makeStyleCSSVar({
         id,
@@ -143,6 +162,12 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         id,
         config,
         key: "lineHeight",
+        device: TABLET
+      });
+      const tabletFontVariationKey = makeStyleCSSVar({
+        id,
+        config,
+        key: "fontVariation",
         device: TABLET
       });
 
@@ -170,6 +195,12 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         key: "lineHeight",
         device: MOBILE
       });
+      const mobileFontVariationKey = makeStyleCSSVar({
+        id,
+        config,
+        key: "fontVariation",
+        device: MOBILE
+      });
 
       const storyFontSizeKey = makeStyleCSSVar({
         id,
@@ -179,7 +210,7 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
       });
 
       // "px" on letterSpacing is hardcoded because we don't have another suffix on letterSpacing
-      return `${fontFamilyKey}:${fontFamily};${fontSizeKey}:${_fontSize};${fontSizeSuffixKey}:${fontSizeSuffix};${fontWeightKey}:${fontWeight};${letterSpacingKey}:${letterSpacing}px;${lineHeightKey}:${lineHeight};${tabletFontSizeKey}:${_tabletFontSize};${tabletFontWeightKey}:${tabletFontWeight};${tabletLetterSpacingKey}:${tabletLetterSpacing}px;${tabletLineHeightKey}:${tabletLineHeight};${mobileFontSizeKey}:${_mobileFontSize};${mobileFontWeightKey}:${mobileFontWeight};${mobileLetterSpacingKey}:${mobileLetterSpacing}px;${mobileLineHeightKey}:${mobileLineHeight};${storyFontSizeKey}:${storyFontSize};`;
+      return `${fontFamilyKey}:${fontFamily};${fontSizeKey}:${_fontSize};${fontSizeSuffixKey}:${fontSizeSuffix};${fontWeightKey}:${fontWeight};${letterSpacingKey}:${letterSpacing}px;${lineHeightKey}:${lineHeight};${fontVariationKey}:${fontVariation};${tabletFontSizeKey}:${_tabletFontSize};${tabletFontWeightKey}:${tabletFontWeight};${tabletLetterSpacingKey}:${tabletLetterSpacing}px;${tabletLineHeightKey}:${tabletLineHeight};${tabletFontVariationKey}:${tabletFontVariation};${mobileFontSizeKey}:${_mobileFontSize};${mobileFontWeightKey}:${mobileFontWeight};${mobileLetterSpacingKey}:${mobileLetterSpacing}px;${mobileLineHeightKey}:${mobileLineHeight};${tabletFontVariationKey}:${tabletFontVariation};${mobileFontVariationKey}:${mobileFontVariation};${storyFontSizeKey}:${storyFontSize};`;
     })
     .join("");
 

@@ -215,7 +215,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           id: "subscribeToCalendarText",
           label: t("Text"),
           type: "inputText",
-          devices: "desktop"
+          devices: "desktop",
+          config: {
+            size: "medium"
+          }
         },
         {
           id: "subscribeToCalendarWidth",

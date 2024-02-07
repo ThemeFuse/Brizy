@@ -13,7 +13,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleElementTitleTextShadow"
+        "cssStyleElementTitleTextShadow",
+        "cssStyleTypography2FontVariation"
       ],
       interval: ["cssStyleHoverTransition"]
     },

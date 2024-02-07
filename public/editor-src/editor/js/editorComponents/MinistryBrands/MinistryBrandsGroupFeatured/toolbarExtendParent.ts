@@ -178,6 +178,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Button"),
                   placeholder: t("Button Text..."),
                   disabled: !dvv("detailPage"),
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Button will display if text is entered and a detail page selected."
@@ -191,6 +194,9 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Slug"),
                   disabled: groupLatestActive || dvv("groupRecentList") !== "",
                   placeholder: t("Slug..."),
+                  config: {
+                    size: "medium"
+                  },
                   helper: {
                     content: t(
                       "Slug of group. Use only if you are not selecting from the 'Recent Groups' above and 'Show Latest' is set to 'Off'."

@@ -33,7 +33,8 @@ export function style(
         "cssStyleElementCommentsNameFontSize",
         "cssStyleElementCommentsNameLineHeight",
         "cssStyleElementCommentsNameFontWeight",
-        "cssStyleElementCommentsNameLetterSpacing"
+        "cssStyleElementCommentsNameLetterSpacing",
+        "cssStyleElementCommentsNameFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -47,7 +48,8 @@ export function style(
         "cssStyleElementCommentsDateFontSize",
         "cssStyleElementCommentsDateLineHeight",
         "cssStyleElementCommentsDateFontWeight",
-        "cssStyleElementCommentsDateLetterSpacing"
+        "cssStyleElementCommentsDateLetterSpacing",
+        "cssStyleElementCommentsDateFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -60,7 +62,8 @@ export function style(
         "cssStyleElementCommentsReplyFontSize",
         "cssStyleElementCommentsReplyLineHeight",
         "cssStyleElementCommentsReplyFontWeight",
-        "cssStyleElementCommentsReplyLetterSpacing"
+        "cssStyleElementCommentsReplyLetterSpacing",
+        "cssStyleElementCommentsReplyFontVariation"
       ]
     },
     ".brz && .brz-comment-awaiting-moderation:hover": {
@@ -70,7 +73,8 @@ export function style(
         "cssStyleElementCommentsCommentFontSize",
         "cssStyleElementCommentsCommentLineHeight",
         "cssStyleElementCommentsCommentFontWeight",
-        "cssStyleElementCommentsCommentLetterSpacing"
+        "cssStyleElementCommentsCommentLetterSpacing",
+        "cssStyleElementCommentsCommentFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -97,7 +101,8 @@ export function style(
         "cssStyleElementCommentsReplyFontSize",
         "cssStyleElementCommentsReplyLineHeight",
         "cssStyleElementCommentsReplyFontWeight",
-        "cssStyleElementCommentsReplyLetterSpacing"
+        "cssStyleElementCommentsReplyLetterSpacing",
+        "cssStyleElementCommentsReplyFontVariation"
       ]
     },
     ".brz && .brz-comment-respond .brz-submit:hover": {
@@ -108,7 +113,8 @@ export function style(
         "cssStyleElementCommentsPostButtonFontSize",
         "cssStyleElementCommentsPostButtonLineHeight",
         "cssStyleElementCommentsPostButtonFontWeight",
-        "cssStyleElementCommentsPostButtonLetterSpacing"
+        "cssStyleElementCommentsPostButtonLetterSpacing",
+        "cssStyleElementCommentsPostButtonFontVariation"
       ],
       interval: [
         "cssStyleHoverTransition",

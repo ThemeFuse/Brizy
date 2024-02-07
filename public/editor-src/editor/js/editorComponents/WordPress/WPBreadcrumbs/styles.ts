@@ -18,13 +18,13 @@ export function style(
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation"
       ]
     },
     ".brz &&:hover .brz-breadcrumbs .brz-icon-svg": {
       standart: [
         "cssStyleSizeTextSpacing",
-        "cssStyleElementBreadcrumbsArrowSize",
         "cssStyleElementBreadcrumbsColorArrows"
       ]
     },

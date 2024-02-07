@@ -47,7 +47,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "howManyFeatured",
                   label: t("Items"),
-                  type: "number-dev",
+                  type: "number",
                   disabled: isNotFeaturedView,
                   devices: "desktop",
                   config: {
@@ -59,7 +59,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "columnNumber",
                   label: t("Columns"),
-                  type: "number-dev",
+                  type: "number",
                   disabled: isNotFeaturedView,
                   config: {
                     min: 1,
@@ -87,7 +87,7 @@ export const getItems: GetItems<Value, Props> = ({
                     {
                       id: "featuredViewOrder",
                       label: t("Order"),
-                      type: "number-dev",
+                      type: "number",
                       disabled: isNotFeaturedView,
                       config: {
                         min: 1,
@@ -104,7 +104,10 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "featuredViewHeading",
                       label: t("Heading"),
                       type: "inputText",
-                      disabled: isNotFeaturedView
+                      disabled: isNotFeaturedView,
+                      config: {
+                        size: "medium"
+                      }
                     },
                     {
                       id: "showFeaturedImages",
@@ -146,7 +149,7 @@ export const getItems: GetItems<Value, Props> = ({
                     {
                       id: "listViewOrder",
                       label: t("Order"),
-                      type: "number-dev",
+                      type: "number",
                       disabled: isNotListView,
                       config: {
                         min: 1,
@@ -163,7 +166,10 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "listViewHeading",
                       label: t("Heading"),
                       type: "inputText",
-                      disabled: isNotListView
+                      disabled: isNotListView,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -181,7 +187,7 @@ export const getItems: GetItems<Value, Props> = ({
                     {
                       id: "calendarViewOrder",
                       label: t("Order"),
-                      type: "number-dev",
+                      type: "number",
                       disabled: isNotCalendarView,
                       config: {
                         min: 1,
@@ -198,13 +204,16 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "calendarViewHeading",
                       label: t("Heading"),
                       type: "inputText",
-                      disabled: isNotCalendarView
+                      disabled: isNotCalendarView,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
                 {
                   id: "howmanymonths",
-                  type: "number-dev",
+                  type: "number",
                   label: t("Months"),
                   devices: "desktop"
                 }
@@ -279,6 +288,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotCategoryFilter,
+                      config: {
+                        size: "medium"
+                      },
                       helper: {
                         content: t(
                           "This should be a comma separate list of category slugs without spaces eg. if you wanted to use the categories 'Category Example 1' and 'Category Example 2' the list would be 'category-example-1,category-example-2'. This option removes the parent filter options."
@@ -290,7 +302,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotCategoryFilter
+                      disabled: isNotCategoryFilter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -310,7 +325,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: v.showGroupFilter === "off"
+                      disabled: v.showGroupFilter === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -330,7 +348,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Placeholder"),
                       devices: "desktop",
-                      disabled: v.showSearch === "off"
+                      disabled: v.showSearch === "off",
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 }
@@ -374,6 +395,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotExtraCategory1Filter,
+                      config: {
+                        size: "medium"
+                      },
                       helper: {
                         content: t(
                           'This should be a comma separate list of category slugs without spaces eg. if you wanted to use the categories "Category Example 1" and "Category Example 2" the list would be "category-example-1,category-example-2". This option removes the parent filter options.'
@@ -385,7 +409,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotExtraCategory1Filter
+                      disabled: isNotExtraCategory1Filter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -422,6 +449,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotExtraCategory2Filter,
+                      config: {
+                        size: "medium"
+                      },
                       helper: {
                         content: t(
                           'This should be a comma separate list of category slugs without spaces eg. if you wanted to use the categories "Category Example 1" and "Category Example 2" the list would be "category-example-1,category-example-2". This option removes the parent filter options.'
@@ -433,7 +463,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotExtraCategory2Filter
+                      disabled: isNotExtraCategory2Filter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 },
@@ -471,6 +504,9 @@ export const getItems: GetItems<Value, Props> = ({
                       label: t("List"),
                       devices: "desktop",
                       disabled: isNotExtraCategory3Filter,
+                      config: {
+                        size: "medium"
+                      },
                       helper: {
                         content: t(
                           'This should be a comma separate list of category slugs without spaces eg. if you wanted to use the categories "Category Example 1" and "Category Example 2" the list would be "category-example-1,category-example-2". This option removes the parent filter options.'
@@ -482,7 +518,10 @@ export const getItems: GetItems<Value, Props> = ({
                       type: "inputText",
                       label: t("Heading"),
                       devices: "desktop",
-                      disabled: isNotExtraCategory3Filter
+                      disabled: isNotExtraCategory3Filter,
+                      config: {
+                        size: "medium"
+                      }
                     }
                   ]
                 }

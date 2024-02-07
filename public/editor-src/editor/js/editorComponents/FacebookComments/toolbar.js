@@ -343,15 +343,5 @@ export function getItems({ v, device, state }) {
         }
       ]
     }
-    /*{
-      id: "apps",
-      type: "legacy-integrationsApps",
-      position: 120,
-      icon: "nc-extensions-2",
-      value: {
-        service: "facebook",
-        group: "social"
-      }
-    }*/
   ];
 }

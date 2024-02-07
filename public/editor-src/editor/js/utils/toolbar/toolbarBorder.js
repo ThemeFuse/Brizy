@@ -12,7 +12,7 @@ export function toolbarBorderWidthOneField2({ devices = "all", prefix = "" }) {
 
   return {
     id: width,
-    type: "number-dev",
+    type: "number",
     label: t("Size"),
     config: {
       min: 0,

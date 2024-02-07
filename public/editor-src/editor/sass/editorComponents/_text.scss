@@ -232,6 +232,22 @@
 }
 
 // RichText with Dynamic content
+.brz-rich-text__population {
+  span {
+    position: relative;
+    z-index: 0;
+  }
+  span::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+}
+
 .brz-rich-text__population-cloud {
   h1,
   h2,

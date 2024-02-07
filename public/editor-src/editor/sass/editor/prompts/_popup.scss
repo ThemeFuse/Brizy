@@ -299,7 +299,7 @@ $popup_content_padding_bottom: 45px;
     &-heading{
       font-size: 20px;
       font-weight:600;
-      color: #212733;
+      color: $popup__header__tabs__item__content-heading;
     }
 
     &-text{
@@ -369,7 +369,7 @@ $popup_content_padding_bottom: 45px;
 
 .brz-ed-popup-btn-help {
   position: absolute;
-  top: 13px;
+  top: 11px;
   right: 36px;
   color: $popup__header__tabs__btn-color;
   cursor: pointer;

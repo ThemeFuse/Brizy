@@ -3,8 +3,6 @@ import {
   FromElementModelGetter,
   callGetter
 } from "visual/component/Options/Type";
-import * as Viewport from "visual/component/Options/types/dev/Motion/types/Viewport";
-import * as Unit from "visual/utils/math/Unit";
 import { optional } from "visual/utils/reader/readWithParser";
 import { isEnabled } from "../utils";
 import * as Blur from "./Blur";
@@ -46,52 +44,6 @@ export type Value = Partial<{
   mouseTrack: MouseTrack.MouseTrack;
   mouseTilt: MouseTilt.MouseTilt;
 }>;
-
-export const defaultValue: Value = {
-  active: undefined,
-  blur: {
-    direction: "in",
-    level: Unit.Min,
-    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
-  },
-  horizontal: {
-    direction: "left",
-    speed: Unit.Min,
-    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
-  },
-  mouseTrack: {
-    direction: "direct",
-    speed: Unit.Min
-  },
-  rotate: {
-    direction: "left",
-    speed: Unit.Min,
-    x: "center",
-    y: "center",
-    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
-  },
-  scale: {
-    direction: "up",
-    speed: -10,
-    x: "center",
-    y: "center",
-    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
-  },
-  mouseTilt: {
-    direction: "direct",
-    speed: Unit.Min
-  },
-  transparency: {
-    direction: "in",
-    level: Unit.Min,
-    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
-  },
-  vertical: {
-    direction: "up",
-    speed: Unit.Min,
-    viewport: Viewport.unsafe(Unit.Min, Unit.Max)
-  }
-};
 
 export const fromElementModel = parseStrict<FromElementModelGetter, Value>({
   active: optional(mPipe(callGetter("active"), pass(isActive))),

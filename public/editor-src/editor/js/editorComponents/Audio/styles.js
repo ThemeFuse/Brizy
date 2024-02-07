@@ -88,7 +88,8 @@ export function styleControls(v, vs, vd) {
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation"
       ]
     }
   };

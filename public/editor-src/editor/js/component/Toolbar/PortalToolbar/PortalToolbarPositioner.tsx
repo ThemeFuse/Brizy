@@ -1,4 +1,5 @@
 import React from "react";
+import { DeviceMode } from "visual/types";
 import { clamp } from "visual/utils/math";
 import { ToolbarItems, ToolbarItemsProps } from "../ToolbarItems";
 import { setPosition } from "../state";
@@ -18,6 +19,7 @@ export type PortalToolbarPositionerProps = {
   offsetBottom?: number;
   offsetLeft?: number;
   repositionOnUpdates?: boolean;
+  device?: DeviceMode;
 } & Omit<
   ToolbarItemsProps,
   "containerRef" | "arrowRef" | "arrow" | "onContentChange"
@@ -45,7 +47,8 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
   }
 
   reposition = (): void => {
-    const { node, offsetTop, offsetBottom, offsetLeft, position } = this.props;
+    const { node, offsetTop, offsetBottom, offsetLeft, position, device } =
+      this.props;
     const toolbar = this.toolbarItemsContainerRef.current;
     const arrow = this.toolbarItemsArrowRef.current;
     const window = node.ownerDocument.defaultView;
@@ -82,6 +85,7 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
     }
 
     // toolbar left
+    const isDesktop = device === "desktop";
     const toolbarLeft =
       nodeRect.left +
       nodeRect.width / 2 -
@@ -98,12 +102,16 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
     );
 
     // arrow left
-    const arrowLeftShift = toolbarLeft - toolbarClampedLeft;
+    const arrowLeftShift =
+      toolbarLeft -
+      (isDesktop && toolbarClampedLeft === 0 ? 20 : toolbarClampedLeft);
 
     // toolbar css
     toolbar.style.top = `${toolbarTop}px`;
     toolbar.style.left =
-      toolbarClampedLeft === 0 ? "20px" : `${toolbarClampedLeft}px`;
+      isDesktop && toolbarClampedLeft === 0
+        ? "20px"
+        : `${toolbarClampedLeft}px`;
 
     if (position === "fixed") {
       toolbar.style.position = "fixed";

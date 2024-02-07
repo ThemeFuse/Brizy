@@ -104,6 +104,9 @@
     "titleTypographyFontWeight": 400,
     "titleTypographyLetterSpacing": 0,
     "titleTypographyLineHeight": 1,
+    "titleTypographyVariableFontWeight": 400,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
@@ -119,6 +122,9 @@
     "metaTypographyFontWeight": 400,
     "metaTypographyLetterSpacing": 0,
     "metaTypographyLineHeight": 1,
+    "metaTypographyVariableFontWeight": 400,
+    "metaTypographyFontWidth": 100,
+    "metaTypographyFontSoftness": 0,
 
     "metaColorHex": "#000000",
     "metaColorOpacity": 0.9,
@@ -169,6 +175,9 @@
     "buttonTypographyFontWeight": 400,
     "buttonTypographyLetterSpacing": 1.3,
     "buttonTypographyLineHeight": 1,
+    "buttonTypographyVariableFontWeight": 400,
+    "buttonTypographyFontWidth": 100,
+    "buttonTypographyFontSoftness": 0,
 
     "buttonColorHex": "#ffffff",
     "buttonColorOpacity": 1,

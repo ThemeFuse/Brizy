@@ -1,20 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
+import EditorIcon from "visual/component/EditorIcon";
 import Config from "visual/global/Config";
 import { updateError } from "visual/redux/actions";
 import { errorSelector } from "visual/redux/selectors";
+import { sendHearBeatTakeOver } from "visual/utils/api";
 import {
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR,
-  PROJECT_LOCKED_ERROR
+  PROJECT_LOCKED_ERROR,
+  SYNC_ERROR
 } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
-import { sendHearBeatTakeOver } from "visual/utils/api";
+import * as Str from "visual/utils/reader/string";
 import { ToastNotification } from "./ToastNotifications";
-import EditorIcon from "visual/component/EditorIcon";
 
-const getUserEmail = data => data.lockedBy.user_email;
+const getUserEmail = (data) => data.lockedBy.user_email;
 
 const NotificationContainer = ({ children }) => {
   return (
@@ -40,9 +42,19 @@ const NotificationFooter = ({ children }) => (
   </div>
 );
 
+const NotificationCloseIcon = ({ onClick }) => (
+  <EditorIcon
+    icon="nc-close"
+    className="brz-ed-notification__close-icon"
+    onClick={onClick}
+  />
+);
+
 const Notification = ({ error, dispatch }) => {
   const { code, data } = error || {};
   let content;
+
+  const clearError = () => dispatch(updateError(null));
 
   switch (code) {
     case HEART_BEAT_ERROR: {
@@ -102,7 +114,7 @@ const Notification = ({ error, dispatch }) => {
             <button
               className="brz-button brz-ed-notification__take-over brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2"
               onClick={() => {
-                dispatch(updateError(null));
+                clearError();
                 sendHearBeatTakeOver().catch(() => {
                   ToastNotification.error(
                     t("Take over failed please refresh the page")
@@ -141,6 +153,39 @@ const Notification = ({ error, dispatch }) => {
       );
       break;
     }
+    case SYNC_ERROR: {
+      content = (
+        <NotificationContainer>
+          <NotificationHeader>
+            <EditorIcon
+              icon="nc-lock2"
+              className="brz-ed-notification__warning"
+            />
+          </NotificationHeader>
+          <NotificationContent>
+            {t(
+              "You have reached the maximum number of published pages for the Free plan. Continue creating drafts or upgrade to PRO to unlock unlimited published pages."
+            )}
+          </NotificationContent>
+          <NotificationFooter>
+            <button
+              className="brz-ed-notification__button-continue"
+              onClick={clearError}
+            >
+              {t("Continue with Free")}
+            </button>
+            <a
+              className="brz-button brz-ed-notification__take-over brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2"
+              href={Str.read(data?.upgradeToProUrl) ?? "#"}
+            >
+              {t("Upgrade to PRO")}
+            </a>
+          </NotificationFooter>
+          <NotificationCloseIcon onClick={clearError} />
+        </NotificationContainer>
+      );
+      break;
+    }
     default: {
       content = null;
     }
@@ -158,7 +203,7 @@ const Notification = ({ error, dispatch }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   error: errorSelector(state)
 });
 

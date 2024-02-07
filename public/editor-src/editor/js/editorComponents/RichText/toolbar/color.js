@@ -14,7 +14,10 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { NORMAL } from "visual/utils/stateMode";
+import { capByPrefix } from "visual/utils/string";
 import { getPopulationColor } from "../utils/dependencies";
+import { ColorOption } from "./types";
+import { colorValues, gradientValues } from "./utils";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -33,80 +36,44 @@ const shadowToString = (value, config) => {
   })} ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
 };
 
-const hexToString = (value, config) => {
-  if (value.palette) {
-    const { palette, opacity } = value;
-    return `rgba(var(${makeStylePaletteCSSVar(palette, config)}),${opacity})`;
-  }
+const getColorValues = (v, patch, prefix = "") => {
+  const bgColorPaletteKey = capByPrefix(prefix, "bgColorPalette");
+  const gradientColorPaletteKey = capByPrefix(prefix, "gradientColorPalette");
 
-  return `${getColorValue({
-    hex: value.hex,
-    opacity: value.opacity
-  })}`;
+  const isColorPalette =
+    patch[bgColorPaletteKey] !== v[bgColorPaletteKey] &&
+    getColorPaletteColor(patch[bgColorPaletteKey]);
+
+  const bgColorHex = isColorPalette
+    ? getColorPaletteColor(patch[bgColorPaletteKey]).hex
+    : patch[capByPrefix(prefix, "bgColorHex")];
+  const gradientColorHex = patch[gradientColorPaletteKey]
+    ? getColorPaletteColor(patch[gradientColorPaletteKey]).hex
+    : patch[capByPrefix(prefix, "gradientColorHex")];
+
+  return {
+    ...patch,
+    [capByPrefix(prefix, "bgColorHex")]: bgColorHex,
+    [capByPrefix(prefix, "gradientColorHex")]: gradientColorHex
+  };
 };
 
-const changeColor = (value, config) => {
-  const DEFAULT_GRADIENT = {
-    type: "linear-gradient",
-    radialPosition: 90,
-    linearAngle: 90,
-    startPointer: 0,
-    finishPointer: 100,
-    activePointer: "startPointer",
-    startHex: "#239ddb",
-    finishHex: "#009900",
-    startOpacity: 1,
-    finishOpacity: 0.8,
-    startPalette: "",
-    finishPalette: ""
-  };
+const changeColor = (value, type, config, prefix = "") => {
+  const selectType = value[capByPrefix(prefix, "bgColorType")];
+  const v = value;
 
-  const selectType =
-    value.bgColorType === "none" ? value.tempBgColorType : value.bgColorType;
-  if (selectType === "gradient") {
-    return {
-      ...value,
-      backgroundGradient: {
-        ...DEFAULT_GRADIENT,
-        startHex: value.bgColorHex,
-        startOpacity: String(value.bgColorOpacity),
-        finishOpacity: String(value.gradientColorOpacity),
-        startPalette: value.bgColorPalette,
-        finishPalette: value.gradientColorPalette,
-        finishHex: value.gradientColorHex,
-        startPointer: value.gradientStartPointer,
-        finishPointer: value.gradientFinishPointer,
-        activePointer: value.gradientActivePointer,
-        type:
-          value.gradientType === "linear"
-            ? "linear-gradient"
-            : "radial-gradient",
-        linearAngle: value.gradientLinearDegree,
-        radialPosition: value.gradientRadialDegree
-      },
-      color: value.bgColorHex,
-      opacity: null,
-      colorPalette: value.bgColorPalette,
-      bgColorType: "gradient"
-    };
-  } else {
-    const rgbColor = hexToString(
-      {
-        palette: value.bgColorPalette,
-        hex: value.bgColorHex,
-        opacity: String(value.bgColorOpacity)
-      },
-      config
-    );
-
-    return {
-      ...value,
-      bgColorType: "solid",
-      backgroundGradient: null,
-      opacity: null,
-      color: rgbColor,
-      colorPalette: value.bgColorPalette
-    };
+  switch (selectType) {
+    case "gradient":
+      return Object.assign({}, v, gradientValues(type, value, prefix));
+    case "solid":
+      return Object.assign({}, v, colorValues(type, value, config, prefix));
+    default:
+      return Object.assign(
+        {},
+        v,
+        gradientValues(type, value, prefix),
+        colorValues(type, value, config, prefix)
+      );
   }
 };
 
@@ -229,23 +196,33 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
                 withNone: false
               },
               dependencies: (value) => {
-                const bgColorHex =
-                  value.bgColorPalette !== v.bgColorPalette &&
-                  getColorPaletteColor(value.bgColorPalette)
-                    ? getColorPaletteColor(value.bgColorPalette).hex
-                    : value.bgColorHex;
-
-                const gradientColorHex = value.gradientColorPalette
-                  ? getColorPaletteColor(value.gradientColorPalette).hex
-                  : value.gradientColorHex;
                 onChange(
                   changeColor(
-                    {
-                      ...value,
-                      bgColorHex,
-                      gradientColorHex
-                    },
+                    getColorValues(v, value),
+                    ColorOption.Color,
                     config
+                  )
+                );
+              }
+            }
+          ]
+        },
+        {
+          id: "tabBg",
+          label: t("Bg. Color"),
+          options: [
+            {
+              id: "text",
+              type: "backgroundColor",
+              icon: "nc-bold",
+              title: t("Text Bg. Color"),
+              dependencies: (value) => {
+                onChange(
+                  changeColor(
+                    getColorValues(v, value, "text"),
+                    ColorOption.Background,
+                    config,
+                    "text"
                   )
                 );
               }
@@ -296,11 +273,11 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
           id: "tabImage",
           label: t("Mask"),
           options: [
-            // Use population-dev option type instead of using the `population` config for imageUpload,
+            // Use population option type instead of using the `legacy-population` config for imageUpload,
             // because the population id and imageUpload id are different.
             {
               id: "image",
-              type: "population-dev",
+              type: "population",
               label: t("Image"),
               config: imageDynamicContentChoices,
               fallback: {
@@ -344,6 +321,17 @@ function getTextPopulationOptions() {
           options: [
             {
               id: "",
+              type: "backgroundColor",
+              states: [NORMAL]
+            }
+          ]
+        },
+        {
+          id: "tabBg",
+          label: t("Bg. Color"),
+          options: [
+            {
+              id: "text",
               type: "backgroundColor",
               states: [NORMAL]
             }

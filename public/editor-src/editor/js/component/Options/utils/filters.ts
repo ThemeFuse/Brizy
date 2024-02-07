@@ -4,9 +4,7 @@ import {
 } from "visual/editorComponents/ToolbarItemType";
 import { isT } from "visual/utils/value";
 
-export const withOptions = <
-  T extends "popover" | "stateMode-dev" | "group"
->(
+export const withOptions = <T extends "popover" | "stateMode" | "group">(
   f: (t: ToolbarItemType) => ToolbarItemType | undefined,
   t: GenericToolbarItemType<T>
 ): GenericToolbarItemType<T> | undefined => {

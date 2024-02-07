@@ -5,7 +5,7 @@ export function toolbarGradientLinearDegree({
 }) {
   return {
     id: "gradientLinearDegree",
-    type: "number-dev",
+    type: "number",
     className: "brz-ed-grid__gradient__size brz-ed-option__input-number-wrap",
     devices,
     states,
@@ -26,7 +26,7 @@ export function toolbarGradientRadialDegree({
 }) {
   return {
     id: "gradientRadialDegree",
-    type: "number-dev",
+    type: "number",
     className: "brz-ed-grid__gradient__degree brz-ed-option__input-number-wrap",
     devices: devices,
     states: states,

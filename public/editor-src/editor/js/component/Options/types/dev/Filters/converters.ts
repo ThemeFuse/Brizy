@@ -1,14 +1,14 @@
+import { mPipe, or, parseStrict } from "fp-utilities";
 import {
-  callGetter,
   FromElementModel,
   FromElementModelGetter,
-  ToElementModel
+  ToElementModel,
+  callGetter
 } from "visual/component/Options/Type";
 import { Value } from "visual/component/Options/types/dev/Filters/types/Value";
-import { mPipe, or, parseStrict } from "fp-utilities";
-import * as Num from "visual/utils/math/number";
 import { always } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
+import * as Num from "visual/utils/math/number";
 
 export const defaultValue: Value = {
   hue: 0,
@@ -17,7 +17,7 @@ export const defaultValue: Value = {
   brightness: 0
 };
 
-export const fromElementModel: FromElementModel<"filters-dev"> = parseStrict<
+export const fromElementModel: FromElementModel<"filters"> = parseStrict<
   FromElementModelGetter,
   Value
 >({
@@ -36,4 +36,4 @@ export const fromElementModel: FromElementModel<"filters-dev"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"filters-dev"> = v => ({ ...v });
+export const toElementModel: ToElementModel<"filters"> = (v) => ({ ...v });
