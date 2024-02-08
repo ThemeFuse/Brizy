@@ -8,3 +8,4 @@ codeception.yml
 .env.local
 /chrome-driver-log.log
 /tests/chrome-driver-log.log
+public/editor-build/dev/

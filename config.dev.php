@@ -29,8 +29,8 @@ class Brizy_Config {
 	const ABOUT_URL = "https://brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
 
-    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build';
-	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build';
+    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build'.DIRECTORY_SEPARATOR.'dev';
+	const EDITOR_BUILD_RELATIVE_PATH = 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'http://www.brizysites.com';
@@ -53,7 +53,7 @@ class Brizy_Config {
 
 
 	// this file will be stored in uploads/brizy/
-	const PROJECT_STLYES_FILE_PATH = '/project/styles.css';
+	const PROJECT_STLYES_FILE_PATH =  DIRECTORY_SEPARATOR . 'project' . DIRECTORY_SEPARATOR . 'styles.css';
 
 	static public function getCompilerUrls() {
 		$host = self::getEnvValue('COMPILER_HOST');
@@ -90,7 +90,7 @@ class Brizy_Config {
 
 		$host = self::getEnvValue('COMPILER_DOWNLOAD_HOST');
 
-		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build';
+		return  'http://'.$host.'/wp-content/plugins/brizy/public/editor-build/dev';
 	}
 
 	static public function getSupportUrl() {

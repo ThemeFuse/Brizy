@@ -66,13 +66,9 @@ class Brizy_Editor_Compiler {
 
 	public function needsCompile( Brizy_Editor_Post $post ) {
 
-		if ( is_preview() || isset( $_GET['preview'] ) ) {
-			return true;
-		}
-
 		if ( version_compare(
-			$t = str_replace( '-wp', '', $post->get_compiler_version() ),
-			$k = str_replace( '-wp', '', BRIZY_MINIMUM_COMPILER_VERSION ),
+			$t = str_replace( ['-wp','-beta2-wp'], '', $post->get_compiler_version() ),
+			$k = str_replace( ['-wp','-beta2-wp'], '', BRIZY_MINIMUM_COMPILER_VERSION ),
 			"<" ) ) {
 			return true;
 		}
