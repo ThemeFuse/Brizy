@@ -199,8 +199,7 @@ class Brizy_Editor_Editor_Editor
             'editorVersion' => BRIZY_EDITOR_VERSION,
             'imageSizes' => $this->getImgSizes(),
             'moduleGroups' => [],
-            'l10n' => $this->getTexts(),
-            'imagePatterns' => json_decode('{ "full": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }')
+            'l10n' => $this->getTexts()
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
@@ -374,7 +373,8 @@ class Brizy_Editor_Editor_Editor
     {
         $config['api'] = [
             'media' => [
-                'mediaResizeUrl' => home_url()
+                'mediaResizeUrl' => home_url(),
+                'imagePatterns' => json_decode('{ "full": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }')
             ],
             'customFile' => [
                 'fileUrl' => home_url('?' . Brizy_Editor::prefix('_attachment') . '='),
