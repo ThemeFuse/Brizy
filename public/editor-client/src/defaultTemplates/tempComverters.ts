@@ -23,7 +23,8 @@ export const tempConverterKit = (
       keywords,
       thumbnailWidth,
       thumbnailHeight,
-      type
+      type,
+      blank
     }) => ({
       id,
       cat,
@@ -34,7 +35,8 @@ export const tempConverterKit = (
       thumbnailWidth,
       thumbnailSrc: `${url}/${id}.jpg`,
       pro: pro ?? false,
-      kitId
+      kitId,
+      blank
     })
   );
 
