@@ -152,8 +152,8 @@ export const parseColor = (color = "", opacity) => {
 
   let hex = "#000000";
 
-  if (color) {
-    let { hex: _hex, opacity: _opacity } = rgbaTohex(color);
+  if (color !== "transparent") {
+    let { hex: _hex, opacity: _opacity } = rgbaTohex(color) || {};
 
     hex = _hex;
     opacity = !isNaN(parseFloat(_opacity)) ? _opacity : opacity;
