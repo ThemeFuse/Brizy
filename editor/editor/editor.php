@@ -1530,7 +1530,7 @@ class Brizy_Editor_Editor_Editor {
 		if ( BRIZY_DEVELOPMENT ) {
 			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Dev_Texts';
 		} else {
-			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Texts';
+			$brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_Prod_Texts';
 		}
 
 		if ( ! class_exists( $brizy_public_editor_build_texts ) ) {
