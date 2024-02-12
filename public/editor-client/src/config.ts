@@ -42,6 +42,8 @@ interface Actions {
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
+
+  getDynamicContentPlaceholders: string;
 }
 
 interface API {
@@ -194,6 +196,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateBlockScreenshot: pipe(
     mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: updateBlockScreenshot")
+  ),
+  getDynamicContentPlaceholders: pipe(
+    mPipe(Obj.readKey("getDynamicContentPlaceholders"), Str.read),
+    throwOnNullish("Invalid actions: getDynamicContentPlaceholders")
   )
 });
 

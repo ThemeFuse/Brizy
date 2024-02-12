@@ -1,5 +1,4 @@
 import set from "lodash/set";
-import { handler as posts } from "./Elements/Posts";
 import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
 import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
@@ -13,6 +12,8 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
+import { placeholders } from "./dynamicContent";
+import { handler as posts } from "./Elements/Posts";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -78,5 +79,10 @@ if (window.__VISUAL_CONFIG__) {
     set(window.__VISUAL_CONFIG__.elements, ["posts", "handler"], posts);
   } else {
     set(window.__VISUAL_CONFIG__, ["elements", "posts", "handler"], posts);
+  }
+
+  // Dynamic Content
+  if (window.__VISUAL_CONFIG__.dynamicContent) {
+    set(window.__VISUAL_CONFIG__.dynamicContent, ["handler"], placeholders);
   }
 }
