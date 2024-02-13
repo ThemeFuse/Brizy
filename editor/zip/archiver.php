@@ -101,8 +101,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             'hasPro' => $item->isPro(),
         );
 
-        if($block instanceof Brizy_Editor_Layout) {
-			$data['globalStyles'] = $block->getGlobalStyles();
+        if ($block instanceof Brizy_Editor_Layout) {
+            $data['globalStyles'] = $block->getGlobalStyles();
         }
 
         if (method_exists($block, 'getTags')) {
@@ -215,8 +215,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         $block->setMedia($data->media);
         $block->set_editor_version($data->editorVersion);
 
-        if($block instanceof Brizy_Editor_Layout) {
-	        $block->setGlobalStyles( $data->globalStyles );
+        if ($block instanceof Brizy_Editor_Layout) {
+            $block->setGlobalStyles($data->globalStyles);
         }
 
         $block->setDataVersion(1);
@@ -254,7 +254,6 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
     protected function storeImages($data, ZipArchive $z, Brizy_Editor_Post $block)
     {
-
         $urlBuilder = new Brizy_Editor_UrlBuilder($this->project, $block->getWpPostId());
         foreach ($data->files->images as $uid => $path) {
 
@@ -263,10 +262,16 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             }
 
             $basename = basename($path);
+            $imageContent = $z->getFromName($path);
+
+            if (!$this->validateImageContent($basename, $imageContent)) {
+                continue;
+            }
+
             $original_asset_path = $urlBuilder->page_upload_path("/assets/images/".$basename);
             $original_asset_path_relative = $urlBuilder->page_upload_relative_path("/assets/images/".$basename);
             wp_mkdir_p(dirname($original_asset_path));
-            file_put_contents($original_asset_path, $z->getFromName($path));
+            file_put_contents($original_asset_path, $imageContent);
 
             Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment(
                 $original_asset_path,
@@ -537,6 +542,16 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         if (!$jsonUploadEnabled) {
             $jsonUpload->disableJsonUpload();
         }
+    }
+
+    private function validateImageContent($name, $content)
+    {
+        $tempName = get_temp_dir().md5($name);
+        file_put_contents($tempName, $content);
+        $isImage = file_is_valid_image($tempName);
+        unlink($tempName);
+
+        return $isImage;
     }
 
 }

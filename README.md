@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.4.3<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.40<br>
+Stable tag: 2.4.41<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.4.41 - 2024-02-13
+* Fixed: Text color from hex when we have the type transparent
+* Fixed: Text Copy and Paste
+* Fixed: Added image content validator on import blocks
+* Fixed: Directory Traversal on screenshot update
+
 ### 2.4.40 - 2024-02-07
 * New: Help video functionality inside the builder
 * New: Added variable fonts 
@@ -163,13 +169,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 ### 2.4.39 - 2024-01-17
  * New: Add Right Click Context Menu to Tabs Element 
  * New: Added tooltip message when saving draft pages 
- * Improvement: Speed when searching pages URL for Links 
- * Improvement: Reduced file size of the Client API 
- * Improvement: UI Translation 
+ * Improved: Speed when searching pages URL for Links 
+ * Improved: Reduced file size of the Client API 
+ * Improved: UI Translation 
  * Fixed: Link To option loses focus 
  * Fixed: Icon Background corner is not active 
  * Fixed: Save selected Page in Link option on any Text element
- * Fixed: Scroll in toolbara and typography is not working when parallax effect is set 
+ * Fixed: Scroll in toolbar and typography is not working when parallax effect is set 
  * Fixed: Some Saved Blocks thumbnails are not displayed 
  * Fixed: Styling Dividers Show thin line on some mobile devices 
  * Fixed: Background color on hover "Get a pro Plan" button 
