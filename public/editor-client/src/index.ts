@@ -28,6 +28,7 @@ import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
 import { screenshots } from "./screenshots";
+import { merge } from "lodash";
 
 const config = getConfig();
 
@@ -41,7 +42,6 @@ const api = {
     addMedia,
     addMediaGallery,
     mediaResizeUrl: config.api.mediaResizeUrl,
-    imagePatterns: config.api.imagePatterns
   },
   customFile: {
     addFile,
@@ -70,7 +70,7 @@ const api = {
 
 if (window.__VISUAL_CONFIG__) {
   // API
-  window.__VISUAL_CONFIG__.api = api;
+  window.__VISUAL_CONFIG__.api = merge(window.__VISUAL_CONFIG__.api, api);
 
   // AutoSave
   window.__VISUAL_CONFIG__.onAutoSave = autoSave;
