@@ -117,7 +117,7 @@ class Brizy_Editor_Editor_Editor
         $preview_post_link = $this->getPreviewUrl($this->post->getWpPost());
 
         $change_template_url = set_url_scheme(
-            admin_url('admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template')
+            admin_url('admin-post.php?post='.$this->post->getWpPostId().'&action=_brizy_change_template')
         );
         $mode = $this->getMode($parent_post_type);
 
@@ -136,17 +136,18 @@ class Brizy_Editor_Editor_Editor
             'urls' => array(
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
-                'assets' => $context == self::COMPILE_CONTEXT ? Brizy_Config::EDITOR_BUILD_RELATIVE_PATH : $this->urlBuilder->editor_build_url(),
-                'image' => $this->urlBuilder->external_media_url() . "",
-                'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
-                'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs') . "",
+                'assets' => $context == self::COMPILE_CONTEXT ? Brizy_Config::EDITOR_BUILD_RELATIVE_PATH : $this->urlBuilder->editor_build_url(
+                ),
+                'image' => $this->urlBuilder->external_media_url()."",
+                'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs')."",
+                'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs')."",
                 'templateIcons' => $this->urlBuilder->proxy_url('editor/icons'),
                 'templateFonts' => $this->urlBuilder->external_fonts_url(),
                 'editorFonts' => home_url('/'),
                 'pagePreview' => $preview_post_link,
                 'about' => __bt('about-url', apply_filters('brizy_about_url', Brizy_Config::ABOUT_URL)),
                 'backToDashboard' => get_edit_post_link($wp_post_id, null),
-                'assetsExternal' => $this->urlBuilder->external_asset_url() . "",
+                'assetsExternal' => $this->urlBuilder->external_asset_url()."",
                 'termsOfService' => Brizy_Config::getTermsOfServiceUrl(),
 
                 // wp specific
@@ -154,12 +155,12 @@ class Brizy_Editor_Editor_Editor
                 'upgradeToPro' => Brizy_Config::getUpgradeUrl(),
 
                 'support' => Brizy_Config::getSupportUrl(),
-                'pluginSettings' => admin_url('admin.php?page=' . Brizy_Admin_Settings::menu_slug()),
+                'pluginSettings' => admin_url('admin.php?page='.Brizy_Admin_Settings::menu_slug()),
                 'dashboardNavMenu' => admin_url('nav-menus.php'),
-                'customFile' => home_url('?' . Brizy_Editor::prefix('_attachment') . '='),
+                'customFile' => home_url('?'.Brizy_Editor::prefix('_attachment').'='),
             ),
             'form' => array(
-                'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
+                'submitUrl' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
                         Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
                     ),
             ),
@@ -185,7 +186,7 @@ class Brizy_Editor_Editor_Editor
             'mode' => $mode,
             'applications' => array(
                 'form' => array(
-                    'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(
+                    'submitUrl' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
                             Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
                         ),
                 ),
@@ -199,13 +200,13 @@ class Brizy_Editor_Editor_Editor
             'editorVersion' => BRIZY_EDITOR_VERSION,
             'imageSizes' => $this->getImgSizes(),
             'moduleGroups' => [],
-            'l10n' => $this->getTexts()
+            'l10n' => $this->getTexts(),
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
-		if (!$this->isPopup($config) && !$this->isStory($config)) {
-			$config['ui']['help'] = $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL);
-		}
+        if (!$this->isPopup($config) && !$this->isStory($config)) {
+            $config['ui']['help'] = $this->getEditorHelpVideos(Brizy_Config::EDITOR_HELP_VIDEOS_URL);
+        }
 
         $config = $this->addRecaptchaAccounts($manager, $config, $context);
         $config = $this->addSocialAccounts($manager, $config, $context);
@@ -222,7 +223,7 @@ class Brizy_Editor_Editor_Editor
         $config = $this->addModuleGroups($config, $context);
         $config = $this->addPageData($config, $context);
 
-        self::$config[$cachePostId] = apply_filters('brizy_editor_config', $config, $context);
+        self::$config[$cachePostId] = $aconfig = apply_filters('brizy_editor_config', $config, $context);
 
         do_action('brizy_create_editor_config_after');
 
@@ -250,7 +251,7 @@ class Brizy_Editor_Editor_Editor
                 "icon" => "nc-info",
                 "label" => __bt("About us", "About us", 'brizy'),
                 "link" => $config['urls']['about'],
-                "linkTarget" => "_blank"
+                "linkTarget" => "_blank",
             ],
             [
                 "type" => "link",
@@ -258,13 +259,13 @@ class Brizy_Editor_Editor_Editor
                 "label" => __bt("Support", "Support", 'brizy'),
                 "link" => $config['urls']['support'],
                 "linkTarget" => "_blank",
-                "roles" => ["admin"]
+                "roles" => ["admin"],
             ],
             [
                 "type" => "shortcuts",
                 "icon" => "nc-alert-circle-que",
                 "label" => __bt("Shortcuts", "Shortcuts", 'brizy'),
-                "link" => "#"
+                "link" => "#",
             ],
             [
                 "type" => "link",
@@ -272,14 +273,14 @@ class Brizy_Editor_Editor_Editor
                 "label" => __bt("Plugin Settings", "Plugin Settings", 'brizy'),
                 "link" => $config['urls']['pluginSettings'],
                 "linkTarget" => "_blank",
-                "roles" => ["admin"]
+                "roles" => ["admin"],
             ],
             [
                 "type" => "link",
                 "icon" => "nc-back",
                 "label" => __bt("Go to Dashboard", "Go to Dashboard", 'brizy'),
-                "link" => $config['urls']['backToDashboard']
-            ]
+                "link" => $config['urls']['backToDashboard'],
+            ],
         ];
         $config['ui']['leftSidebar'] = [
             "topTabsOrder" => ["addElements", "reorderBlock", "globalStyle"],
@@ -288,12 +289,12 @@ class Brizy_Editor_Editor_Editor
                 "options" => [
                     "template" => !($is_popup || $is_story),
                     "membership" => !($is_popup || $is_story),
-                    "featuredImage" => !($is_popup || $is_story) && !$is_template
-                ]
+                    "featuredImage" => !($is_popup || $is_story) && !$is_template,
+                ],
             ],
             "more" => [
-                "options" => array_values(array_filter($options))
-            ]
+                "options" => array_values(array_filter($options)),
+            ],
         ];
 
         $config['ui']['popupSettings'] = [
@@ -304,7 +305,7 @@ class Brizy_Editor_Editor_Editor
             "scrollPageBehind" => true,
             "clickOutsideToClose" => true,
             "deletePopup" => $is_popup,
-            "backgroundPreviewUrl" => $config['urls']['pagePreview']
+            "backgroundPreviewUrl" => $config['urls']['pagePreview'],
         ];
 
         return $config;
@@ -352,7 +353,10 @@ class Brizy_Editor_Editor_Editor
 
         $moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
 
-        $config['ui']['leftSidebar'] = array_merge($config['ui']['leftSidebar'], ['moduleGroups' => $moduleGroupCollector->getAll($config)]);
+        $config['ui']['leftSidebar'] = array_merge(
+            $config['ui']['leftSidebar'],
+            ['moduleGroups' => $moduleGroupCollector->getAll($config)]
+        );
 
         return $config;
     }
@@ -371,23 +375,27 @@ class Brizy_Editor_Editor_Editor
 
     private function getApiConfigFields($config, $context)
     {
-        $config['api'] = [
-            'media' => [
-                'mediaResizeUrl' => home_url(),
-                'imagePatterns' => json_decode('{ "full": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }')
+        $aConfig = [
+            'api' => [
+                'media' => [
+                    'mediaResizeUrl' => home_url(),
+                    'imagePatterns' => json_decode(
+                        '{ "full": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }'
+                    ),
+                ],
+                'customFile' => [
+                    'fileUrl' => home_url('?'.Brizy_Editor::prefix('_attachment').'='),
+                ],
+                'templates' => [
+                    'kitsUrl' => Brizy_Config::getEditorTemplatesUrl('kits'),
+                    'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
+                    'popupsUrl' => Brizy_Config::getEditorTemplatesUrl('popups'),
+                    'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories'),
+                ],
             ],
-            'customFile' => [
-                'fileUrl' => home_url('?' . Brizy_Editor::prefix('_attachment') . '='),
-            ],
-            'templates' => [
-                'kitsUrl' => Brizy_Config::getEditorTemplatesUrl('kits'),
-                'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
-                'popupsUrl' => Brizy_Config::getEditorTemplatesUrl('popups'),
-                'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories')
-            ]
         ];
 
-        return apply_filters('brizy_api_config_fields', $config, $context);
+        return apply_filters('brizy_api_config_fields', array_merge_recursive($config, $aConfig), $context);
     }
 
     private function addContentDefaults($config, $context)
@@ -404,8 +412,8 @@ class Brizy_Editor_Editor_Editor
                             '_styles' => ['column'],
                             'linkSource' => 'page',
                             'linkType' => 'page',
-                            'items' => []
-                        ]
+                            'items' => [],
+                        ],
                     ],
                     [
                         'type' => 'Column',
@@ -413,10 +421,10 @@ class Brizy_Editor_Editor_Editor
                             '_styles' => ['column'],
                             'linkSource' => 'page',
                             'linkType' => 'page',
-                            'items' => []
-                        ]
-                    ]
-                ]
+                            'items' => [],
+                        ],
+                    ],
+                ],
             ],
             'Button' => ['linkSource' => 'page', 'linkType' => 'page'],
             'RichText' => ['linkSource' => 'page', 'linkType' => 'page'],
@@ -432,12 +440,12 @@ class Brizy_Editor_Editor_Editor
                 'textPopulationEntityId' => '',
                 '_population' => [
                     'name' => 'brizy_dc_post_excerpt',
-                    'placeholder' => '{{brizy_dc_post_excerpt}}'
-                ]
+                    'placeholder' => '{{brizy_dc_post_excerpt}}',
+                ],
             ],
             'Column' => [
                 ['type' => 'Column', 'value' => ['linkSource' => 'page', 'linkType' => 'page', 'items' => []]],
-                ['type' => 'Column', 'value' => ['linkSource' => 'page', 'linkType' => 'page', 'items' => []]]
+                ['type' => 'Column', 'value' => ['linkSource' => 'page', 'linkType' => 'page', 'items' => []]],
             ],
             'PostContent' => [
                 'linkSource' => 'page',
@@ -446,8 +454,8 @@ class Brizy_Editor_Editor_Editor
                 'textPopulationEntityId' => '',
                 '_population' => [
                     'name' => 'brizy_dc_post_content',
-                    'placeholder' => '{{brizy_dc_post_content}}'
-                ]
+                    'placeholder' => '{{brizy_dc_post_content}}',
+                ],
             ],
             'PostTitle' => [
                 'linkSource' => 'page',
@@ -457,8 +465,8 @@ class Brizy_Editor_Editor_Editor
                 'textPopulationEntityId' => '',
                 '_population' => [
                     'name' => 'brizy_dc_post_title',
-                    'placeholder' => '{{brizy_dc_post_title}}'
-                ]
+                    'placeholder' => '{{brizy_dc_post_title}}',
+                ],
             ],
             'Posts' => [
                 '_styles' => ['posts', 'posts-posts'],
@@ -495,7 +503,7 @@ class Brizy_Editor_Editor_Editor
                                             'wrapper',
                                             'wrapper-postTitle',
                                             'wrapper-postTitle-posts',
-                                            'wrapper-postTitle-posts-posts'
+                                            'wrapper-postTitle-posts-posts',
                                         ],
                                         'items' => [
                                             [
@@ -504,7 +512,7 @@ class Brizy_Editor_Editor_Editor
                                                     '_styles' => [
                                                         'postTitle',
                                                         'postTitle-posts',
-                                                        'postTitle-posts-posts'
+                                                        'postTitle-posts-posts',
                                                     ],
                                                 ],
                                             ],
@@ -518,7 +526,7 @@ class Brizy_Editor_Editor_Editor
                                             'wrapper',
                                             'wrapper-postExcerpt',
                                             'wrapper-postExcerpt-posts',
-                                            'wrapper-postExcerpt-posts-posts'
+                                            'wrapper-postExcerpt-posts-posts',
                                         ],
                                         'items' => [
                                             [
@@ -527,7 +535,7 @@ class Brizy_Editor_Editor_Editor
                                                     '_styles' => [
                                                         'postExcerpt',
                                                         'postExcerpt-posts',
-                                                        'postExcerpt-posts-posts'
+                                                        'postExcerpt-posts-posts',
                                                     ],
                                                 ],
                                             ],
@@ -670,7 +678,7 @@ class Brizy_Editor_Editor_Editor
                         'type' => 'Column',
                         'value' => [
                             '_styles' => [
-                                'posts--column'
+                                'posts--column',
                             ],
                             'items' => [
                                 [
@@ -678,7 +686,7 @@ class Brizy_Editor_Editor_Editor
                                     'value' => [
                                         '_styles' => [
                                             'wrapper',
-                                            'wrapper--image'
+                                            'wrapper--image',
                                         ],
                                         'items' => [
                                             [
@@ -686,13 +694,13 @@ class Brizy_Editor_Editor_Editor
                                                 'value' => [
                                                     '_styles' => [
                                                         'image',
-                                                        'image--dynamic'
+                                                        'image--dynamic',
                                                     ],
-                                                    'imagePopulation' => '{{brizy_dc_img_featured_image}}'
-                                                ]
-                                            ]
-                                        ]
-                                    ]
+                                                    'imagePopulation' => '{{brizy_dc_img_featured_image}}',
+                                                ],
+                                            ],
+                                        ],
+                                    ],
                                 ],
                                 [
                                     'type' => 'Wrapper',
@@ -701,7 +709,7 @@ class Brizy_Editor_Editor_Editor
                                             'wrapper',
                                             'wrapper-postTitle',
                                             'wrapper-postTitle-posts',
-                                            'wrapper-postTitle-posts-posts'
+                                            'wrapper-postTitle-posts-posts',
                                         ],
                                         'items' => [
                                             [
@@ -710,12 +718,12 @@ class Brizy_Editor_Editor_Editor
                                                     '_styles' => [
                                                         'postTitle',
                                                         'postTitle-posts',
-                                                        'postTitle-posts-posts'
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
+                                                        'postTitle-posts-posts',
+                                                    ],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
                                 ],
                                 [
                                     'type' => 'Wrapper',
@@ -724,7 +732,7 @@ class Brizy_Editor_Editor_Editor
                                             'wrapper',
                                             'wrapper-postExcerpt',
                                             'wrapper-postExcerpt-posts',
-                                            'wrapper-postExcerpt-posts-posts'
+                                            'wrapper-postExcerpt-posts-posts',
                                         ],
                                         'items' => [
                                             [
@@ -733,19 +741,19 @@ class Brizy_Editor_Editor_Editor
                                                     '_styles' => [
                                                         'postExcerpt',
                                                         'postExcerpt-posts',
-                                                        'postExcerpt-posts-posts'
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
+                                                        'postExcerpt-posts-posts',
+                                                    ],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
                                 ],
                                 [
                                     'type' => 'Cloneable',
                                     'value' => [
                                         '_styles' => [
                                             'wrapper-clone',
-                                            'wrapper-clone--button'
+                                            'wrapper-clone--button',
                                         ],
                                         'items' => [
                                             [
@@ -753,17 +761,17 @@ class Brizy_Editor_Editor_Editor
                                                 'value' => [
                                                     '_styles' => [
                                                         'button',
-                                                        'button--dynamic'
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                                        'button--dynamic',
+                                                    ],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             'ShopPosts' => [
                 '_version' => 3,
@@ -870,7 +878,7 @@ class Brizy_Editor_Editor_Editor
                         ],
                     ],
                 ],
-            ]
+            ],
         ];
 
         return $config;
@@ -905,14 +913,14 @@ class Brizy_Editor_Editor_Editor
             ['field' => 'title', 'label' => __('Title', 'brizy')],
             ['field' => 'date', 'label' => __('Date', 'brizy')],
             ['field' => 'rand', 'label' => __('Random', 'brizy')],
-            ['field' => 'comment_count', 'label' => __('Comment Count', 'brizy')]
+            ['field' => 'comment_count', 'label' => __('Comment Count', 'brizy')],
         ];
 
         $orderBy = [
             ['title' => __('Title', 'brizy')],
             ['date' => __('Date', 'brizy')],
             ['rand' => __('Random', 'brizy')],
-            ['comment_count' => __('Comment Count', 'brizy')]
+            ['comment_count' => __('Comment Count', 'brizy')],
         ];
 
         if ($templateTypeArchive) {
@@ -923,7 +931,7 @@ class Brizy_Editor_Editor_Editor
             $result[] = [
                 "name" => "brz_current_context",
                 "label" => "Current Query",
-                'orderBy' => $orderByCustom
+                'orderBy' => $orderByCustom,
             ];
         }
 
@@ -933,7 +941,7 @@ class Brizy_Editor_Editor_Editor
             $typeDto = [
                 'name' => $typeObj->name,
                 'label' => $typeObj->label,
-                'orderBy' => $orderBy
+                'orderBy' => $orderBy,
             ];
             $result[] = $typeDto;
         }
@@ -950,7 +958,7 @@ class Brizy_Editor_Editor_Editor
         $config['posts']['sources'] = array_map(function ($source) {
             return [
                 'value' => $source['name'],
-                'title' => $source['label']
+                'title' => $source['label'],
             ];
         }, $sources);
 
@@ -980,7 +988,9 @@ class Brizy_Editor_Editor_Editor
         }
 
         $config['wp']['postTerms'] = $postTerms;
-        $config['wp']['postTermParents'] = array_values(array_diff_key($this->getAllParents($postTermsByKeys), $postTermsByKeys));
+        $config['wp']['postTermParents'] = array_values(
+            array_diff_key($this->getAllParents($postTermsByKeys), $postTermsByKeys)
+        );
         $config['wp']['postAuthor'] = (int)$this->post->getWpPost()->post_author;
 
         return $config;
@@ -1105,7 +1115,7 @@ class Brizy_Editor_Editor_Editor
                 {
                     $parsedUrl = parse_url($link);
                     $separator = (!isset($parsedUrl['query']) || $parsedUrl['query'] == null) ? '?' : '&';
-                    $link .= $separator . $query;
+                    $link .= $separator.$query;
 
                     return $link;
                 }
@@ -1229,7 +1239,7 @@ class Brizy_Editor_Editor_Editor
             $wp_post,
             array(
                 'preview_id' => $wp_post->ID,
-                'preview_nonce' => wp_create_nonce('post_preview_' . $wp_post->ID),
+                'preview_nonce' => wp_create_nonce('post_preview_'.$wp_post->ID),
             )
         );
     }
@@ -1248,7 +1258,7 @@ class Brizy_Editor_Editor_Editor
 
             $menu_uid = get_term_meta($menu->term_id, 'brizy_uid', true);
             if (!$menu_uid) {
-                $menu_uid = md5($menu->term_id . time());
+                $menu_uid = md5($menu->term_id.time());
                 update_term_meta($menu->term_id, 'brizy_uid', $menu_uid);
             }
 
@@ -1314,7 +1324,7 @@ class Brizy_Editor_Editor_Editor
             $menu_uid = get_post_meta($item->ID, 'brizy_post_uid', true);
 
             if (!$menu_uid) {
-                $menu_uid = md5($item->ID . time());
+                $menu_uid = md5($item->ID.time());
                 $update = update_post_meta($item->ID, 'brizy_post_uid', $menu_uid);
 
                 if (!$update) {
@@ -1486,7 +1496,7 @@ class Brizy_Editor_Editor_Editor
 
         if (!empty($r['limit'])) {
             $r['limit'] = absint($r['limit']);
-            $r['limit'] = ' LIMIT ' . $r['limit'];
+            $r['limit'] = ' LIMIT '.$r['limit'];
         }
 
         $order = strtoupper($r['order']);
@@ -1561,14 +1571,14 @@ class Brizy_Editor_Editor_Editor
             foreach (explode('-', BRIZY_EDITOR_VERSION) as $tmp) {
                 $version .= ucfirst($tmp);
             }
-            $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_' . $version . '_Texts';
+            $brizy_public_editor_build_texts = '\Brizy_Public_EditorBuild_'.$version.'_Texts';
         }
 
         if (!class_exists($brizy_public_editor_build_texts)) {
             if (BRIZY_DEVELOPMENT) {
                 throw new \Exception('You must build the editor first.');
             } else {
-                throw new \Exception('Unable to find class ' . $brizy_public_editor_build_texts);
+                throw new \Exception('Unable to find class '.$brizy_public_editor_build_texts);
             }
         }
 
@@ -1752,93 +1762,93 @@ class Brizy_Editor_Editor_Editor
         $actions = array(
             'hash' => wp_create_nonce(Brizy_Editor_API::nonce),
             'url' => set_url_scheme(admin_url('admin-ajax.php')),
-            'heartBeat' => $pref . Brizy_Editor_API::AJAX_HEARTBEAT,
-            'takeOver' => $pref . Brizy_Editor_API::AJAX_TAKE_OVER,
-            'lockProject' => $pref . Brizy_Editor_API::AJAX_LOCK_PROJECT,
-            'removeLock' => $pref . Brizy_Editor_API::AJAX_REMOVE_LOCK,
-            'getPage' => $pref . Brizy_Editor_API::AJAX_GET,
-            'getPostInfo' => $pref . Brizy_Editor_API::AJAX_GET_POST_INFO,
-            'updatePage' => $pref . Brizy_Editor_API::AJAX_UPDATE,
-            'getProject' => $pref . Brizy_Editor_API::AJAX_GET_PROJECT,
-            'setProject' => $pref . Brizy_Editor_API::AJAX_SET_PROJECT,
-            'setProjectMeta' => $pref . Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
-            'getGlobalBlockList' => $pref . Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
-            'createGlobalBlock' => $pref . Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
-            'updateGlobalBlock' => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
-            'updateGlobalBlocks' => $pref . Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCKS_ACTION,
-            'deleteGlobalBlock' => $pref . Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
-            'getRuleGroupList' => $pref . Brizy_Admin_Rules_Api::RULE_GROUP_LIST,
-            'getLayoutByUid' => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
-            'getLayoutList' => $pref . Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
-            'createLayout' => $pref . Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
-            'updateLayout' => $pref . Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
-            'deleteLayout' => $pref . Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
-            'cloudSignIn' => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
-            'cloudSignUp' => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
-            'cloudSignOut' => $pref . Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
-            'cloudSyncAllowed' => $pref . Brizy_Admin_Cloud_Api::AJAX_SYNC_ALLOWED,
-            'cloudResetPassword' => $pref . Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
-            'cloudSync' => $pref . Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
-            'createRule' => $pref . Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
-            'createRules' => $pref . Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
-            'updateRules' => $pref . Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
-            'deleteRule' => $pref . Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
-            'getRuleList' => $pref . Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
-            'updateBlockPositions' => $pref . Brizy_Admin_Blocks_Api::UPDATE_POSITIONS_ACTION,
-            'getSavedBlockByUid' => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
-            'getSavedBlockList' => $pref . Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
-            'createSavedBlock' => $pref . Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
-            'updateSavedBlock' => $pref . Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
-            'deleteSavedBlock' => $pref . Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
-            'downloadBlocks' => $pref . Brizy_Admin_Blocks_Api::DOWNLOAD_BLOCKS,
-            'uploadBlocks' => $pref . Brizy_Admin_Blocks_Api::UPLOAD_BLOCKS,
-            'downloadLayouts' => $pref . Brizy_Admin_Layouts_Api::DOWNLOAD_LAYOUTS,
-            'uploadLayouts' => $pref . Brizy_Admin_Layouts_Api::UPLOAD_LAYOUTS,
-            'media' => $pref . Brizy_Editor_API::AJAX_MEDIA,
-            'getMediaUid' => $pref . Brizy_Editor_API::AJAX_MEDIA_METAKEY,
-            'getAttachmentUid' => $pref . Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
-            'getServerTimeStamp' => $pref . Brizy_Editor_API::AJAX_TIMESTAMP,
-            'createBlockScreenshot' => $pref . Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
-            'updateBlockScreenshot' => $pref . Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
-            'getSidebars' => $pref . Brizy_Editor_API::AJAX_SIDEBARS,
-            'shortcodeContent' => $pref . Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
-            'placeholderContent' => $pref . Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
-            'placeholdersContent' => $pref . Brizy_Editor_API::AJAX_PLACEHOLDERS_CONTENT,
-            'getPostTaxonomies' => $pref . Brizy_Editor_API::AJAX_GET_POST_TAXONOMIES,
-            'getMenus' => $pref . Brizy_Editor_API::AJAX_GET_MENU_LIST,
-            'getTerms' => $pref . Brizy_Editor_API::AJAX_GET_TERMS,
-            'getTermsBy' => $pref . Brizy_Editor_API::AJAX_GET_TERMS_BY,
-            'getUsers' => $pref . Brizy_Editor_API::AJAX_GET_USERS,
-            'getPostObjects' => $pref . Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
-            'searchPosts' => $pref . Brizy_Editor_API::AJAX_SEARCH_POST,
-            'setFeaturedImage' => $pref . Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
-            'setFeaturedImageFocalPoint' => $pref . Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
-            'removeFeaturedImage' => $pref . Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
-            'getForm' => $pref . Brizy_Editor_Forms_Api::AJAX_GET_FORM,
-            'createForm' => $pref . Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
-            'updateForm' => $pref . Brizy_Editor_Forms_Api::AJAX_UPDATE_FORM,
-            'deleteForm' => $pref . Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
-            'getIntegration' => $pref . Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
-            'createIntegration' => $pref . Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
-            'updateIntegration' => $pref . Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
-            'deleteIntegration' => $pref . Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
-            'createFont' => $pref . Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
-            'deleteFont' => $pref . Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
-            'getFonts' => $pref . Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
-            'getAccount' => $pref . Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNT,
-            'getAccounts' => $pref . Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNTS,
-            'addAccount' => $pref . Brizy_Editor_Accounts_Api::BRIZY_ADD_ACCOUNT,
-            'updateAccount' => $pref . Brizy_Editor_Accounts_Api::BRIZY_UPDATE_ACCOUNT,
-            'deleteAccount' => $pref . Brizy_Editor_Accounts_Api::BRIZY_DELETE_ACCOUNT,
-            'validateRecaptchaAccount' => $pref . Brizy_Editor_Forms_Api::AJAX_VALIDATE_RECAPTCHA_ACCOUNT,
-            'rulePostsGroupList' => $pref . Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
-            'ruleArchiveGroupList' => $pref . Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
-            'ruleTemplateGroupList' => $pref . Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
-            'symbolCreate' => $pref . Brizy_Admin_Symbols_Api::CREATE_ACTION,
-            'symbolUpdate' => $pref . Brizy_Admin_Symbols_Api::UPDATE_ACTION,
-            'symbolDelete' => $pref . Brizy_Admin_Symbols_Api::DELETE_ACTION,
-            'symbolList' => $pref . Brizy_Admin_Symbols_Api::LIST_ACTION,
-            'getDynamicContentPlaceholders' => $pref . Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
+            'heartBeat' => $pref.Brizy_Editor_API::AJAX_HEARTBEAT,
+            'takeOver' => $pref.Brizy_Editor_API::AJAX_TAKE_OVER,
+            'lockProject' => $pref.Brizy_Editor_API::AJAX_LOCK_PROJECT,
+            'removeLock' => $pref.Brizy_Editor_API::AJAX_REMOVE_LOCK,
+            'getPage' => $pref.Brizy_Editor_API::AJAX_GET,
+            'getPostInfo' => $pref.Brizy_Editor_API::AJAX_GET_POST_INFO,
+            'updatePage' => $pref.Brizy_Editor_API::AJAX_UPDATE,
+            'getProject' => $pref.Brizy_Editor_API::AJAX_GET_PROJECT,
+            'setProject' => $pref.Brizy_Editor_API::AJAX_SET_PROJECT,
+            'setProjectMeta' => $pref.Brizy_Editor_API::AJAX_UPDATE_EDITOR_META_DATA,
+            'getGlobalBlockList' => $pref.Brizy_Admin_Blocks_Api::GET_GLOBAL_BLOCKS_ACTION,
+            'createGlobalBlock' => $pref.Brizy_Admin_Blocks_Api::CREATE_GLOBAL_BLOCK_ACTION,
+            'updateGlobalBlock' => $pref.Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCK_ACTION,
+            'updateGlobalBlocks' => $pref.Brizy_Admin_Blocks_Api::UPDATE_GLOBAL_BLOCKS_ACTION,
+            'deleteGlobalBlock' => $pref.Brizy_Admin_Blocks_Api::DELETE_GLOBAL_BLOCK_ACTION,
+            'getRuleGroupList' => $pref.Brizy_Admin_Rules_Api::RULE_GROUP_LIST,
+            'getLayoutByUid' => $pref.Brizy_Admin_Layouts_Api::GET_LAYOUT_BY_UID_ACTION,
+            'getLayoutList' => $pref.Brizy_Admin_Layouts_Api::GET_LAYOUTS_ACTION,
+            'createLayout' => $pref.Brizy_Admin_Layouts_Api::CREATE_LAYOUT_ACTION,
+            'updateLayout' => $pref.Brizy_Admin_Layouts_Api::UPDATE_LAYOUT_ACTION,
+            'deleteLayout' => $pref.Brizy_Admin_Layouts_Api::DELETE_LAYOUT_ACTION,
+            'cloudSignIn' => $pref.Brizy_Admin_Cloud_Api::AJAX_SIGNIN_ACTION,
+            'cloudSignUp' => $pref.Brizy_Admin_Cloud_Api::AJAX_SIGNUP_ACTION,
+            'cloudSignOut' => $pref.Brizy_Admin_Cloud_Api::AJAX_SIGNOUT_ACTION,
+            'cloudSyncAllowed' => $pref.Brizy_Admin_Cloud_Api::AJAX_SYNC_ALLOWED,
+            'cloudResetPassword' => $pref.Brizy_Admin_Cloud_Api::AJAX_RESET_PASSWORD_ACTION,
+            'cloudSync' => $pref.Brizy_Admin_Cloud_Api::AJAX_TRIGGER_SYNC_ACTION,
+            'createRule' => $pref.Brizy_Admin_Rules_Api::CREATE_RULE_ACTION,
+            'createRules' => $pref.Brizy_Admin_Rules_Api::CREATE_RULES_ACTION,
+            'updateRules' => $pref.Brizy_Admin_Rules_Api::UPDATE_RULES_ACTION,
+            'deleteRule' => $pref.Brizy_Admin_Rules_Api::DELETE_RULE_ACTION,
+            'getRuleList' => $pref.Brizy_Admin_Rules_Api::LIST_RULE_ACTION,
+            'updateBlockPositions' => $pref.Brizy_Admin_Blocks_Api::UPDATE_POSITIONS_ACTION,
+            'getSavedBlockByUid' => $pref.Brizy_Admin_Blocks_Api::GET_SAVED_BLOCK_ACTION,
+            'getSavedBlockList' => $pref.Brizy_Admin_Blocks_Api::GET_SAVED_BLOCKS_ACTION,
+            'createSavedBlock' => $pref.Brizy_Admin_Blocks_Api::CREATE_SAVED_BLOCK_ACTION,
+            'updateSavedBlock' => $pref.Brizy_Admin_Blocks_Api::UPDATE_SAVED_BLOCK_ACTION,
+            'deleteSavedBlock' => $pref.Brizy_Admin_Blocks_Api::DELETE_SAVED_BLOCK_ACTION,
+            'downloadBlocks' => $pref.Brizy_Admin_Blocks_Api::DOWNLOAD_BLOCKS,
+            'uploadBlocks' => $pref.Brizy_Admin_Blocks_Api::UPLOAD_BLOCKS,
+            'downloadLayouts' => $pref.Brizy_Admin_Layouts_Api::DOWNLOAD_LAYOUTS,
+            'uploadLayouts' => $pref.Brizy_Admin_Layouts_Api::UPLOAD_LAYOUTS,
+            'media' => $pref.Brizy_Editor_API::AJAX_MEDIA,
+            'getMediaUid' => $pref.Brizy_Editor_API::AJAX_MEDIA_METAKEY,
+            'getAttachmentUid' => $pref.Brizy_Editor_API::AJAX_CREATE_ATTACHMENT_UID,
+            'getServerTimeStamp' => $pref.Brizy_Editor_API::AJAX_TIMESTAMP,
+            'createBlockScreenshot' => $pref.Brizy_Editor_BlockScreenshotApi::AJAX_CREATE_BLOCK_SCREENSHOT,
+            'updateBlockScreenshot' => $pref.Brizy_Editor_BlockScreenshotApi::AJAX_UPDATE_BLOCK_SCREENSHOT,
+            'getSidebars' => $pref.Brizy_Editor_API::AJAX_SIDEBARS,
+            'shortcodeContent' => $pref.Brizy_Editor_API::AJAX_SHORTCODE_CONTENT,
+            'placeholderContent' => $pref.Brizy_Editor_API::AJAX_PLACEHOLDER_CONTENT,
+            'placeholdersContent' => $pref.Brizy_Editor_API::AJAX_PLACEHOLDERS_CONTENT,
+            'getPostTaxonomies' => $pref.Brizy_Editor_API::AJAX_GET_POST_TAXONOMIES,
+            'getMenus' => $pref.Brizy_Editor_API::AJAX_GET_MENU_LIST,
+            'getTerms' => $pref.Brizy_Editor_API::AJAX_GET_TERMS,
+            'getTermsBy' => $pref.Brizy_Editor_API::AJAX_GET_TERMS_BY,
+            'getUsers' => $pref.Brizy_Editor_API::AJAX_GET_USERS,
+            'getPostObjects' => $pref.Brizy_Editor_API::AJAX_GET_POST_OBJECTS, // ???
+            'searchPosts' => $pref.Brizy_Editor_API::AJAX_SEARCH_POST,
+            'setFeaturedImage' => $pref.Brizy_Editor_API::AJAX_SET_FEATURED_IMAGE,
+            'setFeaturedImageFocalPoint' => $pref.Brizy_Editor_API::AJAX_SET_IMAGE_FOCAL_PT,
+            'removeFeaturedImage' => $pref.Brizy_Editor_API::AJAX_REMOVE_FEATURED_IMAGE,
+            'getForm' => $pref.Brizy_Editor_Forms_Api::AJAX_GET_FORM,
+            'createForm' => $pref.Brizy_Editor_Forms_Api::AJAX_CREATE_FORM,
+            'updateForm' => $pref.Brizy_Editor_Forms_Api::AJAX_UPDATE_FORM,
+            'deleteForm' => $pref.Brizy_Editor_Forms_Api::AJAX_DELETE_FORM,
+            'getIntegration' => $pref.Brizy_Editor_Forms_Api::AJAX_GET_INTEGRATION,
+            'createIntegration' => $pref.Brizy_Editor_Forms_Api::AJAX_CREATE_INTEGRATION,
+            'updateIntegration' => $pref.Brizy_Editor_Forms_Api::AJAX_UPDATE_INTEGRATION,
+            'deleteIntegration' => $pref.Brizy_Editor_Forms_Api::AJAX_DELETE_INTEGRATION,
+            'createFont' => $pref.Brizy_Admin_Fonts_Api::AJAX_CREATE_FONT_ACTION,
+            'deleteFont' => $pref.Brizy_Admin_Fonts_Api::AJAX_DELETE_FONT_ACTION,
+            'getFonts' => $pref.Brizy_Admin_Fonts_Api::AJAX_GET_FONTS_ACTION,
+            'getAccount' => $pref.Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNT,
+            'getAccounts' => $pref.Brizy_Editor_Accounts_Api::BRIZY_GET_ACCOUNTS,
+            'addAccount' => $pref.Brizy_Editor_Accounts_Api::BRIZY_ADD_ACCOUNT,
+            'updateAccount' => $pref.Brizy_Editor_Accounts_Api::BRIZY_UPDATE_ACCOUNT,
+            'deleteAccount' => $pref.Brizy_Editor_Accounts_Api::BRIZY_DELETE_ACCOUNT,
+            'validateRecaptchaAccount' => $pref.Brizy_Editor_Forms_Api::AJAX_VALIDATE_RECAPTCHA_ACCOUNT,
+            'rulePostsGroupList' => $pref.Brizy_Admin_Rules_Api::RULE_POSTS_GROUP_LIST,
+            'ruleArchiveGroupList' => $pref.Brizy_Admin_Rules_Api::RULE_ARCHIVE_GROUP_LIST,
+            'ruleTemplateGroupList' => $pref.Brizy_Admin_Rules_Api::RULE_TEMPLATE_GROUP_LIST,
+            'symbolCreate' => $pref.Brizy_Admin_Symbols_Api::CREATE_ACTION,
+            'symbolUpdate' => $pref.Brizy_Admin_Symbols_Api::UPDATE_ACTION,
+            'symbolDelete' => $pref.Brizy_Admin_Symbols_Api::DELETE_ACTION,
+            'symbolList' => $pref.Brizy_Admin_Symbols_Api::LIST_ACTION,
+            'getDynamicContentPlaceholders' => $pref.Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
         );
 
         return $actions;
@@ -1928,250 +1938,250 @@ class Brizy_Editor_Editor_Editor
             __('Get Started', 'brizy') => [
                 [
                     'title' => __('Builder Overview', 'brizy'),
-                    'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4'
+                    'url' => $sourceUrl.'/1.+GET+STARTED/'.'1.+Builder+Overview.mp4',
                 ],
                 [
                     'title' => __('How to Build a Page', 'brizy'),
-                    'url' => $sourceUrl . '/1.+GET+STARTED/' . '2.+How+to+Build+a+Page.mp4'
+                    'url' => $sourceUrl.'/1.+GET+STARTED/'.'2.+How+to+Build+a+Page.mp4',
                 ],
                 [
                     'title' => __('Preview Publish Update', 'brizy'),
-                    'url' => $sourceUrl . '/1.+GET+STARTED/' . '3.+Preview,+publish+&+update.mp4'
+                    'url' => $sourceUrl.'/1.+GET+STARTED/'.'3.+Preview,+publish+&+update.mp4',
                 ],
                 [
                     'title' => __('Free vs PRO', 'brizy'),
-                    'url' => $sourceUrl . '/1.+GET+STARTED/' . '4.+Fress+vs+PRO.mp4'
-                ]
+                    'url' => $sourceUrl.'/1.+GET+STARTED/'.'4.+Fress+vs+PRO.mp4',
+                ],
             ],
             __('The Basics', 'brizy') => [
-                ['title' => __('Blocks', 'brizy'), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '1.+Blocks.mp4'],
+                ['title' => __('Blocks', 'brizy'), 'url' => $sourceUrl.'/2.+THE+BASICS/'.'1.+Blocks.mp4'],
                 [
                     'title' => __('Saved Blocks & Layouts', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '2.+Save+Blocks+&+Layouts.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'2.+Save+Blocks+&+Layouts.mp4',
                 ],
                 [
                     'title' => __('Premade Layouts', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '3.+Premade+Layouts.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'3.+Premade+Layouts.mp4',
                 ],
                 [
                     'title' => __('The Elements', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '4.+The+Elements.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'4.+The+Elements.mp4',
                 ],
                 [
                     'title' => __('Reorder Blocks', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '5.+Reorder+Blocks.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'5.+Reorder+Blocks.mp4',
                 ],
                 [
                     'title' => __('Global Styling', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '6.+Global+Styling.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'6.+Global+Styling.mp4',
                 ],
-                ['title' => __('Links', 'brizy'), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '7.+Links.mp4'],
-                ['title' => __('Fonts', 'brizy'), 'url' => $sourceUrl . '/2.+THE+BASICS/' . '8.+Fonts.mp4'],
+                ['title' => __('Links', 'brizy'), 'url' => $sourceUrl.'/2.+THE+BASICS/'.'7.+Links.mp4'],
+                ['title' => __('Fonts', 'brizy'), 'url' => $sourceUrl.'/2.+THE+BASICS/'.'8.+Fonts.mp4'],
                 [
                     'title' => __('Paddings & Margins', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '9.+Paddings+&+Margins.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'9.+Paddings+&+Margins.mp4',
                 ],
                 [
                     'title' => __('Responsive Design', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '10.+Responsive+Design.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'10.+Responsive+Design.mp4',
                 ],
                 [
                     'title' => __('Headers & Footers', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '11.+Headers+&+Footers.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'11.+Headers+&+Footers.mp4',
                 ],
                 [
                     'title' => __('Menus & Navigation', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '12.+Menus+&+Navigation.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'12.+Menus+&+Navigation.mp4',
                 ],
                 [
                     'title' => __('Global Blocks & Conditions', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '13.+Global+Blocks+&+Conditions.mp4'
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'13.+Global+Blocks+&+Conditions.mp4',
                 ],
                 [
                     'title' => __('Effects & Animations', 'brizy'),
-                    'url' => $sourceUrl . '/2.+THE+BASICS/' . '14.+Effects+&+Animations.mp4'
-                ]
+                    'url' => $sourceUrl.'/2.+THE+BASICS/'.'14.+Effects+&+Animations.mp4',
+                ],
             ],
             __('Dynamic Content', 'brizy') => [
                 [
                     'title' => __('Dynamic Elements', 'brizy'),
-                    'url' => $sourceUrl . '/3.+DYNAMIC+CONTENT/' . '1.+Dynamic+Elements.mp4'
-                ]
+                    'url' => $sourceUrl.'/3.+DYNAMIC+CONTENT/'.'1.+Dynamic+Elements.mp4',
+                ],
             ],
             __('Users & Membership', 'brizy') => [
                 [
                     'title' => __('Membership Blocks', 'brizy'),
-                    'url' => $sourceUrl . '/4.+USERS+&+MEMBERSHIP+BLOCKS/' . '1.+Membership+Blocks.mp4'
-                ]
+                    'url' => $sourceUrl.'/4.+USERS+&+MEMBERSHIP+BLOCKS/'.'1.+Membership+Blocks.mp4',
+                ],
             ],
             __('Marketing Tools', 'brizy') => [
                 [
                     'title' => __('The Popup Builder', 'brizy'),
-                    'url' => $sourceUrl . '/5.+MARKETING+TOOLS/' . '1.+The+Popup+Builder.mp4'
+                    'url' => $sourceUrl.'/5.+MARKETING+TOOLS/'.'1.+The+Popup+Builder.mp4',
                 ],
                 [
                     'title' => __('Contact Form & Integrations', 'brizy'),
-                    'url' => $sourceUrl . '/5.+MARKETING+TOOLS/' . '3.+Contact+Form+&+Integrations.mp4'
-                ]
+                    'url' => $sourceUrl.'/5.+MARKETING+TOOLS/'.'3.+Contact+Form+&+Integrations.mp4',
+                ],
             ],
             __('Cool Features', 'brizy') => [
                 [
                     'title' => __('Shortcuts', 'brizy'),
-                    'url' => $sourceUrl . '/6.+COOL+FEATURES/' . '1.+Shortcuts.mp4'
+                    'url' => $sourceUrl.'/6.+COOL+FEATURES/'.'1.+Shortcuts.mp4',
                 ],
                 [
                     'title' => __('Import & Export', 'brizy'),
-                    'url' => $sourceUrl . '/6.+COOL+FEATURES/' . '2.+Import+&+Export.mp4'
-                ]
+                    'url' => $sourceUrl.'/6.+COOL+FEATURES/'.'2.+Import+&+Export.mp4',
+                ],
             ],
             __('The Elements', 'brizy') => [
                 [
                     'title' => __('Rows & Columns', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '1.+Rows+&+Columns.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'1.+Rows+&+Columns.mp4',
                 ],
-                ['title' => __('Text', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '2.+Text.mp4'],
-                ['title' => __('Button', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '3.+Button.mp4'],
-                ['title' => __('Icon', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '4.+Icon.mp4'],
-                ['title' => __('Image', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '5.+Image.mp4'],
-                ['title' => __('Audio', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '6.+Audio.mp4'],
-                ['title' => __('Video', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '7.+Video.mp4'],
-                ['title' => __('Spacer', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '8.+Spacer.mp4'],
-                ['title' => __('Line', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '9.+Line.mp4'],
-                ['title' => __('Map', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '10.+Map.mp4'],
-                ['title' => __('Embed', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '11.+Embed.mp4'],
+                ['title' => __('Text', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'2.+Text.mp4'],
+                ['title' => __('Button', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'3.+Button.mp4'],
+                ['title' => __('Icon', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'4.+Icon.mp4'],
+                ['title' => __('Image', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'5.+Image.mp4'],
+                ['title' => __('Audio', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'6.+Audio.mp4'],
+                ['title' => __('Video', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'7.+Video.mp4'],
+                ['title' => __('Spacer', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'8.+Spacer.mp4'],
+                ['title' => __('Line', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'9.+Line.mp4'],
+                ['title' => __('Map', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'10.+Map.mp4'],
+                ['title' => __('Embed', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'11.+Embed.mp4'],
                 [
                     'title' => __('Icon Box', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '12.+Icon+Box.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'12.+Icon+Box.mp4',
                 ],
-                ['title' => __('Counter', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '13.+Counter.mp4'],
+                ['title' => __('Counter', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'13.+Counter.mp4'],
                 [
                     'title' => __('Countdown', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '14.+Countdown.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'14.+Countdown.mp4',
                 ],
-                ['title' => __('Tabs', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '15.+Tabs.mp4'],
+                ['title' => __('Tabs', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'15.+Tabs.mp4'],
                 [
                     'title' => __('Progress', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '16.+Progress.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'16.+Progress.mp4',
                 ],
                 [
                     'title' => __('Accordion', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '17.+Accordion.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'17.+Accordion.mp4',
                 ],
-                ['title' => __('Menu', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '18.+Menu.mp4'],
-                ['title' => __('Gallery', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '19.+Gallery.mp4'],
+                ['title' => __('Menu', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'18.+Menu.mp4'],
+                ['title' => __('Gallery', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'19.+Gallery.mp4'],
                 [
                     'title' => __('Carousel', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '20.+Carousel.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'20.+Carousel.mp4',
                 ],
-                ['title' => __('Rating', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '21.+Rating.mp4'],
+                ['title' => __('Rating', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'21.+Rating.mp4'],
                 [
                     'title' => __('Playlist', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '22.+Playlist.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'22.+Playlist.mp4',
                 ],
-                ['title' => __('Table', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '23.+Table.mp4'],
+                ['title' => __('Table', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'23.+Table.mp4'],
                 [
                     'title' => __('Timeline', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '24.+Timeline.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'24.+Timeline.mp4',
                 ],
                 [
                     'title' => __('Switcher', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '25.+Switcher.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'25.+Switcher.mp4',
                 ],
-                ['title' => __('Lottie', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '26.+Lottie.mp4'],
+                ['title' => __('Lottie', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'26.+Lottie.mp4'],
                 [
                     'title' => __('Login/register', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '27.+Login+&+Register.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'27.+Login+&+Register.mp4',
                 ],
                 [
                     'title' => __('Facebook', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '28.+Facebook.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'28.+Facebook.mp4',
                 ],
-                ['title' => __('Twitter', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '29.+Twitter.mp4'],
+                ['title' => __('Twitter', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'29.+Twitter.mp4'],
                 [
                     'title' => __('Comments', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '30.+Comments.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'30.+Comments.mp4',
                 ],
-                ['title' => __('Alert', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '31.+Alert.mp4'],
+                ['title' => __('Alert', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'31.+Alert.mp4'],
                 [
                     'title' => __('Calendly', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '32.+Calendly.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'32.+Calendly.mp4',
                 ],
-                ['title' => __('Search', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '33.+Search.mp4'],
+                ['title' => __('Search', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'33.+Search.mp4'],
                 [
                     'title' => __('Featured Image', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '34.+Featured+Image.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'34.+Featured+Image.mp4',
                 ],
-                ['title' => __('Title', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '35.+Title.mp4'],
-                ['title' => __('Excerpt', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '36.+Excerpt.mp4'],
-                ['title' => __('Info', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '37.+Info.mp4'],
+                ['title' => __('Title', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'35.+Title.mp4'],
+                ['title' => __('Excerpt', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'36.+Excerpt.mp4'],
+                ['title' => __('Info', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'37.+Info.mp4'],
                 [
                     'title' => __('Breadcrumbs', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '38.+Breadcrumbs.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'38.+Breadcrumbs.mp4',
                 ],
-                ['title' => __('Posts', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '39.+Posts.mp4'],
-                ['title' => __('Sidebar', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '40.+Sidebar.mp4'],
+                ['title' => __('Posts', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'39.+Posts.mp4'],
+                ['title' => __('Sidebar', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'40.+Sidebar.mp4'],
                 [
                     'title' => __('Shortcode', 'brizy'),
-                    'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '41.+Shortcode.mp4'
+                    'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'41.+Shortcode.mp4',
                 ],
-                ['title' => __('Archive', 'brizy'), 'url' => $sourceUrl . '/7.+THE+ELEMENTS/' . '42.+Archive.mp4']
+                ['title' => __('Archive', 'brizy'), 'url' => $sourceUrl.'/7.+THE+ELEMENTS/'.'42.+Archive.mp4'],
             ],
             __('Woocommerce Elements', 'brizy') => [
                 [
                     'title' => __('Products', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '1.+Products.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'1.+Products.mp4',
                 ],
-                ['title' => __('Cart', 'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '2.+Cart.mp4'],
+                ['title' => __('Cart', 'brizy'), 'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'2.+Cart.mp4'],
                 [
                     'title' => __('Categories', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '3.+Categories.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'3.+Categories.mp4',
                 ],
                 [
                     'title' => __('Pages', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '4.+Pages.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'4.+Pages.mp4',
                 ],
                 [
                     'title' => __('Content', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '5.+Content.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'5.+Content.mp4',
                 ],
                 [
                     'title' => __('Price', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '6.+Price.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'6.+Price.mp4',
                 ],
                 [
                     'title' => __('Gallery', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '7.+Gallery.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'7.+Gallery.mp4',
                 ],
                 [
                     'title' => __('Add to cart', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '8.+Add+to+Cart.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'8.+Add+to+Cart.mp4',
                 ],
                 [
                     'title' => __('Stock', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '9.+Stock.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'9.+Stock.mp4',
                 ],
-                ['title' => __('SKU', 'brizy'), 'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '10.+SKU.mp4'],
+                ['title' => __('SKU', 'brizy'), 'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'10.+SKU.mp4'],
                 [
                     'title' => __('Meta', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '11.+Meta.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'11.+Meta.mp4',
                 ],
                 [
                     'title' => __('Rating', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '12.+Rating.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'12.+Rating.mp4',
                 ],
                 [
                     'title' => __('Attributes', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '13.+Attributes.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'13.+Attributes.mp4',
                 ],
                 [
                     'title' => __('Upsell', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '14.+Upsell.mp4'
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'14.+Upsell.mp4',
                 ],
                 [
                     'title' => __('Reviews', 'brizy'),
-                    'url' => $sourceUrl . '/9.+WOOCOMMERCE+ELEMENTS/' . '15.+Reviews.mp4'
-                ]
-            ]
+                    'url' => $sourceUrl.'/9.+WOOCOMMERCE+ELEMENTS/'.'15.+Reviews.mp4',
+                ],
+            ],
         ];
 
         $editorHelpVideos = ['video' => []];
@@ -2185,24 +2195,25 @@ class Brizy_Editor_Editor_Editor
                 $nextId++;
             }
 
-	        $editorHelpVideos['video'][] = [
-		        'id'       => count( $editorHelpVideos['video'] ) . 'c', // we make the id different from the id of the videos. It is an issue in the react component
-		        'category' => $title,
-		        'items'    => $videos,
-	        ];
+            $editorHelpVideos['video'][] = [
+                'id' => count($editorHelpVideos['video']).'c',
+                // we make the id different from the id of the videos. It is an issue in the react component
+                'category' => $title,
+                'items' => $videos,
+            ];
         }
 
         $editorHelpVideos['header'] = [
-            'src' => $sourceUrl . '/Getting-started-video-thumb.jpg',
-            'url' => $sourceUrl . '/1.+GET+STARTED/' . '1.+Builder+Overview.mp4'
+            'src' => $sourceUrl.'/Getting-started-video-thumb.jpg',
+            'url' => $sourceUrl.'/1.+GET+STARTED/'.'1.+Builder+Overview.mp4',
         ];
 
-	    $editorHelpVideos['idHelpVideosIcons'] = [
-		    'addElementsHelpVideo'   => '7',
-		    'blocksLayoutsHelpVideo' => '6',
-		    'fontsHelpVideo'         => '11',
-		    'formHelpVideo'          => '21',
-	    ];
+        $editorHelpVideos['idHelpVideosIcons'] = [
+            'addElementsHelpVideo' => '7',
+            'blocksLayoutsHelpVideo' => '6',
+            'fontsHelpVideo' => '11',
+            'formHelpVideo' => '21',
+        ];
 
         return $editorHelpVideos;
     }
