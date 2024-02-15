@@ -5,22 +5,21 @@ import { t } from "@/utils/i18n";
 export const publish: Publish = {
   async handler(res, rej, args) {
     const { projectData, pageData, globalBlocks } = args;
+    const errors: Array<string> = [];
 
     if (projectData) {
       try {
         await updateProject(projectData, { is_autosave: 0 });
-        res(args);
       } catch (e) {
-        rej(t("Failed to update project"));
+        errors.push(t("Failed to update project"));
       }
     }
 
     if (pageData) {
       try {
         await updatePage(pageData, { is_autosave: 0 });
-        res(args);
       } catch (e) {
-        rej(t("Failed to update page"));
+        errors.push(t("Failed to update page"));
       }
     }
 
@@ -28,8 +27,14 @@ export const publish: Publish = {
       try {
         await updateGlobalBlocks(globalBlocks, { is_autosave: 0 });
       } catch (e) {
-        rej(t("Failed to update global blocks"));
+        errors.push(t("Failed to update global blocks"));
       }
+    }
+
+    if (errors.length > 0) {
+      rej(errors.join(";"));
+    } else {
+      res(args);
     }
   }
 };
