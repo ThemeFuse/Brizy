@@ -66,15 +66,14 @@ class Brizy_Editor_Compiler {
 
 	public function needsCompile( Brizy_Editor_Post $post ) {
 
-		if ( version_compare(
-			$t = str_replace( ['-wp','-beta2-wp'], '', $post->get_compiler_version() ),
-			$k = str_replace( ['-wp','-beta2-wp'], '', BRIZY_MINIMUM_COMPILER_VERSION ),
-			"<" ) ) {
+		$v1 = preg_replace("/(-wp)$/","",$post->get_compiler_version());
+		$v2 = preg_replace("/(-wp)$/","",BRIZY_MINIMUM_COMPILER_VERSION);
+
+		if ( version_compare($v1,$v2,"<" ) ) {
 			return true;
 		}
 
 		return false;
-
 		//return ! $post->isCompiledWithCurrentVersion() || $post->get_needs_compile();
 	}
 
