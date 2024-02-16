@@ -37,9 +37,7 @@ class Brizy_Editor_Compiler {
 		$this->urlBuilder->set_post_id( $post->getWpPostId() );
 		$editor_data   = $post->get_editor_data( true );
 		$compilerParam = $this->compilerParams( $editor_data, $editorConfig );
-
 		$httpClient = new Brizy_Editor_Http_Client();
-
 		$compilerResult = $httpClient->request( $this->compilerUrl, array( 'body' => $compilerParam ), 'POST' )
 		                             ->get_response_body();
 
@@ -123,17 +121,7 @@ class Brizy_Editor_Compiler {
 				'page_id'      => (int) $editorConfig['wp']['page'],
 				'free_version' => BRIZY_EDITOR_VERSION,
 				'free_url'     => $this->compilerDownloadUrl,
-				'config_json'  => json_encode( $editorConfig ),
-				'pages_json'   => json_encode(
-					array(
-						array(
-							'id'       => (int) $editorConfig['wp']['page'],
-							'data'     => $pageData,
-							'is_index' => true,
-						),
-					)
-				),
-				'project_json' => json_encode( $this->project->createResponse() ),
+				'config_json'  => json_encode( $editorConfig )
 			)
 		);
 	}

@@ -140,6 +140,8 @@ class Brizy_Admin_Blocks_Main {
 	 */
 	public function addPageGlobalBlocks( $config, $context ) {
 
+		if($context==Brizy_Editor_Editor_Editor::COMPILE_CONTEXT) return $config;
+
 		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 		$blocks       = $blockManager->getEntities( [ 'post_status' => 'any' ] );
 

@@ -174,12 +174,12 @@ class Brizy_Editor_Editor_Editor {
 				'featuredImage' => $this->getThumbnailData( $wp_post_id ),
 				'templates'     => $this->post->get_templates(),
 
-                'plugins' => array(
-                    'dummy' => true,
-                    'woocommerce' => self::get_woocomerce_plugin_info(),
-                ),
-                'hasSidebars' => count($wp_registered_sidebars) > 0,
-                'pageData' => apply_filters('brizy_page_data', array()),
+				'plugins'          => array(
+					'dummy'       => true,
+					'woocommerce' => self::get_woocomerce_plugin_info(),
+				),
+				'hasSidebars'      => count( $wp_registered_sidebars ) > 0,
+
                 'availableRoles' => Brizy_Admin_Membership_Membership::roleList(),
                 'usersCanRegister' => get_option('users_can_register'),
             ),
@@ -341,12 +341,14 @@ class Brizy_Editor_Editor_Editor {
 	}
 
 	private function addPageData( $config, $context ) {
-		$config['pageData'] = $this->post->createConfigData( $context );
 
+		$config['pageData'] = apply_filters( 'brizy_page_data',$this->post->createConfigData( $context ));
 		return $config;
 	}
 
 	private function addModuleGroups( $config, $context ) {
+		if($context==self::COMPILE_CONTEXT) return $config;
+
 		$moduleGroupCollector        = new Brizy_Editor_Editor_ModuleGroups_Manager();
 		$config['ui']['leftSidebar'] = array_merge( $config['ui']['leftSidebar'], [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ] );
 
@@ -355,6 +357,7 @@ class Brizy_Editor_Editor_Editor {
 
 
 	private function addProjectData( $config, $context ) {
+
 		$response              = Brizy_Editor_Project::get()->createResponse();
 		$response['data']      = json_decode( $response['data'] );
 		$config['projectData'] = $response;
