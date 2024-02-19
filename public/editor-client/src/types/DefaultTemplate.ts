@@ -52,7 +52,7 @@ export interface Block {
   blank?: string;
   position?: number;
   pro?: boolean;
-  kitId: string;
+  kitId?: string;
 }
 
 export interface BlockWithThumbs extends Block {
@@ -132,11 +132,6 @@ interface FontStyle {
 }
 
 // region Kits
-export interface KitCategories {
-  id: number;
-  title: string;
-}
-
 export interface DefaultTemplateKits<T1, T2, T3> {
   label?: string;
   getMeta: (res: Response<T1>, rej: Response<string>, kit: KitItem) => void;
@@ -204,6 +199,7 @@ export type APIPopup = {
   thumbnail: string;
   thumbnailHeight: number;
   thumbnailWidth: number;
+  blank?: string;
 };
 
 export interface Popups {

@@ -1,11 +1,11 @@
-import { Arr, Obj, Str } from "@brizy/readers";
 import { Config, getConfig } from "@/config";
+import { APIPopup } from "@/types/DefaultTemplate";
+import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
 import { ResponseWithBody } from "@/types/Response";
-import { ConfigDCItem } from "@/types/DynamicContent";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -15,8 +15,9 @@ import {
   SavedLayoutMeta
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
-import { Dictionary } from "../types/utils";
 import { t } from "@/utils/i18n";
+import { Arr, Obj, Str } from "@brizy/readers";
+import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
   GetCollections,
@@ -1259,6 +1260,31 @@ export const updateGlobalBlocks = async (
   } catch {
     throw new Error(t("Failed to update Global blocks"));
   }
+};
+
+//#endregion
+
+//#region Default Templates
+
+export const getPopups = async (
+  url: string
+): Promise<{
+  blocks: APIPopup[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const res = await fetch(`${url}/api/get-popups-chunk`).then((r) => r.json());
+
+  return {
+    blocks: res.collections,
+    categories: res.categories
+  };
+};
+
+export const getPopupData = async (url: string, id: string) => {
+  return await fetch(`${url}/api/get-popup-data?project_id=${id}`)
+    .then((r) => r.json())
+    .then((arr) => arr.pop())
+    .then((d) => JSON.parse(d.pageData).items.pop());
 };
 
 //#endregion

@@ -1,3 +1,4 @@
+import { getPopupData, getPopups } from "@/api";
 import { Config } from "../config";
 import {
   BlocksArray,
@@ -11,13 +12,13 @@ import {
   KitsWithThumbs,
   Layouts,
   LayoutsWithThumbs,
-  Popups,
   PopupsWithThumbs,
   Stories,
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
 import { tempConverterKit } from "./tempComverters";
+import { converterPopup, convertToCategories } from "./utils";
 
 const defaultKits = (
   config: Config
@@ -134,58 +135,28 @@ const defaultKits = (
 const defaultPopups = (
   config: Config
 ): DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID> => {
-  const { popupsUrl } = config.api.templates;
-  // const apiKitUrl = "https://b8dd-87-255-68-163.ngrok-free.app/api";
-  // const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
+  const { templatesUrl } = config.api.templates;
+
+  const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
+  const apiLayoutsUrl1 = "https://phplaravel-1109775-4184176.cloudwaysapps.com";
 
   return {
     async getMeta(res, rej) {
       try {
-        // region This is new logic
-        // const _meta = await fetch(`${apiKitUrl}/get-popups`).then((r) =>
-        //   r.json()
-        // );
-        //
-        // const data = converterPopup(_meta.collections, apiImageUrl);
-        // endregion
+        const { blocks, categories } = await getPopups(apiLayoutsUrl1);
 
-        // region This in temporary / this is new logic with old source
-        const meta: Popups = await fetch(`${popupsUrl}/meta.json`).then((r) =>
-          r.json()
-        );
+        const data = converterPopup(blocks, apiImageUrl);
 
-        const data = {
-          ...meta,
-          blocks: meta.blocks.map((item) => {
-            return {
-              ...item,
-              thumbnailSrc: `${popupsUrl}/thumbs/${item.id}.jpg`
-            };
-          })
-        };
-        // endregion
+        const convertedCategories = convertToCategories(categories);
 
-        res(data);
+        res({ ...data, categories: convertedCategories });
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
     },
     async getData(res, rej, kit) {
       try {
-        // region This is new logic
-        // const data = await fetch(
-        //   `${apiKitUrl}/get-popup-data?project_id=${kit.id}`
-        // )
-        //   .then((r) => r.json())
-        //   .then((arr) => arr.pop())
-        //   .then((d) => JSON.parse(d.pageData).items.pop());
-        // endregion
-
-        // region This in temporary / this is new logic with old source
-        const data = await fetch(`${popupsUrl}/resolves/${kit.id}.json`).then(
-          (r) => r.json()
-        );
-        // endregion
+        const data = await getPopupData(templatesUrl, kit.id);
 
         res(data);
       } catch (e) {
