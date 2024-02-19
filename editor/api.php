@@ -431,7 +431,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         try {
             $this->verifyNonce(self::nonce);
 
-            $data = stripslashes($this->param('data'));
+            $data = $this->sanitizeJson(stripslashes($this->param('data')));
             $atemplate = $this->param('template');
             $dataVersion = (int)stripslashes($this->param('dataVersion'));
             $status = stripslashes($this->param('status'));

@@ -230,7 +230,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 
 
         try {
-            $editorData = stripslashes($this->param('data'));
+            $editorData = $this->sanitizeJson(stripslashes($this->param('data')));
             $position = stripslashes($this->param('position'));
             $status = stripslashes($this->param('status'));
             $rulesData = stripslashes($this->param('rules'));
@@ -316,7 +316,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 $block->setMeta(stripslashes($this->param('meta')));
             }
             if ($this->param('data')) {
-				$data = stripslashes( $this->param( 'data' ) );
+				$data = $this->sanitizeJson(stripslashes( $this->param( 'data' ) ));
 	            if ( json_decode( $data ) !== null && ! json_last_error() ) {
 		            $block->set_editor_data( $data );
 	            }
@@ -422,10 +422,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 }
 
                 if (isset($this->param('data')[$i]) && !empty($this->param('data')[$i])) {
-	                $data = stripslashes( $this->param( 'data' )[ $i ] );
+	                $data = $this->sanitizeJson(stripslashes( $this->param( 'data' )[ $i ] ));
 
 	                if ( json_decode( $data ) !== null && ! json_last_error() ) {
-		                $block->set_editor_data( stripslashes( $this->param( 'data' )[ $i ] ) );
+		                $block->set_editor_data( $data );
 	                }
                 }
 
@@ -575,7 +575,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 	        	$block->setTags(stripslashes($this->param('tags')));
 	        }
 
-            $block->set_editor_data(stripslashes($this->param('data')));
+            $block->set_editor_data($this->sanitizeJson(stripslashes($this->param('data'))));
             $block->set_needs_compile(true);
             //$block->setCloudUpdateRequired( true );
             $block->save();
@@ -613,7 +613,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             $block->setDataVersion($this->param('dataVersion'));
 
             if ($this->param('data')) {
-                $block->set_editor_data(stripslashes($this->param('data')));
+                $block->set_editor_data($this->sanitizeJson(stripslashes($this->param('data'))));
             }
 
 
