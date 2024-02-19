@@ -51,7 +51,7 @@ class Brizy_Admin_Blocks_Main {
 		$is_view_page = Brizy_Public_Main::is_view_page( $post );
 		$compiler     = $post->get_compiler();
 
-		add_filter( 'brizy_compiler_params', array( $this, 'brizyCompilerParams' ) );
+		//add_filter( 'brizy_compiler_params', array( $this, 'brizyCompilerParams' ) );
 
 		if ( $is_view_page  ) {
 			add_action( 'wp_enqueue_scripts', [ $this, 'enqueueMatchedGlobalBlockAssets' ] );
@@ -66,15 +66,15 @@ class Brizy_Admin_Blocks_Main {
 		Brizy_Admin_Blocks_Api::_init();
 	}
 
-	public function brizyCompilerParams( $compilerParams ) {
-
-		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-		$blocks       = $blockManager->createEntityResponseForCompile( $blockManager->getEntities( [] ) );
-
-		$compilerParams['global_blocks_json'] = json_encode( $blocks );
-
-		return $compilerParams;
-	}
+//	public function brizyCompilerParams( $compilerParams ) {
+//
+//		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+//		$blocks       = $blockManager->createEntityResponseForCompile( $blockManager->getEntities( [] ) );
+//
+//		$compilerParams['global_blocks_json'] = json_encode( $blocks );
+//
+//		return $compilerParams;
+//	}
 
 	/**
 	 * Populated the global data for compiler
@@ -139,8 +139,6 @@ class Brizy_Admin_Blocks_Main {
 	 * @throws Exception
 	 */
 	public function addPageGlobalBlocks( $config, $context ) {
-
-		if($context==Brizy_Editor_Editor_Editor::COMPILE_CONTEXT) return $config;
 
 		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 		$blocks       = $blockManager->getEntities( [ 'post_status' => 'any' ] );
