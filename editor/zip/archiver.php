@@ -3,6 +3,7 @@
 class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 {
     use Brizy_Editor_Asset_AttachmentAware;
+	use Brizy_Editor_Trait_Sanitize;
 
     const ARCHIVE_TYPE_LAYOUT = 'layout';
     const ARCHIVE_TYPE_BLOCK = 'block';
@@ -201,7 +202,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
          */
         $block = $this->getManager($entityClass)->createEntity(md5(random_bytes(10)), 'publish');
         $block->set_needs_compile(true);
-        $block->set_editor_data($data->data);
+        $block->set_editor_data($this->sanitizeJson($data->data));
         $block->setMeta($data->meta);
 
         if (isset($data->title)) {
