@@ -63,7 +63,6 @@ class Brizy_Editor_Compiler {
 	}
 
 	public function needsCompile( Brizy_Editor_Post $post ) {
-		return true;
 		$v1 = preg_replace("/(-wp)$/","",$post->get_compiler_version());
 		$v2 = preg_replace("/(-wp)$/","",BRIZY_MINIMUM_COMPILER_VERSION);
 
