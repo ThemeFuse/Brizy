@@ -149,7 +149,7 @@ class Brizy_Admin_Blocks_Main {
 			$resultBlocks[] = Brizy_Editor_Block::get( $block->getWpPostId() );
 		}
 
-		$config['globalBlocks'] = $blockManager->createResponseForEntities( $resultBlocks );
+		$config['globalBlocks'] = $blockManager->createEntityResponseForCompile( $resultBlocks, [], $context );
 
 		return $config;
 

@@ -143,10 +143,10 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	 *
 	 * @return array
 	 */
-	public function createResponseForEntities( $entities, $fields = [] ) {
+	public function createResponseForEntities( $entities, $fields = [] , $context=Brizy_Editor_Editor_Editor::EDITOR_CONTEXT) {
 		$response = [];
 		foreach ( $entities as $entity ) {
-			$response[] = $entity->createResponse( $fields );
+			$response[] = $entity->createResponse( $fields, $context );
 		}
 		return $response;
 	}
@@ -154,8 +154,10 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	public function createEntityResponseForCompile( $entities, $fields = [] ) {
 		$response = [];
 		foreach ( $entities as $entity ) {
-			$data  = $entity->createResponse( $fields );
-			$data['data'] = base64_decode($data['data']);
+			/**
+			 * @var Brizy_Editor_Entity $entity;
+			 */
+			$data  = $entity->createResponse( $fields, Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
 			$response[] = $data;
 		}
 		return $response;

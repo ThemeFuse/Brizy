@@ -110,28 +110,28 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 */
 	public static function get( $postId = null, $uid = null ) {
 
-		if ( isset(self::$instance[$postId]) ) {
-			return self::$instance[$postId];
+		if ( isset( self::$instance[ $postId ] ) ) {
+			return self::$instance[ $postId ];
 		}
 
 		try {
-			$wp_post = self::getPost($postId);
+			$wp_post = self::getPost( $postId );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
 			throw $e;
 		}
 
-		return self::$instance[$postId] = new self( $wp_post );
+		return self::$instance[ $postId ] = new self( $wp_post );
 	}
 
 	/**
 	 * @return false|WP_Post
 	 * @throws Exception
 	 */
-	static protected function getPost($postId=null) {
+	static protected function getPost( $postId = null ) {
 		global $wpdb;
 
-		if($postId) {
+		if ( $postId ) {
 			return WP_Post::get_instance( $postId );
 		}
 
@@ -237,7 +237,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	/**
 	 * This will be returned by api when project is requested
 	 */
-	public function createResponse( $fields = array() ) {
+	public function createResponse( $fields = array(), $context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT ) {
 		$data = array(
 			'id'          => $this->getId(),
 			'data'        => $this->getDataAsJson(),
@@ -615,7 +615,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity {
 	 */
 	public function setCompiledStyles( $compiledStyles ) {
 
-		$this->isDataChanged = $compiledStyles !== $this->compiledStyles;
+		$this->isDataChanged  = $compiledStyles !== $this->compiledStyles;
 		$this->compiledStyles = $compiledStyles;
 
 		return $this;
