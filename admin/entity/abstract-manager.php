@@ -151,7 +151,7 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 		return $response;
 	}
 
-	public function createEntityResponseForCompile( $entities, $fields = [] ) {
+	public function createEntityResponseForCompile( $entities, $fields = []) {
 		$response = [];
 		foreach ( $entities as $entity ) {
 			/**
