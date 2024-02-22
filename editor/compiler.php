@@ -39,9 +39,7 @@ class Brizy_Editor_Compiler {
 		$compilerParam = $this->compilerParams( $editor_data, $editorConfig );
 		$httpClient = new Brizy_Editor_Http_Client();
 		$compilerResult = $httpClient->request( $this->compilerUrl, array( 'body' => $compilerParam ), 'POST' )
-		                             ->get_response_body();
-
-		if ( ! is_array( $compilerResult ) ) {
+		                             ->get_response_body();if ( ! is_array( $compilerResult ) ) {
 			throw new UnexpectedValueException( 'The compiler response body is invalid' );
 		}
 
@@ -63,6 +61,7 @@ class Brizy_Editor_Compiler {
 	}
 
 	public function needsCompile( Brizy_Editor_Post $post ) {
+		return true;
 		$v1 = preg_replace("/(-wp)$/","",$post->get_compiler_version());
 		$v2 = preg_replace("/(-wp)$/","",BRIZY_MINIMUM_COMPILER_VERSION);
 

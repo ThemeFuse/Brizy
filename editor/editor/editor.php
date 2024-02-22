@@ -117,7 +117,6 @@ class Brizy_Editor_Editor_Editor {
 			admin_url( 'admin-post.php?post='.$this->post->getWpPostId().'&action=_brizy_change_template' )
 		);
 		$mode                = $this->getMode( $parent_post_type );
-		$assetsUrl           = $context == self::COMPILE_CONTEXT ? Brizy_Config::EDITOR_BUILD_RELATIVE_PATH : $this->urlBuilder->editor_build_url();
 
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
 		$config            = array(
@@ -137,7 +136,7 @@ class Brizy_Editor_Editor_Editor {
 			'urls'            => array(
 				'site'               => home_url(),
 				'api'                => home_url( '/wp-json/v1' ),
-				'assets'             => $assetsUrl,
+				'assets'             => $this->urlBuilder->plugin_relative_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH, __FILE__),
 				'image'              => $this->urlBuilder->external_media_url() . "",
 				'blockThumbnails'    => $this->urlBuilder->external_asset_url( 'thumbs' ) . "",
 				'templateThumbnails' => $this->urlBuilder->external_asset_url( 'thumbs' ) . "",

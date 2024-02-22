@@ -56,7 +56,6 @@ class Brizy_Content_Placeholders_GlobalBlocks extends Brizy_Content_Placeholders
 	 */
 	private function returnBlocksContent( array $blocks ) {
 
-
 		$content = "";
 		foreach ( $blocks as $block ) {
 			/**
