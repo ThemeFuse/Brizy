@@ -276,9 +276,20 @@ const defaultLayouts = (
     },
     async getData(res, rej, id) {
       try {
-        const data = await fetch(`${layoutsUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
-        );
+        const layout: BlocksArray<DefaultBlockWithID> = await fetch(
+          `${layoutsUrl}/resolves/${id}.json`
+        ).then((r) => r.json());
+
+        const data = {
+          blocks: layout.blocks.map((b) => ({
+            ...b,
+            value: {
+              ...b.value,
+              // cloud screenshot url should be changed to config value
+              _thumbnailSrc: `https://cloud-1de12d.b-cdn.net/screenshot/${b.value._thumbnailSrc}?t=${b.value._thumbnailTime}`
+            }
+          }))
+        };
 
         res(data);
       } catch (e) {

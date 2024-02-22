@@ -9,7 +9,7 @@ export interface DefaultTemplate<T1, T2> {
   label?: string;
   getMeta: (res: Response<T1>, rej: Response<string>) => void;
   getData: (
-    res: Response<Promise<T2>>,
+    res: Response<Promise<T2> | T2>,
     rej: Response<string>,
     blockID: string
   ) => void;
