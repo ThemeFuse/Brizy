@@ -66,7 +66,7 @@ class Brizy_Editor_UrlBuilder
             $path = '/'.ltrim($path, '/');
         }
 
-        return rtrim(plugin_dir_url($__FILE__), "/").$path;
+        return BRIZY_PLUGIN_URL.$path;
     }
 
     /**
