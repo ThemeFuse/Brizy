@@ -327,12 +327,11 @@ class Brizy_Editor_UrlBuilder
         return $this->plugin_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH.$path);
     }
 
-    public function plugin_relative_url($path = '', $__FILE__ = '')
+    public function plugin_relative_url($path = '', $__FILE__ = __FILE__)
     {
         if ($path) {
             $path = '/'.ltrim($path, '/');
         }
-
         $pluginUrl = $this->plugin_url($path, $__FILE__);
 
         $pluginUrl = str_replace(home_url(), "", $pluginUrl);
