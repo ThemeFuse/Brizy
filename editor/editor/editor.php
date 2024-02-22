@@ -125,8 +125,7 @@ class Brizy_Editor_Editor_Editor
         $config = array(
             'user' => array(
                 'role' => 'admin',
-                'isAuthorized' => $this->project->getMetaValue('brizy-cloud-token') !== null,
-                'allowScripts' => $this->isUserAllowedToAddScripts($context),
+                'isAuthorized' => $this->project->getMetaValue('brizy-cloud-token') !== null
             ),
             'project' => array(
                 'id' => $this->project->getId(),
@@ -1886,34 +1885,6 @@ class Brizy_Editor_Editor_Editor
         }
 
         return $response;
-    }
-
-    /**
-     * Do not use: $userId = get_post_meta( $this->post->getWpPostId(), '_edit_last', true );
-     * This meta _edit_last is often deleted by plugins dealing with optimize database
-     *
-     * @param $context
-     *
-     * @return bool
-     */
-    private function isUserAllowedToAddScripts($context)
-    {
-
-        if ($context == self::COMPILE_CONTEXT) {
-
-            $userId = $this->post->getLastUserEdited();
-
-            if ($userId === null) {
-                return true;
-            }
-
-        } else {
-            $userId = get_current_user_id();
-        }
-
-        $userCan = user_can($userId, 'unfiltered_html');
-
-        return $userCan;
     }
 
     private function getImgSizes()

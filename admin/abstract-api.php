@@ -5,6 +5,8 @@
  */
 abstract class Brizy_Admin_AbstractApi {
 
+	use Brizy_Editor_Trait_Sanitize;
+
 	abstract protected function initializeApiActions();
 
 	abstract protected function getRequestNonce();

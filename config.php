@@ -33,7 +33,7 @@ class Brizy_Config {
 	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/' . BRIZY_EDITOR_VERSION;
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
-	const CLOUD_ENDPOINT = 'https://www.brizy.cloud';
+	const CLOUD_ENDPOINT = 'https://admin.brizy.io';
 	const CLOUD_EDITOR_VERSIONS = '/api/versions';
 	const CLOUD_LIBRARY = '/dev/library';
 	const CLOUD_SIGNIN = '/api/sign_ins';
@@ -74,7 +74,7 @@ class Brizy_Config {
 	static public function getEditorBaseUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'https://www.brizy.cloud',
+				'https://admin.brizy.io',
 				'http://media1.brizycompiler.run',
 				'http://media2.brizycompiler.run'
 			)
@@ -82,7 +82,7 @@ class Brizy_Config {
 	}
 
 	static public function getFontsUrl() {
-		return "https://www.brizy.cloud/fonts/wp?path=%s";
+		return "https://admin.brizy.io/fonts/wp?path=%s";
 	}
 
 	static public function getCompilerDownloadUrl() {
