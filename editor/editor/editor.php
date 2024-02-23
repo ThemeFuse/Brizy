@@ -184,11 +184,12 @@ class Brizy_Editor_Editor_Editor
                 'usersCanRegister' => get_option('users_can_register'),
             ),
             'mode' => $mode,
-            'applications' => array(
+            'integrations' => array(
                 'form' => array(
-                    'submitUrl' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
+                    'action' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
                             Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
                         ),
+                    'showIntegrations' => true
                 ),
             ),
             'server' => array(
