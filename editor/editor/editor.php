@@ -128,7 +128,7 @@ class Brizy_Editor_Editor_Editor
             admin_url('admin-post.php?post='.$this->post->getWpPostId().'&action=_brizy_change_template')
         );
         $mode = $this->getMode($parent_post_type);
-        $assetUrl = str_replace(home_url(), '', BRIZY_PLUGIN_URL);;
+        $assetUrl = BRIZY_PLUGIN_URL;
         $heartBeatInterval = (int)apply_filters('wp_check_post_lock_window', 150);
         $config = array(
             'user' => array(

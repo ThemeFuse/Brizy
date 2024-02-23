@@ -301,7 +301,7 @@ class Brizy_Public_AssetEnqueueManager {
 
 	private function getAssetUrl( Asset $asset ) {
 
-		if ( strpos( $asset->getUrl(), '://' ) ) {
+		if ( strpos( $asset->getUrl(), '://' )!==false ) {
 			return $asset->getUrl();
 		}
 
