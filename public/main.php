@@ -70,16 +70,13 @@ class Brizy_Public_Main
 
     public function previewMode()
     {
-
-        if (!self::is_view_page($this->post)) {
+        if (!self::is_view_page($this->post) || is_ajax()) {
             return;
         }
 
         do_action('brizy_preview_mode', $this->post);
 
-        if ($this->post->get_compiler() == Brizy_Editor_Entity::COMPILER_EXTERNAL) {
-            $this->preparePost();
-        }
+		$this->preparePost();
 
         add_action('template_include', array($this, 'templateIncludeForEditor'), 10000);
         remove_filter('the_content', 'wpautop');
@@ -473,6 +470,9 @@ class Brizy_Public_Main
 //				$is_preview = false;
 //			}
 //		}
+		if ($this->post->get_compiler() !== Brizy_Editor_Entity::COMPILER_EXTERNAL) {
+			return;
+		}
 
         try {
             $compiler = new Brizy_Editor_Compiler(
