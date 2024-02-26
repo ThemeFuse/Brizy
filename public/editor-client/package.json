@@ -25,6 +25,7 @@
   "devDependencies": {
     "@babel/parser": "^7.21.8",
     "@babel/traverse": "^7.21.5",
+    "@brizy/readers": "^1.0.1",
     "@types/backbone": "^1.4.15",
     "@types/jest": "^29.5.1",
     "@types/lodash": "^4.14.198",

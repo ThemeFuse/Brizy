@@ -90,6 +90,9 @@ class Brizy_Editor_Editor_Editor
             'url' => set_url_scheme(admin_url('admin-ajax.php')),
             'actions' => $this->getApiActions(),
             'pageId' => $this->post->getWpPostId(),
+            'project' => array(
+                'status' => $this->getProjectStatus(),
+            ),
         ];
 
         $config = $this->getApiConfigFields($config, $context);

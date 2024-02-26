@@ -156,6 +156,51 @@ export function updateProject(
   return persistentRequest(url, { method: "POST", body });
 }
 
+export async function addProjectLockedBeacon({
+  lockProject,
+  url: _url,
+  hash,
+  version
+}: {
+  lockProject: string;
+  url: string;
+  hash: string;
+  version: string;
+}) {
+  try {
+    const url = makeUrl(_url, {
+      version,
+      hash,
+      action: lockProject
+    });
+
+    await request(url, {
+      method: "GET"
+    });
+  } catch (e) {
+    throw new Error("API Client: Fail to lock project");
+  }
+}
+
+export function removeProjectLockedSendBeacon({
+  removeLock,
+  url: _url,
+  version
+}: {
+  removeLock: string;
+  url: string;
+  version: string;
+}) {
+  return () => {
+    navigator.sendBeacon(
+      makeUrl(_url, {
+        action: removeLock,
+        version
+      })
+    );
+  };
+}
+
 //#endregion
 
 //#region Attachment byId
