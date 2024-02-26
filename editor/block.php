@@ -79,7 +79,7 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		return self::$block_instance[ $wp_post_id ] = new self( $wp_post_id, $uid );
 	}
 
-	public function createResponse( $fields = array(),$context=Brizy_Editor_Editor_Editor::EDITOR_CONTEXT ) {
+	public function createResponse( $fields = array(), $context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT ) {
 		if ( empty( $fields ) ) {
 			$fields = array(
 				'uid',
@@ -115,7 +115,11 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 		}
 
 		if ( in_array( 'data', $fields ) ) {
-			$global['data'] = $this->get_editor_data($context==Brizy_Editor_Editor_Editor::COMPILE_CONTEXT);
+			if ( $this->getWpPost()->post_type == Brizy_Admin_Blocks_Main::CP_SAVED ) {
+				$global['data'] = $this->get_editor_data( true );
+			} else {
+				$global['data'] = $this->get_editor_data( $context == Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
+			}
 		}
 
 		if ( in_array( 'meta', $fields ) ) {
