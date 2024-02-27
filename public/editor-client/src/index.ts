@@ -14,11 +14,12 @@ import {
 } from "./defaultTemplates";
 import { placeholders } from "./dynamicContent";
 import { handler as posts } from "./Elements/Posts";
+import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
 import { onStartLoad } from "./onStartLoad";
-import { popupConditions } from "./popupConditions";
+import {popupConditions } from "./popupConditions";
 import { publish } from "./publish";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
@@ -58,7 +59,8 @@ const api = {
   collectionTypes: {
     loadCollectionTypes
   },
-  screenshots: screenshots()
+  screenshots: screenshots(),
+  heartBeat: heartBeat(config)
 };
 
 if (window.__VISUAL_CONFIG__) {
