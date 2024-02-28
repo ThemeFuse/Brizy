@@ -1,3 +1,4 @@
+import { Literal } from "../utils/types";
 import { Response } from "./Response";
 
 export interface DefaultBlock {
@@ -131,6 +132,10 @@ interface FontStyle {
   tabletLineHeight: number;
 }
 
+export type CustomTemplatePage = TemplatePageWithThumbs & {
+  [key: string]: string;
+};
+
 // region Kits
 export interface KitCategories {
   id: number;
@@ -185,6 +190,61 @@ export type Kit = {
 };
 // endregion
 
+// region Layouts Type
+export interface LayoutTemplate {
+  blank?: boolean;
+  name: string;
+  cat: Array<Literal>;
+  color: string;
+  pagesCount: number;
+  pro: boolean;
+  keywords: string;
+}
+
+export interface LayoutTemplateWithThumbs extends LayoutTemplate {
+  thumbnailSrc: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+export interface LayoutsDefaultTemplate<T1, T2, T3> {
+  label?: string;
+  getMeta: (res: Response<T1>, rej: Response<string>) => void;
+  getData: (
+    res: Response<T2>,
+    rej: Response<string>,
+    page: CustomTemplatePage
+  ) => void;
+  getPages: (res: Response<T3>, rej: Response<string>, id: string) => void;
+}
+
+export interface LayoutsPages {
+  pages: CustomTemplatePage[];
+  styles: Style[];
+}
+
+export interface LayoutsPageAPI {
+  title: string;
+  slug: string;
+  thumbs: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+export interface LayoutsAPI {
+  title: string;
+  pro: string;
+  categories: string;
+  pagesCount: string;
+  slug: string;
+  thumbnail: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+  keywords: string;
+  color: string;
+}
+// endregion
+
 // region Popups
 export interface DefaultTemplatePopup<T1, T2> {
   label?: string;
@@ -213,5 +273,39 @@ export interface Popups {
 
 export interface PopupsWithThumbs extends Omit<Popups, "blocks"> {
   blocks: Array<BlockWithThumbs>;
+}
+// endregion
+
+// region Pages
+export interface PagesAPI {
+  title: string;
+  slug: string;
+  categories: string;
+  thumbnail: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+export interface PagesDefaultTemplate<T1, T2> {
+  label?: string;
+  getMeta: (res: Response<T1>, rej: Response<string>) => void;
+  getData: (
+    res: Response<T2>,
+    rej: Response<string>,
+    page: CustomTemplatePage
+  ) => void;
+}
+
+export interface Pages {
+  blocks: Array<PagesTemplate>;
+  categories: Pick<Categories, "id" | "title">[];
+}
+
+export interface PagesTemplate {
+  title: string;
+  slug: string;
+  cat: Array<Literal>;
+  thumbnailSrc: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
 }
 // endregion
