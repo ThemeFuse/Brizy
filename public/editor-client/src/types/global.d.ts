@@ -12,6 +12,8 @@ import {
   KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
+  Pages,
+  PagesDefaultTemplate,
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./DefaultTemplate";
@@ -152,6 +154,7 @@ export interface VISUAL_CONFIG {
       StoriesWithThumbs,
       BlocksArray<DefaultBlock> | DefaultBlock
     >;
+    defaultPages?: PagesDefaultTemplate<Pages, BlocksArray<DefaultBlock>>;
 
     //Collection Items
     collectionItems?: {
