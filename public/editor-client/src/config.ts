@@ -1,12 +1,9 @@
-import { Bool } from "@brizy/readers";
+import { Arr, Obj, Str, Bool} from "@brizy/readers";
 import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
 import { PLUGIN_ENV } from "./types/global";
 import { pipe } from "./utils/fp/pipe";
 import { onNullish } from "./utils/onNullish";
-import * as Arr from "./utils/reader/array";
-import * as Obj from "./utils/reader/object";
-import * as Str from "./utils/reader/string";
 import { throwOnNullish } from "./utils/throwOnNullish";
 import { MValue } from "./utils/types";
 
