@@ -18,6 +18,10 @@ export interface EkklesiaFields {
   smallgroupsLvl: EkklesiaParentsChilds;
 }
 
+export interface EkklesiaExtra {
+  find_group?: string;
+}
+
 export interface EkklesiaParentsChilds {
   parents: Record<string, Literal>;
   childs: Record<string, Literal>;
