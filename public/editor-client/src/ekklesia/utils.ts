@@ -3,6 +3,7 @@ import { makeUrl } from "api/utils";
 import { ChoicesSync } from "types/Choices";
 import {
   EkklesiaChoiceParamsWithSubKey,
+  EkklesiaExtra,
   EkklesiaFields,
   EkklesiaParams,
   EkklesiaParentsChilds,
@@ -44,11 +45,12 @@ export const getFields = async <
   T extends keyof EkklesiaFields = keyof EkklesiaFields
 >(
   _url: string,
-  keys: EkklesiaParams<T>
+  keys: EkklesiaParams<T>,
+  extra?: EkklesiaExtra
 ): Promise<ChoicesSync> => {
   const { key } = keys;
 
-  const url = makeUrl(_url, { module: key });
+  const url = makeUrl(_url, { module: key, ...extra });
 
   const { data = {} } = await requestFields(url);
   const field = data[key];

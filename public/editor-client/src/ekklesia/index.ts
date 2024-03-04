@@ -1,6 +1,7 @@
 import { Config } from "config";
 import { ChoicesAsync, ChoicesSync } from "types/Choices";
 import {
+  EkklesiaExtra,
   EkklesiaFieldMap,
   EkklesiaFields,
   EkklesiaKeys,
@@ -14,7 +15,8 @@ export const getEkklesiaFields = (config: Config) => ({
   async handler<T extends keyof EkklesiaFields = keyof EkklesiaFields>(
     res: Response<ChoicesAsync | ChoicesSync>,
     rej: Response<string>,
-    keys: EkklesiaParams<T>
+    keys: EkklesiaParams<T>,
+    extra?: EkklesiaExtra
   ): Promise<void> {
     const { ekklesiaApiUrl } = config.api;
     if (!ekklesiaApiUrl) {
@@ -25,7 +27,7 @@ export const getEkklesiaFields = (config: Config) => ({
       return;
     }
     try {
-      const fields = await getFields(ekklesiaApiUrl, keys);
+      const fields = await getFields(ekklesiaApiUrl, keys, extra);
       res(fields);
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
@@ -42,7 +44,8 @@ export const updateEkklesiaFields = (config: Config) => ({
     rej: Response<string>,
     keys: {
       fields: Array<EkklesiaFieldMap[T]>;
-    }
+    },
+    extra?: EkklesiaExtra
   ): Promise<void> {
     const { ekklesiaApiUrl } = config.api;
 
@@ -57,7 +60,11 @@ export const updateEkklesiaFields = (config: Config) => ({
     const dataToChange: EkklesiaKeys = {};
     try {
       for (const field of keys.fields) {
-        const choiches = await getFields<T>(ekklesiaApiUrl, field.module);
+        const choiches = await getFields<T>(
+          ekklesiaApiUrl,
+          field.module,
+          extra
+        );
 
         if (!choiches.length) continue;
 
