@@ -43,6 +43,12 @@ export interface PLUGIN_ENV {
   };
   l10n?: Record<string, string>;
   collectionTypes?: CollectionType[];
+  project?: {
+    status?: {
+      locked?: boolean;
+      lockedBy?: boolean | { user_email: string };
+    };
+  };
 }
 
 export interface VISUAL_CONFIG {
@@ -66,6 +72,8 @@ export interface VISUAL_CONFIG {
   //#endregion
 
   //#region Events
+
+  onStartLoad?: VoidFunction;
 
   onAutoSave?: (data: AutoSave) => void;
 
