@@ -14,9 +14,6 @@ export function toolbarImageTags({ devices = "all", gallery, enableTags }) {
       ),
       position: "top-end"
     },
-    config: {
-      size: "large"
-    },
     placeholder: t("art, nature, etc."),
     devices,
     disabled: !inGallery || !enableTags

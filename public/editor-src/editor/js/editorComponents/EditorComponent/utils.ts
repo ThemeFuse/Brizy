@@ -1,23 +1,57 @@
+import deepMerge from "deepmerge";
+import { mPipe } from "fp-utilities";
 import { getIn } from "timm";
-import { intersection } from "underscore";
+import { flatten, intersection, isEmpty } from "underscore";
 import {
   ElementDefaultValue,
   ElementModel
 } from "visual/component/Elements/Types";
+import { FromElementModelGetter } from "visual/component/Options/Type";
+import { OptionName, OptionValue } from "visual/component/Options/types";
+import { fromElementModel } from "visual/component/Options/types/utils/fromElementModel";
+import { toElementModel } from "visual/component/Options/types/utils/toElementModel";
+import { isOption } from "visual/component/Options/utils";
+import {
+  ParsedToolbarData,
+  ToolbarConfig
+} from "visual/editorComponents/EditorComponent/types";
 import {
   OptionDefinition,
-  ToolbarItemType
+  ToolbarItemType,
+  is as isToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import Shortcodes from "visual/shortcodeComponents";
-import { DeviceMode } from "visual/types";
+import { DeviceMode, UserRole } from "visual/types";
 import { Dictionary } from "visual/types/utils";
 import * as Device from "visual/utils/devices";
-import { getDevice, supportsMode } from "visual/utils/devices";
+import {
+  ALL,
+  DESKTOP as DesktopDevice,
+  RESPONSIVE,
+  getDevice,
+  supportsMode
+} from "visual/utils/devices";
 import { IS_PRO } from "visual/utils/env";
+import { findDeep } from "visual/utils/object";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { defaultValueKey2 } from "visual/utils/onChange/device";
+import { filter } from "visual/utils/options/filter";
+import { hasChilds } from "visual/utils/options/match";
+import { getChildOptions } from "visual/utils/options/match/utils";
+import { reduce } from "visual/utils/options/reduce";
 import * as Obj from "visual/utils/reader/object";
 import * as Responsive from "visual/utils/responsiveMode";
+import {
+  DESKTOP,
+  MOBILE,
+  ResponsiveMode,
+  TABLET
+} from "visual/utils/responsiveMode";
 import { camelCase } from "visual/utils/string";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
+import * as Literal from "visual/utils/types/Literal";
+import { isT } from "visual/utils/value";
+import { isNullish } from "visual/utils/value";
 
 /**
  * Create an complete option id that consists from 2 parts: base id and suffix
@@ -139,6 +173,7 @@ export const makeToolbarPropsFromConfigDefaults = (
 interface FlattenDefaultValueFn {
   (keys: string[]): (defaultValue: ElementDefaultValue) => ElementModel;
 }
+
 export const flattenDefaultValue_: FlattenDefaultValueFn = (keys) => {
   const keysMap: Dictionary<boolean> = keys.reduce((acc, k) => {
     acc[k] = true;
@@ -203,6 +238,44 @@ export const filterToolbarItems =
     return true;
   };
 
+export const filterOptions = (
+  device: DeviceMode,
+  role: UserRole
+): ((o: OptionDefinition) => OptionDefinition) =>
+  // @ts-expect-error, OptionDefinition type is not same ToolbarItemType, but it extends.
+  // Anyway, we need to fix this
+  filter(filterToolbarItems(device, role));
+
+export const filterProOptions = (isPro: boolean) =>
+  filter((item) => !(item.isPro === true && isPro === false));
+
+// INFO: we don't use options "filter" function because this returns popover with filtered options inside
+export const filterCSSOptions = (
+  options: ToolbarItemType[]
+): ToolbarItemType[] => {
+  return flatten(
+    options.map((o) => {
+      const opt = Obj.read(o);
+
+      if (opt) {
+        if (Obj.hasSomeKey(["selector", "style"], opt)) {
+          return opt;
+        }
+
+        const isToolbarItem = isToolbarItemType(
+          (o) => Obj.isObject(o) && Obj.hasKey("id", o)
+        )(opt);
+
+        if (isToolbarItem && hasChilds(opt)) {
+          const childOptions = getChildOptions(opt);
+
+          return filterCSSOptions(childOptions);
+        }
+      }
+    })
+  ).filter(isT) as ToolbarItemType[];
+};
+
 export const getProTitle = (
   type: NoEmptyString,
   model: ElementModel
@@ -231,3 +304,153 @@ export const getProTitle = (
 
   return undefined;
 };
+
+function getKey(id: string, key: string) {
+  return defaultValueKey({
+    device: DESKTOP,
+    state: "normal",
+    key: createOptionId(id, key)
+  });
+}
+
+function generateKeyValue<T extends OptionName>({
+  value,
+  devices
+}: {
+  value: Partial<OptionValue<T>>;
+  devices?: Device.Device;
+}): Record<string, Partial<OptionValue<T>>> {
+  // generate keys for device based on :
+  // device === RESPONSIVE => ["tablet", "mobile"]
+  // all || desktop || undefined => ["desktop"]
+  const modes = devices === "responsive" ? [MOBILE, TABLET] : [DESKTOP];
+
+  return Object.keys(value).reduce(
+    (acc, key) => ({
+      ...acc,
+      ...modes.reduce((acc, device) => {
+        return {
+          ...acc,
+          // at the moment we need to generate only keys per device, without state
+          [defaultValueKey2({ key, device, state: "normal" })]:
+            value[key as keyof typeof value]
+        };
+      }, {})
+    }),
+    {}
+  );
+}
+
+function parseOption(
+  acc: ParsedToolbarData,
+  option: ToolbarItemType
+): ParsedToolbarData {
+  const elementModel = toElementModel(option.type, (key) =>
+    getKey(option.id, key)
+  );
+  const getModel = fromElementModel(option.type);
+
+  const getter: FromElementModelGetter = (k) => {
+    const v = Obj.read(option.default);
+
+    if (v) {
+      const getValue = mPipe(Obj.readKey(k), Literal.read);
+      return getValue(v);
+    }
+
+    return Literal.read(option.default);
+  };
+
+  const optionModel = elementModel(getModel(getter));
+  if (isNullish(optionModel)) {
+    return acc;
+  }
+  // Stringify parse because some values is undefined
+  const value = JSON.parse(JSON.stringify(optionModel));
+  if (isEmpty(value)) {
+    return acc;
+  }
+
+  const defaultValues = generateKeyValue<OptionName>({
+    value: value,
+    devices: option.devices
+  });
+
+  return {
+    dv: { ...acc.dv, ...defaultValues },
+    DCKeys: [
+      ...acc.DCKeys,
+      ...(option.hasOwnProperty("population") ? [option.id] : [])
+    ]
+  };
+}
+
+export function getToolbarData(toolbar?: ToolbarItemType[]): ParsedToolbarData {
+  const data = { dv: {}, DCKeys: [] };
+
+  if (!toolbar) {
+    return data;
+  }
+
+  return deepMerge.all(
+    toolbar.map((option) => reduce(parseOption, data, option))
+  ) as ParsedToolbarData;
+}
+
+const responsiveModeByDevice = {
+  [DesktopDevice]: [DESKTOP],
+  [RESPONSIVE]: [TABLET, MOBILE],
+  [ALL]: [DESKTOP, TABLET, MOBILE]
+};
+
+export function getResponsiveModeByDevice({
+  optionDevices = ALL,
+  currentDevice
+}: {
+  optionDevices?: Device.Device;
+  currentDevice: ResponsiveMode;
+}): ResponsiveMode {
+  if (responsiveModeByDevice[optionDevices].includes(currentDevice)) {
+    return currentDevice;
+  }
+  return DESKTOP;
+}
+
+function getOptionConfigById({
+  id,
+  toolbarConfig
+}: {
+  id: string;
+  toolbarConfig: ToolbarConfig[];
+}): ToolbarItemType | undefined {
+  return findDeep(toolbarConfig, (option: Record<string, unknown>) => {
+    return isOption(option) && option.id === id;
+  }).obj;
+}
+
+export function getOptionValueByDevice({
+  v,
+  id,
+  currentDevice,
+  toolbarConfig
+}: {
+  v: ElementModel;
+  id: string;
+  currentDevice: DeviceMode;
+  toolbarConfig: ToolbarConfig[];
+}): Record<string, unknown> | undefined {
+  const { type: optionType, devices: optionDevices } =
+    getOptionConfigById({ id, toolbarConfig }) ?? {};
+
+  if (optionType) {
+    const device = getResponsiveModeByDevice({
+      optionDevices,
+      currentDevice
+    });
+
+    const getModel = fromElementModel(optionType);
+    return getModel((k: string) =>
+      defaultValueValue({ v, device, key: createOptionId(id, k) })
+    );
+  }
+}

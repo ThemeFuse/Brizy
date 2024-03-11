@@ -1,6 +1,6 @@
 import { _apply, set, setter2 } from "visual/utils/model";
-import * as Palette from "./entities/palette";
-import { Value } from "./entities/Value";
+import { Value } from "visual/utils/options/ColorPicker/entities/Value";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 
 /**
  * @typedef {{

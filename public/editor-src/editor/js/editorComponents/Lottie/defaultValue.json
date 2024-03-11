@@ -21,6 +21,7 @@
     "linkPage": "",
     "linkPageTitle": "",
     "linkPageSource": null,
+    "linkInternalBlank": "off",
     "linkSource": "",
     "linkType": "external",
     "linkExternal": "",

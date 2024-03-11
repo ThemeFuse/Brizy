@@ -32,10 +32,7 @@ export function getItems({
           id: "link",
           type: "inputText",
           label: t("Link"),
-          placeholder: "https://calendly.com/user/event",
-          config: {
-            size: "large"
-          }
+          placeholder: "https://calendly.com/user/event"
         }
       ]
     },

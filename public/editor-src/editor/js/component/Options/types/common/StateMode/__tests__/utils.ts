@@ -13,8 +13,6 @@ jest.mock(
   () => undefined
 );
 jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Button.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ButtonTooltip.jsx", () => undefined);
 jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/ColorPaletteEditor.jsx",
@@ -24,7 +22,6 @@ jest.mock(
   "visual/component/Options/types/FontStyleEditor/index.tsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/PopupConditions.jsx",
   () => undefined

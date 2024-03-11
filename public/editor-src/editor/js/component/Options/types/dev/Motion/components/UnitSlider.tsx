@@ -1,5 +1,6 @@
 import React, { ReactElement, useCallback } from "react";
 import {
+  Meta,
   Props as NSProps,
   NumberSlider
 } from "visual/component/Controls/NumberSlider";
@@ -32,7 +33,7 @@ export const UnitSlider = ({
     onChange,
     500
   );
-  const handleNumberChange = useCallback<OnChange<V>>(
+  const handleNumberChange = useCallback<OnChange<V, Meta>>(
     (v) => mPipe((v: V) => v.number / 10, Unit.fromNumber, _onChange)(v),
     [_onChange]
   );

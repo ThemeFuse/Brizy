@@ -6,6 +6,8 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -26,10 +28,68 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleElementOfMinistryBrandsImgBorder",
+        ...(maskShape === "none"
+          ? []
+          : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat",
+        "cssStyleMinistryElementMediaBorderRadius",
+        ...(maskShape === "none"
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
+          : [])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgFilters",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
     ".brz &&:hover .brz-eventList__container": {
       standart: ["cssStyleElementOfMinistryBrandsColumnsNumberWithSpacing"]
     },
-    ".brz && :is(.brz-eventList__item--meta, .brz-eventList__item--meta--link a):hover":
+    ".brz &&:hover .brz-ministryBrands__meta--icons": {
+      standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
+    },
+    ".brz && .brz-eventList__item--meta--link > .brz-ministryBrands__meta--icons:hover":
+      {
+        standart: ["cssStyleColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz && :is(.brz-eventList__item--meta, .brz-eventList__item--meta--link :is(a,.brz-ministryBrands__meta--icons)):hover":
       {
         standart: ["getAllCssStyleTypography"],
         interval: [
@@ -133,7 +193,7 @@ export function style(
     ".brz && .brz-eventList__item:hover": {
       standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
     },
-    ".brz && .brz-eventList__item :is(iframe,video,img)": {
+    ".brz &&:hover .brz-ministryBrands__item--media :is(img,video,iframe)": {
       standart: ["cssStyleMinistryElementMediaBorderRadius"]
     },
     ".brz && .brz-ministryBrands__pagination a:hover": {

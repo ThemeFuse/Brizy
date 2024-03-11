@@ -1,9 +1,9 @@
-import { filter } from "visual/component/Options/types/utils/filter";
-import { reduce } from "visual/component/Options/types/utils/reduce";
 import {
   GenericToolbarItemType,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
+import { filter } from "visual/utils/options/filter";
+import { reduce } from "visual/utils/options/reduce";
 import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode/index";
 

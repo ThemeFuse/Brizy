@@ -22,7 +22,7 @@ const MiddleBlockAdder = (props: Props): ReactElement => {
 
   const handleOpen = useCallback(() => {
     const config = Config.getAll();
-    ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
+    // TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
     const showGlobal = !(isCloud(config) && isShopify(config));
 
     Prompts.open({

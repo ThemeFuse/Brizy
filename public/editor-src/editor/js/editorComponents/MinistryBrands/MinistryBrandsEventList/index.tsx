@@ -11,7 +11,9 @@ import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
@@ -140,18 +142,40 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                       )}
                       selector=".brz-ministryBrands__pagination a"
                     >
-                      <Wrapper
-                        {...this.makeWrapperProps({
-                          className
-                        })}
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarImage,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-ministryBrands__item--media"
                       >
-                        <DynamicContentHelper
-                          placeholder={getPlaceholder(v)}
-                          props={{ className: "brz-eventList" }}
-                          blocked={false}
-                          tagName="div"
-                        />
-                      </Wrapper>
+                        <Toolbar
+                          {...this.makeToolbarPropsFromConfig2(
+                            toolbarMetaIcons,
+                            undefined,
+                            {
+                              allowExtend: false
+                            }
+                          )}
+                          selector=".brz-ministryBrands__meta--icons"
+                        >
+                          <Wrapper
+                            {...this.makeWrapperProps({
+                              className
+                            })}
+                          >
+                            <DynamicContentHelper
+                              placeholder={getPlaceholder(v)}
+                              props={{ className: "brz-eventList" }}
+                              blocked={false}
+                              tagName="div"
+                            />
+                          </Wrapper>
+                        </Toolbar>
+                      </Toolbar>
                     </Toolbar>
                   </Toolbar>
                 </Toolbar>

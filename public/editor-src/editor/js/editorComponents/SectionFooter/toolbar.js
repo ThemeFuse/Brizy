@@ -54,6 +54,8 @@ export function getItems({ v, device, component, context }) {
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
 
+  const globalBlockId = component.props.meta.globalBlockId;
+
   return [
     toolbarShowOnResponsive({
       v,
@@ -89,9 +91,11 @@ export function getItems({ v, device, component, context }) {
             },
             {
               id: "gbConditions",
-              disabled: !component.props.meta.globalBlockId,
-              value: component.props.meta.globalBlockId,
-              type: "legacy-gbConditions",
+              disabled: !globalBlockId,
+              config: {
+                globalBlockId: globalBlockId
+              },
+              type: "gbCondition",
               context: "block"
             }
           ]

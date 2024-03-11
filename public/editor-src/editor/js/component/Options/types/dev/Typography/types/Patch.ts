@@ -35,6 +35,8 @@ export const isFontFamily = (p: Patch): p is FontFamily =>
 
 // region FontSettings
 export interface FontSettings {
+  fontFamily: string;
+  fontFamilyType: FontFamilyType;
   fontSize: Positive;
   fontSizeSuffix: SizeSuffix.SizeSuffix;
   fontWeight: Weight;
@@ -46,6 +48,8 @@ export interface FontSettings {
 }
 
 export const fontSettings = (v: Value): FontSettings => ({
+  fontFamily: v.fontFamily,
+  fontFamilyType: v.fontFamilyType,
   fontSize: v.fontSize,
   fontWeight: v.fontWeight,
   fontSizeSuffix: v.fontSizeSuffix,

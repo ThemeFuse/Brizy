@@ -17,6 +17,7 @@ interface Value {
   linkPage: string;
   linkPageTitle: string;
   linkPageSource: string;
+  linkInternalBlank: string;
 }
 
 type Patch = Partial<Value>;
@@ -42,6 +43,7 @@ export const handleChangeLink = (v: Value, value: Patch) => {
       upload: value.linkUpload ?? v.linkUpload,
       linkToSlide: value.linkToSlide ?? v.linkToSlide,
       internal: value.linkPage ?? v.linkPage,
+      internalBlank: value.linkInternalBlank ?? v.linkInternalBlank,
       pageTitle: value.linkPageTitle ?? v.linkPageTitle,
       pageSource: value.linkPageSource ?? v.linkPageSource
     })

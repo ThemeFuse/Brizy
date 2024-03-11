@@ -11,14 +11,20 @@ import {
 } from "visual/editorComponents/MinistryBrands/utils/types";
 import { Config } from "visual/global/Config";
 import {
+  ConfigDCItem,
+  DCTypes
+} from "visual/global/Config/types/DynamicContent";
+import {
   AutoSave,
   ConfigCommon,
   OnChange
 } from "visual/global/Config/types/configs/ConfigCommon";
 import {
+  BlockWithThumbs,
   BlocksArray,
   DefaultBlock,
   DefaultBlockWithID,
+  KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
   PopupsWithThumbs,
@@ -515,23 +521,36 @@ export function updatePopupRules(
 
 //#region default Templates
 
+export const defaultKits = (config: ConfigCommon): Promise<Array<KitItem>> => {
+  return new Promise((res, rej) => {
+    const { defaultKits } = config.api ?? {};
+    const getKits = defaultKits?.getKits;
+    if (!getKits) {
+      rej(t("API: No Kits getKits() found."));
+    } else {
+      getKits(res, rej);
+    }
+  });
+};
+
 export const defaultKitsMeta = (
-  config: ConfigCommon
-): Promise<Array<KitsWithThumbs>> => {
+  config: ConfigCommon,
+  id: string
+): Promise<KitsWithThumbs> => {
   return new Promise((res, rej) => {
     const { defaultKits } = config.api ?? {};
     const getMeta = defaultKits?.getMeta;
     if (!getMeta) {
       rej(t("API: No Kits getMeta() found."));
     } else {
-      getMeta(res, rej);
+      getMeta(res, rej, id);
     }
   });
 };
 
 export const defaultKitsData = (
   config: ConfigCommon,
-  blockID: string
+  kit: BlockWithThumbs
 ): Promise<DefaultBlock> => {
   return new Promise((res, rej) => {
     const { defaultKits } = config.api ?? {};
@@ -539,7 +558,7 @@ export const defaultKitsData = (
     if (!getData) {
       rej(t("API: No Kits getData() found."));
     } else {
-      getData(res, rej, blockID);
+      getData(res, rej, kit);
     }
   });
 };
@@ -642,14 +661,18 @@ export const defaultStoriesData = (
 //#region  collections
 
 export const getCollectionTypes = (
-  config: ConfigCommon
+  config: ConfigCommon,
+  extraData?: {
+    defaultTitle?: string;
+    defaultValue?: string;
+  }
 ): Promise<ChoicesSync> => {
   const collectionTypesHandler =
     config?.api?.collectionTypes?.loadCollectionTypes.handler;
 
   return new Promise((res, rej) => {
     if (typeof collectionTypesHandler === "function") {
-      collectionTypesHandler(res, rej);
+      collectionTypesHandler(res, rej, extraData);
     } else {
       rej(t("Missing api handler in config"));
     }
@@ -815,6 +838,25 @@ export const getEcwidProducts = (config: ConfigCommon): Promise<Choice[]> => {
       get(res, rej);
     } else {
       rej("Missing getEcwidProducts api handler in config");
+    }
+  });
+};
+
+//#endregion
+
+//#region Dynamic Content
+
+export const getDynamicContentPlaceholders = async (
+  config: ConfigCommon,
+  extraData: { entityType: string; groupType: DCTypes }
+): Promise<ConfigDCItem[]> => {
+  const handler = config.dynamicContent?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej, extraData);
+    } else {
+      rej(t("Missing dynamicContent inside config api"));
     }
   });
 };

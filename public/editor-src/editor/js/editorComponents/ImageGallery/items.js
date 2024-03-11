@@ -56,26 +56,32 @@ class Items extends EditorArrayComponent {
           },
           {
             id: "duplicate",
-            type: "legacy-button",
-            icon: "nc-duplicate",
-            title: t("Duplicate"),
+            type: "button",
+            config: {
+              icon: "nc-duplicate",
+              title: t("Duplicate"),
+              reverseTheme: true
+            },
             position: 200,
             roles: ["admin"],
             devices: "desktop",
-            onChange: () => {
+            onClick: () => {
               this.cloneItem(itemIndex);
             }
           },
           {
             id: "remove",
-            type: "legacy-button",
-            icon: "nc-trash",
-            title: t("Delete"),
+            type: "button",
+            config: {
+              icon: "nc-trash",
+              title: t("Delete"),
+              reverseTheme: true
+            },
             position: 250,
             roles: ["admin"],
             devices: "desktop",
             disabled: items.length <= 1,
-            onChange: () => {
+            onClick: () => {
               hideToolbar();
               this.removeItem(itemIndex);
             }

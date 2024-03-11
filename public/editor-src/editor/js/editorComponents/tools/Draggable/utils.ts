@@ -2,7 +2,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { DeviceMode } from "visual/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as N from "visual/utils/math/number";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 export const getContainerSizes = (
   v: ElementModel,

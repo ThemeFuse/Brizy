@@ -1,5 +1,7 @@
+import produce from "immer";
 import { Config } from "visual/global/Config";
 import { hexToRgba, makeStylePaletteCSSVar } from "visual/utils/color";
+import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
 import {
@@ -150,3 +152,26 @@ export const colorValues = (
       };
   }
 };
+
+export const mergeTypographyFontFamily = (data: Record<string, unknown>) =>
+  produce(data, (draft) => {
+    if (Obj.hasKey("tabletTypographyFontFamily", data)) {
+      draft["typographyFontFamily"] = data["tabletTypographyFontFamily"];
+      delete draft["tabletTypographyFontFamily"];
+    }
+    if (Obj.hasKey("tabletTypographyFontFamilyType", data)) {
+      draft["typographyFontFamilyType"] =
+        data["tabletTypographyFontFamilyType"];
+      delete draft["tabletTypographyFontFamilyType"];
+    }
+
+    if (Obj.hasKey("mobileTypographyFontFamily", data)) {
+      draft["typographyFontFamily"] = data["mobileTypographyFontFamily"];
+      delete draft["mobileTypographyFontFamily"];
+    }
+    if (Obj.hasKey("mobileTypographyFontFamilyType", data)) {
+      draft["typographyFontFamilyType"] =
+        data["mobileTypographyFontFamilyType"];
+      delete draft["mobileTypographyFontFamilyType"];
+    }
+  });

@@ -91,7 +91,10 @@ export const changeRichText = ($: cheerio.Root): void => {
         link.attr("href", getLinkContentByType(data.type, url));
         link.attr("data-brz-link-type", data.type);
 
-        if (newData.type === "external" && newData.externalBlank === "on") {
+        if (
+          (newData.type === "external" && newData.externalBlank === "on") ||
+          (newData.type === "page" && newData.internalBlank === "on")
+        ) {
           link.attr("target", "_blank");
         }
         if (newData.type === "external" && newData.externalRel === "on") {

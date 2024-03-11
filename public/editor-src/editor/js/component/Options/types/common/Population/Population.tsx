@@ -1,5 +1,13 @@
 import classNames from "classnames";
-import React, { FC, ReactElement, useCallback, useMemo } from "react";
+import React, {
+  FC,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
@@ -7,13 +15,18 @@ import { Props as OptionProps } from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getDynamicContentPlaceholders } from "visual/utils/api/common";
 import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { optionsToChoices } from "visual/utils/options/getDynamicContentChoices";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
+import { auto, isAuto } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import Input from "./Input";
+import { Loading } from "./Loading";
 import Select from "./Select";
 import { Handler } from "./types/Handler";
 import {
@@ -21,11 +34,16 @@ import {
   PopulationOptgroupMethod
 } from "./types/PopulationMethod";
 import { Value } from "./types/Value";
-import { findDCChoiceByPlaceholder, parsePopulation } from "./utils";
+import {
+  configChoicesToSelectItemChoices,
+  findDCChoiceByPlaceholder,
+  parsePopulation
+} from "./utils";
 
-interface Config {
+export interface Config {
   iconOnly?: boolean;
   mockValue?: boolean;
+  type?: DCTypes;
   choices?: Array<PopulationMethod | PopulationOptgroupMethod>;
   handlerChoices?: Handler<string>;
 }
@@ -178,42 +196,84 @@ export const Population: FC<Props> = ({
   label
 }) => {
   let input;
-  const { iconOnly, handlerChoices } = config ?? {};
-  const { population } = value;
+  const { type, iconOnly, handlerChoices } = config ?? {};
+  const { population, populationEntityType = auto } = value;
+  const hasHandlerChoices = typeof handlerChoices === "function";
 
-  const choices = useMemo(() => {
-    if (typeof handlerChoices === "function" || !config) {
+  const configChoices = useMemo(() => {
+    if (hasHandlerChoices || !config) {
       return [];
     }
 
-    const { mockValue = true, choices } = config;
+    const { choices } = config;
 
-    return [
-      ...(mockValue && !iconOnly
-        ? [
-            {
-              title: t("None"),
-              value: EMPTY,
-              name: EMPTY,
-              attr: {},
-              varyAttr: []
+    return configChoicesToSelectItemChoices(config, choices ?? []);
+  }, [config, hasHandlerChoices]);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [choices, setChoices] = useState(configChoices);
+  const mounted = useRef<boolean>();
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasHandlerChoices) {
+      (async () => {
+        if (!isAuto(populationEntityType) && type) {
+          const _config = Config.getAll();
+
+          try {
+            const choices =
+              (await getDynamicContentPlaceholders(_config, {
+                entityType: populationEntityType,
+                groupType: type
+              })) ?? [];
+
+            if (mounted.current) {
+              setChoices(
+                configChoicesToSelectItemChoices(
+                  config ?? {},
+                  optionsToChoices(choices)
+                )
+              );
             }
-          ]
-        : []),
-      ...(iconOnly
-        ? [
-            {
-              title: t("Custom Text"),
-              value: EMPTY,
-              name: EMPTY,
-              attr: {},
-              varyAttr: []
+          } catch (e) {
+            if (process.env.NODE_ENV === "development") {
+              console.error(e);
             }
-          ]
-        : []),
-      ...(choices || [])
-    ];
-  }, [config, handlerChoices, iconOnly]);
+            ToastNotification.error(
+              t("Failed to get DynamicContent placeholders")
+            );
+
+            if (mounted.current) {
+              setIsLoaded(true);
+            }
+          }
+        } else {
+          if (mounted.current) {
+            setChoices(configChoices);
+          }
+        }
+
+        if (mounted.current) {
+          setIsLoaded(true);
+        }
+      })();
+    }
+  }, [
+    value,
+    config,
+    configChoices,
+    populationEntityType,
+    type,
+    hasHandlerChoices
+  ]);
 
   const existChoices = choices.length > 0;
 
@@ -246,8 +306,7 @@ export const Population: FC<Props> = ({
         title: population,
         value: EMPTY,
         name: EMPTY,
-        attr: {},
-        varyAttr: []
+        attr: {}
       };
     }
 
@@ -278,9 +337,7 @@ export const Population: FC<Props> = ({
         choices.push({
           title: t("N/A"),
           value: value.population ?? EMPTY,
-          name: EMPTY,
-          attr: {},
-          varyAttr: []
+          attr: {}
         });
       }
     }
@@ -289,7 +346,7 @@ export const Population: FC<Props> = ({
       <Options
         data={[option]}
         wrapOptions={false}
-        optionClassName={"brz-ed-option-population"}
+        optionClassName="brz-ed-option-population"
       />
     ) : null;
   }
@@ -302,25 +359,24 @@ export const Population: FC<Props> = ({
     <>
       {label}
       <div className={cls}>
-        {input}
-        {existChoices ? (
-          <_Select
-            className={_className}
-            choices={choices}
-            value={value.population ?? ""}
-            entityType={value.populationEntityType ?? ""}
-            currentDCChoice={activeItem}
-            entityId={value.populationEntityId ?? ""}
-            onChange={handlePopulationChange}
-          />
-        ) : null}
-        {typeof handlerChoices === "function" ? (
+        {!isLoaded && !iconOnly ? <Loading /> : input}
+        {hasHandlerChoices ? (
           <_Icon
             iconOnly={iconOnly}
             className={_className}
             handlerChoices={handlerChoices}
             value={value.population ?? ""}
-            entityType={value.populationEntityType ?? ""}
+            entityType={value.populationEntityType ?? auto}
+            entityId={value.populationEntityId ?? ""}
+            onChange={handlePopulationChange}
+          />
+        ) : existChoices ? (
+          <_Select
+            className={_className}
+            choices={choices}
+            value={value.population ?? ""}
+            entityType={value.populationEntityType ?? auto}
+            currentDCChoice={activeItem}
             entityId={value.populationEntityId ?? ""}
             onChange={handlePopulationChange}
           />

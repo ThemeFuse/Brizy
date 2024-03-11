@@ -1,7 +1,6 @@
 export {
   isPlaceholderName,
   isPlaceholderStart,
-  getVaryAttr,
   getPopulatedEntityValues
 } from "./common";
 export {

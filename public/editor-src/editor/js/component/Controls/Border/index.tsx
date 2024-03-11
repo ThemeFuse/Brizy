@@ -10,10 +10,10 @@ import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
-import * as BorderStyle from "visual/component/Options/types/dev/Border/entities/style";
-import * as BorderWidthType from "visual/component/Options/types/dev/Border/entities/widthType";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import { t } from "visual/utils/i18n/t";
+import * as BorderStyle from "visual/utils/options/Border/entities/style";
+import * as BorderWidthType from "visual/utils/options/Border/entities/widthType";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { WithClassName } from "visual/utils/options/attributes";
 import { mApply } from "visual/utils/value";
 import { Width } from "./Width";
@@ -84,15 +84,17 @@ export const Border: FC<Props> = ({
   const _className = classNames("brz-ed-control__border", className);
   const onColor = useCallback(
     (v: Value<Style>, meta: Meta) => {
+      const isChanging = !!meta?.isChanging;
+
       switch (meta.isChanged) {
         case "select":
           mApply(onChangeStyle, v.select);
           break;
         case "hex":
-          onChangeHex(v.hex);
+          onChangeHex(v.hex, { isChanging });
           break;
         case "opacity":
-          onChangeOpacity(v.opacity, meta?.opacityDragEnd ?? true);
+          onChangeOpacity(v.opacity, isChanging);
           break;
         case "palette":
           onChangePalette(v.palette as Palette.Palette);

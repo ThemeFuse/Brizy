@@ -456,12 +456,15 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "remove",
-      type: "legacy-button",
+      type: "button",
       disabled: !enableDelete,
-      title: t("Delete"),
-      icon: "nc-trash",
+      config: {
+        title: t("Delete"),
+        icon: "nc-trash",
+        reverseTheme: true
+      },
       position: 250,
-      onChange: () => {
+      onClick: () => {
         // @ts-expect-error old options
         component.handleDropClick();
       }

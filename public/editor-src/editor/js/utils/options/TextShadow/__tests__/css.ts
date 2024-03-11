@@ -1,0 +1,59 @@
+import { OptionValue } from "visual/component/Options/types";
+import { NoEmptyBlur } from "visual/component/Options/types/dev/TextShadow/types/NoEmptyBlur";
+import { NoEmptyOpacity } from "visual/component/Options/types/dev/TextShadow/types/NoEmptyOpacity";
+import {
+  Black as blackHex,
+  fromString as readHex
+} from "visual/utils/color/Hex";
+import {
+  Palette,
+  COLOR3 as color3Palette,
+  fromString as readPalette
+} from "visual/utils/color/Palette";
+import { css as cssStyleTextShadow } from "../css";
+
+describe("Testing cssStyleTextShadow that should return CSS for text-shadow", () => {
+  const hex = readHex("#FF0000") ?? blackHex;
+  const opacity = 1 as NoEmptyOpacity;
+  const blur = 2 as NoEmptyBlur;
+  const palette = readPalette("") ?? color3Palette;
+
+  const value: OptionValue<"textShadow"> = {
+    palette,
+    hex,
+    opacity,
+    blur,
+    horizontal: 4,
+    vertical: 5
+  };
+
+  test("Empty, should return text-shadow: none;", () => {
+    expect(cssStyleTextShadow({ meta: { isEmpty: true }, value })).toBe(
+      "text-shadow: none;"
+    );
+  });
+
+  test("Populated with palette, should return text-shadow based on palette", () => {
+    expect(cssStyleTextShadow({ meta: { isEmpty: false }, value })).toBe(
+      "text-shadow:4px 5px 2px  rgba(var(--brz-global-color3),1);"
+    );
+  });
+
+  test("Populated with hex, should return text-shadow as rgba based on hex", () => {
+    expect(
+      cssStyleTextShadow({
+        meta: { isEmpty: false },
+        value: { ...value, palette: "" as Palette }
+      })
+    ).toBe("text-shadow:4px 5px 2px  rgba(255, 0, 0, 1);");
+  });
+
+  test("Without meta, should return text-shadow based on palette", () => {
+    expect(
+      cssStyleTextShadow({
+        meta: { isEmpty: false },
+        value
+      })
+    ).toBe("text-shadow:4px 5px 2px  rgba(var(--brz-global-color3),1);");
+  });
+});

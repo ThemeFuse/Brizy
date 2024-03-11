@@ -1,18 +1,18 @@
 import { ComponentProps } from "react";
-import { Props } from "visual/component/Options/Type";
+import { Meta, Props } from "visual/component/Options/Type";
 import { Population } from "visual/component/Options/types/common/Population/Population";
 import { Animation } from "visual/component/Options/types/dev/Animation";
 import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundColor";
 import { Border } from "visual/component/Options/types/dev/Border";
 import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
 import { Button as ButtonDev } from "visual/component/Options/types/dev/Button";
-// Option types that are in development
 import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
 import { Corners } from "visual/component/Options/types/dev/Corners";
 import { FileUpload as FileUploadDev } from "visual/component/Options/types/dev/FileUpload";
 import { Filters } from "visual/component/Options/types/dev/Filters";
 import { Gallery } from "visual/component/Options/types/dev/Gallery";
 import { GalleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery";
+import { GbCondition } from "visual/component/Options/types/dev/GbCondition";
 import { Grid as GridDev } from "visual/component/Options/types/dev/Grid";
 import { Group } from "visual/component/Options/types/dev/Group";
 import { IconPicker } from "visual/component/Options/types/dev/IconPicker";
@@ -33,16 +33,15 @@ import { SidebarTabs } from "visual/component/Options/types/dev/SidebarTabs";
 import { SidebarTabsButton } from "visual/component/Options/types/dev/SidebarTabsButton";
 import { Switch as SwitchDev } from "visual/component/Options/types/dev/Switch";
 import { TextShadow } from "visual/component/Options/types/dev/TextShadow";
+import { ToggleButton } from "visual/component/Options/types/dev/ToggleButton";
 import { Transform } from "visual/component/Options/types/dev/Transform";
 import { Typography } from "visual/component/Options/types/dev/Typography";
 import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
-import Button from "./Button";
 import CheckGroup from "./CheckGroup";
 import ColorPalette2 from "./ColorPalette2";
 import ColorPaletteEditor from "./ColorPaletteEditor";
 import FontStyleEditor from "./FontStyleEditor";
-import GBConditions from "./GBConditions";
 import PopupConditions from "./PopupConditions";
 import PromptAddPopup from "./PromptAddPopup";
 import Toggle from "./Toggle";
@@ -68,6 +67,7 @@ const newTypes = {
   animation: Animation,
   backgroundColor: BackgroundColor,
   button: ButtonDev,
+  toggleButton: ToggleButton,
   order: Order,
   codeMirror: CodeMirrorDev,
   colorPicker: ColorPickerDev,
@@ -111,18 +111,17 @@ const newTypes = {
   transform: Transform,
   savedBlock: SavedBlockDev,
   globalBlock: GlobalBlockDev,
-  formApps: FormAppsDev
+  formApps: FormAppsDev,
+  gbCondition: GbCondition
 };
 
 const oldTypes = {
   "legacy-advancedSettings": AdvancedSettings,
   "legacy-blockThumbnail": BlockThumbnail,
-  "legacy-button": Button,
   "legacy-colorPaletteEditor": ColorPaletteEditor,
   "legacy-colorPalette2": ColorPalette2,
   "legacy-fontStyleEditor": FontStyleEditor,
   "legacy-popupConditions": PopupConditions,
-  "legacy-gbConditions": GBConditions,
   "legacy-promptAddPopup": PromptAddPopup,
   "legacy-checkGroup": CheckGroup,
   "legacy-toggle": Toggle
@@ -136,6 +135,12 @@ export type OptionName = keyof OptionTypes;
 export type OptionValue<T extends OptionName> = ComponentProps<
   OptionTypes[T]
 > extends Props<infer M>
+  ? M
+  : unknown;
+
+export type OptionMeta<T extends OptionName> = ComponentProps<
+  OptionTypes[T]
+> extends Meta<infer M>
   ? M
   : unknown;
 

@@ -175,10 +175,7 @@ export function getItems({
                   type: "inputText",
                   devices: "desktop",
                   placeholder: t("username"),
-                  population: richTextDC,
-                  config: {
-                    size: "medium"
-                  }
+                  population: richTextDC
                 },
                 {
                   id: "twitter",
@@ -256,10 +253,7 @@ export function getItems({
                   type: "inputText",
                   disabled: twitterType !== "mentionButton",
                   devices: "desktop",
-                  placeholder: t("this is my tweet"),
-                  config: {
-                    size: "medium"
-                  }
+                  placeholder: t("this is my tweet")
                 }
               ]
             }

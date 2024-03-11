@@ -30,24 +30,32 @@ export default class linkType extends Link {
       "link--popup",
       "link--story",
       "link--upload",
+      "link--page",
       "is-empty"
     );
 
-    if (type === "anchor") {
-      node.classList.add("link--anchor");
-    }
-    if (type === "external") {
-      node.classList.add("link--external");
-    }
-    if (type === "popup") {
-      node.classList.add("link--popup");
-    }
-    if (type === "upload") {
-      node.classList.add("link--upload");
-    }
-    if (type === "linkToSlide") {
-      node.classList.add("link--story");
-      node.setAttribute("data-brz-link-story", linkToSlide);
+    switch (type) {
+      case "anchor":
+        node.classList.add("link--anchor");
+        break;
+      case "external":
+        node.classList.add("link--external");
+        break;
+      case "popup":
+        node.classList.add("link--popup");
+        break;
+      case "upload":
+        node.classList.add("link--upload");
+        break;
+      case "linkToSlide":
+        node.classList.add("link--story");
+        node.setAttribute("data-brz-link-story", linkToSlide);
+        break;
+      case "page":
+        if (value.pageTitle) {
+          node.classList.add("link--page");
+        }
+        return;
     }
 
     if (!value[type]) {

@@ -6,9 +6,12 @@ import { fontTransform, getFontStyle } from "visual/utils/fonts";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { DefaultFont } from "visual/utils/fonts/getFontById";
 import { defaultValueValue } from "visual/utils/onChange";
+import {
+  defaultValue,
+  fromElementModel
+} from "visual/utils/options/Typography/converters";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
-import { defaultValue, fromElementModel } from "./converters";
 import { FontsBlock } from "./types/FontsBlocks";
 import { Value } from "./types/Value";
 

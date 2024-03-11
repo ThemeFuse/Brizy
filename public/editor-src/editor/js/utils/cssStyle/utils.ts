@@ -2,28 +2,23 @@ import produce from "immer";
 import { CSSProperties } from "react";
 import _ from "underscore";
 import { ElementModel } from "visual/component/Elements/Types";
+import { OptionName } from "visual/component/Options/types";
+import { getOptionModel } from "visual/component/Options/types/utils/fromElementModel";
 import {
-  getElementModel,
-  getOptionModel
-} from "visual/component/Options/types/utils/fromElementModel";
+  getCSSByOptionType,
+  isOptionWithStyles,
+  normalizeOptionModel
+} from "visual/component/Options/types/utils/toCSS/utils";
+import { getElementMoldelKeysFromOption } from "visual/component/Options/types/utils/toElementModel";
+import { getOptionMeta } from "visual/component/Options/types/utils/toMeta/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import * as cssStyleFunctions from "visual/utils/cssStyle";
-import {
-  cssStyleBorderRadius,
-  cssStyleBoxShadow,
-  cssStyleColor
-} from "visual/utils/cssStyle";
-import * as Arr from "visual/utils/reader/array";
 import * as Obj from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
+import { diff } from "visual/utils/reader/object";
 import { breakpoints, isBreakpointWithMediaQuery } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
 import { ResponsiveMode } from "../responsiveMode";
 import { ACTIVE, HOVER, NORMAL, State } from "../stateMode";
-import { CSSValue } from "../style2/types";
 import { MValue, isAllT } from "../value";
-import { cssStyleBgColor } from "./cssStyleBgColor";
-import { cssStyleBorder } from "./cssStyleBorder";
 import {
   AllCSSKeys,
   CSS,
@@ -34,32 +29,6 @@ import {
   OutputStyle,
   SelectorAndCSSObject
 } from "./types";
-import { OptionsStyleFunctions } from "./types";
-
-const optionsStyleFunctions: Record<
-  OptionsStyleFunctions,
-  (d: CSSValue) => string
-> = {
-  border: cssStyleBorder,
-  backgroundColor: cssStyleBgColor,
-  colorPicker: cssStyleColor,
-  boxShadow: cssStyleBoxShadow,
-  corners: cssStyleBorderRadius
-};
-
-export const getUniqueCSS = (
-  candidate: GeneratedCSS<string>,
-  compared: GeneratedCSS<string>
-): GeneratedCSS<string> => {
-  return produce(candidate, (draft) => {
-    Object.keys(draft).forEach((_key) => {
-      const key = _key as BreakpointsNames;
-      if (Obj.hasKey(key, compared)) {
-        draft[key] = _.difference(draft[key], compared[key]);
-      }
-    });
-  });
-};
 
 export const filterDeviceValues = (
   key: AllCSSKeys,
@@ -105,30 +74,11 @@ export const addSameClassNameToIncreaseSpecificity = (
   return style;
 };
 
-export const getSelectorByState = ({
-  selector,
-  state
-}: {
-  selector: string;
-  state?: State;
-}): string => {
-  switch (state) {
-    case NORMAL:
-      return selector;
-    case HOVER:
-      return `${selector}:hover`;
-    case ACTIVE:
-      return `${selector}.active`;
-  }
-
-  return selector;
-};
-
 export const getCSSObjectFromStyle = ({
   v,
   breakpoint,
   option,
-  state
+  state = NORMAL
 }: {
   v: ElementModel;
   breakpoint: BreakpointsNames;
@@ -139,8 +89,19 @@ export const getCSSObjectFromStyle = ({
 
   const model = getOptionModel({ id, type, v, breakpoint, state });
 
-  if (model && typeof style === "function") {
-    return style(model);
+  if (typeof style === "function" && model) {
+    const meta = getOptionMeta(type, model);
+
+    const cssObject = style({
+      ...(meta && Obj.length(meta) > 0 ? { meta } : {}),
+      value: normalizeOptionModel({
+        type,
+        optionModel: model,
+        extraData: { device: breakpoint, state }
+      })
+    });
+
+    return cssObject;
   }
 };
 
@@ -157,117 +118,16 @@ export const getCSSFromSelector = ({
 }): MValue<string> => {
   const { id, type } = option;
 
-  const model = getElementModel({ id, type, v, breakpoint, state });
+  if (isOptionWithStyles(type)) {
+    const style = getCSSByOptionType(type, {
+      v,
+      device: breakpoint as ResponsiveMode,
+      state,
+      id
+    });
 
-  const cssStyleFunction =
-    optionsStyleFunctions?.[type as OptionsStyleFunctions];
-
-  if (!model || typeof cssStyleFunction !== "function") {
-    return undefined;
-  }
-
-  const style = cssStyleFunction({
-    v: model,
-    device: breakpoint as ResponsiveMode,
-    state
-  });
-
-  if (style) {
-    return style;
-  }
-};
-
-export const getCSSByState = ({
-  v,
-  breakpoint,
-  option,
-  state
-}: {
-  v: ElementModel;
-  breakpoint: BreakpointsNames;
-  option: Option;
-  state: State;
-}): MValue<SelectorAndCSSObject[]> => {
-  const { id, type, states = [NORMAL], style, selector } = option;
-
-  if (breakpoint === "desktop" && states.includes(state)) {
     if (style) {
-      const hoverModel = getOptionModel({
-        id,
-        type,
-        v,
-        breakpoint: "desktop",
-        state
-      });
-
-      if (hoverModel) {
-        const cssHoverObject = style(hoverModel);
-
-        return getSelectorAndCssFromCssObject(cssHoverObject, state);
-      }
-    }
-
-    if (selector) {
-      const hoverModel = getElementModel({
-        id,
-        type,
-        v,
-        breakpoint: "desktop",
-        state
-      });
-
-      const style = optionsStyleFunctions[type as OptionsStyleFunctions]?.({
-        v: hoverModel,
-        device: breakpoint as ResponsiveMode,
-        state
-      });
-
-      if (style) {
-        const suffix =
-          state === HOVER ? ":hover" : state === ACTIVE ? ".active" : "";
-        const selectors = selector.split(",");
-
-        return selectors.map((selector) => ({
-          selector: `${selector}${suffix}`,
-          css: style
-        }));
-      }
-    }
-  }
-};
-
-export const selectorHasHover = (selector: string): boolean =>
-  selector.includes(":hover");
-
-export const getCssStyleFnNameAndMode = (
-  name: string
-): { fnName: string; mode: string } => {
-  const [fnName = "", mode = ""] = name.split("|||");
-
-  return { fnName, mode };
-};
-
-export const getCSSFromCssStyleFunction = ({
-  v,
-  name,
-  breakpoint = "desktop",
-  state = NORMAL,
-  extraStylesData = {}
-}: {
-  v: ElementModel;
-  name: string;
-  breakpoint: BreakpointsNames;
-  state: State;
-  extraStylesData?: Record<string, unknown>;
-}): MValue<string> => {
-  const styleFunctions = Obj.readNoArray(cssStyleFunctions);
-
-  if (styleFunctions) {
-    const { fnName, mode } = getCssStyleFnNameAndMode(name);
-    const fn = styleFunctions?.[fnName];
-
-    if (typeof fn === "function") {
-      return fn({ v, device: breakpoint, state, mode, props: extraStylesData });
+      return style;
     }
   }
 };
@@ -276,14 +136,9 @@ export const addBreakpointsToCSS = (
   breakpoint: AllCSSKeys,
   css: string
 ): string => {
-  const { widescreen, desktopLarge, tablet, mobileLandscape, mobile } =
-    breakpoints;
+  const { tablet, mobile } = breakpoints;
 
   switch (breakpoint) {
-    case "widescreen":
-      return `@media only screen and (min-width: ${widescreen}px){${css}}`;
-    case "desktopLarge":
-      return `@media only screen and (min-width: ${desktopLarge}px){${css}}`;
     case "desktop":
     case "active":
       return css;
@@ -291,10 +146,6 @@ export const addBreakpointsToCSS = (
       return `@media only screen and (min-width: ${tablet + 1}px){${css}}`;
     case "tablet":
       return `@media only screen and (max-width: ${tablet}px) and (min-width: ${
-        mobileLandscape + 1
-      }px){${css}}`;
-    case "mobileLandscape":
-      return `@media only screen and (max-width: ${mobileLandscape}px) and (min-width: ${
         mobile + 1
       }px){${css}}`;
     case "mobile":
@@ -304,7 +155,13 @@ export const addBreakpointsToCSS = (
 
 export const objectToCSS = (css: CSSProperties): string => {
   return Object.entries(css)
-    .map(([k, v]) => `${k}:${v}`)
+    .map(([k, _v]) => {
+      // This is case with content:"";
+      // prettier-ignore
+      const v = _v === "" ? "''" : _v;
+
+      return `${k}:${v}`;
+    })
     .join(";");
 };
 
@@ -350,12 +207,15 @@ export const getSelectorAndCssFromCssObject = (
   cssSelectorObject: OutputOptionStyle,
   state?: State
 ): SelectorAndCSSObject[] => {
-  const suffix = state === HOVER ? ":hover" : state === ACTIVE ? ".active" : "";
+  const selectorSuffix =
+    state === HOVER ? ":hover" : state === ACTIVE ? ".active" : "";
 
   return Object.entries(cssSelectorObject).map(([selector, cssProperties]) => {
     const css = objectToCSS(cssProperties);
 
-    return { selector: selector + suffix, css: css + ";" };
+    const cssSuffix = !css.endsWith(";") ? ";" : "";
+
+    return { selector: selector + selectorSuffix, css: css + cssSuffix };
   });
 };
 
@@ -441,81 +301,6 @@ export const mergeStylesArray = (
   }) as unknown as GeneratedCSS<string>;
 };
 
-export const filterStylesByDesktop = (styles: CSS): CSS => {
-  return produce(styles, (draft) => {
-    const desktopValue = styles["desktop"];
-    const hoverStyles = styles[HOVER] ?? [];
-    const activeStyles = styles[ACTIVE] ?? [];
-
-    if (hoverStyles.length) {
-      hoverStyles.forEach((cssObject, index) => {
-        const uniqueCSSObj = filterCSSObjectBetweenCSSObjects(
-          desktopValue,
-          cssObject,
-          HOVER
-        );
-
-        if (uniqueCSSObj) {
-          draft[HOVER][index] = uniqueCSSObj;
-        }
-      });
-    }
-
-    if (activeStyles.length) {
-      activeStyles.forEach((cssObject, index) => {
-        const uniqueCSSObj = filterCSSObjectBetweenCSSObjects(
-          desktopValue,
-          cssObject,
-          ACTIVE
-        );
-
-        if (uniqueCSSObj) {
-          draft[ACTIVE][index] = uniqueCSSObj;
-        }
-      });
-    }
-  });
-};
-
-export const filterBySelector = (styles: CSS, compared: CSS): CSS => {
-  return produce(styles, (draft) => {
-    Object.entries(styles).forEach(([_breakpoint, breakpointValue]) => {
-      const breakpoint = _breakpoint as keyof CSS;
-      if (Obj.hasKey(breakpoint, compared)) {
-        const breakpointArrValue = compared[breakpoint];
-
-        breakpointValue.forEach((cssObject, index) => {
-          const uniqueCSSObj = filterCSSObjectBetweenCSSObjects(
-            breakpointArrValue,
-            cssObject
-          );
-
-          if (uniqueCSSObj) {
-            draft[breakpoint][index] = uniqueCSSObj;
-          }
-        });
-      }
-    });
-  });
-};
-
-export const filterByGroupAndSelector = (
-  defaultStyles: CSS,
-  rulesStyles: CSS,
-  customStyles: CSS
-): [GeneratedCSS<string>, GeneratedCSS<string>, GeneratedCSS<string>] => {
-  const newDefaultStyles = filterStylesByDesktop(defaultStyles);
-  const newRulesStyles = filterBySelector(rulesStyles, defaultStyles);
-  let newCustomStyles = filterBySelector(customStyles, rulesStyles);
-  newCustomStyles = filterBySelector(newCustomStyles, defaultStyles);
-
-  return [
-    mergeStylesArray(newDefaultStyles),
-    mergeStylesArray(newRulesStyles),
-    mergeStylesArray(newCustomStyles)
-  ];
-};
-
 export const concatFinalCSS = (
   styles: OutputStyle,
   toolbarStyles: OutputStyle
@@ -524,33 +309,6 @@ export const concatFinalCSS = (
   styles[1] + toolbarStyles[1],
   styles[2] + toolbarStyles[2]
 ];
-
-export const filterCSSObjectBetweenCSSObjects = (
-  compared: GeneratedCSSItem[],
-  cssObject: GeneratedCSSItem,
-  state?: State
-) => {
-  const suffix = state === HOVER ? ":hover" : state === ACTIVE ? ".active" : "";
-
-  const [_selector, _cssArr] = Object.entries(cssObject).flat();
-
-  const selector = Str.read(_selector) ?? "";
-  const cssArr = Arr.is<string[]>(_cssArr) ? _cssArr : [];
-
-  const desktopCssObjectBySelector = compared.find(
-    (cssObj) => Object.keys(cssObj)[0] === selector.replace(suffix, "")
-  );
-
-  if (desktopCssObjectBySelector) {
-    const defaultCssArr = _.flatten(Object.values(desktopCssObjectBySelector));
-
-    const uniqueCSS = _.difference(cssArr, defaultCssArr);
-
-    return {
-      [selector]: uniqueCSS
-    };
-  }
-};
 
 export const getNewGeneratesCSSfromStyle = ({
   v,
@@ -597,13 +355,21 @@ export const getNewGeneratesCSSfromSelector = ({
   const css = getCSSFromSelector({ v, breakpoint, option, state });
 
   if (css) {
-    const selectors = option.selector?.split(",");
+    const selector =
+      state !== HOVER
+        ? option.selector?.replaceAll(":hover", "")
+        : option.selector;
+    const selectors = selector?.split(",");
 
     const data =
-      selectors?.map((selector) => ({
-        selector: `${selector}${suffix}`,
-        css
-      })) ?? [];
+      selectors?.map((selector) => {
+        const s = state === HOVER && selector.includes(HOVER) ? "" : suffix;
+
+        return {
+          selector: `${selector}${s}`,
+          css
+        };
+      }) ?? [];
 
     const allCSSKey = state === HOVER || state === ACTIVE ? state : breakpoint;
 
@@ -612,5 +378,127 @@ export const getNewGeneratesCSSfromSelector = ({
       dataKey: allCSSKey,
       allCSS
     });
+  }
+};
+
+export const getMissingKeys = (keys: string[], v: ElementModel): string[] =>
+  keys.filter((k) => !Obj.hasKey(k, v));
+
+export const getMissingPropertiesFromModel = (
+  keys: string[],
+  model: {
+    vd: ElementModel;
+    vs: ElementModel;
+    v: ElementModel;
+  },
+  currentModel: "default" | "rules" | "custom"
+): MValue<ElementModel> => {
+  if (currentModel === "rules") {
+    return keys.reduce((acc: ElementModel, curr) => {
+      acc[curr] = model.vd[curr];
+      return acc;
+    }, {});
+  }
+
+  if (currentModel === "custom") {
+    return keys.reduce((acc: ElementModel, curr) => {
+      if (model.vs[curr]) {
+        acc[curr] = model.vs[curr];
+        return acc;
+      }
+
+      acc[curr] = model.vd[curr];
+
+      return acc;
+    }, {});
+  }
+};
+
+export const checkIfSomeKeyWasChanged = ({
+  id,
+  type,
+  v,
+  breakpoint,
+  state
+}: {
+  id: string;
+  type: OptionName;
+  v: ElementModel;
+  breakpoint: ResponsiveMode;
+  state: State;
+}) => {
+  const keys = getElementMoldelKeysFromOption({
+    id,
+    type,
+    v,
+    device: breakpoint,
+    state
+  });
+  return keys.some((k) => v[k]);
+};
+
+export const getNewModel = ({
+  id,
+  type,
+  v,
+  model,
+  currentModel,
+  breakpoint,
+  state
+}: {
+  id: string;
+  type: OptionName;
+  v: ElementModel;
+  breakpoint: BreakpointsNames;
+  state: State;
+  currentModel: "default" | "rules" | "custom";
+  model: {
+    vd: ElementModel;
+    vs: ElementModel;
+    v: ElementModel;
+  };
+}) => {
+  const keys = getElementMoldelKeysFromOption({
+    id,
+    type,
+    v,
+    device: breakpoint,
+    state
+  });
+
+  const missingKeys = getMissingKeys(keys, v);
+
+  const newModel = getMissingPropertiesFromModel(
+    missingKeys,
+    model,
+    currentModel
+  );
+
+  return {
+    ...v,
+    ...newModel
+  };
+};
+
+export const getCurrentModelFilteredValues = (
+  currentModel: "default" | "rules" | "custom",
+  model: {
+    vd: ElementModel;
+    vs: ElementModel;
+    v: ElementModel;
+  }
+): ElementModel => {
+  const { vd: _vd, vs: _vs, v: _v } = model;
+  const vd = _.omit(_vd, "_styles", "_id");
+  const vs = _.omit(_vs, "_styles", "_id");
+  const v = _.omit(_v, "_styles", "_id");
+
+  switch (currentModel) {
+    case "default":
+      return vd;
+    case "rules":
+      return diff(vd, vs);
+    case "custom":
+      return diff(vs, v);
   }
 };

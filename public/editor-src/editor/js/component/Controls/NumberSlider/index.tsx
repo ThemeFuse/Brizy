@@ -10,7 +10,7 @@ import {
 } from "visual/utils/options/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
-type Meta = { editing: boolean };
+export type Meta = { editing: boolean };
 
 export type Props<U> = WithClassName &
   WithValue<Value<U>> &

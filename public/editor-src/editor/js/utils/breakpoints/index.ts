@@ -9,14 +9,11 @@ import {
 } from "./types";
 
 export const desktopBreakpoints = {
-  widescreen: 1920,
-  desktopLarge: 1440,
   desktop: 1279
 };
 
 export const responsiveBreakpoints = {
   tablet: 991,
-  mobileLandscape: 767,
   mobile: 478
 };
 
@@ -46,10 +43,13 @@ export const getBreakpoints = (
 ): MValue<Breakpoints | DesktopBreakpoints | ResponsiveBreakpoints> => {
   switch (type) {
     case "all":
-      return breakpoints;
+      return getCurrentBreakpoints();
     case "desktop":
-      return desktopBreakpoints;
+      return { desktop: desktopBreakpoints["desktop"] };
     case "responsive":
-      return responsiveBreakpoints;
+      return {
+        tablet: responsiveBreakpoints["tablet"],
+        mobile: responsiveBreakpoints["mobile"]
+      };
   }
 };

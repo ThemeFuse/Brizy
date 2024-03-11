@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { GetItems } from "../EditorComponent/types";
-import { Value } from "./toolbarExtend";
+import { Value } from "./types";
 
 export const title = t("Carousel");
 

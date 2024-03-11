@@ -5,6 +5,7 @@ import {
   cssStyleBorderRadius,
   cssStyleBoxShadow,
   cssStyleColor,
+  cssStyleMarginAlign,
   cssStylePositionElement,
   cssStyleSizeFontSizeIcon,
   cssStyleSizePadding,
@@ -178,6 +179,19 @@ export function cssStyleElementMinistryGroupSliderItemsAlign({
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "items"
+  });
+}
+
+export function cssStyleElementMinistryGroupSliderItemsImageAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleMarginAlign({
     v,
     device,
     state,

@@ -31,6 +31,8 @@
 
   "animation": {
     "sliderAnimation": "none",
+    "sliderAnimationSpeed": "0.5",
+    "sliderAnimationSpeedSuffix": "s",
     "sliderAutoPlay": "off",
     "sliderAutoPlaySpeed": 3,
     "sliderAutoPlaySpeedSuffix": null,

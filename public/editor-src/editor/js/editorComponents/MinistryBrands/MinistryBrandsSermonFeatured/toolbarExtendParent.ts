@@ -12,7 +12,8 @@ export const getItems: GetItems<Value, Props> = ({
   device,
   component,
   context,
-  state
+  state,
+  getValue
 }) => {
   const config = Config.getAll();
 
@@ -153,6 +154,12 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Display"),
               options: [
                 {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
+                {
                   id: "showImage",
                   type: "switch",
                   devices: "desktop",
@@ -285,7 +292,8 @@ export const getItems: GetItems<Value, Props> = ({
       device,
       state,
       component,
-      context
+      context,
+      getValue
     }),
     {
       id: "toolbarSettings",

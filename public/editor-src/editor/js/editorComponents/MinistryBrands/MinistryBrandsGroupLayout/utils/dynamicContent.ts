@@ -32,7 +32,8 @@ export const getPlaceholder = (v: Value): string => {
     addCategoryFilterHeading2,
     addCategoryFilter3,
     addCategoryFilterParent3,
-    addCategoryFilterHeading3
+    addCategoryFilterHeading3,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -44,6 +45,7 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showChildcare, "show_childcare"),
     getAttr(showResourceLink, "show_resourcelink"),
     getAttr(showPreview, "show_preview"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `detail_page='${getDetail(detailPage)}'`,
     `detail_page_button_text='${detailButtonText}'`,
     `howmany='${countPerPage}'`,

@@ -24,28 +24,6 @@
         color: inherit;
       }
 
-      &--video {
-        width: 100%;
-        position: relative;
-        padding-bottom: 56.25%;
-        padding-top: 0;
-        height: 0;
-        overflow: hidden;
-
-        &:active {
-          pointer-events: none;
-        }
-
-        iframe {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          border: 0 !important;
-        }
-      }
-
       li.brz-ministryBrands__item--meta--links {
         border-radius: 3px;
       }

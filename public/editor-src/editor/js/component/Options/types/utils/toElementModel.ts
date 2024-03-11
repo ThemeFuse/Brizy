@@ -6,18 +6,13 @@ import { toElementModel as stateMode } from "visual/component/Options/types/comm
 import { toElementModel as ai } from "visual/component/Options/types/dev/AiText/converters";
 import { toElementModel as alert } from "visual/component/Options/types/dev/Alert/converters";
 import { toElementModel as animation } from "visual/component/Options/types/dev/Animation/converters";
-import { toElementModel as backgroundColor } from "visual/component/Options/types/dev/BackgroundColor/converters";
-import { toElementModel as border } from "visual/component/Options/types/dev/Border/converters";
-import { toElementModel as boxShadow } from "visual/component/Options/types/dev/BoxShadow/converters";
 import { toElementModel as button } from "visual/component/Options/types/dev/Button/converters";
 import { toElementModel as codeMirror } from "visual/component/Options/types/dev/CodeMirror/converters";
-import { toElementModel as colorPicker } from "visual/component/Options/types/dev/ColorPicker/converters";
-import { toElementModel as corners } from "visual/component/Options/types/dev/Corners/converters";
 import { toElementModel as fileUpload } from "visual/component/Options/types/dev/FileUpload/converters";
-import { toElementModel as filters } from "visual/component/Options/types/dev/Filters/converters";
 import { toElementModel as formApps } from "visual/component/Options/types/dev/FormApps/converters";
 import { toElementModel as gallery } from "visual/component/Options/types/dev/Gallery/converters";
 import { toElementModel as galleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery/converters";
+import { toElementModel as gbCondition } from "visual/component/Options/types/dev/GbCondition/converters";
 import { toElementModel as globalBlock } from "visual/component/Options/types/dev/GlobalBlock/converters";
 import { toElementModel as grid } from "visual/component/Options/types/dev/Grid/converters";
 import { toElementModel as group } from "visual/component/Options/types/dev/Group/converters";
@@ -27,12 +22,10 @@ import { toElementModel as iconsPicker } from "visual/component/Options/types/de
 import { toElementModel as imageUpload } from "visual/component/Options/types/dev/ImageUpload/converters";
 import { toElementModel as inputText } from "visual/component/Options/types/dev/InputText/converters";
 import { toElementModel as internalLink } from "visual/component/Options/types/dev/InternalLink/converters";
-import { toElementModel as margin } from "visual/component/Options/types/dev/Margin/converters";
 import { toElementModel as motion } from "visual/component/Options/types/dev/Motion/converters";
 import { toElementModel as multiSelect } from "visual/component/Options/types/dev/MultiSelect2/converters";
 import { toElementModel as number } from "visual/component/Options/types/dev/Number/converters";
 import { toElementModel as order } from "visual/component/Options/types/dev/Order/converters";
-import { toElementModel as padding } from "visual/component/Options/types/dev/Padding/converters";
 import { toElementModel as paypal } from "visual/component/Options/types/dev/PayPal/converters";
 import { toElementModel as popover } from "visual/component/Options/types/dev/Popover/converters";
 import { toElementModel as predefinedPopulation } from "visual/component/Options/types/dev/PredefinedPopulation/converters";
@@ -45,11 +38,25 @@ import { toElementModel as sidebarTabsButton } from "visual/component/Options/ty
 import { toElementModel as slider } from "visual/component/Options/types/dev/Slider/converters";
 import { toElementModel as _switch } from "visual/component/Options/types/dev/Switch/converters";
 import { toElementModel as tabs } from "visual/component/Options/types/dev/Tabs/converters";
-import { toElementModel as textShadow } from "visual/component/Options/types/dev/TextShadow/converters";
 import { toElementModel as textarea } from "visual/component/Options/types/dev/Textarea/converters";
 import { toElementModel as toggle } from "visual/component/Options/types/dev/Toggle/converters";
+import { toElementModel as toggleButton } from "visual/component/Options/types/dev/ToggleButton/converters";
 import { toElementModel as transform } from "visual/component/Options/types/dev/Transform/converters";
-import { toElementModel as typography } from "visual/component/Options/types/dev/Typography/converters";
+import { getOptionModel } from "visual/component/Options/types/utils/fromElementModel";
+import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { defaultValueKey } from "visual/utils/onChange";
+import { toElementModel as backgroundColor } from "visual/utils/options/BackgroundColor/converters";
+import { toElementModel as border } from "visual/utils/options/Border/converters";
+import { toElementModel as boxShadow } from "visual/utils/options/BoxShadow/converters";
+import { toElementModel as colorPicker } from "visual/utils/options/ColorPicker/converters";
+import { toElementModel as corners } from "visual/utils/options/Corners/converters";
+import { toElementModel as filters } from "visual/utils/options/Filters/converters";
+import { toElementModel as margin } from "visual/utils/options/Margin/converters";
+import { toElementModel as padding } from "visual/utils/options/Padding/converters";
+import { toElementModel as textShadow } from "visual/utils/options/TextShadow/converters";
+import { toElementModel as typography } from "visual/utils/options/Typography/converters";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { State } from "visual/utils/stateMode";
 
 type ToElementModelFns = {
   [K in OptionName]: ToElementModel<K>;
@@ -104,7 +111,9 @@ const fns: ToElementModelFns = {
   typography: typography,
   savedBlock: savedBlock,
   globalBlock: globalBlock,
-  formApps: formApps
+  formApps: formApps,
+  toggleButton: toggleButton,
+  gbCondition: gbCondition
 };
 
 /**
@@ -124,3 +133,58 @@ export const toElementModel = <T extends OptionName>(
     }, {} as ElementModel);
   };
 };
+
+export const getElementModelFromOption = <T extends OptionName>({
+  id,
+  type,
+  device,
+  state,
+  v
+}: {
+  id: string;
+  type: T;
+  device: ResponsiveMode;
+  state: State;
+  v: ElementModel;
+}) => {
+  const getKey = (id: string, key: string, isDev: boolean) => {
+    return id === "tabsState" || !isDev
+      ? id
+      : defaultValueKey({
+          key: createOptionId(id, key),
+          device,
+          state
+        });
+  };
+
+  const elementModel = toElementModel<typeof type>(type, (key) =>
+    getKey(id, key, true)
+  );
+
+  const value = getOptionModel<T>({
+    id,
+    type,
+    v,
+    breakpoint: device,
+    state
+  });
+
+  return elementModel(value);
+};
+
+export const getElementMoldelKeysFromOption = <T extends OptionName>({
+  id,
+  type,
+  v,
+  device,
+  state
+}: {
+  id: string;
+  type: T;
+  device: ResponsiveMode;
+  state: State;
+  v: ElementModel;
+}) =>
+  Object.keys(getElementModelFromOption({ id, type, v, device, state })).filter(
+    (k) => !k.startsWith("temp")
+  );

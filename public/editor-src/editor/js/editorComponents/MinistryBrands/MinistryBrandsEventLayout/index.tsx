@@ -12,7 +12,6 @@ import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
 import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
-import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
 import { EkklesiaMessages } from "../utils/helpers";
 import * as toolbarExtendDayEvents from "./calendarToolbars/toolbarExtendDayEvents";
@@ -27,6 +26,7 @@ import * as toolbarExtendListTitle from "./listToolbars/toolbarTitle";
 import { style } from "./styles";
 import * as toolbarExtendLayoutView from "./toolbarExtendLayoutView";
 import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as toolbarImage from "./toolbarImage";
 import type { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
@@ -124,93 +124,93 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
             >
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarPreview,
+                  toolbarExtendListPagination,
                   undefined,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-eventLayout--featured__preview"
+                selector=".brz-eventLayout__pagination"
               >
                 <Toolbar
                   {...this.makeToolbarPropsFromConfig2(
-                    toolbarExtendListPagination,
+                    toolbarExtendListTitle,
                     undefined,
                     {
                       allowExtend: false
                     }
                   )}
-                  selector=".brz-eventLayout__pagination"
+                  selector=".brz-eventLayout--list-item__title"
                 >
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarExtendListTitle,
+                      toolbarExtendListItemDate,
                       undefined,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-eventLayout--list-item__title"
+                    selector=".brz-eventLayout--list-item__content-date"
                   >
                     <Toolbar
                       {...this.makeToolbarPropsFromConfig2(
-                        toolbarExtendListItemDate,
+                        toolbarExtendListItemTitle,
                         undefined,
                         {
                           allowExtend: false
                         }
                       )}
-                      selector=".brz-eventLayout--list-item__content-date"
+                      selector=".brz-eventLayout--list-item__content__heading"
                     >
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarExtendListItemTitle,
+                          toolbarExtendListItemMeta,
                           undefined,
                           {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-eventLayout--list-item__content__heading"
+                        selector=".brz-eventLayout--list-item__content__meta"
                       >
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
-                            toolbarExtendListItemMeta,
+                            toolbarExtendCalendarHeading,
                             undefined,
                             {
                               allowExtend: false
                             }
                           )}
-                          selector=".brz-eventLayout--list-item__content__meta"
+                          selector=".brz-eventLayout--calendar-heading th"
                         >
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarExtendCalendarHeading,
+                              toolbarExtendCalendarDays,
                               undefined,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-eventLayout--calendar-heading th"
+                            selector=".brz-eventLayout--calendar-day"
                           >
                             <Toolbar
                               {...this.makeToolbarPropsFromConfig2(
-                                toolbarExtendCalendarDays,
+                                toolbarExtendDayEvents,
                                 undefined,
                                 {
                                   allowExtend: false
                                 }
                               )}
-                              selector=".brz-eventLayout--calendar-day"
+                              selector=".brz-eventLayout--calendar-day li"
                             >
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarExtendDayEvents,
+                                  toolbarImage,
                                   undefined,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-eventLayout--calendar-day li"
+                                selector=".brz-ministryBrands__item--media"
                               >
                                 <Wrapper
                                   {...this.makeWrapperProps({

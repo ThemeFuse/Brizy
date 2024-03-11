@@ -1,5 +1,8 @@
 import { ComponentType } from "react";
-import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import {
+  ToolbarConfig,
+  ToolbarProps
+} from "visual/editorComponents/EditorComponent/types";
 
 interface Hydrate {
   type: "hydrate";
@@ -11,14 +14,18 @@ interface Vanilla {
 
 export type Preview = Hydrate | Vanilla;
 
-export interface ThirdPartyComponentData {
+export interface ThirdPartyConfig {
   id: string;
   title: string;
-  component: ComponentType;
   preview: Preview;
   icon?: string;
-  options?: Array<ToolbarItemType>;
-  category?: string;
+  options?: (props: ToolbarProps) => Array<ToolbarConfig>;
 }
 
-export type ThirdPartyComponents = Record<string, ThirdPartyComponentData>;
+export interface ThirdPartyComponent extends ThirdPartyConfig {
+  component: ComponentType;
+  category?: string;
+  keywords?: string;
+}
+
+export type ThirdPartyComponents = Record<string, ThirdPartyComponent>;

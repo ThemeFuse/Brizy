@@ -3,7 +3,7 @@
   select,
   input,
   button[type="submit"],
-  div:has(> iframe),
+  iframe,
   :is(a, audio, video):active {
     pointer-events: none;
   }

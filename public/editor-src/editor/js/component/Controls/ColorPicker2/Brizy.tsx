@@ -1,7 +1,10 @@
 import classnames from "classnames";
 import React, { Component, ReactElement } from "react";
 import _ from "underscore";
-import { ChangeFunction } from "visual/component/Controls/ColorPicker2/types";
+import {
+  ChangeFunction,
+  OnSwatchHover
+} from "visual/component/Controls/ColorPicker2/types";
 import { Alpha, ColorWrap, Hue, Saturation } from "./common";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
@@ -20,7 +23,7 @@ export interface Props {
   hsv: HSVA;
   rgb: RGBA;
   renderers?: { canvas: new () => HTMLCanvasElement };
-  onSwatchHover?: ChangeFunction;
+  onSwatchHover?: OnSwatchHover;
 }
 
 type PointerProps = {

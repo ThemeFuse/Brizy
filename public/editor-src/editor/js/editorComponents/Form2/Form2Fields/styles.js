@@ -79,7 +79,7 @@ export function styleFormFields(v, vs, vd) {
       interval: ["cssStyleHoverTransition"]
     },
     ".brz && .form-alert": {
-      standart: ["cssStyleTypographyFontFamily"]
+      standart: ["cssStyleTypography2FontFamily"]
     }
   };
 

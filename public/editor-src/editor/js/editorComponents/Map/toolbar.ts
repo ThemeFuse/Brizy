@@ -62,10 +62,7 @@ export function getItems({
                   label: t("Address"),
                   type: "inputText",
                   placeholder: t("Enter address"),
-                  population: richTextDC,
-                  config: {
-                    size: "medium"
-                  }
+                  population: richTextDC
                 },
                 {
                   id: "zoom",

@@ -49,10 +49,14 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
 
       // it's needed for legacy popups
       const pageBlocksData = items.reduce((acc, block) => {
+        const blockWithoutMeta = produce(block, (draft) => {
+          delete draft.meta;
+        });
+
         // globalBlockId - it's needed for legacy models
-        const { _id, globalBlockId } = block.value;
+        const { _id, globalBlockId } = blockWithoutMeta.value;
         const id = globalBlockId || _id;
-        acc[id] = block;
+        acc[id] = blockWithoutMeta;
 
         return acc;
       }, {} as BlocksData);

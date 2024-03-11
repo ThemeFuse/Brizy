@@ -35,10 +35,7 @@ export function getItems({ v, device }) {
               type: "inputText",
               disabled: dvv("redirectType") !== "custom",
               devices: "desktop",
-              placeholder: "http://",
-              config: {
-                size: "medium"
-              }
+              placeholder: "http://"
             }
           ]
         }

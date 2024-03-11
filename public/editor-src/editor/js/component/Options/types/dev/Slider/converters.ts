@@ -10,8 +10,8 @@ export const defaultValue: Value = {
 
 export const fromElementModel: Option.FromElementModel<"slider"> = (get) => {
   return {
-    value: NumberSpec.read(get("value")),
-    unit: String.read(get("suffix"))
+    value: NumberSpec.read(get("value")) ?? defaultValue.value,
+    unit: String.read(get("suffix")) ?? defaultValue.unit
   };
 };
 

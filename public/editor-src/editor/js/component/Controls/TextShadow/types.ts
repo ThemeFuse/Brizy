@@ -12,4 +12,5 @@ export type Value<P, O> = {
 
 export type Meta<P, O> = {
   isChanged: keyof Value<P, O>;
+  isChanging?: boolean;
 };

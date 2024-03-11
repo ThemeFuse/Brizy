@@ -42,13 +42,31 @@ export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
     position?: number;
     roles?: UserRole[]; //TODO: Make sure that roles are a concrete type, not string
     isPro?: boolean;
-    style?: OptionStyle;
+    style?: OptionStyle<K>;
     selector?: string;
+    default?: Partial<OptionValue<K>>;
   };
 
 type ToolbarItemsTypes = { [P in OptionName]: GenericToolbarItemType<P> };
 
 export type ToolbarItemType = ToolbarItemsTypes[keyof ToolbarItemsTypes];
+
+export type ToolbarItemTypeWithColumns = ToolbarItemType & {
+  columns: ToolbarItemType[];
+};
+
+export type ToolbarItemTypeWithOptions = ToolbarItemType & {
+  options: ToolbarItemType[];
+};
+
+export type ToolbarItemTypeWithTabs = ToolbarItemType & {
+  tabs: ToolbarItemType[];
+};
+
+export const is =
+  (checker: (o: unknown) => boolean) =>
+  (o: unknown): o is ToolbarItemType =>
+    checker(o);
 
 export type OptionDefinition<T extends OptionName = OptionName> =
   GenericToolbarItemType<T> & {

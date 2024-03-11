@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { Base64 } from "js-base64";
 import React from "react";
 import { getCurrentPageId } from "visual/bootstraps/editor/getCurrentPageId";
 import {
@@ -45,7 +46,7 @@ class Breadcrumbs extends EditorComponent<Value> {
       postId: getCurrentPageId()
     }).then((res) => {
       const { breadcrumbContent } = this.getValue();
-      const decodedRes = atob(res[0]);
+      const decodedRes = Base64.decode(res[0]);
 
       if (breadcrumbContent !== decodedRes) {
         this.patchValue({

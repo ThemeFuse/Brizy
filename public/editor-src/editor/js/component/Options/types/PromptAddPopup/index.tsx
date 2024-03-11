@@ -78,7 +78,7 @@ export type Props<T extends Value> = ConnectedProps<typeof connector> &
 class PromptAddPopupOptionType<T extends Value> extends Component<Props<T>> {
   handleCreate = (): void => {
     const config = Config.getAll();
-    ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
+    // TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
     const showGlobal = !(isCloud(config) && isShopify(config));
 
     const data: PromptsProps<"popup"> = {

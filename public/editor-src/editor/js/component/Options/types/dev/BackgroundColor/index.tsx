@@ -1,7 +1,6 @@
 import React, { ComponentProps, FC, useMemo } from "react";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
 import * as O from "visual/component/Options/Type";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import {
   paletteHex,
   setOpacity
@@ -13,16 +12,19 @@ import { getStore } from "visual/redux/store";
 import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
-import { Value } from "./entities/Value";
+import { Value } from "visual/utils/options/BackgroundColor/entities/Value";
+import { Meta } from "visual/utils/options/BackgroundColor/meta";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import * as Model from "./model";
 import { toBgControlValue } from "./utils";
 
-export type Props = O.Props<Value> & {
-  config?: {
-    opacity?: boolean;
-    withNone?: boolean;
+export type Props = O.Props<Value> &
+  O.Meta<Meta> & {
+    config?: {
+      opacity?: boolean;
+      withNone?: boolean;
+    };
   };
-};
 
 const openSidebar = (): void => {
   getStore().dispatch(
@@ -36,6 +38,9 @@ const openSidebar = (): void => {
 export const BackgroundColor: FC<Props> = ({ value, onChange, config }) => {
   const _onChange: ComponentProps<typeof Bg>["onChange"] = (v, m) => {
     const isStart = !(value.type === "gradient" && value.active === "end");
+
+    const isChanging = !!m.isChanging;
+
     switch (m.isChanged) {
       case "type":
         onChange(Model.setType(v.type, value));
@@ -65,14 +70,16 @@ export const BackgroundColor: FC<Props> = ({ value, onChange, config }) => {
       case "hex": {
         const setter = isStart ? Model.setHex : Model.setGradientHex;
         const hex = Hex.fromString(v.hex);
-        hex !== undefined && onChange(setter(hex, value));
+        hex !== undefined && onChange(setter(hex, value), { isChanging });
         break;
       }
       case "opacity": {
         const setter = isStart ? Model.setOpacity : Model.setGradientOpacity;
         const opacity = Opacity.fromNumber(v.opacity);
         opacity !== undefined &&
-          onChange(setOpacity(setter, opacity, value, !!m.opacityDragEnd));
+          onChange(setOpacity(setter, opacity, value, isChanging), {
+            isChanging
+          });
         break;
       }
       case "palette": {

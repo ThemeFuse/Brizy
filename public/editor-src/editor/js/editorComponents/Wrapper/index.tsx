@@ -35,10 +35,12 @@ import Toolbar, {
 import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  Props as EDProps,
-  ToolbarExtend
+  Props as EDProps
 } from "visual/editorComponents/EditorComponent";
-import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
+import {
+  OnChangeMeta,
+  ToolbarExtend
+} from "visual/editorComponents/EditorComponent/types";
 import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";

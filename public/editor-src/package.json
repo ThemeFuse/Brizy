@@ -9,7 +9,7 @@
     "@brizy/builder-ui-components": "*",
     "@brizy/component": "*",
     "@brizy/motion": "^0.1.1",
-    "@brizy/ui": "^0.9.55",
+    "@brizy/ui": "^0.9.56",
     "@brizy/ui-icons": "0.0.44",
     "@brizy/widget": "*",
     "@dnd-kit/core": "^6.0.6",

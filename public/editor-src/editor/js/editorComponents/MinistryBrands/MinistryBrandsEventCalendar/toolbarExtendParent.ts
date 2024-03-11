@@ -10,7 +10,8 @@ export const getItems: GetItems<Value, Props> = ({
   device,
   state,
   context,
-  component
+  component,
+  getValue
 }) => {
   const config = Config.getAll();
   return [
@@ -154,7 +155,8 @@ export const getItems: GetItems<Value, Props> = ({
       device,
       state,
       context,
-      component
+      component,
+      getValue
     }),
     { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] }
   ];

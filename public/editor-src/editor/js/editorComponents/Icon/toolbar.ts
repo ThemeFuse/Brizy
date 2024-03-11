@@ -273,8 +273,12 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "linkPage",
                   type: "internalLink",
-                  label: t("Find Page"),
-                  devices: "desktop"
+                  label: t("Find Page")
+                },
+                {
+                  id: "linkInternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch"
                 }
               ]
             },
@@ -290,10 +294,7 @@ export const getItems: GetItems<Value, Props> = ({
                   option: {
                     id: "linkExternal",
                     type: "inputText",
-                    placeholder: "http://",
-                    config: {
-                      size: "medium"
-                    }
+                    placeholder: "http://"
                   }
                 },
                 {

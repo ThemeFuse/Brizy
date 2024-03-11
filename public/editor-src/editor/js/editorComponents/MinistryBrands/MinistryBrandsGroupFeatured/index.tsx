@@ -11,6 +11,8 @@ import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
+import * as toolbarImage from "../toolbarImage";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
@@ -79,20 +81,24 @@ export class MinistryBrandsGroupFeatured extends EditorComponent<Value, Props> {
           selector=".brz-groupFeatured__item--meta--date"
         >
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarMetaLinks, undefined, {
-              allowExtend: false
-            })}
-            selector=".brz-ministryBrands__item--meta--links"
+            {...this.makeToolbarPropsFromConfig2(
+              toolbarMetaTypography,
+              undefined,
+              {
+                allowExtend: false
+              }
+            )}
+            selector=".brz-groupFeatured__item--meta"
           >
             <Toolbar
               {...this.makeToolbarPropsFromConfig2(
-                toolbarMetaTypography,
+                toolbarMetaLinks,
                 undefined,
                 {
                   allowExtend: false
                 }
               )}
-              selector=".brz-groupFeatured__item--meta"
+              selector=".brz-ministryBrands__item--meta--links"
             >
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
@@ -124,18 +130,40 @@ export class MinistryBrandsGroupFeatured extends EditorComponent<Value, Props> {
                     )}
                     selector=".brz-ministryBrands__pagination"
                   >
-                    <Wrapper
-                      {...this.makeWrapperProps({
-                        className
-                      })}
+                    <Toolbar
+                      {...this.makeToolbarPropsFromConfig2(
+                        toolbarImage,
+                        undefined,
+                        {
+                          allowExtend: false
+                        }
+                      )}
+                      selector=".brz-ministryBrands__item--media"
                     >
-                      <DynamicContentHelper
-                        placeholder={getPlaceholder(v)}
-                        props={{ className: "brz-groupFeatured" }}
-                        blocked={false}
-                        tagName="div"
-                      />
-                    </Wrapper>
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarMetaIcons,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-ministryBrands__meta--icons"
+                      >
+                        <Wrapper
+                          {...this.makeWrapperProps({
+                            className
+                          })}
+                        >
+                          <DynamicContentHelper
+                            placeholder={getPlaceholder(v)}
+                            props={{ className: "brz-groupFeatured" }}
+                            blocked={false}
+                            tagName="div"
+                          />
+                        </Wrapper>
+                      </Toolbar>
+                    </Toolbar>
                   </Toolbar>
                 </Toolbar>
               </Toolbar>

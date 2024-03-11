@@ -1,44 +1,46 @@
 import { times } from "underscore";
-import * as Width from "./entities/width";
-import * as Style from "./entities/style";
-import { _setWidthEdge, getStyleObject } from "./utils";
-import { defaultValue } from "./converters";
-import { getWidth } from "visual/component/Options/types/dev/Border/model";
-import { capByPrefix } from "visual/utils/string";
-import * as BorderStyle from "./entities/style";
-import { t } from "visual/utils/i18n";
-import { Value } from "./entities/Value";
 import { StyleObject } from "visual/component/Controls/Border";
+import { getWidth } from "visual/component/Options/types/dev/Border/model";
+import { t } from "visual/utils/i18n";
+import { defaultValue } from "visual/utils/options/Border/converters";
+import { Value } from "visual/utils/options/Border/entities/Value";
+import * as Style from "visual/utils/options/Border/entities/style";
+import * as BorderStyle from "visual/utils/options/Border/entities/style";
+import * as Width from "visual/utils/options/Border/entities/width";
+import { capByPrefix } from "visual/utils/string";
+import { _setWidthEdge, getStyleObject } from "./utils";
 
 const model = defaultValue;
 
-describe("Testing '_getWidth' function", function() {
+describe("Testing '_getWidth' function", function () {
   const valid = times(100, Width.unsafe);
 
-  valid.forEach(width =>
+  valid.forEach((width) =>
     test(`Expect ${width}`, () => {
       expect(getWidth({ ...model, width })).toBe(width);
     })
   );
 });
 
-describe("Testing '_setWidth' function", function() {
+describe("Testing '_setWidth' function", function () {
   test("If value is 0 and other values are 0, temp should not be set to 0", () => {
-    (["topWidth", "rightWidth", "bottomWidth", "leftWidth"] as const).map(k => {
-      const temp = capByPrefix("temp", k);
-      const m: Value = {
-        ...model,
-        topWidth: Width.unsafe(0),
-        rightWidth: Width.unsafe(0),
-        bottomWidth: Width.unsafe(0),
-        leftWidth: Width.unsafe(0),
-        [k]: 2
-      };
+    (["topWidth", "rightWidth", "bottomWidth", "leftWidth"] as const).map(
+      (k) => {
+        const temp = capByPrefix("temp", k);
+        const m: Value = {
+          ...model,
+          topWidth: Width.unsafe(0),
+          rightWidth: Width.unsafe(0),
+          bottomWidth: Width.unsafe(0),
+          leftWidth: Width.unsafe(0),
+          [k]: 2
+        };
 
-      expect(_setWidthEdge(k, Width.empty, m)).toMatchObject({
-        [temp]: 2
-      });
-    });
+        expect(_setWidthEdge(k, Width.empty, m)).toMatchObject({
+          [temp]: 2
+        });
+      }
+    );
   });
 
   test("If all edges are equal and higher then 0, setWidth to same value", () => {
@@ -69,7 +71,7 @@ describe("Testing '_setWidth' function", function() {
   });
 });
 
-describe("Testing 'getStyleObject' function", function() {
+describe("Testing 'getStyleObject' function", function () {
   const objects: Array<[Style.Style, StyleObject]> = [
     ["none", { id: BorderStyle.NONE, title: t("None") }],
     ["solid", { id: BorderStyle.SOLID, icon: "nc-solid" }],

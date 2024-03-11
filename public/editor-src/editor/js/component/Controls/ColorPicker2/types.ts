@@ -1,5 +1,6 @@
-import { MouseEvent, TouchEvent } from "react";
+import { MouseEvent } from "react";
 import _ from "underscore";
+import { GlobalMeta } from "visual/component/Options/Type";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
 import HSVA = tinycolor.ColorFormats.HSVA;
@@ -16,7 +17,6 @@ export interface HSVAwithSource extends HSVA {
 export interface HSVAChange extends HSVA {
   source: string;
   wasChanged: string;
-  opacityDragEnd?: boolean;
   hsv?: HSVA;
   hsl?: HSLA;
   rgb?: RGBA;
@@ -27,7 +27,6 @@ export interface HSVAChange extends HSVA {
 export interface HSLAChange extends HSLA {
   source: string;
   wasChanged: string;
-  opacityDragEnd?: boolean;
   hsv?: HSVA;
   hsl?: HSLA;
   rgb?: RGBA;
@@ -37,7 +36,12 @@ export interface HSLAChange extends HSLA {
 
 export type ChangeFunction = (
   data: HSLAChange | HSVAChange,
-  e: TouchEvent | MouseEvent
+  meta?: GlobalMeta
+) => void;
+
+export type OnSwatchHover = (
+  data: HSLAChange | HSVAChange,
+  e: MouseEvent
 ) => void;
 
 export const isHSLAChange = (

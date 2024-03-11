@@ -5,8 +5,10 @@ import {
   cssStyleBorderRadius,
   cssStyleColor,
   cssStyleDisplayFlex,
+  cssStyleFilter,
   cssStyleFlexColumnHorizontalAlign,
   cssStyleFlexHorizontalAlign,
+  cssStyleSizeMaxWidth,
   cssStyleSpacing,
   cssStyleTextAlign,
   getAllCssStyleTypography
@@ -15,7 +17,10 @@ import * as Num from "visual/utils/math/number";
 import { CSSValue } from "visual/utils/style2/types";
 import { defaultValueValue } from "../onChange";
 import { ACTIVE } from "../stateMode";
+import { capByPrefix } from "../string";
+import { styleSizeHeight, styleSizeWidth } from "../style2";
 import { cssStyleBoxShadow } from "./cssStyleBoxShadow";
+import { cssStyleDropShadow } from "./cssStyleDropShadow";
 
 // Title
 export function cssStyleElementOfMinistryBrandsTitleTypography({
@@ -682,4 +687,116 @@ export function cssStyleElementOfMinistryBrandsListPaddingLeft({
   const suffix = dvv("listPaddingSuffix");
 
   return `padding-left: ${padding}${suffix};`;
+}
+
+export function cssStyleElementOfMinistryBrandsImageWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMaxWidth({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsImagePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const height = styleSizeHeight({ v, device, state, prefix: "img" }) ?? 100;
+  const width = styleSizeWidth({ v, device, state, prefix: "img" }) ?? 100;
+
+  /* 
+    56.25 - aspect ratio of 16:9
+    The calculation using this value, along with the image's width and height, 
+    maintains the image's proportions when resizing.
+  */
+  const _padding = 56.25 * height * 0.01 * width * 0.01;
+  const padding = Num.read(_padding.toFixed(2));
+
+  return `padding-bottom: ${padding}%;`;
+}
+
+export function cssStyleElementOfMinistryBrandsImgBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "img" });
+}
+
+export function cssStyleElementOfMinistryBrandsImgBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "imgBg" });
+}
+
+export const cssStyleElementOfMinistryBrandsImgBorder = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsImgBoxShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsImgMaskShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleDropShadow({
+    v,
+    device,
+    state,
+    prefix: "imgMaskShadow"
+  });
+};
+export const cssStyleElementOfMinistryBrandsImgFilters = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleFilter({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+};
+export function cssStyleElementOfMinistryBrandsMetaIconsSpacing({
+  v,
+  device,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const metaIconsSpacing = dvv(capByPrefix(prefix, "metaIconsSpacing")) ?? "10";
+  const metaIconsSpacingSuffix =
+    dvv(capByPrefix(prefix, "metaIconsSpacingSuffix")) ?? "px";
+
+  return `margin-right: ${metaIconsSpacing}${metaIconsSpacingSuffix};`;
 }

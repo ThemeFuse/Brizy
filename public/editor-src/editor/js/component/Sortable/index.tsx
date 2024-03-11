@@ -14,7 +14,7 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents from "visual/global/UIEvents";
 import { updateUI } from "visual/redux/actions2";
-import { uiSelector } from "visual/redux/selectors-new";
+import { uiSelector } from "visual/redux/selectors";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import SortablePlugin from "./plugin";
 

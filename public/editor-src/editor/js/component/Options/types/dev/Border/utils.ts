@@ -1,17 +1,17 @@
-import { capByPrefix } from "visual/utils/string";
-import { _apply, set } from "visual/utils/model";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as Width from "./entities/width";
-import * as Style from "./entities/style";
-import { getStyle, setStyle, setOpacity } from "./model";
-import { toggleColor } from "visual/component/Options/types/dev/ColorPicker/utils";
-import { mApply } from "visual/utils/value";
-import * as BorderStyle from "visual/component/Options/types/dev/Border/entities/style";
-import { t } from "visual/utils/i18n";
-import { Value } from "./entities/Value";
-import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
 import { StyleObject } from "visual/component/Controls/Border";
-import { isEmptyWidth } from "./converters";
+import { toggleColor } from "visual/component/Options/types/dev/ColorPicker/utils";
+import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { t } from "visual/utils/i18n";
+import { _apply, set } from "visual/utils/model";
+import { isEmptyWidth } from "visual/utils/options/Border/converters";
+import { Value } from "visual/utils/options/Border/entities/Value";
+import * as BorderStyle from "visual/utils/options/Border/entities/style";
+import * as Style from "visual/utils/options/Border/entities/style";
+import * as Width from "visual/utils/options/Border/entities/width";
+import { capByPrefix } from "visual/utils/string";
+import { mApply } from "visual/utils/value";
+import { getStyle, setOpacity, setStyle } from "./model";
 
 const widthTemp = (k: string): string => capByPrefix("temp", k);
 
@@ -72,12 +72,14 @@ export const _setWidthEdge = (
     return m;
   }
 
-  const flatten = ([
-    "topWidth",
-    "rightWidth",
-    "bottomWidth",
-    "leftWidth"
-  ] as (keyof WithWidth)[]).reduce((m, k) => {
+  const flatten = (
+    [
+      "topWidth",
+      "rightWidth",
+      "bottomWidth",
+      "leftWidth"
+    ] as (keyof WithWidth)[]
+  ).reduce((m, k) => {
     const value = _getWidth(k, m) ?? Width.empty;
     return set(capByPrefix("temp", k) as keyof WithWidth, value, m);
   }, m);
@@ -115,13 +117,11 @@ export const _setWidthEdge = (
  * @return {Border}
  */
 export const toggleWidth = (enable: boolean, m: Value): Value => {
-  return ([
-    "width",
-    "topWidth",
-    "rightWidth",
-    "bottomWidth",
-    "leftWidth"
-  ] as Array<keyof WithWidth>).reduce((m, k) => {
+  return (
+    ["width", "topWidth", "rightWidth", "bottomWidth", "leftWidth"] as Array<
+      keyof WithWidth
+    >
+  ).reduce((m, k) => {
     const t = capByPrefix("temp", k) as keyof WithWidth;
     const w = _getWidth(k, m);
     const tW = _getWidth(t, m);

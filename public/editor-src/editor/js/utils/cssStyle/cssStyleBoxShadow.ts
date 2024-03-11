@@ -31,6 +31,7 @@ export function cssStyleBoxShadowSuffixForGlamour({
 
   if (
     type === "" ||
+    type === "none" ||
     type === "off" ||
     (horizontal === 0 && vertical === 0 && blur === 0 && spread === 0)
   ) {

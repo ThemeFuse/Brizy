@@ -9,6 +9,9 @@ import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import * as toolbarImage from "../toolbarImage";
+import * as toolbarLinksColor from "../toolbarLinksColor";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarTitle from "../toolbarTitle";
 import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
@@ -99,18 +102,53 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                 })}
                 selector=".brz-groupSlider_heading"
               >
-                <Wrapper
-                  {...this.makeWrapperProps({
-                    className
-                  })}
+                <Toolbar
+                  {...this.makeToolbarPropsFromConfig2(
+                    toolbarImage,
+                    undefined,
+                    {
+                      allowExtend: false
+                    }
+                  )}
+                  selector=".brz-ministryBrands__item--media"
                 >
-                  <DynamicContentHelper
-                    placeholder={getPlaceholder(v)}
-                    props={{ className: "brz-ministryBrands brz-groupSlider" }}
-                    blocked={false}
-                    tagName="div"
-                  />
-                </Wrapper>
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarLinksColor,
+                      undefined,
+                      {
+                        allowExtend: false
+                      }
+                    )}
+                    selector=".brz-groupSlider_meta--link a"
+                  >
+                    <Toolbar
+                      {...this.makeToolbarPropsFromConfig2(
+                        toolbarMetaIcons,
+                        undefined,
+                        {
+                          allowExtend: false
+                        }
+                      )}
+                      selector=".brz-ministryBrands__meta--icons"
+                    >
+                      <Wrapper
+                        {...this.makeWrapperProps({
+                          className
+                        })}
+                      >
+                        <DynamicContentHelper
+                          placeholder={getPlaceholder(v)}
+                          props={{
+                            className: "brz-ministryBrands brz-groupSlider"
+                          }}
+                          blocked={false}
+                          tagName="div"
+                        />
+                      </Wrapper>
+                    </Toolbar>
+                  </Toolbar>
+                </Toolbar>
               </Toolbar>
             </Toolbar>
           </Toolbar>

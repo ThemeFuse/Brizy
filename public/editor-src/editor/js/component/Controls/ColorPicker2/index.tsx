@@ -1,9 +1,10 @@
 import React, { ReactElement, useRef } from "react";
-import _ from "underscore";
+import { throttle } from "underscore";
 import {
   HSLAChange,
   HSVAChange
 } from "visual/component/Controls/ColorPicker2/types";
+import { GlobalMeta } from "visual/component/Options/Type";
 import { hexToRgba, isHex } from "visual/utils/color";
 import Brizy from "./Brizy";
 
@@ -17,7 +18,7 @@ interface Value {
 
 interface ChangeValue extends Value {
   isChanged: "hex" | "opacity";
-  opacityDragEnd: boolean;
+  isChanging: boolean;
 }
 
 export interface Props {
@@ -38,7 +39,7 @@ function ColorPicker2({
   // https://github.com/bagrinsergiu/blox-editor/issues/19261
   const throttleOnChange =
     onChange &&
-    _.throttle(onChange, 500, {
+    throttle(onChange, 500, {
       leading: false,
       trailing: true
     });
@@ -48,15 +49,18 @@ function ColorPicker2({
     ? DEFAULT_OPACITY
     : value.opacity;
 
-  const handleChange = (value: HSVAChange | HSLAChange): void => {
-    const { hex = "", rgb, wasChanged, opacityDragEnd } = value;
+  const handleChange = (
+    value: HSVAChange | HSLAChange,
+    meta?: GlobalMeta
+  ): void => {
+    const { hex = "", rgb, wasChanged } = value;
 
     const newHex = hex?.toLowerCase();
     throttleOnChange?.({
       hex: newHex,
       opacity: Number(Number(rgb?.a).toFixed(2)),
       isChanged: wasChanged === "opacity" ? "opacity" : "hex",
-      opacityDragEnd: !!opacityDragEnd
+      isChanging: !!meta?.isChanging
     });
   };
 

@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
 import { HSLAChange } from "visual/component/Controls/ColorPicker2/types";
+import { GlobalMeta } from "visual/component/Options/Type";
 import * as hue from "../helpers/hue";
 import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 
@@ -11,7 +12,7 @@ export interface Props {
   hsl: HSLA;
   contentWindow: () => Window | null;
   Pointer?: ComponentType;
-  onChange: (v: HSLAChange, e: MouseEvent | TouchEvent) => void;
+  onChange: (v: HSLAChange, meta: GlobalMeta) => void;
   radius?: string;
   shadow?: string;
 }
@@ -27,7 +28,7 @@ export class Hue extends Component<Props> {
 
   container: null | HTMLDivElement = null;
 
-  handleChange = (e: TouchEvent | MouseEvent) => {
+  handleChange = (e: TouchEvent | MouseEvent, isChanging?: boolean) => {
     const contentWindow = this.props.contentWindow() || window;
     const change = hue.calculateChange({
       e,
@@ -38,12 +39,17 @@ export class Hue extends Component<Props> {
     });
 
     if (change && this.props.onChange) {
-      this.props.onChange({ ...change, wasChanged: "hue" }, e);
+      this.props.onChange(
+        { ...change, wasChanged: "hue" },
+        {
+          isChanging: isChanging ?? false
+        }
+      );
     }
   };
 
   handleMouseDown = (e: MouseEvent) => {
-    this.handleChange(e);
+    this.handleChange(e, true);
     const contentWindow = this.props.contentWindow();
 
     if (contentWindow) {
@@ -52,13 +58,17 @@ export class Hue extends Component<Props> {
       }
       contentWindow.addEventListener(
         "mousemove",
-        this.handleChange as () => void
+        this.handleMouseMove as () => void
       );
       contentWindow.addEventListener("mouseup", this.handleMouseUp);
     }
   };
 
-  handleMouseUp = () => {
+  handleMouseMove = (e: MouseEvent) => this.handleChange(e, true);
+
+  handleMouseUp = (e: MouseEvent | MouseEventInit) => {
+    this.handleChange(e as MouseEvent, false);
+
     const contentWindow = this.props.contentWindow();
     if (contentWindow && !isInIframe(contentWindow)) {
       enableIframeEvents(contentWindow);
@@ -72,7 +82,7 @@ export class Hue extends Component<Props> {
     if (contentWindow) {
       contentWindow.removeEventListener(
         "mousemove",
-        this.handleChange as () => void
+        this.handleMouseMove as () => void
       );
       contentWindow.removeEventListener("mouseup", this.handleMouseUp);
     }

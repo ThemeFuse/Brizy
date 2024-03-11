@@ -1,6 +1,7 @@
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
-import _ from "underscore";
+import { throttle } from "underscore";
 import { HSVAChange } from "visual/component/Controls/ColorPicker2/types";
+import { GlobalMeta } from "visual/component/Options/Type";
 import * as saturation from "../helpers/saturation";
 import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 
@@ -8,7 +9,7 @@ import HSLA = tinycolor.ColorFormats.HSLA;
 import HSVA = tinycolor.ColorFormats.HSVA;
 
 export interface Props {
-  onChange: (v: HSVAChange, e: MouseEvent | TouchEvent) => void;
+  onChange: (v: HSVAChange, meta: GlobalMeta) => void;
   hsl: HSLA;
   hsv: HSVA;
   contentWindow: () => Window | null;
@@ -27,9 +28,9 @@ export class Saturation extends Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    this.throttle = _.throttle(
-      (fn: Props["onChange"], data: HSVAChange, e: MouseEvent | TouchEvent) => {
-        fn({ ...data, wasChanged: "saturation" }, e);
+    this.throttle = throttle(
+      (fn: Props["onChange"], data: HSVAChange, meta: GlobalMeta) => {
+        fn({ ...data, wasChanged: "saturation" }, meta);
       },
       50
     );
@@ -39,24 +40,24 @@ export class Saturation extends Component<Props> {
     this.unbindEventListeners();
   }
 
-  handleChange = (e: MouseEvent | TouchEvent) => {
+  handleChange = (e: MouseEvent | TouchEvent, isChanging?: boolean) => {
     const contentWindow = this.props.contentWindow() || window;
 
+    const data = saturation.calculateChange({
+      e,
+      contentWindow,
+      hsl: this.props.hsl,
+      container: this.container
+    }) as HSVAChange;
+
     this.props.onChange &&
-      this.throttle(
-        this.props.onChange,
-        saturation.calculateChange({
-          e,
-          contentWindow,
-          hsl: this.props.hsl,
-          container: this.container
-        }) as HSVAChange,
-        e
-      );
+      this.throttle(this.props.onChange, data, {
+        isChanging: isChanging ?? false
+      });
   };
 
   handleMouseDown = (e: MouseEvent) => {
-    this.handleChange(e);
+    this.handleChange(e, true);
     const contentWindow = this.props.contentWindow();
 
     if (contentWindow) {
@@ -66,13 +67,17 @@ export class Saturation extends Component<Props> {
 
       contentWindow.addEventListener(
         "mousemove",
-        this.handleChange as () => void
+        this.handleMouseMove as () => void
       );
       contentWindow.addEventListener("mouseup", this.handleMouseUp);
     }
   };
 
-  handleMouseUp = () => {
+  handleMouseMove = (e: MouseEvent) => this.handleChange(e, true);
+
+  handleMouseUp = (e: MouseEvent | MouseEventInit) => {
+    this.handleChange(e as MouseEvent, false);
+
     const contentWindow = this.props.contentWindow();
     if (contentWindow && !isInIframe(contentWindow)) {
       enableIframeEvents(contentWindow);
@@ -86,7 +91,7 @@ export class Saturation extends Component<Props> {
     if (contentWindow) {
       contentWindow.removeEventListener(
         "mousemove",
-        this.handleChange as () => void
+        this.handleMouseMove as () => void
       );
       contentWindow.removeEventListener("mouseup", this.handleMouseUp);
     }

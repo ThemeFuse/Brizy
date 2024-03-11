@@ -1,23 +1,23 @@
+import { TypeObject } from "visual/component/Controls/BoxShadow/types";
+import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
+import * as Blur from "visual/utils/cssProps/Blur";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { t } from "visual/utils/i18n";
+import { _apply, get } from "visual/utils/model";
+import * as T from "visual/utils/options/BoxShadow/entities/Type";
+import { Value } from "visual/utils/options/BoxShadow/entities/Value";
 import {
   getBlur,
   getHorizontal,
+  getOpacity,
+  getPalette,
   getSpread,
+  getType,
   getVertical,
   setOpacity,
   setPalette,
-  setType,
-  getPalette,
-  getOpacity,
-  getType
+  setType
 } from "./model";
-import * as ColorUtils from "visual/component/Options/types/dev/ColorPicker/utils";
-import { get, _apply } from "visual/utils/model";
-import { t } from "visual/utils/i18n";
-import * as T from "visual/component/Options/types/dev/BoxShadow/entities/Type";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as Blur from "visual/utils/cssProps/Blur";
-import { Value } from "./entities/Value";
-import { TypeObject } from "visual/component/Controls/BoxShadow/types";
 
 /**
  * Toggles shadow type
@@ -102,7 +102,7 @@ export const getTypeTitle = (type: T.Type): string => {
 };
 
 export const getTypesItems = (ts: T.Type[]): TypeObject[] =>
-  ts.map(id => ({ id, title: getTypeTitle(id) }));
+  ts.map((id) => ({ id, title: getTypeTitle(id) }));
 
 /**
  * Converts a legacy box shadow value to a valid box shadow type value

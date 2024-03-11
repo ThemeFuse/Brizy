@@ -18,10 +18,7 @@ import Toolbar, {
 } from "visual/component/Toolbar";
 import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import EditorComponent, {
-  ComponentsMeta,
-  ToolbarExtend
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
@@ -43,6 +40,10 @@ import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import {
+  ComponentsMeta,
+  ToolbarExtend
+} from "visual/editorComponents/EditorComponent/types";
 
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 type Item = {

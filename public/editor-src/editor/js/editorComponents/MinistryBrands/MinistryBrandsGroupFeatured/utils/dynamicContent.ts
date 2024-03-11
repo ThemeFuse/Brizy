@@ -20,7 +20,8 @@ export const getPlaceholder = (v: Value): string => {
     group,
     detailPageButtonText,
     detailPage,
-    slug
+    slug,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -34,6 +35,7 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showResourceLink, "show_resourcelink"),
     getAttr(showPreview, "show_preview"),
     getAttr(groupLatest, "group_latest"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `group_recent_list='${groupRecentList}'`,
     `group_slug='${groupSlug}'`,
     `category='${category}'`,

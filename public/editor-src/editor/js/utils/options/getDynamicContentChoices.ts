@@ -3,6 +3,7 @@ import {
   ConfigDCItem,
   DCGroup
 } from "visual/global/Config/types/DynamicContent";
+import { MValue } from "visual/utils/value";
 import { Literal } from "../types/Literal";
 import { TypeChoices } from "./types";
 
@@ -17,7 +18,6 @@ export interface Choice {
   alias?: string;
   attr: Record<string, Literal>;
   icon?: string;
-  varyAttr: Array<"type" | "id">;
   display?: "block" | "inline";
 }
 
@@ -49,12 +49,11 @@ const configDCItemToChoices = (option: ConfigDCItem): Choice | OptGroup => {
     value: option.placeholder,
     alias: option.alias,
     attr: option.attr ?? {},
-    varyAttr: option.varyAttr,
     display: option.display
   };
 };
 
-const optionsToChoices = <T extends keyof Options>(
+export const optionsToChoices = <T extends keyof Options>(
   options: Options[T]
 ): (Choice | OptGroup)[] => {
   return _.flatten(_.values(options), true).map(configDCItemToChoices);
@@ -63,11 +62,11 @@ const optionsToChoices = <T extends keyof Options>(
 export const getDynamicContentChoices = (
   options: DCGroup<"wp"> | DCGroup<"cloud">,
   type: TypeChoices
-): (Choice | OptGroup)[] => {
+): MValue<(Choice | OptGroup)[]> => {
   const item = options?.[type];
 
   if (!options || !item || typeof item === "function") {
-    return [];
+    return undefined;
   }
 
   const choices = optionsToChoices(item);

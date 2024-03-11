@@ -3,12 +3,29 @@ import React, { FC } from "react";
 import { Slider } from "visual/component/Controls/Spacing/Slider";
 import * as Option from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
+import { GlobalMeta } from "visual/component/Options/Type";
 import { fromNumber } from "visual/utils/math/Positive";
+import { Meta } from "visual/utils/options/Filters/meta";
 import { FilterSlider } from "./FilterSlider";
 import { Value } from "./types/Value";
 import { empty, set } from "./utils";
 
-export const Filters: FC<Option.Props<Value>> = ({ value, onChange }) => {
+interface Props extends Option.Props<Value>, Option.Meta<Meta> {}
+
+export const Filters: FC<Props> = ({ value, onChange }) => {
+  const handleChange = (
+    type: "hue" | "saturation" | "brightness" | "contrast",
+    v: number,
+    m?: GlobalMeta
+  ) => {
+    const _value = mPipe(fromNumber, set(type, value))(v);
+    const meta = { isChanging: !!m?.isChanging };
+
+    if (_value) {
+      onChange(_value, meta);
+    }
+  };
+
   return (
     <div className="brz-ed-control__filters">
       <Slider
@@ -16,7 +33,7 @@ export const Filters: FC<Option.Props<Value>> = ({ value, onChange }) => {
         icon="nc-hue"
         value={value.hue}
         unit="deg"
-        onValue={mPipe(set("hue", value), onChange)}
+        onValue={(v: number, m?: GlobalMeta) => handleChange("hue", v, m)}
         onUnit={empty}
         units={[{ value: "deg", title: "deg" }]}
         step={1}
@@ -28,21 +45,26 @@ export const Filters: FC<Option.Props<Value>> = ({ value, onChange }) => {
         className="brz-ed-control__filters__saturation"
         icon="nc-saturation"
         value={value.saturation}
-        onChange={mPipe(fromNumber, set("saturation", value), onChange)}
+        onChange={(v: number, m?: GlobalMeta) =>
+          handleChange("saturation", v, m)
+        }
         title={t("Saturation")}
+
       />
       <FilterSlider
         className="brz-ed-control__filters__brightness"
         icon="nc-brightness"
         value={value.brightness}
-        onChange={mPipe(fromNumber, set("brightness", value), onChange)}
+        onChange={(v: number, m?: GlobalMeta) =>
+          handleChange("brightness", v, m)
+        }
         title={t("Brightness")}
       />
       <FilterSlider
         className="brz-ed-control__filters__contrast"
         icon="nc-contrast"
         value={value.contrast}
-        onChange={mPipe(fromNumber, set("contrast", value), onChange)}
+        onChange={(v: number, m?: GlobalMeta) => handleChange("contrast", v, m)}
         title={t("Contrast")}
       />
     </div>

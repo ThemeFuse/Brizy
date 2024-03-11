@@ -5,14 +5,14 @@ import Config from "visual/global/Config";
 import { getCollectionTypes, getSourceIds } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import * as Str from "visual/utils/reader/string";
-import { empty } from "visual/utils/string/specs";
+import { auto, isAuto } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { ElementModelValue } from "../../dev/Select/types";
 import { ActionTypes, reducer } from "./reducer";
 import { Choices, OptGroup } from "./types/Choices";
 import { PopulationMethod } from "./types/PopulationMethod";
 import { Value } from "./types/Value";
-import { findDCChoiceByPlaceholder, handleValuesChange } from "./utils";
+import { findDCChoiceByPlaceholder } from "./utils";
 
 export interface Props<T extends Literal> {
   value: T;
@@ -45,10 +45,12 @@ export default function PopulationSelect<T extends Literal>({
     },
     entityId: {
       value: vEntityId
-    }
+    },
+    isEntityTypeLoaded: false
   });
 
-  const { isOpen, placeholder, entityType, entityId } = state;
+  const { isOpen, placeholder, entityType, entityId, isEntityTypeLoaded } =
+    state;
 
   const oldState = useRef(state);
 
@@ -62,11 +64,16 @@ export default function PopulationSelect<T extends Literal>({
   const predefinedEntityType = currentDCChoice?.attr?.type;
 
   const entityTypeChoices = {
-    load: () => getCollectionTypes(config),
+    load: () =>
+      getCollectionTypes(config, {
+        defaultTitle: t("Auto"),
+        defaultValue: auto
+      }),
     emptyLoad: {
       title: t("There are no choices")
     }
   };
+
   const entityIdChoices = {
     load: () =>
       getSourceIds(
@@ -90,26 +97,15 @@ export default function PopulationSelect<T extends Literal>({
     if (!_.isEqual(oldState.current, state)) {
       oldState.current = state;
 
-      if (placeholder === empty) {
-        onChange({
-          population: empty,
-          populationEntityType: empty,
-          populationEntityId: empty
-        });
-      }
+      const populationEntityType = isAuto(entityType.value)
+        ? ""
+        : Str.read(entityType.value) ?? "";
 
-      if (placeholder) {
-        const values = handleValuesChange({
-          placeholder,
-          entityType,
-          entityId,
-          varryAttr: currentDCChoice?.varyAttr ?? []
-        });
-
-        if (values) {
-          onChange(values);
-        }
-      }
+      onChange({
+        population: placeholder,
+        populationEntityType,
+        populationEntityId: entityId.value
+      });
     }
     // state is not needed as dependency
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,16 +124,26 @@ export default function PopulationSelect<T extends Literal>({
   };
 
   const onEntityTypeChange = (payload: ElementModelValue) => {
-    dispatch({ type: ActionTypes.SET_ENTITY_TYPE, payload });
+    dispatch({
+      type: ActionTypes.SET_ENTITY_TYPE,
+      payload: {
+        value: Str.read(payload.value) ?? auto
+      }
+    });
   };
 
   const onEntityIdChange = (payload: ElementModelValue) => {
     dispatch({ type: ActionTypes.SET_ENTITY_ID, payload });
   };
 
+  const onEntityTypeLoad = () => {
+    dispatch({ type: ActionTypes.SET_IS_ENTITY_TYPE_LOADED, payload: true });
+  };
+
   return (
-    <Control<T>
+    <Control<Literal>
       isOpen={isOpen}
+      isEntityTypeLoaded={isEntityTypeLoaded}
       showChoices={showChoices}
       choices={choices}
       value={value}
@@ -152,6 +158,7 @@ export default function PopulationSelect<T extends Literal>({
       handleIconClick={handleIconClick}
       onEntityTypeChange={onEntityTypeChange}
       onEntityIdChange={onEntityIdChange}
+      onEntityTypeLoad={onEntityTypeLoad}
     />
   );
 }

@@ -47,4 +47,16 @@
   .brz-icon-svg {
     backface-visibility: hidden;
   }
+
+  // Animation fade
+  > .brz-carousel__slider--fade {
+    .slick-slide {
+      height: auto;
+      visibility: hidden;
+
+      &.slick-active {
+        visibility: visible;
+      }
+    }
+  }
 }

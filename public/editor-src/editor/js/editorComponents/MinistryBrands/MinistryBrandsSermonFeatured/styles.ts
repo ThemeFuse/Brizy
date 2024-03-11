@@ -6,6 +6,8 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -26,14 +28,65 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleElementOfMinistryBrandsImgBorder",
+        ...(maskShape === "none"
+          ? []
+          : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat",
+        "cssStyleMinistryElementMediaBorderRadius",
+        ...(maskShape === "none"
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
+          : [])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover :is(img,iframe,video)": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgFilters",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
     ".brz && .brz-sermonFeatured__item--meta:hover": {
       standart: ["cssStyleColor"],
       interval: ["cssStyleHoverTransition"]
     },
 
-    ".brz && :is(.brz-sermonFeatured__item--meta, .brz-sermonFeatured__item--meta ~ a):hover":
+    ".brz && :is(.brz-sermonFeatured__item--meta, .brz-sermonFeatured__item--meta-passage)":
       {
-        standart: ["getAllCssStyleTypography"],
+        standart: ["getAllCssStyleTypography"]
+      },
+    ".brz && .brz-sermonFeatured__item--meta-passage >.brz-ministryBrands__meta--icons:hover":
+      {
+        standart: ["cssStyleColor"],
         interval: ["cssStyleHoverTransition"]
       },
     ".brz && .brz-sermonFeatured__item--meta--title:hover": {
@@ -46,7 +99,7 @@ export function style(
     ".brz &&:hover .brz-sermonFeatured__item": {
       standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
     },
-    ".brz &&:hover .brz-sermonFeatured__item :is(iframe,video,img)": {
+    ".brz &&:hover .brz-ministryBrands__item--media :is(img,video,iframe)": {
       standart: ["cssStyleMinistryElementMediaBorderRadius"]
     },
     ".brz &&:hover .brz-sermonFeatured__item > *": {
@@ -59,7 +112,7 @@ export function style(
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-sermonFeatured__item--meta ~ a:hover": {
+    ".brz && .brz-sermonFeatured__item--meta-passage a:hover": {
       standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
       interval: ["cssStyleHoverTransition"]
     },

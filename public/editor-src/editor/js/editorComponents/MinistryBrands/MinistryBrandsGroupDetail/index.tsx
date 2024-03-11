@@ -11,7 +11,9 @@ import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarDate from "../toolbarDate";
 import * as toolbarH4 from "../toolbarH4";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarList from "../toolbarList";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarParagraph from "../toolbarParagraph";
@@ -117,18 +119,40 @@ export class MinistryBrandsGroupDetail extends EditorComponent<Value, Props> {
                     )}
                     selector=".brz-groupDetail__item--meta--preview ul"
                   >
-                    <Wrapper
-                      {...this.makeWrapperProps({
-                        className
-                      })}
+                    <Toolbar
+                      {...this.makeToolbarPropsFromConfig2(
+                        toolbarImage,
+                        undefined,
+                        {
+                          allowExtend: false
+                        }
+                      )}
+                      selector=".brz-ministryBrands__item--media"
                     >
-                      <DynamicContentHelper
-                        placeholder={getPlaceholder(v)}
-                        props={{ className: "brz-groupDetail" }}
-                        blocked={false}
-                        tagName="div"
-                      />
-                    </Wrapper>
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarMetaIcons,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-ministryBrands__meta--icons"
+                      >
+                        <Wrapper
+                          {...this.makeWrapperProps({
+                            className
+                          })}
+                        >
+                          <DynamicContentHelper
+                            placeholder={getPlaceholder(v)}
+                            props={{ className: "brz-groupDetail" }}
+                            blocked={false}
+                            tagName="div"
+                          />
+                        </Wrapper>
+                      </Toolbar>
+                    </Toolbar>
                   </Toolbar>
                 </Toolbar>
               </Toolbar>

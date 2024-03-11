@@ -11,6 +11,7 @@ import { CSS } from "@dnd-kit/utilities";
 import classnames from "classnames";
 import React from "react";
 import SlickSlider from "react-slick";
+import _ from "underscore";
 import debounceRenderHOC from "visual/component/DebounceRenderHOC";
 import EditorIcon from "visual/component/EditorIcon";
 import Prompts from "visual/component/Prompts";
@@ -119,22 +120,24 @@ class StoryItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "legacy-button",
-          icon: "nc-duplicate",
-          title: t("Duplicate"),
+          type: "button",
+          config: {
+            icon: "nc-duplicate",
+            title: t("Duplicate"),
+            reverseTheme: true
+          },
           position: 200,
-          onChange: () => {
+          onClick: () => {
             this.cloneItem(itemIndex);
           }
         },
         {
           id: "remove",
-          type: "legacy-button",
-          icon: "nc-trash",
-          title: t("Delete"),
+          type: "button",
+          config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           disabled: dbValue.length === 1,
           position: 250,
-          onChange: () => {
+          onClick: () => {
             hideToolbar();
             this.removeItem(itemIndex);
           }
@@ -169,12 +172,14 @@ class StoryItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "legacy-button",
+          type: "button",
+          onClick: _.noop,
           disabled: true
         },
         {
           id: "remove",
-          type: "legacy-button",
+          type: "button",
+          onClick: _.noop,
           disabled: true
         }
       ],

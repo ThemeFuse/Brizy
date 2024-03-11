@@ -55,6 +55,8 @@ export function getItems({ v, device, component }) {
     }
   ];
 
+  const globalBlockId = component.props.meta.globalBlockId;
+
   return [
     toolbarShowOnResponsive({
       v,
@@ -100,9 +102,11 @@ export function getItems({ v, device, component }) {
                     },
                     {
                       id: "gbConditions",
-                      disabled: !component.props.meta.globalBlockId,
-                      value: component.props.meta.globalBlockId,
-                      type: "legacy-gbConditions",
+                      disabled: !globalBlockId,
+                      config: {
+                        globalBlockId: globalBlockId
+                      },
+                      type: "gbCondition",
                       context: "block"
                     }
                   ]
@@ -181,6 +185,34 @@ export function getItems({ v, device, component }) {
                           }
                         }
                       ]
+                    },
+                    {
+                      id: "sliderAnimation",
+                      label: t("Animation"),
+                      type: "radioGroup",
+                      disabled: slider === "off",
+                      choices: [
+                        {
+                          icon: "nc-slider-horizontal",
+                          value: "none"
+                        },
+                        {
+                          icon: "nc-fade",
+                          value: "fade"
+                        }
+                      ]
+                    },
+                    {
+                      id: "sliderAnimationSpeed",
+                      label: t("Speed"),
+                      type: "slider",
+                      disabled: slider === "off",
+                      config: {
+                        min: 0.1,
+                        max: 10,
+                        step: 0.1,
+                        units: [{ title: "s", value: "s" }]
+                      }
                     },
                     {
                       id: "sliderDots",

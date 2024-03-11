@@ -12,7 +12,8 @@ export const getItems: GetItems<Value, Props> = ({
   device,
   state,
   context,
-  component
+  component,
+  getValue
 }) => {
   const config = Config.getAll();
 
@@ -82,6 +83,12 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabDisplay",
               label: t("Display"),
               options: [
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
                 {
                   id: "showArrows",
                   type: "switch",
@@ -180,7 +187,8 @@ export const getItems: GetItems<Value, Props> = ({
       device,
       state,
       context,
-      component
+      component,
+      getValue
     }),
     {
       id: "horizontalAlign",

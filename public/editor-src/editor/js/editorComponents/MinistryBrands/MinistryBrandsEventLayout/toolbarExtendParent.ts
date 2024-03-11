@@ -11,7 +11,8 @@ export const getItems: GetItems<Value, Props> = ({
   device,
   state,
   component,
-  context
+  context,
+  getValue
 }) => {
   const isNotFeaturedView = v.showFeaturedView === "off";
   const isNotListView = v.showListView === "off";
@@ -536,7 +537,8 @@ export const getItems: GetItems<Value, Props> = ({
       device,
       state,
       component,
-      context
+      context,
+      getValue
     }),
     {
       id: "horizontalAlign",

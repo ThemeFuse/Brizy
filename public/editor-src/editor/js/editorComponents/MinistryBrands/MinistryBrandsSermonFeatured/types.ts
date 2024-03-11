@@ -1,5 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Switch } from "../utils/types";
 
@@ -30,6 +30,7 @@ export interface Value extends ElementModel {
   nonfeatures: Switch;
   showMediaLinks: Switch;
   showPreview: Switch;
+  showMetaIcons: Switch;
   detailPageButtonText: string;
   detailPage: string;
   source: string;

@@ -19,7 +19,7 @@ export function style(
     ".brz &&.brz-btn:hover": {
       standart: [
         "cssStyleDisplayFlex",
-        "cssStyleTypographyFontFamily",
+        "cssStyleTypography2FontFamily",
         "cssStyleTypographyFontWeight",
         "cssStyleTypographyFontSize",
         "cssStyleTypographyLineHeight",

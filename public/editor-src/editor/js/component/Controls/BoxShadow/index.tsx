@@ -14,7 +14,7 @@ import {
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import {
   WithClassName,
   WithOnChange2,

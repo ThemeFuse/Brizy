@@ -16,7 +16,8 @@ export const getPlaceholder = (v: Value): string => {
     showResourceLink,
     showContent,
     groupsRecent,
-    showPreviousPage
+    showPreviousPage,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -32,6 +33,7 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showResourceLink, "show_resourcelink"),
     getAttr(showContent, "show_content"),
     getAttr(showPreviousPage, "previous_page"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `groups_recent='${groupsRecent}'`
   ];
 

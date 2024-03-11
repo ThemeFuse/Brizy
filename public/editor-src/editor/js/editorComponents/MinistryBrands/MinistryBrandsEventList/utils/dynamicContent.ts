@@ -20,7 +20,8 @@ export const getPlaceholder = (v: Value): string => {
     features,
     nonfeatures,
     showLocation,
-    showRegistration
+    showRegistration,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -35,6 +36,7 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showPagination, "show_pagination"),
     getAttr(showLocation, "show_location"),
     getAttr(showRegistration, "show_registration"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `category='${category}'`,
     getFeatures(features, "features"),
     getFeatures(nonfeatures, "nonfeatures"),

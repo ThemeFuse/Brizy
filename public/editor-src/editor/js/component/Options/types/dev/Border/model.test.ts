@@ -1,48 +1,50 @@
-import { times, identity as id } from "underscore";
+import { identity as id, times } from "underscore";
+import * as Hex from "visual/utils/color/Hex";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { get } from "visual/utils/model";
 import {
   testSetterTemp,
   testSetterValidation
 } from "visual/utils/model/utilities.test";
-import { get } from "visual/utils/model";
+import { defaultValue } from "visual/utils/options/Border/converters";
+import { Value } from "visual/utils/options/Border/entities/Value";
+import * as Style from "visual/utils/options/Border/entities/style";
+import * as Width from "visual/utils/options/Border/entities/width";
+import * as WidthType from "visual/utils/options/Border/entities/widthType";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { capByPrefix } from "visual/utils/string";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
 import {
-  getStyle,
-  setStyle,
-  setHex,
-  getOpacity,
-  setOpacity,
-  getPalette,
-  setPalette,
-  getWidth,
-  getTopWidth,
-  getRightWidth,
   getBottomWidth,
   getLeftWidth,
-  setWidth,
-  setTopWidth,
-  setRightWidth,
-  setBottomWidth,
-  setLeftWidth,
+  getOpacity,
+  getPalette,
+  getRightWidth,
+  getStyle,
+  getTopWidth,
+  getWidth,
   getWidthType,
+  setBottomWidth,
+  setHex,
+  setLeftWidth,
+  setOpacity,
+  setPalette,
+  setRightWidth,
+  setStyle,
+  setTopWidth,
+  setWidth,
   setWidthType
 } from "./model";
-import * as Style from "./entities/style";
-import * as Width from "./entities/width";
-import * as WidthType from "./entities/widthType";
-import * as Hex from "visual/utils/color/Hex";
-import { Value } from "visual/component/Options/types/dev/Border/entities/Value";
-import { defaultValue } from "visual/component/Options/types/dev/Border/converters";
 
 const hexs = ["#333", "#123456"].map(Hex.unsafe);
-const opacity = times(11, i => i * 0.1).map(Opacity.unsafe);
+const opacity = times(11, (i) => i * 0.1).map(Opacity.unsafe);
 const widths = times(100, id).map(Width.unsafe);
 
 const filterEmpty = <T extends TS, TS>(e: T, vs: TS[]): Exclude<TS, T>[] =>
   vs.filter((i): i is Exclude<TS, T> => i !== e);
-const tempGetter = <K extends keyof M, M>(key: K) => (m: M): M[K] =>
-  get(capByPrefix("temp", key as string) as keyof M, m) as M[K];
+const tempGetter =
+  <K extends keyof M, M>(key: K) =>
+  (m: M): M[K] =>
+    get(capByPrefix("temp", key as string) as keyof M, m) as M[K];
 
 export const testBorderIsEmpty = (m: Value): void => {
   expect(getStyle(m)).toBe(Style.empty);
@@ -55,15 +57,15 @@ export const testBorderIsEmpty = (m: Value): void => {
   expect(getLeftWidth(m)).toBe(Width.empty);
 };
 
-describe("Testing 'getStyle' function", function() {
-  Style.styles.forEach(style =>
+describe("Testing 'getStyle' function", function () {
+  Style.styles.forEach((style) =>
     test(`Expect ${style}`, () => {
       expect(getStyle({ ...defaultValue, style })).toBe(style);
     })
   );
 });
 
-describe("Testing 'setStyle' function", function() {
+describe("Testing 'setStyle' function", function () {
   testSetterValidation(setStyle, getStyle, defaultValue, Style.styles);
   testSetterTemp(
     setStyle,
@@ -81,15 +83,15 @@ describe("Testing 'setStyle' function", function() {
   });
 });
 
-describe("Testing 'setHex' function", function() {
-  hexs.forEach(hex =>
+describe("Testing 'setHex' function", function () {
+  hexs.forEach((hex) =>
     test(`Expect ${hex}`, () => {
       expect(setHex(hex, { ...defaultValue, hex }).hex).toBe(hex);
     })
   );
 });
 
-describe("Testing 'setOpacity' function", function() {
+describe("Testing 'setOpacity' function", function () {
   testSetterValidation(setOpacity, getOpacity, defaultValue, opacity);
   testSetterTemp(
     setOpacity,
@@ -107,7 +109,7 @@ describe("Testing 'setOpacity' function", function() {
   });
 });
 
-describe("Testing 'setPalette' function", function() {
+describe("Testing 'setPalette' function", function () {
   testSetterValidation(setPalette, getPalette, defaultValue, Palette.palettes);
 
   testSetterTemp(
@@ -126,15 +128,15 @@ describe("Testing 'setPalette' function", function() {
   });
 });
 
-describe("Testing 'getWidthType' function", function() {
-  WidthType.types.forEach(widthType =>
+describe("Testing 'getWidthType' function", function () {
+  WidthType.types.forEach((widthType) =>
     test(`Expect ${widthType}`, () => {
       expect(getWidthType({ ...defaultValue, widthType })).toBe(widthType);
     })
   );
 });
 
-describe("Testing 'setWidthType' function", function() {
+describe("Testing 'setWidthType' function", function () {
   testSetterValidation(
     setWidthType,
     getWidthType,
@@ -143,17 +145,17 @@ describe("Testing 'setWidthType' function", function() {
   );
 });
 
-describe("Testing 'getWidth' function", function() {
+describe("Testing 'getWidth' function", function () {
   times(100, id)
     .map(Width.unsafe)
-    .forEach(width =>
+    .forEach((width) =>
       test(`Expect ${width}`, () => {
         expect(getWidth({ ...defaultValue, width })).toBe(width);
       })
     );
 });
 
-describe("Testing 'setWidth' function", function() {
+describe("Testing 'setWidth' function", function () {
   testSetterValidation(setWidth, getWidth, defaultValue, widths);
 
   test("When palette is width, style, opacity, palette should be empty", () => {
@@ -163,17 +165,17 @@ describe("Testing 'setWidth' function", function() {
   });
 });
 
-describe("Testing 'getTopWidth' function", function() {
+describe("Testing 'getTopWidth' function", function () {
   times(100, id)
     .map(Width.unsafe)
-    .forEach(topWidth =>
+    .forEach((topWidth) =>
       test(`Expect ${topWidth}`, () => {
         expect(getTopWidth({ ...defaultValue, topWidth })).toBe(topWidth);
       })
     );
 });
 
-describe("Testing 'setTopWidth' function", function() {
+describe("Testing 'setTopWidth' function", function () {
   testSetterValidation(
     setTopWidth,
     getTopWidth,
@@ -188,10 +190,10 @@ describe("Testing 'setTopWidth' function", function() {
   });
 });
 
-describe("Testing 'getRightWidth' function", function() {
+describe("Testing 'getRightWidth' function", function () {
   times(100, id)
     .map(Width.unsafe)
-    .forEach(rightWidth =>
+    .forEach((rightWidth) =>
       test(`Expect ${rightWidth}`, () => {
         expect(getRightWidth({ ...defaultValue, rightWidth })).toBe(rightWidth);
       })
@@ -204,7 +206,7 @@ describe("Testing 'getRightWidth' function", function() {
   });
 });
 
-describe("Testing 'setRightWidth' function", function() {
+describe("Testing 'setRightWidth' function", function () {
   testSetterValidation(
     setRightWidth,
     getRightWidth,
@@ -219,10 +221,10 @@ describe("Testing 'setRightWidth' function", function() {
   });
 });
 
-describe("Testing 'getBottomWidth' function", function() {
+describe("Testing 'getBottomWidth' function", function () {
   times(100, id)
     .map(Width.unsafe)
-    .forEach(bottomWidth =>
+    .forEach((bottomWidth) =>
       test(`Expect ${bottomWidth}`, () => {
         expect(getBottomWidth({ ...defaultValue, bottomWidth })).toBe(
           bottomWidth
@@ -237,7 +239,7 @@ describe("Testing 'getBottomWidth' function", function() {
   });
 });
 
-describe("Testing 'setBottomWidth' function", function() {
+describe("Testing 'setBottomWidth' function", function () {
   testSetterValidation(
     setBottomWidth,
     getBottomWidth,
@@ -252,17 +254,17 @@ describe("Testing 'setBottomWidth' function", function() {
   });
 });
 
-describe("Testing 'getLeftWidth' function", function() {
+describe("Testing 'getLeftWidth' function", function () {
   times(100, id)
     .map(Width.unsafe)
-    .forEach(leftWidth =>
+    .forEach((leftWidth) =>
       test(`Expect ${leftWidth}`, () => {
         expect(getLeftWidth({ ...defaultValue, leftWidth })).toBe(leftWidth);
       })
     );
 });
 
-describe("Testing 'setLeftWidth' function", function() {
+describe("Testing 'setLeftWidth' function", function () {
   testSetterValidation(
     setLeftWidth,
     getLeftWidth,

@@ -1,8 +1,8 @@
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
-import { makePlaceholder } from "visual/utils/dynamicContent";
 import { customFileUrl } from "visual/utils/customFile";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import {
   defaultImagePopulation,
   getImageUrl,
@@ -87,7 +87,10 @@ export default function changeRichText($) {
         link.attr("href", getLinkContentByType(data.type, url));
         link.attr("data-brz-link-type", data.type);
 
-        if (newData.type === "external" && newData.externalBlank === "on") {
+        if (
+          (newData.type === "external" && newData.externalBlank === "on") ||
+          (newData.type === "page" && newData.internalBlank === "on")
+        ) {
           link.attr("target", "_blank");
         }
         if (newData.type === "external" && newData.externalRel === "on") {
@@ -120,10 +123,10 @@ export default function changeRichText($) {
       $elem = $this;
     }
 
-      if (population) {
-        // Override current html with placeholder
-        $elem.html(population);
-        $elem.removeAttr("data-population");
+    if (population) {
+      // Override current html with placeholder
+      $elem.html(population);
+      $elem.removeAttr("data-population");
     }
   });
 

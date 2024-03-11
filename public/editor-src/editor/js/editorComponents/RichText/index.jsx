@@ -36,6 +36,7 @@ import Quill, { triggerCodes } from "./Quill";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
+import * as RichTextPatch from "./patch";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
@@ -46,7 +47,7 @@ import {
   parseColor,
   parseShadow
 } from "./utils";
-import { getInnerElement, getStyles } from "./utils/ContextMenu";
+import { getInnerElement, handlePasteStyles } from "./utils/ContextMenu";
 import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
@@ -306,7 +307,11 @@ class RichText extends EditorComponent {
           break;
       }
 
-      this.quillRef.current.formatMultiple(values);
+      const quillNode = this.quillRef.current;
+
+      if (quillNode) {
+        quillNode.formatMultiple(values);
+      }
     }
 
     this.patchValue(values);
@@ -318,12 +323,7 @@ class RichText extends EditorComponent {
     const handlePaste = () => {
       const innerElement = getInnerElement();
       if (!innerElement) return;
-
-      const prefixes = ["typography", "color"];
-      const values = getStyles(innerElement.value, prefixes);
-      if (values) {
-        this.handleChange(values);
-      }
+      handlePasteStyles(innerElement, this.handleChange, this.getValue());
     };
 
     switch (keyName) {
@@ -374,87 +374,102 @@ class RichText extends EditorComponent {
   patchValue(patch, meta) {
     let newPatch = patch;
 
-    // when we change DC to usual RichText, first Toolbar renders and than Quill.
-    // We should send to Toolbar correct v, but we don't know it, because Quill
-    // wasn't mounted yet(Quill generate correct v). This way we hide toolbar
-    if ("textPopulation" in patch && patch.textPopulation === "") {
-      this.toolbarRef.current.hide();
-    } else if ("textPopulation" in patch && patch.textPopulation) {
-      const currentPopulation = this.getValue2().v.textPopulation;
+    const { imagePopulationEntityType: currentImagePopulationEntityType } =
+      this.getValue();
 
-      if (currentPopulation) {
-        return super.patchValue(patch, meta);
+    const isDCPatch = RichTextPatch.dynamicContent(patch);
+    const isBgDCPatch = RichTextPatch.bgDynamicContent(patch);
+
+    if (isBgDCPatch) {
+      const { imagePopulationEntityType: nextImagePopulationEntityType } =
+        patch.backgroundImage;
+
+      if (currentImagePopulationEntityType !== nextImagePopulationEntityType) {
+        newPatch = {
+          ...newPatch,
+          imagePopulationEntityType: nextImagePopulationEntityType
+        };
       }
+    }
 
-      const keys = [
-        "FontFamily",
-        "FontFamilyType",
-        "FontSize",
-        "FontSizeSuffix",
-        "FontStyle",
-        "FontWeight",
-        "LetterSpacing",
-        "LineHeight"
-      ];
-      const children = Array.from(
-        this.quillRef.current?.quill?.root?.children ?? []
-      );
+    if (isDCPatch) {
+      if (patch.textPopulation) {
+        const currentPopulation = this.getValue2().v.textPopulation;
 
-      const v = children
-        .filter((i) => !!TypographyTags[i.tagName])
-        .reverse()
-        .reduce((acc, i) => {
-          acc.push([i.tagName, [...i.classList]]);
-          return acc;
-        }, [])
-        .map(([k, classes]) => [k, classNamesToV(classes)])
-        .map(([tag, v]) =>
-          ResponsiveMode.types.map((device) => {
-            const getKey = (k) =>
-              defaultValueKey2({
-                key: createOptionId(tagId(tag), k),
-                device,
-                state: "normal"
-              });
-            const dvv = (key) => {
-              const k = defaultValueKey2({
-                key: createOptionId("typography", key),
-                device
-              });
-              return v[k];
-            };
-            const getTypographyKey = (k) => {
-              return defaultValueKey2({
-                key: createOptionId("typography", k),
-                device,
-                state: "normal"
-              });
-            };
+        if (currentPopulation) {
+          return super.patchValue(patch, meta);
+        }
 
-            return keys.reduce((acc, key) => {
-              acc[getKey(key)] = dvv(key);
-              acc[getTypographyKey(key)] = dvv(key);
-              return acc;
-            }, {});
-          })
-        )
-        .flat()
-        .reduce((acc, v) => ({ ...acc, ...v }), {});
+        const keys = [
+          "FontFamily",
+          "FontFamilyType",
+          "FontSize",
+          "FontSizeSuffix",
+          "FontStyle",
+          "FontWeight",
+          "LetterSpacing",
+          "LineHeight"
+        ];
+        const children = Array.from(
+          this.quillRef.current?.quill?.root?.children ?? []
+        );
 
-      const formats = this.quillRef.current.quill.getFormat(0);
+        const v = children
+          .filter((i) => !!TypographyTags[i.tagName])
+          .reverse()
+          .reduce((acc, i) => {
+            acc.push([i.tagName, [...i.classList]]);
+            return acc;
+          }, [])
+          .map(([k, classes]) => [k, classNamesToV(classes)])
+          .map(([tag, v]) =>
+            ResponsiveMode.types.map((device) => {
+              const getKey = (k) =>
+                defaultValueKey2({
+                  key: createOptionId(tagId(tag), k),
+                  device,
+                  state: "normal"
+                });
+              const dvv = (key) => {
+                const k = defaultValueKey2({
+                  key: createOptionId("typography", key),
+                  device
+                });
+                return v[k];
+              };
+              const getTypographyKey = (k) => {
+                return defaultValueKey2({
+                  key: createOptionId("typography", k),
+                  device,
+                  state: "normal"
+                });
+              };
 
-      newPatch = {
-        ...newPatch,
-        ...v,
-        ...parseShadow(formats.shadow),
-        ...parseColor(formats.color, formats.opacity),
-        ...getTextBackground(
-          formats.background,
-          formats.textBackgroundGradient
-        ),
-        textBgColorPalette: formats.textBgColorPalette ?? null,
-        bgColorPalette: formats.colorPalette ?? null
-      };
+              return keys.reduce((acc, key) => {
+                acc[getKey(key)] = dvv(key);
+                acc[getTypographyKey(key)] = dvv(key);
+                return acc;
+              }, {});
+            })
+          )
+          .flat()
+          .reduce((acc, v) => ({ ...acc, ...v }), {});
+
+        const formats = this.quillRef.current.quill.getFormat(0);
+
+        newPatch = {
+          ...newPatch,
+          ...v,
+          ...parseShadow(formats.shadow),
+          ...parseColor(formats.color, formats.opacity),
+          ...getTextBackground(
+            formats.background,
+            formats.textBackgroundGradient
+          ),
+          textBgColorPalette: formats.textBgColorPalette ?? null,
+          bgColorPalette: formats.colorPalette ?? null
+        };
+      }
     }
 
     if (

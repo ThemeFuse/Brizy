@@ -160,6 +160,7 @@ export const getItems: GetItems<ElementModel> = ({
         size: "medium",
         title: t("Link")
       },
+      devices: "desktop",
       position: 90,
       options: [
         {
@@ -177,8 +178,12 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "linkPage",
                   type: "internalLink",
-                  label: t("Find Page"),
-                  devices: "desktop"
+                  label: t("Find Page")
+                },
+                {
+                  id: "linkInternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch"
                 }
               ]
             },
@@ -195,7 +200,6 @@ export const getItems: GetItems<ElementModel> = ({
                     id: "linkExternal",
                     type: "inputText",
                     placeholder: "http://",
-                    devices: "desktop",
                     config: {
                       size: "medium"
                     }
@@ -204,14 +208,12 @@ export const getItems: GetItems<ElementModel> = ({
                 {
                   id: "linkExternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch",
-                  devices: "desktop"
+                  type: "switch"
                 },
                 {
                   id: "linkExternalRel",
                   label: t("Make it Nofollow"),
-                  type: "switch",
-                  devices: "desktop"
+                  type: "switch"
                 }
               ]
             },
@@ -222,7 +224,6 @@ export const getItems: GetItems<ElementModel> = ({
                 toolbarLinkAnchor({
                   v,
                   device,
-                  devices: "desktop",
                   state: "normal",
                   disabled: IS_GLOBAL_POPUP
                 })

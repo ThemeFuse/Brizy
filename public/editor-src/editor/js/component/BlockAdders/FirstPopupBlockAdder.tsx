@@ -65,7 +65,7 @@ const FirstPopupBlockAdder = (props: Props): ReactElement => {
   const handleOpen = useCallback((): void => {
     if (deviceMode === "desktop") {
       const config = Config.getAll();
-      ///// TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
+      // TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
       const showGlobal = !(isCloud(config) && isShopify(config));
 
       const data: PromptsProps<"popup"> = {

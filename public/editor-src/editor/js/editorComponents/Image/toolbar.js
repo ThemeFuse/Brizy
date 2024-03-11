@@ -382,6 +382,7 @@ export const getItems =
           size: "medium",
           title: t("Link")
         },
+        devices: "desktop",
         position: 90,
         disabled: (inGallery && dvv("linkLightBox") === "on") || withBigImage,
         options: [
@@ -400,8 +401,12 @@ export const getItems =
                   {
                     id: "linkPage",
                     type: "internalLink",
-                    label: t("Find Page"),
-                    devices: "desktop"
+                    label: t("Find Page")
+                  },
+                  {
+                    id: "linkInternalBlank",
+                    label: t("Open In New Tab"),
+                    type: "switch"
                   }
                 ]
               },
@@ -418,24 +423,18 @@ export const getItems =
                       id: "linkExternal",
                       type: "inputText",
                       placeholder: "http://",
-                      disabled: inGallery,
-                      devices: "desktop",
-                      config: {
-                        size: "medium"
-                      }
+                      disabled: inGallery
                     }
                   },
                   {
                     id: "linkExternalBlank",
                     label: t("Open In New Tab"),
-                    type: "switch",
-                    devices: "desktop"
+                    type: "switch"
                   },
                   {
                     id: "linkExternalRel",
                     label: t("Make it Nofollow"),
-                    type: "switch",
-                    devices: "desktop"
+                    type: "switch"
                   }
                 ]
               },
@@ -445,7 +444,6 @@ export const getItems =
                 options: [
                   toolbarLinkAnchor({
                     v,
-                    devices: "desktop",
                     disabled: isStory(config)
                   })
                 ]

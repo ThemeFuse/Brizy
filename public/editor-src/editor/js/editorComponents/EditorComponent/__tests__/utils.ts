@@ -2,11 +2,24 @@ import {
   ElementDefaultValue,
   ElementModel
 } from "visual/component/Elements/Types";
-import { DESKTOP, RESPONSIVE } from "visual/utils/devices";
-import { MOBILE, TABLET, empty } from "visual/utils/responsiveMode";
+import { ToolbarConfig } from "visual/editorComponents/EditorComponent/types";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { DeviceMode } from "visual/types";
+import { ALL, Device, RESPONSIVE } from "visual/utils/devices";
+import {
+  DESKTOP,
+  MOBILE,
+  ResponsiveMode,
+  TABLET,
+  empty
+} from "visual/utils/responsiveMode";
+import { Literal } from "visual/utils/types/Literal";
 import {
   createOptionId,
   flattenDefaultValue_,
+  getOptionValueByDevice,
+  getResponsiveModeByDevice,
+  getToolbarData,
   inDevelopment,
   makeToolbarPropsFromConfigDefaults,
   optionMode,
@@ -19,8 +32,6 @@ jest.mock(
   () => undefined
 );
 jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
-jest.mock("visual/component/Options/types/Button.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ButtonTooltip.jsx", () => undefined);
 jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
 jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => undefined);
 jest.mock(
@@ -31,7 +42,6 @@ jest.mock(
   "visual/component/Options/types/FontStyleEditor/index.tsx",
   () => undefined
 );
-jest.mock("visual/component/Options/types/GBConditions.tsx", () => undefined);
 jest.mock(
   "visual/component/Options/types/PopupConditions.jsx",
   () => undefined
@@ -327,5 +337,441 @@ describe("Testing 'flattenDefaultValue_' function", () => {
     ]
   ])("no. %#", (defaultValue, expected) => {
     expect(flattenDefaultValue(defaultValue)).toStrictEqual(expected);
+  });
+});
+
+describe("Testing 'getToolbarData' function", () => {
+  const testCase: [
+    ToolbarItemType[],
+    {
+      defaultValue: Record<string, boolean | string | number | unknown>;
+      DCKeys: Array<string>;
+    }
+  ][] = [
+    [
+      [
+        {
+          id: "toolbarCurrentElement",
+          type: "popover",
+          config: {
+            icon: "nc-pin",
+            title: "Map"
+          },
+          devices: "desktop",
+          position: 90,
+          options: [
+            {
+              id: "tabsCurrentElement",
+              type: "tabs",
+              tabs: [
+                {
+                  id: "tabCurrentElement",
+                  label: "Map",
+                  options: [
+                    {
+                      id: "address",
+                      label: "Address",
+                      type: "inputText",
+                      placeholder: "Enter address",
+                      // @ts-expect-error: use short string for population instead of instead of their placehol..
+                      population: "test",
+                      states: ["normal"],
+                      default: {
+                        value: "Chisinau"
+                      }
+                    },
+                    {
+                      id: "zoom",
+                      label: "Zoom",
+                      type: "slider",
+                      devices: "responsive",
+                      states: ["hover"],
+                      // @ts-expect-error: use short string for population instead of instead of their placehol..
+                      population: "",
+                      default: { value: 13 }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "toolbarSettings",
+          type: "popover",
+          config: {
+            icon: "nc-cog",
+            title: "Settings"
+          },
+          position: 110,
+          options: [
+            {
+              id: "size",
+              label: "Width",
+              type: "slider",
+              position: 80,
+              config: {
+                min: 1,
+                units: [
+                  { value: "px", title: "px" },
+                  { value: "%", title: "%" }
+                ]
+              }
+            },
+            {
+              id: "testZeroValue",
+              label: "Height",
+              type: "slider",
+              config: {
+                min: 5,
+                units: [
+                  { value: "px", title: "px" },
+                  { value: "%", title: "%" }
+                ]
+              }
+            },
+            {
+              id: "testZeroValue",
+              label: "Zoom",
+              disabled: true,
+              type: "slider",
+              default: { value: 0 }
+            },
+            {
+              id: "testEmptyString",
+              label: "Zoom",
+              type: "inputText",
+              default: { value: "" }
+            }
+          ]
+        },
+        {
+          id: "advancedSettings",
+          // @ts-expect-error: Missing in new option-types
+          type: "legacy-advancedSettings",
+          devices: "desktop",
+          icon: "nc-cog",
+          position: 110
+        }
+      ],
+
+      {
+        defaultValue: {
+          address: "Chisinau",
+          size: 0,
+          sizeSuffix: "",
+          tabletZoom: 13,
+          tabletZoomSuffix: "",
+          mobileZoom: 13,
+          mobileZoomSuffix: "",
+          testZeroValue: 0,
+          testZeroValueSuffix: "",
+          testEmptyString: "",
+          tabsCurrentElement: ""
+        },
+        DCKeys: ["address", "zoom"]
+      }
+    ],
+    [
+      [
+        {
+          id: "sidebarTabs",
+          type: "sidebarTabs",
+          tabs: [
+            {
+              id: "styles",
+              title: "Styling",
+              label: "Styling",
+              options: [
+                {
+                  id: "hoverTransition",
+                  label: "Hover Transition",
+                  devices: "desktop",
+                  position: 100,
+                  type: "slider",
+                  config: {
+                    min: 0,
+                    max: 99,
+                    units: [{ title: "ms", value: "ms" }]
+                  },
+                  default: { value: 3 }
+                }
+              ]
+            },
+            {
+              id: "effects",
+              title: "Effects",
+              label: "Effects",
+              options: [
+                {
+                  id: "tabs",
+                  type: "tabs",
+                  config: {
+                    align: "start"
+                  },
+                  tabs: [
+                    {
+                      id: "entrance",
+                      label: "Entrance",
+                      options: []
+                    },
+                    {
+                      id: "tabHover",
+                      label: "Hover",
+                      options: [
+                        {
+                          id: "testString",
+                          type: "inputText",
+                          default: { value: "on" }
+                        },
+                        {
+                          id: "optionDesktopDefault",
+                          type: "switch",
+                          default: { value: "on" }
+                        },
+                        {
+                          id: "optionOnResponsive",
+                          devices: "responsive",
+                          type: "switch",
+                          default: { value: "on" }
+                        },
+                        {
+                          id: "optionOnDesktopAll",
+                          devices: "all",
+                          type: "switch",
+                          disabled: false,
+                          states: ["hover", "active"],
+                          default: { value: "on" }
+                        },
+                        {
+                          id: "optionOnDesktopImplicit",
+                          devices: "desktop",
+                          type: "switch",
+                          default: { value: "on" }
+                        },
+                        // @ts-expect-error: unknown
+                        {
+                          id: "test",
+                          devices: "desktop",
+                          type: "inputText",
+                          default: "test"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      {
+        defaultValue: {
+          hoverTransition: 3,
+          hoverTransitionSuffix: "",
+          testString: "on",
+          optionDesktopDefault: "on",
+          mobileOptionOnResponsive: "on",
+          tabletOptionOnResponsive: "on",
+          optionOnDesktopAll: "on",
+          optionOnDesktopImplicit: "on",
+          test: "test",
+          tabs: ""
+        },
+        DCKeys: []
+      }
+    ]
+  ];
+
+  test.each(testCase)(
+    "default value & DCKeys parsing",
+    (toolbarConfig, expected) => {
+      const _parsedToolbarData = getToolbarData(toolbarConfig);
+      expect(_parsedToolbarData.dv).toStrictEqual(expected.defaultValue);
+      expect(_parsedToolbarData.DCKeys).toStrictEqual(expected.DCKeys);
+    }
+  );
+});
+
+describe("Testing 'getResponsiveModeByDevice' function", () => {
+  const testCases: [
+    { optionDevices?: Device; currentDevice: ResponsiveMode },
+    ResponsiveMode
+  ][] = [
+    [{ currentDevice: DESKTOP }, DESKTOP],
+    [{ currentDevice: TABLET }, TABLET],
+    [{ currentDevice: MOBILE }, MOBILE],
+    [{ optionDevices: DESKTOP, currentDevice: DESKTOP }, DESKTOP],
+    [{ optionDevices: DESKTOP, currentDevice: TABLET }, DESKTOP],
+    [{ optionDevices: DESKTOP, currentDevice: MOBILE }, DESKTOP],
+    [{ optionDevices: RESPONSIVE, currentDevice: DESKTOP }, DESKTOP],
+    [{ optionDevices: RESPONSIVE, currentDevice: TABLET }, TABLET],
+    [{ optionDevices: RESPONSIVE, currentDevice: MOBILE }, MOBILE],
+    [{ optionDevices: ALL, currentDevice: DESKTOP }, DESKTOP],
+    [{ optionDevices: ALL, currentDevice: TABLET }, TABLET],
+    [{ optionDevices: ALL, currentDevice: MOBILE }, MOBILE]
+  ];
+
+  test.each(testCases)("Get correct responsive mode", (props, expected) => {
+    expect(getResponsiveModeByDevice(props)).toStrictEqual(expected);
+  });
+});
+
+describe("Testing 'getOptionValueByDevice' function ", () => {
+  const toolbarConfig: ToolbarConfig[] = [
+    {
+      selector: "test",
+      toolbar: [
+        {
+          id: "tabsCurrentElement",
+          type: "tabs",
+          tabs: [
+            {
+              id: "tabCurrentElement",
+              label: "Map",
+              options: [
+                {
+                  id: "address",
+                  label: "Address",
+                  type: "inputText",
+                  placeholder: "Enter address",
+                  default: {
+                    value: "Chisinau"
+                  }
+                },
+                {
+                  id: "zoom",
+                  label: "Zoom",
+                  type: "slider",
+                  config: {
+                    min: 1,
+                    max: 21
+                  },
+                  default: {
+                    value: 13
+                  }
+                },
+                {
+                  id: "country",
+                  label: "country",
+                  type: "inputText",
+                  placeholder: "Enter country",
+                  devices: "responsive",
+                  default: {
+                    value: "Moldova"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      sidebar: [
+        {
+          id: "variant",
+          label: "variant",
+          type: "inputText",
+          placeholder: "Enter variant",
+          devices: "desktop",
+          default: {
+            value: "primary"
+          }
+        },
+        {
+          id: "borderStyle",
+          label: "borderStyle",
+          type: "inputText",
+          placeholder: "Enter borderStyle",
+          devices: "responsive",
+          default: {
+            value: "dashed"
+          }
+        }
+      ]
+    }
+  ];
+  const v: ElementModel = {
+    address: "Chisinau",
+    zoom: 13,
+    tabletCountry: "Moldova",
+    mobileCountry: "Moldova",
+    variant: "primary"
+  };
+
+  const testCasesByDevice: {
+    input: { id: string; currentDevice: DeviceMode };
+    result: Literal;
+  }[] = [
+    {
+      input: {
+        id: "address",
+        currentDevice: "desktop"
+      },
+      result: "Chisinau"
+    },
+
+    {
+      input: {
+        id: "variant",
+        currentDevice: "tablet"
+      },
+      result: "primary"
+    },
+    {
+      input: {
+        id: "borderStyle",
+        currentDevice: "desktop"
+      },
+      result: ""
+    },
+    {
+      input: {
+        id: "zoom",
+        currentDevice: "mobile"
+      },
+      result: 13
+    },
+    {
+      input: {
+        id: "zoom",
+        currentDevice: "tablet"
+      },
+      result: 13
+    },
+    {
+      input: {
+        id: "zoom",
+        currentDevice: "desktop"
+      },
+      result: 13
+    },
+    {
+      input: {
+        id: "country",
+        currentDevice: "desktop"
+      },
+      result: ""
+    },
+    {
+      input: {
+        id: "country",
+        currentDevice: "tablet"
+      },
+      result: "Moldova"
+    },
+    {
+      input: {
+        id: "country",
+        currentDevice: "mobile"
+      },
+      result: "Moldova"
+    }
+  ];
+
+  test.each(testCasesByDevice)("getValueByDevice", ({ input, result }) => {
+    const { value } =
+      getOptionValueByDevice({ ...input, v, toolbarConfig }) ?? {};
+
+    expect(value).toStrictEqual(result);
   });
 });

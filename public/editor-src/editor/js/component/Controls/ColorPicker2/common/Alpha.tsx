@@ -3,6 +3,7 @@ import {
   HSLAChange,
   HSLAwithSource
 } from "visual/component/Controls/ColorPicker2/types";
+import { GlobalMeta } from "visual/component/Options/Type";
 import { calculateChange } from "../helpers/alpha";
 import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 import Checkboard from "./Checkboard";
@@ -11,7 +12,7 @@ import HSLA = tinycolor.ColorFormats.HSLA;
 import RGBA = tinycolor.ColorFormats.RGBA;
 
 interface Props {
-  onChange: (v: HSLAChange, e: MouseEvent | TouchEvent) => void;
+  onChange: (v: HSLAChange, meta?: GlobalMeta) => void;
   contentWindow: () => Window | null;
   direction: string;
   rgb: RGBA;
@@ -65,10 +66,9 @@ export class Alpha extends Component<Props, State> {
         this.props.onChange(
           {
             ...this.change,
-            opacityDragEnd: opacityDragEnd,
             wasChanged: "opacity"
           },
-          e
+          { isChanging: !opacityDragEnd }
         );
     }
   };

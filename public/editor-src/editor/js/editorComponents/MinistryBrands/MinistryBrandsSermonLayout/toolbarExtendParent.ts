@@ -12,7 +12,8 @@ export const getItems: GetItems<Value, Props> = ({
   device,
   state,
   component,
-  context
+  context,
+  getValue
 }) => {
   const config = Config.getAll();
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -67,6 +68,12 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabSermonLayout",
               label: t("Display"),
               options: [
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
                 {
                   id: "showPagination",
                   label: t("Pagination"),
@@ -320,7 +327,8 @@ export const getItems: GetItems<Value, Props> = ({
       device,
       state,
       component,
-      context
+      context,
+      getValue
     }),
     {
       id: "horizontalAlign",

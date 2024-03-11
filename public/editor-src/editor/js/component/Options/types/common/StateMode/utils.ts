@@ -1,9 +1,9 @@
 import { unique } from "underscore";
-import * as State from "visual/utils/stateMode";
-import { t } from "visual/utils/i18n";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { filter } from "visual/component/Options/types/utils/filter";
-import { reduceR } from "visual/component/Options/types/utils/reduce";
+import { t } from "visual/utils/i18n";
+import { filter } from "visual/utils/options/filter";
+import { reduceR } from "visual/utils/options/reduce";
+import * as State from "visual/utils/stateMode";
 
 export const itemStates = (item: ToolbarItemType): State.State[] => {
   const states = reduceR(
@@ -29,7 +29,7 @@ export const filterByState = (
   state: State.State,
   options: ToolbarItemType
 ): ToolbarItemType | undefined =>
-  filter(item => itemStates(item).includes(state), options);
+  filter((item) => itemStates(item).includes(state), options);
 
 /**
  * Returns option state state icon code

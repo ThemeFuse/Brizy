@@ -18,6 +18,8 @@ export function getItems({ v, device, component }) {
 
   const dvv = (key) => defaultValueValue({ v, key, device });
 
+  const globalBlockId = component.props.meta.globalBlockId;
+
   return [
     toolbarShowOnResponsive({
       v,
@@ -64,9 +66,11 @@ export function getItems({ v, device, component }) {
             },
             {
               id: "gbConditions",
-              disabled: !component.props.meta.globalBlockId,
-              value: component.props.meta.globalBlockId,
-              type: "legacy-gbConditions",
+              disabled: !globalBlockId,
+              config: {
+                globalBlockId: globalBlockId
+              },
+              type: "gbCondition",
               context: "block"
             }
           ]

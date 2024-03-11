@@ -3,8 +3,10 @@ import _ from "underscore";
 import {
   ChangeFunction,
   HSLAChange,
-  HSVAChange
+  HSVAChange,
+  OnSwatchHover
 } from "visual/component/Controls/ColorPicker2/types";
+import { GlobalMeta } from "visual/component/Controls/types";
 import { Props as PickerProps } from "../Brizy";
 import color from "../helpers/color";
 
@@ -20,7 +22,7 @@ export interface Props {
   onChange: ChangeFunction;
   onChangeComplete?: ChangeFunction;
   opacity: number;
-  onSwatchHover?: ChangeFunction;
+  onSwatchHover?: OnSwatchHover;
 }
 
 interface State {
@@ -38,7 +40,7 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>) => {
     private debounce: ((
       fn: Props["onChange"],
       data: HSLAChange | HSVAChange,
-      event: React.MouseEvent | React.TouchEvent
+      meta?: GlobalMeta
     ) => void) &
       _.Cancelable;
     constructor(props: Props) {
@@ -53,9 +55,9 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>) => {
         (
           fn: Props["onChange"],
           data: HSLAChange | HSVAChange,
-          event: MouseEvent | TouchEvent
+          meta?: GlobalMeta
         ) => {
-          fn(data, event);
+          fn(data, meta);
         },
         100
       );
@@ -72,10 +74,7 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>) => {
       return null;
     }
 
-    handleChange = (
-      data: HSVAChange | HSLAChange,
-      event: MouseEvent | TouchEvent
-    ) => {
+    handleChange = (data: HSVAChange | HSLAChange, meta?: GlobalMeta) => {
       const isValidColor = color.simpleCheckForValidColor(data);
       if (isValidColor) {
         const colors = color.toState(
@@ -86,17 +85,16 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>) => {
         this.setState(colors);
         this.props.onChangeComplete &&
           // @ts-expect-error no HSV or HSL here
-          this.debounce(this.props.onChangeComplete, colors, event);
+          this.debounce(this.props.onChangeComplete, colors, meta);
 
         this.props.onChange &&
           this.props.onChange(
             // @ts-expect-error no HSV or HSL here
             {
               ...colors,
-              wasChanged: data.wasChanged,
-              opacityDragEnd: data.opacityDragEnd
+              wasChanged: data.wasChanged
             },
-            event
+            meta
           );
       }
     };

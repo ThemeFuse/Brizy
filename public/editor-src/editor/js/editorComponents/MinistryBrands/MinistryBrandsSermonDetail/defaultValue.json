@@ -17,8 +17,15 @@
     "showMetaHeadings": "on",
     "showPreviousPage": "on",
     "showPreview": "on",
-    "recentSermons": "all-in-all"
+    "recentSermons": "all-in-all",
+
+    "maskCustomUploadImageFileName": "",
+    "maskCustomUploadImageSrc": "",
+
+    "showMetaIcons": "off"
+
   },
+
   "style": {
     "families": {
       "typographyFontFamily": "lato",
@@ -104,10 +111,72 @@
     "detailButtonColorOpacity": 1,
     "detailButtonColorPalette": "",
 
+    "imgBgColorType": "none",
+    "imgBgColorHex": "#ffffff",
+    "imgBgColorOpacity": 0,
+    "imgBgColorPalette": "",
+
+    "imgGradientColorHex": "#009900",
+    "imgGradientColorOpacity": 1,
+    "imgGradientColorPalette": "",
+    "imgGradientType": "linear",
+    "imgGradientStartPointer": 0,
+    "imgGradientFinishPointer": 100,
+    "imgGradientActivePointer": "startPointer",
+    "imgGradientLinearDegree": 90,
+    "imgGradientRadialDegree": 90,
+
+    "tempImgBgColorType": "solid",
+
+    "imgBorderStyle": "none",
+    "tempImgBorderStyle": "solid",
+
+    "imgBorderColorHex": "#000000",
+
+    "imgBorderColorOpacity": 0,
+    "tempImgBorderColorOpacity": 1,
+
+    "imgBorderColorPalette": "",
+    "tempImgBorderColorPalette": "color3",
+
+    "imgBorderWidthType": "grouped",
+    "imgBorderWidth": 4,
+    "tempImgBorderWidth": 4,
+
+    "imgBorderTopWidth": 4,
+    "tempImgBorderTopWidth": 4,
+
+    "imgBorderRightWidth": 4,
+    "tempImgBorderRightWidth": 4,
+
+    "imgBorderBottomWidth": 4,
+    "tempImgBorderBottomWidth": 4,
+
+    "imgBorderLeftWidth": 4,
+    "tempImgBorderLeftWidth": 4,
+
+    "imgBoxShadow": "none",
+    "imgBoxShadowColorHex": "#000000",
+    "imgBoxShadowColorPalette": "",
+    "imgBoxShadowColorOpacity": 0,
+    "imgBoxShadowBlur": 0,
+    "imgBoxShadowSpread": 0,
+    "imgBoxShadowVertical": 0,
+    "imgBoxShadowHorizontal": 0,
+
     "itemHorizontalAlign": "left",
 
     "itemSpacing": 5,
     "itemSpacingSuffix": "px",
+
+    "imgWidth": 100,
+    "imgWidthSuffix": "%",
+
+    "imgHeight": 100,
+    "imgHeightSuffix": "%",
+    
+    "metaIconsSpacing": 5,
+    "metaIconsSpacingSuffix": "px",
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -162,8 +231,7 @@
     "metaLinksBorderLeftWidth": 1,
 
     "metaLinksBoxShadow": "none",
-    "tempMetaLinksBoxShadow": "on",
-    "metaLinksBoxShadowColorHex": "#asd543",
+    "metaLinksBoxShadowColorHex": "#000000",
     "metaLinksBoxShadowColorPalette": "",
     "metaLinksBoxShadowColorOpacity": 1,
     "metaLinksBoxShadowBlur": 2,
@@ -199,8 +267,7 @@
     "detailButtonBorderLeftWidth": 0,
 
     "detailButtonBoxShadow": "none",
-    "tempDetailButtonBoxShadow": "on",
-    "detailButtonBoxShadowColorHex": "#asd543",
+    "detailButtonBoxShadowColorHex": "#000000",
     "detailButtonBoxShadowColorPalette": "",
     "detailButtonBoxShadowColorOpacity": 1,
     "detailButtonBoxShadowBlur": 2,
@@ -233,7 +300,7 @@
     "parentBgColorHex": "#ff0000",
     "parentBgColorOpacity": 0,
     "parentBgColorPalette": "",
-    "parentGradientColorHex": "#fasd43",
+    "parentGradientColorHex": "#000000",
     "parentGradientColorOpacity": 1,
     "parentGradientColorPalette": "",
     "parentGradientType": "linear",
@@ -256,8 +323,7 @@
     "parentBorderLeftWidth": 0,
 
     "parentBoxShadow": "none",
-    "tempParentBoxShadow": "on",
-    "parentBoxShadowColorHex": "#asd543",
+    "parentBoxShadowColorHex": "#000000",
     "parentBoxShadowColorPalette": "",
     "parentBoxShadowColorOpacity": 1,
     "parentBoxShadowBlur": 2,
@@ -278,6 +344,36 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+
+    "imgMaskShadowColorHex": "#000000",
+    "imgMaskShadowColorOpacity": 0,
+    "imgMaskShadowColorPalette": "",
+
+    "imgMaskShadowBlur": 0,
+    "imgMaskShadowVertical": 0,
+    "imgMaskShadowHorizontal": 0,
+
+    "imgBrightness": 100,
+    "imgHue": 0,
+    "imgSaturation": 100,
+    "imgContrast": 100
   }
 }

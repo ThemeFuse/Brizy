@@ -8,6 +8,7 @@ import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { currentUserRole } from "visual/component/Roles";
+import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ActionUpdateUI, setActiveElement } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
@@ -25,11 +26,7 @@ import {
   PortalToolbarPositioner,
   PortalToolbarPositionerProps
 } from "./PortalToolbarPositioner";
-import {
-  filterOptions,
-  selectorSearchCoordinates,
-  selectorSearchDomTree
-} from "./utils";
+import { selectorSearchCoordinates, selectorSearchDomTree } from "./utils";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
 

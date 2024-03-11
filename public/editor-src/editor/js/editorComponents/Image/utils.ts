@@ -370,7 +370,7 @@ export const getImageDCSize = (
 
   const imageDCItems = getDynamicContentChoices(dcConfig, DCTypes.image);
 
-  if (imageDCItems.length === 0) {
+  if (imageDCItems === undefined || imageDCItems.length === 0) {
     return undefined;
   }
 

@@ -1,18 +1,25 @@
 import React, { FC, useCallback, useMemo } from "react";
 import { Props as SP, Spacing } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import {
+  Meta as OptionMeta,
+  Props as OptionProps
+} from "visual/component/Options/Type";
 import { Config } from "visual/component/Options/types/dev/Padding/types/Config";
 import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
 import { Type } from "visual/component/Options/utils/Type";
 import { mPipe, pipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
+import { Meta } from "visual/utils/options/Padding/meta";
 import { WithConfig } from "visual/utils/options/attributes";
 import { Value } from "./types/Value";
 import * as V from "./types/Value";
 import { getIcon, unitSetter, valueSetter } from "./utils";
 
-export interface Props extends OptionProps<Value>, WithConfig<Config> {}
+export interface Props
+  extends OptionProps<Value>,
+    OptionMeta<Meta>,
+    WithConfig<Config> {}
 
 export const Padding: FC<Props> = ({ value, onChange, label, config }) => {
   const onType = useCallback(
@@ -70,11 +77,11 @@ export const Padding: FC<Props> = ({ value, onChange, label, config }) => {
   );
 
   const onValue = useCallback<SP<SpacingUnit, Edge>["onValue"]>(
-    (edge: Edge, v: number) =>
+    (edge: Edge, v: number, meta) =>
       mPipe(
         (e: Edge, v: number) =>
           mPipe(Positive.fromNumber, (v) => valueSetter(e)(v, value))(v),
-        onChange
+        (v) => onChange(v, meta)
       )(edge, v),
     [onChange, value]
   );

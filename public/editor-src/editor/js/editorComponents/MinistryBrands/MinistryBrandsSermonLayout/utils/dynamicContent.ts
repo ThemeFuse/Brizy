@@ -31,7 +31,8 @@ export const getPlaceholder = (v: Value) => {
     seriesFilterHeading,
     speakerFilterHeading,
     searchFilterPlacehoder,
-    defaultCategory
+    defaultCategory,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -54,6 +55,7 @@ export const getPlaceholder = (v: Value) => {
     getAttr(showSeriesFilter, "show_series_filter"),
     getAttr(showSpeakerFilter, "show_speaker_filter"),
     getAttr(showSearchFilter, "show_search"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `detail_page='${getDetail(detailPage)}'`,
     `detail_page_button_text='${detailPageButtonText}'`,
     `group_filter_heading='${groupFilterHeading}'`,

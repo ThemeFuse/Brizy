@@ -185,67 +185,58 @@ describe("Testing 'Patches for image' functions", () => {
               placeholder: "{{test size=''}}",
               attr: {
                 size: ""
-              },
-              varyAttr: []
+              }
             },
             {
               label: "Featured Image 2",
               placeholder: "",
-              varyAttr: [],
               optgroup: [
                 {
                   label: "Custom",
                   placeholder: "{{test}}",
-                  attr: {},
-                  varyAttr: []
+                  attr: {}
                 },
                 {
                   label: "Original",
                   placeholder: "{{test size='original'}}",
                   attr: {
                     size: "original"
-                  },
-                  varyAttr: []
+                  }
                 },
                 {
                   label: "Thumbnail",
                   placeholder: "{{test size='thumbnail'}}",
                   attr: {
                     size: "thumbnail"
-                  },
-                  varyAttr: []
+                  }
                 },
                 {
                   label: "Others",
                   placeholder: "{{test size='others'}}",
                   attr: {
                     size: "others"
-                  },
-                  varyAttr: []
+                  }
                 },
                 {
                   label: "Medium",
                   placeholder: "{{test size='medium'}}",
                   attr: {
                     size: "medium"
-                  },
-                  varyAttr: []
+                  }
                 },
                 {
                   label: "Large",
                   placeholder: "{{test size='large'}}",
                   attr: {
                     size: "large"
-                  },
-                  varyAttr: []
+                  }
                 },
                 {
                   label: "1536x1536",
                   placeholder: "{{test size='1536x1536'}}",
                   attr: {
                     size: "1536x1536"
-                  },
-                  varyAttr: []
+                  }
                 }
               ]
             }

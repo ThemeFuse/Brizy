@@ -10,7 +10,6 @@ import {
   cssStyleIconPosition,
   cssStyleSizeHeight,
   cssStyleSizeWidth,
-  cssStyleSpacing,
   cssStyleStrokeWidth,
   cssStyleTextAlign,
   getAllCssStyleTypography
@@ -28,32 +27,18 @@ export function cssStyleElementMinistryEventCalendarTitleAlign({
   return cssStyleTextAlign({ v, device, state, prefix: "title" });
 }
 
-export function cssStyleElementMinistryEventCalendarPaginationRight({
+export function cssStyleElementMinistryEventCalendarPaginationSpacing({
   v,
   device,
   state
 }: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    prefix: "pagination",
-    direction: "right"
-  });
-}
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
 
-export function cssStyleElementMinistryEventCalendarPaginationLeft({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    prefix: "pagination",
-    direction: "left"
-  });
+  const spacing = readNumber(dvv("paginationSpacing")) ?? 10;
+  const spacingSuffix = readString(dvv("paginationSpacingSuffix")) ?? "px";
+
+  return `margin: 0 ${spacing / 2}${spacingSuffix}}`;
 }
 
 export function cssStyleElementMinistryEventCalendarPaginationAlign({

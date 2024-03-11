@@ -24,21 +24,23 @@ class SectionFooterItems extends EditorArrayComponent {
       getItemsForDesktop: () => [
         {
           id: "duplicate",
-          type: "legacy-button",
-          icon: "nc-duplicate",
-          title: t("Duplicate"),
+          type: "button",
+          config: {
+            icon: "nc-duplicate",
+            title: t("Duplicate"),
+            reverseTheme: true
+          },
           position: 200,
-          onChange: () => {
+          onClick: () => {
             this.cloneItem(itemIndex);
           }
         },
         {
           id: "remove",
-          type: "legacy-button",
-          icon: "nc-trash",
-          title: t("Delete"),
+          type: "button",
+          config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           position: 250,
-          onChange: () => {
+          onClick: () => {
             hideToolbar();
             this.removeItem(itemIndex);
           }

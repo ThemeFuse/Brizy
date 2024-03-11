@@ -1,4 +1,6 @@
+import produce from "immer";
 import { Dictionary } from "visual/types/utils";
+import { isNullish } from "visual/utils/value";
 import { Reader } from "./types";
 
 type ObjWithUnknowns<K extends string> = {
@@ -17,6 +19,11 @@ export const hasKeys = <T extends string>(
   keys: T[],
   obj: Record<string, unknown>
 ): obj is ObjWithUnknowns<T> => keys.every((k) => hasKey(k, obj));
+
+export const hasSomeKey = <T extends string>(
+  keys: T[],
+  obj: Record<string, unknown>
+): obj is ObjWithUnknowns<T> => keys.some((k) => hasKey(k, obj));
 
 export const read: Reader<Record<string, unknown>> = (v) => {
   if (isObject(v)) {
@@ -80,3 +87,54 @@ export const length = (obj: Record<string, unknown>): number =>
 
 export const isEmpty = (obj: Record<string, unknown>): boolean =>
   length(obj) === 0;
+
+export const filterNullish = <T extends Record<string, unknown>>(obj: T): T =>
+  produce(obj, (draft) => {
+    Object.keys(draft).forEach((k) => {
+      const current = draft[k];
+
+      if (isNullish(current)) {
+        delete draft[k];
+      }
+
+      if (isObject(current) && !Array.isArray(current)) {
+        // @ts-expect-error: Index signature
+        draft[k] = filterNullish(current);
+      }
+    });
+  });
+
+// get key:value differences between 2 objects
+export const diff = <
+  T extends Record<string, unknown> = Record<string, unknown>,
+  K extends Record<string, unknown> = Record<string, unknown>
+>(
+  obj1: T,
+  obj2: K
+): K | Partial<K> => {
+  const result = {} as { [k in string]: unknown };
+
+  if (Object.is(obj1, obj2)) {
+    return {} as K;
+  }
+  if (!obj2 || typeof obj2 !== "object") {
+    return obj2;
+  }
+
+  Object.keys(obj1 || {})
+    .concat(Object.keys(obj2 || {}))
+    .forEach((key) => {
+      if (obj2[key] !== obj1[key] && !Object.is(obj1[key], obj2[key])) {
+        result[key] = obj2[key];
+      }
+
+      if (isObject(obj2[key]) && isObject(obj1[key])) {
+        const value = diff(obj1[key] as T, obj2[key] as K);
+        if (value !== undefined) {
+          result[key] = value;
+        }
+      }
+    });
+
+  return filterNullish(result) as K | Partial<K>;
+};

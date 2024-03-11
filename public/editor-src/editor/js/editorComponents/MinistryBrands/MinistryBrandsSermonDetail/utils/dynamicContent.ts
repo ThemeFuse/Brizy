@@ -21,7 +21,8 @@ export const getPlaceholder = (v: Value): string => {
     showMetaHeadings,
     showPreview,
     recentSermons,
-    showPreviousPage
+    showPreviousPage,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -42,7 +43,8 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showPassage, "show_passage"),
     getAttr(showMetaHeadings, "show_meta_headings"),
     getAttr(showPreview, "show_preview"),
-    getAttr(showPreviousPage, "previous_page")
+    getAttr(showPreviousPage, "previous_page"),
+    getAttr(showMetaIcons, "show_meta_icons")
   ];
 
   return makePlaceholder({

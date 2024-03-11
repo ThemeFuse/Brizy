@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo, useRef } from "react";
 import {
   Props as NP,
   NumberSlider
@@ -39,11 +39,13 @@ export function Slider<U extends Literal>({
   title
 }: Props<U>): ReactElement {
   const _value = useMemo(() => ({ number: value, unit }), [value, unit]);
+  const lastEditing = useRef(false);
 
   const onChange = useCallback<NP<U>["onChange"]>(
-    (v) => {
-      if (v.number !== value) {
-        onValue(v.number);
+    (v, { editing }) => {
+      if (v.number !== value || lastEditing.current !== editing) {
+        onValue(v.number, { isChanging: editing });
+        lastEditing.current = editing;
       }
 
       if (v.unit !== unit) {

@@ -8,8 +8,10 @@ import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
 import * as toolbarMedia from "../toolbarMedia";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarConfig from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
@@ -114,18 +116,40 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                       )}
                       selector=".brz-sermonLayout__item--detail-button"
                     >
-                      <Wrapper
-                        {...this.makeWrapperProps({
-                          className: "brz-sermonLayout__wrapper"
-                        })}
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarImage,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-ministryBrands__item--media"
                       >
-                        <DynamicContentHelper
-                          placeholder={getPlaceholder(v)}
-                          props={{ className }}
-                          blocked={false}
-                          tagName="div"
-                        />
-                      </Wrapper>
+                        <Toolbar
+                          {...this.makeToolbarPropsFromConfig2(
+                            toolbarMetaIcons,
+                            undefined,
+                            {
+                              allowExtend: false
+                            }
+                          )}
+                          selector=".brz-ministryBrands__meta--icons"
+                        >
+                          <Wrapper
+                            {...this.makeWrapperProps({
+                              className: "brz-sermonLayout__wrapper"
+                            })}
+                          >
+                            <DynamicContentHelper
+                              placeholder={getPlaceholder(v)}
+                              props={{ className }}
+                              blocked={false}
+                              tagName="div"
+                            />
+                          </Wrapper>
+                        </Toolbar>
+                      </Toolbar>
                     </Toolbar>
                   </Toolbar>
                 </Toolbar>

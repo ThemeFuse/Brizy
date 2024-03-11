@@ -147,6 +147,7 @@
     "linkPage": "",
     "linkPageTitle": "",
     "linkPageSource": null,
+    "linkInternalBlank": "off",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
