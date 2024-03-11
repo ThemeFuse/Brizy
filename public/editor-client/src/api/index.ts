@@ -1,4 +1,4 @@
-import { getConfig } from "../config";
+import { Config, getConfig } from "../config";
 import { ConfigDCItem } from "../types/DynamicContent";
 import { Page } from "../types/Page";
 import { Rule } from "../types/PopupConditions";
@@ -930,5 +930,41 @@ export const getPlaceholders = (extraData: {
       return [];
     });
 };
+
+//#endregion
+
+//#region HeartBeat
+export function sendHeartBeat(config: Config) {
+  const {
+    actions: { heartBeat },
+    url: _url,
+    hash,
+    editorVersion: version
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: heartBeat,
+    version,
+    hash
+  });
+  return request(url, { method: "GET" }).then((r) => r.json());
+}
+
+export function sendHeartBeatTakeOver(config: Config) {
+  const {
+    actions: { takeOver },
+    url: _url,
+    hash,
+    editorVersion: version
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: takeOver,
+    version,
+    hash
+  });
+
+  return request(url, { method: "GET" }).then((r) => r.json());
+}
 
 //#endregion
