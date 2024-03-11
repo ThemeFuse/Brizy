@@ -12,7 +12,7 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
-import { placeholders } from "./dynamicContent";
+import { placeholderData, placeholders } from "./dynamicContent";
 import { handler as posts } from "./Elements/Posts";
 import { uploadedFonts } from "./fonts";
 import { heartBeat } from "./heartBeat";
@@ -97,6 +97,11 @@ if (window.__VISUAL_CONFIG__) {
   // Dynamic Content
   if (window.__VISUAL_CONFIG__.dynamicContent) {
     set(window.__VISUAL_CONFIG__.dynamicContent, ["handler"], placeholders);
+    set(
+      window.__VISUAL_CONFIG__.dynamicContent,
+      ["getPlaceholderData"],
+      placeholderData
+    );
   }
 
   set(
