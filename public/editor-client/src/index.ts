@@ -14,12 +14,13 @@ import {
 } from "./defaultTemplates";
 import { placeholders } from "./dynamicContent";
 import { handler as posts } from "./Elements/Posts";
+import { uploadedFonts } from "./fonts";
 import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
 import { onStartLoad } from "./onStartLoad";
-import {popupConditions } from "./popupConditions";
+import { popupConditions } from "./popupConditions";
 import { publish } from "./publish";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
@@ -93,4 +94,10 @@ if (window.__VISUAL_CONFIG__) {
   if (window.__VISUAL_CONFIG__.dynamicContent) {
     set(window.__VISUAL_CONFIG__.dynamicContent, ["handler"], placeholders);
   }
+
+  set(
+    window.__VISUAL_CONFIG__,
+    ["integrations", "fonts", "upload"],
+    uploadedFonts
+  );
 }

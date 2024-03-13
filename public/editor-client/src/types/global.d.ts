@@ -44,6 +44,7 @@ export interface PLUGIN_ENV {
     getAttachmentUid?: string;
     heartBeat?: string;
     takeOver?: string;
+    getFonts?: string;
   };
   api?: {
     mediaResizeUrl?: string;

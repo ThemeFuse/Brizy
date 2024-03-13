@@ -14,6 +14,7 @@ import {
 } from "../types/SavedBlocks";
 import { ScreenshotData } from "../types/Screenshots";
 import { t } from "../utils/i18n";
+import { Literal } from "../utils/types";
 import {
   GetCollections,
   parseMetaSavedBlock,
@@ -965,6 +966,48 @@ export function sendHeartBeatTakeOver(config: Config) {
   });
 
   return request(url, { method: "GET" }).then((r) => r.json());
+}
+
+//#endregion
+
+//#region fonts
+export interface FontsData {
+  id?: Literal;
+  container: number;
+  family: string;
+  uid?: Literal;
+  type: "uploaded";
+  files: Record<string, string>;
+  weights: Array<string>;
+}
+
+export async function getUploadedFonts() {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const {
+    hash,
+    url: _url,
+    editorVersion: version,
+    actions: { getFonts }
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: getFonts,
+    version,
+    hash
+  });
+
+  const r = await request(url, { method: "GET" });
+  if (!r.ok) {
+    throw new Error(t("Failed to fetch fonts"));
+  }
+  const response = await r.json();
+
+  return response.data;
 }
 
 //#endregion
