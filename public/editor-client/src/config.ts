@@ -40,6 +40,8 @@ interface Actions {
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
+  adobeFontsUrl: string;
+  addAccount: string;
 
   getDynamicContentPlaceholders: string;
   lockProject: string;
@@ -236,6 +238,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateBlockScreenshot: pipe(
     mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: updateBlockScreenshot")
+  ),
+  adobeFontsUrl: pipe(
+    mPipe(Obj.readKey("adobeFontsUrl"), Str.read),
+    throwOnNullish("Invalid actions: adobeFontsUrl")
+  ),
+  addAccount: pipe(
+    mPipe(Obj.readKey("addAccount"), Str.read),
+    throwOnNullish("Invalid actions: addAccount")
   ),
   getDynamicContentPlaceholders: pipe(
     mPipe(Obj.readKey("getDynamicContentPlaceholders"), Str.read),
