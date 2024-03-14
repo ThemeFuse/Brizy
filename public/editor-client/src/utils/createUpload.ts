@@ -47,7 +47,7 @@ export const createUpload = <T extends boolean = false>(
         document.body.removeChild(elInDom);
       }
     };
-    const handleFocus = function () {
+    const handleCancel = function () {
       setTimeout(() => {
         const elInDom = document.getElementById(el.id);
 
@@ -59,7 +59,7 @@ export const createUpload = <T extends boolean = false>(
     };
 
     el.addEventListener("change", handleChange, { once: true });
-    window.addEventListener("focus", handleFocus, { once: true });
+    window.addEventListener("cancel", handleCancel, { once: true });
 
     // open file select box
     el.click();
