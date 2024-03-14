@@ -239,8 +239,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 $this->error(400, "Invalid status");
             }
 
-	        if ( json_decode( $editorData ) === null && json_last_error() !== JSON_ERROR_NONE ) {
-		        $this->error( 400, "Invalid JSON data" );
+	        if ( json_decode($editorData ) === null && json_last_error() !== JSON_ERROR_NONE ) {
+		        $this->error(400, "Invalid JSON data" );
+
 	        }
 
             $bockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
@@ -315,12 +316,13 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             if ($this->param('meta')) {
                 $block->setMeta(stripslashes($this->param('meta')));
             }
-            if ($this->param('data')) {
-				$data = stripslashes( $this->param( 'data' ) );
-	            if ( json_decode( $data ) !== null && ! json_last_error() ) {
-		            $block->set_editor_data( $data );
-	            }
-            }
+
+	        if ( $this->param( 'data' ) ) {
+		        $data = stripslashes( $this->param( 'data' ) );
+		        if ( json_decode( $data ) !== null && ! json_last_error() ) {
+			        $block->set_editor_data( $data );
+		        }
+	        }
 
 	        if($this->param('title'))
 	        {
@@ -372,7 +374,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce( self::nonce );
 
-        try {
+		try {
 
             if (!$this->param('uid')) {
                 $this->success([]);
@@ -421,13 +423,13 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                     $block->setTags(stripslashes($this->param('tags')[$i]));
                 }
 
-                if (isset($this->param('data')[$i]) && !empty($this->param('data')[$i])) {
-	                $data = stripslashes( $this->param( 'data' )[ $i ] );
+	            if ( isset( $this->param( 'data' )[$i] ) && !empty( $this->param('data' )[$i] ) ) {
+		            $data = stripslashes( $this->param( 'data' )[$i] );
 
-	                if ( json_decode( $data ) !== null && ! json_last_error() ) {
-		                $block->set_editor_data( stripslashes( $this->param( 'data' )[ $i ] ) );
-	                }
-                }
+		            if ( json_decode( $data ) !== null && ! json_last_error() ) {
+			            $block->set_editor_data( $data );
+		            }
+	            }
 
                 if (isset($this->param('is_autosave')[$i]) && (int)$this->param('is_autosave')[$i] === 1) {
                     $block->save(1);

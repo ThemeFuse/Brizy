@@ -201,6 +201,10 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             $layout->set_editor_data($editorData);
             $layout->set_needs_compile(true);
 
+	        if ( json_decode($editorData ) === null && json_last_error() !== JSON_ERROR_NONE ) {
+		        $this->error(400, "Invalid JSON data" );
+	        }
+
             if ($this->param('title')) {
                 $layout->setTitle(stripslashes($this->param('title')));
             }
@@ -251,9 +255,14 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             if ($this->param('meta')) {
                 $layout->setMeta(stripslashes($this->param('meta')));
             }
-            if ($this->param('data')) {
-                $layout->set_editor_data(stripslashes($this->param('data')));
-            }
+
+	        if ( $this->param( 'data' ) ) {
+		        $data = stripslashes( $this->param( 'data' ) );
+		        if ( json_decode( $data ) !== null && ! json_last_error() ) {
+			        $layout->set_editor_data( $data );
+		        }
+	        }
+
             if ($this->param('title')) {
                 $layout->setTitle(stripslashes($this->param('title')));
             }
