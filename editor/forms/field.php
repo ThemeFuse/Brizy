@@ -14,9 +14,10 @@ class Brizy_Editor_Forms_Field extends Brizy_Admin_Serializable {
 	public function __construct( \BrizyForms\Model\Field $field = null ) {
 		$this->data = array();
 		if ( $field ) {
-			$this->data = array( 'slug'     => $field->getSlug(),
-			                     'name'     => $field->getName(),
-			                     'required' => $field->getRequired()
+			$this->data = array(
+				'slug'     => $field->getSlug(),
+				'name'     => $field->getName(),
+				'required' => $field->getRequired()
 			);
 		}
 	}
@@ -29,12 +30,17 @@ class Brizy_Editor_Forms_Field extends Brizy_Admin_Serializable {
 	}
 
 	public function unserialize( $serialized ) {
-		$this->data = unserialize( $serialized );
+		$unserialize = unserialize( $serialized );
+		if ( is_array( $unserialize ) ) {
+			$this->data = $unserialize;
+		}
+
+		return $this->data = [];
 	}
 
 	#[ReturnTypeWillChange]
 	public function jsonSerialize() {
-		return $this->data;
+		return is_array( $this->data ) ? $this->data : [];
 	}
 
 	public function convertToOptionValue() {
