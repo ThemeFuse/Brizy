@@ -205,7 +205,8 @@ class Brizy_Editor_Editor_Editor
             'imageSizes' => $this->getImgSizes(),
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
-	        'membership' => true
+            'membership' => true,
+            'elements'   => [ 'image' => [ 'zoom' => true ] ],
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
