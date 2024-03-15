@@ -1,3 +1,4 @@
+import { readIconUrl } from "@/types/Icon";
 import { Arr, Bool, Obj, Str } from "@brizy/readers";
 import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
@@ -73,8 +74,13 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  iconsUrl: string;
+  getIconUrl: string;
+  deleteIconUrl: string;
+  uploadIconUrl: string;
   imagePatterns: ImagePatterns;
 }
+
 export interface Config {
   hash: string;
   editorVersion: string;
@@ -158,7 +164,11 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
       })
     ),
     throwOnNullish("Invalid API: image patterns")
-  )
+  ),
+  getIconUrl: readIconUrl("getIconUrl"),
+  iconsUrl: readIconUrl("getIconsUrl"),
+  uploadIconUrl: readIconUrl("uploadIconUrl"),
+  deleteIconUrl: readIconUrl("deleteIconUrl")
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({

@@ -6,6 +6,7 @@ import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
 import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
+import { customIcon } from "./customIcon";
 import {
   defaultKits,
   defaultLayouts,
@@ -15,9 +16,9 @@ import {
 import { placeholders } from "./dynamicContent";
 import { handler as posts } from "./Elements/Posts";
 import { uploadedFonts } from "./fonts";
-import { heartBeat } from "./heartBeat";
-import {globalBlocks } from "./globalBlocks/blocks";
+import { globalBlocks } from "./globalBlocks/blocks";
 import { globalPopups } from "./globalBlocks/popups";
+import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -46,6 +47,10 @@ const api = {
   customFile: {
     addFile,
     fileUrl: config.api.fileUrl
+  },
+  customIcon: {
+    ...customIcon,
+    getIconUrl: config.api.getIconUrl
   },
   savedBlocks,
   savedPopups,
