@@ -1,4 +1,4 @@
-import { Arr, Obj, Str, Bool} from "@brizy/readers";
+import { Arr, Bool, Obj, Str } from "@brizy/readers";
 import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
 import { PLUGIN_ENV } from "./types/global";
@@ -46,6 +46,7 @@ interface Actions {
   removeLock: string;
   heartBeat: string;
   takeOver: string;
+  getFonts: string;
 }
 
 interface ProjectStatus {
@@ -256,6 +257,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   takeOver: pipe(
     mPipe(Obj.readKey("takeOver"), Str.read),
     throwOnNullish("Invalid actions: takeOver")
+  ),
+  getFonts: pipe(
+    mPipe(Obj.readKey("getFonts"), Str.read),
+    throwOnNullish("Invalid actions: getFonts")
   )
 });
 
