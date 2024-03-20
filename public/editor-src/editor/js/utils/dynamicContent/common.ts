@@ -11,18 +11,6 @@ export const isPlaceholderStart = (
   o: DCPlaceholderObj
 ): o is DCPlaceholderStartObj => "content" in o;
 
-export const getVaryAttr = (
-  attr: Array<string>
-): {
-  showEntityType: boolean;
-  showEntityId: boolean;
-} => {
-  return {
-    showEntityType: attr.includes("entityType"),
-    showEntityId: attr.includes("entityId")
-  };
-};
-
 export const getPopulatedEntityValues = (
   entityId: string,
   entityType: string

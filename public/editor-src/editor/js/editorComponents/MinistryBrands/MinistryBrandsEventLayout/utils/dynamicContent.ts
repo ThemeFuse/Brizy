@@ -42,7 +42,8 @@ export const getPlaceholder = (v: Value): string => {
     showGroupFilter,
     groupFilterHeading,
     showSearch,
-    searchPlaceholder
+    searchPlaceholder,
+    dateFormat
   } = v;
 
   const attr = [
@@ -82,7 +83,8 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showGroupFilter, "show_group_filter"),
     `group_filter_heading='${groupFilterHeading}'`,
     getAttr(showSearch, "show_search"),
-    `search_placeholder='${searchPlaceholder}'`
+    `search_placeholder='${searchPlaceholder}'`,
+    `date_format='${dateFormat}'`
   ];
 
   return makePlaceholder({

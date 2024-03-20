@@ -5,16 +5,17 @@
   overflow: hidden;
 
   &__container {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
-    grid-template-columns: repeat(var(--columnCount), var(--columnSize));
     word-break: break-word;
+
+    .brz-eventList__item {
+      width: var(--columnSize)
+    }
   }
 
   &__item {
-    & > * {
-      margin: 0 0 0.5rem 0;
-    }
     &--meta {
       &--title {
         a {
@@ -26,10 +27,6 @@
           pointer-events: none;
         }
       }
-    }
-
-    & > *:not(:last-child) {
-      margin: 0 0 10px 0;
     }
   }
 }

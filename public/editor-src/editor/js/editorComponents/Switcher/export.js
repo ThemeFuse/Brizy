@@ -1,7 +1,7 @@
 import $ from "jquery";
 
-export default function($node) {
-  $node.find(".brz-switcher").each(function() {
+export default function ($node) {
+  $node.find(".brz-switcher").each(function () {
     const $this = $(this);
     const $switcherNav = $this.find("> .brz-switcher__nav");
     const $switcherNavItems = $this.find(
@@ -9,7 +9,7 @@ export default function($node) {
     );
     const $switcherContent = $this.find("> .brz-switcher__content--tab");
 
-    $switcherNavItems.on("click", function() {
+    $switcherNavItems.on("click", function () {
       $switcherNav.toggleClass("brz-switcher__nav--active");
       $switcherNavItems.toggleClass("brz-switcher__nav--item--active");
       $switcherContent.toggleClass("brz-switcher__content--tab--active");
@@ -22,13 +22,7 @@ export default function($node) {
     });
 
     // style 2
-    const $switcherNavControl = $this.find(
-      "> .brz-switcher__nav2 .brz-switcher__nav2--control"
-    );
-    const $switcherActiveContent = $this.find(
-      "> .brz-switcher__nav2 .brz-switcher__nav2--button"
-    );
-    $switcherNavControl.on("click", function() {
+    function toggleSwitcher() {
       $switcherNavControl.toggleClass("brz-switcher__nav2--control--active");
       $switcherContent.toggleClass("brz-switcher__content--tab--active");
       $switcherActiveContent.toggleClass("brz-switcher__nav2__item--active");
@@ -37,6 +31,20 @@ export default function($node) {
         active: $this.find(".brz-switcher__content--tab--active").get(0),
         tabs: $switcherContent.get()
       });
+    }
+
+    const $switcherNavControl = $this.find(
+      "> .brz-switcher__nav2 .brz-switcher__nav2--control"
+    );
+    const $textItems = $this.find(
+      "> .brz-switcher__nav2 .brz-switcher__nav2--button"
+    );
+    const $switcherActiveContent = $this.find(
+      "> .brz-switcher__nav2 .brz-switcher__nav2--button"
+    );
+    $textItems.each(function () {
+      $(this).on("click", toggleSwitcher);
     });
+    $switcherNavControl.on("click", toggleSwitcher);
   });
 }

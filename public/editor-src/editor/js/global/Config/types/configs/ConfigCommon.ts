@@ -24,6 +24,8 @@ import {
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
+  DefaultTemplateKits,
+  KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
   PopupsWithThumbs,
@@ -433,7 +435,11 @@ interface _ConfigCommon<Mode> {
     // Collection Types
     collectionTypes?: {
       loadCollectionTypes: {
-        handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+        handler: (
+          res: Response<ChoicesSync>,
+          rej: Response<string>,
+          extraData?: { defaultTitle?: string; defaultValue?: string }
+        ) => void;
       };
     };
 
@@ -446,7 +452,11 @@ interface _ConfigCommon<Mode> {
     // SavedPopups
     savedPopups?: APISavedPopups;
 
-    defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
+    defaultKits?: DefaultTemplateKits<
+      KitsWithThumbs,
+      DefaultBlock,
+      Array<KitItem>
+    >;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
     defaultLayouts?: DefaultTemplate<
       LayoutsWithThumbs,
@@ -523,7 +533,6 @@ interface _ConfigCommon<Mode> {
     };
     ShopifyImage?: {
       imagePopulation?: string;
-      imagePopulationEntityType?: string;
     };
     PostContent?: {
       textPopulation?: string;
@@ -570,12 +579,10 @@ interface _ConfigCommon<Mode> {
       sourceType?: string;
     };
     ShopifyDescription?: {
-      textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;
     };
     ShopifyTitle?: {
-      textPopulationEntityType?: string;
       textPopulation?: string;
       textPopulationEntityId?: string;
       linkType?: string;

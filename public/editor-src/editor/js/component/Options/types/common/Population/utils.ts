@@ -1,9 +1,9 @@
+import { Config } from "visual/component/Options/types/common/Population/Population";
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getVaryAttr } from "visual/utils/dynamicContent";
+import { t } from "visual/utils/i18n";
 import { findDeep } from "visual/utils/object";
-import * as Str from "visual/utils/reader/string";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import { Choices, OptGroup } from "./types/Choices";
@@ -69,32 +69,6 @@ export const parsePopulation = (v: Value | undefined): Value => {
 
 export const clickOutsideExceptions = [".brz-control__select-current__icon"];
 
-interface Changes {
-  placeholder: string;
-  entityType: {
-    value: Literal;
-  };
-  entityId: {
-    value: Literal;
-  };
-  varryAttr: Array<string>;
-}
-
-export const handleValuesChange = (data: Changes): MValue<Value> => {
-  const { placeholder, entityType, entityId, varryAttr } = data;
-  const { showEntityType, showEntityId } = getVaryAttr(varryAttr);
-  const _entityType = showEntityType ? entityType.value : "";
-  const _entityId = showEntityId ? entityId.value : "";
-
-  if (placeholder) {
-    return {
-      population: placeholder,
-      populationEntityType: Str.read(_entityType) ?? "",
-      populationEntityId: _entityId
-    };
-  }
-};
-
 interface FindChoice<T extends Literal> {
   choices: Array<Choices<T> | OptGroup<T>>;
   placeholder: string;
@@ -121,4 +95,33 @@ export const findDCChoiceByPlaceholder = <T extends Literal>(
       }
     ).obj ?? undefined
   );
+};
+
+export const configChoicesToSelectItemChoices = (
+  config: Config,
+  choices: Array<PopulationMethod | PopulationOptgroupMethod>
+): Array<PopulationMethod | PopulationOptgroupMethod> => {
+  const { mockValue = true, iconOnly } = config;
+
+  return [
+    ...(mockValue && !iconOnly
+      ? [
+          {
+            title: t("None"),
+            value: "",
+            attr: {}
+          }
+        ]
+      : []),
+    ...(iconOnly
+      ? [
+          {
+            title: t("Custom Text"),
+            value: "",
+            attr: {}
+          }
+        ]
+      : []),
+    ...choices
+  ];
 };

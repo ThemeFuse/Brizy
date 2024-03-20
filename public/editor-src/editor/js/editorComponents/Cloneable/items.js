@@ -60,25 +60,27 @@ class Items extends EditorArrayComponent {
         },
         {
           id: "duplicate",
-          type: "legacy-button",
-          icon: "nc-duplicate",
-          title: t("Duplicate"),
+          type: "button",
+          config: {
+            icon: "nc-duplicate",
+            title: t("Duplicate"),
+            reverseTheme: true
+          },
           devices: "desktop",
           position: 200,
           roles: ["admin"],
-          onChange: () => {
+          onClick: () => {
             this.cloneItem(itemIndex);
           }
         },
         {
           id: "remove",
-          type: "legacy-button",
-          icon: "nc-trash",
-          title: t("Delete"),
+          type: "button",
+          config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           devices: "desktop",
           position: 250,
           roles: ["admin"],
-          onChange: () => {
+          onClick: () => {
             hideToolbar();
             this.removeItem(itemIndex);
           }

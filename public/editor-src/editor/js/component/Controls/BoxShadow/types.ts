@@ -1,5 +1,5 @@
-import { Type } from "visual/component/Options/types/dev/BoxShadow/entities/Type";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import { Type } from "visual/utils/options/BoxShadow/entities/Type";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 
 export type Value = {
   type: Type;
@@ -14,6 +14,7 @@ export type Value = {
 
 export type Meta = {
   isChanged: keyof Value;
+  isChanging?: boolean;
 };
 
 export type TypeObject = {

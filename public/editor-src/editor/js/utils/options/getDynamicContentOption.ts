@@ -1,4 +1,4 @@
-import { DCGroup } from "visual/global/Config/types/DynamicContent";
+import { DCGroup, DCTypes } from "visual/global/Config/types/DynamicContent";
 import { MValue } from "visual/utils/value";
 import {
   Choice,
@@ -11,16 +11,17 @@ import { TypeChoices } from "./types";
 interface Base {
   show?: boolean;
   iconOnly?: boolean;
+  type?: DCTypes;
 }
 
-interface Handler extends Base {
+export interface Handler extends Base {
   handlerChoices: (
     resolve: (r: string) => void,
     reject: (r: string) => void
   ) => void;
 }
 
-interface Choices extends Base {
+export interface Choices extends Base {
   choices: Array<Choice | OptGroup>;
 }
 
@@ -54,11 +55,12 @@ export const getDynamicContentOption = (
 
   const dcChoices = getDynamicContentChoices(options, type);
 
-  if (dcChoices.length > 0) {
+  if (Array.isArray(dcChoices)) {
     return {
       ...config,
-      show: config?.show && dcChoices.length > 0,
-      choices: dcChoices
+      show: config?.show,
+      choices: dcChoices,
+      type
     };
   }
 };

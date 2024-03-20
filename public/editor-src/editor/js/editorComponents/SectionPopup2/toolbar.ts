@@ -4,6 +4,7 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import {
   MaskPositions,
   MaskRepeat,
@@ -81,6 +82,8 @@ export const getItems: GetItems<Value> = ({
   const maskShapeIsDisabled =
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
+
+  const isExternalImage = dvv("bgImageType") === ImageType.External;
 
   return [
     {
@@ -191,7 +194,11 @@ export const getItems: GetItems<Value> = ({
                   label: t("Image"),
                   id: "bg",
                   type: "imageUpload",
-                  population: imageDynamicContentChoices
+                  population: imageDynamicContentChoices,
+                  config: {
+                    disableSizes: isExternalImage,
+                    pointer: !isExternalImage
+                  }
                 }
               ]
             },
@@ -456,12 +463,15 @@ export const getItems: GetItems<Value> = ({
     },
     {
       id: "remove",
-      type: "legacy-button",
+      type: "button",
       disabled: !enableDelete,
-      title: t("Delete"),
-      icon: "nc-trash",
+      config: {
+        title: t("Delete"),
+        icon: "nc-trash",
+        reverseTheme: true
+      },
       position: 250,
-      onChange: () => {
+      onClick: () => {
         // @ts-expect-error old options
         component.handleDropClick();
       }

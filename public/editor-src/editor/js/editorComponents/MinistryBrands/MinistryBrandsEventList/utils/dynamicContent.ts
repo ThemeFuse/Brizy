@@ -20,7 +20,9 @@ export const getPlaceholder = (v: Value): string => {
     features,
     nonfeatures,
     showLocation,
-    showRegistration
+    showRegistration,
+    dateFormat,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -35,12 +37,14 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showPagination, "show_pagination"),
     getAttr(showLocation, "show_location"),
     getAttr(showRegistration, "show_registration"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `category='${category}'`,
     getFeatures(features, "features"),
     getFeatures(nonfeatures, "nonfeatures"),
     `group='${group}'`,
     `detail_page='${getDetail(detailPage)}'`,
-    `detail_page_button_text='${detailPageButtonText}'`
+    `detail_page_button_text='${detailPageButtonText}'`,
+    `date_format='${dateFormat}'`
   ];
 
   return makePlaceholder({

@@ -5,6 +5,8 @@ import {
   cssStyleBorderRadius,
   cssStyleBoxShadow,
   cssStyleColor,
+  cssStyleElementOfMinistryBrandsSpacing,
+  cssStyleMarginAlign,
   cssStylePositionElement,
   cssStyleSizeFontSizeIcon,
   cssStyleSizePadding,
@@ -49,12 +51,11 @@ export function cssStyleElementMinistryGroupSliderMetaSpacing({
   device,
   state
 }: CSSValue): string {
-  return cssStyleSpacing({
+  return cssStyleElementOfMinistryBrandsSpacing({
     v,
     device,
     state,
-    prefix: "meta",
-    direction: "bottom"
+    prefix: "meta"
   });
 }
 
@@ -178,6 +179,19 @@ export function cssStyleElementMinistryGroupSliderItemsAlign({
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    prefix: "items"
+  });
+}
+
+export function cssStyleElementMinistryGroupSliderItemsImageAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleMarginAlign({
     v,
     device,
     state,

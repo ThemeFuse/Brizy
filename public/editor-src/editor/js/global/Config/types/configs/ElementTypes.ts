@@ -73,6 +73,7 @@ export enum ElementTypes {
   MinistryBrandsEventList = "MinistryBrandsEventList",
   MinistryBrandsEventDetail = "MinistryBrandsEventDetail",
   MinistryBrandsFormWidget = "MinistryBrandsFormWidget",
+  MinistryBrandsPrayerWidget = "MinistryBrandsPrayerWidget",
   Leadific = "Leadific",
   StoryButton = "StoryButton",
   StoryIcon = "StoryIcon",

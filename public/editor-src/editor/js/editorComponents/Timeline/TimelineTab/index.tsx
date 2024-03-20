@@ -4,14 +4,13 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent, {
-  ToolbarExtend
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import { style } from "./styles";
 import * as toolbar from "./toolbar";
+import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
 
 export interface Value extends ElementModel {
   name: string;

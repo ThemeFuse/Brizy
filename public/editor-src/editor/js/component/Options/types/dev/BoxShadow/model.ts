@@ -1,22 +1,22 @@
-import { _apply, get, set, setter2 } from "visual/utils/model";
-import {
-  getHex,
-  getOpacity,
-  getPalette
-} from "visual/component/Options/types/dev/ColorPicker/model";
-import * as ColorPicker from "visual/component/Options/types/dev/ColorPicker/model";
 import {
   fieldsEnabled,
   toggleColor,
   toggleFields,
   toggleType
 } from "visual/component/Options/types/dev/BoxShadow/utils";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
-import * as Type from "./entities/Type";
-import { capitalize } from "visual/utils/string";
-import { Value } from "./entities/Value";
+import {
+  getHex,
+  getOpacity,
+  getPalette
+} from "visual/component/Options/types/dev/ColorPicker/model";
+import * as ColorPicker from "visual/component/Options/types/dev/ColorPicker/model";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
+import { _apply, get, set, setter2 } from "visual/utils/model";
+import * as Type from "visual/utils/options/BoxShadow/entities/Type";
+import { Value } from "visual/utils/options/BoxShadow/entities/Value";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import { capitalize } from "visual/utils/string";
 
 /**
  * @param {object} m

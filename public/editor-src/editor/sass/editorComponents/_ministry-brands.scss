@@ -7,6 +7,58 @@
     text-decoration: none;
   }
 
+  h5,
+  h6 {
+    text-transform: none;
+  }
+
+  img {
+    object-fit: cover;
+  }
+
+  a {
+    color: unset;
+  }
+
+  a:has(.brz-ministryBrands__item--media) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+  }
+
+  &__item--media {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    iframe,
+    video,
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    iframe,
+    video {
+      width: 100%;
+      height: 100%;
+      border: 0 !important;
+    }
+  }
+
   img,
   iframe,
   video {
@@ -14,23 +66,42 @@
     height: 100%;
   }
 
+  &__meta--icons {
+    svg {
+      vertical-align: -0.125em;
+    }
+  }
+
   audio {
     width: 100%;
+  }
+
+  p,
+  ul,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    padding: 0;
   }
 
   &__item--meta {
     &--register-button,
     &--button {
-      padding: 12px 24px;
+      display: flex;
       cursor: pointer;
       border-radius: 3px;
       a {
         color: inherit;
+        padding: 12px 24px;
       }
     }
   }
 
-  &__pagination {
+  p.brz-ministryBrands__pagination {
     padding: 2rem;
 
     a#off {

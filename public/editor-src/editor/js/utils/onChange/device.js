@@ -65,9 +65,11 @@ export function defaultValueKey({ key, device = "desktop", state = "normal" }) {
  *
  *  Note: It is similar to `defaultValueKey`, the difference is that it does treat `temp` prefixes
  *
- * @param {string} key
- * @param {string} device
- * @param {string} state
+ * @param {{
+ *   key: string,
+ *   device: string,
+ *   state: StateMode,
+ * }} v
  * @returns {string}
  */
 export function defaultValueKey2({ key, device, state }) {

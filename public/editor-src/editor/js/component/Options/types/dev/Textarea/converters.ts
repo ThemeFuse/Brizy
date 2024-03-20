@@ -7,7 +7,7 @@ export const defaultValue: SimpleValue<string> = {
 };
 
 export const fromElementModel: Option.FromElementModel<"textarea"> = (get) => ({
-  value: String.read(get("value"))
+  value: String.read(get("value")) ?? defaultValue.value
 });
 
 export const toElementModel: Option.ToElementModel<"textarea"> = (values) => {

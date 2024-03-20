@@ -9,13 +9,18 @@ import {
   Meta as CMeta,
   Value as CValue
 } from "visual/component/Controls/TextShadow/types";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import {
+  GlobalMeta,
+  Meta as OptionMeta,
+  Props as OptionProps
+} from "visual/component/Options/Type";
 import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import { getColorPaletteColors } from "visual/utils/color";
 import { Palette } from "visual/utils/color/Palette";
 import { mPipe } from "visual/utils/fp";
+import { Meta } from "visual/utils/options/TextShadow/meta";
 import { WithClassName } from "visual/utils/options/attributes";
 import * as Value from "./types/Value";
 import * as Utils from "./utils";
@@ -26,7 +31,10 @@ import {
   valueFromSelectType
 } from "./utils";
 
-export interface Props extends OptionProps<Value.Value>, WithClassName {}
+export interface Props
+  extends OptionProps<Value.Value>,
+    OptionMeta<Meta>,
+    WithClassName {}
 
 export const TextShadow: FC<Props> = ({ onChange, value, className }) => {
   const dispatch = useDispatch();
@@ -39,34 +47,48 @@ export const TextShadow: FC<Props> = ({ onChange, value, className }) => {
         (
           m: CValue<Palette, SelectType>,
           meta: CMeta<Palette, SelectType>
-        ): Value.Value => {
+        ): {
+          value: Value.Value;
+          meta?: GlobalMeta;
+        } => {
+          const isChanging = !!meta.isChanging;
           switch (meta.isChanged) {
             case "opacity": {
-              return Value.setOpacity(
-                m.opacity as Value.Value["opacity"],
-                value
-              );
+              return {
+                value: Value.setOpacity(
+                  m.opacity as Value.Value["opacity"],
+                  value
+                ),
+                meta: { isChanging }
+              };
             }
             case "blur": {
-              return Value.setBlur(m.blur as Value.Value["blur"], value);
+              return {
+                value: Value.setBlur(m.blur as Value.Value["blur"], value)
+              };
             }
             case "hex": {
-              return Value.setHex(m.hex, value);
+              return {
+                value: Value.setHex(m.hex, value),
+                meta: { isChanging }
+              };
             }
             case "palette": {
-              return m.palette ? Value.setPalette(m.palette, value) : value;
+              return {
+                value: m.palette ? Value.setPalette(m.palette, value) : value
+              };
             }
             case "horizontal": {
-              return Value.setHorizontal(m.horizontal, value);
+              return { value: Value.setHorizontal(m.horizontal, value) };
             }
             case "vertical": {
-              return Value.setVertical(m.vertical, value);
+              return { value: Value.setVertical(m.vertical, value) };
             }
             case "select":
-              return valueFromSelectType(m.select, value);
+              return { value: valueFromSelectType(m.select, value) };
           }
         },
-        onChange
+        (v) => onChange(v.value, v.meta)
       )(v, m),
     [onChange, value]
   );

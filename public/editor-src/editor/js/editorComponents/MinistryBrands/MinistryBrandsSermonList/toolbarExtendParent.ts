@@ -7,13 +7,8 @@ import { toolbarParentColors } from "../toolbarParent";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  component,
-  context
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
+  const { v, device } = data;
   const config = Config.getAll();
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -92,6 +87,16 @@ export const getItems: GetItems<Value, Props> = ({
                     max: 6,
                     spinner: true
                   }
+                },
+                {
+                  id: "containerHorizontalAlign",
+                  label: "Container Align",
+                  type: "select",
+                  choices: [
+                    { value: "left", title: t("Left") },
+                    { value: "center", title: t("Center") },
+                    { value: "right", title: t("Right") }
+                  ]
                 }
               ]
             },
@@ -99,6 +104,12 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabSermonList",
               label: t("Display"),
               options: [
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
                 {
                   id: "showTitle",
                   label: t("Title"),
@@ -233,7 +244,7 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "inputText",
                   placeholder: t("Button text..."),
                   label: t("Button"),
-                  disabled: !dvv("detailUrl"),
+                  disabled: !dvv("detailPage"),
                   config: {
                     size: "medium"
                   },
@@ -249,13 +260,7 @@ export const getItems: GetItems<Value, Props> = ({
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     {
       id: "toolbarSettings",
       type: "popover",
@@ -272,6 +277,16 @@ export const getItems: GetItems<Value, Props> = ({
           config: {
             min: 0,
             max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "metaItemSpacing",
+          label: t("Items Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 150,
             units: [{ value: "px", title: "px" }]
           }
         },

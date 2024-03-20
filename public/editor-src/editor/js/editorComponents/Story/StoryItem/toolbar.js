@@ -3,6 +3,7 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import {
   MaskPositions,
   MaskRepeat,
@@ -58,6 +59,8 @@ export function getItems({ v, component, device, context }) {
     (maskShape === "custom" && !maskCustomUploadImageSrc) ||
     disableMaskTab;
 
+  const isExternalImage = dvv("bgImageType") === ImageType.External;
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -92,7 +95,11 @@ export function getItems({ v, component, device, context }) {
                   id: "bg",
                   type: "imageUpload",
                   disabled: dvv("media") !== "image",
-                  population: imageDynamicContentChoices
+                  population: imageDynamicContentChoices,
+                  config: {
+                    disableSizes: isExternalImage,
+                    pointer: !isExternalImage
+                  }
                 },
                 {
                   id: "bgVideoType",

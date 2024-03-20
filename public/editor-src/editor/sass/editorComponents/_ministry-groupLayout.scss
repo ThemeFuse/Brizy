@@ -24,23 +24,9 @@
     width: 100%;
     grid-template-columns: repeat(var(--columnCount), var(--columnSize));
     word-break: break-word;
-
-    .brz-groupLayout--item__content > :is(div, a) {
-      position: relative;
-      padding-bottom: 56.25%;
-      width: 100%;
-      height: 100%;
-
-      img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        object-fit: cover;
-      }
-    }
   }
 
-  &__pagination {
+  p.brz-groupLayout__pagination {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,10 +40,6 @@
     }
   }
   &--item {
-    & > div > *:not(:last-child) {
-      margin: 0 0 0.5rem 0;
-    }
-
     &__content-detailButton {
       width: fit-content;
 
@@ -72,7 +54,7 @@
   &__filters {
     display: flex;
     flex-wrap: wrap;
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem;
     margin-bottom: 2rem;
 
     &--form {

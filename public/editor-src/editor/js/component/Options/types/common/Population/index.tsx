@@ -4,7 +4,7 @@ import { ToastNotification } from "visual/component/Notifications";
 import { t } from "visual/utils/i18n";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { empty } from "visual/utils/string/specs";
+import { auto, empty } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import Input from "./Input";
 import Select from "./Select";
@@ -174,7 +174,7 @@ export default function Population<T extends Literal>({
       <_Select
         value={value}
         choices={choices}
-        entityType={entityType ?? ""}
+        entityType={entityType ?? auto}
         entityId={entityId ?? ""}
         onChange={onChange}
         renderUnset={renderUnset}

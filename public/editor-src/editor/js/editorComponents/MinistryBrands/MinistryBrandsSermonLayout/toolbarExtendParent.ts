@@ -7,13 +7,8 @@ import { toolbarParentColors } from "../toolbarParent";
 import type { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  component,
-  context
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
+  const { v, device } = data;
   const config = Config.getAll();
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -67,6 +62,12 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabSermonLayout",
               label: t("Display"),
               options: [
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
                 {
                   id: "showPagination",
                   label: t("Pagination"),
@@ -197,6 +198,21 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Filter"),
               options: [
                 {
+                  id: "parentCategory",
+                  label: t("Parent Category"),
+                  type: "select",
+                  devices: "desktop",
+                  choices: getEkklesiaChoiches(config, {
+                    key: "sermonsLvl",
+                    subKey: "parents"
+                  }),
+                  helper: {
+                    content: t(
+                      "Defines which level 1 category to use as a base for the layout."
+                    )
+                  }
+                },
+                {
                   id: "groupGroupFilter",
                   type: "group",
                   devices: "desktop",
@@ -315,13 +331,7 @@ export const getItems: GetItems<Value, Props> = ({
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     {
       id: "horizontalAlign",
       type: "toggle",
@@ -355,6 +365,16 @@ export const getItems: GetItems<Value, Props> = ({
           config: {
             min: 0,
             max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "metaItemSpacing",
+          label: t("Items Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 150,
             units: [{ value: "px", title: "px" }]
           }
         },

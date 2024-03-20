@@ -7,6 +7,7 @@
     "media": "image",
 
     "bgSizeType": "custom",
+    "bgImageType": "internal",
 
     "bgImageFileName": null,
     "maskCustomUploadImageFileName": "",
@@ -147,6 +148,7 @@
     "linkPage": "",
     "linkPageTitle": "",
     "linkPageSource": null,
+    "linkInternalBlank": "off",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",
@@ -476,6 +478,7 @@
     "maskCustomUploadImageHeight": 450,
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
+    "maskCustomUploadImageType": "internal",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

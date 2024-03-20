@@ -24,7 +24,7 @@ export type Value = {
 
 export type Meta = {
   isChanged: "palette" | "opacity" | "hex";
-  opacityDragEnd?: boolean;
+  isChanging?: boolean;
 };
 
 export type Props = WithClassName &
@@ -55,16 +55,16 @@ export const ColorPicker3: FC<Props> = ({
     hex,
     opacity,
     isChanged,
-    opacityDragEnd
+    isChanging
   }: {
     hex: string;
     opacity: number;
     isChanged: Meta["isChanged"];
-    opacityDragEnd: Meta["opacityDragEnd"];
+    isChanging: Meta["isChanging"];
   }): void => {
     onChange(
       { hex, opacity, palette: value.palette },
-      { isChanged, opacityDragEnd }
+      { isChanged, isChanging }
     );
   };
 

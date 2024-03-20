@@ -14,7 +14,7 @@ export const fromElementModel: FromElementModel<"gallery"> = pipe(
   mPipe(callGetter("value"), Json.read, pass(Array.isArray), (vs): Image[] =>
     vs.filter(isObject).map(fromRecord).filter(isT)
   ),
-  onNullish<Image[]>([])
+  onNullish<Image[]>(defaultValue)
 );
 export const toElementModel: ToElementModel<"gallery"> = (v) => ({
   value: JSON.stringify(v)

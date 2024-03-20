@@ -59,9 +59,6 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
           devices: "desktop",
           placeholder: "lottie link",
           disabled: dvv("animationFile") !== "",
-          config: {
-            size: "medium"
-          },
           helper: {
             content: t(
               "This is Lottie .json URL. Get more from LottieFiles.com."
@@ -204,8 +201,12 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
                 {
                   id: "linkPage",
                   type: "internalLink",
-                  label: t("Find Page"),
-                  devices: "desktop"
+                  label: t("Find Page")
+                },
+                {
+                  id: "linkInternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch"
                 }
               ]
             },
@@ -221,10 +222,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
                   option: {
                     id: "linkExternal",
                     type: "inputText",
-                    placeholder: "http://",
-                    config: {
-                      size: "medium"
-                    }
+                    placeholder: "http://"
                   }
                 },
                 {

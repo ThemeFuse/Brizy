@@ -4,6 +4,9 @@ import {
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
+  DefaultTemplateKits,
+  DefaultTemplatePopup,
+  KitItem,
   Kits,
   KitsWithThumbs,
   Layouts,
@@ -14,44 +17,115 @@ import {
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
+import { tempConverterKit } from "./tempComverters";
 
 const defaultKits = (
   config: Config
-): DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock> => {
+): DefaultTemplateKits<KitsWithThumbs, DefaultBlock, Array<KitItem>> => {
   const { kitsUrl } = config.api.templates;
+  // const apiKitUrl = "https://b8dd-87-255-68-163.ngrok-free.app/api";
+  // const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
 
   return {
-    async getMeta(res, rej) {
+    async getMeta(res, rej, kit) {
       try {
-        const meta: Array<Kits> = await fetch(`${kitsUrl}/meta.json`).then(
-          (r) => r.json()
+        // region This is new logic
+        // const allElements = await fetchAllElements<Kit>(
+        //   `${apiKitUrl}/get-kit-collections`,
+        //   kit.id,
+        //   100
+        // );
+        //
+        // const { types, blocks, categories } = converterKit(
+        //   allElements,
+        //   apiImageUrl,
+        //   kit.id
+        // );
+        //
+        // const customKit: KitsWithThumbs = {
+        //   id: kit.id,
+        //   blocks,
+        //   categories,
+        //   types,
+        //   name: kit.title,
+        //   styles: getStyles()
+        // };
+        // endregion
+
+        // region This in temporary / this is new logic with old source
+        const allElements = await fetch(`${kitsUrl}/meta.json`).then((r) =>
+          r.json()
         );
 
-        const data = meta.map((kit) => {
-          return {
-            ...kit,
-            blocks: kit.blocks.map((item) => {
-              return {
-                ...item,
-                thumbnailSrc: `${kitsUrl}/thumbs/${item.id}.jpg`
-              };
-            })
-          };
-        });
+        const tempAllElements = allElements.find(
+          (item: Kits) => item.id === kit.id
+        );
 
-        res(data);
+        const { types, blocks, categories } = tempConverterKit(
+          tempAllElements,
+          `${kitsUrl}/thumbs`,
+          kit.id
+        );
+
+        const customKit: KitsWithThumbs = {
+          id: kit.id,
+          blocks,
+          categories,
+          types,
+          name: kit.title,
+          styles: tempAllElements.styles
+        };
+        // endregion
+
+        res(customKit);
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, kit) {
       try {
-        const data = await fetch(`${kitsUrl}/resolves/${id}.json`).then((r) =>
-          r.json()
+        // region This is new logic
+        // const data = await fetch(
+        //   `${apiKitUrl}/get-item?project_id=${kit.kitId}&page_slug=${kit.id}`
+        // )
+        //   .then((r) => r.json())
+        //   .then((data) => data.pop())
+        //   .then((d) => JSON.parse(d.pageData).items.pop());
+        // endregion
+
+        // region This in temporary / this is new logic with old source
+        const data = await fetch(`${kitsUrl}/resolves/${kit.id}.json`).then(
+          (r) => r.json()
         );
+        // endregion
+
         res(data);
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    },
+    async getKits(res, rej) {
+      try {
+        // region This is new logic
+        // const kits = await fetch(`${apiKitUrl}/get-kits`)
+        //   .then((r) => r.json())
+        //   .then((data) => data.list);
+        // endregion
+
+        // region This in temporary / this is new logic with old source
+        const kits = await fetch(`${kitsUrl}/meta.json`)
+          .then((r) => r.json())
+          .then((data) =>
+            data.map((kit: { id: string; name: string }) => ({
+              id: kit.id,
+              title: kit.name
+            }))
+          );
+        // endregion
+
+        res(kits);
+      } catch (e) {
+        rej(t("Failed to load Kits"));
       }
     }
   };
@@ -59,12 +133,23 @@ const defaultKits = (
 
 const defaultPopups = (
   config: Config
-): DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID> => {
+): DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID> => {
   const { popupsUrl } = config.api.templates;
+  // const apiKitUrl = "https://b8dd-87-255-68-163.ngrok-free.app/api";
+  // const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
 
   return {
     async getMeta(res, rej) {
       try {
+        // region This is new logic
+        // const _meta = await fetch(`${apiKitUrl}/get-popups`).then((r) =>
+        //   r.json()
+        // );
+        //
+        // const data = converterPopup(_meta.collections, apiImageUrl);
+        // endregion
+
+        // region This in temporary / this is new logic with old source
         const meta: Popups = await fetch(`${popupsUrl}/meta.json`).then((r) =>
           r.json()
         );
@@ -78,17 +163,30 @@ const defaultPopups = (
             };
           })
         };
+        // endregion
 
         res(data);
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, kit) {
       try {
-        const data = await fetch(`${popupsUrl}/resolves/${id}.json`).then((r) =>
-          r.json()
+        // region This is new logic
+        // const data = await fetch(
+        //   `${apiKitUrl}/get-popup-data?project_id=${kit.id}`
+        // )
+        //   .then((r) => r.json())
+        //   .then((arr) => arr.pop())
+        //   .then((d) => JSON.parse(d.pageData).items.pop());
+        // endregion
+
+        // region This in temporary / this is new logic with old source
+        const data = await fetch(`${popupsUrl}/resolves/${kit.id}.json`).then(
+          (r) => r.json()
         );
+        // endregion
+
         res(data);
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));

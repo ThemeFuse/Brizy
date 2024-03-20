@@ -116,9 +116,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: "Prefix",
                   disabled: !isRadial,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -127,9 +124,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: t("Suffix"),
                   disabled: !isRadial,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -138,9 +132,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: t("Prefix"),
                   disabled: !isSimple,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -149,9 +140,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: t("Suffix"),
                   disabled: !isSimple,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 },
                 {
@@ -160,9 +148,6 @@ export function getItems({ v, device, context }) {
                   type: "inputText",
                   placeholder: ",",
                   disabled: isEmpty || isPie,
-                  config: {
-                    size: "medium"
-                  },
                   population: richTextDC
                 }
               ]

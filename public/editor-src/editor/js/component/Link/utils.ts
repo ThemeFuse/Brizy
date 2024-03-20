@@ -1,17 +1,17 @@
+import { ElementModel } from "visual/component/Elements/Types";
+import * as LinkType from "visual/component/Link/types/Type";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { customFileUrl } from "visual/utils/customFile";
-import { MValue } from "visual/utils/value";
-import { Target, TargetTypes } from "./types/Target";
-import { LinkData, Type } from "./types/Type";
 import {
   getPopulatedEntityValues,
   makePlaceholder
 } from "visual/utils/dynamicContent";
-import { ElementModel } from "visual/component/Elements/Types";
-import { read } from "visual/utils/reader/string";
 import { read as readNum } from "visual/utils/reader/number";
-import * as LinkType from "visual/component/Link/types/Type";
+import { read } from "visual/utils/reader/string";
+import { MValue } from "visual/utils/value";
+import { Target, TargetTypes } from "./types/Target";
+import { LinkData, Type } from "./types/Type";
 
 interface SectionModel {
   value: {
@@ -41,7 +41,8 @@ export const getAttr = (
 };
 
 export const getTarget = (type: Type, target: Target): TargetTypes => {
-  return (type === "external" && target === "on") || type === "upload"
+  return ((type === "external" || type === "page") && target === "on") ||
+    type === "upload"
     ? "_blank"
     : "_self";
 };

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import _ from "underscore";
 import Scrollbars from "react-custom-scrollbars";
-import EditorIcon from "visual/component/EditorIcon";
+import _ from "underscore";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
-import SearchInput from "../common/SearchInput";
-import DataFilter from "../common/DataFilter";
-import ThumbnailGrid from "../common/ThumbnailGrid";
+import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
+import DataFilter from "../common/DataFilter";
+import SearchInput from "../common/SearchInput";
+import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
+import ThumbnailGrid from "../common/ThumbnailGrid";
 
 let defaultFilter = {
+  // type: "light",
   type: 0,
   category: "*",
   search: ""
@@ -37,7 +38,7 @@ class Blocks extends Component {
     const typeMatch = currentFilter.type === item.type;
     const categoryMatch =
       currentFilter.category === "*" ||
-      item.cat.includes(Number(currentFilter.category));
+      item.cat.includes(currentFilter.category);
 
     const searchMatch =
       currentFilter.search === "" ||
@@ -165,9 +166,9 @@ class Blocks extends Component {
                         itemHeight="30"
                         onChange={onChangeKit}
                       >
-                        {kits.map(({ id, name }, index) => (
+                        {kits.map(({ id, title }, index) => (
                           <SelectItem key={index} value={id}>
-                            {name}
+                            {title}
                           </SelectItem>
                         ))}
                       </Select>

@@ -1,23 +1,19 @@
 import $ from "jquery";
 
-export default function($node) {
+export default function ($node) {
   const isRtl = $node.closest("[dir='rtl']").length > 0;
-  const makeArrow = node => {
-    const $svg = $(node)
-      .children(".brz-icon-svg")
-      .removeClass("brz-hidden");
+  const makeArrow = (node) => {
+    const $svg = $(node).children(".brz-icon-svg").removeClass("brz-hidden");
 
     // Delete Svg
-    $(node)
-      .children(".brz-icon-svg")
-      .remove();
+    $(node).children(".brz-icon-svg").remove();
 
-    return className => {
+    return (className) => {
       return `<div class="brz-slick-slider__arrow ${className}">${$svg[0].outerHTML}</div>`;
     };
   };
 
-  $node.find(".brz-slick-slider__section").each(function() {
+  $node.find(".brz-slick-slider__section").each(function () {
     const _this = this;
     const $this = $(this);
     const data = $this.data();
@@ -27,6 +23,7 @@ export default function($node) {
     const dotsClass = data.dotsClass;
     const arrows = data.arrows;
     const fade = data.fade;
+    const speed = data.animationSpeed;
     const vertical = data.vertical;
     const autoPlay = data.autoPlay;
     const autoPlaySpeed = data.autoPlaySpeed;
@@ -46,7 +43,7 @@ export default function($node) {
       vertical,
       responsive,
       useTransform: false,
-      speed: 350,
+      speed,
       draggable: swipe,
       nextArrow: arrows && getArrow("brz-slick-slider__arrow-next"),
       prevArrow: arrows && getArrow("brz-slick-slider__arrow-prev"),

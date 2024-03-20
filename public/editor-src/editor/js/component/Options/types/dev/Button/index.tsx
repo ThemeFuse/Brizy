@@ -4,9 +4,12 @@ import * as Option from "visual/component/Options/Type";
 import { WithConfig } from "visual/utils/options/attributes";
 
 export interface Config {
-  text: string;
   icon: string;
+  text?: string;
   reverse?: boolean;
+  reverseTheme?: boolean;
+  title?: string;
+  value?: boolean;
 }
 
 export interface Props extends Option.Props<undefined>, WithConfig<Config> {
@@ -17,7 +20,13 @@ export const Button: React.FC<Props> = ({ label, onClick, config }) => {
   return (
     <>
       {label}
-      <Control onClick={onClick} icon={config?.icon} reverse={config?.reverse}>
+      <Control
+        onClick={onClick}
+        icon={config?.icon}
+        reverse={config?.reverse}
+        reverseTheme={config?.reverseTheme}
+        title={config?.title}
+      >
         {config?.text}
       </Control>
     </>

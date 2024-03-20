@@ -1,3 +1,4 @@
+import { Action } from "./AiText";
 import { AutoSave } from "./AutoSave";
 import { ChoicesSync } from "./Choices";
 import { CollectionExtra, CollectionType } from "./Collections";
@@ -6,11 +7,15 @@ import {
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
+  DefaultTemplateKits,
+  DefaultTemplatePopup,
+  KitItem,
   KitsWithThumbs,
   LayoutsWithThumbs,
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./DefaultTemplate";
+import { DCHandler } from "./DynamicContent";
 import { AddFileData } from "./File";
 import { AddMediaData, AddMediaGallery } from "./Media";
 import { OnChange } from "./OnChange";
@@ -19,7 +24,6 @@ import { Posts } from "./Posts";
 import { Data } from "./Publish";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 import { Screenshots } from "./Screenshots";
-import { Action } from "./AiText";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -114,8 +118,12 @@ export interface VISUAL_CONFIG {
     // Screenshots
     screenshots?: Screenshots;
 
-    defaultKits?: DefaultTemplate<Array<KitsWithThumbs>, DefaultBlock>;
-    defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
+    defaultKits?: DefaultTemplateKits<
+      KitsWithThumbs,
+      DefaultBlock,
+      Array<KitItem>
+    >;
+    defaultPopups?: DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID>;
     defaultLayouts?: DefaultTemplate<
       LayoutsWithThumbs,
       BlocksArray<DefaultBlockWithID>
@@ -159,6 +167,12 @@ export interface VISUAL_CONFIG {
     posts: Posts;
   };
 
+  //#endregion
+
+  //#region Dynamic Content
+  dynamicContent?: {
+    handler?: DCHandler;
+  };
   //#endregion
 }
 

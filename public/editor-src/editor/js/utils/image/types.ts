@@ -28,3 +28,8 @@ export interface FilterOption extends BaseOptions {
   iW?: number;
   iH?: "any" | number;
 }
+
+export enum ImageType {
+  Internal = "internal",
+  External = "external"
+}

@@ -190,6 +190,7 @@ const getLink = (value = "{}") => {
     internal = "",
     pageTitle = "",
     externalBlank = "off",
+    internalBlank = "off",
     externalRel = "off",
     population = "",
     populationEntityType = "",
@@ -216,7 +217,8 @@ const getLink = (value = "{}") => {
     linkToSlide,
     linkPage: internal,
     linkPageTitle: pageTitle,
-    linkPageSource: pageSource
+    linkPageSource: pageSource,
+    linkInternalBlank: internalBlank
   };
 };
 

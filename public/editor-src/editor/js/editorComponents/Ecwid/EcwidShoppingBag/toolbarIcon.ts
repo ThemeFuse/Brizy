@@ -1,3 +1,4 @@
+import _ from "underscore";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -158,14 +159,14 @@ export function getItems({
     },
     {
       id: "duplicate",
-      // @ts-expect-error: old type
-      type: "legacy-button",
+      type: "button",
+      onClick: _.noop,
       disabled: true
     },
     {
       id: "remove",
-      // @ts-expect-error: old type
-      type: "legacy-button",
+      type: "button",
+      onClick: _.noop,
       disabled: true
     },
     {

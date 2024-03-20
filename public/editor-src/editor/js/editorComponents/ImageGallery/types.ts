@@ -2,7 +2,7 @@ import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import type { ComponentsMeta } from "visual/editorComponents/EditorComponent";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import type { WithClassName } from "visual/utils/options/attributes";
 import { Unit } from "../Image/types";
 

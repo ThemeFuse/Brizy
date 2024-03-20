@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import React from "react";
 import Animation from "visual/component/Animation";
-import { fromElementModel } from "visual/component/Options/types/dev/Margin/converters";
 import {
   wInBoxedPage,
   wInFullPage,
@@ -25,6 +24,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { fromElementModel } from "visual/utils/options/Margin/converters";
 import { NORMAL } from "visual/utils/stateMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -141,6 +141,7 @@ export default class Section extends EditorComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderAnimation,
+      sliderAnimationSpeed,
       showOnDesktop,
       showOnTablet,
       showOnMobile,
@@ -177,6 +178,7 @@ export default class Section extends EditorComponent {
       sliderDots,
       sliderArrows,
       sliderAnimation,
+      sliderAnimationSpeed,
       sliderAutoPlaySpeed,
       bindWithKey: "items",
       meta: this.getMeta(v),

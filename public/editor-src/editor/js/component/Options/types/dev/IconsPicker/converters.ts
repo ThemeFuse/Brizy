@@ -15,7 +15,8 @@ export const fromElementModel: FromElementModel<"iconsPicker"> = parseStrict<
   Value
 >({
   value: (get) =>
-    Arr.fromString(Literal.read, Str.read(get("value")) ?? "") ?? [],
+    Arr.fromString(Literal.read, Str.read(get("value")) ?? "") ??
+    defaultValue.value,
   active: optional((get) => Literal.read(get("active")))
 });
 

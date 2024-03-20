@@ -1,12 +1,12 @@
 import {
+  ResponsiveMode,
   isDesktop,
-  isMobile,
-  ResponsiveMode
+  isMobile
 } from "visual/utils/responsiveMode";
-import { MRead, Reader } from "visual/utils/types/Type";
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { IsEqual } from "visual/utils/types/Eq";
 import { String } from "visual/utils/string/specs";
+import { IsEqual } from "visual/utils/types/Eq";
+import { Append, Concat } from "visual/utils/types/Monoid";
+import { MRead, Reader } from "visual/utils/types/Type";
 
 export type Device = "all" | "desktop" | "responsive";
 
@@ -20,7 +20,7 @@ export type WithDevice = { devices?: Device };
  */
 export const devices: Device[] = ["all", "desktop", "responsive"];
 
-export const read: Reader<Device> = v => {
+export const read: Reader<Device> = (v) => {
   if (typeof v === "string") {
     return devices.includes(v as Device) ? (v as Device) : undefined;
   }
@@ -35,7 +35,7 @@ export const empty: Device = "all";
 
 export const append: Append<Device> = (a, b) => (a === empty ? b : a);
 
-export const concat: Concat<Device> = as => as.reduce(append, empty);
+export const concat: Concat<Device> = (as) => as.reduce(append, empty);
 
 export const eq: IsEqual<Device> = String.eq;
 
@@ -44,7 +44,7 @@ export const eq: IsEqual<Device> = String.eq;
  *  - if it is, return the value
  *  - otherwise, return default device
  */
-export const mRead: MRead<Device> = v => read(v) ?? empty;
+export const mRead: MRead<Device> = (v) => read(v) ?? empty;
 
 export const ALL: Device = "all";
 export const DESKTOP: Device = "desktop";

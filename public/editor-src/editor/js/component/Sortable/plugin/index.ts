@@ -649,7 +649,7 @@ export default class SortablePlugin {
     if (isIntersecting) {
       globalState.sortableInViewPort.add(target);
 
-      if (globalState.dragInfo.source && !globalState.dragInfo.dragInProgress) {
+      if (globalState.dragInfo.source) {
         this.renderLines();
       }
     } else {

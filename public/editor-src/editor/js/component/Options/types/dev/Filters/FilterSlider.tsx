@@ -12,6 +12,8 @@ export interface Props {
 
 const units = [{ value: "%", title: "%" }];
 
+export const MAX = 200;
+
 export const FilterSlider = ({
   icon,
   value,
@@ -30,7 +32,7 @@ export const FilterSlider = ({
       units={units}
       step={1}
       min={0}
-      max={200}
+      max={MAX}
       title={title}
     />
   );

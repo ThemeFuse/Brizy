@@ -182,7 +182,8 @@ const translationsMap = {
   MinistryBrandsGroupFeatured: t("Group Featured"),
   MinistryBrandsEventList: t("Event List"),
   MinistryBrandsEventDetail: t("Event Detail"),
-  MinistryBrandsFormWidget: t("Form Widget"),
+  MinistryBrandsFormWidget: t("FMS Forms"),
+  MinistryBrandsPrayerWidget: t("Prayer Widget"),
 
   // Leadific
   Leadific: t("Leadific")

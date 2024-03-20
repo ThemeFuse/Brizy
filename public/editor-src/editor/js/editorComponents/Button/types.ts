@@ -1,9 +1,9 @@
 import { Patch } from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent";
 import { Block } from "visual/types";
 import { CssId } from "visual/utils/models/cssId";
 import { WithClassName } from "visual/utils/options/attributes";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 export interface Value extends ElementModel, CssId {
   iconName: string;

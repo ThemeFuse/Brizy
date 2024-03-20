@@ -16,7 +16,9 @@ export const getPlaceholder = (v: Value): string => {
     showResourceLink,
     showContent,
     groupsRecent,
-    showPreviousPage
+    showPreviousPage,
+    dateFormat,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -32,7 +34,9 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showResourceLink, "show_resourcelink"),
     getAttr(showContent, "show_content"),
     getAttr(showPreviousPage, "previous_page"),
-    `groups_recent='${groupsRecent}'`
+    getAttr(showMetaIcons, "show_meta_icons"),
+    `groups_recent='${groupsRecent}'`,
+    `date_format='${dateFormat}'`
   ];
 
   return makePlaceholder({

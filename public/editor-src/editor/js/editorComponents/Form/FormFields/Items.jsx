@@ -16,12 +16,15 @@ export default class FormItemItems extends EditorArrayComponent {
       getItems: () => [
         {
           id: "duplicate",
-          type: "legacy-button",
+          type: "button",
           devices: "desktop",
-          icon: "nc-duplicate",
-          title: t("Duplicate"),
+          config: {
+            icon: "nc-duplicate",
+            title: t("Duplicate"),
+            reverseTheme: true
+          },
           position: 200,
-          onChange: () => {
+          onClick: () => {
             this.cloneItem(itemIndex);
           }
         },
@@ -29,13 +32,16 @@ export default class FormItemItems extends EditorArrayComponent {
           ? [
               {
                 id: "remove",
-                type: "legacy-button",
+                type: "button",
                 devices: "desktop",
-                icon: "nc-trash",
-                title: t("Delete"),
+                config: {
+                  icon: "nc-trash",
+                  title: t("Delete"),
+                  reverseTheme: true
+                },
                 position: 250,
                 disable: items.length === 1,
-                onChange: () => {
+                onClick: () => {
                   hideToolbar();
                   this.removeItem(itemIndex);
                 }

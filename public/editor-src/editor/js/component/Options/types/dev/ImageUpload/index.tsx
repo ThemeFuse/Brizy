@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import { Component } from "./Types";
 import { Image } from "./model";
 import { configSizeToSize } from "./utils";
@@ -35,7 +36,8 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
               imageFileName: v.fileName,
               imageExtension: v.extension,
               imageWidth: v.width,
-              imageHeight: v.height
+              imageHeight: v.height,
+              imageType: ImageType.Internal
             });
           }
           break;

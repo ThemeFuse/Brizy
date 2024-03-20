@@ -4,7 +4,11 @@ import { t } from "../utils/i18n";
 import { getCollectionTypes } from "./utils";
 
 export const loadCollectionTypes = {
-  async handler(res: Response<ChoicesSync>, rej: Response<string>) {
+  async handler(
+    res: Response<ChoicesSync>,
+    rej: Response<string>,
+    extraData?: { defaultTitle?: string; defaultValue?: string }
+  ) {
     try {
       const collectionTypes = getCollectionTypes();
 
@@ -12,7 +16,12 @@ export const loadCollectionTypes = {
         return rej(t("Missing collectionTypes in config"));
       }
 
-      const items = [{ title: t("None"), value: "" }, ...collectionTypes];
+      const { defaultTitle, defaultValue } = extraData ?? {};
+
+      const items = [
+        { title: defaultTitle ?? t("None"), value: defaultValue ?? "" },
+        ...collectionTypes
+      ];
 
       res(items);
     } catch (e) {

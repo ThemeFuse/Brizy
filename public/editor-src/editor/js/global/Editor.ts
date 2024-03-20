@@ -1,6 +1,9 @@
 import { ComponentType } from "react";
 import type { EditorInstance as EditorComponent } from "visual/editorComponents/EditorComponent";
-import { ThirdPartyComponentData } from "visual/global/Config/types/configs/ThirdParty";
+import {
+  ThirdPartyComponent,
+  ThirdPartyConfig
+} from "visual/global/Config/types/configs/ThirdParty";
 import type { Shortcode, Shortcodes } from "visual/types";
 import { applyFilter } from "visual/utils/filters";
 
@@ -12,7 +15,7 @@ const thirdPartyShortcodes: Record<
   string,
   {
     component: ComponentType;
-    config: Omit<ThirdPartyComponentData, "component">;
+    config: ThirdPartyConfig;
   }
 > = {};
 
@@ -69,27 +72,28 @@ const Editor = {
     return applyFilter("getShopifyShortcodes", shopifyShortcodes);
   },
 
-  registerThirdPartyElement(config: ThirdPartyComponentData): void {
-    const validConfig = isValidThirdPartyConfig(config);
+  registerThirdPartyElement(element: ThirdPartyComponent): void {
+    const validConfig = isValidThirdPartyConfig(element);
 
     if (!validConfig) {
       throw new Error("Invalid third party element config");
     }
 
-    const { category } = config;
+    const { category } = element;
+    const elementCategory = category ?? "customComponent";
+    const elementShortcode = elementCategory.toUpperCase();
 
-    const shortcodeCategory = category ?? "customComponent";
-
-    if (!shortcodes[shortcodeCategory]) {
-      shortcodes[shortcodeCategory] = [];
+    if (!shortcodes[elementShortcode]) {
+      shortcodes[elementShortcode] = [];
     }
 
     const shortcodeConfig: Shortcode = {
       pro: false,
+      keywords: element?.keywords ?? "",
       component: {
-        id: config.id,
-        title: config.title ?? "Component",
-        icon: config.icon ?? "nc-wp-shortcode-element",
+        id: element.id,
+        title: element.title ?? "Component",
+        icon: element.icon ?? "nc-wp-shortcode-element",
         resolve: {
           type: "Wrapper",
           value: {
@@ -98,7 +102,7 @@ const Editor = {
               {
                 type: "ThirdParty",
                 value: {
-                  thirdPartyId: config.id
+                  thirdPartyId: element.id
                 }
               }
             ]
@@ -107,9 +111,9 @@ const Editor = {
       }
     };
 
-    shortcodes[shortcodeCategory].push(shortcodeConfig);
-    const { component, ...options } = config;
-    thirdPartyShortcodes[config.id] = {
+    shortcodes[elementShortcode].push(shortcodeConfig);
+    const { component, ...options } = element;
+    thirdPartyShortcodes[element.id] = {
       component: component,
       config: options
     };
@@ -120,8 +124,8 @@ const Editor = {
   }
 };
 
-function isValidThirdPartyConfig(config: ThirdPartyComponentData): boolean {
-  const componentId = config?.id;
+function isValidThirdPartyConfig(component: ThirdPartyComponent): boolean {
+  const componentId = component?.id;
 
   if (!componentId) {
     return false;

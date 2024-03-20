@@ -47,10 +47,7 @@ export function getItems({
       position: 20,
       label: isDate ? t("Min Date") : t("Min Time"),
       placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
-      devices: "desktop",
-      config: {
-        size: "medium"
-      }
+      devices: "desktop"
     },
     {
       id: "max",
@@ -58,10 +55,7 @@ export function getItems({
       position: 30,
       label: isDate ? t("Max Date") : t("Max Time"),
       placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
-      devices: "desktop",
-      config: {
-        size: "medium"
-      }
+      devices: "desktop"
     },
     {
       id: "nativeHtml",
@@ -107,9 +101,6 @@ export function getItems({
       type: "inputText",
       devices: "desktop",
       position: 30,
-      config: {
-        size: "medium"
-      },
       helper: {
         content: t(
           "Enter the allowed file types, separated by a comma (jpg, gif, pdf, etc)."
@@ -134,10 +125,7 @@ export function getItems({
       position: 20,
       label: t("Min"),
       placeholder: t("Min"),
-      devices: "desktop",
-      config: {
-        size: "medium"
-      }
+      devices: "desktop"
     },
     {
       id: "max",
@@ -145,10 +133,7 @@ export function getItems({
       position: 30,
       label: t("Max"),
       placeholder: t("Max"),
-      devices: "desktop",
-      config: {
-        size: "medium"
-      }
+      devices: "desktop"
     }
   ];
   const hiddenOptions = (): ToolbarItemType[] => [
@@ -264,10 +249,7 @@ export function getItems({
                   label: t("File size error message"),
                   placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isFileUpload,
-                  config: {
-                    size: "medium"
-                  }
+                  disabled: !isFileUpload
                 },
                 {
                   id: "fileTypeErrorMessage",
@@ -276,10 +258,7 @@ export function getItems({
                   label: t("File type error message"),
                   placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isFileUpload,
-                  config: {
-                    size: "medium"
-                  }
+                  disabled: !isFileUpload
                 },
                 {
                   id: "numberMinMessage",
@@ -288,10 +267,7 @@ export function getItems({
                   label: t("Min number error message"),
                   placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isNumber,
-                  config: {
-                    size: "medium"
-                  }
+                  disabled: !isNumber
                 },
                 {
                   id: "numberMaxMessage",
@@ -300,10 +276,7 @@ export function getItems({
                   label: t("Max number error message"),
                   placeholder: t("..type error message"),
                   devices: "desktop",
-                  disabled: !isNumber,
-                  config: {
-                    size: "medium"
-                  }
+                  disabled: !isNumber
                 },
                 ...(isDateOrTime ? dateOrTimeOptions() : []),
                 ...(isCheckboxOrRadio ? checkboxOrRadioOptions() : []),

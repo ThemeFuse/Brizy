@@ -9,7 +9,7 @@ function createElementFb(lang, appId) {
     "/sdk.js#xfbml=1&version=v3.1&appId=" +
     appId;
 
-  (function(d, s, id) {
+  (function (d, s, id) {
     var js,
       fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -20,12 +20,12 @@ function createElementFb(lang, appId) {
   })(document, "script", "facebook-jssdk");
 }
 
-export default function($node) {
+export default function ($node) {
   var $facebook = $node.find(".brz-facebook");
   var $fbRoot = $node.find(".fb-root");
 
   if ($facebook.length && $fbRoot.length === 0) {
-    var lang = $facebook.attr("lang");
+    var lang = $facebook.attr("data-lang");
     var appId = $facebook.attr("appid");
 
     createElementFb(lang, appId);

@@ -3,6 +3,7 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentOption,
@@ -23,6 +24,8 @@ export function getItems({ v, device, component, context }) {
     options: context.dynamicContent.config,
     type: DCTypes.image
   });
+
+  const isExternalImage = dvv("bgImageType") === ImageType.External;
 
   return [
     {
@@ -69,7 +72,11 @@ export function getItems({ v, device, component, context }) {
                 {
                   id: "bg",
                   type: "imageUpload",
-                  population: imageDynamicContentChoices
+                  population: imageDynamicContentChoices,
+                  config: {
+                    disableSizes: isExternalImage,
+                    pointer: !isExternalImage
+                  }
                 }
               ]
             }

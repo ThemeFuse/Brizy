@@ -1,4 +1,5 @@
 import { getConfig } from "../config";
+import { ConfigDCItem } from "../types/DynamicContent";
 import { Page } from "../types/Page";
 import { Rule } from "../types/PopupConditions";
 import { Project } from "../types/Project";
@@ -848,6 +849,41 @@ export const updateBlockScreenshot = async ({
   } catch (e) {
     throw new Error(t("Failed to update Screenshot"));
   }
+};
+
+//#endregion
+
+//#region Dynamic Content
+
+export const getPlaceholders = (extraData: {
+  entityType: string;
+  groupType: string;
+}): Promise<ConfigDCItem[]> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { entityType, groupType } = extraData;
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    post: entityType ?? "",
+    hash,
+    action: actions.getDynamicContentPlaceholders,
+    version: editorVersion
+  });
+
+  return request(url, { method: "GET" })
+    .then((r) => r.json())
+    .then(({ data }) => {
+      if (Array.isArray(data[groupType])) {
+        return data[groupType];
+      }
+
+      return [];
+    });
 };
 
 //#endregion

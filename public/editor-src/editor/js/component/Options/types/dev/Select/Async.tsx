@@ -1,6 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
+import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
+import { MValue } from "visual/utils/value";
 import { Sync } from "./Sync";
 import { ChoicesAsync, ChoicesSync, Props } from "./types";
 
@@ -13,6 +15,8 @@ export const Async: FC<
   const [choices, setChoices] = useState<ChoicesSync>([]);
   const [hasError, setHasError] = useState(false);
 
+  const prevChoices = useRef<MValue<ChoicesSync>>(undefined);
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -22,6 +26,12 @@ export const Async: FC<
         if (!controller.signal.aborted) {
           setIsLoaded(true);
           setChoices(r);
+
+          if (!_.isEqual(prevChoices.current, r)) {
+            prevChoices.current = r;
+
+            props?.onLoad?.();
+          }
         }
       })
       .catch(() => {
@@ -33,6 +43,8 @@ export const Async: FC<
     return (): void => {
       controller?.abort();
     };
+    // all "props" object is not needed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.choices]);
 
   if (!isLoaded) {

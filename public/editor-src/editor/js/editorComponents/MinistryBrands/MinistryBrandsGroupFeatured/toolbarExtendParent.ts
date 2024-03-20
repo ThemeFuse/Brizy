@@ -4,16 +4,12 @@ import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
+import { helperDateFormatInputHTML } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  component,
-  context
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
+  const { v, device } = data;
   const config = Config.getAll();
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -25,8 +21,8 @@ export const getItems: GetItems<Value, Props> = ({
       id: "toolbarGroupFeatured",
       type: "popover",
       config: {
-        icon: "t2-sermon-featured",
-        title: t("Sermon Featured")
+        icon: "t2-group-featured",
+        title: t("Group Featured")
       },
       position: 60,
       options: [
@@ -95,15 +91,26 @@ export const getItems: GetItems<Value, Props> = ({
                 }
               ]
             },
-
             {
               id: "tabGroupFeatured",
               label: t("Display"),
               options: [
                 {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
+                {
                   id: "showImage",
                   type: "switch",
                   label: t("Image"),
+                  devices: "desktop"
+                },
+                {
+                  id: "showTitle",
+                  label: t("Title"),
+                  type: "switch",
                   devices: "desktop"
                 },
                 {
@@ -204,18 +211,28 @@ export const getItems: GetItems<Value, Props> = ({
                   }
                 }
               ]
+            },
+            {
+              id: "tabMore",
+              label: t("More"),
+              options: [
+                {
+                  id: "dateFormat",
+                  type: "inputText",
+                  devices: "desktop",
+                  helper: {
+                    enabled: true,
+                    content: helperDateFormatInputHTML
+                  },
+                  label: t("Date Format")
+                }
+              ]
             }
           ]
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     {
       id: "toolbarSettings",
       type: "popover",

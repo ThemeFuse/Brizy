@@ -1,11 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { ContextGetItems, ContextMenuItem } from "../EditorComponent/types";
 import {
-  convertStylesFromDCToCustom,
   getInnerElement,
-  getStyles,
+  handlePasteStyles,
   handleRenderText
 } from "./utils/ContextMenu";
 
@@ -42,24 +40,13 @@ const getItems: ContextGetItems<ElementModel> = (
           inactive: !canPaste,
           helperText: handleRenderText(["⇧", "V"]),
           onChange: () => {
-            if (!innerElement?.value) return;
-            const { textPopulation } = innerElement.value;
-            const isCopiedFromDCText = !!textPopulation;
-            const isCustomText = !component.getValue().textPopulation;
-
-            const prefixes = ["typography", "color", "bgColor"];
-            const values =
-              isCopiedFromDCText && isCustomText
-                ? pipe(
-                    (value: string[]) => getStyles(innerElement.value, value),
-                    convertStylesFromDCToCustom
-                  )(prefixes)
-                : getStyles(innerElement.value, prefixes);
-
-            if (values) {
+            if (!innerElement || !innerElement.value) return;
+            handlePasteStyles(
+              innerElement,
               // @ts-expect-error couldn't extend component type
-              component.handleChange(values);
-            }
+              component.handleChange,
+              component.getValue()
+            );
           }
         },
         {

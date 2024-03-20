@@ -1,3 +1,4 @@
+import { ImageType } from "visual/utils/image/types";
 import { V } from "../types";
 import {
   ImageValue,
@@ -118,6 +119,7 @@ describe("Testing 'Getters Image' functions", () => {
       imageExtension: "",
       imagePopulation: "",
       sizeType: "custom",
+      imageType: ImageType.Internal,
       size: 0,
       tabletSize: null,
       mobileSize: null,

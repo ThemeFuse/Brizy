@@ -44,6 +44,9 @@
     > .slick-list > .slick-track > .slick-slide {
       flex: 1;
     }
+    &--fade > .slick-list > .slick-track > .slick-slide {
+      flex: none;
+    }
     .brz-section__content {
       height: 100%;
     }

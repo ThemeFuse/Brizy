@@ -25,35 +25,13 @@
           position: relative;
 
           .brz-groupSlider-info {
-            & > * {
-              margin-top: 0;
-              margin-left: 0;
-              margin-right: 0;
-            }
-
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-
-            h4,
-            h6,
-            p {
-              padding: 0;
-            }
 
             .brz-groupSlider_heading {
               a {
                 color: inherit;
-              }
-            }
-
-            .brz-groupSlider-image {
-              overflow: hidden;
-              margin-bottom: 0.75rem;
-
-              img {
-                display: block;
-                height: auto;
-                width: 100%;
-                max-width: 100%;
               }
             }
 

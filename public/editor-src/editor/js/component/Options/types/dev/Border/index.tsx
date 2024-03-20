@@ -13,17 +13,19 @@ import { updateUI } from "visual/redux/actions2";
 import { getColorPaletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
+import { Config } from "visual/utils/options/Border/entities/Config";
+import { Value } from "visual/utils/options/Border/entities/Value";
+import * as BorderStyle from "visual/utils/options/Border/entities/style";
+import * as Width from "visual/utils/options/Border/entities/width";
+import { Meta } from "visual/utils/options/Border/meta";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { Config } from "./entities/Config";
-import { Value } from "./entities/Value";
-import * as BorderStyle from "./entities/style";
-import * as Width from "./entities/width";
 import * as BorderModel from "./model";
 import { getStyleObject } from "./utils";
 import { _setOpacity } from "./utils";
 
 export interface Props
   extends Option.Props<Value>,
+    Option.Meta<Meta>,
     WithConfig<Config>,
     WithClassName {}
 
@@ -41,16 +43,19 @@ export const Border: FC<Props> = ({ value, onChange, className, config }) => {
     [onChange, value]
   );
   const changeHex = useCallback<ControlProps["onChangeHex"]>(
-    (v) => {
+    (v, m) => {
       const _v = Hex.fromString(v);
-      _v !== undefined && onChange(BorderModel.setHex(_v, value));
+      _v !== undefined && onChange(BorderModel.setHex(_v, value), m);
     },
     [onChange, value]
   );
   const changeOpacity = useCallback<ControlProps["onChangeOpacity"]>(
-    (v, f) => {
+    (v, isChanging) => {
       const _v = Opacity.fromNumber(v);
-      _v !== undefined && onChange(_setOpacity(_v, value, f));
+      _v !== undefined &&
+        onChange(_setOpacity(_v, value, !isChanging), {
+          isChanging
+        });
     },
     [onChange, value]
   );

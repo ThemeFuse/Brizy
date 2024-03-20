@@ -3,16 +3,12 @@ import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
+import { helperDateFormatInputHTML } from "../utils/helpers";
 import type { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings old option
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  component,
-  context
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
+  const { v } = data;
   const isNotFeaturedView = v.showFeaturedView === "off";
   const isNotListView = v.showListView === "off";
   const isNotCalendarView = v.showCalendarView === "off";
@@ -526,18 +522,28 @@ export const getItems: GetItems<Value, Props> = ({
                   ]
                 }
               ]
+            },
+            {
+              id: "tabMore",
+              label: t("More"),
+              options: [
+                {
+                  id: "dateFormat",
+                  type: "inputText",
+                  devices: "desktop",
+                  helper: {
+                    enabled: true,
+                    content: helperDateFormatInputHTML
+                  },
+                  label: t("Date Format")
+                }
+              ]
             }
           ]
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     {
       id: "horizontalAlign",
       type: "toggle",
@@ -572,6 +578,16 @@ export const getItems: GetItems<Value, Props> = ({
           config: {
             min: 0,
             max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "metaItemSpacing",
+          label: t("Items Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 150,
             units: [{ value: "px", title: "px" }]
           }
         },
