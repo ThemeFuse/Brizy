@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.4.3<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.41<br>
+Stable tag: 2.4.42<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,21 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.42 - 2024-03-20
+* Fixed: Drag and drop functionality not working outside the visible viewport
+* Fixed: Copy and Paste for Text element with color gradient
+* Fixed: Selecting all text via shortcut then writing does not show new texts
+* Fixed: Text element with selection for text-transform
+* Fixed: Mask for Text element when using Dynamic Image not working
+* Fixed: Screenshots for blocks inside Reorder sidebar
+* Fixed: Global Typography in responsive viewports
+* Fixed: Text element broken error
+* Improved: Added fade option for Carousel element and Slider option in blocks
+* Improved: Added 'Open in new tab' option for internal page links
+* Improved: Added Underline for links on hover
+* Improved: Changed UI for Dynamic population option
+* Improved: Text element performance with color change
 
 ### 2.4.41 - 2024-02-13
 * Fixed: Text color from hex when we have the type transparent
