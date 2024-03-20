@@ -17,11 +17,11 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
     $_SERVER['HTTPS'] = 'on';
 }
 
-define('BRIZY_DEVELOPMENT', true );
+define('BRIZY_DEVELOPMENT', true);
 define('BRIZY_LOG', false);
 define('BRIZY_VERSION', '2.4.41');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
-define('BRIZY_MINIMUM_COMPILER_VERSION', '280-wp');
+define('BRIZY_MINIMUM_COMPILER_VERSION', '282-wp');
 define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '279-wp');
 define('BRIZY_SYNC_VERSION', '279');
 define('BRIZY_FILE', __FILE__);
