@@ -9,7 +9,7 @@ export const defaultValue: Model = {
 export const fromElementModel: Option.FromElementModel<"inputText"> = (
   get
 ) => ({
-  value: String.read(get("value"))
+  value: String.read(get("value")) ?? defaultValue.value
 });
 
 export const toElementModel: Option.ToElementModel<"inputText"> = (values) => {

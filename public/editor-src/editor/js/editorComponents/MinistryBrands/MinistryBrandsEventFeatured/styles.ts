@@ -6,6 +6,8 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -26,9 +28,148 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-eventFeatured__item": {
-      standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleElementOfMinistryBrandsImgBorder",
+        "cssStyleMinistryElementMediaBorderRadius",
+        ...(maskShape === "none"
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
+          : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgFilters",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz &&:hover .brz-eventFeatured__item": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsHorizontalAlign",
+        "cssStyleElementOfMinistryBrandsSpacing"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-title": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemTitleMargin",
+        "cssStyleElementMinistryBrandsMetaItemTitlePadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-date": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemDateMargin",
+        "cssStyleElementMinistryBrandsMetaItemDatePadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-category": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCategoryMargin",
+        "cssStyleElementMinistryBrandsMetaItemCategoryPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-group": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemGroupMargin",
+        "cssStyleElementMinistryBrandsMetaItemGroupPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-location": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemLocationMargin",
+        "cssStyleElementMinistryBrandsMetaItemLocationPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-address": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemAddressMargin",
+        "cssStyleElementMinistryBrandsMetaItemAddressPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-room": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemRoomMargin",
+        "cssStyleElementMinistryBrandsMetaItemRoomPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-coordinator": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorMargin",
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-coordinatorEmail": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorEmailMargin",
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorEmailPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-coordinatorPhone": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorPhoneMargin",
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorPhonePadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-cost": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCostMargin",
+        "cssStyleElementMinistryBrandsMetaItemCostPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-website": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemWebsiteMargin",
+        "cssStyleElementMinistryBrandsMetaItemWebsitePadding"
+      ]
+    },
+
+    ".brz &&:hover .brz-ministryBrands__meta--icons": {
+      standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
+    },
+    ".brz && .brz-eventFeatured__item--meta--link > .brz-ministryBrands__meta--icons:hover":
+      {
+        standart: ["cssStyleColor"],
+        interval: ["cssStyleHoverTransition"]
+      },
     ".brz && .brz-eventFeatured__item--meta:hover": {
       standart: ["cssStyleColor"],
       interval: ["cssStyleHoverTransition"]
@@ -50,13 +191,6 @@ export function style(
         "cssStyleElementOfMinistryBrandsDateColor"
       ],
       interval: ["cssStyleHoverTransition"]
-    },
-    ".brz &&:hover :is(.brz-eventFeatured__item, .brz-eventFeatured__item--meta--preview) > *":
-      {
-        standart: ["cssStyleElementOfMinistryBrandsSpacing"]
-      },
-    ".brz &&:hover .brz-eventFeatured__item :is(iframe,video,img)": {
-      standart: ["cssStyleMinistryElementMediaBorderRadius"]
     },
     ".brz && :is(.brz-eventFeatured__item--meta--preview, .brz-eventFeatured__item--meta--preview *):hover":
       {

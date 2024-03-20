@@ -8,6 +8,7 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import {
   MaskPositions,
   MaskRepeat,
@@ -61,6 +62,8 @@ export function getItems({
     type: DCTypes.image
   });
 
+  const isExternalImage = dvv("bgImageType") === ImageType.External;
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -84,7 +87,11 @@ export function getItems({
                   id: "bg",
                   type: "imageUpload",
                   states: [NORMAL, HOVER],
-                  population: imageDynamicContentChoices
+                  population: imageDynamicContentChoices,
+                  config: {
+                    disableSizes: isExternalImage,
+                    pointer: !isExternalImage
+                  }
                 }
               ]
             },

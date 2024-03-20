@@ -4,18 +4,19 @@ import React from "react";
 import Placeholder from "visual/component/Placeholder";
 import { withLink } from "visual/component/hooks/withLink";
 import { css } from "visual/utils/cssStyle";
+import { ImageType } from "visual/utils/image/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { stylePicture } from "../styles";
 import { ImageProps, Styles } from "../types";
 import { showOriginalImage } from "../utils";
+import OriginalImage from "./OriginalImage";
 import Population from "./Population";
 import SimpleImage from "./SimpleImage";
-import SvgImage from "./SvgImage";
 
 const Content: React.FC<ImageProps> = (props) => {
   const { v, vs, vd, _id, componentId, wrapperSizes, extraAttributes, meta } =
     props;
-  const { imageSrc, imageExtension, imagePopulation } = v;
+  const { imageSrc, imageExtension, imagePopulation, imageType } = v;
 
   const pictureClassName = IS_EDITOR
     ? "brz-picture"
@@ -50,8 +51,9 @@ const Content: React.FC<ImageProps> = (props) => {
     const content =
       isSVGExtension(imageExtension) ||
       isGIFExtension(imageExtension) ||
-      showOriginalImage(v) ? (
-        <SvgImage
+      showOriginalImage(v) ||
+      imageType === ImageType.External ? (
+        <OriginalImage
           v={v}
           vs={vs}
           vd={vd}

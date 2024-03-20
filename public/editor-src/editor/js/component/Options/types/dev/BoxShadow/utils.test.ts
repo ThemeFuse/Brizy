@@ -1,17 +1,17 @@
-import * as T from "visual/component/Options/types/dev/BoxShadow/entities/Type";
+import * as Hex from "visual/utils/color/Hex";
+import * as Blur from "visual/utils/cssProps/Blur";
 import * as Opacity from "visual/utils/cssProps/opacity";
+import * as T from "visual/utils/options/BoxShadow/entities/Type";
+import { Value } from "visual/utils/options/BoxShadow/entities/Value";
 import {
   fieldsEnabled,
   fromLegacyType,
+  toLegacyType,
   toggleColor,
   toggleFields,
-  toggleType,
-  toLegacyType
+  toggleType
 } from "./utils";
 import { _setOpacity } from "./utils";
-import { Value } from "./entities/Value";
-import * as Hex from "visual/utils/color/Hex";
-import * as Blur from "visual/utils/cssProps/Blur";
 
 const model: Value = {
   type: "inset",
@@ -31,17 +31,17 @@ const model: Value = {
   tempHorizontal: 4
 };
 
-describe("Testing 'fromLegacyType' function", function() {
+describe("Testing 'fromLegacyType' function", function () {
   test("if value is 'on', return 'outset'", () => {
     expect(fromLegacyType("on")).toBe(T.OUTSET);
   });
 
   test("if value is not 'on', return the value", () => {
-    T.types.map(t => expect(fromLegacyType(t)).toBe(t));
+    T.types.map((t) => expect(fromLegacyType(t)).toBe(t));
   });
 });
 
-describe("Testing 'toLegacyType' function", function() {
+describe("Testing 'toLegacyType' function", function () {
   test("if value is 'outset', return 'on'", () => {
     expect(toLegacyType(T.OUTSET)).toBe("on");
   });
@@ -51,11 +51,11 @@ describe("Testing 'toLegacyType' function", function() {
   });
 
   test("if value is not '' or 'on', return the value", () => {
-    T.types.map(t => expect(fromLegacyType(t)).toBe(t));
+    T.types.map((t) => expect(fromLegacyType(t)).toBe(t));
   });
 });
 
-describe("Testing 'toggleColor' function", function() {
+describe("Testing 'toggleColor' function", function () {
   test("Set color fields to empty value on disable", () => {
     const m: Value = {
       ...model,
@@ -91,7 +91,7 @@ describe("Testing 'toggleColor' function", function() {
   });
 });
 
-describe("Testing 'toggleType' function", function() {
+describe("Testing 'toggleType' function", function () {
   test("Set type to NONE on disable", () => {
     const m: Value = {
       ...model,
@@ -132,7 +132,7 @@ describe("Testing 'toggleType' function", function() {
   });
 });
 
-describe("Testing 'toggleFields' function", function() {
+describe("Testing 'toggleFields' function", function () {
   test("Set fields to empty on disable", () => {
     const m: Value = {
       ...model,
@@ -205,7 +205,7 @@ describe("Testing 'toggleFields' function", function() {
   });
 });
 
-describe("Testing '_setOpacity' function", function() {
+describe("Testing '_setOpacity' function", function () {
   const m: Value = {
     ...model,
     hex: Hex.unsafe("#333333"),
@@ -232,12 +232,10 @@ describe("Testing '_setOpacity' function", function() {
   });
 });
 
-describe("Testing 'fieldsEnabled' function", function() {
-  test.each([
-    "blur",
-    "spread"
-  ])("Fields are enabled if '%s' value is higher then 0", k =>
-    expect(fieldsEnabled({ ...model, [k]: 1 })).toBe(true)
+describe("Testing 'fieldsEnabled' function", function () {
+  test.each(["blur", "spread"])(
+    "Fields are enabled if '%s' value is higher then 0",
+    (k) => expect(fieldsEnabled({ ...model, [k]: 1 })).toBe(true)
   );
 
   test("Fields are not enabled if blur and spread values are 0", () => {

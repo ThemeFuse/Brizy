@@ -15,5 +15,5 @@ export type Value = {
 
 export type Meta = {
   isChanged: keyof Value;
-  opacityDragEnd?: boolean;
+  isChanging?: boolean;
 };

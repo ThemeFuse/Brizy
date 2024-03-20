@@ -273,10 +273,7 @@ export function getItems({
                   type: "inputText",
                   devices: "desktop",
                   disabled: !embedType || postEmbedType,
-                  population: linkDC,
-                  config: {
-                    size: "medium"
-                  }
+                  population: linkDC
                 },
                 {
                   id: "facebookEmbedVideoHref",
@@ -284,10 +281,7 @@ export function getItems({
                   type: "inputText",
                   disabled: !embedType || videoEmbedType,
                   devices: "desktop",
-                  population: linkDC,
-                  config: {
-                    size: "medium"
-                  }
+                  population: linkDC
                 },
                 {
                   id: "facebookPageHref",
@@ -295,10 +289,7 @@ export function getItems({
                   type: "inputText",
                   disabled: !pageType,
                   devices: "desktop",
-                  population: linkDC,
-                  config: {
-                    size: "medium"
-                  }
+                  population: linkDC
                 },
                 {
                   id: "pageTabs",
@@ -319,10 +310,7 @@ export function getItems({
                   type: "inputText",
                   disabled: !groupType,
                   devices: "desktop",
-                  population: linkDC,
-                  config: {
-                    size: "medium"
-                  }
+                  population: linkDC
                 },
                 {
                   id: "skin",
@@ -529,10 +517,7 @@ export function getItems({
           disabled: !buttonType || dvv("targetUrl") === "current",
           devices: "desktop",
           placeholder: "http://",
-          population: linkDC,
-          config: {
-            size: "medium"
-          }
+          population: linkDC
         }
       ]
     },

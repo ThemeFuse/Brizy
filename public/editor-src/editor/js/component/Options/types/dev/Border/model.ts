@@ -1,19 +1,19 @@
-import { _apply, set, setter2 } from "visual/utils/model";
-import * as Style from "./entities/style";
-import * as WidthType from "./entities/widthType";
-import * as Width from "./entities/width";
-import { toggleColor } from "visual/component/Options/types/dev/ColorPicker/utils";
 import {
+  getHex,
   getOpacity,
-  getPalette,
-  getHex
+  getPalette
 } from "visual/component/Options/types/dev/ColorPicker/model";
 import * as ColorPicker from "visual/component/Options/types/dev/ColorPicker/model";
-import { _setWidthEdge, toggleStyle, toggleWidth } from "./utils";
+import { toggleColor } from "visual/component/Options/types/dev/ColorPicker/utils";
 import * as Hex from "visual/utils/color/Hex";
-import * as Palette from "visual/component/Options/types/dev/ColorPicker/entities/palette";
+import { _apply, set, setter2 } from "visual/utils/model";
+import { Value } from "visual/utils/options/Border/entities/Value";
+import * as Style from "visual/utils/options/Border/entities/style";
+import * as Width from "visual/utils/options/Border/entities/width";
+import * as WidthType from "visual/utils/options/Border/entities/widthType";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { mApply } from "visual/utils/value";
-import { Value } from "./entities/Value";
+import { _setWidthEdge, toggleStyle, toggleWidth } from "./utils";
 
 export const getStyle = <V extends { style: Style.Style }>(m: V): V["style"] =>
   m.style;

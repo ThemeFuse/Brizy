@@ -6,6 +6,8 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -26,9 +28,64 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleElementOfMinistryBrandsImgBorder",
+        "cssStyleMinistryElementMediaBorderRadius",
+        ...(maskShape === "none"
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
+          : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgFilters",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
     ".brz && :is(.brz-sermonDetail__item--meta, .brz-sermonDetail__item--meta--links)":
       {
         standart: ["getAllCssStyleTypography"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz &&:hover .brz-ministryBrands__meta--icons": {
+      standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
+    },
+    ".brz && .brz-sermonDetail__item--meta--links > .brz-ministryBrands__meta--icons:hover":
+      {
+        standart: ["cssStyleColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionColor"
@@ -52,13 +109,52 @@ export function style(
       ]
     },
     ".brz &&:hover .brz-sermonDetail__item": {
-      standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
+      standart: [
+        "cssStyleElementOfMinistryBrandsHorizontalAlign",
+        "cssStyleElementOfMinistryBrandsSpacing"
+      ]
     },
-    ".brz &&:hover .brz-sermonDetail__item :is(iframe,video,img)": {
-      standart: ["cssStyleMinistryElementMediaBorderRadius"]
+    ".brz && .brz-ministryBrands__item--meta-title": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemTitleMargin",
+        "cssStyleElementMinistryBrandsMetaItemTitlePadding"
+      ]
     },
-    ".brz &&:hover .brz-sermonDetail__item > *": {
-      standart: ["cssStyleElementOfMinistryBrandsSpacing"]
+    ".brz && .brz-ministryBrands__item--meta-date": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemDateMargin",
+        "cssStyleElementMinistryBrandsMetaItemDatePadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-category": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCategoryMargin",
+        "cssStyleElementMinistryBrandsMetaItemCategoryPadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-group": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemGroupMargin",
+        "cssStyleElementMinistryBrandsMetaItemGroupPadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-series": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemSeriesMargin",
+        "cssStyleElementMinistryBrandsMetaItemSeriesPadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-preacher": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemPreacherMargin",
+        "cssStyleElementMinistryBrandsMetaItemPreacherPadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-passage": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemPassageMargin",
+        "cssStyleElementMinistryBrandsMetaItemPassagePadding"
+      ]
     },
     ".brz && .brz-sermonDetail__item--meta--preview:hover": {
       standart: [
@@ -87,13 +183,14 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-sermonDetail__item--meta--links a:hover": {
-      standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    },
+    ".brz && :is(.brz-sermonDetail__item--meta--links a, .brz-ministryBrands__item--meta-passage-content):hover":
+      {
+        standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz && .brz-ministryBrands__item--meta--links--previous:hover": {
       standart: [
         "cssStyleElementOfMinistryBrandsMetaLinksTypography",

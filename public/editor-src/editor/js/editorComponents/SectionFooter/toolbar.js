@@ -8,6 +8,7 @@ import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import {
   MaskPositions,
   MaskRepeat,
@@ -54,6 +55,9 @@ export function getItems({ v, device, component, context }) {
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
 
+  const isExternalImage = dvv("bgImageType") === ImageType.External;
+  const globalBlockId = component.props.meta.globalBlockId;
+
   return [
     toolbarShowOnResponsive({
       v,
@@ -89,9 +93,11 @@ export function getItems({ v, device, component, context }) {
             },
             {
               id: "gbConditions",
-              disabled: !component.props.meta.globalBlockId,
-              value: component.props.meta.globalBlockId,
-              type: "legacy-gbConditions",
+              disabled: !globalBlockId,
+              config: {
+                globalBlockId: globalBlockId
+              },
+              type: "gbCondition",
               context: "block"
             }
           ]
@@ -161,7 +167,11 @@ export function getItems({ v, device, component, context }) {
                   id: "bg",
                   type: "imageUpload",
                   states: [NORMAL, HOVER],
-                  population: imageDynamicContentChoices
+                  population: imageDynamicContentChoices,
+                  config: {
+                    disableSizes: isExternalImage,
+                    pointer: !isExternalImage
+                  }
                 }
               ]
             },

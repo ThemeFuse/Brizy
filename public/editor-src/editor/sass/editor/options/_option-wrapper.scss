@@ -19,6 +19,14 @@
     & > .brz-ed-option__label {
       width: 100%;
     }
+
+    .brz-ed-control__input2 {
+      flex: 1 1 auto;
+
+      input {
+        width: 100%;
+      }
+    }
   }
   &.brz-ed-grid__option {
     padding: 0;

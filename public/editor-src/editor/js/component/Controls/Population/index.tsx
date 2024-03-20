@@ -11,7 +11,6 @@ import {
   OptGroup
 } from "visual/component/Options/types/common/Population/types/Choices";
 import { isOptgroup } from "visual/component/Options/types/common/Population/utils";
-import { getVaryAttr } from "visual/utils/dynamicContent";
 import { Literal } from "visual/utils/types/Literal";
 import { Async as SelectAsync } from "../../Options/types/dev/Select/Async";
 import { PopulationIcon } from "./PopulationIcon";
@@ -55,6 +54,7 @@ const renderChoices = <T extends Literal>(
 
 export const Control = <T extends Literal>({
   isOpen,
+  isEntityTypeLoaded,
   showChoices,
   choices,
   value,
@@ -68,7 +68,8 @@ export const Control = <T extends Literal>({
   handleIconClick,
   onChange,
   onEntityTypeChange,
-  onEntityIdChange
+  onEntityIdChange,
+  onEntityTypeLoad
 }: Props<T>) => {
   const _className = classnames(
     "brz-control__select--dark",
@@ -90,9 +91,6 @@ export const Control = <T extends Literal>({
   );
 
   const predefinedEntityType = currentDCChoice?.attr?.type;
-  const { showEntityType, showEntityId } = getVaryAttr(
-    currentDCChoice?.varyAttr ?? []
-  );
 
   return (
     <div className={wrapperClassName}>
@@ -125,7 +123,16 @@ export const Control = <T extends Literal>({
                     ref={ref}
                     className="brz-ed-control__population-content-wrapper"
                   >
-                    {showChoices && (
+                    {!predefinedEntityType && (
+                      <SelectAsync
+                        value={entityType}
+                        choices={entityTypeChoices}
+                        config={selectConfig}
+                        onLoad={onEntityTypeLoad}
+                        onChange={onEntityTypeChange}
+                      />
+                    )}
+                    {showChoices && isEntityTypeLoaded && (
                       <Select
                         className={_className}
                         defaultValue={defaultValue}
@@ -135,19 +142,8 @@ export const Control = <T extends Literal>({
                         {renderChoices(choices, defaultValue as T)}
                       </Select>
                     )}
-                    {defaultValue &&
-                      entityTypeChoices &&
-                      showEntityType &&
-                      !predefinedEntityType && (
-                        <SelectAsync
-                          value={entityType}
-                          choices={entityTypeChoices}
-                          config={selectConfig}
-                          onChange={onEntityTypeChange}
-                        />
-                      )}
-                    {defaultValue &&
-                      showEntityId &&
+                    {entityType.value !== "auto" &&
+                      defaultValue &&
                       (predefinedEntityType || entityType.value) && (
                         <SelectAsync
                           value={entityId}

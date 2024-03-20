@@ -20,7 +20,11 @@ export const getPlaceholder = (v: Value): string => {
     showRegistration,
     showDescription,
     recentEvents,
-    showPreviousPage
+    showPreviousPage,
+    dateFormat,
+    showMetaIcons,
+    showSubscribeToEvent,
+    subscribeToEventButtonText
   } = v;
 
   const attr = [
@@ -40,7 +44,11 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showRegistration, "show_registration"),
     getAttr(showDescription, "show_description"),
     getAttr(showPreviousPage, "previous_page"),
-    `events_recent='${recentEvents}'`
+    getAttr(showMetaIcons, "show_meta_icons"),
+    getAttr(showSubscribeToEvent, "show_subscribe_to_event"),
+    `events_recent='${recentEvents}'`,
+    `date_format='${dateFormat}'`,
+    `subscribe_to_event_button_text='${subscribeToEventButtonText}'`
   ];
 
   return makePlaceholder({

@@ -88,3 +88,9 @@ export const EkklesiaMessages = {
     "Ministry Content - Sermon Layout - module fields have been updated."
   )
 };
+
+export const helperDateFormatInputHTML = `<span class="brz-span">${t(
+  "Available formatting styles can be found"
+)} <a class="brz-a" target="_blank" href="https://www.php.net/manual/en/function.date.php">${t(
+  "here"
+)}</a></span>`;

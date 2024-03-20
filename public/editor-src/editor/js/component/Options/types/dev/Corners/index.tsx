@@ -6,6 +6,7 @@ import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
 import { Type } from "visual/component/Options/utils/Type";
 import { mPipe, pipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
+import { Meta } from "visual/utils/options/Corners/meta";
 import { WithConfig } from "visual/utils/options/attributes";
 import { Config } from "./types/Config";
 import { Unit } from "./types/Unit";
@@ -13,7 +14,10 @@ import { Value } from "./types/Value";
 import * as V from "./types/Value";
 import { getIcon, unitSetter, unitTitle, valueSetter } from "./utils";
 
-export interface Props extends Option.Props<Value>, WithConfig<Config> {}
+export interface Props
+  extends Option.Props<Value>,
+    Option.Meta<Meta>,
+    WithConfig<Config> {}
 
 export const Corners: FC<Props> = ({ value, onChange, label, config }) => {
   const onType = useCallback(
@@ -71,11 +75,11 @@ export const Corners: FC<Props> = ({ value, onChange, label, config }) => {
   );
 
   const onValue = useCallback<SP<SpacingUnit, Edge>["onValue"]>(
-    (edge: Edge, v: number) =>
+    (edge: Edge, v: number, meta) =>
       mPipe(
         (e: Edge, v: number) =>
           mPipe(Positive.fromNumber, (v) => valueSetter(e)(v, value))(v),
-        onChange
+        (v) => onChange(v, meta)
       )(edge, v),
     [onChange, value]
   );

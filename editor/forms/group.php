@@ -26,11 +26,17 @@ class Brizy_Editor_Forms_Group extends Brizy_Admin_Serializable {
 	}
 
 	public function unserialize( $serialized ) {
-		$this->data = unserialize( $serialized );
+		$unserialize = unserialize( $serialized );
+		if ( is_array( $unserialize ) ) {
+			$this->data = $unserialize;
+		}
+
+		return $this->data = [];
 	}
 
+	#[ReturnTypeWillChange]
 	public function jsonSerialize() {
-		return $this->data;
+		return is_array( $this->data ) ? $this->data : [];
 	}
 
 	public function convertToOptionValue() {

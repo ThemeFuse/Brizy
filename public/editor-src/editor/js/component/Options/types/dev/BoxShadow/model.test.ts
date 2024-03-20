@@ -1,4 +1,9 @@
-import { times, identity } from "underscore";
+import { identity, times } from "underscore";
+import * as Hex from "visual/utils/color/Hex";
+import { palettes } from "visual/utils/color/Palette";
+import * as Blur from "visual/utils/cssProps/Blur";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { Value } from "visual/utils/options/BoxShadow/entities/Value";
 import {
   getBlur,
   getHex,
@@ -8,11 +13,6 @@ import {
   getSpread,
   getVertical
 } from "./model";
-import { palettes } from "visual/utils/color/Palette";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as Blur from "visual/utils/cssProps/Blur";
-import { Value } from "./entities/Value";
-import * as Hex from "visual/utils/color/Hex";
 
 const model: Value = {
   type: "inset",
@@ -33,9 +33,9 @@ const model: Value = {
 };
 
 describe("Testing 'getOpacity' function", () => {
-  const seed = times(11, i => i * 0.1).map(Opacity.unsafe);
+  const seed = times(11, (i) => i * 0.1).map(Opacity.unsafe);
 
-  seed.forEach(opacity => {
+  seed.forEach((opacity) => {
     test(`Expect value to be ${opacity}`, () => {
       expect(getOpacity({ ...model, opacity })).toBe(opacity);
     });
@@ -43,7 +43,7 @@ describe("Testing 'getOpacity' function", () => {
 });
 
 describe("Testing 'getPalette' function", () => {
-  palettes.forEach(palette => {
+  palettes.forEach((palette) => {
     test(`Expect value to be ${palette}`, () => {
       expect(getPalette({ ...model, palette })).toBe(palette);
     });
@@ -53,7 +53,7 @@ describe("Testing 'getPalette' function", () => {
 describe("Testing 'getHex' function", () => {
   const seed = ["#111", "#222", "#333"].map(Hex.unsafe);
 
-  seed.forEach(hex => {
+  seed.forEach((hex) => {
     test(`Expect value to be ${hex}`, () => {
       expect(getHex({ ...model, hex })).toBe(hex);
     });
@@ -63,7 +63,7 @@ describe("Testing 'getHex' function", () => {
 describe("Testing 'getBlur' function", () => {
   const seed = times(11, identity).map(Blur.unsafe);
 
-  seed.forEach(blur => {
+  seed.forEach((blur) => {
     test(`Expect value to be ${blur}`, () => {
       expect(getBlur({ ...model, blur })).toBe(blur);
     });
@@ -73,7 +73,7 @@ describe("Testing 'getBlur' function", () => {
 describe("Testing 'getSpread' function", () => {
   const seed = times(11, identity);
 
-  seed.forEach(spread => {
+  seed.forEach((spread) => {
     test(`Expect value to be ${spread}`, () => {
       expect(getSpread({ ...model, spread })).toBe(spread);
     });
@@ -83,7 +83,7 @@ describe("Testing 'getSpread' function", () => {
 describe("Testing 'getVertical' function", () => {
   const seed = times(11, identity);
 
-  seed.forEach(vertical => {
+  seed.forEach((vertical) => {
     test(`Expect value to be ${vertical}`, () => {
       expect(getVertical({ ...model, vertical })).toBe(vertical);
     });
@@ -93,7 +93,7 @@ describe("Testing 'getVertical' function", () => {
 describe("Testing 'getHorizontal' function", () => {
   const seed = times(11, identity);
 
-  seed.forEach(horizontal => {
+  seed.forEach((horizontal) => {
     test(`Expect value to be ${horizontal}`, () => {
       expect(getHorizontal({ ...model, horizontal })).toBe(horizontal);
     });

@@ -11,7 +11,7 @@ export const fromElementModel: FromElementModel<"select"> = (get) => ({
 
 export const toElementModel: ToElementModel<"select"> = (values) => {
   return {
-    value: values.value
+    value: values.value ?? defaultValue.value
   };
 };
 

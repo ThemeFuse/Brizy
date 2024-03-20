@@ -9,7 +9,7 @@ export const defaultValue: SimpleValue<string> = {
 export const fromElementModel: Option.FromElementModel<"codeMirror"> = (
   get
 ) => ({
-  value: String.read(get("value"))
+  value: String.read(get("value")) ?? defaultValue.value
 });
 
 export const toElementModel: Option.ToElementModel<"codeMirror"> = (values) => {

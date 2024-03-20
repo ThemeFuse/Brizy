@@ -187,9 +187,12 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 */
 	private function getOrignalImgSizes( $uid ) {
 
-		$sizes = wp_get_attachment_image_src( $this->getAttachmentId( $uid ), 'full' );
+		$attachment_id = $this->getAttachmentId( $uid );
+		$sizes         = wp_get_attachment_image_src( $attachment_id, 'full' );
+		if(is_array($sizes))
+			return [ $sizes[1], $sizes[2] ];
 
-		return [ $sizes[1], $sizes[2] ];
+		throw new \Exception('Unable to obtain image: '.$attachment_id);
 	}
 
 	public function cacheImgs( $uids ) {

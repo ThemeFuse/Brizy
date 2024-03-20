@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { LinkData } from "visual/component/Link/types/Type";
 import { LinkProps } from "visual/component/hooks/withLink";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ECDC } from "visual/editorComponents/EditorComponent/types";
-import { LinkData } from "visual/component/Link/types/Type";
+import { ImageType } from "visual/utils/image/types";
 
 type sizes = {
   width: number;
@@ -58,6 +59,7 @@ export type V = {
   imageExtension: string;
   imagePopulation: string;
   sizeType: string;
+  imageType: ImageType;
   size: number;
   tabletSize: number | null;
   mobileSize: number | null;

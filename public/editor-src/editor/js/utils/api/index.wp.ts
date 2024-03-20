@@ -53,6 +53,7 @@ export {
   updateSavedPopup,
   defaultKitsMeta,
   defaultKitsData,
+  defaultKits,
   defaultPopupsMeta,
   defaultPopupsData,
   defaultLayoutsMeta,
@@ -865,11 +866,7 @@ export function sendHearBeatTakeOver(): Promise<unknown> {
 //#endregion
 
 //#region GetPostObjects
-/////
-/////
-///// getPostObjects is not used, need to review if is needed to delete or leave it for future
-/////
-/////
+// getPostObjects is not used, need to review if is needed to delete or leave it for future
 export async function getPostObjects(postType: string): Promise<unknown> {
   const {
     editorVersion,

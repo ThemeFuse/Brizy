@@ -11,8 +11,21 @@ import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
+import {
+  sidebarMinistryBrandsMetaCategory,
+  sidebarMinistryBrandsMetaChildcare,
+  sidebarMinistryBrandsMetaDay,
+  sidebarMinistryBrandsMetaGroup,
+  sidebarMinistryBrandsMetaResourceLink,
+  sidebarMinistryBrandsMetaStatus,
+  sidebarMinistryBrandsMetaTimes,
+  sidebarMinistryBrandsMetaTitle
+} from "../sidebars/sidebars";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
+import * as toolbarImage from "../toolbarImage";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
+import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMeta from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
@@ -97,57 +110,169 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
         selector=".brz-groupLayout__filters"
       >
         <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarTitle, undefined, {
-            allowExtend: false
-          })}
-          selector=".brz-groupLayout--item__content-heading"
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarTitle,
+            sidebarMinistryBrandsMetaTitle,
+            {
+              allowExtend: false
+            }
+          )}
+          selector=".brz-ministryBrands__item--meta-title"
         >
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarMeta, undefined, {
-              allowExtend: false
-            })}
-            selector=".brz-groupLayout--item__content-meta"
+            {...this.makeToolbarPropsFromConfig2(
+              toolbarMeta,
+              sidebarMinistryBrandsMetaDay,
+              {
+                allowExtend: false
+              }
+            )}
+            selector=".brz-ministryBrands__item--meta-day"
           >
             <Toolbar
-              {...this.makeToolbarPropsFromConfig2(toolbarPreview, undefined, {
-                allowExtend: false
-              })}
-              selector=".brz-groupLayout--item__content-preview"
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarMeta,
+                sidebarMinistryBrandsMetaTimes,
+                {
+                  allowExtend: false
+                }
+              )}
+              selector=".brz-ministryBrands__item--meta-times"
             >
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarPagination,
-                  undefined,
+                  toolbarMeta,
+                  sidebarMinistryBrandsMetaCategory,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-groupLayout__pagination"
+                selector=".brz-ministryBrands__item--meta-category"
               >
                 <Toolbar
                   {...this.makeToolbarPropsFromConfig2(
-                    toolbarExtendButtons,
-                    undefined,
+                    toolbarMeta,
+                    sidebarMinistryBrandsMetaGroup,
                     {
                       allowExtend: false
                     }
                   )}
-                  selector=".brz-groupLayout--item__content-detailButton"
+                  selector=".brz-ministryBrands__item--meta-group"
                 >
-                  <Wrapper
-                    {...this.makeWrapperProps({
-                      className
-                    })}
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarMeta,
+                      sidebarMinistryBrandsMetaStatus,
+                      {
+                        allowExtend: false
+                      }
+                    )}
+                    selector=".brz-ministryBrands__item--meta-status"
                   >
-                    <DynamicContentHelper
-                      placeholder={getPlaceholder(v)}
-                      props={{
-                        className: "brz-ministryBrands brz-groupLayout"
-                      }}
-                      blocked={false}
-                      tagName="div"
-                    />
-                  </Wrapper>
+                    <Toolbar
+                      {...this.makeToolbarPropsFromConfig2(
+                        toolbarMeta,
+                        sidebarMinistryBrandsMetaChildcare,
+                        {
+                          allowExtend: false
+                        }
+                      )}
+                      selector=".brz-ministryBrands__item--meta-childcare"
+                    >
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarMeta,
+                          sidebarMinistryBrandsMetaResourceLink,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-ministryBrands__item--meta-resourceLink"
+                      >
+                        <Toolbar
+                          {...this.makeToolbarPropsFromConfig2(
+                            toolbarPreview,
+                            undefined,
+                            {
+                              allowExtend: false
+                            }
+                          )}
+                          selector=".brz-groupLayout--item__content-preview"
+                        >
+                          <Toolbar
+                            {...this.makeToolbarPropsFromConfig2(
+                              toolbarPagination,
+                              undefined,
+                              {
+                                allowExtend: false
+                              }
+                            )}
+                            selector=".brz-groupLayout__pagination"
+                          >
+                            <Toolbar
+                              {...this.makeToolbarPropsFromConfig2(
+                                toolbarExtendButtons,
+                                undefined,
+                                {
+                                  allowExtend: false
+                                }
+                              )}
+                              selector=".brz-groupLayout--item__content-detailButton"
+                            >
+                              <Toolbar
+                                {...this.makeToolbarPropsFromConfig2(
+                                  toolbarImage,
+                                  undefined,
+                                  {
+                                    allowExtend: false
+                                  }
+                                )}
+                                selector=".brz-ministryBrands__item--media"
+                              >
+                                <Toolbar
+                                  {...this.makeToolbarPropsFromConfig2(
+                                    toolbarMetaLinks,
+                                    undefined,
+                                    {
+                                      allowExtend: false
+                                    }
+                                  )}
+                                  selector=".brz-groupLayout--item__content-meta a"
+                                >
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarMetaIcons,
+                                      undefined,
+                                      {
+                                        allowExtend: false
+                                      }
+                                    )}
+                                    selector=".brz-ministryBrands__meta--icons"
+                                  >
+                                    <Wrapper
+                                      {...this.makeWrapperProps({
+                                        className
+                                      })}
+                                    >
+                                      <DynamicContentHelper
+                                        placeholder={getPlaceholder(v)}
+                                        props={{
+                                          className:
+                                            "brz-ministryBrands brz-groupLayout"
+                                        }}
+                                        blocked={false}
+                                        tagName="div"
+                                      />
+                                    </Wrapper>
+                                  </Toolbar>
+                                </Toolbar>
+                              </Toolbar>
+                            </Toolbar>
+                          </Toolbar>
+                        </Toolbar>
+                      </Toolbar>
+                    </Toolbar>
+                  </Toolbar>
                 </Toolbar>
               </Toolbar>
             </Toolbar>

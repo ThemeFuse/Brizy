@@ -88,6 +88,8 @@ export * from "./cssStyleElementMenuSimple";
 export * from "./cssStyleElementMinistryBrands";
 // Ministry Brands Event Layout
 export * from "./cssStyleElementEventLayout";
+// Ministry Brands Event Detail
+export * from "./cssStyleElementMinistryEventDetail";
 // Ministry Group Slider
 export * from "./cssStyleElementMinistryGroupSlider";
 // Ministry Event Calendar
@@ -199,3 +201,7 @@ export * from "./styleBgVideo";
 export * from "./cssStyleMask";
 // Variant
 export * from "./cssStyleElementShopifyVariant";
+
+// Generator v2 functions
+export * from "./cssStyle2";
+export * from "./utils";

@@ -18,6 +18,7 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgImageExtension": "",
+    "bgImageType": "internal",
 
     "bgPopulation": "",
     "bgPopulationEntityType": "",

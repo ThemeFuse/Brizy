@@ -1,4 +1,5 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { ImageType } from "visual/utils/image/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { ImageProps } from "../types";
 import { getImageDCSize, showOriginalImage } from "../utils";
@@ -22,8 +23,7 @@ const POINTS = {
   svg: resize,
   originalImage: ["topLeft", "topRight", "bottomLeft", "bottomRight"],
   gif: resize,
-  sizeType: resize,
-  population: resize
+  sizeType: resize
 };
 
 interface ResizerCustomSize {
@@ -40,12 +40,17 @@ interface ResizerPredefinedSize {
   restrictions: SizeRestriction;
 }
 
+const resizeImageExternal = {
+  points: resize,
+  restrictions: getSizeRestriction()
+};
+
 type UseResizerPoints = (
   props: ImageProps & { context: EditorComponentContextValue }
 ) => ResizerCustomSize | ResizerPredefinedSize;
 
 const useResizerPoints: UseResizerPoints = ({ v, meta, gallery, context }) => {
-  const { sizeType, imagePopulation } = v;
+  const { sizeType, imagePopulation, imageType } = v;
 
   if (imagePopulation) {
     const dcSize = getImageDCSize(imagePopulation, context);
@@ -57,10 +62,11 @@ const useResizerPoints: UseResizerPoints = ({ v, meta, gallery, context }) => {
       };
     }
 
-    return {
-      points: POINTS.population,
-      restrictions: getSizeRestriction()
-    };
+    return resizeImageExternal;
+  }
+
+  if (imageType === ImageType.External) {
+    return resizeImageExternal;
   }
 
   if (sizeType === "custom") {

@@ -5,17 +5,17 @@
   overflow: hidden;
 
   &__container {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
-    grid-template-columns: repeat(var(--columnCount), var(--columnSize));
     word-break: break-word;
+
+    .brz-sermonList__item {
+      width: var(--columnSize);
+    }
   }
 
   &__item {
-    & > * {
-      margin: 0 0 0.5rem 0;
-    }
-
     &--meta--title a {
       color: inherit;
     }
@@ -30,20 +30,6 @@
 
       &--audio {
         width: 100%;
-      }
-      &--video {
-        width: 100%;
-        position: relative;
-        padding-bottom: 56.25%;
-
-        iframe,
-        video {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
       }
     }
   }

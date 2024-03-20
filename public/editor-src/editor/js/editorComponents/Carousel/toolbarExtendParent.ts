@@ -9,7 +9,7 @@ import {
 } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { ToolbarItemType } from "../ToolbarItemType";
-import { Value } from "./toolbarExtend";
+import { Value } from "./types";
 
 export function getItems({
   v,
@@ -83,18 +83,6 @@ export function getItems({
                       type: "switch"
                     },
                     {
-                      id: "transitionSpeed",
-                      label: t("Speed"),
-                      type: "slider",
-                      disabled: dvv("sliderAutoPlay") !== "on",
-                      config: {
-                        min: 1,
-                        max: 5,
-                        step: 0.1,
-                        units: [{ value: "s", title: "s" }]
-                      }
-                    },
-                    {
                       id: "sliderAutoPlaySpeed",
                       label: t("Stop Time"),
                       type: "slider",
@@ -108,6 +96,17 @@ export function getItems({
                   ]
                 },
                 {
+                  id: "transitionSpeed",
+                  label: t("Speed"),
+                  type: "slider",
+                  config: {
+                    min: 1,
+                    max: 10,
+                    step: 0.1,
+                    units: [{ value: "s", title: "s" }]
+                  }
+                },
+                {
                   id: "slidesToShow",
                   label: t("Columns"),
                   type: "slider",
@@ -116,6 +115,22 @@ export function getItems({
                     min: 1,
                     max: 6
                   }
+                },
+                {
+                  id: "sliderAnimation",
+                  label: t("Animation"),
+                  type: "radioGroup",
+                  disabled: dvv("slidesToShow") > 1,
+                  choices: [
+                    {
+                      icon: "nc-slider-horizontal",
+                      value: "none"
+                    },
+                    {
+                      icon: "nc-fade",
+                      value: "fade"
+                    }
+                  ]
                 },
                 {
                   id: "spacing",

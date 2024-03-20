@@ -15,6 +15,7 @@
     "imageHeight": 450,
     "imageExtension": "",
     "sizeType": "custom",
+    "imageType": "internal",
 
     "size": 100,
     "sizeSuffix": "%",
@@ -35,6 +36,7 @@
     "linkPage": "",
     "linkPageTitle": "",
     "linkPageSource": null,
+    "linkInternalBlank": "off",
     "linkSource": "",
     "linkType": "external",
     "linkExternal": "",
@@ -191,6 +193,7 @@
     "maskCustomUploadImageHeight": 450,
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
+    "maskCustomUploadImageType": "internal",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

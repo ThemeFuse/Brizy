@@ -5,17 +5,24 @@ import {
   cssStyleBorderRadius,
   cssStyleColor,
   cssStyleDisplayFlex,
+  cssStyleFilter,
   cssStyleFlexColumnHorizontalAlign,
   cssStyleFlexHorizontalAlign,
-  cssStyleSpacing,
+  cssStyleMargin,
+  cssStylePaddingFourFields,
+  cssStyleSizeMaxWidth,
   cssStyleTextAlign,
   getAllCssStyleTypography
 } from "visual/utils/cssStyle";
-import * as Num from "visual/utils/math/number";
+import { read as readNumber } from "visual/utils/reader/number";
+import { read as readString } from "visual/utils/reader/string";
 import { CSSValue } from "visual/utils/style2/types";
 import { defaultValueValue } from "../onChange";
 import { ACTIVE } from "../stateMode";
+import { capByPrefix } from "../string";
+import { styleSizeHeight, styleSizeWidth } from "../style2";
 import { cssStyleBoxShadow } from "./cssStyleBoxShadow";
+import { cssStyleDropShadow } from "./cssStyleDropShadow";
 
 // Title
 export function cssStyleElementOfMinistryBrandsTitleTypography({
@@ -259,7 +266,7 @@ export function cssStyleElementOfMinistryBrandsColumnsNumber({
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
-  const columnNumber = Num.read(dvv("columnNumber")) ?? 3;
+  const columnNumber = readNumber(dvv("columnNumber")) ?? 3;
   const columnSize = 100 / columnNumber;
   const _columnSize =
     columnNumber === 1 ? columnSize : `calc(${columnSize}% - 15px)`;
@@ -278,11 +285,13 @@ export function cssStyleElementOfMinistryBrandsColumnsNumberWithSpacing({
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
-  const itemSpacing = Num.read(dvv("itemSpacing")) ?? 15;
-  const columnNumber = Num.read(dvv("columnNumber")) ?? 3;
+  const itemSpacing = readNumber(dvv("itemSpacing")) ?? 15;
+  const columnNumber = readNumber(dvv("columnNumber")) ?? 3;
   const columnSize = 100 / columnNumber;
   const _columnSize =
-    columnNumber === 1 ? columnSize : `calc(${columnSize}% - ${itemSpacing}px)`;
+    columnNumber === 1
+      ? `${columnSize}%`
+      : `calc(${columnSize}% - ${itemSpacing}px)`;
 
   const delta = columnNumber === 1 ? 0 : itemSpacing / (columnNumber - 1);
   const gap = delta ? delta * columnNumber : 0;
@@ -323,17 +332,45 @@ export function cssStyleElementOfMinistryBrandsButtonsHorizontalAlign({
   return `${flex}${alignItems}`;
 }
 
-export function cssStyleElementOfMinistryBrandsSpacing({
+export function cssStyleElementOfMinistryBrandsContainerHorizontalAlign({
   v,
   device,
   state
 }: CSSValue): string {
-  return cssStyleSpacing({
+  return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
-    prefix: "item",
-    direction: "bottom"
+    prefix: "container"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsSpacing({
+  v,
+  device,
+  state,
+  prefix = "item"
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const spacing = readNumber(dvv(capByPrefix(prefix, "spacing"))) ?? 10;
+  const spacingSuffix =
+    readString(dvv(capByPrefix(prefix, "spacingSuffix"))) ?? "px";
+
+  return `gap: ${spacing}${spacingSuffix}`;
+}
+
+export function cssStyleElementOfMinistryBrandsMetaItemsSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleElementOfMinistryBrandsSpacing({
+    v,
+    device,
+    state,
+    prefix: "metaItem"
   });
 }
 
@@ -682,4 +719,530 @@ export function cssStyleElementOfMinistryBrandsListPaddingLeft({
   const suffix = dvv("listPaddingSuffix");
 
   return `padding-left: ${padding}${suffix};`;
+}
+
+export function cssStyleElementOfMinistryBrandsImageWidth({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeMaxWidth({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsImagePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const height = styleSizeHeight({ v, device, state, prefix: "img" }) ?? 100;
+  const width = styleSizeWidth({ v, device, state, prefix: "img" }) ?? 100;
+
+  /*
+    56.25 - aspect ratio of 16:9
+    The calculation using this value, along with the image's width and height,
+    maintains the image's proportions when resizing.
+  */
+  const _padding = 56.25 * height * 0.01 * width * 0.01;
+  const padding = readNumber(_padding.toFixed(2));
+
+  return `padding-bottom: ${padding}%;`;
+}
+
+export function cssStyleElementOfMinistryBrandsImgBgGradient({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state, prefix: "img" });
+}
+
+export function cssStyleElementOfMinistryBrandsImgBgColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "imgBg" });
+}
+
+export const cssStyleElementOfMinistryBrandsImgBorder = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsImgBoxShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsImgMaskShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleDropShadow({
+    v,
+    device,
+    state,
+    prefix: "imgMaskShadow"
+  });
+};
+export const cssStyleElementOfMinistryBrandsImgFilters = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleFilter({
+    v,
+    device,
+    state,
+    prefix: "img"
+  });
+};
+
+export function cssStyleElementOfMinistryBrandsMetaIconsSpacing({
+  v,
+  device,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const metaIconsSpacing = dvv(capByPrefix(prefix, "metaIconsSpacing")) ?? "10";
+  const metaIconsSpacingSuffix =
+    dvv(capByPrefix(prefix, "metaIconsSpacingSuffix")) ?? "px";
+
+  return `margin-right: ${metaIconsSpacing}${metaIconsSpacingSuffix};`;
+}
+
+export function cssStyleElementOfMinistryBrandsFeaturedPreviewPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "img" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemTitleMargin({
+  v,
+  device,
+  state,
+  prefix = "metaTitle"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemTitlePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaTitle" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemDateMargin({
+  v,
+  device,
+  state,
+  prefix = "metaDate"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemDatePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaDate" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCategoryMargin({
+  v,
+  device,
+  state,
+  prefix = "metaCategory"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCategoryPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaCategory"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemGroupMargin({
+  v,
+  device,
+  state,
+  prefix = "metaGroup"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemGroupPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaGroup" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemSeriesMargin({
+  v,
+  device,
+  state,
+  prefix = "metaSeries"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemSeriesPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaSeries" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemPreacherMargin({
+  v,
+  device,
+  state,
+  prefix = "metaPreacher"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemPreacherPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaPreacher"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemPassageMargin({
+  v,
+  device,
+  state,
+  prefix = "metaPassage"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemPassagePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaPassage" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemDayMargin({
+  v,
+  device,
+  state,
+  prefix = "metaDay"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemDayPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaDay" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemTimesMargin({
+  v,
+  device,
+  state,
+  prefix = "metaTimes"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemTimesPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaTimes" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemStatusMargin({
+  v,
+  device,
+  state,
+  prefix = "metaStatus"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemStatusPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaStatus"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemChildcareMargin({
+  v,
+  device,
+  state,
+  prefix = "metaChildcare"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemChildcarePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaChildcare"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemResourceLinkMargin({
+  v,
+  device,
+  state,
+  prefix = "metaResourceLink"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemResourceLinkPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaResourceLink"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemLocationMargin({
+  v,
+  device,
+  state,
+  prefix = "metaLocation"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemLocationPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaLocation"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemAddressMargin({
+  v,
+  device,
+  state,
+  prefix = "metaAddress"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemAddressPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaAddress"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemRoomMargin({
+  v,
+  device,
+  state,
+  prefix = "metaRoom"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemRoomPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaRoom"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCoordinatorMargin({
+  v,
+  device,
+  state,
+  prefix = "metaCoordinator"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCoordinatorPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaCoordinator"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCoordinatorEmailMargin({
+  v,
+  device,
+  state,
+  prefix = "metaCoordinatorEmail"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCoordinatorEmailPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaCoordinatorEmail"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCoordinatorPhoneMargin({
+  v,
+  device,
+  state,
+  prefix = "metaCoordinatorPhone"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCoordinatorPhonePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaCoordinatorPhone"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCostMargin({
+  v,
+  device,
+  state,
+  prefix = "metaCost"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCostPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaCost"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemWebsiteMargin({
+  v,
+  device,
+  state,
+  prefix = "metaWebsite"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemWebsitePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaWebsite"
+  });
 }

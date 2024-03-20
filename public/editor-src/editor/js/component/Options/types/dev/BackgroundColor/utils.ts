@@ -1,10 +1,10 @@
 import { Value as BgValue } from "visual/component/Controls/BackgroundColor/entities";
-import { Value as Color } from "visual/component/Options/types/dev/ColorPicker/entities/Value";
-import { Value } from "./entities/Value";
+import { inRange } from "visual/utils/math/";
 import * as Num from "visual/utils/math/number";
+import { Value } from "visual/utils/options/BackgroundColor/entities/Value";
+import { Value as Color } from "visual/utils/options/ColorPicker/entities/Value";
 import { Reader } from "visual/utils/types/Type";
 import { mApply } from "visual/utils/value";
-import { inRange } from "visual/utils/math/";
 
 export const toBgControlValue = (v: Value): BgValue => {
   const isEnd = v.type === "gradient" && v.active === "end";
@@ -45,5 +45,5 @@ export const colorToGradient = (
   tempGradientPalette: v.tempPalette
 });
 
-export const readPercent: Reader<number> = v =>
-  mApply(v => (inRange(0, 100, v) ? v : undefined), Num.read(v));
+export const readPercent: Reader<number> = (v) =>
+  mApply((v) => (inRange(0, 100, v) ? v : undefined), Num.read(v));

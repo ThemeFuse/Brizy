@@ -19,7 +19,9 @@ export const getPlaceholder = (v: Value): string => {
     showTimes,
     showStatus,
     showChildcare,
-    showResourceLink
+    showResourceLink,
+    dateFormat,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -37,8 +39,10 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showStatus, "show_status"),
     getAttr(showChildcare, "show_childcare"),
     getAttr(showResourceLink, "show_resourcelink"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `detail_page='${getDetail(detailPage)}'`,
-    `detail_page_button_text='${detailPageButtonText}'`
+    `detail_page_button_text='${detailPageButtonText}'`,
+    `date_format='${dateFormat}'`
   ];
 
   return makePlaceholder({

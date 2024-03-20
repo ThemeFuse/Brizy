@@ -1,5 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "../EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 export interface Value extends ElementModel {
   code: string;

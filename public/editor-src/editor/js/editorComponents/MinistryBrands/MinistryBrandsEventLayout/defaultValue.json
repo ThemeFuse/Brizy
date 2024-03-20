@@ -52,7 +52,12 @@
     "eventDetailPage": "",
     "eventDetailPageTitle": "",
     "eventDetailPageSource": null,
-    "source": ""
+    "source": "",
+
+    "dateFormat": "g:i a",
+
+    "maskCustomUploadImageFileName": "",
+    "maskCustomUploadImageSrc": ""
   },
 
   "style": {
@@ -93,6 +98,15 @@
     "itemSpacing": 15,
     "itemSpacingSuffix": "px",
 
+    "metaItemSpacing": 8,
+    "metaItemSpacingSuffix": "px",
+
+    "imgWidth": 100,
+    "imgWidthSuffix": "%",
+
+    "imgHeight": 100,
+    "imgHeightSuffix": "%",
+
     "viewBgColorType": "solid",
     "viewBgColorHex": "",
     "viewBgColorOpacity": 0,
@@ -123,6 +137,59 @@
     "filterTypographyFontWidth": 100,
     "filterTypographyFontSoftness": 0,
 
+    "imgBgColorType": "none",
+    "imgBgColorHex": "#ffffff",
+    "imgBgColorOpacity": 0,
+    "imgBgColorPalette": "",
+
+    "imgGradientColorHex": "#009900",
+    "imgGradientColorOpacity": 1,
+    "imgGradientColorPalette": "",
+    "imgGradientType": "linear",
+    "imgGradientStartPointer": 0,
+    "imgGradientFinishPointer": 100,
+    "imgGradientActivePointer": "startPointer",
+    "imgGradientLinearDegree": 90,
+    "imgGradientRadialDegree": 90,
+
+    "tempImgBgColorType": "solid",
+
+    "imgBorderStyle": "none",
+    "tempImgBorderStyle": "solid",
+
+    "imgBorderColorHex": "#000000",
+
+    "imgBorderColorOpacity": 0,
+    "tempImgBorderColorOpacity": 1,
+
+    "imgBorderColorPalette": "",
+    "tempImgBorderColorPalette": "color3",
+
+    "imgBorderWidthType": "grouped",
+    "imgBorderWidth": 4,
+    "tempImgBorderWidth": 4,
+
+    "imgBorderTopWidth": 4,
+    "tempImgBorderTopWidth": 4,
+
+    "imgBorderRightWidth": 4,
+    "tempImgBorderRightWidth": 4,
+
+    "imgBorderBottomWidth": 4,
+    "tempImgBorderBottomWidth": 4,
+
+    "imgBorderLeftWidth": 4,
+    "tempImgBorderLeftWidth": 4,
+
+    "imgBoxShadow": "none",
+    "imgBoxShadowColorHex": "#000000",
+    "imgBoxShadowColorPalette": "",
+    "imgBoxShadowColorOpacity": 0,
+    "imgBoxShadowBlur": 0,
+    "imgBoxShadowSpread": 0,
+    "imgBoxShadowVertical": 0,
+    "imgBoxShadowHorizontal": 0,
+
     "borderRadiusType": "grouped",
     "borderRadius": 0,
     "borderRadiusSuffix": "px",
@@ -150,16 +217,12 @@
     "borderBottomLeftRadiusSuffix": "px",
 
     "filterBgColorType": "solid",
-    "tempFilterBgColorType": "solid",
     "filterBgColorHex": "#d9d9d9",
     "filterBgColorOpacity": 0.5,
     "filterBgColorPalette": "",
-    "tempFilterBgColorPalette": "",
     "filterGradientColorHex": "#000000",
     "filterGradientColorOpacity": 1,
-    "tempFilterGradientColorOpacity": 1,
     "filterGradientColorPalette": "",
-    "tempFilterGradientColorPalette": "",
     "filterGradientType": "linear",
     "filterGradientStartPointer": 0,
     "filterGradientFinishPointer": 100,
@@ -351,7 +414,6 @@
     "calendarDaysTypographyFontWidth": 100,
     "calendarDaysTypographyFontSoftness": 0,
 
-
     "eventsTypographyFontStyle": "",
     "eventsTypographyFontFamilyType": "google",
     "eventsTypographyFontSize": 16,
@@ -475,9 +537,8 @@
     "parentBgColorType": "solid",
     "parentBgColorHex": "#ff0000",
     "parentBgColorOpacity": 0,
-    "tempParentBgColorOpacity": 1,
     "parentBgColorPalette": "",
-    "parentGradientColorHex": "#fasd43",
+    "parentGradientColorHex": "#000000",
     "parentGradientColorOpacity": 1,
     "parentGradientColorPalette": "",
     "parentGradientType": "linear",
@@ -490,7 +551,6 @@
     "parentBorderStyle": "solid",
     "parentBorderColorHex": "#000000",
     "parentBorderColorOpacity": 0,
-    "tempParentBorderColorOpacity": 1,
     "parentBorderColorPalette": "",
     "parentBorderWidthType": "grouped",
     "parentBorderWidth": 1,
@@ -500,8 +560,8 @@
     "parentBorderLeftWidth": 1,
 
     "parentBoxShadow": "none",
-    "tempParentBoxShadow": "on",
-    "parentBoxShadowColorHex": "#asd543",
+
+    "parentBoxShadowColorHex": "#000000",
     "parentBoxShadowColorPalette": "",
     "parentBoxShadowColorOpacity": 1,
     "parentBoxShadowBlur": 2,
@@ -516,7 +576,6 @@
     "viewBorderStyle": "solid",
     "viewBorderColorHex": "#000000",
     "viewBorderColorOpacity": 0,
-    "tempViewBorderColorOpacity": 1,
     "viewBorderColorPalette": "",
     "viewBorderWidthType": "grouped",
     "viewBorderWidth": 1,
@@ -537,6 +596,18 @@
     "bgPaddingLeft": 0,
     "bgPaddingLeftSuffix": "px",
 
+    "imgPaddingType": "grouped",
+    "imgPadding": 10,
+    "imgPaddingSuffix": "px",
+    "imgPaddingTop": 0,
+    "imgPaddingTopSuffix": "px",
+    "imgPaddingRight": 0,
+    "imgPaddingRightSuffix": "px",
+    "imgPaddingBottom": 0,
+    "imgPaddingBottomSuffix": "px",
+    "imgPaddingLeft": 0,
+    "imgPaddingLeftSuffix": "px",
+
     "mediaBorderRadiusType": "grouped",
     "mediaBorderRadius": 0,
     "mediaBorderRadiusSuffix": "px",
@@ -550,6 +621,85 @@
     "mediaBorderBottomLeftRadiusSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageWidth": 600,
+    "maskCustomUploadImageHeight": 450,
+    "maskCustomUploadPositionX": 50,
+    "maskCustomUploadPositionY": 50,
+    "maskCustomUploadImageType": "internal",
+
+    "imgMaskShadowColorHex": "#000000",
+    "imgMaskShadowColorOpacity": 0,
+    "imgMaskShadowColorPalette": "",
+
+    "imgMaskShadowBlur": 0,
+    "imgMaskShadowVertical": 0,
+    "imgMaskShadowHorizontal": 0,
+
+    "imgBrightness": 100,
+    "imgHue": 0,
+    "imgSaturation": 100,
+    "imgContrast": 100,
+
+    "metaTitleMargin": 0,
+    "metaTitleMarginBottom": 0,
+    "metaTitleMarginBottomSuffix": "px",
+    "metaTitleMarginLeft": 0,
+    "metaTitleMarginLeftSuffix": "px",
+    "metaTitleMarginRight": 0,
+    "metaTitleMarginRightSuffix": "px",
+    "metaTitleMarginSuffix": "px",
+    "metaTitleMarginTop": 0,
+    "metaTitleMarginTopSuffix": "px",
+    "metaTitleMarginType": "grouped",
+
+    "metaTitlePadding": 0,
+    "metaTitlePaddingBottom": 0,
+    "metaTitlePaddingBottomSuffix": "px",
+    "metaTitlePaddingLeft": 0,
+    "metaTitlePaddingLeftSuffix": "px",
+    "metaTitlePaddingRight": 0,
+    "metaTitlePaddingRightSuffix": "px",
+    "metaTitlePaddingSuffix": "px",
+    "metaTitlePaddingTop": 0,
+    "metaTitlePaddingTopSuffix": "px",
+    "metaTitlePaddingType": "grouped",
+
+    "metaDateMargin": 0,
+    "metaDateMarginBottom": 0,
+    "metaDateMarginBottomSuffix": "px",
+    "metaDateMarginLeft": 0,
+    "metaDateMarginLeftSuffix": "px",
+    "metaDateMarginRight": 0,
+    "metaDateMarginRightSuffix": "px",
+    "metaDateMarginSuffix": "px",
+    "metaDateMarginTop": 0,
+    "metaDateMarginTopSuffix": "px",
+    "metaDateMarginType": "grouped",
+
+    "metaDatePadding": 0,
+    "metaDatePaddingBottom": 0,
+    "metaDatePaddingBottomSuffix": "px",
+    "metaDatePaddingLeft": 0,
+    "metaDatePaddingLeftSuffix": "px",
+    "metaDatePaddingRight": 0,
+    "metaDatePaddingRightSuffix": "px",
+    "metaDatePaddingSuffix": "px",
+    "metaDatePaddingTop": 0,
+    "metaDatePaddingTopSuffix": "px",
+    "metaDatePaddingType": "grouped"
   }
 }

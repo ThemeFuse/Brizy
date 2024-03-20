@@ -12,8 +12,7 @@ describe("Testing 'bindPopulation' function", function () {
   const method: PopulationMethod = {
     title: "test",
     value: "test",
-    attr: {},
-    varyAttr: []
+    attr: {}
   };
   const option: ToolbarItemType = {
     id: "test",

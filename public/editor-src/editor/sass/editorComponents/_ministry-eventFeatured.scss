@@ -11,19 +11,10 @@
     justify-content: center;
     width: 100%;
 
-    .image {
-      width: 100%;
-    }
-
     &--meta--title {
       a {
         color: inherit;
       }
-    }
-
-    & > *:not(:last-child),
-    &--meta--preview > *:not(:last-child) {
-      margin: 0;
     }
   }
 }

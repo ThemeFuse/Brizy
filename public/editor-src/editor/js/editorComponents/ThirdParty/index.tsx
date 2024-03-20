@@ -1,17 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { ComponentType, ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
-import Toolbar from "visual/component/Toolbar";
-import EditorComponent, {
-  ComponentsMeta
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import Editor from "visual/global/Editor";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Wrapper } from "../tools/Wrapper";
-import defaultValue from "./defaultValue.json";
-import * as sidebarConfig from "./sidebar";
-import * as toolbarConfig from "./toolbar";
-import { getComponentProps } from "./utils";
 
 export interface Value extends ElementModel {
   thirdPartyId: string;
@@ -26,45 +20,71 @@ class ThirdParty extends EditorComponent<Value, Props> {
     return "ThirdParty";
   }
 
-  static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
+  component: ComponentType | undefined;
 
-  renderComponent(v: Value) {
-    const thirdPartyId = v.thirdPartyId;
-    const components = Editor.getThirdPartyElements();
-    const { component: Component, config } = components[thirdPartyId];
-    const options = config.options ?? [];
-    const props = getComponentProps(v, options);
-
-    if (typeof Component === "function") {
-      const getItems = () => options;
-
-      const componentToolbar = this.makeToolbarPropsFromConfig2({ getItems });
-
-      return (
-        <Toolbar {...componentToolbar}>
-          <Component {...props} />
-        </Toolbar>
-      );
+  getComponent(ID: string): ComponentType | undefined {
+    if (this.component) {
+      return this.component;
     }
 
-    return `Missing Third Party Component: ${thirdPartyId}`;
+    const {
+      component,
+      config: { options }
+    } = Editor.getThirdPartyElements()[ID];
+
+    if (!component && typeof component !== "function") {
+      return;
+    }
+
+    this.component = component;
+
+    if (options) {
+      this.componentConfig = {
+        getConfig: options
+      };
+    }
+
+    return this.component;
   }
 
-  renderForEdit(v: Value): ReactNode {
+  render(): ReactNode {
+    const { thirdPartyId } = this.getValue();
+
+    const component = this.getComponent(thirdPartyId);
+
+    if (!component) {
+      return `Missing Third Party Component: ${thirdPartyId}`;
+    }
+
+    const v = this.getValue();
+
+    if (IS_EDITOR) {
+      if (this.componentConfig) {
+        return this.renderToolbars(this.renderForEdit(v, component));
+      }
+      return this.renderForEdit(v, component);
+    }
+
+    if (IS_PREVIEW) {
+      return this.renderForEdit(v, component);
+    }
+  }
+
+  // @ts-expect-error: Props
+  renderForEdit(
+    v: Record<string, unknown>,
+    Component: ComponentType
+  ): ReactNode {
     const { customCSS } = v;
     const className = "brz-third-party";
 
     return (
-      <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
-      >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            {this.renderComponent(v)}
-          </Wrapper>
-        </CustomCSS>
-      </Toolbar>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
+        <Wrapper {...this.makeWrapperProps({ className })}>
+          <Component {...v} />
+        </Wrapper>
+      </CustomCSS>
     );
   }
 }

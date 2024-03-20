@@ -32,7 +32,9 @@ export const getPlaceholder = (v: Value): string => {
     addCategoryFilterHeading2,
     addCategoryFilter3,
     addCategoryFilterParent3,
-    addCategoryFilterHeading3
+    addCategoryFilterHeading3,
+    dateFormat,
+    showMetaIcons
   } = v;
 
   const attr = [
@@ -44,6 +46,7 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showChildcare, "show_childcare"),
     getAttr(showResourceLink, "show_resourcelink"),
     getAttr(showPreview, "show_preview"),
+    getAttr(showMetaIcons, "show_meta_icons"),
     `detail_page='${getDetail(detailPage)}'`,
     `detail_page_button_text='${detailButtonText}'`,
     `howmany='${countPerPage}'`,
@@ -64,7 +67,8 @@ export const getPlaceholder = (v: Value): string => {
     `category_filter_heading_add2='${addCategoryFilterHeading2}'`,
     getAttr(addCategoryFilter3, "show_category_filter_add3"),
     `category_filter_parent_add3='${addCategoryFilterParent3}'`,
-    `category_filter_heading_add3='${addCategoryFilterHeading3}'`
+    `category_filter_heading_add3='${addCategoryFilterHeading3}'`,
+    `date_format='${dateFormat}'`
   ];
 
   return makePlaceholder({

@@ -6,6 +6,8 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
+
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -29,15 +31,75 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-eventLayout iframe, .brz && .brz-eventLayout video, .brz && .brz-eventLayout img, .brz && .brz-eventLayout--featured__preview":
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleElementOfMinistryBrandsImgBorder",
+        "cssStyleMinistryElementMediaBorderRadius",
+
+        ...(maskShape === "none"
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
+          : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media:hover :is(iframe, video,img))":
       {
-        standart: ["cssStyleMinistryElementMediaBorderRadius"]
+        standart: [
+          "cssStyleElementOfMinistryBrandsImgFilters",
+          "cssStyleMaskShape",
+          "cssStyleMaskCustomShape",
+          "cssStyleMaskSize",
+          "cssStyleMaskPosition",
+          "cssStyleMaskRepeat"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyEventLayoutHoverTransition"
+        ]
       },
     ".brz && .brz-eventLayout--featured": {
       standart: ["cssStyleElementOfMinistryBrandsColumnsNumberWithSpacing"]
     },
+    ".brz && .brz-eventLayout--featured__preview": {
+      standart: ["cssStyleElementOfMinistryBrandsFeaturedPreviewPadding"]
+    },
     ".brz && .brz-eventLayout--featured__item": {
-      standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
+      standart: [
+        "cssStyleElementOfMinistryBrandsHorizontalAlign",
+        "cssStyleElementOfMinistryBrandsMetaItemsSpacing"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-title": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemTitleMargin",
+        "cssStyleElementMinistryBrandsMetaItemTitlePadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-date": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemDateMargin",
+        "cssStyleElementMinistryBrandsMetaItemDatePadding"
+      ]
     },
     ".brz && .brz-eventLayout--view li:hover:not(.brz-eventLayout--view-active)":
       {
@@ -171,14 +233,14 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-eventLayout--featured__preview:hover": {
+    ".brz && .brz-eventLayout--featured__preview > div > span:hover": {
       standart: [
         "cssStyleElementOfMinistryBrandsPreviewTypography",
         "cssStyleElementOfMinistryBrandsPreviewColor"
       ],
       interval: [
         "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStylePropertyEventLayoutHoverTransition"
       ]
     },
     ".brz && .brz-eventLayout__pagination:hover": {

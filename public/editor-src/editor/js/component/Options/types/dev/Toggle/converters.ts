@@ -8,7 +8,7 @@ export const defaultValue: SimpleValue<Literal> = {
 };
 
 export const fromElementModel: Option.FromElementModel<"toggle"> = (get) => ({
-  value: String.read(get("value"))
+  value: String.read(get("value")) ?? defaultValue.value
 });
 
 export const toElementModel: Option.ToElementModel<"toggle"> = (values) => {

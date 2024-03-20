@@ -9,9 +9,15 @@
     flex-direction: column;
     width: 100%;
 
-    & > *:not(:last-child),
-    &--meta--preview > *:not(:last-child) {
-      margin: 0;
+    &--subscribe-event {
+      display: flex;
+      cursor: pointer;
+      border-radius: 3px;
+
+      a {
+        padding: 12px 24px;
+        color: inherit;
+      }
     }
   }
 

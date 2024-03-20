@@ -1,5 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Switch } from "../utils/types";
 
@@ -7,6 +7,7 @@ export interface Props extends WithClassName {
   meta: ComponentsMeta;
 }
 export interface Value extends ElementModel {
+  showTitle: Switch;
   showImage: Switch;
   showCategory: Switch;
   showGroup: Switch;
@@ -17,6 +18,7 @@ export interface Value extends ElementModel {
   showResourceLink: Switch;
   showPreview: Switch;
   groupLatest: Switch;
+  showMetaIcons: Switch;
   groupRecentList: string;
   groupSlug: string;
   category: string;
@@ -26,4 +28,5 @@ export interface Value extends ElementModel {
   source: string;
   detailPageTitle: string;
   slug: string;
+  dateFormat: string;
 }

@@ -5,9 +5,7 @@ import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent, {
-  ComponentsMeta
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
 import { xss } from "visual/utils/xss";
@@ -17,6 +15,7 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import type { Meta, Value } from "./types";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 

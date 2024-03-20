@@ -6,13 +6,7 @@ import { toolbarParentColors } from "../toolbarParent";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  component,
-  context
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
   const config = Config.getAll();
 
   return [
@@ -86,6 +80,12 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabSermonDetail",
               label: t("Display"),
               options: [
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
                 {
                   id: "showImage",
                   type: "switch",
@@ -180,13 +180,7 @@ export const getItems: GetItems<Value, Props> = ({
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     {
       id: "toolbarSettings",
       type: "popover",

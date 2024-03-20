@@ -1,14 +1,15 @@
 import { Hex } from "visual/utils/color/Hex";
-import { NoEmptyBlur } from "./NoEmptyBlur";
 import { Palette } from "visual/utils/color/Palette";
-import { NoEmptyOpacity } from "./NoEmptyOpacity";
 import { match } from "visual/utils/fp/match";
+import { NoEmptyBlur } from "./NoEmptyBlur";
+import { NoEmptyOpacity } from "./NoEmptyOpacity";
 
 // region Empty
 export interface Empty {
   hex: Hex;
   opacity: 0;
   blur: 0;
+  palette: undefined;
   vertical: 0;
   horizontal: 0;
   tempOpacity: NoEmptyOpacity;
@@ -26,6 +27,7 @@ export const fromNoEmpty = (v: NoEmpty): Empty => ({
   vertical: 0,
   horizontal: 0,
   hex: v.hex,
+  palette: undefined,
   tempVertical: v.vertical,
   tempHorizontal: v.horizontal,
   tempBlur: v.blur,

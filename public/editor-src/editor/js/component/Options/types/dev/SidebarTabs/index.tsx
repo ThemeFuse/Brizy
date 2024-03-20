@@ -7,7 +7,7 @@ import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
-import { uiSelector } from "visual/redux/selectors-new";
+import { uiSelector } from "visual/redux/selectors";
 import { always, pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
 import { WithClassName, WithId } from "visual/utils/options/attributes";
@@ -55,7 +55,13 @@ export const SidebarTabs: FC<Props> = ({ tabs, toolbar }) => {
         always(alignment),
         nextAlign,
         (alignment) =>
-          updateUI("rightSidebar", { alignment, isOpen, lock, activeTab, type }),
+          updateUI("rightSidebar", {
+            alignment,
+            isOpen,
+            lock,
+            activeTab,
+            type
+          }),
         dispatch,
         () => {
           const tooltip = getCurrentTooltip();

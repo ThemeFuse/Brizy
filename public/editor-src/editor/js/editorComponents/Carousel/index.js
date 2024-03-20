@@ -11,7 +11,7 @@ import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import { style } from "./styles";
-import * as toolbarExtend from "./toolbarExtend";
+import toolbarConfigFn from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
 class Carousel extends EditorComponent {
@@ -155,6 +155,7 @@ class Carousel extends EditorComponent {
       sliderArrows,
       sliderAutoPlay,
       sliderAutoPlaySpeed,
+      sliderAnimation,
       sliderDots,
       transitionSpeed,
       swipe,
@@ -172,9 +173,10 @@ class Carousel extends EditorComponent {
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
 
+    const toolbarConfig = toolbarConfigFn(v, this.handleValueChange);
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
-      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarExtend, null, {
+      toolbarExtend: this.makeToolbarPropsFromConfig2(toolbarConfig, null, {
         allowExtend: false,
         allowExtendFromThirdParty: true
       }),
@@ -186,6 +188,7 @@ class Carousel extends EditorComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderDots,
+      sliderAnimation,
       transitionSpeed,
       swipe,
       dynamic,

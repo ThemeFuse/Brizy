@@ -266,10 +266,7 @@ export function style(
       interval: ["cssStyleHoverTransition"]
     },
     ".brz && .brz-eventCalendar-pagination .brz-eventCalendar-heading": {
-      standart: [
-        "cssStyleElementMinistryEventCalendarPaginationRight",
-        "cssStyleElementMinistryEventCalendarPaginationLeft"
-      ]
+      standart: ["cssStyleElementMinistryEventCalendarPaginationSpacing"]
     },
     ".brz && tr.brz-eventCalendar-row-weekdays th span:hover": {
       standart: [

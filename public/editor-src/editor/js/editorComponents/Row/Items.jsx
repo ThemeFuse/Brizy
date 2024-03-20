@@ -322,21 +322,27 @@ class RowItems extends EditorArrayComponent {
             ? [
                 {
                   id: "emptyItem",
-                  type: "legacy-button",
-                  icon: "nc-add",
-                  title: t("Add New Column"),
+                  type: "button",
+                  config: {
+                    icon: "nc-add",
+                    title: t("Add New Column"),
+                    reverseTheme: true
+                  },
                   position: 100,
-                  onChange: () => {
+                  onClick: () => {
                     this.addColumn(itemIndex + 1);
                   }
                 },
                 {
                   id: "duplicate",
-                  type: "legacy-button",
-                  icon: "nc-duplicate",
-                  title: t("Duplicate"),
+                  type: "button",
+                  config: {
+                    icon: "nc-duplicate",
+                    title: t("Duplicate"),
+                    reverseTheme: true
+                  },
                   position: 200,
-                  onChange: () => {
+                  onClick: () => {
                     this.cloneItem(itemIndex);
                   }
                 }
@@ -344,12 +350,15 @@ class RowItems extends EditorArrayComponent {
             : []),
           {
             id: "remove",
-            type: "legacy-button",
-            title: t("Delete"),
-            icon: "nc-trash",
+            type: "button",
+            config: {
+              icon: "nc-trash",
+              title: t("Delete"),
+              reverseTheme: true
+            },
             disabled: isOnly && insidePopup && !isInner,
             position: 250,
-            onChange: () => {
+            onClick: () => {
               hideToolbar();
               this.removeItem(itemIndex);
             }

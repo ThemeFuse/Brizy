@@ -1,5 +1,5 @@
 import type { ElementModel } from "visual/component/Elements/Types";
-import type { ComponentsMeta } from "visual/editorComponents/EditorComponent";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import type { WithClassName } from "visual/utils/options/attributes";
 import type { Switch } from "../utils/types";
 
@@ -30,6 +30,7 @@ export interface Value extends ElementModel {
   showSearch: Switch;
   searchPlaceholder: string;
   showPagination: Switch;
+  showMetaIcons: Switch;
   addCategoryFilter: Switch;
   addCategoryFilterParent: string;
   addCategoryFilterHeading: string;
@@ -39,4 +40,5 @@ export interface Value extends ElementModel {
   addCategoryFilter3: Switch;
   addCategoryFilterParent3: string;
   addCategoryFilterHeading3: string;
+  dateFormat: string;
 }

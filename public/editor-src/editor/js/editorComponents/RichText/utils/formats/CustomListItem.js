@@ -1,4 +1,5 @@
 import Quill from "quill";
+
 // import { getStyle } from "./BackgroundGradient";
 
 let Parchment = Quill.import("parchment");
@@ -26,30 +27,12 @@ class CustomListItem extends ListItemBlot {
       if (attributes[oldName]) {
         const value = attributes[oldName].value(child.domNode);
         super.format(newName, value);
-        if (oldName === "color") {
-          super.format("block-colorPalette", null);
-        }
-        if (oldName === "colorPalette") {
-          super.format("block-color", null);
-        }
       }
     } else {
       if (this.attributes.hasOwnProperty(newName)) {
         super.format(newName, null);
       }
     }
-  }
-
-  optimize(context) {
-    super.optimize(context);
-
-    // we can't change delta in this method
-    // if we do there something like this
-    // this.copyFormatToParent("colorPalette", "block-colorPalette");
-    // it will break the quill.
-    // It seems, we can update only styles here, not classes
-    this.copyFormatToParent("color", "block-color");
-    this.copyFormatToParent("opacity", "block-opacity");
   }
 }
 
