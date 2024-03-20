@@ -447,3 +447,7 @@ export function cssStyleElementEventLayoutTabAlign({
     prefix: "tab"
   });
 }
+
+export function cssStylePropertyEventLayoutHoverTransition(): string {
+  return "transition-property: filter, color, opacity, background, border-color, box-shadow;";
+}

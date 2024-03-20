@@ -10,6 +10,7 @@ import {
   stylesSelector
 } from "visual/redux/selectors";
 import {
+  defaultKits,
   defaultKitsData,
   defaultKitsMeta,
   defaultPopupsData,
@@ -47,22 +48,31 @@ class BlocksContainer extends Component {
   };
 
   mounted = false;
-  async getMeta() {
+  async getMeta(kit) {
     try {
       return this.props.type === "popup"
         ? await defaultPopupsMeta(Config.getAll())
-        : await defaultKitsMeta(Config.getAll());
+        : await defaultKitsMeta(Config.getAll(), kit);
     } catch (e) {
       console.error(e);
       ToastNotification.error(t("Something went wrong on getting meta"));
     }
   }
 
-  async getBlockResolve(id) {
+  async getKits() {
+    try {
+      return await defaultKits(Config.getAll());
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting meta"));
+    }
+  }
+
+  async getBlockResolve(kit) {
     try {
       return this.props.type === "popup"
-        ? await defaultPopupsData(Config.getAll(), id)
-        : await defaultKitsData(Config.getAll(), id);
+        ? await defaultPopupsData(Config.getAll(), kit)
+        : await defaultKitsData(Config.getAll(), kit);
     } catch (e) {
       console.error(e);
       ToastNotification.error(
@@ -71,9 +81,8 @@ class BlocksContainer extends Component {
     }
   }
 
-  getKitData(kits, kitId = this.props.selectedKit) {
-    const kit = kits.find(({ id }) => id === kitId);
-    const { categories, blocks, styles, types } = kit;
+  getKitData(kits, allKit) {
+    const { categories, blocks, styles, types } = kits;
 
     // categories
     const allCategoriesData = [
@@ -86,7 +95,7 @@ class BlocksContainer extends Component {
     );
 
     return {
-      kits,
+      kits: allKit,
       styles,
       types,
       categories: categoriesData,
@@ -94,12 +103,16 @@ class BlocksContainer extends Component {
     };
   }
 
-  addThumbData({ thumbnailSrc, thumbnailWidth, thumbnailHeight }) {
+  addPopupMeta({ thumbnailSrc, thumbnailWidth, thumbnailHeight }) {
     return {
       _thumbnailSrc: thumbnailSrc,
       _thumbnailWidth: thumbnailWidth,
       _thumbnailHeight: thumbnailHeight
     };
+  }
+
+  getActiveKit(kits, kitId = this.props.selectedKit) {
+    return kits.find(({ id }) => id === kitId);
   }
 
   getPopupData({ blocks, categories = [], types = [] }) {
@@ -128,18 +141,33 @@ class BlocksContainer extends Component {
 
   async componentDidMount() {
     this.mounted = true;
-    const metaData = await this.getMeta();
 
-    if (this.mounted) {
-      const state =
-        this.props.type === "normal"
-          ? this.getKitData(metaData)
-          : this.getPopupData(metaData);
+    if (this.props.type === "normal") {
+      const kits = await this.getKits();
 
-      this.setState({
-        ...state,
-        loading: false
-      });
+      const activeKit = this.getActiveKit(kits) ?? kits[0];
+
+      const metaData = await this.getMeta(activeKit);
+
+      if (this.mounted) {
+        const state = this.getKitData(metaData, kits);
+
+        this.setState({
+          ...state,
+          loading: false
+        });
+      }
+    } else {
+      const metaData = await this.getMeta();
+
+      if (this.mounted) {
+        const state = this.getPopupData(metaData);
+
+        this.setState({
+          ...state,
+          loading: false
+        });
+      }
     }
   }
 
@@ -148,13 +176,14 @@ class BlocksContainer extends Component {
   }
 
   handleThumbnailAdd = async (thumbnailData) => {
-    const { projectFonts, onAddBlocks, onClose } = this.props;
-    const blockData = await this.getBlockResolve(thumbnailData.id);
+    const { projectFonts, onAddBlocks, onClose, type } = this.props;
+
+    const blockData = await this.getBlockResolve(thumbnailData);
 
     const resolve = {
       ...blockData,
       blockId: thumbnailData.id,
-      meta: this.addThumbData(thumbnailData)
+      ...(type === "popup" && { meta: this.addPopupMeta(thumbnailData) })
     };
     const fontsDiff = getBlocksStylesFonts(
       getUsedModelsFonts({ models: resolve }),
@@ -177,34 +206,45 @@ class BlocksContainer extends Component {
       return;
     }
 
-    const newState = this.getKitData(kits, kitId);
-    const { styles } = newState;
+    this.setState({
+      loading: true
+    });
 
-    this.setState(newState);
+    const activeKit = kits.find((kit) => kit.id === kitId);
 
-    if (
-      styles.some(
-        ({ id }) => !projectStyles.some(({ id: stId }) => stId === id)
-      )
-    ) {
-      const stylesFonts = styles.reduce(
-        (acc, { fontStyles }) => acc.concat(getUsedStylesFonts(fontStyles)),
-        []
-      );
-      const fonts = await normalizeFonts(
-        getBlocksStylesFonts(stylesFonts, projectFonts)
-      );
+    if (activeKit) {
+      const metaData = await this.getMeta(activeKit);
+      const newState = this.getKitData(metaData, kits);
+      const { styles } = newState;
 
-      dispatch(
-        importKit({
-          selectedKit: kitId,
-          // TEMP. Check styles reducers and change this condition
-          styles: styles ? normalizeStyles(styles) : undefined,
-          fonts
-        })
-      );
+      this.setState({ ...newState, loading: false });
+
+      if (
+        styles.some(
+          ({ id }) => !projectStyles.some(({ id: stId }) => stId === id)
+        )
+      ) {
+        const stylesFonts = styles.reduce(
+          (acc, { fontStyles }) => acc.concat(getUsedStylesFonts(fontStyles)),
+          []
+        );
+        const fonts = await normalizeFonts(
+          getBlocksStylesFonts(stylesFonts, projectFonts)
+        );
+
+        dispatch(
+          importKit({
+            selectedKit: kitId,
+            // TEMP. Check styles reducers and change this condition
+            styles: styles ? normalizeStyles(styles) : undefined,
+            fonts
+          })
+        );
+      } else {
+        dispatch(updateCurrentKitId(kitId));
+      }
     } else {
-      dispatch(updateCurrentKitId(kitId));
+      ToastNotification.error(t("Something went wrong!"));
     }
   };
 

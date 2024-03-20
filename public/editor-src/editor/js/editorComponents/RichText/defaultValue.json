@@ -34,6 +34,7 @@
 
     "bgImageWidth": 0,
     "bgImageHeight": 0,
+    "bgImageType": "internal",
 
     "bgPositionX": 50,
     "bgPositionY": 50,
@@ -41,6 +42,12 @@
     "bgPopulation": "",
     "bgPopulationEntityType": "",
     "bgPopulationEntityId": "",
+
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "capitalize": false,
 
     "contentHorizontalAlign": "left",
 
@@ -341,6 +348,7 @@
     "linkPage": "",
     "linkPageTitle": "",
     "linkPageSource": null,
+    "linkInternalBlank": "off",
     "linkSource": "",
     "linkType": "external",
     "linkExternal": "",

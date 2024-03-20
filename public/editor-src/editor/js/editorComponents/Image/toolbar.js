@@ -3,6 +3,7 @@ import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import {
   MaskPositions,
@@ -100,6 +101,7 @@ export const getItems =
     const imageExtension = dvv("imageExtension");
     const imagePopulation = dvv("imagePopulation");
     const linkPopup = dvv("linkPopup");
+    const isExternalImage = dvv("imageType") === ImageType.External;
 
     const dcSize = getImageDCSize(imagePopulation, context);
     const isCustomSizeType = sizeType === "custom";
@@ -134,6 +136,7 @@ export const getItems =
                     disabled:
                       ((isSVGExtension(imageExtension) ||
                         isGIFExtension(imageExtension) ||
+                        isExternalImage ||
                         imagePopulation) &&
                         device !== "desktop") ||
                       isBigImageFromGallery,
@@ -152,7 +155,10 @@ export const getItems =
                       type: "imageUpload",
                       config: {
                         edit: device === "desktop",
-                        disableSizes: inGallery && layout === "justified"
+                        disableSizes:
+                          (inGallery && layout === "justified") ||
+                          isExternalImage,
+                        pointer: !isExternalImage
                       }
                     }
                   },
@@ -165,7 +171,8 @@ export const getItems =
                       isSVGExtension(imageExtension) ||
                       isGIFExtension(imageExtension) ||
                       sizeType !== "custom" ||
-                      isBigImageFromGallery,
+                      isBigImageFromGallery ||
+                      isExternalImage,
                     config: {
                       min: 100,
                       max: 200,
@@ -182,7 +189,8 @@ export const getItems =
                       isSVGExtension(imageExtension) ||
                       isGIFExtension(imageExtension) ||
                       isBigImageFromGallery ||
-                      isStory(config),
+                      isStory(config) ||
+                      isExternalImage,
                     devices: "desktop"
                   }
                 ]
@@ -382,6 +390,7 @@ export const getItems =
           size: "medium",
           title: t("Link")
         },
+        devices: "desktop",
         position: 90,
         disabled: (inGallery && dvv("linkLightBox") === "on") || withBigImage,
         options: [
@@ -400,8 +409,12 @@ export const getItems =
                   {
                     id: "linkPage",
                     type: "internalLink",
-                    label: t("Find Page"),
-                    devices: "desktop"
+                    label: t("Find Page")
+                  },
+                  {
+                    id: "linkInternalBlank",
+                    label: t("Open In New Tab"),
+                    type: "switch"
                   }
                 ]
               },
@@ -418,24 +431,18 @@ export const getItems =
                       id: "linkExternal",
                       type: "inputText",
                       placeholder: "http://",
-                      disabled: inGallery,
-                      devices: "desktop",
-                      config: {
-                        size: "medium"
-                      }
+                      disabled: inGallery
                     }
                   },
                   {
                     id: "linkExternalBlank",
                     label: t("Open In New Tab"),
-                    type: "switch",
-                    devices: "desktop"
+                    type: "switch"
                   },
                   {
                     id: "linkExternalRel",
                     label: t("Make it Nofollow"),
-                    type: "switch",
-                    devices: "desktop"
+                    type: "switch"
                   }
                 ]
               },
@@ -445,7 +452,6 @@ export const getItems =
                 options: [
                   toolbarLinkAnchor({
                     v,
-                    devices: "desktop",
                     disabled: isStory(config)
                   })
                 ]

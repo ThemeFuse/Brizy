@@ -10,7 +10,6 @@
 
   ul {
     list-style: none;
-    padding: 0;
   }
 
   a {
@@ -27,8 +26,6 @@
   &--view {
     ul {
       display: flex;
-      margin: 0;
-      padding: 0;
 
       li {
         a {
@@ -70,15 +67,16 @@
       height: 100%;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.8);
-      transition: 0.2s;
       opacity: 0;
-      visibility: hidden;
 
-      div {
+       > div {
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
-        span {
-          height: 100%;
+         > span {
+          height: auto;
           align-items: center;
           text-align: center;
           display: flex;
@@ -89,33 +87,10 @@
     }
 
     &__item {
-      * {
-        margin: 0 0 0.5rem 0;
-      }
-
-      &-image {
-        width: 100%;
-        position: relative;
-        padding-bottom: 56.25%;
-
-        img {
-          width: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          object-fit: cover;
-        }
-
-        .brz-eventLayout--featured__preview {
-          span {
-            color: inherit;
-          }
-        }
-
+      .brz-ministryBrands__item--media {
         &:hover {
           .brz-eventLayout--featured__preview {
             opacity: 1;
-            visibility: visible;
           }
         }
       }
@@ -125,7 +100,7 @@
   &--filters {
     display: flex;
     flex-wrap: wrap;
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem;
     margin-bottom: 2rem;
 
     &-form {
@@ -266,7 +241,7 @@
         border-bottom-width: 1px;
         border-bottom-style: solid;
 
-        span {
+        span:last-child {
           text-transform: none;
           font-size: 50%;
         }

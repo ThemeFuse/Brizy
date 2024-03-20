@@ -15,7 +15,6 @@ interface BaseDCItem {
   alias?: string;
   display?: "block" | "inline";
   attr?: Record<string, Literal>;
-  varyAttr: Array<"type" | "id">;
 }
 
 export interface ConfigDCItem extends BaseDCItem {
@@ -57,4 +56,9 @@ export type DCGroup<T extends "wp" | "cloud"> = Cnf[T];
 export interface DynamicContent<T extends "wp" | "cloud"> {
   liveInBuilder?: boolean;
   groups?: DCGroup<T>;
+  handler?: (
+    res: Response<ConfigDCItem[]>,
+    rej: Response<string>,
+    extraData: { entityType: string; groupType: DCTypes }
+  ) => void;
 }

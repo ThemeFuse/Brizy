@@ -52,24 +52,30 @@ export default class TimelineItems extends EditorArrayComponent {
           },
           {
             id: "duplicate",
-            type: "legacy-button",
-            icon: "nc-duplicate",
-            title: t("Duplicate"),
+            type: "button",
+            config: {
+              icon: "nc-duplicate",
+              title: t("Duplicate"),
+              reverseTheme: true
+            },
             devices: "desktop",
             position: 210,
-            onChange: () => {
+            onClick: () => {
               this.cloneItem(itemIndex);
             }
           },
           {
             id: "remove",
-            type: "legacy-button",
-            icon: "nc-trash",
-            title: t("Delete"),
+            type: "button",
+            config: {
+              icon: "nc-trash",
+              title: t("Delete"),
+              reverseTheme: true
+            },
             devices: "desktop",
             position: 220,
             disabled: items.length === 1,
-            onChange: () => {
+            onClick: () => {
               hideToolbar();
               this.removeItem(itemIndex);
             }

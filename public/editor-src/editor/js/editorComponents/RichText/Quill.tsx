@@ -191,6 +191,13 @@ class QuillComponent extends React.Component<Props> {
       const format = this.getSelectionFormat();
       this.props.onSelectionChange(format, this.getCoords(range));
       this.save(quill.root.innerHTML);
+
+      requestAnimationFrame(() => {
+        if (!quill.getSelection() && quill.hasFocus()) {
+          const { index, length } = range ?? { index: 0, length: 0 };
+          quill.setSelection(index, length);
+        }
+      });
     });
 
     this.quill = quill;

@@ -91,21 +91,27 @@ class SectionItems extends EditorArrayComponent {
           },
           {
             id: "duplicate",
-            type: "legacy-button",
-            icon: "nc-duplicate",
-            title: t("Duplicate"),
+            type: "button",
+            config: {
+              icon: "nc-duplicate",
+              title: t("Duplicate"),
+              reverseTheme: true
+            },
             position: 225,
-            onChange: () => {
+            onClick: () => {
               this.cloneItem(itemIndex);
             }
           },
           {
             id: "remove",
-            type: "legacy-button",
-            icon: "nc-trash",
-            title: t("Delete"),
+            type: "button",
+            config: {
+              icon: "nc-trash",
+              title: t("Delete"),
+              reverseTheme: true
+            },
             position: 250,
-            onChange: () => {
+            onClick: () => {
               hideToolbar();
               this.removeItem(itemIndex);
             }
@@ -172,7 +178,6 @@ class SectionItems extends EditorArrayComponent {
             dots={sliderDots !== "none"}
             dotsClass={`brz-slick-slider__dots brz-slick-slider__dots--${sliderDots}`}
             fade={sliderAnimation === "fade"}
-            verticalSwiping={sliderAnimation === "fade"}
             vertical={sliderAnimation === "vertical"}
           >
             {items}
@@ -181,7 +186,12 @@ class SectionItems extends EditorArrayComponent {
       }
 
       if (IS_PREVIEW) {
-        const { sliderAutoPlay, sliderAutoPlaySpeed } = this.props;
+        const {
+          sliderAutoPlay,
+          sliderAutoPlaySpeed,
+          sliderAnimation,
+          sliderAnimationSpeed
+        } = this.props;
 
         const responsive = [
           {
@@ -210,6 +220,7 @@ class SectionItems extends EditorArrayComponent {
             data-vertical={sliderAnimation === "vertical"}
             data-auto-play={sliderAutoPlay}
             data-auto-play-speed={sliderAutoPlaySpeed * 1000}
+            data-animation-speed={sliderAnimationSpeed * 1000}
             data-swipe={true}
             data-responsive={encodeURIComponent(JSON.stringify(responsive))}
           >

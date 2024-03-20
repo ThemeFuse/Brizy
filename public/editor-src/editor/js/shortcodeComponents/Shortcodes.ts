@@ -32,6 +32,7 @@ import MinistryBrandsGroupFeatured from "./MinistryBrands/MinistryBrandsGroupFea
 import MinistryBrandsGroupLayout from "./MinistryBrands/MinistryBrandsGroupLayout";
 import MinistryBrandsGroupList from "./MinistryBrands/MinistryBrandsGroupList";
 import MinistryBrandsGroupSlider from "./MinistryBrands/MinistryBrandsGroupSlider";
+import MinistryBrandsPrayerWidget from "./MinistryBrands/MinistryBrandsPrayerWidget";
 import MinistryBrandsSermonDetail from "./MinistryBrands/MinistryBrandsSermonDetail";
 import MinistryBrandsSermonFeatured from "./MinistryBrands/MinistryBrandsSermonFeatured";
 import MinistryBrandsSermonLayout from "./MinistryBrands/MinistryBrandsSermonLayout";
@@ -216,6 +217,7 @@ export const ProShortCodes = {
   MinistryBrandsEventList: false,
   MinistryBrandsEventDetail: false,
   MinistryBrandsFormWidget: false,
+  MinistryBrandsPrayerWidget: false,
 
   Leadific: false,
 
@@ -367,6 +369,7 @@ export const ShortCodesKeywords = {
     "Ministry Brands Event Detail event details activity information",
   MinistryBrandsFormWidget:
     "Ministry Brands Form Widget organization form group submission",
+  MinistryBrandsPrayerWidget: "Ministry Brands Prayer prayer request",
 
   Leadific: "Leadific engagement",
 
@@ -507,6 +510,7 @@ export const CloudShortCodes = {
   MinistryBrandsEventList,
   MinistryBrandsEventDetail,
   MinistryBrandsFormWidget,
+  MinistryBrandsPrayerWidget,
 
   Leadific,
 

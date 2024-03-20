@@ -3,16 +3,11 @@ import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
+import { helperDateFormatInputHTML } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  component,
-  context,
-  state
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
   const config = Config.getAll();
 
   return [
@@ -21,7 +16,7 @@ export const getItems: GetItems<Value, Props> = ({
       type: "popover",
       config: {
         icon: "t2-group-detail",
-        title: t("Sermon Detail")
+        title: t("Group Detail")
       },
       position: 60,
       options: [
@@ -51,6 +46,12 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabGroupDetail",
               label: t("Display"),
               options: [
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
                 {
                   id: "showImage",
                   type: "switch",
@@ -112,18 +113,28 @@ export const getItems: GetItems<Value, Props> = ({
                   label: t("Previous Page")
                 }
               ]
+            },
+            {
+              id: "tabMore",
+              label: t("More"),
+              options: [
+                {
+                  id: "dateFormat",
+                  type: "inputText",
+                  devices: "desktop",
+                  helper: {
+                    enabled: true,
+                    content: helperDateFormatInputHTML
+                  },
+                  label: t("Date Format")
+                }
+              ]
             }
           ]
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     {
       id: "toolbarSettings",
       type: "popover",

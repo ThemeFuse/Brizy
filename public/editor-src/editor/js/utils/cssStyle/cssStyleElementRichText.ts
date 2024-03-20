@@ -1,4 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { readToggle } from "visual/component/Options/types/dev/ToggleButton/utils";
 import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import {
@@ -17,10 +18,10 @@ import { capByPrefix } from "visual/utils/string";
 import {
   styleAlignHorizontal,
   styleBgImage,
+  styleColor,
   styleExportBgImage,
   styleTypography2FontSizeSuffix
 } from "visual/utils/style2";
-import { styleColor } from "visual/utils/style2";
 import {
   styleElementRichTextDCGradient,
   styleElementRichTextDCGradientBackground,
@@ -500,7 +501,7 @@ export function cssStyleElementRichTextDCUppercase({
 
   const capitalize = dvv("dynamicTextCapitalize");
 
-  return capitalize === "on" ? `text-transform : uppercase !important;` : "";
+  return readToggle(capitalize) ? `text-transform : uppercase !important;` : "";
 }
 
 export function cssStyleElementRichTextAlign({

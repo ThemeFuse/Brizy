@@ -6,6 +6,7 @@ export function style(
   vs: Value,
   vd: Value
 ): [string, string, string] {
+  const { maskShape = "none" } = v;
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -26,15 +27,64 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-eventDetail__item": {
-      standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleElementOfMinistryBrandsImgBorder",
+        "cssStyleMinistryElementMediaBorderRadius",
+        ...(maskShape === "none"
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
+          : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     },
-    ".brz && :is(.brz-eventDetail__item--meta,.brz-eventDetail__item--meta--container):hover":
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgFilters",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz &&:hover .brz-eventDetail__item": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsHorizontalAlign",
+        "cssStyleElementOfMinistryBrandsSpacing"
+      ]
+    },
+    ".brz &&:hover .brz-ministryBrands__meta--icons": {
+      standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
+    },
+    ".brz && :is(.brz-eventDetail__item--meta,.brz-eventDetail__item--meta--container)":
       {
-        standart: ["getAllCssStyleTypography"],
-        interval: ["cssStyleHoverTransition"]
+        standart: ["getAllCssStyleTypography"]
       },
-    ".brz && :is(.brz-eventDetail__item--meta, .brz-eventDetail__item--meta > *:not(a)):hover":
+    ".brz && :is(.brz-eventDetail__item--meta:hover, .brz-eventDetail__item--meta:hover > *:not(a))":
       {
         standart: ["cssStyleColor"],
         interval: ["cssStyleHoverTransition"]
@@ -72,8 +122,105 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-ministryBrands__item--meta-title": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemTitleMargin",
+        "cssStyleElementMinistryBrandsMetaItemTitlePadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-date": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemDateMargin",
+        "cssStyleElementMinistryBrandsMetaItemDatePadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-category": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCategoryMargin",
+        "cssStyleElementMinistryBrandsMetaItemCategoryPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-group": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemGroupMargin",
+        "cssStyleElementMinistryBrandsMetaItemGroupPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-location": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemLocationMargin",
+        "cssStyleElementMinistryBrandsMetaItemLocationPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-address": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemAddressMargin",
+        "cssStyleElementMinistryBrandsMetaItemAddressPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-room": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemRoomMargin",
+        "cssStyleElementMinistryBrandsMetaItemRoomPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-coordinator": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorMargin",
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-coordinatorEmail": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorEmailMargin",
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorEmailPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-coordinatorPhone": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorPhoneMargin",
+        "cssStyleElementMinistryBrandsMetaItemCoordinatorPhonePadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-cost": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCostMargin",
+        "cssStyleElementMinistryBrandsMetaItemCostPadding"
+      ]
+    },
+
+    ".brz && .brz-ministryBrands__item--meta-website": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemWebsiteMargin",
+        "cssStyleElementMinistryBrandsMetaItemWebsitePadding"
+      ]
+    },
     ".brz && .brz-ministryBrands__item--meta--button a:hover": {
       standart: ["cssStyleElementMinistryBrandsButtonsColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-eventDetail__item--subscribe-event:hover": {
+      standart: [
+        "cssStyleElementMinistryEventDetailSubscribeEventButtonColor",
+        "cssStyleElementMinistryEventDetailSubscribeEventButtonTypography",
+        "cssStyleElementMinistryEventDetailSubscribeEventButtonBgColor",
+        "cssStyleElementMinistryEventDetailSubscribeEventButtonBgGradient",
+        "cssStyleElementMinistryEventDetailSubscribeEventButtonBoxShadow",
+        "cssStyleElementMinistryEventDetailSubscribeEventButtonBorder"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
@@ -89,13 +236,6 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover :is(.brz-eventDetail__item, .brz-eventDetail__item--meta--preview) > *:not(:last-child)":
-      {
-        standart: ["cssStyleElementOfMinistryBrandsSpacing"]
-      },
-    ".brz &&:hover .brz-eventDetail__item :is(iframe,video,img)": {
-      standart: ["cssStyleMinistryElementMediaBorderRadius"]
-    },
     ".brz && .brz-eventDetail__item--meta--preview *:not(a):hover": {
       standart: [
         "cssStyleElementOfMinistryBrandsPreviewTypography",
@@ -103,9 +243,14 @@ export function style(
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-eventDetail__item :not(.brz-eventDetail__item--meta--preview, .brz-ministryBrands__item--meta--button) a:hover":
+    ".brz && .brz-eventDetail__item :not(.brz-eventDetail__item--subscribe-event, .brz-ministryBrands__item--meta--button) a:hover":
       {
         standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
+        interval: ["cssStyleHoverTransition"]
+      },
+    ".brz && .brz-eventDetail__item--meta--container > .brz-ministryBrands__meta--icons:hover":
+      {
+        standart: ["cssStyleColor"],
         interval: ["cssStyleHoverTransition"]
       }
   };

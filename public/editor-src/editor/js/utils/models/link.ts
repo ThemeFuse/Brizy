@@ -25,6 +25,7 @@ export interface Value extends ElementModel {
   linkAnchor?: unknown;
   linkToSlide?: unknown;
   linkExternalBlank?: unknown;
+  linkInternalBlank?: unknown;
   linkExternalType?: unknown;
   linkExternalRel?: unknown;
   linkPopup?: unknown;
@@ -124,6 +125,7 @@ export const getLinkData = <T extends Value>(v: T): Link => {
     linkAnchor,
     linkToSlide,
     linkExternalBlank,
+    linkInternalBlank,
     linkExternalRel,
     linkPopup,
     linkUpload,
@@ -153,10 +155,15 @@ export const getLinkData = <T extends Value>(v: T): Link => {
       ? makeDataAttr({ name: "link-story", value: slide })
       : undefined;
 
+  const target =
+    type === "page"
+      ? LinkTarget.read(linkInternalBlank)
+      : LinkTarget.read(linkExternalBlank);
+
   return {
     type,
     href: data[type],
-    target: LinkTarget.read(linkExternalBlank),
+    target,
     rel: Str.read(linkExternalRel),
     slide: slideAnchor
   };

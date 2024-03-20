@@ -70,28 +70,6 @@
                   list-style-type: none;
                   text-decoration: none;
 
-                  .brz-eventCalendar-title {
-                    position: relative;
-
-                    &:hover {
-                      .brz-eventCalendar-title__subscribe__icon {
-                        opacity: 1;
-                        transition-property: opacity;
-                        transition-duration: 0.3s;
-
-                        a {
-                          transition: inherit;
-                        }
-                      }
-                    }
-                    .brz-eventCalendar-title__subscribe__icon {
-                      position: absolute;
-                      right: 100%;
-                      opacity: 0;
-                      transition-duration: 0.3s;
-                    }
-                  }
-
                   li .brz-eventCalendar-title a {
                     text-decoration: none;
                     color: inherit;

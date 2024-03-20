@@ -2,7 +2,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { Target } from "visual/component/Link/types/Target";
 import { Block } from "visual/types";
 import { WithClassName } from "visual/utils/options/attributes";
-import { ComponentsMeta } from "../EditorComponent";
+import { ComponentsMeta } from "../EditorComponent/types";
 
 export interface Value extends ElementModel {
   leadificCustomFields: string;

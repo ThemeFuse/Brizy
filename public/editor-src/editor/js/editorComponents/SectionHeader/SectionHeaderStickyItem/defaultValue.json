@@ -20,6 +20,7 @@
     "bgPopulationEntityType": "",
     "bgPopulationEntityId": "",
     "bgImageExtension": "",
+    "bgImageType": "internal",
 
     "brightness": 100,
     "hue": 0,
@@ -228,6 +229,7 @@
     "maskCustomUploadImageHeight": 450,
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
+    "masKCustomUploadImageType": "internal",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

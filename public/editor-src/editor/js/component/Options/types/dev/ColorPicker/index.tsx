@@ -14,9 +14,9 @@ import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
+import { Value } from "visual/utils/options/ColorPicker/entities/Value";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { Value } from "./entities/Value";
-import * as Palette from "./entities/palette";
 import { setOpacity as _setOpacity, setHex, setPalette } from "./model";
 import * as Utils from "./utils";
 
@@ -59,6 +59,8 @@ export const ColorPicker: FC<Props> = ({
   );
   const _onChange = useCallback<ColorPicker3Props["onChange"]>(
     (v, meta) => {
+      const isChanging = !!meta?.isChanging;
+
       switch (meta.isChanged) {
         case "palette":
           mPipe(
@@ -73,15 +75,15 @@ export const ColorPicker: FC<Props> = ({
             () => v.hex,
             Hex.fromString,
             (v) => setHex(v, value),
-            onChange
+            (v) => onChange(v, { isChanging })
           )();
           break;
         case "opacity":
           mPipe(
             () => v.opacity,
             Opacity.fromNumber,
-            (v) => setOpacity(v, value, !!meta.opacityDragEnd),
-            onChange
+            (v) => setOpacity(v, value, !isChanging),
+            (v) => onChange(v, { isChanging })
           )();
           break;
       }

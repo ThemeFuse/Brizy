@@ -9,9 +9,19 @@ import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import {
+  sidebarMinistryBrandsMetaAddress,
+  sidebarMinistryBrandsMetaCategory,
+  sidebarMinistryBrandsMetaDate,
+  sidebarMinistryBrandsMetaGroup,
+  sidebarMinistryBrandsMetaLocation,
+  sidebarMinistryBrandsMetaTitle
+} from "../sidebars/sidebars";
 import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
@@ -69,89 +79,152 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarTitle, undefined, {
-          allowExtend: false
-        })}
-        selector=".brz-eventList__item--meta--title"
+        {...this.makeToolbarPropsFromConfig2(
+          toolbarTitle,
+          sidebarMinistryBrandsMetaTitle,
+          {
+            allowExtend: false
+          }
+        )}
+        selector=".brz-ministryBrands__item--meta-title"
       >
         <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarDate, undefined, {
-            allowExtend: false
-          })}
-          selector=".brz-eventList__item--meta--date"
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarDate,
+            sidebarMinistryBrandsMetaDate,
+            {
+              allowExtend: false
+            }
+          )}
+          selector=".brz-ministryBrands__item--meta-date"
         >
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
-              toolbarExtendButtons,
-              undefined,
+              toolbarMetaTypography,
+              sidebarMinistryBrandsMetaCategory,
               {
                 allowExtend: false
               }
             )}
-            selector=".brz-ministryBrands__item--meta--button"
+            selector=".brz-ministryBrands__item--meta-category"
           >
             <Toolbar
               {...this.makeToolbarPropsFromConfig2(
-                toolbarRegisterButton,
-                undefined,
+                toolbarMetaTypography,
+                sidebarMinistryBrandsMetaGroup,
                 {
                   allowExtend: false
                 }
               )}
-              selector=".brz-ministryBrands__item--meta--register-button"
+              selector=".brz-ministryBrands__item--meta-group"
             >
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarPreview,
-                  undefined,
+                  toolbarMetaTypography,
+                  sidebarMinistryBrandsMetaLocation,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-eventList__item--meta--preview"
+                selector=".brz-ministryBrands__item--meta-location"
               >
                 <Toolbar
                   {...this.makeToolbarPropsFromConfig2(
-                    toolbarLinksColor,
-                    undefined,
+                    toolbarMetaTypography,
+                    sidebarMinistryBrandsMetaAddress,
                     {
                       allowExtend: false
                     }
                   )}
-                  selector=".brz-eventList__item--meta--link a"
+                  selector=".brz-ministryBrands__item--meta-address"
                 >
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarMetaTypography,
+                      toolbarExtendButtons,
                       undefined,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-eventList__item--meta"
+                    selector=".brz-ministryBrands__item--meta--button"
                   >
                     <Toolbar
                       {...this.makeToolbarPropsFromConfig2(
-                        toolbarPagination,
+                        toolbarRegisterButton,
                         undefined,
                         {
                           allowExtend: false
                         }
                       )}
-                      selector=".brz-ministryBrands__pagination a"
+                      selector=".brz-ministryBrands__item--meta--register-button"
                     >
-                      <Wrapper
-                        {...this.makeWrapperProps({
-                          className
-                        })}
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarPreview,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-eventList__item--meta--preview"
                       >
-                        <DynamicContentHelper
-                          placeholder={getPlaceholder(v)}
-                          props={{ className: "brz-eventList" }}
-                          blocked={false}
-                          tagName="div"
-                        />
-                      </Wrapper>
+                        <Toolbar
+                          {...this.makeToolbarPropsFromConfig2(
+                            toolbarLinksColor,
+                            undefined,
+                            {
+                              allowExtend: false
+                            }
+                          )}
+                          selector=".brz-eventList__item--meta--link a"
+                        >
+                          <Toolbar
+                            {...this.makeToolbarPropsFromConfig2(
+                              toolbarPagination,
+                              undefined,
+                              {
+                                allowExtend: false
+                              }
+                            )}
+                            selector=".brz-ministryBrands__pagination a"
+                          >
+                            <Toolbar
+                              {...this.makeToolbarPropsFromConfig2(
+                                toolbarImage,
+                                undefined,
+                                {
+                                  allowExtend: false
+                                }
+                              )}
+                              selector=".brz-ministryBrands__item--media"
+                            >
+                              <Toolbar
+                                {...this.makeToolbarPropsFromConfig2(
+                                  toolbarMetaIcons,
+                                  undefined,
+                                  {
+                                    allowExtend: false
+                                  }
+                                )}
+                                selector=".brz-ministryBrands__meta--icons"
+                              >
+                                <Wrapper
+                                  {...this.makeWrapperProps({
+                                    className
+                                  })}
+                                >
+                                  <DynamicContentHelper
+                                    placeholder={getPlaceholder(v)}
+                                    props={{ className: "brz-eventList" }}
+                                    blocked={false}
+                                    tagName="div"
+                                  />
+                                </Wrapper>
+                              </Toolbar>
+                            </Toolbar>
+                          </Toolbar>
+                        </Toolbar>
+                      </Toolbar>
                     </Toolbar>
                   </Toolbar>
                 </Toolbar>

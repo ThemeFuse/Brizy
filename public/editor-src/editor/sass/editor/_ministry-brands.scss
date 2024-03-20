@@ -3,7 +3,7 @@
   select,
   input,
   button[type="submit"],
-  div:has(> iframe),
+  iframe,
   :is(a, audio, video):active {
     pointer-events: none;
   }
@@ -13,6 +13,10 @@
   }
 
   .brz-formWidget iframe {
+    height: 500px !important;
+  }
+
+  .brz-prayerWidget iframe {
     height: 500px !important;
   }
 }

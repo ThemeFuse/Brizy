@@ -7,7 +7,6 @@ export const InputText: Component = ({
   className,
   onChange,
   value: { value },
-  config = {},
   placeholder,
   label
 }) => {
@@ -49,7 +48,6 @@ export const InputText: Component = ({
         onChange={setValue}
         onBlur={handleBlur}
         value={_value}
-        size={config.size ?? "auto"}
         placeholder={placeholder}
       />
     </>

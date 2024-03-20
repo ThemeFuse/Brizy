@@ -21,7 +21,7 @@ import { colorValues, gradientValues } from "./utils";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
-const shadowToString = (value, config) => {
+export const shadowToString = (value, config) => {
   if (value.palette) {
     const { palette, opacity, horizontal, vertical, blur } = value;
     return `rgba(var(${makeStylePaletteCSSVar(
@@ -36,7 +36,7 @@ const shadowToString = (value, config) => {
   })} ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
 };
 
-const getColorValues = (v, patch, prefix = "") => {
+export const getColorValues = (v, patch, prefix = "") => {
   const bgColorPaletteKey = capByPrefix(prefix, "bgColorPalette");
   const gradientColorPaletteKey = capByPrefix(prefix, "gradientColorPalette");
 
@@ -58,7 +58,7 @@ const getColorValues = (v, patch, prefix = "") => {
   };
 };
 
-const changeColor = (value, type, config, prefix = "") => {
+export const changeColor = (value, type, config, prefix = "") => {
   const selectType = value[capByPrefix(prefix, "bgColorType")];
   const v = value;
 
@@ -115,16 +115,18 @@ function getPopulationColorOptions({ populationColor }, onChange) {
   ];
 }
 
-function patchImage(v, patch) {
-  const {
-    imageSrc = v.imageSrc,
-    imageExtension = v.imageExtension,
-    imageFileName = v.imageFileName,
-    imageHeight = v.imageHeight,
-    imageWidth = v.imageWidth,
-    positionX = v.imagePositionX,
-    positionY = v.imagePositionY
-  } = patch;
+export function patchImage(v, patch, prefix = "") {
+  const imageSrc = patch[capByPrefix(prefix, "imageSrc")] ?? v.imageSrc;
+  const imageExtension =
+    patch[capByPrefix(prefix, "imageExtension")] ?? v.imageExtension;
+  const imageFileName =
+    patch[capByPrefix(prefix, "imageFileName")] ?? v.imageFileName;
+  const imageHeight =
+    patch[capByPrefix(prefix, "imageHeight")] ?? v.imageHeight;
+  const imageWidth = patch[capByPrefix(prefix, "imageWidth")] ?? v.imageWidth;
+  const positionX = patch[capByPrefix(prefix, "positionX")] ?? v.imagePositionX;
+  const positionY = patch[capByPrefix(prefix, "positionY")] ?? v.imagePositionY;
+
   const imagePositionX = positionX || 50;
   const imagePositionY = positionY || 50;
 
@@ -167,7 +169,12 @@ function patchImagePopulation(v, patch) {
     ? makePlaceholder({ content: imagePopulation, attr: populationAttr })
     : undefined;
 
-  return { ...imageData, imagePopulation: population };
+  return {
+    ...imageData,
+    imagePopulationEntityType,
+    imagePopulationEntityId,
+    imagePopulation: population
+  };
 }
 
 function getSimpleColorOptions(v, { context, device }, onChange) {
@@ -263,7 +270,13 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
 
                 onChange({
                   shadow: shadowToString(shadow, config),
-                  shadowColorPalette
+                  shadowColorPalette,
+                  textShadowBlur,
+                  textShadowColorHex,
+                  textShadowHorizontal,
+                  textShadowColorOpacity,
+                  textShadowColorPalette,
+                  textShadowVertical
                 });
               }
             }
@@ -353,7 +366,8 @@ function getTextPopulationOptions() {
           options: [
             {
               id: "bg",
-              type: "imageUpload"
+              type: "imageUpload",
+              label: t("Image")
             }
           ]
         }

@@ -1,6 +1,7 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentOption,
@@ -342,6 +343,8 @@ export function getItemsMMenu({ v, device, state, context }) {
     type: DCTypes.image
   });
 
+  const isExternalImage = dvv("bgImageType") === ImageType.External;
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -364,7 +367,11 @@ export function getItemsMMenu({ v, device, state, context }) {
                   label: t("Image"),
                   id: "bg",
                   type: "imageUpload",
-                  population: imageDynamicContentChoices
+                  population: imageDynamicContentChoices,
+                  config: {
+                    disableSizes: isExternalImage,
+                    pointer: !isExternalImage
+                  }
                 }
               ]
             },

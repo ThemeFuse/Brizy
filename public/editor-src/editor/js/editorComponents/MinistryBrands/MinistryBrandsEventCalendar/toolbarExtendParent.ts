@@ -5,13 +5,7 @@ import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
 import { Props, Value } from "./types";
 
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  context,
-  component
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
   const config = Config.getAll();
   return [
     {
@@ -149,13 +143,7 @@ export const getItems: GetItems<Value, Props> = ({
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      context,
-      component
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] }
   ];
 };

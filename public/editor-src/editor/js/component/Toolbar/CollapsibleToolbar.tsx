@@ -8,7 +8,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { currentUserRole } from "visual/component/Roles";
-import { filterOptions } from "visual/component/Toolbar/PortalToolbar/utils";
+import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";

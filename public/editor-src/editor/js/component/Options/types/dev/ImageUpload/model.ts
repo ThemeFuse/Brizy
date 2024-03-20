@@ -1,8 +1,10 @@
-import { parse } from "fp-utilities";
+import { or, parse } from "fp-utilities";
 import { pipe } from "visual/utils/fp";
+import { ImageType } from "visual/utils/image/types";
 import * as Math from "visual/utils/math";
 import { Getter, Setter, setter } from "visual/utils/model";
 import { prop } from "visual/utils/object/get";
+import { readImageType } from "visual/utils/options/ImageUpload/utils";
 import * as String from "visual/utils/string/index";
 
 export interface Coordinates {
@@ -18,6 +20,7 @@ export interface Image {
   height: number;
   x: number;
   y: number;
+  imageType: ImageType;
 }
 
 export function eq(a: Image, b: Image): boolean {
@@ -39,7 +42,11 @@ export const fromRecord = parse<Record<string, unknown>, Image>({
   x: pipe(prop("x"), Math.toNonNegative),
   y: pipe(prop("y"), Math.toNonNegative),
   height: pipe(prop("height"), Math.toNonNegative),
-  width: pipe(prop("width"), Math.toNonNegative)
+  width: pipe(prop("width"), Math.toNonNegative),
+  imageType: pipe(
+    prop("imageType"),
+    or(readImageType, () => ImageType.Internal)
+  )
 });
 
 /**

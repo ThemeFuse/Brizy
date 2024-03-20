@@ -1,3 +1,4 @@
+import _ from "underscore";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -6,7 +7,6 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from ".";
 
-// @ts-expect-error type "button" old options
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -102,12 +102,14 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "duplicate",
-      type: "legacy-button",
+      type: "button",
+      onClick: _.noop,
       disabled: true
     },
     {
       id: "remove",
-      type: "legacy-button",
+      type: "button",
+      onClick: _.noop,
       disabled: true
     }
   ];

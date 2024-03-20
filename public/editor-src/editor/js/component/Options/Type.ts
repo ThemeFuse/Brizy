@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
+  OptionMeta,
   OptionName,
   OptionPatch,
   OptionValue
@@ -9,7 +10,11 @@ import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 
-export type OnChange<T> = (v: T) => void;
+export interface GlobalMeta {
+  isChanging: boolean;
+}
+
+export type OnChange<T, M = GlobalMeta> = (v: T, m?: M) => void;
 
 export type SimpleValue<T> = { value: T };
 
@@ -31,10 +36,18 @@ export type ToElementModel<T extends OptionName> = (
   value: OptionPatch<T>
 ) => ElementModel;
 
+export type ToMeta<T extends OptionName> = (
+  v: OptionValue<T>
+) => Partial<OptionMeta<T>>;
+
 export type Props<Model, Patch = Model> = {
   value: Model;
   onChange: OnChange<Patch>;
   toolbar?: ToolbarItemsInstance;
   label?: ReactNode;
   description?: ReactNode;
+};
+
+export type Meta<T> = {
+  meta?: T;
 };

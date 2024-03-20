@@ -33,7 +33,7 @@ export const fromElementModel: FromElementModel<"gallery-for-gallery"> = pipe(
       .map(fromRecord)
       .filter(isT);
   }),
-  onNullish<Image[]>([])
+  onNullish<Image[]>(defaultValue)
 );
 export const toElementModel: ToElementModel<"gallery-for-gallery"> = (
   value: Array<Value | Image>

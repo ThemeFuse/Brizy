@@ -27,8 +27,20 @@
   }
 
   &__item {
-    & > * {
-      margin: 0 0 0.5rem 0;
+    &--meta {
+      &--title {
+        a {
+          color: inherit;
+        }
+      }
+    }
+     
+    &--meta {
+      &--title {
+        a {
+          color: inherit;
+        }
+      }
     }
 
     &--media {
@@ -46,31 +58,6 @@
 
       &--audio {
         width: 100%;
-
-        audio {
-          width: 100%;
-        }
-      }
-
-      &--video,
-      &--videoResponsive {
-        width: 100%;
-        position: relative;
-        padding-bottom: 56.25%;
-
-        iframe,
-        video {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
-
-        iframe {
-          max-height: none !important;
-          max-width: none !important;
-        }
       }
 
       &_videoplayer,
@@ -91,8 +78,6 @@
 
   ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
   }
 
   &__filter {

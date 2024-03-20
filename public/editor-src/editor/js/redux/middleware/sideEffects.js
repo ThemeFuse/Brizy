@@ -47,7 +47,7 @@ import {
   storeWasChangedSelector,
   unDeletedFontsSelector
 } from "../selectors";
-import { defaultFontSelector, extraFontStylesSelector } from "../selectors-new";
+import { defaultFontSelector, extraFontStylesSelector } from "../selectors";
 
 export default (config) => (store) => (next) => (action) => {
   const callbacks = {

@@ -35,6 +35,7 @@ class Items extends EditorArrayComponent {
     slidesToShow: 2,
     slidesToScroll: 1,
     sliderArrows: "none",
+    sliderAnimation: "none",
     sliderDots: "none",
     meta: {}
   };
@@ -138,21 +139,27 @@ class Items extends EditorArrayComponent {
         getItemsForDesktop: () => [
           {
             id: "emptyItem",
-            type: "legacy-button",
-            icon: "nc-add",
-            title: t("Add New Column"),
+            type: "button",
+            config: {
+              icon: "nc-add",
+              title: t("Add New Column"),
+              reverseTheme: true
+            },
             position: 100,
-            onChange: () => {
+            onClick: () => {
               this.addColumn(itemIndex + 1);
             }
           },
           {
             id: "duplicate",
-            type: "legacy-button",
-            icon: "nc-duplicate",
-            title: t("Duplicate"),
+            type: "button",
+            config: {
+              icon: "nc-duplicate",
+              title: t("Duplicate"),
+              reverseTheme: true
+            },
             position: 200,
-            onChange: () => {
+            onClick: () => {
               this.cloneItem(itemIndex);
             }
           },
@@ -188,11 +195,14 @@ class Items extends EditorArrayComponent {
             ? [
                 {
                   id: "remove",
-                  type: "legacy-button",
-                  title: t("Delete"),
-                  icon: "nc-trash",
+                  type: "button",
+                  config: {
+                    title: t("Delete"),
+                    icon: "nc-trash",
+                    reverseTheme: true
+                  },
                   position: 250,
-                  onChange: () => {
+                  onClick: () => {
                     hideToolbar();
                     this.removeItem(itemIndex);
                   }
@@ -280,6 +290,7 @@ class Items extends EditorArrayComponent {
       sliderAutoPlay,
       sliderAutoPlaySpeed,
       sliderDots,
+      sliderAnimation,
       transitionSpeed,
       swipe,
       tabletSlidesToShow
@@ -314,6 +325,7 @@ class Items extends EditorArrayComponent {
           data-auto-play={sliderAutoPlay === "on"}
           data-auto-play-speed={sliderAutoPlaySpeed * 1000}
           data-swipe={swipe === "on"}
+          data-fade={sliderAnimation === "fade"}
           data-transition-speed={transitionSpeed}
           data-responsive={encodeURIComponent(JSON.stringify(responsive))}
         >
@@ -332,7 +344,7 @@ class Items extends EditorArrayComponent {
     return (
       <SlickSlider
         ref={this.handleRefSlider}
-        className="brz-carousel__slider"
+        className={`brz-carousel__slider brz-carousel__slider--${sliderAnimation}`}
         slidesToShow={slidesToShow}
         slidesToScroll={slidesToScroll}
         swipe={false}
@@ -341,6 +353,7 @@ class Items extends EditorArrayComponent {
         arrows={sliderArrows !== "none"}
         useTransform={false}
         speed={500}
+        fade={sliderAnimation === "fade"}
         nextArrow={
           <SliderArrow
             icon={`right-arrow-${sliderArrows}`}

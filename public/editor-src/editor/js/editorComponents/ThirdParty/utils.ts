@@ -1,6 +1,6 @@
 import { types } from "visual/component/Options/types";
-import { reduce } from "visual/component/Options/types/utils/reduce";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { reduce } from "visual/utils/options/reduce";
 import { Value } from ".";
 
 export function getComponentProps(
@@ -9,7 +9,6 @@ export function getComponentProps(
 ): Record<string, unknown> {
   const getId = (acc: string[], i: ToolbarItemType): string[] =>
     i.type in types ? [...acc, i.id] : acc;
-
   return config
     .map((item: ToolbarItemType) => reduce(getId, [], item))
     .flat()

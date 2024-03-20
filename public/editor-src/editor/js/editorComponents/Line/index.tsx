@@ -7,9 +7,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent, {
-  ComponentsMeta
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { WithClassName } from "visual/utils/options/attributes";
 import { Wrapper } from "../tools/Wrapper";
@@ -18,6 +16,7 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { isDefaultLineType } from "./utils";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 export interface Value extends ElementModel {
   iconName: string;

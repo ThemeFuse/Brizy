@@ -3,16 +3,12 @@ import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
+import { helperDateFormatInputHTML } from "../utils/helpers";
 import type { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  component,
-  context
-}) => {
+export const getItems: GetItems<Value, Props> = (data) => {
+  const { v } = data;
   const config = Config.getAll();
 
   const isNotCategoryFilter = v.showCategoryFilter === "off";
@@ -68,6 +64,12 @@ export const getItems: GetItems<Value, Props> = ({
               id: "tabGroupLayoutDisplay",
               label: t("Display"),
               options: [
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop"
+                },
                 {
                   id: "showImages",
                   type: "switch",
@@ -174,7 +176,6 @@ export const getItems: GetItems<Value, Props> = ({
                   devices: "desktop",
                   choices: getEkklesiaChoiches(config, {
                     key: "smallgroupsLvl",
-
                     subKey: "parents"
                   }),
                   helper: {
@@ -314,7 +315,6 @@ export const getItems: GetItems<Value, Props> = ({
                     }
                   ]
                 },
-
                 {
                   id: "addCategoryGroup2",
                   type: "group",
@@ -354,7 +354,6 @@ export const getItems: GetItems<Value, Props> = ({
                     }
                   ]
                 },
-
                 {
                   id: "addCategoryGroup3",
                   type: "group",
@@ -395,18 +394,28 @@ export const getItems: GetItems<Value, Props> = ({
                   ]
                 }
               ]
+            },
+            {
+              id: "tabMore",
+              label: t("More"),
+              options: [
+                {
+                  id: "dateFormat",
+                  type: "inputText",
+                  devices: "desktop",
+                  helper: {
+                    enabled: true,
+                    content: helperDateFormatInputHTML
+                  },
+                  label: t("Date Format")
+                }
+              ]
             }
           ]
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context
-    }),
+    ...toolbarParentColors<Value, Props>(data),
     {
       id: "horizontalAlign",
       type: "toggle",
@@ -439,6 +448,16 @@ export const getItems: GetItems<Value, Props> = ({
           config: {
             min: 0,
             max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "metaItemSpacing",
+          label: t("Items Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 150,
             units: [{ value: "px", title: "px" }]
           }
         },

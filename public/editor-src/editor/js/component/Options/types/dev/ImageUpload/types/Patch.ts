@@ -1,10 +1,13 @@
 // region ImagePatch
+import { ImageType } from "visual/utils/image/types";
+
 export type ImageDataPatch = {
   imageSrc: string;
   imageFileName: string;
   imageExtension: string;
   imageWidth: number;
   imageHeight: number;
+  imageType: ImageType;
 };
 
 export const isImageDataPatch = (p: Patch): p is ImageDataPatch =>

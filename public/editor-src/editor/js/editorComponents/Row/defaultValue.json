@@ -107,6 +107,7 @@
     "maskCustomUploadImageHeight": 450,
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
+    "maskCustomUploadImageType": "internal",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,
@@ -169,6 +170,7 @@
     "linkPageTitle": "",
     "linkSource": "",
     "linkPageSource": null,
+    "linkInternalBlank": "off",
     "linkType": "external",
     "linkExternal": "",
     "linkAnchor": "",

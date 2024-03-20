@@ -1,6 +1,5 @@
 import type { Device } from "visual/utils/devices";
 import {
-  breakpoints,
   desktopBreakpoints,
   getBreakpoints,
   getCurrentBreakpoints,
@@ -16,7 +15,6 @@ describe("Testing breakpoints utils functions", () => {
     expect(isResponsiveBreakpoint("asd" as BreakpointsNames)).toBe(false);
     expect(isResponsiveBreakpoint("mobile")).toBe(true);
     expect(isResponsiveBreakpoint("tablet")).toBe(true);
-    expect(isResponsiveBreakpoint("mobileLandscape")).toBe(true);
   });
 
   test("isBreakpointWithMediaQuery", () => {
@@ -27,22 +25,23 @@ describe("Testing breakpoints utils functions", () => {
     expect(isBreakpointWithMediaQuery("smartphone" as BreakpointsNames)).toBe(
       false
     );
-    expect(isBreakpointWithMediaQuery("desktopLarge")).toBe(true);
     expect(isBreakpointWithMediaQuery("mobile")).toBe(true);
-    expect(isBreakpointWithMediaQuery("mobileLandscape")).toBe(true);
     expect(isBreakpointWithMediaQuery("tablet")).toBe(true);
-    expect(isBreakpointWithMediaQuery("widescreen")).toBe(true);
   });
 
   test("getBreakpoints", () => {
-    expect(getBreakpoints("all")).toBe(breakpoints);
-    expect(getBreakpoints("desktop")).toBe(desktopBreakpoints);
-    expect(getBreakpoints("responsive")).toBe(responsiveBreakpoints);
-    expect(getBreakpoints("asd" as Device)).toBe(undefined);
+    expect(getBreakpoints("all")).toStrictEqual(getCurrentBreakpoints());
+    expect(getBreakpoints("desktop")).toStrictEqual({
+      desktop: desktopBreakpoints["desktop"]
+    });
+    expect(getBreakpoints("responsive")).toStrictEqual({
+      tablet: responsiveBreakpoints["tablet"],
+      mobile: responsiveBreakpoints["mobile"]
+    });
+    expect(getBreakpoints("asd" as Device)).toStrictEqual(undefined);
   });
 });
 
-///// Temporary tests until we have breakpoints
 describe("Testing getCurrentBreakpoints function that should return desktop, tablet and mobile", () => {
   test("General tests", () => {
     const output = {

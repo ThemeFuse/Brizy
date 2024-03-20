@@ -19,6 +19,7 @@ export interface EkklesiaFields {
   smallgroup: Record<string, Literal>;
   eventsLvl: EkklesiaParentsChilds;
   smallgroupsLvl: EkklesiaParentsChilds;
+  sermonsLvl: EkklesiaParentsChilds;
 }
 
 export interface EkklesiaParentsChilds {

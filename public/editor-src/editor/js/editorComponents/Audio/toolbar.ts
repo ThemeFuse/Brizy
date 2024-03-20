@@ -71,10 +71,7 @@ export function getItems({
                   type: "inputText",
                   disabled: customType,
                   placeholder: t("SoundCloud Link"),
-                  population: linkDC,
-                  config: {
-                    size: "medium"
-                  }
+                  population: linkDC
                 },
                 {
                   id: "style",

@@ -11,6 +11,7 @@ import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props<T extends string | number> extends WithClassName {
   isOpen: boolean;
+  isEntityTypeLoaded: boolean;
   showChoices: boolean;
   choices: (Choices<T> | OptGroup<T>)[];
   currentDCChoice?: PopulationMethod;
@@ -24,4 +25,5 @@ export interface Props<T extends string | number> extends WithClassName {
   handleIconClick: VoidFunction;
   entityTypeChoices: ChoicesAsync;
   entityIdChoices: ChoicesAsync;
+  onEntityTypeLoad?: VoidFunction;
 }

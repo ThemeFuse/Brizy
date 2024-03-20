@@ -30,6 +30,7 @@
     "bgImageWidth": 0,
     "bgImageHeight": 0,
     "bgSizeType": "custom",
+    "bgImageType": "internal",
 
     "bgPopulation": "",
     "bgPopulationEntityType": "",

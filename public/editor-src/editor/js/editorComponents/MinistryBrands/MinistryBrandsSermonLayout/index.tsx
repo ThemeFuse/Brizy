@@ -7,9 +7,20 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
+import {
+  sidebarMinistryBrandsMetaCategory,
+  sidebarMinistryBrandsMetaDate,
+  sidebarMinistryBrandsMetaGroup,
+  sidebarMinistryBrandsMetaPassage,
+  sidebarMinistryBrandsMetaPreacher,
+  sidebarMinistryBrandsMetaSeries,
+  sidebarMinistryBrandsMetaTitle
+} from "../sidebars/sidebars";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
+import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
 import * as toolbarMedia from "../toolbarMedia";
+import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarConfig from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
@@ -51,81 +62,174 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarTitle, undefined, {
-          allowExtend: false
-        })}
-        selector=".brz-sermonLayout__item--meta--title"
+        {...this.makeToolbarPropsFromConfig2(
+          toolbarTitle,
+          sidebarMinistryBrandsMetaTitle,
+          {
+            allowExtend: false
+          }
+        )}
+        selector=".brz-ministryBrands__item--meta-title"
       >
         <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarLinksColor, undefined, {
-            allowExtend: false
-          })}
-          selector=".brz-sermonLayout__item :not(.brz-sermonLayout__item--meta--title, .brz-sermonLayout__item--detail-button, .brz-sermonLayout__item--media) a"
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarConfig,
+            sidebarMinistryBrandsMetaDate,
+            {
+              allowExtend: false
+            }
+          )}
+          selector=".brz-ministryBrands__item--meta-date"
         >
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarMedia, undefined, {
-              allowExtend: false
-            })}
-            selector=".brz-sermonLayout__item--media a"
+            {...this.makeToolbarPropsFromConfig2(
+              toolbarConfig,
+              sidebarMinistryBrandsMetaCategory,
+              {
+                allowExtend: false
+              }
+            )}
+            selector=".brz-ministryBrands__item--meta-category"
           >
             <Toolbar
-              {...this.makeToolbarPropsFromConfig2(toolbarConfig, undefined, {
-                allowExtend: false
-              })}
-              selector=".brz-sermonLayout__item--meta"
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarConfig,
+                sidebarMinistryBrandsMetaGroup,
+                {
+                  allowExtend: false
+                }
+              )}
+              selector=".brz-ministryBrands__item--meta-group"
             >
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarPreview,
-                  undefined,
+                  toolbarConfig,
+                  sidebarMinistryBrandsMetaSeries,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-sermonLayout__item--preview"
+                selector=".brz-ministryBrands__item--meta-series"
               >
                 <Toolbar
                   {...this.makeToolbarPropsFromConfig2(
-                    toolbarPagination,
-                    undefined,
+                    toolbarConfig,
+                    sidebarMinistryBrandsMetaPreacher,
                     {
                       allowExtend: false
                     }
                   )}
-                  selector=".brz-ministryBrands__pagination"
+                  selector=".brz-ministryBrands__item--meta-preacher"
                 >
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarExtendFilters,
-                      sidebarExtendFilters,
+                      toolbarConfig,
+                      sidebarMinistryBrandsMetaPassage,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-sermonLayout__filter"
+                    selector=".brz-ministryBrands__item--meta-passage"
                   >
                     <Toolbar
                       {...this.makeToolbarPropsFromConfig2(
-                        toolbarExtendButtons,
+                        toolbarLinksColor,
                         undefined,
                         {
                           allowExtend: false
                         }
                       )}
-                      selector=".brz-sermonLayout__item--detail-button"
+                      selector=".brz-sermonLayout__item :not(.brz-sermonLayout__item--meta--title, .brz-sermonLayout__item--detail-button, .brz-sermonLayout__item--media) a"
                     >
-                      <Wrapper
-                        {...this.makeWrapperProps({
-                          className: "brz-sermonLayout__wrapper"
-                        })}
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarMedia,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-sermonLayout__item--media a"
                       >
-                        <DynamicContentHelper
-                          placeholder={getPlaceholder(v)}
-                          props={{ className }}
-                          blocked={false}
-                          tagName="div"
-                        />
-                      </Wrapper>
+                        <Toolbar
+                          {...this.makeToolbarPropsFromConfig2(
+                            toolbarPreview,
+                            undefined,
+                            {
+                              allowExtend: false
+                            }
+                          )}
+                          selector=".brz-sermonLayout__item--preview"
+                        >
+                          <Toolbar
+                            {...this.makeToolbarPropsFromConfig2(
+                              toolbarPagination,
+                              undefined,
+                              {
+                                allowExtend: false
+                              }
+                            )}
+                            selector=".brz-ministryBrands__pagination"
+                          >
+                            <Toolbar
+                              {...this.makeToolbarPropsFromConfig2(
+                                toolbarExtendFilters,
+                                sidebarExtendFilters,
+                                {
+                                  allowExtend: false
+                                }
+                              )}
+                              selector=".brz-sermonLayout__filter"
+                            >
+                              <Toolbar
+                                {...this.makeToolbarPropsFromConfig2(
+                                  toolbarExtendButtons,
+                                  undefined,
+                                  {
+                                    allowExtend: false
+                                  }
+                                )}
+                                selector=".brz-sermonLayout__item--detail-button"
+                              >
+                                <Toolbar
+                                  {...this.makeToolbarPropsFromConfig2(
+                                    toolbarImage,
+                                    undefined,
+                                    {
+                                      allowExtend: false
+                                    }
+                                  )}
+                                  selector=".brz-ministryBrands__item--media"
+                                >
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarMetaIcons,
+                                      undefined,
+                                      {
+                                        allowExtend: false
+                                      }
+                                    )}
+                                    selector=".brz-ministryBrands__meta--icons"
+                                  >
+                                    <Wrapper
+                                      {...this.makeWrapperProps({
+                                        className: "brz-sermonLayout__wrapper"
+                                      })}
+                                    >
+                                      <DynamicContentHelper
+                                        placeholder={getPlaceholder(v)}
+                                        props={{ className }}
+                                        blocked={false}
+                                        tagName="div"
+                                      />
+                                    </Wrapper>
+                                  </Toolbar>
+                                </Toolbar>
+                              </Toolbar>
+                            </Toolbar>
+                          </Toolbar>
+                        </Toolbar>
+                      </Toolbar>
                     </Toolbar>
                   </Toolbar>
                 </Toolbar>

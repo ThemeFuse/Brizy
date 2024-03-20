@@ -7,9 +7,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent, {
-  ComponentsMeta
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { WithClassName } from "visual/utils/options/attributes";
@@ -22,6 +20,7 @@ import * as toolbarExtendCloseButton from "./toolbarExtendCloseButton";
 import * as toolbarExtendDescription from "./toolbarExtendDescription";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarExtendTitle from "./toolbarExtendTitle";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 export type Value = ElementModel & {
   showCloseButtonAfter: number;
@@ -167,7 +166,10 @@ class Alert extends EditorComponent<Value, Props> {
     return (
       <Wrapper
         {...this.makeWrapperProps({ className })}
-        attributes={makeDataAttr({ name: "delay", value: showCloseButtonAfter })}
+        attributes={makeDataAttr({
+          name: "delay",
+          value: showCloseButtonAfter
+        })}
       >
         {this.renderAlert(v)}
       </Wrapper>

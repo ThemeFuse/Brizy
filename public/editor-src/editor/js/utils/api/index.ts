@@ -73,6 +73,7 @@ export {
   updateSavedPopup,
   defaultKitsMeta,
   defaultKitsData,
+  defaultKits,
   defaultPopupsMeta,
   defaultPopupsData,
   defaultLayoutsMeta,

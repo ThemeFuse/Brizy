@@ -14,6 +14,7 @@ import {
 } from "visual/global/Config/types/configs/common";
 import { t } from "visual/utils/i18n";
 import { getImageFormat, getImageUrl, preloadImage } from "visual/utils/image";
+import { ImageType } from "visual/utils/image/types";
 import Image from "./Image";
 import { Meta } from "./types";
 
@@ -25,6 +26,7 @@ export interface Value {
   width: number;
   height: number;
   extension: string;
+  imageType: ImageType;
 }
 
 export interface Props<T extends ReactText> {
@@ -66,7 +68,8 @@ export class ImageSetter<T extends ReactText> extends React.Component<
     width: this.props.width,
     height: this.props.height,
     extension: this.props.extension,
-    loading: false
+    loading: false,
+    imageType: ImageType.Internal
   };
 
   mounted = false;
@@ -98,10 +101,10 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 
   handleChange = (value: Partial<Value>, meta: Meta): void => {
     const { x, y, extension } = this.props;
-    const { src, fileName, width, height } = this.state;
+    const { src, fileName, width, height, imageType } = this.state;
 
     this.props.onChange(
-      { src, fileName, width, height, x, y, extension, ...value },
+      { src, fileName, width, height, x, y, extension, imageType, ...value },
       meta
     );
   };
@@ -114,7 +117,8 @@ export class ImageSetter<T extends ReactText> extends React.Component<
       height: 0,
       x: 0,
       y: 0,
-      extension: ""
+      extension: "",
+      imageType: ImageType.Internal
     };
 
     this.setState<"src" | "width" | "height" | "extension">(newValue);

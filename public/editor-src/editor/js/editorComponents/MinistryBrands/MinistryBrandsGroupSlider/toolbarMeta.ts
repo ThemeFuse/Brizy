@@ -6,6 +6,7 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Props, Value } from "./types";
 
+// @ts-expect-error "advancedSettings" old options
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -57,25 +58,14 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       ]
     },
     {
-      id: "toolbarSettings",
-      type: "popover",
-      config: {
-        icon: "nc-cog",
-        title: t("Settings")
-      },
-      position: 30,
-      options: [
-        {
-          id: "metaSpacing",
-          label: t("Bottom"),
-          type: "slider",
-          config: {
-            min: 1,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
-        }
-      ]
+      id: "advancedSettings",
+      type: "legacy-advancedSettings",
+      sidebarLabel: t("More Settings"),
+      position: 110,
+      title: t("Settings"),
+      roles: ["admin"],
+      devices: "desktop",
+      icon: "nc-cog"
     }
   ];
 };

@@ -25,14 +25,16 @@ import * as Hex from "visual/utils/color/Hex";
 import * as Blur from "visual/utils/cssProps/Blur";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { pipe } from "visual/utils/fp";
+import { Config } from "visual/utils/options/BoxShadow/entities/Config";
+import * as Type from "visual/utils/options/BoxShadow/entities/Type";
+import { Value } from "visual/utils/options/BoxShadow/entities/Value";
+import { Meta } from "visual/utils/options/BoxShadow/meta";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { Config } from "./entities/Config";
-import * as Type from "./entities/Type";
-import { Value } from "./entities/Value";
 import { _setOpacity, getTypesItems } from "./utils";
 
 export interface Props
   extends Option.Props<Value>,
+    Option.Meta<Meta>,
     WithConfig<Config>,
     WithClassName {}
 
@@ -60,11 +62,15 @@ export const BoxShadow: FC<Props> = ({
 
   const onValueChange = useCallback<ShadowProps["onChange"]>(
     (m, meta) => {
+      const isChanging = !!meta?.isChanging;
+
       switch (meta.isChanged) {
         case "opacity": {
           const opacity = Opacity.fromNumber(m.opacity);
           opacity !== undefined &&
-            onChange(_setOpacity(opacity, value, !!meta.isChanged));
+            onChange(_setOpacity(opacity, value, !!meta.isChanged), {
+              isChanging
+            });
           break;
         }
         case "type": {
@@ -78,7 +84,7 @@ export const BoxShadow: FC<Props> = ({
         }
         case "hex": {
           const hex = Hex.fromString(m.hex);
-          hex && onChange(setHex(hex, value));
+          hex && onChange(setHex(hex, value), { isChanging });
           break;
         }
         case "spread": {

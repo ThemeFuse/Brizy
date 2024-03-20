@@ -13,7 +13,7 @@ export const getItems: GetItems<Value, Props> = () => {
       type: "popover",
       config: {
         icon: "t2-group-detail",
-        title: t("Form Widget")
+        title: t("FMS Forms")
       },
       position: 60,
       options: [

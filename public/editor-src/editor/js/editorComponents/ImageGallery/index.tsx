@@ -7,7 +7,6 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
-  ComponentsMeta,
   Props as NextProps
 } from "visual/editorComponents/EditorComponent";
 import { SizeType } from "visual/global/Config/types/configs/common";
@@ -65,6 +64,7 @@ import {
   multiUpload
 } from "./utils";
 import { arrangeGridByTags } from "./utils.export";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 class ImageGallery extends EditorComponent<Value, Props> {
   static get componentId(): "ImageGallery" {

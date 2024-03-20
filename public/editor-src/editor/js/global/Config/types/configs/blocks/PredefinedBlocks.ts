@@ -16,6 +16,17 @@ export interface DefaultTemplate<T1, T2> {
   ) => void;
 }
 
+export interface DefaultTemplateKits<T1, T2, T3> {
+  label?: string;
+  getMeta: (res: Response<T1>, rej: Response<string>, id: string) => void;
+  getData: (
+    res: Response<Promise<T2>>,
+    rej: Response<string>,
+    kit: BlockWithThumbs
+  ) => void;
+  getKits: (res: Response<T3>, rej: Response<string>) => void;
+}
+
 export interface Kits {
   blocks: Array<Block>;
   categories: Array<Categories>;
@@ -23,6 +34,11 @@ export interface Kits {
   name: string;
   styles: Array<Style>;
   types: Array<Record<string, unknown>>;
+}
+
+export interface KitItem {
+  id: string;
+  title: string;
 }
 
 export interface KitsWithThumbs extends Omit<Kits, "blocks"> {
@@ -75,9 +91,10 @@ interface Block {
   blank?: string;
   position?: number;
   pro?: boolean;
+  kitId: string;
 }
 
-interface BlockWithThumbs extends Block {
+export interface BlockWithThumbs extends Block {
   thumbnailSrc: string;
 }
 

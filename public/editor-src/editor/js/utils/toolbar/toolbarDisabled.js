@@ -1,3 +1,4 @@
+import _ from "underscore";
 import { defaultValueKey } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 
@@ -44,8 +45,9 @@ export function toolbarDisabledShowOnResponsive({ device }) {
 export function toolbarDisabledDuplicate({ device, devices = "all" }) {
   return {
     id: defaultValueKey({ key: "duplicate", device }),
-    type: "legacy-button",
+    type: "button",
     devices,
+    onClick: _.noop,
     disabled: true
   };
 }
@@ -53,8 +55,9 @@ export function toolbarDisabledDuplicate({ device, devices = "all" }) {
 export function toolbarDisabledRemove({ device, devices = "all" }) {
   return {
     id: defaultValueKey({ key: "remove", device }),
-    type: "legacy-button",
+    type: "button",
     devices,
+    onClick: _.noop,
     disabled: true
   };
 }

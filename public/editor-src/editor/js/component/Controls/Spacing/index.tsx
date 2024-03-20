@@ -3,6 +3,7 @@ import React, { ReactElement, ReactNode, useMemo } from "react";
 import { Group } from "visual/component/Controls/Group";
 import { RadioGroup2 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
+import { GlobalMeta } from "visual/component/Controls/types";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OnChange } from "visual/component/Options/Type";
 import { WithClassName } from "visual/utils/options/attributes";
@@ -18,7 +19,7 @@ export interface Props<U, E extends Edge> extends WithClassName {
   value: { [k in Edges<E>]: { number: number; unit: U } };
   units: SP<U>["units"];
   onType: OnChange<Type>;
-  onValue: (edge: Edge, v: number) => void;
+  onValue: (edge: Edge, v: number, m?: GlobalMeta) => void;
   onUnit: (edge: Edge, v: U) => void;
   getIcon: (edge: Exclude<Edge, "all"> | Type) => string;
   min: number;
@@ -28,7 +29,7 @@ export interface Props<U, E extends Edge> extends WithClassName {
 
 type Callbacks<U> = {
   [K in Edge]: {
-    onValue: (v: number) => void;
+    onValue: (v: number, m?: GlobalMeta) => void;
     onUnit: (v: U) => void;
   };
 };

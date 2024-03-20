@@ -2,7 +2,7 @@ import {
   defaultFontSelector,
   fontsSelector,
   unDeletedFontsSelector
-} from "visual/redux/selectors-new";
+} from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
 import { Font } from "visual/types";
@@ -61,14 +61,16 @@ export const getDefaultFont = (): DefaultFont => {
 
 export const getFontById = ({
   type,
-  family
+  family,
+  fonts
 }: {
   type: ModelFamilyType;
   family: string;
+  fonts?: ReduxState["fonts"];
 }): FontById => {
-  const usedFonts = projectFontsData(
-    unDeletedFontsSelector(getStore().getState())
-  );
+  const _fonts = fonts ?? unDeletedFontsSelector(getStore().getState());
+
+  const usedFonts = projectFontsData(_fonts);
 
   // @ts-expect-error: Property '[FontFamilyType.google]' does not exist on type '{}'.
   const font = findFonts(usedFonts[type], family, type);

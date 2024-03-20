@@ -36,4 +36,5 @@ export type Props = OptionProps<ElementModelValue> &
     placeholder?: string;
     className?: string;
     iconClassName?: string;
+    onLoad?: VoidFunction;
   };

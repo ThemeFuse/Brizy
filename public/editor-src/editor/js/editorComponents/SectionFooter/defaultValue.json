@@ -32,6 +32,7 @@
     "bgImageHeight": 0,
     "bgPositionY": 50,
     "bgPositionX": 50,
+    "bgImageType": "internal",
     "bgPopulation": "",
     "bgPopulationEntityType": "",
     "bgPopulationEntityId": "",
@@ -115,6 +116,7 @@
     "maskCustomUploadImageHeight": 450,
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
+    "maskCustomUploadImageType": "internal",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

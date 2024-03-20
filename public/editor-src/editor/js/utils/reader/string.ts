@@ -22,6 +22,9 @@ export const readOnlyString: Reader<string> = (a) => {
   }
 };
 
+export const readNoEmpty: Reader<string> = (v) =>
+  v !== "" ? read(v) : undefined;
+
 export const is = (s: unknown): s is string => {
   return typeof s === "string";
 };

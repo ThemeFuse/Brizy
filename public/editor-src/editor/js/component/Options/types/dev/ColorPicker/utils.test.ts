@@ -1,17 +1,17 @@
+import * as Color from "visual/component/Options/types/dev/ColorPicker/model";
 import {
   setOpacity,
   toggleColor
 } from "visual/component/Options/types/dev/ColorPicker/utils";
-import { testModelToggle } from "visual/utils/model/utilities.test";
-import * as Color from "visual/component/Options/types/dev/ColorPicker/model";
-import * as Opacity from "visual/utils/cssProps/opacity";
-import * as Palette from "./entities/palette";
 import * as Hex from "visual/utils/color/Hex";
-import { COLOR3 } from "visual/utils/color/Palette";
-import { Value } from "visual/component/Options/types/dev/ColorPicker/entities/Value";
 import { Black } from "visual/utils/color/Hex";
+import { COLOR3 } from "visual/utils/color/Palette";
+import * as Opacity from "visual/utils/cssProps/opacity";
+import { testModelToggle } from "visual/utils/model/utilities.test";
+import { Value } from "visual/utils/options/ColorPicker/entities/Value";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 
-describe("Testing 'setOpacity' function", function() {
+describe("Testing 'setOpacity' function", function () {
   const v: Value = {
     hex: Hex.unsafe("#333333"),
     opacity: Opacity.unsafe(0.1),
@@ -41,7 +41,7 @@ describe("Testing 'setOpacity' function", function() {
   });
 });
 
-describe("Testing 'toggleColor' function", function() {
+describe("Testing 'toggleColor' function", function () {
   const m: Value = {
     hex: Black,
     opacity: Opacity.empty,
