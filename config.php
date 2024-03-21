@@ -29,8 +29,8 @@ class Brizy_Config {
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://www.brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
-    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
-	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/' . BRIZY_EDITOR_VERSION;
+    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'prod';
+	const EDITOR_BUILD_RELATIVE_PATH = 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'prod';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'https://admin.brizy.io';
@@ -51,12 +51,14 @@ class Brizy_Config {
 	const CLOUD_CUSTOM_FILES = '/api/custom_files';
     const WP_HTTP_TIMEOUT = 30;
 
+	// this file will be stored in uploads/brizy/
+	const PROJECT_STLYES_FILE_PATH = '/project/styles.css';
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://compiler.brizy.io/compile/v3',
-				'http://compiler1.brizycompiler.run/compile/v3',
-				'http://compiler2.brizycompiler.run/compile/v3'
+				'http://compiler.brizy.io/compile/v4',
+				'http://compiler1.brizycompiler.run/compile/v4',
+				'http://compiler2.brizycompiler.run/compile/v4'
 			)
 		);
 	}

@@ -1,9 +1,10 @@
-import { Config, getConfig } from "../config";
-import { ConfigDCItem } from "../types/DynamicContent";
-import { Page } from "../types/Page";
-import { Rule } from "../types/PopupConditions";
-import { Project } from "../types/Project";
-import { ResponseWithBody } from "../types/Response";
+import { Config, getConfig } from "@/config";
+import { GlobalBlock } from "@/types/GlobalBlocks";
+import { Page } from "@/types/Page";
+import { Rule } from "@/types/PopupConditions";
+import { Project } from "@/types/Project";
+import { ResponseWithBody } from "@/types/Response";
+import { ConfigDCItem } from "@/types/DynamicContent";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -11,15 +12,16 @@ import {
   SavedBlockMeta,
   SavedLayout,
   SavedLayoutMeta
-} from "../types/SavedBlocks";
-import { ScreenshotData } from "../types/Screenshots";
-import { t } from "../utils/i18n";
+} from "@/types/SavedBlocks";
+import { ScreenshotData } from "@/types/Screenshots";
+import { t } from "@/utils/i18n";
 import { Literal } from "../utils/types";
 import {
   GetCollections,
   parseMetaSavedBlock,
   parseSavedBlock,
   parseSavedLayout,
+  stringifyGlobalBlock,
   stringifyPage,
   stringifyProject,
   stringifySavedBlock
@@ -147,10 +149,11 @@ export function updateProject(
     hash
   });
   const { is_autosave = 1 } = meta;
-  const data = stringifyProject(project);
+  const { data, dataVersion, compiled } = stringifyProject(project);
   const body = new URLSearchParams({
-    data: data.data,
-    dataVersion: data.dataVersion,
+    data,
+    dataVersion,
+    ...(compiled && { compiled }),
     is_autosave: `${is_autosave}`
   });
 
@@ -754,12 +757,13 @@ export const updatePage = (
     hash
   });
   const { is_autosave = 1 } = meta;
-  const { id, status, data, dataVersion } = stringifyPage(page);
+  const { id, status, data, dataVersion, compiled } = stringifyPage(page);
   const body = new URLSearchParams({
     id,
     status,
     data,
-    dataVersion: `${dataVersion}`,
+    dataVersion,
+    ...(compiled && { compiled }),
     is_autosave: `${is_autosave}`
   });
 
@@ -1009,5 +1013,196 @@ export async function getUploadedFonts() {
 
   return response.data;
 }
+
+//#endregion
+
+//#region Global Blocks
+
+export const createGlobalBlock = async (
+  globalBlock: GlobalBlock
+): Promise<GlobalBlock> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { url, hash, actions, editorVersion } = config;
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.createGlobalBlock,
+    version: editorVersion
+  });
+  const { uid, title, tags, data, position, rules, meta, status, compiled } =
+    stringifyGlobalBlock(globalBlock);
+
+  const body = new URLSearchParams({
+    uid,
+    data,
+    rules,
+    meta,
+    status,
+    ...(compiled && { compiled }),
+    title: title ?? "",
+    tags: tags ?? "",
+    position: position ?? ""
+  });
+
+  try {
+    const d = await persistentRequest<GlobalBlock>(_url, {
+      method: "POST",
+      body
+    });
+    if (!d.ok) {
+      throw new Error(t("Failed to update Global blocks"));
+    }
+
+    return d.data;
+  } catch (e) {
+    throw new Error(t("Failed to update Global blocks"));
+  }
+};
+
+export const updateGlobalBlock = async (
+  globalBlock: GlobalBlock,
+  extraMeta: { is_autosave?: 0 | 1 } = {}
+): Promise<GlobalBlock> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const { is_autosave = 1 } = extraMeta;
+  const { url, hash, actions, editorVersion } = config;
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.updateGlobalBlock,
+    version: editorVersion
+  });
+
+  const { uid, title, tags, data, position, rules, meta, status, compiled } =
+    stringifyGlobalBlock(globalBlock);
+  const body = new URLSearchParams({
+    uid,
+    data,
+    rules,
+    meta,
+    status,
+    ...(compiled && { compiled }),
+    title: title ?? "",
+    tags: tags ?? "",
+    position: position ?? "",
+    is_autosave: `${is_autosave}`
+  });
+
+  try {
+    const d = await persistentRequest<GlobalBlock>(_url, {
+      method: "POST",
+      body
+    });
+    if (!d.ok) {
+      throw new Error(t("Failed to update Global Block"));
+    }
+    return d.data;
+  } catch {
+    throw new Error(t("Failed to update Global Block"));
+  }
+};
+
+export const updateGlobalBlocks = async (
+  globalBlocks: Array<GlobalBlock>,
+  meta: { is_autosave?: 1 | 0 } = {}
+): Promise<Array<GlobalBlock>> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const { is_autosave = 1 } = meta;
+  const { url, hash, actions, editorVersion } = config;
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.updateGlobalBlocks,
+    version: editorVersion
+  });
+  const data = globalBlocks.reduce(
+    (acc, globalBlock) => {
+      const {
+        uid,
+        title,
+        tags,
+        data,
+        position,
+        rules,
+        meta,
+        status,
+        compiled
+      } = stringifyGlobalBlock(globalBlock);
+
+      acc.uid.push(uid);
+      acc.data.push(data);
+      acc.status.push(status);
+      acc.rules.push(rules);
+      acc.meta.push(meta);
+      acc.position.push(position ?? "");
+      acc.title.push(title ?? "");
+      acc.tags.push(tags ?? "");
+      acc.compiled.push(compiled ?? "");
+
+      return acc;
+    },
+    {
+      uid: [],
+      status: [],
+      data: [],
+      position: [],
+      rules: [],
+      meta: [],
+      title: [],
+      tags: [],
+      media: [],
+      compiled: []
+    } as {
+      uid: Array<string>;
+      status: Array<string>;
+      data: Array<string>;
+      position: Array<string>;
+      rules: Array<string>;
+      meta: Array<string>;
+      title: Array<string>;
+      tags: Array<string>;
+      media: Array<string>;
+      compiled: Array<string>;
+    }
+  );
+
+  const dataEncode = makeFormEncode({
+    uid: data.uid,
+    status: data.status,
+    data: data.data,
+    position: data.position,
+    rules: data.rules,
+    meta: data.meta,
+    title: data.title,
+    tags: data.tags,
+    media: data.media,
+    compiled: data.compiled,
+    is_autosave: `${is_autosave}`
+  });
+  const body = new URLSearchParams(dataEncode);
+
+  try {
+    const d = await persistentRequest<Array<GlobalBlock>>(_url, {
+      method: "POST",
+      body
+    });
+    if (!d.ok) {
+      throw new Error(t("Failed to update Global blocks"));
+    }
+    return d.data;
+  } catch {
+    throw new Error(t("Failed to update Global blocks"));
+  }
+};
 
 //#endregion

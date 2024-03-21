@@ -296,6 +296,12 @@ class Brizy_Admin_Templates {
 	public function getTemplateForCurrentPage() {
 		$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 
+		$pid = Brizy_Editor::get()->currentPostId();
+
+		if($pid && Brizy_Editor_Post::isBrizyEnabled(get_post($pid))) {
+			return null;
+		}
+
 		$is_preview = is_preview();
 
 		$templates = get_posts(
@@ -393,23 +399,28 @@ class Brizy_Admin_Templates {
 					return;
 				}
 
+				do_action( 'brizy_preview_mode', self::getTemplate() );
 				add_filter( 'template_include', array( $this, 'templateInclude' ), 20000 );
 
-				$is_preview    = is_preview() || isset( $_GET['preview'] );
-				$needs_compile = $is_preview || ! self::getTemplate()->isCompiledWithCurrentVersion() || self::getTemplate()->get_needs_compile();
 
-				if ( $needs_compile ) {
-					try {
-						self::getTemplate()->compile_page();
-						if ( ! $is_preview && $needs_compile ) {
-							self::getTemplate()->saveStorage();
-							self::getTemplate()->savePost();
-						}
-					} catch ( Exception $e ) {
-						//ignore
-						Brizy_Logger::instance()->error( $e->getMessage(), [] );
-					}
-				}
+                try {
+                    $compiler = new Brizy_Editor_Compiler(
+                        Brizy_Editor_Project::get(),
+                        new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL ),
+                        new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), self::getTemplate() ),
+                        Brizy_Config::getCompilerUrls(),
+                        Brizy_Config::getCompilerDownloadUrl()
+                    );
+
+                    if ( $compiler->needsCompile( self::getTemplate() ) ) {
+                        $editorConfig = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), self::getTemplate() )
+                                                                   ->config( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
+                        $compiler->compilePost( self::getTemplate(), $editorConfig );
+                    }
+
+                } catch ( Exception $e ) {
+                    Brizy_Logger::instance()->exception( $e );
+                }
 
 				if ( $pid ) {
 					$this->pid = $pid;
@@ -430,7 +441,7 @@ class Brizy_Admin_Templates {
 
 				// insert the compiled head and content
 				add_filter( 'body_class', array( $this, 'bodyClassFrontend' ) );
-				add_action( 'wp_head', array( $this, 'insertTemplateHead' ) );
+				//add_action( 'wp_head', array( $this, 'insertTemplateHead' ) );
 				add_action( 'brizy_template_content', array( $this, 'showTemplateContent' ), - 12000 );
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_preview_assets' ), 9999 );
 				add_filter( 'the_content', [ $this, 'filterPageContent' ], - 12000 );
@@ -465,36 +476,6 @@ class Brizy_Admin_Templates {
 		return $classes;
 	}
 
-	/**
-	 *  Show the compiled page head content
-	 */
-	public function insertTemplateHead() {
-		if ( ! self::getTemplate() ) {
-			return;
-		}
-
-		$pid      = Brizy_Editor::get()->currentPostId();
-		$template = self::getTemplate();
-		$post     = $template->getWpPost();
-
-		if ( $pid ) {
-			$post = get_post( $pid );
-		}
-
-		$compiled_page = self::getTemplate()->get_compiled_page();
-		$templateHead  = $compiled_page->get_head();
-
-		if ( empty( $templateHead ) ) {
-			return;
-		}
-
-		$head = apply_filters( 'brizy_content', $templateHead, Brizy_Editor_Project::get(), $post, 'head' );
-		?>
-        <!-- BRIZY HEAD -->
-		<?php echo $head; ?>
-        <!-- END BRIZY HEAD -->
-		<?php
-	}
 
 	/**
 	 * @param $content
@@ -520,9 +501,10 @@ class Brizy_Admin_Templates {
 			$post = get_post( $pid );
 		}
 
-		$content = apply_filters(
+		$compiled_html = self::getTemplate()->get_compiled_html();
+		$content       = apply_filters(
 			'brizy_content',
-			self::getTemplate()->get_compiled_page()->getBody(),
+			$compiled_html,
 			Brizy_Editor_Project::get(),
 			$post,
 			'body'
@@ -549,15 +531,7 @@ class Brizy_Admin_Templates {
 			$brizyPost = get_post( $pid );
 		}
 
-		$content = $this->getTemplateContent();
-
-		return apply_filters(
-			'brizy_content',
-			$content,
-			Brizy_Editor_Project::get(),
-			$brizyPost,
-			'body'
-		);
+		return $this->getTemplateContent();
 	}
 
 	/**

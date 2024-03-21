@@ -92,6 +92,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
             'data' => $block->get_editor_data(true),
+            'globalStyles' => $block->getGlobalStyles(),
             'editorVersion' => $this->syncVersion,
             'files' => [
                 'images' => [],

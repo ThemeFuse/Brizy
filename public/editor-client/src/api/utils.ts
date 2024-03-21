@@ -21,9 +21,7 @@ type StrNum = string | number;
 
 type Rec = Dictionary<StrNum>;
 
-const isStrNum = (
-  e: StrNum | undefined | Rec | Array<StrNum | Rec>
-): e is StrNum => {
+const isStrNum = (e: unknown): e is StrNum => {
   return Str.read(e) !== undefined || Num.read(e) !== undefined;
 };
 

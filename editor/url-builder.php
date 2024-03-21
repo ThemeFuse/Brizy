@@ -58,15 +58,15 @@ class Brizy_Editor_UrlBuilder
      *
      * @return string
      */
-    public function plugin_url($path = '')
+    public function plugin_url($path = '', $__FILE__ = __FILE__)
     {
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return BRIZY_PLUGIN_URL . $path;
+        return BRIZY_PLUGIN_URL.$path;
     }
 
     /**
@@ -79,10 +79,10 @@ class Brizy_Editor_UrlBuilder
     {
 
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return BRIZY_PLUGIN_PATH . $path;
+        return BRIZY_PLUGIN_PATH.$path;
     }
 
 
@@ -96,7 +96,9 @@ class Brizy_Editor_UrlBuilder
 
     public function multipass_url()
     {
-        return set_url_scheme(admin_url('admin-ajax.php')) . "?action=brizy_multipass_create&client_id=" . Brizy_Config::BRIZY_APPLICATION_FORM_ID;
+        return set_url_scheme(
+                admin_url('admin-ajax.php')
+            )."?action=brizy_multipass_create&client_id=".Brizy_Config::BRIZY_APPLICATION_FORM_ID;
     }
 
 
@@ -134,13 +136,13 @@ class Brizy_Editor_UrlBuilder
      */
     public function upload_path($path = null)
     {
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return wp_normalize_path($this->upload_dir['basedir'] . $path);
+        return wp_normalize_path($this->upload_dir['basedir'].$path);
     }
 
     /**
@@ -150,13 +152,13 @@ class Brizy_Editor_UrlBuilder
      */
     public function upload_url($path = null)
     {
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
-            $path = "/" . ltrim($path, "/");
+            $path = "/".ltrim($path, "/");
         }
 
-        return $this->upload_dir['baseurl'] . $path;
+        return $this->upload_dir['baseurl'].$path;
     }
 
     /**
@@ -167,7 +169,7 @@ class Brizy_Editor_UrlBuilder
     public function brizy_upload_path($path = null)
     {
 
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
             $path = ltrim($path, '/');
@@ -183,30 +185,30 @@ class Brizy_Editor_UrlBuilder
      */
     public function wp_upload_path($path = null)
     {
-	    if ( $path ) {
-		    $path = ltrim( $path, '/' );
-	    }
+        if ($path) {
+            $path = ltrim($path, '/');
+        }
 
-        return $this->upload_dir['path'] . '/' . $path;
+        return $this->upload_dir['path'].'/'.$path;
     }
 
-	/**
-	 * @param $path
-	 *
-	 * @return string
-	 */
-	public function wp_upload_relative_path( $path )
-	{
-		$path = self::cleanPath($path);
+    /**
+     * @param $path
+     *
+     * @return string
+     */
+    public function wp_upload_relative_path($path)
+    {
+        $path = self::cleanPath($path);
 
-		$path = ltrim( $path, '/' );
+        $path = ltrim($path, '/');
 
-		if ( empty( $this->upload_dir['subdir'] ) || $this->upload_dir['subdir'] == '/' ) {
-			return $path;
-		}
+        if (empty($this->upload_dir['subdir']) || $this->upload_dir['subdir'] == '/') {
+            return $path;
+        }
 
-		return ltrim( $this->upload_dir['subdir'] . '/' . $path, '/' );
-	}
+        return ltrim($this->upload_dir['subdir'].'/'.$path, '/');
+    }
 
     /**
      * @param $path
@@ -215,7 +217,7 @@ class Brizy_Editor_UrlBuilder
      */
     public function brizy_upload_relative_path($path = null)
     {
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
             $path = ltrim($path, '/');
@@ -233,7 +235,7 @@ class Brizy_Editor_UrlBuilder
     public function brizy_upload_url($path = null)
     {
 
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
             $path = ltrim($path, "/");
@@ -258,10 +260,10 @@ class Brizy_Editor_UrlBuilder
         }
 
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return $this->brizy_upload_path($post_id . $path);
+        return $this->brizy_upload_path($post_id.$path);
     }
 
     public function page_upload_relative_path($path = null, $post_id = null)
@@ -271,10 +273,10 @@ class Brizy_Editor_UrlBuilder
         }
 
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return $this->brizy_upload_relative_path($post_id . $path);
+        return $this->brizy_upload_relative_path($post_id.$path);
     }
 
     /**
@@ -290,10 +292,10 @@ class Brizy_Editor_UrlBuilder
         }
 
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return $this->brizy_upload_url($post_id . $path);
+        return $this->brizy_upload_url($post_id.$path);
     }
 
 
@@ -305,10 +307,10 @@ class Brizy_Editor_UrlBuilder
     public function editor_asset_path($path = null)
     {
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return $this->brizy_upload_path('editor' . $path);
+        return $this->brizy_upload_path('editor'.$path);
     }
 
     /**
@@ -316,13 +318,25 @@ class Brizy_Editor_UrlBuilder
      *
      * @return string
      */
-    public function editor_build_url( $path = '' )
+    public function editor_build_url($path = '')
     {
-	    if ( $path ) {
-		    $path = '/' . ltrim( $path, '/' );
-	    }
+        if ($path) {
+            $path = '/'.ltrim($path, '/');
+        }
 
-        return $this->plugin_url( Brizy_Config::EDITOR_BUILD_RELATIVE_PATH . $path );
+        return $this->plugin_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH.$path);
+    }
+
+    public function plugin_relative_url($path = '', $__FILE__ = __FILE__)
+    {
+        if ($path) {
+            $path = '/'.ltrim($path, '/');
+        }
+        $pluginUrl = $this->plugin_url($path, $__FILE__);
+
+        $pluginUrl = str_replace(home_url(), "", $pluginUrl);
+
+        return $pluginUrl;
     }
 
     /**
@@ -332,15 +346,16 @@ class Brizy_Editor_UrlBuilder
      */
     static public function editor_build_path($path = null)
     {
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
-            $path = '/' . ltrim(
+            $path = '/'.ltrim(
                     str_replace(array('/', '\\'), '/', $path),
-                    '/');
+                    '/'
+                );
         }
 
-        return Brizy_Config::EDITOR_BUILD_PATH . $path;
+        return Brizy_Config::EDITOR_BUILD_PATH.$path;
     }
 
     /**
@@ -351,10 +366,10 @@ class Brizy_Editor_UrlBuilder
     public function media_asset_path($path = null)
     {
         if ($path) {
-            $path = '/' . ltrim($path, '/');
+            $path = '/'.ltrim($path, '/');
         }
 
-        return $this->brizy_upload_path("media" . $path);
+        return $this->brizy_upload_path("media".$path);
     }
 
     /**
@@ -365,10 +380,10 @@ class Brizy_Editor_UrlBuilder
     public function media_asset_url($path = null)
     {
         if ($path) {
-            $path = "/" . ltrim($path, "/");
+            $path = "/".ltrim($path, "/");
         }
 
-        return $this->brizy_upload_url("media" . $path);
+        return $this->brizy_upload_url("media".$path);
     }
 
     /**
@@ -378,17 +393,17 @@ class Brizy_Editor_UrlBuilder
      */
     public function external_media_url($path = null)
     {
-	    $path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if ($path) {
-            $path = "/" . ltrim($path, "/");
+            $path = "/".ltrim($path, "/");
         }
 
-        $url = Brizy_Config::MEDIA_IMAGE_URL . $path;
+        $url = Brizy_Config::MEDIA_IMAGE_URL.$path;
 
         $urls = array();
         foreach (Brizy_Config::getEditorBaseUrls() as $baseUrl) {
-            $urls[] = $baseUrl . $url;
+            $urls[] = $baseUrl.$url;
         }
 
         return new Brizy_Admin_UrlIterator($urls);
@@ -404,8 +419,9 @@ class Brizy_Editor_UrlBuilder
         $result = [];
         $brizyCloudUrls = Brizy_Config::getEditorBaseUrls();
         foreach ($brizyCloudUrls as $url) {
-            $result[] = (string)$url . '/customfile/' . $uid . '/' . $fileName;
+            $result[] = (string)$url.'/customfile/'.$uid.'/'.$fileName;
         }
+
         return new Brizy_Admin_UrlIterator($result);
     }
 
@@ -417,19 +433,19 @@ class Brizy_Editor_UrlBuilder
      */
     public function external_asset_url($path = null, $template_version = null)
     {
-		$path = self::cleanPath($path);
+        $path = self::cleanPath($path);
 
         if (is_null($template_version)) {
             $template_version = BRIZY_EDITOR_VERSION;
         }
 
         if ($path) {
-            $path = "/" . ltrim($path, "/");
+            $path = "/".ltrim($path, "/");
         }
 
         $urls = array();
         foreach (Brizy_Config::getStaticUrls() as $url) {
-            $urls[] = sprintf($url . $path, $template_version);
+            $urls[] = sprintf($url.$path, $template_version);
         }
 
         return new Brizy_Admin_UrlIterator($urls);
@@ -452,18 +468,38 @@ class Brizy_Editor_UrlBuilder
         return sprintf($url, $template_version);
     }
 
-	static public function cleanPath($path) {
+    public function compiled_project_styles_url()
+    {
+        return $this->brizy_upload_url(Brizy_Config::PROJECT_STLYES_FILE_PATH);
+    }
 
-		if ( ! $path ) {
-			return $path;
-		}
+    public function compiled_project_styles_path()
+    {
+        return $this->brizy_upload_path(Brizy_Config::PROJECT_STLYES_FILE_PATH);
+    }
 
-		$path =  preg_replace("/\.?\.\//m",'',$path);
-		$path =  preg_replace("/(\/+)\.+(\/+)/m",'$1$2',$path);
-		$path =  preg_replace("/\.{2,}/m",'/',$path);
-		$path =  preg_replace("/\/{2,}/m",'/',$path);
+    public function homeUrl($path = '')
+    {
+        if ($path) {
+            $path = "/".ltrim($path, "/");
+        }
 
-		return $path;
-	}
+        return home_url()."/".$path;
+    }
+
+    static public function cleanPath($path)
+    {
+
+        if (!$path) {
+            return $path;
+        }
+
+        $path = preg_replace("/\.?\.\//m", '', $path);
+        $path = preg_replace("/(\/+)\.+(\/+)/m", '$1$2', $path);
+        $path = preg_replace("/\.{2,}/m", '/', $path);
+        $path = preg_replace("/\/{2,}/m", '/', $path);
+
+        return $path;
+    }
 }
 

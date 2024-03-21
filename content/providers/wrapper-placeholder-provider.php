@@ -3,7 +3,7 @@
 use BrizyPlaceholders\PlaceholderInterface;
 use BrizyPlaceholders\RegistryInterface;
 
-class Brizy_Content_WrapperPlaceholderProvider extends Brizy_Content_PlaceholderProvider {
+class Brizy_Content_Providers_WrapperPlaceholderProvider extends Brizy_Content_PlaceholderProvider {
 
 
 	/**
@@ -16,6 +16,7 @@ class Brizy_Content_WrapperPlaceholderProvider extends Brizy_Content_Placeholder
 	public function __construct( $context = null ) {
 		$this->providers   = [];
 		$this->providers[] = new Brizy_Content_Providers_WrapperProvider();
+		$this->providers[] = new Brizy_Content_Providers_GlobalBlocksProvider();
 	}
 
 }

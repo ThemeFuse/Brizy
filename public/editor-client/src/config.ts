@@ -42,6 +42,10 @@ interface Actions {
   updateBlockScreenshot: string;
 
   getDynamicContentPlaceholders: string;
+
+  createGlobalBlock: string;
+  updateGlobalBlock: string;
+  updateGlobalBlocks: string;
   lockProject: string;
   removeLock: string;
   heartBeat: string;
@@ -241,6 +245,18 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getDynamicContentPlaceholders: pipe(
     mPipe(Obj.readKey("getDynamicContentPlaceholders"), Str.read),
     throwOnNullish("Invalid actions: getDynamicContentPlaceholders")
+  ),
+  createGlobalBlock: pipe(
+    mPipe(Obj.readKey("createGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: createGlobalBlock")
+  ),
+  updateGlobalBlock: pipe(
+    mPipe(Obj.readKey("updateGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlock")
+  ),
+  updateGlobalBlocks: pipe(
+    mPipe(Obj.readKey("updateGlobalBlocks"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlocks")
   ),
   lockProject: pipe(
     mPipe(Obj.readKey("lockProject"), Str.read),

@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "fp-utilities": "^1.1.4",
+    "js-base64": "^3.7.5",
     "lodash": "^4.17.21",
     "franc": "^6.1.0",
     "@brizy/readers": "^1.0.1"

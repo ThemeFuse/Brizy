@@ -10,7 +10,7 @@
 class Brizy_Editor_Popup extends Brizy_Editor_Post {
 
 
-    use Brizy_Editor_PostTagsAware;
+	use Brizy_Editor_PostTagsAware;
 
 	const BRIZY_META = 'brizy-meta';
 	const BRIZY_MEDIA = 'brizy-media';
@@ -172,10 +172,10 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	public function jsonSerialize() {
 		$data                = get_object_vars( $this );
 		$data['editor_data'] = base64_decode( $data['editor_data'] );
-		$data['cloudId'] = $this->getCloudId();
-		$data['meta']    = $this->getMeta();
-		$data['title'] = $this->getTitle();
-		$data['tags'] = $this->getTags();
+		$data['cloudId']     = $this->getCloudId();
+		$data['meta']        = $this->getMeta();
+		$data['title']       = $this->getTitle();
+		$data['tags']        = $this->getTags();
 
 		unset( $data['wp_post'] );
 
@@ -209,9 +209,9 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 	}
 
 
-	public function createResponse( $fields = array() ) {
+	public function createResponse( $fields = array(), $context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT ) {
 
-		$p_id      = (int) $this->getWpPostId();
+		$p_id = (int) $this->getWpPostId();
 
 		if ( empty( $fields ) ) {
 			$fields = array(
@@ -228,7 +228,7 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 		$global = array();
 
 		if ( in_array( 'data', $fields ) ) {
-			$global['data'] = $this->get_editor_data();
+			$global['data'] = $this->get_editor_data( $context == Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
 		}
 
 		if ( in_array( 'uid', $fields ) ) {
@@ -258,6 +258,8 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 		if ( in_array( 'author', $fields ) ) {
 			$global['author'] = $this->getWpPost()->post_author;
 		}
+
+		$global['compiler'] = $this->get_compiler();
 
 		return $global;
 	}

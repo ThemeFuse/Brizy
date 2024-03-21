@@ -1,6 +1,6 @@
 <?php
 
-class Brizy_Content_PlaceholderWpProvider extends Brizy_Content_PlaceholderProvider {
+class Brizy_Content_Providers_PlaceholderWpProvider extends Brizy_Content_PlaceholderProvider {
 
 	const PLACEHOLDERS = [
 		'brizy_dc_image_alt'

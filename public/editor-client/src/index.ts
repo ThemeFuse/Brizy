@@ -16,6 +16,8 @@ import { placeholders } from "./dynamicContent";
 import { handler as posts } from "./Elements/Posts";
 import { uploadedFonts } from "./fonts";
 import { heartBeat } from "./heartBeat";
+import {globalBlocks } from "./globalBlocks/blocks";
+import { globalPopups } from "./globalBlocks/popups";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -49,6 +51,8 @@ const api = {
   savedPopups,
   savedLayouts,
   popupConditions,
+  globalBlocks,
+  globalPopups,
   defaultKits: defaultKits(config),
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),

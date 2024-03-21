@@ -11,7 +11,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
+                "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
                 "reference": "61eea2244cb34ff8666b802aafa74f74dec869da"
             },
             "dist": {
@@ -40,10 +40,6 @@
                 "brizy",
                 "brizy merge assets"
             ],
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/master",
-                "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
-            },
             "time": "2022-09-27T14:56:05+00:00"
         },
         {
@@ -51,7 +47,7 @@
             "version": "1.5.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-migration-utils.git",
+                "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
                 "reference": "81523e89975e56d192bb3a5622ddbe1d06e10809"
             },
             "dist": {
@@ -81,10 +77,6 @@
                 }
             ],
             "description": "Data migration utils",
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.5.4",
-                "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
-            },
             "time": "2022-07-08T10:43:38+00:00"
         },
         {
@@ -92,7 +84,7 @@
             "version": "v2.0.18",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
+                "url": "git@github.com:bagrinsergiu/brizy-content-placeholder.git",
                 "reference": "40c025b4d692f8a06fa144baec8023289a6d8d99"
             },
             "dist": {
@@ -458,5 +450,5 @@
         "php": ">=5.6"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }

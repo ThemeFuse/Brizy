@@ -3,7 +3,7 @@
 use BrizyPlaceholders\Extractor;
 use BrizyPlaceholders\Replacer;
 
-class Brizy_Content_WrapperToPlaceholderProcessor implements Brizy_Editor_Content_ProcessorInterface {
+class Brizy_Content_BlocksProcessor implements Brizy_Editor_Content_ProcessorInterface {
     /**
      * @param string $content
      * @param Brizy_Content_Context $context
@@ -12,7 +12,7 @@ class Brizy_Content_WrapperToPlaceholderProcessor implements Brizy_Editor_Conten
      */
     public function process( $content, Brizy_Content_Context $context ) {
 
-		$placeholderProvider = new Brizy_Content_Providers_WrapperPlaceholderProvider( $context );
+		$placeholderProvider = new Brizy_Content_Providers_GlobalBlocksProvider( $context );
 		$extractor           = new Extractor( $placeholderProvider );
 
 		$context->setProvider( $placeholderProvider );
