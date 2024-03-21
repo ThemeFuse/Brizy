@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC, ReactNode } from "react";
+import React, { ComponentProps, ReactElement, ReactNode } from "react";
 import classNames from "classnames";
 import { Handle } from "rc-slider";
 import Range from "visual/component/Controls/Range";
@@ -21,7 +21,7 @@ export type Props = {
   onActiveChange: (v: Edge) => void;
 };
 
-export const GradientRange: FC<Props> = ({
+export const GradientRange = ({
   start,
   end,
   active,
@@ -30,7 +30,7 @@ export const GradientRange: FC<Props> = ({
   onActiveChange,
   hex1,
   hex2
-}) => {
+}: Props): ReactElement => {
   return (
     <Range
       onChange={(v): void => {

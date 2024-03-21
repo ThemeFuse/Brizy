@@ -1,7 +1,7 @@
 import React from "react";
 import { noop } from "underscore";
-import { t } from "visual/utils/i18n";
 import EditorIcon from "visual/component/EditorIcon";
+import { t } from "visual/utils/i18n";
 
 type InputPlaceholderProps = {
   type?: string;
@@ -15,7 +15,7 @@ type InputPlaceholderProps = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
-const InputPlaceholder: React.FC<InputPlaceholderProps> = props => {
+const InputPlaceholder = (props: InputPlaceholderProps): JSX.Element => {
   const {
     title = "",
     value = "",

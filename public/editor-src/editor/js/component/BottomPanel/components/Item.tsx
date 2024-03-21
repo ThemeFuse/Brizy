@@ -1,5 +1,6 @@
-import React, { FC, MouseEventHandler } from "react";
 import classnames from "classnames";
+import React, { MouseEventHandler } from "react";
+import { FCC } from "visual/utils/react/types";
 
 export interface Props {
   paddingSize: "none" | "small" | "medium";
@@ -10,16 +11,9 @@ export interface Props {
   active?: boolean;
 }
 
-export const BottomPanelItem: FC<Props> = props => {
-  const {
-    className,
-    title,
-    onClick,
-    paddingSize,
-    pointer,
-    active,
-    children
-  } = props;
+export const BottomPanelItem: FCC<Props> = (props) => {
+  const { className, title, onClick, paddingSize, pointer, active, children } =
+    props;
   const _className = classnames(
     "brz-li",
     "brz-ed-fixed-bottom-panel__item",

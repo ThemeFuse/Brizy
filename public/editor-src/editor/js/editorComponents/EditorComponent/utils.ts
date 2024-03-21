@@ -8,9 +8,6 @@ import {
 } from "visual/component/Elements/Types";
 import { FromElementModelGetter } from "visual/component/Options/Type";
 import { OptionName, OptionValue } from "visual/component/Options/types";
-import { fromElementModel } from "visual/component/Options/types/utils/fromElementModel";
-import { toElementModel } from "visual/component/Options/types/utils/toElementModel";
-import { isOption } from "visual/component/Options/utils";
 import {
   ParsedToolbarData,
   ToolbarConfig
@@ -39,6 +36,9 @@ import { filter } from "visual/utils/options/filter";
 import { hasChilds } from "visual/utils/options/match";
 import { getChildOptions } from "visual/utils/options/match/utils";
 import { reduce } from "visual/utils/options/reduce";
+import { isOption } from "visual/utils/options/utils";
+import { fromElementModel } from "visual/utils/options/utils/fromElementModel";
+import { toElementModel } from "visual/utils/options/utils/toElementModel";
 import * as Obj from "visual/utils/reader/object";
 import * as Responsive from "visual/utils/responsiveMode";
 import {

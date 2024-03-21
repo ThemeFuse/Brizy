@@ -24,8 +24,11 @@ import {
   ShopifyTemplate,
   getShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { updateError } from "visual/redux/actions";
-import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
+import {
+  updateError,
+  updatePageLayout,
+  updatePageTitle
+} from "visual/redux/actions2";
 import {
   getCollectionSourceItemsById,
   getPageRelations,
@@ -61,7 +64,7 @@ const getErrors = (s: RulesState): string | undefined => {
 };
 
 export const PromptPageRules = (props: Props): ReactElement => {
-  const _config = Config.getAll();
+  const _config = useMemo(() => Config.getAll(), []);
 
   const templateType = useMemo(() => {
     return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
@@ -187,7 +190,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
         </Button>
       </>
     ),
-    [dispatchS, state.type]
+    [_config, dispatch, dispatchS, state.type]
   );
 
   const content: () => ReactElement = () => {

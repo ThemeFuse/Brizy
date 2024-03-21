@@ -2,14 +2,6 @@ import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import {
-  getBottomWidth,
-  getLeftWidth,
-  getRightWidth,
-  getTopWidth,
-  getWidth,
-  getWidthType
-} from "visual/component/Options/types/dev/Border/model";
 import * as Hex from "visual/utils/color/Hex";
 import { Black } from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
@@ -21,6 +13,14 @@ import { Value } from "./entities/Value";
 import * as Style from "./entities/style";
 import * as Width from "./entities/width";
 import * as WidthType from "./entities/widthType";
+import {
+  getBottomWidth,
+  getLeftWidth,
+  getRightWidth,
+  getTopWidth,
+  getWidth,
+  getWidthType
+} from "./model";
 
 export const defaultValue: Value = {
   style: Style.empty,

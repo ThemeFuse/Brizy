@@ -12,6 +12,13 @@ export type AllCSSKeys = BreakpointsNames | Exclude<State, "normal">;
 
 export type OutputStyle = [string, string, string];
 
+export interface Styles {
+  [k: string]: {
+    interval?: string[];
+    standart?: string[];
+  };
+}
+
 export interface OutputOptionStyle {
   [k: string]: { [k: string]: Literal };
 }

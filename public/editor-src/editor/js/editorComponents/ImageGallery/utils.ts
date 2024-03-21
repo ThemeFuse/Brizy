@@ -1,5 +1,5 @@
 import { isT } from "fp-utilities";
-import produce from "immer";
+import { produce } from "immer";
 import { insert, mergeIn } from "timm";
 import { last } from "underscore";
 import {

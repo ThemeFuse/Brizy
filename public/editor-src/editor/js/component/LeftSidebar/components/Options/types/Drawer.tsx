@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { ReactElement, useCallback, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { ConnectedProps, connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -29,14 +29,14 @@ type DrawerWrapperProps = DrawerProps &
     iconProps: unknown;
   };
 
-const _Drawer: React.FC<DrawerProps> = ({
+const _Drawer = ({
   drawerContentType,
   drawerTitle = "",
   withHelpIcon,
   drawerComponent: DrawerContent,
   wrapperHeaderComponent: WrapperHeaderComponent = ({ children }) => children,
   id
-}) => {
+}: DrawerProps): ReactElement | null => {
   const prevContentTypeRef = useRef(drawerContentType);
   useEffect(() => {
     prevContentTypeRef.current = drawerContentType;
@@ -72,7 +72,7 @@ const _Drawer: React.FC<DrawerProps> = ({
 
 const Drawer = React.memo(_Drawer);
 
-const DrawerWrapper: React.FC<DrawerWrapperProps> = ({ ...props }) => {
+const DrawerWrapper = ({ ...props }: DrawerWrapperProps) => {
   const {
     id,
     deviceMode,

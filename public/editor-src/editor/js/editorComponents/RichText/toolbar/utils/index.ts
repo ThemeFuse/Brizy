@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { Config } from "visual/global/Config";
 import { hexToRgba, makeStylePaletteCSSVar } from "visual/utils/color";
 import * as Obj from "visual/utils/reader/object";

@@ -1,10 +1,10 @@
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
-import { findDCChoiceByPlaceholder } from "visual/component/Options/types/common/Population/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import { pipe } from "visual/utils/fp";
 import { getDynamicContentChoices } from "visual/utils/options";
+import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { capByPrefix, decodeFromString } from "visual/utils/string";
@@ -15,10 +15,13 @@ import { classNamesToV } from "./transforms";
 const $doc = IS_EDITOR ? require("jquery") : require("cheerio");
 
 export function mapBlockElements(html, fn) {
-  let $ = getWrapper(html);
+  const $ = getWrapper(html);
   const nodes = getParagraphsArray($);
 
-  nodes.each((i, elem) => fn($doc(elem)));
+  nodes.each((i, elem) => {
+    const $elem = IS_EDITOR ? $doc(elem) : $(elem);
+    return fn($elem);
+  });
 
   return $.html();
 
@@ -403,6 +406,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     bgColorPalette: palette,
     bgColorOpacity: bgColorOpacity,
     bgColorHex: bgColor,
+    bgColorType: format.backgroundGradient ? "gradient" : "solid",
     ...parseShadow(format.shadow),
     textBgColorPalette,
     textShadowColorPalette: format.shadowColorPalette || null,

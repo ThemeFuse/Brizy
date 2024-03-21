@@ -33,14 +33,14 @@ type Props = {
   }) => ReactElement;
 };
 
-const Video: React.FC<Props> = ({
+const Video = ({
   video,
   videoLoop,
   videoStart,
   children,
   videoType,
   customVideo
-}) => {
+}: Props): ReactElement => {
   const videoMedia = video || customVideo;
   const { type, key } = video ?? {};
 

@@ -4,17 +4,17 @@ import { NumberSlider } from "visual/component/Controls/NumberSlider";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OnChange } from "visual/component/Options/Type";
-import { sliderSizeClassName } from "visual/component/Options/types/utils/sliderSizeClassName";
 import { useDebouncedOnChange } from "visual/component/hooks";
 import { t } from "visual/utils/i18n";
-import { EffectProps } from "../types/EffectProps";
+import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
 import {
   Direction as ScaleDirection,
   Scale as V,
   XPosition,
   YPosition
-} from "../types/Scale";
-import * as Speed from "../types/utils/Speed";
+} from "visual/utils/options/Motion/types/Scale";
+import * as Speed from "visual/utils/options/Motion/types/utils/Speed";
+import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
 import { Direction, Props } from "./Direction";
 import { Viewport } from "./Viewport";
 
@@ -55,7 +55,7 @@ export const Scale: JSXElementConstructor<EffectProps<V>> = ({
   );
 
   const onSpeedChange = useCallback(
-    (x0) =>
+    (x0: number) =>
       mPipe(Speed.fromNumber, (speed) => onChange({ ...value, speed }))(x0),
     [value, onChange]
   );

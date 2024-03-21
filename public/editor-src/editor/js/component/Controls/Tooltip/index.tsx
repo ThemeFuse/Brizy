@@ -31,6 +31,7 @@ export interface Prs extends WithClassName {
   portalNode?: HTMLElement;
   clickOutsideExceptions: string[];
   nodeRef?: RefObject<HTMLElement>;
+  children: ReactNode;
   onOpen: VoidFunction;
   onClose: VoidFunction;
 }
@@ -57,6 +58,7 @@ export class Tooltip extends React.Component<Props> {
     portalNode: undefined,
     clickOutsideExceptions: [],
     nodeRef: undefined,
+    children: undefined,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onOpen: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -1,4 +1,5 @@
-import produce from "immer";
+import { produce } from "immer";
+import { fromJS } from "immutable";
 import Config from "visual/global/Config";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import {
@@ -22,13 +23,22 @@ export const page: RPage = (state, action, fullState) => {
     }
     case "PUBLISH": {
       const { status } = action.payload;
-
-      const page = isPopup(Config.getAll())
+      const popup = isPopup(Config.getAll());
+      const _page = popup
         ? pageAssembledSelector(fullState)
         : pageAssembledRawSelector(fullState);
-
-      return produce<Page>(page, (draft) => {
+      const newPage = produce<Page>(_page, (draft) => {
         draft.status = status;
+      });
+
+      const oldState = fromJS(state);
+      const newState = fromJS(newPage);
+
+      if (oldState.equals(newState)) {
+        return state;
+      }
+
+      return produce<Page>(newPage, (draft) => {
         draft.dataVersion = draft.dataVersion + 1;
       });
     }

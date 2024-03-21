@@ -1,10 +1,6 @@
-import React, { ComponentProps, FC, useMemo } from "react";
+import React, { ComponentProps, ReactElement, useMemo } from "react";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
 import * as O from "visual/component/Options/Type";
-import {
-  paletteHex,
-  setOpacity
-} from "visual/component/Options/types/dev/ColorPicker/utils";
 import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
@@ -14,9 +10,10 @@ import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { Value } from "visual/utils/options/BackgroundColor/entities/Value";
 import { Meta } from "visual/utils/options/BackgroundColor/meta";
+import * as Model from "visual/utils/options/BackgroundColor/model";
+import { toBgControlValue } from "visual/utils/options/BackgroundColor/utils";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
-import * as Model from "./model";
-import { toBgControlValue } from "./utils";
+import { paletteHex, setOpacity } from "visual/utils/options/ColorPicker/utils";
 
 export type Props = O.Props<Value> &
   O.Meta<Meta> & {
@@ -35,7 +32,11 @@ const openSidebar = (): void => {
   );
 };
 
-export const BackgroundColor: FC<Props> = ({ value, onChange, config }) => {
+export const BackgroundColor = ({
+  value,
+  onChange,
+  config
+}: Props): ReactElement => {
   const _onChange: ComponentProps<typeof Bg>["onChange"] = (v, m) => {
     const isStart = !(value.type === "gradient" && value.active === "end");
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { instance } from "./index";
 
@@ -7,10 +7,10 @@ type RightSidebarItemsProps = {
   getTitle?: () => string;
 };
 
-export const RightSidebarItems: React.FC<RightSidebarItemsProps> = ({
+export const RightSidebarItems = ({
   getItems,
   getTitle
-}) => {
+}: RightSidebarItemsProps): null => {
   // update the items on every render
   useEffect(() => {
     getItems && instance && instance.setItems(getItems, getTitle);

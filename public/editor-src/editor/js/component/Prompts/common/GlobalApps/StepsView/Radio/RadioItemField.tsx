@@ -1,12 +1,12 @@
-import React, { FC, ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import Radio, { RadioItem } from "visual/component/Controls/Radio";
 import { RadioItemProps } from "../types";
 
-export const RadioItemField: FC<RadioItemProps> = ({
+export const RadioItemField = ({
   choices,
   name,
   onChange
-}): ReactElement => {
+}: RadioItemProps): ReactElement => {
   const handleRadioChange = useCallback(
     (value: string) => {
       onChange(value, name);

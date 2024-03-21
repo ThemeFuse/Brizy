@@ -19,6 +19,8 @@ import FacebookComments from "./FacebookComments";
 import FacebookEmbed from "./FacebookEmbed";
 import FacebookGroup from "./FacebookGroup";
 import FacebookPage from "./FacebookPage";
+import Flipbox from "./Flipbox";
+import FlipboxItem from "./Flipbox/FlipboxItem";
 import Form from "./Form";
 import Form2 from "./Form2";
 import Form2Field from "./Form2/Form2Field";
@@ -67,6 +69,8 @@ import SectionHeaderStickyItem from "./SectionHeader/SectionHeaderStickyItem";
 import SectionPopup from "./SectionPopup";
 import SectionPopup2 from "./SectionPopup2";
 import Shape from "./Shape";
+import ShareButton from "./ShareButton";
+import ShareButtonItem from "./ShareButton/ShareButtonItem";
 import * as Shopify from "./Shopify";
 import SoundCloud from "./SoundCloud";
 import Spacer from "./Spacer";
@@ -82,6 +86,7 @@ import TableBody from "./Table/TableBody";
 import TableCol from "./Table/TableCol";
 import TableHead from "./Table/TableHead";
 import TableRow from "./Table/TableRow";
+import TableOfContents from "./TableOfContents";
 import Tabs from "./Tabs";
 import Tab from "./Tabs/Tab";
 import ThirdParty from "./ThirdParty";
@@ -178,7 +183,12 @@ export default {
   Translation,
   Calendly,
   Alert,
+  TableOfContents,
+  Flipbox,
+  FlipboxItem,
   ThirdParty,
+  ShareButton,
+  ShareButtonItem,
 
   // DC
   PostTitle,

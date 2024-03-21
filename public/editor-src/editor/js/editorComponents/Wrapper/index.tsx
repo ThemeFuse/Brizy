@@ -19,7 +19,6 @@ import {
   disabledHoverForElements,
   getHoverAnimationOptions
 } from "visual/component/HoverAnimation/utils";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { Roles, currentUserRole } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
@@ -58,6 +57,7 @@ import {
   validateKeyByProperty
 } from "visual/utils/onChange";
 import { WithClassName } from "visual/utils/options/attributes";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
 import { read as readBoolean } from "visual/utils/reader/bool";

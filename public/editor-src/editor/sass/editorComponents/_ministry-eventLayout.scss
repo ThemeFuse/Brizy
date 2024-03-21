@@ -50,6 +50,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      color: inherit;
     }
   }
 
@@ -306,7 +307,6 @@
 
       a {
         color: inherit;
-        transition: inherit;
       }
 
       table {

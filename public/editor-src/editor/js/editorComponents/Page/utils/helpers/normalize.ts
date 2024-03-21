@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { Dispatch } from "redux";
 import {
   ElementModel,
@@ -9,13 +9,13 @@ import {
   normalizeMenuItems,
   symbolsToItems
 } from "visual/editorComponents/Menu/utils";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { Block } from "visual/types";
 import { mapModels } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
 import { FromTo } from "../types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 
@@ -88,7 +88,7 @@ export function detachGlobalBlocks(
     for (const [_id, dataStringified] of globalBlockUpdates) {
       dispatch(
         updateGlobalBlock({
-          id: _id,
+          uid: _id,
           data: JSON.parse(dataStringified)
         })
       );

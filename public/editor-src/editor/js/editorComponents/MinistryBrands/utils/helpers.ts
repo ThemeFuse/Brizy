@@ -86,6 +86,18 @@ export const EkklesiaMessages = {
   ),
   sermon_layout: t(
     "Ministry Content - Sermon Layout - module fields have been updated."
+  ),
+  article_detail: t(
+    "Ministry Content - Article Detail - module fields have been updated."
+  ),
+  article_list: t(
+    "Ministry Content - Article List - module fields have been updated."
+  ),
+  staff_detail: t(
+    "Ministry Content - Staff Detail - module fields have been updated."
+  ),
+  article_featured: t(
+    "Ministry Content - Article Featured - module fields have been updated."
   )
 };
 

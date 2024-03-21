@@ -129,7 +129,10 @@ export default function ($node: JQuery): void {
             };
           });
           // small hack to open lightBox by click on bigImage
-          bigImageWrapper.onclick = () => {
+          bigImageWrapper.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
             if (links[currentIndex]) {
               links[currentIndex].click();
             }
@@ -235,14 +238,28 @@ export default function ($node: JQuery): void {
 
   // MagnificPopup
   root.querySelectorAll(".brz-image__gallery-lightbox").forEach((item) => {
-    // @ts-expect-error magnificPopup have no types
-    $(item).magnificPopup({
-      delegate: "a",
-      type: "image",
-      gallery: {
-        enabled: true
-      },
-      mainClass: "brz brz-lightbox"
+    const aTag = item.querySelectorAll(
+      ".brz-image__gallery-item > .brz-image > a"
+    );
+
+    aTag.forEach((img, index) => {
+      img.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $(item)
+          // @ts-expect-error magnificPopup have no types
+          .magnificPopup({
+            delegate: "a",
+            type: "image",
+            gallery: {
+              enabled: true
+            },
+            mainClass: "brz brz-lightbox"
+          })
+          .magnificPopup("open")
+          .magnificPopup("goTo", index);
+      });
     });
   });
 }

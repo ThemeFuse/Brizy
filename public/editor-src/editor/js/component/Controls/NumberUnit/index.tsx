@@ -34,7 +34,7 @@ export function NumberUnit<U extends Literal>({
   };
 
   const onSelectChange = useCallback(
-    (v): void => {
+    (v: U): void => {
       return onChange({ number, unit: v });
     },
     [onChange, number]

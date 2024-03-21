@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { Base64 } from "js-base64";
 import React from "react";
-import { getCurrentPageId } from "visual/bootstraps/editor/getCurrentPageId";
 import {
   BreadcrumbsEditor,
   BreadcrumbsPreview
@@ -15,6 +14,7 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getCurrentPageId } from "visual/utils/env";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";

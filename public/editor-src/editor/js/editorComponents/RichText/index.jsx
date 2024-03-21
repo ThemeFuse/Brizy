@@ -47,7 +47,11 @@ import {
   parseColor,
   parseShadow
 } from "./utils";
-import { getInnerElement, handlePasteStyles } from "./utils/ContextMenu";
+import {
+  getInnerElement,
+  handleClearFormatting,
+  handlePasteStyles
+} from "./utils/ContextMenu";
 import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
@@ -337,6 +341,12 @@ class RichText extends EditorComponent {
       case "shift+right_cmd+V":
         handlePaste();
         return;
+      case "alt+\\":
+      case "ctrl+\\":
+      case "cmd+\\":
+      case "right_cmd+\\":
+        handleClearFormatting(this.handleChange);
+        return;
       default:
         break;
     }
@@ -588,11 +598,9 @@ class RichText extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });
@@ -646,7 +654,13 @@ class RichText extends EditorComponent {
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
-    const shortcutsTypes = ["copy", "paste", "pasteStyles", "delete"];
+    const shortcutsTypes = [
+      "copy",
+      "paste",
+      "pasteStyles",
+      "delete",
+      "clearFormatting"
+    ];
     const config = Config.getAll();
 
     const newV = {

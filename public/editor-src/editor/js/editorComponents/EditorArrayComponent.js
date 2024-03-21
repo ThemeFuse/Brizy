@@ -3,7 +3,6 @@ import { produce } from "immer";
 import React from "react";
 import { getIn, insert, removeAt, replaceAt, setIn } from "timm";
 import ErrorBoundary from "visual/component/ErrorBoundary";
-import { mergeOptions } from "visual/component/Options/utils";
 import {
   flattenDefaultValue,
   makeToolbarPropsFromConfigDefaults
@@ -11,8 +10,7 @@ import {
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 import Config from "visual/global/Config";
 import Editor from "visual/global/Editor";
-import { updateCopiedElement } from "visual/redux/actions";
-import { updateUI } from "visual/redux/actions2";
+import { updateCopiedElement, updateUI } from "visual/redux/actions2";
 import {
   copiedElementNoRefsSelector,
   deviceModeSelector,
@@ -34,6 +32,7 @@ import {
   setStyles,
   stripSystemKeys
 } from "visual/utils/models";
+import { mergeOptions } from "visual/utils/options/utils";
 import { read as readNumber } from "visual/utils/reader/number";
 import * as State from "visual/utils/stateMode";
 import { getComponentDefaultValue } from "visual/utils/traverse/common";

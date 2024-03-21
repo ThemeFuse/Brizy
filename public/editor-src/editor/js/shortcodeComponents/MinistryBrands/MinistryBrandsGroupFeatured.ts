@@ -12,7 +12,21 @@ export default {
         {
           type: "MinistryBrandsGroupFeatured",
           value: {
-            _styles: ["ministryBrandsGroupFeatured"]
+            _styles: ["ministryBrandsGroupFeatured"],
+            titleTypographyFontStyle: "heading2",
+            titleColorPalette: "color3",
+            hoverTitleColorPalette: "color4",
+            dateTypographyFontStyle: "heading5",
+            dateColorPalette: "color7",
+            typographyFontStyle: "heading6",
+            colorPalette: "color7",
+            detailButtonColorPalette: "color8",
+            detailButtonBgColorPalette: "color3",
+            hoverDetailButtonBgColorOpacity: 0.8,
+            metaLinksTypographyFontStyle: "heading6",
+            metaLinksColorPalette: "color4",
+            previewTypographyFontStyle: "paragraph",
+            previewColorPalette: "color7"
           }
         }
       ]

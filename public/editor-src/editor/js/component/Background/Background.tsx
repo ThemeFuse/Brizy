@@ -3,7 +3,8 @@ import React, {
   CSSProperties,
   Component,
   ReactElement,
-  RefObject
+  RefObject,
+  ReactNode
 } from "react";
 import ResizeAware from "react-resize-aware";
 import UIEvents from "visual/global/UIEvents";
@@ -31,6 +32,7 @@ type Props = {
   shapeTop?: string;
   shapeBottom?: string;
   style?: CSSProperties;
+  children: ReactNode;
 };
 
 type NeedMedia = {

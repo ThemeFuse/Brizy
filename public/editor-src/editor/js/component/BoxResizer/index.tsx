@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
 import Config from "visual/global/Config";
@@ -28,12 +28,12 @@ type Props = {
 
 let startValue: RM | null = null;
 
-const BoxResizer: React.FC<Props> = ({
+const BoxResizer = ({
   value,
   onChange,
   meta = {},
   ...props
-}) => {
+}: Props): ReactElement => {
   const restrictions = transformRestrictions(props.restrictions, value);
   const horizontalAlign = transformAlign(meta, "horizontalAlign");
   const verticalAlign =

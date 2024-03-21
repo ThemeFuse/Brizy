@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import produce from "immer";
+import { produce } from "immer";
 import React, { ReactElement } from "react";
 import _ from "underscore";
 import { CodeMirror } from "visual/component/Controls/CodeMirror";

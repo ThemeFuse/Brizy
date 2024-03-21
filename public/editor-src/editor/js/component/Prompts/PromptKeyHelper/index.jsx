@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { noop } from "underscore";
-import { assetUrl } from "visual/utils/asset";
-import { detectOS } from "visual/utils/dom/detectOS";
-import Fixed from "visual/component/Prompts/Fixed";
+import { isMac } from "visual/component/ContextMenu/utils";
 import EditorIcon from "visual/component/EditorIcon";
+import Fixed from "visual/component/Prompts/Fixed";
+import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 
 export default class PromptKeyHelper extends Component {
@@ -14,15 +14,14 @@ export default class PromptKeyHelper extends Component {
 
   render() {
     const { opened, onClose } = this.props;
-    const os = detectOS();
-    const isMac = os === "MacOS";
+
     const src = isMac
       ? `${assetUrl("editor/img/mac-keyboard1x.png")} 1x , ${assetUrl(
-        "editor/img/mac-keyboard2x.png"
-      )} 2x`
+          "editor/img/mac-keyboard2x.png"
+        )} 2x`
       : `${assetUrl("editor/img/pc-keyboard1x.png")} 1x , ${assetUrl(
-        "editor/img/pc-keyboard2x.png"
-      )} 2x`;
+          "editor/img/pc-keyboard2x.png"
+        )} 2x`;
 
     return (
       <Fixed
@@ -213,6 +212,14 @@ export default class PromptKeyHelper extends Component {
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">
                   {t("Effects")}
+                </span>
+              </div>
+              <div className="brz-ed-hotkeys-combination-container-column-list">
+                <span className="brz-ed-hotkeys-combination-container-column-label">
+                  {isMac ? "cmd + \\" : "ctrl + \\"}
+                </span>
+                <span className="brz-ed-hotkeys-combination-container-column-label-2">
+                  {t("Clear formatting")}
                 </span>
               </div>
             </div>

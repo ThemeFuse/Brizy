@@ -1,7 +1,8 @@
+import { read } from "visual/utils/options/InternalLink/utils";
 import { testEq } from "visual/utils/types/Eq.test";
 import { testReader } from "visual/utils/types/Type.test";
 import { ChoiceWithPermalink } from "../types";
-import { eq, read } from "../types/Post";
+import { eq } from "../types/Post";
 
 describe("Testing 'read' function", function () {
   const valid = [

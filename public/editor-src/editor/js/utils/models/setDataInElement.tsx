@@ -1,8 +1,9 @@
-import produce from "immer";
+import { produce } from "immer";
 import { NumberSpec } from "visual/utils/math/number";
 import { getStore } from "visual/redux/store";
 import { rulesSelector } from "visual/redux/selectors";
 import { ElementModel } from "visual/component/Elements/Types";
+import { Obj } from "@brizy/readers";
 
 export function setOffsetsToElementFromWrapper(
   storyWrapper: ElementModel,
@@ -24,10 +25,10 @@ export function setOffsetsToElementFromWrapper(
   const offsetsExists = NumberSpec.read(offsetX) && NumberSpec.read(offsetY);
   if (!offsetsExists && _styles && currentStyleRules) {
     const styles = _styles.reduce(
-      (acc, style) =>
-        currentStyleRules[style]
-          ? Object.assign(acc, currentStyleRules[style])
-          : acc,
+      (acc, style) => {
+        const rule = Obj.readKey(style)(currentStyleRules);
+        return rule ? Object.assign(acc, rule) : acc;
+      },
       { offsetX: 0, offsetY: 0 } as Partial<ElementModel>
     );
 
@@ -35,7 +36,7 @@ export function setOffsetsToElementFromWrapper(
     offsetY = styles.offsetY as number;
   }
 
-  return produce(storyWrapper, draft => {
+  return produce(storyWrapper, (draft) => {
     // is it a good solution?
     // @ts-expect-error: Object is of type 'unknown'.
     draft.value.items[0].value.offsetX = offsetX + delta;

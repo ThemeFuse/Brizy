@@ -8,3 +8,7 @@ export { fn as MinistryBrandsSermonFeatured } from "./MinistryBrandsSermonFeatur
 export { fn as MinistryBrandsSermonDetail } from "./MinistryBrandsSermonDetail/export";
 export { fn as MinistryBrandsGroupDetail } from "./MinistryBrandsGroupDetail/export";
 export { fn as MinistryBrandsEventDetail } from "./MinistryBrandsEventDetail/export";
+export { fn as MinistryBrandsArticleDetail } from "./MinistryBrandsArticleDetail/export";
+export { fn as MinistryBrandsArticleList } from "./MinistryBrandsArticleList/export";
+export { fn as MinistryBrandsStaffDetail } from "./MinistryBrandsStaffDetail/export";
+export { fn as MinistryBrandsArticleFeatured } from "./MinistryBrandsArticleFeatured/export";

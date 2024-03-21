@@ -1,15 +1,14 @@
 import deepMerge from "deepmerge";
-import { Config,  isWp, isCMS } from "./types";
+import { Config, isCMS, isWp } from "./types";
 import { Cloud } from "./types/configs/Cloud";
 import { WP } from "./types/configs/WP";
-
 
 export type { Cloud, WP, Config };
 export { isWp, isCMS };
 
 // all-possible-keys-of-an-union-type
 // was taken here https://stackoverflow.com/questions/49401866/all-possible-keys-of-an-union-type
-type KeysOfUnion<T> = T extends T ? keyof T: never;
+type KeysOfUnion<T> = T extends T ? keyof T : never;
 
 let _config = {} as Config;
 
@@ -37,4 +36,3 @@ export default {
     return _config;
   }
 };
-

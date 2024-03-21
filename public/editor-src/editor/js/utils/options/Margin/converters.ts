@@ -2,16 +2,16 @@ import { mPipe, parseStrict } from "fp-utilities";
 import {
   FromElementModel,
   FromElementModelGetter,
-  ToElementModel,
-  callGetter
+  ToElementModel
 } from "visual/component/Options/Type";
-import { Value } from "visual/component/Options/types/dev/Margin/types/Value";
-import * as Unit from "visual/component/Options/utils/SpacingUnit";
-import * as Type from "visual/component/Options/utils/Type";
 import { pipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
+import * as Unit from "../utils/SpacingUnit";
+import * as Type from "../utils/Type";
+import { callGetter } from "../utils/wrap";
+import { Value } from "./types/Value";
 
 export const defaultValue: Value = {
   type: "grouped",

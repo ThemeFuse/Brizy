@@ -19,8 +19,6 @@ module.exports = function (argv) {
   const PORT = argv_.port || 3000;
   const ANALYZE_EXPORT = Boolean(argv_["analyze_export"]);
   const ANALYZE_PREVIEW = Boolean(argv_["analyze_preview"]);
-  const COMPILER_URL =
-    argv_["compiler-url"] || "http://localhost:5000/compile/v3";
   const AUTHORIZATION_URL = argv_["authUrl"];
 
   const paths = {
@@ -45,7 +43,6 @@ module.exports = function (argv) {
     PORT,
     ANALYZE_EXPORT,
     ANALYZE_PREVIEW,
-    COMPILER_URL,
     AUTHORIZATION_URL,
     paths
   };

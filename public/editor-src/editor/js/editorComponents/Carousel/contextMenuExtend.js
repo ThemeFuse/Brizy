@@ -1,39 +1,22 @@
+import {
+  getDeleteKeySubMenu,
+  getKeyModifierSubMenu
+} from "visual/component/ContextMenu/utils";
 import { hideToolbar } from "visual/component/Toolbar";
-import { detectOS } from "visual/utils/dom/detectOS";
-
 import { t } from "visual/utils/i18n";
 
-const os = detectOS();
-const isMac = os === "MacOS";
-
-const getKeyModifier = isInSubMenu => {
-  if (isMac) {
-    return isInSubMenu ? "alt" : "⌘";
-  } else {
-    return isInSubMenu ? "alt" : "ctrl";
-  }
-};
-
-const getDeleteKey = isInSubMenu => {
-  if (isMac) {
-    return isInSubMenu ? "alt + delete" : "⌘ + delete";
-  } else {
-    return isInSubMenu ? "alt + delete" : "ctrl + delete";
-  }
-};
-
-export default itemIndex => ({
+export default (itemIndex) => ({
   getItems: getItems(itemIndex)
 });
 
-const getItems = itemIndex => (v, component) => {
+const getItems = (itemIndex) => (v, component) => {
   // const dynamicItems = component.canAddColumn()
   //   ? [
   //       {
   //         id: "duplicate",
   //         type: "button",
   //         title: t("Add New"),
-  //         helperText: ({ isInSubMenu }) => getKeyModifier(isInSubMenu) + " + N",
+  //         helperText: ({ isInSubMenu }) => getKeyModifierSubMenu(isInSubMenu) + " + N",
   //         onChange() {
   //           component.addColumn(itemIndex + 1);
   //         }
@@ -54,14 +37,16 @@ const getItems = itemIndex => (v, component) => {
           id: "copy",
           type: "button",
           title: t("Copy"),
-          helperText: ({ isInSubMenu }) => getKeyModifier(isInSubMenu) + " + C",
+          helperText: ({ isInSubMenu }) =>
+            getKeyModifierSubMenu(isInSubMenu) + " + C",
           onChange: () => component.copy(itemIndex)
         },
         {
           id: "paste",
           type: "button",
           title: t("Paste"),
-          helperText: ({ isInSubMenu }) => getKeyModifier(isInSubMenu) + " + V",
+          helperText: ({ isInSubMenu }) =>
+            getKeyModifierSubMenu(isInSubMenu) + " + V",
           inactive: !canPaste,
           onChange: () => component.paste(itemIndex)
         },
@@ -70,7 +55,7 @@ const getItems = itemIndex => (v, component) => {
           type: "button",
           title: t("Paste Styles"),
           helperText: ({ isInSubMenu }) =>
-            getKeyModifier(isInSubMenu) + " + ⇧ + V",
+            getKeyModifierSubMenu(isInSubMenu) + " + ⇧ + V",
           inactive: !canPaste,
           onChange: () => component.pasteStyles(itemIndex)
         },
@@ -78,7 +63,8 @@ const getItems = itemIndex => (v, component) => {
           id: "duplicate",
           type: "button",
           title: t("Duplicate"),
-          helperText: ({ isInSubMenu }) => getKeyModifier(isInSubMenu) + " + D",
+          helperText: ({ isInSubMenu }) =>
+            getKeyModifierSubMenu(isInSubMenu) + " + D",
           onChange() {
             component.cloneItem(itemIndex);
           }
@@ -87,7 +73,7 @@ const getItems = itemIndex => (v, component) => {
           id: "remove",
           type: "button",
           title: t("Delete"),
-          helperText: ({ isInSubMenu }) => getDeleteKey(isInSubMenu),
+          helperText: ({ isInSubMenu }) => getDeleteKeySubMenu(isInSubMenu),
           onChange() {
             hideToolbar();
             component.removeItem(itemIndex);

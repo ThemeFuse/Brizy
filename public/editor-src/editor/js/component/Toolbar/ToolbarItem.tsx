@@ -1,14 +1,17 @@
 import React from "react";
 import Option from "visual/component/Options/Option";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 
 type ToolbarItemProps = {
   data: OptionDefinition;
   toolbar: ToolbarItemsInstance;
 };
 
-export const ToolbarItem: React.FC<ToolbarItemProps> = ({ data, toolbar }) => {
+export const ToolbarItem = ({
+  data,
+  toolbar
+}: ToolbarItemProps): JSX.Element => {
   return (
     <div className="brz-ed-toolbar__item">
       <Option

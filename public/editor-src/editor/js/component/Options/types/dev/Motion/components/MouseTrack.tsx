@@ -1,21 +1,21 @@
 import React, { JSXElementConstructor, useCallback, useMemo } from "react";
-import { MouseTrack as V } from "../types/MouseTrack";
-import { EffectProps } from "../types/EffectProps";
-import { t } from "visual/utils/i18n";
 import { OnChange } from "visual/component/Options/Type";
-import { UnitSlider } from "./UnitSlider";
+import { t } from "visual/utils/i18n";
+import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import { MouseTrack as V } from "visual/utils/options/Motion/types/MouseTrack";
 import { Direction, Props } from "./Direction";
+import { UnitSlider } from "./UnitSlider";
 
 export const MouseTrack: JSXElementConstructor<EffectProps<V>> = ({
   value,
   onChange
 }) => {
   const onDirectionChange = useCallback<OnChange<V["direction"]>>(
-    direction => onChange({ ...value, direction }),
+    (direction) => onChange({ ...value, direction }),
     [value, onChange]
   );
   const onSpeedChange = useCallback<OnChange<V["speed"]>>(
-    speed => onChange({ ...value, speed }),
+    (speed) => onChange({ ...value, speed }),
     [value, onChange]
   );
   const directions = useMemo<Props<V["direction"]>["directions"]>(

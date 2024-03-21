@@ -1,14 +1,20 @@
-import React, { FC, useCallback, useEffect, useRef } from "react";
-import Options from "visual/component/Options";
-import Tabs from "visual/component/Controls/Tabs/Tabs";
+import React, { ReactElement, useCallback, useEffect, useRef } from "react";
 import Tab from "visual/component/Controls/Tabs/Tab";
-import { stateIcon, stateTitle, filterByState, itemStates } from "./utils";
-import * as State from "visual/utils/stateMode";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import Tabs from "visual/component/Controls/Tabs/Tabs";
+import Options from "visual/component/Options";
 import { SimpleValue } from "visual/component/Options/Type";
 import { Props as OptionProps } from "visual/component/Options/Type";
-import { isT } from "visual/utils/value";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import {
+  filterByState,
+  itemStates,
+  stateIcon,
+  stateTitle
+} from "visual/utils/options/StateMode/utils";
+import * as State from "visual/utils/stateMode";
+import { isT } from "visual/utils/value";
+import { FCP } from "visual/utils/react/types";
 
 export interface Props extends OptionProps<SimpleValue<State.State>> {
   options: ToolbarItemType[];
@@ -18,7 +24,7 @@ export interface Props extends OptionProps<SimpleValue<State.State>> {
   states: State.State[];
 }
 
-export const StateMode: FC<Props> = ({
+export const StateMode: FCP<Props, ReactElement | null> = ({
   options,
   states,
   className,
@@ -34,7 +40,7 @@ export const StateMode: FC<Props> = ({
     (acc: State.State[], o) => [...acc, ...itemStates(o)],
     []
   );
-  const statesList = states.filter(s => itemsStates.includes(s));
+  const statesList = states.filter((s) => itemsStates.includes(s));
   const _onChange = useCallback(
     (value: State.State) => onChangeRef.current.onChange({ value }),
     []
@@ -53,7 +59,7 @@ export const StateMode: FC<Props> = ({
         <Options
           className="brz-ed-tabs__options"
           optionClassName={className}
-          data={options.map(o => filterByState(states[0], o)).filter(isT)}
+          data={options.map((o) => filterByState(states[0], o)).filter(isT)}
           toolbar={toolbar}
           location={location}
         />
@@ -66,7 +72,7 @@ export const StateMode: FC<Props> = ({
           onChange={_onChange}
           className="brz-ed-tabs__options"
         >
-          {statesList.map(state => (
+          {statesList.map((state) => (
             <Tab
               key={state}
               active={value === state}
@@ -77,7 +83,7 @@ export const StateMode: FC<Props> = ({
               <Options
                 className="brz-ed-tabs__options"
                 optionClassName={className}
-                data={options.map(o => filterByState(state, o)).filter(isT)}
+                data={options.map((o) => filterByState(state, o)).filter(isT)}
                 toolbar={toolbar}
                 location={location}
               />

@@ -2,7 +2,6 @@ import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { paletteHex } from "visual/component/Options/types/dev/ColorPicker/utils";
 import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import { Black } from "visual/utils/color/Hex";
@@ -12,6 +11,7 @@ import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import { Value } from "./entities/Value";
 import * as Palette from "./entities/palette";
+import { paletteHex } from "./utils";
 
 export const defaultValue: Value = {
   hex: Black,

@@ -247,6 +247,17 @@
 // Ministry Brands Form Widget
 @import "editorComponents/ministry-formWidget";
 
+// Ministry Brands Article Detail
+@import "editorComponents/ministry-articleDetail";
+
+// Ministry Brands Article List
+@import "editorComponents/ministry-articleList";
+// Ministry Brands Article Featured
+@import "editorComponents/ministry-articleFeatured";
+
+// Ministry Brands Staff Detail
+@import "editorComponents/ministry-staffDetail";
+
 // Leadific
 @import "editorComponents/leadific";
 
@@ -286,8 +297,14 @@
 //Background
 @import "editorComponents/background";
 
+// Flipbox
+@import "editorComponents/flipbox";
+
 // Shopify
 @import "editorComponents/shopify";
 
 // Builder Components
 @import "editorComponents/brizyBuilderUi/index";
+
+//ShareButton
+@import "editorComponents/shareButton";

@@ -21,6 +21,9 @@ import Leadific from "./Leadific/Leadific";
 import Line from "./Line";
 import Map from "./Map";
 import MenuSimple from "./MenuSimple";
+import MinistryBrandsArticleDetail from "./MinistryBrands/MinistryBrandsArticleDetail";
+import MinistryBrandsArticleFeatured from "./MinistryBrands/MinistryBrandsArticleFeatured";
+import MinistryBrandsArticleList from "./MinistryBrands/MinistryBrandsArticleList";
 import MinistryBrandsEventCalendar from "./MinistryBrands/MinistryBrandsEventCalendar";
 import MinistryBrandsEventDetail from "./MinistryBrands/MinistryBrandsEventDetail";
 import MinistryBrandsEventFeatured from "./MinistryBrands/MinistryBrandsEventFeatured";
@@ -37,12 +40,14 @@ import MinistryBrandsSermonDetail from "./MinistryBrands/MinistryBrandsSermonDet
 import MinistryBrandsSermonFeatured from "./MinistryBrands/MinistryBrandsSermonFeatured";
 import MinistryBrandsSermonLayout from "./MinistryBrands/MinistryBrandsSermonLayout";
 import MinistryBrandsSermonList from "./MinistryBrands/MinistryBrandsSermonList";
+import MinistryBrandsStaffDetail from "./MinistryBrands/MinistryBrandsStaffDetail";
 import getPostExcerpt from "./PostExcerpt";
 import getPostTitle from "./PostTitle";
 import getPosts from "./Posts";
 import ProgressBar from "./ProgressBar";
 import ProtectedPage from "./ProtectedPage";
 import getRow from "./Row";
+import ShareButton from "./ShareButton";
 import getShopCategories from "./ShopCategories";
 import getShopPosts from "./ShopPosts";
 import Spacer from "./Spacer";
@@ -66,6 +71,7 @@ import Calendly from "./pro/Calendly";
 import Carousel from "./pro/Carousel";
 import Facebook from "./pro/Facebook";
 import FacebookComments from "./pro/FacebookComments";
+import getFlipbox from "./pro/Flipbox";
 import ImageGallery from "./pro/ImageGallery";
 import Login from "./pro/Login";
 import getLottie from "./pro/Lottie";
@@ -79,6 +85,7 @@ import Search from "./pro/Search";
 import StarRating from "./pro/StarRating";
 import Switcher from "./pro/Switcher";
 import Table from "./pro/Table";
+import getTableOfContents from "./pro/TableOfContents";
 import Timeline from "./pro/Timeline";
 import Twitter from "./pro/Twitter";
 import VideoPlaylist from "./pro/VideoPlaylist";
@@ -126,17 +133,19 @@ export const ProShortCodes = {
   Icon: false,
   Spacer: false,
   Map: false,
-  Form2: false,
+  Form2: true,
   Line: false,
   Menu: true,
   MenuSimple: false,
   Login: true,
   Translation: false,
+  ShareButton: false,
 
   ImageGallery: true,
   Video: false,
   Audio: false,
   VideoPlaylist: true,
+  Flipbox: true,
 
   IconText: false,
   Lottie: true,
@@ -147,6 +156,7 @@ export const ProShortCodes = {
   Countdown2: false,
   ProgressBar: false,
   Calendly: true,
+  TableOfContents: true,
   Carousel: true,
   Tabs: false,
   Accordion: false,
@@ -164,7 +174,7 @@ export const ProShortCodes = {
   StoryCountdown2: false,
   StoryCounter: false,
   StoryShape: false,
-  StoryForm2: false,
+  StoryForm2: true,
   StoryStarRating: true,
   StoryLottie: true,
 
@@ -218,6 +228,10 @@ export const ProShortCodes = {
   MinistryBrandsEventDetail: false,
   MinistryBrandsFormWidget: false,
   MinistryBrandsPrayerWidget: false,
+  MinistryBrandsArticleDetail: false,
+  MinistryBrandsArticleList: false,
+  MinistryBrandsStaffDetail: false,
+  MinistryBrandsArticleFeatured: false,
 
   Leadific: false,
 
@@ -289,6 +303,7 @@ export const ShortCodesKeywords = {
   Countdown: "countdown timer time remaining",
   ProgressBar: "progress bar loading completion",
   Calendly: "Calendly calendar scheduling",
+  TableOfContents: "table of contents",
   Carousel: "carousel slider rotating display",
   Tabs: "tabs tabbed content sections",
   Accordion: "accordion expanding sections collapsible",
@@ -370,6 +385,11 @@ export const ShortCodesKeywords = {
   MinistryBrandsFormWidget:
     "Ministry Brands Form Widget organization form group submission",
   MinistryBrandsPrayerWidget: "Ministry Brands Prayer prayer request",
+  MinistryBrandsArticleDetail:
+    "Ministry Brands Article Detail article details information",
+  MinistryBrandsArticleList:
+    "Ministry Brands Article List article list collection",
+  MinistryBrandsStaffDetail: "Ministry Brands Staff Detail staff details",
 
   Leadific: "Leadific engagement",
 
@@ -429,6 +449,7 @@ export const CloudShortCodes = {
   Login,
   Translation,
   Posts: getPosts(config),
+  ShareButton,
 
   ImageGallery,
   Video,
@@ -444,12 +465,14 @@ export const CloudShortCodes = {
   Countdown2,
   ProgressBar,
   Calendly,
+  TableOfContents: getTableOfContents(),
   Carousel,
   Tabs,
   Accordion,
   Switcher,
   Table,
   Timeline,
+  Flipbox: getFlipbox(),
 
   StoryButton,
   StoryIcon,
@@ -511,6 +534,10 @@ export const CloudShortCodes = {
   MinistryBrandsEventDetail,
   MinistryBrandsFormWidget,
   MinistryBrandsPrayerWidget,
+  MinistryBrandsArticleDetail,
+  MinistryBrandsArticleList,
+  MinistryBrandsStaffDetail,
+  MinistryBrandsArticleFeatured,
 
   Leadific,
 

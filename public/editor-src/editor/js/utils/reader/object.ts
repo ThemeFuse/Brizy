@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { Dictionary } from "visual/types/utils";
 import { isNullish } from "visual/utils/value";
 import { Reader } from "./types";
@@ -54,33 +54,33 @@ export const readWithValueReader =
     valueReader: Reader<T>
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   ): Reader<Dictionary<T>> =>
-  (v) => {
-    const obj = readAsUnknownDict(v);
+    (v) => {
+      const obj = readAsUnknownDict(v);
 
-    if (obj !== undefined) {
-      const r: Dictionary<T> = {};
+      if (obj !== undefined) {
+        const r: Dictionary<T> = {};
 
-      for (const [k, v] of Object.entries(obj)) {
-        const vParsed = valueReader(v);
+        for (const [k, v] of Object.entries(obj)) {
+          const vParsed = valueReader(v);
 
-        if (vParsed !== undefined) {
-          r[k] = vParsed;
-        } else {
-          return undefined;
+          if (vParsed !== undefined) {
+            r[k] = vParsed;
+          } else {
+            return undefined;
+          }
         }
+
+        return r;
       }
 
-      return r;
-    }
-
-    return undefined;
-  };
+      return undefined;
+    };
 
 export const readKey =
   (key: string) =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (obj: Record<string, any>): unknown =>
-    hasKey(key, obj) ? obj[key] : undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (obj: Record<string, any>): unknown =>
+      hasKey(key, obj) ? obj[key] : undefined;
 
 export const length = (obj: Record<string, unknown>): number =>
   Object.keys(obj).length;
@@ -137,4 +137,24 @@ export const diff = <
     });
 
   return filterNullish(result) as K | Partial<K>;
+};
+
+export const replaceNullish = <T extends Record<string, unknown> = Record<string, unknown>>(
+  obj1: T,
+  obj2: T
+): T => {
+  return produce(obj1, (draft) => {
+    Object.keys(draft).forEach((k) => {
+      const current = draft[k];
+
+      if (isNullish(current)) {
+        const candidate = obj2[k];
+
+        if (!isNullish(candidate)) {
+          // @ts-expect-error: Index signature
+          draft[k] = candidate;
+        }
+      }
+    });
+  });
 };

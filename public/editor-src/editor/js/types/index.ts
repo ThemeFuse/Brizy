@@ -6,6 +6,12 @@ import { NewType } from "visual/types/NewType";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { Hex } from "visual/utils/color/Hex";
 import { Palette as ColorPalette } from "visual/utils/color/Palette";
+import {
+  HEART_BEAT_ERROR,
+  PROJECT_DATA_VERSION_ERROR,
+  PROJECT_LOCKED_ERROR,
+  SYNC_ERROR
+} from "visual/utils/errors";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 import * as Obj from "visual/utils/reader/object";
 import { Dictionary } from "./utils";
@@ -87,11 +93,12 @@ export interface CollectionItemRule extends AllRule {
 export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
 
 interface GlobalBlockBase {
-  id: string;
+  uid: string;
   data: Block & { deleted?: boolean };
   status: "draft" | "publish";
   rules: Rule[];
   position: GlobalBlockPosition | null;
+  dataVersion: number;
   title?: string;
   tags?: string;
 }
@@ -166,6 +173,7 @@ export interface Project {
     selectedKit: string;
     selectedStyle: string;
     styles: Style[];
+    extraStyles: Style[];
     extraFontStyles: ExtraFontStyle[];
     font: string;
     fonts: Fonts;
@@ -184,7 +192,7 @@ export interface DataCommon {
     [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   dataVersion: number;
-  status: "draft" | "publish";
+  status: "draft" | "publish" | "future"; // The future status is used for scheduled pages .
 }
 
 interface DataWithTitle extends DataCommon {
@@ -366,6 +374,7 @@ export type Screenshot = {
 
 export interface FontStyle {
   deletable: "off" | "on";
+  deleted?: boolean;
   id: string;
   title: string;
   fontFamily: string;
@@ -391,6 +400,9 @@ export interface FontStyle {
   mobileVariableFontWeight?: number;
   mobileFontWidth?: number;
   mobileFontSoftness?: number;
+  fontSizeSuffix?: string;
+  tabletFontSizeSuffix?: string;
+  mobileFontSizeSuffix?: string;
 }
 
 export const isFontStyle = (item: unknown): item is ExtraFontStyle =>
@@ -479,3 +491,38 @@ export type CollectionItemId = string & {
   [_collectionItemId]: "CollectionItemId";
 };
 // endregion
+
+//#region Error
+
+type ProjectLockError = {
+  code: typeof PROJECT_LOCKED_ERROR;
+  data: {
+    locked: boolean;
+    lockedBy: boolean | { user_email: string };
+  };
+};
+
+type ProjectDataError = {
+  code: typeof PROJECT_DATA_VERSION_ERROR;
+  data: string;
+};
+
+type HeartBeatError = {
+  code: typeof HEART_BEAT_ERROR;
+  data: string;
+};
+
+type SyncError = {
+  code: typeof SYNC_ERROR;
+  data: {
+    upgradeToProUrl?: string;
+  };
+};
+
+export type Error =
+  | ProjectLockError
+  | HeartBeatError
+  | ProjectDataError
+  | SyncError;
+
+//#endregion

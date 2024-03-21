@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { TypographyText } from "visual/component/Brizy-ui/Typography";
 import { Action } from "../types";
@@ -10,12 +10,12 @@ interface Props {
   isTitleSelected: boolean;
 }
 
-export const AiActionButton: FC<Props> = ({
+export const AiActionButton = ({
   onClick,
   action: { icon, label, action },
   disabled,
   isTitleSelected
-}): ReactElement => {
+}: Props): ReactElement => {
   const handleClick = useCallback(() => onClick(action), [action, onClick]);
 
   const isShortenOrExtend = label === "Extend" || label === "Shorten";

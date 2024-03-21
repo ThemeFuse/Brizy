@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement } from "react";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ToolbarItem } from "./ToolbarItem";
 
@@ -26,7 +26,7 @@ export type ToolbarItemsInstance = typeof ToolbarItems & {
   toolbarCSSPosition: ToolbarItemsProps["position"];
   toolbarItemIndex: number;
   toolbarItemsLength: number;
-  setItemsRenderer: (e: ReactNode) => ReactElement;
+  setItemsRenderer: <T>(e: T) => ReactElement;
 };
 
 export class ToolbarItems extends React.Component<

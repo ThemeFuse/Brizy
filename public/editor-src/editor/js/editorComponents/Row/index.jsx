@@ -8,7 +8,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
@@ -30,6 +29,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
@@ -273,11 +273,9 @@ class Row extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import produce from "immer";
+import { produce } from "immer";
 import React, { Component, ElementType, ReactElement, ReactNode } from "react";
 import _ from "underscore";
 import { Alert } from "visual/component/Alert";

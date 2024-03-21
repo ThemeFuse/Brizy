@@ -1,4 +1,5 @@
 import { CSSProperties } from "react";
+import { ModelType } from "visual/component/Elements/Types";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
 import {
   borderElementModel,
@@ -997,19 +998,31 @@ describe("Testing getMissingKeys that should check which keys arr missing in obj
 describe("Testing getMissingPropertiesFromModel that should return key:value from previous model if in current model is missing or undefined", () => {
   test("Empty default", () => {
     expect(
-      getMissingPropertiesFromModel([], { vd: {}, vs: {}, v: {} }, "default")
+      getMissingPropertiesFromModel(
+        [],
+        { vd: {}, vs: {}, v: {} },
+        ModelType.Default
+      )
     ).toStrictEqual(undefined);
   });
 
   test("Empty rules", () => {
     expect(
-      getMissingPropertiesFromModel([], { vd: {}, vs: {}, v: {} }, "rules")
+      getMissingPropertiesFromModel(
+        [],
+        { vd: {}, vs: {}, v: {} },
+        ModelType.Rules
+      )
     ).toStrictEqual({});
   });
 
   test("Empty custom", () => {
     expect(
-      getMissingPropertiesFromModel([], { vd: {}, vs: {}, v: {} }, "custom")
+      getMissingPropertiesFromModel(
+        [],
+        { vd: {}, vs: {}, v: {} },
+        ModelType.Custom
+      )
     ).toStrictEqual({});
   });
 
@@ -1022,7 +1035,7 @@ describe("Testing getMissingPropertiesFromModel that should return key:value fro
           vs: { colorHex: "#FF0000" },
           v: {}
         },
-        "rules"
+        ModelType.Rules
       )
     ).toStrictEqual({ colorOpacity: 0.9, colorPalette: "" });
   });
@@ -1036,7 +1049,7 @@ describe("Testing getMissingPropertiesFromModel that should return key:value fro
           vs: { borderColor: "#000000", borderWidth: 7, borderType: "dashed" },
           v: { borderColor: "#FF0000" }
         },
-        "custom"
+        ModelType.Custom
       )
     ).toStrictEqual({
       borderWidth: 7,
@@ -1057,7 +1070,7 @@ describe("Testing getMissingPropertiesFromModel that should return key:value fro
           vs: {},
           v: { cornerColor: "#FF0000", cornerWidth: 7 }
         },
-        "custom"
+        ModelType.Custom
       )
     ).toStrictEqual({
       cornerWidthType: "grouped"
@@ -1068,25 +1081,29 @@ describe("Testing getMissingPropertiesFromModel that should return key:value fro
 describe("Testing getCurrentModelFilteredValues that should return new filtered model ( 'vd' or 'vs' or 'v')", () => {
   test("Empty default", () => {
     expect(
-      getCurrentModelFilteredValues("default", { vd: {}, vs: {}, v: {} })
+      getCurrentModelFilteredValues(ModelType.Default, {
+        vd: {},
+        vs: {},
+        v: {}
+      })
     ).toStrictEqual({});
   });
 
   test("Empty rules", () => {
     expect(
-      getCurrentModelFilteredValues("rules", { vd: {}, vs: {}, v: {} })
+      getCurrentModelFilteredValues(ModelType.Rules, { vd: {}, vs: {}, v: {} })
     ).toStrictEqual({});
   });
 
   test("Empty custom", () => {
     expect(
-      getCurrentModelFilteredValues("custom", { vd: {}, vs: {}, v: {} })
+      getCurrentModelFilteredValues(ModelType.Custom, { vd: {}, vs: {}, v: {} })
     ).toStrictEqual({});
   });
 
   test("Omit _styles and _id for default", () => {
     expect(
-      getCurrentModelFilteredValues("default", {
+      getCurrentModelFilteredValues(ModelType.Default, {
         vd: { _styles: [], _id: "" },
         vs: { _styles: [], _id: "" },
         v: { _styles: [], _id: "" }
@@ -1096,7 +1113,7 @@ describe("Testing getCurrentModelFilteredValues that should return new filtered 
 
   test("Omit _styles and _id for rules", () => {
     expect(
-      getCurrentModelFilteredValues("rules", {
+      getCurrentModelFilteredValues(ModelType.Rules, {
         vd: { _styles: [], _id: "" },
         vs: { _styles: [], _id: "" },
         v: { _styles: [], _id: "" }
@@ -1106,7 +1123,7 @@ describe("Testing getCurrentModelFilteredValues that should return new filtered 
 
   test("Omit _styles and _id for custom", () => {
     expect(
-      getCurrentModelFilteredValues("custom", {
+      getCurrentModelFilteredValues(ModelType.Custom, {
         vd: { _styles: [], _id: "" },
         vs: { _styles: [], _id: "" },
         v: { _styles: [], _id: "" }
@@ -1116,7 +1133,7 @@ describe("Testing getCurrentModelFilteredValues that should return new filtered 
 
   test("Default model", () => {
     expect(
-      getCurrentModelFilteredValues("default", {
+      getCurrentModelFilteredValues(ModelType.Default, {
         vd: borderElementModel,
         vs: borderElementModel,
         v: borderElementModel
@@ -1126,7 +1143,7 @@ describe("Testing getCurrentModelFilteredValues that should return new filtered 
 
   test("Rules model as same values as default", () => {
     expect(
-      getCurrentModelFilteredValues("rules", {
+      getCurrentModelFilteredValues(ModelType.Rules, {
         vd: borderElementModel,
         vs: borderElementModel,
         v: borderElementModel
@@ -1136,7 +1153,7 @@ describe("Testing getCurrentModelFilteredValues that should return new filtered 
 
   test("Custom model as same values as rules", () => {
     expect(
-      getCurrentModelFilteredValues("custom", {
+      getCurrentModelFilteredValues(ModelType.Custom, {
         vd: borderElementModel,
         vs: borderElementModel,
         v: borderElementModel
@@ -1146,7 +1163,7 @@ describe("Testing getCurrentModelFilteredValues that should return new filtered 
 
   test("Rules model with some new values, should return unique key:value filtered with default", () => {
     expect(
-      getCurrentModelFilteredValues("rules", {
+      getCurrentModelFilteredValues(ModelType.Rules, {
         vd: borderElementModel,
         vs: {
           ...borderElementModel,
@@ -1160,7 +1177,7 @@ describe("Testing getCurrentModelFilteredValues that should return new filtered 
 
   test("Custom model with some new values, should return unique key:value filtered with rules", () => {
     expect(
-      getCurrentModelFilteredValues("custom", {
+      getCurrentModelFilteredValues(ModelType.Custom, {
         vd: borderElementModel,
         vs: borderElementModel,
         v: { ...borderElementModel, borderTopWidth: 7, borderRightWidth: 8 }
@@ -1313,7 +1330,7 @@ describe("Testing getNewModel function that should return new option model that 
         type: "border",
         v: { borderColorHex: "#0000FF", borderColorOpacity: 0.9 },
         model,
-        currentModel: "rules",
+        currentModel: ModelType.Rules,
         breakpoint: DESKTOP,
         state: NORMAL
       })
@@ -1339,7 +1356,7 @@ describe("Testing getNewModel function that should return new option model that 
             borderColorOpacity: "asd3"
           }
         },
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         breakpoint: DESKTOP,
         state: NORMAL
       })
@@ -1367,7 +1384,7 @@ describe("Testing getNewModel function that should return new option model that 
           },
           vs: {}
         },
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         breakpoint: DESKTOP,
         state: NORMAL
       })
@@ -1400,7 +1417,7 @@ describe("Testing getNewModel function that should return new option model that 
           },
           vs: {}
         },
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         breakpoint: DESKTOP,
         state: HOVER
       })
@@ -1439,7 +1456,7 @@ describe("Testing getNewModel function that should return new option model that 
           },
           vs: {}
         },
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         breakpoint: DESKTOP,
         state: ACTIVE
       })
@@ -1478,7 +1495,7 @@ describe("Testing getNewModel function that should return new option model that 
           },
           vs: {}
         },
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         breakpoint: TABLET,
         state: NORMAL
       })
@@ -1517,7 +1534,7 @@ describe("Testing getNewModel function that should return new option model that 
           },
           vs: {}
         },
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         breakpoint: MOBILE,
         state: NORMAL
       })

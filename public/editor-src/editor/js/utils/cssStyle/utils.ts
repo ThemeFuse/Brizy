@@ -1,19 +1,20 @@
-import produce from "immer";
+import { produce } from "immer";
 import { CSSProperties } from "react";
 import _ from "underscore";
-import { ElementModel } from "visual/component/Elements/Types";
+import { ElementModel, ModelType } from "visual/component/Elements/Types";
 import { OptionName } from "visual/component/Options/types";
-import { getOptionModel } from "visual/component/Options/types/utils/fromElementModel";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { getOptionModelWithDesktopDefaults } from "visual/utils/options/utils/fromElementModel";
 import {
   getCSSByOptionType,
   isOptionWithStyles,
   normalizeOptionModel
-} from "visual/component/Options/types/utils/toCSS/utils";
-import { getElementMoldelKeysFromOption } from "visual/component/Options/types/utils/toElementModel";
-import { getOptionMeta } from "visual/component/Options/types/utils/toMeta/utils";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+} from "visual/utils/options/utils/toCSS/utils";
+import { getElementMoldelKeysFromOption } from "visual/utils/options/utils/toElementModel";
+import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
 import * as Obj from "visual/utils/reader/object";
 import { diff } from "visual/utils/reader/object";
+import * as Str from "visual/utils/reader/string";
 import { breakpoints, isBreakpointWithMediaQuery } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
 import { ResponsiveMode } from "../responsiveMode";
@@ -76,18 +77,27 @@ export const addSameClassNameToIncreaseSpecificity = (
 
 export const getCSSObjectFromStyle = ({
   v,
+  initialV,
   breakpoint,
   option,
   state = NORMAL
 }: {
   v: ElementModel;
+  initialV?: ElementModel;
   breakpoint: BreakpointsNames;
   option: Option;
   state?: State;
 }): MValue<OutputOptionStyle> => {
   const { id, type, style } = option;
 
-  const model = getOptionModel({ id, type, v, breakpoint, state });
+  const model = getOptionModelWithDesktopDefaults({
+    id,
+    type,
+    v,
+    initialV,
+    breakpoint,
+    state
+  });
 
   if (typeof style === "function" && model) {
     const meta = getOptionMeta(type, model);
@@ -312,18 +322,26 @@ export const concatFinalCSS = (
 
 export const getNewGeneratesCSSfromStyle = ({
   v,
+  initialV,
   breakpoint,
   option,
   state,
   allCSS
 }: {
   v: ElementModel;
+  initialV?: ElementModel;
   breakpoint: BreakpointsNames;
   option: ToolbarItemType;
   state: State;
   allCSS: CSS;
 }): MValue<CSS> => {
-  const cssObject = getCSSObjectFromStyle({ v, breakpoint, option, state });
+  const cssObject = getCSSObjectFromStyle({
+    v,
+    initialV,
+    breakpoint,
+    option,
+    state
+  });
 
   const allCSSKey = state === HOVER || state === ACTIVE ? state : breakpoint;
 
@@ -354,12 +372,12 @@ export const getNewGeneratesCSSfromSelector = ({
 
   const css = getCSSFromSelector({ v, breakpoint, option, state });
 
-  if (css) {
+  const _selector = Str.read(option.selector);
+
+  if (css && _selector) {
     const selector =
-      state !== HOVER
-        ? option.selector?.replaceAll(":hover", "")
-        : option.selector;
-    const selectors = selector?.split(",");
+      state !== HOVER ? _selector.replace(/:hover/g, "") : _selector;
+    const selectors = selector.split(",");
 
     const data =
       selectors?.map((selector) => {
@@ -391,16 +409,16 @@ export const getMissingPropertiesFromModel = (
     vs: ElementModel;
     v: ElementModel;
   },
-  currentModel: "default" | "rules" | "custom"
+  currentModel: ModelType
 ): MValue<ElementModel> => {
-  if (currentModel === "rules") {
+  if (currentModel === ModelType.Rules) {
     return keys.reduce((acc: ElementModel, curr) => {
       acc[curr] = model.vd[curr];
       return acc;
     }, {});
   }
 
-  if (currentModel === "custom") {
+  if (currentModel === ModelType.Custom) {
     return keys.reduce((acc: ElementModel, curr) => {
       if (model.vs[curr]) {
         acc[curr] = model.vs[curr];
@@ -451,7 +469,7 @@ export const getNewModel = ({
   v: ElementModel;
   breakpoint: BreakpointsNames;
   state: State;
-  currentModel: "default" | "rules" | "custom";
+  currentModel: ModelType;
   model: {
     vd: ElementModel;
     vs: ElementModel;
@@ -481,7 +499,7 @@ export const getNewModel = ({
 };
 
 export const getCurrentModelFilteredValues = (
-  currentModel: "default" | "rules" | "custom",
+  currentModel: ModelType,
   model: {
     vd: ElementModel;
     vs: ElementModel;
@@ -494,11 +512,29 @@ export const getCurrentModelFilteredValues = (
   const v = _.omit(_v, "_styles", "_id");
 
   switch (currentModel) {
-    case "default":
+    case ModelType.Default:
       return vd;
-    case "rules":
+    case ModelType.Rules:
       return diff(vd, vs);
-    case "custom":
+    case ModelType.Custom:
       return diff(vs, v);
+  }
+};
+
+export const getInitialV = (
+  currentModel: ModelType,
+  model: {
+    vd: ElementModel;
+    vs: ElementModel;
+    v: ElementModel;
+  }
+): ElementModel => {
+  switch (currentModel) {
+    case ModelType.Default:
+      return model.vd;
+    case ModelType.Rules:
+      return model.vs;
+    case ModelType.Custom:
+      return model.v;
   }
 };

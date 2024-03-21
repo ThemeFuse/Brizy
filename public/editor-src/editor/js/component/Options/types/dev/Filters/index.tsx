@@ -1,18 +1,18 @@
 import { mPipe } from "fp-utilities";
-import React, { FC } from "react";
+import React from "react";
 import { Slider } from "visual/component/Controls/Spacing/Slider";
 import * as Option from "visual/component/Options/Type";
-import { t } from "visual/utils/i18n";
 import { GlobalMeta } from "visual/component/Options/Type";
+import { t } from "visual/utils/i18n";
 import { fromNumber } from "visual/utils/math/Positive";
 import { Meta } from "visual/utils/options/Filters/meta";
+import { empty, set } from "visual/utils/options/Filters/utils";
 import { FilterSlider } from "./FilterSlider";
 import { Value } from "./types/Value";
-import { empty, set } from "./utils";
 
 interface Props extends Option.Props<Value>, Option.Meta<Meta> {}
 
-export const Filters: FC<Props> = ({ value, onChange }) => {
+export const Filters = ({ value, onChange }: Props): JSX.Element => {
   const handleChange = (
     type: "hue" | "saturation" | "brightness" | "contrast",
     v: number,
@@ -49,7 +49,6 @@ export const Filters: FC<Props> = ({ value, onChange }) => {
           handleChange("saturation", v, m)
         }
         title={t("Saturation")}
-
       />
       <FilterSlider
         className="brz-ed-control__filters__brightness"

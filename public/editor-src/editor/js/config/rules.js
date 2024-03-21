@@ -20,6 +20,9 @@ export default {
   "wrapper--table": {
     showToolbar: "on"
   },
+  "wrapper--shareButton": {
+    showToolbar: "on"
+  },
   "wrapper--protected-page": {
     showToolbar: "on"
   },
@@ -69,6 +72,9 @@ export default {
     showToolbar: "on"
   },
   "wrapper--alert": {
+    showToolbar: "on"
+  },
+  "wrapper--tableOfContents": {
     showToolbar: "on"
   },
   "wrapper--posts": {
@@ -408,5 +414,8 @@ export default {
   },
   "posts-productArchive": {
     pagination: "on"
+  },
+  "wrapper--flipbox": {
+    showToolbar: "on"
   }
 };

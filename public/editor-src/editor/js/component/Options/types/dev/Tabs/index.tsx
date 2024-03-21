@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { sortBy } from "underscore";
 import { Tabs as Control } from "visual/component/Controls/Tabs2";
 import { Props as CProps } from "visual/component/Controls/Tabs2";
@@ -33,14 +33,14 @@ export type Props = OptionProps<SimpleValue<Literal>> &
       })[];
   };
 
-export const Tabs: FC<Props> = ({
+export const Tabs = ({
   tabs = [],
   onChange,
   value: { value },
   config,
   toolbar,
   className
-}) => {
+}: Props): ReactElement => {
   const {
     position = "top",
     align = "center",

@@ -1,5 +1,5 @@
 import { ToMeta } from "visual/component/Options/Type";
-import type { Value } from "visual/component/Options/types/dev/Corners/types/Value";
+import type { Value } from "./types/Value";
 
 export interface Meta {
   isGrouped: boolean;

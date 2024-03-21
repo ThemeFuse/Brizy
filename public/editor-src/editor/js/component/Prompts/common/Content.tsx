@@ -1,9 +1,10 @@
-import React, { FC, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
 import Scrollbars from "react-custom-scrollbars";
 import { Spacer } from "visual/component/Controls/Spacer";
 import { Alert } from "visual/component/Alert";
 import { Loading } from "./Loading";
+import { FCC } from "visual/utils/react/types";
 
 export interface Props {
   spacing?: boolean;
@@ -15,7 +16,7 @@ export interface Props {
   inlineFooter?: boolean;
 }
 
-export const Content: FC<Props> = props => {
+export const Content: FCC<Props> = (props) => {
   const {
     head,
     loading,

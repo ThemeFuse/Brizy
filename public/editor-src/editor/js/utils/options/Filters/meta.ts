@@ -1,6 +1,6 @@
 import { ToMeta } from "visual/component/Options/Type";
-import { MAX as sliderMaxValue } from "visual/component/Options/types/dev/Filters/FilterSlider";
 import type { Value } from "visual/component/Options/types/dev/Filters/types/Value";
+import { MAX as sliderMaxValue } from "./utils";
 
 export interface Meta {
   isHalfBrightness: boolean;

@@ -22,10 +22,10 @@ function styleBgAttachment({ v, isSlider }) {
   return backgroundAttachment[isSlider ? "none" : bgAttachment];
 }
 
-export function cssStyleBgImage({ v, device, state }) {
+export function cssStyleBgImage({ v, device, state, prefix = "" }) {
   const bgImage = IS_EDITOR
-    ? styleBgImage({ v, device, state })
-    : styleExportBgImage({ v, device, state });
+    ? styleBgImage({ v, device, state, prefix })
+    : styleExportBgImage({ v, device, state, prefix });
 
   return `background-image:${bgImage};`;
 }
@@ -49,10 +49,10 @@ export function cssStyleBgMediaImage({ v, device }) {
   return cssStyleDisplayNone();
 }
 
-export function cssStyleBgImagePosition({ v, device, state }) {
-  const bgImage = styleBgImage({ v, device, state });
-  const positionX = styleBgPositionX({ v, device, state });
-  const positionY = styleBgPositionY({ v, device, state });
+export function cssStyleBgImagePosition({ v, device, state, prefix = "" }) {
+  const bgImage = styleBgImage({ v, device, state, prefix });
+  const positionX = styleBgPositionX({ v, device, state, prefix });
+  const positionY = styleBgPositionY({ v, device, state, prefix });
 
   return bgImage === "none"
     ? ""

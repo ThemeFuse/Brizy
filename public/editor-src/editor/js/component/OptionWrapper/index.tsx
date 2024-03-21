@@ -4,6 +4,7 @@ import { t } from "visual/utils/i18n";
 import Tooltip from "../Controls/Tooltip";
 import EditorIcon from "../EditorIcon";
 import { ProInfo } from "../ProInfo";
+import { FCC } from "visual/utils/react/types";
 
 export type Props = {
   className?: string;
@@ -13,7 +14,7 @@ export type Props = {
   upgradeToPro?: string;
 };
 
-export const OptionWrapper: React.FC<Props> = ({
+export const OptionWrapper: FCC<Props> = ({
   children,
   className,
   display = "inline",

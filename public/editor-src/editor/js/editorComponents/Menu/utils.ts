@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import _ from "underscore";
 import {
   ElementModel,
@@ -53,7 +53,7 @@ export function symbolsToItems(
       }
 
       // @ts-expect-error: Need to specific model value
-      draft.value.items = symbolsToItems(item.value.items, symbols);
+      draft.value.items = symbolsToItems(item.value.items ?? [], symbols);
     })
   );
 }

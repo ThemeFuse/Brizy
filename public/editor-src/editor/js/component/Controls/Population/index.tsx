@@ -10,7 +10,7 @@ import {
   Choices,
   OptGroup
 } from "visual/component/Options/types/common/Population/types/Choices";
-import { isOptgroup } from "visual/component/Options/types/common/Population/utils";
+import { isOptgroup } from "visual/utils/options/Population/utils";
 import { Literal } from "visual/utils/types/Literal";
 import { Async as SelectAsync } from "../../Options/types/dev/Select/Async";
 import { PopulationIcon } from "./PopulationIcon";

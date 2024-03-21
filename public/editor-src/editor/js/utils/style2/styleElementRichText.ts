@@ -1,11 +1,7 @@
 import { hexToRgba } from "visual/utils/color";
-import { getFontById } from "visual/utils/fonts";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { getOptionFontByGlobal } from "visual/utils/options";
 import * as Str from "visual/utils/reader/string";
-import { capByPrefix } from "visual/utils/string";
-import { styleTypography2FontFamily } from "visual/utils/style2";
 import { CSSValue } from "./types";
 import { gradientCssDeclaration } from "./utils";
 
@@ -150,42 +146,4 @@ export function styleElementRichTextDCGradientBackground({
     gradientColor,
     bgColor
   });
-}
-
-export function styleElementRichTextFontFamily({
-  v,
-  device,
-  state,
-  prefix = ""
-}: CSSValue): string | undefined {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
-  const fontFamilyKey = capByPrefix(prefix, "fontFamily");
-  const fontFamilyTypeKey = capByPrefix(prefix, "fontFamilyType");
-  const fontStyleKey = capByPrefix(prefix, "fontStyle");
-  const fontStyle = dvv(fontStyleKey);
-
-  if (fontStyle) {
-    return styleTypography2FontFamily({ v, device, state, prefix });
-  } else {
-    const fontFamily = getOptionFontByGlobal(
-      "fontFamily",
-      v[fontFamilyKey],
-      dvv(fontStyleKey)
-    );
-    const fontFamilyType = getOptionFontByGlobal(
-      "fontFamilyType",
-      v[fontFamilyTypeKey],
-      dvv(fontStyleKey)
-    );
-
-    if (!fontFamily) {
-      return undefined;
-    }
-
-    return getFontById({
-      type: fontFamilyType,
-      family: fontFamily
-    }).family;
-  }
 }

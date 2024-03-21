@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { DraggableOverlay } from "visual/component/DraggableOverlay";
+import { Root } from "visual/component/Root";
 import EditorGlobal from "visual/global/Editor";
-import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 import { updateBlocks } from "visual/redux/actions2";
+import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 import { areStatesEqual } from "./utils";
 
 class EditorPage extends Component {
@@ -16,20 +18,23 @@ class EditorPage extends Component {
     const pageData = pageDataDraftBlocksSelector(reduxState);
 
     return (
-      <Page
-        dbValue={pageData}
-        reduxState={reduxState}
-        reduxDispatch={reduxDispatch}
-        onChange={this.handlePageChange}
-      />
+      <Root>
+        <Page
+          dbValue={pageData}
+          reduxState={reduxState}
+          reduxDispatch={reduxDispatch}
+          onChange={this.handlePageChange}
+        />
+        <DraggableOverlay />
+      </Root>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   reduxState: state
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   reduxDispatch: dispatch
 });
 

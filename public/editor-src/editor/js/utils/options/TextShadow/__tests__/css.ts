@@ -1,6 +1,4 @@
 import { OptionValue } from "visual/component/Options/types";
-import { NoEmptyBlur } from "visual/component/Options/types/dev/TextShadow/types/NoEmptyBlur";
-import { NoEmptyOpacity } from "visual/component/Options/types/dev/TextShadow/types/NoEmptyOpacity";
 import {
   Black as blackHex,
   fromString as readHex
@@ -11,6 +9,8 @@ import {
   fromString as readPalette
 } from "visual/utils/color/Palette";
 import { css as cssStyleTextShadow } from "../css";
+import { NoEmptyBlur } from "../types/NoEmptyBlur";
+import { NoEmptyOpacity } from "../types/NoEmptyOpacity";
 
 describe("Testing cssStyleTextShadow that should return CSS for text-shadow", () => {
   const hex = readHex("#FF0000") ?? blackHex;

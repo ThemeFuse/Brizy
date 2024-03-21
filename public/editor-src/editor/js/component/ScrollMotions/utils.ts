@@ -7,12 +7,12 @@ import {
 import { setIn } from "timm";
 import { ElementModel } from "visual/component/Elements/Types";
 import { FromElementModelGetter } from "visual/component/Options/Type";
-import { fromElementModel } from "visual/component/Options/types/dev/Motion/converters";
-import { Value as MotionValue } from "visual/component/Options/types/dev/Motion/types/Value";
-import { Viewport } from "visual/component/Options/types/dev/Motion/types/Viewport";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { IS_PRO } from "visual/utils/env";
 import { defaultValueValue } from "visual/utils/onChange/device";
+import { fromElementModel } from "visual/utils/options/Motion/converters";
+import { Value as MotionValue } from "visual/utils/options/Motion/types/Value";
+import { Viewport } from "visual/utils/options/Motion/types/Viewport";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { encodeToString } from "visual/utils/string";

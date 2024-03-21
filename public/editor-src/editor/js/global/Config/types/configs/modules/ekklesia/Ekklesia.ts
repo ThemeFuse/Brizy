@@ -20,6 +20,10 @@ export interface EkklesiaFields {
   eventsLvl: EkklesiaParentsChilds;
   smallgroupsLvl: EkklesiaParentsChilds;
   sermonsLvl: EkklesiaParentsChilds;
+  articleRecent: Record<string, Literal>;
+  articleSeries: Record<string, Literal>;
+  articleCategories: Record<string, Literal>;
+  staff: Record<string, Literal>;
 }
 
 export interface EkklesiaParentsChilds {

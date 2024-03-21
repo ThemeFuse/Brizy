@@ -8,10 +8,10 @@ import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OnChange } from "visual/component/Options/Type";
 import { Size } from "visual/component/Options/types/types";
-import { sliderSizeClassName } from "visual/component/Options/types/utils/sliderSizeClassName";
 import { useThrottleOnChange } from "visual/component/hooks";
 import { mPipe } from "visual/utils/fp";
 import * as Unit from "visual/utils/math/Unit";
+import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
 
 export type Props = {
   label: string;

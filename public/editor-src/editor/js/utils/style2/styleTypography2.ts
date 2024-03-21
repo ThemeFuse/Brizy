@@ -1,16 +1,14 @@
 import Config from "visual/global/Config";
-import {
-  getFontById,
-  getFontCssStyle,
-  makeStyleCSSVar
-} from "visual/utils/fonts";
+import { getFontCssStyle } from "visual/utils/fonts";
+import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
-import { DESKTOP } from "visual/utils/responsiveMode";
+import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
+import { read as readStr } from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
-import { isNullish } from "visual/utils/value";
-import { FONT_INITIAL } from "../fonts/utils";
+import { MValue, isNullish } from "visual/utils/value";
 import { CSSValue } from "./types";
+import { Str } from "@brizy/readers";
 
 export function styleTypography2FontFamily({
   v,
@@ -25,33 +23,22 @@ export function styleTypography2FontFamily({
   const fontFamilyKey = dvk(capByPrefix(prefix, "fontFamily"));
   const fontFamilyTypeKey = dvk(capByPrefix(prefix, "fontFamilyType"));
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
-  const fontStyle = dvv(fontStyleKey);
+  const fontStyle = readStr(dvv(fontStyleKey));
+  const family = readStr(v[fontFamilyKey]);
+  const familyType = readStr(v[fontFamilyTypeKey]) as MValue<FontFamilyType>;
 
-  if (fontStyle && fontStyle !== "custom") {
-    return `var(${makeStyleCSSVar({
-      id: fontStyle,
-      device: DESKTOP,
-      key: "fontFamily",
-      config: Config.getAll()
-    })}, ${FONT_INITIAL})`;
-  } else {
-    const fontFamily = getOptionFontByGlobal(
-      "fontFamily",
-      v[fontFamilyKey],
-      fontStyle
-    );
-    const fontFamilyType = getOptionFontByGlobal(
-      "fontFamilyType",
-      v[fontFamilyTypeKey],
-      fontStyle
-    );
-
-    if (isNullish(fontFamily) || isNullish(fontFamilyType)) {
-      return;
-    }
-
-    return getFontById({ type: fontFamilyType, family: fontFamily }).family;
+  if (isNullish(family) || isNullish(familyType)) {
+    return "";
   }
+
+  return getDetailsModelFontFamily(
+    {
+      family,
+      familyType,
+      style: fontStyle
+    },
+    Config.getAll()
+  );
 }
 
 export function styleTypography2FontSize({
@@ -67,11 +54,15 @@ export function styleTypography2FontSize({
   const fontStyle = dvv(fontStyleKey);
 
   const globalSize = getFontCssStyle({ fontStyle, key: "fontSize", device });
-
-  return (
+  const value =
     globalSize ??
-    getOptionFontByGlobal(dvk("fontSize"), dvv(fontSizeKey), dvv(fontStyleKey))
-  );
+    getOptionFontByGlobal({
+      key: dvk("fontSize"),
+      value: dvv(fontSizeKey),
+      style: dvv(fontStyleKey)
+    });
+
+  return value as number;
 }
 
 export function styleTypography2FontSizeSuffix({
@@ -89,13 +80,13 @@ export function styleTypography2FontSizeSuffix({
   if (fontStyle && fontStyle !== "custom") {
     return "";
   } else {
-    return (
-      getOptionFontByGlobal(
-        dvk("fontSizeSuffix"),
-        dvv(fontSizeSuffixKey),
-        dvv(fontStyleKey)
-      ) || "px"
-    );
+    const value =
+      getOptionFontByGlobal({
+        key: dvk("fontSizeSuffix"),
+        value: dvv(fontSizeSuffixKey),
+        style: dvv(fontStyleKey)
+      }) || "px";
+    return value as string;
   }
 }
 
@@ -112,15 +103,15 @@ export function styleTypography2LineHeight({
   const fontStyle = dvv(fontStyleKey);
 
   const globalSize = getFontCssStyle({ fontStyle, key: "lineHeight", device });
-
-  return (
+  const value =
     globalSize ??
-    getOptionFontByGlobal(
-      dvk("lineHeight"),
-      dvv(lineHeightKey),
-      dvv(fontStyleKey)
-    )
-  );
+    getOptionFontByGlobal({
+      key: dvk("lineHeight"),
+      value: dvv(lineHeightKey),
+      style: dvv(fontStyleKey)
+    });
+
+  return Str.read(value) ?? "";
 }
 
 export function styleTypography2FontWeight({
@@ -136,15 +127,15 @@ export function styleTypography2FontWeight({
   const fontStyle = dvv(fontStyleKey);
 
   const globalSize = getFontCssStyle({ fontStyle, key: "fontWeight", device });
-
-  return (
+  const value =
     globalSize ??
-    getOptionFontByGlobal(
-      dvk("fontWeight"),
-      dvv(fontWeightKey),
-      dvv(fontStyleKey)
-    )
-  );
+    getOptionFontByGlobal({
+      key: dvk("fontWeight"),
+      value: dvv(fontWeightKey),
+      style: dvv(fontStyleKey)
+    });
+
+  return Str.read(value) ?? "";
 }
 
 export function styleTypography2LetterSpacing({
@@ -168,11 +159,11 @@ export function styleTypography2LetterSpacing({
 
   return (
     globalSize ??
-    `${getOptionFontByGlobal(
-      dvk("letterSpacing"),
-      dvv(letterSpacingKey),
-      dvv(fontStyleKey)
-    )}${suffix}`
+    `${getOptionFontByGlobal({
+      key: dvk("letterSpacing"),
+      value: dvv(letterSpacingKey),
+      style: dvv(fontStyleKey)
+    })}${suffix}`
   );
 }
 
@@ -203,8 +194,13 @@ export function styleTypography2FontVariation({
     fontWidthKey
   )}, "SOFT" ${dvv(fontSoftnessKey)}`;
 
-  return (
+  const _value =
     globalSize ??
-    getOptionFontByGlobal(fontVariationKey, value, dvv(fontStyleKey))
-  );
+    getOptionFontByGlobal({
+      key: fontVariationKey,
+      value,
+      style: dvv(fontStyleKey)
+    });
+
+  return Str.read(_value) ?? "";
 }

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FC, ReactNode, useCallback, useState } from "react";
+import React, { ReactNode, useCallback, useState } from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import { InputHex } from "visual/component/Controls/InputHex";
 import EditorIcon from "visual/component/EditorIcon";
@@ -7,17 +7,22 @@ import { EyeDropper } from "visual/component/EyeDropper";
 import { OnChange } from "visual/component/Options/Type";
 import Config from "visual/global/Config";
 import { isStory } from "visual/utils/models";
+import { Hex } from "visual/utils/color/Hex";
 
 export type Props = {
   value: string;
-  onChange: OnChange<string>;
+  onChange: OnChange<Hex>;
   children?: ReactNode;
 };
 
-export const ColorPickerInputs: FC<Props> = ({ value, onChange, children }) => {
+export const ColorPickerInputs = ({
+  value,
+  onChange,
+  children
+}: Props): JSX.Element => {
   const [eyeDropperStatus, setEyeDropperStatus] = useState(false);
   const handleDropper = useCallback(
-    (hex) => {
+    (hex: Hex) => {
       onChange(hex);
       setEyeDropperStatus(false);
     },

@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import React, {
   ChangeEventHandler,
-  FC,
   KeyboardEventHandler,
+  ReactElement,
   useState
 } from "react";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -13,7 +13,7 @@ export interface Props {
   onAdd: (v: string) => void;
 }
 
-export const ItemAdd: FC<Props> = (props) => {
+export const ItemAdd = (props: Props): ReactElement => {
   const { onAdd } = props;
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);

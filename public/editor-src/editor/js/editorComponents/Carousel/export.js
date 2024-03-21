@@ -37,10 +37,21 @@ export default function ($node) {
       // and init again. this steps remove click lightbox event inside slider.
       // So we should reinitialize lightbox manually
       $this.find(".brz-image__lightbox").each(function () {
-        $(this).magnificPopup({
-          delegate: "a",
-          type: "image",
-          closeOnContentClick: true
+        this.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const aTag = this.querySelector("a");
+
+          if (aTag) {
+            $(this)
+              .magnificPopup({
+                delegate: "a",
+                type: "image",
+                closeOnContentClick: true
+              })
+              .magnificPopup("open");
+          }
         });
       });
     });

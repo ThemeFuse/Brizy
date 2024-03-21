@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React from "react";
+import React, { ReactElement } from "react";
 import _ from "underscore";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { Translate } from "visual/component/Translate";
@@ -18,13 +18,13 @@ type Props = {
   onChange?: (value: { [k: string]: string }) => void;
 };
 
-export const Text: React.FC<Props> = ({
+export const Text = ({
   id,
   v,
   tagName = "span",
   className: className_,
   onChange = _.noop
-}) => {
+}: Props): ReactElement => {
   const className = classnames(className_, `brz-${tagName}`);
   const hasDC_ = hasDC(v, id);
 

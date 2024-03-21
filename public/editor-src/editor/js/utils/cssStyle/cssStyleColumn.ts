@@ -13,6 +13,21 @@ export function cssStyleColumnHeight({ v, device, state }: CSSValue): string {
   }
 }
 
+export function cssStyleEmptyColumnHeight({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const heightStyle = dvv("heightStyle");
+
+  if (heightStyle === "custom") {
+    return cssStyleSizeMinHeightPx({ v, device, state });
+  }
+
+  return "";
+}
+
 export function cssStyleColumnVerticalAlignItems({
   v,
   device

@@ -4,6 +4,7 @@
     "label": "Enter Text",
     "placeholder": null,
     "labelType": "inside",
+    "customFieldName": null,
     "required": "off",
     "options": ["Option 1", "Option 2"],
     "nativeHtml": "off",

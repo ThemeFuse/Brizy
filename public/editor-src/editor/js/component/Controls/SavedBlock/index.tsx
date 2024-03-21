@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
 interface Props {
@@ -11,14 +11,14 @@ interface Props {
   icon: string;
 }
 
-export const SavedBlock: FC<Props> = ({
+export const SavedBlock = ({
   onClick,
   className,
   title,
   tooltipContent,
   loading,
   icon
-}): ReactElement => {
+}: Props): ReactElement => {
   const _className = classnames(
     "brz-ed-option__button",
     "brz-ed-tooltip__content",

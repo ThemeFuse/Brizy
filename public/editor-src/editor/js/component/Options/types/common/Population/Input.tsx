@@ -1,13 +1,14 @@
-import React, { FC } from "react";
+import React from "react";
 import { Popover } from "visual/component/Controls/Popover";
 import EditorIcon from "visual/component/EditorIcon";
+import { FCC } from "visual/utils/react/types";
 
 export type Props = {
   value: string;
   onRemove: VoidFunction;
 };
 
-export const PopulationInput: FC<Props> = ({ value, onRemove, children }) => {
+export const PopulationInput: FCC<Props> = ({ value, onRemove, children }) => {
   return (
     <div className="brz-ed-control__population__input" title={value}>
       <span className="brz-span">{value}</span>

@@ -49,6 +49,8 @@ const output = {
 
 beforeAll(() => {
   const store = createStore();
+  // @ts-expect-error IS_PREVIEW si on build time added by webpack
+  global.IS_PREVIEW = false;
   store.dispatch(
     // @ts-expect-error There is not need to add types because is only for testing purposes
     hydrate(mockDataForReduxStore)
@@ -67,11 +69,11 @@ describe("Testing getTypographyValues that should return typography values", () 
       fontStyle: undefined,
       fontFamilyType: undefined,
       fontFamily: "",
-      fontSize: NaN,
+      fontSize: 0,
       fontSizeSuffix: "px",
-      fontWeight: undefined,
+      fontWeight: 400,
       letterSpacing: "NaNpx",
-      lineHeight: NaN,
+      lineHeight: 0,
       variableFontWeight: '"wght" undefined, "wdth" undefined, "SOFT" undefined'
     });
   });

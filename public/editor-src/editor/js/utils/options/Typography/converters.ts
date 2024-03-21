@@ -2,13 +2,6 @@ import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import {
-  isFontFamily,
-  isFontSettings,
-  isFontStyle,
-  isFullFont
-} from "visual/component/Options/types/dev/Typography/types/Patch";
-import { Value } from "visual/component/Options/types/dev/Typography/types/Value";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
 import * as FontType from "visual/utils/fonts/familyType";
@@ -16,6 +9,13 @@ import { mPipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
+import {
+  isFontFamily,
+  isFontSettings,
+  isFontStyle,
+  isFullFont
+} from "./types/Patch";
+import { Value } from "./types/Value";
 
 export const defaultValue: Value = {
   fontFamily: "",

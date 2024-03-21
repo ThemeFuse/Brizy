@@ -1,17 +1,20 @@
 import { setIn } from "timm";
+import {
+  copyKeyModifier,
+  deleteKeyModifier,
+  duplicateKeyModifier,
+  pasteKeyModifier,
+  pasteStylesKeyModifier
+} from "visual/component/ContextMenu/utils";
 import { hideToolbar } from "visual/component/Toolbar";
-import { detectOS } from "visual/utils/dom/detectOS";
-import { setOffsetsToElementFromWrapper } from "visual/utils/models";
 import { t } from "visual/utils/i18n";
+import { setOffsetsToElementFromWrapper } from "visual/utils/models";
 
-const os = detectOS();
-const isMac = os === "MacOS";
-
-export default itemIndex => ({
+export default (itemIndex) => ({
   getItems: getItems(itemIndex)
 });
 
-const getItems = itemIndex => (v, component) => {
+const getItems = (itemIndex) => (v, component) => {
   const copiedElement = component.getCurrentCopiedElement();
 
   return [
@@ -23,20 +26,19 @@ const getItems = itemIndex => (v, component) => {
           id: "copy",
           type: "button",
           title: t("Copy"),
-          helperText: () => (isMac ? "⌘ + C" : "ctrl + C"),
+          helperText: () => copyKeyModifier,
           onChange: () => component.copy(itemIndex)
         },
         {
           id: "paste",
           type: "button",
           title: t("Paste"),
-          helperText: () => (isMac ? "⌘ + V" : "ctrl + V"),
+          helperText: () => pasteKeyModifier,
           inactive: !copiedElement,
           onChange: () => {
-            component.paste(itemIndex, sourceV => {
-              const { offsetX = 0, offsetY = 0 } = v[
-                itemIndex
-              ].value.items[0].value;
+            component.paste(itemIndex, (sourceV) => {
+              const { offsetX = 0, offsetY = 0 } =
+                v[itemIndex].value.items[0].value;
               let newV = setIn(
                 sourceV,
                 ["value", "items", 0, "value", "offsetX"],
@@ -55,7 +57,7 @@ const getItems = itemIndex => (v, component) => {
           id: "pasteStyles",
           type: "button",
           title: t("Paste Styles"),
-          helperText: () => (isMac ? "⌘ + ⇧ + V" : "ctrl + ⇧ + V"),
+          helperText: () => pasteStylesKeyModifier,
           inactive: !copiedElement,
           onChange: () => component.pasteStyles(itemIndex)
         },
@@ -63,7 +65,7 @@ const getItems = itemIndex => (v, component) => {
           id: "duplicate",
           type: "button",
           title: t("Duplicate"),
-          helperText: () => (isMac ? "⌘ + D" : "ctrl + D"),
+          helperText: () => duplicateKeyModifier,
           onChange: () =>
             component.insertItem(
               itemIndex + 1,
@@ -74,7 +76,7 @@ const getItems = itemIndex => (v, component) => {
           id: "remove",
           type: "button",
           title: t("Delete"),
-          helperText: () => (isMac ? "⌘ + delete" : "ctrl + delete"),
+          helperText: () => deleteKeyModifier,
           onChange: () => {
             hideToolbar();
             component.removeItem(itemIndex);

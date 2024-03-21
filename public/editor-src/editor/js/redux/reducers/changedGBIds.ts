@@ -1,5 +1,5 @@
-import { ReduxAction } from "../actions2";
-import { blocksOrderSelector, globalBlocksInPageSelector } from "../selectors";
+import { ActionTypes, ReduxAction } from "../actions2";
+import { globalBlocksInPageSelector, globalBlocksSelector } from "../selectors";
 import { ReduxState } from "../types";
 
 type ChangedGBIds = ReduxState["changedGBIds"];
@@ -26,24 +26,41 @@ export const changedGBIds: RChangedGBIds = (state = [], action, allState) => {
 
       return !state.includes(fromBlockId) ? [...state, fromBlockId] : state;
     }
-    case "REMOVE_BLOCK": {
-      const { index } = action.payload;
+    case ActionTypes.REMOVE_BLOCK: {
+      const { id } = action.payload;
+      const globalBlocks = globalBlocksSelector(allState);
 
-      const blocksIds = blocksOrderSelector(allState);
-      const _id = blocksIds[index];
+      // Need to add the global block ID to state because every
+      // global block, when deleted, changes the rule
+      // to exclude the global block for the current page.
+      if (globalBlocks[id] && !state.includes(id)) {
+        return [...state, id];
+      }
 
-      return state.filter((id) => id !== _id);
+      return state;
     }
-    case "REMOVE_BLOCKS": {
+    case ActionTypes.REMOVE_BLOCKS: {
       const GBInPages = globalBlocksInPageSelector(allState);
       const GBIdsInPages = Object.keys(GBInPages);
+      const newState = state;
 
-      return state.filter((id) => !GBIdsInPages.includes(id));
+      // Need to add the global block ID to state because every
+      // global block, when deleted, changes the rule
+      // to exclude the global block for the current page.
+      for (let i = 0; i < GBIdsInPages.length; i++) {
+        const id = GBIdsInPages[i];
+
+        if (!state.includes(id)) {
+          newState.push(id);
+        }
+      }
+
+      return newState;
     }
     case "UPDATE_GLOBAL_BLOCK": {
-      const { id } = action.payload;
+      const { uid } = action.payload;
 
-      return !state.includes(id) ? [...state, id] : state;
+      return !state.includes(uid) ? [...state, uid] : state;
     }
 
     case "FETCH_PAGE_SUCCESS": {

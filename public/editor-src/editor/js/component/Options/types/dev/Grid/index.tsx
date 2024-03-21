@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 import { Grid as Control } from "visual/component/Controls/Grid";
 import { Column } from "visual/component/Controls/Grid/Column";
 import Options from "visual/component/Options";
@@ -13,7 +13,12 @@ export interface Props
   columns?: ColumnType[];
 }
 
-export const Grid: FC<Props> = ({ className, columns, toolbar, config }) => {
+export const Grid = ({
+  className,
+  columns,
+  toolbar,
+  config
+}: Props): ReactElement | null => {
   const grid = useMemo(
     () => columns?.map((c) => c.size ?? "auto") ?? [],
     [columns]

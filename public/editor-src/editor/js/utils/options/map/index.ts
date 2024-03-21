@@ -56,9 +56,11 @@ const fns: Maps = {
   globalBlock: undefined,
   formApps: undefined,
   gbCondition: undefined,
+  popupCondition: undefined,
   toggleButton: undefined,
   //@ts-expect-error Old option, here should not be "popover" option, it will be removed when all toolbars will work with "popover"
-  "legacy-popover": withOptions
+  "legacy-popover": withOptions,
+  editableSelect: undefined
 };
 
 export function _map(

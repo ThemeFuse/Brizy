@@ -1,15 +1,15 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import HotKeys from "visual/component/HotKeys";
 import EditorIcon from "visual/component/EditorIcon";
+import HotKeys from "visual/component/HotKeys";
 import { redo } from "visual/redux/actions2";
 import { ReduxStateWithHistory } from "visual/redux/types";
-import { BottomPanelItem } from "./Item";
 import { t } from "visual/utils/i18n";
+import { BottomPanelItem } from "./Item";
 
 type History = ReduxStateWithHistory["history"];
 
-export const RedoButton: React.FC = () => {
+export const RedoButton = (): ReactElement => {
   const canRedo = useSelector<ReduxStateWithHistory, History["canRedo"]>(
     (state) => state.history.canRedo
   );

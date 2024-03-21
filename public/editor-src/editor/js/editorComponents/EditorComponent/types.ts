@@ -63,6 +63,7 @@ export interface ContextMenuItemGroup {
   title?: string;
   icon?: string;
   items?: ContextMenuItem[];
+  disabled?: (item: ElementModel, meta: ComponentsMeta) => void;
 }
 
 export type ContextMenuItem = ContextMenuItemButton | ContextMenuItemGroup;

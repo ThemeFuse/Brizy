@@ -10,8 +10,8 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
       return StoreChanged.unchanged;
     }
     case "ADD_BLOCK":
-    case "REMOVE_BLOCK":
-    case "REMOVE_BLOCKS":
+    case ActionTypes.REMOVE_BLOCK:
+    case ActionTypes.REMOVE_BLOCKS:
     case "REORDER_BLOCKS":
     case "UPDATE_BLOCKS":
     case "UPDATE_GLOBAL_BLOCK":
@@ -19,7 +19,8 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case "MAKE_POPUP_TO_GLOBAL_POPUP":
     case "MAKE_GLOBAL_POPUP_TO_POPUP":
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK":
-    case ActionTypes.UPDATE_CURRENT_STYLE_ID: // @ts-expect-error: don't have in ts
+    case "ADD_GLOBAL_BLOCK":
+    case ActionTypes.UPDATE_CURRENT_STYLE_ID:
     case ActionTypes.UPDATE_CURRENT_STYLE:
     case "UPDATE_EXTRA_FONT_STYLES":
     case ActionTypes.IMPORT_TEMPLATE: // @ts-expect-error: don't have in ts
@@ -35,8 +36,7 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     }
     // right now we have functionality for only refresh the page if some request was fail
     // need implement other functionality for "try again" and this code must we reviewed again
-    // @ts-expect-error: don't have in ts
-    case "UPDATE_ERROR": {
+    case ActionTypes.UPDATE_ERROR: {
       return StoreChanged.unchanged;
     }
     default:
