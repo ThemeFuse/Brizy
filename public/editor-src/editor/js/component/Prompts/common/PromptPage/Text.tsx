@@ -7,7 +7,7 @@ interface Props {
   children: string;
 }
 
-export const Text: React.FC<Props> = ({ className, style, children }) => (
+export const Text = ({ className, style, children }: Props): JSX.Element => (
   <p className={classnames("brz-p", className)} style={style}>
     {children}
   </p>

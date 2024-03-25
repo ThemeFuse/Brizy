@@ -20,6 +20,11 @@
   }
 
   &__item {
+
+     > a {
+      width: 100%;
+     }
+
     &--meta--title a {
       color: inherit;
     }

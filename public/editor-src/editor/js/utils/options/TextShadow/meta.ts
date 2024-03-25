@@ -1,5 +1,5 @@
 import { ToMeta } from "visual/component/Options/Type";
-import { isEmpty } from "visual/component/Options/types/dev/TextShadow/types/Value";
+import { isEmpty } from "./types/Value";
 
 export interface Meta {
   isEmpty: boolean;

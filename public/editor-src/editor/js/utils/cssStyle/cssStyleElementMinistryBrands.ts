@@ -1246,3 +1246,58 @@ export function cssStyleElementMinistryBrandsMetaItemWebsitePadding({
     prefix: "metaWebsite"
   });
 }
+
+export function cssStyleElementOfMinistryBrandsSocialColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "socialColor" });
+}
+
+export const cssStyleElementOfMinistryBrandsSocialBgColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBgColor({ v, device, state, prefix: "socialBg" });
+};
+
+export const cssStyleElementOfMinistryBrandsSocialBgGradient = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    prefix: "social"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsSocialBoxShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    prefix: "social"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsSocialBorder = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    prefix: "social"
+  });
+};

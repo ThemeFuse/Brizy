@@ -1,5 +1,4 @@
 import {
-  cssStyleBgColor,
   cssStyleBorderRadiusType,
   cssStyleColor,
   cssStyleDisplayBlock,
@@ -9,6 +8,7 @@ import {
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { checkValue } from "../checkValue";
+import { styleBgColor } from "../style2";
 import { CSSValue } from "../style2/types";
 
 type Size = "small" | "medium" | "large" | "custom";
@@ -102,12 +102,9 @@ export function cssStyleContainerPopup2CloseBgColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({
-    v,
-    device,
-    prefix: "closeBg",
-    state
-  });
+  const bgColor = styleBgColor({ v, device, state, prefix: "closeBg" });
+
+  return bgColor ? `background-color:${bgColor};` : "";
 }
 
 export function cssStyleContainerPopup2ClosePosition({

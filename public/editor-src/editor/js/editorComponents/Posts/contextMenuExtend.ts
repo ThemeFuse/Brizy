@@ -1,22 +1,11 @@
+import { getKeyModifierSubMenu } from "visual/component/ContextMenu/utils";
 import { ElementModel } from "visual/component/Elements/Types";
+import type { Editor } from "visual/editorComponents/EditorComponent";
 import {
   ContextGetItems,
   ContextMenuItem
 } from "visual/editorComponents/EditorComponent/types";
-import { detectOS } from "visual/utils/dom/detectOS";
 import { t } from "visual/utils/i18n";
-import type { Editor } from "visual/editorComponents/EditorComponent";
-
-const os = detectOS();
-const isMac = os === "MacOS";
-
-const getKeyModifier = (isInSubMenu: boolean): "alt" | "⌘" | "ctrl" => {
-  if (isMac) {
-    return isInSubMenu ? "alt" : "⌘";
-  } else {
-    return isInSubMenu ? "alt" : "ctrl";
-  }
-};
 
 type GetItems = {
   getItems: ContextGetItems<ElementModel>;
@@ -43,7 +32,7 @@ const getItems =
             type: "button",
             title: t("Copy"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifier(isInSubMenu) + " + C",
+              getKeyModifierSubMenu(isInSubMenu) + " + C",
             // @ts-expect-error need transform EditorArrayComponent to ts
             onChange: () => component.copy(itemIndex)
           },
@@ -52,7 +41,7 @@ const getItems =
             type: "button",
             title: t("Paste Styles"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifier(isInSubMenu) + " + ⇧ + V",
+              getKeyModifierSubMenu(isInSubMenu) + " + ⇧ + V",
             inactive: !canPaste,
             // @ts-expect-error need transform EditorArrayComponent to ts
             onChange: () => component.pasteStyles(itemIndex)

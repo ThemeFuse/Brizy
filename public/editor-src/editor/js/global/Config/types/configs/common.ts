@@ -51,6 +51,15 @@ export const defaultCrop: CropData = {
 
 //#endregion
 
+//#region Form
+
+export interface FormFieldsOption {
+  title: string;
+  value: string;
+}
+
+//#endregion
+
 //#region Screenshot
 
 export interface ScreenshotData {

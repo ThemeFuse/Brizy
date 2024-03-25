@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import EditorIcon from "visual/component/EditorIcon";
 import Config from "visual/global/Config";
-import { updateError } from "visual/redux/actions";
+import { updateError } from "visual/redux/actions2";
 import { errorSelector } from "visual/redux/selectors";
-import { sendHearBeatTakeOver } from "visual/utils/api";
+import { sendHeartBeatTakeOver } from "visual/utils/api";
 import {
   HEART_BEAT_ERROR,
   PROJECT_DATA_VERSION_ERROR,
@@ -51,10 +51,19 @@ const NotificationCloseIcon = ({ onClick }) => (
 );
 
 const Notification = ({ error, dispatch }) => {
+  const config = Config.getAll();
   const { code, data } = error || {};
   let content;
 
   const clearError = () => dispatch(updateError(null));
+  const handleTakeOver = useCallback(async () => {
+    clearError();
+    try {
+      await sendHeartBeatTakeOver(config);
+    } catch (e) {
+      ToastNotification.error(t("Take over failed please refresh the page"));
+    }
+  }, []);
 
   switch (code) {
     case HEART_BEAT_ERROR: {
@@ -100,8 +109,8 @@ const Notification = ({ error, dispatch }) => {
             {data.lockedBy
               ? `${t("You can’t make changes")}.
           ${getUserEmail(data)} ${t(
-                  "is currently working on this page. Do you want to take over"
-                )} ?`
+            "is currently working on this page. Do you want to take over"
+          )} ?`
               : data}
           </NotificationContent>
           <NotificationFooter>
@@ -113,14 +122,7 @@ const Notification = ({ error, dispatch }) => {
             </a>
             <button
               className="brz-button brz-ed-notification__take-over brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2"
-              onClick={() => {
-                clearError();
-                sendHearBeatTakeOver().catch(() => {
-                  ToastNotification.error(
-                    t("Take over failed please refresh the page")
-                  );
-                });
-              }}
+              onClick={handleTakeOver}
             >
               {t("Take over")}
             </button>

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import produce from "immer";
+import { produce } from "immer";
 import { mPipe } from "visual/utils/fp/mPipe";
 import { objectFromEntries } from "visual/utils/object";
 import * as Arr from "visual/utils/reader/array";

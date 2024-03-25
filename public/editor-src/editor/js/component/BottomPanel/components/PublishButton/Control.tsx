@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import React, {
-  FC,
   Fragment,
   MouseEventHandler,
   ReactElement,
@@ -77,7 +76,7 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
   );
 };
 
-export const Controls: FC<Props> = (props) => {
+export const Controls = (props: Props): JSX.Element => {
   const { loading, children, addonAfter, disabled, status, onClick } = props;
   const className = classnames("brz-ed-fixed-bottom-panel__btn", {
     "brz-ed-fixed-bottom-panel__btn-popover": addonAfter?.length,

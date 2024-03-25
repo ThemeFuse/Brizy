@@ -19,9 +19,12 @@ import {
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { getShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { updateError } from "visual/redux/actions";
-import { removeBlocks } from "visual/redux/actions2";
-import { fetchPageSuccess, updatePageStatus } from "visual/redux/actions2";
+import {
+  fetchPageSuccess,
+  removeBlocks,
+  updateError,
+  updatePageStatus
+} from "visual/redux/actions2";
 import {
   extraFontStylesSelector,
   pageDataNoRefsSelector,
@@ -328,8 +331,11 @@ class PublishButton extends Component<Props, State> {
 
     this.setState({ [loading]: true });
 
+    const { status } = this.props.page;
+    const pageStatus = status === "future" ? "future" : "draft";
+
     return (this[loading] = this.props
-      .updatePageStatus("draft")
+      .updatePageStatus(pageStatus)
       .then(() => {
         this.props.fetchPageSuccess();
         this.setState({ [loading]: false });
@@ -591,7 +597,8 @@ class PublishButton extends Component<Props, State> {
           case "publish": {
             return t("Update");
           }
-          case "draft": {
+          case "draft":
+          case "future": {
             return t("Save Draft");
           }
         }
@@ -630,6 +637,7 @@ class PublishButton extends Component<Props, State> {
                 case "publish":
                   return this.publish("updateLoading");
                 case "draft":
+                case "future":
                   return this.draft("updateLoading");
               }
             }}

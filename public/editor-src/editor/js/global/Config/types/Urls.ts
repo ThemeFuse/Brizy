@@ -3,6 +3,7 @@ interface UrlsCommon {
   api: string;
   projectCloneLink: string;
   assets: string;
+  compileAssets?: string;
   customFile: string;
   editorFonts: string;
   pagePreview: string;

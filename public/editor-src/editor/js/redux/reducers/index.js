@@ -1,238 +1,29 @@
-import produce from "immer";
+import { ActionTypes } from "visual/redux/actions2";
 import {
   blocksOrderSelector,
   globalBlocksSelector
 } from "visual/redux/selectors";
-import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
-import { objectTraverse2 } from "visual/utils/object";
-import {
-  COPY_ELEMENT,
-  HYDRATE,
-  MAKE_BLOCK_TO_GLOBAL_BLOCK,
-  MAKE_POPUP_TO_GLOBAL_POPUP,
-  REMOVE_BLOCK,
-  REMOVE_BLOCKS,
-  UPDATE_ERROR,
-  UPDATE_GB_RULES,
-  UPDATE_SCREENSHOT
-} from "../actions";
-import { ActionTypes, PUBLISH } from "../actions2";
+import { UPDATE_GB_RULES } from "../actions";
 import { historyReducerEnhancer } from "../history/reducers";
 import { authorized } from "./authorized";
 import { blocksData } from "./blocksData";
 import { blocksOrder } from "./blocksOrder";
 import { changedGBIds } from "./changedGBIds";
+import { copiedElement } from "./copiedElement";
+import { currentStyle } from "./currentStyle";
+import { currentStyleId } from "./currentStyleId";
+import { error } from "./error";
 import { extraFontStyles } from "./extraFontStyles";
+import { extraStyles } from "./extraStyles";
 import { fonts } from "./fonts";
 import { globalBlocks } from "./globalBlocks";
 import { page } from "./page";
 import { project } from "./project";
+import { screenshots } from "./screenshots";
 import { storeWasChanged } from "./storeWasChanged";
 import { styles } from "./styles";
 import { syncAllowed } from "./syncAllowed";
 import { ui } from "./ui";
-
-export function currentStyleId(state = "", action) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { project } = action.payload;
-
-      return project.data.selectedStyle;
-    }
-    case ActionTypes.UPDATE_CURRENT_STYLE_ID: {
-      return action.payload;
-    }
-    case ActionTypes.ADD_NEW_GLOBAL_STYLE: {
-      return action.payload.id;
-    }
-    case ActionTypes.IMPORT_STORY:
-    case ActionTypes.IMPORT_TEMPLATE: {
-      const { currentStyleId } = action.payload;
-
-      return currentStyleId || state;
-    }
-    default:
-      return state;
-  }
-}
-
-export function currentStyle(state = {}, action, fullState) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { project } = action.payload;
-
-      return project.data.styles.find(
-        (style) => style.id === project.data.selectedStyle
-      );
-    }
-    case ActionTypes.UPDATE_CURRENT_STYLE: {
-      return action.payload;
-    }
-    case ActionTypes.UPDATE_CURRENT_STYLE_ID: {
-      const currentStyleId = action.payload;
-
-      return fullState.styles.find(({ id }) => id === currentStyleId);
-    }
-    case ActionTypes.ADD_NEW_GLOBAL_STYLE: {
-      return action.payload;
-    }
-    case ActionTypes.IMPORT_STORY:
-    case ActionTypes.IMPORT_TEMPLATE: {
-      const { currentStyleId, styles } = action.payload;
-      const allStyles = [...(styles ?? []), ...fullState.styles];
-
-      return currentStyleId
-        ? allStyles.find((style) => style.id === currentStyleId)
-        : state;
-    }
-    default:
-      return state;
-  }
-}
-
-// copy
-
-const copiedElementDefault = {
-  value: {},
-  path: []
-};
-export function copiedElement(state = copiedElementDefault, action) {
-  switch (action.type) {
-    case COPY_ELEMENT:
-      return {
-        ...state,
-        ...action.value
-      };
-    default:
-      return state;
-  }
-}
-
-// screenshots
-
-const validateScreenshots = (obj) =>
-  obj.type && obj.value && obj.value._id && obj.value._thumbnailSrc;
-
-function parseScreenshots(data) {
-  const acc = {};
-
-  objectTraverse2(data, (obj) => {
-    if (validateScreenshots(obj)) {
-      const v = obj.value;
-
-      acc[obj.value._id] = {
-        _thumbnailSrc: v._thumbnailSrc,
-        _thumbnailWidth: v._thumbnailWidth,
-        _thumbnailHeight: v._thumbnailHeight,
-        _thumbnailTime: v._thumbnailTime
-      };
-    }
-  });
-
-  return acc;
-}
-export function screenshots(
-  state = {},
-  action,
-  fullState,
-  inConstructionState
-) {
-  switch (action.type) {
-    case HYDRATE:
-    case PUBLISH: {
-      const pageScreenshots = parseScreenshots(inConstructionState.page.data);
-      const globalBlocksScreenshots = {};
-
-      // global blocks parsing is a little more messy
-      for (const [key, obj] of Object.entries(
-        inConstructionState.globalBlocks
-      )) {
-        const objValue = obj.data;
-        if (validateScreenshots(objValue)) {
-          const v = objValue.value;
-
-          globalBlocksScreenshots[key] = {
-            _thumbnailSrc: v._thumbnailSrc,
-            _thumbnailWidth: v._thumbnailWidth,
-            _thumbnailHeight: v._thumbnailHeight,
-            _thumbnailTime: v._thumbnailTime
-          };
-        }
-
-        Object.assign(
-          globalBlocksScreenshots,
-          parseScreenshots(objValue.value)
-        );
-      }
-
-      return {
-        ...pageScreenshots,
-        ...globalBlocksScreenshots,
-        _published: {
-          ...pageScreenshots,
-          ...globalBlocksScreenshots
-        }
-      };
-    }
-    case UPDATE_SCREENSHOT: {
-      const {
-        payload: { blockId, data }
-      } = action;
-
-      return produce(state, (draft) => {
-        draft[blockId] = data;
-      });
-    }
-    case MAKE_POPUP_TO_GLOBAL_POPUP:
-    case MAKE_BLOCK_TO_GLOBAL_BLOCK: {
-      const {
-        data: {
-          value: { _id }
-        },
-        meta
-      } = action.payload.block;
-      const screenshot = {
-        _thumbnailSrc: meta._thumbnailSrc,
-        _thumbnailWidth: meta._thumbnailWidth,
-        _thumbnailHeight: meta._thumbnailHeight,
-        _thumbnailTime: meta._thumbnailTime
-      };
-
-      return produce(state, (draft) => {
-        draft[_id] = screenshot;
-        draft._published[_id] = screenshot;
-      });
-    }
-    default:
-      return state;
-  }
-}
-
-// error
-
-const errorDefault = null;
-export function error(state = errorDefault, action) {
-  switch (action.type) {
-    case HYDRATE: {
-      const { projectStatus } = action.payload;
-
-      if (projectStatus.locked) {
-        return {
-          code: PROJECT_LOCKED_ERROR,
-          data: projectStatus
-        };
-      }
-
-      return state;
-    }
-    case UPDATE_ERROR: {
-      return action.payload;
-    }
-    default: {
-      return state;
-    }
-  }
-}
 
 export default historyReducerEnhancer(
   combineReducersCustom(
@@ -253,7 +44,8 @@ export default historyReducerEnhancer(
       currentStyleId,
       currentStyle,
       ui,
-      storeWasChanged
+      storeWasChanged,
+      extraStyles
     },
     {
       screenshots
@@ -266,19 +58,22 @@ export default historyReducerEnhancer(
       "currentStyleId",
       "currentStyle",
       "extraFontStyles",
-      "storeWasChanged"
+      "storeWasChanged",
+      "extraStyles"
     ],
     onBeforeUpdate: (state, action, history) => {
       if (
         action.type === UPDATE_GB_RULES ||
-        action.type === REMOVE_BLOCK ||
-        action.type === REMOVE_BLOCKS
+        action.type === ActionTypes.REMOVE_BLOCK ||
+        action.type === ActionTypes.REMOVE_BLOCKS
       ) {
         // const { id } = action.payload;
         const blocksOrder = blocksOrderSelector(state);
         const globalBlocks = globalBlocksSelector(state);
         const ids =
-          action.type === REMOVE_BLOCKS ? blocksOrder : [action.payload.id];
+          action.type === ActionTypes.REMOVE_BLOCKS
+            ? blocksOrder
+            : [action.payload.id];
 
         ids.forEach((id) => {
           if (blocksOrder.includes(id) && globalBlocks[id]) {

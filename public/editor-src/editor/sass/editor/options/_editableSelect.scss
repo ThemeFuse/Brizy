@@ -1,0 +1,19 @@
+@import "../../variables";
+
+// --- Editable Select Option
+.brz-ui__editable-select {
+  .brz-ui__editable-select2 {
+    .brz-ui__editable-select2__button {
+      padding-bottom: 3px;
+      padding-top: 3px;
+    }
+    .brz-ui__editable-select2__dropdown__item {
+      padding: 2px 10px;
+
+      &:last-child {
+        border-right-width: 3px;
+        border-left-width: 3px;
+      }
+    }
+  }
+}

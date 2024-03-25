@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FC, useCallback } from "react";
+import React, { useCallback } from "react";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import { ColorPickerSelect } from "visual/component/Controls/ColorPickerSelect";
 import {
@@ -55,7 +55,7 @@ export interface Props extends WithClassName {
   onChangeLeftWidth: OnChange<number>;
 }
 
-export const Border: FC<Props> = ({
+export const Border = ({
   className,
   widthTypes,
   styles,
@@ -80,7 +80,7 @@ export const Border: FC<Props> = ({
   leftWidth,
   onChangeLeftWidth,
   ...props
-}) => {
+}: Props): JSX.Element => {
   const _className = classNames("brz-ed-control__border", className);
   const onColor = useCallback(
     (v: Value<Style>, meta: Meta) => {

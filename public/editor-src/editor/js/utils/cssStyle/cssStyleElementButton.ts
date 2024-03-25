@@ -6,13 +6,13 @@ import {
   cssStyleIconMargin,
   cssStyleIconPosition,
   cssStyleStrokeWidth,
-  getFillType
+  getFillType,
+  getSize
 } from "visual/utils/cssStyle";
 import { getButtonSizes } from "visual/utils/cssStyle/cssStyleSize";
 import { defaultValueValue } from "visual/utils/onChange";
 import { isStory } from "../models";
 import { CSSValue } from "../style2/types";
-import { getSize } from "./cssStyleStroke";
 
 export function cssStyleElementButtonIconPosition({
   v,

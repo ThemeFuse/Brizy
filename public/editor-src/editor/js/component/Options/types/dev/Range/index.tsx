@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { RangeSlider as Control } from "visual/component/Controls/RangeSlider";
@@ -17,13 +17,13 @@ export type Config = {
 
 export type Props = OptionProps<Value> & WithConfig<Config> & WithClassName;
 
-export const Range: FC<Props> = ({
+export const Range = ({
   className,
   onChange,
   value,
   config = {},
   label
-}) => {
+}: Props): ReactElement => {
   const [_value, _onChange] = useThrottleOnChange(
     value,
     onChange,

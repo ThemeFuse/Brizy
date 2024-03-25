@@ -8,7 +8,7 @@ type Props = {
   mapZoom?: string;
 };
 
-const Map: React.FC<Props> = ({ map, mapZoom }) => {
+const Map = ({ map, mapZoom }: Props): JSX.Element => {
   const iframeStyle = {
     display: map ? "block" : "none"
   };

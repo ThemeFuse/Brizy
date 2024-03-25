@@ -1,0 +1,40 @@
+.brz-articleList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  &__container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(var(--columnCount), var(--columnSize));
+    word-break: break-word;
+  }
+
+  &__item {
+    & > * {
+      margin: 0 0 0.5rem 0;
+    }
+
+    &--meta--title a {
+      color: inherit;
+    }
+
+    &--media {
+      display: flex;
+      padding: 0;
+
+      li:not(:last-child) {
+        margin: 0 0.5rem 0 0;
+      }
+
+      &--audio {
+        width: 100%;
+      }
+    }
+  }
+
+  ul {
+    list-style-type: none;
+  }
+}

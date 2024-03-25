@@ -1,16 +1,13 @@
 import classNames from "classnames";
 import React, { ReactNode } from "react";
 import { mergeDeep } from "timm";
-import { defaults, flatten, identity, noop } from "underscore";
+import { flatten, identity, noop } from "underscore";
 import {
   ElementDefaultValue,
-  ElementModel
+  ElementModel,
+  ModelType
 } from "visual/component/Elements/Types";
 import { OptionName, OptionValue } from "visual/component/Options/types";
-import { getOptionModel } from "visual/component/Options/types/utils/fromElementModel";
-import { toElementModel } from "visual/component/Options/types/utils/toElementModel";
-import { getOptionMeta } from "visual/component/Options/types/utils/toMeta/utils";
-import { mergeOptions, optionMap } from "visual/component/Options/utils";
 import Toolbar from "visual/component/Toolbar";
 import {
   OptionDefinition,
@@ -43,11 +40,14 @@ import {
   getDynamicContentOption
 } from "visual/utils/options/getDynamicContentOption";
 import { TypeChoices } from "visual/utils/options/types";
-import { wrapOption } from "visual/utils/options/utils";
+import { mergeOptions, optionMap } from "visual/utils/options/utils";
+import { getOptionModel } from "visual/utils/options/utils/fromElementModel";
+import { toElementModel } from "visual/utils/options/utils/toElementModel";
+import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
+import { wrapOption } from "visual/utils/options/utils/wrap";
 import { attachRef } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import * as Responsive from "visual/utils/responsiveMode";
-import { DESKTOP } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
@@ -74,7 +74,6 @@ import {
   NewToolbarConfig,
   OldToolbarConfig,
   OnChangeMeta,
-  Rule,
   SidebarConfig,
   ToolbarConfig,
   ToolbarExtend
@@ -148,7 +147,6 @@ export class EditorComponent<
   _defaultValueProcessedCache?: DefaultValueProcessed<M>;
   _dc: ECDC = {};
   childToolbarExtend?: ToolbarExtend;
-  toolbarCssOptions: MValue<ToolbarItemType[]> = undefined;
 
   /**
    * @return {string}
@@ -337,15 +335,16 @@ export class EditorComponent<
     return null;
   }
 
-  getMockToolbarOptions = (
-    toolbars: NewToolbarConfig<M>[]
-  ): ToolbarItemType[] => {
+  getToolbarOptions = (toolbars: NewToolbarConfig<M>[]): ToolbarItemType[] => {
+    const v = this.getValue();
+    const { tabsState } = v;
+
     return flatten(
       toolbars.map((toolbar) =>
         toolbar.getItems({
-          v: {} as M,
-          device: DESKTOP,
-          state: NORMAL,
+          v,
+          device: deviceModeSelector(this.getReduxState()),
+          state: State.fromString(Str.read(tabsState) ?? "") ?? NORMAL,
           context: this.context,
           component: this as Editor<M>,
           getValue: this.getValueByOptionId
@@ -359,11 +358,28 @@ export class EditorComponent<
     sidebars?: NewToolbarConfig<M>[]
   ): ToolbarItemType[] => {
     const config = Config.getAll();
+    const thirdPartyExtendId = this.getComponentId();
 
-    const toolbarOptions = this.getMockToolbarOptions(toolbars);
+    const toolbarFreeOptions = this.getToolbarOptions(toolbars);
+    const toolbarPro = applyFilter(
+      `toolbarItemsExtend_${thirdPartyExtendId}`,
+      null
+    );
+    const toolbarProOptions = this.getToolbarOptions(
+      toolbarPro ? [toolbarPro] : []
+    );
+    const toolbarOptions = [...toolbarFreeOptions, ...toolbarProOptions];
 
-    const sidebarOptions =
-      sidebars && sidebars.length ? this.getMockToolbarOptions(sidebars) : [];
+    const sidebarFreeOptions =
+      sidebars && sidebars.length ? this.getToolbarOptions(sidebars) : [];
+    const sidebarPro = applyFilter(
+      `sidebarItemsExtend_${thirdPartyExtendId}`,
+      null
+    );
+    const sidebarProOptions = this.getToolbarOptions(
+      sidebarPro ? [sidebarPro] : []
+    );
+    const sidebarOptions = [...sidebarFreeOptions, ...sidebarProOptions];
 
     return [...toolbarOptions, ...sidebarOptions]
       .map(filterProOptions(isPro(config)))
@@ -376,29 +392,25 @@ export class EditorComponent<
   ): OutputStyle {
     const model = this.getValue2();
 
-    if (this.toolbarCssOptions === undefined) {
-      const filteredOptionsByIsPro = this.getFilteredToolbarOptions(
-        toolbars,
-        sidebars
-      );
+    const filteredOptionsByIsPro = this.getFilteredToolbarOptions(
+      toolbars,
+      sidebars
+    );
 
-      this.toolbarCssOptions = filterCSSOptions(filteredOptionsByIsPro);
-    }
-
-    const options = this.toolbarCssOptions;
+    const options = filterCSSOptions(filteredOptionsByIsPro);
 
     const defaultCSSObj = getCSSObjects({
-      currentModel: "default",
+      currentModel: ModelType.Default,
       model,
       options
     });
     const rulesCSSObj = getCSSObjects({
-      currentModel: "rules",
+      currentModel: ModelType.Rules,
       model,
       options
     });
     const customCSSObj = getCSSObjects({
-      currentModel: "custom",
+      currentModel: ModelType.Custom,
       model,
       options
     });
@@ -937,58 +949,61 @@ export class EditorComponent<
           });
     };
 
-    return optionMap((option) => {
-      const { id, type, onChange: oldOnchange } = option;
+    return optionMap(
+      (option) => {
+        const { id, type, onChange: oldOnchange } = option;
 
-      option = bindStateToOption(GlobalState.states, option, device);
+        option = bindStateToOption(GlobalState.states, option, device);
 
-      //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
-      const isDev = inDevelopment(type);
+        //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
+        const isDev = inDevelopment(type);
 
-      const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
-        v !== undefined ? ({ [id]: v } as Partial<M>) : null;
-      const deps = option.dependencies || identity;
+        const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
+          v !== undefined ? ({ [id]: v } as Partial<M>) : null;
+        const deps = option.dependencies || identity;
 
-      if (isDev) {
-        const optionModel = getOptionModel({
-          id,
-          type,
-          v,
-          breakpoint: device,
-          state
-        });
+        if (isDev) {
+          const optionModel = getOptionModel({
+            id,
+            type,
+            v,
+            breakpoint: device,
+            state
+          });
 
-        option.meta = getOptionMeta(type, optionModel);
+          option.meta = getOptionMeta(type, optionModel);
 
-        option.value = optionModel;
-      }
+          option.value = optionModel;
+        }
 
-      const elementModel = toElementModel<typeof type>(type, (key) =>
-        getKey(id, key, isDev)
-      );
+        const elementModel = toElementModel<typeof type>(type, (key) =>
+          getKey(id, key, isDev)
+        );
 
-      option.onChange =
-        option.isPro === true && !IS_PRO
-          ? noop
-          : (value: ElementModel | Literal, meta: Meta): void => {
-              const id = getKey(option.id, "", isDev);
-              const patch: Partial<Model<M>> = isDev
-                ? deps(elementModel(value))
-                : oldOnchange
-                ? oldOnchange(value, meta)
-                : defaultOnChange(id, value as Literal);
+        option.onChange =
+          option.isPro === true && !IS_PRO
+            ? noop
+            : (value: ElementModel | Literal, meta: Meta): void => {
+                const id = getKey(option.id, "", isDev);
+                const patch: Partial<Model<M>> = isDev
+                  ? deps(elementModel(value))
+                  : oldOnchange
+                    ? oldOnchange(value, meta)
+                    : defaultOnChange(id, value as Literal);
 
-              if (patch) {
-                if (process.env.NODE_ENV === "development") {
-                  this.validatePatch(patch, option, state, device);
+                if (patch) {
+                  if (process.env.NODE_ENV === "development") {
+                    this.validatePatch(patch, option, state, device);
+                  }
+
+                  this.patchValue(patch);
                 }
+              };
 
-                this.patchValue(patch);
-              }
-            };
-
-      return option;
-    }, optionMap(wrapOption, items));
+        return option;
+      },
+      optionMap(wrapOption, items)
+    );
   }
 
   makeToolbarPropsFromConfig2(
@@ -1284,49 +1299,6 @@ export class EditorComponent<
 
   renderForView(v: M, vs: M, vd: M): ReactNode {
     return this.renderForEdit(v, vs, vd);
-  }
-
-  // experimental
-  applyRulesToValue(value: M, rules: (false | Rule)[]): M {
-    const filteredRules = rules.filter(Boolean) as Rule[];
-
-    if (filteredRules.length === 0) {
-      return value;
-    }
-
-    const rulesValue = this.getRulesValue(filteredRules);
-
-    return defaults(rulesValue, value);
-  }
-
-  getRulesValue(rules: Rule[]): MValue<{ [k: string]: Rule }> {
-    const currentStyleRules = rulesSelector(this.getReduxState());
-
-    if (!currentStyleRules) {
-      return undefined;
-    }
-
-    return rules.reduce((acc, rule) => {
-      let overrides;
-
-      switch (typeof rule) {
-        case "object": {
-          const { rule: ruleName, mapper } = rule;
-
-          overrides =
-            currentStyleRules[ruleName] && mapper(currentStyleRules[ruleName]);
-          break;
-        }
-        case "string": {
-          overrides = currentStyleRules[rule];
-          break;
-        }
-        default:
-          throw new Error("Invalid rule type");
-      }
-
-      return overrides ? Object.assign(acc, overrides) : acc;
-    }, {});
   }
 }
 

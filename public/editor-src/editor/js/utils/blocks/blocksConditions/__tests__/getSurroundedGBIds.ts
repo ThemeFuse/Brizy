@@ -25,16 +25,17 @@ const data: GlobalBlock["data"] = {
 };
 
 const globalBlock1: GlobalBlock = {
-  id: "block1",
+  uid: "block1",
   status: "publish",
   rules: [],
   position: null,
   data: data,
+  dataVersion: 0,
   meta: normalMeta
 };
 
 const globalBlock2: GlobalBlock = {
-  id: "block2",
+  uid: "block2",
   status: "publish",
   rules: [],
   position: {
@@ -43,11 +44,12 @@ const globalBlock2: GlobalBlock = {
     bottom: 0
   },
   data: data,
+  dataVersion: 0,
   meta: normalMeta
 };
 
 const globalBlock3: GlobalBlock = {
-  id: "block3",
+  uid: "block3",
   status: "publish",
   rules: [],
   position: {
@@ -56,11 +58,12 @@ const globalBlock3: GlobalBlock = {
     bottom: 0
   },
   data: data,
+  dataVersion: 0,
   meta: normalMeta
 };
 
 const globalBlock4: GlobalBlock = {
-  id: "block4",
+  uid: "block4",
   status: "publish",
   rules: [],
   position: {
@@ -69,11 +72,12 @@ const globalBlock4: GlobalBlock = {
     bottom: 0
   },
   data: data,
+  dataVersion: 0,
   meta: normalMeta
 };
 
 const globalBlock6: GlobalBlock = {
-  id: "block6",
+  uid: "block6",
   status: "publish",
   rules: [],
   position: {
@@ -82,6 +86,7 @@ const globalBlock6: GlobalBlock = {
     bottom: 0
   },
   data: data,
+  dataVersion: 0,
   meta: popupMeta
 };
 

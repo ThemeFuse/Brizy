@@ -128,7 +128,9 @@ export default class FontStyleEditor extends Component<
           {...el}
           key={el.id}
           showDeleteIcon={el.deletable === "on"}
-          onChange={(newValue) => this.handleChange(el.id, newValue)}
+          onChange={(newValue: Partial<FontStyleProps>) =>
+            this.handleChange(el.id, newValue)
+          }
           itemIndex={index}
           numItems={numItems}
           animationCounter={animationCounter}

@@ -6,7 +6,7 @@ interface Props {
   children: string;
 }
 
-export const Link: React.FC<Props> = ({ className, href, children }) => (
+export const Link = ({ className, href, children }: Props): JSX.Element => (
   <a className={className} href={href} target="_blank" rel="noreferrer">
     {children}
   </a>

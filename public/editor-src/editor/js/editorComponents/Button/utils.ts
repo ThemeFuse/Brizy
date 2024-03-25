@@ -29,8 +29,9 @@ export const getMaxBorderRadius = (
 
   // Typography
   const fontStyle = dvv("fontStyle");
-  const { fontSize, lineHeight } =
-    fontStyle === "" ? v : getFontStyle(fontStyle) || v;
+  const style = fontStyle === "" ? v : getFontStyle(fontStyle) || v;
+  const fontSize = Num.read(style.fontSize) ?? 12;
+  const lineHeight = Num.read(style.lineHeight) ?? 1;
 
   // Border Radius
   const contentHeight =

@@ -13,7 +13,7 @@ import OriginalImage from "./OriginalImage";
 import Population from "./Population";
 import SimpleImage from "./SimpleImage";
 
-const Content: React.FC<ImageProps> = (props) => {
+const Content = (props: ImageProps): JSX.Element => {
   const { v, vs, vd, _id, componentId, wrapperSizes, extraAttributes, meta } =
     props;
   const { imageSrc, imageExtension, imagePopulation, imageType } = v;

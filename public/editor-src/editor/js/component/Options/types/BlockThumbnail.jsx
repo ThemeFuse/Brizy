@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import produce from "immer";
+import { produce } from "immer";
 import React from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
@@ -183,7 +183,9 @@ class BlockThumbnail extends React.Component {
     return (
       <div {...attr} className={className}>
         {label || helper ? this.renderLabel() : null}
-        <Scrollbar autoHeightMax="240px" theme="dark">{this.renderThumbnails()}</Scrollbar>
+        <Scrollbar autoHeightMax="240px" theme="dark">
+          {this.renderThumbnails()}
+        </Scrollbar>
       </div>
     );
   }

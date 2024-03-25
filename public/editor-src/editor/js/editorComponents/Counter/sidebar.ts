@@ -1,11 +1,12 @@
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { Value } from "./types";
 
 export const title = t("Counter");
 
-export function getItems(): ToolbarItemType[] {
+export const getItems: GetItems<Value> = () => {
   return [
     {
       id: "sidebarTabs",
@@ -82,4 +83,4 @@ export function getItems(): ToolbarItemType[] {
       ]
     }
   ];
-}
+};

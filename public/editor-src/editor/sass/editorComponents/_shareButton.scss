@@ -1,0 +1,26 @@
+// Share Button
+.brz-shareButton {
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &__item {
+    display: flex;
+    text-decoration: none;
+    word-break: break-word;
+    overflow: hidden;
+    cursor: pointer;
+
+    &-text {
+      flex-grow: 1;
+    }
+
+    &-icon,
+    &-text {
+      align-self: stretch;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

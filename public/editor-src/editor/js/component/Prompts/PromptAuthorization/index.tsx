@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react";
+import React, { ComponentType, ReactElement } from "react";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import SignIn from "./SignIn";
@@ -25,10 +25,10 @@ export type PromptAuthorizationProps = {
   onClose: () => void;
 };
 
-const PromptAuthorization: React.FC<PromptAuthorizationProps> = ({
+const PromptAuthorization = ({
   opened,
   onClose
-}) => {
+}: PromptAuthorizationProps): ReactElement => {
   return (
     <Tabs opened={opened} tabs={TABS} currentTab="signIn" onClose={onClose} />
   );

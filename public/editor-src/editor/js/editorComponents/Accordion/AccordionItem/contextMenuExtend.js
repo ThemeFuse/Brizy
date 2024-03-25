@@ -1,15 +1,18 @@
+import {
+  copyKeyModifier,
+  deleteKeyModifier,
+  duplicateKeyModifier,
+  pasteKeyModifier,
+  pasteStylesKeyModifier
+} from "visual/component/ContextMenu/utils";
 import { hideToolbar } from "visual/component/Toolbar";
-import { detectOS } from "visual/utils/dom/detectOS";
 import { t } from "visual/utils/i18n";
 
-export default itemIndex => ({
+export default (itemIndex) => ({
   getItems: getItems(itemIndex)
 });
 
-const os = detectOS();
-const isMac = os === "MacOS";
-
-const getItems = itemIndex => (v, component) => {
+const getItems = (itemIndex) => (v, component) => {
   const copiedElement = component.getCurrentCopiedElement();
 
   const containRow = v[itemIndex].type === "Row";
@@ -30,14 +33,14 @@ const getItems = itemIndex => (v, component) => {
           id: "copy",
           type: "button",
           title: t("Copy"),
-          helperText: () => (isMac ? "⌘ + C" : "ctrl + C"),
+          helperText: () => copyKeyModifier,
           onChange: () => component.copy(itemIndex)
         },
         {
           id: "paste",
           type: "button",
           title: t("Paste"),
-          helperText: () => (isMac ? "⌘ + V" : "ctrl + V"),
+          helperText: () => pasteKeyModifier,
           inactive: !canPaste,
           onChange: () => component.paste(itemIndex)
         },
@@ -46,14 +49,14 @@ const getItems = itemIndex => (v, component) => {
           type: "button",
           title: t("Paste Styles"),
           inactive: !canPasteStyles,
-          helperText: () => (isMac ? "⌘ + ⇧ + V" : "ctrl + ⇧ + V"),
+          helperText: () => pasteStylesKeyModifier,
           onChange: () => component.pasteStyles(itemIndex)
         },
         {
           id: "duplicate",
           type: "button",
           title: t("Duplicate"),
-          helperText: () => (isMac ? "⌘ + D" : "ctrl + D"),
+          helperText: () => duplicateKeyModifier,
           onChange: () => {
             component.cloneItem(itemIndex);
           }
@@ -62,7 +65,7 @@ const getItems = itemIndex => (v, component) => {
           id: "remove",
           type: "button",
           title: t("Delete"),
-          helperText: () => (isMac ? "⌘ + delete" : "ctrl + delete"),
+          helperText: () => deleteKeyModifier,
           onChange: () => {
             hideToolbar();
             component.removeItem(itemIndex);

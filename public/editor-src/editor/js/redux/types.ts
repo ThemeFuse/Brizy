@@ -2,11 +2,13 @@ import {
   Authorized,
   Block,
   DeviceMode,
+  Error,
   ExtraFontStyle,
   Fonts,
   GlobalBlock,
   Page,
   Project,
+  Screenshot,
   Style,
   SyncAllowed,
   UserRole
@@ -52,6 +54,7 @@ export type ReduxState = {
     currentLanguage: string;
   };
   styles: Style[];
+  extraStyles: Style[];
   extraFontStyles: ExtraFontStyle[];
   authorized: Authorized;
   syncAllowed: SyncAllowed;
@@ -62,13 +65,18 @@ export type ReduxState = {
     };
   };
   storeWasChanged: StoreChanged;
+  error: null | Error;
+  currentStyleId: string;
+  currentStyle: Style;
+  screenshots: {
+    _published: Record<string, Screenshot>;
+    [k: string]: Screenshot | Record<string, Screenshot>;
+  };
 
   // below any are temporary and needed for ReduxStateWithHistory
   // they will be removed once we finish with ReduxState types
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   pageBlocks: any;
-  currentStyleId: any;
-  currentStyle: any;
   globalBlocksUpdates: any;
   /* eslint-enable  @typescript-eslint/no-explicit-any */
 };

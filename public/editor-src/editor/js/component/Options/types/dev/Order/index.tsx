@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import * as Option from "visual/component/Options/Type";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
@@ -24,7 +24,7 @@ export type Props = Option.Props<undefined> &
   WithConfig<Config> &
   WithClassName;
 
-export const Order: React.FC<Props> = ({ className, config, label }) => {
+export const Order = ({ className, config, label }: Props): ReactElement => {
   const onChange = config?.onChange ?? empty;
   const disable = config?.disable ?? "none";
 

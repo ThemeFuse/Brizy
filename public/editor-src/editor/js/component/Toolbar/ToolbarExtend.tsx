@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from "react";
 import _ from "underscore";
 import { PortalToolbarProps } from "./PortalToolbar";
+import { FCC } from "visual/utils/react/types";
 
 export type ToolbarExtendProps = Pick<
   PortalToolbarProps,
@@ -8,11 +9,10 @@ export type ToolbarExtendProps = Pick<
 >;
 export type ToolbarExtendContextType = ToolbarExtendProps | undefined;
 
-export const ToolbarExtendContext = React.createContext<
-  ToolbarExtendContextType
->(undefined);
+export const ToolbarExtendContext =
+  React.createContext<ToolbarExtendContextType>(undefined);
 
-export const ToolbarExtend: React.FC<ToolbarExtendProps> = ({
+export const ToolbarExtend: FCC<ToolbarExtendProps> = ({
   children,
   position,
   onEscape

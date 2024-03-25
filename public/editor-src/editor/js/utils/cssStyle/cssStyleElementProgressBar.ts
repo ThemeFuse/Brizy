@@ -33,6 +33,11 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
   device,
   state
 }: CSSValue): string {
+  if (IS_PREVIEW) {
+    // INFO: is needed to avoid blinking, because in preview animation always starts from 0%
+    return `max-width: 0%;`;
+  }
+
   return cssStyleSizeMaxWidthPrefixEmpty({
     v,
     device,

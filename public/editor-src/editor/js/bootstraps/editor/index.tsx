@@ -7,16 +7,12 @@ import Config from "visual/global/Config";
 import { editorRendered, hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import { Font } from "visual/types";
-import {
-  addProjectLockedBeacon,
-  getGlobalBlocks,
-  removeProjectLockedSendBeacon
-} from "visual/utils/api";
 import { flatMap } from "visual/utils/array";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { PageError, ProjectError } from "visual/utils/errors";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
+import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts,
@@ -24,9 +20,11 @@ import {
 } from "visual/utils/traverse";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
 import { systemFont } from "../../utils/fonts/utils";
-import getMiddleware from "./middleware";
-import { readPageData } from "./utils/adapter";
+import { readPageData } from "../common/adapter";
+import { Root } from "./components/Root";
 import { showError } from "./utils/errors";
+import getMiddleware from "./utils/middleware";
+import { normalizePage } from "./utils/normalizePage";
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector<HTMLElement>(
@@ -41,7 +39,7 @@ const _systemFont = {
 
 (async function main() {
   try {
-    if (!appDiv && pageCurtain) {
+    if (!appDiv) {
       pageCurtain?.classList.add("has-load-error");
       throw new PageError(t("could not find #brz-ed-root"));
     }
@@ -61,12 +59,12 @@ const _systemFont = {
       throw new PageError(t("Missing page data in config"));
     }
 
-    if (projectStatus && !projectStatus.locked) {
-      await addProjectLockedBeacon();
+    if (typeof config.onStartLoad === "function") {
+      config.onStartLoad();
     }
 
     const page = readPageData(_page);
-    const globalBlocks = await getGlobalBlocks();
+    const globalBlocks = parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
 
     /* eslint-disable no-console */
     if (process.env.NODE_ENV === "development") {
@@ -96,7 +94,10 @@ const _systemFont = {
         getBlocksStylesFonts([...pageFonts, ...stylesFonts], fonts)
       );
     const newFonts = fontsDiff.reduce(
-      (acc, { type, fonts }) => ({ ...acc, [type]: { data: fonts } }),
+      (acc, { type, fonts }) => ({
+        ...acc,
+        [type]: { data: fonts }
+      }),
       {}
     );
 
@@ -117,11 +118,11 @@ const _systemFont = {
       hydrate({
         project: normalizedProject,
         projectStatus,
-        page,
+        page: normalizePage(page, config),
         globalBlocks,
         authorized: getAuthorized(),
         syncAllowed: isSyncAllowed,
-        fonts: deepMerge.all([fonts, newFonts, _systemFont])
+        fonts: deepMerge.all([{ ...fonts, ..._systemFont }, newFonts])
       })
     );
 
@@ -129,13 +130,6 @@ const _systemFont = {
     if (IS_EDITOR) {
       window.brzStore = store;
       window.parent.brzStore = store;
-
-      // beacon send data
-      window.parent.addEventListener(
-        "unload",
-        removeProjectLockedSendBeacon,
-        false
-      );
     }
 
     // For External API
@@ -150,22 +144,26 @@ const _systemFont = {
       });
     };
 
-    ReactDOM.render(
-      <Provider store={store}>
-        <Editor />
-      </Provider>,
-      appDiv,
-      () => {
-        pageCurtain?.parentElement?.removeChild(pageCurtain);
+    const app = (
+      <Root
+        onRender={() => {
+          pageCurtain?.parentElement?.removeChild(pageCurtain);
 
-        // @ts-expect-error to TS
-        store.dispatch(editorRendered());
+          // @ts-expect-error to TS
+          store.dispatch(editorRendered());
 
-        if (typeof config.onLoad === "function") {
-          config.onLoad();
-        }
-      }
+          if (typeof config.onLoad === "function") {
+            config.onLoad();
+          }
+        }}
+      >
+        <Provider store={store}>
+          <Editor />
+        </Provider>
+      </Root>
     );
+
+    ReactDOM.render(app, appDiv);
   } catch (e) {
     if (pageCurtain) {
       showError({ e, inRoot: true, hideAfter: 0 });

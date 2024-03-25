@@ -1,6 +1,7 @@
 import { Rule } from "visual/types";
-import { ApiRule, apiRuleToEditorRule } from "visual/utils/api/adapter";
+import { ApiRule } from "visual/utils/api/adapter";
 import { t } from "visual/utils/i18n";
+import { apiRuleToEditorRule } from "visual/utils/reader/globalBlocks";
 import { getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
 import { onCatch } from "./utils";

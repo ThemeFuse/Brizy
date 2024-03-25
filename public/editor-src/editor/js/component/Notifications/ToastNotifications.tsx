@@ -1,10 +1,10 @@
 import React from "react";
-import { Slide, toast } from "react-toastify";
+import { Slide, toast, ToastOptions } from "react-toastify";
 import EditorIcon from "visual/component/EditorIcon";
 
-function generateOptions(hideAfter = 3) {
+function generateOptions(hideAfter = 3): ToastOptions {
   return {
-    position: toast.POSITION.TOP_CENTER,
+    position: "top-center",
     autoClose: hideAfter * 1000,
     closeOnClick: false,
     pauseOnHover: true,

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import produce from "immer";
+import { produce } from "immer";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { ConnectedProps, connect } from "react-redux";

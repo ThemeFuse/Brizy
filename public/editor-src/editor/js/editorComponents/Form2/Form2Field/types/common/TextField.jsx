@@ -150,7 +150,7 @@ export default class TextField extends Component {
 
   render() {
     const {
-      _id,
+      name,
       label,
       labelType,
       showPlaceholder,
@@ -193,7 +193,7 @@ export default class TextField extends Component {
         attr: {
           ...(isExistingType(type) ? { type: type.toLocaleLowerCase() } : ""),
           id: labelId,
-          name: _id,
+          name: name,
           placeholder: this.getPlaceholder(),
           required: required === "on",
           pattern:

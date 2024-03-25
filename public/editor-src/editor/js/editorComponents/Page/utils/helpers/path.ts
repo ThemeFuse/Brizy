@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { ElementModelType } from "visual/component/Elements/Types";
 import { FromTo } from "../types";
 import { createFullModelPath } from "visual/utils/models";

@@ -1,8 +1,8 @@
 import {
   styleFilterBrightness,
+  styleFilterContrast,
   styleFilterHue,
-  styleFilterSaturation,
-  styleFilterContrast
+  styleFilterSaturation
 } from "visual/utils/style2";
 
 // Functia asta nu e nevoie de ea. Codul din ea trebuei sa fie in cssStyleFilter
@@ -22,7 +22,7 @@ export function cssStyleFilterSuffixForGlamour({
     hue === 0 &&
     saturation === 100 &&
     contrast === 100
-    ? ""
+    ? "none"
     : `brightness(${brightness}%) hue-rotate(${hue}deg) saturate(${saturation}%) contrast(${contrast}%)`;
 }
 

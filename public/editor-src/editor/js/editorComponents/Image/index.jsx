@@ -6,8 +6,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { getLinkValue } from "visual/component/Link/utils";
-import { fromElementModel } from "visual/component/Options/types/dev/ImageUpload/converters";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -29,6 +27,8 @@ import {
   mobileSyncOnChange,
   tabletSyncOnChange
 } from "visual/utils/onChange";
+import { fromElementModel } from "visual/utils/options/ImageUpload/converters";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import {
   fromLinkElementModel,
   patchOnDCChange as patchOnLinkDCChange
@@ -562,11 +562,9 @@ class Image extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

@@ -1,4 +1,10 @@
-import React, { FC, ReactNode, Ref, useCallback, useState } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  Ref,
+  useCallback,
+  useState
+} from "react";
 import { Draggable as Drag } from "visual/component/Draggable";
 import { WithOnChange } from "visual/utils/options/attributes";
 import { HAlign } from "visual/utils/position/HAlign";
@@ -25,7 +31,7 @@ type Props = WithOnChange<Value> & {
   children: (ref: Ref<HTMLElement>, className?: string) => ReactNode;
 };
 
-export const Draggable: FC<Props> = ({
+export const Draggable = ({
   active,
   children,
   onChange,
@@ -35,7 +41,7 @@ export const Draggable: FC<Props> = ({
   ySuffix,
   getValue,
   getContainerSizes
-}) => {
+}: Props): ReactElement => {
   // we don't just send x & y because of responsive
   // when we change device mode, editor doesn't rerender
   // and old props were using

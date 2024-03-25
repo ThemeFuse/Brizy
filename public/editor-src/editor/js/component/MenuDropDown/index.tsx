@@ -1,4 +1,4 @@
-import React, { Component, createRef, ReactElement } from "react";
+import React, { Component, createRef, ReactElement, ReactNode } from "react";
 import classnames from "classnames";
 import { DeviceMode } from "visual/types";
 import { encodeToString } from "visual/utils/string";
@@ -9,6 +9,7 @@ export interface Props {
   target?: null | HTMLElement;
   mods?: Record<DeviceMode, "vertical" | "horizontal">;
   placement?: Record<DeviceMode, Props["position"]>;
+  children: ReactNode;
 }
 
 interface State {

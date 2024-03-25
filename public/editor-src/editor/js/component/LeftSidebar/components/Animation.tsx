@@ -1,5 +1,6 @@
 import React from "react";
 import { Transition } from "react-transition-group";
+import { FCC } from "visual/utils/react/types";
 
 const duration = 150;
 
@@ -19,7 +20,7 @@ type Props = {
   unmountOnExit?: boolean;
 };
 
-const SlideLeft: React.FC<Props> = ({
+const SlideLeft: FCC<Props> = ({
   in: inProp,
   children,
   appear,

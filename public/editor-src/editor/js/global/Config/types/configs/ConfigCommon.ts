@@ -1,8 +1,13 @@
+import {
+  Output,
+  ProjectOutput
+} from "visual/bootstraps/compiler/browser/types";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
 import {
   EkklesiaFieldMap,
   EkklesiaKeys,
@@ -13,12 +18,19 @@ import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
-import { PageCommon, Project, Rule } from "visual/types";
+import { GlobalBlock, PageCommon, Project, Rule, UploadedFont } from "visual/types";
 import { PostsSources } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
+import { Pro } from "../Pro";
+import { User } from "../User";
 import type { Compiler } from "./Compiler";
 import { ElementTypes } from "./ElementTypes";
 import { ThirdPartyComponents } from "./ThirdParty";
+import {
+  Block as APIGlobalBlock,
+  APIGlobalBlocks,
+  APIGlobalPopups
+} from "./blocks/GlobalBlocks";
 import {
   BlocksArray,
   DefaultBlock,
@@ -41,6 +53,7 @@ import {
   AddFileExtra,
   AddImageData,
   AddImageExtra,
+  FormFieldsOption,
   Response,
   ScreenshotData
 } from "./common";
@@ -120,31 +133,36 @@ export interface PopupSettings {
   backgroundPreviewUrl?: string;
 }
 
+export interface PublishedProject extends Project {
+  compiled?: ProjectOutput;
+}
+
+export interface PublishedPage extends PageCommon {
+  compiled?: Output;
+}
+
+export interface PublishedGlobalBlock extends APIGlobalBlock {
+  compiled?: Output;
+}
+
 export interface PublishData {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
-  projectData?: Project;
-  pageData?: PageCommon;
-  html?: string;
-  styles?: Array<string>;
-  scripts?: Array<string>;
-  // globalBlocks: Array<GlobalBlock>;
+  is_autosave: 1 | 0;
+  projectData?: PublishedProject;
+  pageData?: PublishedPage;
+  globalBlocks?: Array<PublishedGlobalBlock>;
+  error?: string;
 }
 
 export interface AutoSave {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlock?: APIGlobalBlock;
 }
 
 export interface OnChange {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlock?: APIGlobalBlock;
 }
 
 export interface Theme {
@@ -202,6 +220,19 @@ interface _ConfigCommon<Mode> {
     token: string;
   };
 
+  project: {
+    id: Literal;
+    apiVersion?: number;
+    heartBeatInterval?: number;
+    protectedPagePassword?: string;
+    status?: {
+      locked: boolean;
+      lockedBy: boolean | { user_email: string };
+    };
+  };
+
+  user: User;
+
   branding: {
     name: string;
   };
@@ -213,6 +244,9 @@ interface _ConfigCommon<Mode> {
   postTypesTaxs: PostTypesTax[]; // is this property common or just wp?
 
   imageSizes: ImageDataSize[];
+
+  multilanguage?: boolean;
+  membership?: boolean;
 
   server?: {
     maxUploadFileSize: number;
@@ -228,16 +262,24 @@ interface _ConfigCommon<Mode> {
 
   pageData?: PageCommon;
 
+  globalBlocks?: Array<GlobalBlock>;
+
   cloud?: {
     isSyncAllowed: boolean;
   };
 
-  // HTML Compilation: inside Browser or External Server
-
+  // HTML Compilation
   compiler?: Compiler;
+
+  //#region Pro
+
+  pro?: Pro;
+
+  //#endregion
 
   //#region Third Party
 
+  thirdPartyAssetsURL?: string;
   thirdPartyComponents?: ThirdPartyComponents;
 
   //#endregion
@@ -321,7 +363,35 @@ interface _ConfigCommon<Mode> {
 
   //#endregion
 
+  //#region Integrations
+
+  integrations?: {
+    form?: {
+      showIntegrations?: boolean;
+      action?: string;
+      recaptcha?: {
+        siteKey: string;
+      };
+      fields?: {
+        label?: string;
+        handler: (
+          res: Response<Array<FormFieldsOption>>,
+          rej: Response<string>
+        ) => void;
+      };
+    };
+    fonts?: {
+      upload?: {
+        get(res: Response<Array<UploadedFont>>, rej: Response<string>): void;
+      };
+    };
+  };
+
+  //#endregion
+
   //#region Events
+
+  onStartLoad?: VoidFunction;
 
   onLoad?: VoidFunction;
 
@@ -452,6 +522,12 @@ interface _ConfigCommon<Mode> {
     // SavedPopups
     savedPopups?: APISavedPopups;
 
+    // GlobalBlocks
+    globalBlocks?: APIGlobalBlocks;
+
+    // GlobalPopups
+    globalPopups?: APIGlobalPopups;
+
     defaultKits?: DefaultTemplateKits<
       KitsWithThumbs,
       DefaultBlock,
@@ -504,6 +580,16 @@ interface _ConfigCommon<Mode> {
       };
     };
 
+    heartBeat?: {
+      sendHandler?: (
+        res: Response<{
+          locked: boolean;
+          lockedBy: boolean | { user_email: string };
+        }>,
+        rej: Response<string>
+      ) => void;
+      takeOverHandler?: (res: Response<unknown>, rej: Response<string>) => void;
+    };
     // Screenshots
     screenshots?: {
       create?: (
@@ -666,23 +752,13 @@ interface _ConfigCommon<Mode> {
   //#region Elements
 
   elements?: {
-    section?: {
-      multilanguage: boolean;
+    form?: {
+      inputTypes?: Array<FormInputTypesName>;
     };
-
-    footer?: {
-      multilanguage: boolean;
-    };
-
     postExcerpt?: {
       predefinedPopulation?: boolean;
       sourceTypeOption?: boolean;
     };
-
-    header?: {
-      multilanguage: boolean;
-    };
-
     posts?: {
       includeQueryMultiOptions?: boolean;
       exclude?: boolean;
@@ -723,7 +799,7 @@ interface _ConfigCommon<Mode> {
     shop?: {
       type?: "shopify" | "ecwid";
 
-      //#region ecwid
+      //#region Ecwid
 
       storeId?: EcwidStoreId;
       defaultProductId?: EcwidProductId;

@@ -8,6 +8,7 @@ import { debounce } from "underscore";
 import { getProLibs } from "visual/libs";
 import { DeviceMode } from "visual/types";
 import { BrizyProLibs } from "visual/types/global";
+import { getCurrentDevice } from "visual/utils/export";
 import * as Str from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
@@ -37,20 +38,6 @@ const dropdowns = new Map<
   InstanceType<Required<BrizyProLibs>["Dropdown"]>,
   Settings
 >();
-
-const getCurrentDevice = (): DeviceMode => {
-  const { innerWidth } = window;
-  let device: DeviceMode = "desktop";
-
-  if (innerWidth < 992) {
-    device = "tablet";
-  }
-  if (innerWidth < 768) {
-    device = "mobile";
-  }
-
-  return device;
-};
 
 let lastCurrentDevice = getCurrentDevice();
 

@@ -7,9 +7,9 @@ import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OnChange } from "visual/component/Options/Type";
 import { useThrottleOnChange } from "visual/component/hooks";
 import { t } from "visual/utils/i18n";
-import { EffectProps } from "../types/EffectProps";
-import { Rotate as V } from "../types/Rotate";
-import * as Degree from "../types/utils/Degree";
+import { EffectProps } from "visual/utils/options/Transform/types/EffectProps";
+import { Rotate as V } from "visual/utils/options/Transform/types/Rotate";
+import * as Degree from "visual/utils/options/Transform/types/utils/Degree";
 
 const units: Unit<"°">[] = [
   {

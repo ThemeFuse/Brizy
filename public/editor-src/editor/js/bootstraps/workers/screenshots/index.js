@@ -1,5 +1,5 @@
 import QuickLRU from "quick-lru";
-import { DOMParser, XMLSerializer } from "xmldom";
+import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
 import {
   children,
   closestByClassName,

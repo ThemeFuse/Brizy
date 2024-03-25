@@ -1,0 +1,56 @@
+.brz-toc {
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &--opened .brz-toc-body {
+    height: auto;
+  }
+
+  &-body {
+    transition-timing-function: ease-in-out;
+    overflow: hidden;
+    height: 0;
+    will-change: height, transition-duration;
+    background-clip: padding-box;
+
+    &__list {
+      font-family: inherit;
+      padding: 0;
+      margin: 0;
+      list-style-position: inside;
+
+      &-marker {
+        margin-right: 5px;
+      }
+
+      .brz-li {
+        cursor: pointer;
+      }
+    }
+
+    &__list-numbers {
+      list-style-type: none;
+    }
+  }
+
+  &-message {
+    display: block;
+    min-height: 24px;
+  }
+
+  &-text-underline {
+    .brz-toc-body__list li {
+      .brz-toc-body__list-content {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &-b-none .brz-toc-body {
+    border: none;
+  }
+}

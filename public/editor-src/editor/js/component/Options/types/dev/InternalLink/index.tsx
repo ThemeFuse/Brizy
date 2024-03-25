@@ -1,4 +1,5 @@
 import React, {
+  ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -17,14 +18,14 @@ import type { ChoiceWithPermalink, DebouncedSearch, Props } from "./types";
 import { ChoicesSync } from "./types";
 import { getCollectionChoices, isValidValue, normalizeItems } from "./utils";
 
-export const InternalLink: React.FC<Props> = ({
+export const InternalLink = ({
   className,
   onChange,
   value,
   label,
   placeholder,
   config
-}) => {
+}: Props): ReactElement => {
   const { handler, choices } = useMemo(() => {
     const editorConfig = Config.getAll();
     const { handler } =

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { Field } from "visual/component/Prompts/common/PromptPage/Field";
@@ -11,11 +11,11 @@ interface Props {
   onChange: (s: string) => void;
 }
 
-export const HeaderFooterField: React.FC<Props> = ({
+export const HeaderFooterField = ({
   value,
   onChange,
   layouts
-}) => {
+}: Props): ReactElement => {
   const options = useMemo(() => {
     return layouts.map(({ id, title }) => (
       <SelectItem key={id} value={id}>

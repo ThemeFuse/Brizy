@@ -1,9 +1,30 @@
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+
 export type ElementModel = {
   _id?: string;
   items?: Array<ElementModelType>;
   [k: string]: unknown;
 };
 
+export type ElementPatch<T extends ElementModel = ElementModel> = Partial<T>;
+
+export type ElementProps<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = ComponentsMeta & T;
+
+export interface ElementModelType2<T extends ElementModel = ElementModel> {
+  type: ElementTypes;
+  value: T;
+}
+
+export enum ModelType {
+  Default = "default",
+  Rules = "rules",
+  Custom = "custom"
+}
+
+/** @deprecated use ElementModelType2*/
 export interface ElementModelType {
   type: string;
   value: ElementModel;

@@ -1,9 +1,9 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
+import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import type { GetItems } from "../EditorComponent/types";
 import type { Props, Value } from "./types";

@@ -12,7 +12,19 @@ export default {
         {
           type: "MinistryBrandsSermonDetail",
           value: {
-            _styles: ["ministryBrandsSermonDetail"]
+            _styles: ["ministryBrandsSermonDetail"],
+            titleTypographyFontStyle: "heading2",
+            titleColorPalette: "color3",
+            hoverTitleColorPalette: "color4",
+            typographyFontStyle: "heading6",
+            colorPalette: "color7",
+            previewTypographyFontStyle: "paragraph",
+            previewColorPalette: "color7",
+            metaLinksColorPalette: "color4",
+            detailButtonTypographyFontStyle: "button",
+            detailButtonColorPalette: "color8",
+            detailButtonBgColorPalette: "color3",
+            hoverDetailButtonBgColorOpacity: 0.8
           }
         }
       ]

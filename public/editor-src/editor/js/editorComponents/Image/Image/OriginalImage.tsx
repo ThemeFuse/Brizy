@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React from "react";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { getImageUrl } from "visual/utils/image";
 import { ImageType } from "visual/utils/image/types";
@@ -20,7 +20,7 @@ const OriginalImage = ({
   v,
   imageSrc,
   extraAttributes = {}
-}: Props): ReactElement => {
+}: Props): JSX.Element => {
   const isExternalImage = v.imageType === ImageType.External;
   const url = isExternalImage
     ? imageSrc

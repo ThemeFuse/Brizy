@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { pick } from "underscore";
 import { mapModels } from "../";
 import { Block } from "visual/types";

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import classNames from "classnames";
 import { NonEmptyArray } from "visual/utils/array/types";
 import { Props as OptionProps } from "visual/component/Options/Type";
@@ -22,13 +22,13 @@ export type Props = OptionProps<SimpleValue<Literal>> &
     choices: Choice[];
   };
 
-export const Toggle: FC<Props> = ({
+export const Toggle = ({
   className,
   choices,
   value: { value },
   onChange,
   label
-}) => {
+}: Props): ReactElement | null => {
   const _className = classNames("brz-ed-option__toggle", className);
 
   return choices.length ? (

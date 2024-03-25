@@ -9,7 +9,7 @@ import defaultValue from "./defaultValue";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
 import * as toolbar from "./toolbar";
-import * as types from "./types/index";
+import types from "./types/index";
 
 class Form2Field extends EditorComponent {
   static get componentId() {
@@ -58,7 +58,7 @@ class Form2Field extends EditorComponent {
       "brz-forms2__item",
       className,
       css(
-        `${this.constructor.componentId}-field`,
+        `${this.getComponentId()}-field`,
         `${this.getId()}-field`,
         style(v, vs, vd)
       )
@@ -100,14 +100,15 @@ class Form2Field extends EditorComponent {
       className,
       selectClassName
     } = this.props;
-    const { type } = v;
+    const { type, customFieldName, _id } = v;
+    const name = customFieldName ?? _id;
     const Component = types[type];
     const classNameField = classnames(
       "brz-forms2__item",
       className,
       { "brz-d-none": type === "Hidden" },
       css(
-        `${this.constructor.componentId}-field`,
+        `${this.getComponentId()}-field`,
         `${this.getId()}-field`,
         style(v, vs, vd)
       )
@@ -118,6 +119,7 @@ class Form2Field extends EditorComponent {
         {labelType === "outside" && <Component.Label id={labelId} value={v} />}
         <Component
           {...v}
+          name={name}
           labelId={labelId}
           error={this.getError(v)}
           showPlaceholder={showPlaceholder}

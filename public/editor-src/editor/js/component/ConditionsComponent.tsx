@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Prompts from "visual/component/Prompts";
 import Config from "visual/global/Config";
 import { updatePopupRules } from "visual/redux/actions";
@@ -114,11 +114,15 @@ export function getOptions(
   return options;
 }
 
-export const ConditionsComponent: React.FC<{
+export const ConditionsComponent = ({
+  children,
+  value,
+  context
+}: {
   value: string;
   context: "block" | "popup";
   children: React.ReactElement;
-}> = ({ children, value, context }) => {
+}): ReactElement => {
   const handleMouseDown = (): void => {
     Prompts.open({
       prompt: "conditions",

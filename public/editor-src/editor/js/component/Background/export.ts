@@ -1,22 +1,8 @@
 import $ from "jquery";
 import { ExportFunction } from "visual/types";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { getCurrentDevice } from "visual/utils/export";
 import "./lib/jquery.background-video";
 import "./lib/jquery.parallax";
-
-const getCurrentDevice = (): ResponsiveMode => {
-  const { innerWidth } = window;
-  let device: ResponsiveMode = "desktop";
-
-  if (innerWidth < 992) {
-    device = "tablet";
-  }
-  if (innerWidth < 768) {
-    device = "mobile";
-  }
-
-  return device;
-};
 
 const fn: ExportFunction = ($node) => {
   const $parallax = $node.find(".brz-bg-image-parallax");

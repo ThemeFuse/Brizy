@@ -4,6 +4,7 @@ import {
 } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
+import { FontStyle } from "visual/types";
 
 interface AllFontStyles {
   fontStyles?: ReduxState["currentStyle"]["fontStyles"];
@@ -13,7 +14,7 @@ interface AllFontStyles {
 export function getFontStyles(
   { includeDeleted = false } = {},
   _allFontStyles?: AllFontStyles
-) {
+): Array<FontStyle> {
   let fontStyles = _allFontStyles?.fontStyles;
   let extraFontStyles = _allFontStyles?.extraFontStyles;
 
@@ -24,7 +25,7 @@ export function getFontStyles(
     extraFontStyles = extraFontStylesSelector(state);
   }
 
-  const allFontStyles = [...fontStyles, ...extraFontStyles];
+  const allFontStyles = [...(fontStyles ?? []), ...extraFontStyles];
 
   return includeDeleted
     ? allFontStyles

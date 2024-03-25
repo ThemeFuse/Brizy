@@ -4,7 +4,10 @@ import {
   Props as CProps,
   ColorPickerSelect
 } from "visual/component/Controls/ColorPickerSelect";
-import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import {
+  ColorPickerInputs,
+  Props as ColorPickerInputsProps
+} from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
 import { Hex } from "visual/utils/color/Hex";
@@ -53,12 +56,12 @@ export function TextShadow<P extends string, O extends string>({
     },
     [onChange, value]
   );
-  const onHex = useCallback(
+  const onHex = useCallback<ColorPickerInputsProps["onChange"]>(
     (hex) => onChange({ ...value, hex }, { isChanged: "hex" }),
     [onChange, value]
   );
   const fieldChange = useCallback(
-    (fields) => {
+    (fields: Array<number>) => {
       const [blur, vertical, horizontal] = fields;
       const current = [value.blur, value.vertical, value.horizontal];
       const isChanged = getModifiedField(fields, current);

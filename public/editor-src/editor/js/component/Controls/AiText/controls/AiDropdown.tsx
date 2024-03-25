@@ -1,6 +1,6 @@
 import { IconsName } from "@brizy/ui/es/EditorIcon/types";
 import { Spacing } from "@brizy/ui/es/Space/utils";
-import React, { FC, ReactElement, useCallback, useRef, useState } from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { Dropdown } from "visual/component/Brizy-ui/Dropdown";
 import { EditorIcon } from "visual/component/Brizy-ui/EditorIcon";
@@ -21,11 +21,11 @@ interface Props {
   disabled: boolean;
 }
 
-export const AiDropdown: FC<Props> = ({
+export const AiDropdown = ({
   data: { width, data, icon, label },
   onOptionClick,
   disabled
-}): ReactElement => {
+}: Props): ReactElement => {
   const [opened, setOpen] = useState<boolean>(false);
 
   const nodeRef = useRef<HTMLDivElement>(null);

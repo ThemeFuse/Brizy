@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React from "react";
+import React, { createRef } from "react";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import HotKeys from "visual/component/HotKeys";
@@ -14,6 +14,7 @@ import {
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
 import { IS_WP } from "visual/utils/env";
+import { applyFilter } from "visual/utils/filters";
 import {
   makeAttr,
   makeDataAttr,
@@ -21,9 +22,13 @@ import {
 } from "visual/utils/i18n/attribute";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
+import { disconnect, observe } from "./resizeObserver";
 import { getLoopName, stringifyAttributes } from "./utils.common";
 
 export default class Items extends EditorArrayComponent {
+  node = createRef();
+  isotope = null;
+
   static get componentId() {
     return "Posts.Items";
   }
@@ -38,6 +43,47 @@ export default class Items extends EditorArrayComponent {
     loopAttributes: {},
     meta: {}
   };
+
+  componentDidMount() {
+    const { needMasonry } = this.props;
+    if (needMasonry && this.node.current) {
+      this.observeItems();
+      this.initIsotope();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { needMasonry, isLoading } = this.props;
+    const { needMasonry: prevNeedMasonry, isLoading: prevIsLoading } =
+      prevProps;
+
+    if (needMasonry !== prevNeedMasonry) {
+      if (needMasonry && this.node.current) {
+        this.observeItems();
+        this.initIsotope();
+      } else {
+        this.destroyIsotope();
+      }
+    }
+
+    if (needMasonry && prevIsLoading && !isLoading) {
+      this.observeItems();
+      this.reinitIsotope();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.isotope) {
+      this.isotope.destroy();
+    }
+
+    if (this.node.current) {
+      this.node.current.childNodes.forEach((child) => {
+        disconnect(child);
+      });
+      this.node.current = null;
+    }
+  }
 
   getItemProps() {
     return {
@@ -225,7 +271,9 @@ export default class Items extends EditorArrayComponent {
       >
         <div className={className}>
           {showFilter && this.renderTagsForEdit()}
-          <div className="brz-posts__wrapper">{items}</div>
+          <div className="brz-posts__wrapper" ref={this.node}>
+            {items}
+          </div>
           {showPagination && this.renderPaginationForEdit()}
         </div>
       </Sortable>
@@ -304,4 +352,44 @@ export default class Items extends EditorArrayComponent {
       </div>
     );
   }
+
+  initIsotope = () => {
+    const Isotope = this.getIsotopeLib();
+    if (Isotope && this.node.current) {
+      this.isotope = new Isotope(this.node.current, {
+        itemSelector: ".brz-posts__item",
+        layoutMode: "masonry"
+      });
+    }
+  };
+
+  observeItems = () => {
+    if (this.node.current) {
+      this.node.current.childNodes.forEach((child) => {
+        observe(child, this.handleResize);
+      });
+    }
+  };
+
+  handleResize = () => {
+    if (this.node.current && this.isotope) {
+      this.isotope.layout();
+    }
+  };
+
+  getIsotopeLib() {
+    return applyFilter("getLibs", {}).Isotope;
+  }
+
+  reinitIsotope = () => {
+    this.destroyIsotope();
+    this.initIsotope();
+  };
+
+  destroyIsotope = () => {
+    if (this.isotope) {
+      this.isotope.destroy();
+      this.isotope = null;
+    }
+  };
 }

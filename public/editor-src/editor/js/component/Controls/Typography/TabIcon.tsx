@@ -7,7 +7,7 @@ interface IconProps {
   active: boolean;
   onClick: (icon: string) => void;
 }
-export const Icon: React.FC<IconProps> = ({ icon, active, onClick }) => {
+export const Icon = ({ icon, active, onClick }: IconProps): JSX.Element => {
   const className = classnames("brz-ed-control__tab__icon", {
     active
   });

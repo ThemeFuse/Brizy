@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";

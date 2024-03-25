@@ -1,4 +1,3 @@
-import type { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
@@ -11,9 +10,10 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { ProgressStyle, Value } from "./types";
 
 // @ts-expect-error "advancedSettings" old options
-export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
+export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -25,7 +25,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
   const showText = dvv("showText");
   const showPercentage = dvv("showPercentage");
 
-  const style2 = progressBarStyle === "style2";
+  const style2 = progressBarStyle === ProgressStyle.Style2;
   const percentageOff = showPercentage === "off";
   const textOff = showText === "off";
 
@@ -52,8 +52,8 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
           label: t("Style"),
           type: "radioGroup",
           choices: [
-            { value: "style1", icon: "nc-progress-bar-style-1" },
-            { value: "style2", icon: "nc-progress-bar-style-2" }
+            { value: ProgressStyle.Style1, icon: "nc-progress-bar-style-1" },
+            { value: ProgressStyle.Style2, icon: "nc-progress-bar-style-2" }
           ]
         },
         {
@@ -317,7 +317,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
           id: "style2Height",
           label: t("Height"),
           type: "slider",
-          disabled: progressBarStyle === "style1",
+          disabled: progressBarStyle === ProgressStyle.Style1,
           config: {
             min: 10,
             max: 200,

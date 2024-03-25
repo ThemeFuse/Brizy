@@ -13,6 +13,8 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { read as readNum } from "visual/utils/reader/number";
+import { read as readStr } from "visual/utils/reader/string";
 import { NORMAL } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import { getPopulationColor } from "../utils/dependencies";
@@ -176,6 +178,34 @@ function patchImagePopulation(v, patch) {
     imagePopulation: population
   };
 }
+
+export const getShadowData = (value, config) => {
+  const {
+    textShadowColorHex,
+    textShadowColorOpacity,
+    textShadowColorPalette,
+    textShadowHorizontal,
+    textShadowVertical,
+    textShadowBlur
+  } = value;
+
+  let shadow = {
+    hex: readStr(textShadowColorHex) ?? "",
+    opacity: readNum(textShadowColorOpacity) ?? 1,
+    horizontal: readNum(textShadowHorizontal) ?? 0,
+    vertical: readNum(textShadowVertical) ?? 0,
+    blur: readNum(textShadowBlur) ?? 0
+  };
+
+  if (textShadowColorPalette) {
+    shadow = { ...shadow, palette: textShadowColorPalette };
+  }
+
+  return {
+    shadow: shadowToString(shadow, config),
+    shadowColorPalette: textShadowColorPalette
+  };
+};
 
 function getSimpleColorOptions(v, { context, device }, onChange) {
   const config = Config.getAll();

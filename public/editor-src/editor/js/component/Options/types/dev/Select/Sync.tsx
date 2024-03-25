@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import {
   Item,
@@ -12,7 +12,7 @@ import { toElement } from "./utils";
 
 type ItemInstance = ReactElement<ItemProps<Literal>>;
 
-export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
+export const Sync = ({
   config,
   value: { value },
   placeholder,
@@ -20,7 +20,9 @@ export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
   onChange,
   className,
   iconClassName: _iconClassName
-}) => {
+}: Omit<Props, "choices"> & {
+  choices: ChoicesSync;
+}): ReactElement => {
   return (
     <Select2<Literal>
       placeholder={placeholder}

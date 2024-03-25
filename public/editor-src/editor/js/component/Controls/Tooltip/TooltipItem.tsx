@@ -7,9 +7,7 @@ type TooltipItemProps = {
   onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 };
 
-export const TooltipItem: React.FC<TooltipItemProps> = (
-  props: TooltipItemProps
-): ReactElement => {
+export const TooltipItem = (props: TooltipItemProps): ReactElement => {
   const { className: _className, children, onClick } = props;
   const className = classnames("brz-ed-tooltip__item", _className);
 

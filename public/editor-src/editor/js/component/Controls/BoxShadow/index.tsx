@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FC, useCallback } from "react";
+import React, { useCallback } from "react";
 import {
   Meta,
   TypeObject,
@@ -11,7 +11,10 @@ import {
   Meta as CMeta,
   Value as CValue
 } from "visual/component/Controls/ColorPickerSelect/entities";
-import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import {
+  ColorPickerInputs,
+  Props as ColorPickerInputsProps
+} from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
@@ -32,14 +35,19 @@ export interface Props
   paletteOpenSettings?: () => void;
 }
 
-export const BoxShadow: FC<Props> = ({ value, types, onChange, ...props }) => {
+export const BoxShadow = ({
+  value,
+  types,
+  onChange,
+  ...props
+}: Props): JSX.Element => {
   const className = classNames("brz-ed-control__boxShadow", props.className);
-  const onHex = useCallback(
+  const onHex = useCallback<ColorPickerInputsProps["onChange"]>(
     (hex) => onChange({ ...value, hex }, { isChanged: "hex" }),
     [onChange, value]
   );
   const fieldChange = useCallback(
-    (fields) => {
+    (fields: Array<number>) => {
       const [blur, spread, vertical, horizontal] = fields;
       const current = [
         value.blur,

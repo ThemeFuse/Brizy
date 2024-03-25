@@ -5,7 +5,6 @@ import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Placeholder from "visual/component/Placeholder";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
@@ -14,6 +13,7 @@ import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import { isStory } from "visual/utils/models";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import { read as readString } from "visual/utils/string/specs";
 import {

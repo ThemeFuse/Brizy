@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import React from "react";
 import { FirstPopupBlockAdder } from "visual/component/BlockAdders";
 import HotKeys from "visual/component/HotKeys";
@@ -8,9 +7,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import UIEvents from "visual/global/UIEvents";
-import { updateTriggers } from "visual/redux/actions";
 import { addBlock, addGlobalPopup } from "visual/redux/actions2";
-import { triggersAmountSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { setIds, stripSystemKeys } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
@@ -38,13 +35,6 @@ class PagePopup extends EditorComponent {
   }
 
   componentDidMount() {
-    // it's a bit hacky. to find a better way to implement it
-    const valuesAmount = triggersAmountSelector(getStore().getState());
-    if (valuesAmount === null) {
-      const defaultValue = [{ id: "pageLoad", active: true, value: "1" }];
-      getStore().dispatch(updateTriggers(defaultValue));
-    }
-
     UIEvents.on("dnd.sort", this.handleDNDSort);
   }
 
@@ -144,11 +134,7 @@ class PagePopup extends EditorComponent {
   }
 
   renderForView() {
-    const className = classnames(
-      "brz-root__container brz-root__container-popup brz-reset-all",
-      this.props.className
-    );
-    return <div className={className}>{this.renderItems()}</div>;
+    return this.renderItems();
   }
 }
 

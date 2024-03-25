@@ -156,6 +156,7 @@ export default class Form2 extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
+    const config = Config.getAll();
     const className = classnames(
       "brz-forms2",
       css(
@@ -165,8 +166,8 @@ export default class Form2 extends EditorComponent {
       )
     );
     const { _id, messageSuccess, messageError, messageRedirect, customCSS } = v;
-    const { submitUrl, recaptcha } = Config.get("applications").form;
-    const projectId = Config.get("project").id;
+    const { action, recaptcha } = config?.integrations?.form ?? {};
+    const projectId = config?.project?.id ?? "";
     const recaptchaSiteKey = recaptcha && recaptcha.siteKey;
 
     return (
@@ -179,7 +180,7 @@ export default class Form2 extends EditorComponent {
         >
           <form
             className="brz-form brz-d-xs-flex brz-flex-xs-wrap"
-            action={submitUrl}
+            action={action}
             noValidate
             {...makeDataAttr({ name: "form-id", value: _id })}
             {...makeDataAttr({ name: "project-id", value: projectId })}

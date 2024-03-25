@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
 

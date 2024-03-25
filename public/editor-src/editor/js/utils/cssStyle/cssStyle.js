@@ -535,19 +535,6 @@ export function clearCache() {
   }
 }
 
-export function tmpCSSFromCache() {
-  let css = "";
-
-  for (const type of ["default", "rules", "custom"]) {
-    for (const { cssText } of cssOrdered[type]) {
-      css += cssText;
-      css += "\n";
-    }
-  }
-
-  return css;
-}
-
 export function replacePlaceholders(styles, className) {
   const s = styles.replace(/{{WRAPPER}}/gm, `.${className}`);
   return s.replace(/&&/gm, `.${className}`);
@@ -598,3 +585,7 @@ const cssOrdered = {
   rules: [],
   custom: []
 };
+
+export function getCSSFromCache() {
+  return cssCache;
+}

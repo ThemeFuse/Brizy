@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import React, { Component, RefObject } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import { isOptgroup } from "visual/component/Options/types/common/Population/utils";
 import { t } from "visual/utils/i18n";
+import { isOptgroup } from "visual/utils/options/Population/utils";
 
 type Props = {
   className: string;
