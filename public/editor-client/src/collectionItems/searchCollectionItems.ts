@@ -1,8 +1,8 @@
+import { Str } from "@brizy/readers";
 import { getCollections } from "../api";
 import { getConfig } from "../config";
 import { Response } from "../types/Response";
 import { t } from "../utils/i18n";
-import { read } from "../utils/reader/string";
 
 interface ChoiceWithPermalink {
   id: string;
@@ -29,7 +29,7 @@ export const searchCollectionItems = {
       );
 
       const _items = items
-        .filter((item) => read(item.ID))
+        .filter((item) => Str.read(item.ID))
         .map(({ title, permalink, ID }) => {
           return {
             title,

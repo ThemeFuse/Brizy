@@ -1,10 +1,10 @@
+import { Str } from "@brizy/readers";
 import { franc } from "franc";
 import { get } from "lodash";
 import { request } from "../api";
 import { getConfig } from "../config";
 import { Action, RequestOptions } from "../types/AiText";
 import { t } from "../utils/i18n";
-import * as Str from "../utils/reader/string";
 import { createConversation } from "./utils";
 
 export const doAiRequest = async (

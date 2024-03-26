@@ -1,10 +1,8 @@
+import { Arr, Num, Obj, Str } from "@brizy/readers";
 import { mPipe, parseStrict } from "fp-utilities";
 import { pipe } from "../utils/fp/pipe";
 import { t } from "../utils/i18n";
-import { read as readArray } from "../utils/reader/array";
-import { read as readNumber } from "../utils/reader/number";
-import { readKey } from "../utils/reader/object";
-import { read as readString } from "../utils/reader/string";
+
 import { throwOnNullish } from "../utils/throwOnNullish";
 
 export interface LottieData extends Record<string, unknown> {
@@ -18,27 +16,27 @@ export interface LottieData extends Record<string, unknown> {
 
 const lottieDataParser = parseStrict<Record<string, unknown>, LottieData>({
   layers: pipe(
-    mPipe(readKey("layers"), readArray),
+    mPipe(Obj.readKey("layers"), Arr.read),
     throwOnNullish(t("Invalid Lottie layers"))
   ),
   fr: pipe(
-    mPipe(readKey("fr"), readNumber),
+    mPipe(Obj.readKey("fr"), Num.read),
     throwOnNullish(t("Invalid Lottie fr"))
   ),
   op: pipe(
-    mPipe(readKey("op"), readNumber),
+    mPipe(Obj.readKey("op"), Num.read),
     throwOnNullish(t("Invalid Lottie op"))
   ),
   ip: pipe(
-    mPipe(readKey("ip"), readNumber),
+    mPipe(Obj.readKey("ip"), Num.read),
     throwOnNullish(t("Invalid Lottie ip"))
   ),
   w: pipe(
-    mPipe(readKey("w"), readNumber),
+    mPipe(Obj.readKey("w"), Num.read),
     throwOnNullish(t("Invalid Lottie w"))
   ),
   h: pipe(
-    mPipe(readKey("h"), readNumber),
+    mPipe(Obj.readKey("h"), Num.read),
     throwOnNullish(t("Invalid Lottie h"))
   )
 });
@@ -48,7 +46,7 @@ export const validateLottie = (file: File): Promise<LottieData> =>
     const fileReader = new FileReader();
     fileReader.onload = function (e) {
       try {
-        const data = JSON.parse(readString(e.target?.result) ?? "{}");
+        const data = JSON.parse(Str.read(e.target?.result) ?? "{}");
         resolve(lottieDataParser(data));
       } catch (e) {
         reject(e);
