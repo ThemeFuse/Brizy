@@ -124,8 +124,9 @@ class Brizy_Editor_Editor_Editor
         $heartBeatInterval = (int)apply_filters('wp_check_post_lock_window', 150);
         $config = array(
             'user' => array(
-                'role' => 'admin',
-                'isAuthorized' => $this->project->getMetaValue('brizy-cloud-token') !== null
+                'role'         => 'admin',
+                'isAuthorized' => $this->project->getMetaValue('brizy-cloud-token') !== null,
+	            'allowScripts' => true
             ),
             'project' => array(
                 'id' => $this->project->getId(),
