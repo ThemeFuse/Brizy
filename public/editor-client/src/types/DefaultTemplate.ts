@@ -52,7 +52,7 @@ export interface Block {
   blank?: string;
   position?: number;
   pro?: boolean;
-  kitId: string;
+  kitId?: string;
 }
 
 export interface BlockWithThumbs extends Block {
@@ -204,6 +204,7 @@ export type APIPopup = {
   thumbnail: string;
   thumbnailHeight: number;
   thumbnailWidth: number;
+  blank?: string;
 };
 
 export interface Popups {
