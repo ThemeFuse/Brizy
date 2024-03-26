@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.4.3<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.4.42<br>
+Stable tag: 2.4.43<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.4.43 - 2024-03-26
+* Fixed: dynamic content
+* FIxed: Embed element is not working
 
 ### 2.4.42 - 2024-03-20
 * Fixed: Drag and drop functionality not working outside the visible viewport
