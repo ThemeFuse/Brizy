@@ -1,126 +1,13 @@
-import { flatten, uniq, upperFirst } from "lodash";
+import { upperFirst } from "lodash";
 import {
-  APIPopup,
-  BlockWithThumbs,
   Categories,
-  Kit,
-  KitType,
   LayoutsAPI,
-  LayoutTemplateWithThumbs
+  LayoutTemplateWithThumbs,
+  StoriesAPI,
+  StoriesTemplateWithThumbs
 } from "../types/DefaultTemplate";
-import { pipe } from "../utils/fp/pipe";
 
-type CatTypes = Kit | APIPopup;
-
-export const getUniqueKitCategories = (collections: CatTypes[]): Categories[] =>
-  pipe(
-    (collections: CatTypes[]) =>
-      collections.map((collection: CatTypes) => collection.categories),
-    flatten,
-    uniq,
-    (cats) =>
-      cats.map((cat) => ({
-        title: upperFirst(cat),
-        slug: cat,
-        id: cat
-      }))
-  )(collections);
-
-export const getUniqueKitTypes = (collections: Kit[]): KitType[] =>
-  pipe(
-    (collections: Kit[]) => collections.map((collection) => collection.theme),
-    flatten,
-    uniq,
-    (uni) =>
-      uni.map((u) => ({
-        title: upperFirst(u),
-        id: u,
-        name: u,
-        icon: "nc-light"
-      }))
-  )(collections);
-
-export const converterKit = (
-  kit: Kit[],
-  url: string,
-  kitId: string
-): {
-  blocks: BlockWithThumbs[];
-  categories: Categories[];
-  types: KitType[];
-} => {
-  const categories = getUniqueKitCategories(kit);
-  const types = getUniqueKitTypes(kit);
-
-  const blocks: BlockWithThumbs[] = kit.map(
-    ({
-      slug,
-      categories,
-      pro,
-      thumbnail,
-      keywords,
-      thumbnailWidth,
-      thumbnailHeight
-    }) => ({
-      id: slug,
-      cat: [categories],
-      title: slug,
-      type: types[0].name,
-      keywords: keywords ?? "",
-      thumbnailHeight,
-      thumbnailWidth,
-      thumbnailSrc: `${url}${thumbnail}`,
-      pro: pro === "yes",
-      kitId
-    })
-  );
-
-  return {
-    blocks,
-    categories,
-    types
-  };
-};
-
-export const converterPopup = (
-  kit: APIPopup[],
-  url: string,
-  kitId: string
-): {
-  blocks: BlockWithThumbs[];
-  categories: Categories[];
-} => {
-  const categories = getUniqueKitCategories(kit);
-
-  const blocks: BlockWithThumbs[] = kit.map(
-    ({
-      id,
-      title,
-      categories,
-      pro,
-      thumbnail,
-      thumbnailWidth,
-      thumbnailHeight
-    }) => ({
-      id: id,
-      cat: [categories],
-      title: title,
-      thumbnailHeight,
-      thumbnailWidth,
-      thumbnailSrc: `${url}${thumbnail}`,
-      pro: pro === "true",
-      keywords: "popup2",
-      position: 1,
-      type: 0,
-      kitId
-    })
-  );
-
-  return {
-    blocks,
-    categories
-  };
-};
+const BLANK_PAGE = "Blank";
 
 export const convertLayouts = (
   collections: LayoutsAPI[],
@@ -154,60 +41,51 @@ export const convertLayouts = (
     }
   );
 
-export const fetchAllElements = async <T>(
-  url: string,
-  id: string,
-  itemsPerPage: number
-): Promise<T[]> => {
-  let allElements: T[] = [];
-
-  const firstPageResponse = await fetch(
-    `${url}?project_id=${id}&per_page=${itemsPerPage}`
-  ).then((r) => r.json());
-
-  const lastPage = firstPageResponse.paginationInfo.lastPage;
-
-  allElements = allElements.concat(firstPageResponse.collections);
-
-  for (let currentPage = 2; currentPage <= lastPage; currentPage++) {
-    const nextPageResponse = await fetch(
-      `${url}?project_id=${id}&per_page=${itemsPerPage}&page_number=${currentPage}`
-    ).then((r) => r.json());
-
-    allElements = allElements.concat(nextPageResponse.collections);
-  }
-
-  return allElements;
-};
-
-export const fetchAllLayouts = async <T>(
-  url: string,
-  itemsPerPage: number
-): Promise<T[]> => {
-  let allElements: T[] = [];
-
-  const firstPageResponse = await fetch(`${url}?per_page=${itemsPerPage}`).then(
-    (r) => r.json()
+export const convertStories = (
+  collections: StoriesAPI[],
+  thumbUrl: string
+): StoriesTemplateWithThumbs[] =>
+  collections.map(
+    ({
+      categories,
+      pages,
+      id,
+      title,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight,
+      color
+    }) => {
+      return {
+        layoutId: id,
+        name: title,
+        cat: categories.length
+          ? categories.split(",").map((cat) => cat.trim())
+          : [],
+        color: color,
+        pagesCount: pages,
+        thumbnailSrc: `${thumbUrl}${thumbnail}`,
+        thumbnailWidth,
+        thumbnailHeight,
+        blank: title === BLANK_PAGE
+      };
+    }
   );
-
-  const lastPage = firstPageResponse.paginationInfo.lastPage;
-
-  allElements = allElements.concat(firstPageResponse.collections);
-
-  for (let currentPage = 2; currentPage <= lastPage; currentPage++) {
-    const nextPageResponse = await fetch(
-      `${url}?per_page=${itemsPerPage}&page_number=${currentPage}`
-    ).then((r) => r.json());
-
-    allElements = allElements.concat(nextPageResponse.collections);
-  }
-
-  return allElements;
-};
 
 export const fetchAllLayouts1 = async (
   url: string
 ): Promise<{ templates: LayoutsAPI[]; categories: Record<string, string> }> => {
+  const res = await fetch(url).then((r) => r.json());
+
+  return { templates: res.collections, categories: res.categories };
+};
+
+export const fetchAllStories1 = async (
+  url: string
+): Promise<{
+  templates: Array<StoriesAPI>;
+  categories: Record<string, string>;
+}> => {
   const res = await fetch(url).then((r) => r.json());
 
   return { templates: res.collections, categories: res.categories };
