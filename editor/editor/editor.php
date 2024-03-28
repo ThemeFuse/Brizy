@@ -90,7 +90,7 @@ class Brizy_Editor_Editor_Editor
             'url' => set_url_scheme(admin_url('admin-ajax.php')),
             'actions' => $this->getApiActions(),
             'pageId' => $this->post->getWpPostId(),
-        'project' => array(
+            'project' => array(
                 'status' => $this->getProjectStatus(),
             ),
         ];
@@ -213,7 +213,7 @@ class Brizy_Editor_Editor_Editor
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
             'membership' => true,
-            'elements'   => [ 'image' => [ 'zoom' => true ] ],
+            'elements'   => [ 'image' => [ 'zoom' => true ], 'video'=>[ 'types'=>['youtube','vimeo','url'] ] ],
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
