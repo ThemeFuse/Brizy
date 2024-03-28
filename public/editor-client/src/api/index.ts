@@ -1,3 +1,4 @@
+import { Arr, Obj, Str } from "@brizy/readers";
 import { Config, getConfig } from "@/config";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Page } from "@/types/Page";
@@ -14,6 +15,7 @@ import {
   SavedLayoutMeta
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
+import { Dictionary } from "../types/utils";
 import { t } from "@/utils/i18n";
 import { Literal } from "../utils/types";
 import {
@@ -935,6 +937,60 @@ export const getPlaceholders = (extraData: {
       return [];
     });
 };
+
+export async function getPlaceholdersData(extra: {
+  placeholders: Dictionary<string>;
+  signal?: AbortSignal;
+}) {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const {
+    url,
+    actions: { placeholdersContent },
+    hash,
+    editorVersion: version
+  } = config;
+
+  const { placeholders, signal } = extra;
+
+  const body = new URLSearchParams({
+    hash,
+    version,
+    action: placeholdersContent
+  });
+
+  for (const [postId, placeholders_] of Object.entries(placeholders)) {
+    if (placeholders_) {
+      for (const p of placeholders_) {
+        body.append(`p[${postId}][]`, p);
+      }
+    }
+  }
+
+  try {
+    const r = await request(url, {
+      method: "POST",
+      body,
+      signal
+    }).then((r) => r.json());
+
+    const { data } = r;
+    const dc = Obj.readWithValueReader(Arr.readWithItemReader(Str.read))(
+      data.placeholders
+    );
+
+    if (data.placeholders === undefined || dc === undefined) {
+      throw new Error("fetch dynamic content error");
+    }
+
+    return dc;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+}
 
 //#endregion
 

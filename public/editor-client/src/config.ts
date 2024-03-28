@@ -46,6 +46,7 @@ interface Actions {
   createGlobalBlock: string;
   updateGlobalBlock: string;
   updateGlobalBlocks: string;
+  placeholdersContent: string;
   lockProject: string;
   removeLock: string;
   heartBeat: string;
@@ -257,6 +258,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateGlobalBlocks: pipe(
     mPipe(Obj.readKey("updateGlobalBlocks"), Str.read),
     throwOnNullish("Invalid actions: updateGlobalBlocks")
+  ),
+  placeholdersContent: pipe(
+    mPipe(Obj.readKey("placeholdersContent"), Str.read),
+    throwOnNullish("Invalid actions: getDCPlaceholderContent")
   ),
   lockProject: pipe(
     mPipe(Obj.readKey("lockProject"), Str.read),
