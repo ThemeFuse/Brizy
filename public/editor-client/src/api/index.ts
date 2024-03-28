@@ -1,10 +1,10 @@
 import { Config, getConfig } from "@/config";
+import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
 import { ResponseWithBody } from "@/types/Response";
-import { ConfigDCItem } from "@/types/DynamicContent";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -15,6 +15,7 @@ import {
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
+import { ResData as IconData } from "../types/Icon";
 import { Literal } from "../utils/types";
 import {
   GetCollections,
@@ -413,6 +414,7 @@ export interface UploadSavedBlocksData {
   errors: Array<{ uid: string; message: string }>;
   success: Array<SavedBlock>;
 }
+
 export const uploadSaveBlocks = async (
   files: Array<File>
 ): Promise<UploadSavedBlocksData> => {
@@ -1205,4 +1207,70 @@ export const updateGlobalBlocks = async (
   }
 };
 
+//#endregion
+
+//#region CustomIcon
+export const getCustomIcons = async (): Promise<IconData[]> => {
+  const config = getConfig();
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const { api } = config;
+
+  const url = makeUrl(api.iconsUrl, {
+    "orderBy[id]": "DESC",
+    count: "1000"
+  });
+
+  return request(url, {
+    method: "GET"
+  })
+    .then((r) => r.json())
+    .then((r) => r.data);
+};
+
+export const uploadIcon = async (
+  attachment: string,
+  filename: string
+): Promise<IconData> => {
+  const config = getConfig();
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { api } = config;
+  const response = await request(api.uploadIconUrl, {
+    method: "POST",
+    body: new URLSearchParams({
+      attachment,
+      filename
+    })
+  });
+
+  if (response.ok) {
+    return response.json().then((r) => r.data);
+  }
+
+  throw new Error(t("Failed to upload icon"));
+};
+
+export const deleteIcon = async (uid: string): Promise<Response> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { api } = config;
+
+  const response = await request(`${api.deleteIconUrl}${uid}`, {
+    method: "DELETE"
+  });
+
+  if (response.ok) {
+    return response;
+  }
+
+  throw new Error(t("Failed to delete icon"));
+};
 //#endregion
