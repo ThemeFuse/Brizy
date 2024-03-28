@@ -1,10 +1,11 @@
 import { Config, getConfig } from "@/config";
+import { DefaultBlock, PagesAPI } from "@/types/DefaultTemplate";
+import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
 import { ResponseWithBody } from "@/types/Response";
-import { ConfigDCItem } from "@/types/DynamicContent";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -15,6 +16,7 @@ import {
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
+import { Json } from "@brizy/readers";
 import { Literal } from "../utils/types";
 import {
   GetCollections,
@@ -1206,3 +1208,35 @@ export const updateGlobalBlocks = async (
 };
 
 //#endregion
+
+// region Default Pages
+export const getDefaultPages = async (): Promise<{
+  blocks: PagesAPI[];
+  categories: Record<string, string>;
+}> => {
+  const res = await fetch(
+    // temporary solution, wait until new API will come via config
+    "https://phplaravel-1109775-4184176.cloudwaysapps.com/api/get-pages-chunk"
+  ).then((r) => r.json());
+
+  return {
+    blocks: res.collections,
+    categories: res.categories
+  };
+};
+
+export const getDefaultPage = async (
+  slug: string
+): Promise<{
+  items: DefaultBlock[];
+}> => {
+  const data = await fetch(
+    // temporary solution, wait until new API will come via config
+    `https://j6dfq8pl41.b-cdn.net/api/get-page-data?page_slug=${slug}`
+  ).then((r) => r.json());
+
+  return Json.read(data[0].pageData) as {
+    items: DefaultBlock[];
+  };
+};
+// endregion

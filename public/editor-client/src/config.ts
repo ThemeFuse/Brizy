@@ -12,6 +12,7 @@ interface DefaultTemplates {
   popupsUrl: string;
   storiesUrl: string;
   layoutsUrl: string;
+  pagesUrl: string;
 }
 
 interface Actions {
@@ -104,6 +105,10 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
     mPipe(Obj.readKey("storiesUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
   )
+  // pagesUrl: pipe(
+  //   mPipe(Obj.readKey("pagesUrl"), Str.read),
+  //   throwOnNullish("Invalid API Config: stories")
+  // )
 });
 
 const collectionTypesReader = (arr: Array<unknown>): Array<CollectionType> => {
