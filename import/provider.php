@@ -44,6 +44,8 @@ class Brizy_Import_Provider {
 			throw new Exception( 'No templates found' );
 		}
 
+		$demos['demos'] = array_reverse($demos['demos']);
+
 		return $demos;
 	}
 
