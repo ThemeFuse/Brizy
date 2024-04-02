@@ -26,7 +26,8 @@ class Brizy_Editor_Editor_ModuleGroups_ContentProvider implements Brizy_Editor_E
 				"Switcher",
 				"Table",
 				"Timeline",
-				"Login"
+				"Login",
+				"Flipbox"
 			], 400 ),
 		];
 	}
