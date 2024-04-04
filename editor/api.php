@@ -313,7 +313,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			// update project globas
 			$meta           = stripslashes( $this->param( 'data' ) );
-			$compiledStyles = stripslashes( $this->param( 'compiled' ) );
+			$compiledStyles = json_decode(stripslashes( $this->param( 'compiled' ) ), true);
 			$dataVersion    = (int) stripslashes( $this->param( 'dataVersion' ) );
 
 			if ( ! $meta ) {
@@ -338,7 +338,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			if ( (int) $this->param( 'is_autosave' ) === 1 ) {
 				$project->save( 1 );
 			} else {
-				$project->setCompiledStylesAsJson( $compiledStyles );
+				$project->setCompiledStyles( $compiledStyles );
 				$project->set_compiler(Brizy_Editor_Entity::COMPILER_BROWSER );
 				$project->save();
 				$project->savePost();
