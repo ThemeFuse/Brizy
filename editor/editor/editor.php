@@ -90,7 +90,7 @@ class Brizy_Editor_Editor_Editor
             'url' => set_url_scheme(admin_url('admin-ajax.php')),
             'actions' => $this->getApiActions(),
             'pageId' => $this->post->getWpPostId(),
-        'project' => array(
+            'project' => array(
                 'status' => $this->getProjectStatus(),
             ),
         ];
@@ -128,13 +128,12 @@ class Brizy_Editor_Editor_Editor
             admin_url('admin-post.php?post='.$this->post->getWpPostId().'&action=_brizy_change_template')
         );
         $mode = $this->getMode($parent_post_type);
-        $assetUrl = BRIZY_PLUGIN_URL;
         $heartBeatInterval = (int)apply_filters('wp_check_post_lock_window', 150);
         $config = array(
             'user' => array(
-                'role'         => 'admin',
+                'role' => 'admin',
                 'isAuthorized' => $this->project->getMetaValue('brizy-cloud-token') !== null,
-	            'allowScripts' => true
+                'allowScripts' => true,
             ),
             'project' => array(
                 'id' => $this->project->getId(),
@@ -147,11 +146,15 @@ class Brizy_Editor_Editor_Editor
             'urls' => array(
                 'site' => home_url(),
                 'api' => home_url('/wp-json/v1'),
-                'assets' => $assetUrl."/".Brizy_Config::EDITOR_BUILD_RELATIVE_PATH,
+                'assets' => $this->urlBuilder->plugin_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH),
+                'compileAssets' => $this->urlBuilder->plugin_relative_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH),
                 'image' => $this->urlBuilder->external_media_url()."",
                 'blockThumbnails' => $this->urlBuilder->external_asset_url('thumbs')."",
                 'templateThumbnails' => $this->urlBuilder->external_asset_url('thumbs')."",
-                'templateIcons' => $this->urlBuilder->editor_build_url()."/editor/icons",
+                'templateIcons' => $this->urlBuilder->editor_build_url("/editor/icons"),
+                'compileTemplateIcons' => $this->urlBuilder->plugin_relative_url(
+                    Brizy_Config::EDITOR_BUILD_RELATIVE_PATH."/editor/icons"
+                ),
                 'templateFonts' => $this->urlBuilder->external_fonts_url(),
                 'editorFonts' => home_url('/'),
                 'pagePreview' => $preview_post_link,
@@ -199,7 +202,7 @@ class Brizy_Editor_Editor_Editor
                     'action' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
                             Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
                         ),
-                    'showIntegrations' => true
+                    'showIntegrations' => true,
                 ),
             ),
             'server' => array(
@@ -213,7 +216,7 @@ class Brizy_Editor_Editor_Editor
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
             'membership' => true,
-            'elements'   => [ 'image' => [ 'zoom' => true ] ],
+            'elements' => ['image' => ['zoom' => true]],
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
