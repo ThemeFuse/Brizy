@@ -21,7 +21,8 @@ class Brizy_Editor_Editor_ModuleGroups_SingleProvider implements Brizy_Editor_Ed
                 "WPPostInfo",
                 "WPBreadcrumbs",
 	            $this->isTemplateType($context, 'single') || $this->isPostType($context, 'post') ? "WPPostNavigation" : null, // if it is singleTemplate or postType
-	            "Posts"
+	            "Posts",
+	            "TableOfContents"
             ], $this->isMode($context, 'page') ? 475 : 100 ),
         ];
     }
