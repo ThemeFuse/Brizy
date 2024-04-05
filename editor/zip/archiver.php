@@ -3,7 +3,7 @@
 class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 {
     use Brizy_Editor_Asset_AttachmentAware;
-	use Brizy_Editor_Trait_Sanitize;
+    use Brizy_Editor_Trait_Sanitize;
 
     const ARCHIVE_TYPE_LAYOUT = 'layout';
     const ARCHIVE_TYPE_BLOCK = 'block';
@@ -265,7 +265,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             $basename = basename($path);
             $imageContent = $z->getFromName($path);
 
-            if (!$this->validateImageContent($basename, $imageContent)) {
+            if (!$this->validateImageContent($basename, $imageContent) || !$this->validateImageName($basename)) {
                 continue;
             }
 
@@ -545,12 +545,24 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         }
     }
 
+    private function validateImageName($name)
+    {
+        if (!preg_match("/\.php$|\.sh/", $name)) {
+            return true;
+        }
+
+        return false;
+    }
+
     private function validateImageContent($name, $content)
     {
+
+
         $tempName = get_temp_dir().md5($name);
         file_put_contents($tempName, $content);
         $isImage = file_is_valid_image($tempName);
         unlink($tempName);
+
 
         return $isImage;
     }
