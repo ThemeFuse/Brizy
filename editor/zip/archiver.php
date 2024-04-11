@@ -88,7 +88,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         $block = $item->getPost();
         $data = array(
             'class' => get_class($block),
-            'title' => $block->getTitle(),
+            'title'         => $block->getTitle(),
+			'title' => $block->getTitle(),
             'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
             'data' => $block->get_editor_data(true),

@@ -17,12 +17,12 @@ class Brizy_Content_ContextFactory
      *
      * @return Brizy_Content_Context
      */
-    static public function createContext($project = null, $wp_post = null, $isLoop = false)
+    static public function createContext($project = null, $wp_post = null, $parentContext = false)
     {
-        $context = self::getContext($project, $wp_post);
+        $context = new Brizy_Content_Context($project, null, $wp_post, null, $parentContext);
 
-        if ($isLoop) {
-            return apply_filters('brizy_loop_context_create', $context, $wp_post);
+        if ($wp_post) {
+            $context->setAuthor($wp_post->post_author);
         }
 
         return apply_filters('brizy_context_create', $context, $wp_post);

@@ -490,7 +490,6 @@ class Brizy_Admin_Main {
 				wp_update_post( $p );
 			}
 			do_action( 'brizy_before_enabled_for_post', $p );
-
 			$post->enable_editor();
 			$post->set_template( Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME );
 			$post->set_plugin_version( BRIZY_VERSION );

@@ -200,7 +200,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	/**
 	 * @return mixed
 	 */
-	abstract public function createResponse( $fields = array(), $context=Brizy_Editor_Editor_Editor::EDITOR_CONTEXT );
+	abstract public function createResponse( $fields = array() , $context=Brizy_Editor_Editor_Editor::EDITOR_CONTEXT );
 
 	/**
 	 * Save post data and and trigger post update
@@ -360,7 +360,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	}
 
 	public function getTitle() {
-		return $this->getWpPost()->post_title;
+		return html_entity_decode($this->getWpPost()->post_title);
 	}
 
 	public function setTitle( $title ) {

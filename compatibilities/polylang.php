@@ -5,7 +5,7 @@
 class Brizy_Compatibilities_Polylang {
 
 	public function __construct() {
-		add_action( 'brizy_post_loop_args', [ $this, 'post_loop_args' ] );
+		add_filter( 'brizy_post_loop_args', [ $this, 'post_loop_args' ] );
 		add_filter( 'pll_home_url_white_list', [ $this, 'home_url_white_list' ] );
 	}
 

@@ -13,11 +13,12 @@ import {
   defaultStories
 } from "./defaultTemplates";
 import { placeholderData, placeholders } from "./dynamicContent";
+import { handler as filters, possibleValues } from "./Elements/Filters";
 import { handler as posts } from "./Elements/Posts";
 import { uploadedFonts } from "./fonts";
-import { heartBeat } from "./heartBeat";
-import {globalBlocks } from "./globalBlocks/blocks";
+import { globalBlocks } from "./globalBlocks/blocks";
 import { globalPopups } from "./globalBlocks/popups";
+import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";
@@ -90,8 +91,20 @@ if (window.__VISUAL_CONFIG__) {
   // Elements
   if (window.__VISUAL_CONFIG__.elements) {
     set(window.__VISUAL_CONFIG__.elements, ["posts", "handler"], posts);
+    set(window.__VISUAL_CONFIG__.elements, ["filters", "handler"], filters);
+    set(
+      window.__VISUAL_CONFIG__.elements,
+      ["filters", "possibleValues"],
+      possibleValues
+    );
   } else {
     set(window.__VISUAL_CONFIG__, ["elements", "posts", "handler"], posts);
+    set(window.__VISUAL_CONFIG__, ["elements", "filters", "handler"], filters);
+    set(
+      window.__VISUAL_CONFIG__,
+      ["elements", "filters", "possibleValues"],
+      possibleValues
+    );
   }
 
   // Dynamic Content

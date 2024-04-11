@@ -96,12 +96,13 @@ class Brizy_Editor_Editor_Editor
         ];
 
         $config = $this->getApiConfigFields($config, $context);
-        $config = $this->addLoopSourcesClientConfig(
+	    $config = $this->addLoopSourcesClientConfig(
             $config,
             $mode === 'template',
             $this->post->getWpPostId(),
             $context
         );
+	    $config = apply_filters('brizy_client_config', $config, $context);
 
         return $config;
     }
@@ -168,6 +169,7 @@ class Brizy_Editor_Editor_Editor
                 'pluginSettings' => admin_url('admin.php?page='.Brizy_Admin_Settings::menu_slug()),
                 'dashboardNavMenu' => admin_url('nav-menus.php'),
                 'customFile' => home_url('?'.Brizy_Editor::prefix('_attachment').'='),
+                'filterPlaceholders'=> home_url("/wp-admin/admin-ajax.php?action=".Brizy_Editor::prefix('_filter_placeholders_content'))
             ),
             'form' => array(
                 'submitUrl' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
@@ -211,10 +213,9 @@ class Brizy_Editor_Editor_Editor
             'editorVersion' => BRIZY_EDITOR_VERSION,
             'imageSizes' => $this->getImgSizes(),
             'moduleGroups' => [],
-            'l10n' => $this->getTexts(),
+        'l10n' => $this->getTexts(),
             'membership' => true,
-            'elements'   => [ 'image' => [ 'zoom' => true ], 'video'=>[ 'types'=>['youtube','vimeo','url'] ] ],
-        );
+            'elements'   => [ 'image' => [ 'zoom' => true ], 'video'=>[ 'types'=>['youtube','vimeo','url'] ] ],);
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
         if (!$this->isPopup($config) && !$this->isStory($config)) {
@@ -575,7 +576,7 @@ class Brizy_Editor_Editor_Editor
                     ],
                 ],
             ],
-            'AssetsPosts' => [
+        'AssetsPosts' => [
                 '_version' => 3,
                 'type' => 'posts',
                 'source' => 'post',
@@ -917,8 +918,7 @@ class Brizy_Editor_Editor_Editor
             if ($template_type == Brizy_Admin_Templates::TYPE_ARCHIVE || $template_type == Brizy_Admin_Templates::TYPE_PRODUCT_ARCHIVE) {
                 $templateTypeArchive = true;
             }
-
-            $rule_manager = new Brizy_Admin_Rules_Manager();
+        $rule_manager = new Brizy_Admin_Rules_Manager();
             $template_rules = $rule_manager->getRules($wp_post_id);
             $isSearchTemplate = $this->isSearchTemplate($template_rules);
         }
@@ -951,7 +951,6 @@ class Brizy_Editor_Editor_Editor
 
         foreach ($types as $type) {
             $typeObj = get_post_type_object($type);
-
             $typeDto = [
                 'name' => $typeObj->name,
                 'label' => $typeObj->label,
@@ -963,7 +962,7 @@ class Brizy_Editor_Editor_Editor
         return $result;
     }
 
-    private function addLoopSourcesConfig($config, $isTemplate, $wp_post_id, $context)
+        private function addLoopSourcesConfig($config, $isTemplate, $wp_post_id, $context)
     {
         $sources = $this->getPostLoopSources($isTemplate, $wp_post_id, $context);
 
@@ -975,14 +974,6 @@ class Brizy_Editor_Editor_Editor
                 'title' => $source['label'],
             ];
         }, $sources);
-
-        return $config;
-    }
-
-    private function addLoopSourcesClientConfig($config, $isTemplate, $wp_post_id, $context)
-    {
-        $sources = $this->getPostLoopSources($isTemplate, $wp_post_id, $context);
-        $config['collectionTypes'] = $sources;
 
         return $config;
     }
@@ -1001,40 +992,21 @@ class Brizy_Editor_Editor_Editor
             $postTermsByKeys[$term->term_id] = $term;
         }
 
-        $config['wp']['postTerms'] = $postTerms;
-        $config['wp']['postTermParents'] = array_values(
-            array_diff_key($this->getAllParents($postTermsByKeys), $postTermsByKeys)
-        );
-        $config['wp']['postAuthor'] = (int)$this->post->getWpPost()->post_author;
+        $config['wp']['post_terms'] = $postTerms;
+        $config['wp']['post_term_parents'] = array_diff_key($this->getAllParents($postTermsByKeys), $postTermsByKeys);
+        $config['wp']['post_author'] = (int)$this->post->getWpPost()->post_author;
+        return $config;
+    }
+
+
+        private function addLoopSourcesClientConfig($config, $isTemplate, $wp_post_id, $context)
+    {
+        $sources = $this->getPostLoopSources($isTemplate, $wp_post_id, $context);
+        $config['collectionTypes'] = $sources;
 
         return $config;
     }
 
-    /**
-     * @return object
-     */
-    private function get_page_attachments()
-    {
-        global $wpdb;
-        $query = $wpdb->prepare(
-            "SELECT 
-					pm.*
-				FROM 
-					{$wpdb->prefix}postmeta pm 
-				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
-				WHERE pm.meta_key='brizy_attachment_uid'
-				GROUP BY pm.post_id",
-            $this->post->getUid()
-        );
-
-        $results = $wpdb->get_results($query);
-        $attachment_data = array();
-        foreach ($results as $row) {
-            $attachment_data[$row->meta_value] = true;
-        }
-
-        return (object)$attachment_data;
-    }
 
     /**
      * @return array|null
@@ -1482,7 +1454,8 @@ class Brizy_Editor_Editor_Editor
 
 
     private function getOneArchiveLink($args = '')
-    {
+
+        {
         global $wpdb, $wp_locale;
 
         $defaults = array(
@@ -1721,7 +1694,6 @@ class Brizy_Editor_Editor_Editor
         return '';
     }
 
-
     private function isSearchTemplate($template_rules)
     {
         foreach ($template_rules as $rule) {
@@ -1741,9 +1713,7 @@ class Brizy_Editor_Editor_Editor
         }
 
         return false;
-    }
-
-    /**
+    }/**
      * @return array
      */
     public function getProjectStatus()
@@ -1766,7 +1736,6 @@ class Brizy_Editor_Editor_Editor
      */
     public function getApiActions($config = [], $context = null)
     {
-
         $pref = Brizy_Editor::prefix();
 
         $actions = array(
@@ -1859,6 +1828,7 @@ class Brizy_Editor_Editor_Editor
             'symbolDelete' => $pref.Brizy_Admin_Symbols_Api::DELETE_ACTION,
             'symbolList' => $pref.Brizy_Admin_Symbols_Api::LIST_ACTION,
             'getDynamicContentPlaceholders' => $pref.Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
+			'filterPlaceholderContents' => $pref . Brizy_Editor_Filters_Api::AJAX_FILTER_PLACEHOLDERS_CONTENT,
         );
 
         return $actions;

@@ -35,12 +35,12 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
      */
     public function getPlaceholders()
     {
-        $out = array();
+
 
         if (self::$cache_all_placeholders) {
             return self::$cache_all_placeholders;
         }
-
+		$out = [];
         foreach ($this->providers as $provider) {
             $out = array_merge($out, $provider->getPlaceholders());
         }

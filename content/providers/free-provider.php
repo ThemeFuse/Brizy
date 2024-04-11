@@ -6,250 +6,213 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 	public function __construct() {
 
 		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple(
-				'Internal Display Block By User Role',
-				'display_by_roles',
-				function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
 
-					$attrs = $contentPlaceholder->getAttributes();
+			new Brizy_Content_Placeholders_Simple( 'Internal Display Block By User Role', 'display_by_roles', function( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
 
-					if ( ! empty( $attrs['roles'] ) ) {
-						$roles     = explode( ',', $attrs['roles'] );
-						$userRoles = (array) wp_get_current_user()->roles;
+			$attrs = $contentPlaceholder->getAttributes();
 
-						if ( in_array( 'logged', $roles ) && is_user_logged_in() ) {
-							$userRoles[] = 'logged';
-						}
+			if ( ! empty( $attrs['roles'] ) ) {
+				$roles     = explode( ',', $attrs['roles'] );
+				$userRoles = (array) wp_get_current_user()->roles;
 
-						if ( Brizy_Editor_User::is_user_allowed() ) {
+				if ( in_array( 'logged', $roles ) && is_user_logged_in() ) {
+					$userRoles[] = 'logged';
+				}
 
-							if ( ! empty( $_GET['role'] ) ) {
+				if ( Brizy_Editor_User::is_user_allowed() ) {
 
-								if ( $_GET['role'] === 'default' ) {
+					if ( ! empty( $_GET['role'] ) ) {
+
+						if ( $_GET['role'] === 'default' ) {
+							$roles[]     = 'default';
+							$userRoles[] = 'default';
+						} else {
+							$userRoles = [];
+
+							if ( $_GET['role'] == 'not_logged' ) {
+
+								if ( in_array( 'not_logged', $roles ) ) {
 									$roles[]     = 'default';
 									$userRoles[] = 'default';
-								} else {
-									$userRoles = [];
-
-									if ( $_GET['role'] == 'not_logged' ) {
-
-										if ( in_array( 'not_logged', $roles ) ) {
-											$roles[]     = 'default';
-											$userRoles[] = 'default';
-										}
-									} else {
-										$userRoles[] = $_GET['role'];
-									}
 								}
-							}
-						}
-
-						if ( in_array( 'not_logged', $roles ) ) {
-
-							$roles = array_diff( $roles, [ 'not_logged' ] );
-
-							if ( is_user_logged_in() ) {
-								if ( ! array_intersect( $roles, $userRoles ) ) {
-									return '';
-								}
-							}
-						} else {
-							if ( ! array_intersect( $roles, $userRoles ) ) {
-								return '';
+							} else {
+								$userRoles[] = $_GET['role'];
 							}
 						}
 					}
-
-					$replacer = new \BrizyPlaceholders\Replacer( $context->getProvider() );
-
-					return $replacer->replacePlaceholders( $contentPlaceholder->getContent(), $context );
-				}
-			)
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', 'brizy_dc_image_title' )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_ImageAltAttribute( __( 'Internal Alt Attributes', 'brizy' ), 'brizy_dc_image_alt' )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_UniquePageUrl( __( 'Uniquer page url', 'brizy' ), 'brizy_dc_current_page_unique_url' )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( __( 'WP Language', 'brizy' ), 'brizy_dc_page_language', get_locale() )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( 'Ajax Url', 'brizy_dc_ajax_url', admin_url( 'admin-ajax.php' ) )
-		);
-		$this->registerPlaceholder( new Brizy_Content_Placeholders_Permalink() );
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_sidebar', function ( $context, $contentPlaceholder ) {
-
-				$attrs = $contentPlaceholder->getAttributes();
-
-				$id = isset( $attrs['sidebarId'] ) ? $attrs['sidebarId'] : null;
-
-				if ( $id ) {
-					ob_start();
-
-					dynamic_sidebar( $id );
-
-					return ob_get_clean();
 				}
 
+				if ( in_array( 'not_logged', $roles ) ) {
+
+					$roles = array_diff( $roles, [ 'not_logged' ] );
+
+					if ( is_user_logged_in() ) {
+						if ( ! array_intersect( $roles, $userRoles ) ) {
+							return '';
+						}
+					}
+				} else {
+					if ( ! array_intersect( $roles, $userRoles ) ) {
+						return '';
+					}
+				}
+			}
+
+			$replacer = new \BrizyPlaceholders\Replacer( $context->getProvider() );
+
+			return $replacer->replacePlaceholders( $contentPlaceholder->getContent(), $context );
+		}
+		)
+		);$this->registerPlaceholder( new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', 'brizy_dc_image_title' )
+		);$this->registerPlaceholder( new Brizy_Content_Placeholders_ImageAltAttribute( __( 'Internal Alt Attributes', 'brizy' ), 'brizy_dc_image_alt' )
+		);$this->registerPlaceholder( new Brizy_Content_Placeholders_UniquePageUrl( __( 'Uniquer page url', 'brizy' ), 'brizy_dc_current_page_unique_url' )
+		);$this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( __( 'WP Language', 'brizy' ), 'brizy_dc_page_language', get_locale() ) );
+		$this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( 'Ajax Url', 'brizy_dc_ajax_url', admin_url( 'admin-ajax.php' ) )
+		);$this->registerPlaceholder( new Brizy_Content_Placeholders_SimplePostAware('Permalink', 'brizy_dc_permalink',function ( $context, $contentPlaceholder ) {
+			return get_permalink( (int)$context->getWpPost()->ID );
+        }) );
+		$this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( '', 'editor_sidebar', function ( $context, $contentPlaceholder ) {
+
+			$attrs = $contentPlaceholder->getAttributes();
+
+			$id = isset( $attrs['sidebarId'] ) ? $attrs['sidebarId'] : null;
+
+			if ( $id ) {
+				ob_start();
+
+				dynamic_sidebar( $id );
+
+				return ob_get_clean();
+			}
+
+			return '';
+		} )
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( '', 'editor_navigation', function ( $context, $contentPlaceholder ) {
+
+			$attrs = $contentPlaceholder->getAttributes();
+
+			return $attrs['menuId'] ? wp_nav_menu( array( 'menu' => $attrs['menuId'], 'echo' => false ) ) : '';
+		} )
+
+		);
+		$this->registerPlaceholder(
+			new Brizy_Content_Placeholders_SimplePostAware( '', 'editor_post_field', function ( $context, $contentPlaceholder ) {
+
+			$attrs = $contentPlaceholder->getAttributes();
+
+			$post = $context->getWpPost();
+
+			if ( ! $post || ! isset( $attrs['property'] ) ) {
 				return '';
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_navigation', function ( $context, $contentPlaceholder ) {
+			}
 
-				$attrs = $contentPlaceholder->getAttributes();
+			return $this->filterData( $attrs['property'], $post );
+		} )
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( '', 'editor_post_info', function ( $context, $contentPlaceholder ) {
 
-				return $attrs['menuId'] ? wp_nav_menu( array( 'menu' => $attrs['menuId'], 'echo' => false ) ) : '';
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_post_field', function ( $context, $contentPlaceholder ) {
+			$post = $context->getWpPost();
 
-				$attrs = $contentPlaceholder->getAttributes();
+			if ( $post ) {
+				$commentsCount = get_approved_comments( $post->ID, [ 'count' => true ] );
+				$params        = [];
 
-				$post = ( $context = Brizy_Content_ContextFactory::getGlobalContext() ) ? $context->getWpPost() : get_post();
+				$params['author']   = get_the_author_meta( 'display_name', $post->post_author );
+				$params['date']     = get_the_date( '', $post );
+				$params['time']     = get_the_time( '', $post );
+				$params['comments'] = sprintf( _n( '%s comment', '%s comments', $commentsCount, 'brizy' ), number_format_i18n( $commentsCount ) );
 
-				if ( ! $post || ! isset( $attrs['property'] ) ) {
-					return '';
-				}
+				return Brizy_Editor_View::get(BRIZY_PLUGIN_PATH . '/public/views/post-info', $params);
+			}
 
-				return $this->filterData( $attrs['property'], $post );
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_post_info', function () {
+			return '';
+		} )
 
-				$post = ( $context = Brizy_Content_ContextFactory::getGlobalContext() ) ? $context->getWpPost() : get_post();
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( '', 'editor_posts', function ( $context, $contentPlaceholder ) {
 
-				if ( $post ) {
-					$commentsCount      = get_approved_comments( $post->ID, [ 'count' => true ] );
-					$params             = [];
-					$params['author']   = get_the_author_meta( 'display_name', $post->post_author );
-					$params['date']     = get_the_date( '', $post );
-					$params['time']     = get_the_time( '', $post );
-					$params['comments'] = sprintf(
-						_n( '%s comment', '%s comments', $commentsCount, 'brizy' ),
-						number_format_i18n( $commentsCount )
-					);
+			$atts = $contentPlaceholder->getAttributes();
 
-					return Brizy_Editor_View::get( BRIZY_PLUGIN_PATH . '/public/views/post-info', $params );
-				}
+			// shortcode to use in page: {{editor_posts posts_per_page="5" category="1,2" orderby="date" order="DESC" columns="1" display_date="1" display_author="1"}}
 
-				return '';
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_posts', function ( $context, $contentPlaceholder ) {
+			// this array is used as default values for displayPosts
+			$extra_atts = array(
+				"columns"        => 1,
+				"display_date"   => 1,
+				"display_author" => 1,
+			);
 
-				$atts = $contentPlaceholder->getAttributes();
+			$extra_atts = array_merge( $extra_atts, $atts );
 
-				// shortcode to use in page: {{editor_posts posts_per_page="5" category="1,2" orderby="date" order="DESC" columns="1" display_date="1" display_author="1"}}
+			$posts = $this->getPosts( $atts );
 
-				// this array is used as default values for displayPosts
-				$extra_atts = array(
-					"columns"        => 1,
-					"display_date"   => 1,
-					"display_author" => 1,
-				);
+			return $this->displayPosts( $posts, $extra_atts );
+		} )
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( __( 'Product Page', 'brizy' ),
+				'editor_product_page', function ( $context, $contentPlaceholder ) {
 
-				$extra_atts = array_merge( $extra_atts, $atts );
-
-				$posts = $this->getPosts( $atts );
-
-				return $this->displayPosts( $posts, $extra_atts );
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple(
-				__( 'Product Page', 'brizy' ),
-				'editor_product_page',
-				function ( $context, $contentPlaceholder ) {
-
-					$atts = $contentPlaceholder->getAttributes();
+			$atts = $contentPlaceholder->getAttributes();
 
 //	            if ( ! empty( $atts['id'] ) ) {
 //		            $product_data = get_post( $atts['id'] );
 //		            $product = ! empty( $product_data ) && in_array( $product_data->post_type, [ 'product', 'product_variation' ] ) ? wc_setup_product_data( $product_data ) : false;
 //	            }
 
-					if ( empty( $atts['itemId'] ) && current_user_can( 'manage_options' ) ) {
-						return __( 'Please set a valid product', 'brizy' );
-					}
+			if ( empty( $atts['itemId'] ) && current_user_can( 'manage_options' ) ) {
+				return __( 'Please set a valid product', 'brizy' );
+			}
 
-					$this->setScriptDependency(
-						'brizy-preview',
-						[ 'zoom', 'photoswipe', 'flexslider', 'wc-single-product' ]
-					);
+			$this->setScriptDependency( 'brizy-preview', [ 'zoom', 'photoswipe', 'flexslider', 'wc-single-product' ] );
 
-					// Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
-					remove_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], - 12000 );
+			// Avoid infinite loop. There's a call of the function the_content() in the woocommerce/single-product/tabs/description.php
+			remove_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], - 12000 );
 
-					$html = do_shortcode( '[product_page id="' . $atts['itemId'] . '"]' );
+			$html = do_shortcode( '[product_page id="' . $atts['itemId'] . '"]' );
 
-					add_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], - 12000 );
+			add_filter( 'the_content', [ Brizy_Admin_Templates::instance(), 'filterPageContent' ], - 12000 );
 
-					return $html;
-				}
-			)
+			return $html;
+		}
+
+        )
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( 'Products Page', 'editor_product_products', function ( $context, $contentPlaceholder ) {
+
+			$atts = $contentPlaceholder->getAttributes();
+
+			$shortcodeAttributes = [];
+
+			if ( isset( $atts['limit'] ) ) {
+				$shortcodeAttributes[] = sprintf( "limit=\"%d\"", (int) $atts['limit'] );
+			}
+			if ( isset( $atts['columns'] ) ) {
+				$shortcodeAttributes[] = sprintf( "columns=\"%d\"", (int) $atts['columns'] );
+			}
+			if ( isset( $atts['category'] ) ) {
+				$shortcodeAttributes[] = sprintf( "category=\"%s\"", $atts['category'] );
+			}
+			if ( isset( $atts['orderby'] ) ) {
+				$shortcodeAttributes[] = sprintf( "orderby=\"%s\"", $atts['orderby'] );
+			}
+			if ( isset( $atts['order'] ) ) {
+				$shortcodeAttributes[] = sprintf( "order=\"%s\"", $atts['order'] );
+			}
+
+			$shortcodeAttributes = implode( ' ', $shortcodeAttributes );
+
+			return do_shortcode( '[products ' . $shortcodeAttributes . ' ]' );
+		}
+		)
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( '', 'editor_product_default_cart', function () {
+			return do_shortcode( '[woocommerce_cart]' );
+		} )
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( '', 'editor_product_checkout', function () {
+			return do_shortcode( '[woocommerce_checkout]' );} )
 		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple(
-				'Products Page',
-				'editor_product_products',
-				function ( $context, $contentPlaceholder ) {
-
-					$atts = $contentPlaceholder->getAttributes();
-
-					$shortcodeAttributes = [];
-
-					if ( isset( $atts['limit'] ) ) {
-						$shortcodeAttributes[] = sprintf( "limit=\"%d\"", (int) $atts['limit'] );
-					}
-					if ( isset( $atts['columns'] ) ) {
-						$shortcodeAttributes[] = sprintf( "columns=\"%d\"", (int) $atts['columns'] );
-					}
-					if ( isset( $atts['category'] ) ) {
-						$shortcodeAttributes[] = sprintf( "category=\"%s\"", $atts['category'] );
-					}
-					if ( isset( $atts['orderby'] ) ) {
-						$shortcodeAttributes[] = sprintf( "orderby=\"%s\"", $atts['orderby'] );
-					}
-					if ( isset( $atts['order'] ) ) {
-						$shortcodeAttributes[] = sprintf( "order=\"%s\"", $atts['order'] );
-					}
-
-					$shortcodeAttributes = implode( ' ', $shortcodeAttributes );
-
-					return do_shortcode( '[products ' . $shortcodeAttributes . ' ]' );
-				}
-			)
+		$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( '', 'editor_product_my_account', function () {
+			return do_shortcode( '[woocommerce_my_account]' );
+		} )
+		);$this->registerPlaceholder(new Brizy_Content_Placeholders_Simple( '', 'editor_product_order_tracking', function () {
+			return do_shortcode( '[woocommerce_order_tracking]' );} )
 		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_product_default_cart', function () {
-				return do_shortcode( '[woocommerce_cart]' );
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_product_checkout', function () {
-				return do_shortcode( '[woocommerce_checkout]' );
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_product_my_account', function () {
-				return do_shortcode( '[woocommerce_my_account]' );
-			} )
-		);
-		$this->registerPlaceholder(
-			new Brizy_Content_Placeholders_Simple( '', 'editor_product_order_tracking', function () {
-				return do_shortcode( '[woocommerce_order_tracking]' );
-			} )
-		);
+	$this->registerPlaceholder( new Brizy_Content_Placeholders_IgnoreDc('') );
 
 		$this->registerPlaceholder(
 			new Brizy_Content_Placeholders_Simple( __( 'WooCommerce Notices', 'brizy' ),
@@ -260,14 +223,12 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 						return wc_print_notices( true );
 					}
 
-					return "";
+	return "";
 
 				},
 				self::CONFIG_KEY_TEXT )
 		);
-	}
-
-	private function filterData( $property, $post ) {
+	}private function filterData( $property, $post ) {
 		switch ( $property ) {
 			case 'post_title':
 				return get_the_title( $post );
@@ -387,10 +348,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 				<?php if ( $extra_atts['display_author'] ) { ?>
                     <div class="brz-post-author">
                         <a rel="author" href="<?php echo get_author_posts_url( $post->post_author ); ?>"><span
-                                    itemprop="name"><?php echo get_the_author_meta(
-									'display_name',
-									$post->post_author
-								); ?></span></a>
+                                    itemprop="name"><?php echo get_the_author_meta( 'display_name', $post->post_author ); ?></span></a>
                     </div>
 				<?php } ?>
             </article>
@@ -412,10 +370,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
 		if ( count( $words ) > $excerpt_length ) {
 			array_pop( $words );
-			$the_excerpt = implode(
-				' ',
-				$words
-			); // put in excerpt only the number of word that is set in $excerpt_length
+			$the_excerpt = implode( ' ', $words ); // put in excerpt only the number of word that is set in $excerpt_length
 		}
 
 		return $the_excerpt;

@@ -52,6 +52,8 @@ interface Actions {
   heartBeat: string;
   takeOver: string;
   getFonts: string;
+
+  filterFields: string;
 }
 
 interface ProjectStatus {
@@ -282,6 +284,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getFonts: pipe(
     mPipe(Obj.readKey("getFonts"), Str.read),
     throwOnNullish("Invalid actions: getFonts")
+  ),
+  filterFields: pipe(
+    mPipe(Obj.readKey("filterFields"), Str.read),
+    throwOnNullish("Invalid actions: filterFields")
   )
 });
 
