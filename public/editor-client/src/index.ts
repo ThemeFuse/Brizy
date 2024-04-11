@@ -12,13 +12,13 @@ import {
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
-import { handler as filters, possibleValues } from "./Elements/Filters";
 import { placeholderData, placeholders } from "./dynamicContent";
+import { handler as filters, possibleValues } from "./Elements/Filters";
 import { handler as posts } from "./Elements/Posts";
 import { uploadedFonts } from "./fonts";
-import { heartBeat } from "./heartBeat";
-import {globalBlocks } from "./globalBlocks/blocks";
+import { globalBlocks } from "./globalBlocks/blocks";
 import { globalPopups } from "./globalBlocks/popups";
+import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
 import { onChange } from "./onChange";

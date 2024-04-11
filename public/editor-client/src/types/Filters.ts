@@ -22,7 +22,7 @@ export const isChoiceArray = (arr: any): arr is Choice[] => {
 export type QueryTypeSource = NewType<string, "tripleString">;
 
 export const isQueryTypeSource = (s: string): s is QueryTypeSource =>
-  s.split("|||").length === 3;
+  s.split("|||").length === 4;
 
 export const fromStringQueryTypeSource = pass(isQueryTypeSource);
 
