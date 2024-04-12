@@ -216,9 +216,6 @@ class Brizy_Editor_Editor_Editor
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
             'membership' => true,
-            'elements'   => [
-				'video' => [ 'types' => [ 'youtube', 'vimeo', 'url' ] ]
-            ],
 	        'ui' => [
 		        'features' => [
 			        'imagePointer'      => true,
