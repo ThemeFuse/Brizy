@@ -216,7 +216,16 @@ class Brizy_Editor_Editor_Editor
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
             'membership' => true,
-            'elements' => ['image' => ['zoom' => true]],
+            'elements'   => [
+				'video' => [ 'types' => [ 'youtube', 'vimeo', 'url' ] ]
+            ],
+	        'ui' => [
+		        'features' => [
+			        'imagePointer'      => true,
+			        'imageZoom'         => true,
+			        'backgroundPointer' => true,
+		        ]
+	        ]
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
