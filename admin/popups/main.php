@@ -32,7 +32,7 @@ class Brizy_Admin_Popups_Main
             add_action('wp_enqueue_scripts', [$this, 'enqueuePopupScripts']);
             //add_action('wp_head', [$this, 'wpHeadAppentPopupHtml']);
             add_action('wp_footer', [$this, 'wpFooterAppendPopupHtml']);
-            add_action('wp_footer', [$this, 'wpFooterAppendBrowserCompiled']);
+            //add_action('wp_footer', [$this, 'wpFooterAppendBrowserCompiled']);
             add_filter('body_class', [$this, 'bodyClassFrontend'], 11);
         }
     }
@@ -42,25 +42,24 @@ class Brizy_Admin_Popups_Main
         foreach ($this->getMatchingBrizyPopups() as $popup) {
 
             try {
-		        $compiler = new Brizy_Editor_Compiler(
-			        Brizy_Editor_Project::get(),
-			        new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL ),
-			        new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $popup ),
-			        Brizy_Config::getCompilerUrls(),
-			        Brizy_Config::getCompilerDownloadUrl()
-		        );
+                $compiler = new Brizy_Editor_Compiler(
+                    Brizy_Editor_Project::get(),
+                    new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL),
+                    new Brizy_Editor_UrlBuilder(Brizy_Editor_Project::get(), $popup),
+                    Brizy_Config::getCompilerUrls(),
+                    Brizy_Config::getCompilerDownloadUrl()
+                );
 
 
+                if ($compiler->needsCompile($popup)) {
+                    $editgorConfig = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $popup)
+                        ->config(Brizy_Editor_Editor_Editor::COMPILE_CONTEXT);
+                    $compiler->compilePost($popup, $editgorConfig);
+                }
 
-		        if ( $compiler->needsCompile( $popup ) ) {
-			        $editgorConfig = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $popup )
-			                                                   ->config( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
-			        $compiler->compilePost( $popup, $editgorConfig );
-		        }
-
-	        } catch ( Exception $e ) {
-		        Brizy_Logger::instance()->exception( $e );
-	        }
+            } catch (Exception $e) {
+                Brizy_Logger::instance()->exception($e);
+            }
 
             Brizy_Public_AssetEnqueueManager::_init()->enqueuePost($popup);
         }
