@@ -372,7 +372,7 @@ class Brizy_Admin_Blocks_Main
             return [];
         }
 
-        $context = Brizy_Content_ContextFactory::createContext(Brizy_Editor_Project::get(), $wpPost);
+        $context = Brizy_Content_ContextFactory::createContext(Brizy_Editor_Project::get(), $wpPost->getWpPost());
         $placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider($context);
 
         $extractor = new \BrizyPlaceholders\Extractor($placeholderProvider);

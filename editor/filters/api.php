@@ -8,7 +8,10 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi
 
     protected function initializeApiActions()
     {
-        $this->addNoPrivAjaxAction(self::AJAX_FILTER_PLACEHOLDERS_CONTENT, array($this, 'filterPlaceholdersContent'));
+        $this->addNoPrivAjaxAction(self::AJAX_FILTER_PLACEHOLDERS_CONTENT, array(
+            $this,
+            'filterPlaceholdersContent',
+        ));
         $this->addAjaxAction(self::AJAX_FILTER_PLACEHOLDERS_CONTENT, array($this, 'filterPlaceholdersContent'));
     }
 
@@ -31,6 +34,18 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi
         $placeholderContents = [];
         $brizyPost = Brizy_Editor_Post::get($postId);
         $postContent = $this->getBrizyPostContent(Brizy_Editor_Project::get(), $brizyPost);
+
+//        $postContent = apply_filters(
+//            'brizy_content',
+//            $postContent,
+//            Brizy_Editor_Project::get(),
+//            $brizyPost->getWpPost()
+//        );
+
+        $context = Brizy_Content_ContextFactory::createContext(Brizy_Editor_Project::get(), $brizyPost->getWpPost());
+        $mainProcessor = new Brizy_Content_PlaceholderWrapperProcessor($context);
+        $postContent = $mainProcessor->process($postContent);
+
 
         $placeholderProvider = new Brizy_Content_PlaceholderProvider();
         $context = new Brizy_Content_Context(Brizy_Editor_Project::get(), $brizyPost, $brizyPost->getWpPost(), '');
@@ -71,7 +86,10 @@ class Brizy_Editor_Filters_Api extends Brizy_Admin_AbstractApi
 
     private function getBrizyPostContent(Brizy_Editor_Project $project, Brizy_Editor_Post $post)
     {
+        return $post->get_compiled_html();
+
         $project = Brizy_Editor_Project::get();
+
 
         if (!$post->get_compiled_html()) {
             $compiled_html_body = $post->get_compiled_html_body();
