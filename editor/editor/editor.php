@@ -411,9 +411,10 @@ class Brizy_Editor_Editor_Editor
                 ],
                 'templates' => [
                     'kitsUrl' => Brizy_Config::getEditorTemplatesUrl('kits'),
-                    'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
-                    'popupsUrl' => Brizy_Config::getEditorTemplatesUrl('popups'),
-                    'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories'),
+                    'layoutsUrl'   => Brizy_Config::getEditorTemplatesUrl('layouts'),
+                    'popupsUrl'    => Brizy_Config::getEditorTemplatesUrl('popups'),
+                    'storiesUrl'   => Brizy_Config::getEditorTemplatesUrl('stories'),
+                    'templatesUrl' => 'https://j6dfq8pl41.b-cdn.net'
                 ],
             ],
         ];
