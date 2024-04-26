@@ -414,8 +414,9 @@ class Brizy_Editor_Editor_Editor
                     'layoutsUrl'   => Brizy_Config::getEditorTemplatesUrl('layouts'),
                     'popupsUrl'    => Brizy_Config::getEditorTemplatesUrl('popups'),
                     'storiesUrl'   => Brizy_Config::getEditorTemplatesUrl('stories'),
-                    'templatesUrl' => 'https://template-2.b-cdn.net'
+                    'templatesUrl' => Brizy_Config::TEMPLATES_URL
                 ],
+                'templatesImageUrl' => Brizy_Config::TEMPLATES_IMAGE_URL
             ],
         ];
 

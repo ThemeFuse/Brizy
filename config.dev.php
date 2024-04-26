@@ -55,6 +55,10 @@ class Brizy_Config {
 	// this file will be stored in uploads/brizy/
 	const PROJECT_STLYES_FILE_PATH =  DIRECTORY_SEPARATOR . 'project' . DIRECTORY_SEPARATOR . 'styles.css';
 
+	const TEMPLATES_URL = 'https://template-2.b-cdn.net';
+
+	const TEMPLATES_IMAGE_URL = 'https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/';
+
 	static public function getCompilerUrls() {
 		$host = self::getEnvValue('COMPILER_HOST');
 		return new Brizy_Admin_UrlIterator(
