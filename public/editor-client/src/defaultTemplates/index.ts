@@ -1,3 +1,4 @@
+import { getDefaultPage, getDefaultPages } from "@/api";
 import { Config } from "../config";
 import {
   BlocksArray,
@@ -11,6 +12,8 @@ import {
   KitsWithThumbs,
   Layouts,
   LayoutsWithThumbs,
+  Pages,
+  PagesDefaultTemplate,
   Popups,
   PopupsWithThumbs,
   Stories,
@@ -18,6 +21,7 @@ import {
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
 import { tempConverterKit } from "./tempComverters";
+import { convertPages, convertToCategories } from "./utils";
 
 const defaultKits = (
   config: Config
@@ -288,4 +292,43 @@ const defaultLayouts = (
   };
 };
 
-export { defaultKits, defaultStories, defaultLayouts, defaultPopups };
+const defaultPages = (
+  config: Config
+): PagesDefaultTemplate<Pages, BlocksArray<DefaultBlock>> => {
+  const { templatesUrl } = config.api.templates;
+  const { templatesImageUrl } = config.api;
+
+  return {
+    async getMeta(res, rej) {
+      try {
+        const { blocks, categories } = await getDefaultPages(templatesUrl);
+
+        res({
+          blocks: convertPages(blocks, templatesImageUrl),
+          categories: convertToCategories(categories)
+        });
+      } catch (e) {
+        rej(t("Failed to load meta.json"));
+      }
+    },
+    async getData(res, rej, { slug }) {
+      try {
+        const pageData = await getDefaultPage(templatesUrl, slug);
+
+        res({
+          blocks: [...pageData.items]
+        });
+      } catch (e) {
+        rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    }
+  };
+};
+
+export {
+  defaultKits,
+  defaultStories,
+  defaultLayouts,
+  defaultPopups,
+  defaultPages
+};

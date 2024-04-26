@@ -9,6 +9,7 @@ import { addFile } from "./customFile/addFile";
 import {
   defaultKits,
   defaultLayouts,
+  defaultPages,
   defaultPopups,
   defaultStories
 } from "./defaultTemplates";
@@ -57,6 +58,7 @@ const api = {
   defaultPopups: defaultPopups(config),
   defaultStories: defaultStories(config),
   defaultLayouts: defaultLayouts(config),
+  defaultPages: defaultPages(config),
   collectionItems: {
     searchCollectionItems,
     getCollectionItemsIds

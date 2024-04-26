@@ -12,6 +12,7 @@ interface DefaultTemplates {
   popupsUrl: string;
   storiesUrl: string;
   layoutsUrl: string;
+  templatesUrl: string;
 }
 
 interface Actions {
@@ -74,6 +75,7 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  templatesImageUrl: string;
   imagePatterns: ImagePatterns;
 }
 export interface Config {
@@ -104,6 +106,10 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   storiesUrl: pipe(
     mPipe(Obj.readKey("storiesUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
+  ),
+  templatesUrl: pipe(
+    mPipe(Obj.readKey("templatesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: templates")
   )
 });
 
@@ -137,6 +143,10 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     throwOnNullish("Invalid API: templates")
   ),
   openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read))),
+  templatesImageUrl: pipe(
+    mPipe(Obj.readKey("templatesImageUrl"), Str.read),
+    throwOnNullish("Invalid API: Image templates")
+  ),
   imagePatterns: pipe(
     mPipe(
       Obj.readKey("media"),
