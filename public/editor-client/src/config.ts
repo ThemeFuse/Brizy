@@ -1,3 +1,4 @@
+import { readIconUrl } from "@/types/Icon";
 import { Arr, Bool, Obj, Str } from "@brizy/readers";
 import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
@@ -68,7 +69,13 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  iconsUrl: string;
+  iconUrl: string;
+  deleteIconUrl: string;
+  uploadIconUrl: string;
+  imagePatterns: ImagePatterns;
 }
+
 export interface Config {
   hash: string;
   editorVersion: string;
@@ -130,6 +137,33 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     throwOnNullish("Invalid API: templates")
   ),
   openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read))),
+  imagePatterns: pipe(
+    mPipe(
+      Obj.readKey("media"),
+      Obj.read,
+      Obj.readKey("imagePatterns"),
+      Obj.read,
+      parseStrict<PLUGIN_ENV, ImagePatterns>({
+        full: pipe(
+          mPipe(Obj.readKey("full"), Str.read),
+          throwOnNullish("Invalid API: ImagePatterns full pattern")
+        ),
+        original: pipe(
+          mPipe(Obj.readKey("original"), Str.read),
+          throwOnNullish("Invalid API: ImagePatterns original pattern")
+        ),
+        split: pipe(
+          mPipe(Obj.readKey("split"), Str.read),
+          throwOnNullish("Invalid API: ImagePatterns split pattern")
+        )
+      })
+    ),
+    throwOnNullish("Invalid API: image patterns")
+  ),
+  iconUrl: readIconUrl("iconUrl"),
+  iconsUrl: readIconUrl("getIconsUrl"),
+  uploadIconUrl: readIconUrl("uploadIconUrl"),
+  deleteIconUrl: readIconUrl("deleteIconUrl")
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
