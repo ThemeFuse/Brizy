@@ -2,7 +2,7 @@ import { readIconUrl } from "@/types/Icon";
 import { Arr, Bool, Obj, Str } from "@brizy/readers";
 import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
-import { PLUGIN_ENV } from "./types/global";
+import { ImagePatterns, PLUGIN_ENV } from "./types/global";
 import { pipe } from "./utils/fp/pipe";
 import { onNullish } from "./utils/onNullish";
 import { throwOnNullish } from "./utils/throwOnNullish";
@@ -53,6 +53,11 @@ interface Actions {
   heartBeat: string;
   takeOver: string;
   getFonts: string;
+
+  symbolCreate: string;
+  symbolDelete: string;
+  symbolList: string;
+  symbolUpdate: string;
 }
 
 interface ProjectStatus {
@@ -286,6 +291,22 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getFonts: pipe(
     mPipe(Obj.readKey("getFonts"), Str.read),
     throwOnNullish("Invalid actions: getFonts")
+  ),
+  symbolCreate: pipe(
+    mPipe(Obj.readKey("symbolCreate"), Str.read),
+    throwOnNullish("Invalid actions: symbolCreate")
+  ),
+  symbolDelete: pipe(
+    mPipe(Obj.readKey("symbolDelete"), Str.read),
+    throwOnNullish("Invalid actions: symbolDelete")
+  ),
+  symbolList: pipe(
+    mPipe(Obj.readKey("symbolList"), Str.read),
+    throwOnNullish("Invalid actions: symbolList")
+  ),
+  symbolUpdate: pipe(
+    mPipe(Obj.readKey("symbolUpdate"), Str.read),
+    throwOnNullish("Invalid actions: symbolUpdate")
   )
 });
 

@@ -15,6 +15,7 @@ import {
   SavedLayoutMeta
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
+import { CSSSymbol, DBSymbol } from "@/types/Symbols";
 import { t } from "@/utils/i18n";
 import { Arr, Obj, Str } from "@brizy/readers";
 import { Dictionary } from "../types/utils";
@@ -416,7 +417,6 @@ export interface UploadSavedBlocksData {
   errors: Array<{ uid: string; message: string }>;
   success: Array<SavedBlock>;
 }
-
 export const uploadSaveBlocks = async (
   files: Array<File>
 ): Promise<UploadSavedBlocksData> => {
@@ -1335,4 +1335,102 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
 
   throw new Error(t("Failed to delete icon"));
 };
+//#endregion
+
+//#region Symbols
+
+export const getSymbols = async (): Promise<DBSymbol[]> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__ at receiving symbols"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    action: actions.symbolList,
+    version: editorVersion,
+    hash
+  });
+
+  return request(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  })
+    .then((r) => r.json())
+    .then((r) => (r.success ? r.data : []));
+};
+
+export const createSymbol = async (data: CSSSymbol[]): Promise<void> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__ at createSymbols"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    action: actions.symbolCreate,
+    version: editorVersion,
+    hash
+  });
+
+  await request(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify(data)
+  });
+};
+
+export const updateSymbol = async (data: CSSSymbol[]): Promise<void> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__ at update symbol"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    action: actions.symbolUpdate,
+    version: editorVersion,
+    hash
+  });
+
+  await request(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify(data)
+  });
+};
+
+export const deleteSymbol = async (data: string[]): Promise<void> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__ at delete symbol"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    action: actions.symbolDelete,
+    version: editorVersion,
+    hash
+  });
+
+  await request(url, {
+    method: "DELETE",
+    body: JSON.stringify(data)
+  });
+};
+
 //#endregion
