@@ -1,4 +1,5 @@
 import merge from "lodash/merge";
+import { symbols } from "@/symbols";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
@@ -70,7 +71,8 @@ const api = {
     loadCollectionTypes
   },
   screenshots: screenshots(),
-  heartBeat: heartBeat(config)
+  heartBeat: heartBeat(config),
+  symbols
 };
 
 if (window.__VISUAL_CONFIG__) {
