@@ -3,17 +3,17 @@
         <?php $label = isset( $field->label ) ? $field->label : __( 'No Label', 'brizy' ); ?>
         <?php $type  = isset( $field->type ) ? $field->type : 'Text'; ?>
         <li>
-            <label for="<?php echo $field->name; ?>">
+            <label for="<?php echo esc_attr($field->name); ?>">
                 <?php echo $label; ?>
             </label>:
             <?php if ( $type == 'FileUpload' ): ?>
-                <span id="<?php echo $field->name; ?>">
+                <span id="<?php echo esc_attr($field->name); ?>">
                     <a href="<?php echo $field->value; ?>" target="_blank">
                         <?php echo $field->value; ?>
                     </a>
                 </span>
             <?php else: ?>
-                <span id="<?php echo $field->name; ?>" class="formData-<?php echo strtolower( esc_attr( $type ) ); ?>">
+                <span id="<?php echo esc_attr($field->name); ?>" class="formData-<?php echo strtolower( esc_attr( $type ) ); ?>">
                     <?php echo strip_tags( $field->value, '<br>' ); ?>
                 </span>
             <?php endif; ?>
