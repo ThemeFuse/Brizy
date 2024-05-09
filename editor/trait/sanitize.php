@@ -14,7 +14,7 @@ trait Brizy_Editor_Trait_Sanitize {
 		$dataDecoded = wp_kses_post_deep( $dataDecoded );
 		$data        = json_encode( $dataDecoded );
 		$data        = preg_replace( '/javascript:[^"]*"/', '"', $data );
-		$data        = preg_replace( '/\s(on(click|mouseover|keydown|keyup|change|submit|load|error|focus|blur|select|dblclick))[:=]["\'][^"\']*["\']/i', '', $data );
+		$data        = preg_replace( '/(on(click|mouseover|keydown|keyup|change|submit|load|error|focus|blur|select|dblclick))\s*[:=]\s*(\\\"|\\\')(.*?)(\3)/i', '', $data );
 
 		return $data;
 	}
