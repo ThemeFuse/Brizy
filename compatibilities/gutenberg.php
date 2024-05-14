@@ -74,9 +74,11 @@ class Brizy_Compatibilities_Gutenberg {
 			return;
 		}
 
+        $nonce = wp_create_nonce( 'brizy-admin-nonce' );
+
 		try {
 			if ( Brizy_Editor_Entity::isBrizyEnabled( get_the_ID() ) ) {
-				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_disable&post=' . get_the_ID() ) );
+				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_disable&post=' . get_the_ID() . '&hash=' . $nonce ) );
 				?>
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">
                     <div class="brizy-buttons">
@@ -97,7 +99,7 @@ class Brizy_Compatibilities_Gutenberg {
 
 				<?php
 			} else {
-				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . get_the_ID() ) );
+				$edit_url = esc_url( admin_url( 'admin-post.php?action=_brizy_admin_editor_enable&post=' . get_the_ID() . '&hash=' . $nonce ) );
 
 				?>
                 <script id="brizy-gutenberg-btn-switch-mode" type="text/html">

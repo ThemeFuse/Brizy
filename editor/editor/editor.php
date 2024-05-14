@@ -112,14 +112,10 @@ class Brizy_Editor_Editor_Editor
 
         global $wp_registered_sidebars;
 
-        $parent_post_type = get_post_type($this->post->getWpPostId());
-        $wp_post_id = $this->post->getWpPostId();
-        $preview_post_link = $this->getPreviewUrl($this->post->getWpPost());
-
-        $change_template_url = set_url_scheme(
-            admin_url('admin-post.php?post='.$this->post->getWpPostId().'&action=_brizy_change_template')
-        );
-        $mode = $this->getMode($parent_post_type);
+	    $parent_post_type  = get_post_type( $this->post->getWpPostId() );
+	    $wp_post_id        = $this->post->getWpPostId();
+	    $preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
+	    $mode              = $this->getMode( $parent_post_type );
 
         $heartBeatInterval = (int)apply_filters('wp_check_post_lock_window', 150);
         $config = array(
@@ -151,7 +147,7 @@ class Brizy_Editor_Editor_Editor
                 'termsOfService' => Brizy_Config::getTermsOfServiceUrl(),
 
                 // wp specific
-                'changeTemplate' => $change_template_url,
+                'changeTemplate' => set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template&hash=' . wp_create_nonce( 'brizy-admin-nonce' ) ) ),
                 'upgradeToPro' => Brizy_Config::getUpgradeUrl(),
 
                 'support' => Brizy_Config::getSupportUrl(),
