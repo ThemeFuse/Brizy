@@ -18,7 +18,6 @@ class Brizy_Admin_RuleSet implements Brizy_Admin_RuleInterface {
 		if ( ! is_array( $rules ) ) {
 			throw new InvalidArgumentException( 'Invalid RuleSet constructor argument' );
 		}
-
 		$this->rules = $rules;
 	}
 
