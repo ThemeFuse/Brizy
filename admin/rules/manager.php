@@ -225,6 +225,21 @@ class Brizy_Admin_Rules_Manager {
 	 *
 	 * @return mixed
 	 */
+	static function sortRulesByWeight( $rules, $context ) {
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		// sort templates by rule set weight
+		usort( $rules, function ( $t1, $t2 ) use ( $ruleManager, $context ) {
+			$rule_weight_t1 = $t1->getRuleWeight( $context );
+			$rule_weight_t2 = $t2->getRuleWeight( $context );
+			if ( $rule_weight_t1 == $rule_weight_t2 ) {
+				return 0;
+			}
+
+			return ( $rule_weight_t1 < $rule_weight_t2 ) ? 1 : - 1;
+		} );
+
+		return $rules;
+	}
 	static function sortEntitiesByRuleWeight( $entities, $context ) {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		// sort templates by rule set weight
