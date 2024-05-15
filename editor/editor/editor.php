@@ -156,7 +156,7 @@ class Brizy_Editor_Editor_Editor
                     Brizy_Config::EDITOR_BUILD_RELATIVE_PATH."/editor/icons"
                 ),
                 'templateFonts' => $this->urlBuilder->external_fonts_url(),
-                'editorFonts' => home_url('/'),
+                'editorFonts' => add_query_arg( Brizy_Editor::prefix() . '-font=', '', home_url( '/' ) ),
                 'pagePreview' => $preview_post_link,
                 'about' => __bt('about-url', apply_filters('brizy_about_url', Brizy_Config::ABOUT_URL)),
                 'backToDashboard' => get_edit_post_link($wp_post_id, null),
