@@ -9,7 +9,7 @@
 
 $state     = $is_using_brizy ? 'disable' : 'enable';
 $className = $is_using_brizy ? 'brizy-button--default' : 'brizy-button--primary';
-$edit_url  = esc_url( set_url_scheme( admin_url( 'admin-post.php?action=_brizy_admin_editor_' . $state . '&post=' . $post->ID ) ) );
+$edit_url  = esc_url( set_url_scheme( admin_url( 'admin-post.php?action=_brizy_admin_editor_' . $state . '&post=' . $post->ID . '&hash=' . wp_create_nonce( 'brizy-admin-nonce' ) ) ) );
 ?>
     <div class="brizy-buttons is-classic-editor">
         <?php

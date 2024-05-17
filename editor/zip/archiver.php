@@ -563,10 +563,13 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
     private function validateImageContent($name, $content)
     {
+
+
         $tempName = get_temp_dir().md5($name);
         file_put_contents($tempName, $content);
         $isImage = file_is_valid_image($tempName);
         unlink($tempName);
+
 
         return $isImage;
     }

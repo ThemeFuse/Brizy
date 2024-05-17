@@ -320,7 +320,11 @@ class Brizy_Admin_Main {
 	 */
 	public function action_request_enable() {
 
-		if ( ! isset( $_REQUEST['post'] ) || ! ( $p = get_post( (int) $_REQUEST['post'] ) ) ) {
+		if (
+			( ! isset( $_REQUEST['post'] ) || ! ( $p = get_post( (int) $_REQUEST['post'] ) ) )
+            ||
+			( ! isset( $_REQUEST['hash'] ) || ! wp_verify_nonce( $_REQUEST['hash'], 'brizy-admin-nonce' ) )
+        ) {
 			Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
 			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
 			exit();
@@ -338,7 +342,11 @@ class Brizy_Admin_Main {
 	 * @internal
 	 */
 	public function action_request_disable() {
-		if ( ! isset( $_REQUEST['post'] ) || ! ( $p = get_post( $_REQUEST['post'] ) ) ) {
+		if (
+			( ! isset( $_REQUEST['post'] ) || ! ( $p = get_post( (int) $_REQUEST['post'] ) ) )
+			||
+			( ! isset( $_REQUEST['hash'] ) || ! wp_verify_nonce( $_REQUEST['hash'], 'brizy-admin-nonce' ) )
+		) {
 			Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
 			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
 			exit();
@@ -357,7 +365,11 @@ class Brizy_Admin_Main {
 	}
 
 	public function action_change_template() {
-		if ( ! isset( $_REQUEST['post'], $_REQUEST['template'] ) || ! ( $p = get_post( $_REQUEST['post'] ) ) ) {
+		if (
+			( ! isset( $_REQUEST['post'], $_REQUEST['template'] ) || ! ( $p = get_post( $_REQUEST['post'] ) ) )
+			||
+			( ( ! isset( $_REQUEST['hash'] ) || ! wp_verify_nonce( $_REQUEST['hash'], 'brizy-admin-nonce' ) ) )
+		) {
 			Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
 			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
 			exit();
