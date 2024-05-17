@@ -49,6 +49,7 @@ class Brizy_Config {
 	const CLOUD_SCREENSHOT = '/screenshot/%s';
 	const CLOUD_SCREENSHOTS = '/api/screenshots';
 	const CLOUD_CUSTOM_FILES = '/api/custom_files';
+	const GENERATE_GLOBAL_STYLES_ENDPOINT = 'https://phplaravel-1109775-4163586.cloudwaysapps.com';
     const WP_HTTP_TIMEOUT = 30;
 
 	// this file will be stored in uploads/brizy/

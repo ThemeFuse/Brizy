@@ -1336,3 +1336,23 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
   throw new Error(t("Failed to delete icon"));
 };
 //#endregion
+
+//#region AI Global Styles
+
+export const getStyles = async (config: Config) => {
+  const { aiGlobalStyleUrl } = config;
+
+  return await fetch(`${aiGlobalStyleUrl}/api/template/style`).then((r) =>
+    r.json()
+  );
+};
+
+export const getTypography = async (config: Config) => {
+  const { aiGlobalStyleUrl } = config;
+
+  return await fetch(`${aiGlobalStyleUrl}/api/template/typography`).then((r) =>
+    r.json()
+  );
+};
+
+//#endregion

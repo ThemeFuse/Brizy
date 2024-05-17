@@ -26,6 +26,7 @@ import { onChange } from "./onChange";
 import { onStartLoad } from "./onStartLoad";
 import { popupConditions } from "./popupConditions";
 import { publish } from "./publish";
+import { getRegeneratedGlobalStyles } from "./regeneratedGlobalStyles";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
@@ -90,6 +91,11 @@ if (window.__VISUAL_CONFIG__) {
   // UI
   if (window.__VISUAL_CONFIG__.ui) {
     window.__VISUAL_CONFIG__.ui.publish = publish;
+    set(
+      window.__VISUAL_CONFIG__.ui,
+      ["leftSidebar", "styles"],
+      getRegeneratedGlobalStyles(config)
+    );
   }
 
   // Elements

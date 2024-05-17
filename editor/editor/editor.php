@@ -93,6 +93,7 @@ class Brizy_Editor_Editor_Editor
             'project' => array(
                 'status' => $this->getProjectStatus(),
             ),
+	        'aiGlobalStyleUrl' => Brizy_Config::GENERATE_GLOBAL_STYLES_ENDPOINT
         ];
 
         $config = $this->getApiConfigFields($config, $context);

@@ -86,6 +86,7 @@ export interface Config {
   api: API;
   l10n?: Record<string, string>;
   collectionTypes: CollectionType[];
+  aiGlobalStyleUrl: string;
 }
 
 const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
@@ -355,6 +356,10 @@ const reader = parseStrict<PLUGIN_ENV, Config>({
       })
     ),
     throwOnNullish("Invalid: project")
+  ),
+  aiGlobalStyleUrl: pipe(
+    mPipe(Obj.readKey("aiGlobalStyleUrl"), Str.read),
+    throwOnNullish("Invalid: aiGlobalStyleUrl")
   )
 });
 
