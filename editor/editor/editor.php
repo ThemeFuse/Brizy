@@ -93,7 +93,7 @@ class Brizy_Editor_Editor_Editor
             'project' => array(
                 'status' => $this->getProjectStatus(),
             ),
-	        'aiGlobalStyleUrl' => Brizy_Config::GENERATE_GLOBAL_STYLES_ENDPOINT
+            'aiGlobalStyleUrl' => Brizy_Config::GENERATE_GLOBAL_STYLES_ENDPOINT,
         ];
 
         $config = $this->getApiConfigFields($config, $context);
@@ -121,10 +121,10 @@ class Brizy_Editor_Editor_Editor
 
         global $wp_registered_sidebars;
 
-	    $parent_post_type  = get_post_type( $this->post->getWpPostId() );
-	    $wp_post_id        = $this->post->getWpPostId();
-	    $preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
-	    $mode              = $this->getMode( $parent_post_type );
+        $parent_post_type = get_post_type($this->post->getWpPostId());
+        $wp_post_id = $this->post->getWpPostId();
+        $preview_post_link = $this->getPreviewUrl($this->post->getWpPost());
+        $mode = $this->getMode($parent_post_type);
         $heartBeatInterval = (int)apply_filters('wp_check_post_lock_window', 150);
         $config = array(
             'user' => array(
@@ -153,7 +153,7 @@ class Brizy_Editor_Editor_Editor
                     Brizy_Config::EDITOR_BUILD_RELATIVE_PATH."/editor/icons"
                 ),
                 'templateFonts' => $this->urlBuilder->external_fonts_url(),
-                'editorFonts' => add_query_arg( Brizy_Editor::prefix() . '-font=', '', home_url( '/' ) ),
+                'editorFonts' => add_query_arg(Brizy_Editor::prefix().'-font=', '', home_url('/')),
                 'pagePreview' => $preview_post_link,
                 'about' => __bt('about-url', apply_filters('brizy_about_url', Brizy_Config::ABOUT_URL)),
                 'backToDashboard' => get_edit_post_link($wp_post_id, null),
@@ -161,7 +161,12 @@ class Brizy_Editor_Editor_Editor
                 'termsOfService' => Brizy_Config::getTermsOfServiceUrl(),
 
                 // wp specific
-                'changeTemplate' => set_url_scheme( admin_url( 'admin-post.php?post=' . $this->post->getWpPostId() . '&action=_brizy_change_template&hash=' . wp_create_nonce( 'brizy-admin-nonce' ) ) ),
+                'changeTemplate' => set_url_scheme(
+                    admin_url(
+                        'admin-post.php?post='.$this->post->getWpPostId(
+                        ).'&action=_brizy_change_template&hash='.wp_create_nonce('brizy-admin-nonce')
+                    )
+                ),
                 'upgradeToPro' => Brizy_Config::getUpgradeUrl(),
 
                 'support' => Brizy_Config::getSupportUrl(),
@@ -213,14 +218,14 @@ class Brizy_Editor_Editor_Editor
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
             'membership' => true,
-            'elements'   => [ 'image' => [ 'zoom' => true ], 'video' => [ 'types' => [ 'youtube', 'vimeo', 'url' ] ],
-             'ui' => [
-		        'features' => [
-			        'imagePointer'      => true,
-			        'imageZoom'         => true,
-			        'backgroundPointer' => true,
-		        ]
-	        ]
+            'elements' => ['image' => ['zoom' => true], 'video' => ['types' => ['youtube', 'vimeo', 'url']]],
+            'ui' => [
+                'features' => [
+                    'imagePointer' => true,
+                    'imageZoom' => true,
+                    'backgroundPointer' => true,
+                ],
+            ],
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
@@ -409,12 +414,12 @@ class Brizy_Editor_Editor_Editor
                 ],
                 'templates' => [
                     'kitsUrl' => Brizy_Config::getEditorTemplatesUrl('kits'),
-                    'layoutsUrl'   => Brizy_Config::getEditorTemplatesUrl('layouts'),
-                    'popupsUrl'    => Brizy_Config::getEditorTemplatesUrl('popups'),
-                    'storiesUrl'   => Brizy_Config::getEditorTemplatesUrl('stories'),
-                    'templatesUrl' => Brizy_Config::TEMPLATES_URL
+                    'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
+                    'popupsUrl' => Brizy_Config::getEditorTemplatesUrl('popups'),
+                    'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories'),
+                    'templatesUrl' => Brizy_Config::TEMPLATES_URL,
                 ],
-                'templatesImageUrl' => Brizy_Config::TEMPLATES_IMAGE_URL
+                'templatesImageUrl' => Brizy_Config::TEMPLATES_IMAGE_URL,
             ],
         ];
 
