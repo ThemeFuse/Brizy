@@ -273,6 +273,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             $original_asset_path = $urlBuilder->page_upload_path("/assets/images/".$basename);
             $original_asset_path_relative = $urlBuilder->page_upload_relative_path("/assets/images/".$basename);
             wp_mkdir_p(dirname($original_asset_path));
+
             file_put_contents($original_asset_path, $imageContent);
 
             Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment(
@@ -500,7 +501,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
      * @return array
      * @throws Exception
      */
-    protected function addScreenshot(ZipArchive $z, $meta, $manager, array $data, $dir)
+    protected function addScreenshot(ZipArchive $z, $meta, Brizy_Editor_Screenshot_Manager $manager, array $data, $dir)
     {
         $screenUid = $meta->_thumbnailSrc;
         if ($screenUid) {
@@ -548,11 +549,16 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
     private function validateImageName($name)
     {
-        if (!preg_match("/\.php$|\.sh/", $name)) {
-            return true;
+        if (preg_match("/\.php$|\.sh/", $name)) {
+            return false;
         }
 
-        return false;
+        $wp_filetype = wp_check_filetype($name);
+        if (!$wp_filetype['ext'] && !current_user_can('unfiltered_upload')) {
+            return false;
+        }
+
+        return true;
     }
 
     private function validateImageContent($name, $content)

@@ -385,7 +385,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		$values = array();
 
 		if ( $this->getType() ) {
-			$values[] = $this->getType();
+			$values[] = $weight = $this->getType();
 		}
 		if ( $this->getAppliedFor() ) {
 			$values[] = $this->getAppliedFor();
