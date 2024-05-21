@@ -5,5 +5,5 @@ import { Project } from "./Project";
 export interface OnChange {
   projectData?: Project;
   pageData?: Page;
-  globalBlock?: GlobalBlock;
+  globalBlocks?: Array<GlobalBlock>;
 }
