@@ -136,7 +136,7 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 		}
 
 		// check post author
-		if ( isset( $entity_values[0] ) && isset( $entityValues[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 2 ) {
+		if ( isset( $entity_values[0] ) && isset( $entityValues[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 2  && $this->getEntityType() == $entityType ) {
 			if ( $values[0] === 'author' ) {
 				if($values[1]=='')
 					return true;
@@ -151,8 +151,9 @@ class Brizy_Admin_Rule extends Brizy_Admin_Serializable implements Brizy_Admin_R
 				return count(array_intersect($postTermIds,$allTerms));
 			}
 		}
+
 		// check if post is in a term
-		if ( isset( $entity_values[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 3 &&  isset($entityValues[0]) ) {
+		if ( isset( $entity_values[0] ) && ( $values = explode( '|', $entity_values[0] ) ) && count( $values ) == 3 &&  isset($entityValues[0]) && $this->getEntityType() == $entityType ) {
 
 			// POSTS
 			if ( $applyFor == self::POSTS && $this->getAppliedFor() == self::POSTS && $values[0] === 'in' ) {
