@@ -470,9 +470,6 @@ class Brizy_Public_Main
 //				$is_preview = false;
 //			}
 //		}
-        if ($this->post->get_compiler() !== Brizy_Editor_Entity::COMPILER_EXTERNAL) {
-            return;
-        }
 
         try {
             $compiler = new Brizy_Editor_Compiler(
