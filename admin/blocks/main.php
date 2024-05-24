@@ -159,13 +159,16 @@ class Brizy_Admin_Blocks_Main
      */
     public function enqueueMatchedGlobalBlockAssets()
     {
-        $template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
-        $post = get_post(Brizy_Editor::get()->currentPostId());
-        if ($template) {
-            $post = $template->getWpPost();
-        }
+	    $post = get_post(Brizy_Editor::get()->currentPostId());
 
-        $matching_brizy_blocks = $this->getMatchingBrizyBlocks($post);
+	    $matching_brizy_blocks = $this->getMatchingBrizyBlocks($post);
+	    foreach ($matching_brizy_blocks as $block) {
+		    Brizy_Public_AssetEnqueueManager::_init()->enqueuePost($block);
+	    }
+
+	    $template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
+
+        $matching_brizy_blocks = $this->getMatchingBrizyBlocks($template);
         foreach ($matching_brizy_blocks as $block) {
             Brizy_Public_AssetEnqueueManager::_init()->enqueuePost($block);
         }
