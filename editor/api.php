@@ -73,35 +73,35 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             return;
         }
 
-        $p = 'wp_ajax_' . Brizy_Editor::prefix();
-        add_action($p . self::AJAX_REMOVE_LOCK, array($this, 'removeProjectLock'));
-        add_action($p . self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
-        add_action($p . self::AJAX_TAKE_OVER, array($this, 'takeOver'));
-        add_action($p . self::AJAX_GET, array($this, 'get_item'));
-        add_action($p . self::AJAX_GET_POST_INFO, array($this, 'get_post_info'));
-        add_action($p . self::AJAX_UPDATE, array($this, 'update_item'));
-        add_action($p . self::AJAX_GET_PROJECT, array($this, 'get_project'));
-        add_action($p . self::AJAX_SET_PROJECT, array($this, 'set_project'));
-        add_action($p . self::AJAX_LOCK_PROJECT, array($this, 'lock_project'));
-        add_action($p . self::AJAX_SIDEBARS, array($this, 'get_sidebars'));
-        add_action($p . self::AJAX_SHORTCODE_CONTENT, array($this, 'shortcode_content'));
-        add_action($p . self::AJAX_PLACEHOLDER_CONTENT, array($this, 'placeholder_content'));
-        add_action($p . self::AJAX_PLACEHOLDERS_CONTENT, array($this, 'placeholders_content'));
-        add_action($p . self::AJAX_GET_POST_OBJECTS, array($this, 'get_post_objects'));
-        add_action($p . self::AJAX_SEARCH_POST, array($this, 'search_post'));
-        add_action($p . self::AJAX_GET_MENU_LIST, array($this, 'get_menu_list'));
-        add_action($p . self::AJAX_GET_TERMS, array($this, 'get_terms'));
-        add_action($p . self::AJAX_GET_USERS, array($this, 'get_users'));
-        add_action($p . self::AJAX_GET_TERMS_BY, array($this, 'get_terms_by'));
-        add_action($p . self::AJAX_MEDIA_METAKEY, array($this, 'get_media_key'));
-        add_action($p . self::AJAX_CREATE_ATTACHMENT_UID, array($this, 'get_attachment_key'));
-        add_action($p . self::AJAX_SET_FEATURED_IMAGE, array($this, 'set_featured_image'));
-        add_action($p . self::AJAX_SET_IMAGE_FOCAL_PT, array($this, 'set_featured_image_focal_point'));
-        add_action($p . self::AJAX_TIMESTAMP, array($this, 'timestamp'));
-        add_action($p . self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
-        add_action($p . self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
-        add_action($p . self::AJAX_GET_DYNAMIC_CONTENT, array($this, 'addDynamicContent'));
-        add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
+        $p = 'wp_ajax_'.Brizy_Editor::prefix();
+        add_action($p.self::AJAX_REMOVE_LOCK, array($this, 'removeProjectLock'));
+        add_action($p.self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
+        add_action($p.self::AJAX_TAKE_OVER, array($this, 'takeOver'));
+        add_action($p.self::AJAX_GET, array($this, 'get_item'));
+        add_action($p.self::AJAX_GET_POST_INFO, array($this, 'get_post_info'));
+        add_action($p.self::AJAX_UPDATE, array($this, 'update_item'));
+        add_action($p.self::AJAX_GET_PROJECT, array($this, 'get_project'));
+        add_action($p.self::AJAX_SET_PROJECT, array($this, 'set_project'));
+        add_action($p.self::AJAX_LOCK_PROJECT, array($this, 'lock_project'));
+        add_action($p.self::AJAX_SIDEBARS, array($this, 'get_sidebars'));
+        add_action($p.self::AJAX_SHORTCODE_CONTENT, array($this, 'shortcode_content'));
+        add_action($p.self::AJAX_PLACEHOLDER_CONTENT, array($this, 'placeholder_content'));
+        add_action($p.self::AJAX_PLACEHOLDERS_CONTENT, array($this, 'placeholders_content'));
+        add_action($p.self::AJAX_GET_POST_OBJECTS, array($this, 'get_post_objects'));
+        add_action($p.self::AJAX_SEARCH_POST, array($this, 'search_post'));
+        add_action($p.self::AJAX_GET_MENU_LIST, array($this, 'get_menu_list'));
+        add_action($p.self::AJAX_GET_TERMS, array($this, 'get_terms'));
+        add_action($p.self::AJAX_GET_USERS, array($this, 'get_users'));
+        add_action($p.self::AJAX_GET_TERMS_BY, array($this, 'get_terms_by'));
+        add_action($p.self::AJAX_MEDIA_METAKEY, array($this, 'get_media_key'));
+        add_action($p.self::AJAX_CREATE_ATTACHMENT_UID, array($this, 'get_attachment_key'));
+        add_action($p.self::AJAX_SET_FEATURED_IMAGE, array($this, 'set_featured_image'));
+        add_action($p.self::AJAX_SET_IMAGE_FOCAL_PT, array($this, 'set_featured_image_focal_point'));
+        add_action($p.self::AJAX_TIMESTAMP, array($this, 'timestamp'));
+        add_action($p.self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
+        add_action($p.self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
+        add_action($p.self::AJAX_GET_DYNAMIC_CONTENT, array($this, 'addDynamicContent'));
+        add_action($p.'nopriv_'.Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
 
     }
 
@@ -431,7 +431,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         try {
             $this->verifyNonce(self::nonce);
 
-            $data = $this->sanitizeJson(stripslashes($this->param('data')));
             $atemplate = $this->param('template');
             $dataVersion = (int)stripslashes($this->param('dataVersion'));
             $status = stripslashes($this->param('status'));
@@ -444,10 +443,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 $this->post->set_template($atemplate);
             }
 
-            if ($data) {
-                $this->post->set_editor_data($data);
-                $this->post->set_editor_version(BRIZY_EDITOR_VERSION);
-                $this->post->set_needs_compile(true);
+            if ($this->param('data')) {
+                $decodedData = json_decode(stripslashes($this->param('data')));
+                if ($decodedData !== null && json_last_error() === JSON_ERROR_NONE) {
+                    $decodedData = $this->sanitizeDecodedJson($decodedData);
+                    $this->post->set_editor_data(json_encode($decodedData));
+                    $this->post->set_editor_version(BRIZY_EDITOR_VERSION);
+                    $this->post->set_needs_compile(true);
+                }
             }
 
             $this->post->getWpPost()->post_status = $status;
@@ -733,19 +736,19 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                     break;
                 case Brizy_Admin_Rule::YEAR_ARCHIVE:
 
-                    $wp_query = new WP_Query('year=' . date('Y'));
+                    $wp_query = new WP_Query('year='.date('Y'));
                     $wp_query->is_year = true;
 
                     return null;
                 case Brizy_Admin_Rule::MONTH_ARCHIVE:
 
-                    $wp_query = new WP_Query('year=' . date('Y') . '&monthnum=' . date('m'));
+                    $wp_query = new WP_Query('year='.date('Y').'&monthnum='.date('m'));
                     $wp_query->is_month = true;
 
                     return null;
                 case Brizy_Admin_Rule::DAY_ARCHIVE:
 
-                    $wp_query = new WP_Query('year=' . date('Y') . '&monthnum=' . date('m') . '&day=' . date('d'));
+                    $wp_query = new WP_Query('year='.date('Y').'&monthnum='.date('m').'&day='.date('d'));
                     $wp_query->is_day = true;
 
                     return null;
@@ -808,9 +811,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
         if ($wp_query instanceof WP_Query && $term = $wp_query->get('post_title_term')) {
             $search_term = $wpdb->esc_like($term);
-            $search_term = ' \'%' . $search_term . '%\'';
+            $search_term = ' \'%'.$search_term.'%\'';
 
-            $where .= ' AND ' . $wpdb->posts . '.post_title LIKE ' . $search_term;
+            $where .= ' AND '.$wpdb->posts.'.post_title LIKE '.$search_term;
         }
 
         return $where;
@@ -938,8 +941,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 'postType' => [
                     'type' => $post->post_type,
                     'singular_name' => $pt->labels->singular_name,
-                    'name' => $pt->labels->name
-                ]
+                    'name' => $pt->labels->name,
+                ],
             ];
         }
 
@@ -961,7 +964,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
 
         if (!empty($search)) {
-            $args['search'] = '*' . $search . '*';
+            $args['search'] = '*'.$search.'*';
             $args['search_columns'] = ['display_name'];
         }
 
@@ -1025,7 +1028,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             if (!$uid) {
                 $file = get_attached_file($attachmentId);
                 $path_parts = pathinfo($file);
-                $uid = "wp-" . md5($attachmentId . time()) . '.' . $path_parts['extension'];
+                $uid = "wp-".md5($attachmentId.time()).'.'.$path_parts['extension'];
 
                 // this is a bit wrong as the attachment is attached to itself
                 // (we used brizy_post_uid to mark the attachments as attached to the post with uid in this key)
@@ -1089,7 +1092,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         if (!$uid) {
             $file = get_attached_file($attachmentId);
             $path_parts = pathinfo($file);
-            $uid = "wp-" . md5($attachmentId . time()) . '.' . $path_parts['extension'];
+            $uid = "wp-".md5($attachmentId.time()).'.'.$path_parts['extension'];
             update_post_meta($attachmentId, 'brizy_attachment_uid', $uid);
         }
 
