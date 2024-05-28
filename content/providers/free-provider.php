@@ -117,6 +117,25 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             })
         );
         $this->registerPlaceholder(
+            new Brizy_Content_Placeholders_Simple('', 'menu_current_item', function ($context, $contentPlaceholder) {
+
+                $attrs = $contentPlaceholder->getAttributes();
+                $link = get_permalink();
+                $menu = wp_get_nav_menu_object($attrs['menu']);
+                if ($menu_items = wp_get_nav_menu_items($menu->term_id)) {
+
+                    _wp_menu_item_classes_by_context( $menu_items );
+                    foreach ($menu_items as $menu_item) {
+                        if($menu_item->current && $menu_item->url == $link) {
+                            return 'brz-menu__item--current';
+                        }
+                    }
+                }
+
+                return "";
+            })
+        );
+        $this->registerPlaceholder(
             new Brizy_Content_Placeholders_Simple('', 'editor_post_field', function ($context, $contentPlaceholder) {
 
                 $attrs = $contentPlaceholder->getAttributes();
