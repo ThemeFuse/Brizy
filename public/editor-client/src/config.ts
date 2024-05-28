@@ -2,7 +2,7 @@ import { readIconUrl } from "@/types/Icon";
 import { Arr, Bool, Obj, Str } from "@brizy/readers";
 import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
-import { PLUGIN_ENV } from "./types/global";
+import { ImagePatterns, PLUGIN_ENV } from "./types/global";
 import { pipe } from "./utils/fp/pipe";
 import { onNullish } from "./utils/onNullish";
 import { throwOnNullish } from "./utils/throwOnNullish";
@@ -41,6 +41,8 @@ interface Actions {
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
+  adobeFontsUrl: string;
+  addAccount: string;
 
   getDynamicContentPlaceholders: string;
 
@@ -247,6 +249,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateBlockScreenshot: pipe(
     mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: updateBlockScreenshot")
+  ),
+  adobeFontsUrl: pipe(
+    mPipe(Obj.readKey("adobeFontsUrl"), Str.read),
+    throwOnNullish("Invalid actions: adobeFontsUrl")
+  ),
+  addAccount: pipe(
+    mPipe(Obj.readKey("addAccount"), Str.read),
+    throwOnNullish("Invalid actions: addAccount")
   ),
   getDynamicContentPlaceholders: pipe(
     mPipe(Obj.readKey("getDynamicContentPlaceholders"), Str.read),
