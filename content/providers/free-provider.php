@@ -126,7 +126,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
                     _wp_menu_item_classes_by_context( $menu_items );
                     foreach ($menu_items as $menu_item) {
-                        if($menu_item->current && $menu_item->url == $link) {
+                        if($menu_item->current ) {
                             return 'brz-menu__item--current';
                         }
                     }
