@@ -168,7 +168,7 @@ class Brizy_Admin_Blocks_Main
 
 	    $template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
 
-        $matching_brizy_blocks = $this->getMatchingBrizyBlocks($template);
+        $matching_brizy_blocks = $this->getMatchingBrizyBlocks($template->getWpPost());
         foreach ($matching_brizy_blocks as $block) {
             Brizy_Public_AssetEnqueueManager::_init()->enqueuePost($block);
         }
