@@ -197,16 +197,23 @@ class Brizy_Admin_Blocks_Main {
 		if ( $globalBLocks ) {
 			//return $globalBLocks;
 		}
+
+		$ruleMatches = [];
+
 		if ( ! $wpPost ) {
 			$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 			$wpPost      = get_post( $ruleMatches[0]['entityValues'][0] );
 		}
-		$ruleMatches = [];
+
 		if ( $wpPost->post_type == 'editor-template' ) {
 			$ruleMatches = $this->getTemplateRuleMatches($wpPost);
 		} else {
 			$template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
-			$ruleMatches = $this->getTemplateRuleMatches($template->getWpPost());
+
+			if($template)
+			{
+				$ruleMatches = $this->getTemplateRuleMatches($template->getWpPost());
+			}
 
 			$ruleMatches[] = [
 				'applyFor'     => Brizy_Admin_Rule::POSTS,
