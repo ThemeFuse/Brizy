@@ -1325,6 +1325,13 @@ class Brizy_Editor_Editor_Editor
             $menu_items = $this->get_menu_tree($menuItems);
 
             if (count($menu_items) > 0) {
+
+                $menu_items = array_map(function ($item) use ($menu) {
+                    $item->value->classes[] = '{{ menu_current_item menu="'.$menu->term_id.'" }}';
+
+                    return $item;
+                }, $menu_items);
+
                 $amenu->items = $menu_items;
             }
 
