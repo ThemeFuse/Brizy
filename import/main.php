@@ -99,7 +99,10 @@ class Brizy_Import_Main {
 			wp_send_json_error( $e->getMessage(), '500' );
 		}
 
-		wp_send_json_success( __( 'Template imported successfully.', 'brizy' ) );
+		wp_send_json_success( [
+			'message'         => __( 'Template imported successfully.', 'brizy' ),
+			'editHomepageUrl' => admin_url( 'post.php?action=in-front-editor&post=' . get_option( 'page_on_front' ) ),
+		] );
 	}
 
 	public function adminEnqueueScripts() {
