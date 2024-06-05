@@ -367,8 +367,11 @@ jQuery(document).ready(function ($) {
                         'demo': $( this ).attr( 'data-demo-id' ),
                         'rmContent': $( this ).attr( 'data-rm-content' )
                     },
-                    success: function() {
+                    success: function(response) {
                         $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-success' ).html() );
+                        if ( response.data.editHomepageUrl ) {
+                            $( '.js-demo-data-edit-homepage' ).attr( 'href', response.data.editHomepageUrl );
+                        }
                     },
                     error: function() {
                         $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-error' ).html() );
