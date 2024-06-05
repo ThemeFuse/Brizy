@@ -24,15 +24,6 @@ export interface BlocksArray<T> {
   blocks: Array<T>;
 }
 
-export interface Stories {
-  stories: Array<Template>;
-  categories: Array<Omit<Categories, "slug">>;
-}
-
-export interface StoriesWithThumbs extends Omit<Stories, "stories"> {
-  stories: Array<TemplateWithThumbs>;
-}
-
 export interface Block {
   id: string;
   cat: Array<number | string>;
@@ -244,4 +235,46 @@ export type LayoutsAPI = {
   thumbnailHeight: number;
   keywords: string;
 };
+// endregion
+
+// region Story Types
+export interface Stories {
+  stories: Array<Template>;
+  categories: Array<Omit<Categories, "slug">>;
+}
+
+export interface StoriesWithThumbs extends Omit<Stories, "stories"> {
+  stories: Array<StoriesTemplateWithThumbs>;
+}
+
+export interface StoriesAPI {
+  title: string;
+  categories: string;
+  id: string;
+  pages: number;
+  thumbnail: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+export interface StoriesTemplate {
+  layoutId: string;
+  name: string;
+  cat: Array<number | string>;
+  pagesCount: number;
+  styles?: Array<Style>;
+}
+
+export interface StoriesTemplateWithThumbs extends StoriesTemplate {
+  thumbnailSrc: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+export interface StoryPages {
+  slug: string;
+  thumbnailHeight: number;
+  thumbnailWidth: number;
+  thumbnail: string;
+}
 // endregion

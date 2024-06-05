@@ -1,9 +1,12 @@
-import { upperFirst } from "lodash";
 import {
   Categories,
   LayoutsAPI,
-  LayoutTemplateWithThumbs
+  LayoutTemplateWithThumbs,
+  StoriesAPI,
+  StoriesTemplateWithThumbs
 } from "../types/DefaultTemplate";
+
+const BLANK_PAGE = "Blank";
 
 export const convertLayouts = (
   collections: LayoutsAPI[],
@@ -35,11 +38,40 @@ export const convertLayouts = (
     }
   );
 
+export const convertStories = (
+  collections: StoriesAPI[],
+  thumbUrl: string
+): StoriesTemplateWithThumbs[] =>
+  collections.map(
+    ({
+      categories,
+      pages,
+      id,
+      title,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight
+    }) => {
+      return {
+        layoutId: id,
+        name: title,
+        cat: categories.length
+          ? categories.split(",").map((cat) => cat.trim())
+          : [],
+        pagesCount: pages,
+        thumbnailSrc: `${thumbUrl}${thumbnail}`,
+        thumbnailWidth,
+        thumbnailHeight,
+        blank: title === BLANK_PAGE
+      };
+    }
+  );
+
 export function convertToCategories(
   obj: { slug: string; title: string }[]
 ): Categories[] {
   return obj.map((item) => ({
     ...item,
-    id: upperFirst(item.title.toLowerCase())
+    id: item.title
   }));
 }

@@ -1,8 +1,11 @@
 import { Config, getConfig } from "@/config";
 import {
+  DefaultBlock,
   DefaultBlockWithID,
   LayoutsAPI,
   LayoutsPageAPI,
+  StoriesAPI,
+  StoryPages,
   Style
 } from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
@@ -1314,5 +1317,54 @@ export const getDefaultLayoutData = async (
   return Json.read(data[0].pageData) as {
     items: DefaultBlockWithID[];
   };
+};
+
+export const getDefaultStories = async (
+  url: string
+): Promise<{
+  templates: StoriesAPI[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const res = await fetch(`${url}/get-story-chunk`).then((r) => r.json());
+
+  return {
+    templates: res.collections,
+    categories: res.categories
+  };
+};
+
+export const getDefaultStory = async (
+  url: string,
+  layoutId: Literal,
+  id: string
+): Promise<{
+  blocks: DefaultBlock[];
+}> => {
+  const data = await fetch(
+    `${url}/get-story-page-data?project_id=${layoutId}&page_slug=${id}`
+  ).then((r) => r.json());
+
+  const pageData = JSON.parse(data.collection);
+
+  return pageData as {
+    blocks: DefaultBlock[];
+  };
+};
+
+export const getDefaultStoryPages = async (
+  url: string,
+  id: string
+): Promise<{
+  collections: StoryPages[];
+  paginationInfo: {
+    itemsPerPage: number;
+    lastPage: number;
+    totalCount: number;
+  };
+  styles: Style;
+}> => {
+  return await fetch(`${url}/get-story-page?project_id=${id}&per_page=20`).then(
+    (r) => r.json()
+  );
 };
 //#endregion
