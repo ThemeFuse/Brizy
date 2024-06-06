@@ -36,19 +36,21 @@ final class Brizy_Editor_ThirdParty_Extension implements Brizy_Editor_ThirdParty
 		if ( is_null( $config ) ) {
 			throw new \Exception( "Invalid config object provided" );
 		}
-		$this->name          = $config->name;
-		$this->title         = $config->title;
-		$this->version       = $config->version;
-		$this->category      = $config->category;
+		$this->name     = $config->name;
+		$this->title    = $config->title;
+		$this->version  = $config->version;
+		$this->category = $config->category;
+		$closure = function ( $file ) {
+			if ( strpos( $file, "http" ) !== 0 ) {
+				return $this->publicPath . $file;
+			}
 
-		$closure             = function ( $file ) {
-			return $this->publicPath . $file;
+			return $file;
 		};
-		
-		$this->editorScripts = \array_map( $closure, $config->editorScripts?:[] );
-		$this->viewScripts   = \array_map( $closure, $config->viewScripts?:[] );
-		$this->editorStyles  = \array_map( $closure, $config->editorStyles?:[] );
-		$this->viewStyles    = \array_map( $closure, $config->viewStyles?:[] );
+		$this->editorScripts = \array_map( $closure, $config->editorScripts ?: [] );
+		$this->viewScripts   = \array_map( $closure, $config->viewScripts ?: [] );
+		$this->editorStyles  = \array_map( $closure, $config->editorStyles ?: [] );
+		$this->viewStyles    = \array_map( $closure, $config->viewStyles ?: [] );
 
 	}
 
