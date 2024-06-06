@@ -2,15 +2,45 @@
 
 interface Brizy_Editor_ThirdParty_ExtensionInterface {
 
-	/**
-	 * @return array
-	 */
-	public function getScripts();
+	public function getPublicPath();
 
 	/**
-	 * @return array
+	 * @return mixed
 	 */
-	public function getStyles();
+	public function getName();
 
+	/**
+	 * @return mixed
+	 */
+	public function getTitle();
+
+	/**
+	 * @return mixed
+	 */
+	public function getCategory();
+
+	/**
+	 * @return void[]
+	 */
+	public function getEditorScripts();
+
+	/**
+	 * @return void[]
+	 */
+	public function getViewScripts();
+
+	/**
+	 * @return void[]
+	 */
+	public function getEditorStyles();
+
+	/**
+	 * @return void[]
+	 */
+	public function getViewStyles();
+
+	/**
+	 * @return mixed
+	 */
 	public function getVersion();
 }

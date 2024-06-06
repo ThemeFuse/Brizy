@@ -43,10 +43,16 @@ class Brizy_Public_AssetEnqueueManager {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ], 10002 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 10002 );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ], 10002 );
+		add_filter( 'wp_enqueue_scripts', [ $this, 'addExtensionAssets' ], 10004 );
+
 		add_filter( 'script_loader_tag', [ $this, 'addScriptAttributes' ], 10, 2 );
 		add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
 		add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
 		add_action( 'wp_footer', [ $this, 'insertBodyCodeAssets' ] );
+	}
+
+	public function addExtensionAssets() {
+		do_action('brizy_preview_enqueue_scripts');
 	}
 
 	/**

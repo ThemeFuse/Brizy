@@ -17,7 +17,7 @@ class Brizy_Editor_ThirdParty_Main {
 	}
 
 	public function __construct() {
-		add_action( 'brizy_edit_mode', array( $this, 'init' ) );
+		add_action( 'init', array( $this, 'init' ) );
 	}
 
 	public function init() {
@@ -27,7 +27,25 @@ class Brizy_Editor_ThirdParty_Main {
 		add_filter( 'brizy_editor_config', [ $this, 'registerExtensionsInConfig' ] );
 
 		if ( ! wp_doing_ajax() && ! isset( $_REQUEST[ Brizy_Editor::prefix( Brizy_Public_CropProxy::ENDPOINT ) ] ) && ! isset( $_REQUEST[ Brizy_Editor::prefix( Brizy_Admin_Fonts_Handler::ENDPOINT ) ] ) && ! isset( $_REQUEST[ Brizy_Editor::prefix( Brizy_Editor_API::AJAX_REMOVE_LOCK ) ] ) ) {
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueueExtensionAssets' ], 9998 );
+			add_action( 'brizy_pre_editor_enqueue_scripts', [ $this, 'enqueueExtensionAssets' ]);
+			add_filter('brizy_preview_enqueue_scripts', [ $this,'enqueuePreviewExtensionAssets']);
+		}
+	}
+
+
+	public function enqueuePreviewExtensionAssets() {
+		foreach ( $this->extensions as $extension ) {
+			if ( $extension instanceof Brizy_Editor_ThirdParty_ExtensionInterface ) {
+				foreach ( $extension->getViewScripts() as $scriptUrl ) {
+					$handle = 'brizy-extension-' . md5( $extension->getName().$scriptUrl );
+					wp_enqueue_script( $handle, $scriptUrl,[], $extension->getVersion(), true );
+
+				}
+				foreach ( $extension->getViewStyles() as $styleUrl ) {
+					$handle = 'brizy-extension-' . md5( $extension->getName().$styleUrl );
+					wp_enqueue_style( $handle, $styleUrl, array(), $extension->getVersion() );
+				}
+			}
 		}
 	}
 
@@ -35,8 +53,8 @@ class Brizy_Editor_ThirdParty_Main {
 	public function enqueueExtensionAssets() {
 		foreach ( $this->extensions as $extension ) {
 			if ( $extension instanceof Brizy_Editor_ThirdParty_ExtensionInterface ) {
-				foreach ( $extension->getScripts() as $scriptUrl ) {
-					$handle = 'brizy-custom-extension-' . md5( $scriptUrl );
+				foreach ( $extension->getEditorScripts() as $scriptUrl ) {
+					$handle = 'brizy-extension-' . md5( $extension->getName().$scriptUrl );
 					wp_register_script( $handle, $scriptUrl, [
 						'brizy-editor-vendor',
 						'brizy-react-vendor',
@@ -45,8 +63,8 @@ class Brizy_Editor_ThirdParty_Main {
 					wp_enqueue_script( $handle );
 
 				}
-				foreach ( $extension->getStyles() as $styleUrl ) {
-					$handle = 'brizy-custom-extension-' . md5( $styleUrl );
+				foreach ( $extension->getEditorStyles() as $styleUrl ) {
+					$handle = 'brizy-extension-' . md5( $extension->getName().$styleUrl );
 					wp_enqueue_style( $handle, $styleUrl, array(), $extension->getVersion() );
 				}
 			}
@@ -57,7 +75,7 @@ class Brizy_Editor_ThirdParty_Main {
 
 		foreach ( $this->extensions as $extension ) {
 			if ( $extension instanceof Brizy_Editor_ThirdParty_ExtensionInterface ) {
-				foreach ( $extension->getScripts() as $script ) {
+				foreach ( $extension->getEditorScripts() as $script ) {
 					$config['thirdPartyUrls'][] = [ 'scriptUrl' => $script ];
 				}
 			}
