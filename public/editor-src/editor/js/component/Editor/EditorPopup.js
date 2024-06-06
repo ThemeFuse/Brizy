@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import { Root } from "visual/component/Root";
 import Config from "visual/global/Config";
 import EditorGlobal from "visual/global/Editor";
 import { updateBlocks } from "visual/redux/actions2";
@@ -31,12 +32,14 @@ class EditorPopup extends Component {
             title="popup"
           />
         )}
-        <PagePopup
-          dbValue={{ items }}
-          reduxState={reduxState}
-          reduxDispatch={reduxDispatch}
-          onChange={this.handlePageChange}
-        />
+        <Root type="popup">
+          <PagePopup
+            dbValue={{ items }}
+            reduxState={reduxState}
+            reduxDispatch={reduxDispatch}
+            onChange={this.handlePageChange}
+          />
+        </Root>
       </Fragment>
     );
   }

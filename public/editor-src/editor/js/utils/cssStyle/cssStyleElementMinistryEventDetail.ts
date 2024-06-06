@@ -1,9 +1,12 @@
 import { CSSValue } from "../style2/types";
-import { cssStyleBgColor } from "./cssStyleBgColor";
-import { cssStyleBgGradient } from "./cssStyleBgGradient";
 import { cssStyleBorder } from "./cssStyleBorder";
 import { cssStyleBoxShadow } from "./cssStyleBoxShadow";
 import { cssStyleColor } from "./cssStyleColor";
+import { cssStyleElementButtonSize } from "./cssStyleElementButton";
+import {
+  cssStyleElementMinistryBrandsButtonsBgColor,
+  cssStyleElementMinistryBrandsButtonsBgGradient
+} from "./cssStyleElementMinistryBrands";
 import { getAllCssStyleTypography } from "./cssStyleTypography2";
 
 export const cssStyleElementMinistryEventDetailSubscribeEventButtonColor = ({
@@ -34,17 +37,17 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonBgColor = ({
   device,
   state
 }: CSSValue): string => {
-  return cssStyleBgColor({
+  return cssStyleElementMinistryBrandsButtonsBgColor({
     v,
     device,
     state,
-    prefix: "subscribeEventButtonBg"
+    prefix: "subscribeEventButton"
   });
 };
 
 export const cssStyleElementMinistryEventDetailSubscribeEventButtonBgGradient =
   ({ v, device, state }: CSSValue): string => {
-    return cssStyleBgGradient({
+    return cssStyleElementMinistryBrandsButtonsBgGradient({
       v,
       device,
       state,
@@ -74,3 +77,16 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonBorder = ({
     prefix: "subscribeEventButton"
   });
 };
+
+export function cssStyleElementMinistryBrandsSubscribeEventSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleElementButtonSize({
+    v,
+    device,
+    state,
+    prefix: "subscribeEventButton"
+  });
+}

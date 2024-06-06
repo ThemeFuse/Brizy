@@ -1,0 +1,50 @@
+{% set assetsUrl = editorData.urls.assets %} {% set templateFontsUrl = editorData.urls.templateFonts %} {% spaceless %}<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="{{ assetsUrl }}/editor/css/editor.min.css" rel="stylesheet"><link href="{{ apiAssetsUrl }}/index.css" rel="stylesheet"><style id="brz-ed-page-curtain-style">@keyframes spin{100%{transform:rotate(360deg)}}.brz-ed-page-curtain{position:fixed;left:0;right:0;top:0;bottom:0;background-color:#141923;z-index:1000}.brz-ed-page-spinner,.brz-ed-page-spinner:after,.brz-ed-page-spinner:before{content:'';position:absolute;top:50%;left:50%;border:3px solid transparent;border-radius:50%;animation:spin 1s linear infinite}.brz-ed-page-spinner{width:100px;height:100px;margin:-50px 0 0 -50px;border-top-color:#22b0da;animation-duration:2.5s}.brz-ed-page-spinner:after{width:80px;height:80px;margin:-40px 0 0 -40px;border-right-color:#ed2164;animation-duration:2s}.brz-ed-page-spinner:before{width:60px;height:60px;margin:-30px 0 0 -30px;border-bottom-color:#fff}</style>{% if false and (DEV is not defined or DEV == false) %}<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115444307-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-115444307-1",{linker:{domains:["brizy.io","avangate.com","2checkout.com","brizy.net","brizydemo.com","bitblox7.xyz"]}}),gtag("config","AW-802288683")</script><!-- End Google Analytics --><!-- Facebook Pixel CodeMirror --><script>!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),(o.push=o).loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src="https://connect.facebook.net/en_US/fbevents.js",(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script"),fbq("init","493684744367422"),fbq("track","PageView")</script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=493684744367422&ev=PageView&noscript=1"></noscript><script>fbq("track","ViewContent",{content_name:"Demo Brizy"})</script><!-- End Facebook Pixel CodeMirror --> {% endif %}</head><body class="brz brz-ed"><div class="brz-ed-page-curtain"><div class="brz-ed-page-spinner"></div></div><script>const userAgent = navigator.userAgent;
+        const browserRegex =
+          /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i;
+        const browserTypes = userAgent.match(browserRegex) || [];
+        const browser = browserTypes[1]?.toLowerCase();
+
+        if (browser && browser === "safari") {
+          const regexPattern = /version\/(\d+\.\d+)/i;
+          const matches = userAgent.match(regexPattern);
+          const version = matches ? matches[1] : null;
+          if (version && Number(version) <= 16.3) {
+            alert("Please update Safari browser to the latest version");
+          }
+        }</script><iframe id="brz-ed-iframe" class="brz-iframe brz-ed-iframe--desktop" style="border: 0" srcdoc='
+        <html>
+          <head>
+            <link href="{{ assetsUrl }}/editor/css/editor.min.css" rel="stylesheet">
+            <link href="{{ apiAssetsUrl }}/index.css" rel="stylesheet">
+
+            {% if PRO is defined and PRO %}
+            {% set assetsUrlPro = editorData.pro.urls.assets %}
+              <link href="{{ assetsUrlPro }}/css/editor.pro.min.css" rel="stylesheet">
+            {% endif %}
+          </head>
+          <body class="brz brz-ed brz-ed--desktop">
+            <div id="brz-ed-root"></div>
+            <div id="brz-popups"></div>
+            <script src="{{ assetsUrl }}/editor/js/react.js"></script>
+            <script src="{{ assetsUrl }}/editor/js/react-dom.js"></script>
+            <script src="{{ assetsUrl }}/editor/js/polyfill.min.js"></script>
+            <script src="{{ assetsUrl }}/editor/js/editor.vendor.min.js"></script>
+            <script>
+              window.__VISUAL_CONFIG__ = {{ editorData | json_encode }};
+              window.__CLOUD_ENV__ = {{ cloudData | json_encode }};
+
+              {% if DEV is defined and DEV %}
+                window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+              {% endif %}
+            </script>
+
+            <script src="{{ apiAssetsUrl }}/index.js"></script>
+            <script src="{{ assetsUrl }}/editor/js/editor.min.js"></script>
+
+            {% if PRO is defined and PRO %}
+            {% set assetsUrlPro = editorData.pro.urls.assets %}
+              <script src="{{ assetsUrlPro }}/js/editor.pro.min.js"></script>
+            {% endif %}
+          </body>
+        </html>
+      '></iframe><script src="{{ assetsUrl }}/editor/js/polyfill.min.js"></script></body></html>{% endspaceless %}

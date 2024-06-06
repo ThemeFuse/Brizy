@@ -10,13 +10,13 @@ export interface Props extends OptionProps<Value>, WithClassName {
   choices?: Choice[];
 }
 
-export const IconPicker: React.FC<Props> = ({
+export const IconPicker = ({
   className,
   choices,
   label,
   onChange,
   value
-}) => {
+}: Props): JSX.Element => {
   const icons = useMemo(
     () =>
       choices?.map(({ icon, title, value: id }) => (

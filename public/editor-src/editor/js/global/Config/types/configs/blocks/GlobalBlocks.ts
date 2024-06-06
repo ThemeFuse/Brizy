@@ -1,17 +1,14 @@
+import { GlobalBlock } from "visual/types";
+import { ApiRule } from "visual/utils/api/adapter";
 import { Response } from "../common";
 
 //#region Base
 
-export interface Block {
-  id: string;
-  data: string;
-  status: string;
-  rules: string;
-  position: string | null;
-  meta: string;
-  title?: string;
-  tags?: string;
-}
+type _GB = Omit<GlobalBlock, "rules">;
+
+export type Block = _GB & {
+  rules: Array<ApiRule>;
+};
 
 //#endregion
 

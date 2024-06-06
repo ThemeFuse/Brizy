@@ -1,14 +1,18 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { Model } from "visual/editorComponents/EditorComponent/types";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
+import { read as readNum } from "visual/utils/reader/number";
+import { read as readString } from "visual/utils/reader/string";
 import * as sidebarConfig from "../sidebar";
+import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
   sidebarMinistryBrandsMetaCategory,
   sidebarMinistryBrandsMetaChildcare,
@@ -20,12 +24,11 @@ import {
   sidebarMinistryBrandsMetaTitle
 } from "../sidebars/sidebars";
 import * as toolbarImage from "../toolbarImage";
-import * as toolbarLinksColor from "../toolbarLinksColor";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarMetaItemLinkColor from "../toolbars//toolbarMetaItemLinkColor";
 import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
-import * as sidebarButton from "./sidebarButton";
 import { style } from "./styles";
 import * as toolbarArrow from "./toolbarArrow";
 import * as toolbarButton from "./toolbarButton";
@@ -70,7 +73,27 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
     }
   }
 
-  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+  getDBValue(): Model<Value> {
+    const dbValue = super.getDBValue();
+
+    const buttonBorderRadius = readNum(dbValue?.buttonBorderRadius) ?? 0;
+    const buttonBorderRadiusSuffix =
+      readString(dbValue?.buttonBorderRadiusSuffix) ?? "px";
+
+    const buttonsBorderRadius = readNum(dbValue?.buttonsBorderRadius);
+    const buttonsBorderRadiusSuffix = readString(
+      dbValue?.buttonsBorderRadiusSuffix
+    );
+
+    return {
+      ...dbValue,
+      buttonsBorderRadius: buttonsBorderRadius ?? buttonBorderRadius,
+      buttonsBorderRadiusSuffix:
+        buttonsBorderRadiusSuffix ?? buttonBorderRadiusSuffix
+    };
+  }
+
+  renderForEdit(v: Value, vs: Value, vd: Value): JSX.Element {
     const className = classnames(
       "brz-groupSlider__wrapper",
       "brz-ministryBrands",
@@ -85,9 +108,13 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
         selector=".brz-swiper-arrow"
       >
         <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarButton, sidebarButton, {
-            allowExtend: false
-          })}
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarButton,
+            sidebarExtendButtons,
+            {
+              allowExtend: false
+            }
+          )}
           selector=".brz-groupSlider_detail_button .brz-button"
         >
           <Toolbar
@@ -158,7 +185,7 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-ministryBrands__item--meta-resourceLink"
+                        selector=".brz-ministryBrands__item--meta-resourceLink > .brz-groupSlider_meta"
                       >
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
@@ -192,8 +219,8 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                             >
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarLinksColor,
-                                  undefined,
+                                  toolbarMetaItemLinkColor,
+                                  sidebarMinistryBrandsMetaResourceLink,
                                   {
                                     allowExtend: false
                                   }

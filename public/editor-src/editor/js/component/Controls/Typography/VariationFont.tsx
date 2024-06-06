@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
 import { Unit } from "visual/component/Controls/NumberUnit/types";
@@ -11,7 +11,7 @@ import { isT } from "visual/utils/value";
 import { NumberType, VariationValue } from "./types/FontVariation";
 import { FontVariationProps as Props } from "./types/Props";
 
-export const VariationFont: FC<Props> = ({
+export const VariationFont = ({
   variableFontWeight,
   fontWidth,
   fontSoftness,
@@ -19,7 +19,7 @@ export const VariationFont: FC<Props> = ({
   onVariableFontWeightChange,
   onFontWidthChange,
   onSoftnessChange
-}) => {
+}: Props): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = useCallback(() => setIsOpen(!isOpen), [isOpen]);
 

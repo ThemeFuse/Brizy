@@ -28,8 +28,11 @@ import {
   ShopifyTemplate,
   getShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { updateError } from "visual/redux/actions";
-import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
+import {
+  updateError,
+  updatePageLayout,
+  updatePageTitle
+} from "visual/redux/actions2";
 import {
   getPageRelations,
   shopifyBlogItems,

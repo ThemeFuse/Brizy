@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface MouseCoordinates {
   x: number;
   y: number;
@@ -13,6 +15,7 @@ export interface DraggableProps {
   onDragStart: (arg: MouseCoordinates) => void;
   onDrag: (arg: MouseCoordinates) => void;
   onDragEnd: (arg: MouseCoordinates) => void;
+  children: ReactNode;
   defaultPosition: {
     x: number;
     y: number;

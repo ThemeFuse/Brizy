@@ -12,7 +12,19 @@ export default {
         {
           type: "MinistryBrandsGroupSlider",
           value: {
-            _styles: ["ministryBrandsGroupSlider"]
+            _styles: ["ministryBrandsGroupSlider"],
+            titleTypographyFontStyle: "heading4",
+            titleColorPalette: "color3",
+            hoverTitleColorPalette: "color4",
+            metaTypographyFontStyle: "heading6",
+            metaColorPalette: "color7",
+            buttonTypographyFontStyle: "button",
+            buttonBgColorPalette: "color3",
+            buttonColorPalette: "color8",
+            hoverButtonBgColorOpacity: 0.8,
+            arrowColorPalette: "color3",
+            hoverArrowColorPalette: "color4",
+            dotsBgColorPalette: "color4"
           }
         }
       ]

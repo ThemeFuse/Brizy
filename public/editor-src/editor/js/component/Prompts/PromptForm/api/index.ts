@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import _ from "underscore";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import Config from "visual/global/Config";

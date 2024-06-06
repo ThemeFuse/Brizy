@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { CSSProperties, ReactElement } from "react";
+import React, { CSSProperties, ReactElement, ReactNode } from "react";
 import { Popper } from "react-popper";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
@@ -45,6 +45,7 @@ interface Prs extends WithClassName {
   toolbar?: ToolbarItemsInstance;
   inPortal: boolean;
   node?: HTMLElement;
+  children: ReactNode;
 }
 
 export type Props = Partial<Prs>;
@@ -67,6 +68,7 @@ export class TooltipContent extends React.Component<Props, State> {
     offset: 15,
     toolbar: undefined,
     inPortal: false,
+    children: undefined,
     node: undefined
   };
 

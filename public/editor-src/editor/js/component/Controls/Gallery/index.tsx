@@ -153,7 +153,7 @@ export function Gallery<T extends number | string>({
   onAdd,
   onRemove
 }: Props<T>): ReactElement {
-  const _onSort = useCallback(
+  const _onSort = useCallback<SortableProps<T>["onSortEnd"]>(
     (activeId, overId) => {
       const oldIndex = items.findIndex((item) => item.id === activeId);
       const newIndex = items.findIndex((item) => item.id === overId);

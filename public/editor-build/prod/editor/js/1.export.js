@@ -3,33 +3,15 @@ exports.id = 1;
 exports.ids = [1];
 exports.modules = {
 
-<<<<<<<< HEAD:public/editor-build/282-wp/editor/js/1.export.js
-/***/ 7756:
-========
-<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/1.export.js
-/***/ 7713:
-========
-/***/ 7727:
->>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/1.export.js
->>>>>>>> global-block-refactoring:public/editor-build/prod/editor/js/1.export.js
+/***/ 7398:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Icon": () => (/* binding */ Icon)
 /* harmony export */ });
-<<<<<<<< HEAD:public/editor-build/282-wp/editor/js/1.export.js
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1689);
-/* harmony import */ var _utils_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7757);
-========
-<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/1.export.js
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1653);
-/* harmony import */ var _utils_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7714);
-========
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1581);
-/* harmony import */ var _utils_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7728);
->>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/1.export.js
->>>>>>>> global-block-refactoring:public/editor-build/prod/editor/js/1.export.js
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1234);
+/* harmony import */ var _utils_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7399);
 
 
 var Icon = function(param) {
@@ -45,33 +27,15 @@ var Icon = function(param) {
 
 /***/ }),
 
-<<<<<<<< HEAD:public/editor-build/282-wp/editor/js/1.export.js
-/***/ 7757:
-========
-<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/1.export.js
-/***/ 7714:
-========
-/***/ 7728:
->>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/1.export.js
->>>>>>>> global-block-refactoring:public/editor-build/prod/editor/js/1.export.js
+/***/ 7399:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Icons": () => (/* binding */ Icons)
 /* harmony export */ });
-<<<<<<<< HEAD:public/editor-build/282-wp/editor/js/1.export.js
-/* harmony import */ var _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2424);
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2382);
-========
-<<<<<<<< HEAD:public/editor-build/278-wp/editor/js/1.export.js
-/* harmony import */ var _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2377);
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2335);
-========
-/* harmony import */ var _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2305);
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2263);
->>>>>>>> bd38e9d76 (refactor(editor-build): removed version folder, put all inside editor-build):public/editor-build/editor/js/1.export.js
->>>>>>>> global-block-refactoring:public/editor-build/prod/editor/js/1.export.js
+/* harmony import */ var _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2044);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2002);
 function _define_property(obj, key, value) {
     if (key in obj) {
         Object.defineProperty(obj, key, {

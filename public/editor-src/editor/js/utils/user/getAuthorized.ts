@@ -8,18 +8,22 @@ const setStorageAuthorized = (authorized: Authorized): void => {
 };
 
 const getStorageAuthorized = (): Authorized => {
-  const authorized = localStorage.getItem(storageAuthorizedKey);
+  try {
+    const authorized = localStorage.getItem(storageAuthorizedKey);
 
-  switch (authorized) {
-    case "pending": {
-      return "pending";
+    switch (authorized) {
+      case "pending": {
+        return "pending";
+      }
+      case "connected": {
+        return "connected";
+      }
+      default: {
+        return "disconnect";
+      }
     }
-    case "connected": {
-      return "connected";
-    }
-    default: {
-      return "disconnect";
-    }
+  } catch (e) {
+    return "disconnect";
   }
 };
 

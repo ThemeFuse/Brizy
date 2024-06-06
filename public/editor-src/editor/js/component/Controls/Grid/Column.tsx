@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React from "react";
 import classNames from "classnames";
 import { WithClassName } from "visual/utils/options/attributes";
+import { FCC } from "visual/utils/react/types";
 
 export interface Props extends WithClassName {
   align: "start" | "center" | "end";
@@ -12,7 +13,7 @@ const alignMap = {
   end: "brz-ed-control__grid__column--align-end"
 };
 
-export const Column: FC<Props> = ({ className, children, align }) => (
+export const Column: FCC<Props> = ({ className, children, align }) => (
   <div
     className={classNames(
       "brz-ed-control__grid__column",

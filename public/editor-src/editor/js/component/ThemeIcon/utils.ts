@@ -7,12 +7,16 @@ export interface ParsedSVG {
   attr: Record<string, unknown>;
 }
 
-export async function fetchIcon(
-  type: string,
-  name: string,
-  abortController?: AbortController
-): Promise<string> {
-  const r = await fetch(templateIconUrl(type, name), {
+interface Data {
+  type: string;
+  name: string;
+  suffix?: string;
+  abortController?: AbortController;
+}
+
+export async function fetchIcon(data: Data): Promise<string> {
+  const { type, name, suffix, abortController } = data;
+  const r = await fetch(templateIconUrl(type, name, suffix), {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"

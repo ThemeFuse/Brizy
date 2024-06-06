@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import React, { FC } from "react";
+import React from "react";
 import { Tooltip } from "visual/component/Controls/Tooltip";
 import { Props } from "./types";
 
-export const Popover: FC<Props> = ({
+export const Popover = ({
   className,
   title,
   size,
@@ -14,7 +14,7 @@ export const Popover: FC<Props> = ({
   trigger,
   toolbar,
   clickOutsideExceptions = []
-}) => {
+}: Props): JSX.Element => {
   const _className = classNames("brz-ed-control__popover", className);
   const content = (
     <div className="brz-ed-control__popover--content">{children}</div>

@@ -313,17 +313,20 @@ export function getCustomImageUrl(
     cW: Math.round(cW),
     cH: Math.round(cH)
   };
+
   const url = getImageUrl({
     uid: src,
     crop: options,
     fileName,
-    sizeType: SizeType.custom
+    sizeType: SizeType.custom,
+    imageType: v.imageType
   });
   const retinaUrl = getImageUrl({
     uid: src,
     crop: multiplier(options, 2),
     fileName,
-    sizeType: SizeType.custom
+    sizeType: SizeType.custom,
+    imageType: v.imageType
   });
 
   return {

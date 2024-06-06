@@ -1,14 +1,16 @@
+import classnames from "classnames";
 import React from "react";
 import { noop } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
+import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "../../utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendButton from "./sidebarExtendButton";
 import * as sidebarExtendParent from "./sidebarExtendParent";
-import { styleCSSVars, styleClassName } from "./styles";
+import { style } from "./styles";
 import * as toolbarExtendButton from "./toolbarExtendButton";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
@@ -30,7 +32,7 @@ export default class Form extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -70,10 +72,19 @@ export default class Form extends EditorComponent {
     return <EditorArrayComponent {...itemsProps} />;
   }
 
-  renderForEdit(v) {
+  renderForEdit(v, vs, vd) {
+    const _className = classnames(
+      "brz-forms",
+      css(
+        `${this.getComponentId()}-form`,
+        `${this.getId()}-form`,
+        style(v, vs, vd)
+      )
+    );
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={styleClassName(v)} style={styleCSSVars(v)}>
+        <div className={_className}>
           <form className="brz-form" noValidate onSubmit={this.handleSubmit}>
             {this.renderFields(v)}
             {this.renderButton(v)}
@@ -83,22 +94,28 @@ export default class Form extends EditorComponent {
     );
   }
 
-  renderForView(v) {
+  renderForView(v, vs, vd) {
+    const config = Config.getAll();
     const { _id, messageSuccess, messageError, messageRedirect, customCSS } = v;
-    const { submitUrl, recaptcha } = Config.get("applications").form;
-    const projectId = Config.get("project").id;
+    const { action, recaptcha } = config?.integrations?.form ?? {};
+    const projectId = config?.project?.id ?? "";
     const recaptchaSiteKey = recaptcha && recaptcha.siteKey;
+
+    const _className = classnames(
+      "brz-forms",
+      css(
+        `${this.getComponentId()}-form`,
+        `${this.getId()}-form`,
+        style(v, vs, vd)
+      )
+    );
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <div
-          className={styleClassName(v)}
-          style={styleCSSVars(v)}
-          data-brz-form-version="1"
-        >
+        <div className={_className} data-brz-form-version="1">
           <form
             className="brz-form"
-            action={submitUrl}
+            action={action}
             noValidate
             {...makeDataAttr({ name: "form-id", value: _id })}
             {...makeDataAttr({ name: "project-id", value: projectId })}

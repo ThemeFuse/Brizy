@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import { VariationFont } from "visual/component/Controls/Typography/VariationFont";
@@ -6,7 +6,7 @@ import { Label } from "visual/component/Label";
 import { Weight } from "visual/utils/fonts/Weight";
 import { FontWeightProps as Props } from "./types/Props";
 
-export const FontWeight: FC<Props> = ({
+export const FontWeight = ({
   label,
   weight,
   variableFontWeight,
@@ -18,7 +18,7 @@ export const FontWeight: FC<Props> = ({
   onVariableFontWeightChange,
   onFontWidthChange,
   onSoftnessChange
-}) => {
+}: Props): JSX.Element => {
   return (
     <div className="brz-ed__col brz-ed__col-1-2">
       <Label title={label}>{label}</Label>

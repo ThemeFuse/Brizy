@@ -3,14 +3,13 @@ import {
   styleBorderWidthGrouped,
   styleColor
 } from "visual/utils/style2";
-import { checkValue } from "../checkValue";
 import { defaultValueValue } from "../onChange";
 import * as Num from "../reader/number";
 import { capByPrefix } from "../string";
 import { CSSValue } from "../style2/types";
+import { getSize } from "./cssStyleSize";
 
 type Size = "small" | "medium" | "large" | "custom";
-export const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
 
 export function cssStyleStroke({
   v,

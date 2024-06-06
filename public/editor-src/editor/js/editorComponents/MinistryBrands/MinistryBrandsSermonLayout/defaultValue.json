@@ -31,6 +31,8 @@
     "searchFilterPlacehoder": "Search",
     "defaultCategory": "",
     "parentCategory": "",
+    "groupSlug": "",
+    "searchValue": "",
 
     "source": "",
     "detailPage": "",
@@ -66,17 +68,6 @@
     "filterTypographyVariableFontWeight": 400,
     "filterTypographyFontWidth": 100,
     "filterTypographyFontSoftness": 0,
-
-    "detailButtonTypographyFontStyle": "",
-    "detailButtonTypographyFontFamilyType": "google",
-    "detailButtonTypographyFontSize": 16,
-    "detailButtonTypographyFontSizeSuffix": "px",
-    "detailButtonTypographyFontWeight": 400,
-    "detailButtonTypographyLetterSpacing": 0,
-    "detailButtonTypographyLineHeight": 1,
-    "detailButtonTypographyVariableFontWeight": 400,
-    "detailButtonTypographyFontWidth": 100,
-    "detailButtonTypographyFontSoftness": 0,
 
     "typographyFontStyle": "",
     "typographyFontFamilyType": "google",
@@ -144,6 +135,39 @@
     "mediaLinksTypographyFontWidth": 100,
     "mediaLinksTypographyFontSoftness": 0,
 
+    "resultsHeadingTypographyFontStyle": "heading5",
+    "resultsHeadingTypographyFontFamilyType": "google",
+    "resultsHeadingTypographyFontSize": 24,
+    "resultsHeadingTypographyFontSizeSuffix": "px",
+    "resultsHeadingTypographyFontWeight": 700,
+    "resultsHeadingTypographyLetterSpacing": 0,
+    "resultsHeadingTypographyLineHeight": 1.1,
+    "resultsHeadingTypographyVariableFontWeight": 700,
+    "resultsHeadingTypographyFontWidth": 100,
+    "resultsHeadingTypographyFontSoftness": 0,
+
+    "noResultsTypographyFontStyle": "paragraph",
+    "noResultsTypographyFontFamilyType": "google",
+    "noResultsTypographyFontSize": 24,
+    "noResultsTypographyFontSizeSuffix": "px",
+    "noResultsTypographyFontWeight": 700,
+    "noResultsTypographyLetterSpacing": 0,
+    "noResultsTypographyLineHeight": 1.1,
+    "noResultsTypographyVariableFontWeight": 700,
+    "noResultsTypographyFontWidth": 100,
+    "noResultsTypographyFontSoftness": 0,
+
+    "detailButtonTypographyFontStyle": "",
+    "detailButtonTypographyFontFamilyType": "google",
+    "detailButtonTypographyFontSize": 16,
+    "detailButtonTypographyFontSizeSuffix": "px",
+    "detailButtonTypographyFontWeight": 400,
+    "detailButtonTypographyLetterSpacing": 0,
+    "detailButtonTypographyLineHeight": 1,
+    "detailButtonTypographyVariableFontWeight": 400,
+    "detailButtonTypographyFontWidth": 100,
+    "detailButtonTypographyFontSoftness": 0,
+
     "metaIconsSpacing": 5,
     "metaIconsSpacingSuffix": "px",
 
@@ -166,6 +190,14 @@
     "paginationColorHex": "#707070",
     "paginationColorOpacity": 1,
     "paginationColorPalette": "",
+
+    "resultsHeadingColorHex": "",
+    "resultsHeadingColorOpacity": 1,
+    "resultsHeadingColorPalette": "color3",
+
+    "noResultsColorHex": "",
+    "noResultsColorOpacity": 1,
+    "noResultsColorPalette": "color7",
 
     "imgBgColorType": "none",
     "imgBgColorHex": "#ffffff",
@@ -387,6 +419,15 @@
     "mediaBorderBottomLeftRadius": 0,
     "mediaBorderBottomLeftRadiusSuffix": "px",
 
+    "buttonsBorderRadiusType": "custom",
+    "buttonsBorderRadius": 3,
+    "buttonsBorderRadiusSuffix": "px",
+
+    "buttonsBorderTopLeftRadius": 3,
+    "buttonsBorderTopRightRadius": 3,
+    "buttonsBorderBottomRightRadius": 3,
+    "buttonsBorderBottomLeftRadius": 3,
+
     "detailButtonBgColorType": "solid",
     "detailButtonBgColorHex": "",
     "detailButtonBgColorOpacity": 1,
@@ -414,6 +455,16 @@
     "detailButtonColorOpacity": 1,
     "detailButtonColorPalette": "",
 
+    "detailButtonFillType": "filled",
+
+    "detailButtonSize": "custom",
+
+    "detailButtonPaddingTB": 12,
+    "detailButtonPaddingRL": 24,
+
+    "detailButtonPaddingTBSuffix": "px",
+    "detailButtonPaddingRLSuffix": "px",
+
     "detailButtonBorderStyle": "none",
     "detailButtonBorderColorHex": "#ffffff",
     "detailButtonBorderColorOpacity": 1,
@@ -427,6 +478,9 @@
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "buttonsHoverTransition": 50,
+    "buttonsHoverTransitionSuffix": "",
 
     "maskShape": "none",
     "maskSize": "cover",
