@@ -78,6 +78,10 @@ class Brizy_Editor_ThirdParty_Main {
 				foreach ( $extension->getEditorScripts() as $script ) {
 					$config['thirdPartyUrls'][] = [ 'scriptUrl' => $script ];
 				}
+
+				$config['thirdPartyComponentHosts'][] = [
+					$extension->getName()=>$extension->getPublicPath()
+				];
 			}
 		}
 
