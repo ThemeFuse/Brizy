@@ -51,6 +51,7 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  ekklesiaApiUrl?: string;
 }
 export interface Config {
   hash: string;
@@ -111,9 +112,8 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
   ),
-  openAIUrl: optional(pipe(
-    mPipe(Obj.readKey("openAIUrl"), Str.read),
-  ))
+  openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read))),
+  ekklesiaApiUrl: optional(mPipe(Obj.readKey("ekklesiaApiUrl"), Str.read))
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
