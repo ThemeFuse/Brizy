@@ -29,6 +29,12 @@ declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
 }
 
+export interface ImagePatterns {
+  full?: string;
+  original?: string;
+  split?: string;
+}
+
 export interface PLUGIN_ENV {
   hash?: string;
   url?: string;
@@ -36,13 +42,25 @@ export interface PLUGIN_ENV {
   actions?: {
     getMediaUid?: string;
     getAttachmentUid?: string;
+    heartBeat?: string;
+    takeOver?: string;
+    getFonts?: string;
   };
   api?: {
     mediaResizeUrl?: string;
     fileUrl?: string;
+    media?: {
+      imagePatterns?: ImagePatterns;
+    };
   };
   l10n?: Record<string, string>;
   collectionTypes?: CollectionType[];
+  project?: {
+    status?: {
+      locked?: boolean;
+      lockedBy?: boolean | { user_email: string };
+    };
+  };
 }
 
 export interface VISUAL_CONFIG {
@@ -66,6 +84,8 @@ export interface VISUAL_CONFIG {
   //#endregion
 
   //#region Events
+
+  onStartLoad?: VoidFunction;
 
   onAutoSave?: (data: AutoSave) => void;
 

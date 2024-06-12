@@ -1,8 +1,6 @@
+import { Num, Obj, Str } from "@brizy/readers";
 import { match } from "fp-utilities";
 import { Dictionary } from "../types/utils";
-import * as Num from "../utils/reader/number";
-import * as Obj from "../utils/reader/object";
-import * as Str from "../utils/reader/string";
 import { MValue } from "../utils/types";
 import { ErrorResponse } from "./types";
 
@@ -52,7 +50,7 @@ export const makeFormEncode = (
             isStrNum,
             (v) => {
               r[`${key}[${i}]`] = `${v}`;
-            },
+            }
           ],
           [
             isRec,
@@ -62,7 +60,7 @@ export const makeFormEncode = (
                   r[`${key}[${i}][${key1}]`] = `${value1}`;
                 }
               });
-            },
+            }
           ]
         )(v);
       });

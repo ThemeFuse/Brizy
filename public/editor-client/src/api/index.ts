@@ -1,4 +1,4 @@
-import { getConfig } from "../config";
+import { Config, getConfig } from "../config";
 import { ConfigDCItem } from "../types/DynamicContent";
 import { Page } from "../types/Page";
 import { Rule } from "../types/PopupConditions";
@@ -14,6 +14,7 @@ import {
 } from "../types/SavedBlocks";
 import { ScreenshotData } from "../types/Screenshots";
 import { t } from "../utils/i18n";
+import { Literal } from "../utils/types";
 import {
   GetCollections,
   parseMetaSavedBlock,
@@ -154,6 +155,51 @@ export function updateProject(
   });
 
   return persistentRequest(url, { method: "POST", body });
+}
+
+export async function addProjectLockedBeacon({
+  lockProject,
+  url: _url,
+  hash,
+  version
+}: {
+  lockProject: string;
+  url: string;
+  hash: string;
+  version: string;
+}) {
+  try {
+    const url = makeUrl(_url, {
+      version,
+      hash,
+      action: lockProject
+    });
+
+    await request(url, {
+      method: "GET"
+    });
+  } catch (e) {
+    throw new Error("API Client: Fail to lock project");
+  }
+}
+
+export function removeProjectLockedSendBeacon({
+  removeLock,
+  url: _url,
+  version
+}: {
+  removeLock: string;
+  url: string;
+  version: string;
+}) {
+  return () => {
+    navigator.sendBeacon(
+      makeUrl(_url, {
+        action: removeLock,
+        version
+      })
+    );
+  };
 }
 
 //#endregion
@@ -885,5 +931,83 @@ export const getPlaceholders = (extraData: {
       return [];
     });
 };
+
+//#endregion
+
+//#region HeartBeat
+export function sendHeartBeat(config: Config) {
+  const {
+    actions: { heartBeat },
+    url: _url,
+    hash,
+    editorVersion: version
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: heartBeat,
+    version,
+    hash
+  });
+  return request(url, { method: "GET" }).then((r) => r.json());
+}
+
+export function sendHeartBeatTakeOver(config: Config) {
+  const {
+    actions: { takeOver },
+    url: _url,
+    hash,
+    editorVersion: version
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: takeOver,
+    version,
+    hash
+  });
+
+  return request(url, { method: "GET" }).then((r) => r.json());
+}
+
+//#endregion
+
+//#region fonts
+export interface FontsData {
+  id?: Literal;
+  container: number;
+  family: string;
+  uid?: Literal;
+  type: "uploaded";
+  files: Record<string, string>;
+  weights: Array<string>;
+}
+
+export async function getUploadedFonts() {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const {
+    hash,
+    url: _url,
+    editorVersion: version,
+    actions: { getFonts }
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: getFonts,
+    version,
+    hash
+  });
+
+  const r = await request(url, { method: "GET" });
+  if (!r.ok) {
+    throw new Error(t("Failed to fetch fonts"));
+  }
+  const response = await r.json();
+
+  return response.data;
+}
 
 //#endregion

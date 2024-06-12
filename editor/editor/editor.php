@@ -90,6 +90,9 @@ class Brizy_Editor_Editor_Editor
             'url' => set_url_scheme(admin_url('admin-ajax.php')),
             'actions' => $this->getApiActions(),
             'pageId' => $this->post->getWpPostId(),
+            'project' => array(
+                'status' => $this->getProjectStatus(),
+            ),
         ];
 
         $config = $this->getApiConfigFields($config, $context);
@@ -180,11 +183,12 @@ class Brizy_Editor_Editor_Editor
                 'usersCanRegister' => get_option('users_can_register'),
             ),
             'mode' => $mode,
-            'applications' => array(
+            'integrations' => array(
                 'form' => array(
-                    'submitUrl' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
+                    'action' => '{{brizy_dc_ajax_url}}?action='.Brizy_Editor::prefix(
                             Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM
                         ),
+                    'showIntegrations' => true
                 ),
             ),
             'server' => array(
@@ -197,6 +201,8 @@ class Brizy_Editor_Editor_Editor
             'imageSizes' => $this->getImgSizes(),
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
+            'membership' => true,
+            'elements'   => [ 'image' => [ 'zoom' => true ] ],
         );
         $manager = new Brizy_Editor_Accounts_ServiceAccountManager(Brizy_Editor_Project::get());
 
