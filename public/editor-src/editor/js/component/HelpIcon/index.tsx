@@ -1,5 +1,5 @@
 import { HelpVideo } from "@brizy/builder-ui-components";
-import React from "react";
+import React, { ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
@@ -11,13 +11,13 @@ interface Props {
   isHelpVideoOpened: boolean;
 }
 
-const HelpIcon: React.FC<Props> = ({
+const HelpIcon = ({
   handleHelpIconClick,
   url,
   iconClassName,
   containerClassName,
   isHelpVideoOpened
-}) => (
+}: Props): ReactElement => (
   <>
     <div className={containerClassName} onClick={handleHelpIconClick}>
       <span title={t("Help")}>

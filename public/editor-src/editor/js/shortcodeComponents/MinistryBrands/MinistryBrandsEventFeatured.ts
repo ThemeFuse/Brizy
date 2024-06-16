@@ -12,7 +12,26 @@ export default {
         {
           type: "MinistryBrandsEventFeatured",
           value: {
-            _styles: ["ministryBrandsEventFeatured"]
+            _styles: ["ministryBrandsEventFeatured"],
+            titleTypographyFontStyle: "heading2",
+            titleColorPalette: "color3",
+            hoverTitleColorPalette: "color4",
+            dateTypographyFontStyle: "heading5",
+            dateColorPalette: "color7",
+            typographyFontStyle: "heading6",
+            colorPalette: "color7",
+            previewTypographyFontStyle: "paragraph",
+            previewColorPalette: "color7",
+            metaLinksColorPalette: "color3",
+            hoverMetaLinksColorPalette: "color4",
+            detailButtonTypographyFontStyle: "button",
+            detailButtonColorPalette: "color8",
+            detailButtonBgColorPalette: "color3",
+            hoverDetailButtonBgColorOpacity: 0.8,
+            registerButtonTypographyFontStyle: "button",
+            registerButtonColorPalette: "color8",
+            registerButtonBgColorPalette: "color3",
+            hoverRegisterButtonBgColorOpacity: 0.8
           }
         }
       ]

@@ -127,10 +127,7 @@ export function style(
       standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
     },
     ".brz && .brz-groupLayout--item__content-meta a:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsMetaLinksTypography",
-        "cssStyleElementOfMinistryBrandsMetaLinksColor"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
       interval: ["cssStyleHoverTransition"]
     },
     ".brz && .brz-groupLayout--item__content": {
@@ -275,19 +272,34 @@ export function style(
         "cssStyleElementOfMinistryBrandsPaginationColorActive"
       ]
     },
-    ".brz && .brz-groupLayout--item__content-detailButton a:hover": {
+    ".brz && .brz-groupLayout--item__content-detailButton:hover": {
       standart: [
         "cssStyleElementMinistryBrandsButtonsTypography",
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder"
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-groupLayout--item__content-detailButton a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
+    },
+    ".brz && .brz-groupLayout-results-heading": {
+      standart: [
+        "cssStyleElementMinistryResultsHeadingTypography",
+        "cssStyleElementMinistryResultsHeadingColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-groupLayout-no-results": {
+      standart: [
+        "cssStyleElementMinistryNoResultsParagraphTypography",
+        "cssStyleElementMinistryNoResultsParagraphColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
     }
   };
 

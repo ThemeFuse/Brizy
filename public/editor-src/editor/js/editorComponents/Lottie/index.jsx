@@ -13,13 +13,14 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import { t } from "visual/utils/i18n";
-import { handleLinkChange } from "visual/utils/patch/Link";
 import { getLinkData } from "visual/utils/models/link";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import { omit } from "timm";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -84,6 +85,7 @@ class Lottie extends EditorComponent {
   handleResizerChange = (patch) => this.patchValue(patch);
 
   renderPopups() {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData) => {
@@ -92,21 +94,27 @@ class Lottie extends EditorComponent {
           value: { popupId }
         } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
-          const blockData = globalBlocks[itemData.value._id];
+          const globalBlockId = itemData.value._id;
+          const blockData = globalBlocks[globalBlockId];
 
           popupId = blockData.value.popupId;
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

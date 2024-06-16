@@ -2,6 +2,7 @@ import React, { ReactElement, useCallback, useMemo } from "react";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { t } from "visual/utils/i18n";
+import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { auto, empty } from "visual/utils/string/specs";
@@ -11,7 +12,6 @@ import Select from "./Select";
 import { Choices, OptGroup } from "./types/Choices";
 import { Handler } from "./types/Handler";
 import { Value } from "./types/Value";
-import { findDCChoiceByPlaceholder } from "./utils";
 
 export interface Props<T extends Literal> {
   choices: Array<Choices<T> | OptGroup<T>>;

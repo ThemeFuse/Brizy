@@ -39,6 +39,10 @@
       "buttonTypographyFontFamily": "lato"
     },
 
+    "buttonsBorderRadiusType": "custom",
+    "buttonsBorderRadius": null,
+    "buttonsBorderRadiusSuffix": null,
+
     "parentBgColorType": "solid",
 
     "parentBgColorHex": "#000000",
@@ -259,6 +263,8 @@
     "buttonGradientStartPointer": 0,
     "buttonGradientFinishPointer": 100,
 
+    "buttonFillType": "filled",
+
     "buttonBgColorHex": "#818a91",
     "buttonBgColorOpacity": 1,
     "buttonBgColorPalette": "",
@@ -346,6 +352,9 @@
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "buttonsHoverTransition": 50,
+    "buttonsHoverTransitionSuffix": "",
 
     "maskShape": "none",
     "maskSize": "cover",

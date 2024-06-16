@@ -21,3 +21,6 @@ export const gradientCssDeclaration = ({
     ? `linear-gradient(${gradientValue})`
     : `radial-gradient(circle ${gradientValue})`;
 };
+
+export const isCustomFontStyle = (style: string): boolean =>
+  style === "" || style === "custom";

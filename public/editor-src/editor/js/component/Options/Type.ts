@@ -23,11 +23,6 @@ export type FromElementModelGetter = (
   withoutId?: boolean
 ) => MValue<Literal>;
 
-export const callGetter =
-  (s: string) =>
-  (g: FromElementModelGetter): MValue<Literal> =>
-    g(s);
-
 export type FromElementModel<T extends OptionName> = (
   get: FromElementModelGetter
 ) => Partial<OptionValue<T>>;

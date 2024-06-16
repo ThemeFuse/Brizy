@@ -1,6 +1,6 @@
 import deepMerge from "deepmerge";
 import React, { Component, HTMLAttributes, ReactNode } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { insert } from "timm";
 import { OptionLabel } from "visual/component/OptionLabel";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
@@ -9,16 +9,14 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
 import Config from "visual/global/Config";
-import { isCloud } from "visual/global/Config/types";
-import { isShopify } from "visual/global/Config/types/configs/Cloud";
 import {
-  FontsPayload,
   addFonts,
+  FontsPayload,
   updateExtraFontStyles,
   updateGlobalBlock
 } from "visual/redux/actions2";
 import {
-  globalBlocksSelector,
+  globalBlocksAssembled2Selector,
   pageBlocksSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
@@ -61,7 +59,7 @@ interface StateProps {
 
 const mapState = (state: ReduxState): StateProps => ({
   pageBlocks: pageBlocksSelector(state),
-  globalBlocks: globalBlocksSelector(state)
+  globalBlocks: globalBlocksAssembled2Selector(state)
 });
 
 const mapDispatch = {
@@ -78,8 +76,7 @@ export type Props<T extends Value> = ConnectedProps<typeof connector> &
 class PromptAddPopupOptionType<T extends Value> extends Component<Props<T>> {
   handleCreate = (): void => {
     const config = Config.getAll();
-    // TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
-    const showGlobal = !(isCloud(config) && isShopify(config));
+    const showGlobal = typeof config.api?.globalBlocks?.create === "function";
 
     const data: PromptsProps<"popup"> = {
       prompt: "blocks",
@@ -126,7 +123,7 @@ class PromptAddPopupOptionType<T extends Value> extends Component<Props<T>> {
         popupId = uuid();
 
         updateGlobalBlock({
-          id: _id,
+          uid: _id,
           data: deepMerge(globalBlock, { value: { popupId } }),
           meta: { is_autosave: 0 }
         });

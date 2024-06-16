@@ -1,9 +1,11 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { read as readNumber } from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { getButtonMaxBorderRadius } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 // @ts-expect-error "advancedSettings" is old options
@@ -13,6 +15,31 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const { hex: buttonBgColorHex } = getOptionColorHexByPalette(
     dvv("buttonBgColorHex"),
     dvv("buttonBgColorPalette")
+  );
+
+  const { hex: buttonColorHex } = getOptionColorHexByPalette(
+    dvv("buttonColorHex"),
+    dvv("buttonColorPalette")
+  );
+
+  const buttonColorOpacity = dvv("buttonColorOpacity");
+  const buttonBgColorOpacity = dvv("buttonBgColorOpacity");
+
+  const customSize = dvv("buttonSize") !== "custom";
+  const fillType = dvv("buttonFillType");
+
+  const fillTypeDefault = fillType === "default";
+
+  const detailButtonTypographyFontSize =
+    readNumber(dvv("detailButtonTypographyFontSize")) ?? 15;
+
+  const detailButtonTypographyLineHeight =
+    readNumber(dvv("detailButtonTypographyLineHeight")) ?? 1.6;
+
+  const customBorderRadius = dvv("buttonsBorderRadiusType") !== "custom";
+  const maxBorderRadius = getButtonMaxBorderRadius(
+    detailButtonTypographyFontSize,
+    detailButtonTypographyLineHeight
   );
 
   return [
@@ -43,7 +70,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
             {
               id: "buttonHeight",
               label: t("Height"),
-              disabled: dvv("buttonSize") !== "custom",
+              disabled: customSize,
               type: "slider",
               config: {
                 min: 0,
@@ -54,7 +81,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
             {
               id: "buttonWidth",
               label: t("Width"),
-              disabled: dvv("buttonSize") !== "custom",
+              disabled: customSize,
               type: "slider",
               config: {
                 min: 0,
@@ -66,6 +93,38 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
               }
             }
           ]
+        },
+        {
+          id: "buttonFillType",
+          label: t("Fill"),
+          devices: "desktop",
+          type: "radioGroup",
+          position: 20,
+          choices: [
+            { value: "filled", icon: "nc-circle" },
+            { value: "outline", icon: "nc-outline" },
+            { value: "default", icon: "nc-close" }
+          ]
+        },
+        {
+          id: "buttonsBorderRadiusType",
+          label: t("Corner"),
+          type: "radioGroup",
+          choices: [
+            { value: "square", icon: "nc-corners-square" },
+            { value: "rounded", icon: "nc-corners-round" },
+            { value: "custom", icon: "nc-more" }
+          ]
+        },
+        {
+          id: "buttonsBorderRadius",
+          type: "slider",
+          disabled: customBorderRadius,
+          config: {
+            min: 0,
+            max: maxBorderRadius,
+            units: [{ title: "px", value: "px" }]
+          }
         }
       ]
     },
@@ -95,10 +154,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              buttonBgColorHex,
-              dvv("buttonBgColorOpacity")
-            )
+            backgroundColor:
+              fillType === "filled"
+                ? hexToRgba(buttonBgColorHex, buttonBgColorOpacity)
+                : hexToRgba(buttonColorHex, buttonColorOpacity)
           }
         }
       },
@@ -115,7 +174,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "button",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillType !== "filled"
                 }
               ]
             },
@@ -137,7 +197,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "buttonBorder",
                   type: "border",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             },
@@ -148,7 +209,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "buttonBoxShadow",
                   type: "boxShadow",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             }

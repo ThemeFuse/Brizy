@@ -41,6 +41,7 @@ class Leadific extends EditorComponent<Value, Props> {
   }
 
   renderPopups(): ReactNode {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData: Block) => {
@@ -60,11 +61,10 @@ class Leadific extends EditorComponent<Value, Props> {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

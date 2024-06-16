@@ -1,52 +1,80 @@
-import { getCompileHTML } from "visual/bootstraps/workers/ssr/compile";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isT } from "fp-utilities";
+import { getCompileHTML } from "visual/bootstraps/compiler/browser/compile";
+import {
+  ConfigCommon,
+  PublishedGlobalBlock,
+  PublishedPage,
+  PublishedProject
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { GlobalBlock, PageCommon, Project } from "visual/types";
-import { AuthProvider } from "visual/utils/api/providers/Auth";
-import { CustomError } from "visual/utils/errors";
+import { stringifyGlobalBlock } from "visual/utils/api/adapter";
 import { t } from "visual/utils/i18n";
+import { read as readStr } from "visual/utils/reader/string";
 
 export interface Data {
   config: ConfigCommon;
-  project: Project;
-  page: PageCommon;
-  globalBlocks?: Array<GlobalBlock>;
+  state: {
+    project: Project;
+    page: PageCommon;
+    globalBlocks: Array<GlobalBlock>;
+  };
+  needToCompile: {
+    project?: Project;
+    page?: PageCommon;
+    globalBlocks?: Array<GlobalBlock>;
+  };
 }
 
-export interface Output {
-  html?: string;
-  styles?: Array<string>;
-  scripts?: Array<string>;
+interface Compiled {
+  projectData?: PublishedProject;
+  pageData?: PublishedPage;
+  globalBlocks?: Array<PublishedGlobalBlock>;
   error?: string;
 }
 
-export const getCompile = async (data: Data): Promise<Output> => {
-  const { config, project, page, globalBlocks } = data;
-  let pageHTML = {};
+export const getCompile = async (data: Data): Promise<Compiled> => {
+  const { config, state, needToCompile } = data;
+  let output: Compiled = {
+    pageData: needToCompile.page,
+    projectData: needToCompile.project
+  };
 
-  if (config.compiler?.type === "browser") {
-    try {
-      if (AUTHORIZATION_URL) {
-        const Auth = new AuthProvider(AUTHORIZATION_URL);
-        await Auth.send();
-        const { auth } = config;
+  try {
+    const {
+      page: compiledPage,
+      globalBlocks: compiledBlocks,
+      project: compiledProject
+    } = await getCompileHTML({ ...state, config, needToCompile });
 
-        if (!auth?.token) {
-          return {};
+    let projectData = output.projectData;
+    let pageData = output.pageData;
+    const globalBlocks = compiledBlocks
+      ?.map((block) => {
+        const { uid, ...compiled } = block;
+        const globalBlock = needToCompile.globalBlocks?.find(
+          (b) => b.uid === uid
+        );
+
+        if (globalBlock) {
+          const toApi = stringifyGlobalBlock(globalBlock);
+          return { ...toApi, compiled };
         }
-      }
-      ({ page: pageHTML = {} } = await getCompileHTML({
-        config,
-        project,
-        page,
-        globalBlocks
-      }));
-    } catch (e) {
-      pageHTML = {
-        error:
-          e instanceof CustomError ? e.getMessage() : t("Something went wrong")
-      };
+      })
+      .filter(isT);
+
+    if (pageData && compiledPage) {
+      pageData = { ...pageData, compiled: compiledPage };
     }
+
+    if (projectData && compiledProject) {
+      projectData = { ...projectData, compiled: compiledProject };
+    }
+
+    return { pageData, globalBlocks, projectData };
+  } catch (e) {
+    const error = readStr(e) ?? t("Fail to compile");
+    output = { ...output, error };
   }
 
-  return pageHTML;
+  return output;
 };

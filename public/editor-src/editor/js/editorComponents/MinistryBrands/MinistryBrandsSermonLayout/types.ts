@@ -36,6 +36,8 @@ export interface Value extends ElementModel {
   speakerFilterHeading: string;
   searchFilterPlacehoder: string;
   parentCategory: string;
+  groupSlug: string;
+  searchValue: string;
 
   detailPage: string;
   detailPageButtonText: string;

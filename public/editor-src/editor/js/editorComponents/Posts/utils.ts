@@ -56,7 +56,8 @@ export function postsQuery(v: V): CloudPostsQuery {
     orderBy,
     order,
     symbols,
-    excludeCurrentProduct
+    excludeCurrentProduct,
+    component
   } = decodeV(v);
 
   const includeSymbols = symbols[`${source}_incBy`];
@@ -87,7 +88,8 @@ export function postsQuery(v: V): CloudPostsQuery {
       Union.readWithChoices<CloudPostsQuery["order"]>(["ASC", "DESC"])(order) ??
       "DESC",
     offset,
-    ...(excludeCurrentProduct === "on" ? { excludeCurrentProduct: 1 } : {})
+    ...(excludeCurrentProduct === "on" ? { excludeCurrentProduct: 1 } : {}),
+    ...(component ? { component } : {})
   };
 }
 

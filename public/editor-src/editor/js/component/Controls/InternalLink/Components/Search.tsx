@@ -4,7 +4,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 import { SearchProps } from "./types";
 
-export const Search: React.FC<SearchProps> = ({ loading, onChange }) => {
+export const Search = ({ loading, onChange }: SearchProps): JSX.Element => {
   const spinnerClassName = classNames("brz-ed-control__internalLink__spinner", {
     "brz-invisible": !loading,
     "brz-ed-animated--spin": loading

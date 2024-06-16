@@ -1,10 +1,10 @@
 import React, { JSXElementConstructor, useCallback, useMemo } from "react";
-import { Rotate as V } from "../types/Rotate";
-import { EffectProps } from "../types/EffectProps";
-import { t } from "visual/utils/i18n";
 import { OnChange } from "visual/component/Options/Type";
-import { UnitSlider } from "./UnitSlider";
+import { t } from "visual/utils/i18n";
+import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import { Rotate as V } from "visual/utils/options/Motion/types/Rotate";
 import { Direction, Props } from "./Direction";
+import { UnitSlider } from "./UnitSlider";
 import { Viewport } from "./Viewport";
 
 export const Rotate: JSXElementConstructor<EffectProps<V>> = ({
@@ -12,23 +12,23 @@ export const Rotate: JSXElementConstructor<EffectProps<V>> = ({
   onChange
 }) => {
   const onDirectionChange = useCallback<OnChange<V["direction"]>>(
-    direction => onChange({ ...value, direction }),
+    (direction) => onChange({ ...value, direction }),
     [value, onChange]
   );
   const onXChange = useCallback<OnChange<V["x"]>>(
-    x => onChange({ ...value, x }),
+    (x) => onChange({ ...value, x }),
     [value, onChange]
   );
   const onYChange = useCallback<OnChange<V["y"]>>(
-    y => onChange({ ...value, y }),
+    (y) => onChange({ ...value, y }),
     [value, onChange]
   );
   const onSpeedChange = useCallback<OnChange<V["speed"]>>(
-    speed => onChange({ ...value, speed }),
+    (speed) => onChange({ ...value, speed }),
     [value, onChange]
   );
   const onViewportChange = useCallback<OnChange<V["viewport"]>>(
-    viewport => onChange({ ...value, viewport }),
+    (viewport) => onChange({ ...value, viewport }),
     [value, onChange]
   );
   const directions = useMemo<Props<V["direction"]>["directions"]>(

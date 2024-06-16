@@ -1,5 +1,5 @@
 import { match } from "fp-utilities";
-import produce from "immer";
+import { produce } from "immer";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";

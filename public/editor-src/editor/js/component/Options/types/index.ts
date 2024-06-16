@@ -25,6 +25,7 @@ import { Motion } from "visual/component/Options/types/dev/Motion";
 import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect2";
 import { Order } from "visual/component/Options/types/dev/Order";
 import { PayPal } from "visual/component/Options/types/dev/PayPal";
+import { PopupCondition } from "visual/component/Options/types/dev/PopupCondition";
 import { PredefinedPopulation } from "visual/component/Options/types/dev/PredefinedPopulation";
 import { Range as RangeDev } from "visual/component/Options/types/dev/Range";
 import { SavedBlockOption as SavedBlockDev } from "visual/component/Options/types/dev/SavedBlock";
@@ -39,16 +40,15 @@ import { Typography } from "visual/component/Options/types/dev/Typography";
 import AdvancedSettings from "./AdvancedSettings";
 import BlockThumbnail from "./BlockThumbnail";
 import CheckGroup from "./CheckGroup";
-import ColorPalette2 from "./ColorPalette2";
 import ColorPaletteEditor from "./ColorPaletteEditor";
 import FontStyleEditor from "./FontStyleEditor";
-import PopupConditions from "./PopupConditions";
 import PromptAddPopup from "./PromptAddPopup";
 import Toggle from "./Toggle";
 import { StateMode } from "./common/StateMode";
 import { Ai } from "./dev/AiText";
 import { Alert } from "./dev/Alert";
 import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
+import { EditableSelect } from "./dev/EditableSelect";
 import { FormApps as FormAppsDev } from "./dev/FormApps";
 import { GlobalBlockOption as GlobalBlockDev } from "./dev/GlobalBlock";
 import { Margin } from "./dev/Margin";
@@ -112,16 +112,16 @@ const newTypes = {
   savedBlock: SavedBlockDev,
   globalBlock: GlobalBlockDev,
   formApps: FormAppsDev,
-  gbCondition: GbCondition
+  gbCondition: GbCondition,
+  editableSelect: EditableSelect,
+  popupCondition: PopupCondition
 };
 
 const oldTypes = {
   "legacy-advancedSettings": AdvancedSettings,
   "legacy-blockThumbnail": BlockThumbnail,
   "legacy-colorPaletteEditor": ColorPaletteEditor,
-  "legacy-colorPalette2": ColorPalette2,
   "legacy-fontStyleEditor": FontStyleEditor,
-  "legacy-popupConditions": PopupConditions,
   "legacy-promptAddPopup": PromptAddPopup,
   "legacy-checkGroup": CheckGroup,
   "legacy-toggle": Toggle

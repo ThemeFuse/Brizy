@@ -1,7 +1,6 @@
 import cn from "classnames";
-import { mPipe } from "fp-utilities";
-import React, { ReactElement, useEffect, useState } from "react";
-import { decryptIcon, fetchIcon, ParsedSVG, parseSVG } from "./utils";
+import React, { ReactElement } from "react";
+import { templateIconUrl, compileTemplateIconUrl } from "visual/utils/icons";
 
 interface ThemeIconProps {
   name: string;
@@ -9,52 +8,36 @@ interface ThemeIconProps {
   className?: string;
 }
 
-export const ThemeIcon: (props: ThemeIconProps) => ReactElement | null =
-  IS_EDITOR ? ThemeIconEditor : ThemeIconPreview;
+type Suffix = "nc_icon" | "brz_icon" | "fa_icon";
 
-function ThemeIconEditor({
+function getSuffix(type: string): Suffix {
+  switch (type) {
+    case "editor": {
+      return "brz_icon";
+    }
+    case "fa": {
+      return "fa_icon";
+    }
+    default: {
+      return "nc_icon";
+    }
+  }
+}
+
+const getIconUrl = IS_EDITOR ? templateIconUrl : compileTemplateIconUrl;
+
+export const ThemeIcon = ({
   className: _className,
   type,
   name
-}: ThemeIconProps): ReactElement | null {
+}: ThemeIconProps): ReactElement | null => {
   const className = cn("brz-icon-svg align-[initial]", _className);
-  const [parsed, setParsed] = useState<ParsedSVG | undefined>(undefined);
+  const suffix = getSuffix(type);
+  const pathToIcon = getIconUrl(type, name, suffix);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    (async () => {
-      try {
-        const iconStr = await fetchIcon(type, name, abortController);
-        const parsed = mPipe(decryptIcon, parseSVG)(iconStr);
-
-        setParsed(parsed);
-      } catch (e) {
-        console.warn(e);
-        setParsed(undefined);
-      }
-    })();
-
-    return () => {
-      abortController.abort();
-    };
-  }, [type, name]);
-
-  return parsed ? (
-    <svg
-      {...parsed.attr}
-      className={className}
-      dangerouslySetInnerHTML={{ __html: parsed.innerHTML }}
-    />
-  ) : null;
-}
-
-function ThemeIconPreview({
-  className: _className,
-  type,
-  name
-}: ThemeIconProps): ReactElement {
-  const className = cn("brz-icon-svg align-[initial]", _className);
-
-  return <svg className={className} data-type={type} data-name={name} />;
-}
+  return (
+    <svg className={className}>
+      <use href={pathToIcon} />
+    </svg>
+  );
+};

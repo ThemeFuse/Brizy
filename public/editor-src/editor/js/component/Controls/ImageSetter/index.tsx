@@ -73,7 +73,15 @@ export class ImageSetter<T extends ReactText> extends React.Component<
   };
 
   mounted = false;
-  defaultExtensions: Extensions[] = ["jpeg", "jpg", "png", "gif", "svg"];
+  defaultExtensions: Extensions[] = [
+    "jpeg",
+    "jpg",
+    "png",
+    "gif",
+    "svg",
+    "webp"
+  ];
+
   _extensions =
     this.props.acceptedExtensions && this.props.acceptedExtensions.length > 0
       ? this.props.acceptedExtensions
@@ -143,7 +151,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
         if (!extension) {
           ToastNotification.error(
             t(
-              "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
+              "Failed to upload file. Please upload a valid JPG, PNG, SVG, GIF or WEBP image."
             )
           );
           return;

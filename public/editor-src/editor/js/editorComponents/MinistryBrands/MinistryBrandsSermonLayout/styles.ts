@@ -281,19 +281,34 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-sermonLayout__item--detail-button a:hover": {
+    ".brz && .brz-sermonLayout__item--detail-button:hover": {
       standart: [
-        "cssStyleElementSermonLayoutButtonsTypography",
-        "cssStyleElementSermonLayoutButtonsBgColor",
-        "cssStyleElementSermonLayoutButtonsBgGradient",
-        "cssStyleElementSermonLayoutButtonsColor",
-        "cssStyleElementSermonLayoutButtonsBoxShadow",
-        "cssStyleElementSermonLayoutButtonsBorder"
+        "cssStyleElementMinistryBrandsButtonsTypography",
+        "cssStyleElementMinistryBrandsButtonsBgColor",
+        "cssStyleElementMinistryBrandsButtonsBgGradient",
+        "cssStyleElementMinistryBrandsButtonsColor",
+        "cssStyleElementMinistryBrandsButtonsBoxShadow",
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-sermonLayout__item--detail-button a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
+    },
+    ".brz && .brz-sermonLayout-results-heading": {
+      standart: [
+        "cssStyleElementMinistryResultsHeadingTypography",
+        "cssStyleElementMinistryResultsHeadingColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-sermonLayout-no-results": {
+      standart: [
+        "cssStyleElementMinistryNoResultsParagraphTypography",
+        "cssStyleElementMinistryNoResultsParagraphColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
     }
   };
 

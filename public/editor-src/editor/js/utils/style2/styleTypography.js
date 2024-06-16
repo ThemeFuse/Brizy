@@ -1,35 +1,25 @@
 import Config from "visual/global/Config";
-import {
-  getFontById,
-  getFontCssStyle,
-  makeStyleCSSVar
-} from "visual/utils/fonts";
+import { getFontCssStyle } from "visual/utils/fonts";
 import { defaultValueValue } from "visual/utils/onChange";
-import { DESKTOP } from "visual/utils/responsiveMode";
-import { FONT_INITIAL } from "../fonts/utils";
+import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
+import { isNullish } from "visual/utils/value";
 
 export function styleTypographyFontFamily({ v, device, state }) {
   const { fontFamily, fontFamilyType } = v;
 
-  const fontStyle = defaultValueValue({
-    v,
-    key: "fontStyle",
-    device,
-    state
-  });
-
-  if (fontStyle) {
-    return `var(${makeStyleCSSVar({
-      id: fontStyle,
-      device: DESKTOP,
-      key: "fontFamily",
-      config: Config.getAll()
-    })}, ${FONT_INITIAL})`;
-  } else {
-    return fontFamily === undefined
-      ? fontFamily
-      : getFontById({ family: fontFamily, type: fontFamilyType }).family;
+  if (isNullish(fontFamily) || isNullish(fontFamilyType)) {
+    return "";
   }
+  const fontStyle = defaultValueValue({ v, key: "fontStyle", device, state });
+
+  return getDetailsModelFontFamily(
+    {
+      family: fontFamily,
+      familyType: fontFamilyType,
+      style: fontStyle
+    },
+    Config.getAll()
+  );
 }
 
 export function styleTypographyFontSize({ v, device, state }) {

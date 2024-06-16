@@ -43,7 +43,9 @@ export const getPlaceholder = (v: Value): string => {
     groupFilterHeading,
     showSearch,
     searchPlaceholder,
-    dateFormat
+    dateFormat,
+    eventDetailPageButtonText,
+    groupSlug
   } = v;
 
   const attr = [
@@ -84,7 +86,9 @@ export const getPlaceholder = (v: Value): string => {
     `group_filter_heading='${groupFilterHeading}'`,
     getAttr(showSearch, "show_search"),
     `search_placeholder='${searchPlaceholder}'`,
-    `date_format='${dateFormat}'`
+    `date_format='${dateFormat}'`,
+    `detail_page_button_text='${eventDetailPageButtonText}'`,
+    `group_slug='${groupSlug}'`
   ];
 
   return makePlaceholder({

@@ -1,14 +1,10 @@
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { ToolbarItemType } from "../ToolbarItemType";
+import { Props, Value } from "./type";
 
-export function getItems({
-  context
-}: {
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value, Props> = ({ context }) => {
   const toolbarTagsChoices = [
     { title: "Div", value: "div" },
     { title: t("Header"), value: "header" },
@@ -167,4 +163,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

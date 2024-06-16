@@ -12,9 +12,9 @@ import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
-import { ToolbarItems, ToolbarItemsProps } from "./ToolbarItems";
-import { ToolbarMonitorHandler, monitor } from "./monitor";
+import { monitor, ToolbarMonitorHandler } from "./monitor";
 import { setPosition } from "./state";
+import { ToolbarItems, ToolbarItemsProps } from "./ToolbarItems";
 
 interface CollapsibleToolbarProps extends Omit<ToolbarItemsProps, "items"> {
   getItems: () => OptionDefinition[];
@@ -59,6 +59,7 @@ class _CollapsibleToolbar
       ".brz-ed-popup-integrations",
       ".brz-ed-popup-authorization",
       ".brz-ed-eyeDropper",
+      ".brz-ed-popup-two-wrapper",
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal

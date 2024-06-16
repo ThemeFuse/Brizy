@@ -1,7 +1,10 @@
 import _ from "underscore";
+import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 
 export function getItems({ v }) {
+  const showIntegrations =
+    Config.getAll()?.integrations?.form?.showIntegrations ?? false;
   const fields = _.pluck(v.items[0].value.items, "value");
 
   return [
@@ -75,6 +78,7 @@ export function getItems({ v }) {
       id: "apps",
       type: "formApps",
       devices: "desktop",
+      disabled: !showIntegrations,
       config: {
         id: v._id,
         fields,

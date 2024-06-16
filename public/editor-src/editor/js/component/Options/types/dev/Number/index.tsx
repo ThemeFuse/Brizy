@@ -5,6 +5,7 @@ import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
 import { add, clamp, subtractR } from "visual/utils/math";
 import { Component } from "./Type";
+import { MValue } from "visual/utils/value";
 
 export const Number: Component = ({
   className,
@@ -29,7 +30,7 @@ export const Number: Component = ({
   );
 
   const t = useCallback(
-    (x0) => mPipe(validateChange, wrapValue)(x0),
+    (x0: MValue<number>) => mPipe(validateChange, wrapValue)(x0),
     [validateChange, wrapValue]
   );
   const [_value, handleOnChange] = useDebouncedOnChange<number | undefined>(

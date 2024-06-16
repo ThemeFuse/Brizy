@@ -4,5 +4,4 @@ export interface User {
   role: "admin" | "limited";
 
   isGuest: boolean;
-  allowScripts: boolean;
 }
