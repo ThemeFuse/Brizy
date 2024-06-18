@@ -122,6 +122,35 @@ trait Brizy_Editor_Asset_StaticFileTrait
         wp_update_attachment_metadata( $id, $attach_data );
     }
 
+	public static function createSideLoadMedia(
+		$tempFileArray,
+		$assetPath,
+		$postId = null,
+        $uid = null
+    ) {
+
+		$overrides = array( 'test_form' => false );
+		$post = get_post( $postId );
+
+		if ( $post ) {
+			if ( substr( $post->post_date, 0, 4 ) > 0 ) {
+				$time = $post->post_date;
+			}
+		}
+
+		$uploadData = wp_handle_sideload( $tempFileArray, $overrides, $time );
+
+		if ( isset( $uploadData['error'] ) ) {
+			return new WP_Error( 'upload_error', $uploadData['error'] );
+		}
+
+		@copy($uploadData['file'],$assetPath);
+
+		unlink($uploadData['file']);
+
+		return $assetPath;
+    }
+
     public static function createSideLoadFile($basename, $content)
     {
         $filePath = tempnam(sys_get_temp_dir(), $basename);

@@ -120,11 +120,14 @@ class Brizy_Editor_Screenshot_Manager
             $content
         );
 
-        Brizy_Editor_Asset_StaticFileTrait::createSideLoadMediaAttachment(
+        $filePath = Brizy_Editor_Asset_StaticFileTrait::createSideLoadMedia(
             $tempFile,
             $filePath
         );
 
+		if($filePath instanceof WP_Error) {
+			throw new Exception("Unable to store the thumbnail");
+		}
 
         if ($filePath) {
             $filePath = $this->resizeImage($filePath);
