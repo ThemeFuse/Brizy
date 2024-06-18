@@ -115,13 +115,22 @@ class Brizy_Editor_Screenshot_Manager
      */
     private function storeThumbnail($content, $filePath)
     {
-        $store_file = $this->storeFile($content, $filePath);
+         $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+            basename($filePath),
+            $content
+        );
 
-        if ($store_file) {
-            $store_file = $this->resizeImage($filePath);
+        Brizy_Editor_Asset_StaticFileTrait::createSideLoadMediaAttachment(
+            $tempFile,
+            $filePath
+        );
+
+
+        if ($filePath) {
+            $filePath = $this->resizeImage($filePath);
         }
 
-        return $store_file;
+        return $filePath;
     }
 
     /**
