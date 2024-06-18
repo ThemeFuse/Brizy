@@ -144,8 +144,8 @@ class Brizy_Editor_User {
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
 			self::$is_allowed_for_current_user =
 				(
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) ||
-					current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY )
+					current_user_can( 'edit_posts' ) &&
+					(current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY ))
 				);
 		}
 
