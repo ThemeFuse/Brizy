@@ -150,9 +150,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
         try {
             $this->verifyNonce(self::nonce);
 
-			if(!current_user_can('edit_pages')) {
-				 $this->error(403, 'Unauthorized.');
-            }
 
             if (!isset($_FILES['files'])) {
                 $this->error(400, __('Invalid block file'));
