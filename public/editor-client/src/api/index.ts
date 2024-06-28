@@ -1,4 +1,5 @@
 import { Config, getConfig } from "@/config";
+import { DefaultBlock, Kit, KitItem, Style } from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { IconUploadData } from "@/types/Icon";
@@ -1420,6 +1421,80 @@ export const getTypography = async (config: Config) => {
   return await fetch(`${aiGlobalStyleUrl}/api/template/typography`).then((r) =>
     r.json()
   );
+};
+
+//#endregion
+
+//#region Default Templates
+
+export const getDefaultKits = async (
+  url: string,
+  id: string
+): Promise<{
+  blocks: Kit[];
+  categories: { slug: string; title: string }[];
+  styles: Style;
+}> => {
+  const fullUrl = makeUrl(`${url}/api/get-kit-collections-chunk`, {
+    project_id: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    return {
+      blocks: res.collections,
+      categories: res.categories,
+      styles: res.styles
+    };
+  }
+
+  throw new Error(t("Failed to load kits"));
+};
+
+export const getKitData = async (
+  url: string,
+  kitId: string,
+  id: string
+): Promise<DefaultBlock> => {
+  const fullUrl = makeUrl(`${url}/api/get-item`, {
+    project_id: kitId,
+    page_slug: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+    const collection = res.collection.pop();
+
+    return JSON.parse(collection.pageData).items.pop();
+  }
+
+  throw new Error(t("Failed to load kits"));
+};
+
+export const getKitsList = async (url: string): Promise<KitItem[]> => {
+  const response = await request(`${url}/api/get-kits`, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    return res.collections.map((item: { slug: string; title: string }) => ({
+      ...item,
+      id: item.slug
+    }));
+  }
+
+  throw new Error(t("Failed to load kits"));
 };
 
 //#endregion

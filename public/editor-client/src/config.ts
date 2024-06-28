@@ -13,6 +13,7 @@ interface DefaultTemplates {
   popupsUrl: string;
   storiesUrl: string;
   layoutsUrl: string;
+  templatesUrl: string;
 }
 
 interface Actions {
@@ -76,6 +77,7 @@ interface API {
   deleteIconUrl: string;
   uploadIconUrl: string;
   imagePatterns: ImagePatterns;
+  templatesImageUrl: string;
 }
 
 export interface Config {
@@ -107,6 +109,10 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   storiesUrl: pipe(
     mPipe(Obj.readKey("storiesUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
+  ),
+  templatesUrl: pipe(
+    mPipe(Obj.readKey("templatesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: templates")
   )
 });
 
@@ -166,7 +172,11 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   iconUrl: readIconUrl("iconUrl"),
   iconsUrl: readIconUrl("getIconsUrl"),
   uploadIconUrl: readIconUrl("uploadIconUrl"),
-  deleteIconUrl: readIconUrl("deleteIconUrl")
+  deleteIconUrl: readIconUrl("deleteIconUrl"),
+  templatesImageUrl: pipe(
+    mPipe(Obj.readKey("templatesImageUrl"), Str.read),
+    throwOnNullish("Invalid API: templatesImageUrl")
+  )
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
