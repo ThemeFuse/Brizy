@@ -84,9 +84,7 @@ const CustomInnerElementType = (gutter: number): ReactElementType => {
   return InnerElement;
 };
 
-const SmartGrid: React.FC<SmartGridProps> = (
-  props: SmartGridProps
-): ReactElement => {
+const SmartGrid = (props: SmartGridProps): ReactElement => {
   const {
     height,
     width,

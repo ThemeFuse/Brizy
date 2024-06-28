@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useState } from "react";
+import React, { ReactElement, useCallback, useContext, useState } from "react";
 import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
@@ -14,12 +14,12 @@ interface Props {
   handleRemoveDeletedApp: VoidFunction;
 }
 
-export const EmailDisconnect: FC<Props> = ({
+export const EmailDisconnect = ({
   app,
   notification,
   formId,
   handleRemoveDeletedApp
-}) => {
+}: Props): ReactElement => {
   const [nextLoading, setNextLoading] = useState<boolean>(false);
   const [prevLoading, setPrevLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>(null);

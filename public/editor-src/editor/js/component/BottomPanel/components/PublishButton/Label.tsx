@@ -11,12 +11,19 @@ interface Props {
 }
 
 export const Label = ({ status, children }: Props) => {
-  if (status === "draft") {
+  if (status === "draft" || status === "future") {
+    const message =
+      status === "draft"
+        ? t(
+            "This page is currently a Draft. To enable it on your website, choose Publish after clicking the Up Arrow button."
+          )
+        : t(
+            "This page is currently set to Scheduled. If you want to publish it now, please change the status from the page settings."
+          );
+
     const overlay = (
       <TooltipItem className="brz-ed-tooltip__overlay-publish-button--draft__item">
-        {t(
-          "This page is currently a Draft. To enable it on your website, choose Publish after clicking the Up Arrow button."
-        )}
+        {message}
       </TooltipItem>
     );
 

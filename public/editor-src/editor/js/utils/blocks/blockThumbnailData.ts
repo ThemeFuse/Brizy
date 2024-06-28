@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import _ from "underscore";
 import { ElementModelType } from "visual/component/Elements/Types";
 import Config from "visual/global/Config";

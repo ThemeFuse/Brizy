@@ -207,6 +207,3 @@ export {
   keySyncOnChange,
   validateKeyByProperty
 } from "./device";
-
-// Typography
-export { onChangeTypography2 } from "./onChangeTypography2";

@@ -21,19 +21,14 @@ import {
   scrollToActiveElement,
   scrollToClosestCenterSection
 } from "visual/utils/viewport";
-import {
-  ADD_BLOCK,
-  COPY_ELEMENT,
-  HYDRATE,
-  UPDATE_UI,
-  updateCopiedElement
-} from "../actions";
+import { ADD_BLOCK, HYDRATE, UPDATE_UI } from "../actions";
 import {
   ADD_FONTS,
   ActionTypes,
   DELETE_FONTS,
   UPDATE_DEFAULT_FONT,
   UPDATE_EXTRA_FONT_STYLES,
+  updateCopiedElement,
   updateUI
 } from "../actions2";
 import { historySelector } from "../history/selectors";
@@ -42,12 +37,13 @@ import {
   currentLanguageSelector,
   currentRoleSelector,
   currentStyleSelector,
+  defaultFontSelector,
+  extraFontStylesSelector,
   fontsSelector,
   getDefaultFontDetailsSelector,
   storeWasChangedSelector,
   unDeletedFontsSelector
 } from "../selectors";
-import { defaultFontSelector, extraFontStylesSelector } from "../selectors";
 
 export default (config) => (store) => (next) => (action) => {
   const callbacks = {
@@ -97,7 +93,7 @@ export default (config) => (store) => (next) => (action) => {
     handleCurrentRoleChange(callbacks);
   }
 
-  if (action.type === COPY_ELEMENT) {
+  if (action.type === ActionTypes.COPY_ELEMENT) {
     handleCopiedElementChange(callbacks);
   }
 

@@ -7,6 +7,7 @@ import {
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
+import * as Str from "visual/utils/reader/string";
 
 const config = Config.getAll();
 
@@ -92,3 +93,17 @@ export const isMyAccountPage = (config: Cloud): boolean =>
 
 export const isBlogPage = (config: Cloud): boolean =>
   isCloud(config) && config.page.collectionTypeSlug === "blog";
+
+//#region Page
+
+export const getCurrentPageId = (): string => {
+  const config = Config.getAll();
+
+  if (isWp(config)) {
+    return Str.read(config.wp.page) ?? "";
+  }
+
+  return Str.read(config.page?.id) ?? "";
+};
+
+//#endregion

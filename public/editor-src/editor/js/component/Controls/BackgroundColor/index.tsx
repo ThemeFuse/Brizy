@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FC } from "react";
+import React from "react";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import {
@@ -46,7 +46,7 @@ const renderColorPickerItems = (none: boolean) => {
   return items;
 };
 
-export const BackgroundColor: FC<Props> = ({
+export const BackgroundColor = ({
   className,
   onChange,
   value,
@@ -55,7 +55,7 @@ export const BackgroundColor: FC<Props> = ({
   opacity,
   gradientColors: [g1, g2],
   withNone
-}) => {
+}: Props): JSX.Element => {
   const onColorChange: CSProps<Type>["onChange"] = (v, m) => {
     onChange(
       {

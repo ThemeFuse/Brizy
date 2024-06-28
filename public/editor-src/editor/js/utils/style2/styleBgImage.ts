@@ -1,25 +1,45 @@
+import { defaultCrop } from "visual/global/Config/types/configs/common";
 import { getImageUrl } from "visual/utils/image";
+import {
+  UNSPLASH_BG_IMAGE_WIDTH,
+  isUnsplashImage
+} from "visual/utils/image/utils";
 import { defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
 import { CSSValue } from "./types";
 
-export function styleBgImage({ v, device, state }: CSSValue): string {
+export function styleBgImage({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
   const isHover = styleState({ v, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const dvvHover = (key: string) =>
     defaultValueValue({ v, key, device, state: "hover" });
 
   const media = dvv("media");
-  const bgImageSrc = dvv("bgImageSrc");
-  const bgSizeType = dvv("bgSizeType");
+  const bgImageSrc = dvv(capByPrefix(prefix, "bgImageSrc"));
+  const bgSizeType = dvv(capByPrefix(prefix, "bgSizeType"));
 
-  const bgPopulation = dvv("bgPopulation");
+  const bgPopulation = dvv(capByPrefix(prefix, "bgPopulation"));
   const hoverMedia = dvvHover("media");
-  const hoverBgImageSrc = dvvHover("bgImageSrc");
-  const hoverBgPopulation = dvvHover("bgPopulation");
+  const hoverBgImageSrc = dvvHover(capByPrefix(prefix, "bgImageSrc"));
+  const hoverBgPopulation = dvvHover(capByPrefix(prefix, "bgPopulation"));
 
-  const bgImageFileName = dvv("bgImageFileName");
-  const hoverBgImageFileName = dvvHover("bgImageFileName");
+  const bgImageFileName = dvv(capByPrefix(prefix, "bgImageFileName"));
+  const hoverBgImageFileName = dvvHover(capByPrefix(prefix, "bgImageFileName"));
+
+  const hoverBgImageType = dvvHover("bgImageType");
+  const bgImageType = dvv("bgImageType");
+  const crop = isUnsplashImage(bgImageType)
+    ? { ...defaultCrop, cW: UNSPLASH_BG_IMAGE_WIDTH }
+    : undefined;
+  const hoverCrop = isUnsplashImage(hoverBgImageType)
+    ? { ...defaultCrop, cW: UNSPLASH_BG_IMAGE_WIDTH }
+    : undefined;
 
   const hover =
     hoverMedia === "image" && (hoverBgImageSrc !== "" || hoverBgPopulation)
@@ -28,7 +48,9 @@ export function styleBgImage({ v, device, state }: CSSValue): string {
         : `url("${getImageUrl({
             uid: hoverBgImageSrc,
             fileName: hoverBgImageFileName,
-            sizeType: bgSizeType
+            sizeType: bgSizeType,
+            imageType: hoverBgImageType,
+            crop: hoverCrop
           })}")`
       : "none";
 
@@ -39,21 +61,32 @@ export function styleBgImage({ v, device, state }: CSSValue): string {
         : `url("${getImageUrl({
             uid: bgImageSrc,
             fileName: bgImageFileName,
-            sizeType: bgSizeType
+            sizeType: bgSizeType,
+            imageType: bgImageType,
+            crop
           })}")`
       : "none";
 
   return isHover === "hover" ? hover : normal;
 }
 
-export function styleExportBgImage({ v, device, state }: CSSValue): string {
+export function styleExportBgImage({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const media = dvv("media");
-  const bgImageSrc = dvv("bgImageSrc");
-  const bgSizeType = dvv("bgSizeType");
-  const bgPopulation = dvv("bgPopulation");
-  const bgImageFileName = dvv("bgImageFileName");
+  const bgImageSrc = dvv(capByPrefix(prefix, "bgImageSrc"));
+  const bgSizeType = dvv(capByPrefix(prefix, "bgSizeType"));
+  const bgPopulation = dvv(capByPrefix(prefix, "bgPopulation"));
+  const bgImageFileName = dvv(capByPrefix(prefix, "bgImageFileName"));
+  const bgImageType = dvv("bgImageType");
+  const crop = isUnsplashImage(bgImageType)
+    ? { ...defaultCrop, cW: UNSPLASH_BG_IMAGE_WIDTH }
+    : undefined;
 
   return media === "image" && (bgImageSrc !== "" || bgPopulation)
     ? bgPopulation
@@ -61,23 +94,30 @@ export function styleExportBgImage({ v, device, state }: CSSValue): string {
       : `url("${getImageUrl({
           sizeType: bgSizeType,
           uid: bgImageSrc,
-          fileName: bgImageFileName
+          fileName: bgImageFileName,
+          imageType: bgImageType,
+          crop
         })}")`
     : "none";
 }
 
-export function styleBgPositionX({ v, device, state }: CSSValue): string {
+export function styleBgPositionX({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
   const isHover = styleState({ v, state });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const dvvHover = (key: string) =>
     defaultValueValue({ v, key, device, state: "hover" });
 
-  const bgPopulation = dvv("bgPopulation");
-  const bgPositionX = dvv("bgPositionX");
+  const bgPopulation = dvv(capByPrefix(prefix, "bgPopulation"));
+  const bgPositionX = dvv(capByPrefix(prefix, "bgPositionX"));
 
-  const hoverBgPopulation = dvvHover("bgPopulation");
-  const hoverBgPositionX = dvvHover("bgPositionX");
+  const hoverBgPopulation = dvvHover(capByPrefix(prefix, "bgPopulation"));
+  const hoverBgPositionX = dvvHover(capByPrefix(prefix, "bgPositionX"));
   return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionX}%`
     : !bgPopulation
@@ -85,18 +125,23 @@ export function styleBgPositionX({ v, device, state }: CSSValue): string {
     : "0%";
 }
 
-export function styleBgPositionY({ v, device, state }: CSSValue): string {
+export function styleBgPositionY({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
   const isHover = styleState({ v, state });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const dvvHover = (key: string) =>
     defaultValueValue({ v, key, device, state: "hover" });
 
-  const bgPopulation = dvv("bgPopulation");
-  const bgPositionY = dvv("bgPositionY");
+  const bgPopulation = dvv(capByPrefix(prefix, "bgPopulation"));
+  const bgPositionY = dvv(capByPrefix(prefix, "bgPositionY"));
 
-  const hoverBgPopulation = dvvHover("bgPopulation");
-  const hoverBgPositionY = dvvHover("bgPositionY");
+  const hoverBgPopulation = dvvHover(capByPrefix(prefix, "bgPopulation"));
+  const hoverBgPositionY = dvvHover(capByPrefix(prefix, "bgPositionY"));
   return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionY}%`
     : !bgPopulation

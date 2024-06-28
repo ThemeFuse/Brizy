@@ -1,8 +1,7 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React from "react";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { getImageUrl } from "visual/utils/image";
-import { ImageType } from "visual/utils/image/types";
 import { ImageProps, V } from "../types";
 import { showOriginalImage } from "../utils";
 
@@ -20,20 +19,15 @@ const OriginalImage = ({
   v,
   imageSrc,
   extraAttributes = {}
-}: Props): ReactElement => {
-  const isExternalImage = v.imageType === ImageType.External;
-  const url = isExternalImage
-    ? imageSrc
-    : getImageUrl({
-        uid: imageSrc,
-        sizeType: SizeType.original,
-        fileName: v.imageFileName
-      });
+}: Props): JSX.Element => {
+  const url = getImageUrl({
+    uid: imageSrc,
+    sizeType: SizeType.original,
+    fileName: v.imageFileName
+  });
 
-  const classNames = classnames("brz-img", {
-    "brz-img__original": showOriginalImage(v),
-    "brz-img-svg": !isExternalImage,
-    "brz-img-external": isExternalImage
+  const classNames = classnames("brz-img", "brz-img-svg", {
+    "brz-img__original": showOriginalImage(v)
   });
 
   return (

@@ -36,9 +36,7 @@ type CloudConnectProps = ConnectedProps<typeof cloudConnector> & {
   onSuccessSync?: () => void;
 };
 
-export const CloudConnectWP: React.FC<CloudConnectProps> = (
-  props: CloudConnectProps
-): React.ReactElement => {
+export const CloudConnectWP = (props: CloudConnectProps): React.ReactElement => {
   const { isAuthorized, syncAllowed, onSuccessSync, updateAuthorization } =
     props;
   const { isSync, setSync, loading: syncLoading } = useSync();

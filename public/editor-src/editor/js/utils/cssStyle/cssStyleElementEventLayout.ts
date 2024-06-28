@@ -114,6 +114,19 @@ export const cssStyleElementEventLayoutListPaginationColor = ({
   });
 };
 
+export const cssStyleElementEventLayoutListPaginationArrowsColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "listPaginationArrowsColor"
+  });
+};
+
 export const cssStyleElementEventLayoutListPaginationSpacing = ({
   v,
   device,
@@ -126,7 +139,7 @@ export const cssStyleElementEventLayoutListPaginationSpacing = ({
   return `padding:0 ${spacing}px;`;
 };
 
-export const cssStyleElementEventLayoutListTitleTypography = ({
+export const cssStyleElementEventLayoutGroupingDayTypography = ({
   v,
   device,
   state
@@ -139,7 +152,20 @@ export const cssStyleElementEventLayoutListTitleTypography = ({
   });
 };
 
-export const cssStyleElementEventLayoutListTitleColor = ({
+export const cssStyleElementEventLayoutGroupingDateTypography = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "groupingDateTypography"
+  });
+};
+
+export const cssStyleElementEventLayoutGroupingDayColor = ({
   v,
   device,
   state
@@ -149,6 +175,19 @@ export const cssStyleElementEventLayoutListTitleColor = ({
     device,
     state,
     prefix: "listTitleColor"
+  });
+};
+
+export const cssStyleElementEventLayoutGroupingDateColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "groupingDateColor"
   });
 };
 

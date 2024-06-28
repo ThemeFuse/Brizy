@@ -1,5 +1,5 @@
-import { tabEffects } from "visual/component/Options/types/dev/Animation/utils.ts";
 import { t } from "visual/utils/i18n";
+import { tabEffects } from "visual/utils/options/Animation/utils.ts";
 
 export function getItems() {
   return [

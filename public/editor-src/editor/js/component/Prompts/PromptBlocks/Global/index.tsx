@@ -56,11 +56,11 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
         meta: block.meta
       });
 
-      const { id, title = t("Untitled"), tags } = block;
-      const inactive = type === "normal" && !!globalBlocksInPage[id];
+      const { uid, title = t("Untitled"), tags } = block;
+      const inactive = type === "normal" && !!globalBlocksInPage[uid];
 
       return {
-        uid: id,
+        uid,
         thumbnailSrc: url,
         thumbnailWidth: width,
         thumbnailHeight: height,
@@ -78,7 +78,7 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
 
   handleAdd = async ({ uid }: Thumbnail): Promise<void> => {
     const { globalBlocks, projectFonts, onAddBlocks, onClose } = this.props;
-    const block = createGlobalBlockSymbol({ id: uid });
+    const block = createGlobalBlockSymbol({ uid });
     const fontsDiff = getBlocksStylesFonts(
       getUsedModelsFonts({ models: block, globalBlocks }),
       projectFonts
@@ -98,7 +98,7 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
 
     if (globalBlock) {
       this.props.updateGlobalBlock({
-        id: globalBlock.id,
+        uid: globalBlock.uid,
         data: globalBlock.data,
         title: thumbnailData.title,
         tags: thumbnailData.tags

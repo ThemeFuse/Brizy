@@ -12,7 +12,8 @@ export const getTooltipPageTitle = (status: Page["status"]): string => {
     case "publish": {
       return t("Switch to Draft");
     }
-    case "draft": {
+    case "draft":
+    case "future": {
       return t("Publish Page");
     }
   }
@@ -23,7 +24,8 @@ export const getTooltipPageIcon = (status: Page["status"]): string => {
     case "publish": {
       return "nc-switch";
     }
-    case "draft": {
+    case "draft":
+    case "future": {
       return "nc-publish";
     }
   }
@@ -37,7 +39,8 @@ export const getButtonLabel = (
     case StoreChanged.changed: {
       switch (status) {
         case "draft":
-        case "publish": {
+        case "publish":
+        case "future": {
           return t("Save");
         }
       }
@@ -48,7 +51,8 @@ export const getButtonLabel = (
     }
     case StoreChanged.unchanged: {
       switch (status) {
-        case "draft": {
+        case "draft":
+        case "future": {
           return t("Save Draft");
         }
         case "publish": {

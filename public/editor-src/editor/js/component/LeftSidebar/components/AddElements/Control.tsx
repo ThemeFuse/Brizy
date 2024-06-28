@@ -120,7 +120,7 @@ class ControlInner extends Component<Props, State> {
       );
 
       const containerPath = sortableContainer
-        ?.getAttribute("data-sortable-path")
+        ?.getAttribute(makeAttr("sortable-path"))
         ?.split("-");
       const containerType = "section";
       const itemIndex = slickContainer?.getAttribute("data-index");

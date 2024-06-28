@@ -6,6 +6,7 @@ import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/D
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
 import {
   sidebarMinistryBrandsMetaCategory,
@@ -16,6 +17,7 @@ import {
   sidebarMinistryBrandsMetaSeries,
   sidebarMinistryBrandsMetaTitle
 } from "../sidebars/sidebars";
+import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
 import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
@@ -25,9 +27,9 @@ import * as toolbarConfig from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
-import * as toolbarExtendButtons from "./toolbarExtendButtons";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
@@ -36,6 +38,7 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsSermonLayout" {
     return "MinistryBrandsSermonLayout";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -129,7 +132,7 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-ministryBrands__item--meta-passage"
+                    selector=".brz-ministryBrands__item--meta-passage > .brz-sermonLayout__item--meta"
                   >
                     <Toolbar
                       {...this.makeToolbarPropsFromConfig2(
@@ -143,86 +146,97 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                     >
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarMedia,
-                          undefined,
+                          toolbarMetaItemLinkColor,
+                          sidebarMinistryBrandsMetaPassage,
                           {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-sermonLayout__item--media a"
+                        selector=".brz-sermonLayout__item .brz-ministryBrands__item--meta-passage-content a"
                       >
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
-                            toolbarPreview,
+                            toolbarMedia,
                             undefined,
                             {
                               allowExtend: false
                             }
                           )}
-                          selector=".brz-sermonLayout__item--preview"
+                          selector=".brz-sermonLayout__item--media a"
                         >
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarPagination,
+                              toolbarPreview,
                               undefined,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-ministryBrands__pagination"
+                            selector=".brz-sermonLayout__item--preview"
                           >
                             <Toolbar
                               {...this.makeToolbarPropsFromConfig2(
-                                toolbarExtendFilters,
-                                sidebarExtendFilters,
+                                toolbarPagination,
+                                undefined,
                                 {
                                   allowExtend: false
                                 }
                               )}
-                              selector=".brz-sermonLayout__filter"
+                              selector=".brz-ministryBrands__pagination"
                             >
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarExtendButtons,
-                                  undefined,
+                                  toolbarExtendFilters,
+                                  sidebarExtendFilters,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-sermonLayout__item--detail-button"
+                                selector=".brz-sermonLayout__filter"
                               >
                                 <Toolbar
                                   {...this.makeToolbarPropsFromConfig2(
-                                    toolbarImage,
-                                    undefined,
+                                    toolbarExtendButtons,
+                                    sidebarExtendButtons,
                                     {
                                       allowExtend: false
                                     }
                                   )}
-                                  selector=".brz-ministryBrands__item--media"
+                                  selector=".brz-sermonLayout__item--detail-button"
                                 >
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
-                                      toolbarMetaIcons,
+                                      toolbarImage,
                                       undefined,
                                       {
                                         allowExtend: false
                                       }
                                     )}
-                                    selector=".brz-ministryBrands__meta--icons"
+                                    selector=".brz-ministryBrands__item--media"
                                   >
-                                    <Wrapper
-                                      {...this.makeWrapperProps({
-                                        className: "brz-sermonLayout__wrapper"
-                                      })}
+                                    <Toolbar
+                                      {...this.makeToolbarPropsFromConfig2(
+                                        toolbarMetaIcons,
+                                        undefined,
+                                        {
+                                          allowExtend: false
+                                        }
+                                      )}
+                                      selector=".brz-ministryBrands__meta--icons"
                                     >
-                                      <DynamicContentHelper
-                                        placeholder={getPlaceholder(v)}
-                                        props={{ className }}
-                                        blocked={false}
-                                        tagName="div"
-                                      />
-                                    </Wrapper>
+                                      <Wrapper
+                                        {...this.makeWrapperProps({
+                                          className: "brz-sermonLayout__wrapper"
+                                        })}
+                                      >
+                                        <DynamicContentHelper
+                                          placeholder={getPlaceholder(v)}
+                                          props={{ className }}
+                                          blocked={false}
+                                          tagName="div"
+                                        />
+                                      </Wrapper>
+                                    </Toolbar>
                                   </Toolbar>
                                 </Toolbar>
                               </Toolbar>

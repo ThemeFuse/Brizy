@@ -238,7 +238,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
             className,
             attributes: {
               ...makeDataAttr({ name: "showflags", value: showFlags }),
-              ...makeDataAttr({ name: "showName", value: showName })
+              ...makeDataAttr({ name: "showname", value: showName })
             }
           })}
         >

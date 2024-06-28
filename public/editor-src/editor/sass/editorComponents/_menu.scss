@@ -409,6 +409,9 @@ $dropdown-arrow-size: 7px;
     padding-bottom: 0;
   }
 }
+.brz-mega-menu__portal-inPopup {
+  z-index: z("mega-menu") + 2;
+}
 
 // Dropdown offset
 .brz-menu__dropdown {
@@ -480,9 +483,12 @@ $dropdown-arrow-size: 7px;
 
   // Mega Menu
   .brz-mega-menu__portal {
-    // uses mega-menu-preview 1071
-    // conflicts with Popups
-    z-index: z("mega-menu-preview");
+    z-index: z("mega-menu");
+
+    // Case when MegaMenu inside popup inside MegaMenu
+    &.brz-mega-menu__portal-inPopup {
+      z-index: z("section-popup-opened") + 1;
+    }
   }
 }
 

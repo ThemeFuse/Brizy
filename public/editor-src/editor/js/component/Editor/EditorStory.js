@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import EditorGlobal from "visual/global/Editor";
+import { Root } from "visual/component/Root";
 import Config from "visual/global/Config";
-import { pageBlocksSelector } from "visual/redux/selectors";
+import EditorGlobal from "visual/global/Editor";
 import { updateBlocks } from "visual/redux/actions2";
+import { pageBlocksSelector } from "visual/redux/selectors";
 import { areStatesEqual } from "./utils";
+
 class EditorStory extends Component {
   handlePageChange = ({ items: blocks }, meta) => {
     this.props.reduxDispatch(updateBlocks({ blocks, meta }));
@@ -19,24 +21,26 @@ class EditorStory extends Component {
 
     return (
       <Fragment>
-        {Boolean(items.length) && (
+        {items.length > 0 && (
           <iframe id="brz-ed-home-page" src={pagePreview} title="story" />
         )}
-        <PageStory
-          dbValue={{ items }}
-          reduxState={reduxState}
-          reduxDispatch={reduxDispatch}
-          onChange={this.handlePageChange}
-        />
+        <Root type="story">
+          <PageStory
+            dbValue={{ items }}
+            reduxState={reduxState}
+            reduxDispatch={reduxDispatch}
+            onChange={this.handlePageChange}
+          />
+        </Root>
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   reduxState: state
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   reduxDispatch: dispatch
 });
 

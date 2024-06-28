@@ -6,32 +6,27 @@ import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { css } from "visual/utils/cssStyle";
-import { xss } from "visual/utils/xss";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import type { Meta, Value } from "./types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
 export default class EmbedCode extends EditorComponent<Value, ComponentsMeta> {
+  static defaultValue = defaultValue;
+
   static get componentId(): "EmbedCode" {
     return "EmbedCode";
   }
 
-  static defaultValue = defaultValue;
-
   handleValueChange(newValue: Value, meta: Meta) {
-    const config = Config.getAll();
-
-    if (meta.patch.code && !config.user.allowScripts) {
-      const xssCode = xss(newValue.code, "discard");
-      super.handleValueChange({ ...newValue, code: xssCode }, meta);
+    if (meta.patch.code) {
+      super.handleValueChange({ ...newValue, code: newValue.code }, meta);
     } else {
       super.handleValueChange(newValue, meta);
     }

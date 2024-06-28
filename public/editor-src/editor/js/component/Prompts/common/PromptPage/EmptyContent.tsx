@@ -1,5 +1,5 @@
 import { Box as BoxIcon } from "@brizy/builder-icons/src";
-import React from "react";
+import React, { ReactElement } from "react";
 import { Content } from "visual/component/Prompts/common/Content";
 import {
   getContentText,
@@ -16,11 +16,11 @@ interface Props {
   linkText: string;
 }
 
-export const EmptyContent: React.FC<Props> = ({
+export const EmptyContent = ({
   headingText,
   contentText,
   linkText
-}) => (
+}: Props): ReactElement => (
   <Content>
     <div className="brz-ed-popup-content--empty">
       <BoxIcon className="brz-ed-popup-content--empty-icon" />
@@ -40,7 +40,7 @@ export const EmptyContentWithDefaults = ({
   type
 }: {
   type: ShopifyTemplate;
-}) => (
+}): ReactElement => (
   <EmptyContent
     headingText={getHeadingText(type)}
     contentText={getContentText(type)}

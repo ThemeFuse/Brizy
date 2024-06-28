@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import {
   MultiSelect as Control,
   MultiSelectItem as ControlItem
@@ -15,13 +15,15 @@ function choiceToItem({
   return <ControlItem<ValueItem> key={value} title={title} value={value} />;
 }
 
-export const Sync: FC<Omit<Props, "choices"> & { choices: ChoicesSync }> = ({
+export const Sync = ({
   choices,
   value: { value },
   placeholder,
   config,
   onChange
-}) => {
+}: Omit<Props, "choices"> & {
+  choices: ChoicesSync;
+}): ReactElement => {
   const { useAsSimpleSelect = false, showArrow = false } = config ?? {};
 
   const [search, setSearch] = useState("");

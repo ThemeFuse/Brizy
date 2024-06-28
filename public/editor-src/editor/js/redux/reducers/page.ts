@@ -1,14 +1,15 @@
-import produce from "immer";
+import { produce } from "immer";
 import Config from "visual/global/Config";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import {
   pageAssembledRawSelector,
-  pageAssembledSelector
+  pageAssembledSelector,
+  storeWasChangedSelector
 } from "visual/redux/selectors";
 import { ShopifyPage } from "visual/types";
 import { isPopup } from "visual/utils/models";
 import { ReduxAction } from "../actions2";
-import { ReduxState } from "../types";
+import { ReduxState, StoreChanged } from "../types";
 
 type Page = ReduxState["page"];
 type RPage = (s: Page, a: ReduxAction, f: ReduxState) => Page;
@@ -22,6 +23,11 @@ export const page: RPage = (state, action, fullState) => {
     }
     case "PUBLISH": {
       const { status } = action.payload;
+      const storeWasChanged = storeWasChangedSelector(fullState);
+
+      if (storeWasChanged !== StoreChanged.changed && status === state.status) {
+        return state;
+      }
 
       const page = isPopup(Config.getAll())
         ? pageAssembledSelector(fullState)

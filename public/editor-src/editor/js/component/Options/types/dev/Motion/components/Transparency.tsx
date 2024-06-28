@@ -1,9 +1,9 @@
 import React, { JSXElementConstructor, useCallback, useMemo } from "react";
 import { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
-import { EffectProps } from "../types/EffectProps";
-import { Transparency as V } from "../types/Transparency";
-import { Direction as TDirection } from "../types/Transparency";
+import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import { Transparency as V } from "visual/utils/options/Motion/types/Transparency";
+import { Direction as TDirection } from "visual/utils/options/Motion/types/Transparency";
 import { Direction, Props } from "./Direction";
 import { UnitSlider } from "./UnitSlider";
 import { Viewport } from "./Viewport";

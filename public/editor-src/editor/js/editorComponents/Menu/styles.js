@@ -254,9 +254,9 @@ export function styleMenu(v, vs, vd) {
     },
 
     // Current
-    ".brz && .brz-mm-menu__item.brz-mm-menu__item--current:not(.brz-mm-menu__item.brz-mm-menu__item--current:active):hover":
+    ".brz &&  .brz-mm-menu__item.brz-menu__item--current:not(.brz-mm-menu__item.brz-menu__item--current:active):hover":
       { standart: ["cssStyleElementMMenuActiveColor"] },
-    ".brz:hover && .brz-mm-menu__item.brz-mm-menu__item--current:not(brz-mm-menu__item.brz-mm-menu__item--current:active):hover > .brz-mm-listitem__text":
+    ".brz:hover && .brz-mm-menu__item.brz-menu__item--current:not(brz-mm-menu__item.brz-menu__item--current:active):hover > .brz-mm-listitem__text":
       { standart: ["cssStyleElementMMenuActiveColor"] },
 
     // SubMenu

@@ -1,11 +1,8 @@
+import { deleteKeyModifier } from "visual/component/ContextMenu/utils";
 import { hideToolbar } from "visual/component/Toolbar";
-import { detectOS } from "visual/utils/dom/detectOS";
+import type { ContextGetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import type { Value } from ".";
-import type { ContextGetItems } from "visual/editorComponents/EditorComponent/types";
-
-const os = detectOS();
-const isMac = os === "MacOS";
 
 const getItems: ContextGetItems<Value> = (_, component) => {
   return [
@@ -17,7 +14,7 @@ const getItems: ContextGetItems<Value> = (_, component) => {
           id: "remove",
           type: "button",
           title: t("Delete"),
-          helperText: () => (isMac ? "⌘ + delete" : "ctrl + delete"),
+          helperText: () => deleteKeyModifier,
           onChange: () => {
             hideToolbar();
             component.selfDestruct();

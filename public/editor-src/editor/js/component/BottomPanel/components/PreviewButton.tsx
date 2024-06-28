@@ -1,9 +1,9 @@
-import React, { ReactElement, useCallback, useRef } from "react";
+import React, { MouseEvent, ReactElement, useCallback, useRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import Config from "visual/global/Config";
-import { BottomPanelItem } from "./Item";
 import { t } from "visual/utils/i18n";
+import { BottomPanelItem } from "./Item";
 
 const hotKeysForPreview = [
   "ctrl+shift+P",
@@ -16,6 +16,7 @@ const hotKeysForPreview = [
 
 export function PreviewButton(): ReactElement | null {
   const config = Config.getAll();
+  const previewWindow = useRef<Window | null>(null);
   const refAnchor = useRef<HTMLAnchorElement>(null);
   const previewUrl = config.urls.pagePreview;
 
@@ -37,6 +38,18 @@ export function PreviewButton(): ReactElement | null {
   }
   const href = `${previewUrl}${suffix}`;
 
+  const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    const preview = previewWindow.current;
+
+    if (preview) {
+      preview.close();
+    }
+
+    previewWindow.current = window.open(href, "_blank");
+  };
+
   return (
     <>
       <BottomPanelItem
@@ -48,9 +61,9 @@ export function PreviewButton(): ReactElement | null {
         <a
           href={href}
           className="brz-a"
-          target="_blank"
           rel="noopener noreferrer"
           ref={refAnchor}
+          onClick={onClick}
         >
           <EditorIcon icon="nc-preview" />
         </a>

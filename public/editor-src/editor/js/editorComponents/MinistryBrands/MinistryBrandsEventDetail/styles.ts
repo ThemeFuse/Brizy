@@ -114,13 +114,15 @@ export function style(
         "cssStyleElementMinistryBrandsButtonsTypography",
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
+        "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder"
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-ministryBrands__item--meta--button a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
     },
     ".brz && .brz-ministryBrands__item--meta-title": {
       standart: [
@@ -128,7 +130,6 @@ export function style(
         "cssStyleElementMinistryBrandsMetaItemTitlePadding"
       ]
     },
-
     ".brz && .brz-ministryBrands__item--meta-date": {
       standart: [
         "cssStyleElementMinistryBrandsMetaItemDateMargin",
@@ -219,12 +220,13 @@ export function style(
         "cssStyleElementMinistryEventDetailSubscribeEventButtonBgColor",
         "cssStyleElementMinistryEventDetailSubscribeEventButtonBgGradient",
         "cssStyleElementMinistryEventDetailSubscribeEventButtonBoxShadow",
-        "cssStyleElementMinistryEventDetailSubscribeEventButtonBorder"
+        "cssStyleElementMinistryEventDetailSubscribeEventButtonBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-eventDetail__item--subscribe-event a": {
+      standart: ["cssStyleElementMinistryBrandsSubscribeEventSize"]
     },
     ".brz && .brz-ministryBrands__item--meta--links--previous:hover": {
       standart: [
