@@ -56,6 +56,10 @@ class Brizy_Config {
 	const PROJECT_STLYES_FILE_PATH = '/project/styles.css';
 
 	const TEMPLATES_URL = 'https://template-mk.b-cdn.net';
+	const LAYOUTS_CHUNK_URL = 'https://template-mk.b-cdn.net/api/get-layouts-chunk';
+	const LAYOUTS_PAGES_URL = 'https://template-mk.b-cdn.net/api/get-layouts-pages';
+	const LAYOUTS_PAGE_DATA_URL = 'https://template-mk.b-cdn.net/api/get-layouts-page';
+
 	const TEMPLATES_IMAGE_URL = 'https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/';
 
 	static public function getCompilerUrls() {

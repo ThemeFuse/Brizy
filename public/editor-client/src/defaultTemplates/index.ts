@@ -1,7 +1,17 @@
-import { getDefaultKits, getKitData, getKitsList } from "@/api";
+import {
+  getDefaultKits,
+  getDefaultLayoutData,
+  getDefaultLayouts,
+  getDefaultLayoutsPages,
+  getKitData,
+  getKitsList
+} from "@/api";
+import { MValue } from "@/utils/types";
+import { isT } from "fp-utilities";
 import { Config } from "../config";
 import {
   BlocksArray,
+  CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
@@ -9,7 +19,8 @@ import {
   DefaultTemplatePopup,
   KitItem,
   KitsWithThumbs,
-  Layouts,
+  LayoutsDefaultTemplate,
+  LayoutsPages,
   LayoutsWithThumbs,
   Popups,
   PopupsWithThumbs,
@@ -17,7 +28,12 @@ import {
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
-import { converterKit, convertToCategories } from "./utils";
+import {
+  converterKit,
+  convertLayoutPages,
+  convertLayouts,
+  convertToCategories
+} from "./utils";
 
 const defaultKits = (
   config: Config
@@ -182,49 +198,75 @@ const defaultStories = (
 
 const defaultLayouts = (
   config: Config
-): DefaultTemplate<LayoutsWithThumbs, BlocksArray<DefaultBlockWithID>> => {
-  const { layoutsUrl } = config.api.templates;
+): MValue<
+  LayoutsDefaultTemplate<
+    LayoutsWithThumbs,
+    BlocksArray<DefaultBlockWithID>,
+    LayoutsPages
+  >
+> => {
+  const { layoutDataUrl, layoutsChunkUrl, layoutsPagesUrl } =
+    config.api.templates;
+  const { templatesImageUrl } = config.api;
 
-  return {
-    async getMeta(res, rej) {
-      try {
-        const meta: Layouts = await fetch(`${layoutsUrl}/meta.json`).then((r) =>
-          r.json()
-        );
+  const isLayoutsOn =
+    isT(layoutDataUrl) && isT(layoutsChunkUrl) && isT(layoutsPagesUrl);
 
-        const data = {
-          ...meta,
-          templates: meta.templates.map((item) => {
-            return {
-              ...item,
-              thumbnailSrc: `${layoutsUrl}/thumbs/${item.pages[0].id}.jpg`,
-              pages: item.pages.map((page) => {
-                return {
-                  ...page,
-                  thumbnailSrc: `${layoutsUrl}/thumbs/${page.id}.jpg`
-                };
-              })
+  return isLayoutsOn
+    ? {
+        async getMeta(res, rej) {
+          try {
+            const { templates, categories } = await getDefaultLayouts(
+              layoutsChunkUrl
+            );
+
+            const data: LayoutsWithThumbs = {
+              templates: convertLayouts(templates, templatesImageUrl),
+              categories: convertToCategories(categories)
             };
-          })
-        };
 
-        res(data);
-      } catch (e) {
-        rej(t("Failed to load meta.json"));
-      }
-    },
-    async getData(res, rej, id) {
-      try {
-        const data = await fetch(`${layoutsUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
-        );
+            res(data);
+          } catch (e) {
+            rej(t("Failed to load meta.json"));
+          }
+        },
+        async getData(res, rej, { id, layoutId }) {
+          try {
+            const data = await getDefaultLayoutData(
+              layoutDataUrl,
+              layoutId,
+              id
+            );
 
-        res(data);
-      } catch (e) {
-        rej(t("Failed to load resolves for selected DefaultTemplate"));
+            const result: BlocksArray<DefaultBlockWithID> = {
+              blocks: [...data.items]
+            };
+
+            res(result);
+          } catch (e) {
+            rej(t("Failed to load resolves for selected DefaultTemplate"));
+          }
+        },
+        async getPages(res, rej, id) {
+          try {
+            const { collections, styles } = await getDefaultLayoutsPages(
+              layoutsPagesUrl,
+              id
+            );
+
+            const parsedData: CustomTemplatePage[] = convertLayoutPages(
+              collections,
+              templatesImageUrl,
+              id
+            );
+
+            res({ pages: parsedData, styles: [styles] });
+          } catch (e) {
+            rej(t("Failed to load pages for selected Layout"));
+          }
+        }
       }
-    }
-  };
+    : undefined;
 };
 
 export { defaultKits, defaultStories, defaultLayouts, defaultPopups };
