@@ -12,6 +12,12 @@ interface DefaultTemplates {
   popupsUrl: string;
   storiesUrl: string;
   layoutsUrl: string;
+  layoutDataUrl: string;
+  layoutsChunkUrl: string;
+  layoutsPagesUrl: string;
+  blocksChunkUrl: string;
+  blocksDataUrl: string;
+  blocksKitsUrl: string;
 }
 
 interface Actions {
@@ -74,6 +80,7 @@ interface API {
   templates: DefaultTemplates;
   openAIUrl?: string;
   imagePatterns: ImagePatterns;
+  templatesImageUrl: string;
 }
 export interface Config {
   hash: string;
@@ -103,6 +110,30 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   storiesUrl: pipe(
     mPipe(Obj.readKey("storiesUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
+  ),
+  layoutDataUrl: pipe(
+    mPipe(Obj.readKey("layoutDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsChunkUrl: pipe(
+    mPipe(Obj.readKey("layoutsChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsPagesUrl: pipe(
+    mPipe(Obj.readKey("layoutsPagesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  blocksChunkUrl: pipe(
+    mPipe(Obj.readKey("blocksChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  blocksDataUrl: pipe(
+    mPipe(Obj.readKey("blocksDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  blocksKitsUrl: pipe(
+    mPipe(Obj.readKey("blocksKitsUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
   )
 });
 
@@ -158,6 +189,10 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
       })
     ),
     throwOnNullish("Invalid API: image patterns")
+  ),
+  templatesImageUrl: pipe(
+    mPipe(Obj.readKey("templatesImageUrl"), Str.read),
+    throwOnNullish("Invalid API: templatesImageUrl")
   )
 });
 

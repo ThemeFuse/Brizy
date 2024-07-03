@@ -1,15 +1,30 @@
+import {
+  getDefaultKits,
+  getDefaultLayoutData,
+  getDefaultLayouts,
+  getDefaultLayoutsPages,
+  getKitData,
+  getKitsList
+} from "@/api";
+import {
+  converterKit,
+  convertLayoutPages,
+  convertLayouts,
+  convertToCategories
+} from "@/defaultTemplates/utils";
 import { Config } from "../config";
 import {
   BlocksArray,
+  CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
   DefaultTemplateKits,
   DefaultTemplatePopup,
   KitItem,
-  Kits,
   KitsWithThumbs,
-  Layouts,
+  LayoutsDefaultTemplate,
+  LayoutsPages,
   LayoutsWithThumbs,
   Popups,
   PopupsWithThumbs,
@@ -17,87 +32,39 @@ import {
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
-import { tempConverterKit } from "./tempComverters";
 
 const defaultKits = (
   config: Config
 ): DefaultTemplateKits<KitsWithThumbs, DefaultBlock, Array<KitItem>> => {
-  const { kitsUrl } = config.api.templates;
-  // const apiKitUrl = "https://b8dd-87-255-68-163.ngrok-free.app/api";
-  // const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
+  const { blocksDataUrl, blocksKitsUrl, blocksChunkUrl } = config.api.templates;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej, kit) {
       try {
-        // region This is new logic
-        // const allElements = await fetchAllElements<Kit>(
-        //   `${apiKitUrl}/get-kit-collections`,
-        //   kit.id,
-        //   100
-        // );
-        //
-        // const { types, blocks, categories } = converterKit(
-        //   allElements,
-        //   apiImageUrl,
-        //   kit.id
-        // );
-        //
-        // const customKit: KitsWithThumbs = {
-        //   id: kit.id,
-        //   blocks,
-        //   categories,
-        //   types,
-        //   name: kit.title,
-        //   styles: getStyles()
-        // };
-        // endregion
+        const data = await getDefaultKits(blocksChunkUrl, kit.id);
 
-        // region This in temporary / this is new logic with old source
-        const allElements = await fetch(`${kitsUrl}/meta.json`).then((r) =>
-          r.json()
-        );
-
-        const tempAllElements = allElements.find(
-          (item: Kits) => item.id === kit.id
-        );
-
-        const { types, blocks, categories } = tempConverterKit(
-          tempAllElements,
-          `${kitsUrl}/thumbs`,
+        const { types, blocks } = converterKit(
+          data.blocks,
+          templatesImageUrl,
           kit.id
         );
 
-        const customKit: KitsWithThumbs = {
+        res({
           id: kit.id,
           blocks,
-          categories,
+          categories: convertToCategories(data.categories),
           types,
           name: kit.title,
-          styles: tempAllElements.styles
-        };
-        // endregion
-
-        res(customKit);
+          styles: [data.styles]
+        });
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, kit) {
+    async getData(res, rej, { kitId, id }) {
       try {
-        // region This is new logic
-        // const data = await fetch(
-        //   `${apiKitUrl}/get-item?project_id=${kit.kitId}&page_slug=${kit.id}`
-        // )
-        //   .then((r) => r.json())
-        //   .then((data) => data.pop())
-        //   .then((d) => JSON.parse(d.pageData).items.pop());
-        // endregion
-
-        // region This in temporary / this is new logic with old source
-        const data = await fetch(`${kitsUrl}/resolves/${kit.id}.json`).then(
-          (r) => r.json()
-        );
-        // endregion
+        const data = await getKitData(blocksDataUrl, kitId, id);
 
         res(data);
       } catch (e) {
@@ -106,23 +73,7 @@ const defaultKits = (
     },
     async getKits(res, rej) {
       try {
-        // region This is new logic
-        // const kits = await fetch(`${apiKitUrl}/get-kits`)
-        //   .then((r) => r.json())
-        //   .then((data) => data.list);
-        // endregion
-
-        // region This in temporary / this is new logic with old source
-        const kits = await fetch(`${kitsUrl}/meta.json`)
-          .then((r) => r.json())
-          .then((data) =>
-            data.map((kit: { id: string; name: string }) => ({
-              id: kit.id,
-              title: kit.name
-            }))
-          );
-        // endregion
-
+        const kits = await getKitsList(blocksKitsUrl);
         res(kits);
       } catch (e) {
         rej(t("Failed to load Kits"));
@@ -159,6 +110,7 @@ const defaultPopups = (
           blocks: meta.blocks.map((item) => {
             return {
               ...item,
+              type: ["light"],
               thumbnailSrc: `${popupsUrl}/thumbs/${item.id}.jpg`
             };
           })
@@ -243,30 +195,25 @@ const defaultStories = (
 
 const defaultLayouts = (
   config: Config
-): DefaultTemplate<LayoutsWithThumbs, BlocksArray<DefaultBlockWithID>> => {
-  const { layoutsUrl } = config.api.templates;
+): LayoutsDefaultTemplate<
+  LayoutsWithThumbs,
+  BlocksArray<DefaultBlockWithID>,
+  LayoutsPages
+> => {
+  const { layoutDataUrl, layoutsChunkUrl, layoutsPagesUrl } =
+    config.api.templates;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej) {
       try {
-        const meta: Layouts = await fetch(`${layoutsUrl}/meta.json`).then((r) =>
-          r.json()
+        const { templates, categories } = await getDefaultLayouts(
+          layoutsChunkUrl
         );
 
-        const data = {
-          ...meta,
-          templates: meta.templates.map((item) => {
-            return {
-              ...item,
-              thumbnailSrc: `${layoutsUrl}/thumbs/${item.pages[0].id}.jpg`,
-              pages: item.pages.map((page) => {
-                return {
-                  ...page,
-                  thumbnailSrc: `${layoutsUrl}/thumbs/${page.id}.jpg`
-                };
-              })
-            };
-          })
+        const data: LayoutsWithThumbs = {
+          templates: convertLayouts(templates, templatesImageUrl),
+          categories: convertToCategories(categories)
         };
 
         res(data);
@@ -274,15 +221,35 @@ const defaultLayouts = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, { id, layoutId }) {
       try {
-        const data = await fetch(`${layoutsUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
-        );
+        const data = await getDefaultLayoutData(layoutDataUrl, layoutId, id);
 
-        res(data);
+        const result: BlocksArray<DefaultBlockWithID> = {
+          blocks: data
+        };
+
+        res(result);
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    },
+    async getPages(res, rej, id) {
+      try {
+        const { collections, styles } = await getDefaultLayoutsPages(
+          layoutsPagesUrl,
+          id
+        );
+
+        const parsedData: CustomTemplatePage[] = convertLayoutPages(
+          collections,
+          templatesImageUrl,
+          id
+        );
+
+        res({ pages: parsedData, styles: [styles] });
+      } catch (e) {
+        rej(t("Failed to load pages for selected Layout"));
       }
     }
   };

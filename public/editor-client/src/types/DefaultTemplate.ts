@@ -1,3 +1,4 @@
+import { Literal } from "@/utils/types";
 import { Response } from "./Response";
 
 export interface DefaultBlock {
@@ -15,21 +16,12 @@ export interface DefaultTemplate<T1, T2> {
   ) => void;
 }
 
-export interface Layouts {
-  templates: Array<Template>;
-  categories: Pick<Categories, "id" | "title">;
-}
-
 export interface DefaultBlockWithID extends DefaultBlock {
   blockId: string;
 }
 
 export interface BlocksArray<T> {
   blocks: Array<T>;
-}
-
-export interface LayoutsWithThumbs extends Omit<Layouts, "templates"> {
-  templates: Array<TemplateWithThumbs>;
 }
 
 export interface Stories {
@@ -43,12 +35,12 @@ export interface StoriesWithThumbs extends Omit<Stories, "stories"> {
 
 export interface Block {
   id: string;
-  cat: Array<number | string>;
+  cat: Array<Literal>;
   title: string;
   keywords: string;
   thumbnailWidth: number;
   thumbnailHeight: number;
-  type: number | string;
+  type: Array<Literal>;
   blank?: string;
   position?: number;
   pro?: boolean;
@@ -76,11 +68,8 @@ export interface TemplateWithThumbs extends Omit<Template, "pages"> {
 export interface TemplatePage {
   id: string;
   title: string;
-  keywords: string;
-  cat: Array<number>;
   thumbnailWidth: number;
   thumbnailHeight: number;
-  pro: boolean;
 }
 
 export interface TemplatePageWithThumbs extends TemplatePage {
@@ -131,19 +120,18 @@ interface FontStyle {
   tabletLineHeight: number;
 }
 
-// region Kits
-export interface KitCategories {
-  id: number;
-  title: string;
+export interface CustomTemplatePage extends TemplatePageWithThumbs {
+  [key: string]: Literal;
 }
 
+// region Kits
 export interface DefaultTemplateKits<T1, T2, T3> {
   label?: string;
   getMeta: (res: Response<T1>, rej: Response<string>, kit: KitItem) => void;
   getData: (
-    res: Response<Promise<T2>>,
+    res: Response<T2>,
     rej: Response<string>,
-    kitId: BlockWithThumbs
+    kit: BlockWithThumbs
   ) => void;
   getKits: (res: Response<T3>, rej: Response<string>) => void;
 }
@@ -154,26 +142,14 @@ export interface Kits {
   id: string;
   name: string;
   styles: Array<Style>;
-  types: Array<Record<string, unknown>>;
+  types: KitType[];
 }
 
 export interface KitsWithThumbs extends Omit<Kits, "blocks"> {
   blocks: Array<BlockWithThumbs>;
 }
 
-export type KitItem = {
-  id: string;
-  title: string;
-};
-
-export type KitType = {
-  title: string;
-  id: string;
-  name: string;
-  icon: string;
-};
-
-export type Kit = {
+export interface Kit {
   categories: string;
   pro: string;
   theme: string;
@@ -182,7 +158,22 @@ export type Kit = {
   keywords: string;
   thumbnailHeight: number;
   thumbnailWidth: number;
-};
+  blank?: string;
+}
+
+export interface KitItem {
+  id: string;
+  title: string;
+}
+
+export interface KitType extends KitItem {
+  name: string;
+  icon: string;
+}
+
+export interface KitDataResult {
+  collection: { pageData: string }[];
+}
 // endregion
 
 // region Popups
@@ -196,7 +187,7 @@ export interface DefaultTemplatePopup<T1, T2> {
   ) => void;
 }
 
-export type APIPopup = {
+export interface APIPopup {
   id: string;
   title: string;
   categories: string;
@@ -204,7 +195,7 @@ export type APIPopup = {
   thumbnail: string;
   thumbnailHeight: number;
   thumbnailWidth: number;
-};
+}
 
 export interface Popups {
   blocks: Array<Block>;
@@ -213,5 +204,79 @@ export interface Popups {
 
 export interface PopupsWithThumbs extends Omit<Popups, "blocks"> {
   blocks: Array<BlockWithThumbs>;
+}
+// endregion
+
+// region Layouts
+export interface LayoutsDefaultTemplate<T1, T2, T3> {
+  label?: string;
+  getMeta: (res: Response<T1>, rej: Response<string>) => void;
+  getData: (
+    res: Response<T2>,
+    rej: Response<string>,
+    page: CustomTemplatePage
+  ) => void;
+  getPages: (res: Response<T3>, rej: Response<string>, id: string) => void;
+}
+
+export interface LayoutTemplate {
+  blank?: boolean;
+  name: string;
+  cat: Array<number | string>;
+  pagesCount: number;
+  layoutId: string;
+  pro: boolean;
+  keywords: string;
+}
+
+export interface Layouts {
+  templates: Array<LayoutTemplateWithThumbs>;
+  categories: Pick<Categories, "id" | "title">[];
+}
+
+export interface LayoutsPages {
+  pages: CustomTemplatePage[];
+  styles: Style[];
+}
+
+export interface LayoutsWithThumbs extends Omit<Layouts, "templates"> {
+  templates: Array<LayoutTemplateWithThumbs>;
+}
+
+export interface LayoutTemplateWithThumbs extends LayoutTemplate {
+  thumbnailSrc: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+interface LayoutsCommon {
+  title: string;
+  slug: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+export interface LayoutsPageAPI extends LayoutsCommon {
+  thumbs: string;
+}
+
+export interface LayoutsAPI extends LayoutsCommon {
+  pro: string;
+  categories: string;
+  pagesCount: string;
+  thumbnail: string;
+  keywords: string;
+}
+
+export type LayoutDataResult = Array<{ pageData: string }>;
+
+export interface LayoutsPagesResult {
+  collections: LayoutsPageAPI[];
+  paginationInfo: {
+    itemsPerPage: number;
+    lastPage: number;
+    totalCount: number;
+  };
+  styles: Style;
 }
 // endregion
