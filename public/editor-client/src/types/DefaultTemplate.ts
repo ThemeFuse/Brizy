@@ -174,28 +174,52 @@ export interface KitType extends KitItem {
 export interface KitDataResult {
   collection: { pageData: string }[];
 }
+
+export interface KitDataItems {
+  items: Array<DefaultBlock>;
+}
+
 // endregion
 
 // region Popups
+export interface PopupBlock {
+  id: string;
+  cat: Array<Literal>;
+  title: string;
+  keywords: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+  type: Array<Literal>;
+  blank?: string;
+  position?: number;
+  pro?: boolean;
+}
+
+export interface PopupBlockWithThumbs extends PopupBlock {
+  thumbnailSrc: string;
+}
+
 export interface DefaultTemplatePopup<T1, T2> {
   label?: string;
   getMeta: (res: Response<T1>, rej: Response<string>) => void;
   getData: (
-    res: Response<Promise<T2>>,
+    res: Response<T2>,
     rej: Response<string>,
-    kit: BlockWithThumbs
+    kit: PopupBlockWithThumbs
   ) => void;
 }
 
-export interface APIPopup {
+export type APIPopup = {
   id: string;
-  title: string;
   categories: string;
+  blank?: string;
+  order: number;
   pro: string;
   thumbnail: string;
   thumbnailHeight: number;
   thumbnailWidth: number;
-}
+  title: string;
+};
 
 export interface Popups {
   blocks: Array<Block>;
@@ -203,8 +227,20 @@ export interface Popups {
 }
 
 export interface PopupsWithThumbs extends Omit<Popups, "blocks"> {
-  blocks: Array<BlockWithThumbs>;
+  blocks: Array<PopupBlockWithThumbs>;
 }
+
+export interface PopupsResponse {
+  categories: Array<{
+    title: string;
+    slug: string;
+  }>;
+  collections: APIPopup[];
+}
+
+export type PopupDataResult = Array<{
+  pageData: string;
+}>;
 // endregion
 
 // region Layouts
