@@ -150,6 +150,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
         try {
             $this->verifyNonce(self::nonce);
 
+
             if (!isset($_FILES['files'])) {
                 $this->error(400, __('Invalid block file'));
             }
@@ -275,6 +276,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 $this->ruleManager->addRules($block->getWpPostId(), $rules);
             }
 
+			if(!current_user_can('edit_pages')) {
+				 $this->error(403, 'Unauthorized.');
+            }
+
             $block->save();
 
             do_action('brizy_global_block_created', $block);
@@ -332,6 +337,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 		        $block->setTags(stripslashes($this->param('tags')));
 	        }
 
+			if(!current_user_can('edit_pages')) {
+				 $this->error(403, 'Unauthorized.');
+            }
+
             if ((int)$this->param('is_autosave')) {
                 $block->save(1);
             } else {
@@ -374,11 +383,15 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 
         try {
 
-            if (!$this->param('uid')) {
-                $this->success([]);
+	        if(!current_user_can('edit_pages')) {
+		        $this->error(403, 'Unauthorized.');
+	        }
+
+	        if (!$this->param('uid')) {
+	            $this->success([]);
             }
 
-            foreach ((array)$this->param('uid') as $i => $uid) {
+	        foreach ((array)$this->param('uid') as $i => $uid) {
 
                 if (!$this->param('uid')[$i]) {
                     $this->error('400', 'Invalid uid');
@@ -474,6 +487,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
+	    if ( ! current_user_can( 'edit_pages' ) ) {
+		    $this->error( 403, 'Unauthorized.' );
+	    }
+
         if (!$this->param('uid')) {
             $this->error('400', 'Invalid uid');
         }
@@ -544,6 +561,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
+	    if ( ! current_user_can( 'edit_pages' ) ) {
+		    $this->error( 403, 'Unauthorized.' );
+	    }
+
+
         if (!$this->param('uid')) {
             $this->error(400, 'Invalid uid');
         }
@@ -593,6 +615,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
     public function actionUpdateSavedBlock()
     {
         $this->verifyNonce(self::nonce);
+	    if ( ! current_user_can( 'edit_pages' ) ) {
+		    $this->error( 403, 'Unauthorized.' );
+	    }
 
         try {
             if (!$this->param('uid')) {
@@ -654,6 +679,9 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
     public function actionDeleteSavedBlock()
     {
         $this->verifyNonce(self::nonce);
+	    if ( ! current_user_can( 'edit_pages' ) ) {
+		    $this->error( 403, 'Unauthorized.' );
+	    }
 
         if (!$this->param('uid')) {
             $this->error('400', 'Invalid uid');
@@ -684,6 +712,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
         global $wpdb;
 
         $this->verifyNonce(self::nonce);
+
+	    if ( ! current_user_can( 'edit_pages' ) ) {
+		    $this->error( 403, 'Unauthorized.' );
+	    }
 
         $data = file_get_contents("php://input");
 

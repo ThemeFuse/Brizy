@@ -78,23 +78,119 @@ trait Brizy_Editor_Asset_StaticFileTrait
         return true;
     }
 
-    protected function create_attachment($madia_name, $absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
-    {
+    protected function create_attachment(
+        $madia_name,
+        $absolute_asset_path,
+        $relative_asset_path,
+        $post_id = null,
+        $uid = null
+    ) {
         return self::createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id, $uid);
     }
 
-    public static function createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
+	public static function createSideLoadMediaAttachment(
+		$tempFileArray,
+		$assetPath,
+		$postId = null,
+        $uid = null
+    ) {
+        $id = media_handle_sideload($tempFileArray, $postId, "Attached image file");
+
+        if (!$id || is_wp_error($id)) {
+            Brizy_Logger::instance()->critical('Unable to handle image sideload', [$id]);
+            throw new Exception('Unable to handle image side load');
+        }
+
+		$filePath  = get_attached_file($id,true);
+
+		if( wp_mkdir_p(dirname($assetPath)) === false) {
+			Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
+            throw new Exception('Unable to create folder for block images');
+		}
+
+		@copy($filePath,$assetPath);
+
+		unlink($filePath);
+
+		update_attached_file($id,$assetPath);
+
+		update_post_meta($id, 'brizy_attachment_uid', $uid ? $uid : md5($id.time()));
+        if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+	        include_once ABSPATH . "/wp-admin/includes/image.php";
+        }
+        $attach_data = wp_generate_attachment_metadata( $id, $assetPath );
+        wp_update_attachment_metadata( $id, $attach_data );
+    }
+
+	public static function createSideLoadMedia(
+		$tempFileArray,
+		$assetPath,
+		$postId = null,
+        $uid = null
+    ) {
+
+		$overrides = array( 'test_form' => false );
+		$post = get_post( $postId );
+
+		if ( $post ) {
+			if ( substr( $post->post_date, 0, 4 ) > 0 ) {
+				$time = $post->post_date;
+			}
+		}
+
+		$uploadData = wp_handle_sideload( $tempFileArray, $overrides, $time );
+
+		if ( isset( $uploadData['error'] ) ) {
+			return new WP_Error( 'upload_error', $uploadData['error'] );
+		}
+
+		@copy($uploadData['file'],$assetPath);
+
+		unlink($uploadData['file']);
+
+		return $assetPath;
+    }
+
+    public static function createSideLoadFile($basename, $content)
     {
+        $filePath = tempnam(sys_get_temp_dir(), $basename);
+        $result = file_put_contents($filePath, $content);
+
+        if ($result === false) {
+            Brizy_Logger::instance()->error('Filed to write content', ['filePath' => $filePath]);
+            throw new Exception(__('Failed to write content', 'brizy'));
+        }
+
+        return array(
+            'name' => $basename,
+            'type' => Brizy_Public_AssetProxy::get_mime($filePath),
+            'tmp_name' => $filePath,
+            'error' => 0,
+            'size' => filesize($filePath),
+        );
+    }
+
+
+    public static function createMediaAttachment(
+        $absolute_asset_path,
+        $relative_asset_path,
+        $post_id = null,
+        $uid = null
+    ) {
         $filetype = wp_check_filetype($absolute_asset_path);
+
+        if (!$filetype['type']) {
+            return false;
+        }
 
         $upload_path = wp_upload_dir();
 
         $attachment = array(
-            'guid' => $upload_path['baseurl'] . "/" . $relative_asset_path,
+            'guid' => $upload_path['baseurl']."/".$relative_asset_path,
             'post_mime_type' => $filetype['type'],
             'post_title' => basename($absolute_asset_path),
             'post_content' => '',
-            'post_status' => 'inherit'
+            'post_status' => 'inherit',
         );
 
         $attachment_id = wp_insert_attachment($attachment, $relative_asset_path, $post_id);
@@ -103,10 +199,10 @@ trait Brizy_Editor_Asset_StaticFileTrait
             return false;
         }
 
-        update_post_meta($attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5($attachment_id . time()));
+        update_post_meta($attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5($attachment_id.time()));
 
         if (!function_exists('wp_generate_attachment_metadata')) {
-            include_once ABSPATH . "/wp-admin/includes/image.php";
+            include_once ABSPATH."/wp-admin/includes/image.php";
         }
 
         $attach_data = wp_generate_attachment_metadata($attachment_id, $absolute_asset_path);
@@ -125,7 +221,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
 
             $defaultHeaders = array(
                 'Content-Type' => self::get_mime($filename, 1),
-                'Cache-Control' => 'max-age=600'
+                'Cache-Control' => 'max-age=600',
             );
 
             $content = file_get_contents($filename);

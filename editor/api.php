@@ -452,6 +452,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
             $this->post->getWpPost()->post_status = $status;
 
+            if(!current_user_can('edit_post',$this->post->getWpPostId())) {
+				 $this->error(403, 'Unauthorized post save.');
+            }
+
             if ((int)$this->param('is_autosave') == 1) {
                 $this->post->save(1);
             } else {
