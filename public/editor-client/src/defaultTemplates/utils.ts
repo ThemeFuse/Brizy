@@ -18,10 +18,15 @@ import {
   LayoutTemplateWithThumbs,
   PopupBlockWithThumbs,
   PopupDataResult,
-  PopupsResponse
+  PopupsResponse,
+  StoriesAPI,
+  StoriesTemplateWithThumbs,
+  StoryDataResponse,
+  StoryPages
 } from "../types/DefaultTemplate";
 
 const PRO = "PRO";
+const BLANK_PAGE = "Blank";
 
 type CatTypes = Kit | APIPopup;
 
@@ -193,6 +198,47 @@ export const converterPopup = (
   };
 };
 
+export const convertStories = (
+  collections: StoriesAPI[],
+  thumbUrl: string
+): StoriesTemplateWithThumbs[] =>
+  collections.map(
+    ({
+      categories,
+      pages,
+      id,
+      title,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight
+    }) => {
+      return {
+        layoutId: id,
+        name: title,
+        cat: categories.split(",").map((item) => item.trim().toLowerCase()),
+        pagesCount: pages,
+        thumbnailSrc: `${thumbUrl}${thumbnail}`,
+        thumbnailWidth,
+        thumbnailHeight,
+        blank: title === BLANK_PAGE
+      };
+    }
+  );
+
+export const convertStoriesPages = (
+  stories: StoryPages[],
+  templatesImageUrl: string,
+  id: string
+): CustomTemplatePage[] =>
+  stories.map(({ slug, thumbnailHeight, thumbnailWidth, thumbnail }) => ({
+    id: slug,
+    title: slug,
+    thumbnailSrc: `${templatesImageUrl}${thumbnail}`,
+    thumbnailHeight,
+    thumbnailWidth,
+    layoutId: id
+  }));
+
 export const convertToCategories = (
   obj: { slug: string; title: string }[]
 ): Categories[] =>
@@ -201,53 +247,39 @@ export const convertToCategories = (
     id: item.title.toLowerCase()
   }));
 
-export const isKitDataResult = (obj: unknown): obj is KitDataResult => {
-  return (
-    Obj.isObject(obj) &&
-    Obj.hasKey("collection", obj) &&
-    Array.isArray(obj.collection) &&
-    obj.collection.every(
-      (item: unknown) =>
-        Obj.isObject(item) &&
-        Obj.hasKey("pageData", item) &&
-        typeof item.pageData === "string"
-    )
+export const isKitDataResult = (obj: unknown): obj is KitDataResult =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("collection", obj) &&
+  Array.isArray(obj.collection) &&
+  obj.collection.every(
+    (item: unknown) =>
+      Obj.isObject(item) &&
+      Obj.hasKey("pageData", item) &&
+      typeof item.pageData === "string"
   );
-};
 
-export const isDefaultBlock = (obj: unknown): obj is DefaultBlock => {
-  return (
-    Obj.isObject(obj) &&
-    Obj.hasKey("type", obj) &&
-    Str.is(obj.type) &&
-    Obj.hasKey("value", obj) &&
-    Obj.isObject(obj.value)
-  );
-};
+export const isDefaultBlock = (obj: unknown): obj is DefaultBlock =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("type", obj) &&
+  Str.is(obj.type) &&
+  Obj.hasKey("value", obj) &&
+  Obj.isObject(obj.value);
 
-export const isDefaultBlockWithID = (
+export const isDefaultBlockArray = (
   obj: unknown
-): obj is DefaultBlockWithID => {
-  return Obj.isObject(obj) && Obj.hasKey("blockId", obj) && isDefaultBlock(obj);
-};
+): obj is DefaultBlockWithID[] =>
+  Array.isArray(obj) && obj.every((item) => isDefaultBlock(item));
+
+export const isStoryDataResponse = (obj: unknown): obj is StoryDataResponse =>
+  Obj.isObject(obj) && Obj.hasKey("collection", obj) && Str.is(obj.collection);
+
+export const isDefaultBlockWithID = (obj: unknown): obj is DefaultBlockWithID =>
+  Obj.isObject(obj) && Obj.hasKey("blockId", obj) && isDefaultBlock(obj);
 
 export const isDefaultBlockWithIDArray = (
   obj: unknown
-): obj is DefaultBlockWithID[] => {
-  return Array.isArray(obj) && obj.every((item) => isDefaultBlockWithID(item));
-};
-
-export const isLayoutDataResult = (obj: unknown): obj is LayoutDataResult => {
-  return (
-    Array.isArray(obj) &&
-    obj.every(
-      (item) =>
-        Obj.isObject(item) &&
-        Obj.hasKey("pageData", item) &&
-        Str.is(item.pageData)
-    )
-  );
-};
+): obj is DefaultBlockWithID[] =>
+  Array.isArray(obj) && obj.every(isDefaultBlockWithID);
 
 export const isAPIPopup = (obj: unknown): obj is APIPopup =>
   Obj.isObject(obj) &&
@@ -288,8 +320,25 @@ export const isPopupDataResult = (obj: unknown): obj is PopupDataResult =>
       Str.is(item.pageData)
   );
 
+export const isLayoutDataResult = (obj: unknown): obj is LayoutDataResult =>
+  Array.isArray(obj) &&
+  obj.every(
+    (item) =>
+      Obj.isObject(item) &&
+      Obj.hasKey("pageData", item) &&
+      Str.is(item.pageData)
+  );
+
 export const isKitDataItems = (obj: unknown): obj is KitDataItems =>
   Obj.isObject(obj) &&
   Obj.hasKey("items", obj) &&
   Array.isArray(obj.items) &&
   obj.items.every((item) => isDefaultBlock(item));
+
+export const isStoryDataBlocks = (
+  obj: unknown
+): obj is { blocks: DefaultBlockWithID[] } =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("blocks", obj) &&
+  Array.isArray(obj.blocks) &&
+  obj.blocks.every(isDefaultBlock);

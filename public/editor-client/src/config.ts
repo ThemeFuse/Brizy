@@ -20,6 +20,9 @@ interface DefaultTemplates {
   blocksKitsUrl: string;
   popupsChunkUrl: string;
   popupsDataUrl: string;
+  storiesChunkUrl: string;
+  storiesPagesUrl: string;
+  storiesDataUrl: string;
 }
 
 interface Actions {
@@ -144,6 +147,18 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   popupsDataUrl: pipe(
     mPipe(Obj.readKey("popupsDataUrl"), Str.read),
     throwOnNullish("Invalid API Config: popups")
+  ),
+  storiesChunkUrl: pipe(
+    mPipe(Obj.readKey("storiesChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  storiesPagesUrl: pipe(
+    mPipe(Obj.readKey("storiesPagesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  storiesDataUrl: pipe(
+    mPipe(Obj.readKey("storiesDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
   )
 });
 

@@ -153,7 +153,8 @@ export interface VISUAL_CONFIG {
     >;
     defaultStories?: DefaultTemplate<
       StoriesWithThumbs,
-      BlocksArray<DefaultBlock> | DefaultBlock
+      BlocksArray<DefaultBlock> | DefaultBlock,
+      LayoutsPages
     >;
 
     //Collection Items

@@ -1,6 +1,12 @@
 import { Literal } from "@/utils/types";
 import { Response } from "./Response";
 
+interface ThumbnailWithDimensions {
+  thumbnail: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
 export interface DefaultBlock {
   type: string;
   value: Record<string, unknown>;
@@ -22,15 +28,6 @@ export interface DefaultBlockWithID extends DefaultBlock {
 
 export interface BlocksArray<T> {
   blocks: Array<T>;
-}
-
-export interface Stories {
-  stories: Array<Template>;
-  categories: Array<Omit<Categories, "slug">>;
-}
-
-export interface StoriesWithThumbs extends Omit<Stories, "stories"> {
-  stories: Array<TemplateWithThumbs>;
 }
 
 export interface Block {
@@ -149,15 +146,12 @@ export interface KitsWithThumbs extends Omit<Kits, "blocks"> {
   blocks: Array<BlockWithThumbs>;
 }
 
-export interface Kit {
+export interface Kit extends ThumbnailWithDimensions {
   categories: string;
   pro: string;
   theme: string;
   slug: string;
-  thumbnail: string;
   keywords: string;
-  thumbnailHeight: number;
-  thumbnailWidth: number;
   blank?: string;
 }
 
@@ -308,6 +302,57 @@ export type LayoutDataResult = Array<{ pageData: string }>;
 
 export interface LayoutsPagesResult {
   collections: LayoutsPageAPI[];
+  paginationInfo: {
+    itemsPerPage: number;
+    lastPage: number;
+    totalCount: number;
+  };
+  styles: Style;
+}
+// endregion
+
+// region Story Types
+export interface StoriesAPI extends ThumbnailWithDimensions {
+  title: string;
+  categories: string;
+  id: string;
+  pages: number;
+}
+
+export interface StoryPages extends ThumbnailWithDimensions {
+  slug: string;
+}
+
+export interface Stories {
+  stories: Array<StoriesTemplate>;
+  categories: Array<Omit<Categories, "slug">>;
+}
+
+export interface StoriesWithThumbs extends Omit<Stories, "stories"> {
+  stories: Array<StoriesTemplateWithThumbs>;
+}
+
+export interface StoriesTemplate {
+  blank?: boolean;
+  layoutId: string;
+  name: string;
+  cat: Array<Literal>;
+  pagesCount: number;
+  styles?: Array<Style>;
+}
+
+export interface StoriesTemplateWithThumbs extends StoriesTemplate {
+  thumbnailSrc: string;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+}
+
+export interface StoryDataResponse {
+  collection: string;
+}
+
+export interface StoryPagesResult {
+  collections: StoryPages[];
   paginationInfo: {
     itemsPerPage: number;
     lastPage: number;

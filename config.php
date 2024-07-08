@@ -62,6 +62,10 @@ class Brizy_Config {
 	const POPUPS_CHUNK_URL = "https://template-mk.b-cdn.net/api/get-popups-chunk";
     const POPUPS_DATA_URL = "https://template-mk.b-cdn.net/api/get-popup-data";
 
+    const STORIES_CHUNK_URL = "https://template-mk.b-cdn.net/api/get-story-chunk";
+    const STORIES_PAGES_URL = "https://template-mk.b-cdn.net/api/get-story-page";
+    const STORIES_DATA_URL = "https://template-mk.b-cdn.net/api/get-story-page-data";
+
     const TEMPLATES_IMAGE_URL = 'https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/';
 
 	// this file will be stored in uploads/brizy/
