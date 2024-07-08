@@ -1,10 +1,26 @@
 import { Config, getConfig } from "@/config";
+import {
+  isDefaultBlock,
+  isDefaultBlockWithIDArray,
+  isKitDataResult,
+  isLayoutDataResult
+} from "@/defaultTemplates/utils";
+import {
+  DefaultBlock,
+  DefaultBlockWithID,
+  Kit,
+  KitDataResult,
+  KitItem,
+  LayoutsAPI,
+  LayoutsPagesResult,
+  Style
+} from "@/types/DefaultTemplate";
+import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
 import { ResponseWithBody } from "@/types/Response";
-import { ConfigDCItem } from "@/types/DynamicContent";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -15,6 +31,8 @@ import {
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
+import { Arr, Obj } from "@brizy/readers";
+import { isT, mPipe, pass } from "fp-utilities";
 import { Literal } from "../utils/types";
 import {
   GetCollections,
@@ -1203,6 +1221,167 @@ export const updateGlobalBlocks = async (
   } catch {
     throw new Error(t("Failed to update Global blocks"));
   }
+};
+
+//#endregion
+
+//#region Default Templates
+
+export const getDefaultKits = async (
+  url: string,
+  id: string
+): Promise<{
+  blocks: Kit[];
+  categories: { slug: string; title: string }[];
+  styles: Style;
+}> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res.collections) && isT(res.categories) && isT(res.styles)) {
+      return {
+        blocks: res.collections,
+        categories: res.categories,
+        styles: res.styles
+      };
+    }
+  }
+
+  throw new Error(t("Failed to load kits"));
+};
+
+export const getKitData = async (
+  url: string,
+  kitId: string,
+  id: string
+): Promise<DefaultBlock> => {
+  const fullUrl = makeUrl(url, {
+    project_id: kitId,
+    page_slug: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res: KitDataResult = await response.json();
+
+    const parsedResult = mPipe(
+      pass(isKitDataResult),
+      (s: KitDataResult) => s.collection.pop()?.pageData,
+      (r) => JSON.parse(r),
+      Obj.readKey("items"),
+      Arr.read,
+      (res) => res[0]
+    )(res);
+
+    if (isT(parsedResult) && isDefaultBlock(parsedResult)) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load kits"));
+};
+
+export const getKitsList = async (url: string): Promise<KitItem[]> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (Arr.is(res.collections)) {
+      return res.collections.map((item: { slug: string; title: string }) => ({
+        ...item,
+        id: item.slug
+      }));
+    }
+  }
+
+  throw new Error(t("Failed to load kits"));
+};
+
+export const getDefaultLayouts = async (
+  url: string
+): Promise<{
+  templates: LayoutsAPI[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (res.collections && res.categories) {
+      return { templates: res.collections, categories: res.categories };
+    }
+  }
+
+  throw new Error(t("Failed to load layouts"));
+};
+
+export const getDefaultLayoutsPages = async (
+  url: string,
+  id: string
+): Promise<LayoutsPagesResult> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id,
+    per_page: "20"
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    return response.json();
+  }
+
+  throw new Error(t("Failed to load layouts"));
+};
+
+export const getDefaultLayoutData = async (
+  url: string,
+  layoutId: Literal,
+  id: string
+): Promise<DefaultBlockWithID[]> => {
+  const fullUrl = makeUrl(url, {
+    project_id: layoutId as string,
+    page_slug: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    const parsedResult = mPipe(
+      pass(isLayoutDataResult),
+      (res) => res.pop()?.pageData,
+      (r) => JSON.parse(r),
+      Obj.readKey("items")
+    )(res);
+
+    if (isT(parsedResult) && isDefaultBlockWithIDArray(parsedResult)) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load layouts"));
 };
 
 //#endregion
