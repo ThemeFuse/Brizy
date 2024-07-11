@@ -18,6 +18,8 @@ interface DefaultTemplates {
   blocksChunkUrl: string;
   blocksDataUrl: string;
   blocksKitsUrl: string;
+  popupsChunkUrl: string;
+  popupsDataUrl: string;
 }
 
 interface Actions {
@@ -134,6 +136,14 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   blocksKitsUrl: pipe(
     mPipe(Obj.readKey("blocksKitsUrl"), Str.read),
     throwOnNullish("Invalid API Config: kits")
+  ),
+  popupsChunkUrl: pipe(
+    mPipe(Obj.readKey("popupsChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: popups")
+  ),
+  popupsDataUrl: pipe(
+    mPipe(Obj.readKey("popupsDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: popups")
   )
 });
 

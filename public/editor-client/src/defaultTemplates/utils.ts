@@ -9,12 +9,16 @@ import {
   DefaultBlock,
   DefaultBlockWithID,
   Kit,
+  KitDataItems,
   KitDataResult,
   KitType,
   LayoutDataResult,
   LayoutsAPI,
   LayoutsPageAPI,
-  LayoutTemplateWithThumbs
+  LayoutTemplateWithThumbs,
+  PopupBlockWithThumbs,
+  PopupDataResult,
+  PopupsResponse
 } from "../types/DefaultTemplate";
 
 const PRO = "PRO";
@@ -153,6 +157,42 @@ export const convertLayoutPages = (
     })
   );
 
+export const converterPopup = (
+  kit: APIPopup[],
+  url: string
+): {
+  blocks: PopupBlockWithThumbs[];
+} => {
+  const blocks: PopupBlockWithThumbs[] = kit.map(
+    ({
+      id,
+      title,
+      categories,
+      pro,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight,
+      blank
+    }) => ({
+      id,
+      cat: categories.split(",").map((item) => item.trim().toLowerCase()),
+      title,
+      thumbnailHeight,
+      thumbnailWidth,
+      thumbnailSrc: `${url}${thumbnail}`,
+      pro: pro === PRO,
+      keywords: "popup2",
+      position: 1,
+      type: ["light"],
+      blank
+    })
+  );
+
+  return {
+    blocks
+  };
+};
+
 export const convertToCategories = (
   obj: { slug: string; title: string }[]
 ): Categories[] =>
@@ -208,3 +248,48 @@ export const isLayoutDataResult = (obj: unknown): obj is LayoutDataResult => {
     )
   );
 };
+
+export const isAPIPopup = (obj: unknown): obj is APIPopup =>
+  Obj.isObject(obj) &&
+  Obj.hasKeys(
+    [
+      "categories",
+      "order",
+      "pro",
+      "thumbnail",
+      "thumbnailHeight",
+      "thumbnailWidth",
+      "title",
+      "id"
+    ],
+    obj
+  );
+
+export const isPopupsResponse = (obj: unknown): obj is PopupsResponse =>
+  Obj.isObject(obj) &&
+  Obj.hasKeys(["categories", "collections"], obj) &&
+  Array.isArray(obj.categories) &&
+  obj.categories.every(
+    (item) =>
+      Obj.isObject(item) &&
+      Obj.hasKeys(["title", "slug"], item) &&
+      Str.is(item.slug) &&
+      Str.is(item.title)
+  ) &&
+  Array.isArray(obj.collections) &&
+  obj.collections.every((item) => Obj.isObject(item) && isAPIPopup(item));
+
+export const isPopupDataResult = (obj: unknown): obj is PopupDataResult =>
+  Array.isArray(obj) &&
+  obj.every(
+    (item) =>
+      Obj.isObject(item) &&
+      Obj.hasKey("pageData", item) &&
+      Str.is(item.pageData)
+  );
+
+export const isKitDataItems = (obj: unknown): obj is KitDataItems =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("items", obj) &&
+  Array.isArray(obj.items) &&
+  obj.items.every((item) => isDefaultBlock(item));

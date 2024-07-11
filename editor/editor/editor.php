@@ -421,6 +421,8 @@ class Brizy_Editor_Editor_Editor
                     'blocksChunkUrl' => Brizy_Config::BLOCKS_CHUNK_URL,
                     'blocksKitsUrl' => Brizy_Config::BLOCKS_KITS_URL,
                     'blocksDataUrl' => Brizy_Config::BLOCKS_DATA_URL,
+                    'popupsChunkUrl' => Brizy_Config::POPUPS_CHUNK_URL,
+                    'popupsDataUrl' => Brizy_Config::POPUPS_DATA_URL,
                 ],
                 'templatesImageUrl' => Brizy_Config::TEMPLATES_IMAGE_URL,
             ],

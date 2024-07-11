@@ -4,13 +4,14 @@ import {
   getDefaultLayouts,
   getDefaultLayoutsPages,
   getKitData,
-  getKitsList
+  getKitsList,
+  getPopupData,
+  getPopups
 } from "@/api";
 import {
   converterKit,
   convertLayoutPages,
-  convertLayouts,
-  convertToCategories
+  convertLayouts
 } from "@/defaultTemplates/utils";
 import { Config } from "../config";
 import {
@@ -26,12 +27,12 @@ import {
   LayoutsDefaultTemplate,
   LayoutsPages,
   LayoutsWithThumbs,
-  Popups,
   PopupsWithThumbs,
   Stories,
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
+import { converterPopup, convertToCategories } from "./utils";
 
 const defaultKits = (
   config: Config
@@ -85,59 +86,25 @@ const defaultKits = (
 const defaultPopups = (
   config: Config
 ): DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID> => {
-  const { popupsUrl } = config.api.templates;
-  // const apiKitUrl = "https://b8dd-87-255-68-163.ngrok-free.app/api";
-  // const apiImageUrl = "https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/";
+  const { popupsChunkUrl, popupsDataUrl } = config.api.templates;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej) {
       try {
-        // region This is new logic
-        // const _meta = await fetch(`${apiKitUrl}/get-popups`).then((r) =>
-        //   r.json()
-        // );
-        //
-        // const data = converterPopup(_meta.collections, apiImageUrl);
-        // endregion
+        const { blocks, categories } = await getPopups(popupsChunkUrl);
+        const data = converterPopup(blocks, templatesImageUrl);
 
-        // region This in temporary / this is new logic with old source
-        const meta: Popups = await fetch(`${popupsUrl}/meta.json`).then((r) =>
-          r.json()
-        );
+        const convertedCategories = convertToCategories(categories);
 
-        const data = {
-          ...meta,
-          blocks: meta.blocks.map((item) => {
-            return {
-              ...item,
-              type: ["light"],
-              thumbnailSrc: `${popupsUrl}/thumbs/${item.id}.jpg`
-            };
-          })
-        };
-        // endregion
-
-        res(data);
+        res({ ...data, categories: convertedCategories });
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
     },
     async getData(res, rej, kit) {
       try {
-        // region This is new logic
-        // const data = await fetch(
-        //   `${apiKitUrl}/get-popup-data?project_id=${kit.id}`
-        // )
-        //   .then((r) => r.json())
-        //   .then((arr) => arr.pop())
-        //   .then((d) => JSON.parse(d.pageData).items.pop());
-        // endregion
-
-        // region This in temporary / this is new logic with old source
-        const data = await fetch(`${popupsUrl}/resolves/${kit.id}.json`).then(
-          (r) => r.json()
-        );
-        // endregion
+        const data = await getPopupData(popupsDataUrl, kit.id);
 
         res(data);
       } catch (e) {

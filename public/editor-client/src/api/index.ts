@@ -1,11 +1,16 @@
 import { Config, getConfig } from "@/config";
 import {
   isDefaultBlock,
+  isDefaultBlockWithID,
   isDefaultBlockWithIDArray,
+  isKitDataItems,
   isKitDataResult,
-  isLayoutDataResult
+  isLayoutDataResult,
+  isPopupDataResult,
+  isPopupsResponse
 } from "@/defaultTemplates/utils";
 import {
+  APIPopup,
   DefaultBlock,
   DefaultBlockWithID,
   Kit,
@@ -31,7 +36,7 @@ import {
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
-import { Arr, Obj } from "@brizy/readers";
+import { Arr, Json, Obj } from "@brizy/readers";
 import { isT, mPipe, pass } from "fp-utilities";
 import { Literal } from "../utils/types";
 import {
@@ -1278,7 +1283,8 @@ export const getKitData = async (
     const parsedResult = mPipe(
       pass(isKitDataResult),
       (s: KitDataResult) => s.collection.pop()?.pageData,
-      (r) => JSON.parse(r),
+      (r) => Json.read(r),
+      pass(isKitDataItems),
       Obj.readKey("items"),
       Arr.read,
       (res) => res[0]
@@ -1382,6 +1388,60 @@ export const getDefaultLayoutData = async (
   }
 
   throw new Error(t("Failed to load layouts"));
+};
+
+export const getPopups = async (
+  url: string
+): Promise<{
+  blocks: APIPopup[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isPopupsResponse(res)) {
+      return { blocks: res.collections, categories: res.categories };
+    }
+  }
+
+  throw new Error(t("Failed to load popups"));
+};
+
+export const getPopupData = async (
+  url: string,
+  id: string
+): Promise<DefaultBlockWithID> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id as string
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    const parsedResult = mPipe(
+      pass(isPopupDataResult),
+      (res) => res.pop()?.pageData,
+      (r) => Json.read(r),
+      pass(isKitDataItems),
+      Obj.readKey("items"),
+      Arr.read,
+      (r) => r.pop()
+    )(res);
+
+    if (isT(parsedResult) && isDefaultBlockWithID(parsedResult)) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load popups"));
 };
 
 //#endregion
