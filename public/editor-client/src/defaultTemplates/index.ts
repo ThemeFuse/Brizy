@@ -3,6 +3,9 @@ import {
   getDefaultLayoutData,
   getDefaultLayouts,
   getDefaultLayoutsPages,
+  getDefaultStories,
+  getDefaultStory,
+  getDefaultStoryPages,
   getKitData,
   getKitsList,
   getPopupData,
@@ -10,8 +13,12 @@ import {
 } from "@/api";
 import {
   converterKit,
+  converterPopup,
   convertLayoutPages,
-  convertLayouts
+  convertLayouts,
+  convertStories,
+  convertStoriesPages,
+  convertToCategories
 } from "@/defaultTemplates/utils";
 import { Config } from "../config";
 import {
@@ -19,7 +26,6 @@ import {
   CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
-  DefaultTemplate,
   DefaultTemplateKits,
   DefaultTemplatePopup,
   KitItem,
@@ -28,11 +34,9 @@ import {
   LayoutsPages,
   LayoutsWithThumbs,
   PopupsWithThumbs,
-  Stories,
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
 import { t } from "../utils/i18n";
-import { converterPopup, convertToCategories } from "./utils";
 
 const defaultKits = (
   config: Config
@@ -116,45 +120,60 @@ const defaultPopups = (
 
 const defaultStories = (
   config: Config
-): DefaultTemplate<StoriesWithThumbs, BlocksArray<DefaultBlock>> => {
-  const { storiesUrl } = config.api.templates;
+): LayoutsDefaultTemplate<
+  StoriesWithThumbs,
+  BlocksArray<DefaultBlock>,
+  LayoutsPages
+> => {
+  const { storiesChunkUrl, storiesDataUrl, storiesPagesUrl } =
+    config.api.templates;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej) {
       try {
-        const meta: Stories = await fetch(`${storiesUrl}/meta.json`).then((r) =>
-          r.json()
+        const { templates, categories } = await getDefaultStories(
+          storiesChunkUrl
         );
 
         const data = {
-          ...meta,
-          stories: meta.stories.map((story) => {
-            return {
-              ...story,
-              thumbnailSrc: `${storiesUrl}/thumbs/${story.pages[0].id}.jpg`,
-              pages: story.pages.map((page) => {
-                return {
-                  ...page,
-                  thumbnailSrc: `${storiesUrl}/thumbs/${page.id}.jpg`
-                };
-              })
-            };
-          })
+          stories: convertStories(templates, templatesImageUrl),
+          categories: convertToCategories(categories)
         };
 
         res(data);
       } catch (e) {
-        rej(t("Failed to load meta.json"));
+        rej(t("Failed to load Stories"));
       }
     },
-    async getData(res, rej, id) {
+    async getData(res, rej, { layoutId, id }) {
       try {
-        const data = await fetch(`${storiesUrl}/resolves/${id}.json`).then(
-          (r) => r.json()
-        );
-        res(data);
+        const { blocks } = await getDefaultStory(storiesDataUrl, layoutId, id);
+
+        res({ blocks });
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
+      }
+    },
+    async getPages(res, rej, id) {
+      try {
+        const { collections, styles } = await getDefaultStoryPages(
+          storiesPagesUrl,
+          id
+        );
+
+        const parsedData: CustomTemplatePage[] = convertStoriesPages(
+          collections,
+          templatesImageUrl,
+          id
+        );
+
+        res({
+          pages: parsedData,
+          styles: [styles]
+        });
+      } catch (e) {
+        rej(t("Failed to load pages for selected Stories"));
       }
     }
   };

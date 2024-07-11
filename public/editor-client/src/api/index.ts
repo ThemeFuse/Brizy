@@ -1,13 +1,16 @@
 import { Config, getConfig } from "@/config";
 import {
   isDefaultBlock,
+  isDefaultBlockArray,
   isDefaultBlockWithID,
   isDefaultBlockWithIDArray,
   isKitDataItems,
   isKitDataResult,
   isLayoutDataResult,
   isPopupDataResult,
-  isPopupsResponse
+  isPopupsResponse,
+  isStoryDataBlocks,
+  isStoryDataResponse
 } from "@/defaultTemplates/utils";
 import {
   APIPopup,
@@ -18,6 +21,8 @@ import {
   KitItem,
   LayoutsAPI,
   LayoutsPagesResult,
+  StoriesAPI,
+  StoryPagesResult,
   Style
 } from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
@@ -1442,6 +1447,82 @@ export const getPopupData = async (
   }
 
   throw new Error(t("Failed to load popups"));
+};
+
+export const getDefaultStories = async (
+  url: string
+): Promise<{
+  templates: StoriesAPI[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (res.collections && res.categories) {
+      return { templates: res.collections, categories: res.categories };
+    }
+  }
+
+  throw new Error(t("Failed to load stories"));
+};
+
+export const getDefaultStory = async (
+  url: string,
+  layoutId: Literal,
+  id: string
+): Promise<{
+  blocks: DefaultBlock[];
+}> => {
+  const fullUrl = makeUrl(url, {
+    project_id: `${layoutId}`,
+    page_slug: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    const parsedResult = mPipe(
+      pass(isStoryDataResponse),
+      Obj.readKey("collection"),
+      Json.read,
+      pass(isStoryDataBlocks),
+      pass(({ blocks }) => isDefaultBlockArray(blocks))
+    )(res);
+
+    if (parsedResult) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load stories"));
+};
+
+export const getDefaultStoryPages = async (
+  url: string,
+  id: string
+): Promise<StoryPagesResult> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id,
+    per_page: "20"
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    return response.json();
+  }
+
+  throw new Error(t("Failed to load stories"));
 };
 
 //#endregion
