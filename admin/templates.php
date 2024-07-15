@@ -502,6 +502,7 @@ class Brizy_Admin_Templates {
 		}
 
 		$compiled_html = self::getTemplate()->get_compiled_html();
+		$compiled_html = apply_filters( 'brizy_template_content_compiled', $compiled_html );
 		$content       = apply_filters(
 			'brizy_content',
 			$compiled_html,
@@ -510,7 +511,7 @@ class Brizy_Admin_Templates {
 			'body'
 		);
 
-		return apply_filters( 'brizy_template_content_compiled', $content );
+		return $content;
 	}
 
 	/**
