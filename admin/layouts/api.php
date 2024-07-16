@@ -227,6 +227,9 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
     public function actionUpdateLayout()
     {
         $this->verifyNonce(self::nonce);
+	    if ( ! current_user_can( 'edit_pages' ) ) {
+		    $this->error( 403, 'Unauthorized.' );
+	    }
 
         try {
 
@@ -285,6 +288,9 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
     public function actionDeleteLayout()
     {
         $this->verifyNonce(self::nonce);
+	    if ( ! current_user_can( 'edit_pages' ) ) {
+		    $this->error( 403, 'Unauthorized.' );
+	    }
 
         if (!$this->param('uid')) {
             $this->error('400', 'Invalid uid');
