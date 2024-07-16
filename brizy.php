@@ -24,6 +24,7 @@ define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
 define('BRIZY_MINIMUM_COMPILER_VERSION', '283-wp');
 define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '282-wp');
 define('BRIZY_SYNC_VERSION', '282');
+define('BRIZY_FORCE_FIRST_COMPILE_IN_BACKEND', false);
 define('BRIZY_FILE', __FILE__);
 define('BRIZY_PLUGIN_BASE', plugin_basename(BRIZY_FILE));
 define('BRIZY_PLUGIN_PATH', dirname(BRIZY_FILE));
