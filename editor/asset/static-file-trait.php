@@ -178,6 +178,8 @@ trait Brizy_Editor_Asset_StaticFileTrait
 			return new WP_Error( 'upload_error', $uploadData['error'] );
 		}
 
+		@mkdir(dirname($assetPath));
+
 		@copy($uploadData['file'],$assetPath);
 
 		unlink($uploadData['file']);
