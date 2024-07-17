@@ -1,77 +1,122 @@
 <?php
 
-class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface {
+class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface
+{
 
-	private $dom;
+    private $dom;
 
-	const ENCODING_TAG = '<?xml encoding="UTF-8">';
-	/**
-	 * @param string $html
-	 */
-	public function __construct( $html ) {
+    const ENCODING_TAG = '<?xml encoding="UTF-8">';
 
-		$dom = new DOMDocument();
+    /**
+     * @param string $html
+     */
+    public function __construct($html)
+    {
 
-		libxml_use_internal_errors( true );
+        $dom = new DOMDocument();
 
-		// $html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
+        libxml_use_internal_errors(true);
 
-		$dom->loadHTML( self::ENCODING_TAG . $html, LIBXML_NOERROR );
+        // $html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
 
-		$this->dom = $dom;
-	}
+        $dom->loadHTML(self::ENCODING_TAG.$html, LIBXML_NOERROR);
 
-	/**
-	 * @inheritDoc
-	 */
-	public function remove( $tag, $cssClass ) {
+        $this->dom = $dom;
+    }
 
-		$xpath = new DOMXPath( $this->dom );
+    /**
+     * @inheritDoc
+     */
+    public function remove($tag, $cssClass)
+    {
 
-		/** @var DOMElement $e */
-		foreach ( $xpath->query( '//' . $tag . '[contains(attribute::class, "' . $cssClass . '")]' ) as $e ) {
-			$e->parentNode->removeChild( $e );
-		}
+        $xpath = new DOMXPath($this->dom);
 
-		foreach ( $xpath->query( '//footer[contains(attribute::class, "brz-footer")]' ) as $e ) {
-			$e->parentNode->removeChild( $e );
-		}
+        /** @var DOMElement $e */
+        foreach ($xpath->query('//'.$tag.'[contains(attribute::class, "'.$cssClass.'")]') as $e) {
+            $e->parentNode->removeChild($e);
+        }
 
-		$dom = new self( $xpath->document->saveHTML() );
+        foreach ($xpath->query('//footer[contains(attribute::class, "brz-footer")]') as $e) {
+            $e->parentNode->removeChild($e);
+        }
 
-		$this->dom = $dom->dom;
-	}
+        $dom = new self($xpath->document->saveHTML());
 
-	public function showdomnode(DOMNode $domNode, DOMElement $domeElement) {
-		foreach ($domNode->childNodes as $node)
-		{
-			print $node->nodeName.':'.$node->nodeValue . '<br>';
-			if($node->hasChildNodes()) {
-				$this->showdomnode($node);
-			}
-		}
-	}
-	/**
-	 * @inheritDoc
-	 */
-	public function appendText( $tag, $cssClass, $text ) {
-		$textNode = $this->dom->createTextNode($text);
-		$xpath      = new DOMXPath( $this->dom );
+        $this->dom = $dom->dom;
+    }
 
-		/** @var DOMElement $e */
-		foreach ( $xpath->query( '//*[contains(attribute::class, "' . $cssClass . '")]' ) as $e ) {
-			$e->appendChild( $textNode );
-		}
+    public function showdomnode(DOMNode $domNode, DOMElement $domeElement)
+    {
+        foreach ($domNode->childNodes as $node) {
+            print $node->nodeName.':'.$node->nodeValue.'<br>';
+            if ($node->hasChildNodes()) {
+                $this->showdomnode($node);
+            }
+        }
+    }
 
-		$dom = new self( $xpath->document->saveHTML() );
+    /**
+     * @inheritDoc
+     */
+    public function appendText($tag, $cssClass, $text)
+    {
+        $textNode = $this->dom->createTextNode($text);
+        $xpath = new DOMXPath($this->dom);
 
-		$this->dom = $dom->dom;
-	}
+        /** @var DOMElement $e */
+        foreach ($xpath->query('//*[contains(attribute::class, "'.$cssClass.'")]') as $e) {
+            $e->appendChild($textNode);
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getHtml() {
-		return str_replace( self::ENCODING_TAG, '', $this->dom->saveHTML() );
-	}
+        $dom = new self($xpath->document->saveHTML());
+
+        $this->dom = $dom->dom;
+    }
+
+    public function appendHtml($targetTag, $cssClass, $html)
+    {
+        $xpath = new DOMXPath($this->dom);
+        $nodes = $this->createNodesFromHTML($xpath->document, trim($html));
+        /** @var DOMElement $e */
+        foreach ($xpath->query('//*[contains(attribute::class, "'.$cssClass.'")]') as $e) {
+
+            foreach ($nodes as $node) {
+                $e->appendChild($node);
+            }
+        }
+
+        $dom = new self($xpath->document->saveHTML());
+
+        $this->dom = $dom->dom;
+    }
+
+    private function createNodesFromHTML($doc, $html)
+    {
+        $nodes = array();
+        $d = new DOMDocument();
+        $d->loadHTML("<html><body>{$html}</body></html>");
+        $child = $d->documentElement->firstChild->firstChild;
+        while ($child) {
+            $nodes[] = $doc->importNode($child, true);
+            $child = $child->nextSibling;
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getHtml()
+    {
+        return str_replace(self::ENCODING_TAG, '', $this->dom->saveHTML());
+    }
+
+    public function getBody()
+    {
+        $body = $this->dom->getElementsByTagName('body')->item(0);
+
+        return implode(array_map([$body->ownerDocument, "saveHTML"], iterator_to_array($body->childNodes)));
+    }
 }
