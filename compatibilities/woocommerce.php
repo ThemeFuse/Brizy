@@ -3,18 +3,13 @@
 class Brizy_Compatibilities_Woocommerce
 {
 
-    static $noticesHtml;
-
-    public function __construct()
-    {
-        add_action(
-            'woocommerce_checkout_terms_and_conditions',
-            [$this, 'woocommerce_checkout_terms_and_conditions'],
-            29
-        );
-        add_action('wp_enqueue_scripts', [$this, 'wp_enqueue_scripts'], 11);
-        add_filter('brizy_template_content_compiled', [$this, 'insertWooNotice']);
-    }
+    static $noticesHtml;public function __construct() {
+		add_action( 'woocommerce_checkout_terms_and_conditions',
+			[ $this, 'woocommerce_checkout_terms_and_conditions' ],
+			29 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 11 );
+		add_filter( 'brizy_template_content_compiled', [ $this, 'insertWooNotice' ] );
+	}
 
     /*
      * Don't allow woo to render post_content of terms page if it is edited with brizy,
@@ -47,20 +42,15 @@ class Brizy_Compatibilities_Woocommerce
     {
         $notices = wc_get_notices();
 
-        if (empty($content) || empty($notices) || !strpos($content, 'brz-section__header') || strpos(
-                $content,
-                'editor_woo_notice'
-            )) {
-            return $content;
-        }
+		if ( empty( $content ) || empty( $notices ) || ! strpos( $content, 'brz-section__header' ) || strpos( $content,
+				'editor_woo_notice' ) ) {
+			return $content;
+		}
 
-        $parser = new Brizy_Parser_Parser($content);
-        $parser = $parser->getParser();
-        $cssClass = is_a(
-            $parser,
-            'Brizy_Parser_DomDocument'
-        ) ? 'brz-section brz-section__header' : 'brz-section__header';
-
+		$parser = new Brizy_Parser_Parser( $content );
+		$parser = $parser->getParser();
+		$cssClass = is_a( $parser,
+			'Brizy_Parser_DomDocument' ) ? 'brz-section brz-section__header' : 'brz-section__header';
 
         if (!self::$noticesHtml) {
             self::$noticesHtml = wc_print_notices(true);

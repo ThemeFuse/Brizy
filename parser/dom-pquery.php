@@ -40,10 +40,9 @@ class Brizy_Parser_DomPquery implements Brizy_Parser_DomInterface
     public function getHtml()
     {
         return $this->dom->body();
-    }
+	}
 
-    public function getBody()
-    {
-        return $this->dom->body();
+	public function getBody() {
+		return $this->dom->body();
     }
 }

@@ -110,13 +110,11 @@ class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface
      */
     public function getHtml()
     {
-        return str_replace(self::ENCODING_TAG, '', $this->dom->saveHTML());
-    }
+        return str_replace( self::ENCODING_TAG, '', $this->dom->saveHTML() );
+	}
 
-    public function getBody()
-    {
-        $body = $this->dom->getElementsByTagName('body')->item(0);
-
-        return implode(array_map([$body->ownerDocument, "saveHTML"], iterator_to_array($body->childNodes)));
-    }
+	public function getBody() {
+		$body = $this->dom->getElementsByTagName('body')->item(0);
+		return implode(array_map([$body->ownerDocument,"saveHTML"], iterator_to_array($body->childNodes)));
+	}
 }

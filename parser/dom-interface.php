@@ -20,14 +20,12 @@ interface Brizy_Parser_DomInterface
      */
     public function appendText($tag, $cssClass, $text);
 
-    public function appendHtml($targetTag, $cssClass, $html);
+    public function appendHtml($targetTag, $cssClass, $html);/**
+	 * Get modified HTML
+	 *
+	 * @return string
+	 */
+	public function getHtml();
 
-    /**
-     * Get modified HTML
-     *
-     * @return string
-     */
-    public function getHtml();
-
-    public function getBody();
+	public function getBody();
 }

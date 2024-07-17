@@ -24,13 +24,12 @@ class Brizy_Admin_Templates
 
     private static $templateContent;
 
-    /**
-     * Brizy_Admin_Templates constructor.
-     */
-    protected function __construct()
-    {
-        add_action('wp_loaded', array($this, 'initializeActions'));
-    }
+	/**
+	 * Brizy_Admin_Templates constructor.
+	 */
+	protected function __construct() {
+		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
+	}
 
     /**
      * @return Brizy_Editor_Post
@@ -519,12 +518,12 @@ class Brizy_Admin_Templates
             return;
         }
 
-        if (self::$templateContent) {
-            return self::$templateContent;
-        }
+        if(self::$templateContent) {
+			return self::$templateContent;
+		}
 
-        $pid = Brizy_Editor::get()->currentPostId();
-        $post = self::getTemplate()->getWpPost();
+		$pid  = Brizy_Editor::get()->currentPostId();
+		$post = self::getTemplate()->getWpPost();
 
         if ($pid) {
             $post = get_post($pid);
@@ -540,8 +539,8 @@ class Brizy_Admin_Templates
         );
         $content = apply_filters('brizy_template_content_compiled', $content);
 
-        return self::$templateContent = $content;
-    }
+        return self::$templateContent =  $content;
+	}
 
     /**
      * @param $content
