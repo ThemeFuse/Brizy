@@ -30,11 +30,11 @@ export const useAsSimpleSelectConditions = (vd: VDecoded): boolean => {
 
 export const getManualTitle = (type?: string): string => {
   switch (type) {
-    case "shopify-products":
+    case "shopify-product":
       return t("Products");
-    case "shopify-collections":
+    case "shopify-collection":
       return t("Collections");
-    case "shopify-posts":
+    case "shopify-article":
       return t("Posts");
     default:
       return t("Manual");

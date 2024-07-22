@@ -1,5 +1,6 @@
 import { ElementModelType } from "visual/component/Elements/Types";
 import { Palette, FontStyle as _FontStyle } from "visual/types";
+import { Literal } from "visual/utils/types/Literal";
 import { Response } from "../common";
 
 export interface DefaultBlock extends ElementModelType {
@@ -25,6 +26,17 @@ export interface DefaultTemplateKits<T1, T2, T3> {
     kit: BlockWithThumbs
   ) => void;
   getKits: (res: Response<T3>, rej: Response<string>) => void;
+}
+
+export interface DefaultTemplateWithPages<T1, T2, T3> {
+  label?: string;
+  getMeta: (res: Response<T1>, rej: Response<string>) => void;
+  getData: (
+    res: Response<Promise<T2>>,
+    rej: Response<string>,
+    page: CustomTemplatePage
+  ) => void;
+  getPages: (res: Response<T3>, rej: Response<string>, id: string) => void;
 }
 
 export interface Kits {
@@ -71,6 +83,11 @@ export interface LayoutsWithThumbs extends Omit<Layouts, "templates"> {
   templates: Array<TemplateWithThumbs>;
 }
 
+export interface LayoutsPages {
+  pages: CustomTemplatePage[];
+  styles: Style[];
+}
+
 export interface Stories {
   stories: Array<Template>;
   categories: Array<Omit<Categories, "slug">>;
@@ -101,34 +118,37 @@ export interface BlockWithThumbs extends Block {
 export interface Template {
   blank?: boolean;
   name: string;
-  cat: Array<number>;
+  cat: Array<Literal>;
   color: string;
-  pages: Array<TemplatePage>;
+  pagesCount: number;
+  layoutId: string;
   styles?: Array<Style>;
+  pro: boolean;
+  keywords: string;
 }
 
-export interface TemplateWithThumbs extends Omit<Template, "pages"> {
-  pages: Array<TemplatePageWithThumbs>;
+export interface TemplateWithThumbs extends Template {
   thumbnailSrc: string;
 }
 
-export interface TemplateWithPageProps
-  extends TemplateWithThumbs,
-    TemplatePageWithThumbs {}
+export interface TemplateWithThumbsAndPages extends TemplateWithThumbs {
+  pages: Array<CustomTemplatePage>;
+}
 
 export interface TemplatePage {
   id: string;
   title: string;
-  keywords: string;
-  cat: Array<number>;
   thumbnailWidth: number;
   thumbnailHeight: number;
-  pro: boolean;
 }
 
 export interface TemplatePageWithThumbs extends TemplatePage {
   thumbnailSrc: string;
 }
+
+export type CustomTemplatePage = TemplatePageWithThumbs & {
+  [key: string]: string;
+};
 
 interface Categories {
   id: number;
@@ -137,7 +157,7 @@ interface Categories {
   hidden?: boolean;
 }
 
-interface Style {
+export interface Style {
   id: string;
   title: string;
   colorPalette: Array<Palette>;

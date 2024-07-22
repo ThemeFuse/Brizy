@@ -16,11 +16,11 @@ export { default as drip } from "./Drip";
 export { default as smtp } from "./Smtp";
 export { default as gmail_smtp } from "./Gmail";
 export { default as webhooks } from "./Webhook";
+export { default as constantcontact } from "./ConstantContact";
 
 // Not Implemented
 export { default as mailgun } from "./Mailgun";
 export { default as madmimi } from "./Madmimi";
-export { default as constantcontact } from "./ConstantContact";
 export { default as aweber } from "./Aweber";
 export { default as salesforce } from "./Salesforce";
 export { default as sendgrid } from "./SendGrid";

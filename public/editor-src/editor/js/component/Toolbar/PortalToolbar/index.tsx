@@ -27,6 +27,7 @@ import {
   PortalToolbarPositionerProps
 } from "./PortalToolbarPositioner";
 import { selectorSearchCoordinates, selectorSearchDomTree } from "./utils";
+import { targetExceptions } from "visual/component/Options/constants";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
 
@@ -316,12 +317,7 @@ class _PortalToolbar
       ".brz-ed-fixed",
       ".brz-ed-box__resizer--point",
       ".brz-ed-eyeDropper",
-      ...(TARGET === "WP"
-        ? [
-            ".media-modal", // class of the WP media modal
-            ".media-modal-backdrop"
-          ]
-        : []),
+      ...targetExceptions,
       this.clickOutsideException // makes the toolbar not rerender when clicking repeatedly on the same node
     ];
   };

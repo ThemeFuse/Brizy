@@ -2,6 +2,7 @@ import React, { ReactElement, useCallback, useRef } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Switch as Control } from "visual/component/Controls/Switch";
 import { ToastNotification } from "visual/component/Notifications";
+import Config from "visual/global/Config";
 import {
   makeGlobalBlockToPopup,
   makeGlobalToNormalBlock,
@@ -97,14 +98,16 @@ export const GlobalBlockOption: Component = ({
         }
 
         let globalBlock = {
-          id: blockData.value._id,
+          uid: blockData.value._id,
           meta,
           status: "draft",
           data: blockData,
           rules: [],
+          dataVersion: 0,
           position: { align: "bottom", top: 0, bottom: 0 }
         } as GlobalBlock;
         const newBlockId = blockData.value._id;
+        const config = Config.getAll();
 
         if (!isPopup(blockData) && page) {
           globalBlock = changeRule(globalBlock, true, page);
@@ -112,7 +115,7 @@ export const GlobalBlockOption: Component = ({
 
         if (isGlobalPopup(globalBlock)) {
           try {
-            const popup = await createGlobalPopup(globalBlock);
+            const popup = await createGlobalPopup(globalBlock, config);
 
             if (popup.data) {
               const popupId = blockType === "popup" && getOpenedPopupId();
@@ -139,7 +142,7 @@ export const GlobalBlockOption: Component = ({
           }
         } else {
           try {
-            const block = await createGlobalBlock(globalBlock);
+            const block = await createGlobalBlock(globalBlock, config);
 
             if (block.data) {
               dispatch(

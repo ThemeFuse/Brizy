@@ -30,9 +30,16 @@ type UpdateFormData = {
 export type UpdateForm = (data: UpdateFormData) => Promise<unknown>;
 
 // Integrations
+
+interface Account {
+  id: string;
+  name: string;
+}
+
 export type IntegrationResponse = {
   status: Response["status"];
   data: {
+    accounts: Array<Account>;
     subject: string;
     emailTo: string;
   } | null;
@@ -62,7 +69,12 @@ export type UpdateIntegration = (data: {
 
 export type IntegrationAccountApiKeyResponse = {
   status: Response["status"];
-  data: Array<{ name: string }>;
+  data: Array<{
+    name: string;
+    value?: string;
+    hidden?: boolean;
+    description?: string;
+  }>;
 };
 export type GetIntegrationAccountApiKey = (data: {
   formId: string;

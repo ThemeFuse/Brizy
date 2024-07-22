@@ -1,5 +1,5 @@
 import jQuery from "jquery";
-import React from "react";
+import React, { ReactElement } from "react";
 import ReactDOM from "react-dom";
 
 type FunctionalException = (el: HTMLElement) => boolean;
@@ -12,6 +12,7 @@ type Acc = {
 };
 
 interface Props {
+  children: ReactElement;
   exceptions: Exception[];
   onClickOutside: (e: MouseEvent) => void;
 }

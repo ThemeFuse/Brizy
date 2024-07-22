@@ -1,0 +1,49 @@
+.brz-articleDetail {
+  overflow: hidden;
+
+  &__item {
+    & > * {
+      margin: 0;
+    }
+
+    &--content * {
+      color: inherit;
+      font-family: inherit;
+    }
+
+    .brz-ministryBrands__item--meta--links--previous {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--media {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      width: 100%;
+      flex-flow: row wrap;
+      gap: 0.5rem;
+
+      a {
+        color: inherit;
+      }
+
+      li.brz-ministryBrands__item--meta--links {
+        border-radius: 3px;
+      }
+
+      &--audio {
+        width: 100%;
+      }
+
+      li {
+        margin: 0 0.5rem 0 0;
+
+        a {
+          padding: 12px 24px;
+        }
+      }
+    }
+  }
+}

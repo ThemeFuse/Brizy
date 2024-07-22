@@ -3,16 +3,20 @@ import {
   cssStyleBgGradient,
   cssStyleBorder,
   cssStyleBorderRadius,
+  cssStyleBorderRadiusType,
   cssStyleColor,
   cssStyleDisplayFlex,
+  cssStyleElementButtonSize,
   cssStyleFilter,
   cssStyleFlexColumnHorizontalAlign,
   cssStyleFlexHorizontalAlign,
+  cssStyleHoverTransition,
   cssStyleMargin,
   cssStylePaddingFourFields,
   cssStyleSizeMaxWidth,
   cssStyleTextAlign,
-  getAllCssStyleTypography
+  getAllCssStyleTypography,
+  getFillType
 } from "visual/utils/cssStyle";
 import { read as readNumber } from "visual/utils/reader/number";
 import { read as readString } from "visual/utils/reader/string";
@@ -487,27 +491,49 @@ export const cssStyleElementMinistryBrandsButtonsTypography = ({
 export const cssStyleElementMinistryBrandsButtonsBgColor = ({
   v,
   device,
-  state
+  state,
+  prefix = "detailButton"
 }: CSSValue): string => {
-  return cssStyleBgColor({
-    v,
-    device,
-    state,
-    prefix: "detailButtonBg"
-  });
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const fillType = getFillType(dvv(capByPrefix(prefix, "fillType")));
+
+  switch (fillType) {
+    case "filled":
+      return cssStyleBgColor({
+        v,
+        device,
+        state,
+        prefix: capByPrefix(prefix, "bg")
+      });
+    case "outline":
+      return "background-color: transparent!important;";
+    case "default": {
+      return "border: 0!important; background-color: transparent!important; box-shadow: none!important;";
+    }
+    case undefined:
+      return "";
+  }
 };
 
 export const cssStyleElementMinistryBrandsButtonsBgGradient = ({
   v,
   device,
-  state
+  state,
+  prefix = "detailButton"
 }: CSSValue): string => {
-  return cssStyleBgGradient({
-    v,
-    device,
-    state,
-    prefix: "detailButton"
-  });
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const fillType = getFillType(dvv(capByPrefix(prefix, "fillType")));
+
+  switch (fillType) {
+    case "filled":
+      return cssStyleBgGradient({ v, device, state, prefix });
+    case "outline":
+    case "default":
+      return "background: transparent;";
+    case undefined:
+      return "";
+  }
 };
 
 export const cssStyleElementMinistryBrandsButtonsColor = ({
@@ -568,11 +594,11 @@ export const cssStyleElementMinistryBrandsRegisterButtonBgColor = ({
   device,
   state
 }: CSSValue): string => {
-  return cssStyleBgColor({
+  return cssStyleElementMinistryBrandsButtonsBgColor({
     v,
     device,
     state,
-    prefix: "registerButtonBg"
+    prefix: "registerButton"
   });
 };
 
@@ -581,7 +607,7 @@ export const cssStyleElementMinistryBrandsRegisterButtonBgGradient = ({
   device,
   state
 }: CSSValue): string => {
-  return cssStyleBgGradient({
+  return cssStyleElementMinistryBrandsButtonsBgGradient({
     v,
     device,
     state,
@@ -627,6 +653,19 @@ export const cssStyleElementMinistryBrandsRegisterButtonBorder = ({
     prefix: "registerButton"
   });
 };
+
+export function cssStyleElementMinistryBrandsRegisterButtonSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleElementButtonSize({
+    v,
+    device,
+    state,
+    prefix: "registerButton"
+  });
+}
 
 export function cssStyleElementOfMinistryBrandsParagraphTypography({
   v,
@@ -1244,5 +1283,152 @@ export function cssStyleElementMinistryBrandsMetaItemWebsitePadding({
     device,
     state,
     prefix: "metaWebsite"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsSocialColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "socialColor" });
+}
+
+export const cssStyleElementOfMinistryBrandsSocialBgColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBgColor({ v, device, state, prefix: "socialBg" });
+};
+
+export const cssStyleElementOfMinistryBrandsSocialBgGradient = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    prefix: "social"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsSocialBoxShadow = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    prefix: "social"
+  });
+};
+
+export const cssStyleElementOfMinistryBrandsSocialBorder = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    prefix: "social"
+  });
+};
+
+
+export const cssStyleElementMinistryResultsHeadingTypography = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "resultsHeadingTypography"
+  });
+};
+
+export const cssStyleElementMinistryNoResultsParagraphTypography = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "noResultsTypography"
+  });
+};
+
+export const cssStyleElementMinistryResultsHeadingColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "resultsHeadingColor"
+  });
+};
+
+export const cssStyleElementMinistryNoResultsParagraphColor = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "noResultsColor"
+  });
+};
+
+export function cssStyleElementMinistryBrandsButtonsBorderRadius({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadiusType({
+    v,
+    device,
+    state,
+    prefix: "buttons"
+  });
+}
+
+export function cssStyleElementMinistryBrandsButtonsSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleElementButtonSize({
+    v,
+    device,
+    state,
+    prefix: "detailButton"
+  });
+}
+
+export function cssStyleMinistryBrandsButtonsHoverTransition({
+  v,
+  device,
+  state
+}: CSSValue) {
+  return cssStyleHoverTransition({
+    v,
+    device,
+    state,
+    prefix: "buttons"
   });
 }

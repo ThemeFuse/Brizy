@@ -1,6 +1,7 @@
 import React, {
   Component,
   ComponentType,
+  PropsWithChildren,
   ReactElement,
   ReactNode
 } from "react";
@@ -10,15 +11,18 @@ import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import Config from "visual/global/Config";
 import {
+  CustomTemplatePage,
   LayoutsWithThumbs,
   StoriesWithThumbs,
-  TemplateWithPageProps,
-  TemplateWithThumbs
+  TemplateWithThumbs,
+  TemplateWithThumbsAndPages
 } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
 import {
+  defaultLayoutPages,
   defaultLayoutsMeta,
   defaultStoriesData,
-  defaultStoriesMeta
+  defaultStoriesMeta,
+  defaultStoriesPages
 } from "visual/utils/api";
 import { isBlock } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
@@ -30,15 +34,15 @@ import ThumbnailGrid, { ThumbnailProps } from "../common/ThumbnailGrid";
 import { Data as ThumbnailData } from "../common/ThumbnailGrid";
 import { PromptBlockTemplate } from "../types";
 import Details from "./Details";
-import { Category, Filter, Page, isStoryData } from "./types";
+import { Category, Filter, isStoryData } from "./types";
 
-interface Data extends ThumbnailData, TemplateWithPageProps {}
+interface Data extends ThumbnailData, TemplateWithThumbs {}
 
 export interface Props {
   type: "stories" | "layouts";
   showSidebar: boolean;
   showSearch: boolean;
-  HeaderSlotLeft?: ComponentType;
+  HeaderSlotLeft?: ComponentType<PropsWithChildren<unknown>>;
   onAddBlocks: (b: PromptBlockTemplate) => void;
   onClose: VoidFunction;
   onNext: VoidFunction;
@@ -46,7 +50,7 @@ export interface Props {
 
 interface State {
   data: StoriesWithThumbs | LayoutsWithThumbs | undefined;
-  detailsData: undefined | TemplateWithPageProps;
+  detailsData: undefined | TemplateWithThumbsAndPages;
 }
 
 const defaultFilter: Filter = {
@@ -70,30 +74,36 @@ export default class List extends Component<Props, State> {
   };
 
   async componentDidMount(): Promise<void> {
-    const data = await this.getData();
-
-    this.setState({ data });
-  }
-
-  async getData(): Promise<StoriesWithThumbs | LayoutsWithThumbs | undefined> {
     try {
-      return this.props.type === "layouts"
-        ? await defaultLayoutsMeta(Config.getAll())
-        : await defaultStoriesMeta(Config.getAll());
+      const data = await this.getData();
+
+      this.setState({ data });
     } catch (e) {
       console.error(e);
       ToastNotification.error(t("Something went wrong on getting meta"));
     }
   }
 
-  filterFn = (item: TemplateWithPageProps, cf: Filter): boolean => {
+  async getData(): Promise<StoriesWithThumbs | LayoutsWithThumbs> {
+    return this.props.type === "layouts"
+      ? await defaultLayoutsMeta(Config.getAll())
+      : await defaultStoriesMeta(Config.getAll());
+  }
+
+  async getPages(id: string) {
+    const config = Config.getAll();
+    return this.props.type === "layouts"
+      ? await defaultLayoutPages(config, id)
+      : await defaultStoriesPages(config, id);
+  }
+
+  filterFn = (item: TemplateWithThumbs, cf: Filter): boolean => {
     const searchRegex = new RegExp(
       cf.search?.replace(/[.*+?^${}()|[\]\\]/g, ""),
       "i"
     );
 
-    const categoryMatch =
-      cf.category === "*" || item.cat.includes(Number(cf.category));
+    const categoryMatch = cf.category === "*" || item.cat.includes(cf.category);
     const searchMatch =
       cf.search === "" ||
       searchRegex.test(item.keywords) ||
@@ -112,16 +122,32 @@ export default class List extends Component<Props, State> {
     }
   }
 
-  handleThumbnailAdd = (thumbnailData: State["detailsData"]): void => {
-    this.setState({ detailsData: thumbnailData });
+  handleThumbnailAdd = async (
+    thumbnailData: TemplateWithThumbs
+  ): Promise<void> => {
+    try {
+      const data = await this.getPages(thumbnailData.layoutId);
+
+      this.setState({
+        detailsData: {
+          ...thumbnailData,
+          pages: data.pages,
+          styles: data.styles
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting pages"));
+    }
   };
 
-  handleBlankThumbnailAdd = async (data: Page): Promise<void> => {
+  handleBlankThumbnailAdd = async (data: CustomTemplatePage): Promise<void> => {
     const { onAddBlocks, onClose } = this.props;
-    const blockData = await defaultStoriesData(Config.getAll(), data.id);
+    const blockData = await defaultStoriesData(Config.getAll(), data);
+    const blockId = data.id;
     const resolve = isBlock(blockData)
-      ? { ...blockData, blockId: data.id }
-      : { ...blockData.blocks[0], blockId: data.id };
+      ? { ...blockData, blockId: blockId }
+      : { ...blockData.blocks[0], blockId: blockId };
 
     onAddBlocks({
       blocks: [resolve],
@@ -172,7 +198,7 @@ export default class List extends Component<Props, State> {
       return (
         <Thumbnail
           {...props}
-          data={data.pages[0]}
+          data={data}
           onAdd={this.handleBlankThumbnailAdd}
         />
       );
@@ -184,11 +210,6 @@ export default class List extends Component<Props, State> {
   renderList(data: StoriesWithThumbs | LayoutsWithThumbs): ReactElement {
     const { showSidebar, showSearch } = this.props;
     const blocks = this.getLayoutData(data);
-
-    const thumbnails = blocks.map((el) => ({
-      ...el,
-      ...el.pages[0]
-    }));
 
     const countersSectionBlocks: { [k: string]: number } = {};
 
@@ -219,7 +240,7 @@ export default class List extends Component<Props, State> {
 
     return (
       <DataFilter<Data, Filter>
-        data={thumbnails}
+        data={blocks}
         filterFn={this.filterFn}
         defaultFilter={defaultFilter}
       >

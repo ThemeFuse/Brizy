@@ -9,8 +9,12 @@ import HotKeys from "visual/component/HotKeys";
 import Prompts from "visual/component/Prompts";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { addBlock, importTemplate } from "visual/redux/actions2";
-import { addGlobalBlock, removeBlock } from "visual/redux/actions2";
+import {
+  addBlock,
+  addGlobalBlock,
+  importTemplate,
+  removeBlock
+} from "visual/redux/actions2";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
@@ -47,6 +51,28 @@ class Blocks extends EditorArrayComponent {
     dispatch(addBlock({ block: blockWithIds, ...rest }, meta));
   };
 
+  handleDelete(id) {
+    const index = this.getValue().findIndex((block) => block.value._id === id);
+
+    if (index !== -1) {
+      const { dispatch } = this.props;
+      hideToolbar();
+      dispatch(removeBlock({ index, id }));
+    } else {
+      console.error("Invalid block id", id);
+    }
+  }
+
+  handleClone(id) {
+    const index = this.getValue().findIndex((block) => block.value._id === id);
+
+    if (index !== -1) {
+      this.cloneItem(index);
+    } else {
+      console.error("Invalid block id", id);
+    }
+  }
+
   handleKeyDown = () => {
     const insertIndex = this.getValue().length;
     const changeBlockCb = (data) => this.handleAddBlock(data, insertIndex);
@@ -68,7 +94,7 @@ class Blocks extends EditorArrayComponent {
     });
   };
 
-  getItemProps(itemData, itemIndex) {
+  getItemProps(itemData) {
     const { blockId } = itemData;
     let disabled = false;
     if (itemData.type === "GlobalBlock") {
@@ -90,7 +116,7 @@ class Blocks extends EditorArrayComponent {
           position: 200,
           disabled,
           onClick: () => {
-            this.cloneItem(itemIndex);
+            this.handleClone(itemData.value._id);
           }
         },
         {
@@ -99,9 +125,7 @@ class Blocks extends EditorArrayComponent {
           config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           position: 250,
           onClick: () => {
-            const { dispatch } = this.props;
-            hideToolbar();
-            dispatch(removeBlock({ index: itemIndex, id: itemData.value._id }));
+            this.handleDelete(itemData.value._id);
           }
         }
       ],

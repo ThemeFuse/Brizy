@@ -11,10 +11,6 @@
     left: 0;
     z-index: z("section-popup");
   }
-  &--static {
-    position: relative;
-    overflow-y: hidden;
-  }
   &__close {
     position: absolute;
     z-index: 2;
@@ -67,6 +63,10 @@
   }
 }
 
+.brz-popup2--inMegaMenu {
+  z-index: z("mega-menu") + 1;
+}
+
 // Popup for preview
 .brz-popup2__preview,
 &.brz-popup2__preview {
@@ -84,5 +84,24 @@
     transform: translate(0, 0);
     opacity: 1;
     transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
+
+    &.brz-popup2--inMegaMenu {
+      z-index: z("mega-menu") + 1;
+    }
+  }
+}
+
+// Internal Popup
+// When popup need to be like simple block
+// embedded from config is true
+&.brz-conditions-popup--static {
+  .brz-popup2 {
+    position: relative;
+    top: unset;
+    left: unset;
+    overflow-y: hidden;
+  }
+  .brz-popup2__close {
+    display: none;
   }
 }

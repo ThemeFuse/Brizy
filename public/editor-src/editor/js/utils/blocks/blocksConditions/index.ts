@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import Config from "visual/global/Config";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {

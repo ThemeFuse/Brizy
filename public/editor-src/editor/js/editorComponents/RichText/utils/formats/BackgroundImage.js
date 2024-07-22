@@ -61,7 +61,7 @@ class BackgroundImage extends Inline {
       imagePopulation
     } = value;
 
-    if (imagePopulation) {
+    if (imagePopulation && typeof imagePopulation === "string") {
       node.style.backgroundImage = null;
       // ! should be 50% 50% or should we set image position?
       node.style.backgroundPosition = "50% 50%";

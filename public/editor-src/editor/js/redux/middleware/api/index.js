@@ -1,4 +1,5 @@
-import produce from "immer";
+import { produce } from "immer";
+import { fromJS } from "immutable";
 import _ from "underscore";
 import Config from "visual/global/Config";
 import { StoreChanged } from "visual/redux/types";
@@ -10,29 +11,29 @@ import {
 } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
+import { isT } from "visual/utils/value";
 import {
   ADD_BLOCK,
   HYDRATE,
   MAKE_BLOCK_TO_GLOBAL_BLOCK,
   MAKE_GLOBAL_BLOCK_TO_BLOCK,
-  REMOVE_BLOCK,
   REORDER_BLOCKS,
   UPDATE_BLOCKS,
-  UPDATE_ERROR,
   UPDATE_POPUP_RULES,
-  UPDATE_TRIGGERS,
-  updateError
+  UPDATE_TRIGGERS
 } from "../../actions";
 import {
   ADD_FONTS,
   ADD_GLOBAL_BLOCK,
   ActionTypes,
+  ADD_GLOBAL_POPUP,
   DELETE_FONTS,
   PUBLISH,
   UPDATE_CURRENT_KIT_ID,
   UPDATE_DEFAULT_FONT,
   UPDATE_DISABLED_ELEMENTS,
   UPDATE_EXTRA_FONT_STYLES,
+  updateError,
   updateStoreWasChanged
 } from "../../actions2";
 import { historySelector } from "../../history/selectors";
@@ -53,11 +54,9 @@ import { handleGlobalBlocks } from "./globalBlocks";
 import {
   apiOnChange,
   apiPublish,
-  apiUpdateGlobalBlocks,
   apiUpdatePopupRules,
   debouncedApiAutoSave,
   debouncedApiPublish,
-  debouncedApiUpdateGlobalBlock,
   onUpdate,
   pollingSendHeartBeat
 } from "./utils";
@@ -81,12 +80,11 @@ export default (store) => (next) => {
 };
 
 function handlePublish({ action, state, oldState, apiHandler }) {
-  if (action.type === PUBLISH) {
+  const config = Config.getAll();
+
+  if (action.type === PUBLISH && config.ui?.publish?.handler) {
     const config = Config.getAll();
     const { onSuccess = _.noop, onError = _.noop } = action.meta ?? {};
-
-    // update
-    const meta = { is_autosave: 0 };
 
     const oldProject = projectSelector(oldState);
     const project = projectSelector(state);
@@ -94,62 +92,75 @@ function handlePublish({ action, state, oldState, apiHandler }) {
     const oldPage = pageSelector(oldState);
     const page = pageSelector(state);
 
+    const globalBlocks = globalBlocksAssembledSelector(state);
+
     const allApi = [];
+    let data = undefined;
 
     if (!isStory(config)) {
       const changedGBIds = changedGBIdsSelector(state);
-      const globalBlocks = globalBlocksAssembledSelector(state);
+      const oldGlobalBlocks = globalBlocksAssembledSelector(oldState);
+
+      if (changedGBIds.length > 0 || oldGlobalBlocks !== globalBlocks) {
+        const newGlobalBlocks = Object.entries(globalBlocks)
+          .map(([id, globalBlock]) => {
+            // Check the ChangedGBIds
+            if (changedGBIds.includes(id)) {
+              return globalBlock;
+            }
+
+            // Check the data from JSON
+            const oldGlobalBlock = fromJS(oldGlobalBlocks[id]);
+            const newGlobalBlock = fromJS(globalBlock);
+
+            if (!oldGlobalBlock.equals(newGlobalBlock)) {
+              return globalBlock;
+            }
+          })
+          .filter(isT);
+
+        if (newGlobalBlocks.length > 0) {
+          data = {
+            globalBlocks: newGlobalBlocks
+          };
+        }
+      }
 
       // cancel possible pending requests
       debouncedApiAutoSave.cancel();
       debouncedApiPublish.cancel();
-      const newGlobalBlocks = Object.entries(globalBlocks).reduce(
-        (acc, [id, globalBlock]) => {
-          debouncedApiUpdateGlobalBlock.cancel(id);
-
-          // eslint-disable-next-line no-unused-vars
-          const { data, ...rest } = globalBlock;
-
-          acc[id] = !changedGBIds.includes(id) ? rest : globalBlock;
-
-          return acc;
-        },
-        {}
-      );
-
-      allApi.push(apiUpdateGlobalBlocks(newGlobalBlocks, meta));
     }
 
-    let data = undefined;
-
     if (project !== oldProject) {
-      data = {
-        projectData: project
-      };
+      data = data || {};
+      data.project = project;
     }
 
     if (page !== oldPage) {
       data = data || {};
-      data.pageData = page;
+      data.page = page;
     }
 
     if (data) {
+      const _data = {
+        config,
+        needToCompile: data,
+        is_autosave: 0,
+        state: {
+          project,
+          page,
+          globalBlocks: Object.values(globalBlocks)
+        }
+      };
       switch (action.payload.type) {
         case "internal": {
-          const publish = {
-            config,
-            data,
-            requiredCompilerData: { page, project }
-          };
-          allApi.push(apiPublish(publish));
+          allApi.push(apiPublish(_data));
           break;
         }
         case "external": {
           allApi.push(
             onUpdate({
-              page,
-              project,
-              config,
+              ..._data,
               onDone: action.payload.res
             })
           );
@@ -158,7 +169,7 @@ function handlePublish({ action, state, oldState, apiHandler }) {
       }
     }
 
-    apiHandler(Promise.all(allApi), onSuccess, onError);
+    apiHandler(Promise.all(allApi), action, onSuccess, onError);
   }
 }
 
@@ -168,6 +179,9 @@ function handleProject({ action, state, oldState, apiHandler }) {
   switch (action.type) {
     case ActionTypes.UPDATE_CURRENT_STYLE_ID:
     case ActionTypes.UPDATE_CURRENT_STYLE:
+    case ActionTypes.ADD_NEW_GLOBAL_STYLE:
+    case ActionTypes.REMOVE_GLOBAL_STYLE:
+    case ActionTypes.EDIT_GLOBAL_STYLE_NAME:
     case UPDATE_EXTRA_FONT_STYLES: {
       const project = projectAssembled(state);
 
@@ -180,15 +194,23 @@ function handleProject({ action, state, oldState, apiHandler }) {
     case UPDATE_DISABLED_ELEMENTS: {
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
       const project = projectSelector(state);
+      const page = pageSelector(state);
+      const data = {
+        config,
+        needToCompile: {
+          project
+        },
+        state: {
+          project,
+          page,
+          globalBlocks: []
+        }
+      };
 
       // cancel pending request
       debouncedApiAutoSave.cancel();
 
-      apiHandler(
-        apiOnChange({ projectData: project }, config),
-        onSuccess,
-        onError
-      );
+      apiHandler(apiOnChange(data), action, onSuccess, onError);
       break;
     }
 
@@ -199,21 +221,29 @@ function handleProject({ action, state, oldState, apiHandler }) {
       const fonts = fontsSelector(state);
       const oldStyles = stylesSelector(oldState);
       const styles = stylesSelector(state);
+      const page = pageSelector(state);
 
       if (oldFonts !== fonts || oldStyles !== styles) {
         const project = produce(projectSelector(state), (draft) => {
           draft.data.fonts = fonts;
           draft.data.styles = styles;
         });
+        const data = {
+          config,
+          needToCompile: {
+            project
+          },
+          state: {
+            project,
+            page,
+            globalBlocks: []
+          }
+        };
 
         // cancel pending request
         debouncedApiAutoSave.cancel();
 
-        apiHandler(
-          apiOnChange({ projectData: project }, config),
-          onSuccess,
-          onError
-        );
+        apiHandler(apiOnChange(data), action, onSuccess, onError);
       }
       break;
     }
@@ -225,15 +255,23 @@ function handleProject({ action, state, oldState, apiHandler }) {
       const project = produce(projectSelector(state), (draft) => {
         draft.data.fonts = fonts;
       });
+      const page = pageSelector(state);
+      const data = {
+        config,
+        needToCompile: {
+          project
+        },
+        state: {
+          project,
+          page,
+          globalBlocks: []
+        }
+      };
 
       // cancel pending request
       debouncedApiAutoSave.cancel();
 
-      apiHandler(
-        onChange({ projectData: project }, config),
-        onSuccess,
-        onError
-      );
+      apiHandler(onChange(data), action, onSuccess, onError);
       break;
     }
     case UPDATE_DEFAULT_FONT: {
@@ -242,15 +280,23 @@ function handleProject({ action, state, oldState, apiHandler }) {
       const project = produce(projectSelector(state), (draft) => {
         draft.data.font = font;
       });
+      const page = pageSelector(state);
+      const data = {
+        config,
+        needToCompile: {
+          project
+        },
+        state: {
+          project,
+          page,
+          globalBlocks: []
+        }
+      };
 
       // cancel pending request
       debouncedApiAutoSave.cancel();
 
-      apiHandler(
-        apiOnChange({ projectData: project }, config),
-        onSuccess,
-        onError
-      );
+      apiHandler(apiOnChange(data), action, onSuccess, onError);
       break;
     }
 
@@ -285,7 +331,8 @@ function handlePage({ action, state }) {
     case UPDATE_BLOCKS:
     case ADD_BLOCK:
     case ADD_GLOBAL_BLOCK:
-    case REMOVE_BLOCK: {
+    case ADD_GLOBAL_POPUP:
+    case ActionTypes.REMOVE_BLOCK: {
       const page = produce(pageSelector(state), (draft) => {
         draft.data.items = pageBlocksRawSelector(state);
       });
@@ -308,10 +355,21 @@ function handlePage({ action, state }) {
     case UPDATE_TRIGGERS: {
       const { page } = state;
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+      const config = Config.getAll();
+      const project = projectSelector(state);
+      const data = {
+        config,
+        needToCompile: {
+          page
+        },
+        state: {
+          project,
+          page,
+          globalBlocks: []
+        }
+      };
 
-      apiOnChange({ pageData: page }, Config.getAll())
-        .then(syncSuccess)
-        .catch(syncFail);
+      apiOnChange(data).then(syncSuccess).catch(syncFail);
       break;
     }
     case UNDO:
@@ -349,20 +407,26 @@ const startHeartBeat = (apiHandler) => {
 const startHeartBeatOnce = _.once(startHeartBeat);
 
 function handleHeartBeat({ action, state, apiHandler }) {
-  if (action.type === UPDATE_ERROR || action.type === HYDRATE) {
+  const config = Config.getAll();
+  const { sendHandler } = config.api.heartBeat ?? {};
+
+  if (action.type === ActionTypes.UPDATE_ERROR || action.type === HYDRATE) {
     const error = errorSelector(state);
     const projectUnLocked = !error || error.code !== PROJECT_LOCKED_ERROR;
 
-    if (projectUnLocked) {
+    if (projectUnLocked && typeof sendHandler === "function") {
       startHeartBeatOnce(apiHandler);
     }
   }
 }
 
-function apiCatch(next, p, onSuccess = _.noop, onError = _.noop) {
+function apiCatch(next, p, action, onSuccess = _.noop, onError = _.noop) {
   return p
     .then((r) => {
-      next(updateStoreWasChanged(StoreChanged.unchanged));
+      if (action?.type === PUBLISH) {
+        next(updateStoreWasChanged(StoreChanged.unchanged));
+      }
+
       onSuccess(r);
     })
     .catch((r) => {

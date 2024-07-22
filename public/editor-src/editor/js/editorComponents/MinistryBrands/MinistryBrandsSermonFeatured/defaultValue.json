@@ -15,9 +15,9 @@
     "sermonLatest": "on",
     "sermonRecentList": "all-in-all",
     "sermonSlug": "",
-    "category": "all",
-    "group": "all",
-    "series": "all",
+    "category": "",
+    "group": "",
+    "series": "",
     "features": "off",
     "nonfeatures": "off",
     "showMediaLinks": "on",
@@ -220,6 +220,15 @@
     "metaLinksColorOpacity": 1,
     "metaLinksColorPalette": "",
 
+    "buttonsBorderRadiusType": "custom",
+    "buttonsBorderRadius": 3,
+    "buttonsBorderRadiusSuffix": "px",
+
+    "buttonsBorderTopLeftRadius": 3,
+    "buttonsBorderTopRightRadius": 3,
+    "buttonsBorderBottomRightRadius": 3,
+    "buttonsBorderBottomLeftRadius": 3,
+
     "detailButtonColorHex": "#ffffff",
     "detailButtonColorOpacity": 1,
     "detailButtonColorPalette": "",
@@ -238,6 +247,16 @@
     "detailButtonGradientActivePointer": "finishPointer",
     "detailButtonGradientLinearDegree": 45,
     "detailButtonGradientRadialDegree": 0,
+
+    "detailButtonFillType": "filled",
+
+    "detailButtonSize": "custom",
+
+    "detailButtonPaddingTB": 12,
+    "detailButtonPaddingRL": 24,
+
+    "detailButtonPaddingTBSuffix": "px",
+    "detailButtonPaddingRLSuffix": "px",
 
     "detailButtonBorderStyle": "none",
     "detailButtonBorderColorHex": "#ffffff",
@@ -317,6 +336,9 @@
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "buttonsHoverTransition": 50,
+    "buttonsHoverTransitionSuffix": "",
 
     "maskShape": "none",
     "maskSize": "cover",

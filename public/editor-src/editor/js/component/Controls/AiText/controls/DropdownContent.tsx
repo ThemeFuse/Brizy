@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { Fragment, ReactElement } from "react";
 import { Card } from "visual/component/Brizy-ui/Card";
 import { Divider } from "visual/component/Brizy-ui/Divider";
 import { cardSize } from "../constants";
@@ -11,11 +11,11 @@ interface Props {
   onOptionClick: (action: string) => void;
 }
 
-export const DropdownContent: FC<Props> = ({
+export const DropdownContent = ({
   width,
   options,
   onOptionClick
-}) => (
+}: Props): ReactElement => (
   <Card
     size={cardSize}
     height="fit-content"

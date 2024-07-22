@@ -1,13 +1,13 @@
+import {
+  copyKeyModifier,
+  pasteStylesKeyModifier
+} from "visual/component/ContextMenu/utils";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
   ContextGetItems,
   ContextMenuItem
 } from "visual/editorComponents/EditorComponent/types";
-import { detectOS } from "visual/utils/dom/detectOS";
 import { t } from "visual/utils/i18n";
-
-const os = detectOS();
-const isMac = os === "MacOS";
 
 const getItems: (itemIndex: number) => ContextGetItems<ElementModel> =
   (itemIndex: number) =>
@@ -24,7 +24,7 @@ const getItems: (itemIndex: number) => ContextGetItems<ElementModel> =
             id: "copy",
             type: "button",
             title: t("Copy"),
-            helperText: () => (isMac ? "⌘ + C" : "ctrl + C"),
+            helperText: () => copyKeyModifier,
             // @ts-expect-error need transform EditorArrayComponent to ts
             onChange: () => component.copy(itemIndex)
           },
@@ -33,7 +33,7 @@ const getItems: (itemIndex: number) => ContextGetItems<ElementModel> =
             type: "button",
             title: t("Paste Styles"),
             inactive: !copiedElement,
-            helperText: () => (isMac ? "⌘ + ⇧ + V" : "ctrl + ⇧ + V"),
+            helperText: () => pasteStylesKeyModifier,
             // @ts-expect-error need transform EditorArrayComponent to ts
             onChange: () => component.pasteStyles(itemIndex)
           }

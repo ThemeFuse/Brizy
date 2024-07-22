@@ -58,7 +58,7 @@ async function extractFromEditor(paths) {
     const fileString = fs.readFileSync(file, "utf8");
 
     if (fileString) {
-      for (const translation of extractTranslationsFromT(fileString, file)) {
+      for (const translation of extractTranslationsFromT(fileString)) {
         translations.add(translation);
       }
     } else {
@@ -97,9 +97,9 @@ function extractTranslationsFromT(code, file) {
   return t;
 }
 
-function generateWPFileContent({ translations, IS_PRODUCTION, VERSION }) {
+function generateWPFileContent({ translations, IS_PRODUCTION }) {
   const className = `Brizy_Public_EditorBuild_${
-    IS_PRODUCTION ? VERSION.split("-").map(capitalize).join("") : "Dev"
+    IS_PRODUCTION ? "Prod" : "Dev"
   }_Texts`;
   const arrBody = translations
     .map((t) => {
@@ -122,8 +122,4 @@ function generateWPFileContent({ translations, IS_PRODUCTION, VERSION }) {
   ].join("\n");
 
   return arr;
-}
-
-function capitalize(s) {
-  return s[0].toUpperCase() + s.slice(1);
 }

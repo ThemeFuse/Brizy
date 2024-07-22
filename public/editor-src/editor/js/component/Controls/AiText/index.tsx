@@ -2,13 +2,7 @@ import { EnterRounded } from "@brizy/ui-icons";
 import { Spacing } from "@brizy/ui/es/Space/utils";
 import { FieldsTheme } from "@brizy/ui/es/utils/getFieldsTheme";
 import { Gutter } from "@brizy/ui/lib/Layout/utils";
-import React, {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState
-} from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { Card } from "visual/component/Brizy-ui/Card";
 import { Icon } from "visual/component/Brizy-ui/Icon";
@@ -44,14 +38,14 @@ interface Props {
   isTitleSelected: boolean;
 }
 
-export const AiText: FC<Props> = ({
+export const AiText = ({
   onChange,
   value,
   loading,
   submitRequest,
   prompt,
   isTitleSelected
-}): ReactElement => {
+}: Props): ReactElement => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 

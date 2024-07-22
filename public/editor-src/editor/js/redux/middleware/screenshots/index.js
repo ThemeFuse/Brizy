@@ -8,11 +8,11 @@ import {
   UPDATE_GLOBAL_BLOCK,
   UPDATE_UI
 } from "visual/redux/actions";
-import { updateScreenshot } from "visual/redux/actions";
 import {
   ADD_GLOBAL_BLOCK,
   ADD_GLOBAL_POPUP,
-  UPDATE_EXTRA_FONT_STYLES
+  UPDATE_EXTRA_FONT_STYLES,
+  updateScreenshot
 } from "visual/redux/actions2";
 import { REDO, UNDO } from "visual/redux/history/types";
 import {

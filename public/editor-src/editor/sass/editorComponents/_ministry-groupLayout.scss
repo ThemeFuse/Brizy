@@ -41,12 +41,8 @@
   }
   &--item {
     &__content-detailButton {
-      width: fit-content;
-
       a {
-        border-radius: 3px;
         color: inherit;
-        padding: 12px 24px;
       }
     }
   }
@@ -181,6 +177,10 @@
         }
       }
     }
+  }
+
+  h5.brz-groupLayout-results-heading {
+    margin-bottom: 20px;
   }
 }
 

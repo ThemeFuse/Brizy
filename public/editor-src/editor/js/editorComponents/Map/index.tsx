@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import {
@@ -9,15 +8,15 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { css } from "visual/utils/cssStyle";
 import { IS_WP } from "visual/utils/env";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import * as State from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
@@ -26,7 +25,6 @@ import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 export interface Value extends ElementModel {
@@ -90,8 +88,8 @@ const resizerTransformPatch = (patch: Patch): Patch => {
 };
 
 class Map extends EditorComponent<Value> {
-  static get componentId(): "Map" {
-    return "Map";
+  static get componentId(): ElementTypes.Map {
+    return ElementTypes.Map;
   }
 
   static defaultValue = defaultValue;
@@ -126,20 +124,18 @@ class Map extends EditorComponent<Value> {
     };
   };
 
-  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+  renderForEdit(v: Value): ReactNode {
     const IS_STORY = isStory(Config.getAll());
     const { address, zoom } = v;
 
     const { animationId, hoverName, options, isDisabledHover, isHidden } =
       this.getHoverData(v);
 
-    const wrapperClassName = classnames(
-      "brz-map",
-      {
-        "brz-map_styles": isHidden
-      },
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
-    );
+    const wrapperClassName = this.getCSSClassnames({
+      toolbars: [toolbarConfig],
+      sidebars: [sidebarConfig],
+      extraClassNames: ["brz-map", { "brz-map_styles": isHidden }]
+    });
 
     const resizerRestrictions = {
       height: {
@@ -205,19 +201,17 @@ class Map extends EditorComponent<Value> {
     );
   }
 
-  renderForView(v: Value, vs: Value, vd: Value): ReactNode {
+  renderForView(v: Value): ReactNode {
     const { address, zoom } = v;
     const IS_STORY = isStory(Config.getAll());
 
     const { animationId, options, isHidden, hoverName } = this.getHoverData(v);
 
-    const wrapperClassName = classnames(
-      "brz-map",
-      {
-        "brz-map_styles": isHidden
-      },
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
-    );
+    const wrapperClassName = this.getCSSClassnames({
+      toolbars: [toolbarConfig],
+      sidebars: [sidebarConfig],
+      extraClassNames: ["brz-map", { "brz-map_styles": isHidden }]
+    });
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>

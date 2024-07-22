@@ -6,13 +6,13 @@ export function styleTypographyElementCountdownLabelFontSize({
   device,
   state
 }) {
-  const fontSize = getOptionFontByGlobal(
-    defaultValueKey({ key: "fontSize", device, state }),
-    defaultValueValue({ v, key: "fontSize", device, state }),
-    defaultValueValue({ v, key: "fontStyle", device, state })
-  );
+  const fontSize = getOptionFontByGlobal({
+    key: defaultValueKey({ key: "fontSize", device, state }),
+    value: defaultValueValue({ v, key: "fontSize", device, state }),
+    style: defaultValueValue({ v, key: "fontStyle", device, state })
+  });
 
-  const getLabelSize = fontSize => {
+  const getLabelSize = (fontSize) => {
     return fontSize <= 24 ? 20 : fontSize > 24 && fontSize <= 32 ? 40 : 60;
   };
 

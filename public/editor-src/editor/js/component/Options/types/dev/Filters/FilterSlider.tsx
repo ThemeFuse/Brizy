@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { Slider } from "visual/component/Controls/Spacing/Slider";
-import { empty } from "./utils";
+import { empty } from "visual/utils/options/Filters/utils";
+import { MAX } from "visual/utils/options/Filters/utils";
 
 export interface Props {
   icon: string;
@@ -11,8 +12,6 @@ export interface Props {
 }
 
 const units = [{ value: "%", title: "%" }];
-
-export const MAX = 200;
 
 export const FilterSlider = ({
   icon,

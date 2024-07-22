@@ -9,6 +9,7 @@ import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
   sidebarMinistryBrandsMetaCategory,
   sidebarMinistryBrandsMetaChildcare,
@@ -27,6 +28,7 @@ import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
@@ -38,6 +40,7 @@ export class MinistryBrandsGroupList extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsGroupList" {
     return "MinistryBrandsGroupList";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -155,7 +158,7 @@ export class MinistryBrandsGroupList extends EditorComponent<Value, Props> {
                           allowExtend: false
                         }
                       )}
-                      selector=".brz-ministryBrands__item--meta-resourceLink"
+                      selector=".brz-ministryBrands__item--meta-resourceLink > .brz-groupList__item--meta"
                     >
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
@@ -169,66 +172,77 @@ export class MinistryBrandsGroupList extends EditorComponent<Value, Props> {
                       >
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
-                            toolbarExtendButtons,
-                            undefined,
+                            toolbarMetaItemLinkColor,
+                            sidebarMinistryBrandsMetaResourceLink,
                             {
                               allowExtend: false
                             }
                           )}
-                          selector=".brz-ministryBrands__item--meta--button"
+                          selector=".brz-ministryBrands__item--meta-resourceLink > a"
                         >
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarPreview,
-                              undefined,
+                              toolbarExtendButtons,
+                              sidebarExtendButtons,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-groupList__item--meta--preview *:not(a)"
+                            selector=".brz-ministryBrands__item--meta--button"
                           >
                             <Toolbar
                               {...this.makeToolbarPropsFromConfig2(
-                                toolbarPagination,
+                                toolbarPreview,
                                 undefined,
                                 {
                                   allowExtend: false
                                 }
                               )}
-                              selector=".brz-ministryBrands__pagination a"
+                              selector=".brz-groupList__item--meta--preview *:not(a)"
                             >
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarImage,
+                                  toolbarPagination,
                                   undefined,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-ministryBrands__item--media"
+                                selector=".brz-ministryBrands__pagination a"
                               >
                                 <Toolbar
                                   {...this.makeToolbarPropsFromConfig2(
-                                    toolbarMetaIcons,
+                                    toolbarImage,
                                     undefined,
                                     {
                                       allowExtend: false
                                     }
                                   )}
-                                  selector=".brz-ministryBrands__meta--icons"
+                                  selector=".brz-ministryBrands__item--media"
                                 >
-                                  <Wrapper
-                                    {...this.makeWrapperProps({
-                                      className
-                                    })}
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarMetaIcons,
+                                      undefined,
+                                      {
+                                        allowExtend: false
+                                      }
+                                    )}
+                                    selector=".brz-ministryBrands__meta--icons"
                                   >
-                                    <DynamicContentHelper
-                                      placeholder={getPlaceholder(v)}
-                                      props={{ className: "brz-groupList" }}
-                                      blocked={false}
-                                      tagName="div"
-                                    />
-                                  </Wrapper>
+                                    <Wrapper
+                                      {...this.makeWrapperProps({
+                                        className
+                                      })}
+                                    >
+                                      <DynamicContentHelper
+                                        placeholder={getPlaceholder(v)}
+                                        props={{ className: "brz-groupList" }}
+                                        blocked={false}
+                                        tagName="div"
+                                      />
+                                    </Wrapper>
+                                  </Toolbar>
                                 </Toolbar>
                               </Toolbar>
                             </Toolbar>

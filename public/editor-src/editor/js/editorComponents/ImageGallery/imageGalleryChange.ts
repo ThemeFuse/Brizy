@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { getIn, insert, mergeIn } from "timm";
 import type {
   ElementModel,

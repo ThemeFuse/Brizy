@@ -5,6 +5,7 @@ interface UrlsCommon {
   assets: string;
   customFile: string;
   editorFonts: string;
+  prefetchFonts?: string;
   pagePreview: string;
   preview: string;
   site: string;
@@ -14,16 +15,20 @@ interface UrlsCommon {
   editorIcons: string;
   worker: string;
   collaborationToolUrl?: string;
+  templateIcons: string;
+
+  // On Compile time
+  compileAssets?: string;
+  compileTemplateIcons?: string;
+  compileTemplateIconsPlaceholder?: string;
 }
 
 interface WPUrls extends UrlsCommon {
   assetsExternal: string;
-  backToDashboard: string;
   blockThumbnails: string;
   changeTemplate: string;
   dashboardNavMenu: string;
   pluginSettings: string;
-  templateIcons: string;
   templateThumbnails: string;
 }
 
@@ -34,7 +39,6 @@ interface CloudUrls extends UrlsCommon {
   screenshot: string;
   siteOriginal: string;
   projectSettings: string;
-  backToDashboard: string | undefined;
   prefetchFonts: string;
   flags: string;
   worker: string;

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FC } from "react";
+import React from "react";
 
 export interface Props {
   className?: string;
@@ -9,13 +9,13 @@ export interface Props {
   placeholder?: string;
 }
 
-export const Input: FC<Props> = ({
+export const Input = ({
   className = "",
   value,
   onChange,
   onBlur,
   placeholder = ""
-}) => {
+}: Props): JSX.Element => {
   const baseClass = "brz-ed-control__input2";
   const _className = classNames(baseClass, className);
 

@@ -126,3 +126,26 @@ const read: (r: T) => AllData | undefined = match(
 export const readApiKey = (t: Record<string, unknown>): AllData | undefined => {
   return read(t as T);
 };
+
+// Open window AuthConnect
+
+const makeDimensions = (): string => {
+  const windowWidth = 600;
+  const windowHeight = 600;
+  const left = screen.width / 2 - windowWidth / 2;
+  const top = 100;
+
+  return `width=${windowWidth},height=${windowHeight},top=${top},left=${left}`;
+};
+
+export function authWindow(url: string): Promise<void> {
+  return new Promise((resolve) => {
+    const win = window.open(url, "", makeDimensions());
+    const timer = setInterval(() => {
+      if (win?.closed) {
+        clearInterval(timer);
+        resolve();
+      }
+    }, 500);
+  });
+}

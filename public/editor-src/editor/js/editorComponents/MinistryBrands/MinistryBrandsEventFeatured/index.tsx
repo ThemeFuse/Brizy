@@ -9,6 +9,7 @@ import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
   sidebarMinistryBrandsMetaAddress,
   sidebarMinistryBrandsMetaCategory,
@@ -32,6 +33,7 @@ import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarRegisterButton from "../toolbarRegisterButton";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
@@ -43,6 +45,7 @@ export class MinistryBrandsEventFeatured extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsEventFeatured" {
     return "MinistryBrandsEventFeatured";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -142,7 +145,7 @@ export class MinistryBrandsEventFeatured extends EditorComponent<Value, Props> {
                       allowExtend: false
                     }
                   )}
-                  selector=".brz-ministryBrands__item--meta-address"
+                  selector=".brz-ministryBrands__item--meta-address > .brz-eventFeatured__item--meta"
                 >
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
@@ -172,7 +175,7 @@ export class MinistryBrandsEventFeatured extends EditorComponent<Value, Props> {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-ministryBrands__item--meta-coordinatorEmail"
+                        selector=".brz-ministryBrands__item--meta-coordinatorEmail > .brz-eventFeatured__item--meta"
                       >
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
@@ -202,7 +205,7 @@ export class MinistryBrandsEventFeatured extends EditorComponent<Value, Props> {
                                   allowExtend: false
                                 }
                               )}
-                              selector=".brz-ministryBrands__item--meta-website"
+                              selector=".brz-ministryBrands__item--meta-website > .brz-eventFeatured__item--meta"
                             >
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
@@ -216,66 +219,102 @@ export class MinistryBrandsEventFeatured extends EditorComponent<Value, Props> {
                               >
                                 <Toolbar
                                   {...this.makeToolbarPropsFromConfig2(
-                                    toolbarExtendButtons,
-                                    undefined,
+                                    toolbarMetaItemLinkColor,
+                                    sidebarMinistryBrandsMetaAddress,
                                     {
                                       allowExtend: false
                                     }
                                   )}
-                                  selector=".brz-ministryBrands__item--meta--button"
+                                  selector=".brz-ministryBrands__item--meta-address > a"
                                 >
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
-                                      toolbarRegisterButton,
-                                      undefined,
+                                      toolbarMetaItemLinkColor,
+                                      sidebarMinistryBrandsMetaCoordinatorEmail,
                                       {
                                         allowExtend: false
                                       }
                                     )}
-                                    selector=".brz-ministryBrands__item--meta--register-button"
+                                    selector=".brz-ministryBrands__item--meta-coordinatorEmail > a"
                                   >
                                     <Toolbar
                                       {...this.makeToolbarPropsFromConfig2(
-                                        toolbarPreview,
-                                        undefined,
-                                        { allowExtend: false }
+                                        toolbarMetaItemLinkColor,
+                                        sidebarMinistryBrandsMetaWebsite,
+                                        {
+                                          allowExtend: false
+                                        }
                                       )}
-                                      selector=".brz-eventFeatured__item--meta--preview *:not(:is(:has(a),a))"
+                                      selector=".brz-ministryBrands__item--meta-website > a"
                                     >
                                       <Toolbar
                                         {...this.makeToolbarPropsFromConfig2(
-                                          toolbarImage,
-                                          undefined,
+                                          toolbarExtendButtons,
+                                          sidebarExtendButtons,
                                           {
                                             allowExtend: false
                                           }
                                         )}
-                                        selector=".brz-ministryBrands__item--media"
+                                        selector=".brz-ministryBrands__item--meta--button"
                                       >
                                         <Toolbar
                                           {...this.makeToolbarPropsFromConfig2(
-                                            toolbarMetaIcons,
-                                            undefined,
+                                            toolbarRegisterButton,
+                                            sidebarExtendButtons,
                                             {
                                               allowExtend: false
                                             }
                                           )}
-                                          selector=".brz-ministryBrands__meta--icons"
+                                          selector=".brz-ministryBrands__item--meta--register-button"
                                         >
-                                          <Wrapper
-                                            {...this.makeWrapperProps({
-                                              className
-                                            })}
+                                          <Toolbar
+                                            {...this.makeToolbarPropsFromConfig2(
+                                              toolbarPreview,
+                                              undefined,
+                                              { allowExtend: false }
+                                            )}
+                                            selector=".brz-eventFeatured__item--meta--preview *:not(:is(:has(a),a))"
                                           >
-                                            <DynamicContentHelper
-                                              placeholder={getPlaceholder(v)}
-                                              props={{
-                                                className: "brz-eventFeatured"
-                                              }}
-                                              blocked={false}
-                                              tagName="div"
-                                            />
-                                          </Wrapper>
+                                            <Toolbar
+                                              {...this.makeToolbarPropsFromConfig2(
+                                                toolbarImage,
+                                                undefined,
+                                                {
+                                                  allowExtend: false
+                                                }
+                                              )}
+                                              selector=".brz-ministryBrands__item--media"
+                                            >
+                                              <Toolbar
+                                                {...this.makeToolbarPropsFromConfig2(
+                                                  toolbarMetaIcons,
+                                                  undefined,
+                                                  {
+                                                    allowExtend: false
+                                                  }
+                                                )}
+                                                selector=".brz-ministryBrands__meta--icons"
+                                              >
+                                                <Wrapper
+                                                  {...this.makeWrapperProps({
+                                                    className
+                                                  })}
+                                                >
+                                                  <DynamicContentHelper
+                                                    placeholder={getPlaceholder(
+                                                      v
+                                                    )}
+                                                    props={{
+                                                      className:
+                                                        "brz-eventFeatured"
+                                                    }}
+                                                    blocked={false}
+                                                    tagName="div"
+                                                  />
+                                                </Wrapper>
+                                              </Toolbar>
+                                            </Toolbar>
+                                          </Toolbar>
                                         </Toolbar>
                                       </Toolbar>
                                     </Toolbar>

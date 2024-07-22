@@ -2,5 +2,8 @@
   ".brz-sermonLayout",
   ".brz-sermonList",
   ".brz-sermonDetail",
-  ".brz-sermonFeatured"
+  ".brz-sermonFeatured",
+  ".brz-articleDetail",
+  ".brz-articleList",
+  ".brz-articleFeatured"
 ]

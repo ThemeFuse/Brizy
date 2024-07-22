@@ -1,3 +1,4 @@
+import { ModelType } from "visual/component/Elements/Types";
 import { t } from "visual/utils/i18n";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { filterStylesByDevice, getCSSObjects } from "../index";
@@ -117,7 +118,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   test("Empty values, should return empty object", () => {
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: {}, vs: {}, v: {} },
         options: []
       })
@@ -127,7 +128,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   test("2 Options with same selector", () => {
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: {
           vd: { ...backgroundColorElementModel, ...borderElementModel },
           vs: { ...backgroundColorElementModel, ...borderElementModel },
@@ -160,7 +161,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
     };
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -196,7 +197,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
     const model = { ...backgroundColorElementModel, ...borderElementModel };
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [borderOptionWithSelector, backgroundOptionWithSelector]
       })
@@ -222,7 +223,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [heightOptionWithStyle]
       })
@@ -242,7 +243,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [heightOptionWithStyle, widthOptionWithStyle]
       })
@@ -262,7 +263,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           heightOptionWithStyle,
@@ -290,7 +291,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           { ...heightOptionWithStyle, selector: "{{WRAPPER}} .brz-test" }
@@ -320,7 +321,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -375,7 +376,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -432,7 +433,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -484,7 +485,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   test("Testing with rules as current model that have no differences between default", () => {
     expect(
       getCSSObjects({
-        currentModel: "rules",
+        currentModel: ModelType.Rules,
         model: {
           vd: borderElementModel,
           vs: borderElementModel,
@@ -498,7 +499,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   test("Testing with custom as current model that have no differences between rules", () => {
     expect(
       getCSSObjects({
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
           vs: borderElementModel,
@@ -512,7 +513,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   test("Testing with custom as current model that have only 1 key:value difference between rules ( colorHex only should be unique, opacity should be preserved from rules )", () => {
     expect(
       getCSSObjects({
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
           vs: { ...borderElementModel, borderColorOpacity: 0.7 },
@@ -537,7 +538,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   test("Testing with custom as current model, but rules is empty, should get missing keys from default", () => {
     expect(
       getCSSObjects({
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
           vs: {},

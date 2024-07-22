@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography as Control } from "visual/component/Controls/Typography";
 import * as Option from "visual/component/Options/Type";
@@ -22,13 +22,18 @@ import {
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
 import { t } from "visual/utils/i18n";
+import {
+  divideFonts,
+  getValue
+} from "visual/utils/options/Typography/componentUtils";
+import { Config } from "visual/utils/options/Typography/types/Config";
+import { Font } from "visual/utils/options/Typography/types/Font";
+import { FontObject } from "visual/utils/options/Typography/types/FontObject";
+import { FontsBlock } from "visual/utils/options/Typography/types/FontsBlocks";
+import * as Patch from "visual/utils/options/Typography/types/Patch";
+import { Value } from "visual/utils/options/Typography/types/Value";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { divideFonts, getValue } from "./componentUtils";
-import { Config } from "./types/Config";
-import { Font } from "./types/Font";
-import { FontsBlock } from "./types/FontsBlocks";
-import * as Patch from "./types/Patch";
-import { Value } from "./types/Value";
+import { readKey } from "visual/utils/reader/object";
 
 const deviceIcons: Record<DeviceMode, string> = {
   desktop: "nc-desktop",
@@ -48,7 +53,11 @@ export interface Props
     WithConfig<Config>,
     WithClassName {}
 
-export const Typography: FC<Props> = ({ value, onChange, config }) => {
+export const Typography = ({
+  value,
+  onChange,
+  config
+}: Props): ReactElement => {
   const {
     fontFamily = true,
     letterSpacing: {
@@ -69,7 +78,13 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     () =>
       Object.entries(unDeletedFonts).reduce((acc: FontsBlock, [k, d]) => {
         type K = keyof FontsBlock;
-        acc[k as K] = d?.data.map(fontTransform[k as K]);
+        const getFont = readKey(k)(fontTransform) as
+          | undefined
+          | ((font: Font) => FontObject);
+
+        if (getFont) {
+          acc[k as K] = d?.data.map(getFont);
+        }
         return acc;
       }, {}),
     [unDeletedFonts]

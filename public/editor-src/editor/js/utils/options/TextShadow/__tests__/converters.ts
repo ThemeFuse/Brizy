@@ -1,10 +1,7 @@
-import { NoEmptyBlur } from "visual/component/Options/types/dev/TextShadow/types/NoEmptyBlur";
-import { NoEmptyOpacity } from "visual/component/Options/types/dev/TextShadow/types/NoEmptyOpacity";
-import {
-  Empty,
-  NoEmpty
-} from "visual/component/Options/types/dev/TextShadow/types/Value";
 import { fromElementModel, toElementModel } from "../converters";
+import { NoEmptyBlur } from "../types/NoEmptyBlur";
+import { NoEmptyOpacity } from "../types/NoEmptyOpacity";
+import { Empty, NoEmpty } from "../types/Value";
 
 describe("Testing 'toElementModel' function", () => {
   test("Test empty value", () => {

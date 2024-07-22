@@ -1,76 +1,112 @@
 import _ from "underscore";
+import Config from "visual/global/Config";
 import {
   globalBlocksAssembledSelector,
-  globalBlocksSelector
+  globalBlocksSelector,
+  pageSelector,
+  projectSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { mPipe } from "visual/utils/fp";
-import { readKey, read as readObj } from "visual/utils/reader/object";
-import { ReduxAction } from "../../actions2";
-import { apiUpdateGlobalBlock, debouncedApiUpdateGlobalBlock } from "./utils";
+import { ActionTypes, ReduxAction } from "../../actions2";
+import { apiAutoSave, apiOnChange } from "./utils";
+import { PageCommon } from "visual/types";
 
 interface Data {
   action: ReduxAction;
   state: ReduxState;
   apiHandler: (
     promise: Promise<unknown>,
+    action: ReduxAction,
     onSuccess: VoidFunction,
     onError: VoidFunction
   ) => void;
 }
-
-const getMeta = mPipe(readKey("meta"), readObj);
 
 export function handleGlobalBlocks({ action, state }: Data): void {
   switch (action.type) {
     case "ADD_GLOBAL_BLOCK":
     case "ADD_GLOBAL_POPUP": {
       const { _id } = action.payload.block.value;
-
+      const config = Config.getAll();
       const globalBlock = globalBlocksSelector(state)[_id];
 
-      debouncedApiUpdateGlobalBlock.set(_id, _id, globalBlock, action.meta);
+      apiAutoSave({ globalBlock }, config);
       break;
     }
-    case "UPDATE_GLOBAL_BLOCK":
-    case "REMOVE_BLOCK": {
+    case ActionTypes.REMOVE_BLOCK: {
       const { id } = action.payload;
       const globalBlock = globalBlocksAssembledSelector(state)[id];
+      const config = Config.getAll();
 
       if (globalBlock) {
-        debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, getMeta(action));
+        apiAutoSave({ globalBlock }, config);
+      }
+      break;
+    }
+
+    case "UPDATE_GLOBAL_BLOCK": {
+      const { uid } = action.payload;
+      const globalBlock = globalBlocksAssembledSelector(state)[uid];
+      const config = Config.getAll();
+
+      if (globalBlock) {
+        apiAutoSave({ globalBlock }, config);
       }
       break;
     }
     case "UPDATE_GB_RULES": {
       const { id } = action.payload;
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-      const globalBlock = globalBlocksSelector(state)[id];
+      const globalBlocks = globalBlocksSelector(state);
+      const globalBlock = globalBlocks[id];
+      // @ts-expect-error Type Page is not assignable to type PageCommon
+      const page: PageCommon = pageSelector(state);
+      const project = projectSelector(state);
+      const config = Config.getAll();
+      const data = {
+        config,
+        needToCompile: {
+          globalBlocks: [globalBlock]
+        },
+        state: {
+          project,
+          page,
+          globalBlocks: Object.values(globalBlocks)
+        }
+      };
 
-      apiUpdateGlobalBlock(id, globalBlock, { is_autosave: 0 })
-        .then(syncSuccess as (t: unknown) => unknown)
-        .catch(syncFail);
+      apiOnChange(data).then(syncSuccess).catch(syncFail);
       break;
     }
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { fromBlockId } = action.payload;
       const globalBlock = globalBlocksAssembledSelector(state)[fromBlockId];
+      const config = Config.getAll();
 
-      debouncedApiUpdateGlobalBlock.set(
-        fromBlockId,
-        fromBlockId,
-        globalBlock,
-        getMeta(action)
-      );
+      apiAutoSave({ globalBlock }, config);
       break;
     }
     case "DELETE_GLOBAL_BLOCK": {
       const { id } = action.payload;
-      const globalBlock = globalBlocksSelector(state)[id];
+      const globalBlocks = globalBlocksSelector(state);
+      const globalBlock = globalBlocks[id];
+      // @ts-expect-error Type Page is not assignable to type PageCommon
+      const page: PageCommon = pageSelector(state);
+      const project = projectSelector(state);
+      const config = Config.getAll();
+      const data = {
+        config,
+        needToCompile: {
+          globalBlocks: [globalBlock]
+        },
+        state: {
+          project,
+          page,
+          globalBlocks: Object.values(globalBlocks)
+        }
+      };
 
-      debouncedApiUpdateGlobalBlock.set(id, id, globalBlock, {
-        is_autosave: 0
-      });
+      apiOnChange(data);
       break;
     }
   }

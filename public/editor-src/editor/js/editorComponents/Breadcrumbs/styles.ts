@@ -31,9 +31,10 @@ export const style = (
     ".brz && .brz-ui-ed-breadcrumbs .brz-ui-ed-breadcrumb-separator svg": {
       standart: ["cssStyleElementBreadcrumbsColorArrows"]
     },
-    ".brz && .brz-ui-ed-breadcrumbs li:last-child": {
-      standart: ["cssStyleElementBreadcrumbsColorActive"]
-    }
+    ".brz && .brz-ui-ed-breadcrumbs li:has(.brz-ui-ed-breadcrumb-link):nth-last-child(-n+2) ":
+      {
+        standart: ["cssStyleElementBreadcrumbsColorActive"]
+      }
   };
 
   return renderStyles({ v, vs, vd, styles });

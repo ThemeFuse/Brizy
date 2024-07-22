@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { getAccounts } from "../common/GlobalApps/api";

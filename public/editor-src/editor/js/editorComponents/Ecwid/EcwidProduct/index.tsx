@@ -178,7 +178,7 @@ export class EcwidProduct extends EditorComponent<Value> {
 
     if (node && this.ecwid) {
       if (prevProductId !== currentProductId) {
-        ///// when is selected auto context
+        // when is selected auto context
         if (currentProductId === "auto") {
           if (
             this.initialProductId !== this.lastUsedProductId &&
@@ -191,7 +191,7 @@ export class EcwidProduct extends EditorComponent<Value> {
             this.lastUsedProductId = this.initialProductId;
           }
         } else {
-          ///// when is selected concrete product
+          // when is selected concrete product
           if (prevProductId === undefined) {
             if (
               this.lastUsedProductId !== currentProductId &&
