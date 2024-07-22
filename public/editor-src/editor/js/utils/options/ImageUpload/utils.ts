@@ -1,12 +1,4 @@
 import { ImageType } from "visual/utils/image/types";
-import { Reader } from "visual/utils/reader/types";
+import { checkValue2 } from "visual/utils/checkValue";
 
-export const readImageType: Reader<ImageType> = (v) => {
-  switch (v) {
-    case ImageType.Internal:
-    case ImageType.External:
-      return v;
-    default:
-      return undefined;
-  }
-};
+export const readImageType = checkValue2<ImageType>(ImageType);

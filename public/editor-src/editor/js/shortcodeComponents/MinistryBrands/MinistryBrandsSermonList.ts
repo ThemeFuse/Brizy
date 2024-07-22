@@ -12,7 +12,23 @@ export default {
         {
           type: "MinistryBrandsSermonList",
           value: {
-            _styles: ["ministryBrandsSermonList"]
+            _styles: ["ministryBrandsSermonList"],
+            typographyFontStyle: "heading6",
+            colorPalette: "color7",
+            titleTypographyFontStyle: "heading4",
+            titleColorPalette: "color3",
+            hoverTitleColorPalette: "color4",
+            previewTypographyFontStyle: "paragraph",
+            previewColorPalette: "color7",
+            detailButtonTypographyFontStyle: "button",
+            detailButtonColorPalette: "color8",
+            detailButtonBgColorPalette: "color3",
+            hoverDetailButtonBgColorOpacity: 0.8,
+            paginationTypographyFontStyle: "heading6",
+            paginationColorPalette: "color3",
+            hoverPaginationColorPalette: "color4",
+            activePaginationColorPalette: "color2",
+            metaLinksColorPalette: "color4"
           }
         }
       ]

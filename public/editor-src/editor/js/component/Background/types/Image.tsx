@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import jQuery from "jquery";
-import React, { ReactElement, RefObject, useRef } from "react";
+import { ReactElement, RefObject, useRef } from "react";
 import { getStore } from "visual/redux/store";
 import { IS_WP } from "visual/utils/env";
 import "../lib/jquery.parallax.js";
@@ -36,7 +36,7 @@ type Props = {
   }) => ReactElement;
 };
 
-const Image: React.FC<Props> = ({ showParallax, children }) => {
+const Image = ({ showParallax, children }: Props): ReactElement => {
   const currentDeviceMode = getStore().getState().ui.deviceMode;
   showParallax = showParallax && currentDeviceMode === "desktop";
   const className = classnames("brz-bg-image", {

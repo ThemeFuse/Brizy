@@ -148,34 +148,32 @@ export function style(
     },
     ".brz && .brz-groupFeatured__item--meta:hover": {
       standart: ["getAllCssStyleTypography", "cssStyleColor"],
-      interval: ["cssStyleHoverTransition"]
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     },
     ".brz && .brz-ministryBrands__item--meta--links:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsMetaLinksTypography",
-        "cssStyleElementOfMinistryBrandsMetaLinksColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     },
     ".brz && .brz-ministryBrands__item--meta--button:hover": {
       standart: [
         "cssStyleElementMinistryBrandsButtonsTypography",
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
+        "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder"
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
-    ".brz && .brz-ministryBrands__item--meta--button a:hover": {
-      standart: ["cssStyleElementMinistryBrandsButtonsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+    ".brz && .brz-ministryBrands__item--meta--button a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
     },
     ".brz && .brz-groupFeatured__item--meta--preview:hover": {
       standart: [

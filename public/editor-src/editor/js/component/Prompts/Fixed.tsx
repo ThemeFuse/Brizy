@@ -12,7 +12,7 @@ type FixedProps = {
   className?: string;
 };
 
-const Fixed: React.FC<FixedProps> = (props: FixedProps): ReactElement => {
+const Fixed = (props: FixedProps): ReactElement => {
   const { className: _className, opened, children, onClose } = props;
   const className = classnames("brz-ed-fixed", _className);
 

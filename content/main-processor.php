@@ -21,6 +21,8 @@ class Brizy_Content_MainProcessor {
 
 		$this->context = $context;
 
+		$this->processors[] = new Brizy_Content_ReferencedGlobalBlockProcessor(); // collect all referenced blocks
+		$this->processors[] = new Brizy_Content_BlocksProcessor(); // inserts the global blocks and popups referenced
 		$this->processors[] = new Brizy_Content_WrapperToPlaceholderProcessor();
 		$this->processors[] = new Brizy_Content_ShortcodeToPlaceholderProcessor();
 		$this->processors[] = new Brizy_Editor_Asset_DomainProcessor();
@@ -47,4 +49,10 @@ class Brizy_Content_MainProcessor {
 		return $content;
 	}
 
+	/**
+	 * @param Brizy_Content_Context $context
+	 */
+	public function setContext( $context ) {
+		$this->context = $context;
+	}
 }

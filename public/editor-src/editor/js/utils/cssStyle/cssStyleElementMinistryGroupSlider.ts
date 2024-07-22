@@ -1,10 +1,11 @@
 import {
   cssStyleBgColor,
-  cssStyleBgGradient,
   cssStyleBorder,
   cssStyleBorderRadius,
   cssStyleBoxShadow,
   cssStyleColor,
+  cssStyleElementMinistryBrandsButtonsBgColor,
+  cssStyleElementMinistryBrandsButtonsBgGradient,
   cssStyleElementOfMinistryBrandsSpacing,
   cssStyleMarginAlign,
   cssStylePositionElement,
@@ -264,7 +265,12 @@ export function cssStyleElementMinistryGroupSliderButtonBgColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "buttonBg" });
+  return cssStyleElementMinistryBrandsButtonsBgColor({
+    v,
+    device,
+    state,
+    prefix: "button"
+  });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonBgGradient({
@@ -272,7 +278,12 @@ export function cssStyleElementMinistryGroupSliderButtonBgGradient({
   device,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "button" });
+  return cssStyleElementMinistryBrandsButtonsBgGradient({
+    v,
+    device,
+    state,
+    prefix: "button"
+  });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonBorder({
@@ -281,14 +292,6 @@ export function cssStyleElementMinistryGroupSliderButtonBorder({
   state
 }: CSSValue): string {
   return cssStyleBorder({ v, device, state, prefix: "button" });
-}
-
-export function cssStyleElementMinistryGroupSliderButtonBorderRadius({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "button" });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonBoxShadow({

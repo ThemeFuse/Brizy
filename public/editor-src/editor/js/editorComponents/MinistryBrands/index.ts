@@ -14,3 +14,7 @@ export { MinistryBrandsEventList } from "./MinistryBrandsEventList";
 export { MinistryBrandsFormWidget } from "./MinistryBrandsFormWidget";
 export { MinistryBrandsEventDetail } from "./MinistryBrandsEventDetail";
 export { MinistryBrandsPrayerWidget } from "./MinistryBrandsPrayerWidget";
+export { MinistryBrandsArticleDetail } from "./MinistryBrandsArticleDetail";
+export { MinistryBrandsArticleList } from "./MinistryBrandsArticleList";
+export { MinistryBrandsStaffDetail } from "./MinistryBrandsStaffDetail";
+export { MinistryBrandsArticleFeatured } from "./MinistryBrandsArticleFeatured";

@@ -1,61 +1,9 @@
 import $ from "jquery";
-import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
-import { uuid } from "visual/utils/uuid";
+import { makeDataAttrString } from "visual/utils/i18n/attribute";
 
 export default function ($node) {
-  const root = $node.get(0);
-
-  // append the popup to body to avoid problems with z-index
-  const rootBody = root.ownerDocument.body;
-  const globalPopupsProcessed = {};
-
-  root
-    .querySelectorAll(
-      makeDataAttrString({ name: "link-type", value: "'popup'" })
-    )
-    .forEach((node) => {
-      const popupId = node.getAttribute("href").slice(1); // without the `#`
-      let parent = node.parentElement;
-      let popup;
-
-      // Link with reference to a global popup
-      // Global Block Popup exist only 1 in all page
-      if (globalPopupsProcessed[popupId]) {
-        node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
-        return;
-      }
-
-      while (parent) {
-        popup = [...parent.children].find(
-          (node) => node.dataset.brzPopup === popupId
-        );
-
-        if (popup) {
-          break;
-        }
-
-        parent = parent.parentElement;
-      }
-
-      // append the popup to body to avoid problems with z-index
-      // need to regenerate ids for popups for Dynamic Content
-      if (popup && popup.parentElement !== rootBody) {
-        const newId = uuid();
-        const isGlobal = popup.getAttribute("id").includes("global_");
-
-        node.setAttribute("href", `#${newId}`);
-        popup.setAttribute(makeAttr("popup"), newId);
-
-        if (isGlobal) {
-          globalPopupsProcessed[popupId] = newId;
-        }
-
-        rootBody.append(popup);
-      }
-    });
-
   $node
-    .find(makeDataAttrString({ name: "link-type", value: "'popup'" }))
+    .find(makeDataAttrString({ name: "link-type", value: "popup" }))
     .on("click", function (e) {
       e.preventDefault();
 

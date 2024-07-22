@@ -1,6 +1,8 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -10,14 +12,123 @@ import { Props, Value } from "./types";
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("subscribeToCalendarBgColorHex"),
     dvv("subscribeToCalendarBgPalette")
   );
 
+  const { hex: colorHex } = getOptionColorHexByPalette(
+    dvv("subscribeToCalendarColorHex"),
+    dvv("subscribeToCalendarColorPalette")
+  );
+
+  const subscribeToCalendarTypographyFontSize =
+    Num.read(dvv("subscribeToCalendarTypographyFontSize")) ?? 15;
+
+  const subscribeToCalendarTypographyLineHeight =
+    Num.read(dvv("subscribeToCalendarTypographyLineHeight")) ?? 1.6;
+
+  const maxBorderRadius = getButtonMaxBorderRadius(
+    subscribeToCalendarTypographyFontSize,
+    subscribeToCalendarTypographyLineHeight
+  );
+
+  const colorOpacity = dvv("subscribeToCalendarColorOpacity");
+  const bgColorOpacity = dvv("subscribeToCalendarBgColorOpacity");
+
+  const fillType = dvv("subscribeToCalendarFillType");
+
+  const customBorderRadius =
+    dvv("subscribeToCalendarBorderRadiusType") !== "custom";
+
+  const fillTypeDefault = fillType === "default";
+
   const isDisabledIcon = !Str.read(dvv("iconName"));
 
   return [
+    {
+      id: "toolbarSubscribeToCalendar",
+      label: t("Button"),
+      type: "popover",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
+      position: 20,
+      options: [
+        {
+          id: "subscribeToCalendarSizeGroup",
+          type: "group",
+          position: 10,
+          options: [
+            {
+              id: "subscribeToCalendarWidth",
+              label: t("Width"),
+              type: "slider",
+              config: {
+                min: 1,
+                max: 100,
+                units: [
+                  { value: "%", title: "%" },
+                  { value: "px", title: "px" }
+                ]
+              }
+            },
+            {
+              id: "subscribeToCalendarHeight",
+              label: t("Height"),
+              type: "slider",
+              config: {
+                min: 15,
+                max: 500,
+                units: [{ value: "px", title: "px" }]
+              }
+            }
+          ]
+        },
+        {
+          id: "subscribeToCalendarFillType",
+          label: t("Fill"),
+          devices: "desktop",
+          type: "radioGroup",
+          position: 20,
+          choices: [
+            { value: "filled", icon: "nc-circle" },
+            { value: "outline", icon: "nc-outline" },
+            { value: "default", icon: "nc-close" }
+          ]
+        },
+        {
+          id: "subscribeToCalendarBorderRadiusTypeGroup",
+          type: "group",
+          devices: "desktop",
+          disabled: fillTypeDefault,
+          position: 30,
+          options: [
+            {
+              id: "subscribeToCalendarBorderRadiusType",
+              label: t("Corner"),
+              type: "radioGroup",
+              choices: [
+                { value: "square", icon: "nc-corners-square" },
+                { value: "rounded", icon: "nc-corners-round" },
+                { value: "custom", icon: "nc-more" }
+              ]
+            },
+            {
+              id: "subscribeToCalendarBorderRadius",
+              type: "slider",
+              disabled: customBorderRadius,
+              config: {
+                min: 0,
+                max: maxBorderRadius,
+                units: [{ title: "px", value: "px" }]
+              }
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "toolbarTypography",
       type: "popover",
@@ -128,10 +239,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              colorHex,
-              dvv("subscribeToCalendarBgColorOpacity")
-            )
+            backgroundColor:
+              fillType === "filled"
+                ? hexToRgba(bgColorHex, bgColorOpacity)
+                : hexToRgba(colorHex, colorOpacity)
           }
         }
       },
@@ -149,7 +260,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "subscribeToCalendar",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillType !== "filled"
                 }
               ]
             },
@@ -172,7 +284,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "subscribeToCalendarBorder",
                   type: "border",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             },
@@ -184,7 +297,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "subscribeToCalendarBoxShadow",
                   type: "boxShadow",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             }
@@ -221,27 +335,27 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           }
         },
         {
-          id: "subscribeToCalendarWidth",
-          label: t("Width"),
-          type: "slider",
+          id: "grid",
+          type: "grid",
           config: {
-            min: 1,
-            max: 100,
-            units: [
-              { value: "%", title: "%" },
-              { value: "px", title: "px" }
-            ]
-          }
-        },
-        {
-          id: "subscribeToCalendarHeight",
-          label: t("Height"),
-          type: "slider",
-          config: {
-            min: 15,
-            max: 500,
-            units: [{ value: "px", title: "px" }]
-          }
+            separator: true
+          },
+          columns: [
+            {
+              id: "col-1",
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

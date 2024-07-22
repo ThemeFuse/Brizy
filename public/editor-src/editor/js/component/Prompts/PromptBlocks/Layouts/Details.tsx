@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React, {
   Component,
   ComponentType,
+  PropsWithChildren,
   ReactElement,
   ReactNode
 } from "react";
@@ -30,6 +31,7 @@ import {
 } from "visual/utils/traverse";
 import { Button } from "../../common/Button";
 import ImageLoad from "../common/ImageLoad";
+import { ToastNotification } from "visual/component/Notifications";
 
 const urls = Config.get("urls");
 const TRANSITION_DELAY = 500;
@@ -56,7 +58,7 @@ const connector = connect(mapState);
 export interface Props {
   type: "stories" | "layouts";
   data: LayoutData;
-  HeaderSlotLeft?: ComponentType;
+  HeaderSlotLeft?: ComponentType<PropsWithChildren<unknown>>;
   onClose: VoidFunction;
   onBack: VoidFunction;
   onAddBlocks: (b: PromptBlockTemplate) => void;
@@ -78,11 +80,11 @@ class Details extends Component<AllProps, State> {
     type: "layouts",
     data: {
       name: "",
-      color: "",
       cat: [],
       pages: [],
       pro: false,
-      keywords: ""
+      keywords: "",
+      layoutId: ""
     },
     onClose: _.noop,
     onAddBlocks: _.noop,
@@ -145,50 +147,66 @@ class Details extends Component<AllProps, State> {
   };
 
   handleThumbnailAdd = async (): Promise<void> => {
-    const { data, projectFonts: usedFonts, onAddBlocks, onClose } = this.props;
-    const { active: pageId, replaceStyle, loading } = this.state;
+    try {
+      const {
+        data,
+        projectFonts: usedFonts,
+        onAddBlocks,
+        onClose
+      } = this.props;
+      const { active: pageId, replaceStyle, loading } = this.state;
 
-    if (loading) {
-      return;
-    }
+      if (loading) {
+        return;
+      }
 
-    this.setState({
-      loading: true
-    });
-
-    const page =
-      this.props.type === "layouts"
-        ? await defaultLayoutsData(Config.getAll(), pageId)
-        : await defaultStoriesData(Config.getAll(), pageId);
-
-    const { blocks } = page as { blocks: Block[] };
-    const modelFonts = getUsedModelsFonts({ models: blocks });
-
-    let styles: undefined | Style[];
-
-    if (!this.hasStyleInProject()) {
-      styles = normalizeStyles(data.styles) as unknown as Style[];
-
-      // Check fonts
-      const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
-      const fonts = getUsedStylesFonts(fontStyles);
-
-      modelFonts.push(...fonts);
-    }
-
-    const fonts = await normalizeFonts(
-      getBlocksStylesFonts(modelFonts, usedFonts)
-    );
-
-    this.setState({ loading: false }, () => {
-      onAddBlocks({
-        blocks,
-        styles,
-        fonts,
-        currentStyleId: replaceStyle ? data.styles?.[0]?.id : undefined
+      this.setState({
+        loading: true
       });
-      onClose();
-    });
+
+      const activePage = _.find(data.pages, { id: pageId });
+
+      if (!activePage) {
+        return;
+      }
+
+      const page =
+        this.props.type === "layouts"
+          ? await defaultLayoutsData(Config.getAll(), activePage)
+          : await defaultStoriesData(Config.getAll(), activePage);
+
+      const { blocks } = page as { blocks: Block[] };
+      const modelFonts = getUsedModelsFonts({ models: blocks });
+
+      let styles: undefined | Style[];
+
+      if (!this.hasStyleInProject()) {
+        styles = normalizeStyles(data.styles) as unknown as Style[];
+
+        // Check fonts
+        const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
+        const fonts = getUsedStylesFonts(fontStyles);
+
+        modelFonts.push(...fonts);
+      }
+
+      const fonts = await normalizeFonts(
+        getBlocksStylesFonts(modelFonts, usedFonts)
+      );
+
+      this.setState({ loading: false }, () => {
+        onAddBlocks({
+          blocks,
+          styles,
+          fonts,
+          currentStyleId: replaceStyle ? data.styles?.[0]?.id : undefined
+        });
+        onClose();
+      });
+    } catch (e) {
+      console.error(e);
+      ToastNotification.error(t("Something went wrong on getting data"));
+    }
   };
 
   handleReplaceStyling = (): void => {
@@ -318,8 +336,8 @@ class Details extends Component<AllProps, State> {
                     ? t("stories")
                     : t("layouts")
                   : isStory
-                  ? t("story")
-                  : t("layout")}
+                    ? t("story")
+                    : t("layout")}
               </div>
             </div>
 

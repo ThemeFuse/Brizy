@@ -1,8 +1,6 @@
+import { Num, Obj, Str } from "@brizy/readers";
 import { match } from "fp-utilities";
 import { Dictionary } from "../types/utils";
-import * as Num from "../utils/reader/number";
-import * as Obj from "../utils/reader/object";
-import * as Str from "../utils/reader/string";
 import { MValue } from "../utils/types";
 import { ErrorResponse } from "./types";
 
@@ -23,9 +21,7 @@ type StrNum = string | number;
 
 type Rec = Dictionary<StrNum>;
 
-const isStrNum = (
-  e: StrNum | undefined | Rec | Array<StrNum | Rec>
-): e is StrNum => {
+const isStrNum = (e: unknown): e is StrNum => {
   return Str.read(e) !== undefined || Num.read(e) !== undefined;
 };
 
@@ -52,7 +48,7 @@ export const makeFormEncode = (
             isStrNum,
             (v) => {
               r[`${key}[${i}]`] = `${v}`;
-            },
+            }
           ],
           [
             isRec,
@@ -62,7 +58,7 @@ export const makeFormEncode = (
                   r[`${key}[${i}][${key1}]`] = `${value1}`;
                 }
               });
-            },
+            }
           ]
         )(v);
       });

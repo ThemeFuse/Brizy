@@ -89,6 +89,9 @@ export function style(
         "cssStyleElementOfMinistryBrandsMetaItemsSpacing"
       ]
     },
+    ".brz && .brz-eventLayout--featured__item-content": {
+      standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
+    },
     ".brz && .brz-ministryBrands__item--meta-title": {
       standart: [
         "cssStyleElementMinistryBrandsMetaItemTitleMargin",
@@ -162,7 +165,7 @@ export function style(
           "cssStylePropertyHoverTransitionColor"
         ]
       },
-    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover  select option":
+    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover select option":
       {
         standart: ["cssStyleMinistryElementFiltersInputBgColor"],
         interval: [
@@ -243,24 +246,42 @@ export function style(
         "cssStylePropertyEventLayoutHoverTransition"
       ]
     },
-    ".brz && .brz-eventLayout__pagination:hover": {
+    ".brz && .brz-eventLayout__pagination span": {
       standart: [
         "cssStyleElementEventLayoutListPaginationTypography",
-        "cssStyleElementEventLayoutListPaginationColor"
+        "cssStyleElementEventLayoutListPaginationColor",
+        "cssStyleElementEventLayoutListPaginationSpacing"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-eventLayout__pagination a:hover": {
+      standart: ["cssStyleElementEventLayoutListPaginationArrowsColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-eventLayout--list-item__title:hover": {
+      standart: ["cssStyleElementEventLayoutListTitleBorderBottom"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-eventLayout--list-item__grouping-day:hover": {
+      standart: [
+        "cssStyleElementEventLayoutGroupingDayTypography",
+        "cssStyleElementEventLayoutGroupingDayColor"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-eventLayout__pagination span": {
-      standart: ["cssStyleElementEventLayoutListPaginationSpacing"]
-    },
-    ".brz && .brz-eventLayout--list-item__title:hover": {
+    ".brz && .brz-eventLayout--list-item__grouping-date:hover": {
       standart: [
-        "cssStyleElementEventLayoutListTitleTypography",
-        "cssStyleElementEventLayoutListTitleColor",
-        "cssStyleElementEventLayoutListTitleBorderBottom"
+        "cssStyleElementEventLayoutGroupingDateTypography",
+        "cssStyleElementEventLayoutGroupingDateColor"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -298,6 +319,21 @@ export function style(
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-ministryBrands__item--meta--button:hover": {
+      standart: [
+        "cssStyleElementMinistryBrandsButtonsTypography",
+        "cssStyleElementMinistryBrandsButtonsBgColor",
+        "cssStyleElementMinistryBrandsButtonsBgGradient",
+        "cssStyleElementMinistryBrandsButtonsColor",
+        "cssStyleElementMinistryBrandsButtonsBoxShadow",
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+      ],
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-ministryBrands__item--meta--button a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
     },
     ".brz && .brz-eventLayout--calendar-heading:hover": {
       standart: [
@@ -350,6 +386,20 @@ export function style(
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-eventLayout-results-heading": {
+      standart: [
+        "cssStyleElementMinistryResultsHeadingTypography",
+        "cssStyleElementMinistryResultsHeadingColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-eventLayout-no-results": {
+      standart: [
+        "cssStyleElementMinistryNoResultsParagraphTypography",
+        "cssStyleElementMinistryNoResultsParagraphColor"
+      ],
+      interval: ["cssStyleHoverTransition"]
     }
   };
 

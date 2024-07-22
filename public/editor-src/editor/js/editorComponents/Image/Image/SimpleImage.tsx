@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, {
+  ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -76,7 +77,7 @@ const formatSrc = (data: RetinaData): string => {
   }
 };
 
-const SimpleImage: React.FC<ImageProps> = (props) => {
+const SimpleImage = (props: ImageProps): ReactElement => {
   const {
     v,
     vs,

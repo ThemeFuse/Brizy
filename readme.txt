@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.5.5
+Tested up to: 6.6
 Requires PHP: 7.0.0
-Stable tag: 2.4.45
+Stable tag: 2.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,19 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.5.0 - 2024-07-22 =
+* New: HTML Compilation process for major page-loading improvements
+* Fixed: Copy-Paste Styles for Text Element when using selected text
+* Fixed: Various vulnerabilities
+* Fixed: Global Styles not saving current state in some instances
+* Fixed: Text multi-select with gradients bug
+* Fixed: Section background displaying incorrect option
+* Improved: Uploading images in WEBP format
+* Improved: Moved Form element from FREE to PRO
+* Improved: Added rich-text formatting clearance
+* Improved: Reload the preview tab if already open instead of new tab
+* Updated: Builder developer dependencies
 
 = 2.4.45 - 2024-07-05 =
 * Fixed: small fixes in how the uploaded files are hnadled

@@ -1,10 +1,10 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { Horizontal as V } from "../types/Horizontal";
-import { EffectProps } from "../types/EffectProps";
-import { t } from "visual/utils/i18n";
 import { OnChange } from "visual/component/Options/Type";
-import { UnitSlider } from "./UnitSlider";
+import { t } from "visual/utils/i18n";
+import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import { Horizontal as V } from "visual/utils/options/Motion/types/Horizontal";
 import { Direction, Props } from "./Direction";
+import { UnitSlider } from "./UnitSlider";
 import { Viewport } from "./Viewport";
 
 export const Horizontal = ({
@@ -12,11 +12,11 @@ export const Horizontal = ({
   onChange
 }: EffectProps<V>): ReactElement => {
   const onDirectionChange = useCallback<OnChange<V["direction"]>>(
-    direction => onChange({ ...value, direction }),
+    (direction) => onChange({ ...value, direction }),
     [value, onChange]
   );
   const onSpeedChange = useCallback<OnChange<V["speed"]>>(
-    speed => onChange({ ...value, speed }),
+    (speed) => onChange({ ...value, speed }),
     [value, onChange]
   );
   const directions = useMemo<Props<V["direction"]>["directions"]>(
@@ -27,7 +27,7 @@ export const Horizontal = ({
     []
   );
   const onViewportChange = useCallback<OnChange<V["viewport"]>>(
-    viewport => onChange({ ...value, viewport }),
+    (viewport) => onChange({ ...value, viewport }),
     [value, onChange]
   );
   return (

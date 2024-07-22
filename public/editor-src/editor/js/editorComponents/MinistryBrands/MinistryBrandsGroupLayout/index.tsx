@@ -1,6 +1,5 @@
 import classNames from "classnames";
-import React from "react";
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -10,6 +9,7 @@ import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
 import {
   sidebarMinistryBrandsMetaCategory,
@@ -25,11 +25,11 @@ import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
 import * as toolbarImage from "../toolbarImage";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
-import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMeta from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
@@ -187,7 +187,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-ministryBrands__item--meta-resourceLink"
+                        selector=".brz-ministryBrands__item--meta-resourceLink > span"
                       >
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
@@ -212,7 +212,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                             <Toolbar
                               {...this.makeToolbarPropsFromConfig2(
                                 toolbarExtendButtons,
-                                undefined,
+                    sidebarExtendButtons,
                                 {
                                   allowExtend: false
                                 }
@@ -231,7 +231,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                               >
                                 <Toolbar
                                   {...this.makeToolbarPropsFromConfig2(
-                                    toolbarMetaLinks,
+                                    toolbarMetaItemLinkColor,
                                     undefined,
                                     {
                                       allowExtend: false
@@ -241,29 +241,40 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                                 >
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
-                                      toolbarMetaIcons,
-                                      undefined,
+                                      toolbarMetaItemLinkColor,
+                                      sidebarMinistryBrandsMetaResourceLink,
                                       {
                                         allowExtend: false
                                       }
                                     )}
-                                    selector=".brz-ministryBrands__meta--icons"
+                                    selector=".brz-ministryBrands__item--meta-resourceLink > a"
                                   >
-                                    <Wrapper
-                                      {...this.makeWrapperProps({
-                                        className
-                                      })}
+                                    <Toolbar
+                                      {...this.makeToolbarPropsFromConfig2(
+                                        toolbarMetaIcons,
+                                        undefined,
+                                        {
+                                          allowExtend: false
+                                        }
+                                      )}
+                                      selector=".brz-ministryBrands__meta--icons"
                                     >
-                                      <DynamicContentHelper
-                                        placeholder={getPlaceholder(v)}
-                                        props={{
-                                          className:
-                                            "brz-ministryBrands brz-groupLayout"
-                                        }}
-                                        blocked={false}
-                                        tagName="div"
-                                      />
-                                    </Wrapper>
+                                      <Wrapper
+                                        {...this.makeWrapperProps({
+                                          className
+                                        })}
+                                      >
+                                        <DynamicContentHelper
+                                          placeholder={getPlaceholder(v)}
+                                          props={{
+                                            className:
+                                              "brz-ministryBrands brz-groupLayout"
+                                          }}
+                                          blocked={false}
+                                          tagName="div"
+                                        />
+                                      </Wrapper>
+                                    </Toolbar>
                                   </Toolbar>
                                 </Toolbar>
                               </Toolbar>

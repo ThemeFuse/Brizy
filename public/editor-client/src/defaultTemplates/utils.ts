@@ -1,13 +1,32 @@
+import { pipe } from "@/utils/fp/pipe";
+import { Num, Obj, Str } from "@brizy/readers";
 import { flatten, uniq, upperFirst } from "lodash";
 import {
   APIPopup,
   BlockWithThumbs,
   Categories,
+  CustomTemplatePage,
+  DefaultBlock,
+  DefaultBlockWithID,
   Kit,
+  KitDataItems,
+  KitDataResult,
   KitType,
-  Style
+  LayoutDataResult,
+  LayoutsAPI,
+  LayoutsPageAPI,
+  LayoutTemplateWithThumbs,
+  PopupBlockWithThumbs,
+  PopupDataResult,
+  PopupsResponse,
+  StoriesAPI,
+  StoriesTemplateWithThumbs,
+  StoryDataResponse,
+  StoryPages
 } from "../types/DefaultTemplate";
-import { pipe } from "../utils/fp/pipe";
+
+const PRO = "PRO";
+const BLANK_PAGE = "Blank";
 
 type CatTypes = Kit | APIPopup;
 
@@ -15,8 +34,11 @@ export const getUniqueKitCategories = (collections: CatTypes[]): Categories[] =>
   pipe(
     (collections: CatTypes[]) =>
       collections.map((collection: CatTypes) => collection.categories),
+    (categories) => categories.map((category) => category.split(",")),
     flatten,
+    (categories2) => categories2.map((category2) => category2.trim()),
     uniq,
+    (allCats) => allCats.filter((cat) => cat && cat.length),
     (cats) =>
       cats.map((cat) => ({
         title: upperFirst(cat),
@@ -28,14 +50,17 @@ export const getUniqueKitCategories = (collections: CatTypes[]): Categories[] =>
 export const getUniqueKitTypes = (collections: Kit[]): KitType[] =>
   pipe(
     (collections: Kit[]) => collections.map((collection) => collection.theme),
+    (types) => types.map((type) => type.split(",")),
     flatten,
+    (types2) => types2.map((type2) => type2.toLowerCase()),
     uniq,
+    (allTypes) => allTypes.filter((type) => type && type.length),
     (uni) =>
       uni.map((u) => ({
         title: upperFirst(u),
         id: u,
         name: u,
-        icon: "nc-light"
+        icon: u === "light" ? "nc-light" : "nc-dark"
       }))
   )(collections);
 
@@ -59,18 +84,24 @@ export const converterKit = (
       thumbnail,
       keywords,
       thumbnailWidth,
-      thumbnailHeight
+      thumbnailHeight,
+      blank,
+      theme
     }) => ({
       id: slug,
-      cat: [categories],
+      cat: categories.split(",").map((item) => item.trim().toLowerCase()),
       title: slug,
-      type: types[0].name,
+      type: theme
+        .split(",")
+        .map((item) => item.trim())
+        .map((i1) => i1.toLowerCase()),
       keywords: keywords ?? "",
       thumbnailHeight,
       thumbnailWidth,
       thumbnailSrc: `${url}${thumbnail}`,
-      pro: pro === "yes",
-      kitId
+      pro: pro === PRO,
+      kitId,
+      blank
     })
   );
 
@@ -81,17 +112,63 @@ export const converterKit = (
   };
 };
 
+export const convertLayouts = (
+  collections: LayoutsAPI[],
+  thumbUrl: string
+): LayoutTemplateWithThumbs[] =>
+  collections.map(
+    ({
+      title,
+      categories,
+      pagesCount,
+      pro,
+      keywords,
+      thumbnailWidth,
+      thumbnailHeight,
+      thumbnail,
+      slug
+    }) => ({
+      name: title,
+      cat: categories.split(",").map((item) => item.trim().toLowerCase()),
+      pagesCount: Num.read(pagesCount) ?? 0,
+      pro: pro === PRO,
+      keywords,
+      thumbnailWidth,
+      thumbnailHeight,
+      thumbnailSrc: `${thumbUrl}${thumbnail}`,
+      layoutId: slug
+    })
+  );
+
+export const convertLayoutPages = (
+  layouts: LayoutsPageAPI[],
+  templatesImageUrl: string,
+  id: string
+): CustomTemplatePage[] =>
+  layouts.map(
+    ({
+      slug,
+      title,
+      thumbnailHeight,
+      thumbnailWidth,
+      thumbs
+    }: LayoutsPageAPI) => ({
+      id: slug,
+      title,
+      thumbnailWidth,
+      thumbnailHeight,
+      thumbnailSrc: `${templatesImageUrl}${thumbs}`,
+      layoutId: id
+    })
+  );
+
 export const converterPopup = (
   kit: APIPopup[],
-  url: string,
-  kitId: string
+  url: string
 ): {
-  blocks: BlockWithThumbs[];
-  categories: Categories[];
+  blocks: PopupBlockWithThumbs[];
 } => {
-  const categories = getUniqueKitCategories(kit);
-
-  const blocks: BlockWithThumbs[] = kit.map(
+  const blocks: PopupBlockWithThumbs[] = kit.map(
     ({
       id,
       title,
@@ -99,289 +176,169 @@ export const converterPopup = (
       pro,
       thumbnail,
       thumbnailWidth,
-      thumbnailHeight
+      thumbnailHeight,
+      blank
     }) => ({
-      id: id,
-      cat: [categories],
-      title: title,
+      id,
+      cat: categories.split(",").map((item) => item.trim().toLowerCase()),
+      title,
       thumbnailHeight,
       thumbnailWidth,
       thumbnailSrc: `${url}${thumbnail}`,
-      pro: pro === "true",
+      pro: pro === PRO,
       keywords: "popup2",
       position: 1,
-      type: 0,
-      kitId
+      type: ["light"],
+      blank
     })
   );
 
   return {
-    blocks,
-    categories
+    blocks
   };
 };
 
-export const getStyles = (): Array<Style> => [
-  {
-    colorPalette: [
-      { id: "color1", hex: "#A170D9" },
-      { id: "color2", hex: "#1C1C1C" },
-      { id: "color3", hex: "#05CAB6" },
-      { id: "color4", hex: "#B8E6E1" },
-      { id: "color5", hex: "#F5D4D1" },
-      { id: "color6", hex: "#EBEBEB" },
-      { id: "color7", hex: "#666666" },
-      { id: "color8", hex: "#FFFFFF" }
+export const convertStories = (
+  collections: StoriesAPI[],
+  thumbUrl: string
+): StoriesTemplateWithThumbs[] =>
+  collections.map(
+    ({
+      categories,
+      pages,
+      id,
+      title,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight
+    }) => {
+      return {
+        layoutId: id,
+        name: title,
+        cat: categories.split(",").map((item) => item.trim().toLowerCase()),
+        pagesCount: pages,
+        thumbnailSrc: `${thumbUrl}${thumbnail}`,
+        thumbnailWidth,
+        thumbnailHeight,
+        blank: title === BLANK_PAGE
+      };
+    }
+  );
+
+export const convertStoriesPages = (
+  stories: StoryPages[],
+  templatesImageUrl: string,
+  id: string
+): CustomTemplatePage[] =>
+  stories.map(({ slug, thumbnailHeight, thumbnailWidth, thumbnail }) => ({
+    id: slug,
+    title: slug,
+    thumbnailSrc: `${templatesImageUrl}${thumbnail}`,
+    thumbnailHeight,
+    thumbnailWidth,
+    layoutId: id
+  }));
+
+export const convertToCategories = (
+  obj: { slug: string; title: string }[]
+): Categories[] =>
+  obj.map((item) => ({
+    ...item,
+    id: item.title.toLowerCase()
+  }));
+
+export const isKitDataResult = (obj: unknown): obj is KitDataResult =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("collection", obj) &&
+  Array.isArray(obj.collection) &&
+  obj.collection.every(
+    (item: unknown) =>
+      Obj.isObject(item) &&
+      Obj.hasKey("pageData", item) &&
+      typeof item.pageData === "string"
+  );
+
+export const isDefaultBlock = (obj: unknown): obj is DefaultBlock =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("type", obj) &&
+  Str.is(obj.type) &&
+  Obj.hasKey("value", obj) &&
+  Obj.isObject(obj.value);
+
+export const isDefaultBlockArray = (
+  obj: unknown
+): obj is DefaultBlockWithID[] =>
+  Array.isArray(obj) && obj.every((item) => isDefaultBlock(item));
+
+export const isStoryDataResponse = (obj: unknown): obj is StoryDataResponse =>
+  Obj.isObject(obj) && Obj.hasKey("collection", obj) && Str.is(obj.collection);
+
+export const isDefaultBlockWithID = (obj: unknown): obj is DefaultBlockWithID =>
+  Obj.isObject(obj) && Obj.hasKey("blockId", obj) && isDefaultBlock(obj);
+
+export const isDefaultBlockWithIDArray = (
+  obj: unknown
+): obj is DefaultBlockWithID[] =>
+  Array.isArray(obj) && obj.every(isDefaultBlockWithID);
+
+export const isAPIPopup = (obj: unknown): obj is APIPopup =>
+  Obj.isObject(obj) &&
+  Obj.hasKeys(
+    [
+      "categories",
+      "order",
+      "pro",
+      "thumbnail",
+      "thumbnailHeight",
+      "thumbnailWidth",
+      "title",
+      "id"
     ],
-    fontStyles: [
-      {
-        deletable: "off",
-        id: "paragraph",
-        title: "Paragraph",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 16,
-        fontSizeSuffix: "px",
-        fontWeight: 400,
-        lineHeight: 1.9,
-        letterSpacing: 0,
-        tabletFontSize: 15,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 400,
-        tabletLineHeight: 1.6,
-        tabletLetterSpacing: 0,
-        mobileFontSize: 15,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 400,
-        mobileLineHeight: 1.6,
-        mobileLetterSpacing: 0
-      },
-      {
-        deletable: "off",
-        id: "subtitle",
-        title: "Subtitle",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 17,
-        fontSizeSuffix: "px",
-        fontWeight: 400,
-        lineHeight: 1.8,
-        letterSpacing: 0,
-        tabletFontSize: 17,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 400,
-        tabletLineHeight: 1.5,
-        tabletLetterSpacing: 0,
-        mobileFontSize: 16,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 400,
-        mobileLineHeight: 1.5,
-        mobileLetterSpacing: 0
-      },
-      {
-        deletable: "off",
-        id: "abovetitle",
-        title: "Above Title",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 13,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.5,
-        letterSpacing: 1.1,
-        tabletFontSize: 13,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.5,
-        tabletLetterSpacing: 1,
-        mobileFontSize: 13,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.5,
-        mobileLetterSpacing: 1
-      },
-      {
-        deletable: "off",
-        id: "heading1",
-        title: "Heading 1",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 46,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.3,
-        letterSpacing: -1.5,
-        tabletFontSize: 38,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.2,
-        tabletLetterSpacing: -1,
-        mobileFontSize: 36,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.3,
-        mobileLetterSpacing: -1
-      },
-      {
-        deletable: "off",
-        id: "heading2",
-        title: "Heading 2",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 36,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.3,
-        letterSpacing: -1.5,
-        tabletFontSize: 30,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.2,
-        tabletLetterSpacing: -1,
-        mobileFontSize: 28,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.3,
-        mobileLetterSpacing: -1
-      },
-      {
-        deletable: "off",
-        id: "heading3",
-        title: "Heading 3",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 28,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.4,
-        letterSpacing: -1.5,
-        tabletFontSize: 27,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.3,
-        tabletLetterSpacing: -1,
-        mobileFontSize: 22,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.3,
-        mobileLetterSpacing: -0.5
-      },
-      {
-        deletable: "off",
-        id: "heading4",
-        title: "Heading 4",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 22,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.5,
-        letterSpacing: -0.5,
-        tabletFontSize: 22,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.4,
-        tabletLetterSpacing: -0.5,
-        mobileFontSize: 20,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.4,
-        mobileLetterSpacing: 0
-      },
-      {
-        deletable: "off",
-        id: "heading5",
-        title: "Heading 5",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 20,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.6,
-        letterSpacing: 0,
-        tabletFontSize: 17,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.7,
-        tabletLetterSpacing: 0,
-        mobileFontSize: 17,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.8,
-        mobileLetterSpacing: 0
-      },
-      {
-        deletable: "off",
-        id: "heading6",
-        title: "Heading 6",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 16,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.5,
-        letterSpacing: 0,
-        tabletFontSize: 16,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.5,
-        tabletLetterSpacing: 0,
-        mobileFontSize: 16,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.5,
-        mobileLetterSpacing: 0
-      },
-      {
-        deletable: "off",
-        id: "button",
-        title: "Button",
-        fontFamily: "overpass",
-        fontFamilyType: "google",
-        fontSize: 15,
-        fontSizeSuffix: "px",
-        fontWeight: 700,
-        lineHeight: 1.6,
-        letterSpacing: 0,
-        tabletFontSize: 17,
-        tabletFontSizeSuffix: "px",
-        tabletFontWeight: 700,
-        tabletLineHeight: 1.6,
-        tabletLetterSpacing: 0,
-        mobileFontSize: 15,
-        mobileFontSizeSuffix: "px",
-        mobileFontWeight: 700,
-        mobileLineHeight: 1.6,
-        mobileLetterSpacing: 0
-      }
-    ],
-    id: "bahcadtpvdhdphmhymrsgrwobyzhxcdzytyx",
-    title: "Overpass"
-  }
-];
+    obj
+  );
 
-export const fetchAllElements = async <T>(
-  url: string,
-  id: string,
-  itemsPerPage: number
-): Promise<T[]> => {
-  let allElements: T[] = [];
+export const isPopupsResponse = (obj: unknown): obj is PopupsResponse =>
+  Obj.isObject(obj) &&
+  Obj.hasKeys(["categories", "collections"], obj) &&
+  Array.isArray(obj.categories) &&
+  obj.categories.every(
+    (item) =>
+      Obj.isObject(item) &&
+      Obj.hasKeys(["title", "slug"], item) &&
+      Str.is(item.slug) &&
+      Str.is(item.title)
+  ) &&
+  Array.isArray(obj.collections) &&
+  obj.collections.every((item) => Obj.isObject(item) && isAPIPopup(item));
 
-  const firstPageResponse = await fetch(
-    `${url}?project_id=${id}&per_page=${itemsPerPage}`
-  ).then((r) => r.json());
+export const isPopupDataResult = (obj: unknown): obj is PopupDataResult =>
+  Array.isArray(obj) &&
+  obj.every(
+    (item) =>
+      Obj.isObject(item) &&
+      Obj.hasKey("pageData", item) &&
+      Str.is(item.pageData)
+  );
 
-  const lastPage = firstPageResponse.paginationInfo.lastPage;
+export const isLayoutDataResult = (obj: unknown): obj is LayoutDataResult =>
+  Array.isArray(obj) &&
+  obj.every(
+    (item) =>
+      Obj.isObject(item) &&
+      Obj.hasKey("pageData", item) &&
+      Str.is(item.pageData)
+  );
 
-  allElements = allElements.concat(firstPageResponse.collections);
+export const isKitDataItems = (obj: unknown): obj is KitDataItems =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("items", obj) &&
+  Array.isArray(obj.items) &&
+  obj.items.every((item) => isDefaultBlock(item));
 
-  for (let currentPage = 2; currentPage <= lastPage; currentPage++) {
-    const nextPageResponse = await fetch(
-      `${url}?project_id=${id}&per_page=${itemsPerPage}&page_number=${currentPage}`
-    ).then((r) => r.json());
-
-    allElements = allElements.concat(nextPageResponse.collections);
-  }
-
-  return allElements;
-};
+export const isStoryDataBlocks = (
+  obj: unknown
+): obj is { blocks: DefaultBlockWithID[] } =>
+  Obj.isObject(obj) &&
+  Obj.hasKey("blocks", obj) &&
+  Array.isArray(obj.blocks) &&
+  obj.blocks.every(isDefaultBlock);

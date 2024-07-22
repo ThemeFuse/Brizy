@@ -318,7 +318,8 @@ export function getItems({
       sidebarLabel: t("Styling"),
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog"
+      icon: "nc-cog",
+      title: t("Settings")
     }
   ];
 }

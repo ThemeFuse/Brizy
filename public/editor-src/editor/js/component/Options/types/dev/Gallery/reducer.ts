@@ -1,8 +1,8 @@
 import { replaceAt } from "timm";
 import * as Arr from "visual/utils/array";
+import { maxId } from "visual/utils/options/Gallery/utils";
 import { Actions } from "./types/Actions";
 import * as Item from "./types/Item";
-import { maxId } from "./utils";
 
 export function reducer(
   s: Item.Item<number>[],

@@ -47,6 +47,12 @@ class Brizy_Editor_Screenshot_Manager
         $extension = 'jpeg';
         $screenFileName = $screenUid.'.'.$extension;
         $screenFullPath = $path.DIRECTORY_SEPARATOR.$screenFileName;
+
+        $wp_filetype = wp_check_filetype($screenFileName);
+        if (!$wp_filetype['ext'] && !current_user_can('unfiltered_upload')) {
+            return false;
+        }
+
         try {
             return $this->storeThumbnail($imageContent, $screenFullPath);
         } catch (Exception $e) {

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import produce from "immer";
+import { produce } from "immer";
 import React, { Component, ElementType, ReactElement, ReactNode } from "react";
 import _ from "underscore";
 import { Alert } from "visual/component/Alert";
@@ -119,11 +119,18 @@ class BaseIntegration<
     this.setState(progress);
   };
 
-  handleChange = (id: string, appData: Record<string, unknown>): void => {
+  handleChange = (
+    id: string,
+    appData: Record<string, unknown> | null,
+    cb?: VoidFunction
+  ): void => {
     this.setState(
       produce((draft) => {
         draft.data[id].data = appData;
-      })
+      }),
+      () => {
+        cb?.();
+      }
     );
   };
 
@@ -151,10 +158,12 @@ class BaseIntegration<
     }
 
     if (!pending) {
-      this.setState({
-        stage: nextStage,
-        oldStage: stage
-      });
+      this.setState(
+        produce((draft) => {
+          draft.stage = nextStage;
+          draft.oldStage = stage;
+        })
+      );
     }
   };
 

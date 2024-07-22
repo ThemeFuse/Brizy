@@ -6,8 +6,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { getLinkValue } from "visual/component/Link/utils";
-import { fromElementModel } from "visual/component/Options/types/dev/ImageUpload/converters";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -20,7 +18,11 @@ import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { imagePopulationUrl } from "visual/utils/image";
-import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
+import {
+  isGIFExtension,
+  isSVGExtension,
+  isUnsplashImage
+} from "visual/utils/image/utils";
 import { isNumber } from "visual/utils/math";
 import { isStory } from "visual/utils/models";
 import { getLinkData } from "visual/utils/models/link";
@@ -29,6 +31,8 @@ import {
   mobileSyncOnChange,
   tabletSyncOnChange
 } from "visual/utils/onChange";
+import { fromElementModel } from "visual/utils/options/ImageUpload/converters";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import {
   fromLinkElementModel,
   patchOnDCChange as patchOnLinkDCChange
@@ -66,6 +70,7 @@ import {
   multiplier,
   showOriginalImage
 } from "./utils";
+import { omit } from "timm";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -544,6 +549,7 @@ class Image extends EditorComponent {
   }
 
   renderPopups() {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData) => {
@@ -552,21 +558,28 @@ class Image extends EditorComponent {
           value: { popupId }
         } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
-          const blockData = globalBlocks[itemData.value._id];
+          const globalBlockId = itemData.value._id;
+          const blockData = globalBlocks[globalBlockId];
 
           popupId = blockData.value.popupId;
+
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });
@@ -617,7 +630,7 @@ class Image extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, actionClosePopup } = v;
+    const { className, actionClosePopup, imageType } = v;
     const IS_STORY = isStory(Config.getAll());
     const { gallery = {} } = this.props.renderer
       ? this.props.renderer
@@ -682,6 +695,10 @@ class Image extends EditorComponent {
       _dc: this._dc
     };
 
+    const getResponsiveUrls = isUnsplashImage(imageType)
+      ? (imageSizes) => this.getResponsiveUrls(wrapperSizes, imageSizes)
+      : undefined;
+
     const { animationId, hoverName, options, isHidden } =
       this.getHoverAnimationData(v);
     const { wrapperAnimationActive } = this.props.meta;
@@ -726,6 +743,7 @@ class Image extends EditorComponent {
                     _id={this.getId()}
                     componentId={this.constructor.componentId}
                     wrapperSizes={wrapperSizes}
+                    getResponsiveUrls={getResponsiveUrls}
                     meta={meta}
                     gallery={gallery}
                     linkProps={linkProps}

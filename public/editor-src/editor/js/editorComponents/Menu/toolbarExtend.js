@@ -343,7 +343,7 @@ export function getItemsMMenu({ v, device, state, context }) {
     type: DCTypes.image
   });
 
-  const isExternalImage = dvv("bgImageType") === ImageType.External;
+  const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
 
   return [
     {

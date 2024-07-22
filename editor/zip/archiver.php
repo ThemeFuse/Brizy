@@ -477,7 +477,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
      * @return array
      * @throws Exception
      */
-    protected function addScreenshot(ZipArchive $z, $meta, $manager, array $data, $dir)
+    protected function addScreenshot(ZipArchive $z, $meta, Brizy_Editor_Screenshot_Manager $manager, array $data, $dir)
     {
         $screenUid = $meta->_thumbnailSrc;
         if ($screenUid) {

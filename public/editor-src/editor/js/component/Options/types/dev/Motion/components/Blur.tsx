@@ -1,8 +1,8 @@
 import React, { JSXElementConstructor, useCallback, useMemo } from "react";
 import { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
-import { Blur as V } from "../types/Blur";
-import { EffectProps } from "../types/EffectProps";
+import { Blur as V } from "visual/utils/options/Motion/types/Blur";
+import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
 import { Direction, Props } from "./Direction";
 import { UnitSlider } from "./UnitSlider";
 import { Viewport } from "./Viewport";

@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { fromJS } from "immutable";
 import { projectAssembled } from "visual/redux/selectors";
 import { ActionTypes, ReduxAction } from "../actions2";
@@ -15,14 +15,15 @@ export const project: RProject = (state, action, fullState) => {
       return project;
     }
     case "PUBLISH": {
+      const newProject = projectAssembled(fullState);
       const oldState = fromJS(state);
-      const newState = fromJS(projectAssembled(fullState));
+      const newState = fromJS(newProject);
 
       if (oldState.equals(newState)) {
         return state;
       }
 
-      return produce(projectAssembled(fullState), (draft) => {
+      return produce(newProject, (draft) => {
         draft.dataVersion = draft.dataVersion + 1;
       });
     }

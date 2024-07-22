@@ -1,16 +1,16 @@
-import React from "react";
+import { ReactElement } from "react";
 import { useDC, State as UseDynamicContentState } from "./useDC";
 
 type Props = {
   placeholder: string;
   delayMs: number;
-  children: (state: UseDynamicContentState) => React.ReactElement;
+  children: (state: UseDynamicContentState) => ReactElement;
 };
-export const DynamicContent: React.FC<Props> = ({
+export const DynamicContent = ({
   placeholder,
   delayMs = 0,
   children
-}) => {
+}: Props): ReactElement => {
   const dcData = useDC(placeholder, delayMs);
 
   return children(dcData);

@@ -29,8 +29,8 @@ class Brizy_Config {
 	const SUPPORT_URL = "https://support.brizy.io";
 	const ABOUT_URL = "https://www.brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
-    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . BRIZY_EDITOR_VERSION;
-	const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/' . BRIZY_EDITOR_VERSION;
+    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'prod';
+	const EDITOR_BUILD_RELATIVE_PATH = 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'prod';
 
 	const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
 	const CLOUD_ENDPOINT = 'https://admin.brizy.io';
@@ -51,12 +51,31 @@ class Brizy_Config {
 	const CLOUD_CUSTOM_FILES = '/api/custom_files';
     const WP_HTTP_TIMEOUT = 30;
 
+    const LAYOUTS_CHUNK_URL = 'https://template-mk.b-cdn.net/api/get-layouts-chunk';
+    const LAYOUTS_PAGES_URL = 'https://template-mk.b-cdn.net/api/get-layouts-pages';
+    const LAYOUTS_PAGE_DATA_URL = 'https://template-mk.b-cdn.net/api/get-layouts-page';
+
+    const BLOCKS_CHUNK_URL = "https://template-mk.b-cdn.net/api/get-kit-collections-chunk";
+    const BLOCKS_KITS_URL = "https://template-mk.b-cdn.net/api/get-kits";
+    const BLOCKS_DATA_URL = "https://template-mk.b-cdn.net/api/get-item";
+
+	const POPUPS_CHUNK_URL = "https://template-mk.b-cdn.net/api/get-popups-chunk";
+    const POPUPS_DATA_URL = "https://template-mk.b-cdn.net/api/get-popup-data";
+
+    const STORIES_CHUNK_URL = "https://template-mk.b-cdn.net/api/get-story-chunk";
+    const STORIES_PAGES_URL = "https://template-mk.b-cdn.net/api/get-story-page";
+    const STORIES_DATA_URL = "https://template-mk.b-cdn.net/api/get-story-page-data";
+
+    const TEMPLATES_IMAGE_URL = 'https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/';
+
+	// this file will be stored in uploads/brizy/
+	const PROJECT_STLYES_FILE_PATH = '/project/styles.css';
 	static public function getCompilerUrls() {
 		return new Brizy_Admin_UrlIterator(
 			array(
-				'http://compiler.brizy.io/compile/v3',
-				'http://compiler1.brizycompiler.run/compile/v3',
-				'http://compiler2.brizycompiler.run/compile/v3'
+				'http://compiler.brizy.io/compile/v4',
+				'http://compiler1.brizycompiler.run/compile/v4',
+				'http://compiler2.brizycompiler.run/compile/v4'
 			)
 		);
 	}

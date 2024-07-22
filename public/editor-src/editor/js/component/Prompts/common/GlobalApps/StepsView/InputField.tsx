@@ -3,11 +3,12 @@ import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { RadioItemField } from "./Radio/RadioItemField";
 import { InputFieldProps } from "./types";
 
-export const InputField: React.FC<InputFieldProps> = ({
-  field: { title, name, value, type, choices },
-  onChange,
-  handleKeyDown
-}): ReactElement => {
+export const InputField = (props: InputFieldProps): ReactElement => {
+  const {
+    field: { title, name, value, type, choices, description },
+    onChange,
+    handleKeyDown
+  } = props;
   const handleInputChange = useCallback(
     ({ target }: ChangeEvent<HTMLInputElement>) => {
       onChange(target.value, name);
@@ -21,9 +22,10 @@ export const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <InputPlaceholder
-      title={title}
       required
+      title={title}
       value={value}
+      description={description}
       onChange={handleInputChange}
       onKeyDown={handleKeyDown}
     />

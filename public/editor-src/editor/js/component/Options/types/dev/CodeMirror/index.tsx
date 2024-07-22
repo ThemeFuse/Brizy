@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { CodeMirror as Control } from "visual/component/Controls/CodeMirror";
 import * as Option from "visual/component/Options/Type";
 import { useDebouncedEffect } from "visual/component/hooks";
@@ -19,14 +19,14 @@ export type Props = Option.Props<Model> &
   WithClassName &
   WithPlaceholder;
 
-export const CodeMirror: FC<Props> = ({
+export const CodeMirror = ({
   className,
   onChange,
   value: { value },
   config,
   placeholder,
   label
-}) => {
+}: Props): ReactElement => {
   const [_value, setValue] = useState(value);
   const ref = useRef<string>();
 

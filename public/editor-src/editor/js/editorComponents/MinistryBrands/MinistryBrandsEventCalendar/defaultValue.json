@@ -1,7 +1,7 @@
 {
   "content": {
-    "category": "all",
-    "group": "all",
+    "category": "",
+    "group": "",
 
     "source": "",
     "detailPage": "",
@@ -107,7 +107,6 @@
     "dayTypographyFontWidth": 100,
     "dayTypographyFontSoftness": 0,
 
-
     "subscribeToCalendarTypographyFontStyle": "",
     "subscribeToCalendarTypographyFontFamilyType": "google",
     "subscribeToCalendarTypographyFontSize": 16,
@@ -172,6 +171,8 @@
     "dayBorderBottomRightRadiusSuffix": "px",
     "dayBorderBottomLeftRadiusSuffix": "px",
 
+    "subscribeToCalendarFillType": "filled",
+
     "subscribeToCalendarColorHex": "#000000",
     "subscribeToCalendarColorOpacity": 1,
     "subscribeToCalendarColorPalette": "",
@@ -196,8 +197,7 @@
     "subscribeToCalendarGradientLinearDegree": 90,
     "subscribeToCalendarGradientRadialDegree": 90,
 
-    "subscribeToCalendarBorderRadiusType": "grouped",
-
+    "subscribeToCalendarBorderRadiusType": "square",
     "subscribeToCalendarBorderRadius": 100,
     "subscribeToCalendarBorderRadiusSuffix": "px",
 
@@ -927,6 +927,9 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "subscribeToCalendarHoverTransition": 50,
+    "subscribeToCalendarHoverTransitionSuffix": ""
   }
 }

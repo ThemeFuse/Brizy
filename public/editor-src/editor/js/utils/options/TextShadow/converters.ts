@@ -5,21 +5,6 @@ import {
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { call } from "visual/component/Options/types/dev/Animation/utils";
-import {
-  NoEmptyBlur,
-  fromBlur
-} from "visual/component/Options/types/dev/TextShadow/types/NoEmptyBlur";
-import {
-  NoEmptyOpacity,
-  fromOpacity
-} from "visual/component/Options/types/dev/TextShadow/types/NoEmptyOpacity";
-import {
-  Empty,
-  NoEmpty,
-  isEmpty,
-  isNoEmpty
-} from "visual/component/Options/types/dev/TextShadow/types/Value";
 import * as Hex from "visual/utils/color/Hex";
 import * as Palette from "visual/utils/color/Palette";
 import * as Blur from "visual/utils/cssProps/Blur";
@@ -30,6 +15,10 @@ import * as Num from "visual/utils/math/number";
 import { optional, readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
+import { call } from "../Animation/utils";
+import { NoEmptyBlur, fromBlur } from "./types/NoEmptyBlur";
+import { NoEmptyOpacity, fromOpacity } from "./types/NoEmptyOpacity";
+import { Empty, NoEmpty, isEmpty, isNoEmpty } from "./types/Value";
 
 export const defaultValue: Empty = {
   blur: 0,

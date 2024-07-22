@@ -101,7 +101,7 @@ export const getItems =
     const imageExtension = dvv("imageExtension");
     const imagePopulation = dvv("imagePopulation");
     const linkPopup = dvv("linkPopup");
-    const isExternalImage = dvv("imageType") === ImageType.External;
+    const isExternalImage = dvv("imageType") !== ImageType.Internal;
 
     const dcSize = getImageDCSize(imagePopulation, context);
     const isCustomSizeType = sizeType === "custom";

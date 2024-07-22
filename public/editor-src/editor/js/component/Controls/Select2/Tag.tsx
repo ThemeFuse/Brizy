@@ -1,9 +1,9 @@
-import React, { FC, PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
 type Props = PropsWithChildren<{ onRemove: () => void }>;
 
-export const Tag: FC<Props> = ({ onRemove, children }) => {
+export const Tag = ({ onRemove, children }: Props): JSX.Element => {
   const title = typeof children === "string" ? children : "";
   return (
     <div className="brz-ed-control__multiSelect--tag">

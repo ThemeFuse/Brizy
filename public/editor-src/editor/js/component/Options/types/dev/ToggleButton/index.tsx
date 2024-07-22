@@ -1,16 +1,16 @@
 import classNames from "classnames";
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Props } from "./types";
 
-export const ToggleButton: React.FC<Props> = ({
+export const ToggleButton = ({
   value: _value,
   className,
   onChange,
   children,
   align = "center",
   config
-}) => {
+}: Props): ReactElement | null => {
   const { icon, title, reverseTheme } = config;
   const { value } = _value;
 

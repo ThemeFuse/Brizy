@@ -6,11 +6,11 @@ import { t } from "visual/utils/i18n";
 import { InternalLinkValue } from "./Components/InternalLinkValue";
 import { SelectDropdown } from "./Components/SelectDropdown";
 import { SelectItem, SelectItemNoResults } from "./Components/SelectItem";
+import { SourceSelect } from "./Components/SourceSelect";
 import { Props, Status } from "./types";
 import { isValuePopulated, trimTitle } from "./utils";
-import { SourceSelect } from "./Components/SourceSelect";
 
-export const Control: React.FC<Props> = ({
+export const Control = ({
   className,
   value,
   placeholder,
@@ -26,7 +26,7 @@ export const Control: React.FC<Props> = ({
   onSearch,
   onChange,
   onSourceChange
-}) => {
+}: Props): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const inputValueClassName = classNames(

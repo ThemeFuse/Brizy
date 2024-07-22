@@ -1,16 +1,17 @@
 import Config from "visual/global/Config";
-import {
-  getFontById,
-  getFontCssStyle,
-  makeStyleCSSVar
-} from "visual/utils/fonts";
+import { getFontCssStyle } from "visual/utils/fonts";
+import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
-import { DESKTOP } from "visual/utils/responsiveMode";
+import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
+import { read as readStr } from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
-import { isNullish } from "visual/utils/value";
-import { FONT_INITIAL } from "../fonts/utils";
+import { isNullish, MValue } from "visual/utils/value";
 import { CSSValue } from "./types";
+import { Str } from "@brizy/readers";
+import { DESKTOP, Device } from "visual/utils/devices";
+import { NORMAL } from "visual/utils/stateMode";
+import { isCustomFontStyle } from "./utils";
 
 export function styleTypography2FontFamily({
   v,
@@ -18,40 +19,54 @@ export function styleTypography2FontFamily({
   state,
   prefix = ""
 }: CSSValue) {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const dvk = (key: string) =>
-    defaultValueKey({ key, device, state: "normal" });
+  const dvv = (key: string, deviceMode?: Device) =>
+    defaultValueValue({ v, key, device: deviceMode ?? device, state });
+  const dvk = (key: string, deviceMode?: Device) =>
+    defaultValueKey({ key, device: deviceMode ?? device, state: NORMAL });
 
   const fontFamilyKey = dvk(capByPrefix(prefix, "fontFamily"));
+  const fontFamilyDesktopKey = dvk(capByPrefix(prefix, "fontFamily"), DESKTOP);
   const fontFamilyTypeKey = dvk(capByPrefix(prefix, "fontFamilyType"));
+  const fontFamilyTypeDesktopKey = dvk(
+    capByPrefix(prefix, "fontFamilyType"),
+    DESKTOP
+  );
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
-  const fontStyle = dvv(fontStyleKey);
 
-  if (fontStyle && fontStyle !== "custom") {
-    return `var(${makeStyleCSSVar({
-      id: fontStyle,
-      device: DESKTOP,
-      key: "fontFamily",
-      config: Config.getAll()
-    })}, ${FONT_INITIAL})`;
-  } else {
-    const fontFamily = getOptionFontByGlobal(
-      "fontFamily",
-      v[fontFamilyKey],
-      fontStyle
-    );
-    const fontFamilyType = getOptionFontByGlobal(
-      "fontFamilyType",
-      v[fontFamilyTypeKey],
-      fontStyle
-    );
+  let fontStyle = readStr(dvv(fontStyleKey));
+  const desktopFontStyle = readStr(dvv(fontStyleKey, DESKTOP));
 
-    if (isNullish(fontFamily) || isNullish(fontFamilyType)) {
-      return;
-    }
-
-    return getFontById({ type: fontFamilyType, family: fontFamily }).family;
+  /* The given condition is required when the device is responsive. Because for responsive mode we don't have the value
+  for fontFamily, when fontStyle is `custom` it tries to take the value from desktop, but if fontStyle is set for
+  desktop from globalStyling then fontFamily for responsive mode will be taken from the default. To prevent this
+  behavior we need to assign fontStyle when device mode is responsive the value from desktop fontStyle */
+  if (
+    device !== DESKTOP &&
+    Str.is(fontStyle) &&
+    isCustomFontStyle(fontStyle) &&
+    Str.is(desktopFontStyle) &&
+    !isCustomFontStyle(desktopFontStyle)
+  ) {
+    fontStyle = desktopFontStyle;
   }
+
+  const family = readStr(v[fontFamilyKey] ?? dvv(fontFamilyDesktopKey));
+  const familyType = readStr(
+    v[fontFamilyTypeKey] ?? dvv(fontFamilyTypeDesktopKey)
+  ) as MValue<FontFamilyType>;
+
+  if (isNullish(family) || isNullish(familyType)) {
+    return "";
+  }
+
+  return getDetailsModelFontFamily(
+    {
+      family,
+      familyType,
+      style: fontStyle
+    },
+    Config.getAll()
+  );
 }
 
 export function styleTypography2FontSize({
@@ -67,11 +82,15 @@ export function styleTypography2FontSize({
   const fontStyle = dvv(fontStyleKey);
 
   const globalSize = getFontCssStyle({ fontStyle, key: "fontSize", device });
-
-  return (
+  const value =
     globalSize ??
-    getOptionFontByGlobal(dvk("fontSize"), dvv(fontSizeKey), dvv(fontStyleKey))
-  );
+    getOptionFontByGlobal({
+      key: dvk("fontSize"),
+      value: dvv(fontSizeKey),
+      style: dvv(fontStyleKey)
+    });
+
+  return value as number;
 }
 
 export function styleTypography2FontSizeSuffix({
@@ -89,13 +108,13 @@ export function styleTypography2FontSizeSuffix({
   if (fontStyle && fontStyle !== "custom") {
     return "";
   } else {
-    return (
-      getOptionFontByGlobal(
-        dvk("fontSizeSuffix"),
-        dvv(fontSizeSuffixKey),
-        dvv(fontStyleKey)
-      ) || "px"
-    );
+    const value =
+      getOptionFontByGlobal({
+        key: dvk("fontSizeSuffix"),
+        value: dvv(fontSizeSuffixKey),
+        style: dvv(fontStyleKey)
+      }) || "px";
+    return value as string;
   }
 }
 
@@ -112,15 +131,15 @@ export function styleTypography2LineHeight({
   const fontStyle = dvv(fontStyleKey);
 
   const globalSize = getFontCssStyle({ fontStyle, key: "lineHeight", device });
-
-  return (
+  const value =
     globalSize ??
-    getOptionFontByGlobal(
-      dvk("lineHeight"),
-      dvv(lineHeightKey),
-      dvv(fontStyleKey)
-    )
-  );
+    getOptionFontByGlobal({
+      key: dvk("lineHeight"),
+      value: dvv(lineHeightKey),
+      style: dvv(fontStyleKey)
+    });
+
+  return Str.read(value) ?? "";
 }
 
 export function styleTypography2FontWeight({
@@ -136,15 +155,15 @@ export function styleTypography2FontWeight({
   const fontStyle = dvv(fontStyleKey);
 
   const globalSize = getFontCssStyle({ fontStyle, key: "fontWeight", device });
-
-  return (
+  const value =
     globalSize ??
-    getOptionFontByGlobal(
-      dvk("fontWeight"),
-      dvv(fontWeightKey),
-      dvv(fontStyleKey)
-    )
-  );
+    getOptionFontByGlobal({
+      key: dvk("fontWeight"),
+      value: dvv(fontWeightKey),
+      style: dvv(fontStyleKey)
+    });
+
+  return Str.read(value) ?? "";
 }
 
 export function styleTypography2LetterSpacing({
@@ -168,11 +187,11 @@ export function styleTypography2LetterSpacing({
 
   return (
     globalSize ??
-    `${getOptionFontByGlobal(
-      dvk("letterSpacing"),
-      dvv(letterSpacingKey),
-      dvv(fontStyleKey)
-    )}${suffix}`
+    `${getOptionFontByGlobal({
+      key: dvk("letterSpacing"),
+      value: dvv(letterSpacingKey),
+      style: dvv(fontStyleKey)
+    })}${suffix}`
   );
 }
 
@@ -203,8 +222,13 @@ export function styleTypography2FontVariation({
     fontWidthKey
   )}, "SOFT" ${dvv(fontSoftnessKey)}`;
 
-  return (
+  const _value =
     globalSize ??
-    getOptionFontByGlobal(fontVariationKey, value, dvv(fontStyleKey))
-  );
+    getOptionFontByGlobal({
+      key: fontVariationKey,
+      value,
+      style: dvv(fontStyleKey)
+    });
+
+  return Str.read(_value) ?? "";
 }

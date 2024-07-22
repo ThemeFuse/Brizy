@@ -1,5 +1,6 @@
-import React, { FC } from "react";
+import React from "react";
 import classnames from "classnames";
+import { FCC } from "visual/utils/react/types";
 
 export interface Props {
   className?: string;
@@ -7,7 +8,7 @@ export interface Props {
   alignX?: "left" | "middle" | "right";
 }
 
-export const Footer: FC<Props> = props => {
+export const Footer: FCC<Props> = (props) => {
   const {
     alignX = "top",
     alignY = "left",

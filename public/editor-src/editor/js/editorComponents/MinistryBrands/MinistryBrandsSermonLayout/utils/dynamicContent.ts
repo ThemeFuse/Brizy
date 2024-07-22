@@ -33,7 +33,9 @@ export const getPlaceholder = (v: Value) => {
     searchFilterPlacehoder,
     defaultCategory,
     parentCategory,
-    showMetaIcons
+    showMetaIcons,
+    groupSlug,
+    searchValue
   } = v;
 
   const attr = [
@@ -66,7 +68,9 @@ export const getPlaceholder = (v: Value) => {
     `series_filter_heading='${seriesFilterHeading}'`,
     `speaker_filter_heading='${speakerFilterHeading}'`,
     `search_placeholder='${searchFilterPlacehoder}'`,
-    `howmany='${howmany}'`
+    `howmany='${howmany}'`,
+    `group_slug='${groupSlug}'`,
+    `search_value='${searchValue}'`
   ];
 
   return makePlaceholder({

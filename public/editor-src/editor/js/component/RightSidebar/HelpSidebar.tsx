@@ -1,5 +1,5 @@
 import { HelpSidebarContent } from "@brizy/builder-ui-components";
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { noop } from "underscore";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
@@ -12,7 +12,7 @@ import { t } from "visual/utils/i18n";
 import { prop } from "visual/utils/object/get";
 import { nextAlign } from "../Options/types/dev/SidebarTabs/utils";
 
-export const HelpSidebar: FC = () => {
+export const HelpSidebar = (): ReactElement => {
   const dispatch = useDispatch();
 
   const selector = pipe(uiSelector, prop("rightSidebar"));

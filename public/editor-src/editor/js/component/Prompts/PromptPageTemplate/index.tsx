@@ -20,8 +20,8 @@ import { canSyncPage, getChoices } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { updateError } from "visual/redux/actions";
 import {
+  updateError,
   updatePageIsHomePage,
   updatePageLayout,
   updatePageTitle

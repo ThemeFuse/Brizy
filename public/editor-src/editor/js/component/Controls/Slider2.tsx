@@ -1,5 +1,9 @@
 import classNames from "classnames";
-import React, { FC, useCallback } from "react";
+import React, {
+  ChangeEventHandler,
+  MouseEventHandler,
+  useCallback
+} from "react";
 import { read } from "visual/utils/math/number";
 import { WithClassName } from "visual/utils/options/attributes";
 import { inputValue } from "visual/utils/react";
@@ -13,19 +17,19 @@ export type Props = WithClassName & {
   max: number;
 };
 
-export const Slider2: FC<Props> = ({
+export const Slider2 = ({
   value,
   onChange,
   className,
   min,
   max,
   step
-}) => {
-  const _onChange = useCallback(
+}: Props): JSX.Element => {
+  const _onChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (v) => mCompose((v) => onChange(v, { editing: true }), read, inputValue)(v),
     [onChange]
   );
-  const _onMouseUp = useCallback(
+  const _onMouseUp = useCallback<MouseEventHandler<HTMLInputElement>>(
     (v) =>
       mCompose((v) => onChange(v, { editing: false }), read, inputValue)(v),
     [onChange]

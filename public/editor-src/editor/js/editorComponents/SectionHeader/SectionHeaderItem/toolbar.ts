@@ -62,7 +62,7 @@ export function getItems({
     type: DCTypes.image
   });
 
-  const isExternalImage = dvv("bgImageType") === ImageType.External;
+  const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
 
   return [
     {

@@ -1,5 +1,4 @@
-import { hasKey, isObject } from "../utils/reader/object";
-import { is as isString } from "../utils/reader/string";
+import { Obj, Str } from "@brizy/readers";
 import { Response } from "./Response";
 
 export type OrderBy = {
@@ -8,11 +7,10 @@ export type OrderBy = {
 };
 
 export const isOrderBy = (item: unknown): item is OrderBy =>
-  isObject(item) &&
-  hasKey("id", item) &&
-  hasKey("title", item) &&
-  isString(item.id) &&
-  isString(item.title);
+  Obj.isObject(item) &&
+  Obj.hasKeys(["id", "title"], item) &&
+  Str.is(item.id) &&
+  Str.is(item.title);
 
 type PostSources = {
   sources: { id: string; title: string; orderBy: OrderBy[] }[];

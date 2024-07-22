@@ -78,6 +78,40 @@ trait Brizy_Editor_Asset_StaticFileTrait
         return true;
     }
 
+    protected function store_content_in_file($content, $asset_path, $overwrite=false)
+    {
+        if (file_exists($asset_path) && !$overwrite) {
+            return true;
+        }
+
+        try {
+            // check destination dir
+            $dir_path = dirname($asset_path);
+
+            if (!file_exists($dir_path)) {
+                if (!file_exists($dir_path) && !mkdir($dir_path, 0755, true) && !is_dir($dir_path)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir_path));
+                }
+            }
+
+            if ($content !== false) {
+                file_put_contents($asset_path, $content);
+            } else {
+                return false;
+            }
+
+        } catch (Exception $e) {
+            // clean up
+            if ($asset_path) {
+                @unlink($asset_path);
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
     protected function create_attachment(
         $madia_name,
         $absolute_asset_path,
@@ -143,6 +177,8 @@ trait Brizy_Editor_Asset_StaticFileTrait
 		if ( isset( $uploadData['error'] ) ) {
 			return new WP_Error( 'upload_error', $uploadData['error'] );
 		}
+
+		@mkdir(dirname($assetPath));
 
 		@copy($uploadData['file'],$assetPath);
 

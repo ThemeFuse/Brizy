@@ -85,8 +85,7 @@ class Fields extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(id, { ...appData, ...data });
-        onChangeNext();
+        onChange(id, { ...appData, ...data }, onChangeNext);
       }
     }
   };

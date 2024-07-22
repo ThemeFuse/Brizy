@@ -1,11 +1,9 @@
-import { mPipe, optional, parseStrict } from "fp-utilities";
+import { Arr, Bool, Obj, Str } from "@brizy/readers";
+import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
 import { PLUGIN_ENV } from "./types/global";
 import { pipe } from "./utils/fp/pipe";
 import { onNullish } from "./utils/onNullish";
-import * as Arr from "./utils/reader/array";
-import * as Obj from "./utils/reader/object";
-import * as Str from "./utils/reader/string";
 import { throwOnNullish } from "./utils/throwOnNullish";
 import { MValue } from "./utils/types";
 
@@ -14,6 +12,17 @@ interface DefaultTemplates {
   popupsUrl: string;
   storiesUrl: string;
   layoutsUrl: string;
+  layoutDataUrl: string;
+  layoutsChunkUrl: string;
+  layoutsPagesUrl: string;
+  blocksChunkUrl: string;
+  blocksDataUrl: string;
+  blocksKitsUrl: string;
+  popupsChunkUrl: string;
+  popupsDataUrl: string;
+  storiesChunkUrl: string;
+  storiesPagesUrl: string;
+  storiesDataUrl: string;
 }
 
 interface Actions {
@@ -44,6 +53,30 @@ interface Actions {
   updateBlockScreenshot: string;
 
   getDynamicContentPlaceholders: string;
+
+  createGlobalBlock: string;
+  updateGlobalBlock: string;
+  updateGlobalBlocks: string;
+  lockProject: string;
+  removeLock: string;
+  heartBeat: string;
+  takeOver: string;
+  getFonts: string;
+}
+
+interface ProjectStatus {
+  locked: boolean;
+  lockedBy: boolean | { user_email: string };
+}
+
+interface Project {
+  status: ProjectStatus;
+}
+
+interface ImagePatterns {
+  full: string;
+  original: string;
+  split: string;
 }
 
 interface API {
@@ -51,6 +84,8 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  imagePatterns: ImagePatterns;
+  templatesImageUrl: string;
 }
 export interface Config {
   hash: string;
@@ -58,6 +93,7 @@ export interface Config {
   url: string;
   pageId: string;
   actions: Actions;
+  project: Project;
   api: API;
   l10n?: Record<string, string>;
   collectionTypes: CollectionType[];
@@ -78,6 +114,50 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   ),
   storiesUrl: pipe(
     mPipe(Obj.readKey("storiesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  layoutDataUrl: pipe(
+    mPipe(Obj.readKey("layoutDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsChunkUrl: pipe(
+    mPipe(Obj.readKey("layoutsChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsPagesUrl: pipe(
+    mPipe(Obj.readKey("layoutsPagesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  blocksChunkUrl: pipe(
+    mPipe(Obj.readKey("blocksChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  blocksDataUrl: pipe(
+    mPipe(Obj.readKey("blocksDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  blocksKitsUrl: pipe(
+    mPipe(Obj.readKey("blocksKitsUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  popupsChunkUrl: pipe(
+    mPipe(Obj.readKey("popupsChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: popups")
+  ),
+  popupsDataUrl: pipe(
+    mPipe(Obj.readKey("popupsDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: popups")
+  ),
+  storiesChunkUrl: pipe(
+    mPipe(Obj.readKey("storiesChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  storiesPagesUrl: pipe(
+    mPipe(Obj.readKey("storiesPagesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  storiesDataUrl: pipe(
+    mPipe(Obj.readKey("storiesDataUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
   )
 });
@@ -111,9 +191,34 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
   ),
-  openAIUrl: optional(pipe(
-    mPipe(Obj.readKey("openAIUrl"), Str.read),
-  ))
+  openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read))),
+  imagePatterns: pipe(
+    mPipe(
+      Obj.readKey("media"),
+      Obj.read,
+      Obj.readKey("imagePatterns"),
+      Obj.read,
+      parseStrict<PLUGIN_ENV, ImagePatterns>({
+        full: pipe(
+          mPipe(Obj.readKey("full"), Str.read),
+          throwOnNullish("Invalid API: ImagePatterns full pattern")
+        ),
+        original: pipe(
+          mPipe(Obj.readKey("original"), Str.read),
+          throwOnNullish("Invalid API: ImagePatterns original pattern")
+        ),
+        split: pipe(
+          mPipe(Obj.readKey("split"), Str.read),
+          throwOnNullish("Invalid API: ImagePatterns split pattern")
+        )
+      })
+    ),
+    throwOnNullish("Invalid API: image patterns")
+  ),
+  templatesImageUrl: pipe(
+    mPipe(Obj.readKey("templatesImageUrl"), Str.read),
+    throwOnNullish("Invalid API: templatesImageUrl")
+  )
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
@@ -200,6 +305,38 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getDynamicContentPlaceholders: pipe(
     mPipe(Obj.readKey("getDynamicContentPlaceholders"), Str.read),
     throwOnNullish("Invalid actions: getDynamicContentPlaceholders")
+  ),
+  createGlobalBlock: pipe(
+    mPipe(Obj.readKey("createGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: createGlobalBlock")
+  ),
+  updateGlobalBlock: pipe(
+    mPipe(Obj.readKey("updateGlobalBlock"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlock")
+  ),
+  updateGlobalBlocks: pipe(
+    mPipe(Obj.readKey("updateGlobalBlocks"), Str.read),
+    throwOnNullish("Invalid actions: updateGlobalBlocks")
+  ),
+  lockProject: pipe(
+    mPipe(Obj.readKey("lockProject"), Str.read),
+    throwOnNullish("Invalid API: projectLock")
+  ),
+  removeLock: pipe(
+    mPipe(Obj.readKey("removeLock"), Str.read),
+    throwOnNullish("Invalid API: projectUnlock")
+  ),
+  heartBeat: pipe(
+    mPipe(Obj.readKey("heartBeat"), Str.read),
+    throwOnNullish("Invalid actions: heartBeat")
+  ),
+  takeOver: pipe(
+    mPipe(Obj.readKey("takeOver"), Str.read),
+    throwOnNullish("Invalid actions: takeOver")
+  ),
+  getFonts: pipe(
+    mPipe(Obj.readKey("getFonts"), Str.read),
+    throwOnNullish("Invalid actions: getFonts")
   )
 });
 
@@ -232,6 +369,43 @@ const reader = parseStrict<PLUGIN_ENV, Config>({
   collectionTypes: pipe(
     mPipe(Obj.readKey("collectionTypes"), Arr.read, collectionTypesReader),
     throwOnNullish("Invalid: collectionTypes")
+  ),
+  project: pipe(
+    mPipe(
+      Obj.readKey("project"),
+      Obj.read,
+      parseStrict<PLUGIN_ENV["project"], Project>({
+        status: pipe(
+          mPipe(
+            Obj.readKey("status"),
+            Obj.read,
+            parseStrict<PLUGIN_ENV["project"], ProjectStatus>({
+              locked: pipe(
+                mPipe(Obj.readKey("locked"), Bool.read),
+                throwOnNullish("Invalid: locked")
+              ),
+              lockedBy: pipe(
+                mPipe(
+                  Obj.readKey("lockedBy"),
+                  match(
+                    [(v): v is boolean => typeof v === "boolean", (v) => v],
+                    [
+                      (v): v is ProjectStatus["lockedBy"] => {
+                        return Obj.isObject(v) && "user_email" in v;
+                      },
+                      (v) => v
+                    ]
+                  )
+                ),
+                throwOnNullish("Invalid: lockedBy")
+              )
+            })
+          ),
+          throwOnNullish("Invalid: status")
+        )
+      })
+    ),
+    throwOnNullish("Invalid: project")
   )
 });
 

@@ -176,20 +176,18 @@ export function style(
         "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder"
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-ministryBrands__item--meta--links a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
     },
     ".brz && :is(.brz-sermonDetail__item--meta--links a, .brz-ministryBrands__item--meta-passage-content):hover":
       {
         standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       },
     ".brz && .brz-ministryBrands__item--meta--links--previous:hover": {
       standart: [

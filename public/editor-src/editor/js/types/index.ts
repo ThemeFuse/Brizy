@@ -6,6 +6,12 @@ import { NewType } from "visual/types/NewType";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { Hex } from "visual/utils/color/Hex";
 import { Palette as ColorPalette } from "visual/utils/color/Palette";
+import {
+  HEART_BEAT_ERROR,
+  PROJECT_DATA_VERSION_ERROR,
+  PROJECT_LOCKED_ERROR,
+  SYNC_ERROR
+} from "visual/utils/errors";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 import * as Obj from "visual/utils/reader/object";
 import { Dictionary } from "./utils";
@@ -87,11 +93,12 @@ export interface CollectionItemRule extends AllRule {
 export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
 
 interface GlobalBlockBase {
-  id: string;
+  uid: string;
   data: Block & { deleted?: boolean };
   status: "draft" | "publish";
   rules: Rule[];
   position: GlobalBlockPosition | null;
+  dataVersion: number;
   title?: string;
   tags?: string;
 }
@@ -166,6 +173,7 @@ export interface Project {
     selectedKit: string;
     selectedStyle: string;
     styles: Style[];
+    extraStyles: Style[];
     extraFontStyles: ExtraFontStyle[];
     font: string;
     fonts: Fonts;
@@ -184,7 +192,7 @@ export interface DataCommon {
     [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   dataVersion: number;
-  status: "draft" | "publish";
+  status: "draft" | "publish" | "future"; // The future status is used for scheduled pages .
 }
 
 interface DataWithTitle extends DataCommon {
@@ -366,6 +374,7 @@ export type Screenshot = {
 
 export interface FontStyle {
   deletable: "off" | "on";
+  deleted?: boolean;
   id: string;
   title: string;
   fontFamily: string;
@@ -391,6 +400,9 @@ export interface FontStyle {
   mobileVariableFontWeight?: number;
   mobileFontWidth?: number;
   mobileFontSoftness?: number;
+  fontSizeSuffix?: string;
+  tabletFontSizeSuffix?: string;
+  mobileFontSizeSuffix?: string;
 }
 
 export const isFontStyle = (item: unknown): item is ExtraFontStyle =>
@@ -479,3 +491,249 @@ export type CollectionItemId = string & {
   [_collectionItemId]: "CollectionItemId";
 };
 // endregion
+
+//#region Error
+
+type ProjectLockError = {
+  code: typeof PROJECT_LOCKED_ERROR;
+  data: {
+    locked: boolean;
+    lockedBy: boolean | { user_email: string };
+  };
+};
+
+type ProjectDataError = {
+  code: typeof PROJECT_DATA_VERSION_ERROR;
+  data: string;
+};
+
+type HeartBeatError = {
+  code: typeof HEART_BEAT_ERROR;
+  data: string;
+};
+
+type SyncError = {
+  code: typeof SYNC_ERROR;
+  data: {
+    upgradeToProUrl?: string;
+  };
+};
+
+export type Error =
+  | ProjectLockError
+  | HeartBeatError
+  | ProjectDataError
+  | SyncError;
+
+//#endregion
+
+//#region Popup Triggers
+
+export enum TriggerType {
+  PageLoad = "pageLoad",
+  Scrolling = "scrolling",
+  Click = "click",
+  Inactivity = "inactivity",
+  ExitIntent = "exitIntent",
+  Showing = "showing",
+  Referrer = "referrer",
+  Devices = "devices",
+  CurrentUrl = "currentUrl",
+  CurrentDate = "currentDate",
+  LastVisitDate = "lastVisitDate",
+  TimeFrom = "timeFrom",
+  Cookie = "cookie",
+  OS = "os",
+  OtherPopups = "otherPopups",
+  SpecificPopup = "specificPopup",
+  LoggedIn = "LoggedIn"
+}
+
+interface Base {
+  active: boolean;
+}
+
+interface PageLoadTrigger extends Base {
+  id: TriggerType.PageLoad;
+  value: string;
+}
+
+interface ScrollingTrigger extends Base {
+  id: TriggerType.Scrolling;
+  value: {
+    value: string;
+    within: string;
+    toElement: string;
+  };
+}
+
+interface ClickTrigger extends Base {
+  id: TriggerType.Click;
+  value: string;
+}
+
+interface InactivityTrigger extends Base {
+  id: TriggerType.Inactivity;
+  value: string;
+}
+
+interface ExitIntentTrigger extends Base {
+  id: TriggerType.ExitIntent;
+  value: boolean;
+}
+
+interface ShowingTrigger extends Base {
+  id: TriggerType.Showing;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    value: "views";
+    type: "equals";
+    views: number;
+    sessions: number;
+  };
+}
+
+interface ReferrerTrigger extends Base {
+  id: TriggerType.Referrer;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "is";
+    value: "show";
+    url: string;
+    source: "search_engines";
+  };
+}
+
+interface DevicesTrigger extends Base {
+  id: TriggerType.Devices;
+  value: "desktop" | "tablet" | "mobile";
+}
+
+interface CurrentUrlTrigger extends Base {
+  id: TriggerType.CurrentUrl;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "matches";
+    value: string;
+  };
+}
+
+interface CurrentDateTrigger extends Base {
+  id: TriggerType.CurrentDate;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "matches";
+    value: string;
+  };
+}
+
+interface LastVisitDateTrigger extends Base {
+  id: TriggerType.LastVisitDate;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "matches";
+    value: string;
+  };
+}
+
+interface TimeFromTrigger extends Base {
+  id: TriggerType.TimeFrom;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "greater";
+    visit: "first";
+    time: "days";
+    value: string;
+  };
+}
+
+interface CookieTrigger extends Base {
+  id: TriggerType.Cookie;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "matches";
+    param: string;
+    value: string;
+  };
+}
+
+interface OSTrigger extends Base {
+  id: TriggerType.OS;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "is";
+    value: "windows";
+  };
+}
+
+interface OtherPopupsTrigger extends Base {
+  id: TriggerType.OtherPopups;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "was";
+    value: "page";
+  };
+}
+
+interface SpecificPopupTrigger extends Base {
+  id: TriggerType.SpecificPopup;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    type: "was";
+    value: string;
+  };
+}
+
+interface LoggedInTrigger extends Base {
+  id: TriggerType.LoggedIn;
+  value: {
+    // TODO: Below types are not completed.
+    //  They need to be completed when the
+    //  Triggers from PromptConditions will be rewritten to TS
+    value: "all";
+    user: string;
+  };
+}
+
+export type Trigger =
+  | PageLoadTrigger
+  | ScrollingTrigger
+  | ClickTrigger
+  | InactivityTrigger
+  | ExitIntentTrigger
+  | ShowingTrigger
+  | ReferrerTrigger
+  | DevicesTrigger
+  | CurrentUrlTrigger
+  | CurrentDateTrigger
+  | LastVisitDateTrigger
+  | TimeFromTrigger
+  | CookieTrigger
+  | OSTrigger
+  | OtherPopupsTrigger
+  | SpecificPopupTrigger
+  | LoggedInTrigger;
+
+export type Triggers = Array<Trigger>;
+
+//#endregion

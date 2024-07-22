@@ -1,4 +1,5 @@
-import produce from "immer";
+import { produce } from "immer";
+import Config from "visual/global/Config";
 import { getUploadedFonts } from "visual/utils/api";
 import { getGoogleFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
@@ -97,11 +98,16 @@ export const normalizeFonts = async (newFonts) => {
 
   const fonts = new Map();
   const makeFontWithId = (font) => ({ brizyId: uuid(), ...font });
+  const config = Config.getAll();
 
-  const [googleFonts, uploadedFonts] = await Promise.all([
-    getGoogleFonts(),
-    getUploadedFonts()
-  ]);
+  let uploadedFonts = [];
+  try {
+    uploadedFonts = await getUploadedFonts(config);
+  } catch (e) {
+    console.log(e);
+  }
+
+  const googleFonts = await getGoogleFonts();
 
   newFonts.forEach(({ type, family }) => {
     if (type === "google") {

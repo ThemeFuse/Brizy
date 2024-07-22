@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, ReactNode } from "react";
 import {
   calcMaxHeightBasedOnWidth,
   calcRectangleSide,
@@ -20,6 +20,7 @@ interface Props {
   isHorizontalCenterAligned: boolean;
   isVerticalCenterAligned: boolean;
   getValue: () => RestrictionMapping;
+  children: ReactNode;
   onStart?: () => void;
   onEnd?: () => void;
   onChange: (data: Patch) => void;
@@ -178,58 +179,61 @@ export class Resizer extends Component<Props, State> {
       }
     }
 
-    const patch = patchData.reduce((acc, [key, delta], _i, arr) => {
-      const kValue = startValue[key];
+    const patch = patchData.reduce(
+      (acc, [key, delta], _i, arr) => {
+        const kValue = startValue[key];
 
-      if (kValue === undefined) {
-        return acc;
-      }
+        if (kValue === undefined) {
+          return acc;
+        }
 
-      const min = restrictions?.[key]?.min ?? 0;
-      let max = restrictions?.[key]?.max ?? Infinity;
+        const min = restrictions?.[key]?.min ?? 0;
+        let max = restrictions?.[key]?.max ?? Infinity;
 
-      let offset;
-      const isSizeChanging = arr.length === 2;
-      if (keepAspectRatio && isSizeChanging) {
-        const [, dx, , dy] = patchData.flat();
-        delta = { dx, dy } as { dx: number; dy: number };
+        let offset;
+        const isSizeChanging = arr.length === 2;
+        if (keepAspectRatio && isSizeChanging) {
+          const [, dx, , dy] = patchData.flat();
+          delta = { dx, dy } as { dx: number; dy: number };
 
-        offset = calcRectangleSize(
-          kValue,
-          startRect.width,
-          startRect.height,
-          delta
-        );
-
-        if (key === "height" && startValue.width) {
-          max = calcMaxHeightBasedOnWidth(
-            restrictions?.width?.max || Infinity,
+          offset = calcRectangleSize(
+            kValue,
             startRect.width,
             startRect.height,
-            startValue.width,
-            kValue
+            delta
           );
+
+          if (key === "height" && startValue.width) {
+            max = calcMaxHeightBasedOnWidth(
+              restrictions?.width?.max || Infinity,
+              startRect.width,
+              startRect.height,
+              startValue.width,
+              kValue
+            );
+          }
+        } else {
+          offset =
+            typeof delta === "number"
+              ? calcRectangleSide(
+                  kValue,
+                  startRect[key as "width" | "height"],
+                  delta
+                )
+              : calcRectangleSize(
+                  kValue,
+                  startRect.width,
+                  startRect.height,
+                  delta
+                );
         }
-      } else {
-        offset =
-          typeof delta === "number"
-            ? calcRectangleSide(
-                kValue,
-                startRect[key as "width" | "height"],
-                delta
-              )
-            : calcRectangleSize(
-                kValue,
-                startRect.width,
-                startRect.height,
-                delta
-              );
-      }
 
-      acc[key] = clamp(Math.round(kValue + offset), min, max);
+        acc[key] = clamp(Math.round(kValue + offset), min, max);
 
-      return acc;
-    }, {} as Patch["patch"]);
+        return acc;
+      },
+      {} as Patch["patch"]
+    );
 
     this.props.onChange({ patch, deltaX, deltaY, point, startRect });
   }
@@ -270,10 +274,13 @@ export class Resizer extends Component<Props, State> {
       bottomRight,
       centerLeft,
       topLeft
-    } = points.reduce((acc, point) => {
-      acc[point] = true;
-      return acc;
-    }, {} as Record<string, true | undefined>);
+    } = points.reduce(
+      (acc, point) => {
+        acc[point] = true;
+        return acc;
+      },
+      {} as Record<string, true | undefined>
+    );
 
     return (
       <ClickOutside onClickOutside={this.handleClickOutside}>

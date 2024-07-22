@@ -11,6 +11,8 @@ import {
   DefaultTemplatePopup,
   KitItem,
   KitsWithThumbs,
+  LayoutsDefaultTemplate,
+  LayoutsPages,
   LayoutsWithThumbs,
   PopupsWithThumbs,
   StoriesWithThumbs
@@ -29,6 +31,12 @@ declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
 }
 
+export interface ImagePatterns {
+  full?: string;
+  original?: string;
+  split?: string;
+}
+
 export interface PLUGIN_ENV {
   hash?: string;
   url?: string;
@@ -36,13 +44,25 @@ export interface PLUGIN_ENV {
   actions?: {
     getMediaUid?: string;
     getAttachmentUid?: string;
+    heartBeat?: string;
+    takeOver?: string;
+    getFonts?: string;
   };
   api?: {
     mediaResizeUrl?: string;
     fileUrl?: string;
+    media?: {
+      imagePatterns?: ImagePatterns;
+    };
   };
   l10n?: Record<string, string>;
   collectionTypes?: CollectionType[];
+  project?: {
+    status?: {
+      locked?: boolean;
+      lockedBy?: boolean | { user_email: string };
+    };
+  };
 }
 
 export interface VISUAL_CONFIG {
@@ -66,6 +86,8 @@ export interface VISUAL_CONFIG {
   //#endregion
 
   //#region Events
+
+  onStartLoad?: VoidFunction;
 
   onAutoSave?: (data: AutoSave) => void;
 
@@ -124,13 +146,15 @@ export interface VISUAL_CONFIG {
       Array<KitItem>
     >;
     defaultPopups?: DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID>;
-    defaultLayouts?: DefaultTemplate<
+    defaultLayouts?: LayoutsDefaultTemplate<
       LayoutsWithThumbs,
-      BlocksArray<DefaultBlockWithID>
+      BlocksArray<DefaultBlockWithID>,
+      LayoutsPages
     >;
     defaultStories?: DefaultTemplate<
       StoriesWithThumbs,
-      BlocksArray<DefaultBlock> | DefaultBlock
+      BlocksArray<DefaultBlock> | DefaultBlock,
+      LayoutsPages
     >;
 
     //Collection Items

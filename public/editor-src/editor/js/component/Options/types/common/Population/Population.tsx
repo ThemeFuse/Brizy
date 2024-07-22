@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import React, {
-  FC,
   ReactElement,
   useCallback,
   useEffect,
@@ -19,6 +18,11 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getDynamicContentPlaceholders } from "visual/utils/api/common";
 import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
+import {
+  configChoicesToSelectItemChoices,
+  findDCChoiceByPlaceholder,
+  parsePopulation
+} from "visual/utils/options/Population/utils";
 import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 import { optionsToChoices } from "visual/utils/options/getDynamicContentChoices";
 import * as Obj from "visual/utils/reader/object";
@@ -34,11 +38,7 @@ import {
   PopulationOptgroupMethod
 } from "./types/PopulationMethod";
 import { Value } from "./types/Value";
-import {
-  configChoicesToSelectItemChoices,
-  findDCChoiceByPlaceholder,
-  parsePopulation
-} from "./utils";
+import { FCP } from "visual/utils/react/types";
 
 export interface Config {
   iconOnly?: boolean;
@@ -129,7 +129,7 @@ const _Icon = (props: IconProps): ReactElement => {
   );
 
   const handleChange = useCallback(
-    ({ population: value }) => {
+    ({ population: value }: Value) => {
       if (value === CHOICE_HANDLER) {
         handlerChoices(
           (v) =>
@@ -187,7 +187,7 @@ const _Icon = (props: IconProps): ReactElement => {
   );
 };
 
-export const Population: FC<Props> = ({
+export const Population: FCP<Props, ReactElement> = ({
   config,
   value,
   onChange,
