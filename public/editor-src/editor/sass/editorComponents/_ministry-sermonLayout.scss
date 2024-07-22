@@ -1,7 +1,4 @@
 .brz-sermonLayout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   overflow: hidden;
 
   &__wrapper {
@@ -34,7 +31,15 @@
         }
       }
     }
-     
+
+    &--meta {
+      &--title {
+        a {
+          color: inherit;
+        }
+      }
+    }
+
     &--meta {
       &--title {
         a {
@@ -70,8 +75,7 @@
 
     &--detail-button {
       a {
-        border-radius: 3px;
-        padding: 12px 24px;
+        color: inherit;
       }
     }
   }
@@ -224,6 +228,14 @@
         }
       }
     }
+  }
+
+  .brz-ministryBrands__pagination {
+    text-align: center;
+  }
+
+  h5.brz-sermonLayout-results-heading {
+    margin-bottom: 20px;
   }
 }
 

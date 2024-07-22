@@ -86,6 +86,18 @@ export const EkklesiaMessages = {
   ),
   sermon_layout: t(
     "Ministry Content - Sermon Layout - module fields have been updated."
+  ),
+  article_detail: t(
+    "Ministry Content - Article Detail - module fields have been updated."
+  ),
+  article_list: t(
+    "Ministry Content - Article List - module fields have been updated."
+  ),
+  staff_detail: t(
+    "Ministry Content - Staff Detail - module fields have been updated."
+  ),
+  article_featured: t(
+    "Ministry Content - Article Featured - module fields have been updated."
   )
 };
 
@@ -94,3 +106,13 @@ export const helperDateFormatInputHTML = `<span class="brz-span">${t(
 )} <a class="brz-a" target="_blank" href="https://www.php.net/manual/en/function.date.php">${t(
   "here"
 )}</a></span>`;
+
+export const getButtonMaxBorderRadius = (
+  fontSize: number,
+  lineHeight: number,
+  tempBorderWidth = 0
+): number => {
+  const contentHeight = fontSize * lineHeight;
+
+  return Math.round((contentHeight + 24 + tempBorderWidth * 2) / 2);
+};

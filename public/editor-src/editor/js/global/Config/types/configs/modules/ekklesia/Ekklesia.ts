@@ -9,6 +9,7 @@ export interface EkklesiaResponse {
 
 export interface EkklesiaFields {
   groups: Record<string, Literal>;
+  group: Record<string, Literal>;
   events: Record<string, Literal>;
   series: Record<string, Literal>;
   recentSermons: Record<string, Literal>;
@@ -20,6 +21,18 @@ export interface EkklesiaFields {
   eventsLvl: EkklesiaParentsChilds;
   smallgroupsLvl: EkklesiaParentsChilds;
   sermonsLvl: EkklesiaParentsChilds;
+  articleRecent: Record<string, Literal>;
+  articleSeries: Record<string, Literal>;
+  articleCategories: Record<string, Literal>;
+  staff: Record<string, Literal>;
+}
+
+export interface EkklesiaExtra {
+  find_group?: string;
+  display?: string;
+  groupby?: string;
+  show?: string;
+  order?: string;
 }
 
 export interface EkklesiaParentsChilds {

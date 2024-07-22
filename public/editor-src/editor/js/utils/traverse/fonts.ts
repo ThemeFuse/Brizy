@@ -2,8 +2,6 @@ import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { mapBlockElements } from "visual/editorComponents/RichText/utils";
-import { classNamesToV } from "visual/editorComponents/RichText/utils/transforms";
 import {
   Block,
   FontStyle,
@@ -21,6 +19,7 @@ import {
   Font,
   FontType,
   getComponentDefaultValue,
+  getRichTextFamilies,
   splitFont,
   unSplitFont
 } from "./common";
@@ -32,77 +31,69 @@ type GetUsedModelsFonts = (data: {
   globalBlocks?: Record<string, GlobalBlock>;
 }) => Font[];
 
+const getModelFonts = ({ type, value }: ElementModelType): Array<Font> => {
+  const defaultStyle = getComponentDefaultValue(type)?.style || {};
+  const style = { ...defaultStyle, ...value };
+  const fonts: Array<Font> = [];
+
+  Object.entries(defaultStyle.families || {}).forEach((fontKeys) => {
+    const [key, keyValue] = fontKeys;
+    const fontStyle = key.replace("Family", "Style");
+
+    // if exist fontStyle don't need current fontFamily
+    // in this case fontFamily is global
+    if (style[fontStyle]) {
+      return;
+    }
+
+    const font = {
+      type: Str.read(value[`${key}Type`] || defaultStyle[`${key}Type`]) as
+        | FontType
+        | undefined,
+      family: Str.read(value[key] || keyValue)
+    };
+
+    if (font.type && font.family) {
+      fonts.push({ type: font.type, family: font.family });
+    }
+  });
+
+  return fonts;
+};
+
 export const getUsedModelsFonts: GetUsedModelsFonts = ({
   models = {},
   globalBlocks = {}
 }) => {
   const fontFamilies = new Set<string>();
 
-  const DCFontFamily = ({ type, value }: ElementModelType): void => {
-    const defaultStyle = getComponentDefaultValue(type)?.style || {};
-    const style = { ...defaultStyle, ...value };
-
-    Object.entries(defaultStyle.families || {}).forEach((fontKeys) => {
-      const [key, keyValue] = fontKeys;
-      const font = {
-        type: Str.read(value[`${key}Type`] || defaultStyle[`${key}Type`]) as
-          | FontType
-          | undefined,
-        family: Str.read(value[key] || keyValue)
-      };
-      const fontStyle = key.replace("Family", "Style");
-
-      // if exist fontStyle don't need current fontFamily
-      // in this case fontFamily is global
-      if (Str.read(style[fontStyle])) {
-        return;
-      }
-
-      if (font.type && font.family) {
-        fontFamilies.add(splitFont({ type: font.type, family: font.family }));
-      }
-    });
-  };
-
   modelTraverse(models, {
     Component({ type, value }: ElementModelType) {
-      DCFontFamily({ type, value });
+      const fonts = getModelFonts({ type, value });
+      fonts.forEach((font) => {
+        fontFamilies.add(splitFont(font));
+      });
     },
 
     RichText({ type, value }: ElementModelType) {
       const defaultValue = getComponentDefaultValue(type)?.content || {};
 
       const style = { ...defaultValue, ...value };
-      const text = value.text || defaultValue.text;
+      const text = Str.read(value.text || defaultValue.text);
 
       if (style.textPopulation) {
-        DCFontFamily({ type, value });
-      } else {
-        mapBlockElements(text, (elem: cheerio.Cheerio | JQuery) => {
-          const v = classNamesToV(elem.attr("class")?.split(" ") ?? []);
-          const { typographyFontFamily, typographyFontFamilyType } = v;
-
-          if (typographyFontFamily) {
-            if (typographyFontFamilyType) {
-              fontFamilies.add(
-                splitFont({
-                  type: typographyFontFamilyType as FontType,
-                  family: typographyFontFamily as string
-                })
-              );
-            } else {
-              // if type doesn't exist
-              // set it to unknowns
-              // and parse all fonts
-              fontFamilies.add(
-                splitFont({
-                  family: typographyFontFamily as string,
-                  type: "unknowns"
-                })
-              );
-            }
-          }
+        const fonts = getModelFonts({ type, value });
+        fonts.forEach((font) => {
+          fontFamilies.add(splitFont(font));
         });
+      } else {
+        if (text) {
+          const fonts = getRichTextFamilies(text);
+
+          fonts.forEach((font) => {
+            fontFamilies.add(splitFont(font));
+          });
+        }
       }
     },
     GlobalBlock({ value: { _id } }: ElementModelType) {

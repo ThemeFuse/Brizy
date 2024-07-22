@@ -65,7 +65,7 @@ const useResizerPoints: UseResizerPoints = ({ v, meta, gallery, context }) => {
     return resizeImageExternal;
   }
 
-  if (imageType === ImageType.External) {
+  if (imageType !== ImageType.Internal) {
     return resizeImageExternal;
   }
 

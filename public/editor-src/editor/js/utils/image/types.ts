@@ -31,5 +31,6 @@ export interface FilterOption extends BaseOptions {
 
 export enum ImageType {
   Internal = "internal",
-  External = "external"
+  External = "external",
+  Unsplash = "unsplash"
 }

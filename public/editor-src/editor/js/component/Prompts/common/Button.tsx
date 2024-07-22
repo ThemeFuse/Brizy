@@ -1,6 +1,7 @@
-import React, { FC, MouseEvent } from "react";
 import classnames from "classnames";
+import React, { MouseEvent } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { FCC } from "visual/utils/react/types";
 
 export interface Props {
   className?: string;
@@ -16,7 +17,7 @@ export interface Props {
   onClick?: (e: MouseEvent) => void;
 }
 
-export const Button: FC<Props> = props => {
+export const Button: FCC<Props> = (props) => {
   const {
     className: _className,
     size = 1,

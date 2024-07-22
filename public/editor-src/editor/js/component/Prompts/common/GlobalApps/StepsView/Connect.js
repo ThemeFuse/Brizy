@@ -15,6 +15,7 @@ class Connect extends Component {
         name: "",
         value: "",
         type: "",
+        description: "",
         choices: []
       }
     ],

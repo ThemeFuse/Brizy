@@ -16,14 +16,10 @@ import {
 } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
-import { triggersSelector } from "visual/redux/selectors";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import { makeDataAttr, makeAttr } from "visual/utils/i18n/attribute";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import defaultValue from "./defaultValue.json";
@@ -221,11 +217,13 @@ class SectionPopup extends EditorComponent {
     const { className, customClassName } = v;
 
     const id = this.getId();
+    const { className: _className, blockId } = this.props;
 
     const classNameClose = classnames(
       "brz-popup",
       "brz-popup__editor",
       { "brz-popup--opened": this.state.isOpened },
+      _className,
       className,
       customClassName,
       css(
@@ -247,7 +245,7 @@ class SectionPopup extends EditorComponent {
               ref={containerBorderRef}
               id={id}
               className={classNameClose}
-              {...makeDataAttr({ name: "block-id", value: this.props.blockId })}
+              {...makeDataAttr({ name: "block-id", value: blockId })}
               {...containerBorderAttr}
             >
               <div className="brz-popup__close" onClick={this.handleDropClick}>
@@ -269,43 +267,12 @@ class SectionPopup extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, customClassName, customCSS } = v;
-    const triggers = triggersSelector(getStore().getState());
-
-    let attr = {};
-    if (isPopup(Config.getAll())) {
-      const encodeIdsList = [
-        "scrolling",
-        "showing",
-        "devices",
-        "referrer",
-        "loggedIn"
-      ];
-      const encodeData = (data) => encodeURIComponent(JSON.stringify(data));
-      const decodeData = (data) => JSON.parse(decodeURIComponent(data));
-      const convertString = (name) =>
-        name.replace(/([A-Z])/g, (letter) => `_${letter.toLowerCase()}`);
-
-      attr = triggers.reduce((acc, item) => {
-        if (item.active) {
-          const convertedKey = makeAttr(convertString(item.id));
-          if (encodeIdsList.includes(item.id)) {
-            acc[convertedKey] = acc[convertedKey]
-              ? encodeData([...decodeData(acc[convertedKey]), item.value])
-              : encodeData([item.value]);
-          } else {
-            acc[convertedKey] = item.value;
-          }
-        }
-
-        return acc;
-      }, {});
-    }
-
+    const { className, customClassName, customCSS, popupId } = v;
+    const { className: _className } = this.props;
     const classNameClose = classnames(
       "brz-popup",
       "brz-popup__preview",
-      { "brz-conditions-popup": isPopup(Config.getAll()) },
+      _className,
       className,
       customClassName,
       css(
@@ -319,9 +286,8 @@ class SectionPopup extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div
           className={classNameClose}
-          id={this.instanceKey}
-          {...makeDataAttr({ name: "popup", value: this.instanceKey })}
-          {...attr}
+          id={popupId}
+          {...makeDataAttr({ name: "popup", value: popupId })}
         >
           <div className="brz-popup__close">
             <ThemeIcon name="close-popup" type="editor" />

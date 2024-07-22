@@ -17,6 +17,7 @@ export interface InputFieldProps {
     name: string;
     value: string;
     type: string;
+    description?: string;
     choices?: Choice[];
   };
   onChange: (value: string, name: string) => void;

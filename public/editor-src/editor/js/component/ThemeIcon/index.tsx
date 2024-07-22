@@ -1,7 +1,8 @@
 import cn from "classnames";
-import { mPipe } from "fp-utilities";
-import React, { ReactElement, useEffect, useState } from "react";
-import { decryptIcon, fetchIcon, ParsedSVG, parseSVG } from "./utils";
+import React from "react";
+import { templateIconUrl, compileTemplateIconUrl } from "visual/utils/icons";
+import Config from "visual/global/Config";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 
 interface ThemeIconProps {
   name: string;
@@ -9,52 +10,61 @@ interface ThemeIconProps {
   className?: string;
 }
 
-export const ThemeIcon: (props: ThemeIconProps) => ReactElement | null =
-  IS_EDITOR ? ThemeIconEditor : ThemeIconPreview;
+type Suffix = "nc_icon" | "brz_icon" | "fa_icon";
 
-function ThemeIconEditor({
-  className: _className,
-  type,
-  name
-}: ThemeIconProps): ReactElement | null {
-  const className = cn("brz-icon-svg align-[initial]", _className);
-  const [parsed, setParsed] = useState<ParsedSVG | undefined>(undefined);
-
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    (async () => {
-      try {
-        const iconStr = await fetchIcon(type, name, abortController);
-        const parsed = mPipe(decryptIcon, parseSVG)(iconStr);
-
-        setParsed(parsed);
-      } catch (e) {
-        console.warn(e);
-        setParsed(undefined);
-      }
-    })();
-
-    return () => {
-      abortController.abort();
-    };
-  }, [type, name]);
-
-  return parsed ? (
-    <svg
-      {...parsed.attr}
-      className={className}
-      dangerouslySetInnerHTML={{ __html: parsed.innerHTML }}
-    />
-  ) : null;
+function getSuffix(type: string): Suffix {
+  switch (type) {
+    case "editor": {
+      return "brz_icon";
+    }
+    case "fa": {
+      return "fa_icon";
+    }
+    default: {
+      return "nc_icon";
+    }
+  }
 }
 
-function ThemeIconPreview({
-  className: _className,
-  type,
-  name
-}: ThemeIconProps): ReactElement {
-  const className = cn("brz-icon-svg align-[initial]", _className);
+const getIconUrl = IS_EDITOR ? templateIconUrl : compileTemplateIconUrl;
 
-  return <svg className={className} data-type={type} data-name={name} />;
-}
+const Svg = ({
+  className,
+  href
+}: {
+  className?: string;
+  href: string;
+}): JSX.Element => (
+  <svg className={className}>
+    <use href={href} />
+  </svg>
+);
+
+const ThemeIconPreview = (props: ThemeIconProps): JSX.Element => {
+  const { type, name, className: _className } = props;
+  const urls = Config.getAll().urls;
+  const { compileTemplateIconsPlaceholder } = urls;
+  const className = cn("brz-icon-svg align-[initial]", _className);
+  return compileTemplateIconsPlaceholder ? (
+    <>
+      {makePlaceholder({
+        content: compileTemplateIconsPlaceholder,
+        attr: { type, name, class: className }
+      })}
+    </>
+  ) : (
+    <Svg className={className} href={getIconUrl(type, name, getSuffix(type))} />
+  );
+};
+
+const ThemeIconEditor = (props: ThemeIconProps): JSX.Element => {
+  const { className: _className, type, name } = props;
+  const className = cn("brz-icon-svg align-[initial]", _className);
+  const suffix = getSuffix(type);
+  const pathToIcon = getIconUrl(type, name, suffix);
+
+  return <Svg className={className} href={pathToIcon} />;
+};
+
+export const ThemeIcon = (props: ThemeIconProps): JSX.Element =>
+  IS_EDITOR ? <ThemeIconEditor {...props} /> : <ThemeIconPreview {...props} />;

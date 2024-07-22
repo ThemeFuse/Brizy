@@ -1,16 +1,14 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
-import Config from "visual/global/Config";
-import { WPShortcode } from "../common/WPShortcode";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import { style } from "./styles";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import { xss } from "visual/utils/xss";
+import { WPShortcode } from "../common/WPShortcode";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -21,14 +19,11 @@ class WPCustomShortcode extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   handleValueChange(newValue, meta) {
-    const config = Config.getAll();
-
-    if (meta.patch.shortcode && !config.user.allowScripts) {
-      const xssShortcode = xss(newValue.shortcode, "discard");
-      super.handleValueChange({ ...newValue, shortcode: xssShortcode });
+    if (meta.patch.shortcode) {
+      super.handleValueChange({ ...newValue, shortcode: newValue.shortcode });
     } else {
       super.handleValueChange(newValue, meta);
     }

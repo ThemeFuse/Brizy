@@ -10,7 +10,7 @@ type Props = {
   };
 };
 
-const PopulationComponent: React.FC<Props> = ({ attr, v: { imageSrc } }) => {
+const PopulationComponent = ({ attr, v: { imageSrc } }: Props): JSX.Element => {
   return (
     <img
       {...attr}

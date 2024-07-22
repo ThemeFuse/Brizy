@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FC, useCallback } from "react";
+import React, { ChangeEventHandler, useCallback } from "react";
 import {
   WithClassName,
   WithOnChange,
@@ -18,17 +18,17 @@ export type Props = WithClassName &
     rows?: number;
   };
 
-export const Textarea: FC<Props> = ({
+export const Textarea = ({
   className = "",
   value,
   onChange,
   size = "auto",
   placeholder = "",
   rows = 5
-}) => {
+}: Props): JSX.Element => {
   const baseClass = "brz-ed-control__textarea2";
   const _className = classNames(baseClass, className, `${baseClass}--${size}`);
-  const _onChange = useCallback(
+  const _onChange = useCallback<ChangeEventHandler<HTMLTextAreaElement>>(
     (v) => mCompose(onChange, inputValue)(v),
     [onChange]
   );

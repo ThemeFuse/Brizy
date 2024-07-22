@@ -54,13 +54,34 @@
 
     "mobileBgPopulation": "",
 
-    "mobileBgAttachment": "none"
+    "mobileBgAttachment": "none",
+
+    "popups": []
   },
 
   "toolbar": {
     "tabsState": "",
     "tabsCurrentElement": "",
     "tabsColor": ""
+  },
+
+  "link": {
+    "linkSource": "",
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkPageSource": null,
+    "linkInternalBlank": "off",
+    "linkType": "external",
+    "linkExternal": "",
+    "linkAnchor": "",
+    "linkExternalBlank": "off",
+    "linkExternalRel": "off",
+    "linkExternalType": "linkExternal",
+    "linkPopulation": "",
+    "linkPopulationEntityId": "",
+    "linkPopulationEntityType": "",
+    "linkUpload": "",
+    "linkPopup": ""
   },
 
   "style": {

@@ -6,13 +6,14 @@ import {
   cssStyleIconMargin,
   cssStyleIconPosition,
   cssStyleStrokeWidth,
-  getFillType
+  getFillType,
+  getSize
 } from "visual/utils/cssStyle";
 import { getButtonSizes } from "visual/utils/cssStyle/cssStyleSize";
 import { defaultValueValue } from "visual/utils/onChange";
+import { capByPrefix } from "visual/utils/string";
 import { isStory } from "../models";
 import { CSSValue } from "../style2/types";
-import { getSize } from "./cssStyleStroke";
 
 export function cssStyleElementButtonIconPosition({
   v,
@@ -38,7 +39,11 @@ export function cssStyleElementButtonIconStrokeWidth({
   return cssStyleStrokeWidth({ v, device, state, prefix: "icon" });
 }
 
-export function cssStyleElementButtonSize({ v, device }: CSSValue): string {
+export function cssStyleElementButtonSize({
+  v,
+  device,
+  prefix = ""
+}: CSSValue): string {
   const IS_STORY = isStory(Config.getAll());
 
   if (IS_STORY) {
@@ -47,11 +52,11 @@ export function cssStyleElementButtonSize({ v, device }: CSSValue): string {
 
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
-  const paddingTB = dvv("paddingTB");
-  const paddingRL = dvv("paddingRL");
+  const paddingTB = dvv(capByPrefix(prefix, "paddingTB"));
+  const paddingRL = dvv(capByPrefix(prefix, "paddingRL"));
 
-  const size = getSize(dvv("size"));
-  const fillType = getFillType(dvv("fillType"));
+  const size = getSize(dvv(capByPrefix(prefix, "size")));
+  const fillType = getFillType(dvv(capByPrefix(prefix, "fillType")));
 
   if (!size) {
     return "";

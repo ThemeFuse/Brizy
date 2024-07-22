@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
@@ -30,7 +30,7 @@ export interface Props extends OptionProps<undefined> {
 
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
-export const SidebarTabs: FC<Props> = ({ tabs, toolbar }) => {
+export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
   const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
   const dispatch = useDispatch();
   const onLock = useCallback(

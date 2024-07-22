@@ -1,0 +1,48 @@
+{
+  "content": {
+    "items": [],
+
+    "customAttributes": "",
+
+    "cssIDPopulation": "",
+    "cssClassPopulation": ""
+  },
+
+  "style": {
+    "columns": "auto",
+
+    "columnsGap": 10,
+    "columnsGapSuffix": "px",
+
+    "rowsGap": 10,
+    "rowsGapSuffix": "px",
+
+    "paddingType": "grouped",
+
+    "padding": 0,
+    "paddingTop": 0,
+    "paddingRight": 0,
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px",
+
+    "marignType": "grouped",
+
+    "margin": 0,
+    "marginTop": 0,
+    "marginRight": 0,
+    "marginBottom": 0,
+    "marginLeft": 0,
+
+    "marginSuffix": "px",
+    "marginTopSuffix": "px",
+    "marginRightSuffix": "px",
+    "marginBottomSuffix": "px",
+    "marginLeftSuffix": "px"
+  }
+}

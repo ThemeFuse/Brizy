@@ -17,7 +17,6 @@ import {
   makeEndPlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
-import { IS_CLOUD } from "visual/utils/env";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import {
@@ -34,6 +33,7 @@ import sidebarConfigFn from "./sidebar";
 import { styleClassName, styleMegaMenu, styleMmMenuClassName } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import toolbarExtendFn from "./toolbarExtend";
+import { getBlockData } from "visual/utils/models";
 
 const IS_PRO = Config.get("pro");
 let openedMegaMenu = null;
@@ -179,10 +179,34 @@ class MenuItem extends EditorComponent {
         return true;
       }
 
-      const parentMegaMenuId = getParentMegaMenuUid(target);
       // deep level
+      const v = this.getValue2().v;
+
+      // Inside Popup
+      const popupId = target.closest(".brz-popup2")?.id;
+      if (popupId) {
+        return getBlockData(v, popupId) !== null;
+      }
+
+      const parentMegaMenuId = getParentMegaMenuUid(target);
+
+      // Mega Menu inside Mega Menu
       if (parentMegaMenuId) {
-        return !!node.querySelector(`[data-menu-item-id=${parentMegaMenuId}]`);
+        const navItemSelector = `[data-menu-item-id=${parentMegaMenuId}]`;
+
+        // Mega menu in mega menu
+        if (node.querySelector(navItemSelector)) {
+          return true;
+        }
+
+        // Mega Menu inside popup inside MegaMenu
+        const popupId = document
+          .querySelector(navItemSelector)
+          .closest(".brz-popup2")?.id;
+
+        if (popupId) {
+          return getBlockData(v, popupId) !== null;
+        }
       }
     }
 
@@ -259,7 +283,7 @@ class MenuItem extends EditorComponent {
   }
 
   renderMegaMenuForEdit(v, vs, vd) {
-    const { mMenu, level, getParent, mods } = this.props;
+    const { mMenu, level, getParent, mods, meta } = this.props;
     const { deviceMode: device } = getStore().getState().ui;
     const mode = getModeByDevice(mods, device);
     const placement = styleElementMegaMenuPlacement({ v, device });
@@ -292,7 +316,7 @@ class MenuItem extends EditorComponent {
     }
 
     const className = classnames(
-      css(this.constructor.componentId, this.getId(), styleMegaMenu(v, vs, vd))
+      css(this.getComponentId(), this.getId(), styleMegaMenu(v, vs, vd))
     );
 
     // don't need Popper for mobile and vertical mode
@@ -312,6 +336,7 @@ class MenuItem extends EditorComponent {
       "brz-mega-menu__portal",
       "brz-mega-menu__portal--opened",
       `brz-mega-menu__portal--${device}`,
+      { "brz-mega-menu__portal-inPopup": meta.sectionPopup2 },
       className
     );
     const width = styleElementMegaMenuWidth({ v, device });
@@ -358,7 +383,7 @@ class MenuItem extends EditorComponent {
   }
 
   renderMegaMenuForView(v, vs, vd) {
-    const { mMenu, level, mods } = this.props;
+    const { mMenu, level, mods, meta } = this.props;
     const itemProps = this.makeSubcomponentProps({
       level,
       meta: this.getMeta(v),
@@ -376,7 +401,8 @@ class MenuItem extends EditorComponent {
 
     const className = classnames(
       "brz brz-mega-menu__portal",
-      css(this.constructor.componentId, this.getId(), styleMegaMenu(v, vs, vd))
+      { "brz-mega-menu__portal-inPopup": meta.sectionPopup2 },
+      css(this.getComponentId(), this.getId(), styleMegaMenu(v, vs, vd))
     );
     const dW = styleElementMegaMenuWidth({ v, device: DESKTOP });
     const dWS = styleElementMegaMenuWidthSuffix({ v, device: DESKTOP });
@@ -438,7 +464,7 @@ class MenuItem extends EditorComponent {
     const className = styleClassName(v, this.state);
 
     if (IS_PREVIEW) {
-      const placeholderItemId = IS_CLOUD ? v.itemId : v.id;
+      const placeholderItemId = v.id;
       const placeholderUid = uuid(8);
       const startPlaceholder =
         IS_PRO &&
@@ -558,7 +584,7 @@ class MenuItem extends EditorComponent {
 
     if (IS_PREVIEW) {
       const className = styleMmMenuClassName(v);
-      const placeholderItemId = IS_CLOUD ? v.itemId : v.id;
+      const placeholderItemId = v.id;
       const placeholderUid = uuid(8);
 
       const startPlaceholder =

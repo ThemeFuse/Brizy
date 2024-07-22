@@ -103,6 +103,7 @@ export const getIntegration: GetIntegration = ({ formId, id }) => {
     parseJSON<{
       subject: string;
       emailTo: string;
+      accounts: Array<{ id: string; name: string }>;
     } | null>(r)
   );
 };
@@ -127,6 +128,7 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
     parseJSON<{
       subject: string;
       emailTo: string;
+      accounts: Array<{ id: string; name: string }>;
     } | null>(r)
   );
 };
@@ -163,6 +165,7 @@ export const updateIntegration: UpdateIntegration = ({
     parseJSON<{
       subject: string;
       emailTo: string;
+      accounts: Array<{ id: string; name: string }>;
     } | null>(r)
   );
 };

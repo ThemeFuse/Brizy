@@ -20,7 +20,10 @@ export const Delay = ({ value, onChange }: Props): ReactElement => {
     () => ({ number: value / 1000, unit: "s" }),
     [value]
   );
-  const _onChange = useCallback((v) => onChange(v.number * 1000), [onChange]);
+  const _onChange = useCallback(
+    (v: NSProps<"s">["value"]) => onChange(v.number * 1000),
+    [onChange]
+  );
   return (
     <OptionWrapper display={"inline"} className={"brz-ed-option"}>
       <OptionLabel label={t("Delay")} />

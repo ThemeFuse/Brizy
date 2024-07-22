@@ -1,5 +1,5 @@
 import { pass } from "fp-utilities";
-import React, { useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { unique } from "underscore";
 import { Group } from "visual/component/Controls/Group";
 import { ReloadButton } from "visual/component/Controls/ReloadButton";
@@ -10,6 +10,23 @@ import { OnChange } from "visual/component/Options/Type";
 import { always, mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { fromNumber } from "visual/utils/math/Positive";
+import {
+  EffectType,
+  effectTypeIcon,
+  effectTypeTitle
+} from "visual/utils/options/Animation/types/EffectType";
+import * as Value from "visual/utils/options/Animation/types/Value";
+import { setDelay } from "visual/utils/options/Animation/types/WithDelay";
+import { setDuration } from "visual/utils/options/Animation/types/WithDuration";
+import { setInfiniteAnimation } from "visual/utils/options/Animation/types/WithInfiniteAnimation";
+import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
+import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
+import {
+  defaultEffects,
+  getDirections,
+  onChangeDirection,
+  valueToType
+} from "visual/utils/options/Animation/utils";
 import { WithClassName } from "visual/utils/options/attributes";
 import { AttentionStyle } from "./components/AttentionStyle";
 import { Delay } from "./components/Delay";
@@ -17,23 +34,6 @@ import { Direction } from "./components/Direction";
 import { Duration } from "./components/Duration";
 import { Icon } from "./components/Icon";
 import { Switcher } from "./components/Switcher";
-import {
-  EffectType,
-  effectTypeIcon,
-  effectTypeTitle
-} from "./types/EffectType";
-import * as Value from "./types/Value";
-import { setDelay } from "./types/WithDelay";
-import { setDuration } from "./types/WithDuration";
-import { setInfiniteAnimation } from "./types/WithInfiniteAnimation";
-import * as Attention from "./types/effects/Attention";
-import * as Fade from "./types/effects/Fade";
-import {
-  defaultEffects,
-  getDirections,
-  onChangeDirection,
-  valueToType
-} from "./utils";
 
 export interface Props extends Option.Props<Value.Value>, WithClassName {
   config?: {
@@ -44,13 +44,13 @@ export interface Props extends Option.Props<Value.Value>, WithClassName {
   };
 }
 
-export const Animation: React.FC<Props> = ({
+export const Animation = ({
   label,
   value,
   onChange,
   className,
   config
-}) => {
+}: Props): ReactElement => {
   const types = useMemo(
     (): EffectType[] =>
       unique([EffectType.None, ...(config?.types ?? defaultEffects)]),

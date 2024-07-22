@@ -81,11 +81,11 @@ returnType: string | undefined;
 */
 const getTitle = (component) => {
   switch (component) {
-    case "shopify-products":
+    case "shopify-product":
       return t("Products");
-    case "shopify-collections":
+    case "shopify-collection":
       return t("Collections");
-    case "shopify-posts":
+    case "shopify-article":
       return t("Posts");
   }
 };

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import PointerEvents from "visual/component/PointerEvents";
@@ -11,7 +11,7 @@ import { isStory } from "visual/utils/models/modes";
 import DrawerOptions from "./components/Options";
 import { getOptions } from "./options";
 
-export const LeftSidebar: FC = () => {
+export const LeftSidebar = (): ReactElement => {
   const dispatch = useDispatch();
 
   const { drawerContentType, isOpen } = useSelector(leftSidebarSelector);

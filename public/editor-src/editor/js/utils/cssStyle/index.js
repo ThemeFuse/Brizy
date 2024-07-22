@@ -60,6 +60,8 @@ export * from "./cssStyleElementEcwidProducts";
 export * from "./cssStyleElementEcwidShoppingBag";
 // Facebook
 export * from "./cssStyleElementFacebook";
+// Element Form
+export * from "./cssStyleElementForm";
 // Element Form2
 export * from "./cssStyleElementForm2";
 // Element Icon
@@ -94,8 +96,6 @@ export * from "./cssStyleElementMinistryEventDetail";
 export * from "./cssStyleElementMinistryGroupSlider";
 // Ministry Event Calendar
 export * from "./cssStyleElementMinistryEventCalendar";
-// Ministry Brands Sermon Layout
-export * from "./cssStyleElementSermonLayout";
 // Element Post Info
 export * from "./cssStyleElementPostInfo";
 // Element postNavigation
@@ -201,7 +201,14 @@ export * from "./styleBgVideo";
 export * from "./cssStyleMask";
 // Variant
 export * from "./cssStyleElementShopifyVariant";
+// Table of Contents
+export * from "./cssStyleElementTableOfContents";
+// Share Button
+export * from "./cssStyleElementShareButton";
 
 // Generator v2 functions
 export * from "./cssStyle2";
 export * from "./utils";
+
+// Element Flipbox
+export * from "./cssStyleElementFlipbox";

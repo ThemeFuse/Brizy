@@ -2,19 +2,24 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
 import { helperDateFormatInputHTML } from "../utils/helpers";
 import type { Props, Value } from "./types";
 
 // @ts-expect-error advancedSettings is old option
 export const getItems: GetItems<Value, Props> = (data) => {
-  const { v } = data;
+  const { v, device } = data;
   const config = Config.getAll();
 
-  const isNotCategoryFilter = v.showCategoryFilter === "off";
-  const isNotExtraCategory1Filter = v.addCategoryFilter === "off";
-  const isNotExtraCategory2Filter = v.addCategoryFilter2 === "off";
-  const isNotExtraCategory3Filter = v.addCategoryFilter3 === "off";
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const isNotCategoryFilter = dvv("showCategoryFilter") === "off";
+  const isNotExtraCategory1Filter = dvv("addCategoryFilter") === "off";
+  const isNotExtraCategory2Filter = dvv("addCategoryFilter2") === "off";
+  const isNotExtraCategory3Filter = dvv("addCategoryFilter3") === "off";
+  const isGroupFilterDisabled = dvv("showGroupFilter") === "off";
+  const isValidGroupSlug = !!dvv("groupSlug");
 
   return [
     {
@@ -153,7 +158,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
                   label: t("Detail Button"),
                   placeholder: t("Button name..."),
                   devices: "desktop",
-                  disabled: !v.detailPage,
+                  disabled: !dvv("detailPage"),
                   config: {
                     size: "medium"
                   },
@@ -170,6 +175,23 @@ export const getItems: GetItems<Value, Props> = (data) => {
               label: t("Filter"),
               options: [
                 {
+                  id: "groupSlug",
+                  devices: "desktop",
+                  label: t("Group"),
+                  type: "select",
+                  choices: getEkklesiaChoiches(
+                    config,
+                    {
+                      key: "smallgroup"
+                    },
+                    {
+                      display: "list",
+                      groupby: "group",
+                      show: "group_show"
+                    }
+                  )
+                },
+                {
                   id: "parentCategory",
                   label: t("Parent Category"),
                   type: "select",
@@ -183,6 +205,30 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       "Defines which level 1 category to use as a base for the layout."
                     )
                   }
+                },
+                {
+                  id: "showGroupGroup",
+                  type: "group",
+                  devices: "desktop",
+                  disabled: isValidGroupSlug,
+                  options: [
+                    {
+                      id: "showGroupFilter",
+                      type: "switch",
+                      label: t("Group Filter"),
+                      devices: "desktop"
+                    },
+                    {
+                      id: "groupFilterHeading",
+                      type: "inputText",
+                      label: t("Heading"),
+                      devices: "desktop",
+                      disabled: isGroupFilterDisabled,
+                      config: {
+                        size: "medium"
+                      }
+                    }
+                  ]
                 },
                 {
                   id: "categoryGroup",
@@ -203,7 +249,6 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       disabled: isNotCategoryFilter,
                       choices: getEkklesiaChoiches(config, {
                         key: "eventsLvl",
-
                         subKey: "childs"
                       }),
                       helper: {
@@ -218,29 +263,6 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       label: t("Heading"),
                       devices: "desktop",
                       disabled: isNotCategoryFilter,
-                      config: {
-                        size: "medium"
-                      }
-                    }
-                  ]
-                },
-                {
-                  id: "showGroupGroup",
-                  type: "group",
-                  devices: "desktop",
-                  options: [
-                    {
-                      id: "showGroupFilter",
-                      type: "switch",
-                      label: t("Group"),
-                      devices: "desktop"
-                    },
-                    {
-                      id: "groupFilterHeading",
-                      type: "inputText",
-                      label: t("Heading"),
-                      devices: "desktop",
-                      disabled: v.showGroupFilter === "off",
                       config: {
                         size: "medium"
                       }
@@ -263,19 +285,13 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       type: "inputText",
                       label: t("Placeholder"),
                       devices: "desktop",
-                      disabled: v.showSearch === "off",
+                      disabled: dvv("showSearch") === "off",
                       config: {
                         size: "medium"
                       }
                     }
                   ]
-                }
-              ]
-            },
-            {
-              id: "tabAdvanced",
-              label: t("Advanced"),
-              options: [
+                },
                 {
                   id: "addCategoryGroup",
                   type: "group",

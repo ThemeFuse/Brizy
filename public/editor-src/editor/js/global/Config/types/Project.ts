@@ -1,6 +1,9 @@
 interface ProjectCommon {
   heartBeatInterval: number;
-  status: { locked: boolean; lockedBy: boolean | string };
+  status: {
+    locked: boolean;
+    lockedBy: boolean | { user_email: string };
+  };
 }
 
 interface ProjectCloud extends ProjectCommon {

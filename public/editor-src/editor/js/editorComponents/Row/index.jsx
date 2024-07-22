@@ -8,7 +8,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
@@ -30,6 +29,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
@@ -42,6 +42,7 @@ import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleContainer, styleRow } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import { omit } from "timm";
 
 class Row extends EditorComponent {
   static get componentId() {
@@ -255,6 +256,7 @@ class Row extends EditorComponent {
   }
 
   renderPopups() {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData) => {
@@ -263,21 +265,27 @@ class Row extends EditorComponent {
           value: { popupId }
         } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
-          const blockData = globalBlocks[itemData.value._id];
+          const globalBlockId = itemData.value._id;
+          const blockData = globalBlocks[globalBlockId];
 
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
           popupId = blockData.value.popupId;
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

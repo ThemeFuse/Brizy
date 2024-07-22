@@ -17,6 +17,7 @@ import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarDay from "./sidebarDay";
+import * as sidebarSubscribeToCalendar from "./sidebarSubscribeToCalendar";
 import { style } from "./styles";
 import * as toolbarArrow from "./toolbarArrow";
 import * as toolbarCell from "./toolbarCell";
@@ -306,7 +307,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                             <Toolbar
                                               {...this.makeToolbarPropsFromConfig2(
                                                 toolbarSubscribeToCalendar,
-                                                undefined,
+                                                sidebarSubscribeToCalendar,
                                                 {
                                                   allowExtend: false
                                                 }

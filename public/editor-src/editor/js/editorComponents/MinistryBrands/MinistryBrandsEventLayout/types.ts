@@ -48,6 +48,7 @@ export interface Value extends ElementModel {
 
   showGroupFilter: Switch;
   groupFilterHeading: string;
+  groupSlug: string;
 
   showSearch: Switch;
   searchPlaceholder: string;
@@ -57,6 +58,7 @@ export interface Value extends ElementModel {
   eventDetailPage: string;
   source: string;
   eventDetailPageTitle: string;
+  eventDetailPageButtonText: string;
 
   dateFormat: string;
 }

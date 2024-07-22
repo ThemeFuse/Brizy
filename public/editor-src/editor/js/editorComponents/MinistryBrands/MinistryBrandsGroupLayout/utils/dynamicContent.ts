@@ -34,7 +34,8 @@ export const getPlaceholder = (v: Value): string => {
     addCategoryFilterParent3,
     addCategoryFilterHeading3,
     dateFormat,
-    showMetaIcons
+    showMetaIcons,
+    groupSlug
   } = v;
 
   const attr = [
@@ -68,7 +69,8 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(addCategoryFilter3, "show_category_filter_add3"),
     `category_filter_parent_add3='${addCategoryFilterParent3}'`,
     `category_filter_heading_add3='${addCategoryFilterHeading3}'`,
-    `date_format='${dateFormat}'`
+    `date_format='${dateFormat}'`,
+    `group_slug='${groupSlug}'`
   ];
 
   return makePlaceholder({

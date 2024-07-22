@@ -1,5 +1,6 @@
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { NewType } from "visual/types/NewType";
+import { ImageType } from "visual/utils/image/types";
 
 export type Response<R> = (r: R) => void;
 
@@ -8,6 +9,7 @@ export type Response<R> = (r: R) => void;
 export interface Data {
   uid: string;
   fileName: string;
+  imageType?: ImageType;
 }
 
 export interface FileUploadData {
@@ -48,6 +50,15 @@ export const defaultCrop: CropData = {
   iW: 5000,
   iH: "any"
 };
+
+//#endregion
+
+//#region Form
+
+export interface FormFieldsOption {
+  title: string;
+  value: string;
+}
 
 //#endregion
 

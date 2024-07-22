@@ -1,20 +1,21 @@
-import produce from "immer";
-import { ElementModel } from "visual/component/Elements/Types";
+import { produce } from "immer";
+import { ElementModel, ModelType } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { isEmpty } from "visual/utils/reader/object";
 import { getBreakpoints } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
 import { ACTIVE, HOVER, NORMAL } from "../stateMode";
-import { CSS, GeneratedCSS } from "./types";
 import {
   checkIfSomeKeyWasChanged,
   filterDeviceValues,
   getCurrentModelFilteredValues,
+  getInitialV,
   getNewGeneratesCSSfromSelector,
   getNewGeneratesCSSfromStyle,
   getNewModel,
   removeDuplicateCSSByDevice
 } from "./index";
+import { CSS, GeneratedCSS } from "./types";
 
 export const getCSSObjects = ({
   currentModel,
@@ -22,7 +23,7 @@ export const getCSSObjects = ({
   options
 }: {
   options: ToolbarItemType[];
-  currentModel: "default" | "rules" | "custom";
+  currentModel: ModelType;
   model: {
     vd: ElementModel;
     vs: ElementModel;
@@ -37,6 +38,7 @@ export const getCSSObjects = ({
     active: []
   };
 
+  const initialV = getInitialV(currentModel, model);
   const _v = getCurrentModelFilteredValues(currentModel, model);
 
   if (isEmpty(_v)) {
@@ -83,6 +85,7 @@ export const getCSSObjects = ({
 
           const normalCSS = getNewGeneratesCSSfromStyle({
             v,
+            initialV,
             breakpoint,
             option,
             state: NORMAL,

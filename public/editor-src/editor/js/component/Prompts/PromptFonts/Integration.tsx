@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import Config from "visual/global/Config";
 import { pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
