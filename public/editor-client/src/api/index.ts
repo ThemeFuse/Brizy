@@ -18,6 +18,7 @@ import {
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
 import { Arr, Obj, Str } from "@brizy/readers";
+import { mPipe } from "fp-utilities";
 import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
@@ -960,16 +961,18 @@ export const addAdobeAccount = async (body: AddAccount) => {
   });
 
   try {
-    const res = await request(url, {
+    return await request(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
       body: JSON.stringify(body)
     });
-    return res;
   } catch (error) {
-    throw new Error(`Failed to add Adobe account: ${error.message}`);
+    const getError = mPipe(Obj.read, Obj.readKey("message"), Str.read);
+    const message = getError(error) ?? "Failed to connect new account";
+
+    throw new Error(`Failed to add Adobe account: ${message}`);
   }
 };
 

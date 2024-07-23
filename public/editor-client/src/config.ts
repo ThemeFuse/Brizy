@@ -177,6 +177,24 @@ const collectionTypesReader = (arr: Array<unknown>): Array<CollectionType> => {
   );
 };
 
+const imagePatternsReader = parseStrict<
+  Record<string, unknown>,
+  Required<ImagePatterns>
+>({
+  full: pipe(
+    mPipe(Obj.readKey("full"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns full pattern")
+  ),
+  original: pipe(
+    mPipe(Obj.readKey("original"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns original pattern")
+  ),
+  split: pipe(
+    mPipe(Obj.readKey("split"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns split pattern")
+  )
+});
+
 const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   mediaResizeUrl: pipe(
     mPipe(
@@ -207,20 +225,7 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
       Obj.read,
       Obj.readKey("imagePatterns"),
       Obj.read,
-      parseStrict<PLUGIN_ENV, ImagePatterns>({
-        full: pipe(
-          mPipe(Obj.readKey("full"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns full pattern")
-        ),
-        original: pipe(
-          mPipe(Obj.readKey("original"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns original pattern")
-        ),
-        split: pipe(
-          mPipe(Obj.readKey("split"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns split pattern")
-        )
-      })
+      imagePatternsReader
     ),
     throwOnNullish("Invalid API: image patterns")
   ),
@@ -231,11 +236,7 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   iconUrl: readIconUrl("iconUrl"),
   iconsUrl: readIconUrl("getIconsUrl"),
   uploadIconUrl: readIconUrl("uploadIconUrl"),
-  deleteIconUrl: readIconUrl("deleteIconUrl"),
-  templatesImageUrl: pipe(
-    mPipe(Obj.readKey("templatesImageUrl"), Str.read),
-    throwOnNullish("Invalid API: templatesImageUrl")
-  )
+  deleteIconUrl: readIconUrl("deleteIconUrl")
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
