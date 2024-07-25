@@ -1,12 +1,12 @@
 import { match, optional, parse } from "fp-utilities";
 import Config, { isWp } from "visual/global/Config";
+import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
   AllRule,
   CollectionItemRule,
   CollectionTypeRule,
   GlobalBlock,
   Rule as GlobalBlockRule,
-  PageCommon,
   SavedBlock,
   SavedLayout
 } from "visual/types";
@@ -15,13 +15,9 @@ import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
-import { PageError } from "visual/utils/errors";
 import { mPipe } from "visual/utils/fp/mPipe";
 import { pipe } from "visual/utils/fp/pipe";
-import * as Json from "visual/utils/reader/json";
-import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
-import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/reader/string";
 import {
   getUsedModelsFonts,
@@ -32,13 +28,17 @@ import { getUsedModelsImages } from "visual/utils/traverse/images";
 import { onNullish } from "visual/utils/value";
 import { BlogSourceItem, CollectionSourceItem, Rule } from "./types";
 
-export * from "./adapter-legacy";
-
 //#region Saved blocks | Saved layout
+
+export interface Media {
+  images: Array<string>;
+  uploads: Array<string>;
+  fonts: Array<string>;
+}
 
 export const makeBlockMeta = (
   block: SavedBlock | SavedLayout | GlobalBlock
-): { images: Array<string>; uploads: Array<string>; fonts: Array<string> } => {
+): Media => {
   const { data, meta } = block;
   const { extraFontStyles } = meta;
   const fonts = getUsedModelsFonts({ models: data });
@@ -55,47 +55,9 @@ export const makeBlockMeta = (
   return { images, uploads, fonts: [...fontsSet] };
 };
 
+//#endregion
+
 //#region Page
-
-export const parsePageCommon = (page: unknown): PageCommon => {
-  const reader = mPipe(
-    Obj.read,
-    readWithParser<Record<string, unknown>, PageCommon>({
-      id: mPipe(Obj.readKey("id"), Str.read),
-      data: pipe(
-        Obj.readKey("data"),
-        Json.read,
-        Obj.read as () => PageCommon["data"] | undefined, // TODO: needs more thorough checking
-        onNullish({ items: [] } as PageCommon["data"])
-      ),
-      dataVersion: pipe(Obj.readKey("dataVersion"), Num.read, onNullish(0)),
-      title: pipe(Obj.readKey("title"), Str.read, onNullish("")),
-      slug: pipe(Obj.readKey("slug"), Str.read, onNullish("")),
-      status: (page) => {
-        const status = mPipe(Obj.readKey("status"), Str.read)(page);
-
-        switch (status) {
-          case "draft":
-            return "draft";
-          case "publish":
-          case "published":
-            return "publish";
-          default:
-            // TODO: WP sends at export only id and data.
-            // figure out what to do with all these defaults later
-            return "draft"; // should be return undefined;
-        }
-      }
-    })
-  );
-  const parsed = reader(page);
-
-  if (parsed === undefined) {
-    throw new PageError("Failed to parse page");
-  }
-
-  return parsed;
-};
 
 export const parseCollectionSourceItem = parse<
   Record<string, unknown>,
@@ -152,61 +114,6 @@ export type ApiRule =
   | ApiCollectionTypeRule
   | ApiAllRule;
 
-const isApiItemRule = (rule: ApiRule): rule is ApiCollectionItemRule => {
-  return "entityValues" in rule && rule.entityValues.length > 0;
-};
-
-const isApiTypeRule = (rule: ApiRule): rule is ApiCollectionTypeRule => {
-  return (
-    "appliedFor" in rule &&
-    rule.appliedFor !== null &&
-    "entityValues" in rule &&
-    rule.entityValues.length === 0 &&
-    rule.entityType !== undefined
-  );
-};
-
-const isApiAllRule = (rule: ApiRule): rule is ApiAllRule => {
-  return (
-    "appliedFor" in rule &&
-    rule.appliedFor === null &&
-    (rule.entityType === "" || rule.entityType === undefined)
-  );
-};
-
-export const apiRuleToEditorRule: (v: ApiRule) => GlobalBlockRule = match(
-  [
-    isApiItemRule,
-    (rule: ApiCollectionItemRule): CollectionItemRule => {
-      return {
-        mode: rule.mode ?? "specific",
-        type: rule.type,
-        appliedFor: rule.appliedFor,
-        entityType: rule.entityType,
-        entityValues: rule.entityValues
-      };
-    }
-  ],
-  [
-    isApiTypeRule,
-    (rule: ApiCollectionTypeRule): CollectionTypeRule => {
-      return {
-        type: rule.type,
-        appliedFor: rule.appliedFor,
-        entityType: rule.entityType
-      };
-    }
-  ],
-  [
-    isApiAllRule,
-    (rule: ApiAllRule): AllRule => {
-      return {
-        type: rule.type
-      };
-    }
-  ]
-);
-
 export const editorRuleToApiRule: (v: GlobalBlockRule) => ApiRule = match(
   [
     isCollectionItemRule,
@@ -251,5 +158,17 @@ export const editorRuleToApiRule: (v: GlobalBlockRule) => ApiRule = match(
     }
   ]
 );
+
+//#endregion
+
+//#region GlobalBlocks
+
+export const stringifyGlobalBlock = (
+  globalBlock: GlobalBlock
+): APIGlobalBlock => {
+  const rules = globalBlock.rules.map(editorRuleToApiRule);
+
+  return { ...globalBlock, rules };
+};
 
 //#endregion

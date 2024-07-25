@@ -1,3 +1,3 @@
 export { editorIconUrl } from "./editorIconUrl";
-export { templateIconUrl } from "./templateIconUrl";
+export { templateIconUrl, compileTemplateIconUrl } from "./templateIconUrl";
 export { svgToUri } from "./svgToUri";

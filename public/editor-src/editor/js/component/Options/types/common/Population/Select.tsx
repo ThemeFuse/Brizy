@@ -4,6 +4,7 @@ import { Control } from "visual/component/Controls/Population";
 import Config from "visual/global/Config";
 import { getCollectionTypes, getSourceIds } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
+import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Str from "visual/utils/reader/string";
 import { auto, isAuto } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
@@ -12,7 +13,6 @@ import { ActionTypes, reducer } from "./reducer";
 import { Choices, OptGroup } from "./types/Choices";
 import { PopulationMethod } from "./types/PopulationMethod";
 import { Value } from "./types/Value";
-import { findDCChoiceByPlaceholder } from "./utils";
 
 export interface Props<T extends Literal> {
   value: T;

@@ -280,18 +280,18 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             })
         );
 
+        static $noticeHtml = null;
         $this->registerPlaceholder(
             new Brizy_Content_Placeholders_Simple(
                 __('WooCommerce Notices', 'brizy'),
                 'editor_woo_notice',
-                function () {
-
+                function () use (&$noticeHtml) {
                     if (class_exists('WooCommerce')) {
-                        return wc_print_notices(true);
+                        if($noticeHtml)
+                            return $noticeHtml;
+                        return $noticeHtml = wc_print_notices(true);
                     }
-
                     return "";
-
                 },
                 self::CONFIG_KEY_TEXT
             )

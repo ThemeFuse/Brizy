@@ -1,0 +1,5 @@
+.brz-flipbox {
+  &--transition > .brz-flipbox-item {
+    transition: none;
+  }
+}

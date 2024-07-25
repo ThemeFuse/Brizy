@@ -1,0 +1,130 @@
+{
+  "content": {
+    "network": "",
+
+    "labelText": "",
+    "customLabelText": "",
+
+    "textPopulation": "",
+
+    "view": "icon&text",
+
+    "colorType": "official",
+
+    "href": "",
+    "targetUrl": "currentUrl",
+
+    "iconName": "",
+    "iconType": "",
+
+    "buttonHeight": 7,
+    "buttonHeightSuffix": "px",
+
+    "buttonWidth": 15,
+    "buttonWidthSuffix": "px",
+
+    "iconCustomSize": 25,
+    "iconCustomSizeSuffix": "px",
+
+    "iconWidth": 15,
+    "iconWidthSuffix": "px"
+  },
+
+  "style": {
+    "className": "",
+
+    "families": {
+      "typographyFontFamily": "lato"
+    },
+
+    "typographyFontStyle": "button",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 15,
+    "typographyFontSizeSuffix": "px",
+    "typographyFontWeight": 700,
+    "typographyLineHeight": 1,
+    "typographyLetterSpacing": 1,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
+
+    "textColorHex": "#ffffff",
+    "textColorOpacity": 1,
+    "textColorPalette": "",
+
+    "textBgColorType": "solid",
+
+    "textBgColorHex": "#05cab6",
+    "textBgColorOpacity": 1,
+    "textBgColorPalette": "color3",
+
+    "textGradientColorHex": "#009900",
+    "textGradientColorOpacity": 0.8,
+    "textGradientColorPalette": "",
+
+    "textGradientType": "linear",
+
+    "textGradientStartPointer": 0,
+    "textGradientFinishPointer": 100,
+    "textGradientActivePointer": "startPointer",
+
+    "textGradientLinearDegree": 90,
+    "textGradientRadialDegree": 90,
+
+    "iconColorHex": "#ffffff",
+    "iconColorOpacity": 1,
+    "iconColorPalette": "",
+
+    "iconBgColorType": "solid",
+
+    "iconBgColorHex": "#05cab6",
+    "iconBgColorOpacity": 1,
+    "iconBgColorPalette": "color3",
+
+    "iconGradientColorHex": "",
+    "iconGradientColorOpacity": 0.8,
+    "iconGradientColorPalette": "",
+
+    "iconGradientType": "linear",
+
+    "iconGradientStartPointer": 0,
+    "iconGradientFinishPointer": 100,
+    "iconGradientActivePointer": "startPointer",
+
+    "iconGradientLinearDegree": 90,
+    "iconGradientRadialDegree": 90,
+
+    "borderRadius": 0,
+    "borderRadiusSuffix": "px",
+
+    "borderRadiusType": "square",
+
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "borderStyle": "solid",
+    "borderWidthType": "grouped",
+
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
+
+    "borderColorHex": "#000000",
+    "borderColorOpacity": 0.75,
+    "borderColorPalette": "color7",
+
+    "horizontalAlign": "center",
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": ""
+  }
+}

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import _ from "underscore";
 import Sortable from "visual/component/Sortable";
 import Config from "visual/global/Config";
@@ -21,6 +21,7 @@ const sortableDragOffset = {
 export interface Props {
   category: string;
   shortcodes: Shortcode[];
+  children: ReactNode;
   onChange: (data: SortData, shortcodes: Shortcode[]) => void;
 }
 

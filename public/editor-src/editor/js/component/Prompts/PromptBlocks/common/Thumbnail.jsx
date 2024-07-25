@@ -429,7 +429,9 @@ class Thumbnail extends Component {
     const { blockTooltipOpen } = this.state;
     const showDownLine = showTitle || showDownload || tags;
     const blockIsPro = !IS_PRO && pro;
-    const isBlank = blank && blank === "blank";
+    const isBlank =
+      (typeof blank === "string" && blank === "blank") ||
+      (typeof blank === "boolean" && blank);
     const className = classnames(
       "brz-ed-popup-two-block",
       isStory(Config.getAll()) && "brz-ed-popup-two-block-stories",
@@ -485,7 +487,7 @@ class Layout extends Component {
 
   render() {
     const {
-      data: { name, pages, color },
+      data: { name, pagesCount },
       ...otherProps
     } = this.props;
     const { thumbnailLoaded } = this.state;
@@ -507,28 +509,17 @@ class Layout extends Component {
           isLayout={true}
           onImageLoaded={this.handleLoaded}
         />
-        {thumbnailLoaded && pages.length > 1 && (
-          <span
-            className="brz-ed-popup-two-block-info-color"
-            style={{ backgroundColor: color }}
-          >
-            <span
-              className="brz-ed-popup-two-block-info-color-opacity"
-              style={{ backgroundColor: color }}
-            />
-          </span>
-        )}
         <div className="brz-ed-popup-two-block-info-downline">
           <div className="brz-ed-popup-two-block-info-title">{name}</div>
           <div className="brz-ed-popup-two-block-info-title">
-            {pages.length}{" "}
-            {pages.length > 1
+            {pagesCount}{" "}
+            {pagesCount > 1
               ? IS_STORY
                 ? t("stories")
                 : t("layouts")
               : IS_STORY
-              ? t("story")
-              : t("layout")}
+                ? t("story")
+                : t("layout")}
           </div>
         </div>
       </div>

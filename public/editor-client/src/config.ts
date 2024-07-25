@@ -13,6 +13,17 @@ interface DefaultTemplates {
   popupsUrl: string;
   storiesUrl: string;
   layoutsUrl: string;
+  layoutDataUrl: string;
+  layoutsChunkUrl: string;
+  layoutsPagesUrl: string;
+  blocksChunkUrl: string;
+  blocksDataUrl: string;
+  blocksKitsUrl: string;
+  popupsChunkUrl: string;
+  popupsDataUrl: string;
+  storiesChunkUrl: string;
+  storiesPagesUrl: string;
+  storiesDataUrl: string;
   templatesUrl: string;
 }
 
@@ -108,6 +119,50 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   ),
   storiesUrl: pipe(
     mPipe(Obj.readKey("storiesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  layoutDataUrl: pipe(
+    mPipe(Obj.readKey("layoutDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsChunkUrl: pipe(
+    mPipe(Obj.readKey("layoutsChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  layoutsPagesUrl: pipe(
+    mPipe(Obj.readKey("layoutsPagesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: layouts")
+  ),
+  blocksChunkUrl: pipe(
+    mPipe(Obj.readKey("blocksChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  blocksDataUrl: pipe(
+    mPipe(Obj.readKey("blocksDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  blocksKitsUrl: pipe(
+    mPipe(Obj.readKey("blocksKitsUrl"), Str.read),
+    throwOnNullish("Invalid API Config: kits")
+  ),
+  popupsChunkUrl: pipe(
+    mPipe(Obj.readKey("popupsChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: popups")
+  ),
+  popupsDataUrl: pipe(
+    mPipe(Obj.readKey("popupsDataUrl"), Str.read),
+    throwOnNullish("Invalid API Config: popups")
+  ),
+  storiesChunkUrl: pipe(
+    mPipe(Obj.readKey("storiesChunkUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  storiesPagesUrl: pipe(
+    mPipe(Obj.readKey("storiesPagesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: stories")
+  ),
+  storiesDataUrl: pipe(
+    mPipe(Obj.readKey("storiesDataUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
   ),
   templatesUrl: pipe(

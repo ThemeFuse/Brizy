@@ -8,7 +8,6 @@ import {
   tap
 } from "rxjs/operators";
 import { noop } from "underscore";
-import { getCurrentPageId } from "visual/bootstraps/editor/getCurrentPageId";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorIcon from "visual/component/EditorIcon";
@@ -23,6 +22,7 @@ import { pageSelector } from "visual/redux/selectors";
 import { defaultPostsSources } from "visual/utils/api";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getCurrentPageId } from "visual/utils/env";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as json from "visual/utils/reader/json";
 import Items from "./Items";
@@ -290,6 +290,8 @@ export class Posts extends EditorComponent {
       meta: this.getMeta(v),
       showPagination: pagination === "on",
       showFilter: filter === "on",
+      needMasonry: filter === "on" && masonryFilter === "on",
+      isLoading: dataLoading,
       toolbarExtendPagination: this.makeToolbarPropsFromConfig2(
         toolbarExtendPagination,
         sidebarExtendPagination,

@@ -1,13 +1,15 @@
 import classnames from "classnames";
-import React, { FC, useEffect } from "react";
+import React, { ReactElement, useEffect, useMemo } from "react";
 import { Popover as Control } from "visual/component/Controls/Popover";
 import { ToolbarItem } from "visual/component/Controls/Popover/types";
 import Options from "visual/component/Options";
 import { ToolbarItems } from "./ToolbarItem";
 import { Props } from "./types";
 import { getTrigger } from "./utils";
+import { FCP } from "visual/utils/react/types";
+import { targetExceptions } from "visual/component/Options/constants";
 
-export const Popover: FC<Props> = ({
+export const Popover: FCP<Props, ReactElement | null> = ({
   className,
   config,
   options,
@@ -15,10 +17,18 @@ export const Popover: FC<Props> = ({
   id
 }) => {
   const onOpenDirect = config?.onOpenDirect ?? false;
+  const toolbarExceptions = useMemo(
+    () => (toolbar ? [".brz-ed-sidebar__right"] : []),
+    [toolbar]
+  );
+  const clickOutsideExceptions = useMemo(
+    () => [".brz-ed-fixed", ...targetExceptions, ...toolbarExceptions],
+    [toolbarExceptions]
+  );
 
   useEffect(() => {
     if (onOpenDirect) {
-      toolbar?.setItemsRenderer((items: ToolbarItem[]) => {
+      toolbar?.setItemsRenderer((items: Array<ToolbarItem>) => {
         const toolbarItem = items.find(
           ({ id: toolbarId }: { id: string }) => id === toolbarId
         );
@@ -40,16 +50,7 @@ export const Popover: FC<Props> = ({
       placement={config?.placement ?? "top"}
       size={config?.size ?? "medium"}
       toolbar={toolbar}
-      clickOutsideExceptions={[
-        ".brz-ed-fixed",
-        ...(TARGET === "WP"
-          ? [
-              ".media-modal", // class of the WP media modal
-              ".media-modal-backdrop"
-            ]
-          : []),
-        ...(toolbar ? [".brz-ed-sidebar__right"] : [])
-      ]}
+      clickOutsideExceptions={clickOutsideExceptions}
     >
       <Options wrapOptions={false} data={options} toolbar={toolbar} />
     </Control>

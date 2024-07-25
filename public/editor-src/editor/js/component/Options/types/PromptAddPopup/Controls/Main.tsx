@@ -1,5 +1,6 @@
 import classnames from "classnames";
-import React, { FC, HTMLAttributes } from "react";
+import React, { HTMLAttributes } from "react";
+import { FCC } from "visual/utils/react/types";
 
 export interface Props {
   display: "inline" | "block";
@@ -7,7 +8,7 @@ export interface Props {
   attr?: HTMLAttributes<HTMLDivElement>;
 }
 
-export const Main: FC<Props> = (props) => {
+export const Main: FCC<Props> = (props) => {
   const { className: _className, attr, display, children } = props;
   const className = classnames(
     "brz-ed-option__prompt-popup",

@@ -22,12 +22,11 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
 import Config from "visual/global/Config";
-import { triggersSelector } from "visual/redux/selectors";
 import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
-import { isExternalPopup, isInternalPopup, isPopup } from "visual/utils/models";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -200,12 +199,6 @@ class SectionPopup2 extends EditorComponent {
       cssID
     } = v;
     const _closeCustomID = mRead(closeCustomID) || undefined;
-    const config = Config.getAll();
-    const popupSettings = config.ui?.popupSettings ?? {};
-    const embedded = popupSettings.embedded === true;
-    const isGlobal = isPopup(config);
-    const isSimple = !isGlobal;
-
     const className = classnames(
       "brz-popup2__close",
       IS_PREVIEW && showCloseButtonAfter && "brz-hidden",
@@ -246,24 +239,22 @@ class SectionPopup2 extends EditorComponent {
         <div className={innerClassName}>
           <SortableZIndex zIndex={1}>
             <div className="brz-container__wrap">
-              {((isGlobal && !embedded) || isSimple) && (
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarCloseConfig,
-                    sidebarCloseConfig,
-                    { allowExtend: false }
-                  )}
+              <Toolbar
+                {...this.makeToolbarPropsFromConfig2(
+                  toolbarCloseConfig,
+                  sidebarCloseConfig,
+                  { allowExtend: false }
+                )}
+              >
+                <CustomCSS
+                  selectorName={`${this.getId()}--close`}
+                  css={closeCustomCSS}
                 >
-                  <CustomCSS
-                    selectorName={`${this.getId()}--close`}
-                    css={closeCustomCSS}
-                  >
-                    <div {...props}>
-                      <ThemeIcon name="close-popup" type="editor" />
-                    </div>
-                  </CustomCSS>
-                </Toolbar>
-              )}
+                  <div {...props}>
+                    <ThemeIcon name="close-popup" type="editor" />
+                  </div>
+                </CustomCSS>
+              </Toolbar>
 
               <div className={classNameContainer}>
                 <EditorArrayComponent {...itemsProps} />
@@ -280,6 +271,7 @@ class SectionPopup2 extends EditorComponent {
       return null;
     }
 
+    const { className: _className, blockId, meta = {} } = this.props;
     const {
       className,
       customClassName,
@@ -290,14 +282,18 @@ class SectionPopup2 extends EditorComponent {
     const id = this.getId();
     const config = Config.getAll();
     const isGlobal = isPopup(config);
-
+    const inMegaMenu = meta.megaMenu;
     const classNamePopup = classnames(
       "brz-popup2",
       "brz-popup2__editor",
       `brz-popup2__${columnsHeightStyle}`,
       "brz-popup2--fixed",
-      { "brz-popup2--opened": this.state.isOpened },
+      {
+        "brz-popup2--opened": this.state.isOpened,
+        "brz-popup2--inMegaMenu": inMegaMenu
+      },
       className,
+      _className,
       customClassName,
       css(
         `${this.constructor.componentId}`,
@@ -317,7 +313,7 @@ class SectionPopup2 extends EditorComponent {
             <div
               id={id}
               className={classNamePopup}
-              {...makeDataAttr({ name: "block-id", value: this.props.blockId })}
+              {...makeDataAttr({ name: "block-id", value: blockId })}
               ref={containerBorderRef}
               {...parseCustomAttributes(customAttributes)}
               {...containerBorderAttr}
@@ -373,67 +369,22 @@ class SectionPopup2 extends EditorComponent {
       scrollPage,
       clickOutsideToClose,
       showCloseButtonAfter,
-      customCSS
+      customCSS,
+      popupId
     } = v;
+    const { className: _className, meta = {} } = this.props;
     const config = Config.getAll();
-
-    const triggers = triggersSelector(this.getReduxState());
-    const isGlobal = isPopup(config);
-    const isInternal = isInternalPopup(config);
-    const isExternal = isExternalPopup(config);
-    const isSimple = !isGlobal;
-
+    const inMegaMenu = meta.megaMenu;
     const popupSettings = config.ui?.popupSettings ?? {};
-    const embedded = popupSettings.embedded;
     const scrollPageBehind = popupSettings.scrollPageBehind;
     const clickOutside = popupSettings.clickOutsideToClose;
 
     let attr = {};
-    if (isGlobal) {
-      const encodeIdsList = [
-        "scrolling",
-        "showing",
-        "devices",
-        "referrer",
-        "loggedIn",
-        "currentUrl",
-        "currentDate",
-        "lastVisitDate",
-        "timeFrom",
-        "cookie",
-        "os",
-        "otherPopups",
-        "specificPopup"
-      ];
-      const encodeData = (data) => encodeURIComponent(JSON.stringify(data));
-      const decodeData = (data) => JSON.parse(decodeURIComponent(data));
-      const convertString = (name) =>
-        name.replace(/([A-Z])/g, (letter) => `_${letter.toLowerCase()}`);
-
-      attr = triggers.reduce((acc, item) => {
-        if (item.active) {
-          const convertedKey = makeAttr(convertString(item.id));
-          if (encodeIdsList.includes(item.id)) {
-            acc[convertedKey] = acc[convertedKey]
-              ? encodeData([...decodeData(acc[convertedKey]), item.value])
-              : encodeData([item.value]);
-          } else {
-            acc[convertedKey] = item.value;
-          }
-        }
-
-        return acc;
-      }, {});
-    }
-
     if (scrollPage === "on" && scrollPageBehind === true) {
       attr[makeAttr("scroll_page")] = "true";
     }
     if (clickOutsideToClose === "on" && clickOutside === true) {
       attr[makeAttr("click_outside_to_close")] = "true";
-    }
-    if (embedded === true) {
-      attr[makeAttr("embedded")] = "true";
     }
     if (showCloseButtonAfter) {
       attr[makeAttr("show-close-button-after")] = showCloseButtonAfter;
@@ -443,29 +394,20 @@ class SectionPopup2 extends EditorComponent {
       "brz brz-popup2",
       "brz-popup2__preview",
       `brz-popup2__${columnsHeightStyle}`,
-      {
-        "brz-popup2--static": isGlobal && embedded,
-        "brz-popup2--fixed": (!embedded && isGlobal) || isSimple,
-        "brz-simple-popup": isSimple,
-        "brz-conditions-popup": isGlobal,
-        "brz-conditions-internal-popup": isInternal,
-        "brz-conditions-external-popup": isExternal
-      },
+      "brz-popup2--fixed",
+      { "brz-popup2--inMegaMenu": inMegaMenu },
       className,
+      _className,
       customClassName,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
-      )
+      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div
           className={classNamePopup}
-          id={this.instanceKey}
-          {...makeDataAttr({ name: "popup", value: this.instanceKey })}
+          id={popupId}
+          {...makeDataAttr({ name: "popup", value: popupId })}
           {...attr}
           {...parseCustomAttributes(customAttributes)}
         >

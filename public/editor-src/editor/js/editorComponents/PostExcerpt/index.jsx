@@ -20,6 +20,7 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { getPlaceholder, getPlaceholderIcon } from "./utils";
+import { omit } from "timm";
 
 export default class PostExcerpt extends EditorComponent {
   static get componentId() {
@@ -46,6 +47,7 @@ export default class PostExcerpt extends EditorComponent {
   }
 
   renderPopups() {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData) => {
@@ -54,21 +56,27 @@ export default class PostExcerpt extends EditorComponent {
           value: { popupId }
         } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
-          const blockData = globalBlocks[itemData.value._id];
+          const globalBlockId = itemData.value._id;
+          const blockData = globalBlocks[globalBlockId];
 
           popupId = blockData.value.popupId;
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

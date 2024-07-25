@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -58,10 +57,6 @@ class PageStory extends EditorComponent {
   };
 
   renderForEdit(v) {
-    const className = classnames(
-      "brz-root__container brz-root__container-story brz-reset-all",
-      this.props.className
-    );
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: () => ({
@@ -70,11 +65,7 @@ class PageStory extends EditorComponent {
       })
     });
 
-    return (
-      <div className={className}>
-        <EditorArrayComponent {...popupsProps} />
-      </div>
-    );
+    return <EditorArrayComponent {...popupsProps} />;
   }
 }
 

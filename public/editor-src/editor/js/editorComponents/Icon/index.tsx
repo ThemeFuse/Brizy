@@ -5,7 +5,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -21,6 +20,7 @@ import { isStory } from "visual/utils/models";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
@@ -36,6 +36,7 @@ import {
   resizerTransformPatch,
   resizerTransformValue
 } from "./utils";
+import { omit } from "timm";
 
 const config = Config.getAll();
 const IS_STORY = isStory(config);
@@ -65,6 +66,7 @@ class Icon extends EditorComponent<Value, Props> {
   };
 
   renderPopups(): ReactNode {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData: Block) => {
@@ -74,21 +76,27 @@ class Icon extends EditorComponent<Value, Props> {
 
         const { blockId } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock" && itemData.value._id) {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
-          const blockData = globalBlocks[itemData.value._id];
+          const globalBlockId = itemData.value._id;
+          const blockData = globalBlocks[globalBlockId];
 
           popupId = blockData.value.popupId;
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

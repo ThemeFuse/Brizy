@@ -9,6 +9,7 @@ import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
   sidebarMinistryBrandsMetaCategory,
   sidebarMinistryBrandsMetaDate,
@@ -20,12 +21,12 @@ import {
 } from "../sidebars/sidebars";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
-import * as toolbarLinksColor from "../toolbarLinksColor";
 import * as toolbarMedia from "../toolbarMedia";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
@@ -40,6 +41,7 @@ export class MinistryBrandsSermonFeatured extends EditorComponent<
   static get componentId(): "MinistryBrandsSermonFeatured" {
     return "MinistryBrandsSermonFeatured";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -149,7 +151,7 @@ export class MinistryBrandsSermonFeatured extends EditorComponent<
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-ministryBrands__item--meta-passage"
+                    selector=".brz-ministryBrands__item--meta-passage > .brz-sermonFeatured__item--meta"
                   >
                     <Toolbar
                       {...this.makeToolbarPropsFromConfig2(
@@ -163,8 +165,8 @@ export class MinistryBrandsSermonFeatured extends EditorComponent<
                     >
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarLinksColor,
-                          undefined,
+                          toolbarMetaItemLinkColor,
+                          sidebarMinistryBrandsMetaPassage,
                           {
                             allowExtend: false
                           }
@@ -174,7 +176,7 @@ export class MinistryBrandsSermonFeatured extends EditorComponent<
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
                             toolbarExtendButtons,
-                            undefined,
+                            sidebarExtendButtons,
                             {
                               allowExtend: false
                             }

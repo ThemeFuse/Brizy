@@ -1,7 +1,6 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -47,6 +46,8 @@ export const getItems: GetItems<Value> = ({
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedPopups?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalPopups?.create !== "function";
   const popupSettings = config.ui?.popupSettings ?? {};
   const IS_GLOBAL_POPUP = isPopup(config);
 
@@ -83,7 +84,7 @@ export const getItems: GetItems<Value> = ({
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
 
-  const isExternalImage = dvv("bgImageType") === ImageType.External;
+  const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
 
   return [
     {
@@ -110,7 +111,7 @@ export const getItems: GetItems<Value> = ({
                   label: t("Make it Global"),
                   type: "globalBlock",
                   devices: "desktop",
-                  disabled: isCloud(config) && isShopify(config),
+                  disabled: disabledGlobalBlock,
                   config: {
                     _id: component.getId(),
                     parentId: getInstanceParentId(
@@ -129,7 +130,7 @@ export const getItems: GetItems<Value> = ({
                 },
                 {
                   id: "popupConditions",
-                  type: "legacy-popupConditions",
+                  type: "popupCondition",
                   disabled: !enableDisplayCondition,
                   position: 150
                 }

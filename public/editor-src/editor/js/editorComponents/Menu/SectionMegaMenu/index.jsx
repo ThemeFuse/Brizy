@@ -83,6 +83,7 @@ class SectionMegaMenu extends EditorComponent {
 
     return {
       ...meta,
+      megaMenu: true,
       desktopW,
       desktopWNoSpacing,
       tabletW,

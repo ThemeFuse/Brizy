@@ -41,4 +41,5 @@ export interface Value extends ElementModel {
   addCategoryFilterParent3: string;
   addCategoryFilterHeading3: string;
   dateFormat: string;
+  groupSlug: string;
 }

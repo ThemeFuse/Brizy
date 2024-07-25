@@ -8,7 +8,7 @@ import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
+import Link from "visual/component/Link";
 import { Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
@@ -23,10 +23,12 @@ import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
+import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import { attachRef } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
@@ -40,8 +42,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleColumn, styleItems } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { getLinkData } from "visual/utils/models/link";
-import Link from "visual/component/Link";
+import { omit } from "timm";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -282,6 +283,7 @@ class Column extends EditorComponent {
   }
 
   renderPopups() {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData) => {
@@ -290,20 +292,27 @@ class Column extends EditorComponent {
           value: { popupId }
         } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
-          const blockData = globalBlocks[itemData.value._id];
+          const globalBlockId = itemData.value._id;
+          const blockData = globalBlocks[globalBlockId];
           popupId = blockData.value.popupId;
+
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });

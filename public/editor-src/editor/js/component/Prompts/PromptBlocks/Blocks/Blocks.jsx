@@ -11,8 +11,7 @@ import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import ThumbnailGrid from "../common/ThumbnailGrid";
 
 let defaultFilter = {
-  // type: "light",
-  type: 0,
+  type: "light",
   category: "*",
   search: ""
 };
@@ -35,7 +34,7 @@ class Blocks extends Component {
   };
 
   filterData = (item, currentFilter) => {
-    const typeMatch = currentFilter.type === item.type;
+    const typeMatch = item.type.includes(currentFilter.type);
     const categoryMatch =
       currentFilter.category === "*" ||
       item.cat.includes(currentFilter.category);
@@ -57,7 +56,7 @@ class Blocks extends Component {
     }, {});
 
     blocks.forEach(({ type }) => {
-      counters[type]++;
+      type.forEach((item) => counters[item]++);
     });
 
     return counters;

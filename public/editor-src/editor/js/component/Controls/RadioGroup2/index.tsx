@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
 import { Props as ItemProps } from "./Item";
 
-type Props<T> = WithOnChange<T> &
+export type Props<T> = WithOnChange<T> &
   WithClassName & {
     children: ReactElement<ItemProps<T>>[];
   };

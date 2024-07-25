@@ -11,8 +11,9 @@ export { browserSupports } from "./browserSupports";
 // Note: Workers are build in a separated files
 // See webpack.config.worker.js
 const getWorkerUrl = (config: ConfigType) => {
-  const url = config.urls.worker ?? assetUrl("editor/js");
-  return `${url}/screenshots.worker.min.js`;
+  const base = config.urls?.worker ?? assetUrl("editor/js");
+  const version = config.editorVersion;
+  return `${base}/screenshots.worker.min.js?ver=${version}`;
 };
 
 const SCREENSHOT_MAX_WIDTH = 600;

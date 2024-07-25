@@ -2,19 +2,16 @@ import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import {
-  fromLegacyType,
-  toLegacyType
-} from "visual/component/Options/types/dev/BoxShadow/utils";
 import * as Hex from "visual/utils/color/Hex";
 import * as Blur from "visual/utils/cssProps/Blur";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
-import * as T from "visual/utils/options/BoxShadow/entities/Type";
-import { Value } from "visual/utils/options/BoxShadow/entities/Value";
-import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import * as Str from "visual/utils/string/specs";
+import * as Palette from "../ColorPicker/entities/palette";
+import * as T from "./entities/Type";
+import { Value } from "./entities/Value";
+import { fromLegacyType, toLegacyType } from "./utils";
 
 export const defaultValue: Value = {
   type: T.empty,
@@ -39,7 +36,7 @@ export const defaultValue: Value = {
  * @param get
  * @return {object}
  */
-export const fromElementModel: FromElementModel<"boxShadow"> = get => {
+export const fromElementModel: FromElementModel<"boxShadow"> = (get) => {
   const partial = {
     type: mPipe(() => get("value"), Str.read, fromLegacyType)() ?? T.empty,
     opacity:
@@ -93,7 +90,7 @@ export const fromElementModel: FromElementModel<"boxShadow"> = get => {
 /**
  * Converts box shadow model to db model
  */
-export const toElementModel: ToElementModel<"boxShadow"> = m => {
+export const toElementModel: ToElementModel<"boxShadow"> = (m) => {
   return {
     value: toLegacyType(m.type),
     tempValue: toLegacyType(m.tempType),

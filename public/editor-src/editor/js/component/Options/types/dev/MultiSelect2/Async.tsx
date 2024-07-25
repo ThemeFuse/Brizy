@@ -1,5 +1,4 @@
 import React, {
-  FC,
   ReactElement,
   useCallback,
   useEffect,
@@ -258,13 +257,15 @@ function choiceToItem({
   return <ControlItem<ValueItem> key={value} title={title} value={value} />;
 }
 
-export const Async: FC<Omit<Props, "choices"> & { choices: ChoicesAsync }> = ({
+export const Async = ({
   placeholder,
   choices,
   value: { value },
   config,
   onChange
-}) => {
+}: Omit<Props, "choices"> & {
+  choices: ChoicesAsync;
+}): ReactElement => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const debouncedSearch = useDebounce(state.search, 1000);
   const currentSearchController = useRef<AbortController>();

@@ -1,6 +1,8 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -13,7 +15,132 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     dvv("subscribeEventButtonBgColorHex"),
     dvv("subscribeEventButtonBgColorPalette")
   );
+
+  const { hex: subscribeEventButtonColorHex } = getOptionColorHexByPalette(
+    dvv("subscribeEventButtonColorHex"),
+    dvv("subscribeEventButtonColorPalette")
+  );
+
+  const subscribeEventButtonTypographyFontSize =
+    Num.read(dvv("subscribeEventButtonTypographyFontSize")) ?? 15;
+
+  const subscribeEventButtonTypographyLineHeight =
+    Num.read(dvv("subscribeEventButtonTypographyLineHeight")) ?? 1.6;
+
+  const maxBorderRadius = getButtonMaxBorderRadius(
+    subscribeEventButtonTypographyFontSize,
+    subscribeEventButtonTypographyLineHeight
+  );
+
+  const subscribeEventButtonColorOpacity = dvv(
+    "subscribeEventButtonColorOpacity"
+  );
+
+  const subscribeEventButtonBgColorOpacity = dvv(
+    "subscribeEventButtonBgColorOpacity"
+  );
+
+  const fillType = dvv("subscribeEventButtonFillType");
+
+  const customSize = dvv("subscribeEventButtonSize") !== "custom";
+  const customBorderRadius = dvv("buttonsBorderRadiusType") !== "custom";
+
+  const fillTypeDefault = fillType === "default";
+
   return [
+    {
+      id: "toolbarSubscribeEventButton",
+      label: t("Button"),
+      type: "popover",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
+      position: 20,
+      options: [
+        {
+          id: "subscribeEventButtonSizeGroup",
+          type: "group",
+          position: 10,
+          options: [
+            {
+              id: "subscribeEventButtonSize",
+              label: t("Size"),
+              type: "radioGroup",
+              choices: [
+                { value: "small", icon: "nc-small" },
+                { value: "medium", icon: "nc-medium" },
+                { value: "large", icon: "nc-large" },
+                { value: "custom", icon: "nc-more" }
+              ]
+            },
+            {
+              id: "subscribeEventButtonPaddingRL",
+              label: t("Width"),
+              type: "slider",
+              disabled: customSize,
+              config: {
+                min: 0,
+                max: 100,
+                units: [{ title: "px", value: "px" }]
+              }
+            },
+            {
+              id: "subscribeEventButtonPaddingTB",
+              label: t("Height"),
+              type: "slider",
+              disabled: customSize,
+              config: {
+                min: 0,
+                max: 100,
+                units: [{ title: "px", value: "px" }]
+              }
+            }
+          ]
+        },
+        {
+          id: "subscribeEventButtonFillType",
+          label: t("Fill"),
+          devices: "desktop",
+          type: "radioGroup",
+          position: 20,
+          choices: [
+            { value: "filled", icon: "nc-circle" },
+            { value: "outline", icon: "nc-outline" },
+            { value: "default", icon: "nc-close" }
+          ]
+        },
+        {
+          id: "subscribeEventButtonBorderRadiusTypeGroup",
+          type: "group",
+          devices: "desktop",
+          disabled: fillTypeDefault,
+          position: 30,
+          options: [
+            {
+              id: "buttonsBorderRadiusType",
+              label: t("Corner"),
+              type: "radioGroup",
+              choices: [
+                { value: "square", icon: "nc-corners-square" },
+                { value: "rounded", icon: "nc-corners-round" },
+                { value: "custom", icon: "nc-more" }
+              ]
+            },
+            {
+              id: "buttonsBorderRadius",
+              type: "slider",
+              disabled: customBorderRadius,
+              config: {
+                min: 0,
+                max: maxBorderRadius,
+                units: [{ title: "px", value: "px" }]
+              }
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "toolbarTypography",
       type: "popover",
@@ -41,10 +168,16 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              subscribeEventButtonBgColorHex,
-              dvv("subscribeEventButtonBgColorOpacity")
-            )
+            backgroundColor:
+              fillType === "filled"
+                ? hexToRgba(
+                    subscribeEventButtonBgColorHex,
+                    subscribeEventButtonBgColorOpacity
+                  )
+                : hexToRgba(
+                    subscribeEventButtonColorHex,
+                    subscribeEventButtonColorOpacity
+                  )
           }
         }
       },
@@ -62,7 +195,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "subscribeEventButton",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillType !== "filled"
                 }
               ]
             },
@@ -85,7 +219,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "subscribeEventButtonBorder",
                   type: "border",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             },
@@ -97,7 +232,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                 {
                   id: "subscribeEventButtonBoxShadow",
                   type: "boxShadow",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             }
@@ -120,6 +256,29 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           type: "inputText",
           placeholder: t("Button text..."),
           label: t("Button")
+        },
+        {
+          id: "grid",
+          type: "grid",
+          config: {
+            separator: true
+          },
+          columns: [
+            {
+              id: "col-1",
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

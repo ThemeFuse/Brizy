@@ -1,6 +1,7 @@
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
+import { FCC } from "visual/utils/react/types";
 
-export const FatIconsGrid: FC = ({ children }): ReactElement => {
+export const FatIconsGrid: FCC = ({ children }): ReactElement => {
   return (
     <div
       className={

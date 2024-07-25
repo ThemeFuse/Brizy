@@ -6,7 +6,10 @@ import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
 import { t } from "visual/utils/i18n";
 import * as Unit from "visual/utils/math/Unit";
-import { Viewport as ViewportType, construct } from "../types/Viewport";
+import {
+  Viewport as ViewportType,
+  construct
+} from "visual/utils/options/Motion/types/Viewport";
 
 const divide = (v: number): number => v / 100;
 
@@ -20,7 +23,7 @@ export function Viewport({
   onChange
 }: Props): ReactElement {
   const _onChangeStart = useCallback(
-    (x) =>
+    (x: number) =>
       mPipe(
         divide,
         pass(Unit.is),
@@ -30,7 +33,7 @@ export function Viewport({
     [onChange, bottom]
   );
   const _onChangeEnd = useCallback(
-    (x) =>
+    (x: number) =>
       mPipe(
         divide,
         pass(Unit.is),

@@ -5,15 +5,21 @@ import _ from "underscore";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
+import Link from "visual/component/Link";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { deviceModeSelector } from "visual/redux/selectors";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { hasMembership } from "visual/utils/membership";
+import { getLinkData } from "visual/utils/models/link";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
+import { handleLinkChange } from "visual/utils/patch/Link";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
@@ -81,6 +87,11 @@ class SectionItem extends EditorComponent {
   onPaddingResizerStart = () => {
     this.setState({ isDragging: true });
   };
+
+  patchValue(patch, meta = {}) {
+    const link = handleLinkChange(patch);
+    super.patchValue({ ...patch, ...link }, meta);
+  }
 
   handlePaddingResizerChange = (patch) => {
     if (this.state.isDragging) {
@@ -218,6 +229,38 @@ class SectionItem extends EditorComponent {
     );
   }
 
+  renderPopups() {
+    const popupsProps = this.makeSubcomponentProps({
+      bindWithKey: "popups",
+      itemProps: (itemData) => {
+        let {
+          value: { popupId }
+        } = itemData;
+        const { blockId } = itemData;
+
+        if (itemData.type === "GlobalBlock") {
+          // TODO: some kind of error handling
+          const globalBlocks = blocksDataSelector(getStore().getState());
+          const blockData = globalBlocks[itemData.value._id];
+
+          popupId = blockData.value.popupId;
+        }
+
+        return {
+          blockId,
+          instanceKey: IS_EDITOR
+            ? `${this.getId()}_${popupId}`
+            : itemData.type === "GlobalBlock"
+            ? `global_${popupId}`
+            : popupId
+        };
+      }
+    });
+
+    // @ts-expect-error: Need transform EditorArrayComponents to ts
+    return <EditorArrayComponent {...popupsProps} />;
+  }
+
   renderForEdit(v, vs, vd) {
     const { className, containerType, customCSS } = v;
     const classNameSectionContent = classnames(
@@ -251,6 +294,10 @@ class SectionItem extends EditorComponent {
                 {this.renderToolbar()}
                 <ToolbarExtend onEscape={this.handleToolbarEscape}>
                   {this.renderItems(v, vs, vd)}
+                  {shouldRenderPopup(
+                    v,
+                    blocksDataSelector(getStore().getState())
+                  ) && this.renderPopups()}
                 </ToolbarExtend>
               </Roles>
             </div>
@@ -273,12 +320,27 @@ class SectionItem extends EditorComponent {
       )
     );
 
+    const linkData = getLinkData(v);
+
     return (
-      <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <div className={classNameSectionContent}>
-          {this.renderItems(v, vs, vd)}
-        </div>
-      </CustomCSS>
+      <>
+        <CustomCSS selectorName={this.getId()} css={customCSS}>
+          <div className={classNameSectionContent}>
+            {this.renderItems(v, vs, vd)}
+            {linkData.href && (
+              <Link
+                className="brz-link-container"
+                type={linkData.type}
+                href={linkData.href}
+                target={linkData.target}
+                rel={linkData.rel}
+              />
+            )}
+          </div>
+        </CustomCSS>
+        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+          this.renderPopups()}
+      </>
     );
   }
 }

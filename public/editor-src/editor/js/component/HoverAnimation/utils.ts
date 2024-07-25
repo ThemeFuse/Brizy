@@ -1,6 +1,6 @@
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { Value } from "visual/utils/options/Animation/types/Value";
 import { isNullish } from "visual/utils/value";
-import { Value } from "../Options/types/dev/Animation/types/Value";
 import { getAnimations } from "./animations";
 import { HoverTarget, MultiAnimation } from "./types";
 

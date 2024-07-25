@@ -157,14 +157,23 @@ export function style(
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && :is(.brz-groupDetail__item a, .brz-ministryBrands__item--meta--links):hover":
-      {
-        standart: [
-          "cssStyleElementOfMinistryBrandsMetaLinksTypography",
-          "cssStyleElementOfMinistryBrandsMetaLinksColor"
-        ],
-        interval: ["cssStyleHoverTransition"]
-      },
+    ".brz && .brz-ministryBrands__item--meta--links:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsMetaLinksTypography",
+        "cssStyleElementOfMinistryBrandsMetaLinksColor"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-groupDetail__item a:hover": {
+      standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
     ".brz && .brz-groupDetail__item--meta--preview p:hover": {
       standart: [
         "cssStyleElementOfMinistryBrandsParagraphTypography",

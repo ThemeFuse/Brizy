@@ -50,6 +50,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      color: inherit;
     }
   }
 
@@ -69,13 +70,13 @@
       background-color: rgba(0, 0, 0, 0.8);
       opacity: 0;
 
-       > div {
+      > div {
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
 
-         > span {
+        > span {
           height: auto;
           align-items: center;
           text-align: center;
@@ -240,11 +241,6 @@
         padding-bottom: 0.5rem;
         border-bottom-width: 1px;
         border-bottom-style: solid;
-
-        span:last-child {
-          text-transform: none;
-          font-size: 50%;
-        }
       }
 
       &__content {
@@ -304,11 +300,6 @@
     &-item {
       display: none;
 
-      a {
-        color: inherit;
-        transition: inherit;
-      }
-
       table {
         table-layout: fixed;
         width: 100%;
@@ -358,6 +349,10 @@
         }
       }
     }
+  }
+
+  h5.brz-eventLayout-results-heading {
+    margin-bottom: 20px;
   }
 }
 

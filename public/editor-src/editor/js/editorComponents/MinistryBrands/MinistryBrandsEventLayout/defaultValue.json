@@ -43,6 +43,7 @@
 
     "showGroupFilter": "off",
     "groupFilterHeading": "Group",
+    "groupSlug": "",
 
     "showSearch": "on",
     "searchPlaceholder": "Search",
@@ -52,6 +53,7 @@
     "eventDetailPage": "",
     "eventDetailPageTitle": "",
     "eventDetailPageSource": null,
+    "eventDetailPageButtonText": "Button",
     "source": "",
 
     "dateFormat": "g:i a",
@@ -73,12 +75,14 @@
       "dateTypographyFontFamily": "lato",
       "listPaginationTypographyFontFamily": "lato",
       "listTitleTypographyFontFamily": "lato",
+      "groupingDateTypographyFontFamily": "lato",
       "listItemDateTypographyFontFamily": "lato",
       "listItemTitleTypographyFontFamily": "lato",
       "listItemMetaTypographyFontFamily": "lato",
       "calendarHeadingTypographyFontFamily": "lato",
       "calendarDaysTypographyFontFamily": "lato",
-      "eventsTypographyFontFamily": "lato"
+      "eventsTypographyFontFamily": "lato",
+      "detailButtonTypographyFontFamily": "lato"
     },
 
     "layoutViewTypographyFontStyle": "",
@@ -359,6 +363,17 @@
     "listTitleTypographyFontWidth": 100,
     "listTitleTypographyFontSoftness": 0,
 
+    "groupingDateTypographyFontStyle": "heading5",
+    "groupingDateTypographyFontFamilyType": "google",
+    "groupingDateTypographyFontSize": 15,
+    "groupingDateTypographyFontSizeSuffix": "px",
+    "groupingDateTypographyFontWeight": 400,
+    "groupingDateTypographyLetterSpacing": 0,
+    "groupingDateTypographyLineHeight": 1,
+    "groupingDateTypographyVariableFontWeight": 400,
+    "groupingDateTypographyFontWidth": 100,
+    "groupingDateTypographyFontSoftness": 0,
+
     "listItemDateTypographyFontStyle": "",
     "listItemDateTypographyFontFamilyType": "google",
     "listItemDateTypographyFontSize": 18,
@@ -425,6 +440,39 @@
     "eventsTypographyFontWidth": 100,
     "eventsTypographyFontSoftness": 0,
 
+    "resultsHeadingTypographyFontStyle": "heading5",
+    "resultsHeadingTypographyFontFamilyType": "google",
+    "resultsHeadingTypographyFontSize": 24,
+    "resultsHeadingTypographyFontSizeSuffix": "px",
+    "resultsHeadingTypographyFontWeight": 700,
+    "resultsHeadingTypographyLetterSpacing": 0,
+    "resultsHeadingTypographyLineHeight": 1.1,
+    "resultsHeadingTypographyVariableFontWeight": 700,
+    "resultsHeadingTypographyFontWidth": 100,
+    "resultsHeadingTypographyFontSoftness": 0,
+
+    "noResultsTypographyFontStyle": "paragraph",
+    "noResultsTypographyFontFamilyType": "google",
+    "noResultsTypographyFontSize": 24,
+    "noResultsTypographyFontSizeSuffix": "px",
+    "noResultsTypographyFontWeight": 700,
+    "noResultsTypographyLetterSpacing": 0,
+    "noResultsTypographyLineHeight": 1.1,
+    "noResultsTypographyVariableFontWeight": 700,
+    "noResultsTypographyFontWidth": 100,
+    "noResultsTypographyFontSoftness": 0,
+
+    "detailButtonTypographyFontStyle": "button",
+    "detailButtonTypographyFontFamilyType": "google",
+    "detailButtonTypographyFontSize": 15,
+    "detailButtonTypographyFontSizeSuffix": "px",
+    "detailButtonTypographyFontWeight": 400,
+    "detailButtonTypographyLetterSpacing": 0,
+    "detailButtonTypographyLineHeight": 1,
+    "detailButtonTypographyVariableFontWeight": 400,
+    "detailButtonTypographyFontWidth": 100,
+    "detailButtonTypographyFontSoftness": 0,
+
     "colorHex": "#707070",
     "colorOpacity": 1,
     "colorPalette": "",
@@ -453,12 +501,21 @@
     "listPaginationColorOpacity": 1,
     "listPaginationColorPalette": "",
 
+    "listPaginationArrowsColorHex": "#000000",
+    "listPaginationArrowsColorOpacity": 1,
+    "listPaginationArrowsColorPalette": "color2",
+    "hoverListPaginationArrowsColorPalette": "color3",
+
     "listPaginationSpacing": 15,
     "listPaginationSpacingSuffix": "px",
 
     "listTitleColorHex": "#000000",
     "listTitleColorOpacity": 1,
     "listTitleColorPalette": "",
+
+    "groupingDateColorHex": "#000000",
+    "groupingDateColorOpacity": 1,
+    "groupingDateColorPalette": "color7",
 
     "listItemDateColorHex": "#fffffff",
     "listItemDateColorOpacity": 1,
@@ -483,6 +540,18 @@
     "eventsColorHex": "#fffffff",
     "eventsColorOpacity": 1,
     "eventsColorPalette": "",
+
+    "resultsHeadingColorHex": "",
+    "resultsHeadingColorOpacity": 1,
+    "resultsHeadingColorPalette": "color3",
+
+    "noResultsColorHex": "",
+    "noResultsColorOpacity": 1,
+    "noResultsColorPalette": "color7",
+
+    "detailButtonColorHex": "#ffffff",
+    "detailButtonColorOpacity": 1,
+    "detailButtonColorPalette": "color8",
 
     "listBorderStyle": "solid",
     "listBorderColorHex": "#000000",
@@ -533,6 +602,62 @@
     "calendarDaysGradientActivePointer": "finishPointer",
     "calendarDaysGradientLinearDegree": 90,
     "calendarDaysGradientRadialDegree": 0,
+
+    "buttonsBorderRadiusType": "custom",
+    "buttonsBorderRadius": 3,
+    "buttonsBorderRadiusSuffix": "px",
+
+    "buttonsBorderTopLeftRadius": 3,
+    "buttonsBorderTopRightRadius": 3,
+    "buttonsBorderBottomRightRadius": 3,
+    "buttonsBorderBottomLeftRadius": 3,
+
+    "detailButtonBgColorType": "solid",
+    "detailButtonBgColorHex": "#818a91",
+    "detailButtonBgColorOpacity": 1,
+    "hoverDetailButtonBgColorOpacity": 0.8,
+    "detailButtonBgColorPalette": "color3",
+
+    "detailButtonGradientColorHex": "#ffffff",
+    "detailButtonGradientColorOpacity": 1,
+    "detailButtonGradientColorPalette": "",
+    "detailButtonGradientType": "linear",
+    "detailButtonGradientStartPointer": 0,
+    "detailButtonGradientFinishPointer": 100,
+    "detailButtonGradientActivePointer": "finishPointer",
+    "detailButtonGradientLinearDegree": 45,
+    "detailButtonGradientRadialDegree": 0,
+
+    "detailButtonFillType": "filled",
+
+    "detailButtonSize": "custom",
+
+    "detailButtonPaddingTB": 12,
+    "detailButtonPaddingRL": 24,
+
+    "detailButtonPaddingTBSuffix": "px",
+    "detailButtonPaddingRLSuffix": "px",
+
+    "detailButtonBorderStyle": "solid",
+    "detailButtonBorderColorHex": "#000000",
+    "detailButtonBorderColorOpacity": 1,
+    "detailButtonBorderColorPalette": "",
+
+    "detailButtonBorderWidthType": "grouped",
+    "detailButtonBorderWidth": 0,
+    "detailButtonBorderTopWidth": 0,
+    "detailButtonBorderRightWidth": 0,
+    "detailButtonBorderBottomWidth": 0,
+    "detailButtonBorderLeftWidth": 0,
+
+    "detailButtonBoxShadow": "none",
+    "detailButtonBoxShadowColorHex": "#000000",
+    "detailButtonBoxShadowColorPalette": "",
+    "detailButtonBoxShadowColorOpacity": 1,
+    "detailButtonBoxShadowBlur": 2,
+    "detailButtonBoxShadowSpread": 2,
+    "detailButtonBoxShadowVertical": 2,
+    "detailButtonBoxShadowHorizontal": 2,
 
     "parentBgColorType": "solid",
     "parentBgColorHex": "#ff0000",
@@ -622,6 +747,9 @@
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "buttonsHoverTransition": 50,
+    "buttonsHoverTransitionSuffix": "",
 
     "maskShape": "none",
     "maskSize": "cover",

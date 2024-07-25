@@ -1,6 +1,7 @@
 import Config from "visual/global/Config";
 import { ReduxState } from "visual/redux/types";
 import { Block, GlobalBlockPosition } from "visual/types";
+import { isGlobalBlock } from "visual/types/utils";
 import { isPopup, isStory } from "visual/utils/models";
 import { getAllowedGBIds } from "./getAllowedGBIds";
 
@@ -32,7 +33,12 @@ export const generateBlocksList = (
     return pageBlocksIds;
   }
 
-  const allowedGBIds = getAllowedGBIds(pageBlocksIds, globalBlocks, page);
+  const withoutPopups = Object.entries(globalBlocks)
+    .filter(([, block]) => {
+      return isGlobalBlock(block);
+    })
+    .reduce((blocks, [uid, data]) => ({ ...blocks, [uid]: data }), {});
+  const allowedGBIds = getAllowedGBIds(pageBlocksIds, withoutPopups, page);
 
   const topAlignedConditionBlocks = generateConditionBlocks(
     allowedGBIds,

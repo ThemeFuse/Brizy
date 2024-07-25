@@ -11,6 +11,8 @@ import {
   DefaultTemplatePopup,
   KitItem,
   KitsWithThumbs,
+  LayoutsDefaultTemplate,
+  LayoutsPages,
   LayoutsWithThumbs,
   PopupsWithThumbs,
   StoriesWithThumbs
@@ -146,13 +148,15 @@ export interface VISUAL_CONFIG {
       Array<KitItem>
     >;
     defaultPopups?: DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID>;
-    defaultLayouts?: DefaultTemplate<
+    defaultLayouts?: LayoutsDefaultTemplate<
       LayoutsWithThumbs,
-      BlocksArray<DefaultBlockWithID>
+      BlocksArray<DefaultBlockWithID>,
+      LayoutsPages
     >;
     defaultStories?: DefaultTemplate<
       StoriesWithThumbs,
-      BlocksArray<DefaultBlock> | DefaultBlock
+      BlocksArray<DefaultBlock> | DefaultBlock,
+      LayoutsPages
     >;
 
     //Collection Items

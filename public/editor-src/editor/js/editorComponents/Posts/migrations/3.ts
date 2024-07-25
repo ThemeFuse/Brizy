@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { ElementModel } from "visual/component/Elements/Types";
 import { Dictionary } from "visual/types/utils";
 import { Migration } from "visual/utils/migration";

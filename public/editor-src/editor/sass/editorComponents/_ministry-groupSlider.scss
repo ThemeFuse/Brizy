@@ -51,6 +51,10 @@
               }
             }
           }
+
+          &-hidden {
+            display: none;
+          }
         }
       }
     }
@@ -95,5 +99,9 @@
     .brz-groupSlider-swiper-wrapper
     .brz-groupSlider-swiper-slide {
     flex-basis: 100% !important;
+  }
+
+  .brz-groupSlider-swiper-slide:nth-child(n+2) {
+    display: none;
   }
 }

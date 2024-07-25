@@ -13,6 +13,10 @@ export const getItems: GetItems<Value, Props> = (data) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const isDisabledFilterCategory = dvv("showCategoryFilter") === "off";
+  const isGroupFilterDisabled = dvv("showGroupFilter") === "off";
+  const isValidGroupSlug = !!dvv("groupSlug");
+
+  const isDisabledSearchFilter = dvv("showSearchFilter") === "off";
 
   return [
     {
@@ -181,7 +185,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
                   label: t("Button Text"),
                   devices: "desktop",
                   placeholder: t("Button Text..."),
-                  disabled: !v.detailPage,
+                  disabled: !dvv("detailPage"),
                   config: {
                     size: "medium"
                   },
@@ -197,6 +201,24 @@ export const getItems: GetItems<Value, Props> = (data) => {
               id: "tabSermonLayoutFilter",
               label: t("Filter"),
               options: [
+                {
+                  id: "groupSlug",
+                  devices: "desktop",
+                  label: t("Group"),
+                  type: "select",
+                  choices: getEkklesiaChoiches(
+                    config,
+                    {
+                      key: "sermon"
+                    },
+                    {
+                      display: "list",
+                      groupby: "group",
+                      order: "title",
+                      show: "group_show"
+                    }
+                  )
+                },
                 {
                   id: "parentCategory",
                   label: t("Parent Category"),
@@ -216,6 +238,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
                   id: "groupGroupFilter",
                   type: "group",
                   devices: "desktop",
+                  disabled: isValidGroupSlug,
                   options: [
                     {
                       id: "showGroupFilter",
@@ -226,14 +249,13 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       id: "groupFilterHeading",
                       type: "inputText",
                       label: t("Heading"),
-                      disabled: v.showGroupFilter === "off",
+                      disabled: isGroupFilterDisabled,
                       config: {
                         size: "medium"
                       }
                     }
                   ]
                 },
-
                 {
                   id: "groupCategoryFilter",
                   type: "group",
@@ -260,7 +282,6 @@ export const getItems: GetItems<Value, Props> = (data) => {
                     }
                   ]
                 },
-
                 {
                   id: "groupSeriesFilter",
                   type: "group",
@@ -275,14 +296,13 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       id: "seriesFilterHeading",
                       type: "inputText",
                       label: t("Heading"),
-                      disabled: v.showSeriesFilter === "off",
+                      disabled: dvv("showSeriesFilter") === "off",
                       config: {
                         size: "medium"
                       }
                     }
                   ]
                 },
-
                 {
                   id: "groupSpeakerFilter",
                   type: "group",
@@ -297,7 +317,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       id: "speakerFilterHeading",
                       type: "inputText",
                       label: t("Heading"),
-                      disabled: v.showSpeakerFilter === "off",
+                      disabled: dvv("showSpeakerFilter") === "off",
                       config: {
                         size: "medium"
                       }
@@ -318,7 +338,18 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       id: "searchFilterPlacehoder",
                       type: "inputText",
                       label: t("Placeholder"),
-                      disabled: v.showSearchFilter === "off",
+                      disabled: isDisabledSearchFilter,
+                      config: {
+                        size: "medium"
+                      }
+                    },
+                    {
+                      id: "searchValue",
+                      type: "inputText",
+                      label: t("Value"),
+                      devices: "desktop",
+                      placeholder: t("Search Text..."),
+                      disabled: isDisabledSearchFilter,
                       config: {
                         size: "medium"
                       }

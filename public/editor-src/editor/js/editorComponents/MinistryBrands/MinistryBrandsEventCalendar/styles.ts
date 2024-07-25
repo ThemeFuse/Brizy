@@ -340,9 +340,10 @@ export function style(
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow",
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarWidth",
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarHeight",
-        "cssStyleElementMinistryEventCalendarIconPosition"
+        "cssStyleElementMinistryEventCalendarIconPosition",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBorderRadius"
       ],
-      interval: ["cssStyleHoverTransition"]
+      interval: ["cssStyleElementMinistryEventCalendarHoverTransition"]
     }
   };
 

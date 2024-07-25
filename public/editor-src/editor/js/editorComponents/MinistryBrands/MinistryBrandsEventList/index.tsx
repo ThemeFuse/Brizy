@@ -9,6 +9,7 @@ import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
+import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
   sidebarMinistryBrandsMetaAddress,
   sidebarMinistryBrandsMetaCategory,
@@ -27,6 +28,7 @@ import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarRegisterButton from "../toolbarRegisterButton";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
@@ -38,6 +40,7 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsEventList" {
     return "MinistryBrandsEventList";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -136,12 +139,12 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                       allowExtend: false
                     }
                   )}
-                  selector=".brz-ministryBrands__item--meta-address"
+                  selector=".brz-ministryBrands__item--meta-address > .brz-eventList__item--meta"
                 >
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
                       toolbarExtendButtons,
-                      undefined,
+                      sidebarExtendButtons,
                       {
                         allowExtend: false
                       }
@@ -151,7 +154,7 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                     <Toolbar
                       {...this.makeToolbarPropsFromConfig2(
                         toolbarRegisterButton,
-                        undefined,
+                        sidebarExtendButtons,
                         {
                           allowExtend: false
                         }
@@ -180,46 +183,57 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                         >
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarPagination,
-                              undefined,
+                              toolbarMetaItemLinkColor,
+                              sidebarMinistryBrandsMetaAddress,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-ministryBrands__pagination a"
+                            selector=".brz-ministryBrands__item--meta-address > a"
                           >
                             <Toolbar
                               {...this.makeToolbarPropsFromConfig2(
-                                toolbarImage,
+                                toolbarPagination,
                                 undefined,
                                 {
                                   allowExtend: false
                                 }
                               )}
-                              selector=".brz-ministryBrands__item--media"
+                              selector=".brz-ministryBrands__pagination a"
                             >
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarMetaIcons,
+                                  toolbarImage,
                                   undefined,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-ministryBrands__meta--icons"
+                                selector=".brz-ministryBrands__item--media"
                               >
-                                <Wrapper
-                                  {...this.makeWrapperProps({
-                                    className
-                                  })}
+                                <Toolbar
+                                  {...this.makeToolbarPropsFromConfig2(
+                                    toolbarMetaIcons,
+                                    undefined,
+                                    {
+                                      allowExtend: false
+                                    }
+                                  )}
+                                  selector=".brz-ministryBrands__meta--icons"
                                 >
-                                  <DynamicContentHelper
-                                    placeholder={getPlaceholder(v)}
-                                    props={{ className: "brz-eventList" }}
-                                    blocked={false}
-                                    tagName="div"
-                                  />
-                                </Wrapper>
+                                  <Wrapper
+                                    {...this.makeWrapperProps({
+                                      className
+                                    })}
+                                  >
+                                    <DynamicContentHelper
+                                      placeholder={getPlaceholder(v)}
+                                      props={{ className: "brz-eventList" }}
+                                      blocked={false}
+                                      tagName="div"
+                                    />
+                                  </Wrapper>
+                                </Toolbar>
                               </Toolbar>
                             </Toolbar>
                           </Toolbar>
