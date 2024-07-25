@@ -1,5 +1,30 @@
 import { Config, getConfig } from "@/config";
-import { DefaultBlock, Kit, KitItem, Style } from "@/types/DefaultTemplate";
+import {
+  isDefaultBlock,
+  isDefaultBlockArray,
+  isDefaultBlockWithID,
+  isDefaultBlockWithIDArray,
+  isKitDataItems,
+  isKitDataResult,
+  isLayoutDataResult,
+  isPopupDataResult,
+  isPopupsResponse,
+  isStoryDataBlocks,
+  isStoryDataResponse
+} from "@/defaultTemplates/utils";
+import {
+  APIPopup,
+  DefaultBlock,
+  DefaultBlockWithID,
+  Kit,
+  KitDataResult,
+  KitItem,
+  LayoutsAPI,
+  LayoutsPagesResult,
+  StoriesAPI,
+  StoryPagesResult,
+  Style
+} from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { IconUploadData } from "@/types/Icon";
@@ -17,7 +42,8 @@ import {
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
-import { Arr, Obj, Str } from "@brizy/readers";
+import { Arr, Json, Obj, Str } from "@brizy/readers";
+import { isT, mPipe, pass } from "fp-utilities";
 import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
@@ -969,7 +995,10 @@ export const addAdobeAccount = async (body: AddAccount) => {
     });
     return res;
   } catch (error) {
-    throw new Error(`Failed to add Adobe account: ${error.message}`);
+    const getError = mPipe(Obj.read, Obj.readKey("message"), Str.read);
+    const message = getError(error) ?? "Failed to connect new account";
+
+    throw new Error(`Failed to add Adobe account: ${message}`);
   }
 };
 
@@ -1435,7 +1464,7 @@ export const getDefaultKits = async (
   categories: { slug: string; title: string }[];
   styles: Style;
 }> => {
-  const fullUrl = makeUrl(`${url}/api/get-kit-collections-chunk`, {
+  const fullUrl = makeUrl(url, {
     project_id: id
   });
 
@@ -1446,11 +1475,13 @@ export const getDefaultKits = async (
   if (response.ok) {
     const res = await response.json();
 
-    return {
-      blocks: res.collections,
-      categories: res.categories,
-      styles: res.styles
-    };
+    if (isT(res.collections) && isT(res.categories) && isT(res.styles)) {
+      return {
+        blocks: res.collections,
+        categories: res.categories,
+        styles: res.styles
+      };
+    }
   }
 
   throw new Error(t("Failed to load kits"));
@@ -1461,7 +1492,7 @@ export const getKitData = async (
   kitId: string,
   id: string
 ): Promise<DefaultBlock> => {
-  const fullUrl = makeUrl(`${url}/api/get-item`, {
+  const fullUrl = makeUrl(url, {
     project_id: kitId,
     page_slug: id
   });
@@ -1471,30 +1502,246 @@ export const getKitData = async (
   });
 
   if (response.ok) {
-    const res = await response.json();
-    const collection = res.collection.pop();
+    const res: KitDataResult = await response.json();
 
-    return JSON.parse(collection.pageData).items.pop();
+    const parsedResult = mPipe(
+      pass(isKitDataResult),
+      (s: KitDataResult) => s.collection.pop()?.pageData,
+      (r) => Json.read(r),
+      pass(isKitDataItems),
+      Obj.readKey("items"),
+      Arr.read,
+      (res) => res[0]
+    )(res);
+
+    if (isT(parsedResult) && isDefaultBlock(parsedResult)) {
+      return parsedResult;
+    }
   }
 
   throw new Error(t("Failed to load kits"));
 };
 
 export const getKitsList = async (url: string): Promise<KitItem[]> => {
-  const response = await request(`${url}/api/get-kits`, {
+  const response = await request(url, {
     method: "GET"
   });
 
   if (response.ok) {
     const res = await response.json();
 
-    return res.collections.map((item: { slug: string; title: string }) => ({
-      ...item,
-      id: item.slug
-    }));
+    if (Arr.is(res.collections)) {
+      return res.collections.map((item: { slug: string; title: string }) => ({
+        ...item,
+        id: item.slug
+      }));
+    }
   }
 
   throw new Error(t("Failed to load kits"));
+};
+
+export const getDefaultLayouts = async (
+  url: string
+): Promise<{
+  templates: LayoutsAPI[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (res.collections && res.categories) {
+      return { templates: res.collections, categories: res.categories };
+    }
+  }
+
+  throw new Error(t("Failed to load layouts"));
+};
+
+export const getDefaultLayoutsPages = async (
+  url: string,
+  id: string
+): Promise<LayoutsPagesResult> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id,
+    per_page: "20"
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    return response.json();
+  }
+
+  throw new Error(t("Failed to load layouts"));
+};
+
+export const getDefaultLayoutData = async (
+  url: string,
+  layoutId: Literal,
+  id: string
+): Promise<DefaultBlockWithID[]> => {
+  const fullUrl = makeUrl(url, {
+    project_id: layoutId as string,
+    page_slug: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    const parsedResult = mPipe(
+      pass(isLayoutDataResult),
+      (res) => res.pop()?.pageData,
+      (r) => JSON.parse(r),
+      Obj.readKey("items")
+    )(res);
+
+    if (isT(parsedResult) && isDefaultBlockWithIDArray(parsedResult)) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load layouts"));
+};
+
+export const getPopups = async (
+  url: string
+): Promise<{
+  blocks: APIPopup[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isPopupsResponse(res)) {
+      return { blocks: res.collections, categories: res.categories };
+    }
+  }
+
+  throw new Error(t("Failed to load popups"));
+};
+
+export const getPopupData = async (
+  url: string,
+  id: string
+): Promise<DefaultBlockWithID> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id as string
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    const parsedResult = mPipe(
+      pass(isPopupDataResult),
+      (res) => res.pop()?.pageData,
+      (r) => Json.read(r),
+      pass(isKitDataItems),
+      Obj.readKey("items"),
+      Arr.read,
+      (r) => r.pop()
+    )(res);
+
+    if (isT(parsedResult) && isDefaultBlockWithID(parsedResult)) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load popups"));
+};
+
+export const getDefaultStories = async (
+  url: string
+): Promise<{
+  templates: StoriesAPI[];
+  categories: { slug: string; title: string }[];
+}> => {
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (res.collections && res.categories) {
+      return { templates: res.collections, categories: res.categories };
+    }
+  }
+
+  throw new Error(t("Failed to load stories"));
+};
+
+export const getDefaultStory = async (
+  url: string,
+  layoutId: Literal,
+  id: string
+): Promise<{
+  blocks: DefaultBlock[];
+}> => {
+  const fullUrl = makeUrl(url, {
+    project_id: `${layoutId}`,
+    page_slug: id
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    const parsedResult = mPipe(
+      pass(isStoryDataResponse),
+      Obj.readKey("collection"),
+      Json.read,
+      pass(isStoryDataBlocks),
+      pass(({ blocks }) => isDefaultBlockArray(blocks))
+    )(res);
+
+    if (parsedResult) {
+      return parsedResult;
+    }
+  }
+
+  throw new Error(t("Failed to load stories"));
+};
+
+export const getDefaultStoryPages = async (
+  url: string,
+  id: string
+): Promise<StoryPagesResult> => {
+  const fullUrl = makeUrl(url, {
+    project_id: id,
+    per_page: "20"
+  });
+
+  const response = await request(fullUrl, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    return response.json();
+  }
+
+  throw new Error(t("Failed to load stories"));
 };
 
 //#endregion

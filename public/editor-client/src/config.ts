@@ -171,6 +171,24 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   )
 });
 
+const imagePatternsReader = parseStrict<
+  Record<string, unknown>,
+  Required<ImagePatterns>
+>({
+  full: pipe(
+    mPipe(Obj.readKey("full"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns full pattern")
+  ),
+  original: pipe(
+    mPipe(Obj.readKey("original"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns original pattern")
+  ),
+  split: pipe(
+    mPipe(Obj.readKey("split"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns split pattern")
+  )
+});
+
 const collectionTypesReader = (arr: Array<unknown>): Array<CollectionType> => {
   return arr.filter(
     (o): o is CollectionType => Obj.isObject(o) && !!o.label && !!o.name
@@ -207,20 +225,7 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
       Obj.read,
       Obj.readKey("imagePatterns"),
       Obj.read,
-      parseStrict<PLUGIN_ENV, ImagePatterns>({
-        full: pipe(
-          mPipe(Obj.readKey("full"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns full pattern")
-        ),
-        original: pipe(
-          mPipe(Obj.readKey("original"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns original pattern")
-        ),
-        split: pipe(
-          mPipe(Obj.readKey("split"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns split pattern")
-        )
-      })
+      imagePatternsReader
     ),
     throwOnNullish("Invalid API: image patterns")
   ),
