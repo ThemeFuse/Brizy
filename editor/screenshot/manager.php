@@ -43,7 +43,6 @@ class Brizy_Editor_Screenshot_Manager
             throw new Exception(__('Invalid uid string', 'brizy'));
         }
 
-
         $extension = 'jpeg';
         $screenFileName = $screenUid.'.'.$extension;
         $screenFullPath = $path.DIRECTORY_SEPARATOR.$screenFileName;

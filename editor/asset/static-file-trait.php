@@ -166,10 +166,14 @@ trait Brizy_Editor_Asset_StaticFileTrait
 		$overrides = array( 'test_form' => false );
 		$post = get_post( $postId );
 
-		if ( $post ) {
-			if ( substr( $post->post_date, 0, 4 ) > 0 ) {
-				$time = $post->post_date;
-			}
+		$time = date("Y/m");
+		if ($post && substr( $post->post_date, 0, 4 ) > 0 ) {
+			$time = $post->post_date;
+		}
+
+		if( wp_mkdir_p(dirname($assetPath)) === false) {
+			Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
+            throw new Exception('Unable to create folder for block images');
 		}
 
 		$uploadData = wp_handle_sideload( $tempFileArray, $overrides, $time );
@@ -177,8 +181,6 @@ trait Brizy_Editor_Asset_StaticFileTrait
 		if ( isset( $uploadData['error'] ) ) {
 			return new WP_Error( 'upload_error', $uploadData['error'] );
 		}
-
-		@mkdir(dirname($assetPath));
 
 		@copy($uploadData['file'],$assetPath);
 
