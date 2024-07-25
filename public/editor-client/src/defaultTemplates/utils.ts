@@ -1,6 +1,6 @@
-import {pipe} from "@/utils/fp/pipe";
-import {Num, Obj, Str} from "@brizy/readers";
-import {flatten, uniq, upperFirst} from "lodash";
+import { pipe } from "@/utils/fp/pipe";
+import { Num, Obj, Str } from "@brizy/readers";
+import { flatten, uniq, upperFirst } from "lodash";
 import {
   APIPopup,
   BlockWithThumbs,
@@ -78,16 +78,16 @@ export const converterKit = (
 
   const blocks: BlockWithThumbs[] = kit.map(
     ({
-       slug,
-       categories,
-       pro,
-       thumbnail,
-       keywords,
-       thumbnailWidth,
-       thumbnailHeight,
-       blank,
-       theme
-     }) => ({
+      slug,
+      categories,
+      pro,
+      thumbnail,
+      keywords,
+      thumbnailWidth,
+      thumbnailHeight,
+      blank,
+      theme
+    }) => ({
       id: slug,
       cat: categories.split(",").map((item) => item.trim().toLowerCase()),
       title: slug,
@@ -118,16 +118,16 @@ export const convertLayouts = (
 ): LayoutTemplateWithThumbs[] =>
   collections.map(
     ({
-       title,
-       categories,
-       pagesCount,
-       pro,
-       keywords,
-       thumbnailWidth,
-       thumbnailHeight,
-       thumbnail,
-       slug
-     }) => ({
+      title,
+      categories,
+      pagesCount,
+      pro,
+      keywords,
+      thumbnailWidth,
+      thumbnailHeight,
+      thumbnail,
+      slug
+    }) => ({
       name: title,
       cat: categories.split(",").map((item) => item.trim().toLowerCase()),
       pagesCount: Num.read(pagesCount) ?? 0,
@@ -147,12 +147,12 @@ export const convertLayoutPages = (
 ): CustomTemplatePage[] =>
   layouts.map(
     ({
-       slug,
-       title,
-       thumbnailHeight,
-       thumbnailWidth,
-       thumbs
-     }: LayoutsPageAPI) => ({
+      slug,
+      title,
+      thumbnailHeight,
+      thumbnailWidth,
+      thumbs
+    }: LayoutsPageAPI) => ({
       id: slug,
       title,
       thumbnailWidth,
@@ -170,15 +170,15 @@ export const converterPopup = (
 } => {
   const blocks: PopupBlockWithThumbs[] = kit.map(
     ({
-       id,
-       title,
-       categories,
-       pro,
-       thumbnail,
-       thumbnailWidth,
-       thumbnailHeight,
-       blank
-     }) => ({
+      id,
+      title,
+      categories,
+      pro,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight,
+      blank
+    }) => ({
       id,
       cat: categories.split(",").map((item) => item.trim().toLowerCase()),
       title,
@@ -204,14 +204,14 @@ export const convertStories = (
 ): StoriesTemplateWithThumbs[] =>
   collections.map(
     ({
-       categories,
-       pages,
-       id,
-       title,
-       thumbnail,
-       thumbnailWidth,
-       thumbnailHeight
-     }) => {
+      categories,
+      pages,
+      id,
+      title,
+      thumbnail,
+      thumbnailWidth,
+      thumbnailHeight
+    }) => {
       return {
         layoutId: id,
         name: title,
@@ -230,7 +230,7 @@ export const convertStoriesPages = (
   templatesImageUrl: string,
   id: string
 ): CustomTemplatePage[] =>
-  stories.map(({slug, thumbnailHeight, thumbnailWidth, thumbnail}) => ({
+  stories.map(({ slug, thumbnailHeight, thumbnailWidth, thumbnail }) => ({
     id: slug,
     title: slug,
     thumbnailSrc: `${templatesImageUrl}${thumbnail}`,

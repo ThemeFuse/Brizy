@@ -20,7 +20,7 @@ import {
   convertStoriesPages,
   convertToCategories
 } from "@/defaultTemplates/utils";
-import {Config} from "../config";
+import { Config } from "../config";
 import {
   BlocksArray,
   CustomTemplatePage,
@@ -36,20 +36,20 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "../types/DefaultTemplate";
-import {t} from "../utils/i18n";
+import { t } from "../utils/i18n";
 
 const defaultKits = (
   config: Config
 ): DefaultTemplateKits<KitsWithThumbs, DefaultBlock, Array<KitItem>> => {
-  const {blocksDataUrl, blocksKitsUrl, blocksChunkUrl} = config.api.templates;
-  const {templatesImageUrl} = config.api;
+  const { blocksDataUrl, blocksKitsUrl, blocksChunkUrl } = config.api.templates;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej, kit) {
       try {
         const data = await getDefaultKits(blocksChunkUrl, kit.id);
 
-        const {types, blocks} = converterKit(
+        const { types, blocks } = converterKit(
           data.blocks,
           templatesImageUrl,
           kit.id
@@ -67,7 +67,7 @@ const defaultKits = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, {kitId, id}) {
+    async getData(res, rej, { kitId, id }) {
       try {
         const data = await getKitData(blocksDataUrl, kitId, id);
 
@@ -90,18 +90,18 @@ const defaultKits = (
 const defaultPopups = (
   config: Config
 ): DefaultTemplatePopup<PopupsWithThumbs, DefaultBlockWithID> => {
-  const {popupsChunkUrl, popupsDataUrl} = config.api.templates;
-  const {templatesImageUrl} = config.api;
+  const { popupsChunkUrl, popupsDataUrl } = config.api.templates;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej) {
       try {
-        const {blocks, categories} = await getPopups(popupsChunkUrl);
+        const { blocks, categories } = await getPopups(popupsChunkUrl);
         const data = converterPopup(blocks, templatesImageUrl);
 
         const convertedCategories = convertToCategories(categories);
 
-        res({...data, categories: convertedCategories});
+        res({ ...data, categories: convertedCategories });
       } catch (e) {
         rej(t("Failed to load meta.json"));
       }
@@ -125,14 +125,14 @@ const defaultStories = (
   BlocksArray<DefaultBlock>,
   LayoutsPages
 > => {
-  const {storiesChunkUrl, storiesDataUrl, storiesPagesUrl} =
+  const { storiesChunkUrl, storiesDataUrl, storiesPagesUrl } =
     config.api.templates;
-  const {templatesImageUrl} = config.api;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej) {
       try {
-        const {templates, categories} = await getDefaultStories(
+        const { templates, categories } = await getDefaultStories(
           storiesChunkUrl
         );
 
@@ -146,18 +146,18 @@ const defaultStories = (
         rej(t("Failed to load Stories"));
       }
     },
-    async getData(res, rej, {layoutId, id}) {
+    async getData(res, rej, { layoutId, id }) {
       try {
-        const {blocks} = await getDefaultStory(storiesDataUrl, layoutId, id);
+        const { blocks } = await getDefaultStory(storiesDataUrl, layoutId, id);
 
-        res({blocks});
+        res({ blocks });
       } catch (e) {
         rej(t("Failed to load resolves for selected DefaultTemplate"));
       }
     },
     async getPages(res, rej, id) {
       try {
-        const {collections, styles} = await getDefaultStoryPages(
+        const { collections, styles } = await getDefaultStoryPages(
           storiesPagesUrl,
           id
         );
@@ -186,14 +186,14 @@ const defaultLayouts = (
   BlocksArray<DefaultBlockWithID>,
   LayoutsPages
 > => {
-  const {layoutDataUrl, layoutsChunkUrl, layoutsPagesUrl} =
+  const { layoutDataUrl, layoutsChunkUrl, layoutsPagesUrl } =
     config.api.templates;
-  const {templatesImageUrl} = config.api;
+  const { templatesImageUrl } = config.api;
 
   return {
     async getMeta(res, rej) {
       try {
-        const {templates, categories} = await getDefaultLayouts(
+        const { templates, categories } = await getDefaultLayouts(
           layoutsChunkUrl
         );
 
@@ -207,7 +207,7 @@ const defaultLayouts = (
         rej(t("Failed to load meta.json"));
       }
     },
-    async getData(res, rej, {id, layoutId}) {
+    async getData(res, rej, { id, layoutId }) {
       try {
         const data = await getDefaultLayoutData(layoutDataUrl, layoutId, id);
 
@@ -222,7 +222,7 @@ const defaultLayouts = (
     },
     async getPages(res, rej, id) {
       try {
-        const {collections, styles} = await getDefaultLayoutsPages(
+        const { collections, styles } = await getDefaultLayoutsPages(
           layoutsPagesUrl,
           id
         );
@@ -233,7 +233,7 @@ const defaultLayouts = (
           id
         );
 
-        res({pages: parsedData, styles: [styles]});
+        res({ pages: parsedData, styles: [styles] });
       } catch (e) {
         rej(t("Failed to load pages for selected Layout"));
       }
@@ -241,4 +241,4 @@ const defaultLayouts = (
   };
 };
 
-export {defaultKits, defaultStories, defaultLayouts, defaultPopups};
+export { defaultKits, defaultStories, defaultLayouts, defaultPopups };

@@ -1,4 +1,4 @@
-import {Config, getConfig} from "@/config";
+import { Config, getConfig } from "@/config";
 import {
   isDefaultBlock,
   isDefaultBlockArray,
@@ -25,13 +25,13 @@ import {
   StoryPagesResult,
   Style
 } from "@/types/DefaultTemplate";
-import {ConfigDCItem} from "@/types/DynamicContent";
-import {GlobalBlock} from "@/types/GlobalBlocks";
-import {IconUploadData} from "@/types/Icon";
-import {Page} from "@/types/Page";
-import {Rule} from "@/types/PopupConditions";
-import {Project} from "@/types/Project";
-import {ResponseWithBody} from "@/types/Response";
+import { ConfigDCItem } from "@/types/DynamicContent";
+import { GlobalBlock } from "@/types/GlobalBlocks";
+import { IconUploadData } from "@/types/Icon";
+import { Page } from "@/types/Page";
+import { Rule } from "@/types/PopupConditions";
+import { Project } from "@/types/Project";
+import { ResponseWithBody } from "@/types/Response";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -40,12 +40,12 @@ import {
   SavedLayout,
   SavedLayoutMeta
 } from "@/types/SavedBlocks";
-import {ScreenshotData} from "@/types/Screenshots";
-import {t} from "@/utils/i18n";
-import {Arr, Obj, Str, Json} from "@brizy/readers";
-import {Dictionary} from "../types/utils";
-import {isT, mPipe, pass} from "fp-utilities";
-import {Literal} from "../utils/types";
+import { ScreenshotData } from "@/types/Screenshots";
+import { t } from "@/utils/i18n";
+import { Arr, Json, Obj, Str } from "@brizy/readers";
+import { isT, mPipe, pass } from "fp-utilities";
+import { Dictionary } from "../types/utils";
+import { Literal } from "../utils/types";
 import {
   GetCollections,
   parseMetaSavedBlock,
@@ -56,7 +56,7 @@ import {
   stringifyProject,
   stringifySavedBlock
 } from "./adapter";
-import {makeFormEncode, makeUrl} from "./utils";
+import { makeFormEncode, makeUrl } from "./utils";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -81,7 +81,7 @@ export function request(
   // will see later if we'll have to hardcode
   // some settings into config like we do for brizy cloud
   // In WP referer must be root window not iframe
-  const {fetch} = window.parent || window;
+  const { fetch } = window.parent || window;
   return fetch(url, config);
 }
 
@@ -133,7 +133,7 @@ export const getImageUid = async (id: string): Promise<{ uid: string }> => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {pageId, url, hash, editorVersion, actions} = config;
+  const { pageId, url, hash, editorVersion, actions } = config;
 
   const body = new URLSearchParams({
     hash,
@@ -171,31 +171,31 @@ export function updateProject(
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {url: _url, hash, editorVersion, actions} = config;
+  const { url: _url, hash, editorVersion, actions } = config;
 
   const url = makeUrl(_url, {
     action: actions.setProject,
     version: editorVersion,
     hash
   });
-  const {is_autosave = 1} = meta;
-  const {data, dataVersion, compiled} = stringifyProject(project);
+  const { is_autosave = 1 } = meta;
+  const { data, dataVersion, compiled } = stringifyProject(project);
   const body = new URLSearchParams({
     data,
     dataVersion,
-    ...(compiled && {compiled}),
+    ...(compiled && { compiled }),
     is_autosave: `${is_autosave}`
   });
 
-  return persistentRequest(url, {method: "POST", body});
+  return persistentRequest(url, { method: "POST", body });
 }
 
 export async function addProjectLockedBeacon({
-                                               lockProject,
-                                               url: _url,
-                                               hash,
-                                               version
-                                             }: {
+  lockProject,
+  url: _url,
+  hash,
+  version
+}: {
   lockProject: string;
   url: string;
   hash: string;
@@ -217,10 +217,10 @@ export async function addProjectLockedBeacon({
 }
 
 export function removeProjectLockedSendBeacon({
-                                                removeLock,
-                                                url: _url,
-                                                version
-                                              }: {
+  removeLock,
+  url: _url,
+  version
+}: {
   removeLock: string;
   url: string;
   version: string;
@@ -246,7 +246,7 @@ export async function getAttachmentById(id: string): Promise<{ uid: string }> {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url, hash, actions} = config;
+  const { editorVersion, url, hash, actions } = config;
 
   const body = new URLSearchParams({
     hash,
@@ -282,7 +282,7 @@ export const getSavedBlocks = (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const {
     count,
@@ -313,9 +313,9 @@ export const getSavedBlocks = (
     })
   );
 
-  return request(url, {method: "GET"})
+  return request(url, { method: "GET" })
     .then((r) => r.json())
-    .then(({data}) => data.map(parseMetaSavedBlock));
+    .then(({ data }) => data.map(parseMetaSavedBlock));
 };
 
 export const getSavedBlockById = (uid: string): Promise<SavedBlock> => {
@@ -325,7 +325,7 @@ export const getSavedBlockById = (uid: string): Promise<SavedBlock> => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     uid,
@@ -334,9 +334,9 @@ export const getSavedBlockById = (uid: string): Promise<SavedBlock> => {
     version: editorVersion
   });
 
-  return request(url, {method: "GET"})
+  return request(url, { method: "GET" })
     .then((r) => r.json())
-    .then(({data}) => parseSavedBlock(data));
+    .then(({ data }) => parseSavedBlock(data));
 };
 
 export const createSavedBlock = (
@@ -348,14 +348,14 @@ export const createSavedBlock = (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     hash,
     action: actions.createSavedBlock,
     version: editorVersion
   });
-  const {uid, data, title, tags, dataVersion, meta, media} =
+  const { uid, data, title, tags, dataVersion, meta, media } =
     stringifySavedBlock<CreateSavedBlock>(block);
 
   const body = new URLSearchParams({
@@ -363,12 +363,12 @@ export const createSavedBlock = (
     data,
     meta,
     media,
-    ...(title && {title}),
-    ...(tags && {tags}),
+    ...(title && { title }),
+    ...(tags && { tags }),
     dataVersion: `${dataVersion}`
   });
 
-  return persistentRequest<SavedBlock>(url, {method: "POST", body}).then(
+  return persistentRequest<SavedBlock>(url, { method: "POST", body }).then(
     (d) => {
       if (!d.ok) {
         throw new Error(t("Fail to create saved block"));
@@ -388,10 +388,10 @@ export const updateSavedBlock = (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
-  const {uid, title, dataVersion} = savedBlock;
-  let {tags} = savedBlock;
+  const { uid, title, dataVersion } = savedBlock;
+  let { tags } = savedBlock;
   // if empty string is passed backend doesn't remove tag
   // https://github.com/bagrinsergiu/blox-editor/issues/23277#issuecomment-1610911099
   if (tags === "") {
@@ -399,8 +399,8 @@ export const updateSavedBlock = (
   }
   const body = new URLSearchParams({
     uid,
-    ...(title && {title}),
-    ...(tags && {tags}),
+    ...(title && { title }),
+    ...(tags && { tags }),
     dataVersion: `${dataVersion}`
   });
   const url = makeUrl(_url, {
@@ -409,7 +409,7 @@ export const updateSavedBlock = (
     version: editorVersion
   });
 
-  return persistentRequest<SavedBlockMeta>(url, {method: "POST", body}).then(
+  return persistentRequest<SavedBlockMeta>(url, { method: "POST", body }).then(
     (d) => {
       if (!d.ok) {
         throw new Error(t("Fail to update saved block"));
@@ -427,7 +427,7 @@ export const deleteSavedBlock = (uid: string): Promise<unknown> => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     action: actions.deleteSavedBlock,
@@ -436,7 +436,7 @@ export const deleteSavedBlock = (uid: string): Promise<unknown> => {
     uid
   });
 
-  return request(url, {method: "DELETE"});
+  return request(url, { method: "DELETE" });
 };
 
 export interface UploadSavedBlocksData {
@@ -453,7 +453,7 @@ export const uploadSaveBlocks = async (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url, hash, actions} = config;
+  const { editorVersion, url, hash, actions } = config;
   const formData = new FormData();
 
   for (const file of files) {
@@ -464,7 +464,7 @@ export const uploadSaveBlocks = async (
   formData.append("hash", hash);
   formData.append("action", actions.uploadBlocks);
 
-  const r = await request(url, {method: "POST", body: formData});
+  const r = await request(url, { method: "POST", body: formData });
   const rj = await r.json();
 
   if (rj.success && rj.data.errors && rj.data.success) {
@@ -490,7 +490,7 @@ export const getSavedLayouts = (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const {
     count,
@@ -522,9 +522,9 @@ export const getSavedLayouts = (
     })
   );
 
-  return request(url, {method: "GET"})
+  return request(url, { method: "GET" })
     .then((r) => r.json())
-    .then(({data}) => data.map(parseMetaSavedBlock));
+    .then(({ data }) => data.map(parseMetaSavedBlock));
 };
 
 export const getSavedLayoutById = (uid: string): Promise<SavedLayout> => {
@@ -534,7 +534,7 @@ export const getSavedLayoutById = (uid: string): Promise<SavedLayout> => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     uid,
@@ -543,9 +543,9 @@ export const getSavedLayoutById = (uid: string): Promise<SavedLayout> => {
     version: editorVersion
   });
 
-  return request(url, {method: "GET"})
+  return request(url, { method: "GET" })
     .then((r) => r.json())
-    .then(({data}) => parseSavedLayout(data));
+    .then(({ data }) => parseSavedLayout(data));
 };
 
 export const createSavedLayout = (
@@ -557,14 +557,14 @@ export const createSavedLayout = (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     hash,
     action: actions.createLayout,
     version: editorVersion
   });
-  const {data, dataVersion, title, tags, uid, meta, media, globalStyles} =
+  const { data, dataVersion, title, tags, uid, meta, media, globalStyles } =
     stringifySavedBlock<CreateSavedLayout>(block);
 
   const body = new URLSearchParams({
@@ -573,12 +573,12 @@ export const createSavedLayout = (
     meta,
     media,
     globalStyles: globalStyles ?? "",
-    ...(title && {title}),
-    ...(tags && {tags}),
+    ...(title && { title }),
+    ...(tags && { tags }),
     dataVersion: `${dataVersion}`
   });
 
-  return persistentRequest<SavedLayout>(url, {method: "POST", body}).then(
+  return persistentRequest<SavedLayout>(url, { method: "POST", body }).then(
     (d) => {
       if (!d.ok) {
         throw new Error(t("Fail to create saved layout"));
@@ -598,10 +598,10 @@ export const updateSavedLayout = (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
-  const {uid, title, dataVersion, globalStyles} = savedLayout;
-  let {tags} = savedLayout;
+  const { uid, title, dataVersion, globalStyles } = savedLayout;
+  let { tags } = savedLayout;
   // if empty string is passed backend doesn't remove tag
   // https://github.com/bagrinsergiu/blox-editor/issues/23277#issuecomment-1610911099
   if (tags === "") {
@@ -610,8 +610,8 @@ export const updateSavedLayout = (
 
   const body = new URLSearchParams({
     uid,
-    ...(title && {title}),
-    ...(tags && {tags}),
+    ...(title && { title }),
+    ...(tags && { tags }),
     dataVersion: `${dataVersion}`,
     globalStyles: globalStyles ?? ""
   });
@@ -621,7 +621,7 @@ export const updateSavedLayout = (
     version: editorVersion
   });
 
-  return persistentRequest<SavedLayoutMeta>(url, {method: "POST", body}).then(
+  return persistentRequest<SavedLayoutMeta>(url, { method: "POST", body }).then(
     (d) => {
       if (!d.ok) {
         throw new Error(t("Fail to update saved layout"));
@@ -639,7 +639,7 @@ export const deleteSavedLayout = (uid: string): Promise<unknown> => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     action: actions.deleteLayout,
@@ -648,7 +648,7 @@ export const deleteSavedLayout = (uid: string): Promise<unknown> => {
     uid
   });
 
-  return request(url, {method: "DELETE"});
+  return request(url, { method: "DELETE" });
 };
 
 export interface UploadSavedLayoutsData {
@@ -665,7 +665,7 @@ export const uploadSaveLayouts = async (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url, hash, actions} = config;
+  const { editorVersion, url, hash, actions } = config;
   const formData = new FormData();
 
   for (const file of files) {
@@ -676,7 +676,7 @@ export const uploadSaveLayouts = async (
   formData.append("hash", hash);
   formData.append("action", actions.uploadBlocks);
 
-  const r = await request(url, {method: "POST", body: formData});
+  const r = await request(url, { method: "POST", body: formData });
   const rj = await r.json();
 
   if (rj.success && rj.data.errors && rj.data.success) {
@@ -694,13 +694,13 @@ export const uploadSaveLayouts = async (
 //#region Collections
 
 export const getCollections: GetCollections = async (
-  {search = "", postType, abortSignal},
+  { search = "", postType, abortSignal },
   config
 ) => {
   const {
     url,
     hash,
-    actions: {searchPosts}
+    actions: { searchPosts }
   } = config;
 
   const version = config.editorVersion;
@@ -740,7 +740,7 @@ export const getCollectionSourceItems = async (id: string) => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   return request(_url, {
     method: "POST",
@@ -781,24 +781,24 @@ export const updatePage = (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
   const url = makeUrl(_url, {
     action: actions.updatePage,
     version: editorVersion,
     hash
   });
-  const {is_autosave = 1} = meta;
-  const {id, status, data, dataVersion, compiled} = stringifyPage(page);
+  const { is_autosave = 1 } = meta;
+  const { id, status, data, dataVersion, compiled } = stringifyPage(page);
   const body = new URLSearchParams({
     id,
     status,
     data,
     dataVersion,
-    ...(compiled && {compiled}),
+    ...(compiled && { compiled }),
     is_autosave: `${is_autosave}`
   });
 
-  return persistentRequest<Page>(url, {method: "POST", body}).then((d) => {
+  return persistentRequest<Page>(url, { method: "POST", body }).then((d) => {
     if (!d.ok) {
       throw new Error(t("Fail to update page"));
     }
@@ -824,8 +824,8 @@ export const updatePopupRules = async (
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-  const {pageId, url, hash, editorVersion, actions} = config;
-  const {rules, dataVersion} = data;
+  const { pageId, url, hash, editorVersion, actions } = config;
+  const { rules, dataVersion } = data;
 
   const _url = makeUrl(url, {
     action: actions.updateRules,
@@ -853,16 +853,16 @@ export const updatePopupRules = async (
 //#region Screenshots
 
 export const createBlockScreenshot = async ({
-                                              base64,
-                                              blockType
-                                            }: ScreenshotData): Promise<{ id: string }> => {
+  base64,
+  blockType
+}: ScreenshotData): Promise<{ id: string }> => {
   const config = getConfig();
 
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {pageId, url, hash, editorVersion, actions} = config;
+  const { pageId, url, hash, editorVersion, actions } = config;
   const attachment = base64.replace(/data:image\/.+;base64,/, "");
   const _url = makeUrl(url, {
     hash,
@@ -876,11 +876,11 @@ export const createBlockScreenshot = async ({
   });
 
   try {
-    const r = await request(_url, {method: "POST", body});
+    const r = await request(_url, { method: "POST", body });
     const d = await r.json();
 
     if (d?.data?.id) {
-      return {id: d.data.id};
+      return { id: d.data.id };
     }
 
     throw new Error(t("Failed to create Screenshot"));
@@ -894,17 +894,17 @@ interface UpdateScreenshot extends ScreenshotData {
 }
 
 export const updateBlockScreenshot = async ({
-                                              id,
-                                              base64,
-                                              blockType
-                                            }: UpdateScreenshot): Promise<{ id: string }> => {
+  id,
+  base64,
+  blockType
+}: UpdateScreenshot): Promise<{ id: string }> => {
   const config = getConfig();
 
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {pageId, url, hash, editorVersion, actions} = config;
+  const { pageId, url, hash, editorVersion, actions } = config;
   const attachment = base64.replace(/data:image\/.+;base64,/, "");
   const _url = makeUrl(url, {
     hash,
@@ -919,11 +919,11 @@ export const updateBlockScreenshot = async ({
   });
 
   try {
-    const r = await request(_url, {method: "POST", body});
+    const r = await request(_url, { method: "POST", body });
     const d = await r.json();
 
     if (d?.data?.id) {
-      return {id: d.data.id};
+      return { id: d.data.id };
     }
 
     throw new Error(t("Failed to update Screenshot"));
@@ -947,7 +947,7 @@ export const getAdobeFont = async () => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     hash,
@@ -977,7 +977,7 @@ export const addAdobeAccount = async (body: AddAccount) => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {url: _url, hash, editorVersion, actions} = config;
+  const { url: _url, hash, editorVersion, actions } = config;
 
   const url = makeUrl(_url, {
     hash,
@@ -995,7 +995,10 @@ export const addAdobeAccount = async (body: AddAccount) => {
     });
     return res;
   } catch (error) {
-    throw new Error(`Failed to add Adobe account: ${error.message}`);
+    const getError = mPipe(Obj.read, Obj.readKey("message"), Str.read);
+    const message = getError(error) ?? "Failed to connect new account";
+
+    throw new Error(`Failed to add Adobe account: ${message}`);
   }
 };
 
@@ -1013,8 +1016,8 @@ export const getPlaceholders = (extraData: {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {entityType, groupType} = extraData;
-  const {editorVersion, url: _url, hash, actions} = config;
+  const { entityType, groupType } = extraData;
+  const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {
     post: entityType ?? "",
@@ -1023,9 +1026,9 @@ export const getPlaceholders = (extraData: {
     version: editorVersion
   });
 
-  return request(url, {method: "GET"})
+  return request(url, { method: "GET" })
     .then((r) => r.json())
-    .then(({data}) => {
+    .then(({ data }) => {
       if (Array.isArray(data[groupType])) {
         return data[groupType];
       }
@@ -1045,12 +1048,12 @@ export async function getPlaceholdersData(extra: {
   }
   const {
     url,
-    actions: {placeholdersContent},
+    actions: { placeholdersContent },
     hash,
     editorVersion: version
   } = config;
 
-  const {placeholders, signal} = extra;
+  const { placeholders, signal } = extra;
 
   const body = new URLSearchParams({
     hash,
@@ -1073,7 +1076,7 @@ export async function getPlaceholdersData(extra: {
       signal
     }).then((r) => r.json());
 
-    const {data} = r;
+    const { data } = r;
     const dc = Obj.readWithValueReader(Arr.readWithItemReader(Str.read))(
       data.placeholders
     );
@@ -1093,7 +1096,7 @@ export async function getPlaceholdersData(extra: {
 //#region HeartBeat
 export function sendHeartBeat(config: Config) {
   const {
-    actions: {heartBeat},
+    actions: { heartBeat },
     url: _url,
     hash,
     editorVersion: version
@@ -1104,12 +1107,12 @@ export function sendHeartBeat(config: Config) {
     version,
     hash
   });
-  return request(url, {method: "GET"}).then((r) => r.json());
+  return request(url, { method: "GET" }).then((r) => r.json());
 }
 
 export function sendHeartBeatTakeOver(config: Config) {
   const {
-    actions: {takeOver},
+    actions: { takeOver },
     url: _url,
     hash,
     editorVersion: version
@@ -1121,7 +1124,7 @@ export function sendHeartBeatTakeOver(config: Config) {
     hash
   });
 
-  return request(url, {method: "GET"}).then((r) => r.json());
+  return request(url, { method: "GET" }).then((r) => r.json());
 }
 
 //#endregion
@@ -1148,7 +1151,7 @@ export async function getUploadedFonts() {
     hash,
     url: _url,
     editorVersion: version,
-    actions: {getFonts}
+    actions: { getFonts }
   } = config;
 
   const url = makeUrl(_url, {
@@ -1157,7 +1160,7 @@ export async function getUploadedFonts() {
     hash
   });
 
-  const r = await request(url, {method: "GET"});
+  const r = await request(url, { method: "GET" });
   if (!r.ok) {
     throw new Error(t("Failed to fetch fonts"));
   }
@@ -1179,13 +1182,13 @@ export const createGlobalBlock = async (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {url, hash, actions, editorVersion} = config;
+  const { url, hash, actions, editorVersion } = config;
   const _url = makeUrl(url, {
     hash,
     action: actions.createGlobalBlock,
     version: editorVersion
   });
-  const {uid, title, tags, data, position, rules, meta, status, compiled} =
+  const { uid, title, tags, data, position, rules, meta, status, compiled } =
     stringifyGlobalBlock(globalBlock);
 
   const body = new URLSearchParams({
@@ -1194,7 +1197,7 @@ export const createGlobalBlock = async (
     rules,
     meta,
     status,
-    ...(compiled && {compiled}),
+    ...(compiled && { compiled }),
     title: title ?? "",
     tags: tags ?? "",
     position: position ?? ""
@@ -1224,15 +1227,15 @@ export const updateGlobalBlock = async (
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-  const {is_autosave = 1} = extraMeta;
-  const {url, hash, actions, editorVersion} = config;
+  const { is_autosave = 1 } = extraMeta;
+  const { url, hash, actions, editorVersion } = config;
   const _url = makeUrl(url, {
     hash,
     action: actions.updateGlobalBlock,
     version: editorVersion
   });
 
-  const {uid, title, tags, data, position, rules, meta, status, compiled} =
+  const { uid, title, tags, data, position, rules, meta, status, compiled } =
     stringifyGlobalBlock(globalBlock);
   const body = new URLSearchParams({
     uid,
@@ -1240,7 +1243,7 @@ export const updateGlobalBlock = async (
     rules,
     meta,
     status,
-    ...(compiled && {compiled}),
+    ...(compiled && { compiled }),
     title: title ?? "",
     tags: tags ?? "",
     position: position ?? "",
@@ -1270,8 +1273,8 @@ export const updateGlobalBlocks = async (
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-  const {is_autosave = 1} = meta;
-  const {url, hash, actions, editorVersion} = config;
+  const { is_autosave = 1 } = meta;
+  const { url, hash, actions, editorVersion } = config;
   const _url = makeUrl(url, {
     hash,
     action: actions.updateGlobalBlocks,
@@ -1365,7 +1368,7 @@ export const getCustomIcons = async (): Promise<IconUploadData[]> => {
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-  const {api} = config;
+  const { api } = config;
 
   const url = makeUrl(api.iconsUrl, {
     "orderBy[id]": "DESC",
@@ -1377,7 +1380,7 @@ export const getCustomIcons = async (): Promise<IconUploadData[]> => {
   });
 
   if (response.ok) {
-    const {data} = await response.json();
+    const { data } = await response.json();
     return data;
   }
 
@@ -1393,7 +1396,7 @@ export const uploadIcon = async (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {api} = config;
+  const { api } = config;
   const response = await request(api.uploadIconUrl, {
     method: "POST",
     body: new URLSearchParams({
@@ -1403,7 +1406,7 @@ export const uploadIcon = async (
   });
 
   if (response.ok) {
-    const {data} = await response.json();
+    const { data } = await response.json();
     return data;
   }
 
@@ -1417,7 +1420,7 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  const {api} = config;
+  const { api } = config;
 
   const response = await request(`${api.deleteIconUrl}${uid}`, {
     method: "DELETE"
@@ -1434,7 +1437,7 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
 //#region AI Global Styles
 
 export const getStyles = async (config: Config) => {
-  const {aiGlobalStyleUrl} = config;
+  const { aiGlobalStyleUrl } = config;
 
   return await fetch(`${aiGlobalStyleUrl}/api/template/style`).then((r) =>
     r.json()
@@ -1442,7 +1445,7 @@ export const getStyles = async (config: Config) => {
 };
 
 export const getTypography = async (config: Config) => {
-  const {aiGlobalStyleUrl} = config;
+  const { aiGlobalStyleUrl } = config;
 
   return await fetch(`${aiGlobalStyleUrl}/api/template/typography`).then((r) =>
     r.json()
@@ -1450,7 +1453,6 @@ export const getTypography = async (config: Config) => {
 };
 
 //#endregion
-
 
 //#region Default Templates
 
@@ -1553,7 +1555,7 @@ export const getDefaultLayouts = async (
     const res = await response.json();
 
     if (res.collections && res.categories) {
-      return {templates: res.collections, categories: res.categories};
+      return { templates: res.collections, categories: res.categories };
     }
   }
 
@@ -1626,7 +1628,7 @@ export const getPopups = async (
     const res = await response.json();
 
     if (isT(res) && isPopupsResponse(res)) {
-      return {blocks: res.collections, categories: res.categories};
+      return { blocks: res.collections, categories: res.categories };
     }
   }
 
@@ -1680,7 +1682,7 @@ export const getDefaultStories = async (
     const res = await response.json();
 
     if (res.collections && res.categories) {
-      return {templates: res.collections, categories: res.categories};
+      return { templates: res.collections, categories: res.categories };
     }
   }
 
@@ -1711,7 +1713,7 @@ export const getDefaultStory = async (
       Obj.readKey("collection"),
       Json.read,
       pass(isStoryDataBlocks),
-      pass(({blocks}) => isDefaultBlockArray(blocks))
+      pass(({ blocks }) => isDefaultBlockArray(blocks))
     )(res);
 
     if (parsedResult) {
