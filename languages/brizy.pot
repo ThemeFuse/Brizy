@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.5.0\n"
+"Project-Id-Version: Brizy 2.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-22T08:22:19+00:00\n"
+"POT-Creation-Date: 2024-07-26T12:33:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: brizy\n"
@@ -39,7 +39,7 @@ msgstr ""
 msgid "There are no blocks to be archived"
 msgstr ""
 
-#: admin/blocks/main.php:158
+#: admin/blocks/main.php:169
 msgid "global block."
 msgstr ""
 
@@ -221,46 +221,46 @@ msgstr ""
 msgid "Layout."
 msgstr ""
 
-#: admin/main.php:244
+#: admin/main.php:246
 #: admin/settings.php:109
 #: admin/settings.php:110
 #: public/editor-build/prod/texts.php:1376
 msgid "Settings"
 msgstr ""
 
-#: admin/main.php:252
+#: admin/main.php:254
 #: admin/settings.php:159
 #: import/main.php:54
 msgid "Go Pro"
 msgstr ""
 
-#: admin/main.php:311
+#: admin/main.php:313
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: admin/main.php:312
+#: admin/main.php:314
 msgid "Skip & Deactivate"
 msgstr ""
 
-#: admin/main.php:435
+#: admin/main.php:437
 #: admin/views/button.php:25
 #: admin/views/button.php:44
-#: compatibilities/gutenberg.php:94
-#: compatibilities/gutenberg.php:108
+#: compatibilities/gutenberg.php:95
+#: compatibilities/gutenberg.php:110
 msgid "Edit with %s"
 msgstr ""
 
-#: admin/main.php:547
+#: admin/main.php:549
 msgid "Heads up, Please backup before upgrade!"
 msgstr ""
 
 #. translators: %1$s Link open tag, %2$s: Link close tag.
-#: admin/main.php:553
+#: admin/main.php:555
 msgid "The latest update includes some substantial changes across different areas of the plugin. We highly recommend you %1$sbackup your site before upgrading%2$s, and make sure you first update in a staging environment"
 msgstr ""
 
 #: admin/membership/membership.php:64
-#: editor/post.php:701
+#: editor/post.php:727
 #: public/editor-build/prod/texts.php:477
 msgid "Default"
 msgstr ""
@@ -864,7 +864,7 @@ msgstr ""
 msgid "Original"
 msgstr ""
 
-#: editor/asset/static-file-trait.php:197
+#: editor/asset/static-file-trait.php:199
 msgid "Failed to write content"
 msgstr ""
 
@@ -1337,7 +1337,7 @@ msgid "wordpress"
 msgstr ""
 
 #: editor/screenshot/manager.php:43
-#: editor/screenshot/manager.php:66
+#: editor/screenshot/manager.php:65
 msgid "Invalid uid string"
 msgstr ""
 
