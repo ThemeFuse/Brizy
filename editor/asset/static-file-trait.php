@@ -156,16 +156,26 @@ trait Brizy_Editor_Asset_StaticFileTrait
         wp_update_attachment_metadata( $id, $attach_data );
     }
 
-	public static function createSideLoadMedia( $tempFileArray, $assetPath ) {
+	public static function createSideLoadMedia($tempFileArray, $assetPath,$postId = null,        $uid = null    ) {
 
-		$overrides  = array( 'test_form' => false );
-		$uploadData = wp_handle_sideload( $tempFileArray, $overrides, current_time( 'Y/m' ) );
+		$overrides = array( 'test_form' => false );
+		$post = get_post( $postId );
+
+		$time = date("Y/m");
+		if ($post && substr( $post->post_date, 0, 4 ) > 0 ) {
+			$time = $post->post_date;
+		}
+
+		if( wp_mkdir_p(dirname($assetPath)) === false) {
+			Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
+            throw new Exception('Unable to create folder for block images');
+		}
+
+		$uploadData = wp_handle_sideload( $tempFileArray, $overrides, $time );
 
 		if ( isset( $uploadData['error'] ) ) {
 			return new WP_Error( 'upload_error', $uploadData['error'] );
 		}
-
-		@mkdir(dirname($assetPath));
 
 		@copy($uploadData['file'],$assetPath);
 
