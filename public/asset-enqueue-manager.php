@@ -305,7 +305,7 @@ class Brizy_Public_AssetEnqueueManager {
 			return $asset->getUrl();
 		}
 
-		return apply_filters( 'brizy_asset_url', $this->urlBuilder->homeUrl( $asset->getUrl() ), $asset );
+		return apply_filters( 'brizy_asset_url', $this->urlBuilder->asset_url( $asset->getUrl() ), $asset );
 	}
 
 	private function getAttributes( $asset ) {
