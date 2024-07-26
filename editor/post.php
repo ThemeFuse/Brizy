@@ -367,6 +367,32 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         return true;
     }
 
+	/**
+	 * @deprecated
+	 * @return void
+	 */
+    public function compile_page() {
+        try {
+                $compiler = new Brizy_Editor_Compiler(
+                    Brizy_Editor_Project::get(),
+                    new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL),
+                    new Brizy_Editor_UrlBuilder(Brizy_Editor_Project::get(), $this),
+                    Brizy_Config::getCompilerUrls(),
+                    Brizy_Config::getCompilerDownloadUrl()
+                );
+
+
+                if ($compiler->needsCompile($this)) {
+                    $editgorConfig = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $this)
+                        ->config(Brizy_Editor_Editor_Editor::COMPILE_CONTEXT);
+                    $compiler->compilePost($this, $editgorConfig);
+                }
+
+            } catch (Exception $e) {
+                Brizy_Logger::instance()->exception($e);
+            }
+    }
+
 
     /**
      * @return string
