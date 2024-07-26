@@ -404,7 +404,7 @@ class Brizy_Editor_Editor_Editor
                 'media' => [
                     'mediaResizeUrl' => home_url(),
                     'imagePatterns' => json_decode(
-                        '{ "full": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }'
+                        '{ "full": "{{ [baseUrl] }}/?'.Brizy_Editor::prefix('_media').'={{ [fileName] }}&'.Brizy_Editor::prefix('_crop').'={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?'.Brizy_Editor::prefix('_media').'={{ [fileName] }}&'.Brizy_Editor::prefix('_crop').'={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?'.Brizy_Editor::prefix('_media').'={{ [fileName] }}&'.Brizy_Editor::prefix('_crop').'={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }'
                     ),
                 ],
                 'customFile' => [
@@ -1449,7 +1449,7 @@ class Brizy_Editor_Editor_Editor
         $accounts = $manager->getAccountsByGroup(Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP);
 
         if (isset($accounts[0]) && $accounts[0] instanceof Brizy_Editor_Accounts_RecaptchaAccount) {
-            $config['applications']['form']['recaptcha']['siteKey'] = $accounts[0]->getSiteKey();
+            $config['integrations']['form']['recaptcha']['siteKey'] = $accounts[0]->getSiteKey();
         }
 
         return $config;

@@ -210,28 +210,35 @@ jQuery(document).ready(function ($) {
                 if (document.querySelector('.block-editor-writing-flow')) {
                     guten.find('.edit-post-visual-editor .block-editor-writing-flow').append(html);
                     guten.find('.editor-post-text-editor').after(html);
+                    guten.find('.is-root-container.is-layout-flow').hide();
                 } else {
-                    var gutenbergIframe = $('iframe[name="editor-canvas"]');
-                    if (gutenbergIframe.length > 0) {
-                        gutenbergIframe.on('load', function () {
 
-                            var gutenbergContentHide = gutenbergIframe.contents().find('body > .is-root-container.is-layout-flow');
-                            if (gutenbergContentHide.length > 0) {
+                    var gutenbergIframe = $( 'iframe[name="editor-canvas"]' );
+
+                    if ( gutenbergIframe.length > 0 ) {
+
+                        gutenbergIframe.on( 'load', function () {
+                            var gutenbergContentHide = gutenbergIframe.contents().find( 'body > .is-root-container.is-layout-flow' );
+
+                            if ( gutenbergContentHide.length > 0 ) {
+
                                 gutenbergContentHide.hide();
 
-                                if ( ! $('div.brizy-buttons.brizy-buttons-gutenberg').length > 0) {
-                                    guten.find('.edit-post-visual-editor').append(html);
+                                if ( !gutenbergIframe.contents().find( 'div.brizy-buttons.brizy-buttons-gutenberg' ).length > 0 ) {
+                                    gutenbergIframe.contents().find( '.edit-post-visual-editor__post-title-wrapper' ).after( html );
+                                    gutenbergIframe.contents().find( '.brizy-buttons-gutenberg .button-primary' ).addClass('components-button block-editor-media-placeholder__button block-editor-media-placeholder__upload-button is-primary');
+                                    gutenbergIframe.contents().find( '.brizy-buttons-gutenberg .button-primary' ).parent('a').on('click', function (e) {
+                                        e.preventDefault();
+                                        window.parent.location.href = $(this).attr('href');
+                                    });
                                 }
 
-                                var buttons = $(".brizy-buttons-gutenberg").css({
+                                $( '.brizy-buttons-gutenberg' ).css( {
                                     'margin-bottom': '0',
                                     'position': 'absolute'
-                                });
-                                var updatePadding = () => buttons.css("padding", ($(window).width() > 1080) ? "15% 0" : "40% 0");
-                                updatePadding();
-                                $(window).resize(updatePadding);
+                                } );
                             }
-                        });
+                        } );
                     }
                 }
             }

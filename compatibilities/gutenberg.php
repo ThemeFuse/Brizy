@@ -86,6 +86,7 @@ class Brizy_Compatibilities_Gutenberg {
                             <?php echo __( 'Back to WordPress Editor', 'brizy' ) ?>
                         </a>
                     </div>
+                    <?php $this->admin_head(); ?>
                 </script>
                 <script id="brizy-gutenberg-btn-middle" type="text/html">
                     <div class="brizy-buttons brizy-buttons-gutenberg">
@@ -95,6 +96,7 @@ class Brizy_Compatibilities_Gutenberg {
                             </div>
                         </a>
                     </div>
+                    <?php $this->admin_head(); ?>
                 </script>
 
 				<?php
@@ -108,6 +110,7 @@ class Brizy_Compatibilities_Gutenberg {
                             <?php printf( esc_html__( 'Edit with %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
                         </a>
                     </div>
+                    <?php $this->admin_head(); ?>
                 </script>
                 <?php
 			}
