@@ -1449,7 +1449,7 @@ class Brizy_Editor_Editor_Editor
         $accounts = $manager->getAccountsByGroup(Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP);
 
         if (isset($accounts[0]) && $accounts[0] instanceof Brizy_Editor_Accounts_RecaptchaAccount) {
-            $config['applications']['form']['recaptcha']['siteKey'] = $accounts[0]->getSiteKey();
+            $config['integrations']['form']['recaptcha']['siteKey'] = $accounts[0]->getSiteKey();
         }
 
         return $config;
