@@ -1115,11 +1115,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$manager  = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 		$accounts = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::ADOBE_GROUP );
 
-		if ( ! isset( $accounts[0] ) ) {
+		$account = array_pop($accounts);
+
+		if ( ! $account ) {
 			$this->error( 400, 'No adobe account found.' );
 		}
 
-		$adobeKey = $accounts[0]->getKey();
+		$adobeKey = $account->getKey();
 
 		if ( ! $adobeKey ) {
 			$this->error( 400, 'No adobe key found.' );

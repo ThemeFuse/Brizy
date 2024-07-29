@@ -986,14 +986,13 @@ export const addAdobeAccount = async (body: AddAccount) => {
   });
 
   try {
-    const res = await request(url, {
+    return await request(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
       body: JSON.stringify(body)
     });
-    return res;
   } catch (error) {
     const getError = mPipe(Obj.read, Obj.readKey("message"), Str.read);
     const message = getError(error) ?? "Failed to connect new account";

@@ -156,12 +156,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
         wp_update_attachment_metadata( $id, $attach_data );
     }
 
-	public static function createSideLoadMedia(
-		$tempFileArray,
-		$assetPath,
-		$postId = null,
-        $uid = null
-    ) {
+	public static function createSideLoadMedia($tempFileArray, $assetPath,$postId = null,        $uid = null    ) {
 
 		$overrides = array( 'test_form' => false );
 		$post = get_post( $postId );
