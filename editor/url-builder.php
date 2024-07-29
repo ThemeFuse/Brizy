@@ -425,8 +425,13 @@ class Brizy_Editor_UrlBuilder {
 			$path = "/" . ltrim( $path, "/" );
 		}
 		$urlInfo = parse_url( home_url( $path ) );
+		$portPart = "";
+		if(isset($urlInfo['port']))
+		{
+			$portPart=":".$urlInfo['port'];
+		}
 
-		return "{$urlInfo['scheme']}://{$urlInfo['host']}{$path}";
+		return "{$urlInfo['scheme']}://{$urlInfo['host']}{$portPart}{$path}";
 	}
 
 	public function homeUrl( $path = '' ) {
