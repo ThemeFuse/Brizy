@@ -10,7 +10,9 @@
     "translation": "gulp translate",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "tsc": "tsc --skipLibCheck",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "prettier:check": "prettier --config --check \"src/**/*.*\"",
+    "prettier:write": "prettier --config --write \"src/**/*.*\""
   },
   "keywords": [
     "api"
