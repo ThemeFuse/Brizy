@@ -1,9 +1,13 @@
-import { addAdobeAccount, getAdobeFont } from "../api";
+import {
+  addAdobeAccount,
+  FontsData,
+  getAdobeFont,
+  getUploadedFonts
+} from "../api";
 import { AdobeFonts } from "../types/AdobeFonts";
+import { Response } from "../types/Response";
 import { t } from "../utils/i18n";
 import { Fonts, KitData } from "./types";
-import { FontsData, getUploadedFonts } from "../api";
-import { Response } from "../types/Response";
 
 const convertDataToLocal = (mockTypeKitData: KitData): Fonts => {
   const families = mockTypeKitData.kit.families.map((family) => ({

@@ -1,12 +1,12 @@
-import {readIconUrl} from "@/types/Icon";
-import {Arr, Bool, Obj, Str} from "@brizy/readers";
-import {match, mPipe, optional, parseStrict} from "fp-utilities";
-import {CollectionType} from "./types/Collections";
-import {ImagePatterns, PLUGIN_ENV} from "./types/global";
-import {pipe} from "./utils/fp/pipe";
-import {onNullish} from "./utils/onNullish";
-import {throwOnNullish} from "./utils/throwOnNullish";
-import {MValue} from "./utils/types";
+import { readIconUrl } from "@/types/Icon";
+import { Arr, Bool, Obj, Str } from "@brizy/readers";
+import { match, mPipe, optional, parseStrict } from "fp-utilities";
+import { CollectionType } from "./types/Collections";
+import { ImagePatterns, PLUGIN_ENV } from "./types/global";
+import { pipe } from "./utils/fp/pipe";
+import { onNullish } from "./utils/onNullish";
+import { throwOnNullish } from "./utils/throwOnNullish";
+import { MValue } from "./utils/types";
 
 interface DefaultTemplates {
   kitsUrl: string;
