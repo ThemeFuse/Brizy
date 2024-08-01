@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.6.1<br>
 Requires PHP: 7.0.0<br>
-Stable tag: 2.5.1<br>
+Stable tag: 2.5.2<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.5.2 - 2024-08-01
+* Fixed: Assets not loading on subfolder WordPress instances
+
 
 ### 2.5.1 - 2024-07-26
 * Fixed: Icons not loading on subfolder WordPress instances

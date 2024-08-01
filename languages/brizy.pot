@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.5.1\n"
+"Project-Id-Version: Brizy 2.5.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-26T12:33:49+00:00\n"
+"POT-Creation-Date: 2024-08-01T13:31:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: brizy\n"
@@ -136,8 +136,8 @@ msgid "Date"
 msgstr ""
 
 #: admin/form-entries.php:120
-#: admin/form-entries.php:341
-#: admin/form-entries.php:353
+#: admin/form-entries.php:345
+#: admin/form-entries.php:357
 msgid "Leads"
 msgstr ""
 
@@ -153,62 +153,62 @@ msgstr ""
 msgid "Export to .csv"
 msgstr ""
 
-#: admin/form-entries.php:332
+#: admin/form-entries.php:336
 msgctxt "post type general name"
 msgid "Leads"
 msgstr ""
 
-#: admin/form-entries.php:333
+#: admin/form-entries.php:337
 msgctxt "post type singular name"
 msgid "Lead"
 msgstr ""
 
-#: admin/form-entries.php:334
+#: admin/form-entries.php:338
 msgctxt "admin menu"
 msgid "Leads"
 msgstr ""
 
-#: admin/form-entries.php:335
+#: admin/form-entries.php:339
 msgctxt "add new on admin bar"
 msgid "Lead"
 msgstr ""
 
-#: admin/form-entries.php:336
+#: admin/form-entries.php:340
 #: admin/popups/main.php:162
 #: admin/templates.php:214
 #: public/editor-build/prod/texts.php:135
 msgid "Add New"
 msgstr ""
 
-#: admin/form-entries.php:337
+#: admin/form-entries.php:341
 msgid "Add New Lead"
 msgstr ""
 
-#: admin/form-entries.php:338
+#: admin/form-entries.php:342
 msgid "New Lead"
 msgstr ""
 
-#: admin/form-entries.php:339
+#: admin/form-entries.php:343
 msgid "Edit Lead"
 msgstr ""
 
-#: admin/form-entries.php:340
+#: admin/form-entries.php:344
 msgid "View Lead"
 msgstr ""
 
-#: admin/form-entries.php:342
+#: admin/form-entries.php:346
 msgid "Search Leads"
 msgstr ""
 
-#: admin/form-entries.php:343
+#: admin/form-entries.php:347
 msgid "Parent Leads:"
 msgstr ""
 
-#: admin/form-entries.php:344
+#: admin/form-entries.php:348
 msgid "No Leads found."
 msgstr ""
 
-#: admin/form-entries.php:345
+#: admin/form-entries.php:349
 msgid "No Leads found in Trash."
 msgstr ""
 
