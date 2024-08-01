@@ -4,7 +4,7 @@
         <?php $type  = isset( $field->type ) ? $field->type : 'Text'; ?>
         <li>
             <label for="<?php echo esc_attr($field->name); ?>">
-                <?php echo $label; ?>
+                <?php echo strip_tags( $label ); ?>
             </label>:
             <?php if ( $type == 'FileUpload' ): ?>
                 <span id="<?php echo esc_attr($field->name); ?>">
