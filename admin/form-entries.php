@@ -292,8 +292,12 @@ class Brizy_Admin_FormEntries {
 
 			// We use htmlentities the user can insert text in some languages like German, Hindi, etc.
 			// and the function json_encode broke the json or encode the characters.
-			$fieldsCopy[ $i ]        = clone $field;
-			$fieldsCopy[ $i ]->name  = htmlentities( $field->name, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
+			$fieldsCopy[ $i ]       = clone $field;
+			$fieldsCopy[ $i ]->name = htmlentities( $field->name, ENT_COMPAT | ENT_HTML401, 'UTF-8' );
+
+			if ( isset( $fieldsCopy[ $i ]->label ) ) {
+				$fieldsCopy[ $i ]->label = sanitize_text_field( $field->label );
+			}
 
 			if ( $field->type == 'Paragraph' ) {
                 $value        = sanitize_textarea_field( $field->value );
