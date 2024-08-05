@@ -43,10 +43,15 @@ class Brizy_Public_AssetEnqueueManager {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ], 10002 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 10002 );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ], 10002 );
+		add_filter( 'wp_enqueue_scripts', [ $this, 'addExtensionAssets' ], 10004 );
 		add_filter( 'script_loader_tag', [ $this, 'addScriptAttributes' ], 10, 2 );
 		add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
 		add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
 		add_action( 'wp_footer', [ $this, 'insertBodyCodeAssets' ] );
+	}
+
+	public function addExtensionAssets() {
+		do_action( 'brizy_preview_enqueue_scripts' );
 	}
 
 	/**
@@ -57,6 +62,7 @@ class Brizy_Public_AssetEnqueueManager {
 
 		if ( ! isset( $this->posts[ $id ] ) ) {
 			$this->posts[ $id ] = $post;
+			do_action( 'brizy_preview_enqueue_post', $id );
 		}
 	}
 
@@ -68,47 +74,55 @@ class Brizy_Public_AssetEnqueueManager {
 
 		if ( isset( $this->posts[ $id ] ) ) {
 			unset( $this->posts[ $id ] );
+			do_action( 'brizy_preview_denqueue_post', $id );
 		}
+	}
+
+	public function isPostEnqueued( $post ) {
+
+		$id = null;
+		if ( $post instanceof WP_Post ) {
+			$id = $post->ID;
+		} else if ( $post instanceof Brizy_Editor_Entity ) {
+			$id = $post->getWpPostId();
+		} else {
+			$id = (int) $post;
+		}
+
+		return isset( $this->posts[ $id ] );
 	}
 
 	public function insertHeadCodeAssets() {
 		$content = $this->getCodeAssetsAsString( $this->styles );
-
 		if ( empty( $content ) ) {
 			return;
 		}
-
 		echo $content;
 	}
 
 	public function insertBodyCodeAssets() {
 		$content = $this->getCodeAssetsAsString( $this->scripts );
-
 		if ( empty( $content ) ) {
 			return;
 		}
-
 		echo $content;
 	}
 
 	public function addEditorConfigVar() {
 		$current_user = wp_get_current_user();
-		$config_json  = json_encode(
-			[
-				'serverTimestamp' => time(),
-				'currentUser'     => [
-					'user_login'     => $current_user->user_login,
-					'user_email'     => $current_user->user_email,
-					'user_level'     => $current_user->user_level,
-					'user_firstname' => $current_user->user_firstname,
-					'user_lastname'  => $current_user->user_lastname,
-					'display_name'   => $current_user->display_name,
-					'ID'             => $current_user->ID,
-					'roles'          => $current_user->roles,
-				],
-			]
-		);
-
+		$config_json  = json_encode( [
+			'serverTimestamp' => time(),
+			'currentUser'     => [
+				'user_login'     => $current_user->user_login,
+				'user_email'     => $current_user->user_email,
+				'user_level'     => $current_user->user_level,
+				'user_firstname' => $current_user->user_firstname,
+				'user_lastname'  => $current_user->user_lastname,
+				'display_name'   => $current_user->display_name,
+				'ID'             => $current_user->ID,
+				'roles'          => $current_user->roles,
+			],
+		] );
 		wp_register_script( 'brizy-preview', '' );
 		wp_enqueue_script( 'brizy-preview' );
 		wp_add_inline_script( 'brizy-preview', "var __CONFIG__ = $config_json;", 'before' );
@@ -117,26 +131,19 @@ class Brizy_Public_AssetEnqueueManager {
 	public function enqueueStyles() {
 		$ours   = [];
 		$others = [];
-
 		foreach ( $this->posts as $editorPost ) {
 			$styles = $editorPost->get_compiled_styles();
-
 			if ( ! empty( $styles['free'] ) ) {
 				$ours[] = $ourGroup = AssetGroup::instanceFromJsonData( $styles['free'] );
 				$this->replacePlaceholders( $ourGroup, $editorPost->getWpPost(), 'head' );
 			}
-
 			$_others = apply_filters( 'brizy_pro_head_assets', [], $editorPost );
-
 			foreach ( $_others as &$otherGroup ) {
 				$this->replacePlaceholders( $otherGroup, $editorPost->getWpPost(), 'body' );
 			}
-
 			$others = array_merge( $others, $_others );
 		}
-
 		$assetAggregator = new AssetAggregator( array_merge( $ours, $others ) );
-
 		foreach ( $assetAggregator->getAssetList() as $asset ) {
 			/*
 			 * Allow the manipulation of styles from the outside,
@@ -147,7 +154,6 @@ class Brizy_Public_AssetEnqueueManager {
 				$this->styles[ $this->getHandle( $asset ) ] = $asset;
 			}
 		}
-
 		// enqueue
 		if ( is_array( $this->project->getCompiledStyles() ) ) {
 			foreach ( $this->project->getCompiledAssetGroup()->getPageStyles() as $asset ) {
@@ -156,20 +162,13 @@ class Brizy_Public_AssetEnqueueManager {
 				}
 			}
 		}
-
 		foreach ( $this->styles as $handle => $asset ) {
 			if ( $asset->getType() == Asset::TYPE_FILE ) {
-				wp_register_style(
-					$handle,
-					$this->getAssetUrl( $asset ),
-					[],
-					apply_filters( 'brizy_asset_version', BRIZY_EDITOR_VERSION, $asset )
-				);
+				wp_register_style( $handle, $this->getAssetUrl( $asset ), [], apply_filters( 'brizy_asset_version', BRIZY_EDITOR_VERSION, $asset ) );
 				wp_enqueue_style( $handle );
 			}
 		}
-
-		foreach ( $this->styles as $i=>$asset ) {
+		foreach ( $this->styles as $i => $asset ) {
 			if ( $asset->getType() == Asset::TYPE_INLINE ) {
 
 				$handleStr = 'inline-handle-' . $i;
@@ -183,51 +182,35 @@ class Brizy_Public_AssetEnqueueManager {
 	public function enqueueScripts() {
 		$ours   = [];
 		$others = [];
-
 		foreach ( $this->posts as $editorPost ) {
 			$scripts = $editorPost->get_compiled_scripts();
-
 			if ( ! empty( $scripts['free'] ) ) {
 				$ours[] = $ourGroup = AssetGroup::instanceFromJsonData( $scripts['free'] );
 				$this->replacePlaceholders( $ourGroup, $editorPost->getWpPost(), 'body' );
 			}
-
 			$_others = apply_filters( 'brizy_pro_body_assets', [], $editorPost );
-
 			foreach ( $_others as &$otherGroup ) {
 				$this->replacePlaceholders( $otherGroup, $editorPost->getWpPost(), 'body' );
 			}
-
 			$others = array_merge( $others, $_others );
 		}
-
 		$assetAggregator = new AssetAggregator( array_merge( $ours, $others ) );
-
 		foreach ( $assetAggregator->getAssetList() as $asset ) {
 			$this->scripts[ $this->getHandle( $asset ) ] = $asset;
 		}
-
 		$registered = [];
 		foreach ( $this->scripts as $handle => $asset ) {
 			if ( $asset->getType() == Asset::TYPE_FILE ) {
-				wp_register_script(
-					$handle,
-					$this->getAssetUrl( $asset ),
-					[],
-					apply_filters( 'brizy_asset_version', BRIZY_EDITOR_VERSION, $asset ),
-					true
-				);
+				wp_register_script( $handle, $this->getAssetUrl( $asset ), [], apply_filters( 'brizy_asset_version', BRIZY_EDITOR_VERSION, $asset ), true );
 				wp_enqueue_script( $handle );
 				$registered[] = $asset;
 			}
 		}
-
 		foreach ( $this->scripts as $asset ) {
 			if ( $asset->getType() == Asset::TYPE_INLINE ) {
 
 				$parentHandle = null;
 				$position     = 'after';
-
 				foreach ( $registered as $registeredAsset ) {
 					if ( $registeredAsset->getScore() < $asset->getScore() ) {
 						$parentHandle = $this->getHandle( $registeredAsset );
@@ -239,12 +222,10 @@ class Brizy_Public_AssetEnqueueManager {
 						}
 					}
 				}
-
 				if ( ! $parentHandle ) {
 					$parentHandle = $this->getHandle( $registered[0] );
 					$position     = 'before';
 				}
-
 				wp_add_inline_script( $parentHandle, $asset->getContent(), $position );
 			}
 		}
@@ -255,22 +236,18 @@ class Brizy_Public_AssetEnqueueManager {
 
 			$beforeId = $handle . '-js-before';
 			$afterId  = $handle . '-js-after';
-
 			if ( strpos( $tag, $beforeId ) || strpos( $tag, $afterId ) ) {
 				$position = array_search( $handle, array_keys( $this->scripts ) );
 				$values   = array_values( $this->scripts );
-
 				if ( strpos( $tag, $beforeId ) && isset( $values[ $position - 1 ] ) ) {
 					$attrs = $this->getAttributes( $values[ $position - 1 ] );
 					$tag   = str_replace( "id='{$beforeId}'", "{$attrs} id='{$beforeId}'", $tag );
 				}
-
 				if ( strpos( $tag, $afterId ) && isset( $values[ $position + 1 ] ) ) {
 					$attrs = $this->getAttributes( $values[ $position + 1 ] );
 					$tag   = str_replace( "id='{$afterId}'", "{$attrs} id='{$afterId}'", $tag );
 				}
 			}
-
 			$attrs = $this->getAttributes( $this->scripts[ $handle ] );
 			$tag   = str_replace( 'src=', $attrs . ' src=', $tag );
 		}
@@ -301,7 +278,7 @@ class Brizy_Public_AssetEnqueueManager {
 
 	private function getAssetUrl( Asset $asset ) {
 
-		if ( strpos( $asset->getUrl(), '://' )!==false ) {
+		if ( strpos( $asset->getUrl(), '://' ) !== false ) {
 			return $asset->getUrl();
 		}
 
@@ -328,7 +305,6 @@ class Brizy_Public_AssetEnqueueManager {
 	private function replacePlaceholders( AssetGroup $ag, $post, $context ) {
 
 		$this->replacePlaceholderInAsset( $ag->getMain(), $post, $context );
-
 		foreach ( $ag->getGeneric() as &$asset ) {
 			$this->replacePlaceholderInAsset( $asset, $post, $context );
 		}
@@ -347,14 +323,7 @@ class Brizy_Public_AssetEnqueueManager {
 
 		if ( $asset->getType() == Asset::TYPE_INLINE || $asset->getType() == Asset::TYPE_CODE ) {
 
-			$assetContent = apply_filters(
-				'brizy_content',
-				$asset->getContent(),
-				$this->project,
-				apply_filters( 'brizy_asset_manager_post', $post ),
-				$context
-			);
-
+			$assetContent = apply_filters( 'brizy_content', $asset->getContent(), $this->project, apply_filters( 'brizy_asset_manager_post', $post ), $context );
 			$asset->setContent( $assetContent );
 		}
 
