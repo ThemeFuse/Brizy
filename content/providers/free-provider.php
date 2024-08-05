@@ -6,6 +6,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 {
     public function __construct()
     {
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_GroupPlaceholder());
 
         $this->registerPlaceholder(
             new Brizy_Content_Placeholders_Simple(
@@ -124,9 +125,9 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 $menu = wp_get_nav_menu_object($attrs['menu']);
                 if ($menu_items = wp_get_nav_menu_items($menu->term_id)) {
 
-                    _wp_menu_item_classes_by_context( $menu_items );
+                    _wp_menu_item_classes_by_context($menu_items);
                     foreach ($menu_items as $menu_item) {
-                        if($menu_item->current ) {
+                        if ($menu_item->current) {
                             return 'brz-menu__item--current';
                         }
                     }
@@ -287,10 +288,13 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 'editor_woo_notice',
                 function () use (&$noticeHtml) {
                     if (class_exists('WooCommerce')) {
-                        if($noticeHtml)
+                        if ($noticeHtml) {
                             return $noticeHtml;
+                        }
+
                         return $noticeHtml = wc_print_notices(true);
                     }
+
                     return "";
                 },
                 self::CONFIG_KEY_TEXT
