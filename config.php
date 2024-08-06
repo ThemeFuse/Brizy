@@ -26,7 +26,6 @@ class Brizy_Config
     const PLATFORM_EMAIL = "admin@admin.com";
 
     const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
-    const EDITOR_TEMPLEATES_URL = "https://e-t-cloud.b-cdn.net/1.3.3-beta2/";
     const SUPPORT_URL = "https://support.brizy.io";
     const ABOUT_URL = "https://www.brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
@@ -72,8 +71,6 @@ class Brizy_Config
 
     // this file will be stored in uploads/brizy/
     const PROJECT_STLYES_FILE_PATH = '/project/styles.css';
-
-    const TEMPLATES_URL = 'https://template-mk.b-cdn.net';
 
     static public function getCompilerUrls()
     {
@@ -126,11 +123,6 @@ class Brizy_Config
     static public function getUpgradeUrl()
     {
         return apply_filters('brizy_upgrade_to_pro_url', self::UPGRADE_TO_PRO_URL);
-    }
-
-    static public function getEditorTemplatesUrl($directories)
-    {
-        return apply_filters('brizy_editor_config_templates_url', self::EDITOR_TEMPLEATES_URL.$directories);
     }
 
     static public function getTermsOfServiceUrl()
