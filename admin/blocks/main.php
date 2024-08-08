@@ -226,11 +226,11 @@ class Brizy_Admin_Blocks_Main
                 $ruleMatches = $this->getTemplateRuleMatches($template->getWpPost());
             }
 
-            $ruleMatches[] = [
-                'applyFor' => Brizy_Admin_Rule::POSTS,
-                'entityType' => $wpPost->post_type,
-                'entityValues' => [$wpPost->ID],
-            ];
+//            $ruleMatches[] = [
+//                'applyFor' => Brizy_Admin_Rule::POSTS,
+//                'entityType' => $wpPost->post_type,
+//                'entityValues' => [$wpPost->ID],
+//            ];
         }
         $matching_blocks = $this->findMatchingBlocks($ruleMatches);
 
@@ -254,14 +254,14 @@ class Brizy_Admin_Blocks_Main
     {
         $rule_manager = new Brizy_Admin_Rules_Manager();
         $template_rules = $rule_manager->getRules($template->ID);
-        $ruleMatches = array_map(function (Brizy_Admin_Rule $r) {
-            return [
-                //'type'         => $r->getType(),
-                'applyFor' => $r->getAppliedFor(),
-                'entityType' => $r->getEntityType(),
-                'entityValues' => $r->getEntityValues(),
-            ];
-        }, $template_rules);
+//        $ruleMatches = array_map(function (Brizy_Admin_Rule $r) {
+//            return [
+//                //'type'         => $r->getType(),
+//                'applyFor' => $r->getAppliedFor(),
+//                'entityType' => $r->getEntityType(),
+//                'entityValues' => $r->getEntityValues(),
+//            ];
+//        }, $template_rules);
         $ruleMatches[] = [
             'applyFor' => Brizy_Admin_Rule::BRIZY_TEMPLATE,
             'entityType' => $template->post_type,
@@ -292,7 +292,10 @@ class Brizy_Admin_Blocks_Main
         foreach ($allBlocks as $aBlock) {
             $ruleSets[$aBlock->ID] = $ruleManager->getRuleSet($aBlock->ID);
         }
+
+        $excludeIds = [];
         foreach ($ruleMatches as $ruleMatch) {
+            $include = null;
             $applyFor = $ruleMatch['applyFor'];
             $entityType = $ruleMatch['entityType'];
             $entityValues = $ruleMatch['entityValues'];
@@ -306,11 +309,18 @@ class Brizy_Admin_Blocks_Main
                     if ($ruleSets[$aBlock->ID]->isMatching($applyFor, $entityType, $entityValues)) {
                         $resultBlocks[$aBlock->ID] = Brizy_Editor_Block::get($aBlock);
                     } else {
-                        $t = 0;
+                        $excludeIds[] = $aBlock->ID;
                     }
                 } catch (\Exception $e) {
-                    continue; // we catch here  the  exclusions
+                    $excludeIds[] = $aBlock->ID;
+                    break;
                 }
+            }
+        }
+
+        foreach ($resultBlocks as $i => $resultBlock) {
+            if (in_array($i, $excludeIds)) {
+                unset($resultBlocks[$i]);
             }
         }
 
