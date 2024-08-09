@@ -41,7 +41,7 @@ export const addMedia: AddMediaData = {
 
     wpMediaFrame.on("select", () => {
       const attachment = wpMediaFrame.state().get("selection").first();
-      const { url, filename } = attachment.toJSON();
+      const { url } = attachment.toJSON();
       const extension = getExtension(url);
       const allExtensions = [
         ...acceptedExtensions,
@@ -57,7 +57,7 @@ export const addMedia: AddMediaData = {
 
       getImageUid(attachment.get("id"))
         .then((r) => {
-          res({ uid: r.uid, fileName: filename });
+          res({ uid: r.uid, fileName: "" });
         })
         .catch((r: unknown) => {
           rej(t("failed to get attachment uid"));
