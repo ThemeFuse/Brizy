@@ -38,8 +38,8 @@ class Brizy_Content_Placeholders_GroupPlaceholder extends Brizy_Content_Placehol
         $newContext = Brizy_Content_ContextFactory::createContext(
             $context->getProject(),
             $context->getEntity(),
-            true,
-            $context
+            false,
+            null
         );
         $newContext->setProvider($context->getProvider());
 
