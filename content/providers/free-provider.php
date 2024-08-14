@@ -296,6 +296,31 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 self::CONFIG_KEY_TEXT
             )
         );
+
+	    $this->registerPlaceholder(
+		    new Brizy_Content_Placeholders_Simple(
+			    '',
+			    'editor_nonce',
+			    function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
+
+				    $action = $contentPlaceholder->getAttribute( 'action' );
+				    $show   = true;
+
+				    if ( $showFor = $contentPlaceholder->getAttribute( 'showfor' ) ) {
+					    $show = false;
+					    if ( 'authenticated_user' == $showFor && is_user_logged_in() ) {
+						    $show = true;
+					    }
+				    }
+
+				    if ( ! $action || ! $show ) {
+					    return '';
+				    }
+
+				    return wp_create_nonce( $action );
+			    }
+		    )
+	    );
     }
 
     private function filterData($property, $post)
