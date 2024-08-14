@@ -1449,11 +1449,7 @@ class Brizy_Editor_Editor_Editor
      */
     private function addRecaptchaAccounts(Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config, $context)
     {
-        $accounts = $manager->getAccountsByGroup(Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP);
-
-        if (isset($accounts[0]) && $accounts[0] instanceof Brizy_Editor_Accounts_RecaptchaAccount) {
-            $config['integrations']['form']['recaptcha']['siteKey'] = $accounts[0]->getSiteKey();
-        }
+        $config['integrations']['form']['recaptcha']['siteKey'] = '{{recaptcha_site_key}}';
 
         return $config;
     }
@@ -1891,7 +1887,7 @@ class Brizy_Editor_Editor_Editor
             'symbolDelete' => $pref.Brizy_Admin_Symbols_Api::DELETE_ACTION,
             'symbolList' => $pref.Brizy_Admin_Symbols_Api::LIST_ACTION,
             'getDynamicContentPlaceholders' => $pref.Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
-            'adobeFontsUrl' => $pref . Brizy_Editor_API::AJAX_GET_ADOBE_FONTS,
+            'adobeFontsUrl' => $pref.Brizy_Editor_API::AJAX_GET_ADOBE_FONTS,
         );
 
         return $actions;

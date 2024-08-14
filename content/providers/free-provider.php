@@ -7,6 +7,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
     public function __construct()
     {
         $this->registerPlaceholder(new Brizy_Content_Placeholders_GroupPlaceholder());
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_RecaptchaSiteKey());
 
         $this->registerPlaceholder(
             new Brizy_Content_Placeholders_Simple(
