@@ -2,16 +2,16 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.5.2\n"
+"Project-Id-Version: Brizy 2.5.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-01T13:31:37+00:00\n"
+"POT-Creation-Date: 2024-08-16T10:42:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: brizy\n"
 
 #. Plugin Name of the plugin
@@ -129,8 +129,8 @@ msgid "Leads details"
 msgstr ""
 
 #: admin/form-entries.php:62
-#: editor/editor/editor.php:950
-#: editor/editor/editor.php:957
+#: editor/editor/editor.php:948
+#: editor/editor/editor.php:955
 #: public/editor-build/prod/texts.php:473
 msgid "Date"
 msgstr ""
@@ -475,7 +475,7 @@ msgid "Single"
 msgstr ""
 
 #: admin/templates.php:128
-#: editor/editor/editor.php:2138
+#: editor/editor/editor.php:2136
 #: public/editor-build/prod/texts.php:210
 msgid "Archive"
 msgstr ""
@@ -877,422 +877,422 @@ msgstr ""
 msgid "Invalid image content"
 msgstr ""
 
-#: editor/editor/editor.php:949
-#: editor/editor/editor.php:956
-#: editor/editor/editor.php:2125
+#: editor/editor/editor.php:947
+#: editor/editor/editor.php:954
+#: editor/editor/editor.php:2123
 #: public/editor-build/prod/texts.php:1605
 msgid "Title"
 msgstr ""
 
-#: editor/editor/editor.php:951
-#: editor/editor/editor.php:958
+#: editor/editor/editor.php:949
+#: editor/editor/editor.php:956
 #: public/editor-build/prod/texts.php:1221
 msgid "Random"
 msgstr ""
 
-#: editor/editor/editor.php:952
-#: editor/editor/editor.php:959
+#: editor/editor/editor.php:950
+#: editor/editor/editor.php:957
 #: public/editor-build/prod/texts.php:401
 msgid "Comment Count"
 msgstr ""
 
-#: editor/editor/editor.php:965
+#: editor/editor/editor.php:963
 msgid "Relevance"
 msgstr ""
 
-#: editor/editor/editor.php:1949
+#: editor/editor/editor.php:1947
 msgid "Get Started"
 msgstr ""
 
-#: editor/editor/editor.php:1951
+#: editor/editor/editor.php:1949
 msgid "Builder Overview"
 msgstr ""
 
-#: editor/editor/editor.php:1955
+#: editor/editor/editor.php:1953
 msgid "How to Build a Page"
 msgstr ""
 
-#: editor/editor/editor.php:1959
+#: editor/editor/editor.php:1957
 msgid "Preview Publish Update"
 msgstr ""
 
-#: editor/editor/editor.php:1963
+#: editor/editor/editor.php:1961
 msgid "Free vs PRO"
 msgstr ""
 
-#: editor/editor/editor.php:1967
+#: editor/editor/editor.php:1965
 msgid "The Basics"
 msgstr ""
 
-#: editor/editor/editor.php:1968
+#: editor/editor/editor.php:1966
 #: public/editor-build/prod/texts.php:285
 msgid "Blocks"
 msgstr ""
 
-#: editor/editor/editor.php:1970
+#: editor/editor/editor.php:1968
 msgid "Saved Blocks & Layouts"
 msgstr ""
 
-#: editor/editor/editor.php:1974
+#: editor/editor/editor.php:1972
 msgid "Premade Layouts"
 msgstr ""
 
-#: editor/editor/editor.php:1978
-#: editor/editor/editor.php:2048
+#: editor/editor/editor.php:1976
+#: editor/editor/editor.php:2046
 msgid "The Elements"
 msgstr ""
 
-#: editor/editor/editor.php:1982
+#: editor/editor/editor.php:1980
 #: public/editor-build/prod/texts.php:1253
 msgid "Reorder Blocks"
 msgstr ""
 
-#: editor/editor/editor.php:1986
+#: editor/editor/editor.php:1984
 msgid "Global Styling"
 msgstr ""
 
-#: editor/editor/editor.php:1989
+#: editor/editor/editor.php:1987
 #: public/editor-build/prod/texts.php:876
 msgid "Links"
 msgstr ""
 
-#: editor/editor/editor.php:1990
+#: editor/editor/editor.php:1988
 #: public/editor-build/prod/texts.php:664
 msgid "Fonts"
 msgstr ""
 
-#: editor/editor/editor.php:1992
+#: editor/editor/editor.php:1990
 msgid "Paddings & Margins"
 msgstr ""
 
-#: editor/editor/editor.php:1996
+#: editor/editor/editor.php:1994
 msgid "Responsive Design"
 msgstr ""
 
-#: editor/editor/editor.php:2000
+#: editor/editor/editor.php:1998
 msgid "Headers & Footers"
 msgstr ""
 
-#: editor/editor/editor.php:2004
+#: editor/editor/editor.php:2002
 msgid "Menus & Navigation"
 msgstr ""
 
-#: editor/editor/editor.php:2008
+#: editor/editor/editor.php:2006
 msgid "Global Blocks & Conditions"
 msgstr ""
 
-#: editor/editor/editor.php:2012
+#: editor/editor/editor.php:2010
 msgid "Effects & Animations"
 msgstr ""
 
-#: editor/editor/editor.php:2016
+#: editor/editor/editor.php:2014
 #: public/editor-build/prod/texts.php:529
 msgid "Dynamic Content"
 msgstr ""
 
-#: editor/editor/editor.php:2018
+#: editor/editor/editor.php:2016
 msgid "Dynamic Elements"
 msgstr ""
 
-#: editor/editor/editor.php:2022
+#: editor/editor/editor.php:2020
 msgid "Users & Membership"
 msgstr ""
 
-#: editor/editor/editor.php:2024
+#: editor/editor/editor.php:2022
 msgid "Membership Blocks"
 msgstr ""
 
-#: editor/editor/editor.php:2028
+#: editor/editor/editor.php:2026
 msgid "Marketing Tools"
 msgstr ""
 
-#: editor/editor/editor.php:2030
+#: editor/editor/editor.php:2028
 msgid "The Popup Builder"
 msgstr ""
 
-#: editor/editor/editor.php:2034
+#: editor/editor/editor.php:2032
 msgid "Contact Form & Integrations"
 msgstr ""
 
-#: editor/editor/editor.php:2038
+#: editor/editor/editor.php:2036
 msgid "Cool Features"
 msgstr ""
 
-#: editor/editor/editor.php:2040
+#: editor/editor/editor.php:2038
 #: public/editor-build/prod/texts.php:1393
 msgid "Shortcuts"
 msgstr ""
 
-#: editor/editor/editor.php:2044
+#: editor/editor/editor.php:2042
 msgid "Import & Export"
 msgstr ""
 
-#: editor/editor/editor.php:2050
+#: editor/editor/editor.php:2048
 msgid "Rows & Columns"
 msgstr ""
 
-#: editor/editor/editor.php:2053
+#: editor/editor/editor.php:2051
 #: public/editor-build/prod/texts.php:1554
 msgid "Text"
 msgstr ""
 
-#: editor/editor/editor.php:2054
+#: editor/editor/editor.php:2052
 #: public/editor-build/prod/texts.php:314
 msgid "Button"
 msgstr ""
 
-#: editor/editor/editor.php:2055
+#: editor/editor/editor.php:2053
 #: public/editor-build/prod/texts.php:762
 msgid "Icon"
 msgstr ""
 
-#: editor/editor/editor.php:2056
+#: editor/editor/editor.php:2054
 #: public/editor-build/prod/texts.php:781
 msgid "Image"
 msgstr ""
 
-#: editor/editor/editor.php:2057
+#: editor/editor/editor.php:2055
 #: public/editor-build/prod/texts.php:232
 msgid "Audio"
 msgstr ""
 
-#: editor/editor/editor.php:2058
+#: editor/editor/editor.php:2056
 #: public/editor-build/prod/texts.php:1724
 msgid "Video"
 msgstr ""
 
-#: editor/editor/editor.php:2059
+#: editor/editor/editor.php:2057
 #: public/editor-build/prod/texts.php:1469
 msgid "Spacer"
 msgstr ""
 
-#: editor/editor/editor.php:2060
+#: editor/editor/editor.php:2058
 #: public/editor-build/prod/texts.php:868
 msgid "Line"
 msgstr ""
 
-#: editor/editor/editor.php:2061
+#: editor/editor/editor.php:2059
 #: public/editor-build/prod/texts.php:904
 msgid "Map"
 msgstr ""
 
-#: editor/editor/editor.php:2062
+#: editor/editor/editor.php:2060
 #: public/editor-build/prod/texts.php:546
 msgid "Embed"
 msgstr ""
 
-#: editor/editor/editor.php:2064
+#: editor/editor/editor.php:2062
 #: public/editor-build/prod/texts.php:764
 msgid "Icon Box"
 msgstr ""
 
-#: editor/editor/editor.php:2067
+#: editor/editor/editor.php:2065
 #: public/editor-build/prod/texts.php:442
 msgid "Counter"
 msgstr ""
 
-#: editor/editor/editor.php:2069
+#: editor/editor/editor.php:2067
 #: public/editor-build/prod/texts.php:441
 msgid "Countdown"
 msgstr ""
 
-#: editor/editor/editor.php:2072
+#: editor/editor/editor.php:2070
 #: public/editor-build/prod/texts.php:1543
 msgid "Tabs"
 msgstr ""
 
-#: editor/editor/editor.php:2074
+#: editor/editor/editor.php:2072
 #: public/editor-build/prod/texts.php:1206
 msgid "Progress"
 msgstr ""
 
-#: editor/editor/editor.php:2078
+#: editor/editor/editor.php:2076
 #: public/editor-build/prod/texts.php:118
 msgid "Accordion"
 msgstr ""
 
-#: editor/editor/editor.php:2081
+#: editor/editor/editor.php:2079
 #: public/editor-build/prod/texts.php:938
 msgid "Menu"
 msgstr ""
 
-#: editor/editor/editor.php:2082
-#: editor/editor/editor.php:2163
+#: editor/editor/editor.php:2080
+#: editor/editor/editor.php:2161
 #: public/editor-build/prod/texts.php:683
 msgid "Gallery"
 msgstr ""
 
-#: editor/editor/editor.php:2084
+#: editor/editor/editor.php:2082
 #: public/editor-build/prod/texts.php:341
 msgid "Carousel"
 msgstr ""
 
-#: editor/editor/editor.php:2087
-#: editor/editor/editor.php:2180
+#: editor/editor/editor.php:2085
+#: editor/editor/editor.php:2178
 #: public/editor-build/prod/texts.php:1223
 msgid "Rating"
 msgstr ""
 
-#: editor/editor/editor.php:2089
+#: editor/editor/editor.php:2087
 #: public/editor-build/prod/texts.php:1136
 msgid "Playlist"
 msgstr ""
 
-#: editor/editor/editor.php:2092
+#: editor/editor/editor.php:2090
 #: public/editor-build/prod/texts.php:1537
 msgid "Table"
 msgstr ""
 
-#: editor/editor/editor.php:2094
+#: editor/editor/editor.php:2092
 #: public/editor-build/prod/texts.php:1596
 msgid "Timeline"
 msgstr ""
 
-#: editor/editor/editor.php:2098
+#: editor/editor/editor.php:2096
 #: public/editor-build/prod/texts.php:1529
 msgid "Switcher"
 msgstr ""
 
-#: editor/editor/editor.php:2101
+#: editor/editor/editor.php:2099
 #: public/editor-build/prod/texts.php:893
 msgid "Lottie"
 msgstr ""
 
-#: editor/editor/editor.php:2103
+#: editor/editor/editor.php:2101
 msgid "Login/register"
 msgstr ""
 
-#: editor/editor/editor.php:2107
+#: editor/editor/editor.php:2105
 #: public/editor-build/prod/texts.php:600
 msgid "Facebook"
 msgstr ""
 
-#: editor/editor/editor.php:2110
+#: editor/editor/editor.php:2108
 #: public/editor-build/prod/texts.php:1639
 msgid "Twitter"
 msgstr ""
 
-#: editor/editor/editor.php:2112
+#: editor/editor/editor.php:2110
 #: public/editor-build/prod/texts.php:402
 msgid "Comments"
 msgstr ""
 
-#: editor/editor/editor.php:2115
+#: editor/editor/editor.php:2113
 #: public/editor-build/prod/texts.php:165
 msgid "Alert"
 msgstr ""
 
-#: editor/editor/editor.php:2117
+#: editor/editor/editor.php:2115
 #: public/editor-build/prod/texts.php:336
 msgid "Calendly"
 msgstr ""
 
-#: editor/editor/editor.php:2120
+#: editor/editor/editor.php:2118
 #: import/main.php:52
 #: public/editor-build/prod/texts.php:1337
 msgid "Search"
 msgstr ""
 
-#: editor/editor/editor.php:2122
+#: editor/editor/editor.php:2120
 #: public/editor-build/prod/texts.php:620
 msgid "Featured Image"
 msgstr ""
 
-#: editor/editor/editor.php:2126
+#: editor/editor/editor.php:2124
 #: public/editor-build/prod/texts.php:581
 msgid "Excerpt"
 msgstr ""
 
-#: editor/editor/editor.php:2127
+#: editor/editor/editor.php:2125
 #: public/editor-build/prod/texts.php:805
 msgid "Info"
 msgstr ""
 
-#: editor/editor/editor.php:2129
+#: editor/editor/editor.php:2127
 #: public/editor-build/prod/texts.php:300
 msgid "Breadcrumbs"
 msgstr ""
 
-#: editor/editor/editor.php:2132
+#: editor/editor/editor.php:2130
 #: public/editor-build/prod/texts.php:1157
 msgid "Posts"
 msgstr ""
 
-#: editor/editor/editor.php:2133
+#: editor/editor/editor.php:2131
 #: public/editor-build/prod/texts.php:1419
 msgid "Sidebar"
 msgstr ""
 
-#: editor/editor/editor.php:2135
+#: editor/editor/editor.php:2133
 #: public/editor-build/prod/texts.php:1392
 msgid "Shortcode"
 msgstr ""
 
-#: editor/editor/editor.php:2140
+#: editor/editor/editor.php:2138
 msgid "Woocommerce Elements"
 msgstr ""
 
-#: editor/editor/editor.php:2142
+#: editor/editor/editor.php:2140
 #: public/editor-build/prod/texts.php:1200
 msgid "Products"
 msgstr ""
 
-#: editor/editor/editor.php:2145
+#: editor/editor/editor.php:2143
 #: public/editor-build/prod/texts.php:343
 msgid "Cart"
 msgstr ""
 
-#: editor/editor/editor.php:2147
+#: editor/editor/editor.php:2145
 #: public/editor-build/prod/texts.php:349
 msgid "Categories"
 msgstr ""
 
-#: editor/editor/editor.php:2151
+#: editor/editor/editor.php:2149
 #: public/editor-build/prod/texts.php:1108
 msgid "Pages"
 msgstr ""
 
-#: editor/editor/editor.php:2155
+#: editor/editor/editor.php:2153
 #: public/editor-build/prod/texts.php:412
 msgid "Content"
 msgstr ""
 
-#: editor/editor/editor.php:2159
+#: editor/editor/editor.php:2157
 #: public/editor-build/prod/texts.php:1174
 msgid "Price"
 msgstr ""
 
-#: editor/editor/editor.php:2167
+#: editor/editor/editor.php:2165
 #: public/editor-build/prod/texts.php:150
 msgid "Add to cart"
 msgstr ""
 
-#: editor/editor/editor.php:2171
+#: editor/editor/editor.php:2169
 #: public/editor-build/prod/texts.php:1495
 msgid "Stock"
 msgstr ""
 
-#: editor/editor/editor.php:2174
+#: editor/editor/editor.php:2172
 #: public/editor-build/prod/texts.php:1308
 msgid "SKU"
 msgstr ""
 
-#: editor/editor/editor.php:2176
+#: editor/editor/editor.php:2174
 #: public/editor-build/prod/texts.php:946
 msgid "Meta"
 msgstr ""
 
-#: editor/editor/editor.php:2184
+#: editor/editor/editor.php:2182
 #: public/editor-build/prod/texts.php:231
 msgid "Attributes"
 msgstr ""
 
-#: editor/editor/editor.php:2188
+#: editor/editor/editor.php:2186
 #: public/editor-build/prod/texts.php:1691
 msgid "Upsell"
 msgstr ""
 
-#: editor/editor/editor.php:2192
+#: editor/editor/editor.php:2190
 #: public/editor-build/prod/texts.php:1280
 msgid "Reviews"
 msgstr ""
