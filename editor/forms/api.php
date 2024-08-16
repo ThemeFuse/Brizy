@@ -195,6 +195,12 @@ class Brizy_Editor_Forms_Api
 
     public function submit_form()
     {
+	    if ( is_user_logged_in() ) {
+		    if ( empty( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], Brizy_Editor_API::nonce ) ) {
+			    $this->error( 401, 'Please refresh the page and try again.' );
+		    }
+	    }
+
         try {
             $manager = new Brizy_Editor_Forms_FormManager(Brizy_Editor_Project::get());
             /**
