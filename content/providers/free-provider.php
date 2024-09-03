@@ -237,11 +237,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 			    }
 			}
 
-			$ids[ $key ] = bin2hex( random_bytes( 10 ) );
-			$context->setRandomIds( $ids );
-
-			return $ids[ $key ];
-
+			return bin2hex( random_bytes( 10 ) );
 		} ) );
 	}
 
