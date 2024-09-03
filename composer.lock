@@ -93,12 +93,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "42a7c68f2faf2aff7bf529da0674926cae2538d5"
+                "reference": "ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/42a7c68f2faf2aff7bf529da0674926cae2538d5",
-                "reference": "42a7c68f2faf2aff7bf529da0674926cae2538d5",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a",
+                "reference": "ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a",
                 "shasum": ""
             },
             "require": {
@@ -125,10 +125,10 @@
                 "placeholders"
             ],
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v3.0.3",
+                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v3.0.4",
                 "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
             },
-            "time": "2024-09-03T11:07:06+00:00"
+            "time": "2024-09-03T13:09:04+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
