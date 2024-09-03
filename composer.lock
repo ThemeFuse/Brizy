@@ -81,10 +81,10 @@
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "v2.0.19",
+            "version": "v2.x-dev",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bagrinsergiu/brizy-content-placeholder.git",
+                "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
                 "reference": "77a0856476a28b3bb0a84f122d5a4c1563abd965"
             },
             "dist": {
@@ -114,6 +114,10 @@
                 "content",
                 "placeholders"
             ],
+            "support": {
+                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v2.0.19",
+                "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
+            },
             "time": "2024-03-25T08:02:17+00:00"
         },
         {
@@ -446,5 +450,5 @@
         "php": ">=5.6"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }
