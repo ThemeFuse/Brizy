@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "86d325915acb12eeb1814c0e30274c26",
+    "content-hash": "44f2e7124193d88cb00f4d5eab0216ac",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -93,12 +93,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "dc66747b462095eaa1dd1e9574ad98f4d9b59af2"
+                "reference": "42a7c68f2faf2aff7bf529da0674926cae2538d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/dc66747b462095eaa1dd1e9574ad98f4d9b59af2",
-                "reference": "dc66747b462095eaa1dd1e9574ad98f4d9b59af2",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/42a7c68f2faf2aff7bf529da0674926cae2538d5",
+                "reference": "42a7c68f2faf2aff7bf529da0674926cae2538d5",
                 "shasum": ""
             },
             "require": {
@@ -107,9 +107,9 @@
                 "phplrt/lexer": "^2.3.6"
             },
             "require-dev": {
-                "php": ">=7.1.0",
+                "php": ">=8",
                 "phpspec/prophecy-phpunit": "^2",
-                "phpunit/phpunit": "^9.5.9"
+                "phpunit/phpunit": "^9"
             },
             "type": "library",
             "autoload": {
@@ -125,10 +125,10 @@
                 "placeholders"
             ],
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v3.x",
+                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v3.0.3",
                 "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
             },
-            "time": "2024-08-09T07:52:14+00:00"
+            "time": "2024-09-03T11:07:06+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -1424,7 +1424,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "bagrinsergiu/brizy-merge-page-assets": 20,
-        "bagrinsergiu/content-placeholder": 20,
         "tburry/pquery": 20
     },
     "prefer-stable": false,
