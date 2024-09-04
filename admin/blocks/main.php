@@ -222,15 +222,15 @@ class Brizy_Admin_Blocks_Main
         } else {
             $template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
 
-            if ($template) {
+           if ($template) {
                 $ruleMatches = $this->getTemplateRuleMatches($template->getWpPost());
+            } else {
+                $ruleMatches[] = [
+                    'applyFor' => Brizy_Admin_Rule::POSTS,
+                    'entityType' => $wpPost->post_type,
+                    'entityValues' => [$wpPost->ID],
+                ];
             }
-
-//            $ruleMatches[] = [
-//                'applyFor' => Brizy_Admin_Rule::POSTS,
-//                'entityType' => $wpPost->post_type,
-//                'entityValues' => [$wpPost->ID],
-//            ];
         }
         $matching_blocks = $this->findMatchingBlocks($ruleMatches);
 
