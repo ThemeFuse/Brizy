@@ -246,6 +246,10 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 
 			return bin2hex( random_bytes( 10 ) );
 		} ) );
+
+        $this->registerPlaceholder(
+            new Brizy_Content_Placeholders_GlobalBlock(__('Brizy Global Block', 'brizy'), 'brizy_dc_global_block')
+        );
 	}
 
 	private function filterData( $property, $post ) {

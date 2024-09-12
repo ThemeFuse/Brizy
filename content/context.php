@@ -76,11 +76,12 @@ class Brizy_Content_Context implements ContextInterface
      * @param $project
      * @param $wp_post
      */
-    public function __construct($project = null, $wp_post = null, $parentContext = null)
+    public function __construct($project = null, $wp_post = null, $parentContext = null, $parentPlaceholder=null)
     {
         $this->setProject($project);
         $this->setWpPost($wp_post);
         $this->setEntity($wp_post);
+        $this->setParentPlaceholder($parentPlaceholder);
 
         if ($parentContext instanceof ContextInterface) {
             $this->parentContext = ($parentContext);
@@ -112,4 +113,15 @@ class Brizy_Content_Context implements ContextInterface
 
         return null;
     }
+
+	public function searchParentPlaceholderByName( $name ) {
+		if ( $this->getParentPlaceholder() && $this->getParentPlaceholder()->getName() == $name ) {
+			return $this->getParentPlaceholder();
+		}
+		if ( $this->parentContext instanceof ContextInterface ) {
+			return $this->parentContext->searchParentPlaceholderByName( $name );
+		}
+
+		return null;
+	}
 }

@@ -371,7 +371,6 @@ class Brizy_Public_Main {
 	 * @throws Exception
 	 */
 	public function insert_page_content( $content ) {
-		$currentFilter = current_filter();
 
 		if ( doing_filter( 'brizy_dc_excerpt' ) ) {
 			return $content;

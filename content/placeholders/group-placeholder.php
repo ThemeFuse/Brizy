@@ -39,7 +39,8 @@ class Brizy_Content_Placeholders_GroupPlaceholder extends Brizy_Content_Placehol
             $context->getProject(),
             $context->getEntity(),
             false,
-            null
+            $context,
+            $placeholder
         );
         $newContext->setProvider($context->getProvider());
 
