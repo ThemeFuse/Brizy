@@ -16,8 +16,6 @@ class Brizy_Public_Main {
 	 */
 	private $post;
 
-	static $is_excerpt = false;
-
 	/**
 	 * Brizy_Public_Main constructor.
 	 *
@@ -385,16 +383,6 @@ class Brizy_Public_Main {
 
 		if ( false === strpos( $content, 'brz-root__container' ) ) {
 			return $content;
-		}
-
-		if ( self::$is_excerpt ) {
-			return apply_filters(
-				'brizy_content',
-				$content,
-				Brizy_Editor_Project::get(),
-				$this->post->getWpPost(),
-				'body'
-			);
 		}
 
 		$project = Brizy_Editor_Project::get();
