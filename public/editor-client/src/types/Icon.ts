@@ -1,6 +1,5 @@
-import { throwOnNullish } from "@/utils/throwOnNullish";
-import { Obj, pipe, Str } from "@brizy/readers";
-import { mPipe } from "fp-utilities";
+import { Obj, Str } from "@brizy/readers";
+import { mPipe, optional } from "fp-utilities";
 import { Response } from "./Response";
 
 export interface IconUploadData {
@@ -40,7 +39,6 @@ export interface CustomIcon {
 }
 
 export const readIconUrl = (url: string) =>
-  pipe(
-    mPipe(Obj.readKey("customIcon"), Obj.read, Obj.readKey(url), Str.read),
-    throwOnNullish(`Invalid API: ${url}`)
+  optional(
+    mPipe(Obj.readKey("customIcon"), Obj.read, Obj.readKey(url), Str.read)
   );
