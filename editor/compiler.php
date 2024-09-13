@@ -56,12 +56,9 @@ class Brizy_Editor_Compiler {
 
 	public function needsCompile( Brizy_Editor_Post $post ) {
 
-		$currentCompiler = preg_replace( "/(-wp)$/", "", $post->get_compiler_version() );
-		$v2 = preg_replace( "/(-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
+		$currentCompiler = preg_replace( "/((beta\d?)?-wp)$/", "", $post->get_compiler_version() );
+		$v2 = preg_replace( "/((beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
 
-		if(BRIZY_FORCE_FIRST_COMPILE_IN_BACKEND && version_compare( $currentCompiler, BRIZY_EDITOR_VERSION, "<" ) ) {
-			return true;
-		}
 
 		if ( $post->get_compiler() !== Brizy_Editor_Entity::COMPILER_EXTERNAL ) {
 			return false;

@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87d554b8c00628f13dd20e8bfd2c8f4b",
+    "content-hash": "44f2e7124193d88cb00f4d5eab0216ac",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
+                "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
                 "reference": "61eea2244cb34ff8666b802aafa74f74dec869da"
             },
             "dist": {
@@ -40,6 +40,10 @@
                 "brizy",
                 "brizy merge assets"
             ],
+            "support": {
+                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/master",
+                "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
+            },
             "time": "2022-09-27T14:56:05+00:00"
         },
         {
@@ -47,7 +51,7 @@
             "version": "1.5.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
+                "url": "https://github.com/bagrinsergiu/brizy-migration-utils.git",
                 "reference": "81523e89975e56d192bb3a5622ddbe1d06e10809"
             },
             "dist": {
@@ -77,11 +81,15 @@
                 }
             ],
             "description": "Data migration utils",
+            "support": {
+                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.5.4",
+                "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
+            },
             "time": "2022-07-08T10:43:38+00:00"
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "v3.0.4",
+            "version": "v3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
@@ -1157,16 +1165,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "ec444d3f3f6505bb28d11afa41e75faadebc10a1"
+                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/ec444d3f3f6505bb28d11afa41e75faadebc10a1",
-                "reference": "ec444d3f3f6505bb28d11afa41e75faadebc10a1",
+                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
+                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=7.2"
             },
             "default-branch": true,
             "type": "library",
@@ -1210,7 +1218,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.30.0"
+                "source": "https://github.com/symfony/polyfill-php73/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -1226,7 +1234,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-31T15:07:36+00:00"
+            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "tburry/pquery",

@@ -306,14 +306,14 @@ class Brizy_Admin_Blocks_Main
             ]);
             foreach ($allBlocks as $aBlock) {
                 try {
-                    if ($ruleSets[$aBlock->ID]->isMatching($applyFor, $entityType, $entityValues)) {
+                    $var = $ruleSets[$aBlock->ID];
+                    if ($var->isMatching($applyFor, $entityType, $entityValues)) {
                         $resultBlocks[$aBlock->ID] = Brizy_Editor_Block::get($aBlock);
                     } else {
                         $excludeIds[] = $aBlock->ID;
                     }
                 } catch (\Exception $e) {
                     $excludeIds[] = $aBlock->ID;
-                    break;
                 }
             }
         }
