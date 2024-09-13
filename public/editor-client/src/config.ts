@@ -1,12 +1,12 @@
-import {readIconUrl} from "@/types/Icon";
-import {Arr, Bool, Obj, Str} from "@brizy/readers";
-import {match, mPipe, optional, parseStrict} from "fp-utilities";
-import {CollectionType} from "./types/Collections";
-import {ImagePatterns, PLUGIN_ENV} from "./types/global";
-import {pipe} from "./utils/fp/pipe";
-import {onNullish} from "./utils/onNullish";
-import {throwOnNullish} from "./utils/throwOnNullish";
-import {MValue} from "./utils/types";
+import { readIconUrl } from "@/types/Icon";
+import { Arr, Bool, Obj, Str } from "@brizy/readers";
+import { match, mPipe, optional, parseStrict } from "fp-utilities";
+import { CollectionType } from "./types/Collections";
+import { ImagePatterns, PLUGIN_ENV } from "./types/global";
+import { pipe } from "./utils/fp/pipe";
+import { onNullish } from "./utils/onNullish";
+import { throwOnNullish } from "./utils/throwOnNullish";
+import { MValue } from "./utils/types";
 
 interface DefaultTemplates {
   kitsUrl: string;
@@ -83,10 +83,10 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
-  iconsUrl: string;
-  iconUrl: string;
-  deleteIconUrl: string;
-  uploadIconUrl: string;
+  iconsUrl?: string;
+  iconUrl?: string;
+  deleteIconUrl?: string;
+  uploadIconUrl?: string;
   imagePatterns: ImagePatterns;
   templatesImageUrl: string;
 }
@@ -218,7 +218,7 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
   ),
-  openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read))),
+  openAIUrl: optional(mPipe(Obj.readKey("openAIUrl"), Str.read)),
   imagePatterns: pipe(
     mPipe(
       Obj.readKey("media"),
