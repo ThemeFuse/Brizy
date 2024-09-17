@@ -133,6 +133,42 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 == Changelog ==
 
+= 2.5.4 - 2024-09-17 =
+* New: Hover animations for Buttons
+* New: Paypal element
+* New: Slideshow option for Section
+* New: Text transform options for typography
+* New: Subscript and superscript for Text element
+* New: Background color option for Video element
+* New: Background video for responsive modes for Section, Row and Column
+* New: Regenerate Global styles with AI
+* New: Ability to pin elements in left sidebar
+* Improved: Ability to copy and paste effects and animations
+* Improved: Box resizer restrictions for Map
+* Improved: Removed "To dashboard" button
+* Improved: After upload, Image element by default has original size
+* Improved: Increase width of column resizer bar
+* Improved: Tollbar options code base and migrate Map, Line and Video to new CSS generator
+* Improved: Center "Styling" and "Effects" toolbar buttons:
+* Fixed: Disabled zoom option for Section,Row and Column for respondive modes: 
+* Fixed: Background video error after cloning the container element:
+* Fixed: Text selection opacity if mask/gradinent is set
+* Fixed: Box resizer in responsive modes for all elements
+* Fixed: Copya and paste styles for responsive modes
+* Fixed: Bullet list alignment in Text element
+* Fixed: Text formatting after clear in Story
+* Fixed: Button size with default fill type
+* Fixed: Size of typography text decoration icons
+* Fixed: Background color does not remove on clear formatting on Text element
+* Fixed: Paste style of font style in Text element
+* Fixed: Section slider content snaps after slider load
+* Fixed: Slider block hover arrow color
+* Fixed: Slider block remains active after deleting
+* Fixed: Close dropdown of internal link after selection
+* Fixed: Compilation error
+* Fixed: Excerpt recursion when using Brizy posts in post loops
+* Fixed: Global block rule matching
+
 = 2.5.3 - 2024-08-16 =
 * Fixed: Send the form nonce on submit when the user is authenticated
 
