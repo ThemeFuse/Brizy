@@ -29,7 +29,7 @@ class ColumnResizer extends Component {
   };
 
   renderPopover = () => {
-    const widths = this.props.popoverData();
+    const widths = this.props.popoverData() ?? [];
     const content = widths.reduce((acc, width, index) => {
       if (index > 0) {
         acc.push(

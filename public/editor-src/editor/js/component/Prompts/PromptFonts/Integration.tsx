@@ -1,38 +1,76 @@
 import { produce } from "immer";
+import { ConnectedProps, connect } from "react-redux";
 import Config from "visual/global/Config";
+import { fontsSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import { AppData } from "../common/GlobalApps/type";
+import { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
+import { Fonts, StateToProps } from "./types";
 
 const IS_PRO = Config.get("pro");
 
-class Integration extends BaseIntegration {
+const mapState = (state: ReduxState): StateToProps => ({
+  fonts: fontsSelector(state)
+});
+
+const connector = connect(mapState);
+
+type IntegrationProps = BaseIntegrationProps &
+  ConnectedProps<typeof connector> & {
+    fonts: Fonts;
+  };
+
+class Integration extends BaseIntegration<IntegrationProps> {
   appsData: AppData[] = [];
   appsComponent = AppsComponent;
   proExceptions = !IS_PRO;
 
   async componentDidMount(): Promise<void> {
     const { Integrations } = await import("visual/config/integrations");
+    const adobeId = this.props?.fonts?.adobe?.id;
     this.appsData = Integrations.fonts;
 
-    this.setState({
-      loading: false
-    });
+    if (adobeId) {
+      const accounts = {
+        id: "adobe",
+        type: "adobe",
+        completed: true,
+        data: {
+          id: adobeId
+        }
+      };
+
+      this.setState(
+        produce((draft) => {
+          draft.data = {
+            adobe: accounts
+          };
+          draft.connectedApps = this.getConnectedApps([accounts]);
+          draft.loading = false;
+        })
+      );
+    } else {
+      this.setState({
+        loading: false
+      });
+    }
   }
 
   handleConnectApp = async (appData: AppData): Promise<void> => {
-    const connectedApp = appData.id;
-    const { stages = [] } =
-      this.appsData.find((app) => app.id === connectedApp) || {};
+    const appId = appData.id;
+    const { stages = [] } = this.appsData.find((app) => app.id === appId) || {};
 
     await pendingRequest();
 
     this.setState(
       produce((draft) => {
+        const connectedAppData = draft.data[appId] || {};
+
+        draft.connectedApp = appId;
         draft.stages = stages;
-        draft.connectedApp = connectedApp;
-        draft.data[connectedApp] = appData;
+        draft.data[appId] = { ...appData, ...connectedAppData };
       }),
       () => {
         this.handleNext();
@@ -41,4 +79,4 @@ class Integration extends BaseIntegration {
   };
 }
 
-export default Integration;
+export default connector(Integration);

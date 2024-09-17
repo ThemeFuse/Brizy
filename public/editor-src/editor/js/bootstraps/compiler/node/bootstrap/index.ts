@@ -3,7 +3,7 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import { GoogleFont } from "visual/types";
-import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
+import { isGlobalBlock } from "visual/types/utils";
 import { findFonts, getGoogleFonts } from "visual/utils/fonts";
 import { systemFont } from "visual/utils/fonts/utils";
 import { isPopup, isStory } from "visual/utils/models";
@@ -19,6 +19,15 @@ import { pageToStatic } from "../../common/toStatic/pageToStatic";
 import { popupToStatic } from "../../common/toStatic/popupToStatic";
 import { storyToStatic } from "../../common/toStatic/storyToStatic";
 import { Static } from "./types";
+import {
+  globalBlocksInPageSelector,
+  globalPopupsInPageSelector
+} from "visual/redux/selectors";
+import { pipe } from "@brizy/readers";
+
+const getGlobalBlocks = pipe(globalBlocksInPageSelector, Object.values, (o) =>
+  o.filter(isGlobalBlock)
+);
 
 export async function bootstrap(config: ConfigCommon): Promise<Static> {
   const store = createStore();
@@ -77,46 +86,46 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
     styles: compileProject(config)
   };
 
-  if (isPopup(config)) {
-    const data = await popupToStatic({ store, config });
-    return { page: data, project: compiledProject };
-  }
-
   const commonConfig = { store, config };
-
-  // GlobalPopup exists only in Story and Page mode.
-  // When the mode is Popup, there's no need to compile it.
-  if (isStory(config)) {
-    const data = await storyToStatic(commonConfig);
-    return { page: data, project: compiledProject };
-  }
-
-  const needToCompile = {
-    page,
-    project,
-    globalBlocks: Object.values(globalBlocks)
-  };
-
-  const compiledGlobalBlocks = needToCompile.globalBlocks;
-  const compiledPopups = compiledGlobalBlocks.filter(isGlobalPopup);
+  const state = store.getState();
+  const globalPopupsInPage = globalPopupsInPageSelector(state);
   let globalPopupsStatic = undefined;
 
-  if (compiledPopups.length > 0) {
+  if (globalPopupsInPage.length > 0) {
     try {
       globalPopupsStatic = await globalPopupsToStatic({
         ...commonConfig,
-        compiledBlocks: compiledPopups
+        compiledBlocks: globalPopupsInPage
       });
     } catch (e) {
       console.error(e);
     }
   }
 
+  if (isPopup(config)) {
+    const data = await popupToStatic(commonConfig);
+    return {
+      page: data,
+      project: compiledProject,
+      globalBlocks: globalPopupsStatic
+    };
+  }
+
+  if (isStory(config)) {
+    const data = await storyToStatic(commonConfig);
+    return {
+      page: data,
+      project: compiledProject,
+      globalBlocks: globalPopupsStatic
+    };
+  }
+
+  const globalBlocksInPage = getGlobalBlocks(state);
   const globalBlocksStatic =
-    compiledGlobalBlocks.length > 0
+    globalBlocksInPage.length > 0
       ? await globalBlocksToStatic({
           ...commonConfig,
-          compiledBlocks: compiledGlobalBlocks.filter(isGlobalBlock)
+          compiledBlocks: globalBlocksInPage
         })
       : undefined;
   const pageStatic = await pageToStatic(commonConfig);

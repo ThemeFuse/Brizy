@@ -4,8 +4,8 @@ import React, {
   MouseEventHandler,
   useCallback
 } from "react";
+import { WithClassName } from "visual/types/attributes";
 import { read } from "visual/utils/math/number";
-import { WithClassName } from "visual/utils/options/attributes";
 import { inputValue } from "visual/utils/react";
 import { mCompose } from "visual/utils/value";
 

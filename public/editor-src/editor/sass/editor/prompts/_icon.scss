@@ -1,28 +1,66 @@
 // Icons
-.brz-ed-popup-icons__grid {
-  height: 540px;
+.brz-ed-popup-icons {
+  &__grid {
+    height: 540px;
 
-  &__item {
-    width: 68px;
-    height: 68px;
-    font-size: 24px;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #222;
-    position: relative;
+    &__item {
+      width: 68px;
+      height: 68px;
+      font-size: 24px;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #222;
+      position: relative;
 
-    &.active,
-    &:hover {
-      background-color: #85d8f2;
-      color: #fff;
+      &.active,
+      &:hover {
+        background-color: #85d8f2;
+        color: #fff;
+      }
+
+      svg,
+      i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
-    svg,
-    i {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+  }
+
+  .brz-ed-popup-body-pro-content {
+    height: 636px;
+
+    .brz-ed-popup-body-pro-blocked {
+      height: 100%;
+    }
+  }
+
+  .brz-ui-iconset-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    .brz-ui-iconset__cell {
+      transition: none;
+
+      &:hover,
+      &--active {
+        background-color: #85d8f2;
+      }
+
+      .brz-ui-icon__img {
+        transition: none;
+      }
     }
   }
 }

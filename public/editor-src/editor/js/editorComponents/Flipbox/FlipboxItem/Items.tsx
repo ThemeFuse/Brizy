@@ -64,9 +64,9 @@ class FlipboxItemItems extends EditorArrayComponent {
     };
   }
 
-  renderItemsContainer(items: ElementModel[]): ReactNode {
+  renderItemsContainer(items: Array<JSX.Element>): JSX.Element {
     if (IS_PREVIEW) {
-      return items;
+      return <>{items}</>;
     }
 
     const { isActive } = this.props;

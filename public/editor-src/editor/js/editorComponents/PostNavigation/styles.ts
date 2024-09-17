@@ -26,7 +26,8 @@ export const style = (
         "cssStyleElementPostNavigation2TitleLineHeight",
         "cssStyleElementPostNavigation2TitleFontWeight",
         "cssStyleElementPostNavigation2TitleLetterSpacing",
-        "cssStyleElementPostNavigation2TitleFontVariation"
+        "cssStyleElementPostNavigation2TitleFontVariation",
+        "cssStyleElementPostNavigationTitleTextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -38,7 +39,8 @@ export const style = (
         "cssStyleElementPostNavigation2PostLineHeight",
         "cssStyleElementPostNavigation2PostFontWeight",
         "cssStyleElementPostNavigation2PostLetterSpacing",
-        "cssStyleElementPostNavigation2PostFontVariation"
+        "cssStyleElementPostNavigation2PostFontVariation",
+        "cssStyleElementPostNavigationPostTextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },

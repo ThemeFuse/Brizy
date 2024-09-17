@@ -1,8 +1,7 @@
 import classnames from "classnames";
 import React from "react";
-import CheckboxControls, {
-  CheckGroupItem as CheckboxControlsItem
-} from "visual/component/Controls/CheckGroup";
+import { CheckGroup as CheckboxControls } from "visual/component/Controls/CheckGroup";
+import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
@@ -196,6 +195,7 @@ class LoginField extends EditorComponent {
                   <CheckboxControlsItem
                     name="rememberme"
                     value="forever"
+                    isEditor={true}
                     renderIcons={this.renderIconForEdit}
                   >
                     <TextEditor

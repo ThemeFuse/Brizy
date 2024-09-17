@@ -185,8 +185,11 @@ export default function ($node) {
 
 function _parsePopupData($popup) {
   const triggerOnce = $popup.attr(makeAttr("trigger_once"));
+  const popup = $popup.find(".brz-popup2");
 
-  const popupId = $popup.attr(makeAttr("popup"));
+  // custom-id is for the old popups that haven't been updated
+  const popupId =
+    popup?.attr(makeAttr("once-id")) ?? popup?.attr(makeAttr("custom-id"));
 
   const pageLoad =
     $popup.attr(makeAttr("page_load")) ?? $popup.attr("data-page_load");

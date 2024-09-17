@@ -1,6 +1,8 @@
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
-import { WithConfig, WithSize } from "visual/utils/options/attributes";
+import {
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
+import { WithConfig, WithSize } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
 export type ElementModelValue = SimpleValue<Literal>;

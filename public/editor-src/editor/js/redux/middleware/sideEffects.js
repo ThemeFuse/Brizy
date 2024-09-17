@@ -44,6 +44,7 @@ import {
   storeWasChangedSelector,
   unDeletedFontsSelector
 } from "../selectors";
+import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl.ts";
 
 export default (config) => (store) => (next) => (action) => {
   const callbacks = {
@@ -75,6 +76,9 @@ export default (config) => (store) => (next) => (action) => {
     action.type === ActionTypes.IMPORT_TEMPLATE ||
     action.type === ActionTypes.UPDATE_CURRENT_STYLE_ID ||
     action.type === ActionTypes.UPDATE_CURRENT_STYLE ||
+    action.type === ActionTypes.REMOVE_GLOBAL_STYLE ||
+    action.type === ActionTypes.REGENERATE_COLORS ||
+    action.type === ActionTypes.REGENERATE_TYPOGRAPHY ||
     action.type === UPDATE_EXTRA_FONT_STYLES ||
     action.type === ActionTypes.IMPORT_STORY
   ) {
@@ -149,6 +153,7 @@ function handleHydrate(callbacks) {
       currentStyleSelector(state);
     const extraFontStyles = extraFontStylesSelector(state);
     const fontStyles = [..._fontStyles, ...extraFontStyles];
+    const adobeKitId = state?.fonts?.adobe?.id;
 
     const defaultFont = getDefaultFontDetailsSelector(state);
     // Generate default @fontFace uses in project font
@@ -169,6 +174,17 @@ function handleHydrate(callbacks) {
 
       jQuery("head", document).append($googleFonts);
       jQuery("head", parentDocument).append($googleFonts.clone());
+    }
+
+    if (currentFonts.adobe?.length && adobeKitId) {
+      const $adobeFonts = jQuery("<link>").attr({
+        href: makeAdobeFontsUrl(adobeKitId),
+        type: "text/css",
+        rel: "stylesheet"
+      });
+
+      jQuery("head", document).append($adobeFonts);
+      jQuery("head", parentDocument).append($adobeFonts.clone());
     }
 
     if (currentFonts.upload?.length) {
@@ -236,11 +252,19 @@ function handleFontsChange(callbacks) {
 
     // Generate new Link for new Fonts
     if (action.type !== DELETE_FONTS) {
+      const adobeKitId = state?.fonts?.adobe?.id;
+
       diffFonts(oldState.fonts, state.fonts).forEach(({ type, fonts }) => {
-        const href =
-          type === "upload"
-            ? makeUploadFontsUrl(fonts)
-            : makeSubsetGoogleFontsUrl(fonts);
+        let href;
+
+        if (type === "upload") {
+          href = makeUploadFontsUrl(fonts);
+        } else if (type === "adobe") {
+          if (adobeKitId) href = makeAdobeFontsUrl(adobeKitId);
+        } else {
+          href = makeSubsetGoogleFontsUrl(fonts);
+        }
+
         const $addedFont = jQuery("<link>").attr({
           href,
           type: "text/css",

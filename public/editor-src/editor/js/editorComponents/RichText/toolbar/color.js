@@ -20,6 +20,7 @@ import { capByPrefix } from "visual/utils/string";
 import { getPopulationColor } from "../utils/dependencies";
 import { ColorOption } from "./types";
 import { colorValues, gradientValues } from "./utils";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -216,6 +217,8 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
     config: { show: true }
   });
 
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "richText");
+
   return [
     {
       id: "colorTabs",
@@ -332,7 +335,8 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
                 type: "imageUpload",
                 config: {
                   edit: device === "desktop",
-                  disableSizes: true
+                  disableSizes: true,
+                  pointer: isPointerEnabled
                 },
                 dependencies: (patch) => {
                   onChange({ backgroundImage: patchImage(v, patch) });
@@ -353,6 +357,10 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
 }
 
 function getTextPopulationOptions() {
+  const config = Config.getAll();
+
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "richText");
+
   return [
     {
       id: "tabsColor",
@@ -398,7 +406,10 @@ function getTextPopulationOptions() {
             {
               id: "bg",
               type: "imageUpload",
-              label: t("Image")
+              label: t("Image"),
+              config: {
+                pointer: isPointerEnabled
+              }
             }
           ]
         }

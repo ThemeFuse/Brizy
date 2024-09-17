@@ -1,12 +1,12 @@
-import React, { ReactElement } from "react";
 import classNames from "classnames";
+import React, { ReactElement } from "react";
 import {
   WithClassName,
   WithOnChange,
   WithValue
-} from "visual/utils/options/attributes";
-import { TabList } from "./TabList";
+} from "visual/types/attributes";
 import * as Tab from "./Tab";
+import { TabList } from "./TabList";
 
 export type Props<T> = WithClassName &
   WithValue<T> &
@@ -33,7 +33,7 @@ export function Tabs<T>({
   }
 
   const showTabs = children.length > 1 || (showSingle && children.length === 1);
-  const active = children.find(t => t.props.value === value) ?? children[0];
+  const active = children.find((t) => t.props.value === value) ?? children[0];
   const activeTab = (
     <div
       className={classNames(

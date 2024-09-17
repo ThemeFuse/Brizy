@@ -69,7 +69,8 @@ export function styleBg(v: Value, vs: Value, vd: Value): OutputStyle {
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleTypography3FontVariation"
+        "cssStyleTypography3FontVariation",
+        "cssStyleTypography3TextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -84,7 +85,8 @@ export function styleBg(v: Value, vs: Value, vd: Value): OutputStyle {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ],
       interval: [
         "cssStyleHoverTransition",

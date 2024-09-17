@@ -4,12 +4,15 @@ import { unique } from "underscore";
 import { Group } from "visual/component/Controls/Group";
 import { ReloadButton } from "visual/component/Controls/ReloadButton";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
-import { OptionWrapper } from "visual/component/OptionWrapper";
 import * as Option from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { WithClassName } from "visual/types/attributes";
 import { always, mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { fromNumber } from "visual/utils/math/Positive";
+import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
+import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
 import {
   EffectType,
   effectTypeIcon,
@@ -19,15 +22,12 @@ import * as Value from "visual/utils/options/Animation/types/Value";
 import { setDelay } from "visual/utils/options/Animation/types/WithDelay";
 import { setDuration } from "visual/utils/options/Animation/types/WithDuration";
 import { setInfiniteAnimation } from "visual/utils/options/Animation/types/WithInfiniteAnimation";
-import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
-import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
 import {
   defaultEffects,
   getDirections,
   onChangeDirection,
   valueToType
 } from "visual/utils/options/Animation/utils";
-import { WithClassName } from "visual/utils/options/attributes";
 import { AttentionStyle } from "./components/AttentionStyle";
 import { Delay } from "./components/Delay";
 import { Direction } from "./components/Direction";
@@ -37,6 +37,8 @@ import { Switcher } from "./components/Switcher";
 
 export interface Props extends Option.Props<Value.Value>, WithClassName {
   config?: {
+    minDuration?: number;
+    maxDuration?: number;
     types?: EffectType[];
     replay?: boolean;
     infiniteAnimation?: boolean;
@@ -60,6 +62,8 @@ export const Animation = ({
   const type = valueToType(types, value);
   const delay = config?.delay ?? true;
   const infiniteAnimation = config?.infiniteAnimation ?? true;
+  const minDuration = config?.minDuration ?? 0.0;
+  const maxDuration = config?.maxDuration ?? 5.0;
 
   const _changeType = useCallback<OnChange<EffectType>>(
     (v) => onChange(Value.setType(v, value)),
@@ -119,6 +123,7 @@ export const Animation = ({
 
       case EffectType.Wobble:
       case EffectType.Scale:
+      case EffectType.Fill:
       case EffectType.Pulse:
       case EffectType.Rotate2:
       case EffectType.Skew:
@@ -209,7 +214,12 @@ export const Animation = ({
           <OptionWrapper className={"brz-ed-option"}>
             <Group>
               {valueOptions}
-              <Duration value={value.duration} onChange={_changeDuration} />
+              <Duration
+                min={minDuration}
+                max={maxDuration}
+                value={value.duration}
+                onChange={_changeDuration}
+              />
               {delay && <Delay value={value.delay} onChange={_changeDelay} />}
               {infiniteAnimation && (
                 <Switcher

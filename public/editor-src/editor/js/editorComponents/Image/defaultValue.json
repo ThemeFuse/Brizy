@@ -206,12 +206,6 @@
     "hoverName": "none",
     "hoverDuration": 600,
     "hoverDelay": 0,
-    "hoverInfiniteAnimation": true,
-
-    "tabletWidthSuffix": null,
-    "tabletHeightSuffix": null,
-
-    "mobileWidthSuffix": null,
-    "mobileHeightSuffix": null
+    "hoverInfiniteAnimation": true
   }
 }

@@ -42,88 +42,20 @@
     "bgMapZoom": 15,
     "bgMapZoomSuffix": "",
 
-    "motionActive": false,
-    "motionVerticalEnabled": false,
-    "motionVerticalSpeed": 0.5,
-    "motionVerticalSpeedSuffix": null,
-    "motionVerticalDirection": "up",
-    "motionVerticalViewportType": "viewport",
-    "motionVerticalViewportTop": 0,
-    "motionVerticalViewportBottom": 100,
-
-    "motionHorizontalEnabled": false,
-    "motionHorizontalSpeed": 0.5,
-    "motionHorizontalSpeedSuffix": null,
-    "motionHorizontalDirection": "left",
-    "motionHorizontalViewportType": "viewport",
-    "motionHorizontalViewportBottom": 100,
-    "motionHorizontalViewportTop": 0,
-
-    "motionRotateEnabled": false,
-    "motionRotateSpeed": 0.5,
-    "motionRotateSpeedSuffix": null,
-    "motionRotateDirection": "left",
-    "motionRotateX": "center",
-    "motionRotateY": "center",
-    "motionRotateViewportType": "viewport",
-    "motionRotateViewportBottom": 100,
-    "motionRotateViewportTop": 0,
-
-    "motionTransparencyEnabled": false,
-    "motionTransparencyLevel": 0.5,
-    "motionTransparencyLevelSuffix": null,
-    "motionTransparencyDirection": "in",
-    "motionTransparencyViewportType": "viewport",
-    "motionTransparencyViewportBottom": 100,
-    "motionTransparencyViewportTop": 0,
-
-    "motionScaleEnabled": false,
-    "motionScaleSpeed": 10,
-    "motionScaleSpeedSuffix": null,
-    "motionScaleDirection": "up",
-    "motionScaleX": "center",
-    "motionScaleY": "center",
-    "motionScaleViewportType": "viewport",
-    "motionScaleViewportBottom": 100,
-    "motionScaleViewportTop": 0,
-
-    "motionBlurEnabled": false,
-    "motionBlurLevel": 0.5,
-    "motionBlurLevelSuffix": null,
-    "motionBlurDirection": "in",
-    "motionBlurViewportType": "viewport",
-    "motionBlurViewportBottom": 100,
-    "motionBlurViewportTop": 0,
-
-    "motionMouseTrackEnabled": false,
-    "motionMouseTrackDirection": "direct",
-    "motionMouseTrackSpeed": 0.25,
-    "motionMouseTrackSpeedSuffix": null,
-
-    "motionMouseTiltEnabled": false,
-    "motionMouseTiltDirection": "direct",
-    "motionMouseTiltSpeed": 0.25,
-    "motionMouseTiltSpeedSuffix": null,
+    "bgSize": "cover",
+    "bgRepeat": "off",
 
     "hoverMedia": "image",
 
-    "tabletMedia": "image",
+    "tabletMedia": null,
 
     "tabletBgPopulation": "",
 
-    "tabletMotionActive": false,
-    "tabletMotionMouseTrackEnabled": false,
-    "tabletMotionMouseTiltEnabled": false,
-
     "mobileWidth": 100,
 
-    "mobileMedia": "image",
+    "mobileMedia": null,
 
     "mobileBgPopulation": "",
-
-    "mobileMotionActive": false,
-    "mobileMotionMouseTrackEnabled": false,
-    "mobileMotionMouseTiltEnabled": false,
 
     "showOnDesktop": "on",
 
@@ -156,7 +88,7 @@
     "linkExternalRel": "off",
     "linkExternalType": "linkExternal",
     "linkPopulation": "",
-    "linkPopulationEntityId":  "",
+    "linkPopulationEntityId": "",
     "linkPopulationEntityType": "",
     "linkUpload": "",
     "linkPopup": ""
@@ -486,7 +418,78 @@
 
     "maskShadowBlur": 0,
     "maskShadowVertical": 0,
-    "maskShadowHorizontal": 0
+    "maskShadowHorizontal": 0,
+
+    "motionActive": false,
+    "motionVerticalEnabled": false,
+    "motionVerticalSpeed": 0.5,
+    "motionVerticalSpeedSuffix": null,
+    "motionVerticalDirection": "up",
+    "motionVerticalViewportType": "viewport",
+    "motionVerticalViewportTop": 0,
+    "motionVerticalViewportBottom": 100,
+
+    "motionHorizontalEnabled": false,
+    "motionHorizontalSpeed": 0.5,
+    "motionHorizontalSpeedSuffix": null,
+    "motionHorizontalDirection": "left",
+    "motionHorizontalViewportType": "viewport",
+    "motionHorizontalViewportBottom": 100,
+    "motionHorizontalViewportTop": 0,
+
+    "motionRotateEnabled": false,
+    "motionRotateSpeed": 0.5,
+    "motionRotateSpeedSuffix": null,
+    "motionRotateDirection": "left",
+    "motionRotateX": "center",
+    "motionRotateY": "center",
+    "motionRotateViewportType": "viewport",
+    "motionRotateViewportBottom": 100,
+    "motionRotateViewportTop": 0,
+
+    "motionTransparencyEnabled": false,
+    "motionTransparencyLevel": 0.5,
+    "motionTransparencyLevelSuffix": null,
+    "motionTransparencyDirection": "in",
+    "motionTransparencyViewportType": "viewport",
+    "motionTransparencyViewportBottom": 100,
+    "motionTransparencyViewportTop": 0,
+
+    "motionScaleEnabled": false,
+    "motionScaleSpeed": 10,
+    "motionScaleSpeedSuffix": null,
+    "motionScaleDirection": "up",
+    "motionScaleX": "center",
+    "motionScaleY": "center",
+    "motionScaleViewportType": "viewport",
+    "motionScaleViewportBottom": 100,
+    "motionScaleViewportTop": 0,
+
+    "motionBlurEnabled": false,
+    "motionBlurLevel": 0.5,
+    "motionBlurLevelSuffix": null,
+    "motionBlurDirection": "in",
+    "motionBlurViewportType": "viewport",
+    "motionBlurViewportBottom": 100,
+    "motionBlurViewportTop": 0,
+
+    "motionMouseTrackEnabled": false,
+    "motionMouseTrackDirection": "direct",
+    "motionMouseTrackSpeed": 0.25,
+    "motionMouseTrackSpeedSuffix": null,
+
+    "motionMouseTiltEnabled": false,
+    "motionMouseTiltDirection": "direct",
+    "motionMouseTiltSpeed": 0.25,
+    "motionMouseTiltSpeedSuffix": null,
+
+    "tabletMotionActive": false,
+    "tabletMotionMouseTrackEnabled": false,
+    "tabletMotionMouseTiltEnabled": false,
+
+    "mobileMotionActive": false,
+    "mobileMotionMouseTrackEnabled": false,
+    "mobileMotionMouseTiltEnabled": false
   },
 
   "animation": {

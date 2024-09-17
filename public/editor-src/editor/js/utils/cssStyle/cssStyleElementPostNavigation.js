@@ -1,5 +1,6 @@
 import {
   cssStyleColor,
+  cssStyleTextTransforms,
   cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
@@ -55,7 +56,7 @@ export function cssStyleElementPostNavigation2TitleLetterSpacing({
     v,
     device,
     prefix: "titleTypography"
-  })}`;
+  })};`;
 }
 
 export function cssStyleElementPostNavigation2TitleFontVariation({
@@ -69,6 +70,13 @@ export function cssStyleElementPostNavigation2TitleFontVariation({
   });
 }
 
+export function cssStyleElementPostNavigationTitleTextTransform({ v, device }) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    prefix: "titleTypography"
+  });
+}
 export function cssStyleElementPostNavigation2PostFontFamily({ v, device }) {
   return device === "desktop"
     ? `font-family:${styleTypography2FontFamily({
@@ -113,6 +121,14 @@ export function cssStyleElementPostNavigation2PostLetterSpacing({ v, device }) {
 
 export function cssStyleElementPostNavigation2PostFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "postTypography"
+  });
+}
+
+export function cssStyleElementPostNavigationPostTextTransform({ v, device }) {
+  return cssStyleTextTransforms({
     v,
     device,
     prefix: "postTypography"

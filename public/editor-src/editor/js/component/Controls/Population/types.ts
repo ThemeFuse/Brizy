@@ -7,10 +7,11 @@ import {
   ChoicesAsync,
   ElementModelValue
 } from "visual/component/Options/types/dev/Select/types";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 
 export interface Props<T extends string | number> extends WithClassName {
   isOpen: boolean;
+  onOpened: (o: boolean) => void;
   isEntityTypeLoaded: boolean;
   showChoices: boolean;
   choices: (Choices<T> | OptGroup<T>)[];
@@ -18,11 +19,9 @@ export interface Props<T extends string | number> extends WithClassName {
   value: T;
   entityType: ElementModelValue;
   entityId: ElementModelValue;
-  handleClickOutside: VoidFunction;
   onChange: (v: string) => void;
   onEntityTypeChange: (v: ElementModelValue) => void;
   onEntityIdChange: (v: ElementModelValue) => void;
-  handleIconClick: VoidFunction;
   entityTypeChoices: ChoicesAsync;
   entityIdChoices: ChoicesAsync;
   onEntityTypeLoad?: VoidFunction;

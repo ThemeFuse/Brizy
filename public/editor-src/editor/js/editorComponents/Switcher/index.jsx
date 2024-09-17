@@ -95,8 +95,10 @@ class Switcher extends EditorComponent {
       labelText2,
       firstIconName,
       firstIconType,
+      firstIconFilename,
       secondIconName,
-      secondIconType
+      secondIconType,
+      secondIconFilename
     } = v;
     const className = classNames(
       "brz-switcher__nav2--control",
@@ -129,7 +131,11 @@ class Switcher extends EditorComponent {
                 >
                   <div className={classNameNavButton}>
                     {index === 0 && firstIconName && firstIconType && (
-                      <ThemeIcon name={firstIconName} type={firstIconType} />
+                      <ThemeIcon
+                        name={firstIconName}
+                        type={firstIconType}
+                        filename={firstIconFilename}
+                      />
                     )}
                     {index === 0 && (
                       <TextEditor
@@ -141,7 +147,11 @@ class Switcher extends EditorComponent {
                       />
                     )}
                     {index === 1 && secondIconName && secondIconType && (
-                      <ThemeIcon name={secondIconName} type={secondIconType} />
+                      <ThemeIcon
+                        name={secondIconName}
+                        type={secondIconType}
+                        filename={secondIconFilename}
+                      />
                     )}
                     {index === 1 && (
                       <TextEditor

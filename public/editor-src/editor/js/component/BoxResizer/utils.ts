@@ -100,3 +100,106 @@ export const calcOffsetYBySize = (
     2
   );
 };
+
+export const RESTRICTIONS = {
+  desktop: {
+    height: {
+      px: {
+        min: 3,
+        max: Infinity
+      },
+      "%": {
+        min: 3,
+        max: Infinity
+      }
+    },
+    size: {
+      px: {
+        min: 3,
+        max: 100
+      },
+      "%": {
+        min: 3,
+        max: 100
+      }
+    },
+    width: {
+      px: {
+        min: 3,
+        max: 100
+      },
+      "%": {
+        min: 3,
+        max: 100
+      }
+    }
+  },
+
+  tablet: {
+    // Tablet
+    height: {
+      px: {
+        min: 3,
+        max: Infinity
+      },
+      "%": {
+        min: 3,
+        max: Infinity
+      }
+    },
+    size: {
+      px: {
+        min: 3,
+        max: 100
+      },
+      "%": {
+        min: 3,
+        max: 100
+      }
+    },
+    width: {
+      px: {
+        min: 3,
+        max: 100
+      },
+      "%": {
+        min: 3,
+        max: 100
+      }
+    }
+  },
+
+  mobile: {
+    // Mobile
+    height: {
+      px: {
+        min: 3,
+        max: Infinity
+      },
+      "%": {
+        min: 3,
+        max: Infinity
+      }
+    },
+    size: {
+      px: {
+        min: 3,
+        max: 100
+      },
+      "%": {
+        min: 3,
+        max: 100
+      }
+    },
+    width: {
+      px: {
+        min: 3,
+        max: 100
+      },
+      "%": {
+        min: 3,
+        max: 100
+      }
+    }
+  }
+};

@@ -6,7 +6,6 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
 import { Props, Value } from "./types";
 
-// @ts-expect-error advancedSettings is old option
 export const getItems: GetItems<Value, Props> = ({
   v,
   state,
@@ -335,7 +334,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     },
     {

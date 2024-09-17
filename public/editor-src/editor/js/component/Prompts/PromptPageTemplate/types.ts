@@ -1,4 +1,8 @@
-import { Layout, Tabs } from "visual/component/Prompts/common/PromptPage/types";
+import {
+  Layout,
+  Tabs,
+  ThemeLayout
+} from "visual/component/Prompts/common/PromptPage/types";
 import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { State } from "visual/component/Prompts/common/states/Classic/types/State";
 import { ShopifyPage } from "visual/types";
@@ -20,8 +24,8 @@ export interface Props {
 export interface Invalid {
   activeTab: Tabs;
   title: string | undefined;
-  layout: string;
-  layouts: [Layout, ...Layout[]];
+  layout: Layout;
+  layouts: [ThemeLayout, ...ThemeLayout[]];
   error: string | undefined;
   isHomePage: boolean;
 }

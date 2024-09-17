@@ -10,6 +10,8 @@ export function style(v: ElementModel, vs: ElementModel, vd: ElementModel) {
         "cssStyleTypographyFontSize",
         "cssStyleTypographyFontWeight",
         "cssStyleTypographyLetterSpacing",
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
         "cssStyleElementFormMargin"
       ]
     },

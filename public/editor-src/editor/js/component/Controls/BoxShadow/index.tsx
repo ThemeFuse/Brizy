@@ -17,12 +17,12 @@ import {
 } from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
-import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import {
   WithClassName,
   WithOnChange2,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
 
 export interface Props

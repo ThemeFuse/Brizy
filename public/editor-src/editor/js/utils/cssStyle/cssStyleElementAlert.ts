@@ -3,6 +3,7 @@ import {
   cssStyleColor,
   cssStylePaddingFourFields,
   cssStyleTextShadow2,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -15,9 +16,9 @@ import {
   styleBgColor,
   styleColor
 } from "visual/utils/style2";
+import { readIconSize } from "visual/utils/types/Type";
 import { defaultValueValue } from "../onChange";
 import { CSSValue } from "../style2/types";
-import { readIconSize } from "./cssStyleElementSwitcher";
 
 export function cssStyleAlertContainerShadow({
   v,
@@ -231,6 +232,19 @@ export function cssStyleElementAlertTitleFontVariation({
   });
 }
 
+export function cssStyleElementAlertTitleTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix: "title"
+  });
+}
+
 //#endregion
 
 //#region description
@@ -340,6 +354,19 @@ export function cssStyleElementAlertDescriptionFontVariation({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix: "description"
+  });
+}
+
+export function cssStyleElementAlertDescriptionTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix: "description"
   });
 }

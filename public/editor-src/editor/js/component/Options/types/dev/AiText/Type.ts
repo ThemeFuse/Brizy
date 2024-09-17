@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 
 export interface Model {
   value: string;

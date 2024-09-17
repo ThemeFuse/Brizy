@@ -1,11 +1,10 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import {
   AlphaMapEditor,
   AlphaMapPreview
 } from "visual/component/BrizyBuilder/Map";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Toolbar from "visual/component/Toolbar";
@@ -26,66 +25,12 @@ import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-
-export interface Value extends ElementModel {
-  address: string;
-  zoom: number;
-}
-
-interface Patch {
-  [k: string]: string;
-}
-
-const resizerPoints = [
-  "topLeft",
-  "topCenter",
-  "topRight",
-  "centerLeft",
-  "centerRight",
-  "bottomLeft",
-  "bottomCenter",
-  "bottomRight"
-];
-
-const resizerTransformValue = (v: Value): ElementModel => {
-  const {
-    size,
-    tabletSize,
-    mobileSize,
-    sizeSuffix,
-    tabletSizeSuffix,
-    mobileSizeSuffix,
-    ...rest
-  } = v;
-
-  return {
-    width: size,
-    tabletWidth: tabletSize,
-    mobileWidth: mobileSize,
-    widthSuffix: sizeSuffix,
-    tabletWidthSuffix: tabletSizeSuffix,
-    mobileWidthSuffix: mobileSizeSuffix,
-    ...rest
-  };
-};
-const resizerTransformPatch = (patch: Patch): Patch => {
-  if (patch.width) {
-    patch.size = patch.width;
-    delete patch.width;
-  }
-
-  if (patch.tabletWidth) {
-    patch.tabletSize = patch.tabletWidth;
-    delete patch.tabletWidth;
-  }
-
-  if (patch.mobileWidth) {
-    patch.mobileSize = patch.mobileWidth;
-    delete patch.mobileWidth;
-  }
-
-  return patch;
-};
+import { Value, Patch } from "./type";
+import {
+  getBoxResizerParams,
+  resizerTransformPatch,
+  resizerTransformValue
+} from "./utils";
 
 class Map extends EditorComponent<Value> {
   static get componentId(): ElementTypes.Map {
@@ -124,12 +69,13 @@ class Map extends EditorComponent<Value> {
     };
   };
 
-  renderForEdit(v: Value): ReactNode {
+  renderForEdit(v: Value): JSX.Element {
     const IS_STORY = isStory(Config.getAll());
-    const { address, zoom } = v;
+    const { address, zoom, customCSS } = v;
 
     const { animationId, hoverName, options, isDisabledHover, isHidden } =
       this.getHoverData(v);
+    const { points, restrictions } = getBoxResizerParams();
 
     const wrapperClassName = this.getCSSClassnames({
       toolbars: [toolbarConfig],
@@ -137,38 +83,11 @@ class Map extends EditorComponent<Value> {
       extraClassNames: ["brz-map", { "brz-map_styles": isHidden }]
     });
 
-    const resizerRestrictions = {
-      height: {
-        px: { min: 25, max: Infinity },
-        "%": { min: 5, max: Infinity }
-      },
-      width: {
-        px: { min: 5, max: 1000 },
-        "%": { min: 5, max: 100 }
-      },
-      tabletHeight: {
-        px: { min: 25, max: Infinity },
-        "%": { min: 5, max: Infinity }
-      },
-      tabletWidth: {
-        px: { min: 5, max: 1000 },
-        "%": { min: 5, max: 100 }
-      },
-      mobileHeight: {
-        px: { min: 25, max: Infinity },
-        "%": { min: 5, max: Infinity }
-      },
-      mobileWidth: {
-        px: { min: 5, max: 1000 },
-        "%": { min: 5, max: 100 }
-      }
-    };
-
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper
             {...this.makeWrapperProps({
               className: wrapperClassName
@@ -182,8 +101,8 @@ class Map extends EditorComponent<Value> {
               isHidden={isHidden || IS_STORY}
             >
               <BoxResizer
-                points={resizerPoints}
-                restrictions={resizerRestrictions}
+                points={points}
+                restrictions={restrictions}
                 meta={this.props.meta}
                 value={resizerTransformValue(v)}
                 onChange={this.handleResizerChange}
@@ -201,8 +120,8 @@ class Map extends EditorComponent<Value> {
     );
   }
 
-  renderForView(v: Value): ReactNode {
-    const { address, zoom } = v;
+  renderForView(v: Value): JSX.Element {
+    const { address, zoom, customCSS } = v;
     const IS_STORY = isStory(Config.getAll());
 
     const { animationId, options, isHidden, hoverName } = this.getHoverData(v);
@@ -214,7 +133,7 @@ class Map extends EditorComponent<Value> {
     });
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper
           {...this.makeWrapperProps({
             className: wrapperClassName

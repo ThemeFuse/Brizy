@@ -11,15 +11,32 @@ export interface RadioItemProps {
   onChange: (value: string, name: string) => void;
 }
 
+interface DataField {
+  title: string;
+  name: string;
+  value: string;
+  type: string;
+  description: string;
+  choices: Choice[];
+}
+
 export interface InputFieldProps {
-  field: {
-    title: string;
-    name: string;
-    value: string;
-    type: string;
-    description?: string;
-    choices?: Choice[];
-  };
+  field: DataField;
   onChange: (value: string, name: string) => void;
-  handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
+  handleKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
+}
+
+export interface ConnectProps {
+  img?: string;
+  title?: string;
+  docsUrl?: string;
+  descriptions?: string;
+  data?: DataField[];
+  error?: string;
+  nextLoading?: boolean;
+  prevLoading?: boolean;
+  onNext: VoidFunction;
+  onPrev: VoidFunction;
+  onChange: (value: string, name: string) => void;
 }

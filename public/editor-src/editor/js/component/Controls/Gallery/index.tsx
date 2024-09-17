@@ -1,10 +1,10 @@
 import {
+  closestCenter,
   DndContext,
   DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   UniqueIdentifier,
-  closestCenter,
   useSensor,
   useSensors
 } from "@dnd-kit/core";
@@ -15,7 +15,7 @@ import React, { ReactElement, useCallback } from "react";
 import { noop } from "underscore";
 import { Item } from "visual/component/Controls/Gallery/types/Item";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 import { ImageUpload, Props as UploadProps } from "../ImageUpload";
 import { Error } from "./components/Error";
 import { Loading } from "./components/Loading";
@@ -81,6 +81,7 @@ interface SortableProps<T> extends WithClassName {
   onAdd: UploadProps["onChange"];
   onRemove?: (id: T) => void;
   onSortEnd: (active: UniqueIdentifier, over: UniqueIdentifier) => void;
+  isLoading?: boolean;
 }
 
 const Sortable = function <T extends number | string>({
@@ -88,7 +89,8 @@ const Sortable = function <T extends number | string>({
   items,
   onAdd,
   onRemove,
-  onSortEnd
+  onSortEnd,
+  isLoading
 }: SortableProps<T>) {
   const itemsId = items.map((item) => item.id);
 
@@ -113,6 +115,13 @@ const Sortable = function <T extends number | string>({
     useSensor(KeyboardSensor)
   );
 
+  const galleryItemAddClassname = classNames(
+    "brz-ed-control__gallery__item brz-ed-control__gallery__item--add",
+    {
+      "brz-ed-control__gallery__item--add-loading": isLoading
+    }
+  );
+
   return (
     <div className={classNames("brz-ed-control__gallery", className)}>
       <DndContext
@@ -127,13 +136,20 @@ const Sortable = function <T extends number | string>({
         </SortableContext>
       </DndContext>
       <ImageUpload
-        onChange={onAdd}
-        className="brz-ed-control__gallery__item brz-ed-control__gallery__item--add"
+        onChange={isLoading ? noop : onAdd}
+        className={galleryItemAddClassname}
       >
-        <EditorIcon
-          icon="nc-add"
-          className="brz-ed-control__gallery__item__icon"
-        />
+        {isLoading ? (
+          <EditorIcon
+            icon="nc-circle-02"
+            className="brz-ed-animated--spin brz-ed-control__gallery__item__icon"
+          />
+        ) : (
+          <EditorIcon
+            icon="nc-add"
+            className="brz-ed-control__gallery__item__icon"
+          />
+        )}
       </ImageUpload>
     </div>
   );
@@ -144,6 +160,7 @@ export interface Props<T extends number | string> extends WithClassName {
   items: Item<T>[];
   onAdd: UploadProps["onChange"];
   onRemove?: (id: T) => void;
+  isLoading?: boolean;
 }
 
 export function Gallery<T extends number | string>({
@@ -151,7 +168,8 @@ export function Gallery<T extends number | string>({
   items,
   onSort,
   onAdd,
-  onRemove
+  onRemove,
+  isLoading
 }: Props<T>): ReactElement {
   const _onSort = useCallback<SortableProps<T>["onSortEnd"]>(
     (activeId, overId) => {
@@ -172,6 +190,7 @@ export function Gallery<T extends number | string>({
       onRemove={onRemove}
       className={className}
       items={items}
+      isLoading={isLoading}
     />
   );
 }

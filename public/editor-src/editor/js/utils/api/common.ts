@@ -20,8 +20,8 @@ import {
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
-  BlockWithThumbs,
   BlocksArray,
+  BlockWithThumbs,
   DefaultBlock,
   DefaultBlockWithID,
   KitItem,
@@ -46,20 +46,32 @@ import {
   UpdateSavedBlock,
   UpdateSavedLayout
 } from "visual/global/Config/types/configs/blocks/SavedBlocks";
-import { ScreenshotData } from "visual/global/Config/types/configs/common";
+import {
+  AdobeFontData,
+  ScreenshotData,
+  IconUploadData
+} from "visual/global/Config/types/configs/common";
 import { EkklesiaExtra } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
 import { EkklesiaFields } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
 import {
+  FontStyle,
   GlobalBlock,
   GlobalBlockNormal,
   GlobalBlockPopup,
   PageCommon,
+  Palette,
   Project,
   Rule,
   SavedBlock,
   SavedLayout
 } from "visual/types";
-import { PostsSources } from "visual/utils/api/types";
+import { Dictionary } from "visual/types/utils";
+import {
+  AdobeAddAccount,
+  AdobeFonts,
+  PostsSources,
+  UploadIconData
+} from "visual/utils/api/types";
 import { getCompile } from "visual/utils/compiler";
 import { t } from "visual/utils/i18n";
 import {
@@ -775,7 +787,9 @@ export const getCollectionTypes = (
     if (typeof collectionTypesHandler === "function") {
       collectionTypesHandler(res, rej, extraData);
     } else {
-      rej(t("Missing api handler in config"));
+      rej(
+        t("Missing api collectionTypes.loadCollectionTypes.handler in config")
+      );
     }
   });
 };
@@ -791,7 +805,9 @@ export const getSourceIds = (
     if (typeof sourceItemsHandler === "function") {
       sourceItemsHandler(res, rej, { id: type });
     } else {
-      rej(t("Missing api handler in config"));
+      rej(
+        t("Missing api collectionItems.getCollectionItemsIds.handler in config")
+      );
     }
   });
 };
@@ -833,7 +849,6 @@ export const updateBlockScreenshot = (
 //#endregion
 
 //#region Elements Posts
-
 export const defaultPostsSources = (
   config: ConfigCommon,
   args: {
@@ -849,6 +864,35 @@ export const defaultPostsSources = (
     } else {
       const { handler } = elements.posts;
       handler(res, rej, args);
+    }
+  });
+};
+
+//#endregion
+
+//#region Adobe Fonts
+
+export const getAdobeFonts = (config: ConfigCommon): Promise<AdobeFonts> => {
+  return new Promise((res, rej) => {
+    const get = config.api?.fonts?.adobeFont?.get;
+    if (typeof get === "function") {
+      get(res, rej);
+    } else {
+      rej(t("Missing adobe fonts in api config"));
+    }
+  });
+};
+
+export const addAdobeFonts = (
+  config: ConfigCommon,
+  data: AdobeFontData
+): Promise<AdobeAddAccount> => {
+  const add = config.api?.fonts?.adobeFont?.add;
+  return new Promise((res, rej) => {
+    if (typeof add === "function") {
+      add(res, rej, data);
+    } else {
+      rej(t("Missing adobe fonts in api config"));
     }
   });
 };
@@ -955,6 +999,40 @@ export const sendToAi = (
 
 //#endregion
 
+//#region Ai Global Styles
+
+export const getGlobalColors = (
+  config: ConfigCommon
+): Promise<Array<Palette>> => {
+  return new Promise((res, rej) => {
+    const { styles } = config.ui?.leftSidebar ?? {};
+    const get = styles?.regenerateColors;
+
+    if (!get) {
+      rej(t("API: No regenerate color found."));
+    } else {
+      get(res, rej);
+    }
+  });
+};
+
+export const getGlobalTypography = (
+  config: ConfigCommon
+): Promise<Array<FontStyle>> => {
+  return new Promise((res, rej) => {
+    const { styles } = config.ui?.leftSidebar ?? {};
+    const get = styles?.regenerateTypography;
+
+    if (!get) {
+      rej(t("API: No regenerate typography found."));
+    } else {
+      get(res, rej);
+    }
+  });
+};
+
+//#endregion
+
 //#region Ecwid
 
 export const getEcwidProducts = (config: ConfigCommon): Promise<Choice[]> => {
@@ -1013,6 +1091,54 @@ export const createGlobalPopup = (
 
 //#endregion
 
+//#region CustomIcons
+
+export const getCustomIcons = (
+  config: ConfigCommon
+): Promise<IconUploadData[]> => {
+  const { get } = config?.api?.customIcon ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof get === "function") {
+      get(res, rej);
+    } else {
+      rej("Missing api getIcons in config");
+    }
+  });
+};
+
+export const addCustomIcon = (
+  config: ConfigCommon,
+  { acceptedExtensions }: UploadIconData
+): Promise<IconUploadData[]> => {
+  const { add } = config?.api?.customIcon ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof add === "function") {
+      add(res, rej, { acceptedExtensions });
+    } else {
+      rej("Missing api addIcon in config");
+    }
+  });
+};
+
+export const deleteCustomIcon = (
+  uid: string,
+  config: ConfigCommon
+): Promise<string> => {
+  const { delete: deleteIcon } = config?.api?.customIcon ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof deleteIcon === "function") {
+      deleteIcon(res, rej, { uid });
+    } else {
+      rej("Missing api deleteIcon in config");
+    }
+  });
+};
+
+//#endregion
+
 //#region Dynamic Content
 
 export const getDynamicContentPlaceholders = async (
@@ -1029,6 +1155,25 @@ export const getDynamicContentPlaceholders = async (
     }
   });
 };
+
+export function getDynamicContent(config: ConfigCommon) {
+  const handler = config.dynamicContent?.getPlaceholderData;
+  return ({
+    placeholders,
+    signal
+  }: {
+    placeholders: Dictionary<string[]>;
+    signal?: AbortSignal;
+  }): Promise<Dictionary<string[]>> => {
+    return new Promise((res, rej) => {
+      if (typeof handler === "function") {
+        handler(res, rej, { placeholders, signal });
+      } else {
+        rej(t("Missing getDynamicContent inside api Config"));
+      }
+    });
+  };
+}
 
 //#endregion
 

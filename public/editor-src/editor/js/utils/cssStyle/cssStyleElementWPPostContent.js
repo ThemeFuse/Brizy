@@ -1,6 +1,7 @@
 import {
   cssStyleColor,
   cssStyleTextAlign,
+  cssStyleTextTransforms,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
@@ -139,6 +140,19 @@ export function cssStyleElementWPPostContentTypography2ParagraphFontVariation({
   });
 }
 
+export function cssStyleElementWPPostContentParagraphTextTransform({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix: "paragraph"
+  });
+}
+
 export function cssStyleElementWPPostContentTypography2H1FontFamily({
   v,
   device
@@ -203,6 +217,18 @@ export function cssStyleElementWPPostContentTypography2H1FontVariation({
   });
 }
 
+export function cssStyleElementWPPostContentH1TextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix: "h1"
+  });
+}
 export function cssStyleElementWPPostContentTypography2H2FontFamily({
   v,
   device
@@ -263,6 +289,19 @@ export function cssStyleElementWPPostContentTypography2H2FontVariation({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix: "h2"
+  });
+}
+
+export function cssStyleElementWPPostContentH2TextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix: "h2"
   });
 }
@@ -331,6 +370,19 @@ export function cssStyleElementWPPostContentTypography2H3FontVariation({
   });
 }
 
+export function cssStyleElementWPPostContentH3TextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix: "h3"
+  });
+}
+
 export function cssStyleElementWPPostContentTypography2H4FontFamily({
   v,
   device
@@ -391,6 +443,19 @@ export function cssStyleElementWPPostContentTypography2H4FontVariation({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix: "h4"
+  });
+}
+
+export function cssStyleElementWPPostContentH4TextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix: "h4"
   });
 }
@@ -458,6 +523,20 @@ export function cssStyleElementWPPostContentTypography2H5FontVariation({
     prefix: "h5"
   });
 }
+
+export function cssStyleElementWPPostContentH5TextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix: "h5"
+  });
+}
+
 export function cssStyleElementWPPostContentTypography2H6FontFamily({
   v,
   device
@@ -517,6 +596,19 @@ export function cssStyleElementWPPostContentTypography2H6FontVariation({
 }) {
   return cssStyleTypography2FontVariation({
     v,
+    device,
+    prefix: "h6"
+  });
+}
+
+export function cssStyleElementWPPostContentH6TextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({
+    v,
+    state,
     device,
     prefix: "h6"
   });

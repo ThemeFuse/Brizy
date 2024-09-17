@@ -48,6 +48,10 @@ export const capByPrefix = (p: string, s: string): string =>
 export const camelCase = (strings: Array<string>): string =>
   strings.reduce(capByPrefix, "");
 
+export const snakeCase = (v: string) => {
+  return v.trim().replace(/\s+/g, "_").toLowerCase();
+};
+
 export const printf = (s: string, ...replacements: Array<string>): string => {
   let i = 0;
 

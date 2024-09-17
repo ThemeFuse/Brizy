@@ -31,6 +31,13 @@ export function style(
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
       ]
+    },
+    ".brz &&:hover .brz-icon-svg-custom": {
+      standart: ["cssStyleCustomIconColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStyleElementIconPropertyHoverTransition"
+      ]
     }
   };
   return renderStyles({ v, vs, vd, styles });

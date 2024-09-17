@@ -159,6 +159,9 @@
         line-height: inherit;
         font-weight: inherit;
         letter-spacing: inherit;
+        font-variation-settings: inherit;
+        text-transform: inherit;
+        font-style: inherit;
         color: inherit;
         min-height: 36px;
         appearance: auto;
@@ -418,12 +421,12 @@
   .brz-eventLayout--list-item__content {
     &-date {
       max-width: 50%;
-      word-break: break-all;
+      word-break: break-word;
     }
 
     &-info {
       flex-basis: 70%;
-      word-break: break-all;
+      word-break: break-word;
     }
   }
 }

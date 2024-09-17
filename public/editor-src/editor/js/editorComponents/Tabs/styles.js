@@ -9,7 +9,8 @@ export function styleTabs(v, vs, vd) {
           "cssStyleTypography2FontSize",
           "cssStyleTypography2FontWeight",
           "cssStyleTypography2LineHeight",
-          "cssStyleTypography2LetterSpacing"
+          "cssStyleTypography2LetterSpacing",
+          "cssStyleTextTransforms"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -60,6 +61,22 @@ export function styleTabs(v, vs, vd) {
           "cssStyleElementTabsActiveColor",
           "cssStyleElementTabsActiveBgColor",
           "cssStyleElementTabsActiveShadow"
+        ]
+      },
+    ".brz && > .brz-tabs__nav .brz-tabs__nav--item:not(.brz-tabs__nav--active) .brz-tabs__nav--button .brz-icon-svg-custom:hover":
+      {
+        standart: ["cssStyleCustomIconColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz && > .brz-tabs__nav .brz-tabs__nav--item.brz-tabs__nav--active .brz-tabs__nav--button .brz-icon-svg-custom":
+      {
+        standart: ["cssStyleElementTabsActiveCustomIconColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && > .brz-tabs__nav .brz-tabs__nav--item .brz-tabs__nav--button": {

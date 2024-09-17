@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { noop } from "underscore";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithClassName, WithId } from "visual/utils/options/attributes";
+import { WithClassName, WithId } from "visual/types/attributes";
 
 export interface Props<T> extends WithClassName, WithId<T> {
   onRemove?: (id: T) => void;

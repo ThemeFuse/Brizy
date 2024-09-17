@@ -10,6 +10,7 @@ interface JustifiedRowParams {
   ratio: number[];
   rowHeight: number;
   filterItems?: HTMLElement[];
+  extraWidth?: number;
 }
 
 type WithResponsive<T> = T & {
@@ -22,6 +23,7 @@ type WithResponsive<T> = T & {
 interface _Settings {
   rowHeight: number;
   itemSelector: string;
+  extraWidth?: number;
 }
 
 export type Settings = WithResponsive<_Settings>;
@@ -43,13 +45,16 @@ export default class Gallery {
     this.currentSettings = this.getCurrentSettings(params);
     this.nodeItems = this.getItems(node, this.currentSettings.itemSelector);
 
+    const { extraWidth, rowHeight } = this.currentSettings;
+
     this.justifiedParams = {
       nodeItems: this.nodeItems,
       containerWidth: node.offsetWidth,
+      extraWidth,
       startIndex: 0,
       computedWidth: [],
       ratio: [],
-      rowHeight: this.currentSettings.rowHeight,
+      rowHeight,
       rowsHeights: []
     };
 
@@ -93,7 +98,7 @@ export default class Gallery {
     this.justifiedParams.computedWidth = computedWidth;
     this.justifiedParams.ratio = ratio;
     this.justifiedParams.containerWidth = parentItem
-      ? parentItem.offsetWidth
+      ? parentItem.offsetWidth + (this.currentSettings.extraWidth ?? 0)
       : 0;
     this.justifiedParams.rowsHeights = [];
     this.justifiedParams.startIndex = 0;
@@ -132,7 +137,8 @@ export default class Gallery {
 
     let currentSettings: _Settings = {
       rowHeight: params.rowHeight,
-      itemSelector: params.itemSelector
+      itemSelector: params.itemSelector,
+      extraWidth: params.extraWidth
     };
 
     params.responsive.forEach((breakpoint) => {

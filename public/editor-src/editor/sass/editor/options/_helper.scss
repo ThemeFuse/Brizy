@@ -13,6 +13,10 @@ $main-color: rgba($control-bg, 0.92);
   display: inline-flex;
   align-items: center;
 
+  &--center {
+    vertical-align: middle;
+  }
+
   &:hover {
     color: $popover_tooltips__icon-color--hover;
   }

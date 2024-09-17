@@ -45,6 +45,12 @@ const clone = (value, options) => deepMerge(emptyTarget(value), value, options);
 
 function combineMerge(target, source, options) {
   const destination = target.slice();
+
+  // remove additional items which shouldn't be in destination
+  if (destination?.length > 0 && source?.length > 0) {
+    source.splice(target.length);
+  }
+
   source.forEach(function (e, i) {
     if (typeof destination[i] === "undefined") {
       const cloneRequested = options.clone !== false;
@@ -859,7 +865,8 @@ export default class EditorArrayComponent extends EditorComponent {
         depth = 1;
         if (
           copiedElement.value.items[0].type === "Form" ||
-          copiedElement.value.items[0].type === "IconText"
+          copiedElement.value.items[0].type === "IconText" ||
+          copiedElement.value.items[0].type === "Form2"
         ) {
           depth = 3;
         } else if (copiedElement.value.items[0].type === "ImageGallery") {

@@ -78,10 +78,13 @@ export const baseToStatic = async (props: Props): Promise<Output> => {
     defaultFont: getDefaultFontDetailsSelector(reduxState)
   });
 
+  const { fonts, adobeKitId } = usedFonts;
+
   const { freeScripts, freeStyles, proScripts, proStyles } = getAssets({
     $root: $pageHTML,
-    fonts: usedFonts,
-    css: dynamicCss
+    fonts,
+    css: dynamicCss,
+    extra: { adobeKitId }
   });
 
   const body = dynamicContent($pageHTML("body").html() ?? "");

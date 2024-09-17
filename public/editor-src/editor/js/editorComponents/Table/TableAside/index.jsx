@@ -25,7 +25,7 @@ class TableAside extends EditorComponent {
   };
 
   renderForEdit(v, vs, vd) {
-    const { name, type, labelText } = v;
+    const { name, type, filename, labelText } = v;
     const { showHead, isFromBody, isFirstItem, widthType } = this.props;
 
     const className = classnames(
@@ -36,7 +36,9 @@ class TableAside extends EditorComponent {
 
     const content = (
       <div className="brz-table__th--btn">
-        {name && type && <ThemeIcon name={name} type={type} />}
+        {name && type && (
+          <ThemeIcon name={name} type={type} filename={filename} />
+        )}
         <TextEditor value={labelText} onChange={this.handleLabelChange} />
       </div>
     );

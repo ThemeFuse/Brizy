@@ -4,7 +4,7 @@ import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils
 import * as Str from "visual/utils/reader/string";
 import { auto } from "visual/utils/string/specs";
 import { read as readLiteral } from "visual/utils/types/Literal";
-import Select from "../../common/Population/Select";
+import { PopulationSelect } from "../../common/Population/Components/Select";
 import type { Value } from "../../common/Population/types/Value";
 import type { Props } from "./types";
 
@@ -47,7 +47,7 @@ export const PredefinedPopulation = (props: Props): ReactElement => {
   });
 
   return (
-    <Select<string>
+    <PopulationSelect<string>
       choices={[]}
       showChoices={false}
       value={_value}

@@ -20,6 +20,7 @@ import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getInstanceParentId } from "visual/utils/toolbar";
 import { Value } from "./toolbarClose";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 // @ts-expect-error need to change to new options
 export const getItems: GetItems<Value> = ({
@@ -85,6 +86,7 @@ export const getItems: GetItems<Value> = ({
     (maskShape === "custom" && !maskCustomUploadImageSrc);
 
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "sectionPopup2");
 
   return [
     {
@@ -198,7 +200,7 @@ export const getItems: GetItems<Value> = ({
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
                 }
               ]

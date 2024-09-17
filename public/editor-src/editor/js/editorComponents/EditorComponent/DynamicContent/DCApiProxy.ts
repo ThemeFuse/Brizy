@@ -1,4 +1,5 @@
 import QuickLRU from "quick-lru";
+import Config from "visual/global/Config";
 import { Dictionary } from "visual/types/utils";
 import { getDynamicContent as apiGetDynamicContent } from "visual/utils/api";
 import { GetDynamicContent } from "visual/utils/api/types";
@@ -191,6 +192,8 @@ export class DCApiProxy {
   }
 }
 
+const config = Config.getAll();
+
 export const DCApiProxyInstance = new DCApiProxy({
-  fetcher: new BatchFetcher(apiGetDynamicContent)
+  fetcher: new BatchFetcher(apiGetDynamicContent(config))
 });

@@ -1,6 +1,10 @@
 import $ from "jquery";
 import { makeDataAttrString } from "visual/utils/i18n/attribute";
 
+const recaptchaSelector =
+  // eslint-disable-next-line
+  '.brz-g-recaptcha[data-sitekey]:not([data-sitekey=""])';
+
 export default function ($node) {
   const root = $node.get(0);
   const versionAttr = makeDataAttrString({
@@ -9,7 +13,8 @@ export default function ($node) {
   });
 
   // RECAPTCHA
-  const recaptcha = root.querySelectorAll(".brz-g-recaptcha");
+  // Get all elements with a non-empty site-key data attribute
+  const recaptcha = root.querySelectorAll(recaptchaSelector);
 
   if (recaptcha.length) {
     // Load Script recaptcha
@@ -131,7 +136,7 @@ function initForm(form) {
     }
   );
 
-  const recaptcha = form.querySelector(".brz-g-recaptcha");
+  const recaptcha = form.querySelector(recaptchaSelector);
 
   // if has recaptcha
   // (1) need generate token

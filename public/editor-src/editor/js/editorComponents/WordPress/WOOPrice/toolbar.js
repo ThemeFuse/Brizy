@@ -138,9 +138,8 @@ export const getItems =
       },
       {
         id: "advancedSettings",
-        type: "legacy-advancedSettings",
+        type: "advancedSettings",
         devices: "desktop",
-        icon: "nc-cog",
         position: 110
       }
     ];

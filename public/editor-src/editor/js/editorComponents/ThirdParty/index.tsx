@@ -2,10 +2,14 @@ import React, { ComponentType, ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import {
+  ComponentsMeta,
+  NewToolbarConfig
+} from "visual/editorComponents/EditorComponent/types";
 import Editor from "visual/global/Editor";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 import { Wrapper } from "../tools/Wrapper";
+import classNames from "classnames";
 
 export interface Value extends ElementModel {
   thirdPartyId: string;
@@ -15,15 +19,31 @@ export interface Props extends WithClassName {
   meta: ComponentsMeta;
 }
 
+interface ThirdpartyComponent {
+  editor: ComponentType;
+  view: ComponentType;
+}
+
+interface Options<
+  M extends ElementModel,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  P extends Record<string, any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  S extends Record<string, any> = Record<string, unknown>
+> {
+  toolbars: NewToolbarConfig<M, P, S>[];
+  sidebars: NewToolbarConfig<M, P, S>[];
+}
+
 class ThirdParty extends EditorComponent<Value, Props> {
   static get componentId(): string {
     return "ThirdParty";
   }
 
   static experimentalDynamicContent = true;
-  component: ComponentType | undefined;
+  component?: ThirdpartyComponent;
 
-  getComponent(ID: string): ComponentType | undefined {
+  getComponent(ID: string): ThirdpartyComponent | undefined {
     if (this.component) {
       return this.component;
     }
@@ -33,7 +53,10 @@ class ThirdParty extends EditorComponent<Value, Props> {
       config: { options }
     } = Editor.getThirdPartyElements()[ID];
 
-    if (!component && typeof component !== "function") {
+    if (
+      typeof component.editor !== "function" ||
+      typeof component.view !== "function"
+    ) {
       return;
     }
 
@@ -48,12 +71,44 @@ class ThirdParty extends EditorComponent<Value, Props> {
     return this.component;
   }
 
+  getOptions(): Options<Value, Props> {
+    const config = this.componentConfig?.getConfig({
+      getValue: this.getValueByOptionId,
+      getDCOption: this.getDCOptionByType
+    });
+
+    return (
+      config?.reduce<Options<Value, Props>>(
+        (acc, curr) => {
+          if (curr.toolbar) {
+            acc.toolbars = [
+              ...acc.toolbars,
+              { getItems: () => [...(curr.toolbar ?? [])] }
+            ];
+          }
+
+          if (curr.sidebar) {
+            acc.sidebars = [
+              ...acc.sidebars,
+              { getItems: () => [...(curr.sidebar ?? [])] }
+            ];
+          }
+
+          return acc;
+        },
+        {
+          toolbars: [],
+          sidebars: []
+        }
+      ) ?? { toolbars: [], sidebars: [] }
+    );
+  }
+
   render(): ReactNode {
     const { thirdPartyId } = this.getValue();
+    const { view, editor } = this.getComponent(thirdPartyId) ?? {};
 
-    const component = this.getComponent(thirdPartyId);
-
-    if (!component) {
+    if (!(view && editor)) {
       return `Missing Third Party Component: ${thirdPartyId}`;
     }
 
@@ -61,13 +116,12 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
     if (IS_EDITOR) {
       if (this.componentConfig) {
-        return this.renderToolbars(this.renderForEdit(v, component));
+        return this.renderToolbars(this.renderForEdit(v, editor));
       }
-      return this.renderForEdit(v, component);
+      return this.renderForEdit(v, editor);
     }
-
     if (IS_PREVIEW) {
-      return this.renderForEdit(v, component);
+      return this.renderForEdit(v, view);
     }
   }
 
@@ -77,7 +131,16 @@ class ThirdParty extends EditorComponent<Value, Props> {
     Component: ComponentType
   ): ReactNode {
     const { customCSS } = v;
-    const className = "brz-third-party";
+    const thirdPartyClassName = "brz-third-party";
+
+    const { toolbars, sidebars } = this.getOptions();
+
+    const wrapperClassName = this.getCSSClassnames({
+      toolbars,
+      sidebars
+    });
+
+    const className = classNames(thirdPartyClassName, wrapperClassName);
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>

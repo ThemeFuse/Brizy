@@ -16,7 +16,8 @@ export function style(v, vs, vd) {
         "cssStyleElementPostNavigation2TitleLineHeight",
         "cssStyleElementPostNavigation2TitleFontWeight",
         "cssStyleElementPostNavigation2TitleLetterSpacing",
-        "cssStyleElementPostNavigation2TitleFontVariation"
+        "cssStyleElementPostNavigation2TitleFontVariation",
+        "cssStyleElementPostNavigationTitleTextTransform"
       ]
     },
     ".brz && .brz-navigation-title .brz-a:not(.brz-btn)[href]:hover": {
@@ -27,7 +28,8 @@ export function style(v, vs, vd) {
         "cssStyleElementPostNavigation2TitleLineHeight",
         "cssStyleElementPostNavigation2TitleFontWeight",
         "cssStyleElementPostNavigation2TitleLetterSpacing",
-        "cssStyleElementPostNavigation2TitleFontVariation"
+        "cssStyleElementPostNavigation2TitleFontVariation",
+        "cssStyleElementPostNavigationTitleTextTransform"
       ]
     },
     ".brz && .brz-navigation .brz-a:not(.brz-btn)[href]:hover": {
@@ -38,7 +40,8 @@ export function style(v, vs, vd) {
         "cssStyleElementPostNavigation2PostLineHeight",
         "cssStyleElementPostNavigation2PostFontWeight",
         "cssStyleElementPostNavigation2PostLetterSpacing",
-        "cssStyleElementPostNavigation2PostFontVariation"
+        "cssStyleElementPostNavigation2PostFontVariation",
+        "cssStyleElementPostNavigationPostTextTransform"
       ]
     },
     ".brz &&:hover:before": {

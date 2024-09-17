@@ -1,12 +1,8 @@
 import Config, { WP } from "visual/global/Config";
 import { Rule } from "visual/types";
-import * as Arr from "visual/utils/reader/array";
 import { apiRuleToEditorRule } from "visual/utils/reader/globalBlocks";
-import * as Obj from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
 import {
   GetAuthors,
-  GetDynamicContent,
   GetPosts,
   GetPostTaxonomies,
   GetRulePostsGroupList,
@@ -18,12 +14,14 @@ import {
 import { makeFormEncode, makeUrl } from "./utils";
 
 export {
+  addCustomIcon,
   autoSave,
   createBlockScreenshot,
+  createGlobalBlock,
+  createGlobalPopup,
   createSavedBlock,
   createSavedLayout,
   createSavedPopup,
-  defaultKits,
   defaultKitsData,
   defaultKitsMeta,
   defaultLayoutsData,
@@ -34,6 +32,8 @@ export {
   defaultPostsSources,
   defaultStoriesData,
   defaultStoriesMeta,
+  deleteCustomIcon,
+  defaultKits,
   defaultStoriesPages,
   deleteSavedBlock,
   deleteSavedLayout,
@@ -41,8 +41,12 @@ export {
   filterSavedBlocks,
   filterSavedLayouts,
   filterSavedPopups,
+  getAdobeFonts,
   getCollectionTypes,
+  getDynamicContent,
+  getCustomIcons,
   getEcwidProducts,
+  getLeadificCustomFields,
   getSavedBlockById,
   getSavedBlocks,
   getSavedLayoutById,
@@ -55,6 +59,7 @@ export {
   importSavedLayout,
   importSavePopups,
   onChange,
+  pendingRequest,
   publish,
   sendHeartBeat,
   sendHeartBeatTakeOver,
@@ -63,10 +68,8 @@ export {
   updateSavedBlock,
   updateSavedLayout,
   updateSavedPopup,
-  createGlobalPopup,
-  createGlobalBlock,
-  getLeadificCustomFields,
-  pendingRequest
+  getGlobalColors,
+  getGlobalTypography
 } from "./common";
 export { makeFormEncode, makeUrl };
 
@@ -82,59 +85,6 @@ export function request(
   const { fetch } = window.parent || window;
   return fetch(url, config);
 }
-
-//#endregion
-
-//#region Dynamic Content
-
-export const getDynamicContent: GetDynamicContent = async ({
-  placeholders,
-  signal
-}) => {
-  const {
-    api: { url, hash, placeholdersContent }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
-  const body = new URLSearchParams({
-    hash,
-    version,
-    action: placeholdersContent
-  });
-
-  for (const [postId, placeholders_] of Object.entries(placeholders)) {
-    if (placeholders_) {
-      for (const p of placeholders_) {
-        body.append(`p[${postId}][]`, p);
-      }
-    }
-  }
-
-  const r = await request(url, {
-    method: "POST",
-    body,
-    signal
-  });
-
-  if (!r.ok) {
-    throw new Error("fetch dynamic content error");
-  }
-
-  const { data } = await r.json();
-
-  if (data === undefined || data.placeholders === undefined) {
-    throw new Error("fetch dynamic content error");
-  }
-
-  const dc = Obj.readWithValueReader(Arr.readWithItemReader(Str.read))(
-    data.placeholders
-  );
-
-  if (dc === undefined) {
-    throw new Error("fetch dynamic content error");
-  }
-
-  return dc;
-};
 
 //#endregion
 

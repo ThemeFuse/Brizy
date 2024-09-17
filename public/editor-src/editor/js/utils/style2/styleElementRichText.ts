@@ -4,6 +4,7 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import * as Str from "visual/utils/reader/string";
 import { CSSValue } from "./types";
 import { gradientCssDeclaration } from "./utils";
+import { Num } from "@brizy/readers";
 
 export function styleElementRichTextGradient({
   v,
@@ -26,14 +27,14 @@ export function styleElementRichTextGradient({
     dvv("gradientColorPalette")
   );
 
-  const bgColorOpacity = dvv("colorOpacity");
-  const gradientColorOpacity = dvv("gradientColorOpacity");
+  const bgColorOpacity = Num.read(dvv("colorOpacity"));
+  const gradientColorOpacity = Num.read(dvv("gradientColorOpacity"));
 
-  const gradientStartPointer = Str.read(dvv("gradientStartPointer"));
-  const gradientFinishPointer = Str.read(dvv("gradientFinishPointer"));
+  const gradientStartPointer = Num.read(dvv("gradientStartPointer"));
+  const gradientFinishPointer = Num.read(dvv("gradientFinishPointer"));
 
-  const gradientLinearDegree = Str.read(dvv("gradientLinearDegree"));
-  const gradientRadialDegree = Str.read(dvv("gradientRadialDegree"));
+  const gradientLinearDegree = Num.read(dvv("gradientLinearDegree"));
+  const gradientRadialDegree = Num.read(dvv("gradientRadialDegree"));
 
   const bgColor = hexToRgba(bgColorHex, bgColorOpacity);
   const gradientColor = hexToRgba(gradientColorHex, gradientColorOpacity);
@@ -75,14 +76,14 @@ export function styleElementRichTextDCGradient({
     dvv("gradientColorPalette")
   );
 
-  const bgColorOpacity = dvv("bgColorOpacity");
-  const gradientColorOpacity = dvv("gradientColorOpacity");
+  const bgColorOpacity = Num.read(dvv("bgColorOpacity"));
+  const gradientColorOpacity = Num.read(dvv("gradientColorOpacity"));
 
-  const gradientStartPointer = Str.read(dvv("gradientStartPointer"));
-  const gradientFinishPointer = Str.read(dvv("gradientFinishPointer"));
+  const gradientStartPointer = Num.read(dvv("gradientStartPointer"));
+  const gradientFinishPointer = Num.read(dvv("gradientFinishPointer"));
 
-  const gradientLinearDegree = Str.read(dvv("gradientLinearDegree"));
-  const gradientRadialDegree = Str.read(dvv("gradientRadialDegree"));
+  const gradientLinearDegree = Num.read(dvv("gradientLinearDegree"));
+  const gradientRadialDegree = Num.read(dvv("gradientRadialDegree"));
 
   const bgColor =
     bgColorHex === null
@@ -124,14 +125,14 @@ export function styleElementRichTextDCGradientBackground({
     dvv("textGradientColorPalette")
   );
 
-  const bgColorOpacity = dvv("textBgColorOpacity");
-  const gradientColorOpacity = dvv("textGradientColorOpacity");
+  const bgColorOpacity = Num.read(dvv("textBgColorOpacity"));
+  const gradientColorOpacity = Num.read(dvv("textGradientColorOpacity"));
 
-  const gradientStartPointer = Str.read(dvv("textGradientStartPointer"));
-  const gradientFinishPointer = Str.read(dvv("textGradientFinishPointer"));
+  const gradientStartPointer = Num.read(dvv("textGradientStartPointer"));
+  const gradientFinishPointer = Num.read(dvv("textGradientFinishPointer"));
 
-  const gradientLinearDegree = Str.read(dvv("textGradientLinearDegree"));
-  const gradientRadialDegree = Str.read(dvv("textGradientRadialDegree"));
+  const gradientLinearDegree = Num.read(dvv("textGradientLinearDegree"));
+  const gradientRadialDegree = Num.read(dvv("textGradientRadialDegree"));
 
   const bgColor = hexToRgba(bgColorHex, bgColorOpacity);
   const gradientColor = hexToRgba(gradientColorHex, gradientColorOpacity);

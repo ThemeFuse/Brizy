@@ -34,12 +34,12 @@ export interface BaseIntegrationState {
 }
 
 export interface BaseIntegrationContext {
-  app: Record<string, unknown>;
+  app: AppData;
   connectedApps: Array<string>;
   stages: AppData["stages"];
   stage: string;
   oldStage: string;
-  onChange: (id: string, data: Record<string, unknown>) => void;
+  onChange: (id: string, data: Record<string, unknown> | null) => void;
   onChangeNext: (stage: BaseKey) => void;
   onChangePrev: (stage: BaseKey) => void;
   onConnectApp: (data: AppData) => void;
@@ -50,12 +50,13 @@ export interface BaseIntegrationContext {
 
 export type AppData = {
   id: string;
-  pro?: boolean;
   img: string;
   title: string;
   shortTitle: string;
+  stages: Array<{ type: BaseKey; title?: string; hideProgress?: boolean }>;
+  pro?: boolean;
   restrictions?: { [key: string]: unknown };
   descriptions?: string;
-  stages: Array<{ type: BaseKey; title?: string; hideProgress?: boolean }>;
   docsUrl?: string;
+  data?: { id?: string };
 };

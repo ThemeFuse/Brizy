@@ -5,7 +5,8 @@ import React, {
   useCallback,
   useEffect,
   useReducer,
-  useRef
+  useRef,
+  useState
 } from "react";
 import { BehaviorSubject, from, of } from "rxjs";
 import {
@@ -52,6 +53,7 @@ export function Gallery<I extends Image.Image>({
   onChange,
   config
 }: Props<I>): ReactElement<Props<I>> {
+  const [isLoading, setIsLoading] = useState(false);
   const [items, dispatch] = useReducer<Reducer<Items, Actions.Actions>>(
     reducer,
     value.map((payload, i) => {
@@ -84,11 +86,14 @@ export function Gallery<I extends Image.Image>({
     const { media } = config.api ?? {};
 
     if (media?.addMediaGallery) {
+      setIsLoading(true);
       const res = (data: Array<AddImageData>) => {
         pipe(Actions.add, dispatch)(data.map(toUploadData));
+        setIsLoading(false);
       };
       const rej = (t: string): void => {
         ToastNotification.error(t);
+        setIsLoading(false);
       };
 
       media.addMediaGallery.handler(res, rej, {
@@ -158,6 +163,7 @@ export function Gallery<I extends Image.Image>({
       <Control<number>
         className={className}
         onSort={onSort}
+        isLoading={isLoading}
         onAdd={onAdd}
         items={items.map(Item.toGalleryItem)}
         onRemove={_onRemove}

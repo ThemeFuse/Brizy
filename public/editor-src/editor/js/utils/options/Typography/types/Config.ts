@@ -1,3 +1,5 @@
+import { TextScripts } from "visual/types";
+
 type Boundaries = Partial<{
   min: number;
   max: number;
@@ -10,4 +12,5 @@ export interface Config {
   letterSpacing?: Boundaries;
 
   icons?: string[];
+  scriptChoices?: TextScripts[];
 }

@@ -1,13 +1,13 @@
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 
-// @ts-expect-error "toggle" is old option
 export const getItems: GetItems<ElementModel> = () => {
   return [
     {
       id: "list",
-      type: "legacy-toggle",
+      type: "toggle",
       devices: "desktop",
+      choices: [],
       disabled: true
     },
     {

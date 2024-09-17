@@ -3,9 +3,10 @@ import {
   ElementModelType
 } from "visual/component/Elements/Types";
 import {
+  AdobeFont,
+  Fonts,
   Block,
   FontStyle,
-  Fonts,
   GlobalBlock,
   GoogleFont,
   SystemFont,
@@ -158,6 +159,7 @@ export const getBlocksStylesFonts: GetBlocksStylesFonts = (
   const projectFonts: {
     google: GoogleFont[];
     upload: UploadedFont[];
+    adobe: AdobeFont[];
     system: SystemFont[];
   } = projectFontsData(projectFonts_);
 
@@ -175,6 +177,7 @@ export const getBlocksStylesFonts: GetBlocksStylesFonts = (
       }
       case "google":
       case "system":
+      case "adobe":
       case "upload": {
         return findFonts(projectFonts[type], family, type)
           ? acc

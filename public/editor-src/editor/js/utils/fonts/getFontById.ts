@@ -13,7 +13,8 @@ import { FontFamilyType } from "visual/utils/fonts/familyType";
 export type ModelFamilyType =
   | FontFamilyType.google
   | FontFamilyType.upload
-  | FontFamilyType.system;
+  | FontFamilyType.system
+  | FontFamilyType.adobe;
 type RFonts = ReduxState["fonts"];
 type DFonts = typeof fontTransform;
 type StrictFonts = Required<RFonts>;

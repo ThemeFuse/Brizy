@@ -5,8 +5,6 @@ import { PromptGlobalBlock } from "visual/component/Prompts/PromptBlocks/Global/
 import { PromptBlock } from "visual/component/Prompts/PromptBlocks/types";
 import { rolesHOC } from "visual/component/Roles";
 import Config from "visual/global/Config";
-import { isCloud } from "visual/global/Config/types";
-import { isShopify } from "visual/global/Config/types/configs/Cloud";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { DeviceMode } from "visual/types";
@@ -65,8 +63,7 @@ const FirstPopupBlockAdder = (props: Props): ReactElement => {
   const handleOpen = useCallback((): void => {
     if (deviceMode === "desktop") {
       const config = Config.getAll();
-      // TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
-      const showGlobal = !(isCloud(config) && isShopify(config));
+      const showGlobal = typeof config.api?.globalBlocks?.create === "function";
 
       const data: PromptsProps<"popup"> = {
         prompt: "blocks",

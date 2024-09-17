@@ -60,9 +60,9 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
                       type: "switch",
-                      devices: "desktop",
                       closeTooltip: true,
-                      position: 10
+                      position: 10,
+                      devices: "desktop"
                     },
                     {
                       id: "padding",

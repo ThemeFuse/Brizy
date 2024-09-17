@@ -1,4 +1,4 @@
-import { mPipe, orElse, parse, pass } from "fp-utilities";
+import { mPipe, optional, orElse, parse, pass } from "fp-utilities";
 import {
   FromElementModel,
   FromElementModelGetter,
@@ -15,7 +15,8 @@ import * as Str from "visual/utils/string/specs";
 
 export const defaultValue: Value = {
   name: "",
-  type: ""
+  type: "",
+  filename: ""
 };
 
 export const fromElementModel: FromElementModel<"iconSetter"> = parse<
@@ -29,10 +30,17 @@ export const fromElementModel: FromElementModel<"iconSetter"> = parse<
   type: pipe(
     mPipe(call("type"), Str.read, pass(NoEmptyString.is)),
     orElse(defaultValue.type)
+  ),
+  filename: optional(
+    pipe(
+      mPipe(call("filename"), Str.read, pass(NoEmptyString.is)),
+      orElse(defaultValue.filename)
+    )
   )
 });
 
 export const toElementModel: ToElementModel<"iconSetter"> = (v) => ({
   name: v?.name ?? null,
-  type: v?.type ?? null
+  type: v?.type ?? null,
+  filename: v?.filename ?? null
 });

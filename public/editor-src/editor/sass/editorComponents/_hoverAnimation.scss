@@ -12,3 +12,298 @@
     backface-visibility: hidden;
   }
 }
+
+.brz-btn--hover {
+  overflow: hidden;
+  transform: perspective(1px) translateZ(0);
+  position: relative;
+  vertical-align: middle;
+
+  transition-property: filter, transform, opacity, color, background,
+    border-color, box-shadow;
+
+  &:before {
+    content: "";
+    border-radius: inherit;
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+  }
+
+  &.brz-fade {
+    &:before {
+      opacity: 0;
+    }
+
+    &:hover {
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* Back Pulse */
+  @keyframes brz-back-pulse {
+    50% {
+      background-color: inherit;
+      background-image: inherit;
+    }
+  }
+
+  &.brz-back-pulse {
+    &:before {
+      opacity: 0;
+    }
+
+    &:hover {
+      &:before {
+        opacity: 1;
+        animation-name: brz-back-pulse;
+        animation-delay: 0.3s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+    }
+  }
+
+  /* Sweep To Right */
+  &.brz-sweep-to-right {
+    &:before {
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  &.brz-sweep-to-left {
+    &:before {
+      transform: scaleX(0);
+      transform-origin: 100% 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  /* Sweep To Bottom */
+  &.brz-sweep-to-bottom {
+    &:before {
+      transform: scaleY(0);
+      transform-origin: 50% 0;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleY(1);
+      }
+    }
+  }
+
+  /* Sweep To Top */
+  &.brz-sweep-to-top {
+    &:before {
+      transform: scaleY(0);
+      transform-origin: 50% 100%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleY(1);
+      }
+    }
+  }
+
+  /* Bounce To Right */
+  &.brz-bounce-to-right {
+    &:before {
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleX(1);
+        transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+      }
+    }
+  }
+
+  /* Bounce To Left */
+  &.brz-bounce-to-left {
+    &:before {
+      transform: scaleX(0);
+      transform-origin: 100% 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleX(1);
+        transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+      }
+    }
+  }
+
+  /* Bounce To Bottom */
+  &.brz-bounce-to-bottom {
+    &:before {
+      transform: scaleY(0);
+      transform-origin: 50% 0;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleY(1);
+        transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+      }
+    }
+  }
+
+  /* Bounce To Top */
+  &.brz-bounce-to-top {
+    &:before {
+      transform: scaleY(0);
+      transform-origin: 50% 100%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleY(1);
+        transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+      }
+    }
+  }
+
+  /* Radial Out */
+  &.brz-radial-out {
+    &:before {
+      border-radius: 100%;
+      transform: scale(0);
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scale(2);
+      }
+    }
+  }
+
+  /* Radial In */
+  &.brz-radial-in {
+    &:before {
+      border-radius: 100%;
+      transform: scale(2);
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scale(0);
+      }
+    }
+  }
+
+  /* Rectangle In */
+  &.brz-rectangle-in {
+    &:before {
+      transform: scale(1);
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scale(0);
+      }
+    }
+  }
+
+  /* Rectangle Out */
+  &.brz-rectangle-out {
+    &:before {
+      transform: scale(0);
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scale(1);
+      }
+    }
+  }
+
+  /* Shutter In Horizontal */
+  &.brz-shutter-in-horizontal {
+    &:before {
+      transform: scaleX(1);
+      transform-origin: 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleX(0);
+      }
+    }
+  }
+
+  /* Shutter Out Horizontal */
+  &.brz-shutter-out-horizontal {
+    &:before {
+      transform: scaleX(0);
+      transform-origin: 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  /* Shutter In Vertical */
+  &.brz-shutter-in-vertical {
+    &:before {
+      transform: scaleY(1);
+      transform-origin: 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleY(0);
+      }
+    }
+  }
+
+  /* Shutter Out Vertical */
+  &.brz-shutter-out-vertical {
+    &:before {
+      transform: scaleY(0);
+      transform-origin: 50%;
+      transition-timing-function: ease-out;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleY(1);
+      }
+    }
+  }
+}

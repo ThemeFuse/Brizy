@@ -9,7 +9,7 @@ import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
 import { attachRef } from "visual/utils/react";
-import contextMenuConfig from "./contextMenu";
+import contextMenuConfig from "./contextMenuChild";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 class Items extends EditorArrayComponent {

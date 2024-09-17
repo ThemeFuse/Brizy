@@ -6,7 +6,6 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import type { Props, State, Value } from "./types";
 
-//@ts-expect-error Old option "legacy-advancedSettings"
 export const getItems: GetItems<Value, Props, State> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
@@ -106,7 +105,7 @@ export const getItems: GetItems<Value, Props, State> = ({ v, device }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings"
+      type: "advancedSettings"
     }
   ];
 };

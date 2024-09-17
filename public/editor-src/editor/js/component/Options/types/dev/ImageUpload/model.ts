@@ -1,4 +1,4 @@
-import { or, parse } from "fp-utilities";
+import { optional, or, parse } from "fp-utilities";
 import { pipe } from "visual/utils/fp";
 import { ImageType } from "visual/utils/image/types";
 import * as Math from "visual/utils/math";
@@ -21,6 +21,7 @@ export interface Image {
   x: number;
   y: number;
   imageType: ImageType;
+  altTitle?: string;
 }
 
 export function eq(a: Image, b: Image): boolean {
@@ -46,7 +47,8 @@ export const fromRecord = parse<Record<string, unknown>, Image>({
   imageType: pipe(
     prop("imageType"),
     or(readImageType, () => ImageType.Internal)
-  )
+  ),
+  altTitle: optional(pipe(prop("altTitle"), String.toString))
 });
 
 /**

@@ -54,7 +54,7 @@ class TableRow extends EditorComponent {
 
     return (
       <tr className="brz-table__tr">
-        {meta.table.showAside && head}
+        {showAside && head}
         {body}
       </tr>
     );

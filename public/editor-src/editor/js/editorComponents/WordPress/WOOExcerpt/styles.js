@@ -13,7 +13,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H1LineHeight",
         "cssStyleElementWPPostContentTypography2H1FontWeight",
         "cssStyleElementWPPostContentTypography2H1LetterSpacing",
-        "cssStyleElementWPPostContentTypography2H1FontVariation"
+        "cssStyleElementWPPostContentTypography2H1FontVariation",
+        "cssStyleElementWPPostContentH1TextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -25,7 +26,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H2LineHeight",
         "cssStyleElementWPPostContentTypography2H2FontWeight",
         "cssStyleElementWPPostContentTypography2H2LetterSpacing",
-        "cssStyleElementWPPostContentTypography2H2FontVariation"
+        "cssStyleElementWPPostContentTypography2H2FontVariation",
+        "cssStyleElementWPPostContentH2TextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -37,7 +39,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H3LineHeight",
         "cssStyleElementWPPostContentTypography2H3FontWeight",
         "cssStyleElementWPPostContentTypography2H3LetterSpacing",
-        "cssStyleElementWPPostContentTypography2H3FontVariation"
+        "cssStyleElementWPPostContentTypography2H3FontVariation",
+        "cssStyleElementWPPostContentH3TextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -49,7 +52,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H4LineHeight",
         "cssStyleElementWPPostContentTypography2H4FontWeight",
         "cssStyleElementWPPostContentTypography2H4LetterSpacing",
-        "cssStyleElementWPPostContentTypography2H4FontVariation"
+        "cssStyleElementWPPostContentTypography2H4FontVariation",
+        "cssStyleElementWPPostContentH4TextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -61,7 +65,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H5LineHeight",
         "cssStyleElementWPPostContentTypography2H5FontWeight",
         "cssStyleElementWPPostContentTypography2H5LetterSpacing",
-        "cssStyleElementWPPostContentTypography2H5FontVariation"
+        "cssStyleElementWPPostContentTypography2H5FontVariation",
+        "cssStyleElementWPPostContentH5TextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -73,7 +78,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2H6LineHeight",
         "cssStyleElementWPPostContentTypography2H6FontWeight",
         "cssStyleElementWPPostContentTypography2H6LetterSpacing",
-        "cssStyleElementWPPostContentTypography2H6FontVariation"
+        "cssStyleElementWPPostContentTypography2H6FontVariation",
+        "cssStyleElementWPPostContentH6TextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -84,7 +90,9 @@ export function style(v, vs, vd) {
         "cssStyleElementWPPostContentTypography2ParagraphFontSize",
         "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
         "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing",
-        "cssStyleElementWPPostContentTypography2ParagraphFontWeight"
+        "cssStyleElementWPPostContentTypography2ParagraphFontWeight",
+        "cssStyleElementWPPostContentTypography2ParagraphFontVariation",
+        "cssStyleElementWPPostContentParagraphTextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -97,7 +105,8 @@ export function style(v, vs, vd) {
           "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
           "cssStyleElementWPPostContentTypography2ParagraphFontWeight",
           "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing",
-          "cssStyleElementWPPostContentTypography2ParagraphFontVariation"
+          "cssStyleElementWPPostContentTypography2ParagraphFontVariation",
+          "cssStyleElementWPPostContentParagraphTextTransform"
         ],
         interval: ["cssStyleHoverTransition"]
       }

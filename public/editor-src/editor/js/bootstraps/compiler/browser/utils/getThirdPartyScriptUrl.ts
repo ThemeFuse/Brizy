@@ -1,6 +1,10 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { MValue } from "visual/utils/value";
 
-export function getThirdPartyScriptUrl(config: ConfigCommon): MValue<string> {
-  return config.thirdPartyAssetsURL;
+export function getThirdPartyScriptUrl(config: ConfigCommon): string[] {
+  const urls = config.thirdPartyUrls;
+  if (!urls) {
+    return [];
+  }
+
+  return urls.map(({ scriptUrl }) => scriptUrl);
 }

@@ -1,5 +1,6 @@
 import {
   cssStyleColor,
+  cssStyleTextTransforms,
   cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
@@ -60,6 +61,9 @@ export function cssStyleNumberTypography2FontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "number" });
 }
 
+export function cssStyleNumberTypography2TextTransform({ v, device, state }) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "number" });
+}
 // Style Typography Title
 export function cssStyleTitleTypography2FontFamily({ v, device }) {
   return cssStyleTypography2FontFamily({ v, device, prefix: "title" });
@@ -83,6 +87,10 @@ export function cssStyleTitleTypography2LetterSpacing({ v, device }) {
 
 export function cssStyleTitleTypography2FontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "title" });
+}
+
+export function cssStyleCountdownTitleTextTransform({ v, device, state }) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "title" });
 }
 
 // Style Typography Message
@@ -110,6 +118,9 @@ export function cssStyleMessageTypography2FontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "message" });
 }
 
+export function cssStyleCountdownMessageTextTransform({ v, device, state }) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "message" });
+}
 // Color
 export function cssStyleElementCountDown2NumberColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "numberColor" });

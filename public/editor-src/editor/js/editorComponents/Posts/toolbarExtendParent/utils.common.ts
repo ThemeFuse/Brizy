@@ -1,7 +1,8 @@
 import { Choice } from "visual/component/Options/types/dev/Select/types";
 import { Sources } from "visual/editorComponents/Posts/types";
-import { V } from "visual/types";
+import { DeviceMode, V } from "visual/types";
 import * as Str from "visual/utils/reader/string";
+import { DESKTOP, TABLET, MOBILE } from "visual/utils/responsiveMode";
 
 export const disableNavigation = (v: V): boolean => {
   const { source } = v;
@@ -62,3 +63,13 @@ export const orderByConverter = (
       value: orderByItem.id,
       title: orderByItem.title
     })) ?? [];
+
+export const maxColumn = (device: DeviceMode): number => {
+  switch (device) {
+    case DESKTOP:
+      return 6;
+    case TABLET:
+    case MOBILE:
+      return 2;
+  }
+};

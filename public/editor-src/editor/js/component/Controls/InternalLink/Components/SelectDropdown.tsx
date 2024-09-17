@@ -5,14 +5,23 @@ import { Search } from "./Search";
 import { SelectDropdownProps } from "./types";
 
 const _SelectDropdown = (
-  { style, searchIsLoading, children, onSearchChange }: SelectDropdownProps,
+  {
+    style,
+    searchIsLoading,
+    children,
+    onSearchChange,
+    maxHeight = 150,
+    attr
+  }: SelectDropdownProps,
   ref: ForwardedRef<HTMLDivElement>
 ): ReactElement => {
   useEffect(() => {
     return (): void => {
       onSearchChange?.("");
     };
-  }, [onSearchChange]);
+    // onSearchChange dependency is not nedded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const className = classNames(
     "brz-ed-control__internalLink__dropdown",
@@ -23,12 +32,12 @@ const _SelectDropdown = (
   );
 
   return (
-    <div ref={ref} className={className} style={style}>
+    <div ref={ref} className={className} style={style} {...attr}>
       <Search loading={searchIsLoading} onChange={onSearchChange} />
 
       <Scrollbars
         autoHeight={true}
-        autoHeightMax={150} // hardcoded for 5 items * 30px each
+        autoHeightMax={maxHeight}
         renderThumbVertical={(props): ReactElement => {
           return (
             <div

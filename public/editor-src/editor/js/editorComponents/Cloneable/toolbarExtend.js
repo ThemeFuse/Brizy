@@ -1,7 +1,9 @@
 import { t } from "visual/utils/i18n";
-import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { capitalize } from "visual/utils/string";
+import { Toggle } from "visual/utils/options/utils/Type";
 
 export function getItems({ v, device }) {
+  const deviceCapitalize = capitalize(device);
   return [
     {
       id: "horizontalAlign",
@@ -13,12 +15,25 @@ export function getItems({ v, device }) {
         { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     },
-    toolbarShowOnResponsive({
-      v,
-      device,
-      state: "normal",
-      devices: "responsive"
-    }),
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
+      devices: "responsive",
+      position: 10,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "toolbarCurrentShortcode",
       type: "popover",

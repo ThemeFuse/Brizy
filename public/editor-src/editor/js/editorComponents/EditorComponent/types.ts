@@ -181,3 +181,9 @@ export interface ParsedToolbarData {
 export interface ConfigGetter {
   getConfig: ({ getValue, getDCOption }: ToolbarProps) => Array<ToolbarConfig>;
 }
+
+export type GetElementModelKeyFn = (data: {
+  device: Responsive.ResponsiveMode;
+  state: State.State;
+  option: ToolbarItemType;
+}) => (key: string) => string;

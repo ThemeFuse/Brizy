@@ -6,7 +6,7 @@ import {
   WithPlaceholder,
   WithSize,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
 import { inputValue } from "visual/utils/react";
 import { mCompose } from "visual/utils/value";
 

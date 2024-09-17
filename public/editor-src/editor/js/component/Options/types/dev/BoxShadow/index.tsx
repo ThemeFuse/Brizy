@@ -10,6 +10,7 @@ import * as Option from "visual/component/Options/Type";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { getColorPaletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Blur from "visual/utils/cssProps/Blur";
@@ -29,11 +30,10 @@ import {
   setVertical
 } from "visual/utils/options/BoxShadow/model";
 import {
-  _setOpacity,
-  getTypesItems
+  getTypesItems,
+  _setOpacity
 } from "visual/utils/options/BoxShadow/utils";
 import { paletteHex } from "visual/utils/options/ColorPicker/utils";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 
 export interface Props
   extends Option.Props<Value>,

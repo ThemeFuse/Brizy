@@ -1,6 +1,5 @@
+import { StarRating1, StarRating2 } from "@brizy/component";
 import classnames from "classnames";
-import { StarRating1 } from "@brizy/component";
-import { StarRating2 } from "@brizy/component";
 import React from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
@@ -27,7 +26,15 @@ export default class StarRating extends EditorComponent {
   };
 
   renderForEdit(v, vs, vd) {
-    const { iconName, iconType, label, rating, ratingScale, ratingStyle } = v;
+    const {
+      iconName,
+      iconType,
+      iconFilename,
+      label,
+      rating,
+      ratingScale,
+      ratingStyle
+    } = v;
     const className = classnames(
       "brz-starrating",
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
@@ -57,6 +64,7 @@ export default class StarRating extends EditorComponent {
                 ratingScale={ratingScale}
                 iconName={iconName}
                 iconType={iconType}
+                iconFilename={iconFilename}
               />
             )}
 
@@ -66,6 +74,7 @@ export default class StarRating extends EditorComponent {
                 rating={rating}
                 iconName={iconName}
                 iconType={iconType}
+                iconFilename={iconFilename}
               />
             )}
           </Wrapper>
@@ -75,7 +84,15 @@ export default class StarRating extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { iconName, iconType, label, rating, ratingScale, ratingStyle } = v;
+    const {
+      iconName,
+      iconType,
+      iconFilename,
+      label,
+      rating,
+      ratingScale,
+      ratingStyle
+    } = v;
     const className = classnames(
       "brz-starrating",
       css(this.constructor.componentId, this.getId(), style(v, vs, vd))
@@ -100,6 +117,7 @@ export default class StarRating extends EditorComponent {
               ratingScale={ratingScale}
               iconName={iconName}
               iconType={iconType}
+              iconFilename={iconFilename}
             />
           )}
 
@@ -109,6 +127,7 @@ export default class StarRating extends EditorComponent {
               rating={rating}
               iconName={iconName}
               iconType={iconType}
+              iconFilename={iconFilename}
             />
           )}
         </Wrapper>

@@ -1,5 +1,6 @@
 import {
   cssStyleColor,
+  cssStyleTextTransforms,
   cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
@@ -70,6 +71,15 @@ export function cssStyleElementWOOPriceSaleLetterSpacing({
 export function cssStyleElementWOOPriceSaleFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({
     v,
+    device,
+    prefix: "sale"
+  });
+}
+
+export function cssStyleElementWOOPriceSaleTextTransform({ v, state, device }) {
+  return cssStyleTextTransforms({
+    v,
+    state,
     device,
     prefix: "sale"
   });

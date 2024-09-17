@@ -7,6 +7,7 @@
   "content": {
     "iconName": "shape-star",
     "iconType": "glyph",
+    "iconFilename": "",
 
     "offsetX": 0,
     "offsetY": 0
@@ -75,8 +76,14 @@
     "variableFontWeight": 400,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
-    "colorHex": "#2B3039;",
+    "colorHex": "#2B3039",
     "colorOpacity": 1,
     "colorPalette": "",
 

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import Config from "visual/global/Config";
@@ -8,13 +8,13 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { BottomPanelItem } from "./Item";
 
-function HiddenElementsToggle(): ReactNode {
+function HiddenElementsToggle(): JSX.Element {
   const dispatch = useDispatch();
   const showHiddenElements = useSelector(showHiddenElementsSelector);
 
   // ! write less hacky later
   if (isStory(Config.getAll())) {
-    return null;
+    return <></>;
   }
 
   const icon = showHiddenElements ? "nc-eye-17" : "nc-eye-ban-18";

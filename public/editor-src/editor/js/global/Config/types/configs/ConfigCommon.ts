@@ -13,29 +13,33 @@ import {
   EkklesiaKeys,
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
+import { VideoTypes } from "visual/editorComponents/Video/types";
 import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
 import {
+  FontStyle,
   GlobalBlock,
   PageCommon,
+  Palette,
   Project,
   Rule,
   UploadedFont
 } from "visual/types";
-import { PostsSources } from "visual/utils/api/types";
+import {
+  AdobeAddAccount,
+  AdobeFonts,
+  PostsSources
+} from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
 import { Pro } from "../Pro";
 import { User } from "../User";
-import type { Compiler } from "./Compiler";
-import { ElementTypes } from "./ElementTypes";
-import { ThirdPartyComponents } from "./ThirdParty";
 import {
-  Block as APIGlobalBlock,
   APIGlobalBlocks,
-  APIGlobalPopups
+  APIGlobalPopups,
+  Block as APIGlobalBlock
 } from "./blocks/GlobalBlocks";
 import {
   BlocksArray,
@@ -61,15 +65,23 @@ import {
   AddFileExtra,
   AddImageData,
   AddImageExtra,
+  AdobeFontData,
   FormFieldsOption,
+  ImagePatterns,
+  IconPattern,
+  IconUploadData,
   Response,
-  ScreenshotData
+  ScreenshotData,
+  SizeType
 } from "./common";
+import type { Compiler } from "./Compiler";
+import { ElementTypes } from "./ElementTypes";
 import {
   EkklesiaExtra,
   EkklesiaFields,
   EkklesiaModules
 } from "./modules/ekklesia/Ekklesia";
+import { ThirdPartyComponents, ThirdPartyComponentsHosts } from "./ThirdParty";
 
 export enum Mode {
   page = "page",
@@ -291,14 +303,25 @@ interface _ConfigCommon<Mode> {
 
   //#region Third Party
 
-  thirdPartyAssetsURL?: string;
+  thirdPartyUrls?: Array<{ scriptUrl: string; styleUrl?: string }>;
   thirdPartyComponents?: ThirdPartyComponents;
+  thirdPartyComponentsHosts?: ThirdPartyComponentsHosts;
 
   //#endregion
 
   //#region UI
 
   ui?: {
+    //#region Features
+
+    features?: {
+      imagePointer?: boolean;
+      imageZoom?: boolean;
+      backgroundPointer?: boolean;
+    };
+
+    //#endregion Features
+
     //#region Popup
 
     popupSettings?: PopupSettings;
@@ -326,6 +349,18 @@ interface _ConfigCommon<Mode> {
         onOpen: (res: VoidFunction) => void;
         onClose: VoidFunction;
         icon?: string;
+      };
+
+      styles?: {
+        regenerateColors: (
+          res: Response<Palette[]>,
+          rej: Response<string>
+        ) => void;
+        regenerateTypography: (
+          res: Response<FontStyle[]>,
+          rej: Response<string>
+        ) => void;
+        label: string;
       };
 
       moduleGroups?: Array<{
@@ -365,6 +400,59 @@ interface _ConfigCommon<Mode> {
     };
 
     //#endregion
+
+    //#region Elements
+
+    elements?: {
+      image?: {
+        imageZoom: boolean;
+        imagePointer: boolean;
+      };
+      audio?: {
+        backgroundPointer: boolean;
+      };
+      column?: {
+        backgroundPointer: boolean;
+      };
+      menu?: {
+        backgroundPointer: boolean;
+      };
+      sectionMegaMenu?: {
+        backgroundPointer: boolean;
+      };
+      richText?: {
+        backgroundPointer: boolean;
+      };
+      row?: {
+        backgroundPointer: boolean;
+      };
+      section?: {
+        backgroundPointer: boolean;
+      };
+      sectionFooter?: {
+        backgroundPointer: boolean;
+      };
+      sectionHeader?: {
+        backgroundPointer: boolean;
+      };
+      sectionPopup?: {
+        backgroundPointer: boolean;
+      };
+      sectionPopup2?: {
+        backgroundPointer: boolean;
+      };
+      story?: {
+        backgroundPointer: boolean;
+      };
+      videoPlaylist?: {
+        backgroundPointer: boolean;
+      };
+      video?: {
+        backgroundPointer: boolean;
+      };
+    };
+
+    //#endregion Elements
   };
 
   //#endregion
@@ -408,6 +496,7 @@ interface _ConfigCommon<Mode> {
   onLoad?: VoidFunction;
 
   onAutoSave?: (res: AutoSave) => void;
+  autoSaveInterval?: number;
 
   // Triggered when the user change the
   // pageData, globalBlocks or projectData
@@ -437,6 +526,8 @@ interface _ConfigCommon<Mode> {
 
     // Media
     media?: {
+      isOldImage?: boolean;
+
       mediaResizeUrl?: string;
 
       addMedia?: {
@@ -457,6 +548,19 @@ interface _ConfigCommon<Mode> {
           extra: AddImageExtra
         ) => void;
       };
+
+      imagePatterns?: ImagePatterns;
+    };
+
+    fonts?: {
+      adobeFont?: {
+        get: (res: Response<AdobeFonts>, rej: Response<string>) => void;
+        add: (
+          res: Response<AdobeAddAccount>,
+          rej: Response<string>,
+          extra: AdobeFontData
+        ) => void;
+      };
     };
 
     // File
@@ -471,6 +575,23 @@ interface _ConfigCommon<Mode> {
           extra: AddFileExtra
         ) => void;
       };
+    };
+
+    // Icon
+    customIcon?: {
+      iconUrl?: string;
+      iconPattern?: IconPattern;
+      add?: (
+        res: Response<IconUploadData[]>,
+        rej: Response<string>,
+        extra: Pick<AddFileExtra, "acceptedExtensions">
+      ) => void;
+      get?: (res: Response<IconUploadData[]>, rej: Response<string>) => void;
+      delete?: (
+        res: Response<string>,
+        rej: Response<string>,
+        extra: { uid: string }
+      ) => void;
     };
 
     sourceTypes?: {
@@ -735,6 +856,7 @@ interface _ConfigCommon<Mode> {
     Image?: {
       linkSource?: string;
       linkType?: string;
+      sizeType?: SizeType;
     };
     Lottie?: {
       linkSource?: string;
@@ -798,6 +920,10 @@ interface _ConfigCommon<Mode> {
 
     postContent?: {
       predefinedPopulation?: boolean;
+    };
+
+    video?: {
+      types?: Array<VideoTypes>;
     };
   };
 

@@ -41,7 +41,7 @@ export const getFontVariation = async (
 // uid for cloud is id in editor
 export const normalizeFonts = (
   res: Response,
-  variations?: []
+  variations?: VariationFont[]
 ): Response => {
   return produce(res,  (draft) => {
     // renamed uid to id

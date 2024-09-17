@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { ReactElement } from "react";
+import { WithClassName } from "visual/types/attributes";
 import { t } from "visual/utils/i18n";
-import { WithClassName } from "visual/utils/options/attributes";
 import { Button } from "./Button";
 
 export interface Props extends WithClassName {

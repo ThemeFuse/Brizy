@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
+import { WithClassName, WithOnChange } from "visual/types/attributes";
 import { ColorPaletteItem } from "./entities/Item";
 import { PaletteObject } from "./entities/PaletteObject";
 

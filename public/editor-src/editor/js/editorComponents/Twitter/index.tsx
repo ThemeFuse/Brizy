@@ -19,6 +19,8 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import { Meta, Model } from "../EditorComponent/types";
+import { Patch } from "visual/utils/patch/types";
 
 export interface Value extends ElementModel {
   twitterType: "embed" | "followButton" | "mentionButton";
@@ -85,6 +87,25 @@ class Twitter extends EditorComponent<Value> {
       this.currentDeviceMode = deviceMode;
     }
   };
+
+  patchValue(patch: Partial<Model<Value>>, meta: Meta): void {
+    const type = this.handleTypeChange(patch);
+    super.patchValue({ ...patch, ...type }, meta);
+  }
+
+  handleTypeChange(patch: Partial<Model<Value>>): Patch {
+    const twitter = patch.twitter;
+
+    if (!twitter) return {};
+
+    const isEmbed = this.dvv("twitterType") === "embed";
+
+    if (twitter === "button" && isEmbed) {
+      return { twitterType: "followButton" };
+    }
+
+    return {};
+  }
 
   renderEditorByType(props: TwitterOptions) {
     const {

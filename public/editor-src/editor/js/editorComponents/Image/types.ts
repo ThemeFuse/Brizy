@@ -60,6 +60,7 @@ export type V = {
   imagePopulation: string;
   sizeType: string;
   imageType: ImageType;
+  alt: string | null;
   size: number;
   tabletSize: number | null;
   mobileSize: number | null;

@@ -3,11 +3,12 @@ import React, { ReactElement, ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Prompts from "visual/component/Prompts";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 
 export interface Value {
   name: string;
   type: string;
+  filename?: string;
 }
 
 export interface Props extends WithClassName {
@@ -26,7 +27,8 @@ export class IconSetter extends React.Component<Props> {
       props: {
         onChange,
         name: value?.name,
-        type: value?.type
+        type: value?.type,
+        filename: value?.filename
       }
     });
   };
@@ -34,7 +36,8 @@ export class IconSetter extends React.Component<Props> {
   handleRemove = (): void => {
     this.props.onChange({
       name: "",
-      type: ""
+      type: "",
+      filename: ""
     });
   };
 
@@ -61,7 +64,7 @@ export class IconSetter extends React.Component<Props> {
     ) : null;
   };
 
-  renderIcon = ({ name, type }: Value): ReactNode => {
+  renderIcon = ({ name, type, filename }: Value): ReactNode => {
     return [
       <div
         key="first"
@@ -69,7 +72,12 @@ export class IconSetter extends React.Component<Props> {
         onClick={this.handleClick}
       >
         <div className="brz-ed-control__icon-setter--active text-white inline-block text-[0]">
-          <ThemeIcon className="grid-16 stroke-2" name={name} type={type} />
+          <ThemeIcon
+            className="grid-16 stroke-2"
+            name={name}
+            type={type}
+            filename={filename}
+          />
         </div>
       </div>,
       this.renderRemoveIcon()

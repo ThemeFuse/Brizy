@@ -9,13 +9,20 @@ import { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
 
 export interface Props {
+  min: number;
+  max: number;
   value: number;
   onChange: OnChange<number>;
 }
 
 const units: NSProps<"s">["units"] = [{ title: "s", value: "s" }];
 
-export const Duration = ({ value, onChange }: Props): ReactElement => {
+export const Duration = ({
+  value,
+  onChange,
+  min,
+  max
+}: Props): ReactElement => {
   const v = useMemo<NSProps<"s">["value"]>(
     () => ({ number: value / 1000, unit: "s" }),
     [value]
@@ -32,8 +39,8 @@ export const Duration = ({ value, onChange }: Props): ReactElement => {
         value={v}
         onChange={_onChange}
         step={0.1}
-        min={0.0}
-        max={5.0}
+        min={min}
+        max={max}
         units={units}
       />
     </OptionWrapper>

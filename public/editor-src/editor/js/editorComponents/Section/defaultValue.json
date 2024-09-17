@@ -86,16 +86,6 @@
     "sliderArrowsColorOpacity": 0.7,
     "sliderArrowsColorPalette": "",
 
-    "tempSliderArrowsColorOpacity": 1,
-    "tempSliderArrowsColorPalette": "",
-
-    "hoverSliderArrowsColorHex": "#000000",
-    "hoverSliderArrowsColorOpacity": 1,
-    "hoverSliderArrowsColorPalette": "",
-
-    "tempHoverSliderArrowsColorOpacity": 1,
-    "tempHoverSliderArrowsColorPalette": "",
-
     "sectionHeightStyle": "auto",
     "sectionHeight": 400,
     "sectionHeightSuffix": "px",

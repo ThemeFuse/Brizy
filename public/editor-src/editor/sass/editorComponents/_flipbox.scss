@@ -113,11 +113,11 @@
   // styles on hover
   &.brz-flipbox-hover:hover {
     @media (min-width: 992px) {
-      & > brz-flipbox-content >.brz-flipbox-item-front {
+      & > .brz-flipbox-content >.brz-flipbox-item-front {
         pointer-events: none;
       }
 
-      & > brz-flipbox-content > .brz-flipbox-item-back {
+      & > .brz-flipbox-content > .brz-flipbox-item-back {
         pointer-events: auto;
       }
 

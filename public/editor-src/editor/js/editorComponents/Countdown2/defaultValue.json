@@ -66,7 +66,12 @@
     "numberVariableFontWeight": 700,
     "numberFontWidth": 100,
     "numberFontSoftness": 0,
-
+    "numberBold": false,
+    "numberItalic": false,
+    "numberUnderline": false,
+    "numberStrike": false,
+    "numberUppercase": false,
+    "numberLowercase": false,
 
     "titleFontStyle": "",
     "titleFontFamilyType": "google",
@@ -78,6 +83,12 @@
     "titleVariableFontWeight": 700,
     "titleFontWidth": 100,
     "titleFontSoftness": 0,
+    "titleBold": false,
+    "titleItalic": false,
+    "titleUnderline": false,
+    "titleStrike": false,
+    "titleUppercase": false,
+    "titleLowercase": false,
 
     "messageFontStyle": "",
     "messageFontFamilyType": "google",
@@ -89,6 +100,12 @@
     "messageVariableFontWeight": 700,
     "messageFontWidth": 100,
     "messageFontSoftness": 0,
+    "messageBold": false,
+    "messageItalic": false,
+    "messageUnderline": false,
+    "messageStrike": false,
+    "messageUppercase": false,
+    "messageLowercase": false,
 
     "numberColorHex": "#73777f",
     "numberColorOpacity": 0.75,
@@ -240,9 +257,6 @@
     "tabletMessageLineHeight": 1,
     "tabletMessageLetterSpacing": 1,
 
-    "tabletWidthSuffix": null,
-    "tabletHeightSuffix": null,
-
     "mobileNumberFontStyle": "",
     "mobileNumberFontSize": 30,
     "mobileNumberFontSizeSuffix": "px",
@@ -262,9 +276,6 @@
     "mobileMessageFontSizeSuffix": "px",
     "mobileMessageFontWeight": 700,
     "mobileMessageLineHeight": 1,
-    "mobileMessageLetterSpacing": 1,
-
-    "mobileWidthSuffix": null,
-    "mobileHeightSuffix": null
+    "mobileMessageLetterSpacing": 1
   }
 }

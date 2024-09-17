@@ -1,197 +1,81 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
-import { EditorIcon } from "visual/component/EditorIcon";
-import { ToastNotification } from "visual/component/Notifications";
-import { t } from "visual/utils/i18n";
-import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
-import * as Obj from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
-import { auto, empty } from "visual/utils/string/specs";
-import { Literal } from "visual/utils/types/Literal";
-import Input from "./Input";
-import Select from "./Select";
-import { Choices, OptGroup } from "./types/Choices";
-import { Handler } from "./types/Handler";
+import React, { useCallback } from "react";
+import cn from "classnames";
+import { pipe } from "@brizy/readers";
+import { parsePopulation } from "visual/utils/options/Population/utils";
+import Options from "visual/component/Options";
+import { isChoices, isHandler, Props } from "./types/Props";
+import { PopulationHandler } from "./Components/PopulationHandler";
+import { PopulationChoices } from "./Components/PopulationChoices";
+import { OnChange } from "visual/component/Options/Type";
 import { Value } from "./types/Value";
 
-export interface Props<T extends Literal> {
-  choices: Array<Choices<T> | OptGroup<T>>;
-  handlerChoices?: Handler<T>;
-  value: T;
-  entityType: string;
-  entityId: string;
-  onChange: (s: Value) => void;
-  renderUnset?: () => ReactElement;
-}
+export function Population(props: Props): JSX.Element {
+  const { config, onChange } = props;
 
-interface SelectProps<T extends Literal> {
-  choices: Props<T>["choices"];
-  value: T;
-  entityType: string;
-  entityId: string;
-  onChange: (s: Value) => void;
-  renderUnset?: () => ReactElement;
-}
-
-interface IconProps<T extends Literal> {
-  handlerChoices: Handler<T>;
-  value: T;
-  renderUnset?: () => ReactElement;
-  onChange: (s: Value) => void;
-}
-
-const _Select = <T extends Literal>(props: SelectProps<T>): ReactElement => {
-  const {
-    choices: _choices,
-    value,
-    entityType,
-    entityId,
-    renderUnset,
-    onChange
-  } = props;
-
-  const choices = useMemo(() => {
-    return [
-      {
-        title: t("None"),
-        value: empty as T,
-        name: empty as T,
-        attr: {}
-      },
-
-      ...(_choices || [])
-    ];
-  }, [_choices]);
-
-  let input: ReactElement | undefined;
-
-  const handleRemove = useCallback(() => {
-    onChange({
-      population: empty,
-      populationEntityType: empty,
-      populationEntityId: empty
-    });
-  }, [onChange]);
-
-  const selectedPlaceholder = findDCChoiceByPlaceholder({
-    placeholder: Str.read(value) ?? "",
-    choices
-  });
-
-  const activeItem =
-    selectedPlaceholder &&
-    Obj.isObject(selectedPlaceholder) &&
-    !Array.isArray(selectedPlaceholder)
-      ? Str.read(selectedPlaceholder.title)
-      : null;
-
-  if (value) {
-    input = <Input value={activeItem ?? `${value}`} onRemove={handleRemove} />;
-  } else {
-    input = renderUnset?.();
-  }
-
-  return (
-    <>
-      {input}
-      <Select
-        choices={choices}
-        entityType={entityType}
-        entityId={entityId}
-        value={value}
-        onChange={onChange}
-      />
-    </>
-  );
-};
-
-const _Icon = <T extends Literal>(props: IconProps<T>): ReactElement => {
-  const { handlerChoices, value, onChange, renderUnset } = props;
-  let input: ReactElement | undefined;
-
-  const handleRemove = useCallback(
-    () =>
-      onChange({
-        population: empty,
-        populationEntityType: empty,
-        populationEntityId: empty
-      }),
+  const handlePopulationChange = useCallback<OnChange<Value>>(
+    (v) => pipe(parsePopulation, onChange)(v),
     [onChange]
   );
 
-  const extra = useMemo(
-    () => ({
-      placeholder: value
-    }),
-    [value]
-  );
+  const { value, className: _className, label, option } = props;
 
-  const handleClick = useCallback(() => {
-    if (typeof handlerChoices === "function") {
-      const res = (placeholder: T) => {
-        onChange({
-          population: Str.read(placeholder) ?? empty,
-          populationEntityType: empty,
-          populationEntityId: empty
-        });
-      };
-      const rej = (error: string) => {
-        ToastNotification.error(error);
-      };
-      handlerChoices(res, rej, extra);
-    }
-  }, [handlerChoices, onChange, extra]);
-
-  if (value) {
-    input = <Input value={`${value}`} onRemove={handleRemove} />;
-  } else {
-    input = renderUnset?.();
-  }
-
-  return (
-    <>
-      {input}
-      <div
-        className="brz-ed-control__population--handler"
-        onClick={handleClick}
-      >
-        <EditorIcon icon="nc-dynamic" />
-      </div>
-    </>
-  );
-};
-
-export default function Population<T extends Literal>({
-  choices,
-  handlerChoices,
-  value,
-  entityType,
-  entityId,
-  renderUnset,
-  onChange
-}: Props<T>): ReactElement | null {
-  if (Array.isArray(choices)) {
+  // Population Options is wrapped all options.
+  // If we return null, the entire options will not be rendered.
+  if (!config) {
     return (
-      <_Select
-        value={value}
-        choices={choices}
-        entityType={entityType ?? auto}
-        entityId={entityId ?? ""}
-        onChange={onChange}
-        renderUnset={renderUnset}
-      />
+      <>
+        {label}
+        {option !== undefined && (
+          <Options
+            data={[option]}
+            wrapOptions={false}
+            optionClassName="brz-ed-option-population"
+          />
+        )}
+      </>
     );
   }
 
-  if (handlerChoices) {
+  const { iconOnly, type, mockValue } = config;
+  const className = cn(_className, "brz-ed-control__population");
+
+  // Population with handler
+  if (isHandler(config)) {
     return (
-      <_Icon
-        value={value}
-        handlerChoices={handlerChoices}
-        onChange={onChange}
-        renderUnset={renderUnset}
-      />
+      <>
+        {label}
+        <PopulationHandler
+          className={className}
+          iconOnly={iconOnly}
+          type={type}
+          mockValue={mockValue}
+          handlerChoices={config.handlerChoices}
+          value={value}
+          option={option}
+          onChange={handlePopulationChange}
+        />
+      </>
     );
   }
 
-  return null;
+  // Population with choices
+  if (isChoices(config)) {
+    return (
+      <>
+        {label}
+        <PopulationChoices
+          className={className}
+          iconOnly={iconOnly}
+          option={option}
+          value={value}
+          type={type}
+          mockValue={mockValue}
+          choices={config.choices}
+          onChange={handlePopulationChange}
+        />
+      </>
+    );
+  }
+
+  return <></>;
 }

@@ -75,6 +75,12 @@
     "variableFontWeight": 700,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "colorHex": "#239ddb",
     "colorOpacity": 1,
@@ -174,16 +180,12 @@
     "tabletLineHeight": 1.3,
     "tabletLetterSpacing": 0,
 
-    "tabletWidthSuffix": null,
-
     "mobileFontStyle": "",
     "mobileFontFamilyType": null,
     "mobileFontSize": 56,
     "mobileFontSizeSuffix": "px",
     "mobileFontWeight": 400,
     "mobileLineHeight": 1.3,
-    "mobileLetterSpacing": 0,
-
-    "mobileWidthSuffix": null
+    "mobileLetterSpacing": 0
   }
 }

@@ -140,3 +140,34 @@ export interface PostsSources {
 }
 
 //#endregion
+
+//#region AdobeFonts
+
+interface AdobeFamily {
+  id: string;
+  family: string;
+  category: string;
+  subsets: string[];
+  variants: string[];
+}
+
+export interface AdobeFonts {
+  kit: {
+    id: string;
+    families: AdobeFamily[];
+  };
+}
+
+export interface AdobeAddAccount {
+  status: number;
+}
+
+//#endregion
+
+//#region Icons
+
+export interface UploadIconData {
+  acceptedExtensions: string[];
+}
+
+//#endregion

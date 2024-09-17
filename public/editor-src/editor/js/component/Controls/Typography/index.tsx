@@ -4,16 +4,18 @@ import { FontFamily } from "visual/component/Controls/FontFamily";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import Stepper from "visual/component/Controls/Stepper";
-import { FontWeight } from "visual/component/Controls/Typography/FontWeight";
 import { Label } from "visual/component/Label";
 import Config from "visual/global/Config";
 import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import { isStory } from "visual/utils/models";
-import { FontStyle } from "./FontStyle";
-import { Icon } from "./TabIcon";
+import { FontStyle } from "./Components/FontStyle";
+import { FontTransform } from "./Components/FontTransform";
+import { FontWeight } from "./Components/FontWeight";
+import { Icon } from "./Components/TabIcon";
 import { Font } from "./types/FontFamily";
 import { TypographyProps as Props } from "./types/Props";
 import { Value } from "./types/Value";
+import { WithValue } from "visual/types/attributes";
 
 export class Typography extends PureComponent<Props> {
   onFontFamily = (v: Font): void =>
@@ -37,7 +39,7 @@ export class Typography extends PureComponent<Props> {
   onLetterSpacing = (v: Value["letterSpacing"]): void =>
     this.props.onChange(v, { isChanged: "letterSpacing" });
 
-  onVariableWeiqht = (v: Value["variableFontWeight"]): void =>
+  onVariableWeight = (v: Value["variableFontWeight"]): void =>
     this.props.onChange(v, { isChanged: "variableFontWeight" });
 
   onFontWidth = (v: Value["fontWidth"]): void =>
@@ -45,6 +47,28 @@ export class Typography extends PureComponent<Props> {
 
   onSoftness = (v: Value["fontSoftness"]): void =>
     this.props.onChange(v, { isChanged: "fontSoftness" });
+
+  onBold = (v: Value["bold"]): void =>
+    this.props.onChange(v, { isChanged: "bold" });
+
+  onItalic = (v: Value["italic"]): void =>
+    this.props.onChange(v, { isChanged: "italic" });
+
+  onUnderline = (v: Value["underline"]): void =>
+    this.props.onChange(v, { isChanged: "underline" });
+
+  onStrike = (v: Value["strike"]): void =>
+    this.props.onChange(v, { isChanged: "strike" });
+
+  onUppercase = (v: Value["uppercase"]): void =>
+    this.props.onChange(v, { isChanged: "uppercase" });
+
+  onLowercase = (v: Value["lowercase"]): void =>
+    this.props.onChange(v, { isChanged: "lowercase" });
+
+  onScript = ({ value }: WithValue<Value["script"]>): void => {
+    this.props.onChange(value, { isChanged: "script" });
+  };
 
   render() {
     const {
@@ -80,10 +104,19 @@ export class Typography extends PureComponent<Props> {
       variableFontWeight,
       fontWidth,
       fontSoftness,
+      bold,
+      italic,
+      underline,
+      strike,
+      uppercase,
+      lowercase,
+      script,
+      scriptChoices,
       className,
       icons,
       activeIcon,
       variations,
+      showTextTransform,
       onIconClick
     } = this.props;
 
@@ -98,7 +131,8 @@ export class Typography extends PureComponent<Props> {
       "brz-ed-control__typography",
       {
         "brz-ed-control__typography--style-only": !showFontFamily,
-        "brz-ed-control__typography--tabs-icon": icons
+        "brz-ed-control__typography--tabs-icon": icons,
+        "brz-ed-control__typography--lg": showTextTransform
       },
       className
     );
@@ -114,6 +148,27 @@ export class Typography extends PureComponent<Props> {
             addFontLabel={fontAddLabel}
           />
         )}
+
+        {showTextTransform && (
+          <FontTransform
+            onBoldChange={this.onBold}
+            onItalicChange={this.onItalic}
+            onUppercaseChange={this.onUppercase}
+            onUnderlineChange={this.onUnderline}
+            onLowercaseChange={this.onLowercase}
+            onStrikeChange={this.onStrike}
+            onScriptChange={this.onScript}
+            script={script}
+            scriptChoices={scriptChoices}
+            bold={bold}
+            italic={italic}
+            underline={underline}
+            strike={strike}
+            uppercase={uppercase}
+            lowercase={lowercase}
+          />
+        )}
+
         <div className={typographyStyleClassName}>
           <div className="brz-ed__col brz-ed__col-1-1">
             {icons?.length && !IS_STORY ? (
@@ -174,7 +229,7 @@ export class Typography extends PureComponent<Props> {
             fontWidth={fontWidth}
             fontSoftness={fontSoftness}
             onFontWeightChange={this.onFontWeight}
-            onVariableFontWeightChange={this.onVariableWeiqht}
+            onVariableFontWeightChange={this.onVariableWeight}
             onFontWidthChange={this.onFontWidth}
             onSoftnessChange={this.onSoftness}
             variations={variations}

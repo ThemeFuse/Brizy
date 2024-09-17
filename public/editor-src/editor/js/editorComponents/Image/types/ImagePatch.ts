@@ -1,4 +1,4 @@
-import { mPipe } from "fp-utilities";
+import { mPipe, optional } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
 import { DeviceMode } from "visual/types";
 import * as Num from "visual/utils/math/number";
@@ -13,6 +13,7 @@ export interface ImagePatch {
   imageHeight: number;
   imageSrc: string;
   imageWidth: number;
+  alt?: string;
 }
 
 export interface ImageDCPatch {
@@ -39,6 +40,7 @@ interface FromImageElementModel extends ElementModel {
   imageExtension: unknown | undefined;
   imageHeight: unknown | undefined;
   imageWidth: unknown | undefined;
+  alt: unknown | undefined;
 }
 
 export const fromImageElementModel = readWithParser<
@@ -48,7 +50,8 @@ export const fromImageElementModel = readWithParser<
   imageSrc: mPipe(prop("imageSrc"), Str.read),
   imageExtension: mPipe(prop("imageExtension"), Str.read),
   imageHeight: mPipe(prop("imageHeight"), Num.read),
-  imageWidth: mPipe(prop("imageWidth"), Num.read)
+  imageWidth: mPipe(prop("imageWidth"), Num.read),
+  alt: optional(mPipe(prop("alt"), Str.read))
 });
 
 interface FromImageDCElementModel extends ElementModel {

@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React, {
   ComponentType,
+  createRef,
   HTMLAttributes,
   ReactElement,
   ReactNode,
-  Ref,
-  createRef
+  Ref
 } from "react";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -20,7 +20,7 @@ import {
   getHoverAnimationOptions
 } from "visual/component/HoverAnimation/utils";
 import { ProBlocked } from "visual/component/ProBlocked";
-import { Roles, currentUserRole } from "visual/component/Roles";
+import { currentUserRole, Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import {
@@ -32,6 +32,7 @@ import Toolbar, {
   ToolbarExtend as _ToolbarExtend
 } from "visual/component/Toolbar";
 import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
+import { TransformWrapper } from "visual/component/TransformWrapper";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
   Props as EDProps
@@ -48,6 +49,7 @@ import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { WithClassName } from "visual/types/attributes";
 import { css } from "visual/utils/cssStyle";
 import { getWrapperContainerW } from "visual/utils/meta";
 import { CssId, getCSSId } from "visual/utils/models/cssId";
@@ -56,7 +58,6 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
-import { WithClassName } from "visual/utils/options/attributes";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
@@ -330,20 +331,22 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const { wrapperAnimationActive = false } = this.getMeta(v);
     const isDisabledHover = readBoolean(wrapperAnimationActive);
     const content = (
-      <ScrollMotion
-        className="brz-wrapper__scrollmotion"
-        options={makeOptionValueToMotion(v)}
-      >
-        <HoverAnimation
-          animationId={animationId}
-          cssKeyframe={cssKeyframe}
-          options={options}
-          isDisabledHover={isDisabledHover}
-          isHidden={isHidden}
+      <TransformWrapper<Value> v={v}>
+        <ScrollMotion
+          className="brz-wrapper__scrollmotion"
+          options={makeOptionValueToMotion(v)}
         >
-          {this.renderContent(v)}
-        </HoverAnimation>
-      </ScrollMotion>
+          <HoverAnimation
+            animationId={animationId}
+            cssKeyframe={cssKeyframe}
+            options={options}
+            isDisabledHover={isDisabledHover}
+            isHidden={isHidden}
+          >
+            {this.renderContent(v)}
+          </HoverAnimation>
+        </ScrollMotion>
+      </TransformWrapper>
     );
 
     return (
@@ -479,19 +482,21 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       this.getHoverData(v);
 
     const content = (
-      <ScrollMotion
-        options={makeOptionValueToMotion(v)}
-        className="brz-wrapper__scrollmotion"
-      >
-        <HoverAnimation
-          animationId={animationId}
-          cssKeyframe={cssKeyframe}
-          options={options}
-          isHidden={isHidden}
+      <TransformWrapper<Value> v={v}>
+        <ScrollMotion
+          options={makeOptionValueToMotion(v)}
+          className="brz-wrapper__scrollmotion"
         >
-          {this.renderContent(v)}
-        </HoverAnimation>
-      </ScrollMotion>
+          <HoverAnimation
+            animationId={animationId}
+            cssKeyframe={cssKeyframe}
+            options={options}
+            isHidden={isHidden}
+          >
+            {this.renderContent(v)}
+          </HoverAnimation>
+        </ScrollMotion>
+      </TransformWrapper>
     );
 
     return (

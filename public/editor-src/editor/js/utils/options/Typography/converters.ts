@@ -13,9 +13,12 @@ import {
   isFontFamily,
   isFontSettings,
   isFontStyle,
-  isFullFont
+  isFullFont,
+  isFontTransform
 } from "./types/Patch";
 import { Value } from "./types/Value";
+import { fromStringToScript } from "visual/types";
+import { isNothing } from "fp-utilities";
 
 export const defaultValue: Value = {
   fontFamily: "",
@@ -28,7 +31,13 @@ export const defaultValue: Value = {
   lineHeight: Positive.unsafe(1),
   variableFontWeight: FontWeight.empty,
   fontWidth: 100,
-  fontSoftness: 0
+  fontSoftness: 0,
+  bold: false,
+  italic: false,
+  underline: false,
+  strike: false,
+  uppercase: false,
+  lowercase: false
 };
 
 /**
@@ -65,7 +74,17 @@ export const fromElementModel: FromElementModel<"typography"> = (get) => {
     fontWidth:
       mPipe(() => get("fontWidth"), Num.read)() ?? defaultValue.fontWidth,
     fontSoftness:
-      mPipe(() => get("fontSoftness"), Num.read)() ?? defaultValue.fontSoftness
+      mPipe(() => get("fontSoftness"), Num.read)() ?? defaultValue.fontSoftness,
+    bold: mPipe(() => get("bold"), Boolean)() ?? defaultValue.bold,
+    italic: mPipe(() => get("italic"), Boolean)() ?? defaultValue.italic,
+    underline:
+      mPipe(() => get("underline"), Boolean)() ?? defaultValue.underline,
+    strike: mPipe(() => get("strike"), Boolean)() ?? defaultValue.strike,
+    uppercase:
+      mPipe(() => get("uppercase"), Boolean)() ?? defaultValue.uppercase,
+    lowercase:
+      mPipe(() => get("lowercase"), Boolean)() ?? defaultValue.lowercase,
+    script: mPipe(() => get("script"), Str.read, fromStringToScript)()
   };
 };
 
@@ -82,7 +101,14 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
       lineHeight: v.lineHeight,
       variableFontWeight: v.variableFontWeight,
       fontWidth: v.fontWidth,
-      fontSoftness: v.fontSoftness
+      fontSoftness: v.fontSoftness,
+      bold: v.bold,
+      italic: v.italic,
+      underline: v.underline,
+      strike: v.strike,
+      uppercase: v.uppercase,
+      lowercase: v.lowercase,
+      ...(!isNothing(v.script) ? { script: v.script } : {})
     };
   }
 
@@ -113,6 +139,18 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
 
   if (isFontStyle(v)) {
     return { fontStyle: v.fontStyle };
+  }
+
+  if (isFontTransform(v)) {
+    return {
+      bold: v.bold,
+      italic: v.italic,
+      underline: v.underline,
+      strike: v.strike,
+      uppercase: v.uppercase,
+      lowercase: v.lowercase,
+      ...(!isNothing(v.script) ? { script: v.script } : {})
+    };
   }
 
   return {};

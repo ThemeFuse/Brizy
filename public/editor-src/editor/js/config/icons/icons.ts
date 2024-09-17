@@ -1,20 +1,31 @@
-import { Icon, read } from "visual/config/icons/Icon";
-import { Id } from "visual/config/icons/Type";
+import Config from "visual/global/Config";
+import { getCustomIcons as getCustomIconsApi } from "visual/utils/api";
 import { toArray } from "visual/utils/array";
+import { mPipe } from "visual/utils/fp";
+import { read as readObj } from "visual/utils/reader/object";
+import { isT } from "visual/utils/value";
+import { CustomIcon, Icon, read, readCustom } from "./Icon";
+import { TypeId } from "./Type";
 
 const readIcons = (m: { default: unknown[] }): Icon[] => {
-  return toArray(m?.default)
-    .map(read)
-    .filter(Boolean) as Icon[];
+  return toArray(m?.default).map(read).filter(isT) as Icon[];
 };
 
-export const getTypeIcons = (type: Id): Promise<Icon[]> => {
+const readCustomIcons = (value: unknown): CustomIcon[] => {
+  return toArray(value).map(mPipe(readObj, readCustom)).filter(isT);
+};
+
+export const getTypeIcons = (type: TypeId): Promise<Icon[] | CustomIcon[]> => {
+  const config = Config.getAll();
+
   switch (type) {
-    case 0:
+    case TypeId.Outline:
       return import("./iconTypes/outline.json").then(readIcons);
-    case 1:
+    case TypeId.Glyph:
       return import("./iconTypes/glyph.json").then(readIcons);
-    case 2:
+    case TypeId.Fa:
       return import("./iconTypes/fa.json").then(readIcons);
+    case TypeId.Custom:
+      return getCustomIconsApi(config).then(readCustomIcons);
   }
 };

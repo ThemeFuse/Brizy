@@ -118,15 +118,17 @@ export const GlobalBlockOption: Component = ({
             const popup = await createGlobalPopup(globalBlock, config);
 
             if (popup.data) {
-              const popupId = blockType === "popup" && getOpenedPopupId();
-
               dispatch(
                 makePopupToGlobalBlock({
                   block: globalBlock,
                   fromBlockId: _id
                 })
               );
-              popupId && openPopupById(popupId);
+
+              const popupId = blockType === "popup" && getOpenedPopupId();
+              if (popupId) {
+                requestAnimationFrame(() => openPopupById(popupId));
+              }
 
               if (blockType === "externalPopup") {
                 openPromptCondition({ type: "popup", _id: newBlockId });
@@ -181,7 +183,9 @@ export const GlobalBlockOption: Component = ({
             const popupId = getOpenedPopupId();
 
             parentId && dispatch(makeGlobalBlockToPopup({ ...data, parentId }));
-            popupId && openPopupById(popupId);
+            if (popupId) {
+              requestAnimationFrame(() => openPopupById(popupId));
+            }
             break;
           }
           case "normal":

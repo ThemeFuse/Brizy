@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, KeyboardEvent } from "react";
 import { ToastContainer } from "react-toastify";
 import BottomPanel from "visual/component/BottomPanel";
 import HotKeys from "visual/component/HotKeys";
@@ -13,15 +13,30 @@ import EditorPage from "./EditorPage";
 import EditorPopup from "./EditorPopup";
 import EditorStory from "./EditorStory";
 import { EditorType } from "./types";
+import { noop } from "underscore";
 
 class Editor extends React.Component {
   parentWindowDocument = window.parent.document;
 
-  handleKeyDown(): void {
-    Prompts.open({
-      mode: "stack",
-      prompt: "keyHelper"
-    });
+  handleKeyDown(_: KeyboardEvent, { keyName }: { keyName: string }): void {
+    switch (keyName) {
+      case "ctrl+/":
+      case "cmd+/":
+      case "right_cmd+/":
+        Prompts.open({ mode: "stack", prompt: "keyHelper" });
+        break;
+      case "ctrl+L":
+      case "cmd+L":
+      case "right_cmd+L":
+        {
+          const { api } = Conf.getAll();
+          api?.customFile?.addFile?.handler(noop, noop, {
+            acceptedExtensions: [],
+            insertFilesType: "none"
+          });
+        }
+        break;
+    }
   }
 
   getRenderType(config: Config): EditorType {
@@ -72,7 +87,14 @@ class Editor extends React.Component {
           <Notifications />
         </Portal>
         <HotKeys
-          keyNames={["ctrl+/", "cmd+/", "right_cmd+/"]}
+          keyNames={[
+            "ctrl+/",
+            "cmd+/",
+            "right_cmd+/",
+            "ctrl+L",
+            "cmd+L",
+            "right_cmd+L"
+          ]}
           id="key-helper-editor"
           onKeyDown={this.handleKeyDown}
         />

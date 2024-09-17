@@ -1,6 +1,4 @@
-import { isEmpty } from "underscore";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
@@ -8,11 +6,10 @@ import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  getInstanceParentId,
-  toolbarShowOnResponsive
-} from "visual/utils/toolbar";
+import { capitalize } from "visual/utils/string";
+import { getInstanceParentId } from "visual/utils/toolbar";
 import type { Props, Value } from "./type";
+import { Toggle } from "visual/utils/options/utils/Type";
 
 //@ts-expect-error: ??
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
@@ -22,12 +19,15 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const disabledGlobalBlock =
     typeof config.api?.globalBlocks?.create !== "function";
 
+  const globalBlockId = Str.read(component.props.meta.globalBlockId);
   const multilanguage: boolean = config.multilanguage === true;
   const membership: boolean = config.membership === true;
 
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
   const slider = dvv("slider");
+
+  const deviceCapitalize = capitalize(device);
 
   const sliderDotsChoices = [
     { title: t("None"), icon: { name: "nc-none" }, value: "none" },
@@ -65,17 +65,26 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     }
   ];
 
-  const globalBlockId = Str.read(component.props.meta.globalBlockId);
-
-  const showOnResponsive = toolbarShowOnResponsive({
-    v,
-    device,
-    devices: "responsive",
-    closeTooltip: true
-  });
-
   return [
-    ...(isEmpty(showOnResponsive) ? [] : [showOnResponsive as ToolbarItemType]),
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
+      devices: "responsive",
+      position: 10,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "toolbarSlider",
       type: "popover",

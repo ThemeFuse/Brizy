@@ -1,91 +1,176 @@
+import classNames from "classnames";
 import React from "react";
-import { Badge } from "visual/component/Badge";
-import Select from "visual/component/Controls/Select";
-import SelectItem from "visual/component/Controls/Select/SelectItem";
-import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
+import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
+import { Select2 } from "visual/component/Controls/Select2";
+import { Item } from "visual/component/Controls/Select2/Item";
 import { Rule } from "visual/types";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
-import { t } from "visual/utils/i18n";
-import { RuleList, RuleListItem, isLegacyRuleListItem } from "./types";
+import { getValue } from "./utils/index";
+import {
+  RuleList,
+  RuleListItem,
+  ValueItems,
+  isLegacyRuleListItem
+} from "./types";
 import { getRulesListIndexByRule } from "./utils";
+import { t } from "visual/utils/i18n";
+import { MValue } from "visual/utils/value";
+import { LegacyRuleList } from "../common/LegacyRuleList";
+import { ListItems } from "../common/ListItems";
+import { ControlTypeOptions } from "../common/ControlTypeOptions";
 
-export interface Props {
+interface ConditionGroupProps {
   rule: Rule;
   rulesList: RuleList[];
   onGroupChange: (v: string | null) => void;
   onTypeChange: (v: string | null) => void;
 }
 
-class ConditionGroup extends React.Component<Props> {
-  renderGroupOptions(options: RuleList[]): JSX.Element[] {
-    const allOption = (
-      <SelectItem key="all" value={null}>
-        {t("All")}
-      </SelectItem>
+const ALL = "all";
+
+class ConditionGroup extends React.Component<ConditionGroupProps> {
+  state = {
+    isOpen: false,
+    filteredItems: undefined,
+    loading: false
+  };
+
+  renderGroupOptions(
+    options: RuleList[],
+    groupDV: string | null
+  ): JSX.Element[] {
+    const _className = classNames({
+      "brz-ed-controls-multiSelect-all": groupDV === null
+    });
+
+    const optionAll = (
+      <Item<string> key={ALL} value={ALL}>
+        <div className={_className}>
+          <span title={t("All")}>{t("All")}</span>
+        </div>
+      </Item>
     );
-    const newOptions = options.map(({ title, value, groupValue, disabled }) => (
-      <SelectItem
-        key={`key-${value}`}
-        value={`${groupValue}|||${value}`}
-        disabled={disabled}
-      >
-        {title}
-      </SelectItem>
+
+    const _options = options.map(({ title, value, groupValue }) => (
+      <Item<string> key={value} value={`${groupValue}|||${value}`}>
+        <span title={title}>{title}</span>
+      </Item>
     ));
 
-    return [allOption, ...newOptions];
+    return [optionAll, ..._options];
   }
 
-  renderTypeOptions(items: RuleListItem[]): JSX.Element[] {
-    const allOption = (
-      <SelectItem key="all" value={null}>
-        {t("All")}
-      </SelectItem>
+  renderTypeOptions(items: RuleListItem[]): JSX.Element {
+    const { rule, onTypeChange } = this.props;
+    let _value: ValueItems | undefined;
+
+    if (isCollectionItemRule(rule) && items.length > 0) {
+      _value = getValue(items, rule);
+    }
+
+    const { title: valueTitle } = _value ?? {};
+
+    const value = valueTitle ?? ALL;
+
+    const typeOptionsClassName = classNames("brz-ed-controls-title", {
+      "brz-ed-controls-item-active": value === ALL
+    });
+
+    const optionAll = (
+      <SelectItem
+        className={typeOptionsClassName}
+        key={ALL}
+        title={t("All")}
+        onClick={() => {
+          onTypeChange(null);
+          this.setState({
+            isOpen: false
+          });
+        }}
+      />
     );
 
-    const newItems = items.map((item) =>
+    const newItems = items.map((item, index) =>
       isLegacyRuleListItem(item) ? (
-        <SelectItem key={item.value} value={`specific|||${item.value}`}>
-          <div className="brz-d-xs-flex brz-align-items-xs-center">
-            <span title={item.title} className="brz-ellipsis">
-              {item.title}
-            </span>
-            {item.status && <Badge status={item.status} />}
-          </div>
-        </SelectItem>
+        <LegacyRuleList
+          key={index}
+          item={item}
+          onClick={(v) => {
+            onTypeChange(v);
+            this.setState({ isOpen: false });
+          }}
+          value={value}
+        />
       ) : (
-        <SelectOptgroup
-          key={item.value}
-          title={item.title}
-          items={item.items.map(({ value, title, status }) => (
-            <SelectItem key={item.value} value={`${item.mode}|||${value}`}>
-              <div className="brz-d-xs-flex brz-align-items-xs-center">
-                <span title={title} className="brz-ellipsis">
-                  {title}
-                </span>
-                {status && (
-                  <Badge status={status === "published" ? "publish" : status} />
-                )}
-              </div>
-            </SelectItem>
-          ))}
-        >
-          <span className="brz-span">{item.title}</span>
-        </SelectOptgroup>
+        <ListItems
+          key={index}
+          item={item}
+          onClick={(v) => {
+            onTypeChange(v);
+            this.setState({ isOpen: false });
+          }}
+          value={value}
+        />
       )
     );
 
-    return [allOption, ...newItems];
+    return (
+      <>
+        {optionAll}
+        {newItems}
+      </>
+    );
   }
 
-  render(): JSX.Element {
-    const { rulesList, rule, onGroupChange, onTypeChange } = this.props;
+  handleSearchChange = (
+    searchTerm: string,
+    currentRuleList: RuleList | null
+  ): void => {
+    this.setState({
+      loading: true
+    });
 
-    let currentRuleList: RuleList | null = null;
+    if (searchTerm === "" && currentRuleList) {
+      this.setState({
+        filteredItems: currentRuleList.items,
+        loading: false
+      });
+    } else {
+      if (currentRuleList && currentRuleList.items) {
+        const _filteredItems = currentRuleList.items.map((item) => ({
+          ...item,
+          items: item.items?.filter((nestedItem) =>
+            nestedItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        }));
+
+        this.setState({
+          filteredItems: _filteredItems,
+          loading: false
+        });
+      }
+    }
+  };
+
+  resetValue = () => {
+    this.setState({
+      isOpen: false,
+      filteredItems: undefined,
+      loading: false
+    });
+
+    this.props.onTypeChange(null);
+  };
+
+  render(): JSX.Element {
+    const { rulesList, rule, onGroupChange } = this.props;
+    const { isOpen, loading, filteredItems } = this.state;
     let groupDV: string | null = null;
+    let currentRuleList: RuleList | null = null;
+    let _value: MValue<ValueItems>;
 
     if (isCollectionItemRule(rule) || isCollectionTypeRule(rule)) {
       const currentRuleListIndex = getRulesListIndexByRule(rulesList, rule);
@@ -93,33 +178,61 @@ class ConditionGroup extends React.Component<Props> {
       groupDV = `${rule.appliedFor}|||${rule.entityType}`;
     }
 
+    const typeOptionItems =
+      filteredItems ??
+      (currentRuleList && currentRuleList.items ? currentRuleList.items : []);
+    const hasRulesListItems = currentRuleList && currentRuleList.items;
+
+    if (
+      isCollectionItemRule(rule) &&
+      currentRuleList &&
+      currentRuleList.items &&
+      currentRuleList.items.length > 0
+    ) {
+      _value = getValue(currentRuleList.items, rule);
+    }
+
+    const { title: valueTitle, status: valueStatus } = _value ?? {};
+
+    const selectClassName = classNames(
+      "brz-ed-popup-conditions__select brz-d-xs-flex",
+      "brz-ed-popup-conditions__select-condition-group",
+      {
+        "brz-ed-popup-conditions__select-size":
+          groupDV === null || !hasRulesListItems
+      }
+    );
+
     return (
-      <div className="brz-ed-popup-conditions__select brz-d-xs-flex">
-        <Select
-          className="brz-control__select--white"
-          maxItems={6}
-          itemHeight={30}
-          defaultValue={groupDV}
-          inPortal={true}
-          onChange={onGroupChange}
+      <div className={selectClassName}>
+        <Select2<string>
+          size="large"
+          value={groupDV ?? ALL}
+          editable={false}
+          autoClose={true}
+          onChange={(value): void => {
+            this.resetValue();
+            onGroupChange(value);
+          }}
+          maxHeight={240}
+          positionDropdown="relative"
         >
-          {this.renderGroupOptions(rulesList)}
-        </Select>
-        {currentRuleList && currentRuleList.items && (
-          <Select
-            defaultValue={
-              isCollectionItemRule(rule)
-                ? `${rule.mode}|||${rule.entityValues[0]}`
-                : null
+          {this.renderGroupOptions(rulesList, groupDV)}
+        </Select2>
+        {hasRulesListItems && (
+          <ControlTypeOptions
+            onClickOutside={() => this.setState({ isOpen: false })}
+            onClick={() => this.setState({ isOpen: !isOpen })}
+            onRemove={_value ? this.resetValue : undefined}
+            status={valueStatus}
+            isOpen={isOpen}
+            loading={loading}
+            onSearchChange={(searchTerm: string) =>
+              this.handleSearchChange(searchTerm, currentRuleList)
             }
-            className="brz-control__select--white"
-            maxItems={6}
-            itemHeight={30}
-            inPortal={true}
-            onChange={onTypeChange}
-          >
-            {this.renderTypeOptions(currentRuleList.items)}
-          </Select>
+            typeOptionItems={this.renderTypeOptions(typeOptionItems)}
+            value={valueTitle ?? "All"}
+          />
         )}
       </div>
     );

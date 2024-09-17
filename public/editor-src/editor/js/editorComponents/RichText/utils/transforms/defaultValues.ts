@@ -1,5 +1,6 @@
 import deepMerge from "deepmerge";
 import { ElementModel } from "visual/component/Elements/Types";
+import { TextScripts } from "visual/types";
 
 // represent how data will store inside html
 // inside className, like a style or attribute
@@ -267,6 +268,34 @@ export const inlineValues: Values = {
     capitalize: {
       prefix: "brz-capitalize",
       defaultValue: "off"
+    },
+    typographyBold: {
+      prefix: "brz-bold",
+      defaultValue: false
+    },
+    typographyItalic: {
+      prefix: "brz-italic",
+      defaultValue: false
+    },
+    typographyUnderline: {
+      prefix: "brz-underline",
+      defaultValue: false
+    },
+    typographyStrike: {
+      prefix: "brz-strike",
+      defaultValue: false
+    },
+    typographyUppercase: {
+      prefix: "brz-uppercase",
+      defaultValue: false
+    },
+    typographyLowercase: {
+      prefix: "brz-lowercase",
+      defaultValue: false
+    },
+    typographyScript: {
+      prefix: "brz-tp-script",
+      defaultValue: TextScripts.None
     }
   },
   style: {

@@ -5,7 +5,7 @@ import {
   WithPlaceholder,
   WithSize,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
 
 export type ThemeList = "default" | "idea";
 

@@ -2,7 +2,7 @@ import { FC } from "react";
 import * as Option from "visual/component/Options/Type";
 import { ReduxState } from "visual/redux/types";
 import { Block, GlobalBlock, Page, Screenshot } from "visual/types";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 
 export interface OpenPromptCondition {
   _id: Config["_id"];

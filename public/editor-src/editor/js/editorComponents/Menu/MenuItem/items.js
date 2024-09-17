@@ -1,36 +1,30 @@
 import React from "react";
-import classnames from "classnames";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import MenuDropDown from "visual/component/MenuDropDown";
-import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
-const getPlacement = (level, mods) => ({
-  [DESKTOP]:
-    mods?.desktop === "horizontal" && level === 0
-      ? "bottom-start"
-      : "right-start",
-  [TABLET]: "bottom-start",
-  [MOBILE]: "bottom-start"
-});
+const SubMenuForView = (props) => {
+  const { items } = props;
+  return <>{items}</>;
+};
 
-const renderSubMenu = (items, mMenu, level, mods) => {
-  const mMenuClassName = classnames("brz-mm-menu__sub-menu", {
-    "brz-menu__ul--has-dropdown": level === 0
-  });
+const SubMenuForEdit = (props) => {
+  const { mMenu, items } = props;
 
   return mMenu ? (
-    <ul className={mMenuClassName}>{items}</ul>
+    <ul className="brz-menu__sub-menu">{items}</ul>
   ) : (
-    <MenuDropDown
-      placement={IS_PREVIEW ? getPlacement(level, mods) : undefined}
-      mods={IS_PREVIEW ? mods : undefined}
-      className="brz-menu__sub-menu"
-    >
-      {items}
-    </MenuDropDown>
+    <MenuDropDown className="brz-menu__sub-menu">{items}</MenuDropDown>
+  );
+};
+
+const SubMenu = (props) => {
+  return IS_PREVIEW ? (
+    <SubMenuForView {...props} />
+  ) : (
+    <SubMenuForEdit {...props} />
   );
 };
 
@@ -51,15 +45,8 @@ class MenuItemItems extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex, items) {
     const props = super.getItemProps(itemData, itemIndex, items);
-    let {
-      level,
-      toolbarExtend,
-      mMenu,
-      meta,
-      getParent,
-      mods,
-      menuSelected
-    } = this.props;
+    let { level, toolbarExtend, mMenu, meta, getParent, mods, menuSelected } =
+      this.props;
 
     return {
       ...props,
@@ -105,14 +92,14 @@ class MenuItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(_items) {
-    const { level, megaMenu, mMenu, mods } = this.props;
-    const items = _items.filter(el => el);
+    const { megaMenu, mMenu } = this.props;
+    const items = _items.filter((el) => el);
 
     if (items.length === 0) {
       return null;
     }
 
-    return megaMenu ? items : renderSubMenu(items, mMenu, level, mods);
+    return megaMenu ? items : <SubMenu mMenu={mMenu} items={items} />;
   }
 }
 

@@ -1,11 +1,5 @@
 import classNames from "classnames";
-import React, {
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useMemo,
-  useState
-} from "react";
+import React, { MouseEvent, useCallback, useMemo, useState, JSX } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
@@ -19,12 +13,15 @@ import { pendingRequest } from "visual/utils/api";
 import { fontTransform } from "visual/utils/fonts";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { t } from "visual/utils/i18n";
+import { Circle } from "./Circle";
+import { Tooltip } from "./Tooltip";
 import { deleteFont as apiDeleteFont } from "./api";
 import { FontTypes } from "./types";
 import { sortFonts } from "./utils";
 
-export const List = (): ReactElement => {
+export const List = (): JSX.Element => {
   const [loading, setLoading] = useState("");
+
   const fonts = useSelector(unDeletedFontsSelector);
   const defaultFont = useSelector(defaultFontSelector);
   const dispatch = useDispatch();
@@ -38,7 +35,7 @@ export const List = (): ReactElement => {
 
   const handleDelete = useCallback(
     async (type: FontTypes, font: Font): Promise<void> => {
-      setLoading(font.brizyId);
+      if (font.brizyId) setLoading(font.brizyId);
 
       if (type === "upload") {
         await apiDeleteFont((font as UploadedFont).id);
@@ -69,6 +66,7 @@ export const List = (): ReactElement => {
           const { id, brizyId, title, family } =
             fontTransform[fontGroupType](font);
 
+          const isAdobe = fontGroupType === "adobe";
           const isSystemFont = id === FONT_INITIAL;
           const isDefaultFont = defaultFont === id;
           const isLoading = loading === brizyId;
@@ -89,16 +87,30 @@ export const List = (): ReactElement => {
                 }}
               >
                 Aa
-                {!isDefaultFont && !isLoading && !isSystemFont && (
-                  <div
-                    className="brz-ed-badge__delete brz-ed-popup-fonts__delete"
+                {!isDefaultFont && !isLoading && !isSystemFont && !isAdobe && (
+                  <Circle
+                    classname={
+                      "brz-ed-badge__delete brz-ed-popup-fonts__action"
+                    }
                     onClick={(e: MouseEvent<HTMLDivElement>): void => {
                       e.stopPropagation();
                       handleDelete(fontGroupType, font);
                     }}
                   >
                     <EditorIcon icon="nc-trash" />
-                  </div>
+                  </Circle>
+                )}
+                {isAdobe && (
+                  <Tooltip
+                    className={
+                      "brz-ed-popup-fonts__action brz-ed-popup-integrations__info-icon"
+                    }
+                    hint={t(
+                      "The font can only be deleted if you disconnect from Adobe Fonts. This will remove all fonts added with this integration."
+                    )}
+                  >
+                    <EditorIcon icon="nc-alert-circle-que" />
+                  </Tooltip>
                 )}
               </div>
               <div className="brz-ed-popup-fonts__item-title">{title}</div>
@@ -112,12 +124,12 @@ export const List = (): ReactElement => {
                 </span>
               )}
               {isDefaultFont && !isLoading && (
-                <span
-                  title={t("Default font (can’t be deleted)")}
-                  className="brz-span brz-ed-popup-integrations__app-icon"
+                <Tooltip
+                  hint={t("Default font (can’t be deleted)")}
+                  className={"brz-span brz-ed-popup-integrations__app-icon"}
                 >
                   <EditorIcon icon="nc-check-small" />
-                </span>
+                </Tooltip>
               )}
             </div>
           );

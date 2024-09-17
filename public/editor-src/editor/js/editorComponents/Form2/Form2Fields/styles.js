@@ -12,6 +12,9 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleTypography2FontVariation"
       ]
     },
+    ".brz && .brz-forms2__field": {
+      standart: ["cssStyleTextTransforms"]
+    },
     ".brz &&:hover .brz-forms2__field-label": {
       standart: [
         "cssStyleLabelColor",
@@ -21,7 +24,8 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleElementForm2FieldsLabelLetterSpacing",
         "cssStyleElementForm2FieldsLabelAlign",
         "cssStyleElementForm2FieldsLabelLineHeight",
-        "cssStyleElementForm2FieldsLabelFontVariation"
+        "cssStyleElementForm2FieldsLabelFontVariation",
+        "cssStyleElementForm2FieldsLabelTextTransform"
       ]
     },
     ".brz && .brz-forms2__field-label": {
@@ -58,7 +62,8 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleElementForm2FieldsCheckboxFontWeight",
         "cssStyleElementForm2FieldsCheckboxLetterSpacing",
         "cssStyleElementForm2FieldsCheckboxLineHeight",
-        "cssStyleElementForm2FieldsCheckboxFontVariation"
+        "cssStyleElementForm2FieldsCheckboxFontVariation",
+        "cssStyleElementForm2FieldsCheckboxTextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -70,10 +75,15 @@ export function styleFormFields(v, vs, vd) {
         "cssStyleElementForm2FieldsCheckboxFontWeight",
         "cssStyleElementForm2FieldsCheckboxLetterSpacing",
         "cssStyleElementForm2FieldsCheckboxLineHeight",
-        "cssStyleElementForm2FieldsCheckboxFontVariation"
+        "cssStyleElementForm2FieldsCheckboxFontVariation",
+        "cssStyleElementForm2FieldsCheckboxTextTransform"
       ],
       interval: ["cssStyleHoverTransition"]
     },
+    ".brz && .brz-forms2__checkbox-option-name,.brz-forms2__radio-option-name":
+      {
+        standart: ["cssStyleElementForm2FieldsCheckboxTextTransform"]
+      },
     ".brz &&:hover .brz-forms2__select-item__input": {
       standart: ["cssStyleColor"],
       interval: ["cssStyleHoverTransition"]
@@ -99,6 +109,7 @@ export function styleFormSelect(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
         "cssStyleElementForm2FieldsSelectColor",
         "cssStyleElementForm2FieldsSelectBgColor",
         "cssStyleElementForm2FieldsSelectBorderRadius",
@@ -121,6 +132,7 @@ export function styleFormSelect(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
         "cssStyleElementForm2FieldsSelectColor",
         "cssStyleElementForm2FieldsSelectBgColor",
         "cssStyleElementForm2FieldsSelectBorderRadius"
@@ -130,10 +142,10 @@ export function styleFormSelect(v, vs, vd) {
       standart: ["cssStyleElementForm2FieldsSelectBorder"]
     },
     ".brz && .select2-selection--single": {
-      standart: ["cssStylePaddingFourFields"]
+      standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]
     },
     ".brz && .select2-selection--multiple": {
-      standart: ["cssStylePaddingFourFields"]
+      standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]
     },
     ".brz &&:hover .select2-selection--multiple .select2-selection__choice": {
       standart: ["cssStyleElementForm2FieldsSelectChoiceBgColor"],

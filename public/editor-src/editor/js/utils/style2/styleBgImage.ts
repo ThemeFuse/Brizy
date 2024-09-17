@@ -121,8 +121,8 @@ export function styleBgPositionX({
   return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionX}%`
     : !bgPopulation
-    ? `${bgPositionX}%`
-    : "0%";
+      ? `${bgPositionX}%`
+      : "50%";
 }
 
 export function styleBgPositionY({
@@ -145,6 +145,6 @@ export function styleBgPositionY({
   return isHover === "hover" && !hoverBgPopulation
     ? `${hoverBgPositionY}%`
     : !bgPopulation
-    ? `${bgPositionY}%`
-    : "0%";
+      ? `${bgPositionY}%`
+      : "50%";
 }

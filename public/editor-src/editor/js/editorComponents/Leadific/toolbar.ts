@@ -1,6 +1,5 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { Block } from "visual/types";
 import { getLeadificCustomFields } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -10,6 +9,7 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
@@ -40,9 +40,6 @@ export const getItems: GetItems<Value, Props> = ({
     dvv("colorPalette")
   );
   const linkPopup = Str.read(dvv("linkPopup"));
-
-  const _popups = dvv("popups");
-  const popups = Array.isArray(_popups) ? _popups : [];
 
   const linkDC = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -229,23 +226,12 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "linkPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
-                  type: "legacy-promptAddPopup",
+                  type: "promptAddPopup",
                   label: t("Popup"),
-                  popupKey: `${component.getId()}_${linkPopup}`,
-                  value: {
-                    value: linkPopup,
-                    popups
+                  config: {
+                    popupKey: `${component.getId()}_${linkPopup}`
                   },
-                  onChange: ({
-                    value,
-                    popups
-                  }: {
-                    value: string;
-                    popups: Block[];
-                  }) => ({
-                    linkPopup: value,
-                    popups
-                  })
+                  dependencies: popupToOldModel
                 }
               ]
             }
@@ -277,13 +263,11 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       position: 110,
       title: t("Settings"),
       roles: ["admin"],
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 };

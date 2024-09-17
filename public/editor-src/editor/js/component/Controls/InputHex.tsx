@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import { Input } from "./Input";
+import React, { useEffect, useState } from "react";
+import { useDebouncedEffect } from "visual/component/hooks";
 import {
   WithClassName,
   WithOnChange,
   WithValue
-} from "visual/utils/options/attributes";
-import { mApply } from "visual/utils/value";
-import { useDebouncedEffect } from "visual/component/hooks";
+} from "visual/types/attributes";
 import { fromString, Hex } from "visual/utils/color/Hex";
+import { mApply } from "visual/utils/value";
+import { Input } from "./Input";
 
 export type Props = WithClassName & WithValue<string> & WithOnChange<Hex>;
 

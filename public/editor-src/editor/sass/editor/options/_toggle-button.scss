@@ -1,0 +1,18 @@
+$box-width: 37px;
+$box-height: $control-height;
+
+.brz-ed-option__toggle-button {
+  width: $box-width;
+  height: $box-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $control-bg;
+  color: #fff;
+  border-radius: $control-border-radius;
+
+  &-active {
+    color: $white;
+    background-color: $brand__primary;
+  }
+}

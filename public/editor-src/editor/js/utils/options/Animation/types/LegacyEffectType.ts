@@ -78,7 +78,26 @@ export enum LegacyEffectType {
   brzBuzzOut = "brz-buzz-out",
 
   brzRotate = "brz-rotate",
-  brzGrowRotate = "brz-grow-rotate"
+  brzGrowRotate = "brz-grow-rotate",
+
+  brzFade = "brz-fade",
+  brzBackPulse = "brz-back-pulse",
+  brzSweepToRight = "brz-sweep-to-right",
+  brzSweepToLeft = "brz-sweep-to-left",
+  brzSweepToBottom = "brz-sweep-to-bottom",
+  brzSweepToTop = "brz-sweep-to-top",
+  brzBounceToRight = "brz-bounce-to-right",
+  brzBounceToLeft = "brz-bounce-to-left",
+  brzBounceToBottom = "brz-bounce-to-bottom",
+  brzBounceToTop = "brz-bounce-to-top",
+  brzRadialOut = "brz-radial-out",
+  brzRadialIn = "brz-radial-in",
+  brzRectangleIn = "brz-rectangle-in",
+  brzRectangleOut = "brz-rectangle-out",
+  brzShutterInHorizontal = "brz-shutter-in-horizontal",
+  brzShutterOutHorizontal = "brz-shutter-out-horizontal",
+  brzShutterInVertical = "brz-shutter-in-vertical",
+  brzShutterOutVertical = "brz-shutter-out-vertical"
 }
 
 export const fromString = (v: string): LegacyEffectType | undefined =>

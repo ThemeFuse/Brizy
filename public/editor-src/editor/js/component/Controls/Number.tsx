@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Number from "visual/component/Controls/AutoCorrectingInput";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithSize } from "visual/utils/options/attributes";
+import { WithClassName, WithSize } from "visual/types/attributes";
 
 type Action = "increase" | "decrease" | "none";
 

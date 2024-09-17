@@ -1,16 +1,20 @@
 import { EntityTypeRule } from "visual/types";
 
+export type StatusRule = "published" | "draft";
+
+export interface ValueItems {
+  title: string;
+  value: EntityTypeRule;
+  status?: StatusRule;
+};
+
 export type CmsListItem = {
   title: string;
   value: string;
   mode: "specific" | "reference";
   disabled?: boolean;
   status?: "publish" | "draft" | "pending";
-  items: {
-    title: string;
-    value: EntityTypeRule;
-    status?: "published" | "draft";
-  }[];
+  items: ValueItems[];
 };
 
 export type LegacyRuleListItem = {
@@ -42,3 +46,12 @@ export const isLegacyRuleListItem = (
 ): listItem is LegacyRuleListItem => {
   return !isCMSRuleListItem(listItem);
 };
+
+interface ListRuleItems<T> {
+  item: T;
+  onClick: (value: string) => void;
+  value: string;
+}
+
+export type RuleListProps = ListRuleItems<CmsListItem>;
+export type LegacyRuleListProps = ListRuleItems<RuleListItem>;

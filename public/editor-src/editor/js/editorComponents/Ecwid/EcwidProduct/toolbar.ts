@@ -8,7 +8,6 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EcwidProductColumns, Value } from "./types/Value";
 
-// @ts-expect-error "advancedSettings" old option
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const config = Config.getAll();
 
@@ -321,10 +320,9 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 20,
       devices: "desktop",
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];

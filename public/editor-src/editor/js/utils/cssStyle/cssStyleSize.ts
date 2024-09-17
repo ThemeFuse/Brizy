@@ -5,7 +5,7 @@ import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
-import * as Str from "visual/utils/string/specs";
+import { Str } from "@brizy/readers";
 import {
   styleSizeContainerSize,
   styleSizeCustom,
@@ -16,12 +16,33 @@ import {
   styleSizeWidth
 } from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
+import { readIconSize } from "visual/utils/types/Type";
 import { MValue, mApply } from "visual/utils/value";
 import { checkValue } from "../checkValue";
 
 type Get = (k: string) => MValue<unknown>;
 type Size = "small" | "medium" | "large" | "custom";
 export const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
+
+const getIconSizeValue = (
+  iconSize: string,
+  iconCustomSize: number
+): MValue<number> => {
+  switch (readIconSize(iconSize)) {
+    case "small": {
+      return 16;
+    }
+    case "medium": {
+      return 24;
+    }
+    case "large": {
+      return 32;
+    }
+    case "custom": {
+      return iconCustomSize;
+    }
+  }
+};
 
 export function getButtonSizes(size: Size): MValue<{
   width: number;
@@ -172,8 +193,8 @@ export function cssStyleSizeHeightPxOnly({
         styleSizeHeight({ v, device, state })
       ) ?? ""
     : unit === "%"
-    ? "height: unset;"
-    : "";
+      ? "height: unset;"
+      : "";
 }
 
 /**
@@ -193,8 +214,8 @@ export function cssStyleSizeHeightPercentOnly({
         styleSizeHeight({ v, device, state })
       ) ?? ""
     : unit === "px"
-    ? "height: unset;"
-    : "";
+      ? "height: unset;"
+      : "";
 }
 
 export function cssStyleSizeMaxWidth({
@@ -524,6 +545,39 @@ export function cssStyleIconMargin({
   return iconPosition === "left"
     ? `margin-right:${spacing}px; margin-left:0;`
     : iconPosition === "right"
-    ? `margin-left:${spacing}px; margin-right:0;`
-    : "";
+      ? `margin-left:${spacing}px; margin-right:0;`
+      : "";
+}
+
+export function cssStyleIconSize({
+  v,
+  state,
+  device,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const size = Str.read(dvv(capByPrefix(prefix, "iconSize"))) ?? "small";
+  const customSize = Num.read(dvv(capByPrefix(prefix, "iconCustomSize"))) ?? 16;
+  const iconSize = getIconSizeValue(size, customSize);
+
+  return iconSize ? `font-size:${iconSize}px;` : "";
+}
+
+export function cssStyleCustomHeight({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const heightStyle = Str.read(dvv(capByPrefix(prefix, "heightStyle")));
+
+  if (heightStyle === "custom") {
+    return cssStyleSizeMinHeightPx({ v, device, state });
+  } else {
+    return "min-height:100%;";
+  }
 }

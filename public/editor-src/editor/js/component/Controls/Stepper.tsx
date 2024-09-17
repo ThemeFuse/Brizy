@@ -3,7 +3,7 @@ import React from "react";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { Props } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 import AutoCorrectingInput from "./AutoCorrectingInput";
 
 interface StepperProps extends Props<number>, WithClassName {

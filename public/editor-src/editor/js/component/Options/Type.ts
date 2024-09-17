@@ -39,7 +39,7 @@ export type Props<Model, Patch = Model> = {
   value: Model;
   onChange: OnChange<Patch>;
   toolbar?: ToolbarItemsInstance;
-  label?: ReactNode;
+  label?: JSX.Element;
   description?: ReactNode;
 };
 

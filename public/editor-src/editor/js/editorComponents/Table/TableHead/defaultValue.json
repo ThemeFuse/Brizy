@@ -46,6 +46,12 @@
     "typographyVariableFontWeight": 400,
     "typographyFontWidth": 100,
     "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
 
     "colorHex": "#ffffff",
     "colorOpacity": 1,

@@ -13,7 +13,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import type { Value } from "./types";
 import { StyleType } from "./types";
 
-// @ts-expect-error legacy-advancedSettings is old option
 export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -328,13 +327,11 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       position: 110,
       disabled: !isSimple && !IS_STORY,
       title: t("Settings"),
       roles: ["admin"],
-      icon: "nc-cog",
       devices: "desktop"
     }
   ];

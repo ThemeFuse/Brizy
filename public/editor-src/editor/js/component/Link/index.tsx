@@ -1,20 +1,20 @@
 import classNames from "classnames";
 import React, {
   CSSProperties,
+  forwardRef,
   PropsWithChildren,
   ReactElement,
   Ref,
-  forwardRef,
   useEffect,
   useRef
 } from "react";
+import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { WithClassName } from "visual/utils/options/attributes";
 import { attachRef } from "visual/utils/react";
 import { mRead } from "visual/utils/string/specs";
 import { StoryAnchorAttribute } from "./types/Slide";
-import { Target, empty as defaultTarget } from "./types/Target";
-import { Type, empty as defaultType } from "./types/Type";
+import { empty as defaultTarget, Target } from "./types/Target";
+import { empty as defaultType, Type } from "./types/Type";
 import { getAttr, getHref, getRel, getTarget } from "./utils";
 
 type Props = PropsWithChildren<

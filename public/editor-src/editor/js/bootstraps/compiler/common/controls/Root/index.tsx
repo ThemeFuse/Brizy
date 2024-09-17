@@ -6,10 +6,11 @@ interface Props {
   className?: string;
   type: "page" | "block";
   children: ReactElement;
+  hasGlobalBlocks?: boolean;
 }
 
 export const Root = (props: Props): ReactElement => {
-  const { className, type, children } = props;
+  const { type, children, className, hasGlobalBlocks } = props;
 
   if (type === "page") {
     const topPlaceholder = getGlobalBlockPlaceholder({
@@ -23,9 +24,9 @@ export const Root = (props: Props): ReactElement => {
 
     return (
       <BaseRoot className={className}>
-        {topPlaceholder}
+        {hasGlobalBlocks && topPlaceholder}
         {children}
-        {bottomPlaceholder}
+        {hasGlobalBlocks && bottomPlaceholder}
       </BaseRoot>
     );
   }

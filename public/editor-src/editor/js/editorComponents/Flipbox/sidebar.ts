@@ -58,6 +58,49 @@ export const getItems: GetItems<Value, Props> = ({ v }) => {
                   ]
                 }
               ]
+            },
+            {
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
+              devices: "responsive",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      disabled: true
+                    },
+                    {
+                      id: "frontPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      disabled: isBackSide,
+                      position: 50
+                    },
+                    {
+                      id: "backPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      position: 50,
+                      disabled: isFrontSide
+                    },
+                    {
+                      id: "border",
+                      type: "corners",
+                      label: t("Corner"),
+                      position: 65
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },

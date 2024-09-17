@@ -1,8 +1,10 @@
 import React, { ReactElement } from "react";
 import { Switch as Control } from "visual/component/Controls/Switch";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import {
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
 export type Config = {

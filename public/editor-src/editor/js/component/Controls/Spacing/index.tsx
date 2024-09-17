@@ -4,12 +4,12 @@ import { Group } from "visual/component/Controls/Group";
 import { RadioGroup2 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
 import { GlobalMeta } from "visual/component/Controls/types";
-import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OnChange } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { WithClassName } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 import { Props as SP, Slider } from "./Slider";
-import { Edge, Type, edges, types } from "./types";
+import { Edge, edges, Type, types } from "./types";
 
 type Edges<E extends Edge> = "all" | E;
 

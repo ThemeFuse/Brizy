@@ -8,9 +8,10 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { WithClassName } from "visual/types/attributes";
 import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { WithClassName } from "visual/utils/options/attributes";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarDisabled from "./sidebarDisabled";
@@ -20,7 +21,6 @@ import * as toolbarExtendCloseButton from "./toolbarExtendCloseButton";
 import * as toolbarExtendDescription from "./toolbarExtendDescription";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarExtendTitle from "./toolbarExtendTitle";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 export type Value = ElementModel & {
   showCloseButtonAfter: number;

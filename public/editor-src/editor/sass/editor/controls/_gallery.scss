@@ -62,6 +62,10 @@
         height: 48px;
         justify-self: end;
       }
+
+      &-loading {
+        cursor: progress;
+      }
     }
 
     &--thumbnail {

@@ -36,7 +36,12 @@
     "titleTypographyVariableFontWeight": 600,
     "titleTypographyFontWidth": 100,
     "titleTypographyFontSoftness": 0,
-
+    "titleTypographyBold": false,
+    "titleTypographyItalic": false,
+    "titleTypographyUnderline": false,
+    "titleTypographyStrike": false,
+    "titleTypographyUppercase": false,
+    "titleTypographyLowercase": false,
 
     "postTypographyFontStyle": "",
     "postTypographyFontFamilyType": "google",
@@ -48,6 +53,12 @@
     "postTypographyVariableFontWeight": 600,
     "postTypographyFontWidth": 100,
     "postTypographyFontSoftness": 0,
+    "postTypographyBold": false,
+    "postTypographyItalic": false,
+    "postTypographyUnderline": false,
+    "postTypographyStrike": false,
+    "postTypographyUppercase": false,
+    "postTypographyLowercase": false,
 
     "titleColorHex": "#818a91",
     "titleColorOpacity": 1,

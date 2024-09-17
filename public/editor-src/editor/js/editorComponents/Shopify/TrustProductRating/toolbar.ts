@@ -10,8 +10,7 @@ export const getItems = (): ToolbarItemType[] => {
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error: Type '"advancedSettings"' is not assignable to type
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
       position: 110
     }

@@ -2,7 +2,7 @@ import { ElementDefaultValue } from "visual/component/Elements/Types";
 import EditorComponents from "visual/global/Editor";
 import { MValue } from "visual/utils/value";
 
-export type FontType = "google" | "upload" | "system" | "unknowns";
+export type FontType = "google" | "adobe" | "upload" | "system" | "unknowns";
 
 export function isFontType(t: unknown): t is FontType {
   return t === "google" || t === "upload" || t === "system" || t === "unknowns";

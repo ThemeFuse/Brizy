@@ -13,6 +13,7 @@ import { styleWrapper, styleWrapperContainer } from "../styles";
 import { ImageProps, Meta, Patch, Styles, V } from "../types";
 import { showOriginalImage } from "../utils";
 import useResizerPoints from "./useResizerPoints";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 const Image: FCC<ImageProps> = (props) => {
   const {
@@ -119,7 +120,7 @@ const Image: FCC<ImageProps> = (props) => {
         ? clamp(mobileWidth || width, 0, mobileW)
         : mobileWidth,
       height: isAbsoluteOrFixed ? height / (imageWidth / imageHeight) : height,
-      ...(sizeType !== "custom" && !isSvgOrGif && { size })
+      ...(sizeType !== SizeType.custom && !isSvgOrGif && { size })
     };
   }
 

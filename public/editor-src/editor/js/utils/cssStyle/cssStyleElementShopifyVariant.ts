@@ -12,6 +12,7 @@ import {
   cssStyleSizeHeight,
   cssStyleSizeWidth
 } from "visual/utils/cssStyle/cssStyleSize";
+import { cssStyleTextTransforms } from "visual/utils/cssStyle/cssStyleTextTransform";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -120,6 +121,20 @@ export function cssStyleElementShopifyVariantFontVariationLabel({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix
+  });
+}
+
+export function cssStyleElementShopifyVariantTextTransformLabel({
+  v,
+  device,
+  state,
+  prefix = "label"
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix
   });
 }
@@ -251,6 +266,20 @@ export function cssStyleElementShopifyVariantFontVariationRadio({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix
+  });
+}
+
+export function cssStyleElementShopifyVariantTextTransformRadio({
+  v,
+  device,
+  state,
+  prefix = "radio"
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix
   });
 }
@@ -401,6 +430,20 @@ export function cssStyleElementShopifyVariantFontVariationSelectedItem({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix
+  });
+}
+
+export function cssStyleElementShopifyVariantTextTransformSelectedItem({
+  v,
+  device,
+  state,
+  prefix = "selectedItem"
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix
   });
 }

@@ -44,14 +44,10 @@ function reducer<TResolve, TReject>(
       break;
     }
     case "resolve": {
-      if (state.status === "delay" || state.status === "waiting") {
-        return {
-          status: "resolved",
-          value: action.value
-        };
-      }
-
-      break;
+      return {
+        status: "resolved",
+        value: action.value
+      };
     }
     case "reject": {
       if (state.status === "delay" || state.status === "waiting") {

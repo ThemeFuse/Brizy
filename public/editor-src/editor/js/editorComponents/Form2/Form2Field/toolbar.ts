@@ -4,8 +4,9 @@ import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getThirtyOptions, inputTypesChoice } from "./utils";
+import { Value, Props } from "./type";
 
-export const getItems: GetItems = ({ v, device, component }) => {
+export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const config = Config.getAll();
 

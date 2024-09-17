@@ -22,6 +22,8 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case "ADD_GLOBAL_BLOCK":
     case ActionTypes.UPDATE_CURRENT_STYLE_ID:
     case ActionTypes.UPDATE_CURRENT_STYLE:
+    case ActionTypes.REGENERATE_TYPOGRAPHY:
+    case ActionTypes.REGENERATE_COLORS:
     case "UPDATE_EXTRA_FONT_STYLES":
     case ActionTypes.IMPORT_TEMPLATE:
     case ActionTypes.IMPORT_STORY: // @ts-expect-error: don't have in ts

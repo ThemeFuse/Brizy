@@ -131,7 +131,7 @@ const getItemsSimple =
         ? [
             {
               id: "advancedSettings",
-              type: "legacy-advancedSettings",
+              type: "advancedSettings",
               devices: "desktop"
             },
             {

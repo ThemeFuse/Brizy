@@ -8,6 +8,7 @@ import { WithDirection, setDirection } from "./types/WithDirection";
 import * as Bounce from "./types/effects/Bounce";
 import * as Buzz from "./types/effects/Buzz";
 import * as Fade from "./types/effects/Fade";
+import * as Fill from "./types/effects/Fill";
 import * as Move from "./types/effects/Move";
 import * as Pulse from "./types/effects/Pulse";
 import * as Rotate from "./types/effects/Rotate";
@@ -17,6 +18,7 @@ import * as Skew from "./types/effects/Skew";
 import * as Slide from "./types/effects/Slide";
 import * as Wobble from "./types/effects/Wobble";
 import * as Zoom from "./types/effects/Zoom";
+import { LegacyEffectType } from "./types/LegacyEffectType";
 
 type GetDirection<T extends EffectType> = T extends Value["type"]
   ? T extends WithDirection<never>
@@ -45,6 +47,12 @@ export function getDirections<T extends EffectType>(
         k as GetDirection<T>,
         Bounce.getDirectionTitle(k)
       ]);
+    case EffectType.Fill: {
+      return Object.values(Fill.Direction).map((k) => [
+        k as GetDirection<T>,
+        Fill.getDirectionTitle(k)
+      ]);
+    }
     case EffectType.Fade:
     case EffectType.Fade2:
       return Object.values(Fade.Direction).map((k) => [
@@ -119,20 +127,20 @@ export const valueToType = (types: EffectType[], value: Value): EffectType => {
       return types.includes(EffectType.Attention)
         ? EffectType.Attention
         : types.includes(EffectType.Attention2)
-        ? EffectType.Attention2
-        : EffectType.None;
+          ? EffectType.Attention2
+          : EffectType.None;
     case EffectType.Fade:
       return types.includes(EffectType.Fade)
         ? EffectType.Fade
         : types.includes(EffectType.Fade2)
-        ? EffectType.Fade2
-        : EffectType.None;
+          ? EffectType.Fade2
+          : EffectType.None;
     case EffectType.Zoom:
       return types.includes(EffectType.Zoom)
         ? EffectType.Zoom
         : types.includes(EffectType.Zoom2)
-        ? EffectType.Zoom2
-        : EffectType.None;
+          ? EffectType.Zoom2
+          : EffectType.None;
     case EffectType.None:
     case EffectType.Rotate:
     case EffectType.Slide:
@@ -140,6 +148,7 @@ export const valueToType = (types: EffectType[], value: Value): EffectType => {
     case EffectType.Buzz:
     case EffectType.Pulse:
     case EffectType.Skew:
+    case EffectType.Fill:
     case EffectType.Scale:
     case EffectType.Rotate2:
     case EffectType.Move:
@@ -171,4 +180,37 @@ export const hoverEffects: EffectType[] = [
   EffectType.Scale,
   EffectType.Move,
   EffectType.Rotate2
+];
+
+export const buttonHoverEffects: EffectType[] = [
+  ...hoverEffects,
+  EffectType.Fill
+];
+
+export const buttonHoverAnimations: string[] = [
+  LegacyEffectType.brzFade,
+  LegacyEffectType.brzBackPulse,
+  LegacyEffectType.brzSweepToRight,
+  LegacyEffectType.brzSweepToLeft,
+  LegacyEffectType.brzSweepToBottom,
+  LegacyEffectType.brzSweepToTop,
+  LegacyEffectType.brzBounceToRight,
+  LegacyEffectType.brzBounceToLeft,
+  LegacyEffectType.brzBounceToBottom,
+  LegacyEffectType.brzBounceToTop,
+  LegacyEffectType.brzRadialOut,
+  LegacyEffectType.brzRadialIn,
+  LegacyEffectType.brzRectangleIn,
+  LegacyEffectType.brzRectangleOut,
+  LegacyEffectType.brzShutterInHorizontal,
+  LegacyEffectType.brzShutterOutHorizontal,
+  LegacyEffectType.brzShutterInVertical,
+  LegacyEffectType.brzShutterOutVertical
+];
+
+export const buttonHoverInAnimations: string[] = [
+  LegacyEffectType.brzRadialIn,
+  LegacyEffectType.brzRectangleIn,
+  LegacyEffectType.brzShutterInHorizontal,
+  LegacyEffectType.brzShutterInVertical
 ];

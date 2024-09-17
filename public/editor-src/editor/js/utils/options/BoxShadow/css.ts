@@ -5,7 +5,7 @@ export const css: CSSStyleFn<"boxShadow"> = ({ meta, value }): string => {
   const { isEmpty, isDisabled, isInset } = meta ?? {};
 
   if (isEmpty || isDisabled) {
-    return "";
+    return "box-shadow: none;";
   }
 
   const { palette, hex, opacity, blur, spread, horizontal, vertical } = value;

@@ -9,15 +9,18 @@ import ImagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import Lottie from "lottie-web";
 import Scrollbars from "perfect-scrollbar";
-import { Store } from "visual/redux/store";
+import { Swiper } from "swiper";
+import { Autoplay, EffectFade } from "swiper/modules";
 import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
+import { Store } from "visual/redux/store";
 import Gallery from "../libs/gallery";
 
 export type GalleryIsotope = Isotope;
 export type GalleryJustified = Gallery;
 export type GalleryIsotopeType = typeof Isotope;
 export type GalleryJustifiedType = typeof Gallery;
+export type SwiperType = Swiper;
 
 // Our own jquery plugins
 
@@ -32,6 +35,9 @@ interface BrizyLibs {
   // @ts-expect-error: Cannot use namespace 'Motion' as a type.
   Motions?: Motion;
   initEkklesiaPopups: typeof initEkklesiaPopups;
+  Swiper: SwiperType;
+  Autoplay: Autoplay;
+  EffectFade: EffectFade;
 }
 
 interface BrizyProLibs {
@@ -84,6 +90,16 @@ declare global {
       wp: {
         media: WPMediaFrame;
       };
+      brzFormV2Captcha?: (token: string) => void;
+      grecaptcha: {
+        render: (
+          node: HTMLElement,
+          { sitekey: string, size: string, callback: VoidFunction }
+        ) => string;
+        execute: (id: string) => void;
+        reset: (recaptchaId: string) => void;
+      };
+      brzOnloadRecaptchaCallback: VoidFunction;
     }
   }
 
@@ -117,8 +133,11 @@ declare global {
       width?: string;
       minimumResultsForSearch: number;
       dropdownParent: JQuery;
+      placeholder?: string;
       templateResult?: (item: Record<string, unknown>) => HTMLDivElement;
-      templateSelection?: (item: Record<string, unknown>) => HTMLDivElement;
+      templateSelection?: (
+        item: Record<string, unknown>
+      ) => HTMLDivElement | string;
       dropdownAutoWidth?: boolean;
     }): void;
   }

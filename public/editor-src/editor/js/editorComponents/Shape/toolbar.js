@@ -66,10 +66,9 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
-      position: 110,
-      icon: "nc-cog"
+      position: 110
     }
   ];
 }

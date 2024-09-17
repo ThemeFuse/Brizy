@@ -6,6 +6,7 @@ import {
   cssStyleDisplayNone,
   cssStyleSizeFontSize,
   cssStyleSizeWidth,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -108,6 +109,15 @@ export function cssStyleElementWOOCartPurchasesFontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix });
 }
 
+export function cssStyleElementWOOCartPurchasesTextTransform({
+  v,
+  device,
+  state,
+  prefix = "purchases"
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix });
+}
+
 export function cssStyleElementWOOCartTitleFontFamily({
   v,
   device,
@@ -155,6 +165,15 @@ export function cssStyleElementWOOCartTitleFontVariation({
 }) {
   return cssStyleTypography2FontVariation({ v, device, prefix });
 }
+
+export function cssStyleElementWOOCartTitleTextTransform({
+  v,
+  device,
+  state,
+  prefix = "title"
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix });
+}
 export function cssStyleElementWOOCartCostFontFamily({
   v,
   device,
@@ -201,6 +220,15 @@ export function cssStyleElementWOOCartCostFontVariation({
   prefix = "cost"
 }) {
   return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
+export function cssStyleElementWOOCartCostTextTransform({
+  v,
+  device,
+  state,
+  prefix = "cost"
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalFontFamily({
@@ -251,6 +279,15 @@ export function cssStyleElementWOOCartSubtotalFontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix });
 }
 
+export function cssStyleElementWOOCartSubtotalTextTransform({
+  v,
+  device,
+  state,
+  prefix = "subtotal"
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix });
+}
+
 export function cssStyleElementWOOCartButtonFontFamily({
   v,
   device,
@@ -297,6 +334,15 @@ export function cssStyleElementWOOCartButtonFontVariation({
   prefix = "button"
 }) {
   return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
+export function cssStyleElementWOOCartButtonTextTransform({
+  v,
+  device,
+  prefix = "button",
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix });
 }
 
 export function cssStyleElementWOOCartTitleColor({

@@ -22,7 +22,8 @@ export enum OnChangeActionTypes {
   remove = "remove",
   duplicate = "duplicate",
   edit = "edit",
-  change = "change"
+  change = "change",
+  reset = "reset"
 }
 
 export interface OnChangeAction {
@@ -42,30 +43,6 @@ export enum OnChangeCases {
   Symbol,
   Edit,
   Duplicate,
+  Reset,
   Delete
 }
-
-export interface ActionTypes {
-  type: OnChangeCases;
-  payload: string;
-}
-
-interface SymbolChange {
-  type: OnChangeCases.Symbol;
-  payload: string;
-}
-
-interface Edit {
-  type: OnChangeCases.Edit;
-  payload: string;
-}
-
-interface Duplicate {
-  type: OnChangeCases.Duplicate;
-}
-
-interface Delete {
-  type: OnChangeCases.Delete;
-}
-
-export type Actions = SymbolChange | Edit | Duplicate | Delete;
