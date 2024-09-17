@@ -136,7 +136,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 
 ## Changelog
 
+### 2.5.5 - 2024-09-17
+
+* Fixed:  Simplified the method that obtain the attachment by UID
+
 ### 2.5.4 - 2024-09-17
+
 * New: Hover animations for Buttons
 * New: Paypal element
 * New: Slideshow option for Section
@@ -153,8 +158,8 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Improved: Increase width of column resizer bar
 * Improved: Tollbar options code base and migrate Map, Line and Video to new CSS generator
 * Improved: Center "Styling" and "Effects" toolbar buttons:
-* Fixed: Disabled zoom option for Section,Row and Column for respondive modes: 
-* Fixed: Background video error after cloning the container element:
+* Fixed: Disabled zoom option for Section,Row and Column for respondive modes:* Fixed: Background video error after cloning the container
+                                                                                element:
 * Fixed: Text selection opacity if mask/gradinent is set
 * Fixed: Box resizer in responsive modes for all elements
 * Fixed: Copya and paste styles for responsive modes
@@ -173,14 +178,15 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Global block rule matching
 
 ### 2.5.3 - 2024-08-16
+
 * Fixed: Send the form nonce on submit when the user is authenticated
 
-
 ### 2.5.2 - 2024-08-01
+
 * Fixed: Assets not loading on subfolder WordPress instances
 
-
 ### 2.5.1 - 2024-07-26
+
 * Fixed: Icons not loading on subfolder WordPress instances
 * Fixed: 404 templates not displaying correctly
 * Fixed: Restored backward compatibility support for Astra
@@ -188,6 +194,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Fixed: Page content visibility in wp-admin when editing pages
 
 ### 2.5.0 - 2024-07-22
+
 * New: HTML Compilation process for major page-loading improvements
 * Fixed: Copy-Paste Styles for Text Element when using selected text
 * Fixed: Various vulnerabilities
@@ -201,6 +208,7 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 * Updated: Builder developer dependencies
 
 ### 2.4.45 - 2024-07-05
+
 * Fixed: small fixes in how the uploaded files are hnadled
 
 ### 2.4.44 - 2024-05-14

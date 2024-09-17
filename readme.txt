@@ -133,6 +133,9 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 == Changelog ==
 
+= 2.5.5 - 2024-09-17 =
+* Fixed:  Simplified the method that obtain the attachment by UID
+
 = 2.5.4 - 2024-09-17 =
 * New: Hover animations for Buttons
 * New: Paypal element
