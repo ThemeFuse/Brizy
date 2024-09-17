@@ -1,14 +1,11 @@
-import React, { ReactNode, createRef } from "react";
+import React, { createRef, JSX } from "react";
 import Background from "visual/component/Background";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { Content } from "visual/editorComponents/Flipbox/FlipboxItem/Content";
-import {
-  Props,
-  Value
-} from "visual/editorComponents/Flipbox/FlipboxItem/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import Items from "./Items";
+import { Content } from "./Content";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
+import { Props, Value } from "./types";
 
 class FlipboxItem extends EditorComponent<Value, Props> {
   static get componentId(): ElementTypes.FlipboxItem {
@@ -30,7 +27,7 @@ class FlipboxItem extends EditorComponent<Value, Props> {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(): void {
     const { type, updateHeight } = this.props;
 
     if (type === "back") {
@@ -38,11 +35,8 @@ class FlipboxItem extends EditorComponent<Value, Props> {
     }
   }
 
-  renderForEdit(): ReactNode {
-    const { animationClassName, type, flipboxActive, meta, backgroundValue } =
-      this.props;
-
-    const isActive = type === flipboxActive;
+  renderFlipboxItem(isActive: boolean): JSX.Element {
+    const { animationClassName, type, meta, backgroundValue } = this.props;
 
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -63,6 +57,22 @@ class FlipboxItem extends EditorComponent<Value, Props> {
         </Background>
       </Content>
     );
+  }
+
+  renderForEdit(): JSX.Element {
+    const { type, flipboxActive } = this.props;
+
+    const isActive = type === flipboxActive;
+
+    return this.renderFlipboxItem(isActive);
+  }
+
+  renderForView(): JSX.Element {
+    const { type } = this.props;
+
+    const isActive = type === "front";
+
+    return this.renderFlipboxItem(isActive);
   }
 }
 

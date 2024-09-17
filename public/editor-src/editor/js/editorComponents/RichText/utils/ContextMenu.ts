@@ -17,6 +17,11 @@ import { getStore } from "visual/redux/store";
 import { hexToRgba } from "visual/utils/color";
 import { detectOS } from "visual/utils/dom/detectOS";
 import defaultValue from "../defaultValue.json";
+import { hasSomeKey } from "visual/utils/reader/object";
+import { Patch, patchTextTransform } from "./dependencies";
+import { isStory } from "visual/utils/models";
+import configRules from "visual/config/rules";
+import { DeviceMode } from "visual/types";
 
 type CopiedElementRef = {
   path: string[];
@@ -197,21 +202,44 @@ const patchCustomValue = (values: Value, v: Value) => {
   };
 };
 
-export const handlePasteStyles = (
-  innerElement: InnerElementType,
-  onChange: (v: Value) => void,
-  v: ElementModel
-) => {
+const getExtraStyles = (styles: Patch, device: DeviceMode) => {
+  const hasTextTransformStyle = hasSomeKey(
+    [
+      "typographyBold",
+      "typographyItalic",
+      "typographyUnderline",
+      "typographyStrike",
+      "typographyUppercase",
+      "typographyLowercase"
+    ],
+    styles
+  );
+
+  return hasTextTransformStyle ? patchTextTransform(styles, device) : styles;
+};
+
+export const handlePasteStyles = ({
+  innerElement,
+  onChange,
+  v,
+  device
+}: {
+  innerElement: InnerElementType;
+  onChange: (v: Value) => void;
+  v: ElementModel;
+  device: DeviceMode;
+}) => {
   const { textPopulation } = innerElement.value;
   const values = getStyles(innerElement.value, prefixes);
+  const extraStyles = getExtraStyles(values, device);
 
-  if (values) {
+  if (extraStyles) {
     if (textPopulation) {
-      const dcValues = patchDCValue(values);
+      const dcValues = patchDCValue(extraStyles);
       return onChange(convertStylesFromDCToCustom(dcValues, v));
     }
 
-    const customValues = patchCustomValue(values, v);
+    const customValues = patchCustomValue(extraStyles, v);
     onChange(customValues);
   }
 };
@@ -224,7 +252,11 @@ export const handleClearFormatting = (onChange: (v: Value) => void) => {
     bgColorPalette,
     textShadowColorPalette,
     bgImageWidth,
-    bgImageHeight
+    bgImageHeight,
+    textBgColorHex,
+    textBgColorType,
+    textBgColorOpacity,
+    textBgColorPalette
   } = defaultValue.style;
   const {
     bgImageExtension,
@@ -244,6 +276,17 @@ export const handleClearFormatting = (onChange: (v: Value) => void) => {
     config
   );
 
+  const textBgColor = changeColor(
+    {
+      textBgColorHex,
+      textBgColorType,
+      textBgColorOpacity,
+      textBgColorPalette
+    },
+    ColorOption.Background,
+    config
+  );
+
   const backgroundImage = {
     imageSrc: bgImageSrc,
     imageFileName: bgImageFileName,
@@ -256,7 +299,9 @@ export const handleClearFormatting = (onChange: (v: Value) => void) => {
 
   onChange({
     ...defaultValue.style,
+    ...(isStory(config) && { width: configRules["story-richText"].width }),
     ...color,
+    ...textBgColor,
     background: null,
     shadow: null,
     shadowColorPalette: textShadowColorPalette,

@@ -12,7 +12,7 @@ const objectIsReactClassObject = (o: unknown): o is { displayName: string } => {
 const isComponentType = (c: unknown): c is ComponentType =>
   typeof c === "function" || objectIsReactClassObject(c);
 
-export default function BottomPanel(): ReactElement {
+export default function BottomPanel(): JSX.Element {
   const panelItems = useMemo(() => {
     const config = Config.getAll();
     return getComponents(config)

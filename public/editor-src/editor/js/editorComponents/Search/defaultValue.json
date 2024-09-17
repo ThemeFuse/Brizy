@@ -29,6 +29,12 @@
     "typographyVariableFontWeight": 700,
     "typographyFontWidth": 100,
     "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
 
     "colorHex": "#ccc",
     "colorOpacity": 1,

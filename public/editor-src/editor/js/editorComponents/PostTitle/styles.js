@@ -14,7 +14,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleElementTitleTextShadow",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ],
       interval: ["cssStyleHoverTransition"]
     },

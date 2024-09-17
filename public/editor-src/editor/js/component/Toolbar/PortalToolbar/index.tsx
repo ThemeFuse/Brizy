@@ -361,37 +361,39 @@ class _PortalToolbar
     const portalNode = portalNodesByDocument.get(ownerDocument);
 
     return (
-      portalNode &&
-      ReactDOM.createPortal(
-        <>
-          <ClickOutside
-            exceptions={this.getOutSideExceptions()}
-            onClickOutside={this.handleClickOutside}
-          >
-            <PortalToolbarPositioner
-              {...contextProps}
-              {...ownProps}
-              items={items}
-              node={this.selectorNode ?? this.node}
-              onClick={this.handleClick}
-              onMouseEnter={this.handleMouseEnter}
-              onMouseLeave={this.handleMouseLeave}
-            />
-          </ClickOutside>
-          {ownProps.getSidebarItems && (
-            <RightSidebarItems
-              getItems={this.getSidebarItems}
-              getTitle={ownProps.getSidebarTitle}
-            />
+      <>
+        {portalNode &&
+          ReactDOM.createPortal(
+            <>
+              <ClickOutside
+                exceptions={this.getOutSideExceptions()}
+                onClickOutside={this.handleClickOutside}
+              >
+                <PortalToolbarPositioner
+                  {...contextProps}
+                  {...ownProps}
+                  items={items}
+                  node={this.selectorNode ?? this.node}
+                  onClick={this.handleClick}
+                  onMouseEnter={this.handleMouseEnter}
+                  onMouseLeave={this.handleMouseLeave}
+                />
+              </ClickOutside>
+              {ownProps.getSidebarItems && (
+                <RightSidebarItems
+                  getItems={this.getSidebarItems}
+                  getTitle={ownProps.getSidebarTitle}
+                />
+              )}
+              <HotKeys
+                id="key-helper-toolbar-escape"
+                keyNames={["esc"]}
+                onKeyUp={this.handleEscape}
+              />
+            </>,
+            portalNode
           )}
-          <HotKeys
-            id="key-helper-toolbar-escape"
-            keyNames={["esc"]}
-            onKeyUp={this.handleEscape}
-          />
-        </>,
-        portalNode
-      )
+      </>
     );
   }
 

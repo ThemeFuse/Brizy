@@ -118,6 +118,27 @@ const BackgroundContainer = ({ value, meta, children }) => {
     props.mapZoom = bgMapZoom;
   }
 
+  if (media && currentMedia.includes("slideshow")) {
+    const {
+      slideshow,
+      slideshowLoop,
+      slideshowDuration,
+      slideshowTransitionType,
+      slideshowTransition,
+      kenBurnsEffect
+    } = value;
+
+    props = {
+      ...props,
+      slideshow,
+      slideshowLoop,
+      slideshowDuration,
+      slideshowTransitionType,
+      slideshowTransition,
+      kenBurnsEffect
+    };
+  }
+
   return <Background {...props}>{children}</Background>;
 };
 

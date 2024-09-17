@@ -94,10 +94,12 @@ export class FontFamily extends Component<Props> {
       blocks: blocksFonts = [],
       google: googleFonts = [],
       upload: uploadFonts = [],
+      adobe: adobeFonts = [],
       system: systemFonts = systemFont
     } = normalFonts;
 
-    const needSeparator = uploadFonts.length > 0 || googleFonts.length > 0;
+    const needSeparator =
+      uploadFonts.length > 0 || googleFonts.length > 0 || adobeFonts.length > 0;
 
     const needSeparatorForVariable = variableFonts.length > 0;
 
@@ -118,6 +120,12 @@ export class FontFamily extends Component<Props> {
           {needSeparatorForVariable && (
             <hr className="brz-hr brz-ed-font__separator" />
           )}
+
+          {adobeFonts.length > 0 &&
+            this.renderFontList({
+              fonts: adobeFonts,
+              type: FontFamilyType.adobe
+            })}
 
           {uploadFonts.length > 0 &&
             this.renderFontList({

@@ -6,6 +6,7 @@ import {
 import { GenericToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { State } from "visual/utils/stateMode";
 import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
 import { BreakpointsNames } from "../breakpoints/types";
 
 export type AllCSSKeys = BreakpointsNames | Exclude<State, "normal">;
@@ -19,8 +20,12 @@ export interface Styles {
   };
 }
 
+export interface StyleCSSProperties {
+  [k: string]: Literal;
+}
+
 export interface OutputOptionStyle {
-  [k: string]: { [k: string]: Literal };
+  [k: string]: StyleCSSProperties;
 }
 
 export type GeneratedCSS<T> = Record<AllCSSKeys, T[]>;
@@ -28,10 +33,14 @@ export type GeneratedCSS<T> = Record<AllCSSKeys, T[]>;
 export type Option<T extends OptionName = OptionName> =
   GenericToolbarItemType<T>;
 
-export type OptionStyle<T extends OptionName = OptionName> = (data: {
+export interface OptionStyleData<T extends OptionName = OptionName> {
   meta?: Partial<OptionMeta<T>>;
   value: OptionValue<T>;
-}) => OutputOptionStyle;
+}
+
+export type OptionStyle<T extends OptionName = OptionName> = (
+  data: OptionStyleData<T>
+) => MValue<OutputOptionStyle>;
 
 export interface SelectorAndCSSObject {
   selector: string;

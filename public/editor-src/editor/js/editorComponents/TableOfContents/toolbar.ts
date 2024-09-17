@@ -130,7 +130,7 @@ export const getItems: GetItems<Value, Props, State> = ({ v, device }) => {
                       placeholder: t("Selector of container"),
                       helper: {
                         content: t(
-                          'Search headings inside specific containers by selector. Can be used multiple selectors, divided by ","'
+                          "Extract headings from specific containers. Containers can be selected by CSS class name without the .dot, example: .container1, .container2"
                         )
                       }
                     },
@@ -141,7 +141,7 @@ export const getItems: GetItems<Value, Props, State> = ({ v, device }) => {
                       placeholder: t("Selector of container"),
                       helper: {
                         content: t(
-                          'Exclude headings from specific containers by selector. .Can be used multiple selectors, divided by ","'
+                          "Ignore headings selection from specific containers. Containers can be selected by CSS class name without the .dot, example: .container1, .container2"
                         )
                       }
                     }

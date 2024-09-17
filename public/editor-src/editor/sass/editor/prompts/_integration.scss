@@ -111,7 +111,9 @@ $option-color: #626b70;
       &:after {
         border-color: $brand__primary__pro;
         background-color: rgba(255, 255, 255, 0.9);
-        transition: 0.2s linear border-color, 0.2s linear background-color;
+        transition:
+          0.2s linear border-color,
+          0.2s linear background-color;
       }
 
       .brz-ed-popup-integrations__app-icon {
@@ -141,7 +143,9 @@ $option-color: #626b70;
       width: 100%;
       height: 100%;
       border: 3px solid $popup__apps__item__after-border;
-      transition: 0.2s linear border-color, 0.2s linear background-color;
+      transition:
+        0.2s linear border-color,
+        0.2s linear background-color;
     }
 
     &:hover:after {
@@ -171,6 +175,30 @@ $option-color: #626b70;
     i {
       font-size: 12px;
       line-height: 16px;
+    }
+  }
+
+  &__info-icon {
+    position: absolute;
+    font-size: 0;
+    border-radius: 50%;
+    background-color: $left_sidebar__styling__font__icon-color;
+    color: $popup__apps__loading-color;
+    text-align: center;
+    z-index: 2;
+    outline: 1px solid white;
+    outline-offset: -1px;
+    transition: 0.2s linear opacity;
+    .brz-icon-svg {
+      font-size: 22px;
+      outline: 1px solid white;
+      outline-offset: -1px;
+      border-radius: 50%;
+      &:hover {
+        background-color: $brand__primary;
+        transition: 0.2s linear color;
+        border-radius: 50%;
+      }
     }
   }
 
@@ -226,11 +254,12 @@ $option-color: #626b70;
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    margin: 20px 0 20px 0;
 
     &-head {
       .brz-img {
         max-width: 112px;
-        margin-bottom: 34px;
+        margin-bottom: 20px;
       }
 
       .brz-p {
@@ -611,10 +640,10 @@ $option-color: #626b70;
       font-weight: 500;
     }
 
-    &-home-page{
-      .brz-ed-control__switch{
+    &-home-page, &-header-footer {
+      .brz-ed-control__switch {
         display: flex;
-        justify-content:flex-end;
+        justify-content: flex-end;
       }
     }
   }

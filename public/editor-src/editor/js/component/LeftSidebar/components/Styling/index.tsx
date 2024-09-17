@@ -8,6 +8,8 @@ import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/Config
 import {
   addNewGlobalStyle,
   editGlobalStyleName,
+  getRegenerateColors,
+  getRegenerateTypography,
   removeGlobalStyle,
   updateCurrentStyle,
   updateCurrentStyleId,
@@ -30,6 +32,15 @@ import {
 import { brizyToBranding } from "visual/utils/branding";
 import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
+import { getGlobalColors } from "visual/utils/api";
+import Config from "visual/global/Config";
+import { getGlobalTypography } from "visual/utils/api/common";
+import { LabelWithButton } from "visual/component/Controls/LeftSidebar/Styling/LabelWithButton";
+import { ToastNotification } from "visual/component/Notifications";
+import {
+  REGENERATED_STYLE_TITLE,
+  REGENERATED_STYLE_UID
+} from "visual/redux/reducers/currentStyleId";
 
 interface StateProps {
   styles: Style[];
@@ -44,7 +55,20 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 
-class DrawerComponent extends React.Component<Props> {
+interface State {
+  loadingColor: boolean;
+  loadingTypography: boolean;
+}
+
+class DrawerComponent extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      loadingColor: false,
+      loadingTypography: false
+    };
+  }
+
   handleCurrentStyleChange = ({
     type,
     payload
@@ -86,6 +110,54 @@ class DrawerComponent extends React.Component<Props> {
     dispatch(updateCurrentStyle({ ...currentStyle, colorPalette: value }));
   };
 
+  getRegeneratedStyle = (styles: Style[]): Style => {
+    return (
+      styles.find((style) => style.id === REGENERATED_STYLE_UID) || {
+        ...styles[0],
+        id: REGENERATED_STYLE_UID,
+        title: REGENERATED_STYLE_TITLE
+      }
+    );
+  };
+
+  handleRegenerateColors = async () => {
+    try {
+      this.setState({ loadingColor: true });
+      const { dispatch, styles } = this.props;
+      const config = Config.getAll();
+
+      const colorPalette = await getGlobalColors(config);
+
+      const style = this.getRegeneratedStyle(styles);
+
+      this.setState({ loadingColor: false });
+
+      dispatch(getRegenerateColors({ ...style, colorPalette }));
+    } catch (e) {
+      this.setState({ loadingColor: false });
+      ToastNotification.error(t("Missing regenerate methods in config.api"));
+    }
+  };
+
+  handleRegenerateTypography = async () => {
+    try {
+      this.setState({ loadingTypography: true });
+      const { dispatch, styles } = this.props;
+      const config = Config.getAll();
+
+      const fontStyles = await getGlobalTypography(config);
+
+      const style = this.getRegeneratedStyle(styles);
+
+      this.setState({ loadingTypography: false });
+
+      dispatch(getRegenerateTypography({ ...style, fontStyles }));
+    } catch (e) {
+      this.setState({ loadingTypography: false });
+      ToastNotification.error(t("Missing regenerate methods in config.api"));
+    }
+  };
+
   handleFontStylesChange = (value: FontStyles[]) => {
     const { currentStyle, extraFontStyles, dispatch } = this.props;
     const { fontStyles } = currentStyle;
@@ -124,6 +196,23 @@ class DrawerComponent extends React.Component<Props> {
     }
   };
 
+  labelWithButton = (
+    label: string,
+    onClick: VoidFunction,
+    loading: boolean
+  ): JSX.Element => {
+    const config = Config.getAll();
+
+    return (
+      <LabelWithButton
+        label={label}
+        loading={loading}
+        onClick={onClick}
+        tooltip={config.ui?.leftSidebar?.styles?.label ?? t("Regenerate")}
+      />
+    );
+  };
+
   render() {
     const {
       styles,
@@ -131,6 +220,8 @@ class DrawerComponent extends React.Component<Props> {
       currentStyle: { id, colorPalette, fontStyles },
       extraFontStyles
     } = this.props;
+    const config = Config.getAll();
+    const { loadingTypography, loadingColor } = this.state;
     const stylesChoices = styles.map((style) => ({
       title: brizyToBranding(style.title),
       value: style.id,
@@ -148,6 +239,12 @@ class DrawerComponent extends React.Component<Props> {
 
     const finalChoices = [...stylesChoices, ...extraChoices];
 
+    const showColorsRegenerate: boolean =
+      typeof config.ui?.leftSidebar?.styles?.regenerateColors === "function";
+    const showTypographyRegenerate: boolean =
+      typeof config.ui?.leftSidebar?.styles?.regenerateTypography ===
+      "function";
+
     const options = [
       {
         id: "currentStyle",
@@ -161,17 +258,32 @@ class DrawerComponent extends React.Component<Props> {
       },
       {
         id: "colorPalette",
-        type: "legacy-colorPaletteEditor",
+        type: "colorPaletteEditor",
         attr: {
           className: "brz-ed-sidebar-option__color-palette-editor"
         },
+        label: showColorsRegenerate
+          ? this.labelWithButton(
+              t("COLORS"),
+              this.handleRegenerateColors,
+              loadingColor
+            )
+          : undefined,
         value: colorPalette,
         onChange: this.handleColorPaletteChange
       },
       {
         id: "fontStyles",
-        type: "legacy-fontStyleEditor",
+        type: "fontStyleEditor",
+        className: "brz-ed-sidebar-option__font-style-editor",
         value: { extraFontStyles, fontStyles },
+        label: showTypographyRegenerate
+          ? this.labelWithButton(
+              t("TYPOGRAPHY"),
+              this.handleRegenerateTypography,
+              loadingTypography
+            )
+          : undefined,
         onChange: this.handleFontStylesChange
       }
     ];

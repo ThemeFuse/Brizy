@@ -35,6 +35,14 @@ export const project: RProject = (state, action, fullState) => {
         draft.dataVersion = draft.dataVersion + 1;
       });
     }
+    case ActionTypes.UPDATE_PINNED_ELEMENTS: {
+      const pinnedElements = action.payload;
+
+      return produce(state, (draft) => {
+        draft.data.pinnedElements = pinnedElements;
+        draft.dataVersion = draft.dataVersion + 1;
+      });
+    }
     case ActionTypes.IMPORT_KIT: {
       const { selectedKit } = action.payload;
 

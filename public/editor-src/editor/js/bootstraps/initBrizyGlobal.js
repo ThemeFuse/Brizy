@@ -10,6 +10,7 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 global.Brizy = {
   config: Config,
@@ -21,6 +22,7 @@ global.Brizy = {
       NORMAL,
       HOVER
     },
+    isBackgroundPointerEnabled,
 
     isPopup,
     isStory,

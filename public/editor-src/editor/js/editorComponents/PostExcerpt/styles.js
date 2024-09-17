@@ -13,7 +13,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ]
     },
     ".brz && > .brz-a.brz-a:not(.brz-btn):hover": {

@@ -6,6 +6,7 @@ import {
   cssStyleBorderRadiusType,
   cssStyleBoxShadow,
   cssStyleColor,
+  cssStyleCustomIconColor,
   cssStyleElementMinistryBrandsButtonsBgColor,
   cssStyleElementMinistryBrandsButtonsBgGradient,
   cssStyleFlexHorizontalAlign,
@@ -820,5 +821,18 @@ export function cssStyleElementMinistryEventCalendarHoverTransition({
     device,
     state,
     prefix: "subscribeToCalendar"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarCustomIconColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendarColor"
   });
 }

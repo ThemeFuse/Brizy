@@ -49,6 +49,12 @@
     "variableFontWeight": 400,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "subTitleFontStyle": "",
     "subTitleFontFamilyType": "google",
@@ -60,6 +66,12 @@
     "subTitleVariableFontWeight": 400,
     "subTitleFontWidth": 100,
     "subTitleFontSoftness": 0,
+    "subTitleBold": false,
+    "subTitleItalic": false,
+    "subTitleUnderline": false,
+    "subTitleStrike": false,
+    "subTitleUppercase": false,
+    "subTitleLowercase": false,
 
     "colorType": "solid",
 
@@ -294,7 +306,6 @@
     "tabletSubTitleLineHeight": 1.1,
     "tabletSubTitleLetterSpacing": 0,
 
-    "tabletWidthSuffix": null,
     "tabletWidthSidebar": 250,
     "tabletWidthImage": 75,
 
@@ -367,8 +378,6 @@
     "mobileSubTitleFontWeight": 400,
     "mobileSubTitleLineHeight": 1.1,
     "mobileSubTitleLetterSpacing": 0,
-
-    "mobileWidthSuffix": null,
 
     "mobilePaddingType": "grouped",
     "tempMobilePaddingType": "grouped",

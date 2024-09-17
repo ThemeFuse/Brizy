@@ -1,6 +1,6 @@
 import React from "react";
 import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { Image } from "./model";
 import { Patch, SizePatch } from "./types/Patch";
 

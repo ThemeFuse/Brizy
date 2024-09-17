@@ -23,6 +23,9 @@ import {
 import { read as readString } from "visual/utils/reader/string";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { BgRepeat, BgSize } from "visual/utils/containers/types";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import Config from "visual/global/Config";
 
 export interface Value extends ElementModel {
   containerType: string;
@@ -41,6 +44,8 @@ export function getItems({
   device: ResponsiveMode;
   context: EditorComponentContextValue;
 }): ToolbarItemType[] {
+  const config = Config.getAll();
+
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
@@ -63,6 +68,10 @@ export function getItems({
     (maskShape === "custom" && !maskCustomUploadImageSrc);
 
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "sectionHeader");
+
+  const imageMedia = dvv("media") === "image";
+  const coverBg = dvv("bgSize") === BgSize.Cover;
 
   return [
     {
@@ -90,8 +99,31 @@ export function getItems({
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
+                },
+                {
+                  id: "bgSize",
+                  label: t("Size"),
+                  type: "select",
+                  disabled: !imageMedia,
+                  choices: [
+                    { title: t("Cover"), value: BgSize.Cover },
+                    { title: t("Contain"), value: BgSize.Contain },
+                    { title: t("Auto"), value: BgSize.Auto }
+                  ]
+                },
+                {
+                  id: "bgRepeat",
+                  label: t("Repeat"),
+                  type: "select",
+                  disabled: !imageMedia || coverBg,
+                  choices: [
+                    { title: t("No repeat"), value: BgRepeat.Off },
+                    { title: t("Repeat"), value: BgRepeat.On },
+                    { title: t("Repeat-X"), value: BgRepeat.RepeatX },
+                    { title: t("Repeat-Y"), value: BgRepeat.RepeatY }
+                  ]
                 }
               ]
             },

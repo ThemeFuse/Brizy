@@ -11,7 +11,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Color, ItemValue, Network, TargetUrl, View } from "../types";
 import { getColor, getTargetUrl, getView } from "../utils";
 
-//@ts-expect-error "advancedSettings" old option
 export const getItems: GetItems<ItemValue> = ({ v, device, context }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -350,7 +349,7 @@ export const getItems: GetItems<ItemValue> = ({ v, device, context }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110
     }
   ];

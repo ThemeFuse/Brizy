@@ -36,6 +36,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	const AJAX_GET_TERMS = '_get_terms';
 	const AJAX_GET_TERMS_BY = '_get_terms_by';
 	const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
+    const AJAX_GET_ADOBE_FONTS = '_get_adobe_fonts';
 
 	const AJAX_GET_DYNAMIC_CONTENT = '_get_dynamic_content';
 
@@ -69,35 +70,36 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			return;
 		}
 
-		$p = 'wp_ajax_' . Brizy_Editor::prefix();
-		add_action( $p . self::AJAX_REMOVE_LOCK, array( $this, 'removeProjectLock' ) );
-		add_action( $p . self::AJAX_HEARTBEAT, array( $this, 'heartbeat' ) );
-		add_action( $p . self::AJAX_TAKE_OVER, array( $this, 'takeOver' ) );
-		add_action( $p . self::AJAX_GET, array( $this, 'get_item' ) );
-		add_action( $p . self::AJAX_GET_POST_INFO, array( $this, 'get_post_info' ) );
-		add_action( $p . self::AJAX_UPDATE, array( $this, 'update_item' ) );
-		add_action( $p . self::AJAX_GET_PROJECT, array( $this, 'get_project' ) );
-		add_action( $p . self::AJAX_SET_PROJECT, array( $this, 'set_project' ) );
-		add_action( $p . self::AJAX_LOCK_PROJECT, array( $this, 'lock_project' ) );
-		add_action( $p . self::AJAX_SIDEBARS, array( $this, 'get_sidebars' ) );
-		add_action( $p . self::AJAX_SHORTCODE_CONTENT, array( $this, 'shortcode_content' ) );
-		add_action( $p . self::AJAX_PLACEHOLDER_CONTENT, array( $this, 'placeholder_content' ) );
-		add_action( $p . self::AJAX_PLACEHOLDERS_CONTENT, array( $this, 'placeholders_content' ) );
-		add_action( $p . self::AJAX_GET_POST_OBJECTS, array( $this, 'get_post_objects' ) );
-		add_action( $p . self::AJAX_SEARCH_POST, array( $this, 'search_post' ) );
-		add_action( $p . self::AJAX_GET_MENU_LIST, array( $this, 'get_menu_list' ) );
-		add_action( $p . self::AJAX_GET_TERMS, array( $this, 'get_terms' ) );
-		add_action( $p . self::AJAX_GET_USERS, array( $this, 'get_users' ) );
-		add_action( $p . self::AJAX_GET_TERMS_BY, array( $this, 'get_terms_by' ) );
-		add_action( $p . self::AJAX_MEDIA_METAKEY, array( $this, 'get_media_key' ) );
-		add_action( $p . self::AJAX_CREATE_ATTACHMENT_UID, array( $this, 'get_attachment_key' ) );
-		add_action( $p . self::AJAX_SET_FEATURED_IMAGE, array( $this, 'set_featured_image' ) );
-		add_action( $p . self::AJAX_SET_IMAGE_FOCAL_PT, array( $this, 'set_featured_image_focal_point' ) );
-		add_action( $p . self::AJAX_TIMESTAMP, array( $this, 'timestamp' ) );
-		add_action( $p . self::AJAX_SET_TEMPLATE_TYPE, array( $this, 'setTemplateType' ) );
-		add_action( $p . self::AJAX_GET_POST_TAXONOMIES, array( $this, 'addPostTaxonomies' ) );
-		add_action( $p . self::AJAX_GET_DYNAMIC_CONTENT, array( $this, 'addDynamicContent' ) );
-		add_action( $p . 'nopriv_' . Brizy_Editor::prefix( self::AJAX_TIMESTAMP ), array( $this, 'timestamp' ) );
+        $p = 'wp_ajax_' . Brizy_Editor::prefix();
+        add_action($p . self::AJAX_REMOVE_LOCK, array($this, 'removeProjectLock'));
+        add_action($p . self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
+        add_action($p . self::AJAX_TAKE_OVER, array($this, 'takeOver'));
+        add_action($p . self::AJAX_GET, array($this, 'get_item'));
+        add_action($p . self::AJAX_GET_POST_INFO, array($this, 'get_post_info'));
+        add_action($p . self::AJAX_UPDATE, array($this, 'update_item'));
+        add_action($p . self::AJAX_GET_PROJECT, array($this, 'get_project'));
+        add_action($p . self::AJAX_SET_PROJECT, array($this, 'set_project'));
+        add_action($p . self::AJAX_LOCK_PROJECT, array($this, 'lock_project'));
+        add_action($p . self::AJAX_SIDEBARS, array($this, 'get_sidebars'));
+        add_action($p . self::AJAX_SHORTCODE_CONTENT, array($this, 'shortcode_content'));
+        add_action($p . self::AJAX_PLACEHOLDER_CONTENT, array($this, 'placeholder_content'));
+        add_action($p . self::AJAX_PLACEHOLDERS_CONTENT, array($this, 'placeholders_content'));
+        add_action($p . self::AJAX_GET_POST_OBJECTS, array($this, 'get_post_objects'));
+        add_action($p . self::AJAX_SEARCH_POST, array($this, 'search_post'));
+        add_action($p . self::AJAX_GET_MENU_LIST, array($this, 'get_menu_list'));
+        add_action($p . self::AJAX_GET_TERMS, array($this, 'get_terms'));
+        add_action($p . self::AJAX_GET_USERS, array($this, 'get_users'));
+        add_action($p . self::AJAX_GET_TERMS_BY, array($this, 'get_terms_by'));
+        add_action($p . self::AJAX_MEDIA_METAKEY, array($this, 'get_media_key'));
+        add_action($p . self::AJAX_CREATE_ATTACHMENT_UID, array($this, 'get_attachment_key'));
+        add_action($p . self::AJAX_SET_FEATURED_IMAGE, array($this, 'set_featured_image'));
+        add_action($p . self::AJAX_SET_IMAGE_FOCAL_PT, array($this, 'set_featured_image_focal_point'));
+        add_action($p . self::AJAX_TIMESTAMP, array($this, 'timestamp'));
+        add_action($p . self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
+        add_action($p . self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
+        add_action($p . self::AJAX_GET_DYNAMIC_CONTENT, array($this, 'addDynamicContent'));
+	    add_action($p . self::AJAX_GET_ADOBE_FONTS, array($this, 'getAdobeFonts'));
+        add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
 
 	}
 
@@ -1105,5 +1107,32 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 
 		return $uid;
+	}
+
+	public function getAdobeFonts() {
+		$this->checkNonce( self::nonce );
+
+		$manager  = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
+		$accounts = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::ADOBE_GROUP );
+
+		$account = array_pop($accounts);
+
+		if ( ! $account ) {
+			$this->error( 400, 'No adobe account found.' );
+		}
+
+		$adobeKey = $account->getKey();
+
+		if ( ! $adobeKey ) {
+			$this->error( 400, 'No adobe key found.' );
+		}
+
+		$response = wp_remote_get( "https://typekit.com/api/v1/json/kits/$adobeKey/published", [ 'timeout' => 20 ] );
+
+		if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+			$this->error( 400, 'An error occurred creating the request to adobe.' );
+		}
+
+		$this->success( json_decode( wp_remote_retrieve_body( $response ), true ) );
 	}
 }

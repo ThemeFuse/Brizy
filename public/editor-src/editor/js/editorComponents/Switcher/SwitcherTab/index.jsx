@@ -25,7 +25,7 @@ class SwitcherTab extends EditorComponent {
   };
 
   renderNav(v) {
-    const { iconName, iconType, labelText } = v;
+    const { iconName, iconType, iconFilename, labelText } = v;
     const { active, onChangeNav } = this.props;
     const className = classnames("brz-switcher__nav--item", {
       "brz-switcher__nav--item--active": active
@@ -38,7 +38,11 @@ class SwitcherTab extends EditorComponent {
       >
         <div className={className} onClick={onChangeNav}>
           {iconName && iconType && (
-            <ThemeIcon name={iconName} type={iconType} />
+            <ThemeIcon
+              name={iconName}
+              type={iconType}
+              filename={iconFilename}
+            />
           )}
           <TextEditor value={labelText} onChange={this.handleLabelChange} />
         </div>

@@ -10,14 +10,14 @@ import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
+import { WithClassName } from "visual/types/attributes";
 import { t } from "visual/utils/i18n/t";
 import * as BorderStyle from "visual/utils/options/Border/entities/style";
 import * as BorderWidthType from "visual/utils/options/Border/entities/widthType";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
-import { WithClassName } from "visual/utils/options/attributes";
 import { mApply } from "visual/utils/value";
-import { Width } from "./Width";
 import { toggleType } from "./utils";
+import { Width } from "./Width";
 
 type Style = BorderStyle.Style;
 

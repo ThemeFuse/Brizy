@@ -2,7 +2,6 @@
   .link--anchor,
   .link--story,
   .link--external,
-  .link--page,
   .link--upload,
   .link--popup {
     &:not(.is-empty) {
@@ -17,6 +16,11 @@
         text-decoration: $link-is-empty;
       }
     }
+  }
+  
+  .link--page,
+  .link--dynamic {
+    text-decoration: $link-is-not-empty;
   }
 
   // Text Reset

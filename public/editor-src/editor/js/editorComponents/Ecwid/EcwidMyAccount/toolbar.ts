@@ -74,11 +74,9 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
       position: 30,
-      icon: "nc-cog",
       title: t("Settings")
     },
     {

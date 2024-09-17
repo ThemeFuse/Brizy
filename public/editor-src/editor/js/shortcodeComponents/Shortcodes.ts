@@ -12,8 +12,7 @@ import Cart from "./Ecwid/Cart";
 import MyAccount from "./Ecwid/MyAccount";
 import Product from "./Ecwid/Product";
 import ShoppingBag from "./Ecwid/ShoppingBag";
-import Embed from "./Embed";
-import Form2 from "./Form2";
+import getForm2 from "./Form2";
 import getIcon from "./Icon";
 import IconText from "./IconText";
 import getImage from "./Image";
@@ -41,6 +40,7 @@ import MinistryBrandsSermonFeatured from "./MinistryBrands/MinistryBrandsSermonF
 import MinistryBrandsSermonLayout from "./MinistryBrands/MinistryBrandsSermonLayout";
 import MinistryBrandsSermonList from "./MinistryBrands/MinistryBrandsSermonList";
 import MinistryBrandsStaffDetail from "./MinistryBrands/MinistryBrandsStaffDetail";
+import getPaypal from "./Paypal";
 import getPostExcerpt from "./PostExcerpt";
 import getPostTitle from "./PostTitle";
 import getPosts from "./Posts";
@@ -67,6 +67,7 @@ import WPCustomShortcode from "./WPCustomShortcode";
 import getFeaturedImage from "./WPFeaturedImage";
 import WPSidebar from "./WPSidebar";
 import Breadcrumbs from "./pro/Breadcrumbs";
+import Embed from "./pro/Embed";
 import Calendly from "./pro/Calendly";
 import Carousel from "./pro/Carousel";
 import Facebook from "./pro/Facebook";
@@ -114,7 +115,7 @@ import StoryButton from "./story/StoryButton";
 import StoryCountdown2 from "./story/StoryCountdown2";
 import StoryCounter from "./story/StoryCounter";
 import StoryEmbed from "./story/StoryEmbed";
-import StoryForm2 from "./story/StoryForm2";
+import getStoryForm2 from "./story/StoryForm2";
 import StoryIcon from "./story/StoryIcon";
 import StoryImage from "./story/StoryImage";
 import StoryLeadific from "./story/StoryLeadific";
@@ -149,7 +150,7 @@ export const ProShortCodes = {
 
   IconText: false,
   Lottie: true,
-  Embed: false,
+  Embed: true,
   StarRating: true,
   Alert: false,
   Counter: false,
@@ -166,7 +167,7 @@ export const ProShortCodes = {
 
   StoryButton: false,
   StoryIcon: false,
-  StoryEmbed: false,
+  StoryEmbed: true,
   StoryText: false,
   StoryMap: false,
   StoryProgressBar: false,
@@ -232,6 +233,8 @@ export const ProShortCodes = {
   MinistryBrandsArticleList: false,
   MinistryBrandsStaffDetail: false,
   MinistryBrandsArticleFeatured: false,
+
+  Paypal: false,
 
   Leadific: false,
 
@@ -442,7 +445,7 @@ export const CloudShortCodes = {
   Icon: getIcon(config),
   Spacer,
   Map,
-  Form2,
+  Form2: getForm2(),
   Line,
   Menu,
   MenuSimple,
@@ -455,6 +458,7 @@ export const CloudShortCodes = {
   Video,
   Audio,
   VideoPlaylist,
+  Paypal: getPaypal(),
 
   IconText,
   Lottie: getLottie(config),
@@ -484,7 +488,7 @@ export const CloudShortCodes = {
   StoryCountdown2,
   StoryCounter,
   StoryShape,
-  StoryForm2,
+  StoryForm2: getStoryForm2(),
   StoryStarRating,
   StoryLottie,
 

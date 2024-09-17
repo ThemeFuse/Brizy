@@ -3,7 +3,7 @@ import { Grid as Control } from "visual/component/Controls/Grid";
 import { Column } from "visual/component/Controls/Grid/Column";
 import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { Column as ColumnType, Config } from "./types";
 
 export interface Props

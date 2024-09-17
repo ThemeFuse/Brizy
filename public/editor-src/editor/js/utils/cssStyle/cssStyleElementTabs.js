@@ -3,6 +3,7 @@ import {
   cssStyleBorder,
   cssStyleBoxShadow,
   cssStyleColor,
+  cssStyleCustomIconColor,
   cssStylePaddingFourFields,
   cssStyleSizeWidth
 } from "visual/utils/cssStyle";
@@ -251,4 +252,8 @@ export function cssStyleElementTabsContentShadow({
 
 export function cssStyleElementTabsBgColor({ v, device }) {
   return cssStyleBgColor({ v, device });
+}
+
+export function cssStyleElementTabsActiveCustomIconColor({ v, device }) {
+  return cssStyleCustomIconColor({ v, device, state: ACTIVE });
 }

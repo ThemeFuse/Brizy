@@ -5,6 +5,8 @@ use BrizyPlaceholders\ContextInterface;
 
 class Brizy_Content_Placeholders_GlobalBlock extends Brizy_Content_Placeholders_Abstract
 {
+    static $cache = [];
+
 
     public function __construct(
         $label,
@@ -29,29 +31,32 @@ class Brizy_Content_Placeholders_GlobalBlock extends Brizy_Content_Placeholders_
      */
     public function getValue(ContextInterface $context, ContentPlaceholder $placeholder)
     {
-
+        $inLoop = $context->searchParentPlaceholderByName('brizy_dc_post_loop') || $context->searchParentPlaceholderByName(
+                'editor_product_upsells'
+            ) || $context->searchParentPlaceholderByName('menu_loop');
         $uid = $placeholder->getAttribute('uid');
-
         if (!$uid) {
             return '';
         }
+        $content = '';
+        if (isset(self::$cache[$uid])) {
+            if (!$inLoop) {
+                $content = self::$cache[$uid];
+                //return ''; // return empty because this block has be shown once.
+            } else {
+                $content = self::$cache[$uid];
+            }
+        } else {
+            $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
+            $block = $blockManager->getEntity($uid);
+            if (!$block) {
+                return '';
+            }
 
-        $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-        $block = $blockManager->getEntity($uid);
-
-        if (!$block) {
-            return '';
+            $content = self::$cache[$uid] = $this->returnBlockContent($block);
         }
 
-        $return_block_content = $this->returnBlockContent($block);
-        $content = apply_filters(
-            'brizy_content',
-            $return_block_content,
-            Brizy_Editor_Project::get(),
-            $context->getWpPost()
-        );
-
-        return $content;
+        return apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $context->getWpPost());
     }
 
 

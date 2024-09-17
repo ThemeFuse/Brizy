@@ -1,3 +1,4 @@
+import { Dictionary } from "visual/types/utils";
 import { Literal } from "visual/utils/types/Literal";
 import { Response } from "./configs/common";
 
@@ -54,11 +55,15 @@ type Cnf = {
 export type DCGroup<T extends "wp" | "cloud"> = Cnf[T];
 
 export interface DynamicContent<T extends "wp" | "cloud"> {
-  liveInBuilder?: boolean;
   groups?: DCGroup<T>;
   handler?: (
     res: Response<ConfigDCItem[]>,
     rej: Response<string>,
     extraData: { entityType: string; groupType: DCTypes }
+  ) => void;
+  getPlaceholderData?: (
+    res: Response<Dictionary<string[]>>,
+    rej: Response<string>,
+    extraData: { placeholders: unknown; signal: AbortSignal | undefined }
   ) => void;
 }

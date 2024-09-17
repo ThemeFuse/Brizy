@@ -27,6 +27,7 @@ import {
 } from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
 import { GlobalBlock } from "@/types/GlobalBlocks";
+import { IconUploadData } from "@/types/Icon";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
@@ -41,8 +42,9 @@ import {
 } from "@/types/SavedBlocks";
 import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
-import { Arr, Json, Obj } from "@brizy/readers";
+import { Arr, Json, Obj, Str } from "@brizy/readers";
 import { isT, mPipe, pass } from "fp-utilities";
+import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
   GetCollections,
@@ -441,6 +443,7 @@ export interface UploadSavedBlocksData {
   errors: Array<{ uid: string; message: string }>;
   success: Array<SavedBlock>;
 }
+
 export const uploadSaveBlocks = async (
   files: Array<File>
 ): Promise<UploadSavedBlocksData> => {
@@ -931,6 +934,75 @@ export const updateBlockScreenshot = async ({
 
 //#endregion
 
+//#region AdobeFonts
+interface AddAccount {
+  group: string;
+  key: string;
+}
+
+export const getAdobeFont = async () => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.adobeFontsUrl,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  if (r.ok) {
+    const d = await r.json();
+
+    if (d) {
+      return d.data;
+    }
+  } else {
+    throw new Error(t("Failed to get adobe fonts"));
+  }
+};
+
+export const addAdobeAccount = async (body: AddAccount) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { url: _url, hash, editorVersion, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.addAccount,
+    version: editorVersion
+  });
+
+  try {
+    return await request(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(body)
+    });
+  } catch (error) {
+    const getError = mPipe(Obj.read, Obj.readKey("message"), Str.read);
+    const message = getError(error) ?? "Failed to connect new account";
+
+    throw new Error(`Failed to add Adobe account: ${message}`);
+  }
+};
+
+//#endregion
+
 //#region Dynamic Content
 
 export const getPlaceholders = (extraData: {
@@ -963,6 +1035,60 @@ export const getPlaceholders = (extraData: {
       return [];
     });
 };
+
+export async function getPlaceholdersData(extra: {
+  placeholders: Dictionary<string>;
+  signal?: AbortSignal;
+}) {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const {
+    url,
+    actions: { placeholdersContent },
+    hash,
+    editorVersion: version
+  } = config;
+
+  const { placeholders, signal } = extra;
+
+  const body = new URLSearchParams({
+    hash,
+    version,
+    action: placeholdersContent
+  });
+
+  for (const [postId, placeholders_] of Object.entries(placeholders)) {
+    if (placeholders_) {
+      for (const p of placeholders_) {
+        body.append(`p[${postId}][]`, p);
+      }
+    }
+  }
+
+  try {
+    const r = await request(url, {
+      method: "POST",
+      body,
+      signal
+    }).then((r) => r.json());
+
+    const { data } = r;
+    const dc = Obj.readWithValueReader(Arr.readWithItemReader(Str.read))(
+      data.placeholders
+    );
+
+    if (data.placeholders === undefined || dc === undefined) {
+      throw new Error("fetch dynamic content error");
+    }
+
+    return dc;
+  } catch (e) {
+    throw new Error(`${e}`);
+  }
+}
 
 //#endregion
 
@@ -1231,6 +1357,111 @@ export const updateGlobalBlocks = async (
   } catch {
     throw new Error(t("Failed to update Global blocks"));
   }
+};
+
+//#endregion
+
+//#region CustomIcon
+export const getCustomIcons = async (): Promise<IconUploadData[]> => {
+  const config = getConfig();
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const { api } = config;
+
+  if (!api.iconsUrl) {
+    throw new Error(t("Missing iconsUrl"));
+  }
+
+  const url = makeUrl(api.iconsUrl, {
+    "orderBy[id]": "DESC",
+    count: "1000"
+  });
+
+  const response = await request(url, {
+    method: "GET"
+  });
+
+  if (response.ok) {
+    const { data } = await response.json();
+    return data;
+  }
+
+  throw new Error(t("Failed to get icons"));
+};
+
+export const uploadIcon = async (
+  attachment: string,
+  filename: string
+): Promise<IconUploadData> => {
+  const config = getConfig();
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { api } = config;
+
+  if (!api.uploadIconUrl) {
+    throw new Error(t("Missing uploadIconUrl"));
+  }
+
+  const response = await request(api.uploadIconUrl, {
+    method: "POST",
+    body: new URLSearchParams({
+      attachment,
+      filename
+    })
+  });
+
+  if (response.ok) {
+    const { data } = await response.json();
+    return data;
+  }
+
+  throw new Error(t("Failed to upload icon"));
+};
+
+export const deleteIcon = async (uid: string): Promise<Response> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { api } = config;
+
+  if (!api.deleteIconUrl) {
+    throw new Error(t("Missing deleteIconUrl"));
+  }
+
+  const response = await request(`${api.deleteIconUrl}${uid}`, {
+    method: "DELETE"
+  });
+
+  if (response.ok) {
+    return response;
+  }
+
+  throw new Error(t("Failed to delete icon"));
+};
+//#endregion
+
+//#region AI Global Styles
+
+export const getStyles = async (config: Config) => {
+  const { aiGlobalStyleUrl } = config;
+
+  return await fetch(`${aiGlobalStyleUrl}/api/template/style`).then((r) =>
+    r.json()
+  );
+};
+
+export const getTypography = async (config: Config) => {
+  const { aiGlobalStyleUrl } = config;
+
+  return await fetch(`${aiGlobalStyleUrl}/api/template/typography`).then((r) =>
+    r.json()
+  );
 };
 
 //#endregion

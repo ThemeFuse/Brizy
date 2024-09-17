@@ -1,13 +1,12 @@
-import { isEmpty } from "underscore";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import {
   getMaxContainerSuffix,
   getMinContainerSuffix
 } from "visual/editorComponents/Section/utils";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
+import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
@@ -23,11 +22,15 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { read as readString } from "visual/utils/reader/string";
 import * as Str from "visual/utils/reader/string";
+import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarShowOnResponsive } from "visual/utils/toolbar";
-import { getInstanceParentId } from "visual/utils/toolbar";
+import {
+  getInstanceParentId,
+} from "visual/utils/toolbar";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { capitalize } from "visual/utils/string";
+import { Toggle } from "visual/utils/options/utils/Type";
 
 export const getItems: GetItems = ({ v, device, component, context }) => {
   const config = Config.getAll();
@@ -60,19 +63,33 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
   const maskShapeIsDisabled =
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
-
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "sectionFooter");
   const globalBlockId = Str.read(component.props.meta.globalBlockId);
-
-  const showOnResponsive = toolbarShowOnResponsive({
-    v,
-    device,
-    devices: "responsive",
-    closeTooltip: true
-  });
+  const imageMedia = dvv("media") === "image";
+  const coverBg = dvv("bgSize") === BgSize.Cover;
+  const deviceCapitalize = capitalize(device);
 
   return [
-    ...(isEmpty(showOnResponsive) ? [] : [showOnResponsive as ToolbarItemType]),
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
+      devices: "responsive",
+      position: 10,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "toolbarFooter",
       type: "popover",
@@ -177,8 +194,31 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
+                },
+                {
+                  choices: [
+                    { title: t("Cover"), value: BgSize.Cover },
+                    { title: t("Contain"), value: BgSize.Contain },
+                    { title: t("Auto"), value: BgSize.Auto }
+                  ],
+                  disabled: !imageMedia,
+                  id: "bgSize",
+                  label: t("Size"),
+                  type: "select"
+                },
+                {
+                  id: "bgRepeat",
+                  label: t("Repeat"),
+                  type: "select",
+                  disabled: !imageMedia || coverBg,
+                  choices: [
+                    { title: t("No repeat"), value: BgRepeat.Off },
+                    { title: t("Repeat"), value: BgRepeat.On },
+                    { title: t("Repeat-X"), value: BgRepeat.RepeatX },
+                    { title: t("Repeat-Y"), value: BgRepeat.RepeatY }
+                  ]
                 }
               ]
             },

@@ -1,3 +1,5 @@
+const coreJSVersion = "3.38";
+
 exports.editor = (options) => {
   return {
     module: {
@@ -21,7 +23,7 @@ exports.editor = (options) => {
         ]
       },
       mode: "usage",
-      coreJs: "3"
+      coreJs: coreJSVersion
     }
   };
 };
@@ -70,7 +72,7 @@ exports.webworker = (options) => {
         ]
       },
       mode: "usage",
-      coreJs: "3"
+      coreJs: coreJSVersion
     }
   };
 };

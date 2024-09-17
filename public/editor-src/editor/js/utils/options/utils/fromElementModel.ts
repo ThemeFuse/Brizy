@@ -40,9 +40,11 @@ import { fromElementModel as paypal } from "visual/utils/options/PayPal/converte
 import { fromElementModel as popover } from "visual/utils/options/Popover/converters";
 import { fromElementModel as population } from "visual/utils/options/Population/converters";
 import { fromElementModel as predefinedPopulation } from "visual/utils/options/PredefinedPopulation/converters";
+import { fromElementModel as promptAddPopup } from "visual/utils/options/PromptAddPopup/converters";
 import { fromElementModel as radioGroup } from "visual/utils/options/RadioGroup/converters";
 import { fromElementModel as range } from "visual/utils/options/Range/converters";
 import { fromElementModel as savedBlock } from "visual/utils/options/SavedBlock/converters";
+import { fromElementModel as checkGroup } from "visual/utils/options/CheckGroup/converters";
 import { fromElementModel as select } from "visual/utils/options/Select/converters";
 import { fromElementModel as sidebarTabs } from "visual/utils/options/SidebarTabs/converters";
 import { fromElementModel as sidebarTabsButton } from "visual/utils/options/SidebarTabsButton/converters";
@@ -53,16 +55,22 @@ import { fromElementModel as tabs } from "visual/utils/options/Tabs/converters";
 import { fromElementModel as textShadow } from "visual/utils/options/TextShadow/converters";
 import { fromElementModel as textarea } from "visual/utils/options/Textarea/converters";
 import { fromElementModel as toggle } from "visual/utils/options/Toggle/converters";
+import { fromElementModel as showOnDevice } from "visual/utils/options/ShowOnDevice/converters";
 import { fromElementModel as toggleButton } from "visual/utils/options/ToggleButton/converters";
 import { fromElementModel as transform } from "visual/utils/options/Transform/converters";
 import { fromElementModel as typography } from "visual/utils/options/Typography/converters";
+import { fromElementModel as blockThumbnail } from "visual/utils/options/BlockThumbnail/converters";
 import { fromElementModel as popupCondition } from "visual/utils/options/PopupCondition/converters";
+import { fromElementModel as fontStyleEditor } from "visual/utils/options/FontStyleEditor/converters";
+import { fromElementModel as colorPaletteEditor } from "visual/utils/options/ColorPaletteEditor/converters";
+import { fromElementModel as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 import { read as readObject, replaceNullish } from "visual/utils/reader/object";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { NORMAL, State } from "visual/utils/stateMode";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import { applyDefaultValueToOption } from "./defaultValue";
+import { fromElementModel as symbols } from "visual/utils/options/Symbols/converters";
 
 type FromElementModelFns = {
   [K in OptionName]: FromElementModel<K>;
@@ -121,7 +129,15 @@ const fns: FromElementModelFns = {
   formApps: formApps,
   toggleButton: toggleButton,
   gbCondition: gbCondition,
-  editableSelect: editableSelect
+  colorPaletteEditor: colorPaletteEditor,
+  editableSelect: editableSelect,
+  promptAddPopup: promptAddPopup,
+  fontStyleEditor: fontStyleEditor,
+  showOnDevice: showOnDevice,
+  checkGroup: checkGroup,
+  advancedSettings: advancedSettings,
+  blockThumbnail: blockThumbnail,
+  symbols
 };
 
 /**
@@ -173,21 +189,19 @@ export const getOptionModelWithDesktopDefaults = <T extends OptionName>({
   type,
   id,
   v,
-  initialV,
   breakpoint,
   state = NORMAL
 }: {
   type: T;
   id: string;
   v: ElementModel;
-  initialV?: ElementModel;
   breakpoint: BreakpointsNames;
   state?: State;
 }): OptionValue<T> => {
   const desktopModel = getOptionModel<T>({
     id,
     type,
-    v: initialV ?? {},
+    v,
     state,
     breakpoint: DESKTOP
   });

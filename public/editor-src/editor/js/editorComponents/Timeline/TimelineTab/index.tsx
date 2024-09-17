@@ -5,16 +5,17 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
 import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import { style } from "./styles";
 import * as toolbar from "./toolbar";
-import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
 
 export interface Value extends ElementModel {
   name: string;
   type: string;
+  filename?: string;
   labelText: string;
   customClassName: string;
 
@@ -45,7 +46,7 @@ export default class TimelineTab extends EditorComponent<Value, Props> {
   };
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { customClassName, labelText, name, type } = v;
+    const { customClassName, labelText, name, type, filename } = v;
     const { verticalMode, timelineStyle, toolbarExtendLabel, meta } =
       this.props;
 
@@ -76,7 +77,7 @@ export default class TimelineTab extends EditorComponent<Value, Props> {
         </Toolbar>
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
           <div className="brz-timeline__nav--icon">
-            <ThemeIcon name={name} type={type} />
+            <ThemeIcon name={name} type={type} filename={filename} />
           </div>
         </Toolbar>
         {

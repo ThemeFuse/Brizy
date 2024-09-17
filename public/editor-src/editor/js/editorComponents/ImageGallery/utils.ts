@@ -15,6 +15,7 @@ import * as Str from "visual/utils/reader/string";
 import { Unit } from "../Image/types";
 import { calcWrapperSizes } from "../Image/utils";
 import { SizeChangedType, Value } from "./types";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 interface IsotopeParams {
   itemSelector: string;
@@ -228,7 +229,7 @@ export const multiUpload = (
     }
   }
 
-  const sizeType = layout === "justified" ? "original" : "custom";
+  const sizeType = layout === "justified" ? SizeType.original : SizeType.custom;
 
   const items = patchItems
     .map((item: ElementModel) => {
@@ -316,7 +317,7 @@ export const multiUpload = (
             imageSrc,
             imageFileName,
             imageExtension,
-            sizeType: "custom",
+            sizeType: SizeType.custom,
             tabletSizeType: null,
             mobileSizeType: null,
             clonedFromGallery: true
@@ -426,7 +427,7 @@ export const getDefaultGridItems = ({
         tabletHeightSuffix: null,
         mobileHeight: null,
         mobileHeightSuffix: null,
-        sizeType: "custom",
+        sizeType: SizeType.custom,
         tabletSizeType: null,
         mobileSizeType: null,
         ...(lightBox && mergeLinkType(lightBox))

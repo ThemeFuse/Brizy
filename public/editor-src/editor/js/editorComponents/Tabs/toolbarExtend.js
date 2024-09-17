@@ -274,12 +274,11 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
       roles: ["admin"],
       position: 110,
-      title: t("Settings"),
-      icon: "nc-cog"
+      title: t("Settings")
     }
   ];
 }

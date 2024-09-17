@@ -10,7 +10,6 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
-import { css } from "visual/utils/cssStyle";
 import { customFileUrl } from "visual/utils/customFile";
 import { isStory } from "visual/utils/models";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
@@ -20,16 +19,10 @@ import {
   videoData as getVideoData,
   videoUrl as getVideoUrl
 } from "visual/utils/video";
+import { makeAttr } from "../../utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import {
-  styleContent,
-  styleControls,
-  styleCustomVideo,
-  styleIcon,
-  styleWrapper
-} from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { containsShorts } from "./utils";
 
@@ -141,14 +134,55 @@ class Video extends EditorComponent {
   }
 
   renderCover() {
+    const {
+      lightbox,
+      coverImageSrc,
+      video,
+      custom,
+      type,
+      muted,
+      loop,
+      start,
+      end
+    } = this.getValue();
+
+    const isCustomVideo = type === "custom" || type === "url";
+    const isLightboxOn = lightbox === "on";
+
+    const _href = type === "custom" ? customFileUrl(custom) : video;
+    const href = isCustomVideo
+      ? `#brz-custom-video-lightbox-${this.getId()}`
+      : _href;
+
+    const popupType = isCustomVideo ? "inline" : "iframe";
+
+    const coverClassName = classnames("brz-video__cover", {
+      "brz-blocked": IS_PREVIEW && isLightboxOn
+    });
+
     return (
-      <div key="cover" className="brz-video__cover">
-        <div className="brz-video__cover-icon">
-          <span className="brz-span">
-            <ThemeIcon name="play" type="editor" />
-          </span>
+      <React.Fragment key="cover">
+        {coverImageSrc && isLightboxOn && IS_PREVIEW && (
+          <a
+            className="brz-video__lightbox"
+            href={href}
+            {...{
+              [makeAttr("popup-type")]: popupType,
+              [makeAttr("muted")]: muted,
+              [makeAttr("loop")]: loop,
+              [makeAttr("start")]: start,
+              [makeAttr("end")]: end
+            }}
+          />
+        )}
+        <div key="cover" className={coverClassName}>
+          <div className="brz-video__cover-icon">
+            <span className="brz-span">
+              <ThemeIcon name="play" type="editor" />
+            </span>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 
@@ -210,7 +244,7 @@ class Video extends EditorComponent {
     return this.renderPlaceholder();
   }
 
-  renderCustomPlayer(v, vs, vd) {
+  renderCustomPlayer(v) {
     const {
       coverImageSrc,
       custom,
@@ -220,70 +254,15 @@ class Video extends EditorComponent {
       loop,
       ratio,
       type,
-      video
+      video,
+      lightbox
     } = v;
 
     const customVideoFile = type === "custom" ? customFileUrl(custom) : video;
 
-    const classNameVideo = classnames(
-      "brz-video-elem",
-      css(
-        `${this.constructor.componentId}-bg2`,
-        `${this.getId()}-bg2`,
-        styleCustomVideo(v, vs, vd)
-      )
-    );
-    const classNameControls = classnames(
-      "brz-video-custom-controls",
-      css(
-        `${this.constructor.componentId}-controls`,
-        `${this.getId()}-controls`,
-        styleControls(v, vs, vd)
-      )
-    );
-
-    const styleIconClass = css(
-      `${this.constructor.componentId}-icon-controls`,
-      `${this.getId()}-icon-controls`,
-      styleIcon(v, vs, vd)
-    );
-
-    const playClassName = classnames(
-      "brz-icon-svg",
-      "brz-video-custom-play",
-      styleIconClass
-    );
-    const pauseClassName = classnames(
-      "brz-hidden",
-      "brz-icon-svg",
-      "brz-video-custom-pause",
-      styleIconClass
-    );
-    const muteClassName = classnames(
-      "brz-icon-svg",
-      "brz-video-custom-mute",
-      styleIconClass
-    );
-    const unmuteClassName = classnames(
-      "brz-hidden",
-      "brz-icon-svg",
-      "brz-video-custom-unmute",
-      styleIconClass
-    );
-    const fullScreenIcon = classnames(
-      "brz-icon-svg",
-      "brz-video-custom-fullscreen-icon",
-      styleIconClass
-    );
-
     const classNameWrapper = classnames(
       "video-wrapper",
-      `brz-image-fix-${ratio.replace(":", "-")}`,
-      css(
-        `${this.constructor.componentId}-wrapper`,
-        `${this.getId()}-wrapper`,
-        styleWrapper(v, vs, vd)
-      )
+      `brz-image-fix-${ratio.replace(":", "-")}`
     );
 
     let muted = v.muted;
@@ -297,27 +276,35 @@ class Video extends EditorComponent {
 
     const updatedControls = controls === "on" && !containsShorts(video);
 
+    const customVideoAttr =
+      lightbox === "on" && (type === "custom" || type === "url")
+        ? {
+            id: `brz-custom-video-lightbox-${this.getId()}`,
+            controls: controls === "on"
+          }
+        : {};
+
     return (
       <>
         <div className={classNameWrapper}>{content}</div>
-        <div className={classNameVideo}>
+        <div className="brz-video-elem">
           {updatedControls && (
             <div className="brz-video-custom-video-controls">
               <div className="brz-video-custom-play-pause-btn">
                 <ThemeIcon
-                  className={playClassName}
+                  className="brz-icon-svg brz-video-custom-play"
                   name="button-play"
                   type="glyph"
                 />
                 {IS_PREVIEW && (
                   <ThemeIcon
-                    className={pauseClassName}
+                    className="brz-hidden brz-icon-svg brz-video-custom-pause"
                     name="button-pause"
                     type="glyph"
                   />
                 )}
               </div>
-              <div className={classNameControls}>
+              <div className="brz-video-custom-controls">
                 <span className="brz-video-custom-current-time">0:00</span>
 
                 <div className="brz-video-custom-slider">
@@ -329,20 +316,20 @@ class Video extends EditorComponent {
               <div className="brz-video-custom-volume">
                 <div className="brz-video-custom-fullscreen-btn">
                   <ThemeIcon
-                    className={fullScreenIcon}
+                    className="brz-icon-svg brz-video-custom-fullscreen-icon"
                     name="zoom-e"
                     type="glyph"
                   />
                 </div>
                 <div className="brz-video-custom-volume-btn">
                   <ThemeIcon
-                    className={muteClassName}
+                    className="brz-icon-svg brz-video-custom-mute"
                     name="volume-97"
                     type="glyph"
                   />
                   {IS_PREVIEW && (
                     <ThemeIcon
-                      className={unmuteClassName}
+                      className="brz-hidden brz-icon-svg brz-video-custom-unmute"
                       name="volume-ban"
                       type="glyph"
                     />
@@ -365,6 +352,7 @@ class Video extends EditorComponent {
               data-autoplay={this.getAutoplay(v)}
               src={customVideoFile}
               playsInline
+              {...customVideoAttr}
             />
           )}
         </div>
@@ -376,7 +364,7 @@ class Video extends EditorComponent {
     return <Placeholder key="placeholder" icon="play" />;
   }
 
-  renderForEdit(v, vs, vd) {
+  renderForEdit(v) {
     const { type, ratio, controls, loop, muted, customCSS, hoverName, video } =
       v;
 
@@ -415,31 +403,26 @@ class Video extends EditorComponent {
       }
     };
 
-    const classNameContent = classnames(
-      "brz-video",
-      { "brz-custom-video": type === "custom" || type === "url" },
-      { "brz-youtube-video": type === "youtube" },
-      { "brz-vimeo-video": type === "vimeo" },
-      `brz-video-${updatedControls}-controls-hidden`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleContent(v, vs, vd)
-      )
-    );
+    const classNameContent = this.getCSSClassnames({
+      toolbars: [toolbarConfig],
+      sidebars: [sidebarConfig],
+      extraClassNames: [
+        "brz-video",
+        { "brz-custom-video": type === "custom" || type === "url" },
+        { "brz-youtube-video": type === "youtube" },
+        { "brz-vimeo-video": type === "vimeo" },
+        `brz-video-${updatedControls}-controls-hidden`
+      ]
+    });
+
     const classNameWrapper = classnames(
       "video-wrapper",
-      `brz-image-fix-${ratio.replace(":", "-")}`,
-      css(
-        `${this.constructor.componentId}-wrapper`,
-        `${this.getId()}-wrapper`,
-        styleWrapper(v, vs, vd)
-      )
+      `brz-image-fix-${ratio.replace(":", "-")}`
     );
 
     let content =
       type === "custom" || type === "url" ? (
-        this.renderCustomPlayer(v, vs, vd)
+        this.renderCustomPlayer(v)
       ) : (
         <div className={classNameWrapper}>{this.renderExternalPlayer(v)}</div>
       );

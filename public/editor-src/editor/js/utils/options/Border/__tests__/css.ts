@@ -39,7 +39,9 @@ describe("Testing cssStyleBorder that should return CSS for border", () => {
   };
 
   test("Empty, should be empty string", () => {
-    expect(cssStyleBorder({ meta: { isEmpty: true }, value })).toBe("");
+    expect(cssStyleBorder({ meta: { isEmpty: true }, value })).toBe(
+      "border: none;"
+    );
   });
 
   test("Grouped width", () => {

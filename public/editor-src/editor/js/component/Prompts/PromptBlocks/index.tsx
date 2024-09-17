@@ -3,8 +3,8 @@ import classnames from "classnames";
 import React, {
   Component,
   ComponentType,
-  ReactElement,
-  ReactNode
+  PropsWithChildren,
+  ReactElement
 } from "react";
 import ReactDOM from "react-dom";
 import _ from "underscore";
@@ -374,9 +374,9 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
   }
 }
 
-type HeaderSlotProps = {
+type HeaderSlotProps = PropsWithChildren<{
   slot: "left" | "right";
-};
+}>;
 
 type HeaderSlotState = {
   isMounted: boolean;
@@ -404,11 +404,13 @@ export class HeaderSlot extends Component<HeaderSlotProps, HeaderSlotState> {
     this.setState({ isMounted: true });
   }
 
-  render(): ReactNode {
+  render(): JSX.Element {
     return (
-      this.state.isMounted &&
-      this.headerSlotNode &&
-      ReactDOM.createPortal(this.props.children, this.headerSlotNode)
+      <>
+        {this.state.isMounted &&
+          this.headerSlotNode &&
+          ReactDOM.createPortal(this.props.children, this.headerSlotNode)}
+      </>
     );
   }
 }

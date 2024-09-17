@@ -1,14 +1,19 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import { isStory } from "visual/utils/models";
+import Config from "visual/global/Config";
+import { Value } from "./types";
 
-export function style(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): [string, string, string] {
-  const styles = {
+export function style(v: Value, vs: Value, vd: Value): OutputStyle {
+  const IS_STORY = isStory(Config.getAll());
+
+  const sizeFns = IS_STORY
+    ? ["cssStyleSizeWidth"]
+    : ["cssStyleSizeWidth", "cssStyleCustomHeight"];
+
+  const styles: Styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidth"]
+      standart: sizeFns
     },
     ".brz &&:hover:before": {
       standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBorderRadius"],
@@ -19,6 +24,7 @@ export function style(
         "cssStylePaddingBG",
         "cssStyleBgColor",
         "cssStyleBgGradient",
+        "cssStyleElementEmbedCodeOverflow",
         "cssStyleBorderRadius"
       ]
     }

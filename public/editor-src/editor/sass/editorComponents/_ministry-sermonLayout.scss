@@ -31,15 +31,13 @@
         }
       }
     }
-
-    &--meta {
+&--meta {
       &--title {
         a {
           color: inherit;
         }
       }
     }
-
     &--meta {
       &--title {
         a {
@@ -142,10 +140,13 @@
         height: 100%;
         display: block;
         font-family: inherit;
+        font-style: inherit;
         font-size: inherit;
         line-height: inherit;
         font-weight: inherit;
         letter-spacing: inherit;
+        text-transform: inherit;
+        font-variation-settings: inherit;
         color: inherit;
         min-height: 36px;
         appearance: none;

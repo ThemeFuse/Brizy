@@ -1,9 +1,5 @@
 import * as Option from "visual/component/Options/Type";
-import {
-  WithClassName,
-  WithConfig,
-  WithSize
-} from "visual/utils/options/attributes";
+import { WithClassName, WithConfig, WithSize } from "visual/types/attributes";
 import { MValue } from "visual/utils/value";
 import { Choice } from "../../Select/types";
 

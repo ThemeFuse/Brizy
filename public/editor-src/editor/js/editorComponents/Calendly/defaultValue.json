@@ -10,12 +10,6 @@
     "height": 500,
     "heightSuffix": "px",
 
-    "tabletHeightSuffix": null,
-    "tabletWidthSuffix": null,
-
-    "mobileWidthSuffix": null,
-    "mobileHeightSuffix": null,
-
     "bgColorType": "solid",
     "bgColorHex": "#05CAB6",
     "bgColorOpacity": 0,

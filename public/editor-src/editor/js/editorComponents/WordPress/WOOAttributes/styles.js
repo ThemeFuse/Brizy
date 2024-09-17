@@ -12,6 +12,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAttributesAttributesFontWeight",
         "cssStyleElementWOOAttributesAttributesLetterSpacing",
         "cssStyleElementWOOAttributesAttributesFontVariation",
+        "cssStyleElementWOOAttributesAttributesTextTransform",
         "cssStyleElementWOOAttributesAttributeColor"
       ]
     },
@@ -46,6 +47,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAdditionalTitleFontWeight",
         "cssStyleElementWOOAdditionalTitleLetterSpacing",
         "cssStyleElementWOOAdditionalTitleFontVariation",
+        "cssStyleElementWOOAdditionalTitleTextTransform",
         "cssStyleElementWOOAdditionalTitleColor",
         "cssStyleElementWOOAdditionalTitleSpacing"
       ]

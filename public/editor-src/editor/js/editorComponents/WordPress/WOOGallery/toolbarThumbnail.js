@@ -22,10 +22,10 @@ export function getItems({ v, device, state }) {
   const spacingLabel = bottomThumbStyle
     ? t("Top")
     : topThumbStyle
-    ? t("Bottom")
-    : leftThumbStyle
-    ? t("Right")
-    : t("Left");
+      ? t("Bottom")
+      : leftThumbStyle
+        ? t("Right")
+        : t("Left");
 
   return [
     {
@@ -160,10 +160,9 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110,
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 }

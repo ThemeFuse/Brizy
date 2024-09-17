@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement } from "react";
 import { ChangeFunction } from "visual/component/Controls/ColorPicker2/types";
 import { Props as TooltipProps } from "visual/component/Controls/Tooltip";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 
 export type Props = WithClassName &
   PropsWithChildren<unknown> & {

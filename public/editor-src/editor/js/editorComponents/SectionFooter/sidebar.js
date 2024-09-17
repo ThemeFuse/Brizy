@@ -7,10 +7,6 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { getShapes } from "visual/utils/options";
-import {
-  toolbarShapeBottomFlip,
-  toolbarShapeTopFlip
-} from "visual/utils/toolbar";
 
 export const title = t("Footer");
 
@@ -40,6 +36,9 @@ export function getItems({ v, device, context }) {
     options: context.dynamicContent.config,
     type: DCTypes.richText
   });
+
+  const isShapeTopType = dvv("shapeTopType") === "none";
+  const isShapeBottomType = dvv("shapeBottomType") === "none";
 
   return [
     {
@@ -132,7 +131,7 @@ export function getItems({ v, device, context }) {
                                   }
                                 }
                               },
-                              disabled: dvv("shapeTopType") === "none",
+                              disabled: isShapeTopType,
                               options: [
                                 { id: "shapeTopColor", type: "colorPicker" }
                               ]
@@ -141,7 +140,7 @@ export function getItems({ v, device, context }) {
                               id: "shapeTopHeight",
                               type: "slider",
                               icon: "nc-height",
-                              disabled: dvv("shapeTopType") === "none",
+                              disabled: isShapeTopType,
                               config: {
                                 min: 0,
                                 max:
@@ -154,17 +153,21 @@ export function getItems({ v, device, context }) {
                                 ]
                               }
                             },
-                            toolbarShapeTopFlip({
-                              v,
-                              device,
-                              disabled: dvv("shapeTopType") === "none",
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeTopHorizontal",
+                              label: t("Flip"),
+                              type: "toggleButton",
+                              disabled: isShapeTopType,
+                              config: {
+                                icon: "nc-flip-horizontal",
+                                type: "square"
+                              }
+                            },
                             {
                               id: "shapeTopIndex",
                               type: "radioGroup",
                               label: t("Arrangement"),
-                              disabled: dvv("shapeTopType") === "none",
+                              disabled: isShapeTopType,
                               choices: [
                                 { value: "auto", icon: "nc-send-to-back" },
                                 { value: "10", icon: "nc-bring-to-top" }
@@ -200,7 +203,7 @@ export function getItems({ v, device, context }) {
                                   }
                                 }
                               },
-                              disabled: dvv("shapeBottomType") === "none",
+                              disabled: isShapeBottomType,
                               options: [
                                 {
                                   id: "shapeBottomColor",
@@ -212,7 +215,7 @@ export function getItems({ v, device, context }) {
                               id: "shapeBottomHeight",
                               type: "slider",
                               icon: "nc-height",
-                              disabled: dvv("shapeBottomType") === "none",
+                              disabled: isShapeBottomType,
                               config: {
                                 min: 0,
                                 max:
@@ -225,17 +228,21 @@ export function getItems({ v, device, context }) {
                                 ]
                               }
                             },
-                            toolbarShapeBottomFlip({
-                              v,
-                              device,
-                              disabled: dvv("shapeBottomType") === "none",
-                              state: "normal"
-                            }),
+                            {
+                              id: "shapeBottomHorizontal",
+                              label: t("Flip"),
+                              type: "toggleButton",
+                              disabled: isShapeBottomType,
+                              config: {
+                                icon: "nc-flip-horizontal",
+                                type: "square"
+                              }
+                            },
                             {
                               id: "shapeBottomIndex",
                               type: "radioGroup",
                               label: t("Arrangement"),
-                              disabled: dvv("shapeBottomType") === "none",
+                              disabled: isShapeBottomType,
                               choices: [
                                 { value: "auto", icon: "nc-send-to-back" },
                                 { value: "10", icon: "nc-bring-to-top" }

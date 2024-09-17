@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import { ReactElement } from "react";
 import { t } from "visual/utils/i18n";
@@ -5,14 +6,15 @@ import { SelectItemProps } from "./types";
 
 export const SelectItem = ({
   title,
-  onClick
+  onClick,
+  className
 }: SelectItemProps): ReactElement => {
+  const _classNames = classNames(
+    "brz-ed-control__internalLink__option",
+    className
+  );
   return (
-    <li
-      className="brz-ed-control__internalLink__option"
-      title={title}
-      onClick={onClick}
-    >
+    <li className={_classNames} title={title} onClick={onClick}>
       <span className="brz-ed-control__internalLink__option-text">{title}</span>
     </li>
   );

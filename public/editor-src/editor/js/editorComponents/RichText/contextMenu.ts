@@ -1,7 +1,12 @@
-import { mergeDeep, setIn } from "timm";
+import deepmerge from "deepmerge";
+import { setIn } from "timm";
+import { overwriteMerge } from "visual/bootstraps/initConfig/default/utils";
 import { ElementModel } from "visual/component/Elements/Types";
 import { updateCopiedElement } from "visual/redux/actions2";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
+import {
+  deviceModeSelector,
+  pageDataNoRefsSelector
+} from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { createFullModelPath } from "visual/utils/models";
 import { read as strRead } from "visual/utils/reader/string";
@@ -19,6 +24,7 @@ const getItems: ContextGetItems<ElementModel> = (
 ): ContextMenuItem[] => {
   const innerElement = getInnerElement();
   const canPaste = component.getComponentId() === innerElement?.type;
+  const device = deviceModeSelector(component.getReduxState());
 
   return [
     {
@@ -36,12 +42,12 @@ const getItems: ContextGetItems<ElementModel> = (
             const componentValue = component.getValue();
 
             const data = pageDataNoRefsSelector(component.getReduxState());
-            const { wrapperAnimationId } = component.props.meta;
-            const wrapperId = strRead(wrapperAnimationId);
-            if (!wrapperId) return;
+            const { wrapperAnimationId, wrapperId } = component.props.meta;
+            const _wrapperId = strRead(wrapperAnimationId ?? wrapperId);
+            if (!_wrapperId) return;
 
             const id = component.getId();
-            const shortcodePath = createFullModelPath(data, [wrapperId]);
+            const shortcodePath = createFullModelPath(data, [_wrapperId]);
 
             const newValue = setIn(
               data,
@@ -53,8 +59,9 @@ const getItems: ContextGetItems<ElementModel> = (
               dispatch(
                 updateCopiedElement({
                   path: shortcodePath,
-                  // @ts-expect-error: Type 'object' is not assignable to type 'Record<string, unknown>'
-                  value: mergeDeep(data, newValue)
+                  value: deepmerge(data, newValue, {
+                    arrayMerge: overwriteMerge
+                  })
                 })
               );
             }
@@ -75,12 +82,13 @@ const getItems: ContextGetItems<ElementModel> = (
           helperText: handleRenderText(["⇧", "V"]),
           onChange: () => {
             if (!innerElement || !innerElement.value) return;
-            handlePasteStyles(
+            handlePasteStyles({
               innerElement,
               // @ts-expect-error couldn't extend component type
-              component.handleChange,
-              component.getValue()
-            );
+              onChange: component.handleChange,
+              v: component.getValue(),
+              device
+            });
           }
         },
         {

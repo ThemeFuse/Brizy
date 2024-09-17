@@ -67,7 +67,15 @@ const fns: ToMetaFns = {
   toggleButton: undefined,
   gbCondition: undefined,
   popupCondition: undefined,
-  editableSelect: undefined
+  editableSelect: undefined,
+  colorPaletteEditor: undefined,
+  promptAddPopup: undefined,
+  fontStyleEditor: undefined,
+  showOnDevice: undefined,
+  checkGroup: undefined,
+  blockThumbnail: undefined,
+  advancedSettings: undefined,
+  symbols: undefined
 };
 
 export const toMeta = <T extends OptionName>(type: T) => {

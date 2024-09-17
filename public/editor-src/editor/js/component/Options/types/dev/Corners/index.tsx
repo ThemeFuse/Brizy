@@ -2,20 +2,20 @@ import React, { ReactElement, useCallback, useMemo } from "react";
 import { Props as SP, Spacing } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
 import * as Option from "visual/component/Options/Type";
+import { WithConfig } from "visual/types/attributes";
 import { mPipe, pipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
 import { Meta } from "visual/utils/options/Corners/meta";
 import { Config } from "visual/utils/options/Corners/types/Config";
 import { Unit } from "visual/utils/options/Corners/types/Unit";
-import { Value } from "visual/utils/options/Corners/types/Value";
 import * as V from "visual/utils/options/Corners/types/Value";
+import { Value } from "visual/utils/options/Corners/types/Value";
 import {
   getIcon,
   unitSetter,
   unitTitle,
   valueSetter
 } from "visual/utils/options/Corners/utils";
-import { WithConfig } from "visual/utils/options/attributes";
 import { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
 import { Type } from "visual/utils/options/utils/Type";
 

@@ -38,9 +38,27 @@ export const getValue = (
   const get = (key: string): MValue<Literal> =>
     key === "fontStyle" ? m.fontStyle : defaultValueValue({ key, v, device });
 
+  const {
+    bold,
+    underline,
+    strike,
+    italic,
+    uppercase,
+    lowercase,
+    script,
+    ...otherValues
+  } = fromElementModel(get);
+
   const model = {
     ...defaultValue,
-    ...fromElementModel(get)
+    ...otherValues,
+    bold: bold ?? m.bold,
+    underline: underline ?? m.underline,
+    strike: strike ?? m.strike,
+    italic: italic ?? m.italic,
+    uppercase: uppercase ?? m.uppercase,
+    lowercase: lowercase ?? m.lowercase,
+    script: script ?? m.script
   };
 
   if (hasFont(fonts, model.fontFamily)) {
@@ -68,6 +86,13 @@ export const getValue = (
       return {
         ...model,
         fontFamilyType: FontFamilyType.google,
+        fontFamily: family
+      };
+    }
+    case "adobe": {
+      return {
+        ...model,
+        fontFamilyType: FontFamilyType.adobe,
         fontFamily: family
       };
     }

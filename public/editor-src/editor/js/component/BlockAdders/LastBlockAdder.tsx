@@ -7,8 +7,6 @@ import {
 } from "visual/component/Prompts/PromptBlocks/types";
 import { rolesHOC } from "visual/component/Roles";
 import Config from "visual/global/Config";
-import { isCloud } from "visual/global/Config/types";
-import { isShopify } from "visual/global/Config/types/configs/Cloud";
 import { Last as Control } from "./Controls/Last";
 
 interface Props {
@@ -22,8 +20,7 @@ const LastBlockAdder = (props: Props): ReactElement => {
 
   const handleOpen = useCallback(() => {
     const config = Config.getAll();
-    // TODO: https://github.com/bagrinsergiu/blox-editor/issues/24123
-    const showGlobal = !(isCloud(config) && isShopify(config));
+    const showGlobal = typeof config.api?.globalBlocks?.create === "function";
 
     Prompts.open({
       prompt: "blocks",

@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import React, {
   ComponentType,
+  forwardRef,
   MouseEventHandler,
   PropsWithChildren,
   ReactElement,
   ReactNode,
-  Ref,
-  forwardRef
+  Ref
 } from "react";
 import { identity } from "underscore";
 import Animation from "visual/component/Animation";
@@ -18,9 +18,9 @@ import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { WithClassName } from "visual/types/attributes";
 import { css } from "visual/utils/cssStyle";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { WithClassName } from "visual/utils/options/attributes";
 import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import { t } from "visual/utils/i18n";
@@ -7,7 +7,7 @@ import { InternalLinkValue } from "./Components/InternalLinkValue";
 import { SelectDropdown } from "./Components/SelectDropdown";
 import { SelectItem, SelectItemNoResults } from "./Components/SelectItem";
 import { SourceSelect } from "./Components/SourceSelect";
-import { Props, Status } from "./types";
+import { Choice, Props, Status } from "./types";
 import { isValuePopulated, trimTitle } from "./utils";
 
 export const Control = ({
@@ -38,6 +38,14 @@ export const Control = ({
 
   const _value = trimTitle(value?.title || placeholder || t("Type name"));
 
+  const handleClickItem = useCallback(
+    (item: Choice): void => {
+      onChange(item);
+      setIsOpen(false);
+    },
+    [onChange]
+  );
+
   const selectItems =
     status === Status.NO_RESULT ? (
       <SelectItemNoResults />
@@ -47,7 +55,7 @@ export const Control = ({
           <SelectItem
             key={index}
             title={item.title}
-            onClick={(): void => onChange(item)}
+            onClick={() => handleClickItem(item)}
           />
         ))}
       </ul>

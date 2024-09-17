@@ -1,6 +1,5 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -11,6 +10,7 @@ import {
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getInstanceParentId } from "visual/utils/toolbar";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
@@ -26,6 +26,9 @@ export function getItems({ v, device, component, context }) {
   });
 
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "sectionPopup");
+  const showGlobal = typeof config.api?.globalBlocks?.create === "function";
+  const showSavedBlock = typeof config.api?.savedBlocks?.create === "function";
 
   return [
     {
@@ -43,7 +46,7 @@ export function getItems({ v, device, component, context }) {
           label: t("Make it Global"),
           type: "globalBlock",
           devices: "desktop",
-          disabled: isCloud(config) && isShopify(config),
+          disabled: !showGlobal,
           config: {
             _id: component.getId(),
             parentId: getInstanceParentId(component.props.instanceKey, "popup"),
@@ -75,7 +78,7 @@ export function getItems({ v, device, component, context }) {
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
                 }
               ]
@@ -131,6 +134,7 @@ export function getItems({ v, device, component, context }) {
       id: "makeItSaved",
       type: "savedBlock",
       devices: "desktop",
+      disabled: !showSavedBlock,
       position: 90,
       config: {
         icon: "nc-save-section",

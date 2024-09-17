@@ -106,6 +106,12 @@
     "typographyVariableFontWeight": 600,
     "typographyFontWidth": 100,
     "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
 
     "iconColorHex": "#ffffff",
     "iconColorOpacity": 1,

@@ -2,8 +2,8 @@ import classNames from "classnames";
 import React, { ReactElement, useCallback } from "react";
 import { Slider2 } from "visual/component/Controls/Slider2";
 import { Label } from "visual/component/Label";
+import { WithClassName } from "visual/types/attributes";
 import { clamp } from "visual/utils/math";
-import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props extends WithClassName {
   start: number;

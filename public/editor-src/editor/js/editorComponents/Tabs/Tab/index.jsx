@@ -26,7 +26,7 @@ class Tab extends EditorComponent {
   };
 
   renderNav(v) {
-    const { iconName, iconType, labelText } = v;
+    const { iconName, iconType, iconFilename, labelText } = v;
     const { active, onChangeNav, action } = this.props;
     const className = classnames("brz-tabs__nav--item brz-tabs__nav--desktop", {
       "brz-tabs__nav--active": active
@@ -41,7 +41,11 @@ class Tab extends EditorComponent {
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
           <div className={classnames("brz-tabs__nav--button")}>
             {iconName && iconType && (
-              <ThemeIcon name={iconName} type={iconType} />
+              <ThemeIcon
+                name={iconName}
+                type={iconType}
+                filename={iconFilename}
+              />
             )}
             <TextEditor value={labelText} onChange={this.handleLabelChange} />
           </div>
@@ -51,7 +55,7 @@ class Tab extends EditorComponent {
   }
 
   renderContent(v) {
-    const { labelText, iconName, iconType } = v;
+    const { labelText, iconName, iconType, iconFilename } = v;
     const { active, meta, onChangeNav, animationClassName } = this.props;
     const itemsProps = this.makeSubcomponentProps({
       meta,
@@ -72,7 +76,11 @@ class Tab extends EditorComponent {
           <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
             <div className={classnames("brz-tabs__nav--button")}>
               {iconName && iconType && (
-                <ThemeIcon name={iconName} type={iconType} />
+                <ThemeIcon
+                  name={iconName}
+                  type={iconType}
+                  filename={iconFilename}
+                />
               )}
               <DangerouslySetHtmlContent
                 tagName={"span"}

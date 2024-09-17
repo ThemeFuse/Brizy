@@ -1,5 +1,6 @@
 import {
   cssStyleColor,
+  cssStyleTextTransforms,
   cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
@@ -101,6 +102,20 @@ export function cssStyleElementWOOProductMetaCategoryFontVariation({
   });
 }
 
+export function cssStyleElementWOOProductMetaCategoryTextTransform({
+  v,
+  device,
+  state,
+  prefix = "category"
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix
+  });
+}
+
 export function cssStyleElementWOOProductMetaValueFontFamily({
   v,
   device,
@@ -171,6 +186,20 @@ export function cssStyleElementWOOProductMetaValueFontVariation({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix
+  });
+}
+
+export function cssStyleElementWOOProductMetaValueTextTransform({
+  v,
+  device,
+  state,
+  prefix = "value"
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix
   });
 }

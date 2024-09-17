@@ -110,7 +110,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     } catch (e) {
       return process.env.NODE_ENV === "development" ? (
         <details className="brz-details" style={{ whiteSpace: "pre-wrap" }}>
-          {e}
+          {e as ReactNode}
         </details>
       ) : null;
     }

@@ -6,6 +6,11 @@ import * as Num from "visual/utils/reader/number";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
 import { Value } from "./types";
+import {
+  buttonHoverAnimations,
+  buttonHoverInAnimations
+} from "visual/utils/options/Animation/utils";
+import classNames from "classnames";
 
 export const hasSizing = (
   v: Record<string, unknown>,
@@ -44,4 +49,18 @@ export const getMaxBorderRadius = (
   );
 
   return maxBorderRadius;
+};
+
+export const isButtonFillHover = (animationName: string): boolean =>
+  buttonHoverAnimations.includes(animationName);
+
+export const getHoverClassName = (hoverName: string): string => {
+  const _isButtonFillHover = isButtonFillHover(hoverName);
+  return classNames(
+    { "brz-btn--hover": _isButtonFillHover },
+    { [hoverName]: _isButtonFillHover },
+    {
+      "brz-btn--hover-in": buttonHoverInAnimations.includes(hoverName)
+    }
+  );
 };

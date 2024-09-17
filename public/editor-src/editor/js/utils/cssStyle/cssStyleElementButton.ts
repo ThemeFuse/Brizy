@@ -14,7 +14,10 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import { isStory } from "../models";
 import { CSSValue } from "../style2/types";
-
+import { NORMAL } from "../stateMode";
+import { styleBgBlendGradient, styleBgColorHex } from "../style2";
+import { Num } from "@brizy/readers";
+import { hexToBlendedRgba } from "visual/utils/color/RGB";
 export function cssStyleElementButtonIconPosition({
   v,
   device,
@@ -70,12 +73,19 @@ export function cssStyleElementButtonSize({
   switch (fillType) {
     case "filled":
     case "outline":
-    case "default":
       return `padding: ${height}px ${width}px;`;
-
+    case "default":
+      return `padding: ${height}px 0px;`;
     case undefined:
       return "";
   }
+}
+
+export function cssStyleElementButtonBgColorStateNORMAL({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleElementButtonBgColor({ v, device, state: NORMAL });
 }
 
 export function cssStyleElementButtonBgColor({
@@ -98,6 +108,14 @@ export function cssStyleElementButtonBgColor({
     case undefined:
       return "";
   }
+}
+
+export function cssStyleElementButtonBgGradientStateNORMAL({
+  v,
+  device,
+  prefix
+}: CSSValue): string {
+  return cssStyleBgGradient({ v, device, state: NORMAL, prefix });
 }
 
 export function cssStyleElementButtonBgGradient({
@@ -139,4 +157,87 @@ export function cssStyleElementButtonBorderStory({
     case undefined:
       return "";
   }
+}
+
+export function cssStyleButtonHoverTransitionDuration({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const hoverDuration =
+    Num.read(dvv(capByPrefix(prefix, "hoverDuration"))) ?? 1000;
+
+  return `transition-duration:${hoverDuration / 1000}s;`;
+}
+
+export function cssStyleButtonHoverAnimationDuration({
+  v,
+  device,
+  state,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const hoverDuration =
+    Num.read(dvv(capByPrefix(prefix, "hoverDuration"))) ?? 1000;
+
+  return `animation-duration:${hoverDuration / 1000}s;`;
+}
+
+export const cssStyleElementButtonBgBlendColor = ({
+  v,
+  device,
+  state,
+  prefix = "bg"
+}: CSSValue): string => {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const hex = styleBgColorHex({ v, device, state, prefix });
+  const opacity = Num.read(dvv(capByPrefix(prefix, "colorOpacity"))) ?? 1;
+
+  const bgColor = hexToBlendedRgba({
+    hex,
+    opacity
+  });
+
+  return `background-color: ${bgColor};`;
+};
+
+export function cssStyleElementButtonBgBlendGradient({
+  v,
+  device,
+  state,
+  prefix
+}: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const fillType = getFillType(dvv("fillType"));
+
+  switch (fillType) {
+    case "filled":
+      return cssStyleBgBlendGradient({ v, device, state, prefix });
+    case "outline":
+    case "default":
+      return "background: transparent;";
+    case undefined:
+      return "";
+  }
+}
+
+export function cssStyleBgBlendGradient({
+  v,
+  device,
+  state,
+  prefix
+}: CSSValue): string {
+  const bgGradient = styleBgBlendGradient({
+    v,
+    device,
+    state,
+    prefix
+  });
+  return `background-image:${bgGradient};`;
 }

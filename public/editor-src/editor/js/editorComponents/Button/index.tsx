@@ -9,7 +9,11 @@ import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils"
 import Link from "visual/component/Link";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import { hasSizing } from "visual/editorComponents/Button/utils";
+import {
+  getHoverClassName,
+  hasSizing,
+  isButtonFillHover
+} from "visual/editorComponents/Button/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
@@ -31,7 +35,7 @@ import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import { style, styleIcon } from "./styles";
+import { style, styleButtonFillAnimation, styleIcon } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { PatchValue, Props, Value } from "./types";
 import { omit } from "timm";
@@ -76,7 +80,7 @@ export default class Button extends EditorComponent<Value, Props> {
     this.patchValue(patch);
 
   renderIcon(v: Value, vs: Value, vd: Value): ReactNode {
-    const { iconName, iconType } = v;
+    const { iconName, iconType, iconFilename } = v;
 
     const iconClassName = classnames(
       css(
@@ -87,7 +91,12 @@ export default class Button extends EditorComponent<Value, Props> {
     );
 
     return (
-      <ThemeIcon className={iconClassName} name={iconName} type={iconType} />
+      <ThemeIcon
+        className={iconClassName}
+        name={iconName}
+        type={iconType}
+        filename={iconFilename}
+      />
     );
   }
 
@@ -145,9 +154,16 @@ export default class Button extends EditorComponent<Value, Props> {
     const linkData = getLinkData<Value>(v);
     const id = getCSSId<Value>(v);
     const _className = Str.mRead(cssClass || customClassName);
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
 
     const className = classnames(
       "brz-btn",
+      getHoverClassName(hoverName),
+      css(
+        this.getComponentId(),
+        this.getId(),
+        styleButtonFillAnimation(v, vs, vd)
+      ),
       { "brz-blocked": v.tabsState === "hover" },
       _className,
       css(
@@ -258,7 +274,10 @@ export default class Button extends EditorComponent<Value, Props> {
       hoverName,
       options: getHoverAnimationOptions(options, hoverName),
       animationId,
-      isHidden: isStory(Config.getAll()) || hoverName === "none"
+      isHidden:
+        isStory(Config.getAll()) ||
+        hoverName === "none" ||
+        isButtonFillHover(hoverName)
     };
   }
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {

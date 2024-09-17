@@ -11,7 +11,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -39,12 +40,27 @@ export function style(v, vs, vd) {
           "cssStylePropertyHoverTransitionColor"
         ]
       },
+    ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color .brz-icon-svg-custom":
+      {
+        standart: ["cssStyleElementStarRatingCustomIconColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz &&:hover .brz-starrating-style2-container": {
       standart: [
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorderRadius",
         "cssStyleElementStarRatingDirection"
+      ]
+    },
+    ".brz &&:hover .brz-starrating-style2-container .brz-icon-svg-custom": {
+      standart: ["cssStyleCustomIconColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

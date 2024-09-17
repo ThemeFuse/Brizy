@@ -1,28 +1,29 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { JSX, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import _ from "underscore";
-import CheckGroup, {
-  CheckGroupIcon,
-  CheckGroupItem
-} from "visual/component/Controls/CheckGroup";
-import Fixed from "visual/component/Prompts/Fixed";
+import { CheckGroup } from "visual/component/Controls/CheckGroup";
+import { CheckGroupIcon } from "visual/component/Controls/CheckGroup/CheckGroupIcon";
+import { CheckGroupItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import Fixed from "visual/component/Prompts/Fixed";
 import {
   canSyncPage,
   getAllOptionText,
   getChoices,
   getRulesId,
+  getShopifyLayout,
   getTabsByItemsNumber,
-  isAllChecked
+  isAllChecked,
+  isShopifyLayout
 } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  ShopifyTemplate,
-  getShopifyTemplate
+  getShopifyTemplate,
+  ShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import {
   updateError,
@@ -43,11 +44,10 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { Tabs } from "../common/PromptPage/types";
+import { Layout, Tabs } from "../common/PromptPage/types";
 import * as Actions from "../common/states/Classic/types/Actions";
 import { reducer } from "./reducer";
-import { Props, RulesState, Valid } from "./types";
-import { Item } from "./types";
+import { Item, Props, RulesState, Valid } from "./types";
 import * as Setters from "./types/Setters";
 
 const getErrors = (s: RulesState): string | undefined => {
@@ -63,7 +63,7 @@ const getErrors = (s: RulesState): string | undefined => {
   }
 };
 
-export const PromptPageRules = (props: Props): ReactElement => {
+export const PromptPageRules = (props: Props): JSX.Element => {
   const _config = useMemo(() => Config.getAll(), []);
 
   const templateType = useMemo(() => {
@@ -193,7 +193,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
     [_config, dispatch, dispatchS, state.type]
   );
 
-  const content: () => ReactElement = () => {
+  const content: () => JSX.Element = () => {
     switch (state.type) {
       case "Loading":
         return <Content head={headTitle} loading={true} />;
@@ -214,10 +214,15 @@ export const PromptPageRules = (props: Props): ReactElement => {
         const error = getErrors(state);
 
         switch (state.payload.activeTab) {
-          case Tabs.settings:
+          case Tabs.settings: {
             if (!items.length) {
               return <EmptyContentWithDefaults type={templateType} />;
             }
+
+            const hasShopifyLayout = !!getShopifyLayout(state.payload.layouts);
+            const isShopifyLayoutEnabled = isShopifyLayout(
+              state.payload.layout
+            );
 
             return (
               <Content
@@ -231,11 +236,15 @@ export const PromptPageRules = (props: Props): ReactElement => {
                   onChange={(v): void => dispatchS(Setters.setTitle(v))}
                   placeholder={t("Page title")}
                 />
-                <HeaderFooterField
-                  value={state.payload.layout}
-                  layouts={state.payload.layouts}
-                  onChange={(s): void => dispatchS(Setters.setLayout(s))}
-                />
+                {hasShopifyLayout && (
+                  <HeaderFooterField
+                    value={isShopifyLayoutEnabled}
+                    onChange={(v): void => {
+                      const data = v ? Layout.Shopify : Layout.Default;
+                      dispatchS(Setters.setLayout(data));
+                    }}
+                  />
+                )}
                 <CheckGroup
                   defaultValue={checked}
                   onChange={(v: Record<string, boolean>): void => {
@@ -268,6 +277,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
                       inline={true}
                       value={rule.id}
                       renderIcons={CheckGroupIcon}
+                      isEditor={IS_EDITOR}
                     >
                       {rule.title}
                     </CheckGroupItem>
@@ -275,6 +285,7 @@ export const PromptPageRules = (props: Props): ReactElement => {
                 </CheckGroup>
               </Content>
             );
+          }
         }
       }
     }

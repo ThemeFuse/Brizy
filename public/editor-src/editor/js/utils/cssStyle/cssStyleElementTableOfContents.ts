@@ -3,8 +3,10 @@ import {
   cssStyleBorder,
   cssStyleColor,
   cssStylePaddingFourFields,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
+  cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
@@ -146,6 +148,21 @@ export function cssStyleElementTOCBodyLetterSpacing({
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "body" });
+}
+
+export function cssStyleElementTOCBodyFontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, prefix: "body" });
+}
+
+export function cssStyleElementTOCBodyTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "body" });
 }
 
 export function cssStyleElementTOCBodyBorder({

@@ -1,16 +1,10 @@
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { Value } from "./index";
+import { transitionCSS } from "./css";
+import type { Props, Value } from "./types";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   return [
@@ -39,7 +33,9 @@ export function getItems({
                       id: "border",
                       type: "corners",
                       label: t("Corner"),
-                      devices: "desktop"
+                      devices: "desktop",
+                      selector:
+                        "{{WRAPPER}} .brz-hr, {{WRAPPER}} .brz-line-container:before, {{WRAPPER}} .brz-line-container:after, {{WRAPPER}} .brz-line-icon-wrapper"
                     }
                   ]
                 },
@@ -57,7 +53,8 @@ export function getItems({
                         min: 0,
                         max: 99,
                         units: [{ title: "ms", value: "ms" }]
-                      }
+                      },
+                      style: transitionCSS
                     },
                     {
                       id: "tagName",
@@ -83,15 +80,31 @@ export function getItems({
               ]
             },
             {
-              id: "border",
-              type: "corners",
-              label: t("Corner"),
-              position: 65,
-              devices: "responsive"
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
+              devices: "responsive",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  position: 10,
+                  options: [
+                    {
+                      id: "border",
+                      type: "corners",
+                      label: t("Corner"),
+                      position: 65
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
       ]
     }
   ];
-}
+};

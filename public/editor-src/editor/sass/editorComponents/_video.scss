@@ -22,12 +22,26 @@
     display: block;
     pointer-events: none;
   }
+
   .brz-video-content {
     overflow: hidden;
     position: relative;
     width: 100%;
     height: 100%;
+
+    .brz-video__lightbox {
+      cursor: zoom-in;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+
+      &:hover ~ .brz-video__cover .brz-video__cover-icon {
+        transform: scale(1.1);
+      }
+    }
   }
+
   .brz-iframe,
   .brz-video__cover {
     position: absolute;
@@ -37,10 +51,12 @@
     height: 100%;
     border: none;
   }
+
   .brz-iframe {
     height: 100%;
     width: 100%;
   }
+
   .brz-video__cover {
     display: flex;
     align-items: center;
@@ -58,6 +74,7 @@
       margin: 0 auto;
       background-repeat: no-repeat;
     }
+
     .brz-video__cover-icon {
       position: relative;
       z-index: 1;
@@ -71,10 +88,12 @@
         width: 100%;
         left: 2px;
       }
+
       .brz-span {
         line-height: 0;
       }
     }
+
     &:hover {
       cursor: pointer;
 
@@ -122,17 +141,23 @@
       height: 50px;
       z-index: 999;
     }
+
     .brz-video-custom-play-pause-btn {
       display: flex;
       cursor: pointer;
       z-index: 3;
     }
+
     .brz-video-custom-current-time {
       margin-left: 25px;
+      text-decoration: inherit;
     }
+
     .brz-video-custom-total-time {
       margin-left: 15px;
+      text-decoration: inherit;
     }
+
     .brz-video-custom-slider {
       position: relative;
       flex-grow: 1;
@@ -143,6 +168,7 @@
         position: absolute;
         pointer-events: none;
       }
+
       &:before {
         content: "";
         display: block;
@@ -156,6 +182,7 @@
         opacity: 0.35;
       }
     }
+
     .brz-video-custom-controls {
       display: flex;
       flex-grow: 1;
@@ -174,13 +201,16 @@
           height: 100%;
         }
       }
+
       span {
         cursor: default;
       }
     }
+
     .brz-video-custom-controls:empty {
       display: none;
     }
+
     .brz-video-custom-volume {
       position: relative;
       display: flex;
@@ -192,14 +222,17 @@
       .brz-video-custom-fullscreen-btn {
         display: flex;
       }
+
       .brz-video-custom-fullscreen-icon {
         margin-right: 15px;
         cursor: pointer;
       }
+
       .brz-video-custom-volume-btn {
         display: flex;
         cursor: pointer;
       }
+
       .brz-video-custom-volume-controls {
         display: flex;
         width: 60px;
@@ -217,10 +250,12 @@
       }
     }
   }
+
   .brz-video-custom-fullScreen-window-show {
     video {
       padding-bottom: 50px;
     }
+
     .brz-video-custom-video-controls {
       position: absolute;
       left: 0;
@@ -238,6 +273,7 @@
     .brz-shortcode__placeholder {
       border-radius: 0 !important;
     }
+
     &:hover {
       .brz-shortcode__placeholder .brz-icon-svg {
         cursor: pointer;
@@ -245,6 +281,7 @@
     }
   }
 }
+
 .brz-custom-video.brz-video-on-controls-hidden {
   .brz-video__cover {
     position: relative;
@@ -255,17 +292,21 @@
     height: calc(100% - 50px);
   }
 }
+
 .brz-custom-video.brz-video-off-controls-hidden {
   background: inherit;
   padding-bottom: 0;
+
   video {
     padding-bottom: 0;
     background: inherit;
   }
+
   .brz-shortcode__placeholder {
     top: 0;
     padding-top: 0;
   }
+
   .brz-video__cover {
     padding-bottom: 0;
   }
@@ -280,5 +321,15 @@
     .brz-video-content .brz-video-elem {
       height: 0;
     }
+  }
+}
+
+// this is magnific popup container class, need for video lightbox mode
+.mfp-content {
+  max-width: 900px;
+
+  video {
+    display: block !important;
+    width: 100%;
   }
 }

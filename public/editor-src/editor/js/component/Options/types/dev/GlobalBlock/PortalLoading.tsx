@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import EditorIcon from "visual/component/EditorIcon";
 
 type RenderNode = HTMLElement | null;
@@ -23,7 +23,8 @@ class PortalLoading {
       rootNode.append(rootContainer);
       PortalLoading.opened.add(rootContainer);
 
-      ReactDOM.render(loading, rootContainer);
+      const root = createRoot(rootContainer);
+      root.render(loading);
 
       return rootContainer;
     }
@@ -38,7 +39,7 @@ class PortalLoading {
 
   static closeAll(): void {
     // Remove All node append
-    PortalLoading.opened.forEach(node => {
+    PortalLoading.opened.forEach((node) => {
       node.remove();
     });
 

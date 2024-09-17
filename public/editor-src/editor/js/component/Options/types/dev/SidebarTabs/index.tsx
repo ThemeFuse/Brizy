@@ -8,9 +8,9 @@ import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
+import { WithClassName, WithId } from "visual/types/attributes";
 import { always, pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
-import { WithClassName, WithId } from "visual/utils/options/attributes";
 import { nextAlign } from "./utils";
 
 export interface Tab {

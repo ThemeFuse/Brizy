@@ -1,13 +1,10 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { SelectEditable2 } from "visual/component/Brizy-ui/SelectEditable";
-import { getActive } from "visual/utils/options/EditableSelect/utils";
 import {
-  Actions,
-  Choice,
-  OnChangeActionTypes,
-  OnChangeCases,
-  Props
-} from "./types";
+  SelectEditable2,
+  Props as SelectProps
+} from "visual/component/Brizy-ui/SelectEditable";
+import { getActive } from "visual/utils/options/EditableSelect/utils";
+import { Choice, OnChangeActionTypes, OnChangeCases, Props } from "./types";
 
 export const EditableSelect = ({
   choices,
@@ -23,8 +20,8 @@ export const EditableSelect = ({
     setState(choice ?? choices[0]);
   }, [choices, value]);
 
-  const onValueChange = useCallback(
-    (a: Actions) => {
+  const onValueChange = useCallback<SelectProps["onChange"]>(
+    (a) => {
       switch (a.type) {
         case OnChangeCases.Delete: {
           onChange({ type: OnChangeActionTypes.remove, payload: state.value });
@@ -55,6 +52,9 @@ export const EditableSelect = ({
           }
           break;
         }
+        case OnChangeCases.Reset: {
+          break;
+        }
       }
     },
     [choices, onChange, state.title, state.value]
@@ -67,6 +67,9 @@ export const EditableSelect = ({
         value={state.title}
         title={state.title}
         onChange={onValueChange}
+        hasEdit
+        hasDelete
+        hasDuplicate
         choices={choices}
       />
     </>

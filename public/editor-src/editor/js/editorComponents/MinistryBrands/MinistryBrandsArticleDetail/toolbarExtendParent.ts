@@ -5,7 +5,6 @@ import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { Props, Value } from "./types";
 
-// @ts-expect-error advancedSettings is old option
 export const getItems: GetItems<Value, Props> = ({
   v,
   device,
@@ -255,7 +254,7 @@ export const getItems: GetItems<Value, Props> = ({
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     },
     {

@@ -1,6 +1,10 @@
 import { CSSProperties } from "react";
-import { ModelType } from "visual/component/Elements/Types";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
+import {
+  AllCSSKeys,
+  GeneratedCSS,
+  OutputStyle
+} from "visual/utils/cssStyle/types";
 import {
   borderElementModel,
   borderOptionWithSelector,
@@ -10,14 +14,11 @@ import {
   heightOptionWithStyle,
   mockAllCssObjects
 } from "visual/utils/cssStyle/__tests__/cssStyle";
-import { AllCSSKeys, GeneratedCSS } from "visual/utils/cssStyle/types";
-import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   addBreakpointsToCSS,
   addBreakpointsToFilteredCSS,
   addSameClassNameToIncreaseSpecificity,
-  checkIfSomeKeyWasChanged,
   concatCSSWithBreakpoints,
   concatFinalCSS,
   concatStyles,
@@ -26,16 +27,14 @@ import {
   getCSSForCompare,
   getCSSFromSelector,
   getCSSObjectFromStyle,
-  getCurrentModelFilteredValues,
-  getMissingKeys,
-  getMissingPropertiesFromModel,
   getNewGeneratesCSSfromSelector,
   getNewGeneratesCSSfromStyle,
-  getNewModel,
   getSelectorAndCssFromCssObject,
   mergeStylesArray,
   objectToCSS,
-  removeDuplicateCSSByDevice
+  removeDuplicateCSSByDevice,
+  replaceCSSDuplicatesWithEmptyString,
+  replaceHoverAndActive
 } from "../index";
 
 // is only for testing purposes
@@ -193,7 +192,7 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
         breakpoint: "desktop",
         option: borderOptionWithSelector
       })
-    ).toStrictEqual(undefined);
+    ).toStrictEqual("border: none;");
   });
 
   test("Wrong option", () => {
@@ -962,593 +961,38 @@ describe("Testing concatFinalCSS that should concat 2 arrays with 3 strings by i
   ]);
 });
 
-describe("Testing getMissingKeys that should check which keys arr missing in object", () => {
-  test("Empty array of keys and empty object", () => {
-    expect(getMissingKeys([], {})).toStrictEqual([]);
-  });
+describe("replaceCSSDuplicatesWithEmptyString", () => {
+  const t1 = ["value1", "value2", "value3"];
+  const t2 = ["", "", ""];
 
-  test("Empty array only", () => {
-    expect(getMissingKeys([], { a: 1 })).toStrictEqual([]);
-  });
-
-  test("Empty object only, should return 'a'", () => {
-    expect(getMissingKeys(["a"], {})).toStrictEqual(["a"]);
-  });
-
-  test("Random keys test №1", () => {
-    expect(getMissingKeys(["a", "b", "c"], { a: 1, b: 2 })).toStrictEqual([
-      "c"
-    ]);
-  });
-
-  test("Random keys test №2", () => {
-    expect(getMissingKeys(["a", "b", "c", "d"], { a: 1, b: 2 })).toStrictEqual([
-      "c",
-      "d"
-    ]);
-  });
-
-  test("Random keys test №3", () => {
+  test.each([
+    [
+      ["value", "value", "other"],
+      ["value", "", "other"]
+    ],
+    [t1, t1],
+    [
+      ["value", "value", "value"],
+      ["value", "", ""]
+    ],
+    [t2, t2]
+  ])("%o is not equal with %o", (input, output) => {
     expect(
-      getMissingKeys(["a", "b", "c", "d"], { a: 1, b: 2, c: 3, d: 4 })
-    ).toStrictEqual([]);
+      replaceCSSDuplicatesWithEmptyString(input as OutputStyle)
+    ).toStrictEqual(output);
   });
 });
 
-describe("Testing getMissingPropertiesFromModel that should return key:value from previous model if in current model is missing or undefined", () => {
-  test("Empty default", () => {
-    expect(
-      getMissingPropertiesFromModel(
-        [],
-        { vd: {}, vs: {}, v: {} },
-        ModelType.Default
-      )
-    ).toStrictEqual(undefined);
-  });
+describe("replaceHoverAndActive function", () => {
+  const output = "button";
 
-  test("Empty rules", () => {
-    expect(
-      getMissingPropertiesFromModel(
-        [],
-        { vd: {}, vs: {}, v: {} },
-        ModelType.Rules
-      )
-    ).toStrictEqual({});
-  });
-
-  test("Empty custom", () => {
-    expect(
-      getMissingPropertiesFromModel(
-        [],
-        { vd: {}, vs: {}, v: {} },
-        ModelType.Custom
-      )
-    ).toStrictEqual({});
-  });
-
-  test("Color hex in rules, but missing opacity, and palette. Should get opacity and palette from default", () => {
-    expect(
-      getMissingPropertiesFromModel(
-        ["colorOpacity", "colorPalette"],
-        {
-          vd: { colorHex: "#000000", colorOpacity: 0.9, colorPalette: "" },
-          vs: { colorHex: "#FF0000" },
-          v: {}
-        },
-        ModelType.Rules
-      )
-    ).toStrictEqual({ colorOpacity: 0.9, colorPalette: "" });
-  });
-
-  test("Border color in custom, but missing width and type. Should get width and type from rules", () => {
-    expect(
-      getMissingPropertiesFromModel(
-        ["borderWidth", "borderType"],
-        {
-          vd: { borderColor: "#000000", borderWidth: 5, borderType: "solid" },
-          vs: { borderColor: "#000000", borderWidth: 7, borderType: "dashed" },
-          v: { borderColor: "#FF0000" }
-        },
-        ModelType.Custom
-      )
-    ).toStrictEqual({
-      borderWidth: 7,
-      borderType: "dashed"
-    });
-  });
-
-  test("Corner in custom, but missing width type. Should get width type from default, because in rules are still missing", () => {
-    expect(
-      getMissingPropertiesFromModel(
-        ["cornerWidthType"],
-        {
-          vd: {
-            cornerColor: "#000000",
-            cornerWidth: 5,
-            cornerWidthType: "grouped"
-          },
-          vs: {},
-          v: { cornerColor: "#FF0000", cornerWidth: 7 }
-        },
-        ModelType.Custom
-      )
-    ).toStrictEqual({
-      cornerWidthType: "grouped"
-    });
-  });
-});
-
-describe("Testing getCurrentModelFilteredValues that should return new filtered model ( 'vd' or 'vs' or 'v')", () => {
-  test("Empty default", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Default, {
-        vd: {},
-        vs: {},
-        v: {}
-      })
-    ).toStrictEqual({});
-  });
-
-  test("Empty rules", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Rules, { vd: {}, vs: {}, v: {} })
-    ).toStrictEqual({});
-  });
-
-  test("Empty custom", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Custom, { vd: {}, vs: {}, v: {} })
-    ).toStrictEqual({});
-  });
-
-  test("Omit _styles and _id for default", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Default, {
-        vd: { _styles: [], _id: "" },
-        vs: { _styles: [], _id: "" },
-        v: { _styles: [], _id: "" }
-      })
-    ).toStrictEqual({});
-  });
-
-  test("Omit _styles and _id for rules", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Rules, {
-        vd: { _styles: [], _id: "" },
-        vs: { _styles: [], _id: "" },
-        v: { _styles: [], _id: "" }
-      })
-    ).toStrictEqual({});
-  });
-
-  test("Omit _styles and _id for custom", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Custom, {
-        vd: { _styles: [], _id: "" },
-        vs: { _styles: [], _id: "" },
-        v: { _styles: [], _id: "" }
-      })
-    ).toStrictEqual({});
-  });
-
-  test("Default model", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Default, {
-        vd: borderElementModel,
-        vs: borderElementModel,
-        v: borderElementModel
-      })
-    ).toStrictEqual(borderElementModel);
-  });
-
-  test("Rules model as same values as default", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Rules, {
-        vd: borderElementModel,
-        vs: borderElementModel,
-        v: borderElementModel
-      })
-    ).toStrictEqual({});
-  });
-
-  test("Custom model as same values as rules", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Custom, {
-        vd: borderElementModel,
-        vs: borderElementModel,
-        v: borderElementModel
-      })
-    ).toStrictEqual({});
-  });
-
-  test("Rules model with some new values, should return unique key:value filtered with default", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Rules, {
-        vd: borderElementModel,
-        vs: {
-          ...borderElementModel,
-          borderColorHex: "#FF0000",
-          borderColorOpacity: 0.9
-        },
-        v: borderElementModel
-      })
-    ).toStrictEqual({ borderColorHex: "#FF0000", borderColorOpacity: 0.9 });
-  });
-
-  test("Custom model with some new values, should return unique key:value filtered with rules", () => {
-    expect(
-      getCurrentModelFilteredValues(ModelType.Custom, {
-        vd: borderElementModel,
-        vs: borderElementModel,
-        v: { ...borderElementModel, borderTopWidth: 7, borderRightWidth: 8 }
-      })
-    ).toStrictEqual({ borderTopWidth: 7, borderRightWidth: 8 });
-  });
-});
-
-describe("Testing checkIfSomeKeyWasChanged that should check if min 1 key of option model in changed in vs or v", () => {
-  test("Empty, should return false", () => {
-    // @ts-expect-error testing purpose
-    expect(checkIfSomeKeyWasChanged({})).toStrictEqual(false);
-  });
-
-  test("Border option in empty v, should return false", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {},
-        breakpoint: DESKTOP,
-        state: NORMAL
-      })
-    ).toStrictEqual(false);
-  });
-
-  test("Border option with desktop normal, should return true", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {
-          borderColorHex: "asd"
-        },
-        breakpoint: DESKTOP,
-        state: NORMAL
-      })
-    ).toStrictEqual(true);
-  });
-
-  test("Border option with desktop hover, should return true", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {
-          hoverBorderColorHex: "asd"
-        },
-        breakpoint: DESKTOP,
-        state: HOVER
-      })
-    ).toStrictEqual(true);
-  });
-
-  test("Border option with desktop hover but any hover key is missing, should return false", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {},
-        breakpoint: DESKTOP,
-        state: HOVER
-      })
-    ).toStrictEqual(false);
-  });
-
-  test("Border option with desktop active, should return true", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {
-          activeBorderColorHex: "a"
-        },
-        breakpoint: DESKTOP,
-        state: ACTIVE
-      })
-    ).toStrictEqual(true);
-  });
-
-  test("Border option with desktop active but any active key is missing, should return false", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {},
-        breakpoint: DESKTOP,
-        state: ACTIVE
-      })
-    ).toStrictEqual(false);
-  });
-
-  test("Border option with tablet but any active key is missing, should return false", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {},
-        breakpoint: TABLET,
-        state: NORMAL
-      })
-    ).toStrictEqual(false);
-  });
-
-  test("Border option with tablet, should return true", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {
-          tabletBorderColorHex: 1
-        },
-        breakpoint: TABLET,
-        state: NORMAL
-      })
-    ).toStrictEqual(true);
-  });
-
-  test("Border option with mobile, should return true", () => {
-    expect(
-      checkIfSomeKeyWasChanged({
-        id: "border",
-        type: "border",
-        v: {
-          mobileBorderColorHex: 1
-        },
-        breakpoint: MOBILE,
-        state: NORMAL
-      })
-    ).toStrictEqual(true);
-  });
-});
-
-describe("Testing getNewModel function that should return new option model that get missing keys from previous model, as example missing key from v is getting from vs, missing key from vs is getting from vd", () => {
-  const model = {
-    vd: borderElementModel,
-    vs: borderElementModel,
-    v: borderElementModel
-  };
-
-  test("Empty", () => {
-    // @ts-expect-error testing purposes
-    expect(getNewModel({})).toStrictEqual({});
-  });
-
-  test("Missing normal keys in vs must be taken from vd ", () => {
-    expect(
-      getNewModel({
-        id: "border",
-        type: "border",
-        v: { borderColorHex: "#0000FF", borderColorOpacity: 0.9 },
-        model,
-        currentModel: ModelType.Rules,
-        breakpoint: DESKTOP,
-        state: NORMAL
-      })
-    ).toStrictEqual({
-      ...borderElementModel,
-      borderColorHex: "#0000FF",
-      borderColorOpacity: 0.9
-    });
-  });
-
-  test("Missing normal keys in v must be taken from vs ", () => {
-    expect(
-      getNewModel({
-        id: "border",
-        type: "border",
-        v: { borderWidth: 5 },
-        model: {
-          ...model,
-          vs: {
-            ...borderElementModel,
-            borderColorHex: "asd",
-            borderColorPalette: "asd2",
-            borderColorOpacity: "asd3"
-          }
-        },
-        currentModel: ModelType.Custom,
-        breakpoint: DESKTOP,
-        state: NORMAL
-      })
-    ).toStrictEqual({
-      ...borderElementModel,
-      borderColorHex: "asd",
-      borderColorOpacity: "asd3",
-      borderColorPalette: "asd2"
-    });
-  });
-
-  test("Missing normal keys in v must be taken from vd if also is still missing in vs ", () => {
-    expect(
-      getNewModel({
-        id: "border",
-        type: "border",
-        v: { borderWidth: 5 },
-        model: {
-          ...model,
-          vd: {
-            ...borderElementModel,
-            borderColorHex: "#FF0000",
-            borderColorPalette: "color3",
-            borderColorOpacity: "0.9"
-          },
-          vs: {}
-        },
-        currentModel: ModelType.Custom,
-        breakpoint: DESKTOP,
-        state: NORMAL
-      })
-    ).toStrictEqual({
-      ...borderElementModel,
-      borderColorHex: "#FF0000",
-      borderColorPalette: "color3",
-      borderColorOpacity: "0.9"
-    });
-  });
-
-  test("Missing hover keys in v must be taken from vd if also is still missing in vs ", () => {
-    expect(
-      getNewModel({
-        id: "border",
-        type: "border",
-        v: { hoverBorderWidth: 5 },
-        model: {
-          ...model,
-          vd: {
-            hoverBorderColorHex: "#FF0000",
-            hoverBorderColorPalette: "color3",
-            hoverBorderColorOpacity: "0.9",
-            hoverBorderBottomWidth: 1,
-            hoverBorderLeftWidth: 2,
-            hoverBorderRightWidth: 3,
-            hoverBorderStyle: "solid",
-            hoverBorderTopWidth: 4,
-            hoverBorderWidthType: "grouped"
-          },
-          vs: {}
-        },
-        currentModel: ModelType.Custom,
-        breakpoint: DESKTOP,
-        state: HOVER
-      })
-    ).toStrictEqual({
-      hoverBorderBottomWidth: 1,
-      hoverBorderColorHex: "#FF0000",
-      hoverBorderColorOpacity: "0.9",
-      hoverBorderColorPalette: "color3",
-      hoverBorderLeftWidth: 2,
-      hoverBorderRightWidth: 3,
-      hoverBorderStyle: "solid",
-      hoverBorderTopWidth: 4,
-      hoverBorderWidth: 5,
-      hoverBorderWidthType: "grouped"
-    });
-  });
-
-  test("Missing active keys in v must be taken from vd if also is still missing in vs ", () => {
-    expect(
-      getNewModel({
-        id: "border",
-        type: "border",
-        v: { activeBorderWidth: 5 },
-        model: {
-          ...model,
-          vd: {
-            activeBorderColorHex: "#FF0000",
-            activeBorderColorPalette: "color3",
-            activeBorderColorOpacity: "0.9",
-            activeBorderBottomWidth: 1,
-            activeBorderLeftWidth: 2,
-            activeBorderRightWidth: 3,
-            activeBorderStyle: "solid",
-            activeBorderTopWidth: 4,
-            activeBorderWidthType: "grouped"
-          },
-          vs: {}
-        },
-        currentModel: ModelType.Custom,
-        breakpoint: DESKTOP,
-        state: ACTIVE
-      })
-    ).toStrictEqual({
-      activeBorderBottomWidth: 1,
-      activeBorderColorHex: "#FF0000",
-      activeBorderColorOpacity: "0.9",
-      activeBorderColorPalette: "color3",
-      activeBorderLeftWidth: 2,
-      activeBorderRightWidth: 3,
-      activeBorderStyle: "solid",
-      activeBorderTopWidth: 4,
-      activeBorderWidth: 5,
-      activeBorderWidthType: "grouped"
-    });
-  });
-
-  test("Missing tablet keys in v must be taken from vd if also is still missing in vs ", () => {
-    expect(
-      getNewModel({
-        id: "border",
-        type: "border",
-        v: { tabletBorderWidth: 5 },
-        model: {
-          ...model,
-          vd: {
-            tabletBorderColorHex: "#FF0000",
-            tabletBorderColorPalette: "color3",
-            tabletBorderColorOpacity: "0.9",
-            tabletBorderBottomWidth: 1,
-            tabletBorderLeftWidth: 2,
-            tabletBorderRightWidth: 3,
-            tabletBorderStyle: "solid",
-            tabletBorderTopWidth: 4,
-            tabletBorderWidthType: "grouped"
-          },
-          vs: {}
-        },
-        currentModel: ModelType.Custom,
-        breakpoint: TABLET,
-        state: NORMAL
-      })
-    ).toStrictEqual({
-      tabletBorderBottomWidth: 1,
-      tabletBorderColorHex: "#FF0000",
-      tabletBorderColorOpacity: "0.9",
-      tabletBorderColorPalette: "color3",
-      tabletBorderLeftWidth: 2,
-      tabletBorderRightWidth: 3,
-      tabletBorderStyle: "solid",
-      tabletBorderTopWidth: 4,
-      tabletBorderWidth: 5,
-      tabletBorderWidthType: "grouped"
-    });
-  });
-
-  test("Missing mobile keys in v must be taken from vd if also is still missing in vs ", () => {
-    expect(
-      getNewModel({
-        id: "border",
-        type: "border",
-        v: { mobileBorderWidth: 5 },
-        model: {
-          ...model,
-          vd: {
-            mobileBorderColorHex: "#FF0000",
-            mobileBorderColorPalette: "color3",
-            mobileBorderColorOpacity: "0.9",
-            mobileBorderBottomWidth: 1,
-            mobileBorderLeftWidth: 2,
-            mobileBorderRightWidth: 3,
-            mobileBorderStyle: "solid",
-            mobileBorderTopWidth: 4,
-            mobileBorderWidthType: "grouped"
-          },
-          vs: {}
-        },
-        currentModel: ModelType.Custom,
-        breakpoint: MOBILE,
-        state: NORMAL
-      })
-    ).toStrictEqual({
-      mobileBorderBottomWidth: 1,
-      mobileBorderColorHex: "#FF0000",
-      mobileBorderColorOpacity: "0.9",
-      mobileBorderColorPalette: "color3",
-      mobileBorderLeftWidth: 2,
-      mobileBorderRightWidth: 3,
-      mobileBorderStyle: "solid",
-      mobileBorderTopWidth: 4,
-      mobileBorderWidth: 5,
-      mobileBorderWidthType: "grouped"
-    });
+  test.each([
+    ["button:hover"],
+    ["button.active"],
+    ["button:hover.active"],
+    ["button"],
+    ["button:hover.active:hover"]
+  ])(`%s is not equal with ${output}`, (input) => {
+    expect(replaceHoverAndActive(input)).toBe(output);
   });
 });

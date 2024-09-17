@@ -40,6 +40,7 @@ import { omit } from "timm";
 
 const config = Config.getAll();
 const IS_STORY = isStory(config);
+const classNameContainer = "brz-icon__container";
 
 class Icon extends EditorComponent<Value, Props> {
   static get componentId(): "Icon" {
@@ -122,6 +123,7 @@ class Icon extends EditorComponent<Value, Props> {
       name,
       actionClosePopup,
       customClassName,
+      filename,
       customCSS,
       cssClass
     } = v;
@@ -139,8 +141,13 @@ class Icon extends EditorComponent<Value, Props> {
       )
     );
 
-    const classWrapper = classnames(
-      "brz-icon__container",
+    const classWrapper = classnames(classNameContainer, {
+      "brz-popup2__action-close":
+        linkData.type === "action" && actionClosePopup === "on"
+    });
+
+    const classWrapperStory = classnames(
+      classNameContainer,
       css(
         `${this.getComponentId()}-icon-wrap`,
         `${this.getId()}-icon-wrap`,
@@ -150,23 +157,17 @@ class Icon extends EditorComponent<Value, Props> {
 
     let content = (
       <span className={classNameIcon}>
-        <ThemeIcon name={name} type={type} />
+        <ThemeIcon name={name} type={type} filename={filename} />
       </span>
     );
 
     if (linkData.href) {
-      const className = classnames({
-        "brz-popup2__action-close":
-          linkData.type === "action" && actionClosePopup === "on"
-      });
-
       content = (
         <Link
           type={linkData.type}
           href={linkData.href}
           target={linkData.target}
           rel={linkData.rel}
-          className={className}
           slide={linkData.slide}
         >
           {content}
@@ -193,7 +194,7 @@ class Icon extends EditorComponent<Value, Props> {
           <CustomCSS selectorName={this.getId()} css={customCSS}>
             <Wrapper
               {...this.makeWrapperProps({
-                className: IS_STORY ? classWrapper : "brz-icon__container",
+                className: IS_STORY ? classWrapperStory : classWrapper,
                 attributes: { ...props }
               })}
             >

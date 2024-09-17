@@ -8,6 +8,7 @@ export type ImageDataPatch = {
   imageWidth: number;
   imageHeight: number;
   imageType: ImageType;
+  alt?: string;
 };
 
 export const isImageDataPatch = (p: Patch): p is ImageDataPatch =>

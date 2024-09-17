@@ -6,7 +6,7 @@ export { default as Countdown2 } from "./Countdown2/export.js";
 export { default as Counter } from "./Counter/export.ts";
 export * from "./Ecwid/export";
 export { default as Form } from "./Form/export.js";
-export { default as Form2 } from "./Form2/export.js";
+export { default as Form2 } from "./Form2/export.ts";
 export { default as FileUpload } from "./Form2/Form2Field/types/FileUpload/export.js";
 export { default as Image } from "./Image/export.js";
 export { default as Login } from "./Login/export";

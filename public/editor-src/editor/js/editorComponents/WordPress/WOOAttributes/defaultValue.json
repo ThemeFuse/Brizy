@@ -41,6 +41,12 @@
     "titleVariableFontWeight": 300,
     "titleFontWidth": 100,
     "titleFontSoftness": 0,
+    "titleBold": false,
+    "titleItalic": false,
+    "titleUnderline": false,
+    "titleStrike": false,
+    "titleUppercase": false,
+    "titleLowercase": false,
 
     "tabletTitleFontStyle": "",
     "tabletTitleFontFamilyType": null,
@@ -75,6 +81,12 @@
     "attributesVariableFontWeight": 300,
     "attributesFontWidth": 100,
     "attributesFontSoftness": 0,
+    "attributesBold": false,
+    "attributesItalic": false,
+    "attributesUnderline": false,
+    "attributesStrike": false,
+    "attributesUppercase": false,
+    "attributesLowercase": false,
 
     "attributeColorHex": "#1c1c1c",
     "attributeColorOpacity": 1,
@@ -107,8 +119,6 @@
     "tempBorderColorOpacity": 1,
     "tempBorderColorPalette": "color2",
 
-    "tabletWidthSuffix": null,
-
     "tabletAttributesFontStyle": "",
     "tabletAttributesFontFamilyType": null,
     "tabletAttributesFontSize": 15,
@@ -116,8 +126,6 @@
     "tabletAttributesFontWeight": 300,
     "tabletAttributesLineHeight": 1.3,
     "tabletAttributesLetterSpacing": 0,
-
-    "mobileWidthSuffix": null,
 
     "mobileAttributesFontStyle": "",
     "mobileAttributesFontFamilyType": null,

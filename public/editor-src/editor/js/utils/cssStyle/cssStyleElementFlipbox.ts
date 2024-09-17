@@ -1,5 +1,4 @@
 import { cssStyleFlexColumnVerticalAlign } from "visual/utils/cssStyle/cssStyleAlign";
-import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBgGradient } from "visual/utils/cssStyle/cssStyleBgGradient";
 import {
   cssStyleBgImage,
@@ -9,6 +8,7 @@ import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 import { cssStyleFilter } from "visual/utils/cssStyle/cssStyleFilter";
+import { styleBgColor, styleBgGradient } from "visual/utils/style2";
 import { CSSValue } from "../style2/types";
 import { cssStylePaddingFourFields } from "./cssStylePadding";
 
@@ -77,7 +77,20 @@ export const cssStyleElementFlipboxBackBgColor = ({
   v,
   device,
   state
-}: CSSValue): string => cssStyleBgColor({ v, device, state, prefix: "backBg" });
+}: CSSValue): string => {
+  const bgColor = styleBgColor({ v, device, state, prefix: "backBg" });
+
+  const bgGradient = styleBgGradient({
+    v,
+    device,
+    state,
+    prefix: "backBg"
+  });
+
+  return bgColor === undefined || bgGradient !== "none"
+    ? "background-color:transparent;"
+    : `background-color:${bgColor};`;
+};
 
 export const cssStyleElementFlipboxBackBgGradient = ({
   v,

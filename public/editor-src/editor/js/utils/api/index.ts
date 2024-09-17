@@ -14,7 +14,6 @@ import { pipe } from "visual/utils/fp";
 import * as ArrReader from "visual/utils/reader/array";
 import { read } from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
 import {
   parseBlogSourceItem,
@@ -25,7 +24,6 @@ import {
   BlogSourceItem,
   CollectionSourceItem,
   GetCollectionSourceTypes,
-  GetDynamicContent,
   Rule,
   SelectedItem
 } from "./types";
@@ -34,12 +32,14 @@ import { makeUrl } from "./utils";
 export * from "./cms";
 export * from "./cms/popup";
 export {
+  addCustomIcon,
   autoSave,
   createBlockScreenshot,
+  createGlobalBlock,
+  createGlobalPopup,
   createSavedBlock,
   createSavedLayout,
   createSavedPopup,
-  defaultKits,
   defaultKitsData,
   defaultKitsMeta,
   defaultLayoutsData,
@@ -51,6 +51,8 @@ export {
   defaultStoriesData,
   defaultStoriesMeta,
   defaultStoriesPages,
+  deleteCustomIcon,
+  defaultKits,
   deleteSavedBlock,
   deleteSavedLayout,
   deleteSavedPopup,
@@ -58,7 +60,11 @@ export {
   filterSavedLayouts,
   filterSavedPopups,
   getCollectionTypes,
+  getDynamicContent,
+  getCustomIcons,
   getEcwidProducts,
+  getLeadificCustomFields,
+  getAdobeFonts,
   getSavedBlockById,
   getSavedBlocks,
   getSavedLayoutById,
@@ -71,19 +77,18 @@ export {
   importSavedLayout,
   importSavePopups,
   onChange,
+  pendingRequest,
   publish,
   sendHeartBeat,
   sendHeartBeatTakeOver,
+  updateBlockScreenshot,
+  updateEkklesiaFields,
   updatePopupRules,
   updateSavedBlock,
   updateSavedLayout,
   updateSavedPopup,
-  createGlobalBlock,
-  createGlobalPopup,
-  getLeadificCustomFields,
-  pendingRequest,
-  updateBlockScreenshot,
-  updateEkklesiaFields
+  getGlobalColors,
+  getGlobalTypography
 } from "./common";
 export { makeFormEncode, makeUrl, parseJSON } from "./utils";
 
@@ -119,47 +124,6 @@ export function request(
 //#region getPostObjects
 // eslint-disable-next-line
 export const getPostObjects = async (_ = undefined) => [];
-
-//#endregion
-
-//#region Dynamic content
-
-export const getDynamicContent: GetDynamicContent = async ({
-  placeholders,
-  signal
-}) => {
-  const apiUrl = Config.get("urls").api;
-  const projectId = Config.get("project").id;
-  const body = new URLSearchParams();
-
-  for (const [postId, placeholders_] of Object.entries(placeholders)) {
-    if (placeholders_) {
-      for (const p of placeholders_) {
-        body.append(`p[${postId}][]`, p);
-      }
-    }
-  }
-
-  const r = await request(
-    `${apiUrl}/projects/${projectId}/placeholders_bulks`,
-    { method: "POST", body, signal }
-  );
-
-  if (!r.ok) {
-    throw new Error("fetch dynamic content error");
-  }
-
-  const json = await r.json();
-  const dc = Obj.readWithValueReader(ArrReader.readWithItemReader(Str.read))(
-    json
-  );
-
-  if (dc === undefined) {
-    throw new Error("fetch dynamic content error");
-  }
-
-  return dc;
-};
 
 //#endregion
 

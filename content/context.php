@@ -6,6 +6,7 @@ class Brizy_Content_Context implements ContextInterface
 {
 
     private $data = array();
+    private $parentContext = null;
 
     /**
      * @param $name
@@ -50,7 +51,7 @@ class Brizy_Content_Context implements ContextInterface
 
     public function afterExtract($contentPlaceholders, $instancePlaceholders, $contentAfterExtractor)
     {
-        $this->setPlaceholders($contentPlaceholders);
+        $this->setPlaceholders(array_merge((array)$this->getPlaceholders(), $contentPlaceholders));
     }
 
 
@@ -75,10 +76,52 @@ class Brizy_Content_Context implements ContextInterface
      * @param $project
      * @param $wp_post
      */
-    public function __construct($project = null, $wp_post = null)
+    public function __construct($project = null, $wp_post = null, $parentContext = null, $parentPlaceholder=null)
     {
         $this->setProject($project);
         $this->setWpPost($wp_post);
         $this->setEntity($wp_post);
+        $this->setParentPlaceholder($parentPlaceholder);
+
+        if ($parentContext instanceof ContextInterface) {
+            $this->parentContext = ($parentContext);
+        }
     }
+
+    public function getParentContext()
+    {
+        return $this->parentContext;
+    }
+
+    public function setParentContext($parentContext)
+    {
+        $this->parentContext = $parentContext;
+
+        return $this;
+    }
+
+    public function searchPlaceholderByNameAndAttr($name, $attrName, $attrValue)
+    {
+        foreach ((array)$this->getPlaceholders() as $placeholder) {
+            if ($placeholder->getName() == $name && $placeholder->getAttribute($attrName) == $attrValue) {
+                return $placeholder;
+            }
+        }
+        if ($this->parentContext instanceof ContextInterface) {
+            return $this->parentContext->searchPlaceholderByNameAndAttr($name, $attrName, $attrValue);
+        }
+
+        return null;
+    }
+
+	public function searchParentPlaceholderByName( $name ) {
+		if ( $this->getParentPlaceholder() && $this->getParentPlaceholder()->getName() == $name ) {
+			return $this->getParentPlaceholder();
+		}
+		if ( $this->parentContext instanceof ContextInterface ) {
+			return $this->parentContext->searchParentPlaceholderByName( $name );
+		}
+
+		return null;
+	}
 }

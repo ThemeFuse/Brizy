@@ -11,6 +11,7 @@
 
     "iconName": "tail-right",
     "iconType": "glyph",
+    "iconFilename": "",
 
     "popups": [],
 
@@ -89,6 +90,12 @@
     "variableFontWeight": 700,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "bgColorType": "solid",
 
@@ -289,10 +296,7 @@
     "customCSS": "",
 
     "width": null,
-    "widthSuffix": null,
-
     "height": null,
-    "heightSuffix": null,
 
     "tabletSize": "small",
 

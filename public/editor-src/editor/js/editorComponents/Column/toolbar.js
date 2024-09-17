@@ -1,6 +1,7 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
+import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -16,13 +17,13 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { capitalize } from "visual/utils/string";
 import { read as readString } from "visual/utils/string/specs";
-import {
-  toolbarLinkAnchor,
-  toolbarLinkPopup,
-  toolbarShowOnResponsive
-} from "visual/utils/toolbar";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { Toggle } from "visual/utils/options/utils/Type";
 
 export function getItems({ v, device, component, context, state }) {
   const config = Config.getAll();
@@ -30,6 +31,8 @@ export function getItems({ v, device, component, context, state }) {
   const IS_GLOBAL_POPUP = isPopup(config);
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "column");
 
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const dvvState = (key, state) => defaultValueValue({ v, key, device, state });
@@ -42,6 +45,8 @@ export function getItems({ v, device, component, context, state }) {
     options: context.dynamicContent.config,
     type: DCTypes.image
   });
+
+  const media = dvv("media");
 
   const maskShape = readString(dvv("maskShape")) ?? "none";
   const maskPosition = readString(dvv("maskPosition")) ?? "center center";
@@ -63,9 +68,10 @@ export function getItems({ v, device, component, context, state }) {
       ]
     : [];
 
-  const videoMedia = dvv("media") !== "video";
   const videoType = dvv("bgVideoType");
+  const coverBg = dvv("bgSize") === BgSize.Cover;
 
+  const imageMedia = media === "image";
   const youtubeType = videoType === "youtube";
   const vimeoType = videoType === "vimeo";
   const customType = videoType === "bgVideoCustom";
@@ -74,15 +80,35 @@ export function getItems({ v, device, component, context, state }) {
     options: context.dynamicContent.config,
     type: DCTypes.link
   });
-  const image = dvv("media") !== "image";
-  const video = dvv("media") !== "video";
-  const map = dvv("media") !== "map";
 
-  const isDesktop = device === "desktop";
+  const image = media !== "image";
+  const video = media !== "video";
+  const map = media !== "map";
+
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const linkPopup = dvv("linkPopup");
+  const deviceCapitalize = capitalize(device);
 
   return [
-    toolbarShowOnResponsive({ v, device, devices: "responsive" }),
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
+      devices: "responsive",
+      position: 10,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "toolbarCurrentElement",
       type: "popover",
@@ -106,9 +132,7 @@ export function getItems({ v, device, component, context, state }) {
                   type: "radioGroup",
                   choices: [
                     { value: "image", icon: "nc-media-image" },
-                    ...(isDesktop
-                      ? [{ value: "video", icon: "nc-media-video" }]
-                      : []),
+                    { value: "video", icon: "nc-media-video" },
                     { value: "map", icon: "nc-media-map" }
                   ]
                 },
@@ -122,7 +146,7 @@ export function getItems({ v, device, component, context, state }) {
                   disabled: image,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
                 },
                 {
@@ -132,18 +156,41 @@ export function getItems({ v, device, component, context, state }) {
                   devices: "responsive",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
-                  disabled: image && video,
+                  disabled: image,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
+                },
+                {
+                  id: "bgSize",
+                  label: t("Size"),
+                  type: "select",
+                  disabled: !imageMedia,
+                  choices: [
+                    { title: t("Cover"), value: BgSize.Cover },
+                    { title: t("Contain"), value: BgSize.Contain },
+                    { title: t("Auto"), value: BgSize.Auto }
+                  ]
+                },
+                {
+                  id: "bgRepeat",
+                  label: t("Repeat"),
+                  type: "select",
+                  disabled: !imageMedia || coverBg,
+                  choices: [
+                    { title: t("No repeat"), value: BgRepeat.Off },
+                    { title: t("Repeat"), value: BgRepeat.On },
+                    { title: t("Repeat-X"), value: BgRepeat.RepeatX },
+                    { title: t("Repeat-Y"), value: BgRepeat.RepeatY }
+                  ]
                 },
                 {
                   id: "bgVideoType",
                   label: t("Video type"),
                   type: "select",
                   devices: "desktop",
-                  disabled: videoMedia,
+                  disabled: video,
                   choices: [
                     { title: t("Youtube"), value: "youtube" },
                     { title: t("Vimeo"), value: "vimeo" },
@@ -156,7 +203,7 @@ export function getItems({ v, device, component, context, state }) {
                   label: t("Link"),
                   type: "inputText",
                   devices: "desktop",
-                  disabled: videoMedia || customType,
+                  disabled: video || customType,
                   placeholder: youtubeType
                     ? t("YouTube")
                     : vimeoType
@@ -180,7 +227,7 @@ export function getItems({ v, device, component, context, state }) {
                     allowedExtensions: ["video/*"]
                   },
                   devices: "desktop",
-                  disabled: videoMedia || !customType
+                  disabled: video || !customType
                 },
                 {
                   id: "bgVideoLoop",
@@ -201,7 +248,8 @@ export function getItems({ v, device, component, context, state }) {
                   id: "bgMapZoom",
                   label: t("Zoom"),
                   type: "slider",
-                  disabled: map || device !== "desktop",
+                  devices: "desktop",
+                  disabled: map,
                   config: {
                     min: 1,
                     max: 21
@@ -460,17 +508,20 @@ export function getItems({ v, device, component, context, state }) {
               id: "popup",
               label: t("Popup"),
               options: [
-                toolbarLinkPopup({
-                  v,
-                  component,
-                  state: "normal",
-                  device: "desktop",
-                  canDelete: device === "desktop",
+                {
+                  id: "linkPopup",
+                  type: "promptAddPopup",
+                  label: t("Popup"),
                   disabled:
                     device === "desktop"
                       ? inPopup || inPopup2 || IS_GLOBAL_POPUP
-                      : dvv("linkType") !== "popup" || dvv("linkPopup") === ""
-                })
+                      : dvv("linkType") !== "popup" || linkPopup === "",
+                  config: {
+                    popupKey: `${component.getId()}_${linkPopup}`,
+                    canDelete: device === "desktop"
+                  },
+                  dependencies: popupToOldModel
+                }
               ]
             }
           ]

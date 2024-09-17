@@ -117,7 +117,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
                 }
               ),
               extendParentToolbar: this.handleExtendParentToolbar,
-              meta: this.props.meta,
+              meta: {...this.props.meta, wrapperId: this.getId()},
               wrapperExtend: {
                 ref,
                 attributes: attr,

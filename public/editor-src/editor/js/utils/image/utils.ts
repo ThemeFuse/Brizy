@@ -1,17 +1,20 @@
-import _ from "underscore";
-import { SizeType } from "visual/global/Config/types/configs/common";
+import {
+  defaultCrop,
+  SizeType
+} from "visual/global/Config/types/configs/common";
+import { parseCropData } from "visual/utils/image/parsers";
+import * as Str from "../reader/string";
+import {
+  CustomSize,
+  Data,
+  DataUrl,
+  PlaceholdersValues,
+  ResizeData,
+  ImageType
+} from "./types";
 import { makeUrl } from "visual/utils/api";
 import { read as readStr } from "visual/utils/reader/string";
-import { objectToQueryString } from "visual/utils/url";
-import { CustomSize, Data, FilterOption, ImageType } from "./types";
-
-export const getFilter = (options: FilterOption): string => {
-  const roundedOptions = _.mapObject(options, (val) =>
-    typeof val === "number" ? Math.round(val) : val
-  );
-
-  return objectToQueryString(roundedOptions);
-};
+import normalizeUrl from "normalize-url";
 
 export const isCropSize = (d: Data): d is CustomSize =>
   d.sizeType === SizeType.custom;
@@ -40,3 +43,94 @@ export const getUnsplashCrop = (data: Data): string => {
 };
 
 export const UNSPLASH_BG_IMAGE_WIDTH = 1920;
+
+export const knownPlaceholders = [
+  "[iW]",
+  "[iH]",
+  "[cW]",
+  "[cH]",
+  "[baseUrl]",
+  "[uid]",
+  "[fileName]",
+  "[oX]",
+  "[oY]"
+];
+
+export const getPlaceholders = (pattern: string): string[] => {
+  const placeholderRegex = /\[([^\]]+)\]/g;
+
+  return pattern.match(placeholderRegex) || [];
+};
+
+export const replaceSymbols = (input: string): string => {
+  return input.replaceAll("{", "").replaceAll("}", "").replaceAll(" ", "");
+};
+
+export const replacePlaceholders = (options: ResizeData): string => {
+  const { pattern, baseUrl, fileName, uid, sizeType, crop } = options;
+
+  const placeholders = getPlaceholders(pattern);
+
+  const values: PlaceholdersValues = {
+    baseUrl,
+    fileName,
+    uid,
+    sizeType,
+    ...crop
+  };
+
+  const finalUrl = placeholders.reduce((url, placeholder) => {
+    const key = placeholder.replace("[", "").replace("]", "");
+    const value = Str.read(values[key]);
+
+    return value
+      ? url.replace(placeholder, value)
+      : knownPlaceholders.includes(placeholder)
+        ? url.replace(placeholder, "")
+        : url;
+  }, pattern);
+
+  return normalizeUrl(replaceSymbols(finalUrl), { sortQueryParameters: false });
+};
+
+export const generateUrl = (options: DataUrl): string => {
+  const { crop, baseUrl, uid, fileName, patterns, sizeType } = options;
+
+  const parsedCropData = parseCropData(crop);
+
+  const baseOptions = { baseUrl, uid, fileName };
+
+  // Case when size is custom but crop is undefined
+  if (sizeType && sizeType === SizeType.custom && !parsedCropData) {
+    return replacePlaceholders({
+      pattern: patterns.split,
+      ...baseOptions,
+      crop: defaultCrop
+    });
+  }
+
+  // Case when size is predefined (original, thumbnail, 200x200 etc.)
+  if (parsedCropData === undefined) {
+    return replacePlaceholders({
+      pattern: patterns.original,
+      sizeType: SizeType.original,
+      ...baseOptions
+    });
+  }
+
+  // Case when "iH" is "any"
+  if (parsedCropData.iH === "any") {
+    return replacePlaceholders({
+      pattern: patterns.split,
+      crop: parsedCropData,
+      ...baseOptions
+    });
+  }
+
+  // Case when size = custom and crop exists
+  return replacePlaceholders({
+    pattern: patterns.full,
+    crop: parsedCropData,
+    ...baseOptions
+  });
+};

@@ -55,10 +55,11 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
   $(document).on("brz.popup.close", function (e, popup) {
     var $popup = $(popup);
 
-    if ($popup.hasClass("brz-conditions-popup")) {
+    if ($popup.closest(".brz-conditions-popup")) {
       var showedPopups = JSON.parse(getFromStorage("brz-showedPopups") || "[]");
 
-      var popupId = $popup.attr(makeAttr("popup"));
+      var popupId =
+        $popup.attr(makeAttr("once-id")) ?? $popup.attr(makeAttr("custom-id"));
 
       setToStorage(
         "brz-showedPopups",

@@ -1,9 +1,11 @@
 import { ElementModel } from "editor/js/component/Elements/Types";
+import { Layout } from "visual/component/Prompts/common/PromptPage/types";
 import Config from "visual/global/Config";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
 import { NewType } from "visual/types/NewType";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
+import { checkValue2 } from "visual/utils/checkValue";
 import { Hex } from "visual/utils/color/Hex";
 import { Palette as ColorPalette } from "visual/utils/color/Palette";
 import {
@@ -13,6 +15,7 @@ import {
   SYNC_ERROR
 } from "visual/utils/errors";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { pass } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";
 import { Dictionary } from "./utils";
 
@@ -92,7 +95,7 @@ export interface CollectionItemRule extends AllRule {
 
 export type Rule = AllRule | CollectionTypeRule | CollectionItemRule;
 
-interface GlobalBlockBase {
+export interface GlobalBlockBase {
   uid: string;
   data: Block & { deleted?: boolean };
   status: "draft" | "publish";
@@ -101,6 +104,10 @@ interface GlobalBlockBase {
   dataVersion: number;
   title?: string;
   tags?: string;
+}
+
+export interface ExtraFontData {
+  adobeKitId?: string;
 }
 
 export interface GlobalBlockNormal extends GlobalBlockBase {
@@ -178,6 +185,7 @@ export interface Project {
     font: string;
     fonts: Fonts;
     disabledElements: string[];
+    pinnedElements: string[];
   };
 }
 
@@ -231,7 +239,7 @@ export type ExternalPopupCloud = DataCommon;
 export interface ShopifyPage extends PageCommon {
   layout: {
     id: string;
-    value: string | undefined;
+    value: Layout | undefined;
     isHomePage: string | null;
   };
 }
@@ -280,6 +288,15 @@ export type GoogleFont = {
   deleted?: boolean;
 };
 
+export type AdobeFont = {
+  brizyId?: string;
+  id: string;
+  family: string;
+  category: string;
+  subsets: string[];
+  variants: string[];
+};
+
 export type SystemFont = {
   brizyId: string;
   id: string;
@@ -298,7 +315,7 @@ export type UploadedFont = {
   variations?: VariationFont[];
 };
 
-export type Font = GoogleFont | UploadedFont | SystemFont;
+export type Font = GoogleFont | UploadedFont | AdobeFont | SystemFont;
 
 export type VariationFont = {
   tag: string;
@@ -315,6 +332,10 @@ export interface Fonts {
   };
   google?: {
     data: GoogleFont[];
+  };
+  adobe?: {
+    id: string;
+    data: AdobeFont[];
   };
   system?: {
     data: SystemFont[];
@@ -372,7 +393,7 @@ export type Screenshot = {
 
 // style
 
-export interface FontStyle {
+export interface FontStyle extends FontTransform {
   deletable: "off" | "on";
   deleted?: boolean;
   id: string;
@@ -403,6 +424,27 @@ export interface FontStyle {
   fontSizeSuffix?: string;
   tabletFontSizeSuffix?: string;
   mobileFontSizeSuffix?: string;
+}
+
+export enum TextScripts {
+  "None" = "",
+  "Super" = "super",
+  "Sub" = "sub"
+}
+
+const isScript = (v: string): v is TextScripts =>
+  !!checkValue2<TextScripts>(TextScripts)(v);
+
+export const fromStringToScript = pass(isScript);
+
+export interface FontTransform {
+  bold: boolean;
+  italic: boolean;
+  underline: boolean;
+  strike: boolean;
+  uppercase: boolean;
+  lowercase: boolean;
+  script?: TextScripts;
 }
 
 export const isFontStyle = (item: unknown): item is ExtraFontStyle =>

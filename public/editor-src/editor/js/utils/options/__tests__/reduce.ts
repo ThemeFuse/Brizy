@@ -2,21 +2,6 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { reduce, reduceR } from "../reduce";
 
 // region Mocks
-jest.mock(
-  "visual/component/Options/types/AdvancedSettings.jsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
-jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
-jest.mock(
-  "visual/component/Options/types/ColorPaletteEditor.jsx",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/FontStyleEditor/index.tsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));

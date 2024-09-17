@@ -1,18 +1,25 @@
-import React, { ReactElement, MouseEvent, useCallback } from "react";
 import classnames from "classnames";
+import React, { MouseEvent, useCallback } from "react";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
-import { ThemeIcon } from "visual/component/ThemeIcon";
 
 export interface Props {
   className?: string;
   absolute?: boolean;
   text: string;
+  needElementTitle?: boolean;
   onRemove?: VoidFunction;
 }
 
-export const ProBlocked = (props: Props): ReactElement => {
-  const { className: _cls, absolute, text, onRemove } = props;
+export const ProBlocked = (props: Props): JSX.Element => {
+  const {
+    className: _cls,
+    absolute,
+    text,
+    onRemove,
+    needElementTitle = true
+  } = props;
   const className = classnames(
     "brz-element__pro",
     { "brz-element__pro--absolute": absolute },
@@ -32,7 +39,7 @@ export const ProBlocked = (props: Props): ReactElement => {
       <p className="brz-p brz-element__pro-title">
         <span>{t("Upgrade to PRO to use this")}</span>
         <strong>&nbsp;{text}&nbsp;</strong>
-        <span>{t("element")}</span>
+        {needElementTitle && <span>{t("element")}</span>}
       </p>
       {typeof onRemove === "function" && (
         <p className="brz-p brz-element__pro-removed">

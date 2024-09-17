@@ -18,7 +18,7 @@ module.exports = {
   transform: {
     "\\.(tsx|ts|js|jsx)?$": ["@swc/jest", swcConfig]
   },
-  transformIgnorePatterns: ["/node_modules/(?!(nanoid)/)"],
+  transformIgnorePatterns: ["/node_modules/(?!(nanoid|normalize-url)/)"],
   globals: {
     TARGET: "Jest",
     IS_EDITOR: true,

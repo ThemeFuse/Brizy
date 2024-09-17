@@ -23,10 +23,11 @@ export async function bootstrap(data: Props): Promise<Static> {
   } = data;
   const { fonts } = project.data;
   const store = createStore();
-  const globalBlocks = _globalBlocks.reduce<GlobalBlockRecord>((acc, block) => {
-    acc[block.uid] = block;
-    return acc;
-  }, {});
+  const globalBlocks =
+    _globalBlocks?.reduce<GlobalBlockRecord>((acc, block) => {
+      acc[block.uid] = block;
+      return acc;
+    }, {}) ?? {};
 
   const _fonts = deepMerge(fonts, {
     system: { data: systemFont }

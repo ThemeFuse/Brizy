@@ -139,7 +139,7 @@ export function getItems({ v, device, state }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     }
   ];

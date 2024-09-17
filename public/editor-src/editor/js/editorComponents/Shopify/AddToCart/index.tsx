@@ -8,8 +8,8 @@ import PortalToolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import * as Str from "visual/utils/reader/string";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import * as Str from "visual/utils/reader/string";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -19,6 +19,7 @@ import * as toolbar from "./toolbar";
 export interface Value extends ElementModel {
   iconName: string;
   iconType: string;
+  iconFilename?: string;
   itemId: string;
 }
 
@@ -33,7 +34,7 @@ export class AddToCart extends EditorComponent<Value> {
     this.patchValue(patch);
 
   renderIcon(v: Value): ReactNode {
-    const { iconName, iconType } = v;
+    const { iconName, iconType, iconFilename } = v;
 
     if (iconName && iconType) {
       return (
@@ -41,6 +42,7 @@ export class AddToCart extends EditorComponent<Value> {
           className="brz-shopify-icon-cart"
           name={iconName}
           type={iconType}
+          filename={iconFilename}
         />
       );
     }
@@ -73,7 +75,10 @@ export class AddToCart extends EditorComponent<Value> {
               className,
               attributes: {
                 ...makeDataAttr({ name: "product-handle", value: _itemId }),
-                ...makeDataAttr({ name: "default-variant-id", value: _variantId })
+                ...makeDataAttr({
+                  name: "default-variant-id",
+                  value: _variantId
+                })
               }
             })}
             component={"button"}

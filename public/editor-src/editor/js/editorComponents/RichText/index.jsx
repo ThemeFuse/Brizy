@@ -18,7 +18,7 @@ import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { blocksDataSelector } from "visual/redux/selectors";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
@@ -30,13 +30,13 @@ import {
   getDynamicContentChoices
 } from "visual/utils/options";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
-import { Wrapper } from "../tools/Wrapper";
 import { withMigrations } from "../tools/withMigrations";
-import Quill, { triggerCodes } from "./Quill";
+import { Wrapper } from "../tools/Wrapper";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
 import * as RichTextPatch from "./patch";
+import Quill, { triggerCodes } from "./Quill";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
@@ -79,7 +79,11 @@ class RichText extends EditorComponent {
   toolbarRef = React.createRef();
   toolbarOpen = false;
   // Can be enabled by Config
-  renderDC = !Config.getAll().dynamicContent?.liveInBuilder || IS_PREVIEW;
+
+  renderDC =
+    !(
+      typeof Config.getAll().dynamicContent?.getPlaceholderData === "function"
+    ) || IS_PREVIEW;
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -269,8 +273,6 @@ class RichText extends EditorComponent {
 
   handleBlockTag = (value) => {
     switch (value) {
-      case "paragraph":
-        return { pre: false, header: null };
       case "heading1":
         return { pre: false, header: "h1" };
       case "heading2":
@@ -283,6 +285,9 @@ class RichText extends EditorComponent {
         return { pre: false, header: "h5" };
       case "heading6":
         return { pre: false, header: "h6" };
+      case "paragraph":
+      default:
+        return { pre: false, header: null };
     }
   };
 
@@ -305,18 +310,10 @@ class RichText extends EditorComponent {
     }
 
     if (this.quillRef && this.quillRef.current) {
-      switch (values.typographyFontStyle) {
-        case "paragraph":
-        case "heading1":
-        case "heading2":
-        case "heading3":
-        case "heading4":
-        case "heading5":
-        case "heading6":
-          this.quillRef.current.formatMultiple(
-            this.handleBlockTag(values.typographyFontStyle)
-          );
-          break;
+      if (values.hasOwnProperty("typographyFontStyle")) {
+        this.quillRef.current.formatMultiple(
+          this.handleBlockTag(values.typographyFontStyle)
+        );
       }
 
       const quillNode = this.quillRef.current;
@@ -334,8 +331,15 @@ class RichText extends EditorComponent {
 
     const handlePaste = () => {
       const innerElement = getInnerElement();
+      const device = deviceModeSelector(this.getReduxState());
       if (!innerElement) return;
-      handlePasteStyles(innerElement, this.handleChange, this.getValue());
+
+      handlePasteStyles({
+        innerElement,
+        onChange: this.handleChange,
+        v: this.getValue(),
+        device
+      });
     };
 
     switch (keyName) {
@@ -743,12 +747,12 @@ class RichText extends EditorComponent {
               ref={this.toolbarRef}
               {...toolbarOptions}
             >
-              <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-                <Wrapper
-                  {...this.makeWrapperProps({
-                    className: this.getClassName(v, vs, vd)
-                  })}
-                >
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: this.getClassName(v, vs, vd)
+                })}
+              >
+                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
                   {isStory(config) ? (
                     <BoxResizer
                       points={resizerPoints}
@@ -763,10 +767,11 @@ class RichText extends EditorComponent {
                       {content}
                     </BoxResizer>
                   ) : (
-                    content
+                    // div is needed as an attachment for context menu in dynamic content case
+                    <div>{content}</div>
                   )}
-                </Wrapper>
-              </ContextMenu>
+                </ContextMenu>
+              </Wrapper>
             </Toolbar>
           </CustomCSS>
         </HotKeys>

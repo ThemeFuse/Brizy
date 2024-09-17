@@ -1,3 +1,5 @@
+import { Num } from "@brizy/readers";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { hexToRgba } from "visual/utils/color";
@@ -8,11 +10,26 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { Value } from "./index";
+import {
+  alignCSS,
+  amountCSS,
+  borderColorCSSForCustom,
+  borderColorCSSForDefault,
+  colorBackgroundCSS,
+  defaultLineHeightCSS,
+  iconBgColorCSS,
+  iconCustomSizeCSS,
+  iconPaddingCSS,
+  iconRotateCSS,
+  iconSizeCSS,
+  lineStyleCSS,
+  lineTypeCSS,
+  spacingCSS,
+  styledLineHeightCSS,
+  widthCSS
+} from "./css";
+import { Props, Value } from "./types";
 import { isDefaultLineType, isTypeWithoutWeight } from "./utils";
 
 const getColorLabel = (style: string) => {
@@ -26,15 +43,7 @@ const getColorLabel = (style: string) => {
   }
 };
 
-export function getItems({
-  v,
-  device,
-  context
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
   const IS_STORY = isStory(Config.getAll());
 
   const dvv = (key: string) =>
@@ -42,10 +51,13 @@ export function getItems({
 
   const lineStyle = dvv("lineStyle");
   const style = dvv("style");
+  const iconSize = dvv("iconSizeBtns");
+  const weight = Num.read(dvv("weight")) ?? 1;
 
   const iconStyle = style === "icon";
   const textStyle = style === "text";
   const defaultStyle = style === "default";
+  const isDefaultLineStyle = isDefaultLineType(lineStyle);
 
   const { hex: borderColorHex } = getOptionColorHexByPalette(
     dvv("borderColorHex"),
@@ -87,7 +99,8 @@ export function getItems({
                     { value: "default", icon: "nc-line-solid" },
                     { value: "text", icon: "nc-line-text" },
                     { value: "icon", icon: "nc-line-icon" }
-                  ]
+                  ],
+                  style: lineStyleCSS
                 },
                 {
                   id: "lineStyle",
@@ -138,7 +151,8 @@ export function getItems({
                     },
                     { title: "", value: "stars", icon: { name: "nc-stars" } },
                     { title: "", value: "waves", icon: { name: "nc-waves" } }
-                  ]
+                  ],
+                  style: (d) => lineTypeCSS(weight, d)
                 },
                 {
                   id: "weight",
@@ -165,7 +179,8 @@ export function getItems({
                     min: 1,
                     max: 50,
                     units: [{ value: "px", title: "px" }]
-                  }
+                  },
+                  style: defaultLineHeightCSS
                 },
                 {
                   id: "amount",
@@ -179,7 +194,8 @@ export function getItems({
                       { value: "px", title: "px" },
                       { value: "%", title: "%" }
                     ]
-                  }
+                  },
+                  style: amountCSS
                 },
                 {
                   id: "lineSize",
@@ -190,7 +206,8 @@ export function getItems({
                     min: 1,
                     max: 100,
                     units: [{ value: "px", title: "px" }]
-                  }
+                  },
+                  style: styledLineHeightCSS
                 }
               ]
             },
@@ -215,7 +232,8 @@ export function getItems({
                     { value: "left", icon: "nc-line-align-left" },
                     { value: "center", icon: "nc-line-align-center" },
                     { value: "right", icon: "nc-line-align-right" }
-                  ]
+                  ],
+                  style: alignCSS
                 },
                 {
                   id: "groupIconSize",
@@ -231,17 +249,19 @@ export function getItems({
                         { value: "medium", icon: "nc-24" },
                         { value: "large", icon: "nc-32" },
                         { value: "custom", icon: "nc-more" }
-                      ]
+                      ],
+                      style: iconSizeCSS
                     },
                     {
                       id: "iconSize",
                       type: "slider",
-                      disabled: !iconStyle || dvv("iconSizeBtns") !== "custom",
+                      disabled: !iconStyle || iconSize !== "custom",
                       config: {
                         min: 8,
                         max: 50,
                         units: [{ title: "px", value: "px" }]
-                      }
+                      },
+                      style: iconCustomSizeCSS
                     }
                   ]
                 },
@@ -252,7 +272,8 @@ export function getItems({
                   disabled: defaultStyle,
                   config: {
                     units: [{ value: "px", title: "px" }]
-                  }
+                  },
+                  style: (d) => spacingCSS(dvv("horizontalAlign"), d)
                 },
                 {
                   id: "iconPadding",
@@ -264,7 +285,8 @@ export function getItems({
                     min: 0,
                     max: 100,
                     units: [{ title: "px", value: "px" }]
-                  }
+                  },
+                  style: iconPaddingCSS
                 },
                 {
                   id: "iconRotate",
@@ -276,7 +298,8 @@ export function getItems({
                     min: 0,
                     max: 360,
                     units: [{ title: "deg", value: "deg" }]
-                  }
+                  },
+                  style: iconRotateCSS
                 }
               ]
             }
@@ -310,7 +333,8 @@ export function getItems({
                   type: "typography",
                   config: {
                     fontFamily: device === "desktop"
-                  }
+                  },
+                  selector: "{{WRAPPER}}.brz-line-text .brz-line-content"
                 }
               ]
             },
@@ -361,7 +385,8 @@ export function getItems({
                   id: "color",
                   type: "colorPicker",
                   disabled: defaultStyle,
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  style: colorBackgroundCSS
                 }
               ]
             },
@@ -372,7 +397,16 @@ export function getItems({
                 {
                   id: "borderColor",
                   type: "colorPicker",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: !isDefaultLineStyle,
+                  style: borderColorCSSForDefault
+                },
+                {
+                  id: "borderColor",
+                  type: "colorPicker",
+                  states: [NORMAL, HOVER],
+                  disabled: isDefaultLineStyle,
+                  style: borderColorCSSForCustom
                 }
               ]
             },
@@ -384,7 +418,8 @@ export function getItems({
                   id: "iconBgColor",
                   type: "colorPicker",
                   disabled: !iconStyle,
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  style: iconBgColorCSS
                 }
               ]
             },
@@ -396,7 +431,8 @@ export function getItems({
                   id: "iconBorder",
                   type: "border",
                   states: [NORMAL, HOVER],
-                  disabled: !iconStyle
+                  disabled: !iconStyle,
+                  selector: "{{WRAPPER}}:hover .brz-line-icon-wrapper"
                 }
               ]
             },
@@ -408,13 +444,15 @@ export function getItems({
                   id: "boxShadow",
                   type: "boxShadow",
                   states: [NORMAL, HOVER],
-                  disabled: !iconStyle
+                  disabled: !iconStyle,
+                  selector: "{{WRAPPER}}:hover .brz-line-icon-wrapper"
                 },
                 {
                   id: "textShadow",
                   type: "textShadow",
                   states: [NORMAL, HOVER],
-                  disabled: !textStyle
+                  disabled: !textStyle,
+                  selector: "{{WRAPPER}}:hover.brz-line-text .brz-line-content"
                 }
               ]
             }
@@ -443,7 +481,8 @@ export function getItems({
               { value: "px", title: "px" },
               { value: "%", title: "%" }
             ]
-          }
+          },
+          style: widthCSS
         },
         {
           id: "grid",
@@ -486,11 +525,9 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      //@ts-expect-error old option
-      type: "legacy-advancedSettings",
-      icon: "nc-cog",
+      type: "advancedSettings",
       disabled: !IS_STORY,
       position: 110
     }
   ];
-}
+};

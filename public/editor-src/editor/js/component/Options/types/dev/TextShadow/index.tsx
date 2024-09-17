@@ -2,8 +2,8 @@ import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import {
-  TextShadow as ShadowControl,
-  Props as ShadowProps
+  Props as ShadowProps,
+  TextShadow as ShadowControl
 } from "visual/component/Controls/TextShadow";
 import {
   Meta as CMeta,
@@ -17,6 +17,7 @@ import {
 import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { WithClassName } from "visual/types/attributes";
 import { getColorPaletteColors } from "visual/utils/color";
 import { Palette } from "visual/utils/color/Palette";
 import { mPipe } from "visual/utils/fp";
@@ -24,12 +25,11 @@ import { Meta } from "visual/utils/options/TextShadow/meta";
 import * as Value from "visual/utils/options/TextShadow/types/Value";
 import * as Utils from "visual/utils/options/TextShadow/utils";
 import {
-  SelectType,
   options,
+  SelectType,
   selectTypeFromValue,
   valueFromSelectType
 } from "visual/utils/options/TextShadow/utils";
-import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props
   extends OptionProps<Value.Value>,

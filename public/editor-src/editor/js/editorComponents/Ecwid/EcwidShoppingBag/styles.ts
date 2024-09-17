@@ -40,6 +40,7 @@ export function style(
           "cssStyleTypography3FontWeight",
           "cssStyleTypography3LetterSpacing",
           "cssStyleTypography3FontVariation",
+          "cssStyleTypography3TextTransform",
           "cssStyleElementEcwidShoppingBagIconDisplay",
           "cssStyleElementEcwidShoppingBagIconPositionTop",
           "cssStyleElementEcwidShoppingBagIconPositionLeft",

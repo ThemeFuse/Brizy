@@ -12,6 +12,15 @@ export interface DefaultBlock {
   value: Record<string, unknown>;
 }
 
+export interface RegeneratedGlobalStyles<T1, T2> {
+  regenerateColors: (res: Response<T1>, rej: Response<string>) => void;
+  regenerateTypography: (
+    res: Response<Promise<T2>>,
+    rej: Response<string>
+  ) => void;
+  label: string;
+}
+
 export interface DefaultTemplate<T1, T2> {
   label?: string;
   getMeta: (res: Response<T1>, rej: Response<string>) => void;
@@ -87,14 +96,14 @@ export interface Style {
   fontStyles: Array<FontStyle>;
 }
 
-interface Palette {
+export interface Palette {
   id: string;
   hex: string;
 }
 
 type fontSizeUnits = "px" | "%";
 
-interface FontStyle {
+export interface FontStyle {
   id: number | string;
   title: string;
   deletable: "on" | "off";

@@ -1,7 +1,8 @@
+import { readIconUrl } from "@/types/Icon";
 import { Arr, Bool, Obj, Str } from "@brizy/readers";
 import { match, mPipe, optional, parseStrict } from "fp-utilities";
 import { CollectionType } from "./types/Collections";
-import { PLUGIN_ENV } from "./types/global";
+import { ImagePatterns, PLUGIN_ENV } from "./types/global";
 import { pipe } from "./utils/fp/pipe";
 import { onNullish } from "./utils/onNullish";
 import { throwOnNullish } from "./utils/throwOnNullish";
@@ -23,6 +24,7 @@ interface DefaultTemplates {
   storiesChunkUrl: string;
   storiesPagesUrl: string;
   storiesDataUrl: string;
+  templatesUrl: string;
 }
 
 interface Actions {
@@ -51,12 +53,15 @@ interface Actions {
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
+  adobeFontsUrl: string;
+  addAccount: string;
 
   getDynamicContentPlaceholders: string;
 
   createGlobalBlock: string;
   updateGlobalBlock: string;
   updateGlobalBlocks: string;
+  placeholdersContent: string;
   lockProject: string;
   removeLock: string;
   heartBeat: string;
@@ -73,20 +78,19 @@ interface Project {
   status: ProjectStatus;
 }
 
-interface ImagePatterns {
-  full: string;
-  original: string;
-  split: string;
-}
-
 interface API {
   mediaResizeUrl: string;
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  iconsUrl?: string;
+  iconUrl?: string;
+  deleteIconUrl?: string;
+  uploadIconUrl?: string;
   imagePatterns: ImagePatterns;
   templatesImageUrl: string;
 }
+
 export interface Config {
   hash: string;
   editorVersion: string;
@@ -97,6 +101,7 @@ export interface Config {
   api: API;
   l10n?: Record<string, string>;
   collectionTypes: CollectionType[];
+  aiGlobalStyleUrl: string;
 }
 
 const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
@@ -159,6 +164,10 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   storiesDataUrl: pipe(
     mPipe(Obj.readKey("storiesDataUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
+  ),
+  templatesUrl: pipe(
+    mPipe(Obj.readKey("templatesUrl"), Str.read),
+    throwOnNullish("Invalid API Config: templates")
   )
 });
 
@@ -167,6 +176,24 @@ const collectionTypesReader = (arr: Array<unknown>): Array<CollectionType> => {
     (o): o is CollectionType => Obj.isObject(o) && !!o.label && !!o.name
   );
 };
+
+const imagePatternsReader = parseStrict<
+  Record<string, unknown>,
+  Required<ImagePatterns>
+>({
+  full: pipe(
+    mPipe(Obj.readKey("full"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns full pattern")
+  ),
+  original: pipe(
+    mPipe(Obj.readKey("original"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns original pattern")
+  ),
+  split: pipe(
+    mPipe(Obj.readKey("split"), Str.read),
+    throwOnNullish("Invalid API: ImagePatterns split pattern")
+  )
+});
 
 const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   mediaResizeUrl: pipe(
@@ -191,34 +218,25 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
   ),
-  openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read))),
+  openAIUrl: optional(mPipe(Obj.readKey("openAIUrl"), Str.read)),
   imagePatterns: pipe(
     mPipe(
       Obj.readKey("media"),
       Obj.read,
       Obj.readKey("imagePatterns"),
       Obj.read,
-      parseStrict<PLUGIN_ENV, ImagePatterns>({
-        full: pipe(
-          mPipe(Obj.readKey("full"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns full pattern")
-        ),
-        original: pipe(
-          mPipe(Obj.readKey("original"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns original pattern")
-        ),
-        split: pipe(
-          mPipe(Obj.readKey("split"), Str.read),
-          throwOnNullish("Invalid API: ImagePatterns split pattern")
-        )
-      })
+      imagePatternsReader
     ),
     throwOnNullish("Invalid API: image patterns")
   ),
   templatesImageUrl: pipe(
     mPipe(Obj.readKey("templatesImageUrl"), Str.read),
     throwOnNullish("Invalid API: templatesImageUrl")
-  )
+  ),
+  iconUrl: readIconUrl("iconUrl"),
+  iconsUrl: readIconUrl("getIconsUrl"),
+  uploadIconUrl: readIconUrl("uploadIconUrl"),
+  deleteIconUrl: readIconUrl("deleteIconUrl")
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
@@ -302,6 +320,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
     mPipe(Obj.readKey("updateBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: updateBlockScreenshot")
   ),
+  adobeFontsUrl: pipe(
+    mPipe(Obj.readKey("adobeFontsUrl"), Str.read),
+    throwOnNullish("Invalid actions: adobeFontsUrl")
+  ),
+  addAccount: pipe(
+    mPipe(Obj.readKey("addAccount"), Str.read),
+    throwOnNullish("Invalid actions: addAccount")
+  ),
   getDynamicContentPlaceholders: pipe(
     mPipe(Obj.readKey("getDynamicContentPlaceholders"), Str.read),
     throwOnNullish("Invalid actions: getDynamicContentPlaceholders")
@@ -317,6 +343,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   updateGlobalBlocks: pipe(
     mPipe(Obj.readKey("updateGlobalBlocks"), Str.read),
     throwOnNullish("Invalid actions: updateGlobalBlocks")
+  ),
+  placeholdersContent: pipe(
+    mPipe(Obj.readKey("placeholdersContent"), Str.read),
+    throwOnNullish("Invalid actions: getDCPlaceholderContent")
   ),
   lockProject: pipe(
     mPipe(Obj.readKey("lockProject"), Str.read),
@@ -406,6 +436,10 @@ const reader = parseStrict<PLUGIN_ENV, Config>({
       })
     ),
     throwOnNullish("Invalid: project")
+  ),
+  aiGlobalStyleUrl: pipe(
+    mPipe(Obj.readKey("aiGlobalStyleUrl"), Str.read),
+    throwOnNullish("Invalid: aiGlobalStyleUrl")
   )
 });
 

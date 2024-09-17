@@ -2,18 +2,18 @@ import classNames from "classnames";
 import React, {
   ComponentProps,
   ComponentType,
+  createElement,
+  forwardRef,
   PropsWithChildren,
   PropsWithRef,
   ReactElement,
   Ref,
-  RefObject,
-  createElement,
-  forwardRef
+  RefObject
 } from "react";
 import UIEvents from "visual/global/UIEvents";
+import { WithClassName } from "visual/types/attributes";
 import { AnimationEvents } from "visual/utils/animation";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { WithClassName } from "visual/utils/options/attributes";
 import { mApply } from "visual/utils/value";
 import * as Observer from "./Observer";
 

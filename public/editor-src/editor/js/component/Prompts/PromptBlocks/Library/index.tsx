@@ -30,9 +30,9 @@ import {
   importSavePopups,
   importSavedLayout,
   updateSavedBlock,
-  updateSavedLayout,
-  updateSavedPopup
+  updateSavedLayout
 } from "visual/utils/api";
+import { updateSavedPopup } from "visual/utils/api/common";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { IS_WP } from "visual/utils/env";
 import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";

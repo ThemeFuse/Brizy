@@ -104,10 +104,8 @@ const getItems =
       },
       {
         id: "advancedSettings",
-        type: "legacy-advancedSettings",
-        sidebarLabel: t("More Settings"),
+        type: "advancedSettings",
         devices: "desktop",
-        icon: "nc-cog",
         position: 150
       }
     ];

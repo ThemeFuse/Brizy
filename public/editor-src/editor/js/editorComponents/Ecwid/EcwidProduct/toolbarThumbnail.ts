@@ -6,7 +6,6 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { EcwidProductThumb, Value } from "./types/Value";
 
-// @ts-expect-error "advancedSettings" old option
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
@@ -191,10 +190,9 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: !imageFeed && !thumbVertical,
       position: 40,
-      icon: "nc-cog",
       devices: "desktop",
       title: t("Settings")
     }

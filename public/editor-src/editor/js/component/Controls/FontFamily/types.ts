@@ -7,6 +7,7 @@ export type FontsBlock = Partial<{
   config: Array<FontObject>;
   blocks: Array<FontObject>;
   [FontFamilyType.google]: Array<FontObject>;
+  [FontFamilyType.adobe]: Array<FontObject>;
   [FontFamilyType.system]: Array<FontObject>;
   [FontFamilyType.upload]: Array<FontObject>;
 }>;

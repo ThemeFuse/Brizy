@@ -26,18 +26,6 @@ export const getItems: GetItems<Value> = () => {
           label: t("Styling"),
           options: [
             {
-              id: "padding",
-              type: "padding",
-              disabled: true
-            },
-            {
-              id: "sliderPadding",
-              type: "padding",
-              label: t("Padding"),
-              devices: "responsive",
-              position: 50
-            },
-            {
               id: "settingsTabs",
               type: "tabs",
               config: {
@@ -77,6 +65,34 @@ export const getItems: GetItems<Value> = () => {
                       devices: "desktop",
                       helper: { content: helperHTML },
                       placeholder: `element { ${t("CSS goes here")} }`
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
+              devices: "responsive",
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      disabled: true
+                    },
+                    {
+                      id: "sliderPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      position: 50
                     }
                   ]
                 }

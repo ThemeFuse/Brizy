@@ -12,6 +12,7 @@
 
     "iconName": "shape-star",
     "iconType": "glyph",
+    "iconFilename": "",
     "tagName": "span"
   },
   "style": {
@@ -88,6 +89,12 @@
     "variableFontWeight": 400,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "tabletFontStyle": "",
     "tabletFontSize": 20,

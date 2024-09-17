@@ -1,5 +1,7 @@
 import { ActionTypes, ReduxAction } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
+import { Style } from "visual/types";
+import { MValue } from "visual/utils/value";
 
 type CurrentStyleId = ReduxState["currentStyleId"];
 type RCurrentStyleId = (
@@ -7,6 +9,16 @@ type RCurrentStyleId = (
   a: ReduxAction,
   f: ReduxState
 ) => CurrentStyleId;
+
+export const REGENERATED_STYLE_TITLE = "REGENERATED";
+export const REGENERATED_STYLE_UID = "u2354e9A74GE";
+
+export const getRegeneratedStyle = (styles: Style[]): MValue<Style> =>
+  styles.find(
+    (style) =>
+      style.title === REGENERATED_STYLE_TITLE &&
+      style.id === REGENERATED_STYLE_UID
+  );
 
 export const currentStyleId: RCurrentStyleId = (
   state = "",
@@ -33,6 +45,16 @@ export const currentStyleId: RCurrentStyleId = (
       const { currentStyleId } = action.payload;
 
       return currentStyleId || state;
+    }
+    case ActionTypes.REGENERATE_COLORS:
+    case ActionTypes.REGENERATE_TYPOGRAPHY: {
+      const regenerateStylesExist = getRegeneratedStyle(fullState.styles);
+
+      if (regenerateStylesExist) {
+        return regenerateStylesExist.id;
+      }
+
+      return action.payload.id;
     }
     default:
       return state;

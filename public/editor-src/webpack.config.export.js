@@ -17,6 +17,7 @@ exports.node = (options) => {
     /magnific-popup/,
     /slick-carousel/,
     /react-calendly/,
+    /swiper/,
 
     // stripped for performance / bundle size reduction
     /\/editor\/js\/component\/Prompts\//,
@@ -116,6 +117,7 @@ exports.browser = (options) => {
     /@brizy\/ui\//,
     /@dnd-kit/,
     /rxjs/,
+    /swiper/,
 
     // stripped for performance / bundle size reduction
     /\/editor\/js\/component\/Prompts\//,

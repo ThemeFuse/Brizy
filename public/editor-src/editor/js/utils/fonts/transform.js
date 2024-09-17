@@ -32,11 +32,16 @@ export const projectFontsData = (projectFonts) => {
   return Object.entries(projectFonts).reduce((acc, curr) => {
     const [type, { data }] = curr;
 
-    return type === "upload"
-      ? { ...acc, upload: data }
-      : type === "system"
-      ? { ...acc, system: data }
-      : { ...acc, google: [...(acc.google || []), ...data] };
+    switch (type) {
+      case "adobe":
+        return { ...acc, adobe: data };
+      case "upload":
+        return { ...acc, upload: data };
+      case "system":
+      return { ...acc, system: data };
+      default:
+        return { ...acc, google: [...(acc.google || []), ...data] };
+    }
   }, {});
 };
 
@@ -47,6 +52,20 @@ export const getGoogleFontDetails = (font) => {
     id: tripId(family),
     title: family,
     // category => sans-serif, serif
+    family: `'${family}', ${category}`,
+    weights: normalizeWeights(variants),
+
+    // Extra Data
+    ...(brizyId && { brizyId }),
+    ...(deleted && { deleted })
+  };
+};
+
+export const getAdobeFontDetails = (font) => {
+  const { family, category, variants, brizyId, deleted } = font;
+  return {
+    id: tripId(family),
+    title: family,
     family: `'${family}', ${category}`,
     weights: normalizeWeights(variants),
 
@@ -88,6 +107,7 @@ export const fontTransform = {
   google: getGoogleFontDetails,
   blocks: getGoogleFontDetails,
   upload: getUploadFontDetails,
+  adobe: getAdobeFontDetails,
   system: getSystemDetails
 };
 

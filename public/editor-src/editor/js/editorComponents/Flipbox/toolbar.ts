@@ -10,7 +10,6 @@ import {
 import { NORMAL } from "visual/utils/stateMode";
 import { Props, Value } from "./types";
 
-//@ts-expect-error Old option
 export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -143,7 +142,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
       type: "popover",
       disabled: isBackSide,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -240,7 +239,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
       type: "popover",
       disabled: isFrontSide,
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -418,7 +417,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     }
   ];

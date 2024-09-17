@@ -757,7 +757,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
         v,
         breakpoints
       ) as JustifySettings;
-      this.gallery = new Gallery(this.node, settings);
+      this.gallery = new Gallery(this.node, { ...settings, extraWidth: 48 }); // these 48px are for the left sidebar from the editor
     }
   }
 

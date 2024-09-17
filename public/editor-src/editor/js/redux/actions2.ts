@@ -1,10 +1,13 @@
+import { produce } from "immer";
 import { ThunkAction } from "redux-thunk";
 import { mergeDeep } from "timm";
 import _ from "underscore";
+import { Layout } from "visual/component/Prompts/common/PromptPage/types";
 import { PublishData } from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector } from "visual/redux/selectors";
 import {
   ActiveElement,
+  AdobeFont,
   Authorized,
   Block,
   DeviceMode,
@@ -38,6 +41,7 @@ type StrictFonts = Required<RFonts>;
 export type FontKeyTypes = keyof StrictFonts;
 
 type FontPayload<T extends FontKeyTypes> = {
+  id?: string;
   type: T;
   fonts: ArrayType<StrictFonts[T]["data"]>[];
 };
@@ -162,6 +166,11 @@ export type ActionDisabledElements = {
   payload: string[];
 };
 
+export type ActionPinnedElements = {
+  type: ActionTypes.UPDATE_PINNED_ELEMENTS;
+  payload: string[];
+};
+
 export const UPDATE_CURRENT_KIT_ID = "UPDATE_CURRENT_KIT_ID";
 
 export type ActionUpdateKitId = {
@@ -268,6 +277,7 @@ export type ReduxAction =
   | ActionUpdatePageStatus
   | ActionUpdateKitId
   | ActionDisabledElements
+  | ActionPinnedElements
   | ActionUpdatePageLayout
   | ActionUpdateIsHomePage
   | ActionFetchPageSuccess
@@ -297,7 +307,9 @@ export type ReduxAction =
   | AddNewGlobalStyle
   | RemoveGlobalStyle
   | EditGlobalStyleName
-  | UpdateCurrentStyleId;
+  | UpdateCurrentStyleId
+  | RegenerateColors
+  | RegenerateTypography;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";
@@ -343,7 +355,7 @@ export type ActionUpdatePageStatus = {
 export type ActionUpdatePageLayout = {
   type: "UPDATE_PAGE_LAYOUT";
   payload: {
-    layout: ShopifyPage["layout"]["id"];
+    layout: ShopifyPage["layout"]["value"];
   };
 };
 
@@ -509,6 +521,13 @@ export const updateDisabledElements = (
   };
 };
 
+export const updatePinnedElements = (
+  payload: string[]
+): ActionPinnedElements => ({
+  type: ActionTypes.UPDATE_PINNED_ELEMENTS,
+  payload
+});
+
 type ThunkAddFonts = (
   a: FontsPayload
 ) => ThunkAction<void, ReduxState, unknown, ActionAddFonts>;
@@ -518,12 +537,12 @@ export const addFonts: ThunkAddFonts =
   (dispatch, getState): ActionAddFonts => {
     const usedFonts = fontsSelector(getState());
     const newFonts = addedFonts.reduce((acc, curr) => {
-      const { type, fonts } = curr;
+      const { id, type, fonts } = curr;
 
       // current version of tsc (3.7.3) does not allow
       // calling map on (GoogleFont[] | UploadFont[])
       // but does on (GoogleFont | UploadedFont)[]
-      const fontData: (GoogleFont | UploadedFont | SystemFont)[] =
+      const fontData: (GoogleFont | UploadedFont | AdobeFont | SystemFont)[] =
         usedFonts[type]?.data || [];
 
       // Separated Deleted Font with Normal Font
@@ -535,10 +554,13 @@ export const addFonts: ThunkAddFonts =
         brizyId: uuid()
       }));
 
+      const _id = id ? { id } : {};
+
       // Make new Data, check deleted Font
       return {
         ...acc,
         [type]: {
+          ..._id,
           data: fontData
             .map(
               (font) =>
@@ -564,7 +586,11 @@ export const deleteFont: ThunkDeleteFonts =
   (payload) =>
   (dispatch, getState): ActionDeleteFont => {
     const { type, fonts: removedFonts } = payload;
-    const fonts = fontsSelector(getState());
+    const fonts = produce(fontsSelector(getState()), (draft) => {
+      if (type === "adobe") {
+        delete draft["adobe"];
+      }
+    });
     const fontData: Font[] = (fonts[type] && fonts[type]?.data) || [];
 
     const dataFonts = {
@@ -665,7 +691,7 @@ export const updatePageStatus: ThunkPublishPage =
     });
   };
 
-export const updatePageLayout = (layout: string): ActionUpdatePageLayout => {
+export const updatePageLayout = (layout: Layout): ActionUpdatePageLayout => {
   return {
     type: "UPDATE_PAGE_LAYOUT",
     payload: { layout }
@@ -835,7 +861,10 @@ export enum ActionTypes {
   "UPDATE_ERROR" = "UPDATE_ERROR",
   "UPDATE_SCREENSHOT" = "UPDATE_SCREENSHOT",
   "REMOVE_BLOCK" = "REMOVE_BLOCK",
-  "REMOVE_BLOCKS" = "REMOVE_BLOCKS"
+  "REMOVE_BLOCKS" = "REMOVE_BLOCKS",
+  "UPDATE_PINNED_ELEMENTS" = "UPDATE_PINNED_ELEMENTS",
+  "REGENERATE_COLORS" = "REGENERATE_COLORS",
+  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY"
 }
 
 // templates
@@ -918,6 +947,28 @@ interface Kit {
 
 export const importKit = (payload: Kit): ActionImportKit => ({
   type: ActionTypes.IMPORT_KIT,
+  payload
+});
+
+export interface RegenerateColors {
+  type: ActionTypes.REGENERATE_COLORS;
+  payload: Style;
+}
+
+export const getRegenerateColors = (payload: Style): RegenerateColors => ({
+  type: ActionTypes.REGENERATE_COLORS,
+  payload
+});
+
+export interface RegenerateTypography {
+  type: ActionTypes.REGENERATE_TYPOGRAPHY;
+  payload: Style;
+}
+
+export const getRegenerateTypography = (
+  payload: Style
+): RegenerateTypography => ({
+  type: ActionTypes.REGENERATE_TYPOGRAPHY,
   payload
 });
 

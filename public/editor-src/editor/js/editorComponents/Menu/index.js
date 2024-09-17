@@ -18,7 +18,6 @@ import UIEvents from "visual/global/UIEvents";
 import { pageSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import { makePlaceholder } from "visual/utils/dynamicContent";
 import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
@@ -31,12 +30,15 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarClose from "./sidebarClose";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
-import { styleMenu, styleMenuContainer } from "./styles";
+import { styleMenu, styleMenuContainer, styleMMenu } from "./styles";
 import * as toolbarClose from "./toolbarClose";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { itemsToSymbols, normalizeMenuItems, symbolsToItems } from "./utils";
 import { isClonedSlide } from "./utils.common";
+import { MenuPreviewMock } from "./controls/MenuPreviewMock";
+import { NavContainer } from "./controls/NavContainer";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 
 const IS_PRO = Config.get("pro");
 
@@ -259,9 +261,21 @@ export default class Menu extends EditorComponent {
     );
   }
 
-  renderMenu(v, vs, vd, id) {
+  renderMenuForEdit(v, vs, vd, id) {
     const { className: _className, items, menuSelected } = v;
     const hasMMenu = this.hasMMenu() && !!id;
+    const styleClassName = hasMMenu
+      ? css(
+          `${this.getComponentId()}-mmenu`,
+          `${this.getId()}-mmenu`,
+          styleMMenu(v, vs, vd)
+        )
+      : css(
+          `${this.getComponentId()}-menu`,
+          `${this.getId()}-menu`,
+          styleMenu(v, vs, vd)
+        );
+
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
@@ -283,39 +297,92 @@ export default class Menu extends EditorComponent {
     });
     const className = classnames(
       "brz-menu",
+      "brz-menu__editor",
       {
         "brz-menu__mmenu": hasMMenu,
         "brz-menu--has-dropdown":
           hasMMenu && items.some(({ value: { items } }) => items.length)
       },
-      IS_PREVIEW ? "brz-menu__preview" : "brz-menu__editor",
       _className,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleMenu(v, vs, vd)
-      ),
+      styleClassName,
       hasMMenu && this.getMMenuClassNames()
     );
 
-    const ulAttr =
-      IS_PREVIEW && TARGET === "WP"
-        ? {
-            className: "brz-menu__ul",
-            "data-menu-items-active": makePlaceholder({
-              content: "{{ editor_menu_active_item }}",
-              attr: { menu: menuSelected }
-            })
-          }
-        : { className: "brz-menu__ul" };
+    const props = {
+      className,
+      ...(id && { id })
+    };
 
     return (
-      <nav id={id} className={className}>
-        <ul {...ulAttr}>
-          {IS_EDITOR && hasMMenu && this.renderMMenuTitle(v)}
+      <NavContainer {...props}>
+        <ul className="brz-menu__ul">
+          {hasMMenu && this.renderMMenuTitle(v)}
           <EditorArrayComponent {...itemsProps} />
         </ul>
-      </nav>
+      </NavContainer>
+    );
+  }
+
+  renderMenuForView(v, vs, vd, id) {
+    const { className: _className, items, menuSelected } = v;
+    const hasMMenu = this.hasMMenu() && !!id;
+    const styleClassName = hasMMenu
+      ? css(
+          `${this.getComponentId()}-mmenu`,
+          `${this.getId()}-mmenu`,
+          styleMMenu(v, vs, vd)
+        )
+      : css(
+          `${this.getComponentId()}-menu`,
+          `${this.getId()}-menu`,
+          styleMenu(v, vs, vd)
+        );
+    const mods = {
+      [DESKTOP]: styleElementMenuMode({ v, device: DESKTOP }),
+      [TABLET]: styleElementMenuMode({ v, device: TABLET }),
+      [MOBILE]: styleElementMenuMode({ v, device: MOBILE })
+    };
+    const itemsProps = this.makeSubcomponentProps({
+      bindWithKey: "items",
+      itemProps: {
+        menuSelected,
+        mods,
+        mMenu: hasMMenu,
+        meta: this.getMeta(v),
+        toolbarExtend: this.makeToolbarPropsFromConfig2(
+          toolbarExtend,
+          sidebarExtend,
+          { allowExtend: false }
+        )
+      }
+    });
+    const className = classnames(
+      "brz-menu__preview",
+      {
+        "brz-menu__mmenu": hasMMenu,
+        "brz-menu--has-dropdown":
+          hasMMenu && items.some(({ value: { items } }) => items.length)
+      },
+      _className,
+      styleClassName,
+      hasMMenu && this.getMMenuClassNames()
+    );
+    const attr = {
+      "data-mods": encodeToString(mods)
+    };
+
+    const props = {
+      className,
+      attr,
+      wrapInPlaceholder: true,
+      ...(id && { id })
+    };
+
+    return (
+      <NavContainer {...props}>
+        <EditorArrayComponent {...itemsProps} />
+        <MenuPreviewMock menuId={menuSelected} />
+      </NavContainer>
     );
   }
 
@@ -330,7 +397,7 @@ export default class Menu extends EditorComponent {
           className="brz-ed-mmenu-portal"
         >
           <div className="brz-ed-mmenu-portal__menu brz-d-none">
-            {this.renderMenu(v, vs, vd, this.getId())}
+            {this.renderMenuForEdit(v, vs, vd, this.getId())}
           </div>
         </Portal>
 
@@ -402,8 +469,8 @@ export default class Menu extends EditorComponent {
     const className = classnames(
       "brz-menu__container",
       css(
-        `${this.constructor.componentId}-menu`,
-        `${this.getId()}-menu`,
+        `${this.getComponentId()}-menu-container`,
+        `${this.getId()}-menu-container`,
         styleMenuContainer(v, vs, vd)
       )
     );
@@ -423,7 +490,7 @@ export default class Menu extends EditorComponent {
             >
               {this.hasMMenu()
                 ? this.renderMMenu(v, vs, vd)
-                : this.renderMenu(v, vs, vd)}
+                : this.renderMenuForEdit(v, vs, vd)}
             </Wrapper>
           </ContextMenu>
         </CustomCSS>
@@ -454,11 +521,12 @@ export default class Menu extends EditorComponent {
       tablet: tabletCloseDrawerIcon || closeDrawerIcon,
       mobile: mobileCloseDrawerIcon || closeDrawerIcon
     });
-
+    const id = this.getId();
+    const htmlId = `${id}-${makePlaceholder({ content: "{{ random_id }}", attr: { key: "menu" } })}`;
     const hasMMenu = this.hasMMenu();
     const mMenuProps = hasMMenu
       ? {
-          "data-mmenu-id": `#${this.getId()}`,
+          "data-mmenu-id": `#${htmlId}`,
           "data-mmenu-position": `position-${mMenuPosition}`,
           "data-mmenu-title": mMenuTitle,
           "data-mmenu-stickytitle": stickyTitle,
@@ -470,22 +538,22 @@ export default class Menu extends EditorComponent {
     const className = classnames(
       "brz-menu__container",
       css(
-        `${this.constructor.componentId}-menu`,
-        `${this.getId()}-menu`,
+        `${this.getComponentId()}-menu-container`,
+        `${id}-menu-container`,
         styleMenuContainer(v, vs, vd)
       )
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={customCSS}>
+      <CustomCSS selectorName={id} css={customCSS}>
         <div className={className} {...mMenuProps}>
-          {this.renderMenu(v, vs, vd)}
+          {this.renderMenuForView(v, vs, vd)}
           {hasMMenu && (
             <>
               <div className="brz-mm-menu__icon">
                 <ThemeIcon name="menu-3" type="editor" />
               </div>
-              {IS_PRO && this.renderMenu(v, vs, vd, this.getId())}
+              {IS_PRO && this.renderMenuForView(v, vs, vd, htmlId)}
             </>
           )}
         </div>

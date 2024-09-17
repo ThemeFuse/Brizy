@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { ConnectedProps, connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -36,7 +36,7 @@ const _Drawer = ({
   drawerComponent: DrawerContent,
   wrapperHeaderComponent: WrapperHeaderComponent = ({ children }) => children,
   id
-}: DrawerProps): ReactElement | null => {
+}: DrawerProps): JSX.Element | null => {
   const prevContentTypeRef = useRef(drawerContentType);
   useEffect(() => {
     prevContentTypeRef.current = drawerContentType;
@@ -99,10 +99,10 @@ const DrawerWrapper = ({ ...props }: DrawerWrapperProps) => {
     typeof iconProps === "object"
       ? iconProps
       : typeof iconProps === "function"
-      ? iconProps({
-          activeClass: "brz-ed-sidebar__control__item--active"
-        })
-      : {};
+        ? iconProps({
+            activeClass: "brz-ed-sidebar__control__item--active"
+          })
+        : {};
 
   const handleDrawerContentTypeChange = useCallback(() => {
     onDrawerContentTypeChange(id, true);

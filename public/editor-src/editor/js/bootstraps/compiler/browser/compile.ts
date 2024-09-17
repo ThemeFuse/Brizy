@@ -6,17 +6,13 @@ import { compileProject } from "../common/compileProject";
 import { Compile, Data } from "./types";
 import { getDemoPage } from "./utils/demo";
 import { compilePage } from "./worker";
-import { isExternalPopup } from "visual/utils/models";
 
 export const getCompileHTML = async (data: Data): Promise<Compile> => {
-  const { config, project } = data;
+  const { config, project, needToCompile } = data;
   const { auth, compiler } = config;
-
-  // When is External Popup the project styles must be
-  // skipped because the global styles are included in the pageStyles
-  const compiledProject = isExternalPopup(config)
-    ? undefined
-    : compileProject(config);
+  const compiledProject = needToCompile.project
+    ? compileProject(config)
+    : undefined;
 
   if (AUTHORIZATION_URL) {
     if (!auth?.token) {

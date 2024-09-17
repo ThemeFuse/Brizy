@@ -5,18 +5,18 @@ import {
   Meta as OptionMeta,
   Props as OptionProps
 } from "visual/component/Options/Type";
+import { WithConfig } from "visual/types/attributes";
 import { Meta } from "visual/utils/options/Margin/meta";
 import { Config } from "visual/utils/options/Margin/types/Config";
 import { ToSpacingEdges } from "visual/utils/options/Margin/types/ToSpacingEdges";
-import { Value } from "visual/utils/options/Margin/types/Value";
 import * as V from "visual/utils/options/Margin/types/Value";
+import { Value } from "visual/utils/options/Margin/types/Value";
 import {
   getIcon,
   toSpacingValue,
   unitSetter,
   valueSetter
 } from "visual/utils/options/Margin/utils";
-import { WithConfig } from "visual/utils/options/attributes";
 import { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
 import { Type } from "visual/utils/options/utils/Type";
 

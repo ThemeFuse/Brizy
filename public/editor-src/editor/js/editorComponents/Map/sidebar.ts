@@ -6,7 +6,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import type { GetItems } from "../EditorComponent/types";
-import type { Value } from "./index";
+import type { Value } from "./type";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const IS_STORY = isStory(Config.getAll());
@@ -96,18 +96,35 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
               ]
             },
             {
-              id: "padding",
-              type: "padding",
-              label: t("Padding"),
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
               devices: "responsive",
-              disabled: true
-            },
-            {
-              id: "bgPadding",
-              type: "padding",
-              label: t("Padding"),
-              devices: "responsive",
-              position: 50
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      disabled: true
+                    },
+                    {
+                      id: "bgPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      position: 50
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },

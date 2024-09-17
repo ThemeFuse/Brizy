@@ -17,6 +17,7 @@ import {
 } from "visual/utils/options";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 export function getItems({ v, component, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
@@ -60,6 +61,7 @@ export function getItems({ v, component, device, context }) {
     disableMaskTab;
 
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "story");
 
   return [
     {
@@ -98,7 +100,7 @@ export function getItems({ v, component, device, context }) {
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
                 },
                 {
@@ -178,6 +180,7 @@ export function getItems({ v, component, device, context }) {
                 {
                   id: "bgMapZoom",
                   label: t("Zoom"),
+                  devices: "desktop",
                   type: "slider",
                   disabled: dvv("media") !== "map",
                   config: {
@@ -361,12 +364,10 @@ export function getItems({ v, component, device, context }) {
 
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
-      sidebarLabel: t("More Settings"),
       roles: ["admin"],
-      position: 110,
-      icon: "nc-cog"
+      position: 110
     }
   ];
 }

@@ -1,6 +1,6 @@
 import deepMerge from "deepmerge";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import Editor from "visual/component/Editor";
 import Config from "visual/global/Config";
@@ -11,6 +11,8 @@ import { flatMap } from "visual/utils/array";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { PageError, ProjectError } from "visual/utils/errors";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
+import { normalizeAdobeFonts } from "visual/utils/fonts/getAdobeFonts";
+import { systemFont } from "visual/utils/fonts/utils";
 import { t } from "visual/utils/i18n";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import {
@@ -19,7 +21,6 @@ import {
   getUsedStylesFonts
 } from "visual/utils/traverse";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
-import { systemFont } from "../../utils/fonts/utils";
 import { readPageData } from "../common/adapter";
 import { Root } from "./components/Root";
 import { showError } from "./utils/errors";
@@ -89,10 +90,19 @@ const _systemFont = {
     });
     const fontStyles = flatMap(styles, ({ fontStyles }) => fontStyles);
     const stylesFonts = getUsedStylesFonts([...fontStyles, ...extraFontStyles]);
-    const fontsDiff: Array<{ type: "blocks" | "upload"; fonts: Array<Font> }> =
-      await normalizeFonts(
-        getBlocksStylesFonts([...pageFonts, ...stylesFonts], fonts)
-      );
+    const adobeFonts = fonts.adobe?.id
+      ? await normalizeAdobeFonts(config, fonts.adobe.id)
+      : {};
+
+    const fontsDiff: Array<{
+      type: "blocks" | "upload" | "system";
+      fonts: Array<Font>;
+    }> = await normalizeFonts(
+      getBlocksStylesFonts([...pageFonts, ...stylesFonts], {
+        ...fonts,
+        ...adobeFonts
+      })
+    );
     const newFonts = fontsDiff.reduce(
       (acc, { type, fonts }) => ({
         ...acc,
@@ -162,8 +172,9 @@ const _systemFont = {
         </Provider>
       </Root>
     );
+    const root = createRoot(appDiv);
 
-    ReactDOM.render(app, appDiv);
+    root.render(app);
   } catch (e) {
     if (pageCurtain) {
       showError({ e, inRoot: true, hideAfter: 0 });

@@ -72,7 +72,8 @@ export function styleNumber(v: Value, vs: Value, vd: Value): OutputStyle {
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ]
     }
   };

@@ -80,18 +80,35 @@ export function getItems() {
               ]
             },
             {
-              id: "padding",
-              type: "padding",
-              label: t("Padding"),
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
               devices: "responsive",
-              disabled: true
-            },
-            {
-              id: "bgPadding",
-              type: "padding",
-              label: t("Padding"),
-              devices: "responsive",
-              position: 50
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      disabled: true
+                    },
+                    {
+                      id: "bgPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      position: 50
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

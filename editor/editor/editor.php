@@ -93,6 +93,7 @@ class Brizy_Editor_Editor_Editor
             'project' => array(
                 'status' => $this->getProjectStatus(),
             ),
+            'aiGlobalStyleUrl' => Brizy_Config::GENERATE_GLOBAL_STYLES_ENDPOINT,
         ];
 
         $config = $this->getApiConfigFields($config, $context);
@@ -215,6 +216,7 @@ class Brizy_Editor_Editor_Editor
             'moduleGroups' => [],
             'l10n' => $this->getTexts(),
             'membership' => true,
+            'elements' => ['image' => ['zoom' => true], 'video' => ['types' => ['youtube', 'vimeo', 'url']]],
             'ui' => [
                 'features' => [
                     'imagePointer' => true,
@@ -424,6 +426,7 @@ class Brizy_Editor_Editor_Editor
                     'storiesChunkUrl' => Brizy_Config::STORIES_CHUNK_URL,
                     'storiesPagesUrl' => Brizy_Config::STORIES_PAGES_URL,
                     'storiesDataUrl' => Brizy_Config::STORIES_DATA_URL,
+                    'templatesUrl' => Brizy_Config::TEMPLATES_URL,
                 ],
                 'templatesImageUrl' => Brizy_Config::TEMPLATES_IMAGE_URL,
             ],
@@ -1444,11 +1447,7 @@ class Brizy_Editor_Editor_Editor
      */
     private function addRecaptchaAccounts(Brizy_Editor_Accounts_ServiceAccountManager $manager, array $config, $context)
     {
-        $accounts = $manager->getAccountsByGroup(Brizy_Editor_Accounts_AbstractAccount::RECAPTCHA_GROUP);
-
-        if (isset($accounts[0]) && $accounts[0] instanceof Brizy_Editor_Accounts_RecaptchaAccount) {
-            $config['integrations']['form']['recaptcha']['siteKey'] = $accounts[0]->getSiteKey();
-        }
+        $config['integrations']['form']['recaptcha']['siteKey'] = '{{recaptcha_site_key}}';
 
         return $config;
     }
@@ -1886,6 +1885,7 @@ class Brizy_Editor_Editor_Editor
             'symbolDelete' => $pref.Brizy_Admin_Symbols_Api::DELETE_ACTION,
             'symbolList' => $pref.Brizy_Admin_Symbols_Api::LIST_ACTION,
             'getDynamicContentPlaceholders' => $pref.Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
+            'adobeFontsUrl' => $pref.Brizy_Editor_API::AJAX_GET_ADOBE_FONTS,
         );
 
         return $actions;

@@ -14,7 +14,7 @@ export function toolbarDisabledToolbarSettings({ devices = "all" }) {
 export function toolbarDisabledShowOnTablet({ devices = "responsive" }) {
   return {
     id: "showOnTablet",
-    type: "legacy-toggle",
+    type: "showOnDevice",
     disabled: true,
     devices
   };
@@ -23,7 +23,7 @@ export function toolbarDisabledShowOnTablet({ devices = "responsive" }) {
 export function toolbarDisabledShowOnMobile({ devices = "responsive" }) {
   return {
     id: "showOnMobile",
-    type: "legacy-toggle",
+    type: "showOnDevice",
     disabled: true,
     devices
   };

@@ -161,8 +161,7 @@ export const getItems = ({
         },
         {
           id: "advancedSettings",
-          // @ts-expect-error: Type '"advancedSettings"' is not assignable to type
-          type: "legacy-advancedSettings",
+          type: "advancedSettings",
           label: t("More Settings"),
           devices: "desktop",
           position: 110

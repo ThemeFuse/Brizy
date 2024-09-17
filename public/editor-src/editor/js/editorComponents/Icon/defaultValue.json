@@ -2,6 +2,7 @@
   "content": {
     "type": "glyph",
     "name": "favourite-31",
+    "filename": "",
 
     "showOnDesktop": "on",
 
@@ -258,11 +259,7 @@
 
     "customCSS": "",
 
-    "tabletCustomSizeSuffix": null,
-    "mobileCustomSizeSuffix": null,
-
     "tempMobilePadding": 20,
-
     "tempMobileBorderRadius": 4
   }
 }

@@ -1,20 +1,20 @@
 import { noop } from "underscore";
 import Config from "visual/global/Config";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ConfigCommon,
   Mode
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   AllRule,
   BlockTypeRule,
   CollectionItemRule,
   CollectionTypeRule,
+  DataCommon as PageCommon,
   GlobalBlock,
   Page,
   PageCollection,
-  DataCommon as PageCommon,
   Rule
 } from "visual/types";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
@@ -232,7 +232,6 @@ describe("testing WP getAllowedGBIds", () => {
         templateThumbnails: ""
       },
       dynamicContent: {
-        liveInBuilder: true,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],
@@ -949,7 +948,6 @@ describe("testing Cloud getAllowedGBIds", () => {
         protectedPagePassword: ""
       },
       dynamicContent: {
-        liveInBuilder: true,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],
@@ -1584,7 +1582,6 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
         protectedPagePassword: ""
       },
       dynamicContent: {
-        liveInBuilder: true,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],

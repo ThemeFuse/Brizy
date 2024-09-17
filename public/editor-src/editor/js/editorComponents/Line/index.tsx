@@ -1,34 +1,17 @@
-import classnames from "classnames";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
-import { WithClassName } from "visual/utils/options/attributes";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import type { Props, Value } from "./types";
 import { isDefaultLineType } from "./utils";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-
-export interface Value extends ElementModel {
-  iconName: string;
-  iconType: string;
-  lineStyle: string;
-  style: "text" | "icon" | "default";
-  tagName: keyof JSX.IntrinsicElements;
-}
-
-interface Props extends WithClassName {
-  meta: ComponentsMeta;
-}
 
 const resizerPoints = ["centerLeft", "centerRight"];
 const resizerRestrictions = {
@@ -58,7 +41,7 @@ class Line extends EditorComponent<Value, Props> {
   };
 
   renderLine(v: Value): ReactNode {
-    const { iconName, iconType, style, lineStyle, tagName } = v;
+    const { iconName, iconType, iconFilename, style, lineStyle, tagName } = v;
 
     switch (style) {
       case "text":
@@ -81,6 +64,7 @@ class Line extends EditorComponent<Value, Props> {
                 className="brz-line-content"
                 name={iconName}
                 type={iconType}
+                filename={iconFilename}
               />
             </span>
           </span>
@@ -94,14 +78,15 @@ class Line extends EditorComponent<Value, Props> {
     }
   }
 
-  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { customCSS } = v;
+  renderForEdit(v: Value): ReactNode {
+    const { style, customCSS } = v;
 
-    const className = classnames(
-      "brz-line",
-      `brz-line-${v.style}`,
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
-    );
+    const className = this.getCSSClassnames({
+      toolbars: [toolbarConfig],
+      sidebars: [sidebarConfig],
+      extraClassNames: ["brz-line", `brz-line-${style}`]
+    });
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}

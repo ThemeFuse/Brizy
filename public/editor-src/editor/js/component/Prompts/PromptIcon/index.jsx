@@ -1,29 +1,12 @@
-import classNames from "classnames";
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, { Component } from "react";
 import _ from "underscore";
-import Select from "visual/component/Controls/Select";
-import SelectItem from "visual/component/Controls/Select/SelectItem";
-import EditorIcon from "visual/component/EditorIcon";
-import { PromiseComponent } from "visual/component/PromiseComponent";
-import Fixed from "visual/component/Prompts/Fixed";
-import { loadFonts } from "visual/component/Prompts/PromptIcon/utils";
-import SmartGrid from "visual/component/Prompts/common/SmartGrid";
-import {
-  getCategories,
-  getIconClassName,
-  getIcons,
-  getTypes
-} from "visual/config/icons";
+import { getCategories, getTypes } from "visual/config/icons";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
+import Control from "./Controls";
+import { loadFonts } from "./utils";
 
 const TYPES = getTypes();
-
-const typeIdsToNames = TYPES.reduce((acc, { id, name }) => {
-  acc[id] = name;
-
-  return acc;
-}, {});
 
 export default class PromptIcon extends Component {
   static defaultProps = {
@@ -58,34 +41,21 @@ export default class PromptIcon extends Component {
     }, 0);
   };
 
-  renderTabs() {
-    const tabs = TYPES.map((item) => (
-      <div
-        key={item.id}
-        className={classNames("brz-ed-popup-tab-item", {
-          active: item.id === this.state.typeId
-        })}
-        onClick={() => this.setState({ typeId: item.id })}
-      >
-        <div className="brz-ed-popup-tab-icon">
-          <EditorIcon icon={item.icon} />
-        </div>
-        <div className="brz-ed-popup-tab-name" title={item.title}>
-          {item.title}
-        </div>
-      </div>
-    ));
+  handleSelectChange = (categoryId) => {
+    this.setState({ categoryId });
+  };
 
-    return (
-      <div className="brz-ed-popup-header">
-        <div className="brz-ed-popup-header__tabs">{tabs}</div>
-        <div className="brz-ed-popup-btn-close" onClick={this.props.onClose} />
-      </div>
-    );
-  }
+  handleInputChange = (search) => {
+    this.setState({ search });
+  };
 
-  renderFilters() {
-    const { categoryId, search, typeId } = this.state;
+  handleTabClick = (typeId) => {
+    this.setState({ typeId });
+  };
+
+  render() {
+    const { name, type, opened, onClose } = this.props;
+    const { typeId, categoryId, search } = this.state;
     const categories = [
       {
         id: "*",
@@ -96,195 +66,21 @@ export default class PromptIcon extends Component {
     ];
 
     return (
-      <>
-        <div className="brz-ed-popup__categories">
-          <Select
-            className="brz-ed-popup__select brz-ed-popup__select--block-categories brz-ed-popup-control__select--light"
-            defaultValue={categoryId}
-            maxItems={10}
-            itemHeight={30}
-            onChange={(id) => this.setState({ categoryId: id })}
-          >
-            {categories.map(({ id, title }) => {
-              return (
-                <SelectItem key={id} value={id}>
-                  {title}
-                </SelectItem>
-              );
-            })}
-          </Select>
-        </div>
-        <div className="brz-ed-popup__search">
-          <input
-            type="text"
-            className="brz-input brz-ed-popup__input"
-            placeholder={t("Enter Search Keyword")}
-            onChange={(e) =>
-              this.setState({
-                search: e.target.value
-              })
-            }
-            value={search}
-          />
-          <div
-            className={classNames("brz-ed-popup__search--icon", {
-              active: search.length > 0
-            })}
-          >
-            <EditorIcon icon="nc-search" />
-          </div>
-        </div>
-      </>
+      <Control
+        name={name}
+        type={type}
+        opened={opened}
+        ref={this.containerRef}
+        categoryId={categoryId}
+        categories={categories}
+        typeId={typeId}
+        search={search}
+        onClose={onClose}
+        onSelectChange={this.handleSelectChange}
+        onInputChange={this.handleInputChange}
+        onTabClick={this.handleTabClick}
+        onIconClick={this.onIconClick}
+      />
     );
   }
-
-  filterIcons(icons) {
-    const { typeId, categoryId, search } = this.state;
-
-    const searchRegex = new RegExp(
-      search.replace(/[.*+?^${}()|[\]\\]/g, ""),
-      "i"
-    );
-
-    return icons.filter(
-      ({ type, cat, title }) =>
-        typeId === type &&
-        (categoryId === "*" || cat.includes(categoryId)) &&
-        (search === "" || searchRegex.test(title))
-    );
-  }
-
-  render() {
-    const { name, type, opened, onClose } = this.props;
-
-    return (
-      <Fixed opened={opened} onClose={onClose}>
-        <div ref={this.containerRef} className="brz-ed-popup-wrapper">
-          {this.renderTabs()}
-          <div className="brz-ed-popup-content brz-ed-popup-pane brz-ed-popup-icons">
-            <div className="brz-ed-popup-body">
-              <div className="brz-ed-popup__head--search brz-d-xs-flex brz-align-items-center brz-justify-content-xs-center">
-                {this.renderFilters()}
-              </div>
-              <div className="brz brz-ed-popup-icons__grid">
-                <PromiseComponent
-                  getPromise={() => getIcons(getTypes().map((t) => t.id))}
-                  renderResolved={(icons) => {
-                    const filteredIcons = this.filterIcons(icons);
-
-                    return (
-                      <IconGrid
-                        icons={filteredIcons}
-                        value={{ name, type }}
-                        onChange={this.onIconClick}
-                      />
-                    );
-                  }}
-                  renderWaiting={() => <LoadingSpinner />}
-                  delayMs={1000}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Fixed>
-    );
-  }
-}
-
-function IconGrid({ icons, value, onChange }) {
-  const [gridSize, setGridSize] = useState(null);
-  const node = useRef(null);
-  const activeIconIndex = icons.findIndex((icon) => icon.name === value.name);
-  const rowCount = Math.floor(icons.length / 8) + 1;
-  const activeRowIndex = Math.floor(activeIconIndex / 8);
-  const prettyRowIndex = activeRowIndex === 0 ? 0 : activeRowIndex - 1;
-
-  useEffect(() => {
-    if (node.current) {
-      const { width, height } = node.current.getBoundingClientRect();
-      setGridSize({ width, height });
-    }
-  }, []);
-
-  if (!gridSize) {
-    return (
-      <div style={{ height: "100%" }} ref={node}>
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  const { width, height } = gridSize;
-  const columnWidth = 68;
-  const columnsInRow = 8;
-  const rowHeight = 68;
-  const gutter = 6;
-  const initialScrollTop = prettyRowIndex * (68 + gutter);
-
-  return (
-    <SmartGrid
-      width={width}
-      height={height}
-      columnCount={columnsInRow}
-      columnWidth={columnWidth}
-      rowCount={rowCount}
-      rowHeight={rowHeight}
-      gutter={gutter}
-      initialScrollTop={initialScrollTop}
-      renderItem={({ rowIndex, columnIndex, style }) => {
-        const index = rowIndex * 8 + columnIndex;
-        const icon = icons[index];
-
-        if (!icon) {
-          return null;
-        }
-
-        const { type, name } = {
-          type: typeIdsToNames[icon.type],
-          name: icon.name
-        };
-        const className = classNames("brz-ed-popup-icons__grid__item", {
-          active: type === value.type && name === value.name
-        });
-
-        return (
-          <div
-            style={{
-              ...style,
-              left: style.left + gutter,
-              top: style.top + gutter,
-              width: style.width - gutter,
-              height: style.height - gutter
-            }}
-            className={className}
-            onClick={() => {
-              onChange({ type, name });
-            }}
-          >
-            <i
-              className={classNames(["brz-font-icon", getIconClassName(icon)])}
-            />
-          </div>
-        );
-      }}
-    />
-  );
-}
-
-function LoadingSpinner() {
-  return (
-    <div
-      style={{
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        color: "#828b92",
-        fontSize: "35px"
-      }}
-    >
-      <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-    </div>
-  );
 }

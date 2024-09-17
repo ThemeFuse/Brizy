@@ -1,6 +1,6 @@
 import * as Option from "visual/component/Options/Type";
 import { Choices } from "visual/component/Options/types/common/Population/types/Choices";
-import { WithConfig } from "visual/utils/options/attributes";
+import { WithConfig } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 import type { Value } from "../../common/Population/types/Value";
 

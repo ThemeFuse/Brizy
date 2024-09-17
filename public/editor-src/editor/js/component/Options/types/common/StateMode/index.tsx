@@ -1,9 +1,16 @@
-import React, { ReactElement, useCallback, useEffect, useRef } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useLayoutEffect,
+  useRef
+} from "react";
 import Tab from "visual/component/Controls/Tabs/Tab";
 import Tabs from "visual/component/Controls/Tabs/Tabs";
 import Options from "visual/component/Options";
-import { SimpleValue } from "visual/component/Options/Type";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import {
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import {
@@ -46,7 +53,7 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
     []
   );
 
-  useEffect(
+  useLayoutEffect(
     () => () => onChangeRef.current.onChange({ value: State.empty }),
     []
   );

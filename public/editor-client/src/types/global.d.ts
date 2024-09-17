@@ -116,6 +116,8 @@ export interface VISUAL_CONFIG {
       addMedia?: AddMediaData;
 
       addMediaGallery?: AddMediaGallery;
+
+      imagePatterns?: ImagePatterns;
     };
 
     // File

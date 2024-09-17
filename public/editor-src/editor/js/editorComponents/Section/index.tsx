@@ -16,6 +16,7 @@ import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import {
+  makePlaceholder,
   makeEndPlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
@@ -77,13 +78,26 @@ export default class Section extends EditorComponent<Value, Props> {
     if (value.items.length === 0) {
       this.selfDestruct();
     } else {
-      const { patch } = meta;
+      const { patch, arrayOperation } = meta;
+      const { slider, items } = value;
 
-      if (patch && patch.slider === "on" && value.items.length === 1) {
+      if (
+        arrayOperation === "remove" &&
+        slider === "on" &&
+        items.length === 1
+      ) {
         super.handleValueChange(
           {
             ...value,
-            items: cloneItem(value.items, 0)
+            slider: "off"
+          },
+          meta
+        );
+      } else if (patch && patch.slider === "on" && items.length === 1) {
+        super.handleValueChange(
+          {
+            ...value,
+            items: cloneItem(items, 0)
           },
           meta
         );
@@ -351,7 +365,11 @@ export default class Section extends EditorComponent<Value, Props> {
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
-    const blockName = cssID ? cssID : anchorName || this.getId();
+
+    const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });
+    const blockName = cssID
+      ? cssID
+      : anchorName || `${uidPlaceholder}-${this.getId()}`;
 
     const props = {
       ...parseCustomAttributes(customAttributes),

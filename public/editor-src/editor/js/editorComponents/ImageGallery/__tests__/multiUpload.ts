@@ -14,6 +14,7 @@ import {
   masonryLayout,
   mockValue
 } from "./imageGalleryChange";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 const fakeImageUrl = "https://image.com";
 const fakeImageUrl2 = "https://image2.com";
@@ -31,7 +32,7 @@ const mockImage: ElementModelType = {
     imageSrc: "1.jpg",
     imageFileName: "1.jpg",
     imageExtension: "jpg",
-    sizeType: "custom",
+    sizeType: SizeType.custom,
     linkType: "external",
     linkLightBox: disabled,
     _styles: ["image"],
@@ -85,7 +86,7 @@ const getPatchExtraDataStaticData = {
 
 const multiUploadCommonData = {
   imageExtension: "jpg",
-  sizeType: "custom",
+  sizeType: SizeType.custom,
   linkType: "external",
   _styles: ["image"],
   ...patchItemCommonSizes
@@ -97,7 +98,7 @@ const multiUploadCommonData2 = {
   imageWidth: 500,
   imageHeight: 500,
   imageExtension: "jpg",
-  sizeType: "custom",
+  sizeType: SizeType.custom,
   linkType: "external",
   _styles: ["image"]
 };

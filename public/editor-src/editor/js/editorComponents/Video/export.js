@@ -1,4 +1,6 @@
 import $ from "jquery";
+import { makeAttr } from "visual/utils/i18n/attribute";
+import * as Num from "visual/utils/reader/number";
 import {
   videoData as getVideoData,
   videoUrl as getVideoUrl
@@ -376,6 +378,61 @@ export default function ($node) {
       }
     }
   });
+
+  // Lightbox
+  $node.find(".brz-video__lightbox").each(function () {
+    const type = this.getAttribute(makeAttr("popup-type")) ?? "iframe";
+    const loop = this.getAttribute(makeAttr("loop")) === "on";
+    const muted = this.getAttribute(makeAttr("muted")) === "on";
+    const start = Num.read(this.getAttribute(makeAttr("start"))) ?? 0;
+    const end = Num.read(this.getAttribute(makeAttr("end"))) ?? 0;
+    const src = this.getAttribute("href");
+
+    const { type: videoType, key: id } = getVideoData(src) ?? {};
+    const isShortLink = videoType === "youtube" && src.includes("youtu.be");
+
+    if (type === "inline") {
+      $(this).magnificPopup({
+        type: "inline",
+        callbacks: {
+          open: function () {
+            const video = this.currItem.inlineElement[0];
+            if (video) {
+              video.currentTime = start;
+              video.play();
+              video.addEventListener("timeupdate", () => {
+                if (video.currentTime >= end && end > start) {
+                  video.pause();
+                }
+              });
+            }
+          },
+          close: function () {
+            const video = this.currItem.inlineElement[0];
+            video.currentTime = 0;
+            video.pause();
+          }
+        }
+      });
+    } else {
+      $(this).magnificPopup({
+        type: "iframe",
+        closeOnContentClick: true,
+        iframe: {
+          patterns: {
+            youtube: {
+              index: isShortLink ? "youtu.be/" : "youtube.com/",
+              src: `//www.youtube.com/embed/${id}?playlist=${id}&autoplay=1&mute=${muted}&loop=${loop}&start=${start}&end=${end}`
+            },
+            vimeo: {
+              index: "vimeo.com/",
+              src: `//player.vimeo.com/video/${id}?autoplay=1&muted=${muted}&loop=${loop}#t=${start}`
+            }
+          }
+        }
+      });
+    }
+  });
 }
 
 function getVideoSrc($elem) {
@@ -491,6 +548,10 @@ function getSliderOffset($slider, pageX) {
 }
 
 function changePlayerState($shortcodeVideo) {
+  if (!$shortcodeVideo.length) {
+    return;
+  }
+
   var $slider = $shortcodeVideo.find(
     ".brz-video-custom-controls .brz-video-custom-slider"
   );

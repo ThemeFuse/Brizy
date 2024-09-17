@@ -3,21 +3,6 @@ import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { filterByState, itemStates, stateIcon, stateTitle } from "../utils";
 
 // region Mocks
-jest.mock(
-  "visual/component/Options/types/AdvancedSettings.jsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
-jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
-jest.mock(
-  "visual/component/Options/types/ColorPaletteEditor.jsx",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/FontStyleEditor/index.tsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));

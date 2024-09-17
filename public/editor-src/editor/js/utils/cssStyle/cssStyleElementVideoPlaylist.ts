@@ -4,6 +4,7 @@ import {
   cssStyleColor,
   cssStylePadding,
   cssStyleSizeWidthPrefix,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -64,6 +65,19 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2FontVariatio
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix: "subTitle"
+  });
+}
+
+export function cssStyleElementVideoPlaylistSubTitleVideoTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix: "subTitle"
   });
 }

@@ -1,0 +1,192 @@
+{
+  "content": {
+    "text": "Paypal",
+    "textPopulation": "",
+    "textPopulationEntityType": "",
+    "textPopulationEntityId": "",
+    "type": "_xclick",
+
+    "iconType": "glyph",
+    "iconName": "logo-paypal",
+
+    "account": "",
+    "accountPopulation": "",
+    "accountPopulationEntityType": "",
+    "accountPopulationEntityId": "",
+
+    "name": "",
+    "namePopulation": "",
+    "namePopulationEntityType": "",
+    "namePopulationEntityId": "",
+
+    "sku": "",
+    "skuPopulation": "",
+    "skuPopulationEntityType": "",
+    "skuPopulationEntityId": "",
+
+    "currency": "USD",
+
+    "amount": 0,
+    "amountPopulation": "",
+    "amountPopulationEntityType": "",
+    "amountPopulationEntityId": "",
+
+    "donationAmount": "fixed",
+
+    "redirect": "",
+    "redirectPopulation": "",
+    "redirectPopulationEntityType": "",
+    "redirectPopulationEntityId": "",
+
+    "quantity": 1,
+    "quantityPopulation": "",
+    "quantityPopulationEntityType": "",
+    "quantityPopulationEntityId": "",
+
+    "rate": 0,
+    "ratePopulation": "",
+    "ratePopulationEntityType": "",
+    "ratePopulationEntityId": "",
+
+    "activeSandbox": "on",
+
+    "price": 1,
+    "pricePopulation": "",
+    "pricePopulationEntityType": "",
+    "pricePopulationEntityId": "",
+
+    "tax": "none",
+
+    "openInNewTab": "on",
+
+    "shippingPrice": 0,
+    "shippingPricePopulation": "",
+    "shippingPricePopulationEntityType": "",
+    "shippingPricePopulationEntityId": "",
+
+    "billingCycle": "W",
+    "billingCycleDuration": 1,
+
+    "autoRenewal": "on"
+  },
+
+  "style": {
+    "className": "",
+    "customCSS": "",
+
+    "horizontalAlign": "center",
+
+    "width": 160,
+    "widthSuffix": "px",
+
+    "height": 45,
+    "heightSuffix": "px",
+
+    "iconColorHex": "#ffffff",
+    "iconColorOpacity": 1,
+    "iconColorPalette": "",
+
+    "iconSize": "small",
+
+    "iconCustomSize": 16,
+    "iconCustomSizeSuffix": "px",
+
+    "iconPosition": "left",
+
+    "iconSpacing": 10,
+    "iconSpacingSuffix": "px",
+
+    "families": {
+      "typographyFontFamily": "lato"
+    },
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 15,
+    "typographyFontSizeSuffix": "px",
+    "typographyFontWeight": 400,
+    "typographyLetterSpacing": 0,
+    "typographyLineHeight": 1,
+    "typographyVariableFontWeight": 400,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
+
+    "colorHex": "#ffffff",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#064BD3",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "borderStyle": "none",
+
+    "borderColorHex": "#000000",
+    "borderColorOpacity": 0,
+    "borderColorPalette": "",
+
+    "borderWidthType": "grouped",
+
+    "borderWidth": 0,
+    "borderTopWidth": 0,
+    "borderRightWidth": 0,
+    "borderBottomWidth": 0,
+    "borderLeftWidth": 0,
+
+    "boxShadow": "",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 0,
+    "boxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "gradientType": "linear",
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+
+    "borderRadiusType": "grouped",
+
+    "borderRadius": 2,
+    "borderTopLeftRadius": 2,
+    "borderTopRightRadius": 2,
+    "borderBottomRightRadius": 2,
+    "borderBottomLeftRadius": 2,
+
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "hoverTransition": 50,
+
+    "paddingType": "ungrouped",
+
+    "padding": 0,
+    "paddingTop": 0,
+    "paddingRight": 10,
+    "paddingBottom": 0,
+    "paddingLeft": 10,
+
+    "paddingSuffix": "px",
+    "paddingTopSuffix": "px",
+    "paddingRightSuffix": "px",
+    "paddingBottomSuffix": "px",
+    "paddingLeftSuffix": "px"
+  }
+}

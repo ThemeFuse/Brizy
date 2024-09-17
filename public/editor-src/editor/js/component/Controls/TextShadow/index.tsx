@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import {
-  Props as CProps,
-  ColorPickerSelect
+  ColorPickerSelect,
+  Props as CProps
 } from "visual/component/Controls/ColorPickerSelect";
 import {
   ColorPickerInputs,
@@ -10,12 +10,12 @@ import {
 } from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
-import { Hex } from "visual/utils/color/Hex";
 import {
   WithClassName,
   WithOnChange2,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
+import { Hex } from "visual/utils/color/Hex";
 import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
 import { Meta, Value } from "./types";
 import { getModifiedField } from "./utils";

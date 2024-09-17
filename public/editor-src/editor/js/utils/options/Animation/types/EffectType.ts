@@ -18,7 +18,8 @@ export enum EffectType {
   Scale = "scale",
   Skew = "skew",
   Move = "move",
-  Rotate2 = "rotate2"
+  Rotate2 = "rotate2",
+  Fill = "fill"
 }
 
 export const fromLegacyEffectType = (v: LegacyEffectType): EffectType => {
@@ -30,6 +31,26 @@ export const fromLegacyEffectType = (v: LegacyEffectType): EffectType => {
     case LegacyEffectType.bounceInRight:
     case LegacyEffectType.bounceInUp: {
       return EffectType.Bounce;
+    }
+    case LegacyEffectType.brzFade:
+    case LegacyEffectType.brzBackPulse:
+    case LegacyEffectType.brzSweepToRight:
+    case LegacyEffectType.brzSweepToLeft:
+    case LegacyEffectType.brzSweepToBottom:
+    case LegacyEffectType.brzSweepToTop:
+    case LegacyEffectType.brzBounceToRight:
+    case LegacyEffectType.brzBounceToLeft:
+    case LegacyEffectType.brzBounceToBottom:
+    case LegacyEffectType.brzBounceToTop:
+    case LegacyEffectType.brzRadialOut:
+    case LegacyEffectType.brzRadialIn:
+    case LegacyEffectType.brzRectangleIn:
+    case LegacyEffectType.brzRectangleOut:
+    case LegacyEffectType.brzShutterInHorizontal:
+    case LegacyEffectType.brzShutterOutHorizontal:
+    case LegacyEffectType.brzShutterInVertical:
+    case LegacyEffectType.brzShutterOutVertical: {
+      return EffectType.Fill;
     }
     case LegacyEffectType.fadeIn:
     case LegacyEffectType.fadeInDown:
@@ -176,6 +197,9 @@ export const effectTypeIcon = (t: EffectType): string => {
     case EffectType.Rotate2: {
       return "nc-hover-rotate";
     }
+    case EffectType.Fill: {
+      return "nc-hover-fill";
+    }
   }
 };
 
@@ -225,6 +249,9 @@ export function effectTypeTitle(type: EffectType): string {
     }
     case EffectType.Rotate2: {
       return t("Rotate");
+    }
+    case EffectType.Fill: {
+      return t("Fill");
     }
   }
 }

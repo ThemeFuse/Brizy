@@ -1,3 +1,4 @@
+import { PayPal } from "@brizy/builder-icons/src/Icons/PayPal";
 import { ShopifyList } from "@brizy/builder-icons/src/Icons/ShopifyList";
 import { ShopifyMeta } from "@brizy/builder-icons/src/Icons/ShopifyMeta";
 import { ShopifyMetafield } from "@brizy/builder-icons/src/Icons/ShopifyMetafield";
@@ -64,7 +65,8 @@ const Icons = {
   "t2-shopify-variant-style-select": ShopifyVariantStyleSelect,
   "t2-shopify-variant-style-radio": ShopifyVariantStyleRadio,
   "t2-shopify-variant-style-image": ShopifyVariantStyleImage,
-  "t2-star-shapes": StarShapes
+  "t2-star-shapes": StarShapes,
+  "t2-paypal": PayPal
 };
 
 export type IconNames = keyof typeof Icons;

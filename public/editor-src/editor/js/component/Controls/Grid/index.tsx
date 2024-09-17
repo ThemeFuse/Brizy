@@ -1,6 +1,6 @@
-import React, { CSSProperties, ReactElement } from "react";
 import classNames from "classnames";
-import { WithClassName } from "visual/utils/options/attributes";
+import React, { CSSProperties, ReactElement } from "react";
+import { WithClassName } from "visual/types/attributes";
 import { Props as ColProps } from "./Column";
 
 interface Props extends WithClassName {
@@ -17,7 +17,7 @@ export const Grid = ({
 }: Props): ReactElement => {
   const style: CSSProperties = {
     gridTemplateColumns: grid
-      .map(item => {
+      .map((item) => {
         switch (item) {
           case "auto":
             return item;

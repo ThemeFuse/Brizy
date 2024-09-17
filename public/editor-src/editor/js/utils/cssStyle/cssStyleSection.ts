@@ -170,21 +170,3 @@ export function cssStyleSectionPaddingsForEditorResize({
     return `margin-left: -${_paddingLeft}; margin-right: -${_paddingRight}; width: calc(100% + ${_paddingRight} + ${_paddingLeft});`;
   } else return "";
 }
-
-export function cssStyleSectionBgSize({ v, device, state }: CSSValue): string {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const bgSize = dvv("bgSize");
-
-  return `background-size:${bgSize};`;
-}
-
-export function cssStyleSectionBgRepeat({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const bgRepeat = dvv("bgRepeat");
-
-  return `background-repeat:${bgRepeat === "on" ? "repeat" : "no-repeat"};`;
-}

@@ -198,12 +198,14 @@ export function getItems({
       position: 110,
       options: [
         {
-          id: "advancedSettings",
-          //@ts-expect-error Old option doesn't work
-          type: "legacy-advancedSettings",
-          label: t("Styling"),
-          icon: "nc-cog",
-          devices: "desktop"
+          id: "styles",
+          type: "sidebarTabsButton",
+          devices: "desktop",
+          config: {
+            tabId: "styles",
+            text: t("Styling"),
+            icon: "nc-cog"
+          }
         }
       ]
     }

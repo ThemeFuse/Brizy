@@ -1,6 +1,7 @@
 import {
   cssStyleBgColor,
   cssStyleColor,
+  cssStyleCustomIconColor,
   cssStyleSizeSizeHeight,
   cssStyleSizeWidth
 } from "visual/utils/cssStyle";
@@ -11,16 +12,12 @@ import {
 } from "visual/utils/style2";
 import { Reader } from "visual/utils/types/Type";
 import { CSSValue } from "../style2/types";
+import { ACTIVE } from "visual/utils/stateMode";
 
 type IconPositionType = "left" | "top" | "bottom" | "right";
-type IconSizeType = "small" | "medium" | "large" | "custom";
 
 export const readIconPosition: Reader<IconPositionType> = (v) =>
   v === "top" || v === "left" || v === "bottom" || v === "right"
-    ? v
-    : undefined;
-export const readIconSize: Reader<IconSizeType> = (v) =>
-  v === "small" || v === "medium" || v === "large" || v === "custom"
     ? v
     : undefined;
 
@@ -115,6 +112,17 @@ export function cssStyleElementSwitcherActiveTextColor({
   device
 }: CSSValue): string {
   return cssStyleColor({ v, device, state: "active", prefix: "color" });
+}
+
+export function cssStyleElementSwitcherActiveCustomIconColor({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state: ACTIVE
+  });
 }
 
 export function cssStyleElementSwitcherWidth({

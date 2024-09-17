@@ -10,6 +10,9 @@ export function style(
     ".brz && .brz-timeline__nav--icon": {
       standart: ["cssStyleColor", "cssStyleBgColor", "cssStyleBorder"]
     },
+    ".brz && .brz-timeline__nav--icon .brz-icon-svg-custom": {
+      standart: ["cssStyleCustomIconColor"]
+    },
     ".brz && .brz-timeline__content": {
       standart: ["cssStyleBgColor", "cssStyleBoxShadow", "cssStyleBorder"]
     },

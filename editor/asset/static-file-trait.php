@@ -78,7 +78,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
         return true;
     }
 
-    protected function store_content_in_file($content, $asset_path, $overwrite=false)
+    protected function store_content_in_file($content, $asset_path, $overwrite = false)
     {
         if (file_exists($asset_path) && !$overwrite) {
             return true;
@@ -122,10 +122,10 @@ trait Brizy_Editor_Asset_StaticFileTrait
         return self::createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id, $uid);
     }
 
-	public static function createSideLoadMediaAttachment(
-		$tempFileArray,
-		$assetPath,
-		$postId = null,
+    public static function createSideLoadMediaAttachment(
+        $tempFileArray,
+        $assetPath,
+        $postId = null,
         $uid = null
     ) {
         $id = media_handle_sideload($tempFileArray, $postId, "Attached image file");
@@ -135,58 +135,54 @@ trait Brizy_Editor_Asset_StaticFileTrait
             throw new Exception('Unable to handle image side load');
         }
 
-		$filePath  = get_attached_file($id,true);
+        $filePath = get_attached_file($id, true);
 
-		if( wp_mkdir_p(dirname($assetPath)) === false) {
-			Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
+        if (wp_mkdir_p(dirname($assetPath)) === false) {
+            Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
             throw new Exception('Unable to create folder for block images');
-		}
-
-		@copy($filePath,$assetPath);
-
-		unlink($filePath);
-
-		update_attached_file($id,$assetPath);
-
-		update_post_meta($id, 'brizy_attachment_uid', $uid ? $uid : md5($id.time()));
-        if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
-	        include_once ABSPATH . "/wp-admin/includes/image.php";
         }
-        $attach_data = wp_generate_attachment_metadata( $id, $assetPath );
-        wp_update_attachment_metadata( $id, $attach_data );
+
+        @copy($filePath, $assetPath);
+
+        unlink($filePath);
+
+        update_attached_file($id, $assetPath);
+
+        update_post_meta($id, 'brizy_attachment_uid', $uid ? $uid : md5($id.time()));
+        if (!function_exists('wp_generate_attachment_metadata')) {
+            include_once ABSPATH."/wp-admin/includes/image.php";
+        }
+        $attach_data = wp_generate_attachment_metadata($id, $assetPath);
+        wp_update_attachment_metadata($id, $attach_data);
     }
 
-	public static function createSideLoadMedia(
-		$tempFileArray,
-		$assetPath,
-		$postId = null,
-        $uid = null
-    ) {
+    public static function createSideLoadMedia($tempFileArray, $assetPath, $postId = null, $uid = null)
+    {
 
-		$overrides = array( 'test_form' => false );
-		$post = get_post( $postId );
+        $overrides = array('test_form' => false);
+        $post = get_post($postId);
 
-		$time = date("Y/m");
-		if ($post && substr( $post->post_date, 0, 4 ) > 0 ) {
-			$time = $post->post_date;
-		}
+        $time = date("Y/m");
+        if ($post && substr($post->post_date, 0, 4) > 0) {
+            $time = $post->post_date;
+        }
 
-		if( wp_mkdir_p(dirname($assetPath)) === false) {
-			Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
+        if (wp_mkdir_p(dirname($assetPath)) === false) {
+            Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
             throw new Exception('Unable to create folder for block images');
-		}
+        }
 
-		$uploadData = wp_handle_sideload( $tempFileArray, $overrides, $time );
+        $uploadData = wp_handle_sideload($tempFileArray, $overrides, $time);
 
-		if ( isset( $uploadData['error'] ) ) {
-			return new WP_Error( 'upload_error', $uploadData['error'] );
-		}
+        if (isset($uploadData['error'])) {
+            return new WP_Error('upload_error', $uploadData['error']);
+        }
 
-		@copy($uploadData['file'],$assetPath);
+        @copy($uploadData['file'], $assetPath);
 
-		unlink($uploadData['file']);
+        unlink($uploadData['file']);
 
-		return $assetPath;
+        return $assetPath;
     }
 
     public static function createSideLoadFile($basename, $content)
@@ -231,9 +227,12 @@ trait Brizy_Editor_Asset_StaticFileTrait
             'post_status' => 'inherit',
         );
 
-        $attachment_id = wp_insert_attachment($attachment, $relative_asset_path, $post_id);
+        $attachment_id = self::getAttachmentByGuid($upload_path['baseurl']."/".$relative_asset_path);
+        if (!$attachment_id) {
+            $attachment_id = wp_insert_attachment($attachment, $relative_asset_path, $post_id);
+        }
 
-        if (is_wp_error($attachment_id) || $attachment_id === 0) {
+        if (is_wp_error($attachment_id) || $attachment_id === 0 || $attachment_id === null) {
             return false;
         }
 
@@ -379,5 +378,21 @@ trait Brizy_Editor_Asset_StaticFileTrait
         } else {
             return 'application/octet-stream';
         }
+    }
+
+
+    private static function getAttachmentByGuid($media_name)
+    {
+        global $wpdb;
+
+        return $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT 
+						p.ID
+					FROM {$wpdb->posts} p
+					WHERE p.guid = %s AND p.post_type = 'attachment'",
+                $media_name
+            )
+        );
     }
 }

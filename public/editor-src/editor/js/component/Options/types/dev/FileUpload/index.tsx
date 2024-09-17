@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from "react";
 import * as Option from "visual/component/Options/Type";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { WithConfig } from "visual/utils/options/attributes";
+import { WithConfig } from "visual/types/attributes";
 import { Uploader } from "./components/Uploader";
 import { Value } from "./types/Value";
 

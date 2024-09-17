@@ -1,10 +1,11 @@
-import { GoogleFont, UploadedFont } from "visual/types";
+import { AdobeFont, GoogleFont, UploadedFont } from "visual/types";
 import { makeScripts } from "./makeScripts";
 import { makeStyles } from "./makeStyles";
 
 export interface Fonts {
   google: GoogleFont[];
   upload: UploadedFont[];
+  adobe: AdobeFont[];
 }
 
 export interface AssetCommon {
@@ -57,11 +58,23 @@ export interface AssetUpload {
   pro: boolean;
 }
 
+export interface AssetAdobe {
+  name: "adobe";
+  type: "adobe-font";
+  score: number;
+  content: {
+    type: "file";
+    url: string;
+    attr: Record<string, string>;
+  };
+  pro: boolean;
+}
+
 export interface AssetLibsMap extends Asset {
   selectors: string[];
 }
 
-export type AssetFonts = AssetGoogle | AssetUpload;
+export type AssetFonts = AssetGoogle | AssetUpload | AssetAdobe;
 
 export interface StylesFree {
   main: Asset;
@@ -105,6 +118,7 @@ interface Data {
   $root: cheerio.Root;
   fonts: Fonts;
   css: DynamicCSS;
+  extra?: { adobeKitId?: string };
 }
 
 type GetAssets = (data: Data) => {

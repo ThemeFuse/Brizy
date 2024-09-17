@@ -1,4 +1,4 @@
-import { getImageFormat, isSVG } from "./imageFormat";
+import { isSVG } from "./imageFormat";
 import imagePopulationUrl, {
   defaultImagePopulation
 } from "./imagePopulationUrl";
@@ -10,7 +10,6 @@ export {
   preloadImage,
   imagePopulationUrl,
   imageWrapperSize,
-  getImageFormat,
   isSVG,
   getImageUrl,
   defaultImagePopulation

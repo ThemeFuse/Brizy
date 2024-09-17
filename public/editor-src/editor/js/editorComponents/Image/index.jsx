@@ -1,6 +1,8 @@
+import { Bool, Num, Str } from "@brizy/readers";
 import classnames from "classnames";
 import React, { Fragment } from "react";
 import ResizeAware from "react-resize-aware";
+import { omit } from "timm";
 import _ from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
@@ -23,7 +25,6 @@ import {
   isSVGExtension,
   isUnsplashImage
 } from "visual/utils/image/utils";
-import { isNumber } from "visual/utils/math";
 import { isStory } from "visual/utils/models";
 import { getLinkData } from "visual/utils/models/link";
 import {
@@ -37,14 +38,11 @@ import {
   fromLinkElementModel,
   patchOnDCChange as patchOnLinkDCChange
 } from "visual/utils/patch/Link/";
-import { read as readBoolean } from "visual/utils/reader/bool";
-import { read as readNumber } from "visual/utils/reader/number";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { read as readString } from "visual/utils/string/specs";
+import { SizeType } from "../../global/Config/types/configs/common";
 import { Wrapper } from "../tools/Wrapper";
-import ImageContent from "./Image";
-import ImageWrapper from "./Wrapper";
 import defaultValue from "./defaultValue.json";
+import ImageContent from "./Image";
 import {
   elementModelToValue,
   patchOnDCChange,
@@ -70,7 +68,7 @@ import {
   multiplier,
   showOriginalImage
 } from "./utils";
-import { omit } from "timm";
+import ImageWrapper from "./Wrapper";
 
 class Image extends EditorComponent {
   static get componentId() {
@@ -212,20 +210,26 @@ class Image extends EditorComponent {
   };
 
   getWidth = () => {
+    // INFO: the parent element chosen for width can affect the ImageGallery element
     let parentNode = this.container?.current?.parentElement;
-    if (parentNode.classList.contains("brz-wrapper__scrollmotion")) {
-      parentNode = parentNode.parentElement;
-    }
-    const parentWidth = parentNode?.getBoundingClientRect().width;
 
-    if (parentNode && isNumber(parentWidth)) {
-      const cs = getComputedStyle(parentNode);
+    if (parentNode) {
+      if (parentNode.classList.contains("brz-wrapper__scrollmotion")) {
+        parentNode = parentNode.parentElement;
+      }
 
-      const paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-      const borderX =
-        parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+      const parentWidth = parentNode.getBoundingClientRect().width;
 
-      return parentWidth - paddingX - borderX;
+      if (Num.read(parentWidth)) {
+        const cs = getComputedStyle(parentNode);
+
+        const paddingX =
+          parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+        const borderX =
+          parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
+        return parentWidth - paddingX - borderX;
+      }
     }
 
     return undefined;
@@ -466,14 +470,14 @@ class Image extends EditorComponent {
     if (
       !dbValue.imagePopulation &&
       dbValue.sizeType !== undefined &&
-      dbValue.sizeType !== "custom"
+      dbValue.sizeType !== SizeType.custom
     ) {
       const { imageSizes } = Config.getAll();
       const imageData = imageSizes?.find(
         ({ name }) => name === dbValue.sizeType
       );
       if (imageData === undefined) {
-        dbValue.sizeType = "original";
+        dbValue.sizeType = SizeType.original;
       }
     }
 
@@ -600,12 +604,12 @@ class Image extends EditorComponent {
     } = gallery;
     const { clonedFromGallery = false } = v;
     const IS_STORY = isStory(Config.getAll());
-    const animationId = readString(wrapperAnimationId) ?? this.getId();
+    const animationId = Str.read(wrapperAnimationId) ?? this.getId();
     if (inGallery && !clonedFromGallery) {
-      const hoverName = readString(galleryHoverName) ?? "none";
+      const hoverName = Str.read(galleryHoverName) ?? "none";
       const isHidden = IS_STORY || hoverName === "none";
       const optionsFromGallery = {
-        duration: readNumber(galleryHoverDuration) ?? 1000,
+        duration: Num.read(galleryHoverDuration) ?? 1000,
         infiniteAnimation: galleryHoverInfiniteAnimation ?? false
       };
 
@@ -617,7 +621,7 @@ class Image extends EditorComponent {
       };
     }
     const { hoverName } = v;
-    const _hoverName = readString(hoverName) ?? "none";
+    const _hoverName = Str.read(hoverName) ?? "none";
     const isHidden = IS_STORY || _hoverName === "none";
     const options = makeOptionValueToAnimation(v);
 
@@ -655,10 +659,6 @@ class Image extends EditorComponent {
     const link = getLinkData(v);
 
     const linkProps = {
-      className: classnames({
-        "brz-popup2__action-close":
-          link.type === "action" && actionClosePopup === "on"
-      }),
       slide: link.slide,
       draggable: false
     };
@@ -668,7 +668,11 @@ class Image extends EditorComponent {
       IS_STORY && "brz-image--story",
       { "brz-story-linked": IS_STORY && linked },
       this.getLightboxClassName(),
-      className
+      className,
+      {
+        "brz-popup2__action-close":
+          link.type === "action" && actionClosePopup === "on"
+      }
     );
 
     const classNameContent = classnames(
@@ -702,7 +706,7 @@ class Image extends EditorComponent {
     const { animationId, hoverName, options, isHidden } =
       this.getHoverAnimationData(v);
     const { wrapperAnimationActive } = this.props.meta;
-    const isDisabledHover = readBoolean(wrapperAnimationActive);
+    const isDisabledHover = Bool.read(wrapperAnimationActive);
     return (
       <Fragment>
         <Toolbar
@@ -782,10 +786,6 @@ class Image extends EditorComponent {
     const link = getLinkData(v);
 
     const linkProps = {
-      className: classnames({
-        "brz-popup2__action-close":
-          link.type === "action" && actionClosePopup === "on"
-      }),
       slide: link.slide
     };
 
@@ -800,6 +800,10 @@ class Image extends EditorComponent {
       isAbsoluteOrFixed && "brz-image--story",
       this.getLightboxClassName(),
       className,
+      {
+        "brz-popup2__action-close":
+          link.type === "action" && actionClosePopup === "on"
+      },
       css(
         `${this.getComponentId()}-${this.getId()}-parent`,
         `${this.getId()}-parent`,

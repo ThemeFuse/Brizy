@@ -120,6 +120,7 @@ describe("Testing 'Getters Image' functions", () => {
       imagePopulation: "",
       sizeType: "custom",
       imageType: ImageType.Internal,
+      alt: "",
       size: 0,
       tabletSize: null,
       mobileSize: null,

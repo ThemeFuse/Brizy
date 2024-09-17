@@ -1,7 +1,7 @@
-import React, { CSSProperties, ReactNode } from "react";
 import classNames from "classnames";
+import React, { CSSProperties, ReactNode } from "react";
 import Draggable from "visual/component/Draggable";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 import { FCC } from "visual/utils/react/types";
 
 export type Props = WithClassName & {
