@@ -32,7 +32,7 @@ export interface Props {
   config: ConfigCommon;
   page: PageCommon;
   project: Project;
-  globalBlocks: Array<GlobalBlock>;
+  globalBlocks?: Array<GlobalBlock>;
   needToCompile: {
     page?: PageCommon;
     project?: Project;

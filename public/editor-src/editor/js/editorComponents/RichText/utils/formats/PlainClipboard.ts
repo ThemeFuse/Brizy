@@ -1,6 +1,6 @@
 import Quill from "quill";
-import { ClipboardInterface } from "./types/ClipboardInterface";
 import IDelta from "quill-delta";
+import { ClipboardInterface } from "./types/ClipboardInterface";
 
 const Clipboard: typeof ClipboardInterface = Quill.import("modules/clipboard");
 const Delta: typeof IDelta = Quill.import("delta");
@@ -51,6 +51,8 @@ export default class PlainClipboard extends Clipboard {
         return d;
       });
 
+      //@ts-expect-error: Quil problems:
+      // Type string | object | undefined is not assignable to type string | Record<string, unknown> | undefined
       this.quill.updateContents(delta, Quill.sources.USER);
       // range.length contributes to delta.length()
       this.quill.setSelection(

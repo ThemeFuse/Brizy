@@ -23,6 +23,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
 import Config from "visual/global/Config";
 import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
@@ -370,7 +371,7 @@ class SectionPopup2 extends EditorComponent {
       clickOutsideToClose,
       showCloseButtonAfter,
       customCSS,
-      popupId
+      popupId: _popupId
     } = v;
     const { className: _className, meta = {} } = this.props;
     const config = Config.getAll();
@@ -402,6 +403,9 @@ class SectionPopup2 extends EditorComponent {
       css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
     );
 
+    const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });
+    const popupId = _popupId || `${this.getId()}-${uidPlaceholder}`;
+
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div
@@ -410,6 +414,10 @@ class SectionPopup2 extends EditorComponent {
           {...makeDataAttr({ name: "popup", value: popupId })}
           {...attr}
           {...parseCustomAttributes(customAttributes)}
+          {...makeDataAttr({
+            name: "once-id",
+            value: _popupId || this.getId()
+          })}
         >
           {this.renderItems(v, vs, vd)}
         </div>

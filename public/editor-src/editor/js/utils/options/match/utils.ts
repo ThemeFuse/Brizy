@@ -1,10 +1,12 @@
 import { match } from "fp-utilities";
-import type {
+import {
   ToolbarItemType,
+  ToolbarItemTypeWithChildOption,
   ToolbarItemTypeWithColumns,
   ToolbarItemTypeWithOptions,
   ToolbarItemTypeWithTabs
 } from "visual/editorComponents/ToolbarItemType";
+import { isOption } from "visual/utils/options/utils";
 import * as Obj from "visual/utils/reader/object";
 import type { ToolbarItemTypeWithChildrens } from "./types";
 
@@ -18,6 +20,20 @@ export const hasOptions = (
 
 export const hasTabs = (o: ToolbarItemType): o is ToolbarItemTypeWithTabs =>
   Array.isArray(Obj.readKey("tabs")(o));
+
+export const isPopulationWithOption = (
+  o: ToolbarItemType
+): o is ToolbarItemTypeWithChildOption => {
+  const option = Obj.read(o);
+
+  return (
+    Obj.isObject(option) &&
+    Obj.hasKey("type", option) &&
+    option.type === "population" &&
+    Obj.hasKey("option", option) &&
+    isOption(option.option)
+  );
+};
 
 export const getChildOptions: (
   o: ToolbarItemTypeWithChildrens

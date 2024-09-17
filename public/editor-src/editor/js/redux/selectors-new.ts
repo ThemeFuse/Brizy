@@ -4,13 +4,19 @@ import { ElementModelType } from "visual/component/Elements/Types";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
-import { Authorized, Font, GlobalBlock, SyncAllowed } from "visual/types";
+import {
+  Authorized,
+  Font,
+  GlobalBlock,
+  GlobalBlockPopup,
+  SyncAllowed
+} from "visual/types";
 import { NonEmptyArray } from "visual/utils/array/types";
 import { canUseCondition, createGlobalBlockSymbol } from "visual/utils/blocks";
 import { getSurroundedGBIds } from "visual/utils/blocks/blocksConditions";
 import { getGroupFontsById } from "visual/utils/fonts";
 import { mapModels } from "visual/utils/models";
-import { objectFromEntries } from "visual/utils/object";
+import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
 
 //#region === 0 DEPENDENCIES ===
 
@@ -96,6 +102,11 @@ export const disabledElementsSelector = createSelector(
   (project) => project.data.disabledElements || []
 );
 
+export const pinnedElementsSelector = createSelector(
+  projectSelector,
+  (project) => project.data.pinnedElements || []
+);
+
 const deletedPredicate = <T extends { deleted?: boolean }>(t: T): boolean =>
   t.deleted !== true;
 
@@ -130,6 +141,22 @@ export const unDeletedFontsSelector = createSelector(
         ...acc,
         [`${type}`]: {
           data: data.filter(deletedPredicate)
+        }
+      };
+    }, {});
+  }
+);
+
+export const filteredFontsSelector = createSelector(
+  fontsSelector,
+  (fonts): ReduxState["fonts"] => {
+    return Object.entries(fonts).reduce((acc, curr) => {
+      const [type, { id, data = [] } = { id: "", data: [] }] = curr;
+
+      return {
+        ...acc,
+        [type]: {
+          ...(type === "adobe" ? { id, data } : { data })
         }
       };
     }, {});
@@ -303,6 +330,30 @@ export const globalBlocksInPageSelector = createSelector(
 
       return acc;
     }, {});
+  }
+);
+
+// Retrieve all global popups from page, including their data.
+// Used when try to compile page with node
+export const globalPopupsInPageSelector = createSelector(
+  pageBlocksDataSelector,
+  globalBlocksSelector,
+  (page, globalBlocks) => {
+    const popups = new Map<string, GlobalBlockPopup>();
+    objectTraverse2(page, (obj: Record<string, unknown>) => {
+      if (Array.isArray(obj.popups)) {
+        obj.popups.forEach((popup) => {
+          if (popup.type === "GlobalBlock" && globalBlocks[popup.value._id]) {
+            popups.set(
+              popup.value._id,
+              globalBlocks[popup.value._id] as GlobalBlockPopup
+            );
+          }
+        });
+      }
+    });
+
+    return [...popups].map(([, data]) => data);
   }
 );
 

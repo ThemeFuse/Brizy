@@ -1,4 +1,4 @@
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 
 export interface Props extends WithClassName {
   onChange: () => void;

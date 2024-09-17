@@ -59,17 +59,32 @@ export function getItems(): ToolbarItemType[] {
               ]
             },
             {
-              id: "padding",
-              type: "padding",
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
               devices: "responsive",
-              disabled: true
-            },
-            {
-              id: "calendlyPadding",
-              type: "padding",
-              devices: "responsive",
-              label: t("Padding"),
-              position: 50
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      disabled: true
+                    },
+                    {
+                      id: "calendlyPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      position: 50
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

@@ -4,7 +4,8 @@ import React, {
   CSSProperties,
   Component,
   ComponentType,
-  ReactElement
+  ReactElement,
+  PropsWithChildren
 } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import _ from "underscore";
@@ -46,7 +47,7 @@ export interface Props {
   items: Partial<Record<BlockTypes, BlockData[]>>;
   types: BlockCategory[];
   filter?: string;
-  HeaderSlotLeft: ComponentType;
+  HeaderSlotLeft: ComponentType<PropsWithChildren<unknown>>;
   onChange: (b: BlockData) => void;
   onDelete: (b: BlockData) => void;
   onSync?: (b: BlockData) => void;
@@ -328,8 +329,8 @@ class Blocks extends Component<Props> {
       activeType === "POPUP"
         ? t("Import New Popup")
         : activeType === "BLOCK"
-        ? t("Import New Block")
-        : t("Import New Layout");
+          ? t("Import New Block")
+          : t("Import New Layout");
 
     return (
       <Button
@@ -352,8 +353,8 @@ class Blocks extends Component<Props> {
       activeType === "POPUP"
         ? t("Export All Popups")
         : activeType === "BLOCK"
-        ? t("Export All Blocks")
-        : t("Export All Layouts");
+          ? t("Export All Blocks")
+          : t("Export All Layouts");
 
     return (
       <Button
@@ -462,8 +463,8 @@ class Blocks extends Component<Props> {
               {loading
                 ? this.renderLoading()
                 : filteredThumbnails.length === 0
-                ? this.renderEmpty()
-                : this.renderItems(filteredThumbnails, tagsWithoutAll)}
+                  ? this.renderEmpty()
+                  : this.renderItems(filteredThumbnails, tagsWithoutAll)}
             </>
           );
         }}

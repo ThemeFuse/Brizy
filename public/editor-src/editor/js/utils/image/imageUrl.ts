@@ -1,17 +1,28 @@
-import Config from "visual/global/Config";
-import { defaultCrop } from "visual/global/Config/types/configs/common";
+import Config, { isWp } from "visual/global/Config";
 import { isDynamicContent } from "visual/utils/dynamicContent";
-import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
+import { parseImagePatterns } from "visual/utils/image/parsers";
+import {
+  is as isNoEmptyString,
+  NoEmptyString
+} from "visual/utils/string/NoEmptyString";
 import { isAbsoluteUrl } from "visual/utils/url";
 import { MValue } from "visual/utils/value";
-import { getImageFormat } from "./imageFormat";
-import { Data, ImageType } from "./types";
+import { Data, DataUrl, ImageType } from "./types";
 import {
-  getFilter,
   getUnsplashCrop,
-  isCropSize,
-  isUnsplashImage
+  isUnsplashImage,
+  generateUrl,
+  isCropSize
 } from "./utils";
+import { getFileFormat } from "visual/utils/customFile/utils";
+
+const getUrl = (data: Data, options: DataUrl): string => {
+  if (isCropSize(data)) {
+    return generateUrl({ ...options, crop: data.crop });
+  }
+
+  return generateUrl(options);
+};
 
 export const getImageUrl = ({
   imageType = ImageType.Internal,
@@ -32,38 +43,81 @@ export const getImageUrl = ({
   const config = Config.getAll();
   const { api = {} } = config ?? {};
   const { media = {} } = api;
+  const { isOldImage, imagePatterns, mediaResizeUrl } = media;
 
-  if (media.mediaResizeUrl) {
-    const { fileName, uid: src, sizeType } = data;
-    const extension = getImageFormat(src);
-    const filter = isCropSize(data)
-      ? getFilter({ ...defaultCrop, ...data.crop })
-      : sizeType;
+  const parsedImagePatterns = parseImagePatterns(imagePatterns);
 
-    if (extension) {
-      // remove extension
-      const uid = src.replace(`.${extension}`, "");
-
-      if (fileName) {
-        // remove extension for fileName
-        // add extension from UID to fileName
-        // the API is doesn't work with original .ext of file
-        const fileNameExt = getImageFormat(fileName) ?? "";
-        const _fileName = fileName.replace(`.${fileNameExt}`, "");
-        const name = `${_fileName}.${extension}`;
-        return [media.mediaResizeUrl, filter, uid, name].join("/");
-      }
-
-      const name = `image.${extension}`;
-      return [media.mediaResizeUrl, filter, uid, name].join("/");
-    }
-
-    if (fileName) {
-      return [media.mediaResizeUrl, filter, src, fileName].join("/");
-    }
-
-    return [media.mediaResizeUrl, filter, src].join("/");
+  if (!parsedImagePatterns || !mediaResizeUrl) {
+    return undefined;
   }
 
-  return undefined;
+  const { uid, fileName } = data;
+  const extension = getFileFormat(uid);
+
+  if (fileName) {
+    let newFileName = fileName;
+    let newUid = uid;
+
+    // Only for WP,
+    // always return uid
+    if (isWp(config)) {
+      const options = {
+        fileName: uid,
+        baseUrl: mediaResizeUrl,
+        patterns: parsedImagePatterns,
+        sizeType: data.sizeType
+      };
+
+      return getUrl(data, options);
+    }
+
+    // (1) New Cloud where we have fileName and uid with file extension
+    // Check for fileName (new api)
+    if (extension) {
+      // remove extension for fileName
+      // add extension from UID to fileName
+      // the API is doesn't work with original .ext of file
+      const fileNameExt = getFileFormat(fileName) ?? "";
+      const _fileName = fileName.replace(`.${fileNameExt}`, "");
+      newFileName = `${_fileName}.${extension}`;
+      newUid = uid.replace(`.${extension}`, "") as NoEmptyString;
+    }
+
+    // (1.1) For Third-Party app who used
+    // uid and fileName, but uid without extensions
+    const options = {
+      uid: newUid,
+      fileName: newFileName,
+      baseUrl: mediaResizeUrl,
+      patterns: parsedImagePatterns,
+      sizeType: data.sizeType
+    };
+
+    return getUrl(data, options);
+  }
+
+  // (2) OLD Cloud
+  if (isOldImage && extension) {
+    const fileName = `image.${extension}`;
+    const newUid = uid.replace(`.${extension}`, "") as NoEmptyString;
+    const options = {
+      fileName,
+      uid: newUid,
+      baseUrl: mediaResizeUrl,
+      patterns: parsedImagePatterns,
+      sizeType: data.sizeType
+    };
+
+    return getUrl(data, options);
+  }
+
+  // (3) WP & All Third-party partners
+  const options = {
+    fileName: uid,
+    baseUrl: mediaResizeUrl,
+    patterns: parsedImagePatterns,
+    sizeType: data.sizeType
+  };
+
+  return getUrl(data, options);
 };

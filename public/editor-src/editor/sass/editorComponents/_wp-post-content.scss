@@ -12,6 +12,23 @@
   > div > * {
     margin: revert;
   }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    a {
+      font-family: inherit !important;
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+      letter-spacing: inherit !important;
+      font-variation-settings: inherit !important;
+    }
+  }
 }
 
 .brz-rich-text .brz-tp__dc-block-st1 {

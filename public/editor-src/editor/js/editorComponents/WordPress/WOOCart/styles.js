@@ -23,7 +23,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleTypography3FontVariation"
+        "cssStyleTypography3FontVariation",
+        "cssStyleTypography3TextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -46,7 +47,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartPurchasesLineHeight",
         "cssStyleElementWOOCartPurchasesFontWeight",
         "cssStyleElementWOOCartPurchasesLetterSpacing",
-        "cssStyleElementWOOCartPurchasesFontVariation"
+        "cssStyleElementWOOCartPurchasesFontVariation",
+        "cssStyleElementWOOCartPurchasesTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -82,7 +84,8 @@ export function style(v, vs, vd) {
           "cssStyleElementWOOCartTitleLineHeight",
           "cssStyleElementWOOCartTitleFontWeight",
           "cssStyleElementWOOCartTitleLetterSpacing",
-          "cssStyleElementWOOCartTitleFontVariation"
+          "cssStyleElementWOOCartTitleFontVariation",
+          "cssStyleElementWOOCartTitleTextTransform"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -98,7 +101,8 @@ export function style(v, vs, vd) {
           "cssStyleElementWOOCartCostLineHeight",
           "cssStyleElementWOOCartCostFontWeight",
           "cssStyleElementWOOCartCostLetterSpacing",
-          "cssStyleElementWOOCartCostFontVariation"
+          "cssStyleElementWOOCartCostFontVariation",
+          "cssStyleElementWOOCartCostTextTransform"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -113,7 +117,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartSubtotalLineHeight",
         "cssStyleElementWOOCartSubtotalFontWeight",
         "cssStyleElementWOOCartSubtotalLetterSpacing",
-        "cssStyleElementWOOCartSubtotalFontVariation"
+        "cssStyleElementWOOCartSubtotalFontVariation",
+        "cssStyleElementWOOCartSubtotalTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -131,7 +136,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOCartButtonLineHeight",
         "cssStyleElementWOOCartButtonFontWeight",
         "cssStyleElementWOOCartButtonLetterSpacing",
-        "cssStyleElementWOOCartButtonFontVariation"
+        "cssStyleElementWOOCartButtonFontVariation",
+        "cssStyleElementWOOCartButtonTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",

@@ -1,14 +1,16 @@
+import {
+  Layout,
+  readLayout,
+  Tabs,
+  tabs,
+  ThemeLayout
+} from "visual/component/Prompts/common/PromptPage/types";
 import { RulesState as PageArticleRulesState } from "visual/component/Prompts/PromptPageArticle/types";
 import {
   Item,
   RulesState as PageRulesState,
   Valid
 } from "visual/component/Prompts/PromptPageRules/types";
-import {
-  Layout,
-  Tabs,
-  tabs
-} from "visual/component/Prompts/common/PromptPage/types";
 import { Shopify } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
@@ -17,11 +19,14 @@ import * as Arr from "visual/utils/reader/array";
 import * as Str from "visual/utils/reader/string";
 import { MValue } from "visual/utils/value";
 
-export const getChoices = (config: Shopify): Layout[] =>
-  config.templates.map(({ id, title }) => ({
-    id,
-    title
-  }));
+export const getChoices = (config: Shopify): ThemeLayout[] =>
+  config.templates.reduce<ThemeLayout[]>((acc, { id, title }) => {
+    const _id = readLayout(id);
+    if (_id) {
+      acc.push({ id: _id, title });
+    }
+    return acc;
+  }, []);
 
 export const getTabsByItemsNumber = (
   state: PageRulesState | PageArticleRulesState
@@ -143,3 +148,9 @@ export const canSyncPage = (config: ConfigCommon): boolean => {
 
   return !currentPublishedPagesCount;
 };
+
+export const getShopifyLayout = (layouts: ThemeLayout[]): MValue<ThemeLayout> =>
+  layouts.find((layout) => layout.id === Layout.Shopify);
+
+export const isShopifyLayout = (layout: Layout): layout is Layout.Shopify =>
+  layout === Layout.Shopify;

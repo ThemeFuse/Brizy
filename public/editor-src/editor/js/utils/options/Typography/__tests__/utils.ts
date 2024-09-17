@@ -32,7 +32,13 @@ const value: OptionValue<"typography"> = {
   lineHeight: readPositive(1) ?? emptyPositive,
   variableFontWeight: readWeight(400) ?? normalWeight,
   fontWidth: 100,
-  fontSoftness: 0
+  fontSoftness: 0,
+  bold: false,
+  italic: true,
+  underline: true,
+  strike: true,
+  uppercase: false,
+  lowercase: true
 };
 
 const output = {
@@ -44,7 +50,10 @@ const output = {
   fontWeight: 400,
   letterSpacing: "0px",
   lineHeight: 1,
-  variableFontWeight: '"wght" 400, "wdth" 100, "SOFT" 0'
+  variableFontWeight: '"wght" 400, "wdth" 100, "SOFT" 0',
+  textStyle: "font-style:italic;",
+  textDecoration: "text-decoration:underline line-through;",
+  textTransform: "text-transform:lowercase;"
 };
 
 beforeAll(() => {
@@ -74,7 +83,11 @@ describe("Testing getTypographyValues that should return typography values", () 
       fontWeight: 400,
       letterSpacing: "NaNpx",
       lineHeight: 0,
-      variableFontWeight: '"wght" undefined, "wdth" undefined, "SOFT" undefined'
+      variableFontWeight:
+        '"wght" undefined, "wdth" undefined, "SOFT" undefined',
+      textStyle: "",
+      textDecoration: "",
+      textTransform: ""
     });
   });
 

@@ -4,7 +4,7 @@ import { Option } from "visual/component/LeftSidebar/options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { Html } from "visual/component/Options/types/dev/Popover/triggers/Html";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 
 export type Icon = string | ComponentProps<typeof Html>;
 

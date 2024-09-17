@@ -65,14 +65,14 @@ export function getItems() {
         },
         {
           id: "advancedSettings",
-          type: "legacy-advancedSettings",
+          type: "advancedSettings",
           label: t("More Settings")
         }
       ]
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     }
   ];

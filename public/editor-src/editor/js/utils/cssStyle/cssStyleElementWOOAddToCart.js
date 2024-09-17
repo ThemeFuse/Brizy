@@ -6,6 +6,7 @@ import {
   cssStyleColor,
   cssStyleSizeHeight,
   cssStyleSizeWidth,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -114,6 +115,14 @@ export function cssStyleElementWOOAddToCartInputFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "input" });
 }
 
+export function cssStyleElementWOOAddToCartInputTextTransform({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "input" });
+}
+
 export function cssStyleElementWOOAddToCartInputColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "inputColor" });
 }
@@ -146,6 +155,14 @@ export function cssStyleElementWOOAddToCartLabelFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "label" });
 }
 
+export function cssStyleElementWOOAddToCartLabelTextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "label" });
+}
+
 export function cssStyleElementWOOAddToCartValueFontFamily({ v, device }) {
   return cssStyleTypography2FontFamily({ v, device, prefix: "value" });
 }
@@ -168,6 +185,14 @@ export function cssStyleElementWOOAddToCartValueLetterSpacing({ v, device }) {
 
 export function cssStyleElementWOOAddToCartValueFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "value" });
+}
+
+export function cssStyleElementWOOAddToCartValueTextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "value" });
 }
 
 export function cssStyleElementWOOAddToCartLabelColor({ v, device, state }) {
@@ -200,6 +225,14 @@ export function cssStyleElementWOOAddToCartClearLetterSpacing({ v, device }) {
 
 export function cssStyleElementWOOAddToCartClearFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "clear" });
+}
+
+export function cssStyleElementWOOAddToCartClearTextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "clear" });
 }
 
 export function cssStyleElementWOOAddToCartClearColor({ v, device, state }) {

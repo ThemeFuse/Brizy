@@ -15,6 +15,7 @@ import { css1 } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { isStory } from "visual/utils/models";
 import * as Arr from "visual/utils/reader/array";
+import { diff } from "visual/utils/reader/object";
 import { uuid } from "visual/utils/uuid";
 import { styleHeading } from "./styles";
 import { createLabel, getFormats, mapBlockElements } from "./utils";
@@ -483,13 +484,11 @@ class QuillComponent extends React.Component<Props> {
       if (!paragraphLength.trim().length) {
         // dynamic Content is alone in the paragraph
         quill.insertText(index, label, newFormats);
-        quill.format("dcBlock", true);
       } else if (lineBlot.offset() + paragraphLength.length === index) {
         // dynamicContent is in the end of paragraph
         quill.insertText(index, "\n");
         index += 1;
         quill.insertText(index, label, newFormats);
-        quill.format("dcBlock", true);
       } else if (lineBlot.offset() === index) {
         // dynamicContent is in the begin of paragraph
         quill.insertText(index, `${label}\n`, newFormats);
@@ -549,14 +548,43 @@ class QuillComponent extends React.Component<Props> {
       .map((value) => Object.keys(value))
       .flat();
 
+    // this is needed for extract only the one value that was changed for the textTransform,
+    // because quill  can't format this patch : {bold: true, italic: true}, it will format only the last one
+    const objectDifference = diff(this.getSelectionFormat(), values);
+    const exceptionKeys = [
+      "bold",
+      "italic",
+      "underline",
+      "strike",
+      "script",
+      "capitalize",
+      "typographyUppercase",
+      "typographyLowercase",
+      "typographyScript",
+      "popups"
+    ];
+
     // eslint-disable-next-line prefer-const
     for (let [key, value] of Object.entries(values)) {
-      if (key !== "popups") {
+      if (!exceptionKeys.includes(key)) {
         if (blockKeys.includes(key)) {
           value = formatVToQuilValue(value);
         }
         this.format(key, value);
       }
+    }
+
+    const textTransformValues = Object.entries(objectDifference).reduce<
+      Record<string, unknown>
+    >((acc, [key, value]) => {
+      if (exceptionKeys.includes(key)) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+
+    for (const [key, value] of Object.entries(textTransformValues)) {
+      this.format(key, value);
     }
 
     this.setGeneratedCss();

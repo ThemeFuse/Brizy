@@ -24,7 +24,10 @@ import FlipboxItem from "./Flipbox/FlipboxItem";
 import Form from "./Form";
 import Form2 from "./Form2";
 import Form2Field from "./Form2/Form2Field";
+import Form2FieldOption from "./Form2/Form2Field/types/FieldOption";
 import Form2Fields from "./Form2/Form2Fields";
+import Form2Step from "./Form2/Form2Step";
+import Form2Steps from "./Form2/Form2Steps";
 import FormField from "./Form/FormField";
 import FormFields from "./Form/FormFields";
 import GlobalBlock from "./GlobalBlock";
@@ -48,6 +51,7 @@ import * as MinistryBrands from "./MinistryBrands";
 import Page from "./Page";
 import PagePopup from "./PagePopup";
 import PageStory from "./PageStory";
+import Paypal from "./Paypal";
 import WPPostContent from "./PostContent";
 import PostExcerpt from "./PostExcerpt";
 import PostInfo from "./PostInfo";
@@ -119,6 +123,9 @@ export default {
   Form2,
   Form2Fields,
   Form2Field,
+  Form2Steps,
+  Form2Step,
+  Form2FieldOption,
   Wrapper,
   ProtectedPage,
   Cloneable,
@@ -189,6 +196,7 @@ export default {
   ThirdParty,
   ShareButton,
   ShareButtonItem,
+  Paypal,
 
   // DC
   PostTitle,

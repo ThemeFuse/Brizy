@@ -45,10 +45,13 @@ class RowItems extends EditorArrayComponent {
 
   popoverData = null;
 
-  state = {
-    patch: null,
+  resizerState = {
     isDragging: false,
     deltaX: 0
+  };
+
+  state = {
+    patch: null
   };
 
   getDBValue() {
@@ -85,12 +88,15 @@ class RowItems extends EditorArrayComponent {
   };
 
   handleColumnResizeEnd = (itemIndex, position) => {
-    this.setState({ patch: null, isDragging: false }, () =>
-      this.handleColumnResize(itemIndex, this.state.deltaX, position)
-    );
-    // this.columnWidths = null;
-    this.containerWidth = null;
-    this.popoverData = null;
+    this.resizerState.isDragging = false;
+
+    this.setState({ patch: null }, () => {
+      this.handleColumnResize(itemIndex, this.resizerState.deltaX, position);
+      // this.columnWidths = null;
+      this.resizerState.deltaX = 0;
+      this.containerWidth = null;
+      this.popoverData = null;
+    });
   };
 
   handleColumnResize = (index, deltaX, position) => {
@@ -101,8 +107,8 @@ class RowItems extends EditorArrayComponent {
       (colWidthPx * 100) / this.containerWidth
     );
 
-    if (this.state.isDragging) {
-      this.setState({ deltaX });
+    if (this.resizerState.isDragging) {
+      this.resizerState.deltaX = deltaX;
     }
     this.changeColumnWidths(index, colWidthPercent, position);
   };
@@ -150,8 +156,8 @@ class RowItems extends EditorArrayComponent {
 
     this.popoverData = popoverData;
 
-    if (this.state.isDragging) {
-      this.setState((state) => ({ ...state, patch: newValue }));
+    if (this.resizerState.isDragging) {
+      this.setState({ patch: newValue });
     } else {
       this.handleValueChange(newValue);
     }
@@ -304,8 +310,8 @@ class RowItems extends EditorArrayComponent {
                 itemIndex === 0
                   ? "prev"
                   : itemIndex === items.length - 1
-                  ? "next"
-                  : undefined,
+                    ? "next"
+                    : undefined,
               onChange: (v) => {
                 switch (v) {
                   case "prev":
@@ -388,9 +394,8 @@ class RowItems extends EditorArrayComponent {
       toolbarExtend,
       popoverData: this.getPopoverData,
       onResizeStart: (position) => {
-        this.setState({ isDragging: true }, () =>
-          this.handleColumnResizeStart(itemIndex, 0, position)
-        );
+        this.resizerState.isDragging = true;
+        this.handleColumnResizeStart(itemIndex, 0, position);
       },
       onResize: (deltaX, position) =>
         this.handleColumnResize(itemIndex, deltaX, position),

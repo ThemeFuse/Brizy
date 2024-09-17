@@ -5,6 +5,7 @@ import * as Obj from "visual/utils/reader/object";
 import { read } from "visual/utils/reader/string";
 import { MValue } from "visual/utils/value";
 import { MigrationImage } from "./types";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 interface DCPlaceholderObj {
   name: string;
@@ -51,14 +52,14 @@ const correction = (v: ElementModel): ElementModel => {
   const placeholderData = placeholderObjFromStr(imagePopulation);
 
   if (placeholderData?.attr?.size !== undefined) {
-    const size = read(placeholderData.attr.size) ?? "custom";
+    const size = read(placeholderData.attr.size) ?? SizeType.custom;
 
     return {
-      sizeType: size.trim().length > 0 ? size : "custom"
+      sizeType: size.trim().length > 0 ? size : SizeType.custom
     };
   }
 
-  return { sizeType: "custom" };
+  return { sizeType: SizeType.custom };
 };
 
 export const m2: MigrationImage = {

@@ -1,14 +1,15 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { Target } from "visual/component/Link/types/Target";
 import { Type } from "visual/component/Link/types/Type";
-import { Block } from "visual/types";
-import { CssId } from "visual/utils/models/cssId";
-import { WithClassName } from "visual/utils/options/attributes";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { Block } from "visual/types";
+import { WithClassName } from "visual/types/attributes";
+import { CssId } from "visual/utils/models/cssId";
 
 export interface Value extends ElementModel, CssId {
   name: string;
   type: string;
+  filename?: string;
 
   linkPage: string;
   popups: Block[];

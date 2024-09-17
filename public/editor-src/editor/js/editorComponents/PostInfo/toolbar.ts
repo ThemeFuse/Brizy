@@ -5,7 +5,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { Slug, Value } from "./types";
 
-// @ts-expect-error "advancedSettings" old options
+// @ts-expect-error wrong typing
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
@@ -136,9 +136,8 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
-      icon: "nc-cog",
       position: 150
     }
   ];

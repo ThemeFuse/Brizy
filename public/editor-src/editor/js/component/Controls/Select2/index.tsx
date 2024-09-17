@@ -5,10 +5,13 @@ import { OnChange } from "visual/component/Options/Type";
 import { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
 import { Props as MP, Select } from "./Select";
+import { Position } from "visual/utils/position/Position";
 
 type Props<T extends Literal> = Omit<MP<T>, "value" | "onChange"> & {
   value: T;
   onChange: OnChange<T>;
+  maxHeight?: number;
+  positionDropdown?: Position;
 };
 
 export function Select2<T extends Literal>({
@@ -16,10 +19,15 @@ export function Select2<T extends Literal>({
   onChange,
   children,
   className,
+  maxHeight,
+  positionDropdown,
   ...props
 }: Props<T>): ReactElement {
   const _value = value !== undefined ? [value] : [];
-  const _onChange = useCallback((v) => mCompose(onChange, last)(v), [onChange]);
+  const _onChange = useCallback(
+    (v: Array<T>) => mCompose(onChange, last)(v),
+    [onChange]
+  );
 
   return (
     <Select<T>
@@ -28,6 +36,8 @@ export function Select2<T extends Literal>({
       onChange={_onChange}
       value={_value}
       hideSelected={false}
+      maxHeight={maxHeight}
+      positionDropdown={positionDropdown}
     >
       {children}
     </Select>

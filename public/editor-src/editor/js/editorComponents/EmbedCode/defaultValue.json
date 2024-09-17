@@ -2,7 +2,9 @@
   "content": {
     "code": "",
     "offsetX": 0,
-    "offsetY": 0
+    "offsetY": 0,
+
+    "overflow": "off"
   },
 
   "toolbar": {
@@ -105,7 +107,9 @@
     "width": 100,
     "widthSuffix": "%",
 
+    "heightStyle": "auto",
     "height": 250,
+    "heightSuffix": "px",
 
     "customCSS": "",
 
@@ -125,9 +129,6 @@
     "bgPaddingTopSuffix": "px",
     "bgPaddingRightSuffix": "px",
     "bgPaddingBottomSuffix": "px",
-    "bgPaddingLeftSuffix": "px",
-
-    "tabletWidthSuffix": null,
-    "mobileWidthSuffix": null
+    "bgPaddingLeftSuffix": "px"
   }
 }

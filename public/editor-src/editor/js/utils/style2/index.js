@@ -70,5 +70,7 @@ export * from "./styleTextShadow";
 export * from "./styleTypography";
 // Typography
 export * from "./styleTypography2";
+// Text Transform
+export * from "./styleTextTransform";
 // Z Index
 export * from "./styleZIndex";

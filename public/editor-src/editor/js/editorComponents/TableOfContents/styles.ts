@@ -30,7 +30,9 @@ export function style(v: Value, vs: Value, vd: Value): OutputStyle {
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
-        "cssStyleTypography2LetterSpacing"
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -45,6 +47,8 @@ export function style(v: Value, vs: Value, vd: Value): OutputStyle {
         "cssStyleElementTOCBodyLineHeight",
         "cssStyleElementTOCBodyFontWeight",
         "cssStyleElementTOCBodyLetterSpacing",
+        "cssStyleElementTOCBodyFontVariation",
+        "cssStyleElementTOCBodyTextTransform",
         "cssStyleElementTOCWordWrap"
       ],
       interval: [

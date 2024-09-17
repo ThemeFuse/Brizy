@@ -1,12 +1,14 @@
 import React, { ReactElement, useCallback } from "react";
 import {
-  RadioGroup2,
-  Props as RadioGroup2Props
+  Props as RadioGroup2Props,
+  RadioGroup2
 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
+import {
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
+import { WithClassName } from "visual/types/attributes";
 import * as L from "visual/utils/types/Literal";
 import { Literal } from "visual/utils/types/Literal";
 import { Choice } from "./Choice";

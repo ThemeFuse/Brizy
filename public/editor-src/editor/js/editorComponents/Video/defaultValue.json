@@ -14,6 +14,7 @@
     "privacyMode": "off",
     "suggestedVideos": "current",
     "lazyLoad": "on",
+    "lightbox": "off",
 
     "images": {
       "coverImageSrc": ""
@@ -88,6 +89,12 @@
     "typographyVariableFontWeight": 400,
     "typographyFontWidth": 100,
     "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
 
     "colorHex": "#0000ee",
     "colorOpacity": 1,
@@ -256,15 +263,11 @@
     "tabletTypographyLineHeight": 1.1,
     "tabletTypographyLetterSpacing": 0,
 
-    "tabletSizeSuffix": null,
-
     "mobileTypographyFontStyle": "",
     "mobileTypographyFontSize": 16,
     "mobileTypographyFontSizeSuffix": "px",
     "mobileTypographyFontWeight": 400,
     "mobileTypographyLineHeight": 1.1,
-    "mobileTypographyLetterSpacing": 0,
-
-    "mobileSizeSuffix": null
+    "mobileTypographyLetterSpacing": 0
   }
 }

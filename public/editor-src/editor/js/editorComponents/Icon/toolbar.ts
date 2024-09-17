@@ -1,7 +1,6 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { Block } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { DESKTOP } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
@@ -11,6 +10,7 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { Props, Value } from "./types";
@@ -323,25 +323,13 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "linkPopup",
-                  // need to remove Old option in #24935
-                  type: "legacy-promptAddPopup",
+                  type: "promptAddPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
                   label: t("Popup"),
-                  popupKey: `${component.getId()}_${dvv("linkPopup")}`,
-                  value: {
-                    value: dvv("linkPopup"),
-                    popups: dvv("popups")
+                  config: {
+                    popupKey: `${component.getId()}_${dvv("linkPopup")}`
                   },
-                  onChange: ({
-                    value,
-                    popups
-                  }: {
-                    value: string;
-                    popups: Block[];
-                  }) => ({
-                    linkPopup: value,
-                    popups
-                  })
+                  dependencies: popupToOldModel
                 }
               ]
             },
@@ -368,11 +356,9 @@ export const getItems: GetItems<Value, Props> = ({
     {
       id: "advancedSettings",
       devices: "desktop",
-      //need to remove Old option in #24941
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];

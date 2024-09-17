@@ -1,5 +1,5 @@
-import { ReactNode, isValidElement } from "react";
-import { Size } from "visual/utils/options/attributes";
+import { isValidElement, ReactNode } from "react";
+import { Size } from "visual/types/attributes";
 import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
 import { Element } from "./types/Element";
 import { Value } from "./types/Value";

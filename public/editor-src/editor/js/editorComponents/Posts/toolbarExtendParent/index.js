@@ -1,8 +1,7 @@
 import { t } from "visual/utils/i18n";
-import { defaultValueValue } from "visual/utils/onChange";
 import { tabFilter } from "./tabFilter";
 import { tagsFilter } from "./tagsFilter";
-import { disableNavigation } from "./utils.common";
+import { disableNavigation, maxColumn } from "./utils.common";
 
 const getItems =
   (context) =>
@@ -95,11 +94,6 @@ const tabCurrentElement = (v, device) => {
 
   const title = getTitle(v.component) || _title;
 
-  const dvv = (key) => defaultValueValue({ key, v, device });
-
-  const max =
-    device === "desktop" ? 6 : Math.min(dvv("gridColumn") * dvv("gridRow"), 6);
-
   return {
     id: "posts",
     label: title,
@@ -108,12 +102,11 @@ const tabCurrentElement = (v, device) => {
         id: "gridColumn",
         type: "slider",
         label: t("Columns"),
-        devices: "desktop",
         config: {
           min: 1,
-          max,
+          max: maxColumn(device),
           inputMin: 1,
-          inputMax: max,
+          inputMax: maxColumn(device),
           step: 1
         }
       },

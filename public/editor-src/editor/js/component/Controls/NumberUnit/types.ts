@@ -2,7 +2,7 @@ import {
   WithClassName,
   WithOnChange,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
 
 export type Value<U> = {
   number: number;

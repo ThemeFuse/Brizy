@@ -128,6 +128,14 @@ export default class PromptKeyHelper extends Component {
               </div>
               <div className="brz-ed-hotkeys-combination-container-column-list">
                 <span className="brz-ed-hotkeys-combination-container-column-label">
+                  {isMac ? "cmd + L" : "ctrl + L"}
+                </span>
+                <span className="brz-ed-hotkeys-combination-container-column-label-2">
+                  {t("Open Media Library")}
+                </span>
+              </div>
+              <div className="brz-ed-hotkeys-combination-container-column-list">
+                <span className="brz-ed-hotkeys-combination-container-column-label">
                   {isMac ? "esc" : "esc"}
                 </span>
                 <span className="brz-ed-hotkeys-combination-container-column-label-2">

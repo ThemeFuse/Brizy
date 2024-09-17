@@ -1369,6 +1369,10 @@ export const getCustomIcons = async (): Promise<IconUploadData[]> => {
   }
   const { api } = config;
 
+  if (!api.iconsUrl) {
+    throw new Error(t("Missing iconsUrl"));
+  }
+
   const url = makeUrl(api.iconsUrl, {
     "orderBy[id]": "DESC",
     count: "1000"
@@ -1396,6 +1400,11 @@ export const uploadIcon = async (
   }
 
   const { api } = config;
+
+  if (!api.uploadIconUrl) {
+    throw new Error(t("Missing uploadIconUrl"));
+  }
+
   const response = await request(api.uploadIconUrl, {
     method: "POST",
     body: new URLSearchParams({
@@ -1420,6 +1429,10 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
   }
 
   const { api } = config;
+
+  if (!api.deleteIconUrl) {
+    throw new Error(t("Missing deleteIconUrl"));
+  }
 
   const response = await request(`${api.deleteIconUrl}${uid}`, {
     method: "DELETE"

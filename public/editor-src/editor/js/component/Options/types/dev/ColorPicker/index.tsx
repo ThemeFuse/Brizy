@@ -13,19 +13,19 @@ import * as Option from "visual/component/Options/Type";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
-import { Value } from "visual/utils/options/ColorPicker/entities/Value";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import { Value } from "visual/utils/options/ColorPicker/entities/Value";
 import {
-  setOpacity as _setOpacity,
   setHex,
+  setOpacity as _setOpacity,
   setPalette
 } from "visual/utils/options/ColorPicker/model";
 import * as Utils from "visual/utils/options/ColorPicker/utils";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 
 const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
 

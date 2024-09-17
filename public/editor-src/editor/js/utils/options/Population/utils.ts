@@ -1,4 +1,3 @@
-import { Config } from "visual/component/Options/types/common/Population/Population";
 import {
   Choices,
   OptGroup
@@ -66,7 +65,7 @@ export const findDCChoiceByPlaceholder = <T extends Literal>(
 };
 
 export const configChoicesToSelectItemChoices = (
-  config: Config,
+  config: { mockValue?: boolean; iconOnly?: boolean },
   choices: Array<PopulationMethod | PopulationOptgroupMethod>
 ): Array<PopulationMethod | PopulationOptgroupMethod> => {
   const { mockValue = true, iconOnly } = config;

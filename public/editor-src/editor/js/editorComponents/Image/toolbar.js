@@ -17,10 +17,16 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarImageTags, toolbarLinkAnchor } from "visual/utils/toolbar";
 import { getImageDCSize } from "./utils";
+import {
+  isImagePointerEnabled,
+  isImageZoomEnabled
+} from "visual/global/Config/types/configs/featuresValue";
+import { SizeType } from "../../global/Config/types/configs/common";
 
 export default ({
   desktopContainerWidth,
@@ -57,6 +63,9 @@ export const getItems =
 
     const isBigImageFromGallery = Boolean(v?.clonedFromGallery);
 
+    const isZoomEnabled = isImageZoomEnabled(config);
+    const isPointerEnabled = isImagePointerEnabled(config);
+
     const {
       inGallery = false,
       withBigImage = false,
@@ -87,7 +96,7 @@ export const getItems =
     );
     const maskShapeIsDisabled =
       maskShape === "none" ||
-      (maskShape === "custom" && !maskCustomUploadImageSrc);
+      (maskShape === SizeType.custom && !maskCustomUploadImageSrc);
 
     const widthSuffixValue = dvv("widthSuffix");
     const heightSuffixValue = dvv("heightSuffix");
@@ -104,10 +113,19 @@ export const getItems =
     const isExternalImage = dvv("imageType") !== ImageType.Internal;
 
     const dcSize = getImageDCSize(imagePopulation, context);
-    const isCustomSizeType = sizeType === "custom";
+    const isCustomSizeType = sizeType === SizeType.custom;
     const isSvgOrGif =
       (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) &&
       !dcSize;
+
+    const zoomDisabled =
+      Boolean(imagePopulation) ||
+      isSVGExtension(imageExtension) ||
+      isGIFExtension(imageExtension) ||
+      sizeType !== SizeType.custom ||
+      isBigImageFromGallery ||
+      isExternalImage ||
+      !isZoomEnabled;
 
     return [
       {
@@ -158,7 +176,7 @@ export const getItems =
                         disableSizes:
                           (inGallery && layout === "justified") ||
                           isExternalImage,
-                        pointer: !isExternalImage
+                        pointer: !isExternalImage && isPointerEnabled
                       }
                     }
                   },
@@ -166,13 +184,7 @@ export const getItems =
                     id: "zoom",
                     label: t("Zoom"),
                     type: "slider",
-                    disabled:
-                      Boolean(imagePopulation) ||
-                      isSVGExtension(imageExtension) ||
-                      isGIFExtension(imageExtension) ||
-                      sizeType !== "custom" ||
-                      isBigImageFromGallery ||
-                      isExternalImage,
+                    disabled: zoomDisabled,
                     config: {
                       min: 100,
                       max: 200,
@@ -224,7 +236,7 @@ export const getItems =
                             enabled: true,
                             content: t("Upload only [ .png or .svg ]")
                           },
-                          disabled: maskShape !== "custom"
+                          disabled: maskShape !== SizeType.custom
                         },
                         {
                           id: "groupSize",
@@ -240,7 +252,7 @@ export const getItems =
                             {
                               id: "maskScale",
                               type: "slider",
-                              disabled: maskSize !== "custom",
+                              disabled: maskSize !== SizeType.custom,
                               config: {
                                 min: 1,
                                 max: maskScaleSuffix === "px" ? 500 : 100,
@@ -267,7 +279,7 @@ export const getItems =
                               id: "maskPositionx",
                               label: t("X"),
                               type: "slider",
-                              disabled: maskPosition !== "custom",
+                              disabled: maskPosition !== SizeType.custom,
                               config: {
                                 min: 1,
                                 max: 100,
@@ -278,7 +290,7 @@ export const getItems =
                               id: "maskPositiony",
                               label: t("Y"),
                               type: "slider",
-                              disabled: maskPosition !== "custom",
+                              disabled: maskPosition !== SizeType.custom,
                               config: {
                                 min: 1,
                                 max: 100,
@@ -462,23 +474,18 @@ export const getItems =
                 options: [
                   {
                     id: "linkPopup",
-                    type: "legacy-promptAddPopup",
+                    type: "promptAddPopup",
                     disabled:
                       isStory(config) ||
                       (device === "desktop"
                         ? inPopup || inPopup2 || isPopup(config)
                         : dvv("linkType") !== "popup" || linkPopup === ""),
                     label: t("Popup"),
-                    canDelete: device === "desktop",
-                    popupKey: `${component.getId()}_${linkPopup}`,
-                    value: {
-                      value: linkPopup,
-                      popups: dvv("popups")
+                    config: {
+                      canDelete: device === "desktop",
+                      popupKey: `${component.getId()}_${linkPopup}`
                     },
-                    onChange: ({ value, popups }) => ({
-                      linkPopup: value,
-                      popups
-                    })
+                    dependencies: popupToOldModel
                   }
                 ]
               },
@@ -598,8 +605,7 @@ export const getItems =
       },
       {
         id: "advancedSettings",
-        type: "legacy-advancedSettings",
-        icon: "nc-cog",
+        type: "advancedSettings",
         disabled: !isStory(config),
         position: 110
       }

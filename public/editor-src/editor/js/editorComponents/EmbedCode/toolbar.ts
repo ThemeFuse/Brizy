@@ -131,6 +131,41 @@ export function getItems({
           }
         },
         {
+          id: "groupHeightSize",
+          type: "group",
+          options: [
+            {
+              id: "heightStyle",
+              label: t("Height"),
+              type: "select",
+              choices: [
+                { title: t("Auto"), value: "auto" },
+                { title: t("Custom"), value: "custom" }
+              ]
+            },
+            {
+              id: "height",
+              type: "slider",
+              disabled: dvv("heightStyle") !== "custom",
+              config: {
+                min: 20,
+                max: 10000,
+                units: [{ value: "px", title: "px" }]
+              }
+            }
+          ]
+        },
+        {
+          id: "overflow",
+          label: t("Overflow"),
+          type: "switch",
+          helper: {
+            content: t(
+              "Shows, in preview only, the content that renders outside the element box."
+            )
+          }
+        },
+        {
           id: "grid",
           type: "grid",
           config: { separator: true },
@@ -171,11 +206,9 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      //@ts-expect-error Old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110,
       disabled: !IS_STORY,
-      icon: "nc-cog",
       devices: "desktop"
     }
   ];

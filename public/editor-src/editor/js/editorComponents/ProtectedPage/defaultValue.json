@@ -30,6 +30,7 @@
       "tabletTypographyFontFamily": null,
       "mobileTypographyFontFamily": null
     },
+
     "typographyFontStyle": "paragraph",
     "typographyFontFamilyType": "google",
     "typographyFontSize": 15,
@@ -40,6 +41,12 @@
     "typographyVariableFontWeight": 700,
     "typographyFontWidth": 100,
     "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
 
     "bgColorHex": "#000000",
     "bgColorOpacity": 0,

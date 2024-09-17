@@ -96,6 +96,15 @@
     "fontWeight": 400,
     "lineHeight": 1,
     "letterSpacing": 0,
+    "bold": false,
+    "underline": false,
+    "italic": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
+    "variableFontWeight": 400,
+    "fontSoftness": 0,
+    "fontWidth": 100,
     "bodyFontStyle": "",
     "bodyFontFamily": "lato",
     "bodyFontFamilyType": "google",
@@ -103,6 +112,15 @@
     "bodyFontSizeSuffix": "px",
     "bodyFontWeight": 400,
     "bodyLetterSpacing": 0,
-    "bodyLineHeight": 1.5
+    "bodyLineHeight": 1.5,
+    "bodyBold": false,
+    "bodyItalic": false,
+    "bodyUnderline": false,
+    "bodyStrike": false,
+    "bodyUppercase": false,
+    "bodyLowercase": false,
+    "bodyVariableFontWeight": 400,
+    "bodyFontSoftness": 0,
+    "bodyFontWidth": 100
   }
 }

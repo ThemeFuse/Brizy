@@ -3,6 +3,7 @@ import React from "react";
 import _ from "underscore";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
+import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
@@ -26,6 +27,7 @@ import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import Toolbar from "../../component/Toolbar";
+import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import * as sidebarConfig from "./sidebar";
@@ -248,41 +250,48 @@ export default class Cloneable extends EditorComponent {
               >
                 {(ref, draggableClassName) => {
                   return (
-                    <ContainerBorder
-                      ref={this.containerBorder}
-                      type="wrapper__clone"
-                      color="grey"
-                      borderStyle="dotted"
-                      renderButtonWrapper={this.renderToolbar}
+                    <ContextMenu
+                      {...this.makeContextMenuProps(contextMenuConfig)}
                     >
-                      {({
-                        ref: containerBorderRef,
-                        attr: containerBorderAttr,
-                        button: ContainerBorderButton,
-                        border: ContainerBorderBorder
-                      }) => (
-                        <Animation
-                          ref={(v) => {
-                            attachRef(v, containerBorderRef);
-                            attachRef(v, ref || null);
-                          }}
-                          component={"div"}
-                          componentProps={{
-                            ...parseCustomAttributes(customAttributes),
-                            ...containerBorderAttr,
-                            ...(id && { id }),
-                            ...extraAttr,
-                            className: classnames(className, draggableClassName)
-                          }}
-                          animationId={this.getId()}
-                          animationClass={animationClassName}
-                        >
-                          {this.renderContent(v, vs, vd)}
-                          {ContainerBorderButton}
-                          {ContainerBorderBorder}
-                        </Animation>
-                      )}
-                    </ContainerBorder>
+                      <ContainerBorder
+                        ref={this.containerBorder}
+                        type="wrapper__clone"
+                        color="grey"
+                        borderStyle="dotted"
+                        renderButtonWrapper={this.renderToolbar}
+                      >
+                        {({
+                          ref: containerBorderRef,
+                          attr: containerBorderAttr,
+                          button: ContainerBorderButton,
+                          border: ContainerBorderBorder
+                        }) => (
+                          <Animation
+                            ref={(v) => {
+                              attachRef(v, containerBorderRef);
+                              attachRef(v, ref || null);
+                            }}
+                            component={"div"}
+                            componentProps={{
+                              ...parseCustomAttributes(customAttributes),
+                              ...containerBorderAttr,
+                              ...(id && { id }),
+                              ...extraAttr,
+                              className: classnames(
+                                className,
+                                draggableClassName
+                              )
+                            }}
+                            animationId={this.getId()}
+                            animationClass={animationClassName}
+                          >
+                            {this.renderContent(v, vs, vd)}
+                            {ContainerBorderButton}
+                            {ContainerBorderBorder}
+                          </Animation>
+                        )}
+                      </ContainerBorder>
+                    </ContextMenu>
                   );
                 }}
               </Draggable>

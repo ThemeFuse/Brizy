@@ -1,5 +1,6 @@
 import LibsConfig from "visual/bootstraps/libs.json";
 import Config from "visual/global/Config";
+import { ExtraFontData } from "visual/types";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
 import { IS_WP } from "visual/utils/env";
 import { makePrefetchFonts } from "visual/utils/fonts";
@@ -10,6 +11,7 @@ import { getDCColor } from "./getDCColor";
 import { getFontLinks } from "./getProjectFonts";
 import {
   Asset,
+  AssetAdobe,
   AssetGoogle,
   AssetLibsMap,
   AssetUpload,
@@ -23,7 +25,8 @@ import {
   DEPENDENCY_SCORE,
   LIBS_SCORE,
   MAIN_SCORE,
-  OTHERS_SCORE
+  OTHERS_SCORE,
+  THIRD_PARTY_SCORE
 } from "./scores";
 
 type MakeStyles = {
@@ -66,9 +69,29 @@ const makePageFontsPrefetch = (fonts: Fonts): Array<Asset> => {
   return [];
 };
 
-const makePageFonts = (fonts: Fonts): (AssetGoogle | AssetUpload)[] => {
-  const { google, upload } = getFontLinks(fonts);
-  const pageFonts: (AssetGoogle | AssetUpload)[] = [];
+const makePageFonts = (
+  fonts: Fonts,
+  extra?: ExtraFontData
+): (AssetGoogle | AssetUpload | AssetAdobe)[] => {
+  const { google, upload, adobe } = getFontLinks({ ...fonts, extra });
+  const pageFonts: (AssetGoogle | AssetUpload | AssetAdobe)[] = [];
+
+  if (adobe) {
+    pageFonts.push({
+      name: "adobe",
+      type: "adobe-font",
+      score: DEPENDENCY_SCORE,
+      content: {
+        type: "file",
+        url: adobe,
+        attr: withRel({
+          class: "brz-link brz-link-adobe",
+          type: "text/css"
+        })
+      },
+      pro: true
+    });
+  }
 
   if (google) {
     pageFonts.push({
@@ -188,10 +211,13 @@ interface Data {
   $root: cheerio.Root;
   fonts: Fonts;
   css: DynamicCSS;
+  extra?: { adobeKitId?: string };
 }
 export const makeStyles = (data: Data): MakeStyles => {
-  const { $root, fonts, css } = data;
+  const { $root, fonts, css, extra } = data;
   const { free = [], pro = [] } = LibsConfig;
+  const config = Config.getAll();
+
   const main: Asset = {
     name: "main",
     score: MAIN_SCORE,
@@ -207,7 +233,7 @@ export const makeStyles = (data: Data): MakeStyles => {
   const generic: Asset[] = [];
 
   // project fonts
-  const pageFonts = makePageFonts(fonts);
+  const pageFonts = makePageFonts(fonts, extra);
 
   // page styles
   const pageStyles = makePageFontsPrefetch(fonts);
@@ -227,6 +253,23 @@ export const makeStyles = (data: Data): MakeStyles => {
   // dynamic styles
   const dynamicStyles = makeDynamicStyle(css);
   generic.push(...dynamicStyles);
+
+  //ThirdParty styles
+  const thirdPartyUrls = config.thirdPartyUrls ?? [];
+
+  thirdPartyUrls.forEach(({ styleUrl }) => {
+    if (styleUrl) {
+      generic.push({
+        name: `third-party-${toHashCode(styleUrl)}`,
+        score: THIRD_PARTY_SCORE,
+        pro: false,
+        content: {
+          type: "file",
+          url: styleUrl
+        }
+      });
+    }
+  });
 
   const libsMap: AssetLibsMap[] = [];
   const libsSelectors = new Set<string>();
@@ -272,7 +315,7 @@ export const makeStyles = (data: Data): MakeStyles => {
   };
 
   // PRO
-  const proConfig = Config.getAll().pro;
+  const proConfig = config.pro;
 
   if (proConfig) {
     const genericPro: Asset[] = [];

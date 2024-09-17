@@ -36,12 +36,9 @@ export const getItems = (): ToolbarItemType[] => {
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error: Old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
-      sidebarLabel: t("More Settings"),
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];

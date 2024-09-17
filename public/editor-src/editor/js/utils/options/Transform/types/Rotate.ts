@@ -1,20 +1,28 @@
 import { or, parseStrict } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
+import * as Degree from "visual/component/Controls/Transform/Degree";
+import { Rotate } from "visual/component/Controls/Transform/types/Rotate";
 import { FromElementModelGetter } from "visual/component/Options/Type";
 import { always, mPipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import { callGetter } from "visual/utils/options/utils/wrap";
-import * as Degree from "./utils/Degree";
-
-export interface Rotate {
-  degree: Degree.Degree;
-}
+import { read as readBool } from "visual/utils/reader/bool";
 
 export const fromElementModel = parseStrict<FromElementModelGetter, Rotate>({
-  degree: or(
-    mPipe(callGetter("degree"), Num.read, Degree.fromNumber),
+  rotate: or(
+    mPipe(callGetter("rotate"), Num.read, Degree.fromNumber),
+    always(0)
+  ),
+  rotate3D: or(mPipe(callGetter("rotate3D"), readBool), always(false)),
+  rotateX: or(
+    mPipe(callGetter("rotateX"), Num.read, Degree.fromNumber),
+    always(0)
+  ),
+  rotateY: or(
+    mPipe(callGetter("rotateY"), Num.read, Degree.fromNumber),
+    always(0)
+  ),
+  rotatePerspective: or(
+    mPipe(callGetter("rotatePerspective"), Num.read),
     always(0)
   )
 });
-
-export const toElementModel = (v: Rotate): ElementModel => ({ ...v });

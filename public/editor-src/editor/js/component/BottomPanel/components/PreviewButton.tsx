@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactElement, useCallback, useRef } from "react";
+import React, { MouseEvent, useCallback, useRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import Config from "visual/global/Config";
@@ -14,7 +14,7 @@ const hotKeysForPreview = [
   "shift+right_cmd+P"
 ];
 
-export function PreviewButton(): ReactElement | null {
+export function PreviewButton(): JSX.Element {
   const config = Config.getAll();
   const previewWindow = useRef<Window | null>(null);
   const refAnchor = useRef<HTMLAnchorElement>(null);
@@ -27,7 +27,7 @@ export function PreviewButton(): ReactElement | null {
   }, []);
 
   if (!previewUrl) {
-    return null;
+    return <></>;
   }
 
   let suffix = "";

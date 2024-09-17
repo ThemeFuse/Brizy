@@ -20,9 +20,6 @@
     "betweenThumbnail": 10,
     "betweenThumbnailSuffix": "px",
 
-    "tabletWidthSuffix": null,
-    "mobileWidthSuffix": null,
-
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 

@@ -1,0 +1,41 @@
+.brz-ed-popup-common {
+
+  &-validation-error {
+    text-align: left;
+  }
+
+  &-validation-error .brz-p {
+    max-width: 100%;
+    margin-bottom: 5px;
+  }
+
+  &__connect {
+    text-align: center;
+
+    &--adobe {
+      height: 20%;
+    }
+
+    .brz-img,
+    .brz-label {
+      margin-bottom: 34px;
+    }
+    .brz-input {
+      margin-right: 10px;
+    }
+    .brz-label {
+      line-height: 1.5;
+      max-width: 400px;
+    }
+    &:before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+
+  &__confirmation {
+    font-size: 14px;
+  }
+}

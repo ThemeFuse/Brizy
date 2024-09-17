@@ -1,6 +1,7 @@
 import {
   cssStyleColor,
   cssStyleFlexHorizontalAlign,
+  cssStyleTextTransforms,
   cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
@@ -79,6 +80,14 @@ export function cssStyleElementLoginLostPasswordTypography2FontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "lost" });
 }
 
+export function cssStyleElementLoginLostPasswordTextTransform({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "lost" });
+}
+
 export function cssStyleElementLoginLostPasswordTypography2FontWeight({
   v,
   device
@@ -148,6 +157,10 @@ export function cssStyleElementLoginTextTypography2FontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "text" });
 }
 
+export function cssStyleElementLoginTextTransform({ v, device, state }) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "text" });
+}
+
 // Color Autorized
 export function cssStyleElementLoginTextColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "textColor" });
@@ -203,6 +216,19 @@ export function cssStyleElementLoginRegisterInfoTypography2FontVariation({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix: "registerInfo"
+  });
+}
+
+export function cssStyleElementLoginRegisterInfoTextTransform({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix: "registerInfo"
   });
 }
@@ -265,6 +291,19 @@ export function cssStyleElementLoginRegisterLinkTypography2FontVariation({
   });
 }
 
+export function cssStyleElementLoginRegisterLinkTextTransform({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix: "registerLink"
+  });
+}
+
 export function cssStyleElementLoginRegisterLinkColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "registerLinkColor" });
 }
@@ -322,6 +361,15 @@ export function cssStyleElementLoginLoginLinkTypography2FontVariation({
     prefix: "loginLink"
   });
 }
+
+export function cssStyleElementLoginLoginLinkTextTransform({ v, device }) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    prefix: "loginLink"
+  });
+}
+
 export function cssStyleElementLoginLoginLinkColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "loginLinkColor" });
 }

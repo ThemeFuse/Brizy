@@ -1,12 +1,12 @@
-import React, { ReactElement } from "react";
 import classNames from "classnames";
+import React, { ReactElement } from "react";
 import {
   WithClassName,
   WithOnChange,
   WithValue
-} from "visual/utils/options/attributes";
-import { NonEmptyArray } from "visual/utils/array/types";
+} from "visual/types/attributes";
 import { indexOf, nextIndex } from "visual/utils/array";
+import { NonEmptyArray } from "visual/utils/array/types";
 import { Props as ItemProps } from "./IconToggleItem";
 
 export type Props<T> = WithClassName &
@@ -22,8 +22,8 @@ export function IconToggle<T>({
   onChange
 }: Props<T>): ReactElement<Props<T>> {
   const _className = classNames("brz-ed-control__icon-carousel", className);
-  const current = children.find(i => i.props.value === value) ?? children[0];
-  const values: T[] = children.map(i => i.props.value);
+  const current = children.find((i) => i.props.value === value) ?? children[0];
+  const values: T[] = children.map((i) => i.props.value);
   const onClick = (): void => {
     const i = indexOf(value, values);
     const j = i !== undefined ? nextIndex(i, values) : undefined;

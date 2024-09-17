@@ -12,19 +12,12 @@ import { getCurrentDevice } from "visual/utils/export";
 import * as Str from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import { getParentMegaMenuUid, isClonedSlide } from "./utils.common";
-
-interface Settings {
-  widths?: {
-    [k in DeviceMode]: string;
-  };
-  mods?: {
-    [k in DeviceMode]: "vertical" | "horizontal";
-  };
-  placement?: {
-    [k in DeviceMode]: PopperPlacement;
-  };
-}
+import {
+  getParentMegaMenuUid,
+  getPlacement,
+  isClonedSlide
+} from "./utils.common";
+import { Settings } from "./types";
 
 interface ClosingType {
   desktop: "on" | "off";
@@ -463,38 +456,46 @@ export default function ($node: JQuery): void {
   }
 
   root
-    .querySelectorAll<HTMLElement>(".brz-menu__item-mega-menu")
+    .querySelectorAll<HTMLElement>(".brz-mega-menu__portal")
     .forEach((node) => {
-      const megaMenu = node.querySelector<HTMLElement>(
-        ".brz-mega-menu__portal"
-      );
+      const item = node.closest<HTMLElement>(".brz-menu__item");
 
-      if (megaMenu) {
+      if (item) {
         const temporaryUid = uuid();
 
-        node.setAttribute("data-mega-menu-open-uid", temporaryUid);
-        megaMenu.setAttribute("data-mega-menu-uid", temporaryUid);
-        megaMenus.set(temporaryUid, megaMenu);
+        item.classList.add("brz-menu__item-mega-menu");
+        item.setAttribute("data-mega-menu-open-uid", temporaryUid);
+        node.setAttribute("data-mega-menu-uid", temporaryUid);
+        megaMenus.set(temporaryUid, node);
 
         // Initialize
-        init(node, root);
+        init(item, root);
       }
     });
 
   if (Dropdown) {
     root
-      .querySelectorAll<HTMLElement>(".brz-menu__item-dropdown")
+      .querySelectorAll<HTMLElement>(
+        ".brz-menu:not(.brz-menu__mmenu) .brz-menu__sub-menu"
+      )
       .forEach((node) => {
         const device = lastCurrentDevice;
-        const content = [...node.children].find((node) =>
-          node.classList.contains("brz-menu__dropdown")
+        const item = node.closest<HTMLElement>(".brz-menu__item");
+        const menu = node.closest<HTMLElement>(".brz-menu");
+        const mods = decodeFromString<Settings["mods"]>(
+          menu?.dataset?.mods ?? ""
         );
+        const isSubMenu = node.parentElement?.closest(".brz-menu__sub-menu");
 
-        if (content instanceof HTMLElement) {
-          const dataSettings = content.dataset.settings ?? "";
-          const settings = decodeFromString<Settings>(dataSettings);
+        if (item instanceof HTMLElement) {
+          const settings = {
+            placement: getPlacement(!isSubMenu, mods),
+            mods
+          };
 
-          const dropdown = new Dropdown(node, content, {
+          item.classList.add("brz-menu__item-dropdown");
+
+          const dropdown = new Dropdown(item, node, {
             placement: getPopperPlacement(settings, device),
             offset: 5,
             disabled: {

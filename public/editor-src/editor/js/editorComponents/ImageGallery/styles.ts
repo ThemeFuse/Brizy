@@ -96,7 +96,8 @@ export function styleForFilter(
         "cssStyleElementImageGallery3LineHeight",
         "cssStyleElementImageGallery3FontWeight",
         "cssStyleElementImageGallery3LetterSpacing",
-        "cssStyleElementImageGallery3FontVariation"
+        "cssStyleElementImageGallery3FontVariation",
+        "cssStyleElementImageGalleryFilterTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",

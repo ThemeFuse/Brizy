@@ -1,7 +1,8 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
-import { GetItems } from "../EditorComponent/types";
+import type { GetItems } from "../EditorComponent/types";
+import type { Value } from "./types";
 
 const helperHTML = `
 <p class="brz-p">${t(
@@ -12,7 +13,8 @@ const helperHTML = `
   <br class="brz-br">
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
-export const getItems: GetItems = ({ context }) => {
+
+export const getItems: GetItems<Value> = ({ context }) => {
   const richTextDC = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.richText

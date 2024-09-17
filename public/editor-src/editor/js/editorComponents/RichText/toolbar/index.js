@@ -3,13 +3,15 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
 import { getDynamicContentOption } from "visual/utils/options";
-import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
-import { handleChangeLink } from "../utils/dependencies";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { handleChangeLink, patchTextTransform } from "../utils/dependencies";
 import getColorToolbar from "./color";
 import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
 import { mergeTypographyFontFamily } from "./utils/index";
 
 const proEnabled = Boolean(Config.get("pro"));
+
+const scriptChoices = ["sub", "super"];
 
 export default function (v, onChange) {
   return { getItems: getItems(v, onChange) };
@@ -74,8 +76,6 @@ const getItems =
       v.textPopulation
     );
 
-    const disableButtonDynamicTextCapitalize =
-      !v.textPopulation || device !== "desktop";
     const richTextDC = getDynamicContentOption({
       options: context.dynamicContent.config,
       type: DCTypes.richText,
@@ -98,6 +98,8 @@ const getItems =
       options: context.dynamicContent.config,
       type: DCTypes.link
     });
+
+    const linkPopup = v.linkPopup;
 
     const disableAiText =
       !!v.population ||
@@ -165,9 +167,11 @@ const getItems =
                             id: "typography",
                             type: "typography",
                             config: {
-                              fontFamily: "desktop" === device
+                              fontFamily: "desktop" === device,
+                              scriptChoices
                             },
-                            ...dependencies
+                            dependencies: (data) =>
+                              onChange(patchTextTransform(data, device, v))
                           }
                         ]
                       },
@@ -210,7 +214,8 @@ const getItems =
                             id: "h1",
                             type: "typography",
                             config: {
-                              fontFamily: "desktop" === device
+                              fontFamily: "desktop" === device,
+                              scriptChoices
                             },
                             ...dependencies
                           }
@@ -252,7 +257,8 @@ const getItems =
                             id: "h2",
                             type: "typography",
                             config: {
-                              fontFamily: "desktop" === device
+                              fontFamily: "desktop" === device,
+                              scriptChoices
                             },
                             ...dependencies
                           }
@@ -294,7 +300,8 @@ const getItems =
                             id: "h3",
                             type: "typography",
                             config: {
-                              fontFamily: "desktop" === device
+                              fontFamily: "desktop" === device,
+                              scriptChoices
                             },
                             ...dependencies
                           }
@@ -336,7 +343,8 @@ const getItems =
                             id: "h4",
                             type: "typography",
                             config: {
-                              fontFamily: "desktop" === device
+                              fontFamily: "desktop" === device,
+                              scriptChoices
                             },
                             ...dependencies
                           }
@@ -378,7 +386,8 @@ const getItems =
                             id: "h5",
                             type: "typography",
                             config: {
-                              fontFamily: "desktop" === device
+                              fontFamily: "desktop" === device,
+                              scriptChoices
                             },
                             ...dependencies
                           }
@@ -420,7 +429,8 @@ const getItems =
                             id: "h6",
                             type: "typography",
                             config: {
-                              fontFamily: "desktop" === device
+                              fontFamily: "desktop" === device,
+                              scriptChoices
                             },
                             ...dependencies
                           }
@@ -448,18 +458,6 @@ const getItems =
           }
         ]
       },
-      {
-        id: "dynamicTextCapitalize",
-        type: "toggleButton",
-        config: {
-          icon: "nc-tp-capitalize",
-          title: t("Uppercase"),
-          reverseTheme: true
-        },
-        position: 75,
-        disabled: disableButtonDynamicTextCapitalize
-      },
-
       getColorToolbar(
         { ...v, isPopulationBlock },
         { device, component, context },
@@ -524,67 +522,6 @@ const getItems =
           }
         ],
         ...dependencies
-      },
-      {
-        id: "bold",
-        type: "toggleButton",
-        config: {
-          icon: "nc-bold",
-          title: t("Bold"),
-          reverseTheme: true
-        },
-        position: 50,
-        disabled: disableButtons,
-        dependencies: ({ bold }) => onChange({ bold })
-      },
-      {
-        id: "italic",
-        type: "toggleButton",
-        config: {
-          icon: "nc-italic",
-          title: t("Italic"),
-          reverseTheme: true
-        },
-        position: 60,
-        disabled: disableButtons,
-        dependencies: ({ italic }) => onChange({ italic })
-      },
-      {
-        id: "underline",
-        type: "toggleButton",
-        config: {
-          icon: "nc-tp-underline",
-          title: t("Underline"),
-          reverseTheme: true
-        },
-        position: 65,
-        disabled: disableButtons,
-        dependencies: ({ underline }) => onChange({ underline })
-      },
-      {
-        id: "strike",
-        type: "toggleButton",
-        config: {
-          icon: "nc-tp-strike",
-          title: t("Strike"),
-          reverseTheme: true
-        },
-        position: 70,
-        disabled: disableButtons,
-        dependencies: ({ strike }) => onChange({ strike })
-      },
-      {
-        id: "capitalize",
-        type: "toggleButton",
-        config: {
-          icon: "nc-tp-capitalize",
-          title: t("Uppercase"),
-          reverseTheme: true
-        },
-        position: 75,
-        disabled: disableButtons,
-        dependencies: ({ capitalize }) =>
-          onChange({ capitalize: capitalize ? "on" : null })
       },
       {
         id: "toolbarLink",
@@ -694,7 +631,7 @@ const getItems =
                     ...(v.textPopulation
                       ? {}
                       : {
-                          onChange: (linkAnchor) =>
+                          dependencies: ({ linkAnchor }) =>
                             onChange(handleChangeLink(v, { linkAnchor }))
                         })
                   }
@@ -724,19 +661,21 @@ const getItems =
                 label: t("Popup"),
                 options: [
                   {
-                    ...toolbarLinkPopup({
-                      v,
-                      component,
+                    id: "linkPopup",
+                    type: "promptAddPopup",
+                    label: t("Popup"),
+                    config: {
+                      popupKey: `${component.getId()}_${linkPopup}`,
                       canDelete: device === "desktop"
-                    }),
+                    },
                     disabled: disablePopup || IS_STORY,
                     ...(v.textPopulation
                       ? {}
                       : {
-                          onChange: ({ value: linkPopup, popups }) =>
+                          dependencies: ({ linkPopup, linkPopupPopups }) =>
                             onChange({
                               ...handleChangeLink(v, { linkPopup }),
-                              popups
+                              popups: linkPopupPopups
                             })
                         })
                   }
@@ -773,8 +712,7 @@ const getItems =
       },
       {
         id: "advancedSettings",
-        type: "legacy-advancedSettings",
-        icon: "nc-cog",
+        type: "advancedSettings",
         disabled: !v.textPopulation,
         title: t("Settings"),
         devices: "desktop",

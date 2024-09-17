@@ -1,14 +1,13 @@
-import { isEmpty } from "underscore";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
-import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { capitalize } from "visual/utils/string";
 import { getInstanceParentId } from "visual/utils/toolbar";
+import { Toggle } from "visual/utils/options/utils/Type";
 
 export const getItems: GetItems = ({ v, device, component }) => {
   const config = Config.getAll();
@@ -16,23 +15,35 @@ export const getItems: GetItems = ({ v, device, component }) => {
     typeof config.api?.savedBlocks?.create !== "function";
   const disabledGlobalBlock =
     typeof config.api?.globalBlocks?.create !== "function";
-
+  const globalBlockId = Str.read(component.props.meta.globalBlockId);
   const multilanguage: boolean = config.multilanguage === true;
   const membership: boolean = config.membership === true;
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const globalBlockId = Str.read(component.props.meta.globalBlockId);
-
-  const showOnResponsive = toolbarShowOnResponsive({
-    v,
-    device,
-    devices: "responsive",
-    closeTooltip: true
-  });
+  const deviceCapitalize = capitalize(device);
 
   return [
-    ...(isEmpty(showOnResponsive) ? [] : [showOnResponsive as ToolbarItemType]),
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
+      closeTooltip: true,
+      devices: "responsive",
+      position: 9,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "toolbarSticky",
       type: "popover",

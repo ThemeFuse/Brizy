@@ -7,7 +7,7 @@ import {
   ComponentsMeta,
   ContextMenuItem
 } from "visual/editorComponents/EditorComponent/types";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 
 export enum Network {
   Facebook = "Facebook",

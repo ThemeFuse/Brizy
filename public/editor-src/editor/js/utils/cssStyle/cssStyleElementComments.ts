@@ -1,6 +1,7 @@
 import {
   cssStyleColor,
   cssStyleSizeFontSize,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -62,6 +63,14 @@ export function cssStyleElementCommentsNameFontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "name" });
 }
 
+export function cssStyleElementCommentsNameTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "name" });
+}
+
 export function cssStyleElementCommentsCommentFontFamily({
   v,
   device
@@ -110,6 +119,14 @@ export function cssStyleElementCommentsCommentFontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "comment" });
 }
 
+export function cssStyleElementCommentsCommentTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "comment" });
+}
+
 export function cssStyleElementCommentsDateFontFamily({
   v,
   device
@@ -151,6 +168,14 @@ export function cssStyleElementCommentsDateFontVariation({
   device
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({ v, device, prefix: "date" });
+}
+
+export function cssStyleElementCommentsDateTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "date" });
 }
 
 export function cssStyleElementCommentsReplyFontFamily({
@@ -223,6 +248,14 @@ export function cssStyleElementCommentsReplyFontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "reply" });
 }
 
+export function cssStyleElementCommentsReplyTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "reply" });
+}
+
 export function cssStyleElementCommentsPostButtonFontFamily({
   v,
   device
@@ -291,6 +324,14 @@ export function cssStyleElementCommentsPostButtonFontVariation({
   device
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({ v, device, prefix: "postButton" });
+}
+
+export function cssStyleElementCommentsPostButtonTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "postButton" });
 }
 
 export function cssStyleElementCommentsLogoSize({

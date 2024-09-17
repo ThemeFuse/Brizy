@@ -5,14 +5,14 @@ import {
 } from "visual/component/Options/types/dev/Gallery/types/Image";
 import { UploadData } from "visual/component/Options/types/dev/Gallery/types/UploadData";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { WithId } from "visual/types/attributes";
 import { getImageUrl, preloadImage } from "visual/utils/image";
 import { prop } from "visual/utils/object/get";
-import { WithId } from "visual/utils/options/attributes";
 import * as Num from "visual/utils/reader/number";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/reader/string";
 
-export const allowedExtensions = ["jpeg", "jpg", "png", "gif", "svg"];
+export const allowedExtensions = ["jpeg", "jpg", "png", "gif", "svg", "webp"];
 
 export const maxId = <T extends WithId<number>>(ts: T[]): number =>
   ts.reduce((id, i) => (i.id > id ? i.id : id), 0);

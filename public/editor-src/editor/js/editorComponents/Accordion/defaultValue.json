@@ -57,6 +57,12 @@
     "variableFontWeight": 400,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "filterFontStyle": "",
     "filterFontFamilyType": "google",
@@ -67,7 +73,13 @@
     "filterLetterSpacing": 0,
     "filterVariableFontWeight": 400,
     "filterFontWidth": 100,
-    "filterSoftness": 0,
+    "filterFontSoftness": 0,
+    "filterBold": false,
+    "filterItalic": false,
+    "filterUnderline": false,
+    "filterStrike": false,
+    "filterUppercase": false,
+    "filterLowercase": false,
 
 
     "borderStyle": "solid",

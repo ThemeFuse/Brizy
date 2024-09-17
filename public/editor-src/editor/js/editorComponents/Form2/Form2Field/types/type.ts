@@ -1,29 +1,41 @@
-export type Active = Record<string, boolean>;
+import { ElementModelType2 } from "visual/component/Elements/Types";
+
+export type Active = Record<string, boolean> | boolean | number;
 
 export interface RadioProps {
   options: string[];
   label: string;
+  labelType: string;
+  showPlaceholder: boolean;
   attr: {
-    name: string;
+    placeholder: string;
+    type: string;
+    value: string;
   };
 }
 
-export interface RadioState {
-  value: string;
+export interface SelectAttributes extends Record<string, boolean> {
+  multiple: boolean;
+}
+
+export interface SelectState {
+  isOpen: boolean;
+}
+
+export interface SelectProps {
+  options: string[];
+  label: string;
+  labelType: string;
+  showPlaceholder: boolean;
+  attr: {
+    placeholder: string;
+    type: string;
+    value: string;
+  };
+  items: ElementModelType2[];
 }
 
 export interface CheckboxProps {
-  onChange: (data: { active: Active }) => void;
-  options: string[];
-  active: Active;
-  label: string;
-  _id: string;
-  index: number;
-  attr: {
-    type: string;
-  };
-}
-
-export interface CheckboxState {
-  value: string;
+  children: React.JSX.Element | React.JSX.Element[];
+  active: Record<string, boolean>;
 }

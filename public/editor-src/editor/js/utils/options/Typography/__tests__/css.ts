@@ -47,7 +47,13 @@ describe("Testing cssStyleTypography that should return CSS for font family, fon
       lineHeight: readPositive(1) ?? emptyPositive,
       variableFontWeight: readWeight(400) ?? normalWeight,
       fontWidth: 100,
-      fontSoftness: 0
+      fontSoftness: 0,
+      bold: false,
+      italic: false,
+      underline: false,
+      strike: false,
+      uppercase: false,
+      lowercase: false
     };
 
     expect(cssStyleTypography({ value })).toBe(

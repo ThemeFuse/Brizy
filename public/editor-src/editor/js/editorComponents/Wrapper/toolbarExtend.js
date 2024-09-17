@@ -1,10 +1,12 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { capitalize } from "visual/utils/string";
+import { Toggle } from "visual/utils/options/utils/Type";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
 
+  const deviceCapitalize = capitalize(device);
   // Don't send items down because they will likely
   // be disabled below as Wrapper uses them itself (see toolbar.js)
   if (dvv("showToolbar") === "on") {
@@ -12,13 +14,25 @@ export function getItems({ v, device }) {
   }
 
   return [
-    toolbarShowOnResponsive({
-      v,
-      device,
-      state: "normal",
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
       devices: "responsive",
-      position: 1
-    }),
+      position: 10,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "horizontalAlign",
       type: "toggle",

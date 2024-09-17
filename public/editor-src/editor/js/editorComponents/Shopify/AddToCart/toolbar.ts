@@ -9,7 +9,6 @@ import * as Str from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from ".";
 
-// @ts-expect-error using legacy-option
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const config = Config.getAll();
 
@@ -303,7 +302,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110
     }
   ];

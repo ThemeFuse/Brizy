@@ -66,6 +66,7 @@ const translationsMap = {
   PostNavigation: t("Post Navigation"),
   Breadcrumbs: t("Breadcrumbs"),
   ShareButton: t("Share Button"),
+  Paypal: t("Paypal"),
 
   // WP
   WPSidebar: t("Sidebar"),

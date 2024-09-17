@@ -5,8 +5,8 @@ import {
   Response
 } from "visual/global/Config/types/configs/common";
 import { t } from "visual/utils/i18n";
-import { Literal } from "visual/utils/types/Literal";
 import types, { FormInputTypesName } from "./types";
+import { InputType, InputTypeChoice } from "./type";
 
 export const getThirtyOptions = (fieldId: string): ChoicesAsync["load"] => {
   const uniqueField: FormFieldsOption = {
@@ -31,16 +31,6 @@ export const getThirtyOptions = (fieldId: string): ChoicesAsync["load"] => {
     });
   };
 };
-
-interface InputTypeChoice {
-  title: FormInputTypesName;
-  value: Literal;
-}
-
-interface InputType {
-  componentTitle: FormInputTypesName;
-  componentType: Literal;
-}
 
 const getInputType = (item: InputType): InputTypeChoice => {
   return { title: item.componentTitle, value: item.componentType };

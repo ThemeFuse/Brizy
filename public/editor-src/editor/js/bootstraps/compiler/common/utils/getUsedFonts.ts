@@ -1,14 +1,19 @@
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { GoogleFont, SystemFont, UploadedFont } from "visual/types";
+import { AdobeFont, GoogleFont, SystemFont, UploadedFont } from "visual/types";
 import { findFonts, projectFontsData } from "visual/utils/fonts";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { FontGroup } from "visual/utils/fonts/getFontById";
+import { ProjectFontsData } from "../types";
 
 interface UsedFonts {
-  google: Array<GoogleFont>;
-  upload: Array<UploadedFont>;
-  system: Array<SystemFont>;
+  fonts: {
+    google: Array<GoogleFont>;
+    upload: Array<UploadedFont>;
+    system: Array<SystemFont>;
+    adobe: Array<AdobeFont>;
+  };
+  adobeKitId?: string;
 }
 
 type RFonts = ReduxState["fonts"];
@@ -22,15 +27,28 @@ interface Data {
 
 export const getUsedFonts = (data: Data): UsedFonts => {
   const { fonts, parsedFonts, defaultFont, projectDefaultFontId } = data;
+
   const fontMap: UsedFonts = {
-    google: [],
-    upload: [],
-    system: []
+    fonts: {
+      google: [],
+      upload: [],
+      adobe: [],
+      system: []
+    }
   };
 
   // @ts-expect-error: Property 'upload' | 'google' does not exist on type '{}'.
-  const { upload = [], google = [], system = [] } = projectFontsData(fonts);
+  const {
+    upload = [],
+    google = [],
+    system = [],
+    adobe = []
+  }: ProjectFontsData = projectFontsData(fonts);
+
   let includedDefaultProjectFont = false;
+
+  const { fonts: _font } = fontMap;
+  const adobeKitId = fonts?.adobe?.id;
 
   parsedFonts.forEach(({ type, family }) => {
     if (!includedDefaultProjectFont) {
@@ -38,21 +56,28 @@ export const getUsedFonts = (data: Data): UsedFonts => {
     }
 
     switch (type) {
+      case "adobe": {
+        const font = findFonts(adobe, family);
+        if (font && adobeKitId) {
+          _font.adobe.push(font);
+        }
+        break;
+      }
       case "system": {
         const font = findFonts(system, family);
         if (font) {
-          fontMap.system.push(font);
+          _font.system.push(font);
         }
         break;
       }
       case "upload": {
         const font = findFonts(upload, family, "upload");
-        font && fontMap.upload.push(font);
+        font && _font.upload.push(font);
         break;
       }
       case "google": {
         const font = findFonts(google, family);
-        font && fontMap.google.push(font);
+        font && _font.google.push(font);
         break;
       }
     }
@@ -64,14 +89,17 @@ export const getUsedFonts = (data: Data): UsedFonts => {
 
     switch (group) {
       case "upload":
-        fontMap.upload.push(font as UploadedFont);
+        _font.upload.push(font as UploadedFont);
         break;
       case "system":
-        fontMap.system.push(font as SystemFont);
+        _font.system.push(font as SystemFont);
+        break;
+      case "adobe":
+        _font.adobe.push(<AdobeFont>font);
         break;
       default:
-        fontMap.google.push(font as GoogleFont);
+        _font.google.push(font as GoogleFont);
     }
   }
-  return fontMap;
+  return { fonts: _font, adobeKitId };
 };

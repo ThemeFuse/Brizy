@@ -95,9 +95,15 @@
     "titleFontWeight": 700,
     "titleLineHeight": 1.3,
     "titleLetterSpacing": 0,
-    "titleVariableFontWeight":400,
+    "titleVariableFontWeight": 400,
     "titleFontWidth": 100,
     "titleFontSoftness": 0,
+    "titleBold": false,
+    "titleItalic": false,
+    "titleUnderline": false,
+    "titleStrike": false,
+    "titleUppercase": false,
+    "titleLowercase": false,
 
     "descriptionFontFamily": "",
     "descriptionFontStyle": "",
@@ -107,9 +113,15 @@
     "descriptionFontWeight": 400,
     "descriptionLineHeight": 1.3,
     "descriptionLetterSpacing": 0,
-    "descriptionVariableFontWeight":400,
+    "descriptionVariableFontWeight": 400,
     "descriptionFontWidth": 100,
     "descriptionFontSoftness": 0,
+    "descriptionBold": false,
+    "descriptionItalic": false,
+    "descriptionUnderline": false,
+    "descriptionStrike": false,
+    "descriptionUppercase": false,
+    "descriptionLowercase": false,
 
     "bgColorHex": "#1a86f2",
     "bgColorOpacity": 1,
@@ -282,8 +294,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "tabletWidthSuffix": null,
-
     "tabletTitleFontStyle": null,
     "tabletTitleFontSize": null,
     "tabletTitleFontSizeSuffix": null,
@@ -297,8 +307,6 @@
     "tabletDescriptionFontWeight": null,
     "tabletDescriptionLetterSpacing": null,
     "tabletDescriptionLineHeight": null,
-
-    "mobileWidthSuffix": null,
 
     "mobileTitleFontStyle": null,
     "mobileTitleFontSize": null,

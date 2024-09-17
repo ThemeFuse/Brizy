@@ -5,6 +5,10 @@
   &__content {
     position: relative;
     z-index: 1;
+
+    &--fix {
+      line-height: 1;
+    }
   }
 
   &__overlay {

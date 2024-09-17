@@ -152,7 +152,7 @@ export const toElementModel: ToElementModel<"motion"> = (patch) => {
     case Type.enable:
       return {
         [capByPrefix(patch.effect, "enabled")]: patch.value,
-        ...(patch.active && !patch.value ? { active: undefined } : {}),
+        ...(patch.active && !patch.value ? { active: false } : {}),
         ...disableEffects(patch.effect)
       };
     case Type.effect: {

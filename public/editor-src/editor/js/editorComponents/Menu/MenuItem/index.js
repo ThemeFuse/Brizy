@@ -7,16 +7,11 @@ import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import Link from "visual/component/Link";
 import Portal from "visual/component/Portal";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
-import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import Config from "visual/global/Config";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
-import {
-  makeEndPlaceholder,
-  makeStartPlaceholder
-} from "visual/utils/dynamicContent";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import {
@@ -24,7 +19,6 @@ import {
   styleElementMegaMenuWidth,
   styleElementMegaMenuWidthSuffix
 } from "visual/utils/style2";
-import { uuid } from "visual/utils/uuid";
 import { getParentMegaMenuUid } from "../utils.common";
 import defaultValue from "./defaultValue.json";
 import MenuItemItems from "./items";
@@ -34,6 +28,8 @@ import { styleClassName, styleMegaMenu, styleMmMenuClassName } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import toolbarExtendFn from "./toolbarExtend";
 import { getBlockData } from "visual/utils/models";
+import { IconContainer } from "./controls/Icon";
+import { MegaMenuContainer } from "./controls/MegaMenu";
 
 const IS_PRO = Config.get("pro");
 let openedMegaMenu = null;
@@ -214,42 +210,26 @@ class MenuItem extends EditorComponent {
   };
 
   renderIcon(v) {
-    const { iconName, iconType } = v;
-    const { level, mMenu } = this.props;
+    const { iconName, iconType, iconFilename, id } = v;
+    const hasIcon = iconName && iconType;
+    const { mMenu } = this.props;
 
-    const className = classnames(
-      { "brz-menu__item__icon": level === 0 && !mMenu },
-      { "brz-menu__sub-item__icon": level >= 1 },
-      { "brz-mm-menu__item__icon": mMenu }
-    );
-
-    return (
-      <ThemeIcon
-        key="icon"
-        className={className}
-        name={iconName}
-        type={iconType}
+    return hasIcon ? (
+      <IconContainer
+        itemId={id}
+        wrapInPlaceholder={IS_PREVIEW && IS_PRO}
+        iconName={iconName}
+        iconType={iconType}
+        iconFilename={iconFilename}
+        mMenu={mMenu}
       />
-    );
+    ) : null;
   }
 
   renderLink(v, vs, vd, content) {
-    const { url, target, classes, attrTitle } = v;
-
-    const trimUrl = url.trim();
-
+    const { target, classes, attrTitle } = v;
     let type = "";
     let href = "";
-
-    if (IS_PREVIEW) {
-      if (trimUrl.charAt(0) === "#") {
-        type = "anchor";
-        href = url.replace("#", "");
-      } else {
-        type = "external";
-        href = trimUrl;
-      }
-    }
 
     let props = {
       href,
@@ -258,16 +238,13 @@ class MenuItem extends EditorComponent {
       className: classes,
       attr: {
         title: attrTitle
-      }
-    };
-
-    if (IS_EDITOR) {
-      props.onDragStart = (e) => {
+      },
+      onDragStart(e) {
         e.preventDefault();
         return false;
-      };
-      props.draggable = "false";
-    }
+      },
+      draggable: "false"
+    };
 
     return <Link {...props}>{content}</Link>;
   }
@@ -438,7 +415,7 @@ class MenuItem extends EditorComponent {
     );
   }
 
-  renderDropDown() {
+  renderDropDown(v) {
     if (!IS_PRO) {
       return null;
     }
@@ -452,6 +429,7 @@ class MenuItem extends EditorComponent {
       meta,
       mods,
       menuSelected,
+      itemId: v.id,
       bindWithKey: "items",
       megaMenu: false
     });
@@ -459,43 +437,9 @@ class MenuItem extends EditorComponent {
     return <MenuItemItems {...itemProps} />;
   }
 
-  renderSimple(v, vs, vd, content) {
-    const { level, mMenu, mods, menuSelected } = this.props;
+  renderSimpleForEdit(v, vs, vd, content) {
+    const { level, mMenu, mods } = this.props;
     const className = styleClassName(v, this.state);
-
-    if (IS_PREVIEW) {
-      const placeholderItemId = v.id;
-      const placeholderUid = uuid(8);
-      const startPlaceholder =
-        IS_PRO &&
-        makeStartPlaceholder({
-          content: `{{nav_item_${placeholderUid}}}`,
-          attr: {
-            menuId: menuSelected,
-            itemId: placeholderItemId
-          }
-        });
-
-      const endPlaceholder =
-        IS_PRO &&
-        makeEndPlaceholder({
-          content: `{{end_nav_item_${placeholderUid}}}`
-        });
-
-      return (
-        <>
-          {startPlaceholder}
-          <li className={className} data-menu-item-id={v.id}>
-            {this.renderLink(v, vs, vd, content)}
-            {v.megaMenu === "off"
-              ? this.renderDropDown(v, vs, vd)
-              : this.renderMegaMenu(v, vs, vd)}
-          </li>
-          {endPlaceholder}
-        </>
-      );
-    }
-
     const { deviceMode: device } = getStore().getState().ui;
     const mode = getModeByDevice(mods, device);
     const toolbarConfig = toolbarConfigFn(level, mMenu);
@@ -565,7 +509,7 @@ class MenuItem extends EditorComponent {
                 >
                   {this.renderLink(v, vs, vd, content)}
                 </Toolbar>
-                {v.megaMenu === "off" && this.renderDropDown()}
+                {v.megaMenu === "off" && this.renderDropDown(v, vs, vd)}
               </li>
             )}
           </Reference>
@@ -575,48 +519,12 @@ class MenuItem extends EditorComponent {
     );
   }
 
-  renderMMenu(v, vs, vd, content) {
-    const { level, mMenu, menuSelected } = this.props;
+  renderMMenuForEdit(v, vs, vd, content) {
+    const { level, mMenu } = this.props;
     const toolbarConfig = toolbarConfigFn(level, mMenu);
     const sidebarConfig = sidebarConfigFn(level, mMenu);
 
     const isDropDown = v.megaMenu === "off";
-
-    if (IS_PREVIEW) {
-      const className = styleMmMenuClassName(v);
-      const placeholderItemId = v.id;
-      const placeholderUid = uuid(8);
-
-      const startPlaceholder =
-        IS_PRO &&
-        makeStartPlaceholder({
-          content: `{{nav_item_${placeholderUid}}}`,
-          attr: {
-            menuId: menuSelected,
-            itemId: placeholderItemId
-          }
-        });
-      const endPlaceholder =
-        IS_PRO &&
-        makeEndPlaceholder({
-          content: `{{end_nav_item_${placeholderUid}}}`
-        });
-
-      return (
-        <>
-          {startPlaceholder}
-          <li className={className} data-menu-item-id={v.id}>
-            {this.renderLink(v, vs, vd, content)}
-            <div>
-              {isDropDown
-                ? this.renderDropDown(v, vs, vd)
-                : this.renderMegaMenu(v, vs, vd)}
-            </div>
-          </li>
-          {endPlaceholder}
-        </>
-      );
-    }
 
     return (
       <li
@@ -651,8 +559,27 @@ class MenuItem extends EditorComponent {
     );
 
     return this.props.mMenu
-      ? this.renderMMenu(v, vs, vd, content)
-      : this.renderSimple(v, vs, vd, content);
+      ? this.renderMMenuForEdit(v, vs, vd, content)
+      : this.renderSimpleForEdit(v, vs, vd, content);
+  }
+
+  renderForView(v, vs, vd) {
+    const { megaMenu, id } = v;
+    const item =
+      megaMenu === "on" ? (
+        <MegaMenuContainer itemId={id} wrapInPlaceholder={IS_PRO}>
+          {this.renderMegaMenu(v, vs, vd)}
+        </MegaMenuContainer>
+      ) : (
+        this.renderDropDown(v, vs, vd)
+      );
+
+    return (
+      <>
+        {this.renderIcon(v)}
+        {item}
+      </>
+    );
   }
 }
 

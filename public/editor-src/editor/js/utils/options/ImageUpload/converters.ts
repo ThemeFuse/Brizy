@@ -19,7 +19,8 @@ export const defaultValue: Value = {
   x: 50,
   y: 50,
   sizeType: "custom",
-  imageType: ImageType.Internal
+  imageType: ImageType.Internal,
+  altTitle: ""
 };
 
 export const fromElementModel: FromElementModel<"imageUpload"> = (get) => ({
@@ -31,6 +32,7 @@ export const fromElementModel: FromElementModel<"imageUpload"> = (get) => ({
   x: Math.toNonNegative(get("positionX"), defaultValue.x),
   y: Math.toNonNegative(get("positionY"), defaultValue.y),
   sizeType: String.toString(get("sizeType"), defaultValue.sizeType),
+  altTitle: String.toString(get("altTitle"), defaultValue.altTitle),
   imageType: or(
     pipe(() => get("imageType"), readStr, readImageType),
     always(defaultValue.imageType)
@@ -46,7 +48,8 @@ export const toElementModel: Option.ToElementModel<"imageUpload"> = match(
       imageExtension: v.imageExtension,
       imageWidth: v.imageWidth,
       imageHeight: v.imageHeight,
-      imageType: ImageType.Internal
+      imageType: ImageType.Internal,
+      alt: v.alt
     })
   ],
   [

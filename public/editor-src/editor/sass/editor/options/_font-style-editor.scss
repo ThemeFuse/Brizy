@@ -1,4 +1,8 @@
 // FontStyles
+.brz-ed-option-type__fontStyleEditor {
+  display: unset;
+}
+
 .brz-ed-option__font-style-editor {
   position: relative;
   cursor: pointer;
@@ -118,6 +122,10 @@
 
   .brz-scrollbar__view {
     scroll-behavior: smooth;
+  }
+
+  &__label {
+    justify-content: center;
   }
 
   &--add {

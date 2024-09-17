@@ -1,24 +1,37 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
-import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { capitalize } from "visual/utils/string";
+import { Toggle } from "visual/utils/options/utils/Type";
 
-// @ts-expect-error: old option
-export const getItems: GetItems = ({ v, device }) => {
+export const getItems: GetItems = ({ device }) => {
+  const deviceCapitalize = capitalize(device);
   return [
-    toolbarShowOnResponsive({
-      v,
-      device,
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
       devices: "responsive",
-      position: 1
-    }),
+      position: 10,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       title: t("Settings"),
       devices: "desktop",
       position: 110,
-      roles: ["admin"],
-      icon: "nc-cog"
+      roles: ["admin"]
     }
   ];
 };

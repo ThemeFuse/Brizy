@@ -11,7 +11,10 @@ const defaultStyle = {
 
 const transitionStyles = {
   entering: { transform: "translate3d(-100%, 0, 0)" },
-  entered: { transform: "translate3d(0, 0, 0)" }
+  entered: { transform: "translate3d(0, 0, 0)" },
+  exiting: undefined,
+  exited: undefined,
+  unmounted: undefined
 };
 
 type Props = {
@@ -32,7 +35,7 @@ const SlideLeft: FCC<Props> = ({
     appear={appear}
     unmountOnExit={unmountOnExit}
   >
-    {(state: keyof typeof transitionStyles): React.ReactNode => (
+    {(state: keyof typeof transitionStyles): JSX.Element => (
       <div
         className={`brz-ed-sidebar__content ${inProp ? "active" : ""}`}
         style={{

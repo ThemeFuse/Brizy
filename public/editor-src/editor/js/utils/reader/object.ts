@@ -54,33 +54,33 @@ export const readWithValueReader =
     valueReader: Reader<T>
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   ): Reader<Dictionary<T>> =>
-    (v) => {
-      const obj = readAsUnknownDict(v);
+  (v) => {
+    const obj = readAsUnknownDict(v);
 
-      if (obj !== undefined) {
-        const r: Dictionary<T> = {};
+    if (obj !== undefined) {
+      const r: Dictionary<T> = {};
 
-        for (const [k, v] of Object.entries(obj)) {
-          const vParsed = valueReader(v);
+      for (const [k, v] of Object.entries(obj)) {
+        const vParsed = valueReader(v);
 
-          if (vParsed !== undefined) {
-            r[k] = vParsed;
-          } else {
-            return undefined;
-          }
+        if (vParsed !== undefined) {
+          r[k] = vParsed;
+        } else {
+          return undefined;
         }
-
-        return r;
       }
 
-      return undefined;
-    };
+      return r;
+    }
+
+    return undefined;
+  };
 
 export const readKey =
   (key: string) =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (obj: Record<string, any>): unknown =>
-      hasKey(key, obj) ? obj[key] : undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (obj: Record<string, any>): unknown =>
+    hasKey(key, obj) ? obj[key] : undefined;
 
 export const length = (obj: Record<string, unknown>): number =>
   Object.keys(obj).length;
@@ -88,7 +88,10 @@ export const length = (obj: Record<string, unknown>): number =>
 export const isEmpty = (obj: Record<string, unknown>): boolean =>
   length(obj) === 0;
 
-export const filterNullish = <T extends Record<string, unknown>>(obj: T): T =>
+export const filterNullish = <T extends Record<string, unknown>>(
+  obj: T,
+  options?: { empty?: boolean }
+): T =>
   produce(obj, (draft) => {
     Object.keys(draft).forEach((k) => {
       const current = draft[k];
@@ -97,7 +100,22 @@ export const filterNullish = <T extends Record<string, unknown>>(obj: T): T =>
         delete draft[k];
       }
 
-      if (isObject(current) && !Array.isArray(current)) {
+      if (options?.empty) {
+        if (current === "") {
+          delete draft[k];
+        }
+
+        if (isObject(current)) {
+          if (
+            (Array.isArray(current) && current.length === 0) ||
+            length(current) === 0
+          ) {
+            delete draft[k];
+          }
+        }
+      }
+
+      if (isObject(current) && !Array.isArray(current) && length(current) > 0) {
         // @ts-expect-error: Index signature
         draft[k] = filterNullish(current);
       }
@@ -139,7 +157,9 @@ export const diff = <
   return filterNullish(result) as K | Partial<K>;
 };
 
-export const replaceNullish = <T extends Record<string, unknown> = Record<string, unknown>>(
+export const replaceNullish = <
+  T extends Record<string, unknown> = Record<string, unknown>
+>(
   obj1: T,
   obj2: T
 ): T => {

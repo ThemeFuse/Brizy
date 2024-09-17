@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 import { GetItems } from "../EditorComponent/types";
 import { Value } from "./toolbarExtend";
 
-// @ts-expect-error "advancedSettings" is old option
+// @ts-expect-error wrong typing
 export const getItems: GetItems<Value> = () => {
   return [
     {
@@ -29,12 +29,10 @@ export const getItems: GetItems<Value> = () => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       devices: "desktop",
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];

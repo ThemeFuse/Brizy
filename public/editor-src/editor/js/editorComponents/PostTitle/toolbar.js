@@ -9,8 +9,9 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
 
 export function getItems({ v, device, component, context }) {
   const config = Config.getAll();
@@ -25,6 +26,8 @@ export function getItems({ v, device, component, context }) {
     dvv("colorHex"),
     dvv("colorPalette")
   );
+
+  const linkPopup = dvv("linkPopup");
 
   const activeChoice = config.contentDefaults.PostTitle.textPopulation;
 
@@ -233,17 +236,20 @@ export function getItems({ v, device, component, context }) {
               id: "popup",
               label: t("Popup"),
               options: [
-                toolbarLinkPopup({
-                  v,
-                  component,
-                  state: "normal",
-                  device: "desktop",
-                  canDelete: device === "desktop",
+                {
+                  id: "linkPopup",
+                  type: "promptAddPopup",
+                  label: t("Popup"),
+                  config: {
+                    popupKey: `${component.getId()}_${linkPopup}`,
+                    canDelete: device === "desktop"
+                  },
                   disabled:
                     device === "desktop"
                       ? inPopup || inPopup2 || IS_GLOBAL_POPUP
-                      : dvv("linkType") !== "popup" || dvv("linkPopup") === ""
-                })
+                      : dvv("linkType") !== "popup" || linkPopup === "",
+                  dependencies: popupToOldModel
+                }
               ]
             }
           ]
@@ -264,13 +270,11 @@ export function getItems({ v, device, component, context }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       position: 110,
       title: t("Settings"),
       roles: ["admin"],
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 }

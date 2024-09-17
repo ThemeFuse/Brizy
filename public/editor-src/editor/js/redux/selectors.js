@@ -13,7 +13,6 @@ import {
   currentStyleSelector,
   extraFontStylesSelector,
   extraStylesSelector,
-  fontsSelector,
   globalBlocksAssembled2Selector,
   globalBlocksSelector,
   pageBlocksRawSelector,
@@ -21,7 +20,8 @@ import {
   pageSelector,
   projectSelector,
   screenshotsSelector,
-  stylesSelector
+  stylesSelector,
+  filteredFontsSelector
 } from "./selectors-new";
 
 // temporary until all selectors won't be migrated to TS
@@ -356,7 +356,7 @@ export const copiedElementNoRefsSelector = createSelector(
 
 export const projectAssembled = createSelector(
   projectSelector,
-  fontsSelector,
+  filteredFontsSelector,
   stylesSelector,
   extraStylesSelector,
   currentStyleIdSelector,

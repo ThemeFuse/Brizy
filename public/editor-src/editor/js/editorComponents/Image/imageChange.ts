@@ -24,6 +24,7 @@ import {
   isOriginalSize,
   isPredefinedSize
 } from "./utils";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 export interface Size {
   width: number;
@@ -35,6 +36,7 @@ export interface Patch {
   imageHeight: number;
   imageSrc: string;
   imageExtension: string;
+  alt: string | null;
   width: number;
   height: number;
   widthSuffix: Unit;
@@ -146,6 +148,7 @@ export const patchOnImageChange = (
   const imgWidth = patch.imageWidth;
   const imgHeight = patch.imageHeight;
   const extension = patch.imageExtension;
+  const alt = patch.alt ?? null;
   const src = patch.imageSrc;
   const isSvgOrGif = extension === "svg" || extension === "gif";
 
@@ -211,6 +214,7 @@ export const patchOnImageChange = (
     imageHeight: imgHeight,
     imageSrc: src,
     imageExtension: extension,
+    alt,
     width: Math.roundTo(newCW, 2),
     height: Math.roundTo(newCH, 2),
     widthSuffix: newWidthSuffix,
@@ -268,7 +272,7 @@ export const patchOnDCChange = (
       height: 100,
       widthSuffix: "%",
       heightSuffix: "%",
-      sizeType: "custom"
+      sizeType: SizeType.custom
     };
   }
 
@@ -276,7 +280,7 @@ export const patchOnDCChange = (
 
   if (dcSize === undefined) {
     return {
-      sizeType: "custom",
+      sizeType: SizeType.custom,
       height: wrapperSizes.height,
       heightSuffix: "px"
     };
@@ -294,7 +298,7 @@ export const patchOnDCChange = (
   }
 
   return {
-    sizeType: isNoEmptyString(dcSize) ? dcSize : "custom",
+    sizeType: isNoEmptyString(dcSize) ? dcSize : SizeType.custom,
     size: 100
   };
 };

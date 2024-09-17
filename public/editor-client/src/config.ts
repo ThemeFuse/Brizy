@@ -78,10 +78,10 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
-  iconsUrl: string;
-  iconUrl: string;
-  deleteIconUrl: string;
-  uploadIconUrl: string;
+  iconsUrl?: string;
+  iconUrl?: string;
+  deleteIconUrl?: string;
+  uploadIconUrl?: string;
   imagePatterns: ImagePatterns;
   templatesImageUrl: string;
 }
@@ -193,7 +193,7 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
     mPipe(Obj.readKey("templates"), Obj.read, templatesReader),
     throwOnNullish("Invalid API: templates")
   ),
-  openAIUrl: optional(pipe(mPipe(Obj.readKey("openAIUrl"), Str.read))),
+  openAIUrl: optional(mPipe(Obj.readKey("openAIUrl"), Str.read)),
   imagePatterns: pipe(
     mPipe(
       Obj.readKey("media"),

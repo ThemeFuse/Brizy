@@ -16,6 +16,7 @@ import * as Skew from "./effects/Skew";
 import * as Slide from "./effects/Slide";
 import * as Wobble from "./effects/Wobble";
 import * as Zoom from "./effects/Zoom";
+import * as Fill from "./effects/Fill";
 
 export type Value =
   | Attention.Attention
@@ -31,7 +32,8 @@ export type Value =
   | Scale.Scale
   | Skew.Skew
   | Move.Move
-  | Rotate2.Rotate2;
+  | Rotate2.Rotate2
+  | Fill.Fill;
 
 export const isNone = (v: Value): v is None.None => v.type === EffectType.None;
 
@@ -52,7 +54,8 @@ export const fromLegacyModel = Parse.or<LegacyModel, Value>([
   Scale.fromLegacyModel,
   Skew.fromLegacyModel,
   Move.fromLegacyModel,
-  Rotate2.fromLegacyModel
+  Rotate2.fromLegacyModel,
+  Fill.fromLegacyModel
 ]);
 
 export const toLegacyModel = (v: Value): LegacyModel => {
@@ -85,6 +88,8 @@ export const toLegacyModel = (v: Value): LegacyModel => {
       return Move.toLegacyModel(v);
     case EffectType.Rotate2:
       return Rotate2.toLegacyModel(v);
+    case EffectType.Fill:
+      return Fill.toLegacyModel(v);
   }
 };
 
@@ -215,6 +220,15 @@ export function setType(type: EffectType, v: Value): Value {
       return {
         type: EffectType.Rotate2,
         direction: Rotate2.Direction.brzRotate,
+        duration: v.duration,
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
+      };
+    }
+    case EffectType.Fill: {
+      return {
+        type: EffectType.Fill,
+        direction: Fill.Direction.brzFade,
         duration: v.duration,
         delay: v.delay,
         infiniteAnimation: v.infiniteAnimation

@@ -9,19 +9,18 @@ import * as Option from "visual/component/Options/Type";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { getColorPaletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { Config } from "visual/utils/options/Border/entities/Config";
-import { Value } from "visual/utils/options/Border/entities/Value";
 import * as BorderStyle from "visual/utils/options/Border/entities/style";
+import { Value } from "visual/utils/options/Border/entities/Value";
 import * as Width from "visual/utils/options/Border/entities/width";
 import { Meta } from "visual/utils/options/Border/meta";
 import * as BorderModel from "visual/utils/options/Border/model";
-import { getStyleObject } from "visual/utils/options/Border/utils";
-import { _setOpacity } from "visual/utils/options/Border/utils";
+import { getStyleObject, _setOpacity } from "visual/utils/options/Border/utils";
 import { paletteHex } from "visual/utils/options/ColorPicker/utils";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
 
 export interface Props
   extends Option.Props<Value>,

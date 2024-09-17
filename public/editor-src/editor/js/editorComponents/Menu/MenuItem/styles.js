@@ -43,7 +43,7 @@ export function styleMmMenuClassName(v, menuItem) {
   const currentNodeClassName = getMMenuClassNames(menuItem);
 
   return classnames(
-    "brz-mm-menu__item",
+    "brz-menu__item",
     className,
     currentNodeClassName,
     liClasses,

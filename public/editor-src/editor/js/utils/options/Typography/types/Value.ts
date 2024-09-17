@@ -1,4 +1,4 @@
-import { VariationFont } from "visual/types";
+import { TextScripts, VariationFont } from "visual/types";
 import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import { Weight } from "visual/utils/fonts/Weight";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
@@ -17,4 +17,11 @@ export interface Value {
   fontWidth: number;
   fontSoftness: number;
   variations?: VariationFont[];
+  bold: boolean;
+  italic: boolean;
+  underline: boolean;
+  strike: boolean;
+  uppercase: boolean;
+  lowercase: boolean;
+  script?: TextScripts;
 }

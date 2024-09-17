@@ -283,13 +283,10 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error: Need transform to ts
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
-      sidebarLabel: t("More Settings"),
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];

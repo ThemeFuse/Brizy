@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import { ToastNotification } from "visual/component/Notifications";
 import Portal from "visual/component/Portal";
@@ -29,17 +29,19 @@ export const showError = (data: Data): void => {
       ? e.getMessage()
       : t("Something went wrong");
 
-  // Need to show error with ReactDom.render when inRoot is true
+  // Need to show error with createRoot when inRoot is true
   // because the main app is not mounted yet,
   // so we can't use ToastNotification directly
   if (inRoot) {
     const appDiv = document.querySelector("#brz-ed-root") ?? document.body;
-    ReactDOM.render(
+    const app = (
       <Portal node={window.parent.document.body}>
         <ToastContainer />
-      </Portal>,
-      appDiv
+      </Portal>
     );
+    const root = createRoot(appDiv);
+
+    root.render(app);
   }
 
   ToastNotification.error(message, hideAfter);

@@ -1,12 +1,6 @@
 import classNames from "classnames";
 import { isT } from "fp-utilities";
-import React, {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { EMPTY, from, fromEvent } from "rxjs";
 import {
@@ -31,7 +25,7 @@ export interface Props {
   onPick: (hex: Hex) => void;
 }
 
-export const EyeDropper = ({ onPick }: Props): ReactElement | null => {
+export const EyeDropper = ({ onPick }: Props): JSX.Element | null => {
   const [state, setState] = useState<State.State>(State.idle());
   const pointerRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<Coords>({ x: 0, y: 0 });

@@ -30,6 +30,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartInputFontWeight",
         "cssStyleElementWOOAddToCartInputLetterSpacing",
         "cssStyleElementWOOAddToCartInputFontVariation",
+        "cssStyleElementWOOAddToCartInputTextTransform",
         "cssStyleElementWOOAddToCartInputRadius",
         "cssStyleElementWOOAddToCartInputBg",
         "cssStyleElementWOOAddToCartInputBorder",
@@ -55,7 +56,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
         "cssStyleElementWOOAddToCartValueLetterSpacing",
-        "cssStyleElementWOOAddToCartValueFontVariation"
+        "cssStyleElementWOOAddToCartValueFontVariation",
+        "cssStyleElementWOOAddToCartValueTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -77,7 +79,8 @@ export function style(v, vs, vd) {
           "cssStyleTypography3LineHeight",
           "cssStyleTypography3FontWeight",
           "cssStyleTypography3LetterSpacing",
-          "cssStyleTypography3FontVariation"
+          "cssStyleTypography3FontVariation",
+          "cssStyleTypography3TextTransform"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -92,7 +95,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartLabelLineHeight",
         "cssStyleElementWOOAddToCartLabelFontWeight",
         "cssStyleElementWOOAddToCartLabelLetterSpacing",
-        "cssStyleElementWOOAddToCartLabelFontVariation"
+        "cssStyleElementWOOAddToCartLabelFontVariation",
+        "cssStyleElementWOOAddToCartLabelTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -106,7 +110,9 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartLabelFontSize",
         "cssStyleElementWOOAddToCartLabelLineHeight",
         "cssStyleElementWOOAddToCartLabelFontWeight",
-        "cssStyleElementWOOAddToCartLabelLetterSpacing"
+        "cssStyleElementWOOAddToCartLabelLetterSpacing",
+        "cssStyleElementWOOAddToCartLabelFontVariation",
+        "cssStyleElementWOOAddToCartLabelTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -121,7 +127,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartClearLineHeight",
         "cssStyleElementWOOAddToCartClearFontWeight",
         "cssStyleElementWOOAddToCartClearLetterSpacing",
-        "cssStyleElementWOOAddToCartClearFontVariation"
+        "cssStyleElementWOOAddToCartClearFontVariation",
+        "cssStyleElementWOOAddToCartClearTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -158,7 +165,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
         "cssStyleElementWOOAddToCartValueLetterSpacing",
-        "cssStyleElementWOOAddToCartValueFontVariation"
+        "cssStyleElementWOOAddToCartValueFontVariation",
+        "cssStyleElementWOOAddToCartValueTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -176,7 +184,8 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOAddToCartValueLineHeight",
         "cssStyleElementWOOAddToCartValueFontWeight",
         "cssStyleElementWOOAddToCartValueLetterSpacing",
-        "cssStyleElementWOOAddToCartValueFontVariation"
+        "cssStyleElementWOOAddToCartValueFontVariation",
+        "cssStyleElementWOOAddToCartValueTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",

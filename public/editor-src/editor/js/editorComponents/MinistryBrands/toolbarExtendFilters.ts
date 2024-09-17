@@ -116,8 +116,7 @@ export const getItems = <
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error advancedSettings is old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop"
     }
   ];

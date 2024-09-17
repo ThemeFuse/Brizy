@@ -74,7 +74,7 @@ const getItems =
           }
         ]
       },
-      //@ts-expect-error Old option doesn't work
+      // @ts-expect-error wrong typing
       ...(isFirstItem
         ? [
             {
@@ -84,11 +84,9 @@ const getItems =
             },
             {
               id: "advancedSettings",
-              type: "legacy-advancedSettings",
-              sidebarLabel: t("More Settings"),
+              type: "advancedSettings",
               roles: ["admin"],
               position: 110,
-              icon: "nc-cog",
               devices: "desktop",
               title: t("Settings")
             }

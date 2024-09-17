@@ -1,12 +1,13 @@
 import classNames from "classnames";
 import React from "react";
+import { Badge } from "visual/component/Badge";
 import EditorIcon from "visual/component/EditorIcon";
 import { InternalLinkValueProps } from "./types";
 
 export const InternalLinkValue = React.forwardRef<
   HTMLDivElement,
   InternalLinkValueProps
->(({ className, value, onRemove, onClick }, ref) => {
+>(({ className, value, onRemove, onClick, arrow = false, itemStatus }, ref) => {
   const _className = classNames(
     "brz-ed-control__internalLink__value",
     className
@@ -20,7 +21,22 @@ export const InternalLinkValue = React.forwardRef<
       style={{ position: "relative" }}
     >
       <span className="brz-span">{value}</span>
-      {onRemove && <EditorIcon icon="nc-circle-remove" onClick={onRemove} />}
+      {itemStatus && (
+        <Badge
+          status={itemStatus === "published" ? "publish" : itemStatus}
+          className="brz-badge-position"
+        />
+      )}
+      {onRemove ? (
+        <EditorIcon icon="nc-circle-remove" onClick={onRemove} />
+      ) : (
+        arrow && (
+          <EditorIcon
+            icon="nc-stre-down"
+            className="brz-control__select--arrow"
+          />
+        )
+      )}
     </div>
   );
 });

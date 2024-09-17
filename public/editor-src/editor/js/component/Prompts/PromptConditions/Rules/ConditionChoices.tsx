@@ -1,13 +1,13 @@
 import React from "react";
 import { removeAt, setIn } from "timm";
-import ItemWrapper from "../common/ItemWrapper";
-import ConditionGroup from "./ConditionGroup";
 import {
   BlockTypeRule,
   CollectionItemRule,
   CollectionTypeRule,
   Rule
 } from "visual/types";
+import ItemWrapper from "../common/ItemWrapper";
+import ConditionGroup from "./ConditionGroup";
 import { RuleList } from "./types";
 
 export interface Props {
@@ -32,7 +32,7 @@ class ConditionChoices extends React.Component<Props> {
     const { rules, onChange } = this.props;
     let newRule: Rule;
 
-    if (value === null) {
+    if (value === null || value === "all") {
       newRule = {
         type: rules[index].type
       };

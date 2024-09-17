@@ -14,14 +14,7 @@ export {
 export { toolbarBoxShadowFields2 } from "./toolbarBoxShadow";
 
 // Anchor and URL
-export { toolbarLinkAnchor, toolbarLinkPopup } from "./toolbarLink";
-
-// Show on Devices
-export {
-  toolbarShowOnTablet,
-  toolbarShowOnMobile,
-  toolbarShowOnResponsive
-} from "./toolbarShowOnDevices";
+export { toolbarLinkAnchor } from "./toolbarLink";
 
 // Disabled
 export {
@@ -42,6 +35,3 @@ export { getInstanceParentId } from "./toolbarElementSection";
 export { toolbarImageTags } from "./toolbarElementImage";
 
 export { toolbarElementForm2Apps } from "./toolbarElementForm2";
-
-// Shape
-export { toolbarShapeTopFlip, toolbarShapeBottomFlip } from "./toolbarShape";

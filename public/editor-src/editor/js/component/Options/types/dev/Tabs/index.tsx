@@ -1,17 +1,17 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { sortBy } from "underscore";
-import { Tabs as Control } from "visual/component/Controls/Tabs2";
-import { Props as CProps } from "visual/component/Controls/Tabs2";
+import {
+  Props as CProps,
+  Tabs as Control
+} from "visual/component/Controls/Tabs2";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
 import Options from "visual/component/Options";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import {
-  WithClassName,
-  WithConfig,
-  WithId
-} from "visual/utils/options/attributes";
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { WithClassName, WithConfig, WithId } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
 export type Config = {

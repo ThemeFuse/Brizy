@@ -4,6 +4,7 @@ import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Static } from "./bootstrap/types";
 import { getProScriptUrl } from "./utils/getProScriptUrl";
+import { getTempConfig } from "./utils/getTempConfig";
 import { getThirdPartyScriptUrl } from "./utils/getThirdPartyScriptUrl";
 import "./utils/globals";
 
@@ -26,10 +27,17 @@ class Core {
       importScripts(proScriptUrl);
     }
 
+    // Need to set the thirdPartyComponentsHosts
+    // used when @brizy/core tries to obtain the host of every widget
+    // @ts-expect-error: Config in worker
+    global.__VISUAL_CONFIG__ = getTempConfig(_config);
+
     // Load the third party components
-    const thirdPartyScriptUrl = getThirdPartyScriptUrl(_config);
-    if (thirdPartyScriptUrl) {
-      importScripts(thirdPartyScriptUrl);
+    const thirdPartyScriptsUrl = getThirdPartyScriptUrl(_config);
+    try {
+      importScripts(...thirdPartyScriptsUrl);
+    } catch (e) {
+      console.warn("IMPORT THIRD PARTY SCRIPT ERROR: ", e);
     }
 
     // @ts-expect-error: Config in worker

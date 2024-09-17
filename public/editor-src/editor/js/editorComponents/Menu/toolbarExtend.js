@@ -9,6 +9,8 @@ import {
 } from "visual/utils/options";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import Config from "visual/global/Config";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 export function getItems({ v, device, state, context }) {
   return defaultValueValue({ v, device, state, key: "mMenu" }) === "on"
@@ -321,11 +323,10 @@ export function getItemsSimple({ v, device, state }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];
@@ -338,12 +339,16 @@ export function getItemsMMenu({ v, device, state, context }) {
     dvv("mMenuColorPalette")
   );
 
+  const config = Config.getAll();
+
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.image
   });
 
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "menu");
 
   return [
     {
@@ -370,7 +375,7 @@ export function getItemsMMenu({ v, device, state, context }) {
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
                 }
               ]
@@ -521,11 +526,10 @@ export function getItemsMMenu({ v, device, state, context }) {
     },
     {
       id: "mMenuAdvancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];

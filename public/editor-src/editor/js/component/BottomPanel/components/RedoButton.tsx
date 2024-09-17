@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
@@ -9,7 +9,7 @@ import { BottomPanelItem } from "./Item";
 
 type History = ReduxStateWithHistory["history"];
 
-export const RedoButton = (): ReactElement => {
+export const RedoButton = (): JSX.Element => {
   const canRedo = useSelector<ReduxStateWithHistory, History["canRedo"]>(
     (state) => state.history.canRedo
   );

@@ -110,7 +110,7 @@
   }
 
   .brz-ed-control__population-content-wrapper {
-    width: 120px;
+    width: 142px;
     z-index: 1110;
     background-color: #383e48;
     border-radius: 4px;
@@ -129,6 +129,7 @@
 
         .brz-control__select-option {
           border-bottom: 1px solid var(--tertiary-white, rgba(255, 255, 255, 0.07)) !important;
+          max-width: $control__lg-width;
         }
       }
 
@@ -143,13 +144,13 @@
   }
 
   .brz-ed-control__multiSelect__menu {
-    max-width: 110px;
+    max-width: $control__lg-width;
 
     .brz-ed-control__multiSelect__option {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      max-width: 110px;
+      max-width: $control__lg-width;
       width: 100%;
       display: inline-block;
     }

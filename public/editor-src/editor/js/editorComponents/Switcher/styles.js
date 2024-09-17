@@ -10,6 +10,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
         "cssStyleTypography3FontVariation",
+        "cssStyleTypography3TextTransform",
         "cssStyleBgColor",
         "cssStyleBorder",
         "cssStyleBorderRadius",
@@ -24,9 +25,17 @@ export function style(v, vs, vd) {
     ".brz && > .brz-switcher__nav .brz-switcher__nav--item": {
       standart: ["cssStyleColor", "cssStylePaddingFourFields"]
     },
+    ".brz && > .brz-switcher__nav .brz-switcher__nav--item .brz-icon-svg-custom":
+      {
+        standart: ["cssStyleCustomIconColor"]
+      },
     ".brz && > .brz-switcher__nav .brz-switcher__nav--item--active": {
       standart: ["cssStyleElementSwitcherActiveTextColor"]
     },
+    ".brz && > .brz-switcher__nav .brz-switcher__nav--item--active .brz-icon-svg-custom":
+      {
+        standart: ["cssStyleElementSwitcherActiveCustomIconColor"]
+      },
     ".brz && .brz-switcher__nav--item": {
       standart: ["cssStyleElementSwitcherBtnIconPosition"]
     },
@@ -73,6 +82,9 @@ export function style(v, vs, vd) {
         "cssStyleSizeFontSizeIcon"
       ]
     },
+    ".brz &&:hover .brz-switcher__nav2--button .brz-icon-svg-custom": {
+      standart: ["cssStyleCustomIconColor"]
+    },
     ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control:before": {
       standart: ["cssStyleBorderRadius", "cssStyleElementSwitcherNavBeforeBg"]
     },
@@ -83,6 +95,10 @@ export function style(v, vs, vd) {
     ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-icon-svg":
       {
         standart: ["cssStyleElementSwitcherActiveTextColor"]
+      },
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-icon-svg-custom":
+      {
+        standart: ["cssStyleElementSwitcherActiveCustomIconColor"]
       }
   };
 

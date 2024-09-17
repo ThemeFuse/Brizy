@@ -6,7 +6,7 @@ import React, {
   useState
 } from "react";
 import { Draggable as Drag } from "visual/component/Draggable";
-import { WithOnChange } from "visual/utils/options/attributes";
+import { WithOnChange } from "visual/types/attributes";
 import { HAlign } from "visual/utils/position/HAlign";
 import { VAlign } from "visual/utils/position/VAlign";
 import { Value } from "./entities/Value";

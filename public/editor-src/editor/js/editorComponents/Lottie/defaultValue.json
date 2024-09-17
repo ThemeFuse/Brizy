@@ -10,8 +10,11 @@
 
     "loop": "on",
     "autoplay": "on",
+    "lazyload": "on",
+
     "direction": 1,
     "renderer": "svg",
+    "trigger": "onLoad",
 
     "offsetX": 0,
     "offsetY": 0
@@ -106,9 +109,6 @@
     "bgPaddingTopSuffix": "px",
     "bgPaddingRightSuffix": "px",
     "bgPaddingBottomSuffix": "px",
-    "bgPaddingLeftSuffix": "px",
-
-    "tabletWidthSuffix": null,
-    "mobileWidthSuffix": null
+    "bgPaddingLeftSuffix": "px"
   }
 }

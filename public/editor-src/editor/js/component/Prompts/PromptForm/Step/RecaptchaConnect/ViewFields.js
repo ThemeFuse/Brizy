@@ -41,7 +41,7 @@ class ViewFields extends Component {
 
   renderValidationError() {
     return (
-      <div className="brz-ed-alert brz-ed-alert-error brz-ed-popup-recaptcha-validation-error">
+      <div className="brz-ed-alert brz-ed-alert-error brz-ed-popup-common-validation-error">
         <p className="brz-p">
           {t(
             "Verification process failed, please make sure you have done the following three things and try again in a few minutes."
@@ -88,7 +88,7 @@ class ViewFields extends Component {
 
     return (
       /* eslint-disable react/no-unescaped-entities */
-      <div className="brz-ed-popup-recaptcha__confirmation">
+      <div className="brz-ed-popup-common__confirmation">
         <label className="brz-label">
           <input
             className="brz-input"
@@ -119,8 +119,8 @@ class ViewFields extends Component {
 
     return (
       <Scrollbar theme="light">
-        <div className="brz-ed-popup-recaptcha__connect">
-          <div className="brz-ed-popup-recaptcha__container">
+        <div className="brz-ed-popup-common__connect">
+          <div className="brz-ed-popup-common__container">
             <div className="brz-ed-popup-integrations__connect-head">
               <img className="brz-img" src={img} alt={title} />
               {validated

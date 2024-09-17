@@ -41,7 +41,8 @@ export function styles(
         "cssStyleElementSearchLineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleTypography3FontVariation"
+        "cssStyleTypography3FontVariation",
+        "cssStyleTypography3TextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",

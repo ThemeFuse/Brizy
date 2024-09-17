@@ -71,16 +71,33 @@ export function getItems(): ToolbarItemType[] {
               ]
             },
             {
-              id: "padding",
-              type: "padding",
-              disabled: true
-            },
-            {
-              id: "alertPadding",
-              type: "padding",
-              label: t("Padding"),
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
               devices: "responsive",
-              position: 50
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      disabled: true
+                    },
+                    {
+                      id: "alertPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      position: 50
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

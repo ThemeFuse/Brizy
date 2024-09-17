@@ -6,5 +6,9 @@ export const readConfig = (config: Record<string, unknown>): Cloud => {
   const pageData = parsePageCommon(config.pageData);
   const globalBlocks = parseGlobalBlocks(config.globalBlocks);
 
-  return withDefaultConfig({ ...config, pageData, globalBlocks } as Cloud);
+  return withDefaultConfig({
+    ...config,
+    pageData,
+    globalBlocks
+  } as Cloud);
 };

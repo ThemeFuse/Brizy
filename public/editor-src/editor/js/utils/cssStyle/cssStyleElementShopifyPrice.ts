@@ -9,6 +9,7 @@ import {
   cssStyleSizeMinHeightImportant,
   cssStyleSizeMinWidth
 } from "visual/utils/cssStyle/cssStyleSize";
+import { cssStyleTextTransforms } from "visual/utils/cssStyle/cssStyleTextTransform";
 import {
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
@@ -136,6 +137,15 @@ export function cssStyleElementShopifyFontVariationPrice({
   return cssStyleTypography2FontVariation({ v, device, prefix });
 }
 
+export function cssStyleElementShopifyTextTransformPrice({
+  v,
+  device,
+  state,
+  prefix = "typographyPrice"
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, prefix, state });
+}
+
 export function cssStyleElementShopifyFontFamilyThroughPrice({
   v,
   device,
@@ -164,6 +174,15 @@ export function cssStyleElementShopifyFontVariationThroughPrice({
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({ v, device, prefix });
+}
+
+export function cssStyleElementShopifyTextTransformThroughPrice({
+  v,
+  device,
+  state,
+  prefix = "typographyThroughPrice"
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, prefix, state });
 }
 
 export function cssStyleElementShopifyPaddingFourFieldsPrice({

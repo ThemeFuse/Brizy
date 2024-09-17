@@ -1,9 +1,9 @@
 import { BaseApp } from "../../common/GlobalApps/BaseApp";
-import Connect from "../Step/GoogleConnect";
+import { GoogleConnect } from "../Step";
 import Done from "../Step/Done";
 
 class Google extends BaseApp {
-  static connect = Connect;
+  static connect = GoogleConnect;
   static done = Done;
 }
 

@@ -25,8 +25,10 @@ export const pageToStatic = async (props: Props) => {
     items: pageBlocks
   };
 
+  const hasGlobalBlocks = Array.isArray(config.globalBlocks);
+
   const Page = (
-    <Root className="brz" type="page">
+    <Root className="brz" type="page" hasGlobalBlocks={hasGlobalBlocks}>
       {/* @ts-expect-error: Missing optional props */}
       <BasePage dbValue={dbValue} reduxState={reduxState} />
     </Root>

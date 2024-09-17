@@ -1,8 +1,18 @@
 import { getIn, setIn } from "timm";
 import Editor from "visual/global/Editor";
-import { DESKTOP } from "visual/utils/devices";
+import { DESKTOP, RESPONSIVE } from "visual/utils/devices";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ACTIVE, HOVER } from "visual/utils/stateMode";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import { getStore } from "visual/redux/store";
+import { capByPrefix } from "../string";
+import { Obj } from "@brizy/readers";
+
+const filterKeys = [
+  capByPrefix("temp", "tablet"),
+  capByPrefix("temp", "mobile"),
+  "tablet",
+  "mobile"
+];
 
 export function getElementOfArrayLoop(list, currentValue, operation) {
   let currentIndex = list.findIndex((item) => item === currentValue);
@@ -50,27 +60,70 @@ export function getClosestParent(path, value, cb) {
     path: null
   };
 }
+
+const filterDesktopKeys = (v) => {
+  if (!Obj.isObject(v) && !Array.isArray(v)) return;
+
+  const dvv = (key) =>
+    defaultValueValue({ v, key, device: DESKTOP, state: NORMAL });
+
+  return Object.keys(v).reduce((acc, key) => {
+    if (!filterKeys.some((filterKey) => key.startsWith(filterKey))) {
+      acc[key] = dvv(key);
+    }
+    return acc;
+  }, {});
+};
+
+const filterResponsiveKeys = (v, deviceMode) => {
+  if (!Obj.isObject(v) && !Array.isArray(v)) return;
+
+  const dvv = (key) =>
+    defaultValueValue({ v, key, device: RESPONSIVE, state: NORMAL });
+
+  return Object.keys(v).reduce((acc, key) => {
+    if (key.startsWith(deviceMode)) {
+      acc[key] = dvv(key);
+    }
+    return acc;
+  }, {});
+};
+
 export function getStateModeKeys(v) {
   const dvv = (key, state) =>
     defaultValueValue({ v, key, device: DESKTOP, state });
 
   return Object.keys(v).reduce((stateModeKeys, key) => {
-    if (key.startsWith("hover")) {
-      stateModeKeys[key] = dvv(key, HOVER);
+    switch (true) {
+      case key.startsWith("hover"):
+        stateModeKeys[key] = dvv(key, HOVER);
+        break;
+      case key.startsWith("active"):
+        stateModeKeys[key] = dvv(key, ACTIVE);
+        break;
     }
-    if (key.startsWith("active")) {
-      stateModeKeys[key] = dvv(key, ACTIVE);
-    }
-
     return stateModeKeys;
   }, {});
 }
 
-export function getStyles(value) {
-  const { defaultValue } = Editor.getComponent(value.type);
-  const stateModeValues = getStateModeKeys(value.value);
+export function getStyles({ value, type }) {
+  const { deviceMode } = getStore().getState().ui;
+  const { defaultValue } = Editor.getComponent(type);
 
-  return Object.assign({}, defaultValue.style, stateModeValues);
+  if (deviceMode === DESKTOP) {
+    const stateModeKeys = getStateModeKeys(value);
+    const defaultStyleDevice = filterDesktopKeys(defaultValue.style);
+
+    return Object.assign({}, defaultStyleDevice, stateModeKeys);
+  } else {
+    const componentStyleDevice = filterResponsiveKeys(value, deviceMode);
+    const defaultStyleDevice = filterResponsiveKeys(
+      defaultValue.style,
+      deviceMode
+    );
+
+    return Object.assign({}, defaultStyleDevice, componentStyleDevice);
+  }
 }
 
 export function setStyles(componentValue, depth = 0, i = 0) {

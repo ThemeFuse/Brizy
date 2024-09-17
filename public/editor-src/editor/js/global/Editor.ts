@@ -14,7 +14,7 @@ let shopifyShortcodes: Shortcodes = {};
 const thirdPartyShortcodes: Record<
   string,
   {
-    component: ComponentType;
+    component: { editor: ComponentType; view: ComponentType };
     config: ThirdPartyConfig;
   }
 > = {};

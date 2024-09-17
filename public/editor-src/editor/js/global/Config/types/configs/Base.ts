@@ -1,14 +1,14 @@
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
-import { Urls } from "visual/global/Config/types/Urls";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
+import { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import { Urls } from "visual/global/Config/types/Urls";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
 import { CollectionItemId, CustomerId } from "visual/types";
+import { WithId } from "visual/types/attributes";
 import { Role } from "visual/utils/membership";
-import { WithId } from "visual/utils/options/attributes";
 import { Module } from "../Module";
-import { WhiteLabel } from "./WhiteLabel";
 import { Shopify } from "./modules/shop/Shopify";
+import { WhiteLabel } from "./WhiteLabel";
 
 export type ShopModules = undefined | Ecwid | Shopify;
 

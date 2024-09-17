@@ -254,8 +254,7 @@ export const getItems = <
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error "advancedSettings" old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110,
       icon: "nc-cog",
       devices: "desktop",

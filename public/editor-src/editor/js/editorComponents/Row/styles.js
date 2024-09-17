@@ -62,6 +62,8 @@ export function styleRow(v, vs, vd) {
           "cssStyleFilter",
           "cssStyleBgImagePosition",
           "cssStyleBgMediaImage",
+          "cssStyleBgSize",
+          "cssStyleBgRepeat",
           "cssStyleMaskShape",
           "cssStyleMaskCustomShape",
           "cssStyleMaskSize",

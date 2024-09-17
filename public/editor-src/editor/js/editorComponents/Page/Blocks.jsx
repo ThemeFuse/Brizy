@@ -9,6 +9,7 @@ import HotKeys from "visual/component/HotKeys";
 import Prompts from "visual/component/Prompts";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import Config from "visual/global/Config";
 import {
   addBlock,
   addGlobalBlock,
@@ -80,12 +81,17 @@ class Blocks extends EditorArrayComponent {
       this.handleAddGlobalBlock(data, insertIndex);
     const changeTemplateCb = (data) =>
       this.handleAddTemplate(data, insertIndex);
+    const config = Config.getAll();
+    const showGlobal = typeof config.api?.globalBlocks?.create === "function";
+    const showSaved = typeof config.api?.savedBlocks?.create === "function";
 
     Prompts.open({
       prompt: "blocks",
       mode: "single",
       props: {
         type: "normal",
+        showGlobal,
+        showSaved,
         onChangeBlocks: changeBlockCb,
         onChangeGlobal: changeGlobalBlockCb,
         onChangeSaved: changeTemplateCb,

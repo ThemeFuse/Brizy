@@ -1,9 +1,7 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Block } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
@@ -12,14 +10,14 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
-
-export interface Value extends ElementModel {
-  bgColorHex: string;
-  bgColorPalette: string;
-  bgColorOpacity: number;
-}
+import { Value } from "./type";
+import {
+  RendererType,
+  TriggerType
+} from "@brizy/component/src/Flex/Lottie/types";
 
 // @ts-expect-error old option
 export const getItems: GetItems<Value> = ({ v, device, component }) => {
@@ -41,6 +39,12 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
     type: DCTypes.link
   });
 
+  const isScrollTrigger = dvv("trigger") === TriggerType.OnScroll;
+  const isHoverTrigger = dvv("trigger") === TriggerType.OnHover;
+  const isLoadTrigger = dvv("trigger") === TriggerType.OnLoad;
+
+  const _isAutoplay = dvv("autoplay") === "off";
+
   return [
     {
       id: "toolbarCurrentShortcode",
@@ -56,7 +60,6 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
           id: "animationLink",
           label: t("Lottie Link"),
           type: "inputText",
-          devices: "desktop",
           placeholder: "lottie link",
           disabled: dvv("animationFile") !== "",
           helper: {
@@ -72,28 +75,45 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
           config: {
             allowedExtensions: [".json"],
             componentId: ElementTypes.Lottie
-          },
-          devices: "desktop"
+          }
+        },
+        {
+          id: "trigger",
+          type: "select",
+          disabled: IS_STORY,
+          label: t("Trigger On"),
+          choices: [
+            { title: t("Load"), value: TriggerType.OnLoad },
+            { title: t("Hover"), value: TriggerType.OnHover },
+            { title: t("Click"), value: TriggerType.OnClick },
+            { title: t("Scroll"), value: TriggerType.OnScroll }
+          ]
         },
         {
           id: "renderer",
           type: "select",
           label: t("Renderer"),
           choices: [
-            { title: "SVG", value: "svg" },
-            { title: "Canvas", value: "canvas" }
+            { title: "SVG", value: RendererType.SVG },
+            { title: "Canvas", value: RendererType.Canvas }
           ]
+        },
+        {
+          id: "lazyload",
+          label: t("Lazy Load"),
+          type: "switch"
         },
         {
           id: "autoplay",
           label: t("Autoplay"),
-          type: "switch"
+          type: "switch",
+          disabled: !isLoadTrigger
         },
         {
           id: "direction",
           label: t("Reverse"),
           type: "switch",
-          disabled: dvv("autoplay") === "off",
+          disabled: _isAutoplay || isHoverTrigger || isScrollTrigger,
           config: {
             on: "-1",
             off: "1"
@@ -103,13 +123,13 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
           id: "loop",
           label: t("Loop"),
           type: "switch",
-          disabled: dvv("autoplay") === "off"
+          disabled: _isAutoplay || isScrollTrigger
         },
         {
           id: "speed",
           type: "slider",
           label: t("Speed"),
-          devices: "desktop",
+          disabled: isScrollTrigger,
           config: {
             min: 0.1,
             max: 5,
@@ -155,7 +175,6 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
                 {
                   id: "border",
                   type: "border",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -167,7 +186,6 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
                 {
                   id: "boxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -251,25 +269,13 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
               options: [
                 {
                   id: "linkPopup",
-                  // need to remove Old option in #24935
-                  type: "legacy-promptAddPopup",
+                  type: "promptAddPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
                   label: t("Popup"),
-                  popupKey: `${component.getId()}_${dvv("linkPopup")}`,
-                  value: {
-                    value: dvv("linkPopup"),
-                    popups: dvv("popups")
+                  config: {
+                    popupKey: `${component.getId()}_${dvv("linkPopup")}`
                   },
-                  onChange: ({
-                    value,
-                    popups
-                  }: {
-                    value: string;
-                    popups: Block[];
-                  }) => ({
-                    linkPopup: value,
-                    popups
-                  })
+                  dependencies: popupToOldModel
                 }
               ]
             },

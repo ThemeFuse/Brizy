@@ -1,41 +1,20 @@
-import React, { ReactElement, useMemo } from "react";
-import Select from "visual/component/Controls/Select";
-import SelectItem from "visual/component/Controls/Select/SelectItem";
+import React from "react";
+import { Switch } from "visual/component/Controls/Switch";
 import { Field } from "visual/component/Prompts/common/PromptPage/Field";
-import { Layout } from "visual/component/Prompts/common/PromptPage/types";
 import { t } from "visual/utils/i18n";
+import { FCC } from "visual/utils/react/types";
 
 interface Props {
-  value: string;
-  layouts: Layout[];
-  onChange: (s: string) => void;
+  value: boolean;
+  onChange: (s: boolean) => void;
 }
 
-export const HeaderFooterField = ({
-  value,
-  onChange,
-  layouts
-}: Props): ReactElement => {
-  const options = useMemo(() => {
-    return layouts.map(({ id, title }) => (
-      <SelectItem key={id} value={id}>
-        {title}
-      </SelectItem>
-    ));
-  }, [layouts]);
-
-  return (
-    <Field label={t("Header & Footer")} required={true}>
-      <Select
-        className="brz-control__select--white"
-        maxItems="6"
-        itemHeight="30"
-        inPortal={true}
-        defaultValue={value}
-        onChange={onChange}
-      >
-        {options}
-      </Select>
-    </Field>
-  );
-};
+export const HeaderFooterField: FCC<Props> = ({ value, onChange }) => (
+  <Field
+    className="brz-ed-popup-integrations-step__fields-option-header-footer"
+    label={t("Theme Header & Footer")}
+    required={true}
+  >
+    <Switch value={value} onChange={onChange} />
+  </Field>
+);

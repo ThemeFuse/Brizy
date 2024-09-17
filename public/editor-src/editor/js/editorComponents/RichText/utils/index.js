@@ -9,6 +9,7 @@ import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { capByPrefix, decodeFromString } from "visual/utils/string";
 import { isNullish, onNullish, throwOnNullish } from "visual/utils/value";
+import { fromFormatsToTextTransform } from "./dependencies";
 import { classNamesToV } from "./transforms";
 
 // have problems with cheerio it declared _ as global variables
@@ -389,14 +390,31 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     ? format.backgroundGradient.startOpacity
     : opacity;
 
+  const {
+    typographyBold,
+    typographyItalic,
+    typographyUnderline,
+    typographyStrike,
+    typographyUppercase,
+    typographyScript
+  } = fromFormatsToTextTransform(format);
+
   return {
     ...v,
+    bold: format.typographyBold ?? format.bold ?? false,
+    italic: format.italic ?? format.typographyItalic ?? false,
+    underline: format.underline ?? format.typographyUnderline ?? false,
+    strike: format.strike ?? format.typographyStrike ?? false,
+    capitalize: format.capitalize || format.typographyUppercase ? "on" : "",
+    script: format.script ?? format.typographyScript ?? "none",
 
-    bold: format.bold ?? "",
-    italic: format.italic ?? "",
-    underline: format.underline ?? "",
-    strike: format.strike ?? "",
-    capitalize: format.capitalize ?? "",
+    typographyBold: format.typographyBold ?? typographyBold,
+    typographyItalic: format.typographyItalic ?? typographyItalic,
+    typographyUnderline: format.typographyUnderline ?? typographyUnderline,
+    typographyStrike: format.typographyStrike ?? typographyStrike,
+    typographyUppercase: format.typographyUppercase || typographyUppercase,
+    typographyLowercase: format.typographyLowercase ? "on" : "",
+    typographyScript: format.typographyScript ?? typographyScript,
 
     color: {
       hex,

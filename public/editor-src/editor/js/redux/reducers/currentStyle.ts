@@ -60,6 +60,10 @@ export const currentStyle: RCurrentStyle = (state, action, fullState) => {
     case ActionTypes.EDIT_GLOBAL_STYLE_NAME: {
       return { ...state, title: action.payload };
     }
+    case ActionTypes.REGENERATE_TYPOGRAPHY:
+    case ActionTypes.REGENERATE_COLORS: {
+      return action.payload;
+    }
     default:
       return state;
   }

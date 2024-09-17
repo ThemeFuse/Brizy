@@ -112,7 +112,7 @@
       border-radius: $control-border-radius;
       background: $options__control-bg;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-      transform: none !important;
+      transform: none;
 
       &--with-search {
         .brz-ed-control__multiSelect2__option:first-child {

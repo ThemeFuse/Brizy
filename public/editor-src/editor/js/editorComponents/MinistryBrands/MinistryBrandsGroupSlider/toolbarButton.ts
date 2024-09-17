@@ -8,7 +8,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getButtonMaxBorderRadius } from "../utils/helpers";
 import { Props, Value } from "./types";
 
-// @ts-expect-error "advancedSettings" is old options
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
@@ -220,7 +219,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
       position: 110,
       icon: "nc-cog"

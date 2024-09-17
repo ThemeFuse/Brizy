@@ -19,7 +19,13 @@ import * as GlobalState from "visual/global/StateMode";
 import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
-import { css } from "visual/utils/cssStyle";
+import { WithClassName } from "visual/types/attributes";
+import {
+  css,
+  filterMergedStylesByDevice,
+  getInitialV,
+  replaceCSSDuplicatesWithEmptyString
+} from "visual/utils/cssStyle";
 import {
   filterStylesByDevice,
   getCSSObjects
@@ -30,14 +36,13 @@ import {
   concatFinalCSS,
   mergeStylesArray
 } from "visual/utils/cssStyle/utils";
-import { IS_PRO, isPro } from "visual/utils/env";
+import { isPro, IS_PRO } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import { defaultValueKey } from "visual/utils/onChange/device";
-import { WithClassName } from "visual/utils/options/attributes";
 import {
   Choices,
-  Handler,
-  getDynamicContentOption
+  getDynamicContentOption,
+  Handler
 } from "visual/utils/options/getDynamicContentOption";
 import { TypeChoices } from "visual/utils/options/types";
 import { mergeOptions, optionMap } from "visual/utils/options/utils";
@@ -53,7 +58,7 @@ import { NORMAL } from "visual/utils/stateMode";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
 import { Literal } from "visual/utils/types/Literal";
 import { uuid } from "visual/utils/uuid";
-import { MValue, isT } from "visual/utils/value";
+import { isT, MValue } from "visual/utils/value";
 import {
   DCObjResult,
   getDCObjEditor,
@@ -86,7 +91,8 @@ import {
   getOptionValueByDevice,
   getToolbarData,
   inDevelopment,
-  makeToolbarPropsFromConfigDefaults
+  makeToolbarPropsFromConfigDefaults,
+  getElementModelKeyFn
 } from "./utils";
 
 const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
@@ -335,8 +341,11 @@ export class EditorComponent<
     return null;
   }
 
-  getToolbarOptions = (toolbars: NewToolbarConfig<M>[]): ToolbarItemType[] => {
-    const v = this.getValue();
+  getToolbarOptions = (
+    currentModel: ModelType,
+    toolbars: NewToolbarConfig<M>[]
+  ): ToolbarItemType[] => {
+    const v = getInitialV<M>(currentModel, this.getValue2());
     const { tabsState } = v;
 
     return flatten(
@@ -354,65 +363,91 @@ export class EditorComponent<
   };
 
   getFilteredToolbarOptions = (
-    toolbars: NewToolbarConfig<M>[],
-    sidebars?: NewToolbarConfig<M>[]
+    currentModel: ModelType,
+    toolbars: NewToolbarConfig<M, P, S>[],
+    sidebars?: NewToolbarConfig<M, P, S>[]
   ): ToolbarItemType[] => {
     const config = Config.getAll();
     const thirdPartyExtendId = this.getComponentId();
 
-    const toolbarFreeOptions = this.getToolbarOptions(toolbars);
+    const toolbarFreeOptions = this.getToolbarOptions(currentModel, toolbars);
     const toolbarPro = applyFilter(
       `toolbarItemsExtend_${thirdPartyExtendId}`,
       null
     );
     const toolbarProOptions = this.getToolbarOptions(
+      currentModel,
       toolbarPro ? [toolbarPro] : []
     );
     const toolbarOptions = [...toolbarFreeOptions, ...toolbarProOptions];
 
     const sidebarFreeOptions =
-      sidebars && sidebars.length ? this.getToolbarOptions(sidebars) : [];
+      sidebars && sidebars.length
+        ? this.getToolbarOptions(currentModel, sidebars)
+        : [];
     const sidebarPro = applyFilter(
       `sidebarItemsExtend_${thirdPartyExtendId}`,
       null
     );
     const sidebarProOptions = this.getToolbarOptions(
+      currentModel,
       sidebarPro ? [sidebarPro] : []
     );
     const sidebarOptions = [...sidebarFreeOptions, ...sidebarProOptions];
 
-    return [...toolbarOptions, ...sidebarOptions]
-      .map(filterProOptions(isPro(config)))
-      .filter(isT);
+    const options = filterCSSOptions(
+      [...toolbarOptions, ...sidebarOptions]
+        .map(filterProOptions(isPro(config)))
+        .filter(isT)
+    );
+
+    return options.filter((o) => o.disabled !== true);
   };
 
-  getCSS(
-    toolbars: NewToolbarConfig<M>[],
-    sidebars?: NewToolbarConfig<M>[]
-  ): OutputStyle {
-    const model = this.getValue2();
-
-    const filteredOptionsByIsPro = this.getFilteredToolbarOptions(
+  getCSS({
+    toolbars,
+    sidebars,
+    model
+  }: {
+    toolbars: NewToolbarConfig<M, P, S>[];
+    sidebars?: NewToolbarConfig<M, P, S>[];
+    model: {
+      v: M;
+      vs: M;
+      vd: M;
+    };
+  }): OutputStyle {
+    const defaultOptions = this.getFilteredToolbarOptions(
+      ModelType.Default,
+      toolbars,
+      sidebars
+    );
+    const rulesOptions = this.getFilteredToolbarOptions(
+      ModelType.Rules,
+      toolbars,
+      sidebars
+    );
+    const customOptions = this.getFilteredToolbarOptions(
+      ModelType.Custom,
       toolbars,
       sidebars
     );
 
-    const options = filterCSSOptions(filteredOptionsByIsPro);
-
     const defaultCSSObj = getCSSObjects({
       currentModel: ModelType.Default,
       model,
-      options
+      options: defaultOptions
     });
+
     const rulesCSSObj = getCSSObjects({
       currentModel: ModelType.Rules,
       model,
-      options
+      options: rulesOptions
     });
     const customCSSObj = getCSSObjects({
       currentModel: ModelType.Custom,
       model,
-      options
+      options: customOptions
     });
 
     const css: [
@@ -420,12 +455,20 @@ export class EditorComponent<
       GeneratedCSS<string>,
       GeneratedCSS<string>
     ] = [
-      filterStylesByDevice(mergeStylesArray(defaultCSSObj)),
-      filterStylesByDevice(mergeStylesArray(rulesCSSObj)),
-      filterStylesByDevice(mergeStylesArray(customCSSObj))
+      filterMergedStylesByDevice(
+        mergeStylesArray(filterStylesByDevice(defaultCSSObj))
+      ),
+      filterMergedStylesByDevice(
+        mergeStylesArray(filterStylesByDevice(rulesCSSObj))
+      ),
+      filterMergedStylesByDevice(
+        mergeStylesArray(filterStylesByDevice(customCSSObj))
+      )
     ];
 
-    return addBreakpointsToFilteredCSS(css);
+    const output = addBreakpointsToFilteredCSS(css);
+
+    return replaceCSSDuplicatesWithEmptyString(output);
   }
 
   getCSSClassnames({
@@ -434,17 +477,18 @@ export class EditorComponent<
     stylesFn,
     extraClassNames
   }: {
-    toolbars: NewToolbarConfig<M>[];
-    sidebars?: NewToolbarConfig<M>[];
+    toolbars: NewToolbarConfig<M, P, S>[];
+    sidebars?: NewToolbarConfig<M, P, S>[];
     stylesFn?: (v: M, vs: M, vd: M) => OutputStyle;
     extraClassNames?: Array<string | Record<string, boolean>>;
   }) {
-    const { v, vs, vd } = this.getValue2();
+    const model = this.getValue2();
+    const { v, vs, vd } = model;
 
     const cssFromStylesFn =
       typeof stylesFn === "function" ? stylesFn(v, vs, vd) : undefined;
 
-    const cssFromToolbarOptions = this.getCSS(toolbars, sidebars);
+    const cssFromToolbarOptions = this.getCSS({ toolbars, sidebars, model });
 
     const _css = cssFromStylesFn
       ? concatFinalCSS(cssFromStylesFn, cssFromToolbarOptions)
@@ -473,7 +517,8 @@ export class EditorComponent<
     }
 
     const dcObjKeysAfterHook = this.getDCValueHook(getDCObjKeys, v);
-    const replaceDC = _config.dynamicContent?.liveInBuilder ?? false;
+    const replaceDC =
+      typeof _config.dynamicContent?.getPlaceholderData === "function";
 
     // Can be disabled by Config
     if (!replaceDC || IS_PREVIEW) {
@@ -939,71 +984,57 @@ export class EditorComponent<
     state: State.State,
     items: ToolbarItemType[]
   ): OptionDefinition[] {
-    const getKey = (id: string, key: string, isDev: boolean) => {
-      return id === "tabsState" || !isDev
-        ? id
-        : defaultValueKey({
-            key: createOptionId(id, key),
-            device,
-            state
-          });
-    };
+    return optionMap((option) => {
+      const { id, type, onChange: oldOnchange } = option;
 
-    return optionMap(
-      (option) => {
-        const { id, type, onChange: oldOnchange } = option;
+      const getKey = getElementModelKeyFn({ device, state, option });
 
-        option = bindStateToOption(GlobalState.states, option, device);
+      option = bindStateToOption(GlobalState.states, option, device);
 
-        //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
-        const isDev = inDevelopment(type);
+      //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
+      const isDev = inDevelopment(type);
+      const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
+        v !== undefined ? ({ [id]: v } as Partial<M>) : null;
+      const deps = option.dependencies || identity;
 
-        const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
-          v !== undefined ? ({ [id]: v } as Partial<M>) : null;
-        const deps = option.dependencies || identity;
+      if (isDev) {
+        const optionModel = getOptionModel({
+          id,
+          type,
+          v,
+          breakpoint: device,
+          state
+        });
 
-        if (isDev) {
-          const optionModel = getOptionModel({
-            id,
-            type,
-            v,
-            breakpoint: device,
-            state
-          });
+        option.meta = getOptionMeta(type, optionModel);
 
-          option.meta = getOptionMeta(type, optionModel);
+        option.value = optionModel;
+      }
 
-          option.value = optionModel;
-        }
+      const elementModel = toElementModel<typeof type>(type, getKey);
 
-        const elementModel = toElementModel<typeof type>(type, (key) =>
-          getKey(id, key, isDev)
-        );
+      option.onChange =
+        option.isPro === true && !IS_PRO
+          ? noop
+          : (value: ElementModel | Literal, meta: Meta): void => {
+              const id = getKey("");
+              const patch: Partial<Model<M>> = isDev
+                ? deps(elementModel(value))
+                : oldOnchange
+                ? oldOnchange(value, meta)
+                : defaultOnChange(id, value as Literal);
 
-        option.onChange =
-          option.isPro === true && !IS_PRO
-            ? noop
-            : (value: ElementModel | Literal, meta: Meta): void => {
-                const id = getKey(option.id, "", isDev);
-                const patch: Partial<Model<M>> = isDev
-                  ? deps(elementModel(value))
-                  : oldOnchange
-                    ? oldOnchange(value, meta)
-                    : defaultOnChange(id, value as Literal);
-
-                if (patch) {
-                  if (process.env.NODE_ENV === "development") {
-                    this.validatePatch(patch, option, state, device);
-                  }
-
-                  this.patchValue(patch);
+              if (patch) {
+                if (process.env.NODE_ENV === "development") {
+                  this.validatePatch(patch, option, state, device);
                 }
-              };
 
-        return option;
-      },
-      optionMap(wrapOption, items)
-    );
+                this.patchValue(patch);
+              }
+            };
+
+      return option;
+    }, optionMap(wrapOption, items));
   }
 
   makeToolbarPropsFromConfig2(

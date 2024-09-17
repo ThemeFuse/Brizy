@@ -5,7 +5,10 @@ import React, {
   useCallback
 } from "react";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
-import { PromptFrame } from "visual/component/Prompts/common/PromptFrame";
+import {
+  PromptFrame,
+  Validator
+} from "visual/component/Prompts/common/PromptFrame";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 
@@ -15,6 +18,7 @@ export interface Props {
   value: string | undefined;
   onSave: () => Promise<void>;
   onCancel: () => Promise<void>;
+  validator: Validator;
 }
 
 export const PayPal = ({
@@ -22,7 +26,8 @@ export const PayPal = ({
   value,
   onCancel,
   onSave,
-  label
+  label,
+  validator
 }: Props): ReactElement | null => {
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (e) => onChange(e.target.value),
@@ -33,8 +38,10 @@ export const PayPal = ({
     <PromptFrame
       img={assetUrl("editor/img/paypal-224.jpg")}
       label={label}
+      value={value}
       onSave={onSave}
       onCancel={onCancel}
+      validator={validator}
       description={t(
         "Allow Brizy to access your PayPal account via API access"
       )}

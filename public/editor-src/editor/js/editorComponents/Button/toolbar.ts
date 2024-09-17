@@ -1,7 +1,6 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { Block } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { isPopup, isStory } from "visual/utils/models";
@@ -10,12 +9,13 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { Props, Value } from "./types";
 import { getMaxBorderRadius } from "./utils";
 
-// @ts-expect-error "advancedSettings" old option
+// @ts-expect-error wrong typing
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const config = Config.getAll();
 
@@ -447,23 +447,13 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 {
                   id: "linkPopup",
                   disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
-                  type: "legacy-promptAddPopup",
+                  type: "promptAddPopup",
                   label: t("Popup"),
-                  popupKey: `${component.getId()}_${linkPopup}`,
-                  value: {
-                    value: linkPopup,
-                    popups: dvv("popups")
+                  config: {
+                    popupKey: `${component.getId()}_${linkPopup}`,
+                    canDelete: device === "desktop"
                   },
-                  onChange: ({
-                    value,
-                    popups
-                  }: {
-                    value: string;
-                    popups: Block[];
-                  }) => ({
-                    linkPopup: value,
-                    popups
-                  })
+                  dependencies: popupToOldModel
                 }
               ]
             },
@@ -489,11 +479,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: submitType || searchType,
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       devices: "desktop",
       title: t("Settings")
     }

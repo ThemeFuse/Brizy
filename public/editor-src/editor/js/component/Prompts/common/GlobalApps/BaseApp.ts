@@ -18,6 +18,7 @@ class BaseApp {
   static disconnect: BaseAppSteps = undefined;
   static client: BaseAppSteps = undefined;
   static upload: BaseAppSteps = undefined;
+  static appList: BaseAppSteps = undefined;
   static variation: BaseAppSteps = undefined;
   static connect: BaseAppSteps = undefined;
   static account: BaseAppSteps = undefined;

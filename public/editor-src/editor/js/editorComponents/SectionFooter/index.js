@@ -22,6 +22,7 @@ import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import {
+  makePlaceholder,
   makeEndPlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
@@ -386,7 +387,11 @@ class SectionFooter extends EditorComponent {
       cssClass
     } = v;
 
-    const blockName = cssID ? cssID : anchorName || this.getId();
+    const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });
+    const blockName = cssID
+      ? cssID
+      : anchorName || `${uidPlaceholder}-${this.getId()}`;
+
     const content = (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Animation

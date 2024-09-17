@@ -54,7 +54,8 @@ export function style(
           "cssStyleTypography2LineHeight",
           "cssStyleTypography2FontWeight",
           "cssStyleTypography2LetterSpacing",
-          "cssStyleTypography2FontVariation"
+          "cssStyleTypography2FontVariation",
+          "cssStyleTextTransforms"
         ]
       },
     ".brz && > .brz-accordion__item .brz-accordion-icon": {
@@ -86,7 +87,8 @@ export function style(
         "cssStyleElementAccordion3LineHeight",
         "cssStyleElementAccordion3FontWeight",
         "cssStyleElementAccordion3LetterSpacing",
-        "cssStyleElementAccordion3FontVariation"
+        "cssStyleElementAccordion3FontVariation",
+        "cssStyleElementAccordionFilterTextTransform"
       ]
     },
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item":

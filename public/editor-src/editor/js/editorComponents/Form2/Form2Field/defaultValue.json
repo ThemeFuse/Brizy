@@ -1,10 +1,13 @@
 {
   "content": {
+    "items": [],
     "type": "Text",
     "label": "Enter Text",
     "placeholder": null,
     "labelType": "inside",
     "customFieldName": null,
+    "active": {},
+    "activeRadio": 0,
     "required": "off",
     "options": ["Option 1", "Option 2"],
     "nativeHtml": "off",
@@ -18,7 +21,9 @@
     "fileTypeErrorMessage": "File Type Not Accepted",
 
     "numberMinMessage": "Selected quantity is less than stock status, min:",
-    "numberMaxMessage": "Selected quantity is more than stock status, max: "
+    "numberMaxMessage": "Selected quantity  is more than stock status, max: ",
+
+    "columns": 1
   },
 
   "style": {
@@ -29,8 +34,6 @@
     "heightSuffix": "px",
 
     "min": "",
-    "max": "",
-
-    "columns": 1
+    "max": ""
   }
 }

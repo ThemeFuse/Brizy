@@ -34,6 +34,7 @@ import { defaultValue as padding } from "visual/utils/options/Padding/converters
 import { defaultValue as paypal } from "visual/utils/options/PayPal/converters";
 import { defaultValue as popover } from "visual/utils/options/Popover/converters";
 import { defaultValue as population } from "visual/utils/options/Population/converters";
+import { defaultValue as promptAddPopup } from "visual/utils/options/PromptAddPopup/converters";
 import { defaultValue as radioGroup } from "visual/utils/options/RadioGroup/converters";
 import { defaultValue as range } from "visual/utils/options/Range/converters";
 import { defaultValue as savedBlock } from "visual/utils/options/SavedBlock/converters";
@@ -47,9 +48,16 @@ import { defaultValue as textShadow } from "visual/utils/options/TextShadow/conv
 import { defaultValue as textarea } from "visual/utils/options/Textarea/converters";
 import { defaultValue as toggle } from "visual/utils/options/Toggle/converters";
 import { defaultValue as toggleButton } from "visual/utils/options/ToggleButton/converters";
+import { defaultValue as fontStyleEditor } from "visual/utils/options/FontStyleEditor/converters";
 import { defaultValue as transform } from "visual/utils/options/Transform/converters";
 import { defaultValue as typography } from "visual/utils/options/Typography/converters";
 import { defaultValue as popupCondition } from "visual/utils/options/PopupCondition/converters";
+import { defaultValue as showOnDevice } from "visual/utils/options/ShowOnDevice/converters";
+import { defaultValue as checkGroup } from "visual/utils/options/CheckGroup/converters";
+import { defaultValue as colorPaletteEditor } from "visual/utils/options/ColorPaletteEditor/converters";
+import { defaultValue as blockThumbnail } from "visual/utils/options/BlockThumbnail/converters";
+import { defaultValue as symbols } from "visual/utils/options/Symbols/converters";
+import { defaultValue as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 
 type DefaultValues = {
   [K in OptionName]: OptionValue<K>;
@@ -108,7 +116,15 @@ export const defaultValues: DefaultValues = {
   formApps: formApps,
   gbCondition: gbCondition,
   toggleButton: toggleButton,
-  editableSelect: editableSelect
+  editableSelect: editableSelect,
+  colorPaletteEditor: colorPaletteEditor,
+  promptAddPopup: promptAddPopup,
+  blockThumbnail: blockThumbnail,
+  fontStyleEditor: fontStyleEditor,
+  checkGroup: checkGroup,
+  showOnDevice: showOnDevice,
+  advancedSettings: advancedSettings,
+  symbols
 };
 
 export function applyDefaultValueToOption<T>(values: T, type: OptionName): T {

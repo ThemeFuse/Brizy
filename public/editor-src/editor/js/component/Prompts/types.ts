@@ -6,6 +6,7 @@ export type PromptIconProps = {
   onChange: () => {
     name: string;
     type: string;
+    uid?: string;
   };
   onClose?: () => void;
 };

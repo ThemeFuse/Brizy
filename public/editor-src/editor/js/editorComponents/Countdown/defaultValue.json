@@ -25,6 +25,12 @@
     "variableFontWeight": 700,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "colorHex": "#73777f",
     "colorOpacity": 0.75,

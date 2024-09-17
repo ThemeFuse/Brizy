@@ -11,10 +11,11 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkAnchor, toolbarLinkPopup } from "visual/utils/toolbar";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
 
-// @ts-expect-error "advancedSettings" old options
+// @ts-expect-error wrong typing
 export const getItems: GetItems<ElementModel> = ({
   v,
   device,
@@ -54,6 +55,9 @@ export const getItems: GetItems<ElementModel> = ({
     options: component.context.dynamicContent.config,
     type: DCTypes.link
   });
+
+  const linkPopup = dvv("linkPopup");
+
   return [
     {
       id: "posts",
@@ -110,7 +114,7 @@ export const getItems: GetItems<ElementModel> = ({
             },
             {
               id: "col-2",
-              size: "1",
+              size: 1,
               align: "center",
               options: [
                 {
@@ -233,17 +237,20 @@ export const getItems: GetItems<ElementModel> = ({
               id: "popup",
               label: t("Popup"),
               options: [
-                toolbarLinkPopup({
-                  v,
-                  device,
-                  component,
-                  state: "normal",
-                  canDelete: device === "desktop",
+                {
+                  id: "linkPopup",
+                  type: "promptAddPopup",
+                  label: t("Popup"),
+                  config: {
+                    popupKey: `${component.getId()}_${linkPopup}`,
+                    canDelete: device === "desktop"
+                  },
                   disabled:
                     device === "desktop"
                       ? inPopup || inPopup2 || IS_GLOBAL_POPUP
-                      : dvv("linkType") !== "popup" || dvv("linkPopup") === ""
-                })
+                      : dvv("linkType") !== "popup" || linkPopup === "",
+                  dependencies: popupToOldModel
+                }
               ]
             }
           ]
@@ -264,13 +271,11 @@ export const getItems: GetItems<ElementModel> = ({
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       position: 110,
       title: t("Settings"),
       roles: ["admin"],
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 };

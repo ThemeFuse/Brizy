@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
 import _ from "underscore";
 import { Props } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 import {
   correctNumber,
   formatInputValue,
@@ -88,7 +88,7 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
         return null;
       },
       () => {
-        if(this.props.onTextChange) this.props.onTextChange(this.state.text);
+        if (this.props.onTextChange) this.props.onTextChange(this.state.text);
         this.props.onChange(this.state.value);
       }
     );
@@ -117,7 +117,7 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
         return null;
       },
       () => {
-        if(this.props.onTextChange) this.props.onTextChange(this.state.text);
+        if (this.props.onTextChange) this.props.onTextChange(this.state.text);
         this.props.onChange(this.state.value);
       }
     );
@@ -125,7 +125,7 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ text: e.target.value }, () => {
-      if(this.props.onTextChange) this.props.onTextChange(this.state.text);
+      if (this.props.onTextChange) this.props.onTextChange(this.state.text);
       this.debouncedOnChange();
     });
   };
@@ -137,9 +137,7 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
         const { text, value } = state;
         const textValue = parseFloat(String(text));
         const correctedTextValue = correctNumber(
-          !Number.isNaN(textValue)
-            ? textValue
-            : value,
+          !Number.isNaN(textValue) ? textValue : value,
           min,
           max,
           step
@@ -151,7 +149,7 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
         };
       },
       () => {
-        if(this.props.onTextChange) this.props.onTextChange(this.state.text);
+        if (this.props.onTextChange) this.props.onTextChange(this.state.text);
         this.props.onChange(this.state.value);
       }
     );

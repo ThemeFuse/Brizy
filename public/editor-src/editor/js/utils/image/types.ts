@@ -1,9 +1,12 @@
 import {
   CropData,
   Data as ImageBaseData,
+  ImagePatterns,
   OthersSizeType,
   SizeType
 } from "visual/global/Config/types/configs/common";
+import { Literal } from "visual/utils/types/Literal";
+import { MValue } from "visual/utils/value";
 
 export interface CustomSize extends ImageBaseData {
   sizeType: SizeType.custom;
@@ -20,13 +23,31 @@ export interface OthersSize extends ImageBaseData {
 
 export type Data = CustomSize | OriginalSize | OthersSize;
 
-export interface BaseOptions {
-  fileName?: string;
+interface BaseImageData {
+  baseUrl: string;
+  fileName: string;
+  uid?: string;
+  sizeType?: string;
+  crop?: CropData;
 }
 
-export interface FilterOption extends BaseOptions {
+export interface ResizeData extends BaseImageData {
+  pattern: string;
+}
+
+export interface DataUrl extends BaseImageData {
+  patterns: ImagePatterns;
+}
+
+export interface PlaceholdersValues
+  extends Omit<CropData, "iW" | "iH">,
+    Record<string, MValue<Literal>> {
+  baseUrl: string;
+  fileName: string;
+  uid?: string;
+  sizeType?: string;
   iW?: number;
-  iH?: "any" | number;
+  iH?: number | "any";
 }
 
 export enum ImageType {

@@ -12,7 +12,6 @@ import {
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ProgressStyle, Value } from "./types";
 
-// @ts-expect-error "advancedSettings" old options
 export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
@@ -365,11 +364,10 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: !IS_STORY,
       position: 110,
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 };

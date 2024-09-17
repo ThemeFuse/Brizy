@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, { ReactElement, useMemo } from "react";
-import { WithValue } from "visual/utils/options/attributes";
+import { WithValue } from "visual/types/attributes";
 import { Props as TabProps } from "../Tabs2/Tab";
-import { TabList, Props as TabListProps } from "../Tabs2/TabList";
+import { Props as TabListProps, TabList } from "../Tabs2/TabList";
 import { Icon } from "./Icon";
 import { Align, Locked } from "./types";
 import { alignIcon, alignTitle, lockedIcon, lockedTitle } from "./utils";

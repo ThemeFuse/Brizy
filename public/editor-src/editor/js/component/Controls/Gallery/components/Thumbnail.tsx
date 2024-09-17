@@ -1,5 +1,5 @@
 import React, { ReactElement, useMemo } from "react";
-import { WithId } from "visual/utils/options/attributes";
+import { WithId } from "visual/types/attributes";
 import { Item } from "./Item";
 
 export interface Props<T> extends WithId<T> {

@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 
 export default {
-  id: "button",
+  id: "storyButton",
   title: t("Button"),
   icon: "nc-button",
   resolve: {

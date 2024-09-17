@@ -23,9 +23,9 @@ import {
   UPDATE_TRIGGERS
 } from "../../actions";
 import {
+  ActionTypes,
   ADD_FONTS,
   ADD_GLOBAL_BLOCK,
-  ActionTypes,
   ADD_GLOBAL_POPUP,
   DELETE_FONTS,
   PUBLISH,
@@ -42,6 +42,7 @@ import {
   changedGBIdsSelector,
   defaultFontSelector,
   errorSelector,
+  filteredFontsSelector,
   fontsSelector,
   globalBlocksAssembledSelector,
   pageBlocksRawSelector,
@@ -80,9 +81,7 @@ export default (store) => (next) => {
 };
 
 function handlePublish({ action, state, oldState, apiHandler }) {
-  const config = Config.getAll();
-
-  if (action.type === PUBLISH && config.ui?.publish?.handler) {
+  if (action.type === PUBLISH) {
     const config = Config.getAll();
     const { onSuccess = _.noop, onError = _.noop } = action.meta ?? {};
 
@@ -191,7 +190,8 @@ function handleProject({ action, state, oldState, apiHandler }) {
 
     case ActionTypes.IMPORT_KIT:
     case UPDATE_CURRENT_KIT_ID:
-    case UPDATE_DISABLED_ELEMENTS: {
+    case UPDATE_DISABLED_ELEMENTS:
+    case ActionTypes.UPDATE_PINNED_ELEMENTS: {
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
       const project = projectSelector(state);
       const page = pageSelector(state);
@@ -250,7 +250,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
 
     case ADD_FONTS:
     case DELETE_FONTS: {
-      const fonts = fontsSelector(state);
+      const fonts = filteredFontsSelector(state);
       const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
       const project = produce(projectSelector(state), (draft) => {
         draft.data.fonts = fonts;

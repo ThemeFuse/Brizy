@@ -60,6 +60,12 @@
     "paginationVariableFontWeight": 400,
     "paginationFontWidth": 100,
     "paginationFontSoftness": 0,
+    "paginationBold": false,
+    "paginationItalic": false,
+    "paginationUnderline": false,
+    "paginationStrike": false,
+    "paginationUppercase": false,
+    "paginationLowercase": false,
 
 
     "tabletPaginationFontStyle": "",
@@ -191,6 +197,12 @@
     "filterVariableFontWeight": 400,
     "filterFontWidth": 100,
     "filterFontSoftness": 0,
+    "filterBold": false,
+    "filterItalic": false,
+    "filterUnderline": false,
+    "filterStrike": false,
+    "filterUppercase": false,
+    "filterLowercase": false,
 
     "tabletFilterFontStyle": "",
     "tabletFilterFontFamilyType": null,

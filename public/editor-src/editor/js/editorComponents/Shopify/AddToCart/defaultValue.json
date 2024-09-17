@@ -4,7 +4,8 @@
     "itemId": "",
 
     "iconName": "cart-simple-in",
-    "iconType": "glyph"
+    "iconType": "glyph",
+    "iconFilename": ""
   },
   "families": {
     "fontFamily": "lato",
@@ -41,6 +42,12 @@
     "variableFontWeight": 700,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "tabletFontFamilyType": null,
     "tabletFontStyle": null,

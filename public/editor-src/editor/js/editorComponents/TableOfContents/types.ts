@@ -1,6 +1,6 @@
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import type { WithClassName } from "visual/utils/options/attributes";
+import type { WithClassName } from "visual/types/attributes";
 
 export type MarkerType = "numbers" | "circle";
 

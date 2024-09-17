@@ -37,7 +37,8 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
               imageExtension: v.extension,
               imageWidth: v.width,
               imageHeight: v.height,
-              imageType: ImageType.Internal
+              imageType: ImageType.Internal,
+              alt: v.altTitle
             });
           }
           break;

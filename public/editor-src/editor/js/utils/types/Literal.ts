@@ -9,7 +9,7 @@ import { IsEqual } from "visual/utils/types/Eq";
 
 export type Literal = string | number;
 
-export const read: Reader<Literal> = v => {
+export const read: Reader<Literal> = (v) => {
   if (typeof v === "number") {
     return NumberSpec.read(v);
   }
@@ -18,3 +18,5 @@ export const read: Reader<Literal> = v => {
 };
 
 export const eq: IsEqual<Literal> = (a, b) => a === b;
+
+export const is = (v: unknown): v is Literal => !!read(v);

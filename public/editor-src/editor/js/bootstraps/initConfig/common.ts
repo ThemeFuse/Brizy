@@ -4,6 +4,7 @@ import { mPipe } from "visual/utils/fp";
 import * as Json from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
+import { MValue } from "visual/utils/value";
 
 const reader = mPipe(Obj.readKey("data"), Str.read, Base64.decode, Json.read);
 
@@ -25,14 +26,10 @@ export const parsePageCommon = (page: unknown): PageCommon => {
 
 export const parseGlobalBlocks = (
   globalBlocks: unknown
-): Array<GlobalBlock> => {
-  const _blocks = Array.isArray(globalBlocks);
-
-  if (!_blocks) {
-    return [];
+): MValue<Array<GlobalBlock>> => {
+  if (Array.isArray(globalBlocks)) {
+    return globalBlocks
+      .map((b) => ({ ...b, data: reader(b) }))
+      .filter((b) => b.data);
   }
-
-  return globalBlocks
-    .map((b) => ({ ...b, data: reader(b) }))
-    .filter((b) => b.data);
 };

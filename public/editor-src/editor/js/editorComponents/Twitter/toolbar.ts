@@ -131,8 +131,7 @@ export function getItems({
   const disableAdvancedSettings = (): ToolbarItemType[] => [
     {
       id: "advancedSettings",
-      // @ts-expect-error old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     }
   ];
@@ -140,13 +139,10 @@ export function getItems({
   const enableAdvancedSettings = (): ToolbarItemType[] => [
     {
       id: "advancedSettings",
-      // @ts-expect-error old option
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       roles: ["admin"],
       position: 110,
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 

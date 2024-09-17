@@ -108,7 +108,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     },
     {
