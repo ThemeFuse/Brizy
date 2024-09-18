@@ -3,9 +3,14 @@ import {
   cssStyleBgGradient,
   cssStyleBorder,
   cssStyleBorderRadius,
+  cssStyleBorderRadiusType,
   cssStyleBoxShadow,
   cssStyleColor,
+  cssStyleCustomIconColor,
+  cssStyleElementMinistryBrandsButtonsBgColor,
+  cssStyleElementMinistryBrandsButtonsBgGradient,
   cssStyleFlexHorizontalAlign,
+  cssStyleHoverTransition,
   cssStyleIconMargin,
   cssStyleIconPosition,
   cssStyleSizeHeight,
@@ -652,7 +657,12 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgColor({
   device,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "subscribeToCalendarBg" });
+  return cssStyleElementMinistryBrandsButtonsBgColor({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendar"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradient({
@@ -660,7 +670,7 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradien
   device,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({
+  return cssStyleElementMinistryBrandsButtonsBgGradient({
     v,
     device,
     state,
@@ -703,6 +713,19 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarHeight({
   state
 }: CSSValue): string {
   return cssStyleSizeHeight({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendar"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBorderRadius({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBorderRadiusType({
     v,
     device,
     state,
@@ -786,4 +809,30 @@ export function cssStyleElementMinistryEventCalendarArrowSize({
   const arrowSizeSuffix = readString(dvv("arrowSizeSuffix")) ?? "px";
 
   return `font-size:${arrowSize}${arrowSizeSuffix};`;
+}
+
+export function cssStyleElementMinistryEventCalendarHoverTransition({
+  v,
+  device,
+  state
+}: CSSValue) {
+  return cssStyleHoverTransition({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendar"
+  });
+}
+
+export function cssStyleElementMinistryEventCalendarCustomIconColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state,
+    prefix: "subscribeToCalendarColor"
+  });
 }

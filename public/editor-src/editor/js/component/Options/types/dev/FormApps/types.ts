@@ -1,7 +1,7 @@
 import { FC } from "react";
 import * as Option from "visual/component/Options/Type";
 import { FormField } from "visual/component/Prompts/common/GlobalApps/type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 
 interface Config {
   id: string;

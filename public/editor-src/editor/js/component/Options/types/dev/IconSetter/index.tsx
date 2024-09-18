@@ -1,18 +1,18 @@
-import React from "react";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithConfig } from "visual/utils/options/attributes";
+import React, { ReactElement } from "react";
 import { IconSetter as IconSetterControl } from "visual/component/Controls/IconSetter";
-import { Value } from "./types/Value";
+import { Props as OptionProps } from "visual/component/Options/Type";
+import { WithConfig } from "visual/types/attributes";
 import { Config } from "./types/Config";
+import { Value } from "./types/Value";
 
 export interface Props extends OptionProps<Value>, WithConfig<Config> {}
 
-export const IconSetter: React.FC<Props> = ({
+export const IconSetter = ({
   config,
   onChange,
   value,
   label
-}) => {
+}: Props): ReactElement => {
   return (
     <>
       {label}

@@ -1,6 +1,7 @@
-import { Config } from "../config";
-import { Page } from "../types/Page";
-import { Project } from "../types/Project";
+import { Config } from "@/config";
+import { GlobalBlock } from "@/types/GlobalBlocks";
+import { Page } from "@/types/Page";
+import { Project } from "@/types/Project";
 import {
   CreatedSavedBlock,
   CreatedSavedLayout,
@@ -9,8 +10,10 @@ import {
   SavedBlock,
   SavedBlockMeta,
   SavedLayout
-} from "../types/SavedBlocks";
-import { t } from "../utils/i18n";
+} from "@/types/SavedBlocks";
+import { t } from "@/utils/i18n";
+import { isNullish } from "@/utils/isNullish";
+import { encode } from "js-base64";
 
 //#region Saved Blocks
 
@@ -178,16 +181,22 @@ export const parseSavedLayout = (
 
 //#region Project
 
-type APIProject = Omit<Project, "data" | "dataVersion"> & {
+type APIProject = Omit<Project, "data" | "dataVersion" | "compiled"> & {
   data: string;
   dataVersion: string;
+  compiled?: string;
 };
 
-export const stringifyProject = (project: Project): APIProject => ({
-  ...project,
-  data: JSON.stringify(project.data),
-  dataVersion: `${project.dataVersion}`
-});
+export const stringifyProject = (project: Project): APIProject => {
+  const { data, dataVersion, compiled, ..._project } = project;
+
+  return {
+    ..._project,
+    data: JSON.stringify(data),
+    dataVersion: `${dataVersion}`,
+    ...(compiled && { compiled: JSON.stringify(compiled) })
+  };
+};
 
 //#endregion
 
@@ -206,15 +215,69 @@ export type GetCollections = (
 
 //#region Page
 
-type APIPage = Omit<Page, "data" | "dataVersion"> & {
+type APIPage = Omit<Page, "data" | "dataVersion" | "compiled"> & {
   data: string;
   dataVersion: string;
+  compiled?: string;
 };
 
-export const stringifyPage = (page: Page): APIPage => ({
-  ...page,
-  data: JSON.stringify(page.data),
-  dataVersion: `${page.dataVersion}`
-});
+export const stringifyPage = (page: Page): APIPage => {
+  const { data, dataVersion, compiled: _compiled, ..._page } = page;
+  const compiled = _compiled
+    ? JSON.stringify({ ..._compiled, html: encode(_compiled.html) })
+    : undefined;
+
+  return {
+    ..._page,
+    data: JSON.stringify(data),
+    dataVersion: `${dataVersion}`,
+    compiled
+  };
+};
+
+//#endregion
+
+//#region Global Blocks
+
+interface APIGlobalBlock {
+  uid: string;
+  data: string;
+  status: string;
+  rules: string;
+  position: string | null;
+  meta: string;
+  title?: string;
+  tags?: string;
+  compiled?: string;
+}
+
+export const stringifyGlobalBlock = (
+  globalBlock: GlobalBlock
+): APIGlobalBlock => {
+  const data = JSON.stringify(globalBlock.data);
+  const meta = JSON.stringify(globalBlock.meta);
+  const rules = JSON.stringify(globalBlock.rules);
+  const position = isNullish(globalBlock.position)
+    ? null
+    : JSON.stringify(globalBlock.position);
+  const compiled = globalBlock.compiled
+    ? JSON.stringify({
+        ...globalBlock.compiled,
+        html: encode(globalBlock.compiled.html)
+      })
+    : undefined;
+
+  return {
+    data,
+    meta,
+    rules,
+    position,
+    compiled,
+    title: globalBlock.title,
+    tags: globalBlock.tags,
+    uid: globalBlock.uid,
+    status: globalBlock.status
+  };
+};
 
 //#endregion

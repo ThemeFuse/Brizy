@@ -20,6 +20,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
         "cssStyleTypography3FontVariation",
+        "cssStyleTypography3TextTransform",
         "cssStyleBorder",
         "cssStylePaddingFourFields"
       ]
@@ -32,6 +33,9 @@ export function style(v, vs, vd) {
     },
     ".brz && .brz-table__th .brz-icon-svg": {
       standart: ["cssStyleElementTableSpacing", "cssStyleSizeFontSizeIcon"]
+    },
+    ".brz && .brz-table__th--btn .brz-icon-svg-custom": {
+      standart: ["cssStyleCustomIconColor"]
     }
   };
 

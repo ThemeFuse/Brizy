@@ -1,13 +1,6 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import Radio, { RadioItem } from "visual/component/Controls/Radio";
-import Fixed from "visual/component/Prompts/Fixed";
-import { reducer } from "visual/component/Prompts/PromptPageArticle/reducer";
-import {
-  setBlog,
-  setLayout,
-  setTitle
-} from "visual/component/Prompts/PromptPageArticle/types/Setters";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import {
@@ -16,20 +9,32 @@ import {
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import Fixed from "visual/component/Prompts/Fixed";
+import { reducer } from "visual/component/Prompts/PromptPageArticle/reducer";
+import {
+  setBlog,
+  setLayout,
+  setTitle
+} from "visual/component/Prompts/PromptPageArticle/types/Setters";
 import {
   canSyncPage,
   getChoices,
-  getTabsByItemsNumber
+  getShopifyLayout,
+  getTabsByItemsNumber,
+  isShopifyLayout
 } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  ShopifyTemplate,
-  getShopifyTemplate
+  getShopifyTemplate,
+  ShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { updateError } from "visual/redux/actions";
-import { updatePageLayout, updatePageTitle } from "visual/redux/actions2";
+import {
+  updateError,
+  updatePageLayout,
+  updatePageTitle
+} from "visual/redux/actions2";
 import {
   getPageRelations,
   shopifyBlogItems,
@@ -42,7 +47,7 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { Tabs } from "../common/PromptPage/types";
+import { Layout, Tabs } from "../common/PromptPage/types";
 import { Props, Valid } from "./types";
 
 export const PromptPageArticle = (props: Props): ReactElement => {
@@ -167,10 +172,15 @@ export const PromptPageArticle = (props: Props): ReactElement => {
         const { items } = state.payload;
 
         switch (state.payload.activeTab) {
-          case Tabs.settings:
+          case Tabs.settings: {
             if (!items.length) {
               return <EmptyContentWithDefaults type={templateType} />;
             }
+
+            const hasShopifyLayout = !!getShopifyLayout(state.payload.layouts);
+            const isShopifyLayoutEnabled = isShopifyLayout(
+              state.payload.layout
+            );
 
             return (
               <Content
@@ -184,11 +194,15 @@ export const PromptPageArticle = (props: Props): ReactElement => {
                   onChange={(s): void => dispatchS(setTitle(s))}
                   placeholder={t("Page title")}
                 />
-                <HeaderFooterField
-                  value={state.payload.layout}
-                  layouts={state.payload.layouts}
-                  onChange={(v): void => dispatchS(setLayout(v))}
-                />
+                {hasShopifyLayout && (
+                  <HeaderFooterField
+                    value={isShopifyLayoutEnabled}
+                    onChange={(v): void => {
+                      const data = v ? Layout.Shopify : Layout.Default;
+                      dispatchS(setLayout(data));
+                    }}
+                  />
+                )}
                 <Radio
                   className="brz-ed-popup-integrations-option__radio"
                   defaultValue={state.payload.selected?.id}
@@ -204,6 +218,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
                 </Radio>
               </Content>
             );
+          }
         }
       }
     }

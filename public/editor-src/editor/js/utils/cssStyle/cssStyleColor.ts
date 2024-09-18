@@ -11,3 +11,14 @@ export function cssStyleLabelColor({ v, device, state }: CSSValue): string {
   const color = styleColor({ v, device, state, prefix: "labelColor" });
   return color === undefined ? "" : `color:${color};`;
 }
+
+export function cssStyleCustomIconColor({
+  v,
+  device,
+  state,
+  prefix = "color"
+}: CSSValue): string {
+  const color = styleColor({ v, device, state, prefix });
+
+  return color === undefined ? "" : `background-color:${color};`;
+}

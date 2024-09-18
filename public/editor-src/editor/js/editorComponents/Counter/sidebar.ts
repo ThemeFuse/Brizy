@@ -1,11 +1,12 @@
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { Value } from "./types";
 
 export const title = t("Counter");
 
-export function getItems(): ToolbarItemType[] {
+export const getItems: GetItems<Value> = () => {
   return [
     {
       id: "sidebarTabs",
@@ -64,22 +65,40 @@ export function getItems(): ToolbarItemType[] {
               ]
             },
             {
-              id: "padding",
-              type: "padding",
-              label: t("Padding"),
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
               devices: "responsive",
-              disabled: true
-            },
-            {
-              id: "bgPadding",
-              type: "padding",
-              label: t("Padding"),
-              devices: "responsive",
-              position: 50
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      disabled: true
+                    },
+                    {
+                      id: "bgPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      position: 50
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
       ]
     }
   ];
-}
+};

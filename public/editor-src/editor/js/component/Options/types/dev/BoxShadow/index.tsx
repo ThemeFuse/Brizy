@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import {
   BoxShadow as ShadowControl,
@@ -7,19 +7,10 @@ import {
 } from "visual/component/Controls/BoxShadow";
 import { TypeObject } from "visual/component/Controls/BoxShadow/types";
 import * as Option from "visual/component/Options/Type";
-import {
-  setBlur,
-  setHex,
-  setHorizontal,
-  setPalette,
-  setSpread,
-  setType,
-  setVertical
-} from "visual/component/Options/types/dev/BoxShadow/model";
-import { paletteHex } from "visual/component/Options/types/dev/ColorPicker/utils";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { getColorPaletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Blur from "visual/utils/cssProps/Blur";
@@ -29,8 +20,20 @@ import { Config } from "visual/utils/options/BoxShadow/entities/Config";
 import * as Type from "visual/utils/options/BoxShadow/entities/Type";
 import { Value } from "visual/utils/options/BoxShadow/entities/Value";
 import { Meta } from "visual/utils/options/BoxShadow/meta";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { _setOpacity, getTypesItems } from "./utils";
+import {
+  setBlur,
+  setHex,
+  setHorizontal,
+  setPalette,
+  setSpread,
+  setType,
+  setVertical
+} from "visual/utils/options/BoxShadow/model";
+import {
+  getTypesItems,
+  _setOpacity
+} from "visual/utils/options/BoxShadow/utils";
+import { paletteHex } from "visual/utils/options/ColorPicker/utils";
 
 export interface Props
   extends Option.Props<Value>,
@@ -38,12 +41,12 @@ export interface Props
     WithConfig<Config>,
     WithClassName {}
 
-export const BoxShadow: FC<Props> = ({
+export const BoxShadow = ({
   onChange,
   value,
   className,
   config
-}) => {
+}: Props): ReactElement => {
   const dispatch = useDispatch();
   const _className = classNames("brz-ed-option__boxShadow", className);
 

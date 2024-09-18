@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
+import { WithClassName, WithOnChange } from "visual/types/attributes";
 import { Props as TabProps } from "./Tab";
 
 export type Props<T> = WithClassName &

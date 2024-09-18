@@ -123,13 +123,13 @@
   }
 
   &__advanced {
-    padding-top: 15px;
-    color: $brand__primary;
+    padding: 14px 0 12px 12px;
+    color: $white;
     transition: color 0.2s linear;
     font-size: 0;
 
     &:hover {
-      color: #fff;
+      color: $brand__primary;
     }
 
     .brz-icon-svg {

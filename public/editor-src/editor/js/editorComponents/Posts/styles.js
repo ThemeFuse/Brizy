@@ -25,7 +25,8 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsFilterLineHeight",
         "cssStyleElementPostsFilterFontWeight",
         "cssStyleElementPostsFilterLetterSpacing",
-        "cssStyleElementPostsFilterFontVariation"
+        "cssStyleElementPostsFilterFontVariation",
+        "cssStyleElementPostsFilterTextTransform"
       ]
     },
     ".brz && .brz-posts__filter__item--style-1:hover": {
@@ -92,6 +93,7 @@ export function style(v, vs, vd) {
         "cssStyleElementPostsPaginationFontWeight",
         "cssStyleElementPostsPaginationLetterSpacing",
         "cssStyleElementPostsPaginationFontVariation",
+        "cssStyleElementPostsPaginationTextTransform",
         "cssStyleElementPostsPaginationBorderRadius"
       ]
     },

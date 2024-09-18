@@ -1,14 +1,14 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ToastNotification } from "visual/component/Notifications";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
   Props as ModelProps
 } from "visual/editorComponents/EditorComponent";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
 import { css } from "visual/utils/cssStyle";
@@ -17,6 +17,7 @@ import { EkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarDay from "./sidebarDay";
+import * as sidebarSubscribeToCalendar from "./sidebarSubscribeToCalendar";
 import { style } from "./styles";
 import * as toolbarArrow from "./toolbarArrow";
 import * as toolbarCell from "./toolbarCell";
@@ -24,6 +25,9 @@ import * as toolbarDay from "./toolbarDay";
 import * as toolbarEmpty from "./toolbarEmpty";
 import * as toolbarEventStartTime from "./toolbarEventStartTime";
 import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as toolbarMonth10 from "./toolbarMonths/toolbarMonth10";
+import * as toolbarMonth11 from "./toolbarMonths/toolbarMonth11";
+import * as toolbarMonth12 from "./toolbarMonths/toolbarMonth12";
 import * as toolbarMonth2 from "./toolbarMonths/toolbarMonth2";
 import * as toolbarMonth3 from "./toolbarMonths/toolbarMonth3";
 import * as toolbarMonth4 from "./toolbarMonths/toolbarMonth4";
@@ -32,9 +36,6 @@ import * as toolbarMonth6 from "./toolbarMonths/toolbarMonth6";
 import * as toolbarMonth7 from "./toolbarMonths/toolbarMonth7";
 import * as toolbarMonth8 from "./toolbarMonths/toolbarMonth8";
 import * as toolbarMonth9 from "./toolbarMonths/toolbarMonth9";
-import * as toolbarMonth10 from "./toolbarMonths/toolbarMonth10";
-import * as toolbarMonth11 from "./toolbarMonths/toolbarMonth11";
-import * as toolbarMonth12 from "./toolbarMonths/toolbarMonth12";
 import * as toolbarPagination from "./toolbarPagination";
 import * as toolbarSubscribeToCalendar from "./toolbarSubscribeToCalendar";
 import * as toolbarTitle from "./toolbarTitle";
@@ -79,7 +80,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
   }
 
   componentDidUpdate(prevProps: ModelProps<Value, Props>): void {
-    const { iconName, iconType } = this.getIconData();
+    const { iconName, iconType, iconFilename } = this.getIconData();
     const { iconName: prevIconName, iconType: prevIconType } =
       prevProps.dbValue;
 
@@ -87,26 +88,29 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
     const _prevIconType = Str.read(prevIconType);
 
     if (iconName !== _prevIconName || iconType !== _prevIconType) {
-      this.renderIcon({ iconName, iconType });
+      this.renderIcon({ iconName, iconType, iconFilename });
     }
   }
 
   getIconData() {
     const v = this.getValue();
-    const { iconName, iconType } = v;
+    const { iconName, iconType, iconFilename } = v;
 
     return {
       iconName: Str.read(iconName) ?? "",
-      iconType: Str.read(iconType) ?? ""
+      iconType: Str.read(iconType) ?? "",
+      iconFilename: Str.read(iconFilename) ?? ""
     };
   }
 
   renderIcon = ({
     iconName,
-    iconType
+    iconType,
+    iconFilename
   }: {
     iconName: string;
     iconType: string;
+    iconFilename: string;
   }) => {
     const iconContainer = this.calendarIcon.current?.querySelector(
       ".brz-eventCalendar__subscribe__icon"
@@ -116,15 +120,17 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
 
     const newIcon =
       iconName && iconType ? (
-        <ThemeIcon name={iconName} type={iconType} />
+        <ThemeIcon name={iconName} type={iconType} filename={iconFilename} />
       ) : (
         <></>
       );
-    ReactDOM.render(newIcon, iconContainer);
+
+    const root = createRoot(iconContainer);
+    root.render(newIcon);
   };
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { iconName, iconType } = this.getIconData();
+    const { iconName, iconType, iconFilename } = this.getIconData();
     const className = classnames(
       "brz-eventCalendar__wrapper",
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
@@ -306,7 +312,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                             <Toolbar
                                               {...this.makeToolbarPropsFromConfig2(
                                                 toolbarSubscribeToCalendar,
-                                                undefined,
+                                                sidebarSubscribeToCalendar,
                                                 {
                                                   allowExtend: false
                                                 }
@@ -333,7 +339,8 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                                   onSuccess={() =>
                                                     this.renderIcon({
                                                       iconName,
-                                                      iconType
+                                                      iconType,
+                                                      iconFilename
                                                     })
                                                   }
                                                 />

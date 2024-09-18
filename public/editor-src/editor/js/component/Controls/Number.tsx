@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Number from "visual/component/Controls/AutoCorrectingInput";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithSize } from "visual/utils/options/attributes";
+import { WithClassName, WithSize } from "visual/types/attributes";
 
 type Action = "increase" | "decrease" | "none";
 
@@ -14,7 +14,7 @@ export interface Props extends WithClassName, WithSize {
   spinner: boolean;
 }
 
-export const NumberComponent: FC<Props> = ({
+export const NumberComponent = ({
   value,
   onChange,
   className,
@@ -22,7 +22,7 @@ export const NumberComponent: FC<Props> = ({
   spinner = true,
   onIncrease,
   onDecrease
-}) => {
+}: Props): JSX.Element => {
   const ref = useRef<NodeJS.Timeout>();
   const [action, setAction] = useState<Action>("none");
   const baseClass = "brz-ed-control__number";

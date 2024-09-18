@@ -1,3 +1,6 @@
+import { checkValue2 } from "visual/utils/checkValue";
+import type { MValue } from "visual/utils/value";
+
 export enum ElementTypes {
   Text = "Text",
   Image = "Image",
@@ -5,6 +8,8 @@ export enum ElementTypes {
   Icon = "Icon",
   Spacer = "Spacer",
   Map = "Map",
+  FormField = "FormField",
+  FormFields = "FormFields",
   Form2 = "Form2",
   Line = "Line",
   Menu = "Menu",
@@ -74,7 +79,12 @@ export enum ElementTypes {
   MinistryBrandsEventDetail = "MinistryBrandsEventDetail",
   MinistryBrandsFormWidget = "MinistryBrandsFormWidget",
   MinistryBrandsPrayerWidget = "MinistryBrandsPrayerWidget",
+  MinistryBrandsArticleDetail = "MinistryBrandsArticleDetail",
+  MinistryBrandsArticleList = "MinistryBrandsArticleList",
+  MinistryBrandsStaffDetail = "MinistryBrandsStaffDetail",
+  MinistryBrandsArticleFeatured = "MinistryBrandsArticleFeatured",
   Leadific = "Leadific",
+  StoryItem = "StoryItem",
   StoryButton = "StoryButton",
   StoryIcon = "StoryIcon",
   StoryEmbed = "StoryEmbed",
@@ -134,5 +144,34 @@ export enum ElementTypes {
   EcwidProduct = "EcwidProduct",
   Breadcrumbs = "Breadcrumbs",
   Radio = "Radio",
-  Checkbox = "Checkbox"
+  Section = "Section",
+  SectionItem = "SectionItem",
+  SectionMegaMenu = "SectionMegaMenu",
+  SectionPopup2 = "SectionPopup2",
+  SectionPopup = "SectionPopup",
+  SectionHeaderItem = "SectionHeaderItem",
+  SectionHeaderStickyItem = "SectionHeaderStickyItem",
+  SectionFooter = "SectionFooter",
+  Checkbox = "Checkbox",
+  TableOfContents = "TableOfContents",
+  Flipbox = "Flipbox",
+  FlipboxItems = "Flipbox.Items",
+  FlipboxItem = "FlipboxItem",
+  FlipboxItemItems = "FlipboxItem.Items",
+  ShareButton = "ShareButton",
+  ShareButtonItem = "ShareButtonItem",
+  ShareButtonItemItems = "ShareButton.Items",
+  Paypal = "Paypal",
+  Form2Steps = "Form2Steps",
+  Form2StepsItems = "Form2Steps.Items",
+  Form2Step = "Form2Step",
+  VideoPlaylistItem = "VideoPlaylistItem",
+  Form2FieldOption = "Form2FieldOption",
+  Form2Field = "Form2Field",
+  Select = "Select",
+  Hidden = "Hidden",
+  Form2FieldItems = "Form2FieldItems"
 }
+
+export const readElementType = (v: unknown): MValue<ElementTypes> =>
+  checkValue2<ElementTypes>(ElementTypes)(v);

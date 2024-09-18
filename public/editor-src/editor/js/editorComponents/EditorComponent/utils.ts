@@ -8,17 +8,16 @@ import {
 } from "visual/component/Elements/Types";
 import { FromElementModelGetter } from "visual/component/Options/Type";
 import { OptionName, OptionValue } from "visual/component/Options/types";
-import { fromElementModel } from "visual/component/Options/types/utils/fromElementModel";
-import { toElementModel } from "visual/component/Options/types/utils/toElementModel";
-import { isOption } from "visual/component/Options/utils";
 import {
+  GetElementModelKeyFn,
   ParsedToolbarData,
   ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import {
+  hasId,
+  is as isToolbarItemType,
   OptionDefinition,
-  ToolbarItemType,
-  is as isToolbarItemType
+  ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import Shortcodes from "visual/shortcodeComponents";
 import { DeviceMode, UserRole } from "visual/types";
@@ -27,8 +26,8 @@ import * as Device from "visual/utils/devices";
 import {
   ALL,
   DESKTOP as DesktopDevice,
-  RESPONSIVE,
   getDevice,
+  RESPONSIVE,
   supportsMode
 } from "visual/utils/devices";
 import { IS_PRO } from "visual/utils/env";
@@ -37,8 +36,14 @@ import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { defaultValueKey2 } from "visual/utils/onChange/device";
 import { filter } from "visual/utils/options/filter";
 import { hasChilds } from "visual/utils/options/match";
-import { getChildOptions } from "visual/utils/options/match/utils";
+import {
+  getChildOptions,
+  isPopulationWithOption
+} from "visual/utils/options/match/utils";
 import { reduce } from "visual/utils/options/reduce";
+import { isOption } from "visual/utils/options/utils";
+import { fromElementModel } from "visual/utils/options/utils/fromElementModel";
+import { toElementModel } from "visual/utils/options/utils/toElementModel";
 import * as Obj from "visual/utils/reader/object";
 import * as Responsive from "visual/utils/responsiveMode";
 import {
@@ -50,8 +55,7 @@ import {
 import { camelCase } from "visual/utils/string";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Literal from "visual/utils/types/Literal";
-import { isT } from "visual/utils/value";
-import { isNullish } from "visual/utils/value";
+import { isNullish, isT } from "visual/utils/value";
 
 /**
  * Create an complete option id that consists from 2 parts: base id and suffix
@@ -249,6 +253,8 @@ export const filterOptions = (
 export const filterProOptions = (isPro: boolean) =>
   filter((item) => !(item.isPro === true && isPro === false));
 
+const checkIsToolbarItem = isToolbarItemType(hasId);
+
 // INFO: we don't use options "filter" function because this returns popover with filtered options inside
 export const filterCSSOptions = (
   options: ToolbarItemType[]
@@ -262,14 +268,16 @@ export const filterCSSOptions = (
           return opt;
         }
 
-        const isToolbarItem = isToolbarItemType(
-          (o) => Obj.isObject(o) && Obj.hasKey("id", o)
-        )(opt);
+        const isToolbarItem = checkIsToolbarItem(opt);
 
         if (isToolbarItem && hasChilds(opt)) {
           const childOptions = getChildOptions(opt);
 
           return filterCSSOptions(childOptions);
+        }
+
+        if (isPopulationWithOption(o)) {
+          return filterCSSOptions([o.option]);
         }
       }
     })
@@ -454,3 +462,23 @@ export function getOptionValueByDevice({
     );
   }
 }
+
+export const getElementModelKeyFn: GetElementModelKeyFn =
+  ({ device, state, option }) =>
+  (key: string) => {
+    const { id, type, preserveId } = option;
+
+    const isDev = inDevelopment(type);
+
+    if (id === "tabsState" || !isDev) {
+      return id;
+    }
+
+    const device_ = preserveId === true ? DESKTOP : device;
+
+    return defaultValueKey({
+      key: createOptionId(id, key),
+      device: device_,
+      state
+    });
+  };

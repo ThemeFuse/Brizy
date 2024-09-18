@@ -1,10 +1,13 @@
+import { produce } from "immer";
 import { ThunkAction } from "redux-thunk";
 import { mergeDeep } from "timm";
 import _ from "underscore";
+import { Layout } from "visual/component/Prompts/common/PromptPage/types";
 import { PublishData } from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector } from "visual/redux/selectors";
 import {
   ActiveElement,
+  AdobeFont,
   Authorized,
   Block,
   DeviceMode,
@@ -14,6 +17,7 @@ import {
   GlobalBlockNormal,
   GlobalBlockPopup,
   GoogleFont,
+  Screenshot,
   ShopifyPage,
   Style,
   SystemFont,
@@ -29,10 +33,15 @@ type SyncAllowed = ReduxState["syncAllowed"];
 
 type RFonts = ReduxState["fonts"];
 
+type Error = ReduxState["error"];
+
+type CopyElementPayload = ReduxState["copiedElement"];
+
 type StrictFonts = Required<RFonts>;
 export type FontKeyTypes = keyof StrictFonts;
 
 type FontPayload<T extends FontKeyTypes> = {
+  id?: string;
   type: T;
   fonts: ArrayType<StrictFonts[T]["data"]>[];
 };
@@ -47,7 +56,7 @@ export type ActionHydrate = {
     project: ReduxState["project"];
     projectStatus: {
       locked: boolean;
-      lockedBy: boolean | string;
+      lockedBy: boolean | { user_email: string };
     };
     globalBlocks: ReduxState["globalBlocks"];
     fonts: RFonts;
@@ -82,7 +91,7 @@ export type ActionMakeGlobalBlockToBlock = {
 export type ActionUpdateGlobalBlock = {
   type: "UPDATE_GLOBAL_BLOCK";
   payload: {
-    id: string;
+    uid: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: any;
     title?: string;
@@ -157,6 +166,11 @@ export type ActionDisabledElements = {
   payload: string[];
 };
 
+export type ActionPinnedElements = {
+  type: ActionTypes.UPDATE_PINNED_ELEMENTS;
+  payload: string[];
+};
+
 export const UPDATE_CURRENT_KIT_ID = "UPDATE_CURRENT_KIT_ID";
 
 export type ActionUpdateKitId = {
@@ -213,7 +227,7 @@ export type ActionAddBlock = {
 };
 
 export type ActionRemoveBlock = {
-  type: "REMOVE_BLOCK";
+  type: ActionTypes.REMOVE_BLOCK;
   payload: {
     index: number;
     id: string;
@@ -221,7 +235,7 @@ export type ActionRemoveBlock = {
 };
 
 export type ActionRemoveBlocks = {
-  type: "REMOVE_BLOCKS";
+  type: ActionTypes.REMOVE_BLOCKS;
 };
 
 export type ActionUpdateGBRules = {
@@ -263,10 +277,15 @@ export type ReduxAction =
   | ActionUpdatePageStatus
   | ActionUpdateKitId
   | ActionDisabledElements
+  | ActionPinnedElements
   | ActionUpdatePageLayout
   | ActionUpdateIsHomePage
   | ActionFetchPageSuccess
   | ActionUpdateExtraFontStyles
+  | ActionUpdateCurrentStyle
+  | ActionCopyElement
+  | ActionUpdateError
+  | ActionUpdateScreenshot
   | ActionImportTemplate
   | ActionImportKit
   | ActionImportStory
@@ -286,7 +305,11 @@ export type ReduxAction =
   | ActionStoreWasChanged
   | ActionUpdatePageTitle
   | AddNewGlobalStyle
-  | UpdateCurrentStyleId;
+  | RemoveGlobalStyle
+  | EditGlobalStyleName
+  | UpdateCurrentStyleId
+  | RegenerateColors
+  | RegenerateTypography;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";
@@ -332,7 +355,7 @@ export type ActionUpdatePageStatus = {
 export type ActionUpdatePageLayout = {
   type: "UPDATE_PAGE_LAYOUT";
   payload: {
-    layout: ShopifyPage["layout"]["id"];
+    layout: ShopifyPage["layout"]["value"];
   };
 };
 
@@ -354,6 +377,33 @@ export const UPDATE_EXTRA_FONT_STYLES = "UPDATE_EXTRA_FONT_STYLES";
 export type ActionUpdateExtraFontStyles = {
   type: typeof UPDATE_EXTRA_FONT_STYLES;
   payload: ReduxState["extraFontStyles"];
+};
+
+export type ActionUpdateCurrentStyle = {
+  type: ActionTypes.UPDATE_CURRENT_STYLE;
+  payload: ReduxState["currentStyle"];
+};
+
+export type ActionCopyElement = {
+  type: ActionTypes.COPY_ELEMENT;
+  value: ReduxState["copiedElement"];
+};
+
+export type ActionUpdateError = {
+  type: ActionTypes.UPDATE_ERROR;
+  payload: ReduxState["error"];
+};
+
+export type ActionUpdateScreenshot = {
+  type: ActionTypes.UPDATE_SCREENSHOT;
+  payload: {
+    blockId: string;
+    data: Screenshot;
+  };
+  meta?: {
+    blockType?: "normal" | "global" | "popup";
+    action?: "create" | "update";
+  };
 };
 
 /// action creators
@@ -428,13 +478,13 @@ export function makeGlobalBlockToPopup({
 }
 
 export function updateGlobalBlock({
-  id,
+  uid,
   data,
   title,
   tags,
   meta
 }: {
-  id: string;
+  uid: string;
   data: GlobalBlock["data"];
   title?: string;
   tags?: string;
@@ -445,7 +495,7 @@ export function updateGlobalBlock({
 }): ActionUpdateGlobalBlock {
   return {
     type: "UPDATE_GLOBAL_BLOCK",
-    payload: { id, data, title, tags },
+    payload: { uid, data, title, tags },
     meta: {
       is_autosave: 1,
       ...meta
@@ -471,6 +521,13 @@ export const updateDisabledElements = (
   };
 };
 
+export const updatePinnedElements = (
+  payload: string[]
+): ActionPinnedElements => ({
+  type: ActionTypes.UPDATE_PINNED_ELEMENTS,
+  payload
+});
+
 type ThunkAddFonts = (
   a: FontsPayload
 ) => ThunkAction<void, ReduxState, unknown, ActionAddFonts>;
@@ -480,12 +537,12 @@ export const addFonts: ThunkAddFonts =
   (dispatch, getState): ActionAddFonts => {
     const usedFonts = fontsSelector(getState());
     const newFonts = addedFonts.reduce((acc, curr) => {
-      const { type, fonts } = curr;
+      const { id, type, fonts } = curr;
 
       // current version of tsc (3.7.3) does not allow
       // calling map on (GoogleFont[] | UploadFont[])
       // but does on (GoogleFont | UploadedFont)[]
-      const fontData: (GoogleFont | UploadedFont | SystemFont)[] =
+      const fontData: (GoogleFont | UploadedFont | AdobeFont | SystemFont)[] =
         usedFonts[type]?.data || [];
 
       // Separated Deleted Font with Normal Font
@@ -497,10 +554,13 @@ export const addFonts: ThunkAddFonts =
         brizyId: uuid()
       }));
 
+      const _id = id ? { id } : {};
+
       // Make new Data, check deleted Font
       return {
         ...acc,
         [type]: {
+          ..._id,
           data: fontData
             .map(
               (font) =>
@@ -526,7 +586,11 @@ export const deleteFont: ThunkDeleteFonts =
   (payload) =>
   (dispatch, getState): ActionDeleteFont => {
     const { type, fonts: removedFonts } = payload;
-    const fonts = fontsSelector(getState());
+    const fonts = produce(fontsSelector(getState()), (draft) => {
+      if (type === "adobe") {
+        delete draft["adobe"];
+      }
+    });
     const fontData: Font[] = (fonts[type] && fonts[type]?.data) || [];
 
     const dataFonts = {
@@ -627,7 +691,7 @@ export const updatePageStatus: ThunkPublishPage =
     });
   };
 
-export const updatePageLayout = (layout: string): ActionUpdatePageLayout => {
+export const updatePageLayout = (layout: Layout): ActionUpdatePageLayout => {
   return {
     type: "UPDATE_PAGE_LAYOUT",
     payload: { layout }
@@ -708,7 +772,7 @@ export function removeBlock({
   id: string;
 }): ActionRemoveBlock {
   return {
-    type: "REMOVE_BLOCK",
+    type: ActionTypes.REMOVE_BLOCK,
     payload: {
       index,
       id
@@ -718,7 +782,7 @@ export function removeBlock({
 
 export function removeBlocks(): ActionRemoveBlocks {
   return {
-    type: "REMOVE_BLOCKS"
+    type: ActionTypes.REMOVE_BLOCKS
   };
 }
 
@@ -782,15 +846,25 @@ export const updatePageIsHomePage = (
   };
 };
 
-// region Add New Global Style
+//#region Add New Global Style
 
 export enum ActionTypes {
   "ADD_NEW_GLOBAL_STYLE" = "ADD_NEW_GLOBAL_STYLE",
+  "EDIT_GLOBAL_STYLE_NAME" = "EDIT_GLOBAL_STYLE_NAME",
+  "REMOVE_GLOBAL_STYLE" = "REMOVE_GLOBAL_STYLE",
   "IMPORT_KIT" = "IMPORT_KIT",
   "IMPORT_STORY" = "IMPORT_STORY",
   "IMPORT_TEMPLATE" = "IMPORT_TEMPLATE",
   "UPDATE_CURRENT_STYLE_ID" = "UPDATE_CURRENT_STYLE_ID",
-  "UPDATE_CURRENT_STYLE" = "UPDATE_CURRENT_STYLE"
+  "UPDATE_CURRENT_STYLE" = "UPDATE_CURRENT_STYLE",
+  "COPY_ELEMENT" = "COPY_ELEMENT",
+  "UPDATE_ERROR" = "UPDATE_ERROR",
+  "UPDATE_SCREENSHOT" = "UPDATE_SCREENSHOT",
+  "REMOVE_BLOCK" = "REMOVE_BLOCK",
+  "REMOVE_BLOCKS" = "REMOVE_BLOCKS",
+  "UPDATE_PINNED_ELEMENTS" = "UPDATE_PINNED_ELEMENTS",
+  "REGENERATE_COLORS" = "REGENERATE_COLORS",
+  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY"
 }
 
 // templates
@@ -822,7 +896,7 @@ export const importTemplate = (
   payload: template
 });
 
-export const updateCurrentStyle = (currentStyle: string) => ({
+export const updateCurrentStyle = (currentStyle: Style) => ({
   type: ActionTypes.UPDATE_CURRENT_STYLE,
   payload: currentStyle
 });
@@ -876,13 +950,55 @@ export const importKit = (payload: Kit): ActionImportKit => ({
   payload
 });
 
+export interface RegenerateColors {
+  type: ActionTypes.REGENERATE_COLORS;
+  payload: Style;
+}
+
+export const getRegenerateColors = (payload: Style): RegenerateColors => ({
+  type: ActionTypes.REGENERATE_COLORS,
+  payload
+});
+
+export interface RegenerateTypography {
+  type: ActionTypes.REGENERATE_TYPOGRAPHY;
+  payload: Style;
+}
+
+export const getRegenerateTypography = (
+  payload: Style
+): RegenerateTypography => ({
+  type: ActionTypes.REGENERATE_TYPOGRAPHY,
+  payload
+});
+
 export type AddNewGlobalStyle = {
   type: ActionTypes.ADD_NEW_GLOBAL_STYLE;
   payload: Style;
 };
 
+export type EditGlobalStyleName = {
+  type: ActionTypes.EDIT_GLOBAL_STYLE_NAME;
+  payload: string;
+};
+
 export const addNewGlobalStyle = (payload: Style): AddNewGlobalStyle => ({
   type: ActionTypes.ADD_NEW_GLOBAL_STYLE,
+  payload
+});
+
+export const editGlobalStyleName = (payload: string): EditGlobalStyleName => ({
+  type: ActionTypes.EDIT_GLOBAL_STYLE_NAME,
+  payload
+});
+
+export type RemoveGlobalStyle = {
+  type: ActionTypes.REMOVE_GLOBAL_STYLE;
+  payload: string;
+};
+
+export const removeGlobalStyle = (payload: string): RemoveGlobalStyle => ({
+  type: ActionTypes.REMOVE_GLOBAL_STYLE,
   payload
 });
 
@@ -898,4 +1014,47 @@ export const updateCurrentStyleId = (
   payload
 });
 
-// endregion
+//#endregion
+
+// copy
+
+export function updateCopiedElement(
+  value: CopyElementPayload
+): ActionCopyElement {
+  return {
+    type: ActionTypes.COPY_ELEMENT,
+    value
+  };
+}
+
+// error
+
+export function updateError(data: Error): ActionUpdateError {
+  return {
+    type: ActionTypes.UPDATE_ERROR,
+    payload: data
+  };
+}
+
+// screenshots
+
+interface ScreenshotPayload {
+  blockId: string;
+  data: Screenshot;
+  meta?: ActionUpdateScreenshot["meta"];
+}
+
+export function updateScreenshot({
+  blockId,
+  data,
+  meta
+}: ScreenshotPayload): ActionUpdateScreenshot {
+  return {
+    type: ActionTypes.UPDATE_SCREENSHOT,
+    payload: {
+      blockId,
+      data
+    },
+    meta
+  };
+}

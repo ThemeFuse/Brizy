@@ -1,55 +1,25 @@
-import React, { FC, ReactElement } from "react";
+import React from "react";
 import classNames from "classnames";
-import { NonEmptyArray } from "visual/utils/array/types";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import { Toggle as Control } from "visual/component/Controls/Toggle";
+import { Props } from "visual/component/Controls/Toggle/types";
 import { Literal } from "visual/utils/types/Literal";
-import { IconToggle } from "visual/component/Controls/IconToggle";
-import {
-  IconToggleItem,
-  Props as ItemProps
-} from "visual/component/Controls/IconToggle/IconToggleItem";
-import { SimpleValue } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
 
-type Choice = {
-  icon: string;
-  title: string;
-  value: Literal;
-};
-
-export type Props = OptionProps<SimpleValue<Literal>> &
-  WithClassName & {
-    choices: Choice[];
-  };
-
-export const Toggle: FC<Props> = ({
+export const Toggle = <T extends Literal>({
   className,
   choices,
-  value: { value },
+  value,
   onChange,
   label
-}) => {
+}: Props<T>): JSX.Element => {
   const _className = classNames("brz-ed-option__toggle", className);
 
-  return choices.length ? (
-    <>
-      {label}
-      <IconToggle<Literal>
-        value={value}
-        onChange={(value): void => onChange({ value })}
-        className={_className}
-      >
-        {
-          choices.map(({ icon, value, title }, i) => (
-            <IconToggleItem<Literal>
-              key={i}
-              value={value}
-              icon={icon}
-              title={title}
-            />
-          )) as NonEmptyArray<ReactElement<ItemProps<Literal>>>
-        }
-      </IconToggle>
-    </>
-  ) : null;
+  return (
+    <Control<T>
+      choices={choices}
+      value={value}
+      onChange={onChange}
+      className={_className}
+      label={label}
+    />
+  );
 };

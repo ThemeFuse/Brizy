@@ -1,10 +1,10 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import Form2FieldsItems from "./Items";
+import { FormFields } from "./Components/FormFields";
 import defaultValue from "./defaultValue.json";
+import Form2FieldsItems from "./Items";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendLabel from "./sidebarExtendLabel";
 import * as sidebarExtendSelect from "./sidebarExtendSelect";
@@ -12,16 +12,7 @@ import { styleFormFields, styleFormSelect } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendLabel from "./toolbarExtendLabel";
 import * as toolbarExtendSelect from "./toolbarExtendSelect";
-
-export interface Value extends ElementModel {
-  labelType: string;
-  placeholder: string;
-}
-
-interface Props {
-  labelType: string;
-  placeholder: string;
-}
+import type { Props, Value } from "./types";
 
 class Form2Fields extends EditorComponent<Value, Props> {
   static get componentId(): "Form2Fields" {
@@ -30,8 +21,9 @@ class Form2Fields extends EditorComponent<Value, Props> {
 
   static defaultValue = defaultValue;
 
-  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { labelType, placeholder } = this.props;
+  renderForEdit(v: Value, vs: Value, vd: Value): React.JSX.Element {
+    const { labelType, placeholder, multistep, active } = this.props;
+
     const className = classnames(
       css(
         `${this.getComponentId()}-fields`,
@@ -46,6 +38,22 @@ class Form2Fields extends EditorComponent<Value, Props> {
         styleFormSelect(v, vs, vd)
       )
     );
+
+    const toolbarProps = {
+      toolbarExtendLabel: this.makeToolbarPropsFromConfig2(
+        // @ts-expect-error: need to transform in .ts
+        toolbarExtendLabel,
+        sidebarExtendLabel,
+        { allowExtend: false }
+      ),
+      toolbarExtendSelect: this.makeToolbarPropsFromConfig2(
+        // @ts-expect-error: need to transform in .ts
+        toolbarExtendSelect,
+        sidebarExtendSelect,
+        { allowExtend: false }
+      )
+    };
+
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       toolbarExtend: this.makeToolbarPropsFromConfig2(
@@ -58,23 +66,22 @@ class Form2Fields extends EditorComponent<Value, Props> {
         placeholder,
         className,
         selectClassName,
-        toolbarExtendLabel: this.makeToolbarPropsFromConfig2(
-          // @ts-expect-error: need to transform in .ts
-          toolbarExtendLabel,
-          sidebarExtendLabel,
-          { allowExtend: false }
-        ),
-        toolbarExtendSelect: this.makeToolbarPropsFromConfig2(
-          // @ts-expect-error: need to transform in .ts
-          toolbarExtendSelect,
-          sidebarExtendSelect,
-          { allowExtend: false }
-        )
+        ...toolbarProps
       }
     });
 
-    // @ts-expect-error: need review when EditorArrayComponent converted to TS
-    return <Form2FieldsItems {...itemsProps} />;
+    // @ts-expect-error: EditorArrayComponent is still in .js
+    const items = <Form2FieldsItems {...itemsProps} />;
+
+    if (multistep === "on") {
+      return (
+        <FormFields style={{ display: active ? "block" : "none" }}>
+          {items}
+        </FormFields>
+      );
+    }
+
+    return items;
   }
 }
 

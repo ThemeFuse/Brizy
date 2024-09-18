@@ -184,23 +184,18 @@ export function style(
       },
     ".brz && .brz-ministryBrands__item--meta--button:hover": {
       standart: [
+        "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsTypography",
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder"
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
-    ".brz && .brz-ministryBrands__item--meta--button a:hover": {
-      standart: ["cssStyleElementMinistryBrandsButtonsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+    ".brz && .brz-ministryBrands__item--meta--button a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
     }
   };
 

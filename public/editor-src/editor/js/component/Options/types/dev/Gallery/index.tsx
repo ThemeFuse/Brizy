@@ -5,7 +5,8 @@ import React, {
   useCallback,
   useEffect,
   useReducer,
-  useRef
+  useRef,
+  useState
 } from "react";
 import { BehaviorSubject, from, of } from "rxjs";
 import {
@@ -16,7 +17,10 @@ import {
   mergeMap,
   withLatestFrom
 } from "rxjs/operators";
-import { Gallery as Control } from "visual/component/Controls/Gallery";
+import {
+  Gallery as Control,
+  Props as ControlProps
+} from "visual/component/Controls/Gallery";
 import { ToastNotification } from "visual/component/Notifications";
 import * as Option from "visual/component/Options/Type";
 import Config from "visual/global/Config";
@@ -24,11 +28,15 @@ import { AddImageData } from "visual/global/Config/types/configs/common";
 import * as Arr from "visual/utils/array";
 import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
+import {
+  allowedExtensions,
+  toInitialStructure,
+  toUploadData
+} from "visual/utils/options/Gallery/utils";
 import { reducer } from "./reducer";
 import * as Actions from "./types/Actions";
 import * as Image from "./types/Image";
 import * as Item from "./types/Item";
-import { allowedExtensions, toInitialStructure, toUploadData } from "./utils";
 
 export type Value<I extends Image.Image> = Array<Image.Image | I>;
 type Items = Item.Item<number>[];
@@ -45,6 +53,7 @@ export function Gallery<I extends Image.Image>({
   onChange,
   config
 }: Props<I>): ReactElement<Props<I>> {
+  const [isLoading, setIsLoading] = useState(false);
   const [items, dispatch] = useReducer<Reducer<Items, Actions.Actions>>(
     reducer,
     value.map((payload, i) => {
@@ -58,7 +67,7 @@ export function Gallery<I extends Image.Image>({
   const handleOnChange = useRef({ fn: onChange });
   handleOnChange.current.fn = onChange;
 
-  const onRemove = useCallback(
+  const onRemove = useCallback<Required<ControlProps<number>>["onRemove"]>(
     (payload) => dispatch(Actions.remove(payload)),
     []
   );
@@ -77,11 +86,14 @@ export function Gallery<I extends Image.Image>({
     const { media } = config.api ?? {};
 
     if (media?.addMediaGallery) {
+      setIsLoading(true);
       const res = (data: Array<AddImageData>) => {
         pipe(Actions.add, dispatch)(data.map(toUploadData));
+        setIsLoading(false);
       };
       const rej = (t: string): void => {
         ToastNotification.error(t);
+        setIsLoading(false);
       };
 
       media.addMediaGallery.handler(res, rej, {
@@ -151,6 +163,7 @@ export function Gallery<I extends Image.Image>({
       <Control<number>
         className={className}
         onSort={onSort}
+        isLoading={isLoading}
         onAdd={onAdd}
         items={items.map(Item.toGalleryItem)}
         onRemove={_onRemove}

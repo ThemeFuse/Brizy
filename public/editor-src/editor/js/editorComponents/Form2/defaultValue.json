@@ -13,7 +13,10 @@
     "items": [],
 
     "offsetX": 0,
-    "offsetY": 0
+    "offsetY": 0,
+
+    "multistep": "off",
+    "viewType": "icon"
   },
   "style": {
     "horizontalAlign": "left",

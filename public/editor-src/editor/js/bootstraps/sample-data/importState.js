@@ -1,11 +1,11 @@
-import produce from "immer";
+import { produce } from "immer";
 
 export default function importState(
   data,
   state,
   options = { page: true, project: true, globalBlocks: true }
 ) {
-  return produce(data, draft => {
+  return produce(data, (draft) => {
     if (options.page) {
       draft.page.data = state.page.data;
     }

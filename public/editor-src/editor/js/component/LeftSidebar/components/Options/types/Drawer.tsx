@@ -29,14 +29,14 @@ type DrawerWrapperProps = DrawerProps &
     iconProps: unknown;
   };
 
-const _Drawer: React.FC<DrawerProps> = ({
+const _Drawer = ({
   drawerContentType,
   drawerTitle = "",
   withHelpIcon,
   drawerComponent: DrawerContent,
   wrapperHeaderComponent: WrapperHeaderComponent = ({ children }) => children,
   id
-}) => {
+}: DrawerProps): JSX.Element | null => {
   const prevContentTypeRef = useRef(drawerContentType);
   useEffect(() => {
     prevContentTypeRef.current = drawerContentType;
@@ -72,7 +72,7 @@ const _Drawer: React.FC<DrawerProps> = ({
 
 const Drawer = React.memo(_Drawer);
 
-const DrawerWrapper: React.FC<DrawerWrapperProps> = ({ ...props }) => {
+const DrawerWrapper = ({ ...props }: DrawerWrapperProps) => {
   const {
     id,
     deviceMode,
@@ -99,10 +99,10 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({ ...props }) => {
     typeof iconProps === "object"
       ? iconProps
       : typeof iconProps === "function"
-      ? iconProps({
-          activeClass: "brz-ed-sidebar__control__item--active"
-        })
-      : {};
+        ? iconProps({
+            activeClass: "brz-ed-sidebar__control__item--active"
+          })
+        : {};
 
   const handleDrawerContentTypeChange = useCallback(() => {
     onDrawerContentTypeChange(id, true);

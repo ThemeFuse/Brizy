@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, ReactElement } from "react";
-import { WithValue } from "visual/utils/options/attributes";
+import { WithValue } from "visual/types/attributes";
 
 export type Props<T> = PropsWithChildren<
   WithValue<T> & {

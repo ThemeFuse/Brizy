@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { DeviceMode } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
+import { OutputOptionStyle } from "visual/utils/cssStyle/types";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -10,19 +10,12 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { Value } from "./index";
+import { Value } from "./type";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { Str } from "@brizy/readers";
 
-export function getItems({
-  v,
-  device,
-  context
-}: {
-  v: Value;
-  device: DeviceMode;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, context }) => {
+  const { hoverName } = v;
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state: "normal" });
 
@@ -37,6 +30,13 @@ export function getItems({
   });
 
   const IS_STORY = isStory(Config.getAll());
+
+  const hoverSelector =
+    hoverName === "none" ? ".brz-map_styles" : ` .brz-ui-ed-map-content`;
+
+  const hasElementPosition = ["fixed", "absolute"].includes(
+    Str.read(dvv("elementPosition")) ?? ""
+  );
 
   return [
     {
@@ -109,6 +109,7 @@ export function getItems({
                 {
                   id: "",
                   type: "backgroundColor",
+                  selector: "{{WRAPPER}}:hover .brz-ui-ed-iframe",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -121,6 +122,7 @@ export function getItems({
                   id: "border",
                   type: "border",
                   devices: "desktop",
+                  selector: `{{WRAPPER}}:hover${hoverSelector}:before`,
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -133,6 +135,7 @@ export function getItems({
                   id: "boxShadow",
                   type: "boxShadow",
                   devices: "desktop",
+                  selector: "{{WRAPPER}}:hover .brz-ui-ed-map-content",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -163,6 +166,13 @@ export function getItems({
               { value: "px", title: "px" },
               { value: "%", title: "%" }
             ]
+          },
+          style: ({ value }) => {
+            return {
+              "{{WRAPPER}}.brz-map": {
+                width: `${value.value}${value.unit || "%"}`
+              }
+            };
           }
         },
         {
@@ -171,11 +181,48 @@ export function getItems({
           type: "slider",
           config: {
             min: 5,
-            max: dvv("heightSuffix") === "%" ? 100 : 500,
+            max: dvv("heightSuffix") === "%" ? 100 : 999,
             units: [
               { value: "px", title: "px" },
               { value: "%", title: "%" }
             ]
+          },
+          style: ({ value }) => {
+            const percentOutput: OutputOptionStyle = {
+              "{{WRAPPER}}:after": {
+                content: "",
+                display: "block",
+                width: 0,
+                "padding-top": `${value.value}${value.unit}`
+              },
+
+              "{{WRAPPER}}.brz-map": {
+                height: "unset"
+              },
+
+              "{{WRAPPER}} > .brz-ed-box__resizer":
+                IS_EDITOR && hasElementPosition
+                  ? {
+                      height: "unset"
+                    }
+                  : {},
+
+              "{{WRAPPER}} > .brz-ui-ed-map-content":
+                IS_PREVIEW && hasElementPosition
+                  ? {
+                      height: "unset"
+                    }
+                  : {}
+            };
+            if (value.unit === "%") {
+              return percentOutput;
+            }
+
+            return {
+              "{{WRAPPER}}.brz-map": {
+                height: `${value.value}${value.unit || "px"}`
+              }
+            };
           }
         },
         {
@@ -221,12 +268,10 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error: Missing in new option-types
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
-      icon: "nc-cog",
       position: 110,
       disabled: !IS_STORY
     }
   ];
-}
+};

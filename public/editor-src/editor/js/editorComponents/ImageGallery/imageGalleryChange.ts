@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { getIn, insert, mergeIn } from "timm";
 import type {
   ElementModel,
@@ -17,6 +17,7 @@ import {
   mergeLinkType,
   removeHorizontalThumbStyleData
 } from "./utils";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 export const patchOnColumnChange = (
   columns: number,
@@ -137,7 +138,7 @@ export const patchOnBigImageAsCurrLayout = (newValue: Value): Value => {
       imageWidth,
       imageHeight,
       size,
-      sizeType: "custom",
+      sizeType: SizeType.custom,
       tabletSizeType: null,
       mobileSizeType: null,
       clonedFromGallery: true
@@ -254,7 +255,7 @@ export const patchOnMasonryLayout = (newValue: Value): Value => {
     (image) =>
       mergeIn(image, ["value"], {
         ...(image.value as Value),
-        sizeType: "custom",
+        sizeType: SizeType.custom,
         tabletSizeType: null,
         mobileSizeType: null,
         ...mergeLinkType(lightBox)
@@ -280,7 +281,7 @@ export const patchOnBigImageLayout = (
   const { bigImageImagesHeight, bigImageImagesHeightSuffix } = newValue;
 
   const _newItems = changeImagesData(newValue.items, {
-    sizeType: "custom",
+    sizeType: SizeType.custom,
     tabletSizeType: null,
     mobileSizeType: null
   });
@@ -341,7 +342,7 @@ export const patchOnBigImageImagesThumbSizeChange = (
   } = extraData;
 
   const _newItems = changeImagesData(newValue.items, {
-    sizeType: "custom",
+    sizeType: SizeType.custom,
     tabletSizeType: null,
     mobileSizeType: null
   });

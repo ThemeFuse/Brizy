@@ -6,8 +6,8 @@ import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
+import { WithClassName } from "visual/types/attributes";
 import { isPro } from "visual/utils/env";
-import { WithClassName } from "visual/utils/options/attributes";
 import { types } from "./types";
 
 export interface Props extends WithClassName {

@@ -6,6 +6,7 @@ import {
   cssStyleColor,
   cssStylePaddingFourFields,
   cssStyleSizeFontSizeIcon,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -236,6 +237,19 @@ export function cssStyleElementAccordion3FontVariation({
   return cssStyleTypography2FontVariation({
     v,
     device,
+    prefix: "filter"
+  });
+}
+
+export function cssStyleElementAccordionFilterTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
     prefix: "filter"
   });
 }

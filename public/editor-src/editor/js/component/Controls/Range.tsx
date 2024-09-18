@@ -1,7 +1,7 @@
-import React, { CSSProperties, FC, ReactNode } from "react";
 import classNames from "classnames";
 import { Range as RCRange } from "rc-slider";
-import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
+import React, { CSSProperties, ReactNode } from "react";
+import { WithClassName, WithOnChange } from "visual/types/attributes";
 
 export type Props = WithClassName &
   WithOnChange<number[]> & {
@@ -15,7 +15,7 @@ export type Props = WithClassName &
     handle?: (props: unknown) => ReactNode;
   };
 
-export const Range: FC<Props> = ({
+export const Range = ({
   className: _className,
   min,
   max,
@@ -26,7 +26,7 @@ export const Range: FC<Props> = ({
   handle,
   railStyle,
   onChange
-}) => {
+}: Props): JSX.Element => {
   const className = classNames("brz-ed-control__range", _className);
 
   return (

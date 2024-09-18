@@ -17,7 +17,7 @@ export const css: CSSStyleFn<"border"> = ({ meta, value }): string => {
   const { isNoEmptyGrouped, isNoEmptyUngrouped, isEmpty } = meta ?? {};
 
   if (isEmpty) {
-    return "";
+    return "border: none;";
   }
 
   const color = getColor(palette, hex, opacity);

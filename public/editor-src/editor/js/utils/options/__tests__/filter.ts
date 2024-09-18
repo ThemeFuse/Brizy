@@ -2,26 +2,6 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { filter } from "../filter";
 
 // region Mocks
-jest.mock(
-  "visual/component/Options/types/AdvancedSettings.jsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
-jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => undefined);
-jest.mock(
-  "visual/component/Options/types/ColorPaletteEditor.jsx",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/FontStyleEditor/index.tsx",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/PopupConditions.jsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));

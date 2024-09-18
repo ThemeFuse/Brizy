@@ -1,6 +1,6 @@
 import { create } from "fontkit";
 import { orElse } from "fp-utilities";
-import produce from "immer";
+import { produce } from "immer";
 import { VariationFont } from "visual/types";
 import { pipe } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";
@@ -41,9 +41,9 @@ export const getFontVariation = async (
 // uid for cloud is id in editor
 export const normalizeFonts = (
   res: Response,
-  variations?: []
-): Promise<Response> => {
-  return produce(res, async (draft) => {
+  variations?: VariationFont[]
+): Response => {
+  return produce(res,  (draft) => {
     // renamed uid to id
     if (draft.data.uid) {
       draft.data.id = draft.data.uid;

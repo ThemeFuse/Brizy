@@ -60,9 +60,13 @@ const translationsMap = {
   Calendly: t("Calendly"),
 
   Alert: t("Alert"),
+  TableOfContents: t("Table of Contents"),
+  Flipbox: t("Flipbox"),
   PostInfo: t("Post Info"),
   PostNavigation: t("Post Navigation"),
   Breadcrumbs: t("Breadcrumbs"),
+  ShareButton: t("Share Button"),
+  Paypal: t("Paypal"),
 
   // WP
   WPSidebar: t("Sidebar"),
@@ -184,6 +188,10 @@ const translationsMap = {
   MinistryBrandsEventDetail: t("Event Detail"),
   MinistryBrandsFormWidget: t("FMS Forms"),
   MinistryBrandsPrayerWidget: t("Prayer Widget"),
+  MinistryBrandsArticleDetail: t("Article Detail"),
+  MinistryBrandsArticleList: t("Article List"),
+  MinistryBrandsStaffDetail: t("Staff Detail"),
+  MinistryBrandsArticleFeatured: t("Article Featured"),
 
   // Leadific
   Leadific: t("Leadific")

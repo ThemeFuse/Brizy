@@ -1,14 +1,11 @@
-import { once } from "underscore";
 import Conf, { Config } from "visual/global/Config";
 import { hexToRgb } from "visual/utils/color";
 import { isExternalPopup } from "visual/utils/models/modes";
-import { uuid } from "visual/utils/uuid";
-
-const getUid = once(() => uuid(4));
+import { uidByConfig } from "visual/utils/uuid";
 
 export const makeStylePaletteCSSVar = (id: string, config: Config): string => {
   if (isExternalPopup(config)) {
-    const uid = getUid();
+    const uid = uidByConfig(config);
     return `--brz-global-${id}-${uid}`;
   }
 

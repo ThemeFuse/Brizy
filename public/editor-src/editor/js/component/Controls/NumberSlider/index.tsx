@@ -7,7 +7,7 @@ import {
   WithClassName,
   WithOnChange2,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
 export type Meta = { editing: boolean };

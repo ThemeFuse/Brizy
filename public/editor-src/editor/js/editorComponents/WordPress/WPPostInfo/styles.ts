@@ -15,6 +15,7 @@ export function style(
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
         "cssStyleColor",
         "cssStyleElementPostInfoSpacing"
       ]

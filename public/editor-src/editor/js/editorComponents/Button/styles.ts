@@ -2,6 +2,7 @@ import { DeviceMode } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Value } from "./types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function style(
   v: Value,
@@ -25,11 +26,10 @@ export function style(
         "cssStyleTypographyLineHeight",
         "cssStyleTypographyLetterSpacing",
         "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
         "cssStyleColor",
         ...(hasSizing && IS_EDITOR && !submitType ? [] : ["cssStyleBorder"]),
         "cssStyleBorderRadiusType",
-        "cssStyleElementButtonBgColor",
-        "cssStyleElementButtonBgGradient",
         "cssStyleBoxShadow",
         "cssStylePaddingFourFields",
         "cssStyleElementButtonIconPosition",
@@ -43,6 +43,19 @@ export function style(
         "cssStyleVisibleMode|||editor",
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
+      ]
+    },
+    ".brz &&.brz-btn:not(.brz-btn--hover):hover": {
+      standart: [
+        "cssStyleElementButtonBgColor",
+        "cssStyleElementButtonBgGradient"
+      ]
+    },
+    ".brz &&.brz-btn:hover .brz-icon-svg-custom": {
+      standart: ["cssStyleCustomIconColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&.brz-btn.brz-btn-submit:hover": {
@@ -98,6 +111,36 @@ export function styleIcon(
         "cssStyleElementButtonIconMargin",
         "cssStyleElementButtonIconStrokeWidth"
       ]
+    }
+  };
+
+  return renderStyles({ v, vs, vd, styles });
+}
+
+export function styleButtonFillAnimation(
+  v: Value,
+  vs: Value,
+  vd: Value
+): OutputStyle {
+  const styles: Styles = {
+    ".brz &&.brz-btn--hover:not(.brz-btn--hover-in), .brz &&.brz-btn--hover-in:before":
+      {
+        standart: [
+          "cssStyleElementButtonBgColorStateNORMAL",
+          "cssStyleElementButtonBgGradientStateNORMAL"
+        ],
+        interval: ["cssStyleButtonHoverTransitionDuration"]
+      },
+    ".brz &&.brz-btn--hover:not(.brz-btn--hover-in):before, .brz &&.brz-btn--hover-in":
+      {
+        standart: [
+          "cssStyleElementButtonBgBlendColor",
+          "cssStyleElementButtonBgBlendGradient"
+        ],
+        interval: ["cssStyleButtonHoverTransitionDuration"]
+      },
+    ".brz &&.brz-back-pulse:before:hover": {
+      interval: ["cssStyleButtonHoverAnimationDuration"]
     }
   };
 

@@ -11,6 +11,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
         "cssStyleColor"
       ]
     },
@@ -21,6 +22,7 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
         "cssStyleElementWOOPriceSpacingLast"
       ]
     },
@@ -33,6 +35,7 @@ export function style(v, vs, vd) {
         "cssStyleElementWOOPriceSaleLetterSpacing",
         "cssStyleElementWOOPriceColorSale",
         "cssStyleElementWOOPriceSaleFontVariation",
+        "cssStyleElementWOOPriceSaleTextTransform",
         "cssStyleElementWOOPriceSpacingFirst"
       ]
     },

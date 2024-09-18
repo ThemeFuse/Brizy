@@ -6,7 +6,6 @@ import { toolbarParentColors } from "../toolbarParent";
 import { helperDateFormatInputHTML } from "../utils/helpers";
 import { Props, Value } from "./types";
 
-// @ts-expect-error advancedSettings is old option
 export const getItems: GetItems<Value, Props> = (data) => {
   const config = Config.getAll();
 
@@ -201,7 +200,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     },
     {

@@ -13,11 +13,14 @@ import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { read as readNum } from "visual/utils/reader/number";
+import { read as readStr } from "visual/utils/reader/string";
 import { NORMAL } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import { getPopulationColor } from "../utils/dependencies";
 import { ColorOption } from "./types";
 import { colorValues, gradientValues } from "./utils";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -141,7 +144,7 @@ export function patchImage(v, patch, prefix = "") {
   };
 }
 
-function patchImagePopulation(v, patch) {
+export function patchImagePopulation(v, patch) {
   const {
     imagePopulation,
     imagePopulationEntityId,
@@ -177,6 +180,34 @@ function patchImagePopulation(v, patch) {
   };
 }
 
+export const getShadowData = (value, config) => {
+  const {
+    textShadowColorHex,
+    textShadowColorOpacity,
+    textShadowColorPalette,
+    textShadowHorizontal,
+    textShadowVertical,
+    textShadowBlur
+  } = value;
+
+  let shadow = {
+    hex: readStr(textShadowColorHex) ?? "",
+    opacity: readNum(textShadowColorOpacity) ?? 1,
+    horizontal: readNum(textShadowHorizontal) ?? 0,
+    vertical: readNum(textShadowVertical) ?? 0,
+    blur: readNum(textShadowBlur) ?? 0
+  };
+
+  if (textShadowColorPalette) {
+    shadow = { ...shadow, palette: textShadowColorPalette };
+  }
+
+  return {
+    shadow: shadowToString(shadow, config),
+    shadowColorPalette: textShadowColorPalette
+  };
+};
+
 function getSimpleColorOptions(v, { context, device }, onChange) {
   const config = Config.getAll();
 
@@ -185,6 +216,8 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
     type: DCTypes.image,
     config: { show: true }
   });
+
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "richText");
 
   return [
     {
@@ -302,7 +335,8 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
                 type: "imageUpload",
                 config: {
                   edit: device === "desktop",
-                  disableSizes: true
+                  disableSizes: true,
+                  pointer: isPointerEnabled
                 },
                 dependencies: (patch) => {
                   onChange({ backgroundImage: patchImage(v, patch) });
@@ -310,6 +344,7 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
               },
               dependencies: (patch) => {
                 onChange({
+                  ...patch,
                   backgroundImage: patchImagePopulation(v, patch)
                 });
               }
@@ -322,6 +357,10 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
 }
 
 function getTextPopulationOptions() {
+  const config = Config.getAll();
+
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "richText");
+
   return [
     {
       id: "tabsColor",
@@ -367,7 +406,10 @@ function getTextPopulationOptions() {
             {
               id: "bg",
               type: "imageUpload",
-              label: t("Image")
+              label: t("Image"),
+              config: {
+                pointer: isPointerEnabled
+              }
             }
           ]
         }
@@ -418,8 +460,8 @@ const getColorToolbar = (v, { device, context }, onChange) => {
     options: isPopulationBlock
       ? getPopulationColorOptions({ populationColor }, onChange)
       : v.textPopulation
-      ? getTextPopulationOptions()
-      : getSimpleColorOptions(v, { device, context }, onChange)
+        ? getTextPopulationOptions()
+        : getSimpleColorOptions(v, { device, context }, onChange)
   };
 };
 

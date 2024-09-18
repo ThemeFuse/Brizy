@@ -60,8 +60,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		return true;
 	}
 
-	public function createResponse( $fields = array() ) {
-
+	public function createResponse( $fields = array(), $context=Brizy_Editor_Editor_Editor::EDITOR_CONTEXT ) {
 
 		if ( empty( $fields ) ) {
 			$fields = array(
@@ -107,7 +106,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		}
 
 		if ( in_array( 'data', $fields ) ) {
-			$global['data'] = $this->get_editor_data();
+			$global['data'] = $this->get_editor_data(true);
 		}
 
 		if ( in_array( 'meta', $fields ) ) {
@@ -129,6 +128,8 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		if ( in_array( 'author', $fields ) ) {
 			$global['author'] = $this->getWpPost()->post_author;
 		}
+
+		$global['compiler'] = $this->get_compiler();
 
 		return $global;
 	}

@@ -1,7 +1,5 @@
 import classnames from "classnames";
 import React, { ReactElement } from "react";
-import { Manager, Popper, Reference } from "react-popper";
-import ClickOutside from "visual/component/ClickOutside";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
@@ -10,14 +8,16 @@ import {
   Choices,
   OptGroup
 } from "visual/component/Options/types/common/Population/types/Choices";
-import { isOptgroup } from "visual/component/Options/types/common/Population/utils";
+import { isOptgroup } from "visual/utils/options/Population/utils";
 import { Literal } from "visual/utils/types/Literal";
 import { Async as SelectAsync } from "../../Options/types/dev/Select/Async";
-import { PopulationIcon } from "./PopulationIcon";
+import { Dropdown } from "./Components/Dropdown";
 import type { Props } from "./types";
+import { Config } from "visual/component/Options/types/dev/Select/types";
 
-const selectConfig = {
-  autoClose: true
+const selectConfig: Config = {
+  autoClose: true,
+  size: "large"
 };
 
 const clickOutsideExceptions = [".brz-control__select-current__icon"];
@@ -60,16 +60,15 @@ export const Control = <T extends Literal>({
   value,
   entityType,
   className,
-  handleClickOutside,
   entityTypeChoices,
   entityId,
   entityIdChoices,
   currentDCChoice,
-  handleIconClick,
   onChange,
   onEntityTypeChange,
   onEntityIdChange,
-  onEntityTypeLoad
+  onEntityTypeLoad,
+  onOpened
 }: Props<T>) => {
   const _className = classnames(
     "brz-control__select--dark",
@@ -79,86 +78,47 @@ export const Control = <T extends Literal>({
     className
   );
 
-  const iconClassName = classnames({
-    "brz-control__select--active": isOpen
-  });
-
-  const wrapperClassName = classnames(
-    "brz-ed-control__population--wrapper",
-    "brz-control__select-current",
-    "brz-control__select-current__icon",
-    className
-  );
-
   const predefinedEntityType = currentDCChoice?.attr?.type;
+  const defaultValue = currentDCChoice?.value ?? value;
 
   return (
-    <div className={wrapperClassName}>
-      <Manager>
-        <Reference>
-          {({ ref }) => (
-            <PopulationIcon
-              ref={ref}
-              className={iconClassName}
-              onClick={handleIconClick}
+    <Dropdown
+      className={className}
+      isOpen={isOpen}
+      clickOutsideExceptions={clickOutsideExceptions}
+      onOpened={onOpened}
+    >
+      <>
+        {!predefinedEntityType && (
+          <SelectAsync
+            value={entityType}
+            choices={entityTypeChoices}
+            config={selectConfig}
+            onLoad={onEntityTypeLoad}
+            onChange={onEntityTypeChange}
+          />
+        )}
+        {showChoices && isEntityTypeLoaded && (
+          <Select
+            className={_className}
+            defaultValue={defaultValue}
+            itemHeight={30}
+            onChange={onChange}
+          >
+            {renderChoices(choices, defaultValue as T)}
+          </Select>
+        )}
+        {entityType.value !== "auto" &&
+          defaultValue &&
+          (predefinedEntityType || entityType.value) && (
+            <SelectAsync
+              value={entityId}
+              choices={entityIdChoices}
+              config={selectConfig}
+              onChange={onEntityIdChange}
             />
           )}
-        </Reference>
-        <div style={{ position: "relative" }}>
-          <Popper placement="bottom-start">
-            {({ ref, style }) => {
-              if (!isOpen) {
-                return null;
-              }
-
-              const defaultValue = currentDCChoice?.value ?? value;
-
-              return (
-                <ClickOutside
-                  exceptions={clickOutsideExceptions}
-                  onClickOutside={handleClickOutside}
-                >
-                  <div
-                    style={style}
-                    ref={ref}
-                    className="brz-ed-control__population-content-wrapper"
-                  >
-                    {!predefinedEntityType && (
-                      <SelectAsync
-                        value={entityType}
-                        choices={entityTypeChoices}
-                        config={selectConfig}
-                        onLoad={onEntityTypeLoad}
-                        onChange={onEntityTypeChange}
-                      />
-                    )}
-                    {showChoices && isEntityTypeLoaded && (
-                      <Select
-                        className={_className}
-                        defaultValue={defaultValue}
-                        itemHeight={30}
-                        onChange={onChange}
-                      >
-                        {renderChoices(choices, defaultValue as T)}
-                      </Select>
-                    )}
-                    {entityType.value !== "auto" &&
-                      defaultValue &&
-                      (predefinedEntityType || entityType.value) && (
-                        <SelectAsync
-                          value={entityId}
-                          choices={entityIdChoices}
-                          config={selectConfig}
-                          onChange={onEntityIdChange}
-                        />
-                      )}
-                  </div>
-                </ClickOutside>
-              );
-            }}
-          </Popper>
-        </div>
-      </Manager>
-    </div>
+      </>
+    </Dropdown>
   );
 };

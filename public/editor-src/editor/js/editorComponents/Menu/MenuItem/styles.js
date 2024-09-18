@@ -1,11 +1,12 @@
 import classnames from "classnames";
 import { renderStyles } from "visual/utils/cssStyle";
 
-const hasSubMenu = ({ items = [] }) => items.some(el => el.type === "MenuItem");
+const hasSubMenu = ({ items = [] }) =>
+  items.some((el) => el.type === "MenuItem");
 
-const hasDropDown = v => (v.megaMenu === "on" ? false : hasSubMenu(v));
+const hasDropDown = (v) => (v.megaMenu === "on" ? false : hasSubMenu(v));
 
-const getMMenuClassNames = node => {
+const getMMenuClassNames = (node) => {
   if (!node) {
     return "";
   }
@@ -15,7 +16,7 @@ const getMMenuClassNames = node => {
   let classNames = [];
   const currentClassList = node.classList;
 
-  currentClassList.forEach(className => {
+  currentClassList.forEach((className) => {
     if (/brz-mm-(?!menu__item).*$/.test(className)) {
       classNames.push(className);
     }
@@ -25,10 +26,10 @@ const getMMenuClassNames = node => {
 };
 
 export function styleClassName(v, state) {
-  const { className, megaMenu, current } = v;
+  const { className, liClasses, megaMenu, current } = v;
 
-  return classnames("brz-menu__item", className, {
-    "brz-menu__item--current": current,
+  return classnames("brz-menu__item", className, liClasses, {
+    "brz-menu__item--current": current && IS_EDITOR,
     "brz-menu__item-mega-menu": megaMenu === "on",
     "brz-menu__item-dropdown": hasDropDown(v),
     "brz-menu__item--opened": state.isOpen
@@ -36,17 +37,23 @@ export function styleClassName(v, state) {
 }
 
 export function styleMmMenuClassName(v, menuItem) {
-  const { className, megaMenu, current } = v;
+  const { className, liClasses, megaMenu, current } = v;
   const needMegaMenu = megaMenu === "on";
   const needDropDown = hasDropDown(v);
   const currentNodeClassName = getMMenuClassNames(menuItem);
 
-  return classnames("brz-mm-menu__item", className, currentNodeClassName, {
-    "brz-mm-menu__item-empty": !needMegaMenu && !needDropDown,
-    "brz-mm-menu__item--current": current,
-    "brz-mm-menu__item-mega-menu": needMegaMenu,
-    "brz-mm-menu__item-dropdown": needDropDown
-  });
+  return classnames(
+    "brz-menu__item",
+    className,
+    currentNodeClassName,
+    liClasses,
+    {
+      "brz-mm-menu__item-empty": !needMegaMenu && !needDropDown,
+      "brz-menu__item--current": current && IS_EDITOR,
+      "brz-mm-menu__item-mega-menu": needMegaMenu,
+      "brz-mm-menu__item-dropdown": needDropDown
+    }
+  );
 }
 
 export function styleMegaMenu(v, vs, vd) {

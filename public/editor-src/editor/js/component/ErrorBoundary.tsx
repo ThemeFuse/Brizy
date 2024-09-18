@@ -1,10 +1,17 @@
-import React, { Component, CSSProperties, ErrorInfo, MouseEvent, ReactNode } from "react";
+import React, {
+  Component,
+  CSSProperties,
+  ErrorInfo,
+  MouseEvent,
+  ReactNode
+} from "react";
 import { noop } from "underscore";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 
 type ErrorBoundaryProps = {
   onRemove: () => void;
+  children: ReactNode;
 };
 
 type ErrorBoundaryState = {
@@ -14,7 +21,8 @@ type ErrorBoundaryState = {
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static defaultProps: ErrorBoundaryProps = {
-    onRemove: noop
+    onRemove: noop,
+    children: undefined
   };
 
   state: ErrorBoundaryState = {
@@ -102,7 +110,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     } catch (e) {
       return process.env.NODE_ENV === "development" ? (
         <details className="brz-details" style={{ whiteSpace: "pre-wrap" }}>
-          {e}
+          {e as ReactNode}
         </details>
       ) : null;
     }

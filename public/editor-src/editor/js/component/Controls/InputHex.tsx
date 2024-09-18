@@ -1,18 +1,22 @@
-import React, { FC, useEffect, useState } from "react";
 import classNames from "classnames";
-import { Input } from "./Input";
+import React, { useEffect, useState } from "react";
+import { useDebouncedEffect } from "visual/component/hooks";
 import {
   WithClassName,
   WithOnChange,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
+import { fromString, Hex } from "visual/utils/color/Hex";
 import { mApply } from "visual/utils/value";
-import { useDebouncedEffect } from "visual/component/hooks";
-import { fromString } from "visual/utils/color/Hex";
+import { Input } from "./Input";
 
-export type Props = WithClassName & WithValue<string> & WithOnChange<string>;
+export type Props = WithClassName & WithValue<string> & WithOnChange<Hex>;
 
-export const InputHex: FC<Props> = ({ className, value, onChange }) => {
+export const InputHex = ({
+  className,
+  value,
+  onChange
+}: Props): JSX.Element => {
   const [_value, setValue] = useState(value);
 
   useDebouncedEffect(

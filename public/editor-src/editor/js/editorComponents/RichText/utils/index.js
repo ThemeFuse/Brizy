@@ -1,24 +1,28 @@
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
-import { findDCChoiceByPlaceholder } from "visual/component/Options/types/common/Population/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import { pipe } from "visual/utils/fp";
 import { getDynamicContentChoices } from "visual/utils/options";
+import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { capByPrefix, decodeFromString } from "visual/utils/string";
 import { isNullish, onNullish, throwOnNullish } from "visual/utils/value";
+import { fromFormatsToTextTransform } from "./dependencies";
 import { classNamesToV } from "./transforms";
 
 // have problems with cheerio it declared _ as global variables
 const $doc = IS_EDITOR ? require("jquery") : require("cheerio");
 
 export function mapBlockElements(html, fn) {
-  let $ = getWrapper(html);
+  const $ = getWrapper(html);
   const nodes = getParagraphsArray($);
 
-  nodes.each((i, elem) => fn($doc(elem)));
+  nodes.each((i, elem) => {
+    const $elem = IS_EDITOR ? $doc(elem) : $(elem);
+    return fn($elem);
+  });
 
   return $.html();
 
@@ -386,14 +390,31 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     ? format.backgroundGradient.startOpacity
     : opacity;
 
+  const {
+    typographyBold,
+    typographyItalic,
+    typographyUnderline,
+    typographyStrike,
+    typographyUppercase,
+    typographyScript
+  } = fromFormatsToTextTransform(format);
+
   return {
     ...v,
+    bold: format.typographyBold ?? format.bold ?? false,
+    italic: format.italic ?? format.typographyItalic ?? false,
+    underline: format.underline ?? format.typographyUnderline ?? false,
+    strike: format.strike ?? format.typographyStrike ?? false,
+    capitalize: format.capitalize || format.typographyUppercase ? "on" : "",
+    script: format.script ?? format.typographyScript ?? "none",
 
-    bold: format.bold ?? "",
-    italic: format.italic ?? "",
-    underline: format.underline ?? "",
-    strike: format.strike ?? "",
-    capitalize: format.capitalize ?? "",
+    typographyBold: format.typographyBold ?? typographyBold,
+    typographyItalic: format.typographyItalic ?? typographyItalic,
+    typographyUnderline: format.typographyUnderline ?? typographyUnderline,
+    typographyStrike: format.typographyStrike ?? typographyStrike,
+    typographyUppercase: format.typographyUppercase || typographyUppercase,
+    typographyLowercase: format.typographyLowercase ? "on" : "",
+    typographyScript: format.typographyScript ?? typographyScript,
 
     color: {
       hex,
@@ -403,6 +424,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     bgColorPalette: palette,
     bgColorOpacity: bgColorOpacity,
     bgColorHex: bgColor,
+    bgColorType: format.backgroundGradient ? "gradient" : "solid",
     ...parseShadow(format.shadow),
     textBgColorPalette,
     textShadowColorPalette: format.shadowColorPalette || null,
@@ -442,4 +464,37 @@ export const dcItemOptionParser = parseStrict({
 
 export const createLabel = (label) => {
   return `✦${label}`;
+};
+
+export const getFilteredPopups = (textContent, popups, blocksData = {}) => {
+  const regex = /data-href="([^"]+)"/gs;
+  const links = textContent.matchAll(regex);
+
+  const domPopups = [];
+
+  for (const [, link] of links) {
+    try {
+      const { type, popup } = decodeFromString(link) ?? {};
+
+      if (type === "popup" && popup) {
+        domPopups.push(popup);
+      }
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+    }
+  }
+
+  return popups.filter(({ value, type }) =>
+    domPopups.some((popupId) => {
+      if (type === "GlobalBlock") {
+        const { _id } = value;
+        const { value: blockValue } = blocksData[_id];
+        return `#${blockValue.popupId}` === popupId;
+      }
+
+      return `#${value.popupId}` === popupId;
+    })
+  );
 };

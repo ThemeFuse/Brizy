@@ -13,7 +13,6 @@
       "bgImageSrc": "",
       "maskCustomUploadImageSrc": ""
     },
-
     "bgImageWidth": 0,
     "bgImageHeight": 0,
     "bgPositionY": 50,
@@ -23,6 +22,9 @@
     "bgPopulationEntityId": "",
     "bgImageExtension": "",
     "bgImageType": "internal",
+
+    "bgSize": "cover",
+    "bgRepeat": "off",
 
     "brightness": 100,
     "hue": 0,
@@ -254,6 +256,8 @@
     "shapeBottomIndex": "auto",
     "shapeTopHorizontal": "off",
     "shapeBottomHorizontal": "off",
+    "shapeTopFlip": "off",
+    "shapeBottomFlip": "off",
 
     "containerClassName": "",
     "customClassName": "",

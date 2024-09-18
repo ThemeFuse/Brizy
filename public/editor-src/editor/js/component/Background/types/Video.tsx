@@ -33,14 +33,14 @@ type Props = {
   }) => ReactElement;
 };
 
-const Video: React.FC<Props> = ({
+const Video = ({
   video,
   videoLoop,
   videoStart,
   children,
   videoType,
   customVideo
-}) => {
+}: Props): ReactElement => {
   const videoMedia = video || customVideo;
   const { type, key } = video ?? {};
 
@@ -93,12 +93,30 @@ const Video: React.FC<Props> = ({
   }, [videoStart]);
 
   useLayoutEffect(() => {
-    if (isInitialMount.current && videoRef.current) {
+    if (videoRef.current && isCustomVideo && !isInitialMount.current) {
+      jQuery(videoRef.current).backgroundVideo("reinit", {
+        type: "custom",
+        loop: videoLoop,
+        start: videoStart
+      });
+    }
+  }, [videoLoop, videoStart, isCustomVideo]);
+
+  useLayoutEffect(() => {
+    if (isInitialMount.current && videoRef.current && !isCustomVideo) {
       isInitialMount.current = false;
 
       jQuery(videoRef.current).backgroundVideo({
         type: type,
         key: key,
+        loop: videoLoop,
+        start: videoStart
+      });
+    } else if (isInitialMount.current && videoRef.current && isCustomVideo) {
+      isInitialMount.current = false;
+
+      jQuery(videoRef.current).backgroundVideo({
+        type: "custom",
         loop: videoLoop,
         start: videoStart
       });
@@ -117,22 +135,12 @@ const Video: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, key]);
 
-  useLayoutEffect(() => {
-    if (videoRef.current && isCustomVideo) {
-      jQuery(videoRef.current).backgroundVideo("reinit", {
-        type: "custom",
-        loop: videoLoop,
-        start: videoStart
-      });
-    }
-  }, [videoLoop, videoStart, isCustomVideo]);
-
   const src =
     video && !isCustomVideo
       ? videoUrl(video, settings)
       : dataType === VideoType.BgVideoCustom && customVideo
-      ? customFileUrl(customVideo)
-      : customVideo;
+        ? customFileUrl(customVideo)
+        : customVideo;
 
   const getContent = useMemo((): ReactElement => {
     if (video && !isCustomVideo) {

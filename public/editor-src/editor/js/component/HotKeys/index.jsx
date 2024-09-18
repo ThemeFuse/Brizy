@@ -52,7 +52,8 @@ const keyNamesShortKeys = {
     "right_cmd+down"
   ],
   showSidebarStyling: ["ctrl+M", "cmd+M", "right_cmd+M"],
-  showSidebarAdvanced: ["ctrl+K", "cmd+K", "right_cmd+K"]
+  showSidebarAdvanced: ["ctrl+K", "cmd+K", "right_cmd+K"],
+  clearFormatting : ["alt+\\", "ctrl+\\", "cmd+\\", "right_cmd+\\"]
 };
 
 const getShortKeysByShortcuts = (types) => {

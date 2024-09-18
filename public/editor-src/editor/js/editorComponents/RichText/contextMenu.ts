@@ -1,8 +1,19 @@
+import deepmerge from "deepmerge";
+import { setIn } from "timm";
+import { overwriteMerge } from "visual/bootstraps/initConfig/default/utils";
 import { ElementModel } from "visual/component/Elements/Types";
+import { updateCopiedElement } from "visual/redux/actions2";
+import {
+  deviceModeSelector,
+  pageDataNoRefsSelector
+} from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
+import { createFullModelPath } from "visual/utils/models";
+import { read as strRead } from "visual/utils/reader/string";
 import { ContextGetItems, ContextMenuItem } from "../EditorComponent/types";
 import {
   getInnerElement,
+  handleClearFormatting,
   handlePasteStyles,
   handleRenderText
 } from "./utils/ContextMenu";
@@ -13,6 +24,7 @@ const getItems: ContextGetItems<ElementModel> = (
 ): ContextMenuItem[] => {
   const innerElement = getInnerElement();
   const canPaste = component.getComponentId() === innerElement?.type;
+  const device = deviceModeSelector(component.getReduxState());
 
   return [
     {
@@ -24,7 +36,36 @@ const getItems: ContextGetItems<ElementModel> = (
           id: "copy",
           type: "button",
           title: t("Copy"),
-          helperText: handleRenderText(["C"])
+          helperText: handleRenderText(["C"]),
+          onChange: () => {
+            const dispatch = component.getReduxDispatch();
+            const componentValue = component.getValue();
+
+            const data = pageDataNoRefsSelector(component.getReduxState());
+            const { wrapperAnimationId, wrapperId } = component.props.meta;
+            const _wrapperId = strRead(wrapperAnimationId ?? wrapperId);
+            if (!_wrapperId) return;
+
+            const id = component.getId();
+            const shortcodePath = createFullModelPath(data, [_wrapperId]);
+
+            const newValue = setIn(
+              data,
+              createFullModelPath(data, [id]),
+              componentValue
+            );
+
+            if (typeof dispatch === "function" && newValue) {
+              dispatch(
+                updateCopiedElement({
+                  path: shortcodePath,
+                  value: deepmerge(data, newValue, {
+                    arrayMerge: overwriteMerge
+                  })
+                })
+              );
+            }
+          }
         },
         {
           id: "paste",
@@ -41,12 +82,23 @@ const getItems: ContextGetItems<ElementModel> = (
           helperText: handleRenderText(["⇧", "V"]),
           onChange: () => {
             if (!innerElement || !innerElement.value) return;
-            handlePasteStyles(
+            handlePasteStyles({
               innerElement,
               // @ts-expect-error couldn't extend component type
-              component.handleChange,
-              component.getValue()
-            );
+              onChange: component.handleChange,
+              v: component.getValue(),
+              device
+            });
+          }
+        },
+        {
+          id: "clearFormatting",
+          type: "button",
+          title: t("Clear formatting"),
+          helperText: handleRenderText(["\\"]),
+          onChange: () => {
+            // @ts-expect-error couldn't extend component type
+            handleClearFormatting(component.handleChange);
           }
         },
         {

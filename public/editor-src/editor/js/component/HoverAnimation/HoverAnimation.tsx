@@ -1,14 +1,8 @@
 import classNames from "classnames";
-import React, {
-  FC,
-  MouseEvent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import React, { MouseEvent, useEffect, useMemo, useRef, useState } from "react";
 import UIEvents from "visual/global/UIEvents";
 import { AnimationEvents } from "visual/utils/animation";
+import { FCC } from "visual/utils/react/types";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { Hover } from "./Hover";
 import { getAnimations } from "./animations";
@@ -30,7 +24,7 @@ interface Props {
   isDisabledHover?: boolean;
 }
 
-export const HoverAnimation: FC<Props> = ({
+export const HoverAnimation: FCC<Props> = ({
   children,
   animationId,
   options = {},

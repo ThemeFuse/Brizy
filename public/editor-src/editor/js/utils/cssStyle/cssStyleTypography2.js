@@ -1,4 +1,8 @@
 import {
+  cssStyleTextTransforms,
+  cssStyleTextScript
+} from "visual/utils/cssStyle/cssStyleTextTransform";
+import {
   styleTypography2FontFamily,
   styleTypography2FontSize,
   styleTypography2FontSizeSuffix,
@@ -10,9 +14,7 @@ import {
 
 export function cssStyleTypography2FontFamily({ v, device, prefix = "" }) {
   const fontFamily = styleTypography2FontFamily({ v, device, prefix });
-  return fontFamily
-    ? `font-family:${styleTypography2FontFamily({ v, device, prefix })};`
-    : "";
+  return fontFamily ? `font-family:${fontFamily};` : "";
 }
 
 export function cssStyleTypography2FontSize({ v, device, prefix = "" }) {
@@ -97,6 +99,24 @@ export function cssStyleTypography3FontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix });
 }
 
+export function cssStyleTypography3TextTransform({
+  v,
+  device,
+  prefix = "typography",
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix });
+}
+
+export function cssStyleTypography3Script({
+  v,
+  device,
+  prefix = "typography",
+  state
+}) {
+  return cssStyleTextScript({ v, device, state, prefix });
+}
+
 export function getAllCssStyleTypography({
   v,
   device,
@@ -141,5 +161,12 @@ export function getAllCssStyleTypography({
     prefix
   });
 
-  return `${fontFamily} ${fontSize} ${lineHeight} ${fontWeight} ${letterSpacing} ${fontVariation}`;
+  const textTransforms = cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix
+  });
+
+  return `${fontFamily} ${fontSize} ${lineHeight} ${fontWeight} ${letterSpacing} ${fontVariation} ${textTransforms}`;
 }

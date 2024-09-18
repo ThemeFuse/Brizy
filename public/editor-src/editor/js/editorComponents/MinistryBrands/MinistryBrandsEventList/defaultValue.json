@@ -19,8 +19,8 @@
     "showRegistration": "on",
     "showMetaIcons": "off",
 
-    "category": "all",
-    "group": "all",
+    "category": "",
+    "group": "",
     "detailPageButtonText": "Button",
 
     "source": "",
@@ -56,6 +56,12 @@
     "typographyVariableFontWeight": 400,
     "typographyFontWidth": 100,
     "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
 
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
@@ -67,6 +73,12 @@
     "titleTypographyVariableFontWeight": 700,
     "titleTypographyFontWidth": 100,
     "titleTypographyFontSoftness": 0,
+    "titleTypographyBold": false,
+    "titleTypographyItalic": false,
+    "titleTypographyUnderline": false,
+    "titleTypographyStrike": false,
+    "titleTypographyUppercase": false,
+    "titleTypographyLowercase": false,
 
     "dateTypographyFontStyle": "",
     "dateTypographyFontFamilyType": "google",
@@ -78,6 +90,12 @@
     "dateTypographyVariableFontWeight": 700,
     "dateTypographyFontWidth": 100,
     "dateTypographyFontSoftness": 0,
+    "dateTypographyBold": false,
+    "dateTypographyItalic": false,
+    "dateTypographyUnderline": false,
+    "dateTypographyStrike": false,
+    "dateTypographyUppercase": false,
+    "dateTypographyLowercase": false,
 
     "previewTypographyFontStyle": "",
     "previewTypographyFontFamilyType": "google",
@@ -89,6 +107,12 @@
     "previewTypographyVariableFontWeight": 400,
     "previewTypographyFontWidth": 100,
     "previewTypographyFontSoftness": 0,
+    "previewTypographyBold": false,
+    "previewTypographyItalic": false,
+    "previewTypographyUnderline": false,
+    "previewTypographyStrike": false,
+    "previewTypographyUppercase": false,
+    "previewTypographyLowercase": false,
 
     "paginationTypographyFontStyle": "",
     "paginationTypographyFontFamilyType": "google",
@@ -100,6 +124,12 @@
     "paginationTypographyVariableFontWeight": 400,
     "paginationTypographyFontWidth": 100,
     "paginationTypographyFontSoftness": 0,
+    "paginationTypographyBold": false,
+    "paginationTypographyItalic": false,
+    "paginationTypographyUnderline": false,
+    "paginationTypographyStrike": false,
+    "paginationTypographyUppercase": false,
+    "paginationTypographyLowercase": false,
 
     "metaLinksTypographyFontStyle": "",
     "metaLinksTypographyFontFamilyType": "google",
@@ -111,6 +141,12 @@
     "metaLinksTypographyVariableFontWeight": 400,
     "metaLinksTypographyFontWidth": 100,
     "metaLinksTypographyFontSoftness": 0,
+    "metaLinksTypographyBold": false,
+    "metaLinksTypographyItalic": false,
+    "metaLinksTypographyUnderline": false,
+    "metaLinksTypographyStrike": false,
+    "metaLinksTypographyUppercase": false,
+    "metaLinksTypographyLowercase": false,
 
     "detailButtonTypographyFontStyle": "",
     "detailButtonTypographyFontFamilyType": "google",
@@ -122,6 +158,12 @@
     "detailButtonTypographyVariableFontWeight": 400,
     "detailButtonTypographyFontWidth": 100,
     "detailButtonTypographyFontSoftness": 0,
+    "detailButtonTypographyBold": false,
+    "detailButtonTypographyItalic": false,
+    "detailButtonTypographyUnderline": false,
+    "detailButtonTypographyStrike": false,
+    "detailButtonTypographyUppercase": false,
+    "detailButtonTypographyLowercase": false,
 
     "registerButtonTypographyFontStyle": "",
     "registerButtonTypographyFontFamilyType": "google",
@@ -133,6 +175,12 @@
     "registerButtonTypographyVariableFontWeight": 400,
     "registerButtonTypographyFontWidth": 100,
     "registerButtonTypographyFontSoftness": 0,
+    "registerButtonTypographyBold": false,
+    "registerButtonTypographyItalic": false,
+    "registerButtonTypographyUnderline": false,
+    "registerButtonTypographyStrike": false,
+    "registerButtonTypographyUppercase": false,
+    "registerButtonTypographyLowercase": false,
 
     "colorHex": "#707070",
     "colorOpacity": 1,
@@ -275,6 +323,15 @@
     "metaLinksColorOpacity": 1,
     "metaLinksColorPalette": "",
 
+    "buttonsBorderRadiusType": "custom",
+    "buttonsBorderRadius": 3,
+    "buttonsBorderRadiusSuffix": "px",
+
+    "buttonsBorderTopLeftRadius": 3,
+    "buttonsBorderTopRightRadius": 3,
+    "buttonsBorderBottomRightRadius": 3,
+    "buttonsBorderBottomLeftRadius": 3,
+
     "detailButtonColorHex": "#ffffff",
     "detailButtonColorOpacity": 1,
     "detailButtonColorPalette": "",
@@ -293,6 +350,16 @@
     "detailButtonGradientActivePointer": "finishPointer",
     "detailButtonGradientLinearDegree": 45,
     "detailButtonGradientRadialDegree": 0,
+
+    "detailButtonFillType": "filled",
+
+    "detailButtonSize": "custom",
+
+    "detailButtonPaddingTB": 12,
+    "detailButtonPaddingRL": 24,
+
+    "detailButtonPaddingTBSuffix": "px",
+    "detailButtonPaddingRLSuffix": "px",
 
     "detailButtonBorderStyle": "solid",
     "detailButtonBorderColorHex": "#000000",
@@ -314,6 +381,16 @@
     "detailButtonBoxShadowSpread": 2,
     "detailButtonBoxShadowVertical": 2,
     "detailButtonBoxShadowHorizontal": 2,
+
+    "registerButtonFillType": "filled",
+
+    "registerButtonSize": "custom",
+
+    "registerButtonPaddingTB": 12,
+    "registerButtonPaddingRL": 24,
+
+    "registerButtonPaddingTBSuffix": "px",
+    "registerButtonPaddingRLSuffix": "px",
 
     "registerButtonColorHex": "#ffffff",
     "registerButtonColorOpacity": 1,
@@ -404,6 +481,9 @@
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "buttonsHoverTransition": 50,
+    "buttonsHoverTransitionSuffix": "",
 
     "maskShape": "none",
     "maskSize": "cover",

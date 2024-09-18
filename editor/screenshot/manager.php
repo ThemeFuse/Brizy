@@ -43,10 +43,15 @@ class Brizy_Editor_Screenshot_Manager
             throw new Exception(__('Invalid uid string', 'brizy'));
         }
 
-
         $extension = 'jpeg';
         $screenFileName = $screenUid.'.'.$extension;
         $screenFullPath = $path.DIRECTORY_SEPARATOR.$screenFileName;
+
+        $wp_filetype = wp_check_filetype($screenFileName);
+        if (!$wp_filetype['ext'] && !current_user_can('unfiltered_upload')) {
+            return false;
+        }
+
         try {
             return $this->storeThumbnail($imageContent, $screenFullPath);
         } catch (Exception $e) {
@@ -115,13 +120,22 @@ class Brizy_Editor_Screenshot_Manager
      */
     private function storeThumbnail($content, $filePath)
     {
-        $store_file = $this->storeFile($content, $filePath);
+         $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+            basename($filePath),
+            $content
+        );
 
-        if ($store_file) {
-            $store_file = $this->resizeImage($filePath);
+        $filePath = Brizy_Editor_Asset_StaticFileTrait::createSideLoadMedia( $tempFile, $filePath );
+
+		if($filePath instanceof WP_Error) {
+			throw new Exception("Unable to store the thumbnail");
+		}
+
+        if ($filePath) {
+            $filePath = $this->resizeImage($filePath);
         }
 
-        return $store_file;
+        return $filePath;
     }
 
     /**

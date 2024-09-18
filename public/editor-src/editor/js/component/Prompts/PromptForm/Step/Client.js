@@ -30,7 +30,7 @@ class Client extends Component {
     return usedFolder || useFirsFolder;
   }
 
-  handleActive = active => {
+  handleActive = (active) => {
     this.setState({ active });
   };
 
@@ -62,8 +62,7 @@ class Client extends Component {
           error: t("Something went wrong")
         });
       } else {
-        onChange(id, { ...appData, ...data });
-        onChangeNext();
+        onChange(id, { ...appData, ...data }, onChangeNext);
       }
     } else {
       // Emitted fake request
@@ -72,7 +71,7 @@ class Client extends Component {
     }
   };
 
-  handlePrev = async prev => {
+  handlePrev = async (prev) => {
     this.setState({
       prevLoading: true,
       error: null

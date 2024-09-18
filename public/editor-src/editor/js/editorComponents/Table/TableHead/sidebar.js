@@ -43,6 +43,13 @@ export function getItems() {
                   options: []
                 }
               ]
+            },
+            {
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              devices: "responsive",
+              disabled: true,
+              tabs: []
             }
           ]
         }

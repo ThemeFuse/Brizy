@@ -21,8 +21,8 @@ export function style(v, vs, vd, props) {
         "cssStyleFilter",
         "cssStyleBgImagePosition",
         "cssStyleBgMediaImage",
-        "cssStyleSectionBgSize",
-        "cssStyleSectionBgRepeat",
+        "cssStyleBgSize",
+        "cssStyleBgRepeat",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
@@ -92,7 +92,19 @@ export function style(v, vs, vd, props) {
         "cssStylePaddingBottomForEditorResizer",
         "cssStyleSectionPaddingsForEditorResize"
       ]
-    }
+    },
+    ".brz &&:hover > .brz-bg > .brz-bg-slideshow  .brz-bg-slideshow-item": {
+      standart: [
+        "cssStyleBgMediaSlideshow",
+        "cssStyleFilter",
+        "cssStyleBgSlideshowKenBurnsEffectStart",
+        "cssStyleBgSlideshowPosition"
+      ]
+    },
+    ".brz && > .brz-bg > .brz-bg-slideshow .swiper-slide.swiper-slide-active .brz-bg-slideshow-item, .brz && > .brz-bg > .brz-bg-slideshow .swiper-slide-duplicate-active .brz-bg-slideshow-item":
+      {
+        standart: ["cssStyleBgSlideshowKenBurnsEffectEnd"]
+      }
   };
 
   return renderStyles({ v, vs, vd, styles, props });

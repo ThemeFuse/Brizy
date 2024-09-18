@@ -4,8 +4,11 @@ import { ToastNotification } from "visual/component/Notifications";
 import Config from "visual/global/Config";
 import { sendToAi } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
+import {
+  generateTags,
+  purifyTextContent
+} from "visual/utils/options/AiText/utils";
 import { Component } from "./Type";
-import { generateTags, purifyTextContent } from "./utils";
 
 export const Ai: Component = (props) => {
   const [loading, setLoading] = useState<boolean>(false);

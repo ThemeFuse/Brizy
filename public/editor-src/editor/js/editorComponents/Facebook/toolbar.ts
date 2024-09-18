@@ -153,8 +153,7 @@ export function getItems({
   const advancedSettings = (): ToolbarItemType[] => [
     {
       id: "advancedSettings",
-      // @ts-expect-error: Old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110
     }
   ];
@@ -166,8 +165,7 @@ export function getItems({
   const disableAdvancedSettings = (): ToolbarItemType[] => [
     {
       id: "advancedSettings",
-      // @ts-expect-error: Old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     }
   ];

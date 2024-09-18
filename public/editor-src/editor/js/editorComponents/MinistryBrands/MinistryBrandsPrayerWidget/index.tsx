@@ -2,11 +2,11 @@ import React, { ReactNode } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { WithClassName } from "visual/types/attributes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { WithClassName } from "visual/utils/options/attributes";
 
 export interface Props extends WithClassName {
   meta: ComponentsMeta;

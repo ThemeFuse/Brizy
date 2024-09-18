@@ -1,6 +1,8 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -23,7 +25,138 @@ export const getItems = <
     dvv("registerButtonBgColorHex"),
     dvv("registerButtonBgColorPalette")
   );
+
+  const { hex: registerButtonColorHex } = getOptionColorHexByPalette(
+    dvv("registerButtonColorHex"),
+    dvv("registerButtonColorPalette")
+  );
+
+  const registerButtonTypographyFontSize =
+    Num.read(dvv("registerButtonTypographyFontSize")) ?? 15;
+
+  const registerButtonTypographyLineHeight =
+    Num.read(dvv("registerButtonTypographyLineHeight")) ?? 1.6;
+
+  const maxBorderRadius = getButtonMaxBorderRadius(
+    registerButtonTypographyFontSize,
+    registerButtonTypographyLineHeight
+  );
+
+  const registerButtonColorOpacity = dvv("registerButtonColorOpacity");
+  const registerButtonBgColorOpacity = dvv("registerButtonBgColorOpacity");
+
+  const fillType = dvv("registerButtonFillType");
+
+  const customSize = dvv("registerButtonSize") !== "custom";
+  const customBorderRadius = dvv("buttonsBorderRadiusType") !== "custom";
+
+  const fillTypeDefault = fillType === "default";
+
   return [
+    {
+      id: "toolbarCurrentShortcode",
+      type: "popover",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
+      position: 20,
+      options: [
+        {
+          id: "registerButtonTabs",
+          type: "tabs",
+          tabs: [
+            {
+              id: "registerButtonTab",
+              label: t("Button"),
+              options: [
+                {
+                  id: "registerButtonSizeGroup",
+                  type: "group",
+                  position: 10,
+                  options: [
+                    {
+                      id: "registerButtonSize",
+                      label: t("Size"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "small", icon: "nc-small" },
+                        { value: "medium", icon: "nc-medium" },
+                        { value: "large", icon: "nc-large" },
+                        { value: "custom", icon: "nc-more" }
+                      ]
+                    },
+                    {
+                      id: "registerButtonPaddingRL",
+                      label: t("Width"),
+                      type: "slider",
+                      disabled: customSize,
+                      config: {
+                        min: 0,
+                        max: 100,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    },
+                    {
+                      id: "registerButtonPaddingTB",
+                      label: t("Height"),
+                      type: "slider",
+                      disabled: customSize,
+                      config: {
+                        min: 0,
+                        max: 100,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: "registerButtonFillType",
+                  label: t("Fill"),
+                  devices: "desktop",
+                  type: "radioGroup",
+                  position: 20,
+                  choices: [
+                    { value: "filled", icon: "nc-circle" },
+                    { value: "outline", icon: "nc-outline" },
+                    { value: "default", icon: "nc-close" }
+                  ]
+                },
+                {
+                  id: "registerButtonBorderRadiusTypeGroup",
+                  type: "group",
+                  devices: "desktop",
+                  disabled: fillTypeDefault,
+                  position: 30,
+                  options: [
+                    {
+                      id: "buttonsBorderRadiusType",
+                      label: t("Corner"),
+                      type: "radioGroup",
+                      choices: [
+                        { value: "square", icon: "nc-corners-square" },
+                        { value: "rounded", icon: "nc-corners-round" },
+                        { value: "custom", icon: "nc-more" }
+                      ]
+                    },
+                    {
+                      id: "buttonsBorderRadius",
+                      type: "slider",
+                      disabled: customBorderRadius,
+                      config: {
+                        min: 0,
+                        max: maxBorderRadius,
+                        units: [{ title: "px", value: "px" }]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "toolbarTypography",
       type: "popover",
@@ -51,10 +184,13 @@ export const getItems = <
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              registerButtonBgColorHex,
-              dvv("registerButtonBgColorOpacity")
-            )
+            backgroundColor:
+              fillType === "filled"
+                ? hexToRgba(
+                    registerButtonBgColorHex,
+                    registerButtonBgColorOpacity
+                  )
+                : hexToRgba(registerButtonColorHex, registerButtonColorOpacity)
           }
         }
       },
@@ -72,7 +208,8 @@ export const getItems = <
                 {
                   id: "registerButton",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillType !== "filled"
                 }
               ]
             },
@@ -87,7 +224,6 @@ export const getItems = <
                 }
               ]
             },
-
             {
               id: "tabBorder",
               label: t("Border"),
@@ -95,11 +231,11 @@ export const getItems = <
                 {
                   id: "registerButtonBorder",
                   type: "border",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             },
-
             {
               id: "tabShadow",
               label: t("Shadow"),
@@ -107,13 +243,22 @@ export const getItems = <
                 {
                   id: "registerButtonBoxShadow",
                   type: "boxShadow",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             }
           ]
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      position: 110,
+      icon: "nc-cog",
+      devices: "desktop",
+      title: t("Settings")
     }
   ];
 };

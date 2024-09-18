@@ -323,12 +323,16 @@ export function style(
     ".brz &&:hover .brz-eventCalendar__subscribe__container": {
       standart: ["cssStyleElementMinistryEventCalendarSubscribeToCalendarAlign"]
     },
-    ".brz &&:hover .brz-eventCalendar__subscribe svg": {
+    ".brz &&:hover .brz-eventCalendar__subscribe .brz-icon-svg": {
       standart: [
         "cssStyleSizeFontSizeIcon",
         "cssStyleElementMinistryEventCalendarIconMargin",
         "cssStyleElementMinistryEventCalendarIconStrokeWidth"
       ]
+    },
+    ".brz &&:hover .brz-eventCalendar__subscribe .brz-icon-svg-custom": {
+      standart: ["cssStyleElementMinistryEventCalendarCustomIconColor"],
+      interval: ["cssStyleHoverTransition"]
     },
     ".brz && .brz-eventCalendar__subscribe:hover": {
       standart: [
@@ -340,9 +344,10 @@ export function style(
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow",
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarWidth",
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarHeight",
-        "cssStyleElementMinistryEventCalendarIconPosition"
+        "cssStyleElementMinistryEventCalendarIconPosition",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBorderRadius"
       ],
-      interval: ["cssStyleHoverTransition"]
+      interval: ["cssStyleElementMinistryEventCalendarHoverTransition"]
     }
   };
 

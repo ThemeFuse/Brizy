@@ -1,4 +1,10 @@
-import React, { ComponentType, ReactElement, useMemo, useRef } from "react";
+import React, {
+  ComponentType,
+  PropsWithChildren,
+  ReactElement,
+  useMemo,
+  useRef
+} from "react";
 import Sidebar, {
   SidebarOption
 } from "visual/component/Prompts/PromptBlocks/common/Sidebar";
@@ -18,7 +24,7 @@ import { filterFn, getMessage, getSrc, getTags } from "./utils";
 
 export interface Props<T extends Thumbnail> {
   data: Array<T>;
-  HeaderSlotLeft?: ComponentType;
+  HeaderSlotLeft?: ComponentType<PropsWithChildren<unknown>>;
   type: BlockMetaType;
   showSearch?: boolean;
   showSidebar?: boolean;

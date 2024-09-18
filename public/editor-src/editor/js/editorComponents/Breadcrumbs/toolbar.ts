@@ -6,7 +6,6 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types";
 
-// @ts-expect-error "advancedSettings" old options
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
@@ -109,11 +108,9 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       devices: "desktop"
     }
   ];

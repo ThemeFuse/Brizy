@@ -1,7 +1,7 @@
-import { fromElementModel } from "visual/component/Options/types/dev/Motion/types/Value";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { renderStyles } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
+import { fromElementModel } from "visual/utils/options/Motion/types/Value";
 import { types as Devices } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 
@@ -43,19 +43,18 @@ export function styleRow(v, vs, vd) {
       ]
     },
 
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg`]:
-      {
-        standart: [
-          "cssStyleBorder",
-          "cssStyleBorderRadius",
-          ...(maskShape === "none"
-            ? ["cssStyleBoxShadow"]
-            : ["cssStyleMaskDropShadow"]),
-          "cssStyleSizeMaxWidthSize",
-          "cssStyleBlendMode"
-        ],
-        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-      },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg`]: {
+      standart: [
+        "cssStyleBorder",
+        "cssStyleBorderRadius",
+        ...(maskShape === "none"
+          ? ["cssStyleBoxShadow"]
+          : ["cssStyleMaskDropShadow"]),
+        "cssStyleSizeMaxWidthSize",
+        "cssStyleBlendMode"
+      ],
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+    },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
       {
         standart: [
@@ -63,6 +62,8 @@ export function styleRow(v, vs, vd) {
           "cssStyleFilter",
           "cssStyleBgImagePosition",
           "cssStyleBgMediaImage",
+          "cssStyleBgSize",
+          "cssStyleBgRepeat",
           "cssStyleMaskShape",
           "cssStyleMaskCustomShape",
           "cssStyleMaskSize",
@@ -97,15 +98,14 @@ export function styleRow(v, vs, vd) {
         standart: ["cssStyleFilter", "cssStyleBgMediaVideo"],
         interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]:
-      {
-        standart: ["cssStyleBorderTransparentColor"],
-        interval: [
-          "cssStyleRowReverseColumn",
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransition"
-        ]
-      }
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]: {
+      standart: ["cssStyleBorderTransparentColor"],
+      interval: [
+        "cssStyleRowReverseColumn",
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransition"
+      ]
+    }
   };
 
   if (IS_EDITOR) {

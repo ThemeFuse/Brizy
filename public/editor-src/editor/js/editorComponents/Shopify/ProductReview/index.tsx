@@ -6,15 +6,15 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { WithClassName } from "visual/types/attributes";
 import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { WithClassName } from "visual/utils/options/attributes";
 import { Wrapper } from "../../tools/Wrapper";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 export type Value = ElementModel;
 

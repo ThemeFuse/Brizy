@@ -19,6 +19,25 @@
     }
   }
 
+  .brz-lowercase-on {
+    text-transform: lowercase;
+
+    span {
+      text-transform: lowercase;
+    }
+  }
+
+  .brz-tp-script-sub,
+  .brz-tp-script-super {
+    font-size: inherit;
+
+    span,
+    sub,
+    sup {
+      font-size: inherit;
+    }
+  }
+
   @include word-wrap;
 
   > * {
@@ -29,6 +48,7 @@
   em {
     font-style: italic;
   }
+
   ul li,
   ol li {
     margin-left: 1em;
@@ -38,6 +58,7 @@
   ul > li {
     list-style-type: none;
   }
+
   ol li {
     counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8;
     counter-increment: list-0;
@@ -50,7 +71,9 @@
   ol li.ql-indent-5:before,
   ol li.ql-indent-7:before {
     content: "\2022";
-    margin-right: 5px;
+    display: inline-block;
+    min-width: 1em;
+    margin-left: -1em;
   }
 
   // ordered list
@@ -59,74 +82,99 @@
   ol li.ql-indent-4:before,
   ol li.ql-indent-6:before,
   ol li.ql-indent-8:before {
-    margin-right: 5px;
+    display: inline-block;
+    min-width: 1em;
+    margin-left: -1em;
   }
+
   ol li:before {
     content: counter(list-0, decimal) ".";
   }
+
   ol li.ql-indent-1 {
     counter-increment: list-1;
   }
+
   ol li.ql-indent-1 {
     counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8;
   }
+
   ol li.ql-indent-2 {
     counter-increment: list-2;
   }
+
   ol li.ql-indent-2:before {
     content: counter(list-2, decimal) ".";
   }
+
   ol li.ql-indent-2 {
     counter-reset: list-3 list-4 list-5 list-6 list-7 list-8;
   }
+
   ol li.ql-indent-3 {
     counter-increment: list-3;
   }
+
   ol li.ql-indent-3 {
     counter-reset: list-4 list-5 list-6 list-7 list-8;
   }
+
   ol li.ql-indent-4 {
     counter-increment: list-4;
   }
+
   ol li.ql-indent-4:before {
     content: counter(list-4, decimal) ".";
   }
+
   ol li.ql-indent-4 {
     counter-reset: list-5 list-6 list-7 list-8;
   }
+
   ol li.ql-indent-5 {
     counter-increment: list-5;
   }
+
   ol li.ql-indent-5 {
     counter-reset: list-6 list-7 list-8;
   }
+
   ol li.ql-indent-6 {
     counter-increment: list-6;
   }
+
   ol li.ql-indent-6:before {
     content: counter(list-6, decimal) ".";
   }
+
   ol li.ql-indent-6 {
     counter-reset: list-7 list-8;
   }
+
   ol li.ql-indent-7 {
     counter-increment: list-7;
   }
+
   ol li.ql-indent-7 {
     counter-reset: list-8;
   }
+
   ol li.ql-indent-8 {
     counter-increment: list-8;
   }
+
   ol li.ql-indent-8:before {
     content: counter(list-8, decimal) ".";
   }
+
   ol li.ql-indent-8 {
     counter-reset: reset;
   }
+
   .ql-editor {
     white-space: pre-wrap;
   }
+
   .brz-text-mask,
   .brz-image-gradient {
     caret-color: #000;
@@ -135,6 +183,12 @@
     -webkit-box-decoration-break: clone;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+
+    &::selection {
+      -webkit-text-fill-color: initial;
+      background: #3dbfe8;
+      color: #ffffff;
+    }
   }
 
   // Text Reset
@@ -154,6 +208,7 @@
       display: none;
     }
   }
+
   > div > p,
   span {
     margin-top: 0;
@@ -163,42 +218,57 @@
     text-transform: initial;
     text-decoration: initial;
   }
+
   span {
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
     letter-spacing: inherit;
+    text-decoration: inherit;
+    text-transform: inherit;
   }
+
   p {
     display: block;
   }
+
   a,
   em,
   span {
     display: inline;
   }
+
   ol,
   ul,
   dl {
     margin: 0;
     padding: 0;
   }
+
+  ol,
+  ul {
+    margin-left: 1em;
+  }
+
   ol ol,
   ul ul,
   ol ul,
   ul ol {
     margin: 0;
   }
+
   strong {
     font-weight: bold;
   }
+
   .link--anchor,
   .link--story,
   .link--upload,
   .link--external,
+  .link--popup,
   .link--page,
-  .link--popup {
+  .link--dynamic {
     text-decoration: $link-decoration;
 
     @include hover {
@@ -208,7 +278,21 @@
 
   .brz-tp__dc-block {
     @include clearfix;
+
+    ul {
+      font-family: inherit;
+
+      li {
+        display: list-item;
+        list-style-type: inherit;
+
+        &:before {
+          content: none;
+        }
+      }
+    }
   }
+
   .brz-tp__dc-block iframe,
   .brz-tp__dc-block object,
   .brz-tp__dc-block video,
@@ -235,9 +319,11 @@
 // RichText with Dynamic content
 .brz-rich-text__population {
   span {
+    display: inline-block;
     position: relative;
     z-index: 0;
   }
+
   span::before {
     content: "";
     position: absolute;
@@ -259,6 +345,7 @@
   p {
     margin: 0;
   }
+
   a {
     color: inherit;
     text-decoration: $link-decoration;
@@ -267,6 +354,7 @@
       text-decoration: $link-hover-decoration;
     }
   }
+
   blockquote {
     border-left: 4px solid #ccc;
     margin: 5px 0 5px;
@@ -277,40 +365,50 @@
 .brz-rich-text {
   // Indent
   .ql-indent-1 {
-    text-indent: 3em;
+    padding-left: 3em;
   }
+
   .ql-indent-2 {
-    text-indent: 6em;
+    padding-left: 6em;
   }
+
   .ql-indent-3 {
-    text-indent: 9em;
+    padding-left: 9em;
   }
+
   .ql-indent-4 {
-    text-indent: 12em;
+    padding-left: 12em;
   }
+
   .ql-indent-5 {
-    text-indent: 15em;
+    padding-left: 15em;
   }
+
   .ql-indent-6 {
-    text-indent: 18em;
+    padding-left: 18em;
   }
+
   .ql-indent-7 {
-    text-indent: 21em;
+    padding-left: 21em;
   }
+
   .ql-indent-8 {
-    text-indent: 24em;
+    padding-left: 24em;
   }
+
   .ql-indent-9 {
-    text-indent: 27em;
+    padding-left: 27em;
   }
 
   // Align
   .ql-align-center {
     text-align: center;
   }
+
   .ql-align-right {
     text-align: right;
   }
+
   .ql-align-justify {
     text-align: justify;
   }
@@ -324,6 +422,7 @@
     content: "\00a0\00a0";
   }
 }
+
 .brz-population-mask {
   &.brz-population-mask__style {
     -webkit-background-clip: text;
@@ -341,5 +440,9 @@
 
   .brz-story .brz-rich-text > div {
     width: 100%;
+  }
+
+  .brz-rich-text .brz-tp__dc-block-st1 > * {
+    margin: 0;
   }
 }

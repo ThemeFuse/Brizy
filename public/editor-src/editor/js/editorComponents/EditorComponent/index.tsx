@@ -1,16 +1,13 @@
 import classNames from "classnames";
 import React, { ReactNode } from "react";
 import { mergeDeep } from "timm";
-import { defaults, flatten, identity, noop } from "underscore";
+import { flatten, identity, noop } from "underscore";
 import {
   ElementDefaultValue,
-  ElementModel
+  ElementModel,
+  ModelType
 } from "visual/component/Elements/Types";
 import { OptionName, OptionValue } from "visual/component/Options/types";
-import { getOptionModel } from "visual/component/Options/types/utils/fromElementModel";
-import { toElementModel } from "visual/component/Options/types/utils/toElementModel";
-import { getOptionMeta } from "visual/component/Options/types/utils/toMeta/utils";
-import { mergeOptions, optionMap } from "visual/component/Options/utils";
 import Toolbar from "visual/component/Toolbar";
 import {
   OptionDefinition,
@@ -22,7 +19,13 @@ import * as GlobalState from "visual/global/StateMode";
 import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
-import { css } from "visual/utils/cssStyle";
+import { WithClassName } from "visual/types/attributes";
+import {
+  css,
+  filterMergedStylesByDevice,
+  getInitialV,
+  replaceCSSDuplicatesWithEmptyString
+} from "visual/utils/cssStyle";
 import {
   filterStylesByDevice,
   getCSSObjects
@@ -33,27 +36,29 @@ import {
   concatFinalCSS,
   mergeStylesArray
 } from "visual/utils/cssStyle/utils";
-import { IS_PRO, isPro } from "visual/utils/env";
+import { isPro, IS_PRO } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import { defaultValueKey } from "visual/utils/onChange/device";
-import { WithClassName } from "visual/utils/options/attributes";
 import {
   Choices,
-  Handler,
-  getDynamicContentOption
+  getDynamicContentOption,
+  Handler
 } from "visual/utils/options/getDynamicContentOption";
 import { TypeChoices } from "visual/utils/options/types";
-import { wrapOption } from "visual/utils/options/utils";
+import { mergeOptions, optionMap } from "visual/utils/options/utils";
+import { getOptionModel } from "visual/utils/options/utils/fromElementModel";
+import { toElementModel } from "visual/utils/options/utils/toElementModel";
+import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
+import { wrapOption } from "visual/utils/options/utils/wrap";
 import { attachRef } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import * as Responsive from "visual/utils/responsiveMode";
-import { DESKTOP } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
 import { Literal } from "visual/utils/types/Literal";
 import { uuid } from "visual/utils/uuid";
-import { MValue, isT } from "visual/utils/value";
+import { isT, MValue } from "visual/utils/value";
 import {
   DCObjResult,
   getDCObjEditor,
@@ -74,7 +79,6 @@ import {
   NewToolbarConfig,
   OldToolbarConfig,
   OnChangeMeta,
-  Rule,
   SidebarConfig,
   ToolbarConfig,
   ToolbarExtend
@@ -87,7 +91,8 @@ import {
   getOptionValueByDevice,
   getToolbarData,
   inDevelopment,
-  makeToolbarPropsFromConfigDefaults
+  makeToolbarPropsFromConfigDefaults,
+  getElementModelKeyFn
 } from "./utils";
 
 const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
@@ -148,7 +153,6 @@ export class EditorComponent<
   _defaultValueProcessedCache?: DefaultValueProcessed<M>;
   _dc: ECDC = {};
   childToolbarExtend?: ToolbarExtend;
-  toolbarCssOptions: MValue<ToolbarItemType[]> = undefined;
 
   /**
    * @return {string}
@@ -337,15 +341,19 @@ export class EditorComponent<
     return null;
   }
 
-  getMockToolbarOptions = (
+  getToolbarOptions = (
+    currentModel: ModelType,
     toolbars: NewToolbarConfig<M>[]
   ): ToolbarItemType[] => {
+    const v = getInitialV<M>(currentModel, this.getValue2());
+    const { tabsState } = v;
+
     return flatten(
       toolbars.map((toolbar) =>
         toolbar.getItems({
-          v: {} as M,
-          device: DESKTOP,
-          state: NORMAL,
+          v,
+          device: deviceModeSelector(this.getReduxState()),
+          state: State.fromString(Str.read(tabsState) ?? "") ?? NORMAL,
           context: this.context,
           component: this as Editor<M>,
           getValue: this.getValueByOptionId
@@ -355,52 +363,91 @@ export class EditorComponent<
   };
 
   getFilteredToolbarOptions = (
-    toolbars: NewToolbarConfig<M>[],
-    sidebars?: NewToolbarConfig<M>[]
+    currentModel: ModelType,
+    toolbars: NewToolbarConfig<M, P, S>[],
+    sidebars?: NewToolbarConfig<M, P, S>[]
   ): ToolbarItemType[] => {
     const config = Config.getAll();
+    const thirdPartyExtendId = this.getComponentId();
 
-    const toolbarOptions = this.getMockToolbarOptions(toolbars);
+    const toolbarFreeOptions = this.getToolbarOptions(currentModel, toolbars);
+    const toolbarPro = applyFilter(
+      `toolbarItemsExtend_${thirdPartyExtendId}`,
+      null
+    );
+    const toolbarProOptions = this.getToolbarOptions(
+      currentModel,
+      toolbarPro ? [toolbarPro] : []
+    );
+    const toolbarOptions = [...toolbarFreeOptions, ...toolbarProOptions];
 
-    const sidebarOptions =
-      sidebars && sidebars.length ? this.getMockToolbarOptions(sidebars) : [];
+    const sidebarFreeOptions =
+      sidebars && sidebars.length
+        ? this.getToolbarOptions(currentModel, sidebars)
+        : [];
+    const sidebarPro = applyFilter(
+      `sidebarItemsExtend_${thirdPartyExtendId}`,
+      null
+    );
+    const sidebarProOptions = this.getToolbarOptions(
+      currentModel,
+      sidebarPro ? [sidebarPro] : []
+    );
+    const sidebarOptions = [...sidebarFreeOptions, ...sidebarProOptions];
 
-    return [...toolbarOptions, ...sidebarOptions]
-      .map(filterProOptions(isPro(config)))
-      .filter(isT);
+    const options = filterCSSOptions(
+      [...toolbarOptions, ...sidebarOptions]
+        .map(filterProOptions(isPro(config)))
+        .filter(isT)
+    );
+
+    return options.filter((o) => o.disabled !== true);
   };
 
-  getCSS(
-    toolbars: NewToolbarConfig<M>[],
-    sidebars?: NewToolbarConfig<M>[]
-  ): OutputStyle {
-    const model = this.getValue2();
-
-    if (this.toolbarCssOptions === undefined) {
-      const filteredOptionsByIsPro = this.getFilteredToolbarOptions(
-        toolbars,
-        sidebars
-      );
-
-      this.toolbarCssOptions = filterCSSOptions(filteredOptionsByIsPro);
-    }
-
-    const options = this.toolbarCssOptions;
+  getCSS({
+    toolbars,
+    sidebars,
+    model
+  }: {
+    toolbars: NewToolbarConfig<M, P, S>[];
+    sidebars?: NewToolbarConfig<M, P, S>[];
+    model: {
+      v: M;
+      vs: M;
+      vd: M;
+    };
+  }): OutputStyle {
+    const defaultOptions = this.getFilteredToolbarOptions(
+      ModelType.Default,
+      toolbars,
+      sidebars
+    );
+    const rulesOptions = this.getFilteredToolbarOptions(
+      ModelType.Rules,
+      toolbars,
+      sidebars
+    );
+    const customOptions = this.getFilteredToolbarOptions(
+      ModelType.Custom,
+      toolbars,
+      sidebars
+    );
 
     const defaultCSSObj = getCSSObjects({
-      currentModel: "default",
+      currentModel: ModelType.Default,
       model,
-      options
+      options: defaultOptions
     });
+
     const rulesCSSObj = getCSSObjects({
-      currentModel: "rules",
+      currentModel: ModelType.Rules,
       model,
-      options
+      options: rulesOptions
     });
     const customCSSObj = getCSSObjects({
-      currentModel: "custom",
+      currentModel: ModelType.Custom,
       model,
-      options
+      options: customOptions
     });
 
     const css: [
@@ -408,12 +455,20 @@ export class EditorComponent<
       GeneratedCSS<string>,
       GeneratedCSS<string>
     ] = [
-      filterStylesByDevice(mergeStylesArray(defaultCSSObj)),
-      filterStylesByDevice(mergeStylesArray(rulesCSSObj)),
-      filterStylesByDevice(mergeStylesArray(customCSSObj))
+      filterMergedStylesByDevice(
+        mergeStylesArray(filterStylesByDevice(defaultCSSObj))
+      ),
+      filterMergedStylesByDevice(
+        mergeStylesArray(filterStylesByDevice(rulesCSSObj))
+      ),
+      filterMergedStylesByDevice(
+        mergeStylesArray(filterStylesByDevice(customCSSObj))
+      )
     ];
 
-    return addBreakpointsToFilteredCSS(css);
+    const output = addBreakpointsToFilteredCSS(css);
+
+    return replaceCSSDuplicatesWithEmptyString(output);
   }
 
   getCSSClassnames({
@@ -422,17 +477,18 @@ export class EditorComponent<
     stylesFn,
     extraClassNames
   }: {
-    toolbars: NewToolbarConfig<M>[];
-    sidebars?: NewToolbarConfig<M>[];
+    toolbars: NewToolbarConfig<M, P, S>[];
+    sidebars?: NewToolbarConfig<M, P, S>[];
     stylesFn?: (v: M, vs: M, vd: M) => OutputStyle;
     extraClassNames?: Array<string | Record<string, boolean>>;
   }) {
-    const { v, vs, vd } = this.getValue2();
+    const model = this.getValue2();
+    const { v, vs, vd } = model;
 
     const cssFromStylesFn =
       typeof stylesFn === "function" ? stylesFn(v, vs, vd) : undefined;
 
-    const cssFromToolbarOptions = this.getCSS(toolbars, sidebars);
+    const cssFromToolbarOptions = this.getCSS({ toolbars, sidebars, model });
 
     const _css = cssFromStylesFn
       ? concatFinalCSS(cssFromStylesFn, cssFromToolbarOptions)
@@ -461,7 +517,8 @@ export class EditorComponent<
     }
 
     const dcObjKeysAfterHook = this.getDCValueHook(getDCObjKeys, v);
-    const replaceDC = _config.dynamicContent?.liveInBuilder ?? false;
+    const replaceDC =
+      typeof _config.dynamicContent?.getPlaceholderData === "function";
 
     // Can be disabled by Config
     if (!replaceDC || IS_PREVIEW) {
@@ -927,24 +984,15 @@ export class EditorComponent<
     state: State.State,
     items: ToolbarItemType[]
   ): OptionDefinition[] {
-    const getKey = (id: string, key: string, isDev: boolean) => {
-      return id === "tabsState" || !isDev
-        ? id
-        : defaultValueKey({
-            key: createOptionId(id, key),
-            device,
-            state
-          });
-    };
-
     return optionMap((option) => {
       const { id, type, onChange: oldOnchange } = option;
+
+      const getKey = getElementModelKeyFn({ device, state, option });
 
       option = bindStateToOption(GlobalState.states, option, device);
 
       //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
       const isDev = inDevelopment(type);
-
       const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
         v !== undefined ? ({ [id]: v } as Partial<M>) : null;
       const deps = option.dependencies || identity;
@@ -963,15 +1011,13 @@ export class EditorComponent<
         option.value = optionModel;
       }
 
-      const elementModel = toElementModel<typeof type>(type, (key) =>
-        getKey(id, key, isDev)
-      );
+      const elementModel = toElementModel<typeof type>(type, getKey);
 
       option.onChange =
         option.isPro === true && !IS_PRO
           ? noop
           : (value: ElementModel | Literal, meta: Meta): void => {
-              const id = getKey(option.id, "", isDev);
+              const id = getKey("");
               const patch: Partial<Model<M>> = isDev
                 ? deps(elementModel(value))
                 : oldOnchange
@@ -1284,49 +1330,6 @@ export class EditorComponent<
 
   renderForView(v: M, vs: M, vd: M): ReactNode {
     return this.renderForEdit(v, vs, vd);
-  }
-
-  // experimental
-  applyRulesToValue(value: M, rules: (false | Rule)[]): M {
-    const filteredRules = rules.filter(Boolean) as Rule[];
-
-    if (filteredRules.length === 0) {
-      return value;
-    }
-
-    const rulesValue = this.getRulesValue(filteredRules);
-
-    return defaults(rulesValue, value);
-  }
-
-  getRulesValue(rules: Rule[]): MValue<{ [k: string]: Rule }> {
-    const currentStyleRules = rulesSelector(this.getReduxState());
-
-    if (!currentStyleRules) {
-      return undefined;
-    }
-
-    return rules.reduce((acc, rule) => {
-      let overrides;
-
-      switch (typeof rule) {
-        case "object": {
-          const { rule: ruleName, mapper } = rule;
-
-          overrides =
-            currentStyleRules[ruleName] && mapper(currentStyleRules[ruleName]);
-          break;
-        }
-        case "string": {
-          overrides = currentStyleRules[rule];
-          break;
-        }
-        default:
-          throw new Error("Invalid rule type");
-      }
-
-      return overrides ? Object.assign(acc, overrides) : acc;
-    }, {});
   }
 }
 

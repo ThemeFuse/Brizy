@@ -13,7 +13,7 @@ import { Choice } from "visual/utils/options/getDynamicContentChoices";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
-import { MValue, isNullish } from "visual/utils/value";
+import { isNullish, MValue } from "visual/utils/value";
 import { ImageSize, Unit, V } from "./types";
 
 export interface ImageValue {
@@ -228,15 +228,15 @@ export const isPredefinedSize = (
 export const isOriginalSize = (
   size: ALLSizes
 ): size is PredefinedOriginalSize => {
-  return size === "original";
+  return size === SizeType.original;
 };
 
 export const isCustomSize = (size: ALLSizes): size is CustomSize => {
-  return size === "custom";
+  return size === SizeType.custom;
 };
 
 export const getImageSize = (size: string): ALLSizes => {
-  if (size === "custom") {
+  if (size === SizeType.custom) {
     return SizeType.custom;
   }
 
@@ -313,17 +313,20 @@ export function getCustomImageUrl(
     cW: Math.round(cW),
     cH: Math.round(cH)
   };
+
   const url = getImageUrl({
     uid: src,
     crop: options,
     fileName,
-    sizeType: SizeType.custom
+    sizeType: SizeType.custom,
+    imageType: v.imageType
   });
   const retinaUrl = getImageUrl({
     uid: src,
     crop: multiplier(options, 2),
     fileName,
-    sizeType: SizeType.custom
+    sizeType: SizeType.custom,
+    imageType: v.imageType
   });
 
   return {

@@ -1,11 +1,14 @@
 import React, { ReactElement } from "react";
-import { OnChange } from "visual/component/Options/Type";
-import { t } from "visual/utils/i18n";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
-import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OptionLabel } from "visual/component/OptionLabel";
-import { Style, styleTitle } from "../types/effects/Attention";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { OnChange } from "visual/component/Options/Type";
+import { t } from "visual/utils/i18n";
+import {
+  Style,
+  styleTitle
+} from "visual/utils/options/Animation/types/effects/Attention";
 
 export interface Props<T extends Style> {
   styles: T[];
@@ -22,7 +25,7 @@ export function AttentionStyle<T extends Style>({
     <OptionWrapper display={"inline"} className={"brz-ed-option"}>
       <OptionLabel label={t("Style")} />
       <Select2<T> value={value} onChange={onChange} editable={false}>
-        {styles.map(s => {
+        {styles.map((s) => {
           return (
             <Item<Style> key={s} value={s}>
               {styleTitle(s)}

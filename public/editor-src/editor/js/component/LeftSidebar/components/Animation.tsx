@@ -1,5 +1,6 @@
 import React from "react";
 import { Transition } from "react-transition-group";
+import { FCC } from "visual/utils/react/types";
 
 const duration = 150;
 
@@ -10,7 +11,10 @@ const defaultStyle = {
 
 const transitionStyles = {
   entering: { transform: "translate3d(-100%, 0, 0)" },
-  entered: { transform: "translate3d(0, 0, 0)" }
+  entered: { transform: "translate3d(0, 0, 0)" },
+  exiting: undefined,
+  exited: undefined,
+  unmounted: undefined
 };
 
 type Props = {
@@ -19,7 +23,7 @@ type Props = {
   unmountOnExit?: boolean;
 };
 
-const SlideLeft: React.FC<Props> = ({
+const SlideLeft: FCC<Props> = ({
   in: inProp,
   children,
   appear,
@@ -31,7 +35,7 @@ const SlideLeft: React.FC<Props> = ({
     appear={appear}
     unmountOnExit={unmountOnExit}
   >
-    {(state: keyof typeof transitionStyles): React.ReactNode => (
+    {(state: keyof typeof transitionStyles): JSX.Element => (
       <div
         className={`brz-ed-sidebar__content ${inProp ? "active" : ""}`}
         style={{

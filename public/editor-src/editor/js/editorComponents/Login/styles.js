@@ -23,7 +23,8 @@ export function style(v, vs, vd) {
           "cssStyleElementLoginTextTypography2LineHeight",
           "cssStyleElementLoginTextTypography2FontWeight",
           "cssStyleElementLoginTextTypography2LetterSpacing",
-          "cssStyleElementLoginTextTypography2FontVariation"
+          "cssStyleElementLoginTextTypography2FontVariation",
+          "cssStyleElementLoginTextTransform"
         ]
       },
     ".brz && .brz-login__authorized p:hover": {
@@ -48,7 +49,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ]
     },
     ".brz && .brz-login-form .brz-login-form__field": {
@@ -67,7 +69,8 @@ export function style(v, vs, vd) {
         "cssStyleElementForm2FieldsLabelFontWeight",
         "cssStyleElementForm2FieldsLabelLetterSpacing",
         "cssStyleElementForm2FieldsLabelLineHeight",
-        "cssStyleElementForm2FieldsLabelFontVariation"
+        "cssStyleElementForm2FieldsLabelFontVariation",
+        "cssStyleElementForm2FieldsLabelTextTransform"
       ]
     },
     ".brz && .brz-login-form .brz-login-form__field-lost-password:hover": {
@@ -79,6 +82,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginLostPasswordTypography2LetterSpacing",
         "cssStyleElementLoginLostPasswordTypography2LineHeight",
         "cssStyleElementLoginLostPasswordTypography2FontVariation",
+        "cssStyleElementLoginLostPasswordTextTransform",
         "cssStyleElementLoginLostPasswordAlign"
       ]
     },
@@ -91,6 +95,7 @@ export function style(v, vs, vd) {
         "cssStyleElementForm2FieldsCheckboxLetterSpacing",
         "cssStyleElementForm2FieldsCheckboxLineHeight",
         "cssStyleElementForm2FieldsCheckboxFontVariation",
+        "cssStyleElementForm2FieldsCheckboxTextTransform",
         "cssStyleElementLoginRememberMeAlign"
       ]
     },
@@ -102,6 +107,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginRegisterInfoTypography2FontWeight",
         "cssStyleElementLoginRegisterInfoTypography2LetterSpacing",
         "cssStyleElementLoginRegisterInfoTypography2FontVariation",
+        "cssStyleElementLoginRegisterInfoTextTransform",
         "cssStyleElementRegisterInfoColor",
         "cssStyleElementRegisterInfoAlign"
       ]
@@ -114,6 +120,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginRegisterLinkTypography2FontWeight",
         "cssStyleElementLoginRegisterLinkTypography2LetterSpacing",
         "cssStyleElementLoginRegisterLinkTypography2FontVariation",
+        "cssStyleElementLoginRegisterLinkTextTransform",
         "cssStyleElementLoginRegisterLinkColor",
         "cssStyleElementLoginRegisterLinkAlign"
       ]
@@ -126,6 +133,7 @@ export function style(v, vs, vd) {
         "cssStyleElementLoginLoginLinkTypography2FontWeight",
         "cssStyleElementLoginLoginLinkTypography2LetterSpacing",
         "cssStyleElementLoginLoginLinkTypography2FontVariation",
+        "cssStyleElementLoginLoginLinkTextTransform",
         "cssStyleElementLoginLoginLinkColor",
         "cssStyleElementLoginLoginLinkAlign"
       ]

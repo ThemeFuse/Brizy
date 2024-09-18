@@ -1,3 +1,4 @@
+import { Obj } from "@brizy/readers";
 import { ComponentProps } from "react";
 import {
   OptionName,
@@ -5,16 +6,16 @@ import {
   OptionValue
 } from "visual/component/Options/types";
 import { UserRole } from "visual/types";
-import { OptionStyle } from "visual/utils/cssStyle/types";
-import { Device } from "visual/utils/devices";
-import { Disabled } from "visual/utils/disabled";
 import {
   WithClassName,
   WithHelper,
   WithId,
   WithLabel,
   WithPopulation
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
+import { OptionStyle } from "visual/utils/cssStyle/types";
+import { Device } from "visual/utils/devices";
+import { Disabled } from "visual/utils/disabled";
 import { State } from "visual/utils/stateMode";
 
 export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
@@ -44,6 +45,7 @@ export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
     isPro?: boolean;
     style?: OptionStyle<K>;
     selector?: string;
+    preserveId?: boolean;
     default?: Partial<OptionValue<K>>;
   };
 
@@ -62,6 +64,13 @@ export type ToolbarItemTypeWithOptions = ToolbarItemType & {
 export type ToolbarItemTypeWithTabs = ToolbarItemType & {
   tabs: ToolbarItemType[];
 };
+
+export type ToolbarItemTypeWithChildOption = ToolbarItemType & {
+  option: ToolbarItemType;
+};
+
+export const hasId = (o: unknown): boolean =>
+  Obj.isObject(o) && Obj.hasKey("id", o);
 
 export const is =
   (checker: (o: unknown) => boolean) =>

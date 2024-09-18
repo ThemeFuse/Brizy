@@ -103,6 +103,12 @@
     "filterVariableFontWeight": 400,
     "filterFontWidth": 100,
     "filterFontSoftness": 0,
+    "filterBold": false,
+    "filterItalic": false,
+    "filterUnderline": false,
+    "filterStrike": false,
+    "filterUppercase": false,
+    "filterLowercase": false,
 
     "borderStyle": "solid",
 

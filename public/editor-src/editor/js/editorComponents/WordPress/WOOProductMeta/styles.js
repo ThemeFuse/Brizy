@@ -26,6 +26,7 @@ export function style(v, vs, vd) {
           "cssStyleElementWOOProductMetaCategoryFontWeight",
           "cssStyleElementWOOProductMetaCategoryLetterSpacing",
           "cssStyleElementWOOProductMetaCategoryFontVariation",
+          "cssStyleElementWOOProductMetaCategoryTextTransform",
           "cssStyleElementWOOProductMetaCategoryColor"
         ]
       },
@@ -38,6 +39,7 @@ export function style(v, vs, vd) {
           "cssStyleElementWOOProductMetaValueFontWeight",
           "cssStyleElementWOOProductMetaValueLetterSpacing",
           "cssStyleElementWOOProductMetaValueFontVariation",
+          "cssStyleElementWOOProductMetaValueTextTransform",
           "cssStyleElementWOOProductMetaRightSpacing",
           "cssStyleElementWOOProductMetaValueColor"
         ]

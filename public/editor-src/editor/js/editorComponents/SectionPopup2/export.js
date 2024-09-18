@@ -26,9 +26,12 @@ $.fn.popup = function () {
       }
 
       if (showAfter) {
-        setTimeout(() => {
-          $this.find(".brz-popup2__close").removeClass("brz-hidden");
-        }, Number(showAfter) * 1000);
+        setTimeout(
+          () => {
+            $this.find(".brz-popup2__close").removeClass("brz-hidden");
+          },
+          Number(showAfter) * 1000
+        );
       }
 
       $this.addClass("brz-popup2--opened");
@@ -59,23 +62,18 @@ export default function ($node) {
 
   // append the popup to body to avoid problems with z-index
   const rootBody = root.ownerDocument.body;
-  const globalPopupsProcessed = {};
 
   root
-    .querySelectorAll(
-      makeDataAttrString({ name: "link-type", value: "'popup'" })
-    )
+    .querySelectorAll(makeDataAttrString({ name: "link-type", value: "popup" }))
     .forEach((node) => {
       const popupId = node.getAttribute("href").slice(1); // without the `#`
-      let parent = node.parentElement;
-      let popup;
 
-      // Link with reference to a global popup
-      // Global Block Popup exist only 1 in all page
-      if (globalPopupsProcessed[popupId]) {
-        node.setAttribute("href", `#${globalPopupsProcessed[popupId]}`);
+      if (!popupId) {
         return;
       }
+
+      let parent = node.parentElement;
+      let popup;
 
       while (parent) {
         popup = [...parent.children].find(
@@ -89,19 +87,12 @@ export default function ($node) {
         parent = parent.parentElement;
       }
 
-      // append the popup to body to avoid problems with z-index
-      // need to regenerate ids for popups for Dynamic Content
-      if (popup && popup.parentElement !== rootBody) {
+      if (popup) {
+        // Need to generate a new UID to resolve problems with global popup.
+        // The global popup doesn't need to be removed because the popup can be inside a post loop.
         const newId = uuid();
-        const isGlobal = popup.getAttribute("id").includes("global_");
-
         node.setAttribute("href", `#${newId}`);
         popup.setAttribute(makeAttr("popup"), newId);
-
-        if (isGlobal) {
-          globalPopupsProcessed[popupId] = newId;
-        }
-
         rootBody.append(popup);
       }
     });
@@ -122,69 +113,64 @@ export default function ($node) {
       }
     });
 
-  $node
-    .find(
-      ".brz-simple-popup, .brz-conditions-internal-popup, .brz-conditions-external-popup"
-    )
-    .filter(function () {
-      return !($(this).attr("data-brz-embedded") === "true");
-    })
-    .each(function () {
-      const $this = $(this);
+  // Excluded embedded popups(.brz-conditions-popup--static)
+  const $conditionalPopups = $node
+    .find(".brz-conditions-popup:not(.brz-conditions-popup--static)")
+    .filter((_, node) => node.innerHTML);
 
-      $this.on("click", function (e) {
-        const canClosePopup = !clickInsideExceptions.some((className) =>
-          e.target.classList.contains(className)
-        );
+  // Popups with Triggers
+  $conditionalPopups.each(function () {
+    const $this = $(this);
+    const data = _parsePopupData($this);
+    const $popup = $this.children(".brz-popup2");
+    const popup = $popup.popup();
 
-        if (canClosePopup) {
-          const clickedOutSideToClose =
-            $this.attr(clickOutsideAttr) ?? $this.attr(oldClickOutsideAttr);
+    window.brzPopup(
+      Object.assign({}, data, {
+        show: function () {
+          this.show();
+        }.bind(popup),
+        hide: function () {
+          this.close();
+        }.bind(popup)
+      })
+    );
+  });
 
-          const clickedOutSideContent =
-            $(e.target).closest(".brz-container").length === 0;
-          const clickedTheCross = $(e.target).closest(
-            ".brz-popup2__close"
-          ).length;
-          const clickedTheCrossAction = $(e.target).closest(
-            ".brz-popup2__action-close"
-          ).length;
+  $node.find(".brz-popup2, .brz-popup").each(function () {
+    const $this = $(this);
+    $this.on("click", function (e) {
+      const canClosePopup = !clickInsideExceptions.some((className) =>
+        e.target.classList.contains(className)
+      );
 
-          const clickedFormEvent =
-            $(e.target).closest(".select2-selection__choice").length > 0;
+      if (canClosePopup) {
+        const clickedOutSideToClose =
+          $this.attr(clickOutsideAttr) ?? $this.attr(oldClickOutsideAttr);
 
-          if (
-            clickedTheCrossAction ||
-            clickedTheCross ||
-            (!clickedFormEvent &&
-              clickedOutSideContent &&
-              clickedOutSideToClose)
-          ) {
-            e.preventDefault();
-            $this.popup().close();
-          }
+        const clickedOutSideContent =
+          $(e.target).closest(".brz-container").length === 0;
+        const clickedTheCross = $(e.target).closest(
+          ".brz-popup2__close"
+        ).length;
+        const clickedTheCrossAction = $(e.target).closest(
+          ".brz-popup2__action-close"
+        ).length;
+
+        const clickedFormEvent =
+          $(e.target).closest(".select2-selection__choice").length > 0;
+
+        if (
+          clickedTheCrossAction ||
+          clickedTheCross ||
+          (!clickedFormEvent && clickedOutSideContent && clickedOutSideToClose)
+        ) {
+          e.preventDefault();
+          $this.popup().close();
         }
-      });
-
-      if (
-        $this.hasClass("brz-conditions-internal-popup") ||
-        $this.hasClass("brz-conditions-external-popup")
-      ) {
-        const data = _parsePopupData($this);
-        const popup = $this.popup();
-
-        window.brzPopup(
-          Object.assign({}, data, {
-            show: function () {
-              this.show();
-            }.bind(popup),
-            hide: function () {
-              this.close();
-            }.bind(popup)
-          })
-        );
       }
     });
+  });
 
   // closes a popup when an anchor link is clicked inside it
   window.Brz.on("elements.anchor.startScrolled", (anchor) => {
@@ -198,30 +184,33 @@ export default function ($node) {
 }
 
 function _parsePopupData($popup) {
-  var triggerOnce = $popup.attr(makeAttr("trigger_once"));
+  const triggerOnce = $popup.attr(makeAttr("trigger_once"));
+  const popup = $popup.find(".brz-popup2");
 
-  var popupId = $popup.attr(makeAttr("popup"));
+  // custom-id is for the old popups that haven't been updated
+  const popupId =
+    popup?.attr(makeAttr("once-id")) ?? popup?.attr(makeAttr("custom-id"));
 
-  var pageLoad =
+  const pageLoad =
     $popup.attr(makeAttr("page_load")) ?? $popup.attr("data-page_load");
-  var click = $popup.attr(makeAttr("click"));
-  var inactivity = $popup.attr(makeAttr("inactivity"));
-  var exitIntent = $popup.attr(makeAttr("exit_intent"));
-  var scrolling = _parseData($popup.attr(makeAttr("scrolling")));
+  const click = $popup.attr(makeAttr("click"));
+  const inactivity = $popup.attr(makeAttr("inactivity"));
+  const exitIntent = $popup.attr(makeAttr("exit_intent"));
+  const scrolling = _parseData($popup.attr(makeAttr("scrolling")));
 
-  var showing = _parseData($popup.attr(makeAttr("showing")));
-  var loggedIn = _parseData($popup.attr(makeAttr("logged_in")));
-  var referrer = _parseData($popup.attr(makeAttr("referrer")));
-  var devices = _parseData($popup.attr(makeAttr("devices")));
+  const showing = _parseData($popup.attr(makeAttr("showing")));
+  const loggedIn = _parseData($popup.attr(makeAttr("logged_in")));
+  const referrer = _parseData($popup.attr(makeAttr("referrer")));
+  const devices = _parseData($popup.attr(makeAttr("devices")));
 
-  var currentUrl = _parseData($popup.attr(makeAttr("current_url")));
-  var currentDate = _parseData($popup.attr(makeAttr("current_date")));
-  var lastVisitDate = _parseData($popup.attr(makeAttr("last_visit_date")));
-  var timeFrom = _parseData($popup.attr(makeAttr("time_from")));
-  var cookie = _parseData($popup.attr(makeAttr("cookie")));
-  var os = _parseData($popup.attr(makeAttr("os")));
-  var otherPopups = _parseData($popup.attr(makeAttr("other_popups")));
-  var specificPopup = _parseData($popup.attr(makeAttr("specific_popup")));
+  const currentUrl = _parseData($popup.attr(makeAttr("current_url")));
+  const currentDate = _parseData($popup.attr(makeAttr("current_date")));
+  const lastVisitDate = _parseData($popup.attr(makeAttr("last_visit_date")));
+  const timeFrom = _parseData($popup.attr(makeAttr("time_from")));
+  const cookie = _parseData($popup.attr(makeAttr("cookie")));
+  const os = _parseData($popup.attr(makeAttr("os")));
+  const otherPopups = _parseData($popup.attr(makeAttr("other_popups")));
+  const specificPopup = _parseData($popup.attr(makeAttr("specific_popup")));
 
   return {
     pageLoad: pageLoad,

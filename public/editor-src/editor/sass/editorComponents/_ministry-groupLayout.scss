@@ -41,12 +41,8 @@
   }
   &--item {
     &__content-detailButton {
-      width: fit-content;
-
       a {
-        border-radius: 3px;
         color: inherit;
-        padding: 12px 24px;
       }
     }
   }
@@ -108,10 +104,13 @@
         height: 100%;
         display: block;
         font-family: inherit;
+        font-style: inherit;
         font-size: inherit;
         line-height: inherit;
         font-weight: inherit;
         letter-spacing: inherit;
+        font-variation-settings: inherit;
+        text-transform: inherit;
         color: inherit;
         min-height: 36px;
         appearance: none;
@@ -181,6 +180,10 @@
         }
       }
     }
+  }
+
+  h5.brz-groupLayout-results-heading {
+    margin-bottom: 20px;
   }
 }
 

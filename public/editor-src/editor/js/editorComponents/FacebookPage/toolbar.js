@@ -149,11 +149,9 @@ export function getItems({ v, device, state }) {
     {
       id: "advancedSettings",
       devices: "desktop",
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       roles: ["admin"],
-      position: 110,
-      icon: "nc-cog"
+      position: 110
     },
     { id: "horizontalAlign", type: "toggle", disabled: true }
   ];

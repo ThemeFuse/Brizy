@@ -1,29 +1,35 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { identity } from "underscore";
+import { DisabledIcon } from "visual/component/Controls/common/DisabledIcon";
+import { Icon } from "visual/component/Controls/common/Icon";
 import { Group } from "visual/component/Controls/Group";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
-import { OptionWrapper } from "visual/component/OptionWrapper";
 import * as Option from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
-import { WithClassName } from "visual/utils/options/attributes";
-import { DisabledIcon } from "./components/DisabledIcon";
-import { Icon } from "./components/Icon";
-import { Config } from "./types/Config";
-import * as Patch from "./types/Patch";
-import { Effect, EffectValue, Value, effects } from "./types/Value";
-import { effectIcon, effectOptions, effectTitle } from "./utils";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { WithClassName } from "visual/types/attributes";
+import { Config } from "visual/utils/options/Motion/types/Config";
+import * as Patch from "visual/utils/options/Motion/types/Patch";
+import {
+  Effect,
+  effects,
+  EffectValue,
+  Value
+} from "visual/utils/options/Motion/types/Value";
+import { effectIcon, effectTitle } from "visual/utils/options/Motion/utils";
+import { effectOptions } from "./utils";
 
 export interface Props extends Option.Props<Value, Patch.Patch>, WithClassName {
   config?: Config;
 }
 
-export const Motion: FC<Props> = ({
+export const Motion = ({
   className,
   label,
   value,
   onChange,
   config
-}) => {
+}: Props): JSX.Element => {
   const { active } = value;
   const disabled = config?.disabled ?? [];
   const activeEffect = active ? value[active] : undefined;

@@ -1,5 +1,5 @@
 import { OnChange } from "visual/component/Options/Type";
-import { VariationFont } from "visual/types";
+import { FontTransform, TextScripts, VariationFont } from "visual/types";
 import { Font, FontFamily } from "./FontFamily";
 import { FontLetterSpacing } from "./FontLetterSpacing";
 import { FontLineHeight } from "./FontLineHeight";
@@ -8,6 +8,8 @@ import { FontStyle } from "./FontStyle";
 import { FontStyle as FontStyleType } from "./FontStyle";
 import { FontWeight } from "./FontWeight";
 import { Value } from "./Value";
+import { Choice } from "visual/component/Controls/Toggle/types";
+import { WithValue } from "visual/types/attributes";
 
 type changeValue = Value[keyof Value] | Font;
 type changeMeta = {
@@ -20,7 +22,8 @@ export interface TypographyProps
     FontSize,
     FontStyle,
     FontWeight,
-    FontFamily {
+    FontFamily,
+    FontTransform {
   className?: string;
   onChange: (v: changeValue, meta: changeMeta) => void;
 
@@ -28,6 +31,8 @@ export interface TypographyProps
   activeIcon?: string;
   onIconClick: (icon: string) => void;
   variations?: VariationFont[];
+  showTextTransform?: boolean;
+  scriptChoices?: Choice<FontTransform["script"]>[];
 }
 
 export interface FontStyleProps {
@@ -52,3 +57,19 @@ export type FontVariationProps = Omit<
   FontWeightProps,
   "onFontWeightChange" | "weights" | "weight"
 >;
+
+export interface FontScript {
+  script: TextScripts;
+  scriptChoices: Choice<TextScripts>[];
+}
+
+export interface FontTransformProps extends FontTransform {
+  onBoldChange: OnChange<FontTransform["bold"]>;
+  onItalicChange: OnChange<FontTransform["italic"]>;
+  onUnderlineChange: OnChange<FontTransform["underline"]>;
+  onStrikeChange: OnChange<FontTransform["strike"]>;
+  onUppercaseChange: OnChange<FontTransform["uppercase"]>;
+  onLowercaseChange: OnChange<FontTransform["lowercase"]>;
+  onScriptChange: OnChange<WithValue<FontTransform["script"]>>;
+  scriptChoices?: Choice<FontTransform["script"]>[];
+}

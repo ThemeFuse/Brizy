@@ -142,10 +142,9 @@ export const getItems = ({ v, device, state }) => {
         },
         {
           id: "advancedSettings",
-          type: "legacy-advancedSettings",
+          type: "advancedSettings",
           devices: "desktop",
-          label: t("More Settings"),
-          icon: "nc-cog"
+          label: t("More Settings")
         }
       ]
     }

@@ -1,37 +1,45 @@
-import classNames from "classnames";
-import React, { useCallback } from "react";
-import EditorIcon from "visual/component/EditorIcon";
+import React, { useCallback, useMemo } from "react";
+import { ToggleButton as Control } from "visual/component/Controls/ToggleButton";
 import { Props } from "./types";
+import { Toggle } from "visual/utils/options/utils/Type";
 
-export const ToggleButton: React.FC<Props> = ({
-  value: _value,
+export const ToggleButton = ({
+  value: { value },
+  label,
   className,
   onChange,
   children,
   align = "center",
   config
-}) => {
-  const { icon, title, reverseTheme } = config;
-  const { value } = _value;
+}: Props): JSX.Element | null => {
+  const { icon, title, reverseTheme, type, on, off } = config;
 
-  const handleClick = useCallback(() => {
-    onChange(!value);
-  }, [onChange, value]);
-
-  const _className = classNames(
-    {
-      "brz-ed-toolbar--active": value,
-      reverseTheme: reverseTheme
-    },
-    "brz-ed-control__button",
-    `brz-ed-control__button-${align}`,
-    className
+  const { _on, _off } = useMemo(
+    () => ({
+      _on: on ?? Toggle.ON,
+      _off: off ?? Toggle.OFF
+    }),
+    [on, off]
   );
 
-  return children || icon ? (
-    <div className={_className} onClick={handleClick} title={title}>
-      {icon && <EditorIcon icon={icon} />}
-      {children && <span className={"brz-ed-control__label"}>{children}</span>}
-    </div>
-  ) : null;
+  const handleClick = useCallback(() => {
+    const v = value === _on ? _off : _on;
+    onChange({ value: v });
+  }, [_off, _on, onChange, value]);
+
+  return (
+    <Control
+      value={value === _on}
+      icon={icon}
+      title={title}
+      label={label}
+      onClick={handleClick}
+      className={className}
+      type={type}
+      align={align}
+      reverseTheme={reverseTheme}
+    >
+      {children}
+    </Control>
+  );
 };

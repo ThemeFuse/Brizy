@@ -3,7 +3,6 @@ import { produce } from "immer";
 import React from "react";
 import { getIn, insert, removeAt, replaceAt, setIn } from "timm";
 import ErrorBoundary from "visual/component/ErrorBoundary";
-import { mergeOptions } from "visual/component/Options/utils";
 import {
   flattenDefaultValue,
   makeToolbarPropsFromConfigDefaults
@@ -11,8 +10,7 @@ import {
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 import Config from "visual/global/Config";
 import Editor from "visual/global/Editor";
-import { updateCopiedElement } from "visual/redux/actions";
-import { updateUI } from "visual/redux/actions2";
+import { updateCopiedElement, updateUI } from "visual/redux/actions2";
 import {
   copiedElementNoRefsSelector,
   deviceModeSelector,
@@ -34,6 +32,7 @@ import {
   setStyles,
   stripSystemKeys
 } from "visual/utils/models";
+import { mergeOptions } from "visual/utils/options/utils";
 import { read as readNumber } from "visual/utils/reader/number";
 import * as State from "visual/utils/stateMode";
 import { getComponentDefaultValue } from "visual/utils/traverse/common";
@@ -46,6 +45,12 @@ const clone = (value, options) => deepMerge(emptyTarget(value), value, options);
 
 function combineMerge(target, source, options) {
   const destination = target.slice();
+
+  // remove additional items which shouldn't be in destination
+  if (destination?.length > 0 && source?.length > 0) {
+    source.splice(target.length);
+  }
+
   source.forEach(function (e, i) {
     if (typeof destination[i] === "undefined") {
       const cloneRequested = options.clone !== false;
@@ -860,7 +865,8 @@ export default class EditorArrayComponent extends EditorComponent {
         depth = 1;
         if (
           copiedElement.value.items[0].type === "Form" ||
-          copiedElement.value.items[0].type === "IconText"
+          copiedElement.value.items[0].type === "IconText" ||
+          copiedElement.value.items[0].type === "Form2"
         ) {
           depth = 3;
         } else if (copiedElement.value.items[0].type === "ImageGallery") {

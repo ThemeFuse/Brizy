@@ -88,7 +88,7 @@ export function getItems({
                       type: "slider",
                       disabled: dvv("sliderAutoPlay") !== "on",
                       config: {
-                        min: 1,
+                        min: 0,
                         max: 6,
                         units: [{ value: "s", title: "s" }]
                       }
@@ -101,7 +101,7 @@ export function getItems({
                   type: "slider",
                   config: {
                     min: 1,
-                    max: 10,
+                    max: 40,
                     step: 0.1,
                     units: [{ value: "s", title: "s" }]
                   }
@@ -332,13 +332,10 @@ export function getItems({
     { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "advancedSettings",
-      // @ts-expect-error: Need transform to ts
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       position: 110,
       title: t("Settings"),
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 }

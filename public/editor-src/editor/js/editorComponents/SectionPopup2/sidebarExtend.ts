@@ -31,7 +31,8 @@ export function getItems(): ToolbarItemType[] {
                     {
                       id: "showOnDesktop",
                       type: "switch",
-                      disabled: true
+                      disabled: true,
+                      preserveId: true
                     }
                   ]
                 }

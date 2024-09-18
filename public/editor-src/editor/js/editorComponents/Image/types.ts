@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { ReactNode } from "react";
 import { LinkData } from "visual/component/Link/types/Type";
 import { LinkProps } from "visual/component/hooks/withLink";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
@@ -60,6 +60,7 @@ export type V = {
   imagePopulation: string;
   sizeType: string;
   imageType: ImageType;
+  alt: string | null;
   size: number;
   tabletSize: number | null;
   mobileSize: number | null;
@@ -109,6 +110,7 @@ export type ImageProps = {
   wrapperSizes: WrapperSizes;
   getResponsiveUrls: GetResponsiveUrls;
   extraAttributes?: React.HTMLAttributes<HTMLImageElement>;
+  children: ReactNode;
   onChange: (arg0: Patch) => void;
   onStart?: VoidFunction;
   onEnd?: VoidFunction;

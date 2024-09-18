@@ -1,19 +1,29 @@
-import { Reader } from "visual/utils/types/Type";
-import * as Type from "./Type";
-import * as Cat from "./Categories";
-import * as Str from "visual/utils/string/specs";
-import * as Num from "visual/utils/math/number";
+import { Num, Obj, pipe, Str } from "@brizy/readers";
+import { mPipe, optional, parseStrict } from "fp-utilities";
 import { toArray } from "visual/utils/array";
+import { always } from "visual/utils/fp";
+import { t } from "visual/utils/i18n";
+import { Reader } from "visual/utils/types/Type";
+import { throwOnNullish } from "visual/utils/value";
+import * as Cat from "./Categories";
+import * as Type from "./Type";
+import { IconTypes } from "./Type";
 
 export type Icon = {
   title: string;
   name: string;
   cat: number[];
-  type: Type.Id;
+  type: Type.TypeId;
   family?: string;
 };
 
-export const read: Reader<Icon> = v => {
+export interface CustomIcon {
+  name: string;
+  filename?: string;
+  type: IconTypes;
+}
+
+export const read: Reader<Icon> = (v) => {
   if (v === null || typeof v !== "object") {
     return undefined;
   }
@@ -39,3 +49,12 @@ export const read: Reader<Icon> = v => {
     family
   };
 };
+
+export const readCustom = parseStrict<Record<string, unknown>, CustomIcon>({
+  name: pipe(
+    mPipe(Obj.readKey("name"), Str.read),
+    throwOnNullish(t("Invalid Icon name"))
+  ),
+  filename: optional(mPipe(Obj.readKey("filename"), Str.read)),
+  type: always(IconTypes.Custom)
+});

@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import { Dictionary } from "visual/types/utils";
 import { isNullish } from "visual/utils/value";
 import { Reader } from "./types";
@@ -88,7 +88,10 @@ export const length = (obj: Record<string, unknown>): number =>
 export const isEmpty = (obj: Record<string, unknown>): boolean =>
   length(obj) === 0;
 
-export const filterNullish = <T extends Record<string, unknown>>(obj: T): T =>
+export const filterNullish = <T extends Record<string, unknown>>(
+  obj: T,
+  options?: { empty?: boolean }
+): T =>
   produce(obj, (draft) => {
     Object.keys(draft).forEach((k) => {
       const current = draft[k];
@@ -97,7 +100,22 @@ export const filterNullish = <T extends Record<string, unknown>>(obj: T): T =>
         delete draft[k];
       }
 
-      if (isObject(current) && !Array.isArray(current)) {
+      if (options?.empty) {
+        if (current === "") {
+          delete draft[k];
+        }
+
+        if (isObject(current)) {
+          if (
+            (Array.isArray(current) && current.length === 0) ||
+            length(current) === 0
+          ) {
+            delete draft[k];
+          }
+        }
+      }
+
+      if (isObject(current) && !Array.isArray(current) && length(current) > 0) {
         // @ts-expect-error: Index signature
         draft[k] = filterNullish(current);
       }
@@ -137,4 +155,26 @@ export const diff = <
     });
 
   return filterNullish(result) as K | Partial<K>;
+};
+
+export const replaceNullish = <
+  T extends Record<string, unknown> = Record<string, unknown>
+>(
+  obj1: T,
+  obj2: T
+): T => {
+  return produce(obj1, (draft) => {
+    Object.keys(draft).forEach((k) => {
+      const current = draft[k];
+
+      if (isNullish(current)) {
+        const candidate = obj2[k];
+
+        if (!isNullish(candidate)) {
+          // @ts-expect-error: Index signature
+          draft[k] = candidate;
+        }
+      }
+    });
+  });
 };

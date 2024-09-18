@@ -1,27 +1,36 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { Props as SP, Spacing } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
 import {
   Meta as OptionMeta,
   Props as OptionProps
 } from "visual/component/Options/Type";
-import { Config } from "visual/component/Options/types/dev/Padding/types/Config";
-import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
-import { Type } from "visual/component/Options/utils/Type";
+import { WithConfig } from "visual/types/attributes";
 import { mPipe, pipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
 import { Meta } from "visual/utils/options/Padding/meta";
-import { WithConfig } from "visual/utils/options/attributes";
-import { Value } from "./types/Value";
-import * as V from "./types/Value";
-import { getIcon, unitSetter, valueSetter } from "./utils";
+import { Config } from "visual/utils/options/Padding/types/Config";
+import * as V from "visual/utils/options/Padding/types/Value";
+import { Value } from "visual/utils/options/Padding/types/Value";
+import {
+  getIcon,
+  unitSetter,
+  valueSetter
+} from "visual/utils/options/Padding/utils";
+import { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
+import { Type } from "visual/utils/options/utils/Type";
 
 export interface Props
   extends OptionProps<Value>,
     OptionMeta<Meta>,
     WithConfig<Config> {}
 
-export const Padding: FC<Props> = ({ value, onChange, label, config }) => {
+export const Padding = ({
+  value,
+  onChange,
+  label,
+  config
+}: Props): ReactElement => {
   const onType = useCallback(
     (v: Type) => onChange(V.setType(v, value)),
     [value, onChange]

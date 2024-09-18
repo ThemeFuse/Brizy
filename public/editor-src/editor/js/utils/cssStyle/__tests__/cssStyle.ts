@@ -1,7 +1,12 @@
+import { ModelType } from "visual/component/Elements/Types";
 import { t } from "visual/utils/i18n";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-import { filterStylesByDevice, getCSSObjects } from "../index";
-import { GeneratedCSS, Option } from "../types";
+import {
+  filterMergedStylesByDevice,
+  filterStylesByDevice,
+  getCSSObjects
+} from "../index";
+import { CSS, GeneratedCSS, Option } from "../types";
 
 export const heightOptionWithStyle: Option<"slider"> = {
   id: "height",
@@ -117,7 +122,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   test("Empty values, should return empty object", () => {
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: {}, vs: {}, v: {} },
         options: []
       })
@@ -125,9 +130,16 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
   });
 
   test("2 Options with same selector", () => {
+    const output = {
+      "{{WRAPPER}}": [
+        "border:5px solid rgba(115, 119, 127, 1);",
+        "background-color:rgba(255, 0, 0, 1); background-image:none;"
+      ]
+    };
+
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: {
           vd: { ...backgroundColorElementModel, ...borderElementModel },
           vs: { ...backgroundColorElementModel, ...borderElementModel },
@@ -140,14 +152,9 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [
-        {
-          "{{WRAPPER}}": [
-            "border:5px solid rgba(115, 119, 127, 1);",
-            "background-color:rgba(255, 0, 0, 1); background-image:none;"
-          ]
-        }
-      ]
+      desktop: [output],
+      tablet: [output],
+      mobile: [output]
     });
   });
 
@@ -158,9 +165,16 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       hoverBorderColorHex: "#ff0000",
       hoverBgColorHex: "#ff0000"
     };
+    const output = {
+      "{{WRAPPER}}": [
+        "border:5px solid rgba(115, 119, 127, 1);",
+        "background-color:rgba(255, 0, 0, 1); background-image:none;"
+      ]
+    };
+
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -173,14 +187,9 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [
-        {
-          "{{WRAPPER}}": [
-            "border:5px solid rgba(115, 119, 127, 1);",
-            "background-color:rgba(255, 0, 0, 1); background-image:none;"
-          ]
-        }
-      ],
+      desktop: [output],
+      tablet: [output],
+      mobile: [output],
       hover: [
         {
           "{{WRAPPER}}:hover": [
@@ -194,41 +203,48 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
   test("2 options, different selector", () => {
     const model = { ...backgroundColorElementModel, ...borderElementModel };
+    const output = [
+      {
+        "{{WRAPPER}} .list .list-item": [
+          "border:5px solid rgba(115, 119, 127, 1);"
+        ]
+      },
+      {
+        "{{WRAPPER}}": [
+          "background-color:rgba(255, 0, 0, 1); background-image:none;"
+        ]
+      }
+    ];
+
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [borderOptionWithSelector, backgroundOptionWithSelector]
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [
-        {
-          "{{WRAPPER}} .list .list-item": [
-            "border:5px solid rgba(115, 119, 127, 1);"
-          ]
-        },
-        {
-          "{{WRAPPER}}": [
-            "background-color:rgba(255, 0, 0, 1); background-image:none;"
-          ]
-        }
-      ]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 
   test("Option with 'style'", () => {
     const model = { height: 30, heightSuffix: "px" };
+    const output = [{ "{{WRAPPER}}": ["height:30px;"] }];
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [heightOptionWithStyle]
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [{ "{{WRAPPER}}": ["height:30px;"] }]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 
@@ -239,16 +255,19 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       width: 50,
       widthSuffix: "px"
     };
+    const output = [{ "{{WRAPPER}}": ["height:30px;", "width:50px;"] }];
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [heightOptionWithStyle, widthOptionWithStyle]
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [{ "{{WRAPPER}}": ["height:30px;", "width:50px;"] }]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 
@@ -259,10 +278,14 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       width: 50,
       widthSuffix: "px"
     };
+    const output = [
+      { "{{WRAPPER}}": ["height:30px;"] },
+      { "{{WRAPPER}} .brz-map": ["width:50px;"] }
+    ];
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           heightOptionWithStyle,
@@ -278,19 +301,19 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [
-        { "{{WRAPPER}}": ["height:30px;"] },
-        { "{{WRAPPER}} .brz-map": ["width:50px;"] }
-      ]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 
   test("If exists style and selector on same option, should remain css from 'styles'", () => {
     const model = { height: 50, heightSuffix: "px" };
+    const output = [{ "{{WRAPPER}}": ["height:50px;"] }];
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           { ...heightOptionWithStyle, selector: "{{WRAPPER}} .brz-test" }
@@ -298,7 +321,9 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [{ "{{WRAPPER}}": ["height:50px;"] }]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 
@@ -317,10 +342,13 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       activeFontSize: 70,
       fontSizeSuffix: "px"
     };
+    const output = [
+      { "{{WRAPPER}}": ["height:30px;", "width:40px;", "font-size:50px;"] }
+    ];
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -342,9 +370,9 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
           ]
         }
       ],
-      desktop: [
-        { "{{WRAPPER}}": ["height:30px;", "width:40px;", "font-size:50px;"] }
-      ],
+      desktop: output,
+      tablet: output,
+      mobile: output,
       hover: [
         {
           "{{WRAPPER}}:hover": [
@@ -372,10 +400,15 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       activeFontSize: 50,
       fontSizeSuffix: "px"
     };
+    const output = [
+      { "{{WRAPPER}} .brz-h1": ["height:100px;"] },
+      { "{{WRAPPER}} .brz-h2": ["width:450px;"] },
+      { "{{WRAPPER}} .brz-h3": ["font-size:230px;"] }
+    ];
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -414,11 +447,9 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         { "{{WRAPPER}} .brz-h2.active": ["width:90px;"] },
         { "{{WRAPPER}} .brz-h3.active": ["font-size:50px;"] }
       ],
-      desktop: [
-        { "{{WRAPPER}} .brz-h1": ["height:100px;"] },
-        { "{{WRAPPER}} .brz-h2": ["width:450px;"] },
-        { "{{WRAPPER}} .brz-h3": ["font-size:230px;"] }
-      ],
+      desktop: output,
+      tablet: output,
+      mobile: output,
       hover: [
         { "{{WRAPPER}} .brz-h1:hover": ["height:40px;"] },
         { "{{WRAPPER}} .brz-h2:hover": ["width:70px;"] },
@@ -429,10 +460,38 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
   test("With more selectors on option", () => {
     const model = { ...borderElementModel, ...backgroundColorElementModel };
+    const output = [
+      {
+        "{{WRAPPER}} .brz-container": [
+          "border:5px solid rgba(115, 119, 127, 1);"
+        ]
+      },
+      {
+        " {{WRAPPER}}.brz-spacer": ["border:5px solid rgba(115, 119, 127, 1);"]
+      },
+      {
+        " {{WRAPPER}} .brz-line": ["border:5px solid rgba(115, 119, 127, 1);"]
+      },
+      {
+        ".brz {{WRAPPER}}": [
+          "background-color:rgba(255, 0, 0, 1); background-image:none;"
+        ]
+      },
+      {
+        ".brz-alert": [
+          "background-color:rgba(255, 0, 0, 1); background-image:none;"
+        ]
+      },
+      {
+        " #brz-root": [
+          "background-color:rgba(255, 0, 0, 1); background-image:none;"
+        ]
+      }
+    ];
 
     expect(
       getCSSObjects({
-        currentModel: "default",
+        currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
           {
@@ -448,43 +507,24 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [
-        {
-          "{{WRAPPER}} .brz-container": [
-            "border:5px solid rgba(115, 119, 127, 1);"
-          ]
-        },
-        {
-          " {{WRAPPER}}.brz-spacer": [
-            "border:5px solid rgba(115, 119, 127, 1);"
-          ]
-        },
-        {
-          " {{WRAPPER}} .brz-line": ["border:5px solid rgba(115, 119, 127, 1);"]
-        },
-        {
-          ".brz {{WRAPPER}}": [
-            "background-color:rgba(255, 0, 0, 1); background-image:none;"
-          ]
-        },
-        {
-          ".brz-alert": [
-            "background-color:rgba(255, 0, 0, 1); background-image:none;"
-          ]
-        },
-        {
-          " #brz-root": [
-            "background-color:rgba(255, 0, 0, 1); background-image:none;"
-          ]
-        }
-      ]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 
   test("Testing with rules as current model that have no differences between default", () => {
+    const output = [
+      {
+        "{{WRAPPER}} .list .list-item": [
+          "border:5px solid rgba(115, 119, 127, 1);"
+        ]
+      }
+    ];
+
     expect(
       getCSSObjects({
-        currentModel: "rules",
+        currentModel: ModelType.Rules,
         model: {
           vd: borderElementModel,
           vs: borderElementModel,
@@ -492,13 +532,26 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         },
         options: [borderOptionWithSelector]
       })
-    ).toStrictEqual(emptyCSS);
+    ).toStrictEqual({
+      ...emptyCSS,
+      desktop: output,
+      tablet: output,
+      mobile: output
+    });
   });
 
   test("Testing with custom as current model that have no differences between rules", () => {
+    const output = [
+      {
+        "{{WRAPPER}} .list .list-item": [
+          "border:5px solid rgba(115, 119, 127, 1);"
+        ]
+      }
+    ];
+
     expect(
       getCSSObjects({
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
           vs: borderElementModel,
@@ -506,13 +559,23 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         },
         options: [borderOptionWithSelector]
       })
-    ).toStrictEqual(emptyCSS);
+    ).toStrictEqual({
+      ...emptyCSS,
+      desktop: output,
+      tablet: output,
+      mobile: output
+    });
   });
 
   test("Testing with custom as current model that have only 1 key:value difference between rules ( colorHex only should be unique, opacity should be preserved from rules )", () => {
+    const output = [
+      {
+        "{{WRAPPER}} .list .list-item": ["border: none;"]
+      }
+    ];
     expect(
       getCSSObjects({
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
           vs: { ...borderElementModel, borderColorOpacity: 0.7 },
@@ -524,20 +587,18 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [
-        {
-          "{{WRAPPER}} .list .list-item": [
-            "border:5px solid rgba(0, 0, 255, 0.7);"
-          ]
-        }
-      ]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 
   test("Testing with custom as current model, but rules is empty, should get missing keys from default", () => {
+    const output = [{ "{{WRAPPER}} .list .list-item": ["border: none;"] }];
+
     expect(
       getCSSObjects({
-        currentModel: "custom",
+        currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
           vs: {},
@@ -549,30 +610,26 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       })
     ).toStrictEqual({
       ...emptyCSS,
-      desktop: [
-        {
-          "{{WRAPPER}} .list .list-item": [
-            "border:5px solid rgba(115, 119, 127, 0.5);"
-          ]
-        }
-      ]
+      desktop: output,
+      tablet: output,
+      mobile: output
     });
   });
 });
 
-describe("Testing filterStylesByDevice that filter styles between devices + hover + active", () => {
+describe("Testing filterMergedStylesByDevice that filter styles between devices + hover + active", () => {
   test("Mock data, should return all empty", () => {
-    expect(filterStylesByDevice(emptyCSS)).toStrictEqual(emptyCSS);
+    expect(filterMergedStylesByDevice(emptyCSS)).toStrictEqual(emptyCSS);
   });
   test("Filtering all the same data, should remaing only desktop", () => {
-    expect(filterStylesByDevice(generatedCSSSameStyles)).toStrictEqual({
+    expect(filterMergedStylesByDevice(generatedCSSSameStyles)).toStrictEqual({
       ...emptyCSS,
       desktop: ["{{WRAPPER}}{height:50px}"]
     });
   });
   test("Filtering with 2 or more styles in, should remaing only desktop", () => {
     expect(
-      filterStylesByDevice(generatedCSSSameStylesDoubledData)
+      filterMergedStylesByDevice(generatedCSSSameStylesDoubledData)
     ).toStrictEqual({
       ...emptyCSS,
       desktop: ["{{WRAPPER}}{height:50px}"]
@@ -580,7 +637,7 @@ describe("Testing filterStylesByDevice that filter styles between devices + hove
   });
   test("Filtering where tablet has different styles, should remaing desktop and tablet", () => {
     expect(
-      filterStylesByDevice({
+      filterMergedStylesByDevice({
         ...generatedCSSSameStyles,
         tablet: [".brz-spacer{height:50px}"]
       })
@@ -592,7 +649,7 @@ describe("Testing filterStylesByDevice that filter styles between devices + hove
   });
   test("Filtering where all styles is different, should remaing all", () => {
     expect(
-      filterStylesByDevice({
+      filterMergedStylesByDevice({
         desktop: ["{{WRAPPER}}{color:red}"],
         tablet: ["{{WRAPPER}} .list{width:50px}"],
         mobile: ["{{WRAPPER}}{border:none}"],
@@ -609,6 +666,104 @@ describe("Testing filterStylesByDevice that filter styles between devices + hove
       ],
       mobile: ["{{WRAPPER}}{{WRAPPER}}{border:none}"],
       tablet: ["{{WRAPPER}}{{WRAPPER}} .list{width:50px}"]
+    });
+  });
+});
+
+describe("filterStylesByDevice function", () => {
+  it("should return an empty object if all device styles are filtered out", () => {
+    const data = {
+      desktop: [],
+      tablet: [],
+      mobile: []
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual(data);
+  });
+
+  it("should return an empty object if all device styles except desktop are filtered out", () => {
+    const data = {
+      desktop: [{ ".selector1": ["style1", "style2"] }],
+      tablet: [],
+      mobile: []
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual(data);
+  });
+
+  it("should return an empty object if all device styles except tablet are filtered out", () => {
+    const data = {
+      desktop: [],
+      tablet: [{ ".selector1": ["style1", "style2"] }],
+      mobile: []
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual(data);
+  });
+
+  it("should return an empty object if all device styles except mobile are filtered out", () => {
+    const data = {
+      desktop: [],
+      tablet: [],
+      mobile: [{ ".selector1": ["style1", "style2"] }]
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual(data);
+  });
+
+  it("should return the same data if all devices have the same styles", () => {
+    const sharedStyles = [{ ".selector1": ["style1", "style2"] }];
+    const data = {
+      desktop: sharedStyles,
+      tablet: [{ ".selector1": [] }],
+      mobile: [{ ".selector1": [] }]
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual(data);
+  });
+
+  it("should return only desktop styles if desktop and tablet have the same styles but mobile is empty", () => {
+    const desktopStyles = [{ ".selector1": ["style1", "style2"] }];
+    const data = {
+      desktop: desktopStyles,
+      tablet: desktopStyles,
+      mobile: []
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual({
+      desktop: desktopStyles,
+      tablet: [{ ".selector1": [] }],
+      mobile: []
+    });
+  });
+
+  it("should return only desktop and tablet styles if they are different from mobile styles", () => {
+    const desktopStyles = [{ ".selector1": ["style1", "style2"] }];
+    const tabletStyles = [{ ".selector2": ["style3", "style4"] }];
+    const mobileStyles = [{ ".selector3": ["style5", "style6"] }];
+    const data = {
+      desktop: desktopStyles,
+      tablet: tabletStyles,
+      mobile: mobileStyles
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual(data);
+  });
+
+  it("should return an empty object if all device styles are different and filtered out", () => {
+    const desktopStyles = [{ ".selector1": ["style1", "style2"] }];
+    const tabletStyles = [{ ".selector1": ["style1", "style2"] }];
+    const mobileStyles = [{ ".selector1": ["style1", "style2"] }];
+    const data = {
+      desktop: desktopStyles,
+      tablet: tabletStyles,
+      mobile: mobileStyles
+    };
+    const newData = filterStylesByDevice(data as unknown as CSS);
+    expect(newData).toEqual({
+      desktop: desktopStyles,
+      tablet: [{ ".selector1": [] }],
+      mobile: [{ ".selector1": [] }]
     });
   });
 });

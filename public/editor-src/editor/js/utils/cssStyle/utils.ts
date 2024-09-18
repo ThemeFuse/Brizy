@@ -1,24 +1,25 @@
-import produce from "immer";
+import { pipe } from "@brizy/readers";
+import { produce } from "immer";
 import { CSSProperties } from "react";
-import _ from "underscore";
-import { ElementModel } from "visual/component/Elements/Types";
-import { OptionName } from "visual/component/Options/types";
-import { getOptionModel } from "visual/component/Options/types/utils/fromElementModel";
+import { ElementModel, ModelType } from "visual/component/Elements/Types";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { mPipe } from "visual/utils/fp";
+import { getOptionModelWithDesktopDefaults } from "visual/utils/options/utils/fromElementModel";
 import {
   getCSSByOptionType,
   isOptionWithStyles,
   normalizeOptionModel
-} from "visual/component/Options/types/utils/toCSS/utils";
-import { getElementMoldelKeysFromOption } from "visual/component/Options/types/utils/toElementModel";
-import { getOptionMeta } from "visual/component/Options/types/utils/toMeta/utils";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+} from "visual/utils/options/utils/toCSS/utils";
+import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
+import * as Bool from "visual/utils/reader/bool";
 import * as Obj from "visual/utils/reader/object";
-import { diff } from "visual/utils/reader/object";
+import { filterNullish } from "visual/utils/reader/object";
+import * as Str from "visual/utils/reader/string";
 import { breakpoints, isBreakpointWithMediaQuery } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
 import { ResponsiveMode } from "../responsiveMode";
 import { ACTIVE, HOVER, NORMAL, State } from "../stateMode";
-import { MValue, isAllT } from "../value";
+import { isAllT, MValue, onNullish } from "../value";
 import {
   AllCSSKeys,
   CSS,
@@ -81,13 +82,20 @@ export const getCSSObjectFromStyle = ({
   state = NORMAL
 }: {
   v: ElementModel;
+  initialV?: ElementModel;
   breakpoint: BreakpointsNames;
   option: Option;
   state?: State;
 }): MValue<OutputOptionStyle> => {
   const { id, type, style } = option;
 
-  const model = getOptionModel({ id, type, v, breakpoint, state });
+  const model = getOptionModelWithDesktopDefaults({
+    id,
+    type,
+    v,
+    breakpoint,
+    state
+  });
 
   if (typeof style === "function" && model) {
     const meta = getOptionMeta(type, model);
@@ -167,7 +175,7 @@ export const objectToCSS = (css: CSSProperties): string => {
 
 export const addBreakpointsToFilteredCSS = (
   styles: [GeneratedCSS<string>, GeneratedCSS<string>, GeneratedCSS<string>]
-): [string, string, string] => {
+): OutputStyle => {
   const [defaultCSS, rulesCSS, customCSS] = styles;
 
   const defaultStyles = concatCSSWithBreakpoints(defaultCSS);
@@ -207,12 +215,16 @@ export const getSelectorAndCssFromCssObject = (
   cssSelectorObject: OutputOptionStyle,
   state?: State
 ): SelectorAndCSSObject[] => {
-  const selectorSuffix =
+  const stateSuffix =
     state === HOVER ? ":hover" : state === ACTIVE ? ".active" : "";
 
-  return Object.entries(cssSelectorObject).map(([selector, cssProperties]) => {
+  return Object.entries(cssSelectorObject).map(([_selector, cssProperties]) => {
+    const selector =
+      state !== HOVER ? _selector.replace(/:hover/g, "") : _selector;
     const css = objectToCSS(cssProperties);
 
+    const selectorSuffix =
+      state === HOVER && selector.includes(HOVER) ? "" : stateSuffix;
     const cssSuffix = !css.endsWith(";") ? ";" : "";
 
     return { selector: selector + selectorSuffix, css: css + cssSuffix };
@@ -310,6 +322,13 @@ export const concatFinalCSS = (
   styles[2] + toolbarStyles[2]
 ];
 
+const getCss = pipe(
+  mPipe(getCSSObjectFromStyle, Obj.read, (d) =>
+    filterNullish(d, { empty: true })
+  ),
+  onNullish({})
+);
+
 export const getNewGeneratesCSSfromStyle = ({
   v,
   breakpoint,
@@ -323,11 +342,11 @@ export const getNewGeneratesCSSfromStyle = ({
   state: State;
   allCSS: CSS;
 }): MValue<CSS> => {
-  const cssObject = getCSSObjectFromStyle({ v, breakpoint, option, state });
+  const cssObject = getCss({ v, breakpoint, option, state });
 
-  const allCSSKey = state === HOVER || state === ACTIVE ? state : breakpoint;
+  if (Obj.length(cssObject) > 0) {
+    const allCSSKey = state === HOVER || state === ACTIVE ? state : breakpoint;
 
-  if (cssObject) {
     return concatStylesByCssObject({
       breakpoint: allCSSKey,
       cssObject,
@@ -354,12 +373,12 @@ export const getNewGeneratesCSSfromSelector = ({
 
   const css = getCSSFromSelector({ v, breakpoint, option, state });
 
-  if (css) {
+  const _selector = Str.read(option.selector);
+
+  if (css && _selector) {
     const selector =
-      state !== HOVER
-        ? option.selector?.replaceAll(":hover", "")
-        : option.selector;
-    const selectors = selector?.split(",");
+      state !== HOVER ? _selector.replace(/:hover/g, "") : _selector;
+    const selectors = selector.split(",");
 
     const data =
       selectors?.map((selector) => {
@@ -381,124 +400,48 @@ export const getNewGeneratesCSSfromSelector = ({
   }
 };
 
-export const getMissingKeys = (keys: string[], v: ElementModel): string[] =>
-  keys.filter((k) => !Obj.hasKey(k, v));
-
-export const getMissingPropertiesFromModel = (
-  keys: string[],
+export const getInitialV = <T extends ElementModel = ElementModel>(
+  currentModel: ModelType,
   model: {
-    vd: ElementModel;
-    vs: ElementModel;
-    v: ElementModel;
-  },
-  currentModel: "default" | "rules" | "custom"
-): MValue<ElementModel> => {
-  if (currentModel === "rules") {
-    return keys.reduce((acc: ElementModel, curr) => {
-      acc[curr] = model.vd[curr];
-      return acc;
-    }, {});
+    vd: T;
+    vs: T;
+    v: T;
   }
-
-  if (currentModel === "custom") {
-    return keys.reduce((acc: ElementModel, curr) => {
-      if (model.vs[curr]) {
-        acc[curr] = model.vs[curr];
-        return acc;
-      }
-
-      acc[curr] = model.vd[curr];
-
-      return acc;
-    }, {});
-  }
-};
-
-export const checkIfSomeKeyWasChanged = ({
-  id,
-  type,
-  v,
-  breakpoint,
-  state
-}: {
-  id: string;
-  type: OptionName;
-  v: ElementModel;
-  breakpoint: ResponsiveMode;
-  state: State;
-}) => {
-  const keys = getElementMoldelKeysFromOption({
-    id,
-    type,
-    v,
-    device: breakpoint,
-    state
-  });
-  return keys.some((k) => v[k]);
-};
-
-export const getNewModel = ({
-  id,
-  type,
-  v,
-  model,
-  currentModel,
-  breakpoint,
-  state
-}: {
-  id: string;
-  type: OptionName;
-  v: ElementModel;
-  breakpoint: BreakpointsNames;
-  state: State;
-  currentModel: "default" | "rules" | "custom";
-  model: {
-    vd: ElementModel;
-    vs: ElementModel;
-    v: ElementModel;
-  };
-}) => {
-  const keys = getElementMoldelKeysFromOption({
-    id,
-    type,
-    v,
-    device: breakpoint,
-    state
-  });
-
-  const missingKeys = getMissingKeys(keys, v);
-
-  const newModel = getMissingPropertiesFromModel(
-    missingKeys,
-    model,
-    currentModel
-  );
-
-  return {
-    ...v,
-    ...newModel
-  };
-};
-
-export const getCurrentModelFilteredValues = (
-  currentModel: "default" | "rules" | "custom",
-  model: {
-    vd: ElementModel;
-    vs: ElementModel;
-    v: ElementModel;
-  }
-): ElementModel => {
-  const { vd: _vd, vs: _vs, v: _v } = model;
-  const vd = _.omit(_vd, "_styles", "_id");
-  const vs = _.omit(_vs, "_styles", "_id");
-  const v = _.omit(_v, "_styles", "_id");
-
+): T => {
   switch (currentModel) {
-    case "default":
-      return vd;
-    case "rules":
-      return diff(vd, vs);
-    case "custom":
-      return diff(vs, v);
+    case ModelType.Default:
+      return model.vd;
+    case ModelType.Rules:
+      return model.vs;
+    case ModelType.Custom:
+      return model.v;
   }
+};
+
+// compare whole css output from custom and rules with default and replace with empty string if it matched
+export const replaceCSSDuplicatesWithEmptyString = (
+  data: OutputStyle
+): OutputStyle =>
+  produce(data, (draft) => {
+    if (draft[1] === draft[0]) {
+      draft[1] = "";
+    }
+    if (draft[2] === draft[1] || draft[2] === draft[0]) {
+      draft[2] = "";
+    }
+  });
+
+export const replaceHoverAndActive = (k: string): string =>
+  k.replace(/:hover/g, "").replace(/.active/g, "");
+
+export const readTextTransformValue = (
+  value: unknown,
+  transformKey: string
+): string | undefined => {
+  // This check is needed because value can came from global styles as var(--varName)
+  if (Bool.read(value)) {
+    return value ? transformKey : "";
+  }
+
+  return Str.read(value);
 };

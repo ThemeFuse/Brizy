@@ -1,18 +1,21 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { readToggle } from "visual/component/Options/types/dev/ToggleButton/utils";
 import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import {
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight
+  cssStyleTypography2LineHeight,
+  cssStyleTextScript
 } from "visual/utils/cssStyle";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
+import { read as readNum } from "visual/utils/reader/number";
+import { readToggle } from "visual/utils/options/ToggleButton/utils";
 import { State } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import {
@@ -20,12 +23,12 @@ import {
   styleBgImage,
   styleColor,
   styleExportBgImage,
+  styleTypography2FontFamily,
   styleTypography2FontSizeSuffix
 } from "visual/utils/style2";
 import {
   styleElementRichTextDCGradient,
   styleElementRichTextDCGradientBackground,
-  styleElementRichTextFontFamily,
   styleElementRichTextGradient
 } from "visual/utils/style2/styleElementRichText";
 import { styleState, styleTypography2FontSize } from "../style2";
@@ -91,10 +94,13 @@ export function cssStyleElementRichTextFontSize(d: CSSValue): string {
       // Keys is lowercase because have problems in backend export HTML
       return `font-size:var(--brz-${fontStyle}StoryFontSize);`.toLowerCase();
     } else {
-      const fontSize = styleTypography2FontSize({
-        ...d,
-        prefix: "typography"
-      });
+      const fontSize =
+        readNum(
+          styleTypography2FontSize({
+            ...d,
+            prefix: "typography"
+          })
+        ) ?? 1;
       const suffix = styleTypography2FontSizeSuffix({
         ...d,
         prefix: "typography"
@@ -146,12 +152,14 @@ export function cssStyleElementRichTextFontFamily({
   prefix = "typography",
   state
 }: CSSValue): string {
-  return `font-family:${styleElementRichTextFontFamily({
+  const family = styleTypography2FontFamily({
     v,
     device,
     prefix,
     state
-  })} !important;`;
+  });
+
+  return family ? `font-family:${family} !important;` : "";
 }
 
 const getState = (v: ElementModel, state: State): string =>
@@ -276,6 +284,22 @@ export function cssStyleElementRichTextH1FontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "h1" });
 }
 
+export function cssStyleElementRichTextH1TextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "h1" });
+}
+
+export function cssStyleElementRichTextH1Script({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextScript({ v, device, state, prefix: "h1" });
+}
+
 export function cssStyleElementRichTextH2FontFamily({
   v,
   device
@@ -317,6 +341,22 @@ export function cssStyleElementRichTextH2FontVariation({
   device
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({ v, device, prefix: "h2" });
+}
+
+export function cssStyleElementRichTextH2TextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "h2" });
+}
+
+export function cssStyleElementRichTextH2Script({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextScript({ v, device, state, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH3FontFamily({
@@ -362,6 +402,22 @@ export function cssStyleElementRichTextH3FontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "h3" });
 }
 
+export function cssStyleElementRichTextH3TextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "h3" });
+}
+
+export function cssStyleElementRichTextH3Script({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextScript({ v, device, state, prefix: "h3" });
+}
+
 export function cssStyleElementRichTextH4FontFamily({
   v,
   device
@@ -403,6 +459,22 @@ export function cssStyleElementRichTextH4FontVariation({
   device
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({ v, device, prefix: "h4" });
+}
+
+export function cssStyleElementRichTextH4TextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "h4" });
+}
+
+export function cssStyleElementRichTextH4Script({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextScript({ v, device, state, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH5FontFamily({
@@ -448,6 +520,22 @@ export function cssStyleElementRichTextH5FontVariation({
   return cssStyleTypography2FontVariation({ v, device, prefix: "h5" });
 }
 
+export function cssStyleElementRichTextH5TextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "h5" });
+}
+
+export function cssStyleElementRichTextH5Script({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextScript({ v, device, state, prefix: "h5" });
+}
+
 export function cssStyleElementRichTextH6FontFamily({
   v,
   device
@@ -489,6 +577,22 @@ export function cssStyleElementRichTextH6FontVariation({
   device
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({ v, device, prefix: "h6" });
+}
+
+export function cssStyleElementRichTextH6TextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, state, prefix: "h6" });
+}
+
+export function cssStyleElementRichTextH6Script({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextScript({ v, device, state, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextDCUppercase({

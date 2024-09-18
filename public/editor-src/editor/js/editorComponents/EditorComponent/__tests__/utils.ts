@@ -27,26 +27,6 @@ import {
 } from "../utils";
 
 // region Mocks
-jest.mock(
-  "visual/component/Options/types/AdvancedSettings.jsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/BlockThumbnail.jsx", () => undefined);
-jest.mock("visual/component/Options/types/CheckGroup.jsx", () => undefined);
-jest.mock("visual/component/Options/types/ColorPalette2.jsx", () => undefined);
-jest.mock(
-  "visual/component/Options/types/ColorPaletteEditor.jsx",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/FontStyleEditor/index.tsx",
-  () => undefined
-);
-jest.mock(
-  "visual/component/Options/types/PopupConditions.jsx",
-  () => undefined
-);
-jest.mock("visual/component/Options/types/Toggle.jsx", () => undefined);
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
   Typography: {}
 }));
@@ -447,10 +427,8 @@ describe("Testing 'getToolbarData' function", () => {
         },
         {
           id: "advancedSettings",
-          // @ts-expect-error: Missing in new option-types
-          type: "legacy-advancedSettings",
+          type: "advancedSettings",
           devices: "desktop",
-          icon: "nc-cog",
           position: 110
         }
       ],

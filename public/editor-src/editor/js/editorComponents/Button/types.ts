@@ -1,13 +1,14 @@
 import { Patch } from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
-import { Block } from "visual/types";
-import { CssId } from "visual/utils/models/cssId";
-import { WithClassName } from "visual/utils/options/attributes";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { Block } from "visual/types";
+import { WithClassName } from "visual/types/attributes";
+import { CssId } from "visual/utils/models/cssId";
 
 export interface Value extends ElementModel, CssId {
   iconName: string;
   iconType: string;
+  iconFilename?: string;
 
   popups: Block[];
   linkPopup: string;

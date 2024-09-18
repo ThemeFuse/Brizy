@@ -118,6 +118,12 @@
     "variableFontWeight": 700,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "customCSS": "",
 
@@ -382,6 +388,12 @@
     "subMenuVariableFontWeight": 700,
     "subMenuFontWidth": 100,
     "subMenuFontSoftness": 0,
+    "subMenuBold": false,
+    "subMenuItalic": false,
+    "subMenuUnderline": false,
+    "subMenuStrike": false,
+    "subMenuUppercase": false,
+    "subMenuLowercase": false,
 
     "borderRadiusType": "grouped",
     "borderRadius": 0,
@@ -448,6 +460,12 @@
     "mMenuVariableFontWeight": 700,
     "mMenuFontWidth": 100,
     "mMenuFontSoftness": 0,
+    "mMenuBold": false,
+    "mMenuItalic": false,
+    "mMenuUnderline": false,
+    "mMenuStrike": false,
+    "mMenuUppercase": false,
+    "mMenuLowercase": false,
     "mMenuPosition": "left",
 
     "mMenuColorHex": "#ffffff",

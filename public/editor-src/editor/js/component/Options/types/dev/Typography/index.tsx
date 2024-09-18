@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography as Control } from "visual/component/Controls/Typography";
 import * as Option from "visual/component/Options/Type";
@@ -14,6 +14,7 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import {
   fontTransform,
   getFontStyles,
@@ -21,14 +22,23 @@ import {
 } from "visual/utils/fonts";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
+import { mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import { divideFonts, getValue } from "./componentUtils";
-import { Config } from "./types/Config";
-import { Font } from "./types/Font";
-import { FontsBlock } from "./types/FontsBlocks";
-import * as Patch from "./types/Patch";
-import { Value } from "./types/Value";
+import {
+  divideFonts,
+  getValue
+} from "visual/utils/options/Typography/componentUtils";
+import { Config } from "visual/utils/options/Typography/types/Config";
+import { Font } from "visual/utils/options/Typography/types/Font";
+import { FontObject } from "visual/utils/options/Typography/types/FontObject";
+import { FontsBlock } from "visual/utils/options/Typography/types/FontsBlocks";
+import * as Patch from "visual/utils/options/Typography/types/Patch";
+import { Value } from "visual/utils/options/Typography/types/Value";
+import {
+  createScriptChoices,
+  readScripts
+} from "visual/utils/options/Typography/utils";
+import { readKey } from "visual/utils/reader/object";
 
 const deviceIcons: Record<DeviceMode, string> = {
   desktop: "nc-desktop",
@@ -48,7 +58,12 @@ export interface Props
     WithConfig<Config>,
     WithClassName {}
 
-export const Typography: FC<Props> = ({ value, onChange, config }) => {
+export const Typography = ({
+  value,
+  onChange,
+  config,
+  className
+}: Props): ReactElement => {
   const {
     fontFamily = true,
     letterSpacing: {
@@ -57,7 +72,8 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     } = {},
     lineHeight: { min: lineHeightMin = 1, max: lineHeightMax = 20 } = {},
     fontSize: { min: sizeMin = 0, max: sizeMax = 300 } = {},
-    icons
+    icons,
+    scriptChoices
   } = config ?? {};
   const dispatch = useDispatch();
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
@@ -69,7 +85,13 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     () =>
       Object.entries(unDeletedFonts).reduce((acc: FontsBlock, [k, d]) => {
         type K = keyof FontsBlock;
-        acc[k as K] = d?.data.map(fontTransform[k as K]);
+        const getFont = readKey(k)(fontTransform) as
+          | undefined
+          | ((font: Font) => FontObject);
+
+        if (getFont) {
+          acc[k as K] = d?.data.map(getFont);
+        }
         return acc;
       }, {}),
     [unDeletedFonts]
@@ -117,6 +139,33 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
               });
           return onChange(value);
         }
+        case "bold":
+        case "italic":
+        case "underline":
+        case "strike":
+        case "uppercase":
+        case "lowercase":
+        case "script": {
+          const patch = { ..._value };
+
+          if (["uppercase", "lowercase"].includes(meta.isChanged)) {
+            const isUppercase = meta.isChanged === "uppercase";
+            patch.uppercase = isUppercase;
+            patch.lowercase = !isUppercase;
+          }
+
+          const value = withFontFamily
+            ? Patch.fullFont({
+                ...patch,
+                [meta.isChanged]: v
+              })
+            : Patch.textTransform({
+                ...patch,
+                [meta.isChanged]: v
+              });
+
+          return onChange(value);
+        }
       }
     },
     [onChange, _value, fontFamily]
@@ -142,6 +191,8 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     type: _value.fontFamilyType,
     family: _value.fontFamily
   });
+
+  const showTextTransform = device === "desktop";
 
   const variations = useMemo(() => _value.variations, [_value.variations]);
 
@@ -169,6 +220,11 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
     _setDeviceMode(device);
   };
 
+  const _scriptChoices = useMemo(
+    () => mPipe(readScripts, createScriptChoices)(scriptChoices),
+    [scriptChoices]
+  );
+
   return (
     <Control
       onChange={_onChange}
@@ -190,6 +246,14 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       variableFontWeight={_value.variableFontWeight}
       fontWidth={_value.fontWidth}
       fontSoftness={_value.fontSoftness}
+      bold={_value.bold}
+      italic={_value.italic}
+      underline={_value.underline}
+      strike={_value.strike}
+      uppercase={_value.uppercase}
+      lowercase={_value.lowercase}
+      script={_value.script}
+      scriptChoices={_scriptChoices}
       letterSpacingMin={letterSpacingMin}
       letterSpacingMax={letterSpacingMax}
       letterSpacingStep={0.1}
@@ -205,9 +269,11 @@ export const Typography: FC<Props> = ({ value, onChange, config }) => {
       styleLabel={t("Typography")}
       weightLabel={t("Weight")}
       icons={icons}
+      className={className}
       activeIcon={deviceIcons[device]}
       onIconClick={onIconClick}
       variations={variations}
+      showTextTransform={showTextTransform}
     />
   );
 };

@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 
 export default {
-  id: "icon",
+  id: "storyIcon",
   title: t("Icon"),
   icon: "nc-star",
   resolve: {

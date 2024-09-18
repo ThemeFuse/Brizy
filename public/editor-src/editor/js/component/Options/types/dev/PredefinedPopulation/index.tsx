@@ -1,14 +1,14 @@
-import produce from "immer";
-import React, { useCallback } from "react";
+import { produce } from "immer";
+import React, { ReactElement, useCallback } from "react";
+import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Str from "visual/utils/reader/string";
 import { auto } from "visual/utils/string/specs";
 import { read as readLiteral } from "visual/utils/types/Literal";
-import Select from "../../common/Population/Select";
+import { PopulationSelect } from "../../common/Population/Components/Select";
 import type { Value } from "../../common/Population/types/Value";
-import { findDCChoiceByPlaceholder } from "../../common/Population/utils";
 import type { Props } from "./types";
 
-export const PredefinedPopulation: React.FC<Props> = (props) => {
+export const PredefinedPopulation = (props: Props): ReactElement => {
   const { config, onChange } = props;
   const { activeChoice } = config ?? {};
 
@@ -47,7 +47,7 @@ export const PredefinedPopulation: React.FC<Props> = (props) => {
   });
 
   return (
-    <Select<string>
+    <PopulationSelect<string>
       choices={[]}
       showChoices={false}
       value={_value}

@@ -1,8 +1,10 @@
-import type { ElementModel } from "visual/component/Elements/Types";
+import { KenEffect, Transition } from "visual/component/Background/type";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { hexToRgba } from "visual/utils/color";
+import { BgPosition, BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -12,16 +14,22 @@ import {
   MaskShapes,
   MaskSizes
 } from "visual/utils/mask/Mask";
+import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentOption,
   getOptionColorHexByPalette
 } from "visual/utils/options";
+import { read as readArr } from "visual/utils/reader/array";
+import { read as jsonRead } from "visual/utils/reader/json";
 import { read as readString } from "visual/utils/reader/string";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { HOVER, NORMAL, State } from "visual/utils/stateMode";
 import { getMaxContainerSuffix, getMinContainerSuffix } from "../utils";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
-export const getItems: GetItems<ElementModel> = ({
+// @ts-expect-error old options
+export const getItems: GetItems = ({
   v,
   device,
   component,
@@ -29,6 +37,9 @@ export const getItems: GetItems<ElementModel> = ({
   context
 }) => {
   const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const dvvState = (key: string, state: State): unknown =>
     defaultValueValue({ v, key, device, state });
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
@@ -50,15 +61,17 @@ export const getItems: GetItems<ElementModel> = ({
       ]
     : [];
 
+  const isBackgroundEnabled = isBackgroundPointerEnabled(config, "section");
+
   const media = dvv("media");
-  const isDesktop = device === "desktop";
 
   const maskShape = readString(dvv("maskShape")) ?? "none";
   const maskPosition = readString(dvv("maskPosition")) ?? "center center";
   const maskSize = readString(dvv("maskSize")) ?? "cover";
   const maskScaleSuffix = readString(dvv("maskScaleSuffix")) ?? "%";
   const maskCustomUploadImageSrc = readString(dvv("maskCustomUploadImageSrc"));
-  const disableMaskTab = media !== "image";
+  const disableMaskTab = dvvState("media", NORMAL) !== "image";
+  const linkPopup = dvv("linkPopup");
   const maskShapeIsDisabled =
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc) ||
@@ -70,16 +83,39 @@ export const getItems: GetItems<ElementModel> = ({
   const imageMedia = media === "image";
   const videoMedia = media !== "video";
   const mapMedia = media !== "map";
+  const slideshowMedia = media === "slideshow";
 
   const videoType = dvv("bgVideoType");
-  const coverBg = dvv("bgSize") === "cover";
+  const coverBg = dvv("bgSize") === BgSize.Cover;
 
   const youtubeType = videoType === "youtube";
   const vimeoType = videoType === "vimeo";
   const customType = videoType === "bgVideoCustom";
   const urlType = videoType === "url";
+  const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
 
-  const isExternalImage = dvv("bgImageType") === ImageType.External;
+  const linkDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.link
+  });
+
+  const IS_GLOBAL_POPUP = isPopup(config);
+  const inPopup = Boolean(component.props.meta.sectionPopup);
+  const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+
+  const slideshow = dvv("slideshow");
+  const slideshowLength = slideshow
+    ? (readArr(jsonRead(slideshow)) ?? []).length
+    : 0;
+
+  const tConfig = {
+    min: 1,
+    max: 10,
+    inputMin: 1,
+    inputMax: 10,
+    step: 0.1,
+    units: [{ value: "s", title: "s" }]
+  };
 
   return [
     {
@@ -103,27 +139,11 @@ export const getItems: GetItems<ElementModel> = ({
                   id: "media",
                   label: t("Type"),
                   type: "radioGroup",
-                  devices: "desktop",
                   choices: [
                     { value: "image", icon: "nc-media-image" },
                     { value: "video", icon: "nc-media-video" },
-                    { value: "map", icon: "nc-media-map" }
-                  ]
-                },
-                {
-                  id: "media",
-                  label: t("Type"),
-                  type: "radioGroup",
-                  disabled: isDesktop,
-                  choices: [
-                    {
-                      value: "image",
-                      icon: "nc-media-image"
-                    },
-                    {
-                      value: "map",
-                      icon: "nc-media-map"
-                    }
+                    { value: "map", icon: "nc-media-map" },
+                    { value: "slideshow", icon: "nc-reorder" }
                   ]
                 },
                 {
@@ -137,7 +157,7 @@ export const getItems: GetItems<ElementModel> = ({
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isBackgroundEnabled
                   }
                 },
                 {
@@ -146,16 +166,40 @@ export const getItems: GetItems<ElementModel> = ({
                   type: "select",
                   disabled: !imageMedia,
                   choices: [
-                    { title: t("Cover"), value: "cover" },
-                    { title: t("Contain"), value: "contain" },
-                    { title: t("Auto"), value: "auto" }
+                    { title: t("Cover"), value: BgSize.Cover },
+                    { title: t("Contain"), value: BgSize.Contain },
+                    { title: t("Auto"), value: BgSize.Auto }
+                  ]
+                },
+                {
+                  id: "bgPosition",
+                  type: "select",
+                  label: t("Position"),
+                  disabled: !slideshowMedia,
+                  choices: [
+                    { title: "Default", value: BgPosition.Default },
+                    { title: "Center Center", value: BgPosition.CenterCenter },
+                    { title: "Center Left", value: BgPosition.CenterLeft },
+                    { title: "Center Right", value: BgPosition.CenterRight },
+                    { title: "Top Center", value: BgPosition.TopCenter },
+                    { title: "Top Left", value: BgPosition.TopLeft },
+                    { title: "Top Right", value: BgPosition.TopRight },
+                    { title: "Bottom Center", value: BgPosition.BottomCenter },
+                    { title: "Bottom Left", value: BgPosition.BottomLeft },
+                    { title: "Bottom Right", value: BgPosition.BottomRight }
                   ]
                 },
                 {
                   id: "bgRepeat",
                   label: t("Repeat"),
-                  type: "switch",
-                  disabled: !imageMedia || coverBg
+                  type: "select",
+                  disabled: !imageMedia || coverBg,
+                  choices: [
+                    { title: t("No repeat"), value: BgRepeat.Off },
+                    { title: t("Repeat"), value: BgRepeat.On },
+                    { title: t("Repeat-X"), value: BgRepeat.RepeatX },
+                    { title: t("Repeat-Y"), value: BgRepeat.RepeatY }
+                  ]
                 },
                 {
                   id: "bgAttachment",
@@ -191,16 +235,16 @@ export const getItems: GetItems<ElementModel> = ({
                   placeholder: youtubeType
                     ? t("YouTube")
                     : vimeoType
-                    ? t("Vimeo")
-                    : t("https://"),
+                      ? t("Vimeo")
+                      : t("https://"),
                   helper: {
                     content: urlType
                       ? t("This is .mp4 URL.")
                       : youtubeType
-                      ? t(
-                          "Use the regular video links generated by YouTube. The 'feature=share' parameter is not a valid or recognized parameter by the YouTube platform."
-                        )
-                      : ""
+                        ? t(
+                            "Use the regular video links generated by YouTube. The 'feature=share' parameter is not a valid or recognized parameter by the YouTube platform."
+                          )
+                        : ""
                   }
                 },
                 {
@@ -247,11 +291,68 @@ export const getItems: GetItems<ElementModel> = ({
                   id: "bgMapZoom",
                   label: t("Zoom"),
                   type: "slider",
+                  devices: "desktop",
                   disabled: mapMedia,
                   config: {
                     min: 1,
                     max: 21
                   }
+                },
+                {
+                  id: "slideshow",
+                  type: "gallery",
+                  label: t("Slides"),
+                  devices: "desktop",
+                  disabled: !slideshowMedia
+                },
+                {
+                  id: "slideshowLoop",
+                  type: "switch",
+                  label: t("Infinite Loop"),
+                  devices: "desktop",
+                  disabled: !slideshowMedia
+                },
+                {
+                  id: "slideshowDuration",
+                  type: "slider",
+                  label: t("Delay"),
+                  disabled: !slideshowMedia,
+                  devices: "desktop",
+                  config: tConfig
+                },
+                {
+                  id: "slideshowTransitionType",
+                  type: "select",
+                  label: t("Transition Type"),
+                  devices: "desktop",
+                  disabled: !slideshowMedia,
+                  choices: [
+                    { title: "Fade", value: Transition.Fade },
+                    { title: "Slide Left", value: Transition.SlideLeft },
+                    { title: "Slide Right", value: Transition.SlideRight },
+                    { title: "Slide Up", value: Transition.SlideUp },
+                    { title: "Slide Down", value: Transition.SlideDown }
+                  ]
+                },
+                {
+                  id: "slideshowTransition",
+                  type: "slider",
+                  label: t("Transition"),
+                  devices: "desktop",
+                  disabled: !slideshowMedia,
+                  config: tConfig
+                },
+                {
+                  id: "kenBurnsEffect",
+                  type: "select",
+                  label: t("Ken Burns"),
+                  devices: "desktop",
+                  disabled: !slideshowMedia || slideshowLength <= 1,
+                  choices: [
+                    { title: t("Off"), value: KenEffect.Off },
+                    { title: t("In"), value: KenEffect.In },
+                    { title: t("Out"), value: KenEffect.Out }
+                  ]
                 }
               ]
             },
@@ -406,6 +507,103 @@ export const getItems: GetItems<ElementModel> = ({
                   type: "textShadow",
                   states: [NORMAL, HOVER],
                   disabled: maskShapeIsDisabled
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "toolbarLink",
+      type: "popover",
+      config: {
+        icon: "nc-link",
+        title: t("Link"),
+        size: "medium"
+      },
+      position: 95,
+      devices: "desktop",
+      disabled:
+        device === "desktop"
+          ? dvv("linkLightBox") === "on"
+          : dvv("linkType") !== "popup" || linkPopup === "",
+      options: [
+        {
+          id: "linkType",
+          type: "tabs",
+          config: {
+            saveTab: true
+          },
+          tabs: [
+            {
+              id: "page",
+              label: t("Page"),
+              options: [
+                {
+                  id: "linkPage",
+                  type: "internalLink",
+                  label: t("Find Page")
+                },
+                {
+                  id: "linkInternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch"
+                }
+              ]
+            },
+            {
+              id: "external",
+              label: t("URL"),
+              options: [
+                {
+                  id: "link",
+                  type: "population",
+                  label: t("Link to"),
+                  config: linkDC,
+                  option: {
+                    id: "linkExternal",
+                    type: "inputText",
+                    placeholder: "http://"
+                  }
+                },
+                {
+                  id: "linkExternalBlank",
+                  label: t("Open In New Tab"),
+                  type: "switch"
+                },
+                {
+                  id: "linkExternalRel",
+                  label: t("Make it Nofollow"),
+                  type: "switch"
+                }
+              ]
+            },
+            {
+              id: "anchor",
+              label: t("Block"),
+              options: [
+                toolbarLinkAnchor({
+                  v,
+                  device,
+                  state: "normal",
+                  disabled: IS_GLOBAL_POPUP
+                })
+              ]
+            },
+            {
+              id: "popup",
+              label: t("Popup"),
+              options: [
+                {
+                  id: "linkPopup",
+                  type: "promptAddPopup",
+                  label: t("Popup"),
+                  config: {
+                    popupKey: `${component.getId()}_${linkPopup}`
+                  },
+                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  dependencies: popupToOldModel
                 }
               ]
             }

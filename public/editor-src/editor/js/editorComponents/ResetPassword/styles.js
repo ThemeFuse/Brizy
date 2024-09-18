@@ -25,7 +25,8 @@ export function style(v, vs, vd) {
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2LineHeight",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ]
     },
     ".brz && .brz-reset-psw-form .brz-reset-psw-form__field": {
@@ -45,7 +46,8 @@ export function style(v, vs, vd) {
           "cssStyleElementForm2FieldsLabelFontWeight",
           "cssStyleElementForm2FieldsLabelLetterSpacing",
           "cssStyleElementForm2FieldsLabelLineHeight",
-          "cssStyleElementForm2FieldsLabelFontVariation"
+          "cssStyleElementForm2FieldsLabelFontVariation",
+          "cssStyleElementForm2FieldsLabelTextTransform"
         ]
       }
   };

@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import React, { FC } from "react";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithOnChange } from "visual/utils/options/attributes";
+import { WithClassName, WithOnChange } from "visual/types/attributes";
 import { ColorPaletteItem } from "./entities/Item";
 import { PaletteObject } from "./entities/PaletteObject";
 
@@ -12,13 +12,13 @@ type Props = WithClassName &
     openSettings?: () => void;
   };
 
-export const ColorPalette: FC<Props> = ({
+export const ColorPalette = ({
   className = "",
   palette,
   onChange,
   openSettings,
   value = ""
-}) => {
+}: Props): JSX.Element => {
   const wrapperClassName = classNames(
     "brz-ed-control__color-palette",
     className

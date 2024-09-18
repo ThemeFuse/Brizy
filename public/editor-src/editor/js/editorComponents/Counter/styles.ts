@@ -1,12 +1,9 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { renderStyles } from "visual/utils/cssStyle";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { Value } from "./types";
 
-export function styleChart(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): [string, string, string] {
-  const styles = {
+export function styleChart(v: Value, vs: Value, vd: Value): OutputStyle {
+  const styles: Styles = {
     ".brz &&:hover": {
       standart: ["cssStyleElementCounterChartEnd"]
     }
@@ -15,12 +12,8 @@ export function styleChart(
   return renderStyles({ v, vs, vd, styles });
 }
 
-export function style(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): [string, string, string] {
-  const styles = {
+export function style(v: Value, vs: Value, vd: Value): OutputStyle {
+  const styles: Styles = {
     ".brz &&:hover": {
       standart: ["cssStyleSizeWidth"]
     },
@@ -70,12 +63,8 @@ export function style(
   return renderStyles({ v, vs, vd, styles });
 }
 
-export function styleNumber(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): [string, string, string] {
-  const styles = {
+export function styleNumber(v: Value, vs: Value, vd: Value): OutputStyle {
+  const styles: Styles = {
     ".brz &&": {
       standart: [
         "cssStyleTypography2FontFamily",
@@ -83,7 +72,8 @@ export function styleNumber(
         "cssStyleTypography2LineHeight",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
-        "cssStyleTypography2FontVariation"
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms"
       ]
     }
   };

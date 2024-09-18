@@ -4,9 +4,9 @@ import { Manager, Reference } from "react-popper";
 import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
+import { WithClassName } from "visual/types/attributes";
 import { TimerType } from "visual/types/TimerType";
-import { WithClassName } from "visual/utils/options/attributes";
-import { TooltipContent as Content, Props as ContentProps } from "./Content";
+import { Props as ContentProps, TooltipContent as Content } from "./Content";
 
 const stack: Tooltip[] = [];
 
@@ -31,6 +31,7 @@ export interface Prs extends WithClassName {
   portalNode?: HTMLElement;
   clickOutsideExceptions: string[];
   nodeRef?: RefObject<HTMLElement>;
+  children: ReactNode;
   onOpen: VoidFunction;
   onClose: VoidFunction;
 }
@@ -57,6 +58,7 @@ export class Tooltip extends React.Component<Props> {
     portalNode: undefined,
     clickOutsideExceptions: [],
     nodeRef: undefined,
+    children: undefined,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onOpen: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -250,7 +252,7 @@ export class Tooltip extends React.Component<Props> {
             <div
               title={title}
               ref={this.contentRef}
-              className="brz-ed-tooltip__content"
+              className={"brz-ed-tooltip__content"}
               onClick={openOnClick ? this.handleContentClick : _.noop}
             >
               {children}

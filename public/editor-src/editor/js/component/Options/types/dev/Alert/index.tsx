@@ -1,6 +1,6 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import * as Option from "visual/component/Options/Type";
-import { WithConfig } from "visual/utils/options/attributes";
+import { WithConfig } from "visual/types/attributes";
 
 export type Config = {
   html: string;
@@ -8,7 +8,7 @@ export type Config = {
 
 export type Props = Option.Props<undefined> & WithConfig<Config>;
 
-export const Alert: React.FC<Props> = ({ config, label }) => {
+export const Alert = ({ config, label }: Props): ReactElement => {
   return (
     <>
       {label}

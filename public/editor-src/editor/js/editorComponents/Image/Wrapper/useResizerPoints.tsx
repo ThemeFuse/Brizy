@@ -5,6 +5,7 @@ import { ImageProps } from "../types";
 import { getImageDCSize, showOriginalImage } from "../utils";
 import { SizeRestriction, WidthHeightRestriction } from "./type";
 import { getSizeRestriction, getWidthRestriction } from "./utils";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 const resize = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
@@ -65,11 +66,11 @@ const useResizerPoints: UseResizerPoints = ({ v, meta, gallery, context }) => {
     return resizeImageExternal;
   }
 
-  if (imageType === ImageType.External) {
+  if (imageType !== ImageType.Internal) {
     return resizeImageExternal;
   }
 
-  if (sizeType === "custom") {
+  if (sizeType === SizeType.custom) {
     const { imageExtension, elementPosition } = v;
     const isAbsoluteOrFixed =
       elementPosition === "absolute" || elementPosition === "fixed";

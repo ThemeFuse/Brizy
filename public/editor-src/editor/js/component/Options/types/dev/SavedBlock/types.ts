@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ReduxState } from "visual/redux/types";
 import { Block, ExtraFontStyle } from "visual/types";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 
 export interface Config {
   blockType: "normal" | "popup";

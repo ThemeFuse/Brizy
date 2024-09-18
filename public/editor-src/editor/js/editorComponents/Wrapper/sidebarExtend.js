@@ -1,9 +1,9 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
+import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 
 export function getItems({ v, device, context }) {
@@ -51,7 +51,8 @@ export function getItems({ v, device, context }) {
                       label: t("Show on Desktop"),
                       type: "switch",
                       position: 10,
-                      closeTooltip: true
+                      closeTooltip: true,
+                      devices: "desktop"
                     },
                     {
                       id: "padding",
@@ -212,90 +213,108 @@ export function getItems({ v, device, context }) {
               ]
             },
             {
-              id: "padding",
-              type: "padding",
-              label: t("Padding"),
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
               devices: "responsive",
-              position: 50
-            },
-            {
-              id: "margin",
-              devices: "responsive",
-              label: t("Margin"),
-              type: "margin",
-              position: 60
-            },
-            {
-              id: "groupPosition",
-              type: "group",
-              devices: "responsive",
-              options: [
+              tabs: [
                 {
-                  id: "elementPosition",
-                  label: t("Position"),
-                  type: "select",
-                  choices: [
-                    { value: "relative", title: t("None") },
-                    { value: "absolute", title: t("Absolute") },
-                    { value: "fixed", title: t("Fixed") }
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      position: 50
+                    },
+                    {
+                      id: "margin",
+                      devices: "responsive",
+                      label: t("Margin"),
+                      type: "margin",
+                      position: 60
+                    },
+                    {
+                      id: "groupPosition",
+                      type: "group",
+                      devices: "responsive",
+                      options: [
+                        {
+                          id: "elementPosition",
+                          label: t("Position"),
+                          type: "select",
+                          choices: [
+                            { value: "relative", title: t("None") },
+                            { value: "absolute", title: t("Absolute") },
+                            { value: "fixed", title: t("Fixed") }
+                          ]
+                        },
+                        {
+                          id: "width",
+                          label: t("Width"),
+                          type: "slider",
+                          disabled: isRelative,
+                          config: {
+                            min: 0,
+                            max: dvv("widthSuffix") === "px" ? 1200 : 100,
+                            units: [
+                              { value: "px", title: "px" },
+                              { value: "%", title: "%" }
+                            ]
+                          }
+                        },
+                        {
+                          id: "offsetXAlignment",
+                          label: t("Horizontal Offset"),
+                          type: "radioGroup",
+                          disabled: isRelative,
+                          choices: [
+                            { value: "left", icon: "nc-align-left" },
+                            { value: "right", icon: "nc-align-right" }
+                          ]
+                        },
+                        {
+                          id: "offsetX",
+                          type: "slider",
+                          disabled: isRelative,
+                          config: {
+                            min: dvv("offsetXSuffix") === "px" ? -1200 : -100,
+                            max: dvv("offsetXSuffix") === "px" ? 1200 : 100,
+                            units: [
+                              { value: "px", title: "px" },
+                              { value: "%", title: "%" }
+                            ]
+                          }
+                        },
+                        {
+                          id: "offsetYAlignment",
+                          label: t("Vertical Offset"),
+                          type: "radioGroup",
+                          disabled: isRelative,
+                          choices: [
+                            { value: "top", icon: "nc-align-top" },
+                            { value: "bottom", icon: "nc-align-bottom" }
+                          ]
+                        },
+                        {
+                          id: "offsetY",
+                          type: "slider",
+                          disabled: isRelative,
+                          config: {
+                            min: -1200,
+                            max: 1200,
+                            units: [{ value: "px", title: "px" }]
+                          }
+                        }
+                      ]
+                    }
                   ]
-                },
-                {
-                  id: "width",
-                  label: t("Width"),
-                  type: "slider",
-                  disabled: isRelative,
-                  config: {
-                    min: 0,
-                    max: dvv("widthSuffix") === "px" ? 1200 : 100,
-                    units: [
-                      { value: "px", title: "px" },
-                      { value: "%", title: "%" }
-                    ]
-                  }
-                },
-                {
-                  id: "offsetXAlignment",
-                  label: t("Horizontal Offset"),
-                  type: "radioGroup",
-                  disabled: isRelative,
-                  choices: [
-                    { value: "left", icon: "nc-align-left" },
-                    { value: "right", icon: "nc-align-right" }
-                  ]
-                },
-                {
-                  id: "offsetX",
-                  type: "slider",
-                  disabled: isRelative,
-                  config: {
-                    min: dvv("offsetXSuffix") === "px" ? -1200 : -100,
-                    max: dvv("offsetXSuffix") === "px" ? 1200 : 100,
-                    units: [
-                      { value: "px", title: "px" },
-                      { value: "%", title: "%" }
-                    ]
-                  }
-                },
-                {
-                  id: "offsetYAlignment",
-                  label: t("Vertical Offset"),
-                  type: "radioGroup",
-                  disabled: isRelative,
-                  choices: [
-                    { value: "top", icon: "nc-align-top" },
-                    { value: "bottom", icon: "nc-align-bottom" }
-                  ]
-                },
-                {
-                  id: "offsetY",
-                  type: "slider",
-                  disabled: isRelative,
-                  config: {
-                    min: -1200,
-                    max: 1200,
-                    units: [{ value: "px", title: "px" }]
-                  }
                 }
               ]
             }

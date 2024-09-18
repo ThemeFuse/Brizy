@@ -1,12 +1,12 @@
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button as Control } from "visual/component/Controls/Button";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
+import { WithConfig } from "visual/types/attributes";
 import { pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
-import { WithConfig } from "visual/utils/options/attributes";
 
 export interface Config {
   tabId: string;
@@ -19,7 +19,7 @@ export interface Props extends OptionProps<undefined>, WithConfig<Config> {}
 
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
-export const SidebarTabsButton: React.FC<Props> = ({ config }) => {
+export const SidebarTabsButton = ({ config }: Props): ReactElement => {
   const { tabId, icon, align, text } = config ?? {};
 
   const dispatch = useDispatch();

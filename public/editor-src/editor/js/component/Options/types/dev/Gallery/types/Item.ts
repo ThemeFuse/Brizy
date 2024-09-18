@@ -1,7 +1,7 @@
 import * as GalleryItem from "visual/component/Controls/Gallery/types/Item";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { WithId } from "visual/types/attributes";
 import { getImageUrl } from "visual/utils/image";
-import { WithId } from "visual/utils/options/attributes";
 import { Image } from "./Image";
 
 // region Thumbnail
@@ -61,7 +61,7 @@ export const toGalleryItem = <T>(item: Item<T>): GalleryItem.Item<T> => {
           uid: item.payload.uid,
           fileName: item.payload.fileName ?? "",
           sizeType: SizeType.custom,
-          crop: { iW: 100, iH: 100 }
+          crop: { iW: 100, iH: 100, cH: 100, cW: 100, oX: 0, oY: 0 }
         }) ?? "";
 
       return GalleryItem.thumbnail(item.id, url);

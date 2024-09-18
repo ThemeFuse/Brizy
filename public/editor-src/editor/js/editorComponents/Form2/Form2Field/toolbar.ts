@@ -1,20 +1,14 @@
-import _ from "underscore";
-import { ElementModel } from "visual/component/Elements/Types";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import * as types from "./types/index";
+import { getThirtyOptions, inputTypesChoice } from "./utils";
+import { Value, Props } from "./type";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: ElementModel;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const config = Config.getAll();
 
   const type = dvv("type");
 
@@ -28,6 +22,11 @@ export function getItems({
   const isNumber = type === "Number";
   const isParagraph = type === "Paragraph";
 
+  const thirtyOption = config.integrations?.form?.fields;
+  const thirtyOptionHandler = thirtyOption?.handler;
+  const thirtyOptionLabel = thirtyOption?.label ?? t("Field Name");
+  const fieldId = component.getId();
+
   const isCheckboxOrRadio = isCheckbox || isRadio;
   const isDateOrTime = isDate || isTime;
 
@@ -39,6 +38,7 @@ export function getItems({
       fileUploadSizes.push({ title: `${idx} MB`, value: `${idx}mb` });
     }
   }
+  const inputTypes = inputTypesChoice();
 
   const dateOrTimeOptions = (): ToolbarItemType[] => [
     {
@@ -237,10 +237,8 @@ export function getItems({
                   type: "select",
                   devices: "desktop",
                   position: 10,
-                  choices: _.map(types, (item) => ({
-                    title: item.componentTitle,
-                    value: item.componentType
-                  }))
+                  disabled: inputTypes.length === 0,
+                  choices: inputTypes
                 },
                 {
                   id: "fileSizeErrorMessage",
@@ -289,7 +287,18 @@ export function getItems({
             {
               id: "advanced",
               label: t("Advanced"),
-              options: [...(isCheckboxOrRadio ? checkboxOrRadioAdvanced() : [])]
+              options: [
+                ...(isCheckboxOrRadio ? checkboxOrRadioAdvanced() : []),
+                {
+                  id: "customFieldName",
+                  type: "select",
+                  label: thirtyOptionLabel,
+                  disabled: typeof thirtyOptionHandler !== "function",
+                  choices: {
+                    load: getThirtyOptions(fieldId)
+                  }
+                }
+              ]
             },
             {
               id: "background",
@@ -337,4 +346,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

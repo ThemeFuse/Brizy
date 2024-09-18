@@ -170,10 +170,9 @@ export function getItems({ v, device }) {
     {
       id: "advancedSettings",
       devices: "desktop",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       roles: ["admin"],
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     },
     { id: "toolbarSettings", type: "popover", disabled: true }

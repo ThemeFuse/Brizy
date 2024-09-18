@@ -8,6 +8,7 @@ import {
   cssStyleDisplayNone,
   cssStyleFlexHorizontalAlign,
   cssStylePaddingFourFields,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -98,6 +99,19 @@ export function cssStyleElementPostsPaginationFontVariation({
   state
 }) {
   return cssStyleTypography2FontVariation({
+    v,
+    device,
+    state,
+    prefix: "pagination"
+  });
+}
+
+export function cssStyleElementPostsPaginationTextTransform({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextTransforms({
     v,
     device,
     state,
@@ -230,6 +244,15 @@ export function cssStyleElementPostsFilterLetterSpacing({ v, device, state }) {
 
 export function cssStyleElementPostsFilterFontVariation({ v, device, state }) {
   return cssStyleTypography2FontVariation({
+    v,
+    device,
+    state,
+    prefix: "filter"
+  });
+}
+
+export function cssStyleElementPostsFilterTextTransform({ v, device, state }) {
+  return cssStyleTextTransforms({
     v,
     device,
     state,

@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { MouseEventHandler, ReactElement, useCallback } from "react";
 import { CheckMark } from "visual/component/CheckMark";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithClassName } from "visual/utils/options/attributes";
+import { WithClassName } from "visual/types/attributes";
 
 export interface Props extends WithClassName {
   icon: string;
@@ -30,8 +30,12 @@ export const FatCheckIcon = ({
     [onCheck]
   );
 
-  const activeLabel = active ? "text-right-sidebar-item--active" : "text-right-sidebar-item";
-  const activeIcon = active ? "!text-right-sidebar-item--active" : "!text-right-sidebar-item";
+  const activeLabel = active
+    ? "text-right-sidebar-item--active"
+    : "text-right-sidebar-item";
+  const activeIcon = active
+    ? "!text-right-sidebar-item--active"
+    : "!text-right-sidebar-item";
 
   const activeBorder = active
     ? "border-right-sidebar-item--active"

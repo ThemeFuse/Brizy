@@ -1,17 +1,9 @@
 import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./index";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { Value } from "./index";
 
-export function styleWrapper(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+export function styleWrapper(v: Value, vs: Value, vd: Value): OutputStyle {
+  const styles: Styles = {
     ".brz &&:hover": {
       interval: [
         "cssStyleDisplayFlex",
@@ -31,6 +23,9 @@ export function styleWrapper(
         "cssStyleWrapperContainerFlex",
         "cssStyleWrapperBorderFlex"
       ]
+    },
+    ".brz && .brz-wrapper-transform": {
+      standart: ["cssStyleTransform"]
     }
   };
 
@@ -45,12 +40,8 @@ export function styleWrapper(
   return renderStyles({ v, vs, vd, styles });
 }
 
-export function styleAnimation(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
-  const styles = {
+export function styleAnimation(v: Value, vs: Value, vd: Value): OutputStyle {
+  const styles: Styles = {
     ".brz &&:hover": {
       standart: ["cssStyleAnimationAll"]
     }

@@ -41,12 +41,9 @@ export const getItems = ({ v }: { v: Value }): ToolbarItemType[] => {
     { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "advancedSettings",
-      // @ts-expect-error: Old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       devices: "desktop",
-      sidebarLabel: t("More Settings"),
       position: 110,
-      icon: "nc-cog",
       title: t("Settings")
     }
   ];

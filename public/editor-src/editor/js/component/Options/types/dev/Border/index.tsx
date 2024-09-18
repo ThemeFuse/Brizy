@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { identity as id } from "underscore";
 import {
@@ -6,22 +6,21 @@ import {
   Props as ControlProps
 } from "visual/component/Controls/Border";
 import * as Option from "visual/component/Options/Type";
-import { paletteHex } from "visual/component/Options/types/dev/ColorPicker/utils";
 import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { getColorPaletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { Config } from "visual/utils/options/Border/entities/Config";
-import { Value } from "visual/utils/options/Border/entities/Value";
 import * as BorderStyle from "visual/utils/options/Border/entities/style";
+import { Value } from "visual/utils/options/Border/entities/Value";
 import * as Width from "visual/utils/options/Border/entities/width";
 import { Meta } from "visual/utils/options/Border/meta";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
-import * as BorderModel from "./model";
-import { getStyleObject } from "./utils";
-import { _setOpacity } from "./utils";
+import * as BorderModel from "visual/utils/options/Border/model";
+import { getStyleObject, _setOpacity } from "visual/utils/options/Border/utils";
+import { paletteHex } from "visual/utils/options/ColorPicker/utils";
 
 export interface Props
   extends Option.Props<Value>,
@@ -29,7 +28,12 @@ export interface Props
     WithConfig<Config>,
     WithClassName {}
 
-export const Border: FC<Props> = ({ value, onChange, className, config }) => {
+export const Border = ({
+  value,
+  onChange,
+  className,
+  config
+}: Props): ReactElement => {
   const dispatch = useDispatch();
   const styles = config?.styles ?? BorderStyle.styles;
   const hasNone = styles.includes(BorderStyle.empty);
@@ -63,7 +67,7 @@ export const Border: FC<Props> = ({ value, onChange, className, config }) => {
     (v) => onChange(BorderModel.setPalette(v, value)),
     [onChange, value]
   );
-  const changeWidthType = useCallback(
+  const changeWidthType = useCallback<ControlProps["onChangeWidthType"]>(
     (v) => onChange(BorderModel.setWidthType(v, value)),
     [onChange, value]
   );
@@ -74,28 +78,28 @@ export const Border: FC<Props> = ({ value, onChange, className, config }) => {
     },
     [onChange, value, minWidth]
   );
-  const changeTopWidth = useCallback(
+  const changeTopWidth = useCallback<ControlProps["onChangeTopWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setTopWidth(_v, value));
     },
     [onChange, value, minWidth]
   );
-  const changeRightWidth = useCallback(
+  const changeRightWidth = useCallback<ControlProps["onChangeRightWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setRightWidth(_v, value));
     },
     [onChange, value, minWidth]
   );
-  const changeBottomWidth = useCallback(
+  const changeBottomWidth = useCallback<ControlProps["onChangeBottomWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setBottomWidth(_v, value));
     },
     [onChange, value, minWidth]
   );
-  const changeLeftWidth = useCallback(
+  const changeLeftWidth = useCallback<ControlProps["onChangeLeftWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
       _v !== undefined && onChange(BorderModel.setLeftWidth(_v, value));

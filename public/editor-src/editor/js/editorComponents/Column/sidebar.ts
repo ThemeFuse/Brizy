@@ -1,12 +1,12 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
+import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
 
@@ -60,9 +60,9 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
                       type: "switch",
-                      devices: "desktop",
                       closeTooltip: true,
-                      position: 10
+                      position: 10,
+                      devices: "desktop"
                     },
                     {
                       id: "padding",

@@ -89,7 +89,7 @@
             </svg>
             <h3 class="brz-demo-modal-content-h3"><?php echo $l10n['t4']; ?></h3>
             <p class="brz-demo-modal-content-p"><?php echo $l10n['t5']; ?></p>
-            <a href="<?php echo admin_url( 'post.php?action=in-front-editor&post=' . get_option( 'page_on_front' ) ); ?>" class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button"> <?php echo $l10n['t15']; ?> </a>
+            <a href="<?php echo admin_url( 'post.php?action=in-front-editor&post=' . get_option( 'page_on_front' ) ); ?>" class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button js-demo-data-edit-homepage"> <?php echo $l10n['t15']; ?> </a>
         </div>
     </script>
 

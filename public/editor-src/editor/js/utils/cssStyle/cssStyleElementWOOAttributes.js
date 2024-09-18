@@ -1,5 +1,6 @@
 import {
   cssStyleColor,
+  cssStyleTextTransforms,
   cssStyleTypography2FontVariation
 } from "visual/utils/cssStyle";
 import {
@@ -41,6 +42,14 @@ export function cssStyleElementWOOAdditionalTitleLetterSpacing({ v, device }) {
 
 export function cssStyleElementWOOAdditionalTitleFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "title" });
+}
+
+export function cssStyleElementWOOAdditionalTitleTextTransform({
+  v,
+  state,
+  device
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "title" });
 }
 
 export function cssStyleElementWOOAdditionalTitleColor({ v, device, state }) {
@@ -90,6 +99,14 @@ export function cssStyleElementWOOAttributesAttributesFontVariation({
   device
 }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "attributes" });
+}
+
+export function cssStyleElementWOOAttributesAttributesTextTransform({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "attributes" });
 }
 
 export function cssStyleElementWOOAttributesSpacing({ v, device, state }) {

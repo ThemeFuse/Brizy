@@ -13,4 +13,4 @@ echo -e "-----------------------------------------------------------------------
 echo -e "\Install composer dependencies"
 echo -e "-----------------------------------------------------------------------------"
 rm -rf vendor
-/usr/bin/composer install --no-dev || { exit 1; }
+/usr/bin/composer install --ignore-platform-reqs --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts  --no-dev || { exit 1; }

@@ -1,20 +1,20 @@
 import { noop } from "underscore";
 import Config from "visual/global/Config";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ConfigCommon,
   Mode
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   AllRule,
   BlockTypeRule,
   CollectionItemRule,
   CollectionTypeRule,
+  DataCommon as PageCommon,
   GlobalBlock,
   Page,
   PageCollection,
-  DataCommon as PageCommon,
   Rule
 } from "visual/types";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
@@ -37,7 +37,6 @@ export const urlsCommon = {
   editorIcons: "",
   worker: "",
   assetsExternal: "",
-  backToDashboard: "",
   blockThumbnails: "",
   changeTemplate: "",
   dashboardNavMenu: "",
@@ -69,24 +68,28 @@ const cmsCommon = {
   notificationsApiUrl: ""
 };
 
-export const projectCommon = {
-  heartBeatInterval: 1,
-  status: {
-    locked: false,
-    lockedBy: false
-  }
-};
-
 export const configCommon: ConfigCommon = {
   branding: {
     name: "brizy"
+  },
+  user: {
+    isGuest: false,
+    isAuthorized: false,
+    role: "admin"
   },
   editorVersion: "1",
   mode: Mode.page,
   taxonomies: [],
   postTypesTaxs: [],
   imageSizes: [],
-
+  project: {
+    id: "",
+    heartBeatInterval: 1,
+    status: {
+      locked: false,
+      lockedBy: false
+    }
+  },
   server: {
     maxUploadFileSize: 40
   },
@@ -215,14 +218,12 @@ describe("testing WP getAllowedGBIds", () => {
       user: {
         isAuthorized: false,
         role: "admin",
-        isGuest: false,
-        allowScripts: false
+        isGuest: false
       },
       modules: undefined,
       urls: {
         ...urlsCommon,
         assetsExternal: "",
-        backToDashboard: "",
         blockThumbnails: "",
         changeTemplate: "",
         dashboardNavMenu: "",
@@ -230,12 +231,7 @@ describe("testing WP getAllowedGBIds", () => {
         templateIcons: "",
         templateThumbnails: ""
       },
-      project: {
-        ...projectCommon,
-        id: ""
-      },
       dynamicContent: {
-        liveInBuilder: true,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],
@@ -348,7 +344,8 @@ describe("testing WP getAllowedGBIds", () => {
   test.each<[GlobalBlock, Page, boolean]>([
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -367,7 +364,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -386,7 +384,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -405,7 +404,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -424,7 +424,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -443,7 +444,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -462,7 +464,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -481,7 +484,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -500,7 +504,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -519,7 +524,8 @@ describe("testing WP getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -540,7 +546,8 @@ describe("testing WP getAllowedGBIds", () => {
     //#region Author
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -566,7 +573,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -592,7 +600,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -622,7 +631,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -648,7 +658,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -674,7 +685,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -700,7 +712,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -726,7 +739,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -755,7 +769,8 @@ describe("testing WP getAllowedGBIds", () => {
     //#region Child
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -781,7 +796,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -807,7 +823,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -833,7 +850,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -859,7 +877,8 @@ describe("testing WP getAllowedGBIds", () => {
 
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -918,19 +937,17 @@ describe("testing Cloud getAllowedGBIds", () => {
       user: {
         isAuthorized: false,
         role: "admin",
-        isGuest: false,
-        allowScripts: false
+        isGuest: false
       },
       cms: cmsCommon,
       urls: urlsCommon,
       project: {
-        ...projectCommon,
+        ...configCommon.project,
         id: 1,
         apiVersion: 2,
         protectedPagePassword: ""
       },
       dynamicContent: {
-        liveInBuilder: true,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],
@@ -1001,7 +1018,8 @@ describe("testing Cloud getAllowedGBIds", () => {
   test.each<[GlobalBlock, Page, boolean]>([
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1020,7 +1038,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1039,7 +1058,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1058,7 +1078,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1077,7 +1098,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1096,7 +1118,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1115,7 +1138,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1134,7 +1158,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1153,7 +1178,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1172,7 +1198,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1193,7 +1220,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     // Specific case in CollectionItem: rules with reference and multiReference
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1244,7 +1272,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1297,7 +1326,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1350,7 +1380,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1403,7 +1434,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1456,7 +1488,8 @@ describe("testing Cloud getAllowedGBIds", () => {
     ],
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1538,19 +1571,17 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
       user: {
         isAuthorized: false,
         role: "admin",
-        isGuest: false,
-        allowScripts: false
+        isGuest: false
       },
       cms: cmsCommon,
       urls: urlsCommon,
       project: {
-        ...projectCommon,
+        ...configCommon.project,
         id: 1,
         apiVersion: 2,
         protectedPagePassword: ""
       },
       dynamicContent: {
-        liveInBuilder: true,
         groups: {
           [DCTypes.image]: [],
           [DCTypes.link]: [],
@@ -1569,7 +1600,8 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
     // Specific case in CustomerPage: rules with group
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",
@@ -1596,7 +1628,8 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
     // Specific case in CustomerPage: rules with group
     [
       {
-        id: "b1",
+        uid: "b1",
+        dataVersion: 0,
         data: {
           blockId: "b1",
           type: "Section",

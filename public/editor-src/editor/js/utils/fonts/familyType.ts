@@ -3,6 +3,7 @@ import { pass } from "visual/utils/fp";
 export enum FontFamilyType {
   google = "google",
   upload = "upload",
+  adobe = "adobe",
   system = "system"
 }
 

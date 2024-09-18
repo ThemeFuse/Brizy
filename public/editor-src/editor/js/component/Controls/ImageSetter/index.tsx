@@ -13,10 +13,11 @@ import {
   SizeType
 } from "visual/global/Config/types/configs/common";
 import { t } from "visual/utils/i18n";
-import { getImageFormat, getImageUrl, preloadImage } from "visual/utils/image";
+import { getImageUrl, preloadImage } from "visual/utils/image";
 import { ImageType } from "visual/utils/image/types";
 import Image from "./Image";
 import { Meta } from "./types";
+import { getFileFormat } from "visual/utils/customFile/utils";
 
 export interface Value {
   src: string;
@@ -27,12 +28,13 @@ export interface Value {
   height: number;
   extension: string;
   imageType: ImageType;
+  altTitle?: string;
 }
 
 export interface Props<T extends ReactText> {
   className?: string;
   src: string;
-  fileName: string;
+  fileName?: string;
   x: number;
   y: number;
   width: number;
@@ -51,11 +53,12 @@ export interface Props<T extends ReactText> {
 
 interface State {
   src: string;
-  fileName: string;
+  fileName?: string;
   width: number;
   height: number;
   extension: string;
   loading: boolean;
+  altTitle?: string;
 }
 
 export class ImageSetter<T extends ReactText> extends React.Component<
@@ -64,16 +67,25 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 > {
   state = {
     src: this.props.src,
-    fileName: this.props.fileName,
+    fileName: this.props.fileName ?? `image.${this.props.extension}`,
     width: this.props.width,
     height: this.props.height,
     extension: this.props.extension,
     loading: false,
-    imageType: ImageType.Internal
+    imageType: ImageType.Internal,
+    altTitle: ""
   };
 
   mounted = false;
-  defaultExtensions: Extensions[] = ["jpeg", "jpg", "png", "gif", "svg"];
+  defaultExtensions: Extensions[] = [
+    "jpeg",
+    "jpg",
+    "png",
+    "gif",
+    "svg",
+    "webp"
+  ];
+
   _extensions =
     this.props.acceptedExtensions && this.props.acceptedExtensions.length > 0
       ? this.props.acceptedExtensions
@@ -101,10 +113,21 @@ export class ImageSetter<T extends ReactText> extends React.Component<
 
   handleChange = (value: Partial<Value>, meta: Meta): void => {
     const { x, y, extension } = this.props;
-    const { src, fileName, width, height, imageType } = this.state;
+    const { src, fileName, width, height, imageType, altTitle } = this.state;
 
     this.props.onChange(
-      { src, fileName, width, height, x, y, extension, imageType, ...value },
+      {
+        src,
+        fileName,
+        width,
+        height,
+        x,
+        y,
+        extension,
+        imageType,
+        altTitle,
+        ...value
+      },
       meta
     );
   };
@@ -118,7 +141,8 @@ export class ImageSetter<T extends ReactText> extends React.Component<
       x: 0,
       y: 0,
       extension: "",
-      imageType: ImageType.Internal
+      imageType: ImageType.Internal,
+      altTitle: ""
     };
 
     this.setState<"src" | "width" | "height" | "extension">(newValue);
@@ -132,18 +156,22 @@ export class ImageSetter<T extends ReactText> extends React.Component<
     if (media.addMedia) {
       this.setState({ loading: true });
 
-      const response: Response<AddImageData> = ({ uid, fileName }) => {
-        if (!uid && !fileName) {
-          ToastNotification.error(t("Invalid uid & fileName"));
+      const response: Response<Partial<AddImageData>> = ({
+        uid,
+        fileName,
+        altTitle
+      }) => {
+        if (!uid) {
+          ToastNotification.error(t("Invalid uid"));
           return;
         }
 
-        const extension = getImageFormat(fileName);
+        const extension = getFileFormat(uid);
 
         if (!extension) {
           ToastNotification.error(
             t(
-              "Failed to upload file. Please upload a valid JPG, PNG, SVG or GIF image."
+              "Failed to upload file. Please upload a valid JPG, PNG, SVG, GIF or WEBP image."
             )
           );
           return;
@@ -165,7 +193,8 @@ export class ImageSetter<T extends ReactText> extends React.Component<
               width,
               height,
               extension,
-              fileName
+              fileName,
+              altTitle
             };
 
             if (this.mounted) {
@@ -180,6 +209,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
           .catch((e) => {
             this.setState({ loading: false });
             console.log(e);
+            ToastNotification.error("Failed to upload file");
           });
       };
 

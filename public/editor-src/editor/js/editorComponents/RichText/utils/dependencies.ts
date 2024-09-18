@@ -1,6 +1,8 @@
 import { setIn } from "timm";
+import { DeviceMode, TextScripts } from "visual/types";
 import { isObject } from "visual/utils/reader/object";
 import { capByPrefix, encodeToString } from "visual/utils/string";
+import { defaultValueValue } from "visual/utils/onChange";
 
 interface Value {
   linkType: string;
@@ -18,9 +20,25 @@ interface Value {
   linkPageTitle: string;
   linkPageSource: string;
   linkInternalBlank: string;
+  bold: boolean;
+  italic: boolean;
+  underline: boolean;
+  strike: boolean;
+  capitalize: string;
+  lowercase: string;
+  script: TextScripts;
+  typographyFontStyle: string;
+  // Text Transform Values can also be string from quill formats
+  typographyBold: boolean | string;
+  typographyItalic: boolean | string;
+  typographyUnderline: boolean | string;
+  typographyStrike: boolean | string;
+  typographyUppercase: boolean;
+  typographyLowercase: string;
+  typographyScript: TextScripts;
 }
 
-type Patch = Partial<Value>;
+export type Patch = Partial<Value>;
 
 export const handleChangeLink = (v: Value, value: Patch) => {
   const linkAnchor = value.linkAnchor ?? v.linkAnchor;
@@ -89,3 +107,53 @@ export const getPopulationColor = (
 
   return "";
 };
+
+const isCustomFontStyle = (v: Patch, device: DeviceMode) => {
+  const value = defaultValueValue({ v, key: "typographyFontStyle", device });
+  return value === "custom" || value === "";
+};
+
+export const patchTextTransform = (
+  patch: Patch,
+  device: DeviceMode,
+  v: Patch = {}
+): Patch => {
+  const isCustom = isCustomFontStyle(patch, device);
+
+  const {
+    typographyBold = v.bold,
+    typographyItalic = v.italic,
+    typographyUnderline = v.underline,
+    typographyStrike = v.strike,
+    typographyUppercase = v.capitalize,
+    typographyLowercase,
+    typographyScript
+  } = patch;
+
+  return {
+    ...patch,
+    bold: Boolean(isCustom && typographyBold),
+    italic: Boolean(isCustom && typographyItalic),
+    underline: Boolean(isCustom && typographyUnderline),
+    strike: Boolean(isCustom && typographyStrike),
+    capitalize: isCustom && typographyUppercase ? "on" : "",
+    typographyLowercase: typographyLowercase ? "on" : "",
+    script: typographyScript
+  };
+};
+
+export const fromFormatsToTextTransform = ({
+  bold,
+  italic,
+  strike,
+  underline,
+  capitalize,
+  script
+}: Patch) => ({
+  typographyBold: bold,
+  typographyItalic: italic,
+  typographyStrike: strike,
+  typographyUnderline: underline,
+  typographyUppercase: capitalize === "on",
+  typographyScript: script
+});

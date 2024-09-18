@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import React, { FC } from "react";
+import React from "react";
 import { ColorPalette } from "visual/component/Controls/ColorPalette";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import ColorPicker2 from "visual/component/Controls/ColorPicker2";
-import { WithClassName, WithValue } from "visual/utils/options/attributes";
+import { WithClassName, WithValue } from "visual/types/attributes";
 
 export const paletteHex = (
   id: PaletteObject["id"],
@@ -36,14 +36,14 @@ export type Props = WithClassName &
     onChange: (v: Value, m: Meta) => void;
   };
 
-export const ColorPicker3: FC<Props> = ({
+export const ColorPicker3 = ({
   className: _className,
   opacity = true,
   palette = [],
   paletteOpenSettings,
   value,
   onChange
-}) => {
+}: Props): JSX.Element => {
   const className = classNames("brz-ed-control__colorPicker3", _className);
 
   const colorValue = {

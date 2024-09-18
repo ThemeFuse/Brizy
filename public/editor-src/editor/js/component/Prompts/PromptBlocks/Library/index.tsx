@@ -1,5 +1,5 @@
 import { match } from "fp-utilities";
-import produce from "immer";
+import { produce } from "immer";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
@@ -30,9 +30,9 @@ import {
   importSavePopups,
   importSavedLayout,
   updateSavedBlock,
-  updateSavedLayout,
-  updateSavedPopup
+  updateSavedLayout
 } from "visual/utils/api";
+import { updateSavedPopup } from "visual/utils/api/common";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { IS_WP } from "visual/utils/env";
 import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";

@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
+import { mPipe, pass } from "fp-utilities";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu from "visual/component/ContextMenu";
@@ -19,6 +20,11 @@ import SectionMegaMenuItems from "./items";
 import * as sidebarConfig from "./sidebar";
 import { styleContainer, styleSection } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getCSSId } from "visual/utils/models/cssId";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
+
+const getModelId = mPipe(getCSSId, pass(NoEmptyString.is));
 
 class SectionMegaMenu extends EditorComponent {
   static get componentId() {
@@ -83,6 +89,7 @@ class SectionMegaMenu extends EditorComponent {
 
     return {
       ...meta,
+      megaMenu: true,
       desktopW,
       desktopWNoSpacing,
       tabletW,
@@ -134,7 +141,7 @@ class SectionMegaMenu extends EditorComponent {
       className,
       cssClass || customClassName,
       css(
-        `${this.constructor.componentId}-section`,
+        `${this.getComponentId()}-section`,
         `${this.getId()}-section`,
         styleSection(v, vs, vd)
       )
@@ -188,7 +195,6 @@ class SectionMegaMenu extends EditorComponent {
       className,
       tagName,
       customClassName,
-      cssID,
       cssClass,
       customAttributes,
       customCSS
@@ -198,17 +204,20 @@ class SectionMegaMenu extends EditorComponent {
       className,
       cssClass || customClassName,
       css(
-        `${this.constructor.componentId}-section`,
+        `${this.getComponentId()}-section`,
         `${this.getId()}-section`,
         styleSection(v, vs, vd)
       )
     );
 
+    const id = getModelId(v) ?? this.getId();
+    const htmlId = `${id}-${makePlaceholder({ content: "{{ random_id }}" })}`;
+
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <CustomTag
+          id={htmlId}
           tagName={tagName}
-          id={cssID === "" ? this.getId() : cssID}
           className={classNameSection}
           data-uid={this.getId()}
           {...parseCustomAttributes(customAttributes)}

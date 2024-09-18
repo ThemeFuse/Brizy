@@ -1,7 +1,7 @@
 {
   "content": {
-    "category": "all",
-    "group": "all",
+    "category": "",
+    "group": "",
 
     "source": "",
     "detailPage": "",
@@ -20,7 +20,8 @@
     "subscribeToCalendarText": "Subscribe",
 
     "iconName": "hit-down",
-    "iconType": "glyph"
+    "iconType": "glyph",
+    "iconFilename": ""
   },
   "style": {
     "families": {
@@ -54,6 +55,12 @@
     "paginationTypographyVariableFontWeight": 600,
     "paginationTypographyFontWidth": 100,
     "paginationTypographyFontSoftness": 0,
+    "paginationTypographyBold": false,
+    "paginationTypographyItalic": false,
+    "paginationTypographyUnderline": false,
+    "paginationTypographyStrike": false,
+    "paginationTypographyUppercase": false,
+    "paginationTypographyLowercase": false,
 
     "paginationColorHex": "#000000",
     "paginationColorOpacity": 1,
@@ -74,6 +81,12 @@
     "weekdaysTypographyVariableFontWeight": 700,
     "weekdaysTypographyFontWidth": 100,
     "weekdaysTypographyFontSoftness": 0,
+    "weekdaysTypographyBold": false,
+    "weekdaysTypographyItalic": false,
+    "weekdaysTypographyUnderline": false,
+    "weekdaysTypographyStrike": false,
+    "weekdaysTypographyUppercase": false,
+    "weekdaysTypographyLowercase": false,
 
     "weekdaysColorHex": "#000000",
     "weekdaysColorOpacity": 1,
@@ -95,6 +108,12 @@
     "eventStartTimeTypographyVariableFontWeight": 700,
     "eventStartTimeTypographyFontWidth": 100,
     "eventStartTimeTypographyFontSoftness": 0,
+    "eventStartTimeTypographyBold": false,
+    "eventStartTimeTypographyItalic": false,
+    "eventStartTimeTypographyUnderline": false,
+    "eventStartTimeTypographyStrike": false,
+    "eventStartTimeTypographyUppercase": false,
+    "eventStartTimeTypographyLowercase": false,
 
     "dayTypographyFontStyle": "",
     "dayTypographyFontFamilyType": "google",
@@ -106,7 +125,12 @@
     "dayTypographyVariableFontWeight": 700,
     "dayTypographyFontWidth": 100,
     "dayTypographyFontSoftness": 0,
-
+    "dayTypographyBold": false,
+    "dayTypographyItalic": false,
+    "dayTypographyUnderline": false,
+    "dayTypographyStrike": false,
+    "dayTypographyUppercase": false,
+    "dayTypographyLowercase": false,
 
     "subscribeToCalendarTypographyFontStyle": "",
     "subscribeToCalendarTypographyFontFamilyType": "google",
@@ -118,6 +142,12 @@
     "subscribeToCalendarTypographyVariableFontWeight": 700,
     "subscribeToCalendarTypographyFontWidth": 100,
     "subscribeToCalendarTypographyFontSoftness": 0,
+    "subscribeToCalendarTypographyBold": false,
+    "subscribeToCalendarTypographyItalic": false,
+    "subscribeToCalendarTypographyUnderline": false,
+    "subscribeToCalendarTypographyStrike": false,
+    "subscribeToCalendarTypographyUppercase": false,
+    "subscribeToCalendarTypographyLowercase": false,
 
     "dayColorHex": "#000000",
     "dayColorOpacity": 1,
@@ -172,6 +202,8 @@
     "dayBorderBottomRightRadiusSuffix": "px",
     "dayBorderBottomLeftRadiusSuffix": "px",
 
+    "subscribeToCalendarFillType": "filled",
+
     "subscribeToCalendarColorHex": "#000000",
     "subscribeToCalendarColorOpacity": 1,
     "subscribeToCalendarColorPalette": "",
@@ -196,8 +228,7 @@
     "subscribeToCalendarGradientLinearDegree": 90,
     "subscribeToCalendarGradientRadialDegree": 90,
 
-    "subscribeToCalendarBorderRadiusType": "grouped",
-
+    "subscribeToCalendarBorderRadiusType": "square",
     "subscribeToCalendarBorderRadius": 100,
     "subscribeToCalendarBorderRadiusSuffix": "px",
 
@@ -341,6 +372,12 @@
     "titleTypographyVariableFontWeight": 400,
     "titleTypographyFontWidth": 100,
     "titleTypographyFontSoftness": 0,
+    "titleTypographyBold": false,
+    "titleTypographyItalic": false,
+    "titleTypographyUnderline": false,
+    "titleTypographyStrike": false,
+    "titleTypographyUppercase": false,
+    "titleTypographyLowercase": false,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
@@ -927,6 +964,9 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "subscribeToCalendarHoverTransition": 50,
+    "subscribeToCalendarHoverTransitionSuffix": ""
   }
 }

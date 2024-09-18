@@ -1,6 +1,11 @@
 import { Sources } from "visual/editorComponents/Posts/types";
 import { Dictionary } from "visual/types/utils";
 
+export enum AutoSave {
+  publish = 0,
+  draft = 1
+}
+
 export interface ResponseWithBody<T> {
   status: number;
   ok: boolean;
@@ -129,16 +134,40 @@ export type GetRulePostsGroupList = (p: string) => Promise<
 >;
 
 //#region Posts
-export type GetPostsSourceRefId = Dictionary<
-  Array<{ id: string; type: "single" | "multi" | "manual"; title: string }>
->;
-export type GetPostsSourceRefs = (t: string) => Promise<{
-  collectionTypes: Array<{ id: string; slug?: string | null; title: string }>;
-  refsById: GetPostsSourceRefId;
-}>;
 
 export interface PostsSources {
   sources: Sources[];
+}
+
+//#endregion
+
+//#region AdobeFonts
+
+interface AdobeFamily {
+  id: string;
+  family: string;
+  category: string;
+  subsets: string[];
+  variants: string[];
+}
+
+export interface AdobeFonts {
+  kit: {
+    id: string;
+    families: AdobeFamily[];
+  };
+}
+
+export interface AdobeAddAccount {
+  status: number;
+}
+
+//#endregion
+
+//#region Icons
+
+export interface UploadIconData {
+  acceptedExtensions: string[];
 }
 
 //#endregion

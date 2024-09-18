@@ -1,18 +1,18 @@
 import classNames from "classnames";
-import React, { FC } from "react";
+import React from "react";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import {
-  Props as CSProps,
-  ColorPickerSelect
+  ColorPickerSelect,
+  Props as CSProps
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
-import { Item } from "visual/component/Controls/Select2/Item";
 import { Select2 } from "visual/component/Controls/Select2";
+import { Item } from "visual/component/Controls/Select2/Item";
+import { WithClassName, WithValue } from "visual/types/attributes";
 import { t } from "visual/utils/i18n";
-import { WithClassName, WithValue } from "visual/utils/options/attributes";
-import { GradientRange } from "./GradientRange";
 import { GradientType, Meta, Type, Value } from "./entities";
+import { GradientRange } from "./GradientRange";
 import { fromColorMeta } from "./utils";
 
 type Props = WithClassName &
@@ -46,7 +46,7 @@ const renderColorPickerItems = (none: boolean) => {
   return items;
 };
 
-export const BackgroundColor: FC<Props> = ({
+export const BackgroundColor = ({
   className,
   onChange,
   value,
@@ -55,7 +55,7 @@ export const BackgroundColor: FC<Props> = ({
   opacity,
   gradientColors: [g1, g2],
   withNone
-}) => {
+}: Props): JSX.Element => {
   const onColorChange: CSProps<Type>["onChange"] = (v, m) => {
     onChange(
       {

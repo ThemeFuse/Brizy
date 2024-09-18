@@ -27,6 +27,7 @@ import {
   PortalToolbarPositionerProps
 } from "./PortalToolbarPositioner";
 import { selectorSearchCoordinates, selectorSearchDomTree } from "./utils";
+import { targetExceptions } from "visual/component/Options/constants";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
 
@@ -316,12 +317,7 @@ class _PortalToolbar
       ".brz-ed-fixed",
       ".brz-ed-box__resizer--point",
       ".brz-ed-eyeDropper",
-      ...(TARGET === "WP"
-        ? [
-            ".media-modal", // class of the WP media modal
-            ".media-modal-backdrop"
-          ]
-        : []),
+      ...targetExceptions,
       this.clickOutsideException // makes the toolbar not rerender when clicking repeatedly on the same node
     ];
   };
@@ -365,37 +361,39 @@ class _PortalToolbar
     const portalNode = portalNodesByDocument.get(ownerDocument);
 
     return (
-      portalNode &&
-      ReactDOM.createPortal(
-        <>
-          <ClickOutside
-            exceptions={this.getOutSideExceptions()}
-            onClickOutside={this.handleClickOutside}
-          >
-            <PortalToolbarPositioner
-              {...contextProps}
-              {...ownProps}
-              items={items}
-              node={this.selectorNode ?? this.node}
-              onClick={this.handleClick}
-              onMouseEnter={this.handleMouseEnter}
-              onMouseLeave={this.handleMouseLeave}
-            />
-          </ClickOutside>
-          {ownProps.getSidebarItems && (
-            <RightSidebarItems
-              getItems={this.getSidebarItems}
-              getTitle={ownProps.getSidebarTitle}
-            />
+      <>
+        {portalNode &&
+          ReactDOM.createPortal(
+            <>
+              <ClickOutside
+                exceptions={this.getOutSideExceptions()}
+                onClickOutside={this.handleClickOutside}
+              >
+                <PortalToolbarPositioner
+                  {...contextProps}
+                  {...ownProps}
+                  items={items}
+                  node={this.selectorNode ?? this.node}
+                  onClick={this.handleClick}
+                  onMouseEnter={this.handleMouseEnter}
+                  onMouseLeave={this.handleMouseLeave}
+                />
+              </ClickOutside>
+              {ownProps.getSidebarItems && (
+                <RightSidebarItems
+                  getItems={this.getSidebarItems}
+                  getTitle={ownProps.getSidebarTitle}
+                />
+              )}
+              <HotKeys
+                id="key-helper-toolbar-escape"
+                keyNames={["esc"]}
+                onKeyUp={this.handleEscape}
+              />
+            </>,
+            portalNode
           )}
-          <HotKeys
-            id="key-helper-toolbar-escape"
-            keyNames={["esc"]}
-            onKeyUp={this.handleEscape}
-          />
-        </>,
-        portalNode
-      )
+      </>
     );
   }
 

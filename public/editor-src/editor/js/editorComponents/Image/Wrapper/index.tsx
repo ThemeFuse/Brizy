@@ -7,13 +7,15 @@ import { css } from "visual/utils/cssStyle";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { clamp } from "visual/utils/math";
 import { mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
+import { FCC } from "visual/utils/react/types";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { styleWrapper, styleWrapperContainer } from "../styles";
 import { ImageProps, Meta, Patch, Styles, V } from "../types";
 import { showOriginalImage } from "../utils";
 import useResizerPoints from "./useResizerPoints";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
-const Image: React.FC<ImageProps> = (props) => {
+const Image: FCC<ImageProps> = (props) => {
   const {
     v,
     vs,
@@ -118,7 +120,7 @@ const Image: React.FC<ImageProps> = (props) => {
         ? clamp(mobileWidth || width, 0, mobileW)
         : mobileWidth,
       height: isAbsoluteOrFixed ? height / (imageWidth / imageHeight) : height,
-      ...(sizeType !== "custom" && !isSvgOrGif && { size })
+      ...(sizeType !== SizeType.custom && !isSvgOrGif && { size })
     };
   }
 

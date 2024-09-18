@@ -1,26 +1,36 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { Props as SP, Spacing } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
 import {
   Meta as OptionMeta,
   Props as OptionProps
 } from "visual/component/Options/Type";
-import { SpacingUnit } from "visual/component/Options/utils/SpacingUnit";
-import { Type } from "visual/component/Options/utils/Type";
+import { WithConfig } from "visual/types/attributes";
 import { Meta } from "visual/utils/options/Margin/meta";
-import { WithConfig } from "visual/utils/options/attributes";
-import { Config } from "./types/Config";
-import { ToSpacingEdges } from "./types/ToSpacingEdges";
-import { Value } from "./types/Value";
-import * as V from "./types/Value";
-import { getIcon, toSpacingValue, unitSetter, valueSetter } from "./utils";
+import { Config } from "visual/utils/options/Margin/types/Config";
+import { ToSpacingEdges } from "visual/utils/options/Margin/types/ToSpacingEdges";
+import * as V from "visual/utils/options/Margin/types/Value";
+import { Value } from "visual/utils/options/Margin/types/Value";
+import {
+  getIcon,
+  toSpacingValue,
+  unitSetter,
+  valueSetter
+} from "visual/utils/options/Margin/utils";
+import { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
+import { Type } from "visual/utils/options/utils/Type";
 
 export interface Props
   extends OptionProps<Value>,
     OptionMeta<Meta>,
     WithConfig<Config> {}
 
-export const Margin: FC<Props> = ({ value, onChange, label, config }) => {
+export const Margin = ({
+  value,
+  onChange,
+  label,
+  config
+}: Props): ReactElement => {
   const edges = config?.edges ?? "all";
   type E = ToSpacingEdges<typeof edges>;
 

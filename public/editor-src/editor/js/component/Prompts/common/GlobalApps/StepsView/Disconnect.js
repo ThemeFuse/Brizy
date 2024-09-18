@@ -41,8 +41,9 @@ class Disconnect extends Component {
           <img className="brz-img" src={img} alt={title} />
           <p className="brz-p">{descriptions}</p>
         </div>
+        <br />
+        {error && this.renderError()}
         <div className="brz-ed-popup-integrations__connect-body">
-          {error && this.renderError()}
           {hasButtons && (
             <div className="brz-ed-popup-integrations-step__buttons">
               {nextLoading !== null && (

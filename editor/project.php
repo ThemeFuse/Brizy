@@ -2,16 +2,18 @@
     die('Direct access forbidden.');
 }
 
-include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
-include_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
+include_once ABSPATH."wp-admin/includes/class-wp-filesystem-base.php";
+include_once ABSPATH."wp-admin/includes/class-wp-filesystem-direct.php";
 
 class Brizy_Editor_Project extends Brizy_Editor_Entity
 {
 
     use Brizy_Editor_AutoSaveAware;
+    use Brizy_Editor_Asset_StaticFileTrait;
 
 
     const BRIZY_PROJECT = 'brizy-project';
+    const BRIZY_PROJECT_STYLES = 'brizy-project-styles';
 
     /**
      * @var Brizy_Editor_Project
@@ -45,6 +47,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
     protected $cloud_project;
     protected $image_optimizer_settings;
     protected $data;
+    protected $compiledStyles;
     //---------------------------------------------------------------------------------------------------
     protected $isDataChanged = false;
     //---------------------------------------------------------------------------------------------------
@@ -89,7 +92,8 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
 
     static public function registerCustomPostType()
     {
-        register_post_type(self::BRIZY_PROJECT,
+        register_post_type(
+            self::BRIZY_PROJECT,
             array(
                 'public' => false,
                 'has_archive' => false,
@@ -101,7 +105,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
                 'hierarchical' => false,
                 'show_in_rest' => false,
                 'exclude_from_search' => true,
-                'supports' => array('title', 'revisions', 'page-attributes')
+                'supports' => array('title', 'revisions', 'page-attributes'),
             )
         );
     }
@@ -116,32 +120,39 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
     public static function get($postId = null, $uid = null)
     {
 
-        if (self::$instance) {
-            return self::$instance;
+        if (isset(self::$instance[$postId])) {
+            return self::$instance[$postId];
         }
 
         try {
-            $wp_post = self::getPost();
+            $wp_post = self::getPost($postId);
         } catch (Exception $e) {
             Brizy_Logger::instance()->exception($e);
             throw $e;
         }
 
-        return self::$instance = new self($wp_post);
+        return self::$instance[$postId] = new self($wp_post);
     }
 
     /**
      * @return false|WP_Post
      * @throws Exception
      */
-    static protected function getPost()
+    static protected function getPost($postId = null)
     {
         global $wpdb;
 
+        if ($postId) {
+            return WP_Post::get_instance($postId);
+        }
+
         $row = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM {$wpdb->posts} p
+            $wpdb->prepare(
+                "SELECT * FROM {$wpdb->posts} p
 									WHERE p.post_type = %s and p.post_status='publish' 
-									ORDER BY ID DESC LIMIT 1 ", self::BRIZY_PROJECT),
+									ORDER BY ID DESC LIMIT 1 ",
+                self::BRIZY_PROJECT
+            ),
             OBJECT
         );
 
@@ -169,7 +180,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
         $defaultJsonPath = Brizy_Editor_UrlBuilder::editor_build_path('defaults.json');
 
         if (!file_exists($defaultJsonPath)) {
-            $message = 'Failed to create the default project data. ' . $defaultJsonPath . ' was not found. ';
+            $message = 'Failed to create the default project data. '.$defaultJsonPath.' was not found. ';
             Brizy_Logger::instance()->critical($message, [$message]);
             throw new Exception($message);
         }
@@ -240,12 +251,13 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
     /**
      * This will be returned by api when project is requested
      */
-    public function createResponse($fields = array())
+    public function createResponse($fields = array(), $context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT)
     {
         $data = array(
             'id' => $this->getId(),
             'data' => $this->getDataAsJson(),
-            'dataVersion' => $this->getCurrentDataVersion()
+            'dataVersion' => $this->getCurrentDataVersion(),
+            'compiled' => $this->get_compiler(),
         );
 
         return $data;
@@ -272,12 +284,14 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
             'accounts' => $this->accounts,
             'forms' => $this->forms,
             'data' => $this->data,
+            'compiledStyles' => base64_encode(json_encode($this->compiledStyles)),
             'brizy-license-key' => $this->license_key,
             'brizy-cloud-token' => $this->cloud_token,
             'brizy-cloud-project' => $this->cloud_project,
             'brizy-cloud-account-id' => $this->cloud_account_id,
             'cloudContainer' => $this->cloudContainer,
             'image-optimizer-settings' => $this->image_optimizer_settings,
+            'compiled' => $this->get_compiler(),
         );
     }
 
@@ -304,6 +318,10 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
         $this->cloud_account_id = isset($data['brizy-cloud-account-id']) ? $data['brizy-cloud-account-id'] : null;
         $this->cloudContainer = isset($data['cloudContainer']) ? $data['cloudContainer'] : null;
         $this->image_optimizer_settings = isset($data['image-optimizer-settings']) ? $data['image-optimizer-settings'] : array();
+        $compiledStyles = isset($data['compiledStyles']) ? $data['compiledStyles'] : '[]';
+        $this->compiledStyles = json_decode(base64_decode($compiledStyles), true);
+        $this->set_compiler(isset($data['compiler']) ? $data['compiler'] : Brizy_Editor_Entity::COMPILER_EXTERNAL);
+
     }
 
     /**
@@ -341,7 +359,6 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
      */
     public function savePost()
     {
-
         if (!$this->isDataChanged) {
             return;
         }
@@ -356,7 +373,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
         wp_update_post(array(
             'ID' => $this->getWpPostId(),
             'post_status' => $post_status,
-            'post_content' => md5(time())
+            'post_content' => md5(time()),
         ));
     }
 
@@ -639,6 +656,47 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCompiledStyles()
+    {
+        return $this->compiledStyles;
+    }
+
+    /**
+     * @param mixed $compiledStyles
+     */
+    public function setCompiledStyles($compiledStyles)
+    {
+
+        $this->isDataChanged = $this->isDataChanged ? true : ($compiledStyles !== $this->compiledStyles);
+        $this->compiledStyles = $compiledStyles;
+
+        return $this;
+    }
+
+    public function setCompiledStylesAsJson($compiledStylesJson)
+    {
+        $this->setCompiledStyles(json_decode($compiledStylesJson, true));
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCompiledAssetGroup()
+    {
+        $page_styles = $this->getCompiledStyles();
+        $assets = [];
+        foreach ($page_styles['styles'] as $style) {
+            $assets[] = BrizyMerge\Assets\Asset::instanceFromJsonData($style);
+        }
+
+        return new \BrizyMerge\Assets\AssetGroup(null, [], [], [], [], $assets);
+    }
+
+    //====================================================================================================================================================================================
 
     //====================================================================================================================================================================================
 

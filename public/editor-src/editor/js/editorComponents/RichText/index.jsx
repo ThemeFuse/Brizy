@@ -18,7 +18,7 @@ import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { blocksDataSelector } from "visual/redux/selectors";
+import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
@@ -30,27 +30,33 @@ import {
   getDynamicContentChoices
 } from "visual/utils/options";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
-import { Wrapper } from "../tools/Wrapper";
 import { withMigrations } from "../tools/withMigrations";
-import Quill, { triggerCodes } from "./Quill";
+import { Wrapper } from "../tools/Wrapper";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
 import * as RichTextPatch from "./patch";
+import Quill, { triggerCodes } from "./Quill";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
-import { TypographyTags, tagId } from "./toolbar/utils";
+import { tagId, TypographyTags } from "./toolbar/utils";
 import {
   dcItemOptionParser,
+  getFilteredPopups,
   getTextBackground,
   parseColor,
   parseShadow
 } from "./utils";
-import { getInnerElement, handlePasteStyles } from "./utils/ContextMenu";
+import {
+  getInnerElement,
+  handleClearFormatting,
+  handlePasteStyles
+} from "./utils/ContextMenu";
 import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
+import { omit } from "timm";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -73,7 +79,11 @@ class RichText extends EditorComponent {
   toolbarRef = React.createRef();
   toolbarOpen = false;
   // Can be enabled by Config
-  renderDC = !Config.getAll().dynamicContent?.liveInBuilder || IS_PREVIEW;
+
+  renderDC =
+    !(
+      typeof Config.getAll().dynamicContent?.getPlaceholderData === "function"
+    ) || IS_PREVIEW;
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -225,9 +235,15 @@ class RichText extends EditorComponent {
       this.tmpPopups = null;
     }
 
+    const { blocksData } = this.getReduxState();
+    const modelPopups = popups ?? this.getValue().popups;
+    const filteredPopups = getFilteredPopups(text, modelPopups, blocksData);
+
     this.patchValue({
       text,
-      ...(popups ? { popups } : {})
+      ...(filteredPopups.length !== modelPopups.length
+        ? { popups: filteredPopups }
+        : {})
     });
   };
 
@@ -257,8 +273,6 @@ class RichText extends EditorComponent {
 
   handleBlockTag = (value) => {
     switch (value) {
-      case "paragraph":
-        return { pre: false, header: null };
       case "heading1":
         return { pre: false, header: "h1" };
       case "heading2":
@@ -271,6 +285,9 @@ class RichText extends EditorComponent {
         return { pre: false, header: "h5" };
       case "heading6":
         return { pre: false, header: "h6" };
+      case "paragraph":
+      default:
+        return { pre: false, header: null };
     }
   };
 
@@ -293,18 +310,10 @@ class RichText extends EditorComponent {
     }
 
     if (this.quillRef && this.quillRef.current) {
-      switch (values.typographyFontStyle) {
-        case "paragraph":
-        case "heading1":
-        case "heading2":
-        case "heading3":
-        case "heading4":
-        case "heading5":
-        case "heading6":
-          this.quillRef.current.formatMultiple(
-            this.handleBlockTag(values.typographyFontStyle)
-          );
-          break;
+      if (values.hasOwnProperty("typographyFontStyle")) {
+        this.quillRef.current.formatMultiple(
+          this.handleBlockTag(values.typographyFontStyle)
+        );
       }
 
       const quillNode = this.quillRef.current;
@@ -322,8 +331,15 @@ class RichText extends EditorComponent {
 
     const handlePaste = () => {
       const innerElement = getInnerElement();
+      const device = deviceModeSelector(this.getReduxState());
       if (!innerElement) return;
-      handlePasteStyles(innerElement, this.handleChange, this.getValue());
+
+      handlePasteStyles({
+        innerElement,
+        onChange: this.handleChange,
+        v: this.getValue(),
+        device
+      });
     };
 
     switch (keyName) {
@@ -336,6 +352,12 @@ class RichText extends EditorComponent {
       case "shift+cmd+V":
       case "shift+right_cmd+V":
         handlePaste();
+        return;
+      case "alt+\\":
+      case "ctrl+\\":
+      case "cmd+\\":
+      case "right_cmd+\\":
+        handleClearFormatting(this.handleChange);
         return;
       default:
         break;
@@ -569,6 +591,7 @@ class RichText extends EditorComponent {
       return null;
     }
 
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData) => {
@@ -577,22 +600,28 @@ class RichText extends EditorComponent {
           value: { popupId }
         } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
+          const globalBlockId = itemData.value._id;
           const blockData = blocksDataSelector(getStore().getState())[
-            itemData.value._id
+            globalBlockId
           ];
 
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
           popupId = blockData.value.popupId;
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });
@@ -646,7 +675,13 @@ class RichText extends EditorComponent {
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
-    const shortcutsTypes = ["copy", "paste", "pasteStyles", "delete"];
+    const shortcutsTypes = [
+      "copy",
+      "paste",
+      "pasteStyles",
+      "delete",
+      "clearFormatting"
+    ];
     const config = Config.getAll();
 
     const newV = {
@@ -712,12 +747,12 @@ class RichText extends EditorComponent {
               ref={this.toolbarRef}
               {...toolbarOptions}
             >
-              <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-                <Wrapper
-                  {...this.makeWrapperProps({
-                    className: this.getClassName(v, vs, vd)
-                  })}
-                >
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: this.getClassName(v, vs, vd)
+                })}
+              >
+                <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
                   {isStory(config) ? (
                     <BoxResizer
                       points={resizerPoints}
@@ -732,10 +767,11 @@ class RichText extends EditorComponent {
                       {content}
                     </BoxResizer>
                   ) : (
-                    content
+                    // div is needed as an attachment for context menu in dynamic content case
+                    <div>{content}</div>
                   )}
-                </Wrapper>
-              </ContextMenu>
+                </ContextMenu>
+              </Wrapper>
             </Toolbar>
           </CustomCSS>
         </HotKeys>
@@ -743,20 +779,6 @@ class RichText extends EditorComponent {
         {this.renderPopups(v)}
       </React.Fragment>
     );
-  }
-
-  getExtraClassNames($elem) {
-    const extraClassNames = [];
-
-    if ($elem.is("*[class*='brz-tp__dc-block']")) {
-      extraClassNames.push("brz-tp__dc-block");
-    }
-
-    if ($elem.is("*[class*='brz-tp__dc-block-st1']")) {
-      extraClassNames.push("brz-tp__dc-block-st1");
-    }
-
-    return extraClassNames;
   }
 
   renderForView(v, vs, vd) {

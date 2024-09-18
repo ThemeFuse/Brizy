@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
+import React from "react";
 import _ from "underscore";
 import { CSSTransition } from "react-transition-group";
 import classnames from "classnames";
@@ -6,13 +6,13 @@ import HotKeys from "visual/component/HotKeys";
 import Portal from "visual/component/Portal";
 
 type FixedProps = {
-  children: ReactNode;
+  children: JSX.Element;
   onClose: () => void;
   opened?: boolean;
   className?: string;
 };
 
-const Fixed: React.FC<FixedProps> = (props: FixedProps): ReactElement => {
+const Fixed = (props: FixedProps): JSX.Element => {
   const { className: _className, opened, children, onClose } = props;
   const className = classnames("brz-ed-fixed", _className);
 

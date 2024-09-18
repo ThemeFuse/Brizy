@@ -42,7 +42,8 @@ export function style(
         "cssStyleNumberTypography2LineHeight",
         "cssStyleNumberTypography2FontWeight",
         "cssStyleNumberTypography2LetterSpacing",
-        "cssStyleNumberTypography2FontVariation"
+        "cssStyleNumberTypography2FontVariation",
+        "cssStyleNumberTypography2TextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -57,7 +58,8 @@ export function style(
         "cssStyleNumberTypography2LineHeight",
         "cssStyleNumberTypography2FontWeight",
         "cssStyleNumberTypography2LetterSpacing",
-        "cssStyleNumberTypography2FontVariation"
+        "cssStyleNumberTypography2FontVariation",
+        "cssStyleNumberTypography2TextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -72,7 +74,8 @@ export function style(
         "cssStyleTitleTypography2LineHeight",
         "cssStyleTitleTypography2FontWeight",
         "cssStyleTitleTypography2LetterSpacing",
-        "cssStyleTitleTypography2FontVariation"
+        "cssStyleTitleTypography2FontVariation",
+        "cssStyleCountdownTitleTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -98,7 +101,8 @@ export function styleMessage(
         "cssStyleMessageTypography2LineHeight",
         "cssStyleMessageTypography2FontWeight",
         "cssStyleMessageTypography2LetterSpacing",
-        "cssStyleMessageTypography2FontVariation"
+        "cssStyleMessageTypography2FontVariation",
+        "cssStyleCountdownMessageTextTransform"
       ],
       interval: [
         "cssStyleHoverTransition",

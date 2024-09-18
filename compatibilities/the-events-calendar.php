@@ -12,6 +12,7 @@ class Brizy_Compatibilities_TheEventsCalendar {
 	public function wp_head() {
 		if ( $this->isEvent() ) {
 			remove_action( 'wp_head', [ 'Tribe__Events__Templates', 'maybeSpoofQuery' ], 100 );
+			add_action( 'tribe_events_views_v2_should_hijack_page_template', '__return_false' );
 		}
 	}
 

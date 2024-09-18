@@ -2,22 +2,27 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
 import { helperDateFormatInputHTML } from "../utils/helpers";
 import type { Props, Value } from "./types";
 
-// @ts-expect-error advancedSettings old option
 export const getItems: GetItems<Value, Props> = (data) => {
-  const { v } = data;
-  const isNotFeaturedView = v.showFeaturedView === "off";
-  const isNotListView = v.showListView === "off";
-  const isNotCalendarView = v.showCalendarView === "off";
-  const isNotCategoryFilter = v.showCategoryFilter === "off";
-  const isNotExtraCategory1Filter = v.addCategoryFilter === "off";
-  const isNotExtraCategory2Filter = v.addCategoryFilter2 === "off";
-  const isNotExtraCategory3Filter = v.addCategoryFilter3 === "off";
-
+  const { v, device, state } = data;
   const config = Config.getAll();
+
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const isNotFeaturedView = dvv("showFeaturedView") === "off";
+  const isNotListView = dvv("showListView") === "off";
+  const isNotCalendarView = dvv("showCalendarView") === "off";
+  const isNotCategoryFilter = dvv("showCategoryFilter") === "off";
+  const isNotExtraCategory1Filter = dvv("addCategoryFilter") === "off";
+  const isNotExtraCategory2Filter = dvv("addCategoryFilter2") === "off";
+  const isNotExtraCategory3Filter = dvv("addCategoryFilter3") === "off";
+  const isGroupFilterDisabled = dvv("showGroupFilter") === "off";
+  const isValidGroupSlug = !!dvv("groupSlug");
 
   return [
     {
@@ -229,6 +234,22 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       'URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the "Event Detail" widget to be placed on a page and that page url/slug placed in this field.'
                     )
                   }
+                },
+                {
+                  id: "eventDetailPageButtonText",
+                  type: "inputText",
+                  devices: "desktop",
+                  label: t("Button"),
+                  placeholder: t("Button text..."),
+                  disabled: !dvv("eventDetailPage"),
+                  config: {
+                    size: "medium"
+                  },
+                  helper: {
+                    content: t(
+                      "Button will display if text is entered and a detail page selected."
+                    )
+                  }
                 }
               ]
             },
@@ -236,6 +257,15 @@ export const getItems: GetItems<Value, Props> = (data) => {
               id: "tabFilterSettings",
               label: t("Filter"),
               options: [
+                {
+                  id: "groupSlug",
+                  devices: "desktop",
+                  label: t("Group"),
+                  type: "select",
+                  choices: getEkklesiaChoiches(config, {
+                    key: "group"
+                  })
+                },
                 {
                   id: "parentCategory",
                   label: t("Parent Category"),
@@ -250,6 +280,30 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       "Defines which level 1 category to use as a base for the layout."
                     )
                   }
+                },
+                {
+                  id: "showGroupGroup",
+                  type: "group",
+                  devices: "desktop",
+                  disabled: isValidGroupSlug,
+                  options: [
+                    {
+                      id: "showGroupFilter",
+                      type: "switch",
+                      label: t("Group Filter"),
+                      devices: "desktop"
+                    },
+                    {
+                      id: "groupFilterHeading",
+                      type: "inputText",
+                      label: t("Heading"),
+                      devices: "desktop",
+                      disabled: isGroupFilterDisabled,
+                      config: {
+                        size: "medium"
+                      }
+                    }
+                  ]
                 },
                 {
                   id: "categoryGroup",
@@ -306,29 +360,6 @@ export const getItems: GetItems<Value, Props> = (data) => {
                   ]
                 },
                 {
-                  id: "showGroupGroup",
-                  type: "group",
-                  devices: "desktop",
-                  options: [
-                    {
-                      id: "showGroupFilter",
-                      type: "switch",
-                      label: t("Group"),
-                      devices: "desktop"
-                    },
-                    {
-                      id: "groupFilterHeading",
-                      type: "inputText",
-                      label: t("Heading"),
-                      devices: "desktop",
-                      disabled: v.showGroupFilter === "off",
-                      config: {
-                        size: "medium"
-                      }
-                    }
-                  ]
-                },
-                {
                   id: "showGroupSearch",
                   type: "group",
                   devices: "desktop",
@@ -344,19 +375,13 @@ export const getItems: GetItems<Value, Props> = (data) => {
                       type: "inputText",
                       label: t("Placeholder"),
                       devices: "desktop",
-                      disabled: v.showSearch === "off",
+                      disabled: dvv("showSearch") === "off",
                       config: {
                         size: "medium"
                       }
                     }
                   ]
-                }
-              ]
-            },
-            {
-              id: "tabAdvanced",
-              label: t("Advanced"),
-              options: [
+                },
                 {
                   id: "addCategoryGroup",
                   type: "group",
@@ -466,7 +491,6 @@ export const getItems: GetItems<Value, Props> = (data) => {
                     }
                   ]
                 },
-
                 {
                   id: "addCategoryGroup3",
                   type: "group",
@@ -632,7 +656,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110,
       disabled: !isNotFeaturedView
     }

@@ -205,10 +205,10 @@ export function style(
           "cssStyleElementMinistryGroupSliderButtonBgColor",
           "cssStyleElementMinistryGroupSliderButtonBgGradient",
           "cssStyleElementMinistryGroupSliderButtonBorder",
-          "cssStyleElementMinistryGroupSliderButtonBorderRadius",
+          "cssStyleElementMinistryBrandsButtonsBorderRadius",
           "cssStyleElementMinistryGroupSliderButtonBoxShadow"
         ],
-        interval: ["cssStyleHoverTransition"]
+        interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
       }
   };
 

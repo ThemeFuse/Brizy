@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import FuzzySearch from "fuzzy-search";
 import React, { Component, Fragment, ReactElement } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import _ from "underscore";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
@@ -9,8 +9,14 @@ import { ProInfo } from "visual/component/ProInfo";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import Config from "visual/global/Config";
 import UIEvents from "visual/global/UIEvents";
-import { updateDisabledElements } from "visual/redux/actions2";
-import { disabledElementsSelector } from "visual/redux/selectors";
+import {
+  updateDisabledElements,
+  updatePinnedElements
+} from "visual/redux/actions2";
+import {
+  disabledElementsSelector,
+  pinnedElementsSelector
+} from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { Shortcode } from "visual/types";
 import { IS_PRO } from "visual/utils/env";
@@ -19,11 +25,16 @@ import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { isStory, setIds } from "visual/utils/models";
 import { Category } from "./Category";
 import { SortData } from "./types";
+import {
+  CategoryTitle,
+  ShortcodeElement
+} from "visual/component/Controls/LeftSidebar/AddElements";
 
 const { upgradeToPro } = Config.get("urls");
 
 export interface BaseProps {
   isEditMode: boolean;
+  isPinMode: boolean;
   shortcodes: {
     [k: string]: Shortcode[];
   };
@@ -31,18 +42,21 @@ export interface BaseProps {
 
 type MapStateProps = {
   disabledElements: string[];
+  pinnedElements: string[];
 };
 
 export interface State {
   disabledElements: Record<string, boolean>;
+  pinnedElements: string[];
   inputValue: string;
 }
 
 const mapState = (state: ReduxState): MapStateProps => ({
-  disabledElements: disabledElementsSelector(state)
+  disabledElements: disabledElementsSelector(state),
+  pinnedElements: pinnedElementsSelector(state)
 });
 
-const mapDispatch = { updateDisabledElements };
+const mapDispatch = { updateDisabledElements, updatePinnedElements };
 const connector = connect(mapState, mapDispatch);
 
 export type WithBaseProps<T> = ConnectedProps<typeof connector> & T;
@@ -61,7 +75,10 @@ class ControlInner extends Component<Props, State> {
       {}
     );
 
+    const pinnedElements = props.pinnedElements;
+
     this.state = {
+      pinnedElements,
       disabledElements,
       inputValue: ""
     };
@@ -75,6 +92,9 @@ class ControlInner extends Component<Props, State> {
       this.props.updateDisabledElements(
         Object.keys(this.state.disabledElements)
       );
+    }
+    if (prevProps.isPinMode && !this.props.isPinMode) {
+      this.props.updatePinnedElements(this.state.pinnedElements);
     }
   }
 
@@ -120,7 +140,7 @@ class ControlInner extends Component<Props, State> {
       );
 
       const containerPath = sortableContainer
-        ?.getAttribute("data-sortable-path")
+        ?.getAttribute(makeAttr("sortable-path"))
         ?.split("-");
       const containerType = "section";
       const itemIndex = slickContainer?.getAttribute("data-index");
@@ -144,6 +164,7 @@ class ControlInner extends Component<Props, State> {
 
   handleDisabledElementsChange = (id: string): void => {
     const { disabledElements } = this.state;
+
     if (disabledElements[id]) {
       // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
       const { [id]: currentShortcode, ...rest } = disabledElements;
@@ -161,17 +182,50 @@ class ControlInner extends Component<Props, State> {
     }
   };
 
+  handlePinnedElementsChange = (id: string): void => {
+    const { pinnedElements } = this.state;
+
+    if (pinnedElements.includes(id)) {
+      const filtered = _.without(pinnedElements, id);
+
+      this.setState({
+        pinnedElements: filtered
+      });
+    } else {
+      this.setState({
+        pinnedElements: [...pinnedElements, id]
+      });
+    }
+  };
+
   getFilteredShortcodes(shortcodes: Shortcode[]): Shortcode[] {
-    const { isEditMode } = this.props;
-    const { disabledElements, inputValue } = this.state;
+    const { isEditMode, isPinMode } = this.props;
+    const { disabledElements, inputValue, pinnedElements } = this.state;
     const filteredShortcodes = shortcodes.filter(
-      (shortcode) =>
-        isEditMode || (!isEditMode && !disabledElements[shortcode.component.id])
+      ({ component }) =>
+        !pinnedElements.includes(component.id) &&
+        (isEditMode ||
+          isPinMode ||
+          (!isEditMode && !disabledElements[component.id]))
     );
+
     const searcher = new FuzzySearch(filteredShortcodes, [
       "component.title",
       "keywords"
     ]);
+
+    return searcher.search(inputValue);
+  }
+
+  getFilteredPinnedElements(ids: string[]): string[] {
+    const { inputValue, disabledElements } = this.state;
+    const { isEditMode, isPinMode } = this.props;
+
+    const filtered = ids.filter(
+      (id) => isEditMode || isPinMode || !disabledElements[id]
+    );
+
+    const searcher = new FuzzySearch(filtered);
 
     return searcher.search(inputValue);
   }
@@ -212,8 +266,8 @@ class ControlInner extends Component<Props, State> {
   }
 
   renderIcons(shortcodes: Shortcode[]): ReactElement[] {
-    const { disabledElements } = this.state;
-    const { isEditMode } = this.props;
+    const { disabledElements, pinnedElements } = this.state;
+    const { isEditMode, isPinMode } = this.props;
 
     return shortcodes.map(({ component, pro }, index) => {
       const clickFn = isStory(Config.getAll())
@@ -223,11 +277,15 @@ class ControlInner extends Component<Props, State> {
       const clickEditMode = (): void =>
         this.handleDisabledElementsChange(component.id);
 
+      const clickPinMode = (): void =>
+        this.handlePinnedElementsChange(component.id);
+
       const iconElem = this.renderIcon(
         component.title,
         component.icon,
         !IS_PRO && pro
       );
+
       const iconContainer = (
         <div
           className={classnames("brz-ed-sidebar__add-elements__item", {
@@ -240,23 +298,25 @@ class ControlInner extends Component<Props, State> {
         </div>
       );
 
-      return isEditMode ? (
-        <div
-          className="brz-ed-sidebar__add-elements__item brz-ed-sidebar__add-elements__item-edit"
+      const isDisabledAndNotPinned =
+        disabledElements[component.id] &&
+        !pinnedElements.includes(component.id);
+
+      return isPinMode ? (
+        <ShortcodeElement
           key={component.id}
-        >
-          <div
-            className={classnames("brz-ed-sidebar__edit", {
-              "brz-ed-sidebar__edit--checked": !disabledElements[component.id]
-            })}
-            onClick={clickEditMode}
-          >
-            <span className="brz-ed-sidebar__checked">
-              <EditorIcon icon="nc-check-circle" />
-            </span>
-          </div>
-          {iconElem}
-        </div>
+          onClick={isDisabledAndNotPinned ? _.noop : clickPinMode}
+          iconElement={iconElem}
+          isChecked={pinnedElements.includes(component.id)}
+          isDisabled={isDisabledAndNotPinned}
+        />
+      ) : isEditMode ? (
+        <ShortcodeElement
+          key={component.id}
+          onClick={clickEditMode}
+          iconElement={iconElem}
+          isChecked={!disabledElements[component.id]}
+        />
       ) : pro && !IS_PRO ? (
         iconContainer
       ) : (
@@ -271,10 +331,60 @@ class ControlInner extends Component<Props, State> {
     });
   }
 
-  render(): ReactElement {
-    const { inputValue } = this.state;
-    const { shortcodes } = this.props;
+  renderPinned(
+    isEveryPinnedElementDisabled: boolean,
+    pinnedElementsShortcodes: Shortcode[]
+  ): JSX.Element | null {
+    const { isEditMode, isPinMode } = this.props;
 
+    const isOneOfModes = isEditMode || isPinMode;
+
+    if (
+      (!isOneOfModes && pinnedElementsShortcodes.length <= 0) ||
+      (isEveryPinnedElementDisabled && !isOneOfModes) ||
+      pinnedElementsShortcodes.length <= 0
+    ) {
+      return null;
+    }
+
+    return (
+      <>
+        <CategoryTitle title={t("Pinned")} />
+        <Category
+          category="pinned"
+          shortcodes={pinnedElementsShortcodes}
+          onChange={this.handleSortableSort}
+        >
+          {this.renderIcons(pinnedElementsShortcodes)}
+        </Category>
+      </>
+    );
+  }
+
+  renderShortcodeCategory(
+    category: string,
+    index: number,
+    pinnedElementsShortcodes: Shortcode[],
+    isEveryPinnedElementDisabled: boolean
+  ): JSX.Element | null {
+    const { isEditMode, isPinMode } = this.props;
+
+    const isOneOfModes = isEditMode || isPinMode;
+
+    if (
+      !isOneOfModes &&
+      index === 0 &&
+      (pinnedElementsShortcodes.length <= 0 || isEveryPinnedElementDisabled)
+    ) {
+      return null;
+    }
+
+    return <CategoryTitle title={category} />;
+  }
+
+  render(): ReactElement {
+    const { inputValue, pinnedElements, disabledElements } = this.state;
+    const { shortcodes } = this.props;
     // why does Category class need for?
     // Sortable plugin doesn't update options when new props arrive
     // and in old variant
@@ -286,6 +396,19 @@ class ControlInner extends Component<Props, State> {
     // if shortcodes chanced handleSortableSort function didn't get
     // new list of shortcodes
 
+    const isEveryPinnedElementDisabled = pinnedElements.every(
+      (el) => disabledElements[el]
+    );
+
+    const filteredPinnedElements =
+      this.getFilteredPinnedElements(pinnedElements);
+
+    const pinnedElementsShortcodes = Object.values(shortcodes)
+      .flat()
+      .filter((shortcode) =>
+        filteredPinnedElements.includes(shortcode.component.id)
+      );
+
     return (
       <>
         <div className="brz-ed-sidebar__search">
@@ -293,7 +416,7 @@ class ControlInner extends Component<Props, State> {
             type="text"
             className="brz-input"
             placeholder={t("Search element")}
-            autoFocus={true}
+            autoFocus
             spellCheck={false}
             value={inputValue}
             onChange={({ target: { value } }): void =>
@@ -304,12 +427,14 @@ class ControlInner extends Component<Props, State> {
             <EditorIcon icon="nc-search" />
           </div>
         </div>
+        {this.renderPinned(
+          isEveryPinnedElementDisabled,
+          pinnedElementsShortcodes
+        )}
         {Object.entries(shortcodes)
           .filter(
-            (
-              // @ts-expect-error: 'category' is defined but never used.
-              [category, categoryShortcodes] // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
-            ) => this.getFilteredShortcodes(categoryShortcodes).length > 0
+            ([, categoryShortcodes]) =>
+              this.getFilteredShortcodes(categoryShortcodes).length > 0
           )
           .map(([category, categoryShortcodes], index) => {
             const shortcodes = this.getFilteredShortcodes(categoryShortcodes);
@@ -323,12 +448,12 @@ class ControlInner extends Component<Props, State> {
 
             return (
               <Fragment key={category}>
-                {index !== 0 && (
-                  <div className="brz-ed-sidebar__add-elements--separator-title">
-                    {category}
-                  </div>
+                {this.renderShortcodeCategory(
+                  category,
+                  index,
+                  pinnedElementsShortcodes,
+                  isEveryPinnedElementDisabled
                 )}
-
                 <Category
                   category={category}
                   shortcodes={prepared}

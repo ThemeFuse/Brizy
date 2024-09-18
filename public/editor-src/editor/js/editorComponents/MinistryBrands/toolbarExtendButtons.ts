@@ -1,11 +1,13 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
+import { getButtonMaxBorderRadius } from "./utils/helpers";
 
 export const getItems = <
   M extends ElementModel,
@@ -23,7 +25,127 @@ export const getItems = <
     dvv("detailButtonBgColorHex"),
     dvv("detailButtonBgColorPalette")
   );
+
+  const { hex: detailButtonColorHex } = getOptionColorHexByPalette(
+    dvv("detailButtonColorHex"),
+    dvv("detailButtonColorPalette")
+  );
+
+  const detailButtonTypographyFontSize =
+    Num.read(dvv("detailButtonTypographyFontSize")) ?? 15;
+
+  const detailButtonTypographyLineHeight =
+    Num.read(dvv("detailButtonTypographyLineHeight")) ?? 1.6;
+
+  const maxBorderRadius = getButtonMaxBorderRadius(
+    detailButtonTypographyFontSize,
+    detailButtonTypographyLineHeight
+  );
+
+  const detailButtonColorOpacity = dvv("detailButtonColorOpacity");
+  const detailButtonBgColorOpacity = dvv("detailButtonBgColorOpacity");
+
+  const fillType = dvv("detailButtonFillType");
+
+  const customSize = dvv("detailButtonSize") !== "custom";
+  const customBorderRadius = dvv("buttonsBorderRadiusType") !== "custom";
+
+  const fillTypeDefault = fillType === "default";
+
   return [
+    {
+      id: "toolbarDetailButton",
+      label: t("Button"),
+      type: "popover",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
+      position: 20,
+      options: [
+        {
+          id: "detailButtonSizeGroup",
+          type: "group",
+          position: 10,
+          options: [
+            {
+              id: "detailButtonSize",
+              label: t("Size"),
+              type: "radioGroup",
+              choices: [
+                { value: "small", icon: "nc-small" },
+                { value: "medium", icon: "nc-medium" },
+                { value: "large", icon: "nc-large" },
+                { value: "custom", icon: "nc-more" }
+              ]
+            },
+            {
+              id: "detailButtonPaddingRL",
+              label: t("Width"),
+              type: "slider",
+              disabled: customSize,
+              config: {
+                min: 0,
+                max: 100,
+                units: [{ title: "px", value: "px" }]
+              }
+            },
+            {
+              id: "detailButtonPaddingTB",
+              label: t("Height"),
+              type: "slider",
+              disabled: customSize,
+              config: {
+                min: 0,
+                max: 100,
+                units: [{ title: "px", value: "px" }]
+              }
+            }
+          ]
+        },
+        {
+          id: "detailButtonFillType",
+          label: t("Fill"),
+          devices: "desktop",
+          type: "radioGroup",
+          position: 20,
+          choices: [
+            { value: "filled", icon: "nc-circle" },
+            { value: "outline", icon: "nc-outline" },
+            { value: "default", icon: "nc-close" }
+          ]
+        },
+        {
+          id: "detailButtonBorderRadiusTypeGroup",
+          type: "group",
+          devices: "desktop",
+          disabled: fillTypeDefault,
+          position: 30,
+          options: [
+            {
+              id: "buttonsBorderRadiusType",
+              label: t("Corner"),
+              type: "radioGroup",
+              choices: [
+                { value: "square", icon: "nc-corners-square" },
+                { value: "rounded", icon: "nc-corners-round" },
+                { value: "custom", icon: "nc-more" }
+              ]
+            },
+            {
+              id: "buttonsBorderRadius",
+              type: "slider",
+              disabled: customBorderRadius,
+              config: {
+                min: 0,
+                max: maxBorderRadius,
+                units: [{ title: "px", value: "px" }]
+              }
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "toolbarTypography",
       type: "popover",
@@ -51,10 +173,10 @@ export const getItems = <
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              detailButtonBgColorHex,
-              dvv("detailButtonBgColorOpacity")
-            )
+            backgroundColor:
+              fillType === "filled"
+                ? hexToRgba(detailButtonBgColorHex, detailButtonBgColorOpacity)
+                : hexToRgba(detailButtonColorHex, detailButtonColorOpacity)
           }
         }
       },
@@ -72,7 +194,8 @@ export const getItems = <
                 {
                   id: "detailButton",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillType !== "filled"
                 }
               ]
             },
@@ -87,7 +210,6 @@ export const getItems = <
                 }
               ]
             },
-
             {
               id: "tabBorder",
               label: t("Border"),
@@ -95,11 +217,11 @@ export const getItems = <
                 {
                   id: "detailButtonBorder",
                   type: "border",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             },
-
             {
               id: "tabShadow",
               label: t("Shadow"),
@@ -107,13 +229,21 @@ export const getItems = <
                 {
                   id: "detailButtonBoxShadow",
                   type: "boxShadow",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  disabled: fillTypeDefault
                 }
               ]
             }
           ]
         }
       ]
+    },
+    {
+      id: "advancedSettings",
+      type: "advancedSettings",
+      position: 110,
+      devices: "desktop",
+      title: t("Settings")
     }
   ];
 };

@@ -8,7 +8,10 @@ import {
   getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarShowOnResponsive } from "visual/utils/toolbar";
+import { capitalize } from "visual/utils/string";
+import { Toggle } from "visual/utils/options/utils/Type";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import Config from "visual/global/Config";
 
 export function getItems({ v, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
@@ -17,20 +20,42 @@ export function getItems({ v, device, context }) {
     dvv("bgColorHex"),
     dvv("bgColorPalette")
   );
+
+  const config = Config.getAll();
+
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.image
   });
 
-  const isExternalImage = dvv("bgImageType") === ImageType.External;
+  const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const deviceCapitalize = capitalize(device);
+
+  const isPointerEnabled = isBackgroundPointerEnabled(
+    config,
+    "sectionMegaMenu"
+  );
 
   return [
-    toolbarShowOnResponsive({
-      v,
-      device,
+    {
+      id: `showOn${deviceCapitalize}`,
+      type: "showOnDevice",
       devices: "responsive",
-      closeTooltip: true
-    }),
+      position: 10,
+      preserveId: true,
+      choices: [
+        {
+          icon: "nc-eye-17",
+          title: `${t("Disable on")} ${deviceCapitalize}`,
+          value: Toggle.ON
+        },
+        {
+          icon: "nc-eye-ban-18",
+          title: `${t("Enable on")} ${deviceCapitalize}`,
+          value: Toggle.OFF
+        }
+      ]
+    },
     {
       id: "toolbarCurrentElement",
       type: "popover",
@@ -48,7 +73,7 @@ export function getItems({ v, device, context }) {
           population: imageDynamicContentChoices,
           config: {
             disableSizes: isExternalImage,
-            pointer: !isExternalImage
+            pointer: !isExternalImage && isPointerEnabled
           }
         }
       ]

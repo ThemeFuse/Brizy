@@ -1,5 +1,6 @@
 import classnames from "classnames";
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
+import { FCC } from "visual/utils/react/types";
 
 interface Props {
   label: string;
@@ -7,7 +8,7 @@ interface Props {
   className?: string;
 }
 
-export const Field: FC<Props> = ({
+export const Field: FCC<Props> = ({
   children,
   label,
   required,

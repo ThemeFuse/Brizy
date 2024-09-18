@@ -1,5 +1,4 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
@@ -7,8 +6,10 @@ import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
+import { buttonHoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import { Props, Value } from "./types";
+import { isButtonFillHover } from "./utils";
 
 export const title = t("Button");
 
@@ -23,7 +24,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
 
   const IS_STORY = isStory(Config.getAll());
   const hoverName = readString(dvv("hoverName")) ?? "none";
-
+  const maxAnimationDuration = isButtonFillHover(hoverName) ? 1.0 : undefined;
   return [
     {
       id: "sidebarTabs",
@@ -135,8 +136,9 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                       disabled: IS_STORY,
                       devices: "desktop",
                       config: {
-                        types: hoverEffects,
+                        types: buttonHoverEffects,
                         replay: false,
+                        maxDuration: maxAnimationDuration,
                         infiniteAnimation: hasInfiniteAnimation(hoverName),
                         delay: false
                       }

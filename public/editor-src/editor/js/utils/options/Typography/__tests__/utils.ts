@@ -32,7 +32,13 @@ const value: OptionValue<"typography"> = {
   lineHeight: readPositive(1) ?? emptyPositive,
   variableFontWeight: readWeight(400) ?? normalWeight,
   fontWidth: 100,
-  fontSoftness: 0
+  fontSoftness: 0,
+  bold: false,
+  italic: true,
+  underline: true,
+  strike: true,
+  uppercase: false,
+  lowercase: true
 };
 
 const output = {
@@ -44,11 +50,16 @@ const output = {
   fontWeight: 400,
   letterSpacing: "0px",
   lineHeight: 1,
-  variableFontWeight: '"wght" 400, "wdth" 100, "SOFT" 0'
+  variableFontWeight: '"wght" 400, "wdth" 100, "SOFT" 0',
+  textStyle: "font-style:italic;",
+  textDecoration: "text-decoration:underline line-through;",
+  textTransform: "text-transform:lowercase;"
 };
 
 beforeAll(() => {
   const store = createStore();
+  // @ts-expect-error IS_PREVIEW si on build time added by webpack
+  global.IS_PREVIEW = false;
   store.dispatch(
     // @ts-expect-error There is not need to add types because is only for testing purposes
     hydrate(mockDataForReduxStore)
@@ -67,12 +78,16 @@ describe("Testing getTypographyValues that should return typography values", () 
       fontStyle: undefined,
       fontFamilyType: undefined,
       fontFamily: "",
-      fontSize: NaN,
+      fontSize: 0,
       fontSizeSuffix: "px",
-      fontWeight: undefined,
+      fontWeight: 400,
       letterSpacing: "NaNpx",
-      lineHeight: NaN,
-      variableFontWeight: '"wght" undefined, "wdth" undefined, "SOFT" undefined'
+      lineHeight: 0,
+      variableFontWeight:
+        '"wght" undefined, "wdth" undefined, "SOFT" undefined',
+      textStyle: "",
+      textDecoration: "",
+      textTransform: ""
     });
   });
 

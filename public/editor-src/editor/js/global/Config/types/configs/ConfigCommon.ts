@@ -1,32 +1,56 @@
+import {
+  Output,
+  ProjectOutput
+} from "visual/bootstraps/compiler/browser/types";
 import { ElementModel } from "visual/component/Elements/Types";
 import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
 import {
   EkklesiaFieldMap,
   EkklesiaKeys,
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
+import { VideoTypes } from "visual/editorComponents/Video/types";
 import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
-import { PageCommon, Project, Rule } from "visual/types";
-import { PostsSources } from "visual/utils/api/types";
+import {
+  FontStyle,
+  GlobalBlock,
+  PageCommon,
+  Palette,
+  Project,
+  Rule,
+  UploadedFont
+} from "visual/types";
+import {
+  AdobeAddAccount,
+  AdobeFonts,
+  PostsSources
+} from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
-import type { Compiler } from "./Compiler";
-import { ElementTypes } from "./ElementTypes";
-import { ThirdPartyComponents } from "./ThirdParty";
+import { Pro } from "../Pro";
+import { User } from "../User";
+import {
+  APIGlobalBlocks,
+  APIGlobalPopups,
+  Block as APIGlobalBlock
+} from "./blocks/GlobalBlocks";
 import {
   BlocksArray,
   DefaultBlock,
   DefaultBlockWithID,
   DefaultTemplate,
   DefaultTemplateKits,
+  DefaultTemplateWithPages,
   KitItem,
   KitsWithThumbs,
+  LayoutsPages,
   LayoutsWithThumbs,
   PopupsWithThumbs,
   StoriesWithThumbs
@@ -41,10 +65,23 @@ import {
   AddFileExtra,
   AddImageData,
   AddImageExtra,
+  AdobeFontData,
+  FormFieldsOption,
+  ImagePatterns,
+  IconPattern,
+  IconUploadData,
   Response,
-  ScreenshotData
+  ScreenshotData,
+  SizeType
 } from "./common";
-import { EkklesiaFields, EkklesiaModules } from "./modules/ekklesia/Ekklesia";
+import type { Compiler } from "./Compiler";
+import { ElementTypes } from "./ElementTypes";
+import {
+  EkklesiaExtra,
+  EkklesiaFields,
+  EkklesiaModules
+} from "./modules/ekklesia/Ekklesia";
+import { ThirdPartyComponents, ThirdPartyComponentsHosts } from "./ThirdParty";
 
 export enum Mode {
   page = "page",
@@ -120,31 +157,36 @@ export interface PopupSettings {
   backgroundPreviewUrl?: string;
 }
 
+export interface PublishedProject extends Project {
+  compiled?: ProjectOutput;
+}
+
+export interface PublishedPage extends PageCommon {
+  compiled?: Output;
+}
+
+export interface PublishedGlobalBlock extends APIGlobalBlock {
+  compiled?: Output;
+}
+
 export interface PublishData {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
-  projectData?: Project;
-  pageData?: PageCommon;
-  html?: string;
-  styles?: Array<string>;
-  scripts?: Array<string>;
-  // globalBlocks: Array<GlobalBlock>;
+  is_autosave: 1 | 0;
+  projectData?: PublishedProject;
+  pageData?: PublishedPage;
+  globalBlocks?: Array<PublishedGlobalBlock>;
+  error?: string;
 }
 
 export interface AutoSave {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
   projectData?: Project;
   pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  globalBlock?: APIGlobalBlock;
 }
 
 export interface OnChange {
-  // TODO  Currently only projectData and pageData is used
-  //  Need to add globalBlocks
-  projectData?: Project;
-  pageData?: PageCommon;
-  // globalBlocks: Array<GlobalBlock>;
+  projectData?: PublishedProject;
+  pageData?: PublishedPage;
+  globalBlocks?: Array<PublishedGlobalBlock>;
 }
 
 export interface Theme {
@@ -202,6 +244,19 @@ interface _ConfigCommon<Mode> {
     token: string;
   };
 
+  project: {
+    id: Literal;
+    apiVersion?: number;
+    heartBeatInterval?: number;
+    protectedPagePassword?: string;
+    status?: {
+      locked: boolean;
+      lockedBy: boolean | { user_email: string };
+    };
+  };
+
+  user: User;
+
   branding: {
     name: string;
   };
@@ -213,6 +268,9 @@ interface _ConfigCommon<Mode> {
   postTypesTaxs: PostTypesTax[]; // is this property common or just wp?
 
   imageSizes: ImageDataSize[];
+
+  multilanguage?: boolean;
+  membership?: boolean;
 
   server?: {
     maxUploadFileSize: number;
@@ -228,23 +286,42 @@ interface _ConfigCommon<Mode> {
 
   pageData?: PageCommon;
 
+  globalBlocks?: Array<GlobalBlock>;
+
   cloud?: {
     isSyncAllowed: boolean;
   };
 
-  // HTML Compilation: inside Browser or External Server
-
+  // HTML Compilation
   compiler?: Compiler;
+
+  //#region Pro
+
+  pro?: Pro;
+
+  //#endregion
 
   //#region Third Party
 
+  thirdPartyUrls?: Array<{ scriptUrl: string; styleUrl?: string }>;
   thirdPartyComponents?: ThirdPartyComponents;
+  thirdPartyComponentsHosts?: ThirdPartyComponentsHosts;
 
   //#endregion
 
   //#region UI
 
   ui?: {
+    //#region Features
+
+    features?: {
+      imagePointer?: boolean;
+      imageZoom?: boolean;
+      backgroundPointer?: boolean;
+    };
+
+    //#endregion Features
+
     //#region Popup
 
     popupSettings?: PopupSettings;
@@ -272,6 +349,18 @@ interface _ConfigCommon<Mode> {
         onOpen: (res: VoidFunction) => void;
         onClose: VoidFunction;
         icon?: string;
+      };
+
+      styles?: {
+        regenerateColors: (
+          res: Response<Palette[]>,
+          rej: Response<string>
+        ) => void;
+        regenerateTypography: (
+          res: Response<FontStyle[]>,
+          rej: Response<string>
+        ) => void;
+        label: string;
       };
 
       moduleGroups?: Array<{
@@ -311,6 +400,59 @@ interface _ConfigCommon<Mode> {
     };
 
     //#endregion
+
+    //#region Elements
+
+    elements?: {
+      image?: {
+        imageZoom: boolean;
+        imagePointer: boolean;
+      };
+      audio?: {
+        backgroundPointer: boolean;
+      };
+      column?: {
+        backgroundPointer: boolean;
+      };
+      menu?: {
+        backgroundPointer: boolean;
+      };
+      sectionMegaMenu?: {
+        backgroundPointer: boolean;
+      };
+      richText?: {
+        backgroundPointer: boolean;
+      };
+      row?: {
+        backgroundPointer: boolean;
+      };
+      section?: {
+        backgroundPointer: boolean;
+      };
+      sectionFooter?: {
+        backgroundPointer: boolean;
+      };
+      sectionHeader?: {
+        backgroundPointer: boolean;
+      };
+      sectionPopup?: {
+        backgroundPointer: boolean;
+      };
+      sectionPopup2?: {
+        backgroundPointer: boolean;
+      };
+      story?: {
+        backgroundPointer: boolean;
+      };
+      videoPlaylist?: {
+        backgroundPointer: boolean;
+      };
+      video?: {
+        backgroundPointer: boolean;
+      };
+    };
+
+    //#endregion Elements
   };
 
   //#endregion
@@ -321,11 +463,40 @@ interface _ConfigCommon<Mode> {
 
   //#endregion
 
+  //#region Integrations
+
+  integrations?: {
+    form?: {
+      showIntegrations?: boolean;
+      action?: string;
+      recaptcha?: {
+        siteKey: string;
+      };
+      fields?: {
+        label?: string;
+        handler: (
+          res: Response<Array<FormFieldsOption>>,
+          rej: Response<string>
+        ) => void;
+      };
+    };
+    fonts?: {
+      upload?: {
+        get(res: Response<Array<UploadedFont>>, rej: Response<string>): void;
+      };
+    };
+  };
+
+  //#endregion
+
   //#region Events
+
+  onStartLoad?: VoidFunction;
 
   onLoad?: VoidFunction;
 
   onAutoSave?: (res: AutoSave) => void;
+  autoSaveInterval?: number;
 
   // Triggered when the user change the
   // pageData, globalBlocks or projectData
@@ -355,6 +526,8 @@ interface _ConfigCommon<Mode> {
 
     // Media
     media?: {
+      isOldImage?: boolean;
+
       mediaResizeUrl?: string;
 
       addMedia?: {
@@ -375,6 +548,19 @@ interface _ConfigCommon<Mode> {
           extra: AddImageExtra
         ) => void;
       };
+
+      imagePatterns?: ImagePatterns;
+    };
+
+    fonts?: {
+      adobeFont?: {
+        get: (res: Response<AdobeFonts>, rej: Response<string>) => void;
+        add: (
+          res: Response<AdobeAddAccount>,
+          rej: Response<string>,
+          extra: AdobeFontData
+        ) => void;
+      };
     };
 
     // File
@@ -389,6 +575,23 @@ interface _ConfigCommon<Mode> {
           extra: AddFileExtra
         ) => void;
       };
+    };
+
+    // Icon
+    customIcon?: {
+      iconUrl?: string;
+      iconPattern?: IconPattern;
+      add?: (
+        res: Response<IconUploadData[]>,
+        rej: Response<string>,
+        extra: Pick<AddFileExtra, "acceptedExtensions">
+      ) => void;
+      get?: (res: Response<IconUploadData[]>, rej: Response<string>) => void;
+      delete?: (
+        res: Response<string>,
+        rej: Response<string>,
+        extra: { uid: string }
+      ) => void;
     };
 
     sourceTypes?: {
@@ -452,19 +655,27 @@ interface _ConfigCommon<Mode> {
     // SavedPopups
     savedPopups?: APISavedPopups;
 
+    // GlobalBlocks
+    globalBlocks?: APIGlobalBlocks;
+
+    // GlobalPopups
+    globalPopups?: APIGlobalPopups;
+
     defaultKits?: DefaultTemplateKits<
       KitsWithThumbs,
       DefaultBlock,
       Array<KitItem>
     >;
     defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
-    defaultLayouts?: DefaultTemplate<
+    defaultLayouts?: DefaultTemplateWithPages<
       LayoutsWithThumbs,
-      BlocksArray<DefaultBlockWithID>
+      BlocksArray<DefaultBlockWithID>,
+      LayoutsPages
     >;
-    defaultStories?: DefaultTemplate<
+    defaultStories?: DefaultTemplateWithPages<
       StoriesWithThumbs,
-      BlocksArray<DefaultBlock> | DefaultBlock
+      BlocksArray<DefaultBlock> | DefaultBlock,
+      LayoutsPages
     >;
 
     // Popup Conditions
@@ -489,7 +700,8 @@ interface _ConfigCommon<Mode> {
           handler: <T extends keyof EkklesiaFields = keyof EkklesiaFields>(
             res: Response<ChoicesSync | ChoicesSync>,
             rej: Response<string>,
-            keys: EkklesiaParams<T>
+            keys: EkklesiaParams<T>,
+            extra?: EkklesiaExtra
           ) => void;
         };
         updateEkklesiaFields?: {
@@ -498,12 +710,23 @@ interface _ConfigCommon<Mode> {
             rej: Response<string>,
             keys: {
               fields: Array<EkklesiaFieldMap[T]>;
-            }
+            },
+            extra?: EkklesiaExtra
           ) => EkklesiaKeys;
         };
       };
     };
 
+    heartBeat?: {
+      sendHandler?: (
+        res: Response<{
+          locked: boolean;
+          lockedBy: boolean | { user_email: string };
+        }>,
+        rej: Response<string>
+      ) => void;
+      takeOverHandler?: (res: Response<unknown>, rej: Response<string>) => void;
+    };
     // Screenshots
     screenshots?: {
       create?: (
@@ -633,6 +856,7 @@ interface _ConfigCommon<Mode> {
     Image?: {
       linkSource?: string;
       linkType?: string;
+      sizeType?: SizeType;
     };
     Lottie?: {
       linkSource?: string;
@@ -666,23 +890,13 @@ interface _ConfigCommon<Mode> {
   //#region Elements
 
   elements?: {
-    section?: {
-      multilanguage: boolean;
+    form?: {
+      inputTypes?: Array<FormInputTypesName>;
     };
-
-    footer?: {
-      multilanguage: boolean;
-    };
-
     postExcerpt?: {
       predefinedPopulation?: boolean;
       sourceTypeOption?: boolean;
     };
-
-    header?: {
-      multilanguage: boolean;
-    };
-
     posts?: {
       includeQueryMultiOptions?: boolean;
       exclude?: boolean;
@@ -707,6 +921,10 @@ interface _ConfigCommon<Mode> {
     postContent?: {
       predefinedPopulation?: boolean;
     };
+
+    video?: {
+      types?: Array<VideoTypes>;
+    };
   };
 
   //#endregion
@@ -723,7 +941,7 @@ interface _ConfigCommon<Mode> {
     shop?: {
       type?: "shopify" | "ecwid";
 
-      //#region ecwid
+      //#region Ecwid
 
       storeId?: EcwidStoreId;
       defaultProductId?: EcwidProductId;

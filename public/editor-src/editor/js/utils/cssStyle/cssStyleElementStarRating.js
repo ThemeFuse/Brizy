@@ -1,4 +1,8 @@
-import { cssStyleColor, cssStyleSpacing } from "visual/utils/cssStyle";
+import {
+  cssStyleColor,
+  cssStyleCustomIconColor,
+  cssStyleSpacing
+} from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 
 export function cssStyleElementStarRatingRatingColor({ v, device, state }) {
@@ -60,5 +64,14 @@ export function cssStyleElementStarRatingSpacing({ v, device, state }) {
     state,
     prefix: "icon",
     direction: "right"
+  });
+}
+
+export function cssStyleElementStarRatingCustomIconColor({ v, device, state }) {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state,
+    prefix: "ratingColor"
   });
 }

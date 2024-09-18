@@ -9,20 +9,21 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Scrollbars, positionValues } from "react-custom-scrollbars";
+import { positionValues, Scrollbars } from "react-custom-scrollbars";
 import { Manager, Popper, Reference } from "react-popper";
 import { property } from "underscore";
 import { SelectItem } from "visual/component/Controls/Select2/SelectItem";
 import { Tag } from "visual/component/Controls/Select2/Tag";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
+import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { WithClassName } from "visual/utils/options/attributes";
 import { mRead } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
 import { Props as ItemProps } from "./Item";
 import { dropdownHeight } from "./utils";
+import { Position } from "visual/utils/position/Position";
 
 type ItemInstance<T> = ReactElement<ItemProps<T>>;
 type TagInstance = ReactElement<ComponentProps<typeof Tag>>;
@@ -40,6 +41,8 @@ export type Props<T> = WithClassName & {
   autoClose?: boolean;
   onType?: OnChange<string>;
   onKeyDown?: OnChange<KeyboardEvent<HTMLInputElement>>;
+  maxHeight?: number;
+  positionDropdown?: Position;
 };
 
 const getEnvironment = (node: HTMLElement | null): Window => {
@@ -59,7 +62,9 @@ export function Component<T extends Literal>({
   inputValue,
   scroll = 5,
   autoClose,
-  onOpen
+  onOpen,
+  maxHeight,
+  positionDropdown
 }: Props<T>): ReactElement {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -176,7 +181,10 @@ export function Component<T extends Literal>({
                       return items.length ? (
                         <div
                           ref={ref}
-                          style={style}
+                          style={{
+                            ...style,
+                            position: positionDropdown || style.position
+                          }}
                           className="brz-ed-control__multiSelect__menu"
                           {...makeDataAttr({
                             name: "placement",
@@ -186,7 +194,7 @@ export function Component<T extends Literal>({
                           <Scrollbars
                             onUpdate={onScrollUpdate}
                             autoHeight={true}
-                            autoHeightMax={height}
+                            autoHeightMax={maxHeight ?? height}
                             renderThumbVertical={(props): ReactElement => {
                               return (
                                 <div

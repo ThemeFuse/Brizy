@@ -61,7 +61,7 @@ class BackgroundImage extends Inline {
       imagePopulation
     } = value;
 
-    if (imagePopulation) {
+    if (imagePopulation && typeof imagePopulation === "string") {
       node.style.backgroundImage = null;
       // ! should be 50% 50% or should we set image position?
       node.style.backgroundPosition = "50% 50%";
@@ -75,9 +75,11 @@ class BackgroundImage extends Inline {
           .closest("[data-item_id]")
           .getAttribute("data-item_id");
         const dynamicContent = Config.getAll().dynamicContent;
-        const liveInBuilder = dynamicContent?.liveInBuilder ?? false;
 
-        if (liveInBuilder) {
+        const renderDC =
+          typeof dynamicContent.getPlaceholderData === "function";
+
+        if (renderDC) {
           getImagePopulation(imagePopulation, itemId).then((url) => {
             if (url) {
               node.style.backgroundImage = `url('${url}')`;

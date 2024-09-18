@@ -5,7 +5,7 @@ import {
   SelectionData
 } from "../types/Media";
 import { t } from "../utils/i18n";
-import { uploadImage } from "./utils";
+import { getImageUid } from "@/api";
 
 export const addMediaGallery: AddMediaGallery = {
   label: "Image",
@@ -53,8 +53,8 @@ export const addMediaGallery: AddMediaGallery = {
       );
 
       Promise.all(
-        images.map((file: ImageUpload) => {
-          return uploadImage(file);
+        images.map(({ id }: ImageUpload) => {
+          return getImageUid(String(id)).then(({ uid }) => ({ uid, fileName: "" }));
         })
       )
         .then((uploadedImages: AddImageData[]) => {

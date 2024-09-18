@@ -1,6 +1,6 @@
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import type { WithClassName } from "visual/utils/options/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { Switch } from "../utils/types";
 
 export interface Props extends WithClassName {
@@ -48,6 +48,7 @@ export interface Value extends ElementModel {
 
   showGroupFilter: Switch;
   groupFilterHeading: string;
+  groupSlug: string;
 
   showSearch: Switch;
   searchPlaceholder: string;
@@ -57,6 +58,7 @@ export interface Value extends ElementModel {
   eventDetailPage: string;
   source: string;
   eventDetailPageTitle: string;
+  eventDetailPageButtonText: string;
 
   dateFormat: string;
 }

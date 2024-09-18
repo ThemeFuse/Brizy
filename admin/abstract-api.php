@@ -34,6 +34,10 @@ abstract class Brizy_Admin_AbstractApi {
 			$this->error( 400, "Invalid editor version. Please refresh the page and try again" );
 		}
 
+		$this->checkNonce( $action );
+	}
+
+	protected function checkNonce( $action ) {
 		if ( ! wp_verify_nonce( $this->getRequestNonce(), $action ) ) {
 			Brizy_Logger::instance()->error( 'Invalid request nonce', $_REQUEST );
 			$this->error( 400, "Bad request" );

@@ -68,14 +68,11 @@ export const getItems = <
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error "advancedSettings" old options
-      type: "legacy-advancedSettings",
-      sidebarLabel: t("More Settings"),
+      type: "advancedSettings",
       position: 110,
       title: t("Settings"),
       roles: ["admin"],
-      devices: "desktop",
-      icon: "nc-cog"
+      devices: "desktop"
     }
   ];
 };

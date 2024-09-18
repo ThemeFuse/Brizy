@@ -3,7 +3,7 @@
 class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 {
     use Brizy_Editor_Asset_AttachmentAware;
-	use Brizy_Editor_Trait_Sanitize;
+    use Brizy_Editor_Trait_Sanitize;
 
     const ARCHIVE_TYPE_LAYOUT = 'layout';
     const ARCHIVE_TYPE_BLOCK = 'block';
@@ -265,18 +265,15 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             $basename = basename($path);
             $imageContent = $z->getFromName($path);
 
-            if (!$this->validateImageContent($basename, $imageContent)) {
-                continue;
-            }
-
+            $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+                $basename,
+                $imageContent
+            );
             $original_asset_path = $urlBuilder->page_upload_path("/assets/images/".$basename);
-            $original_asset_path_relative = $urlBuilder->page_upload_relative_path("/assets/images/".$basename);
-            wp_mkdir_p(dirname($original_asset_path));
-            file_put_contents($original_asset_path, $imageContent);
 
-            Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment(
+            Brizy_Editor_Asset_StaticFileTrait::createSideLoadMediaAttachment(
+                $tempFile,
                 $original_asset_path,
-                $original_asset_path_relative,
                 $block->getWpPostId(),
                 $uid
             );
@@ -311,7 +308,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
             foreach ((array)$weights as $weight => $weightType) {
                 foreach ((array)$weightType as $type => $filePath) {
-                    $newWeights[$weight][$type] = $this->downloadFileToTemporaryFile(
+                    $newWeights[$weight][$type] = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
                         basename($filePath),
                         $z->getFromName($filePath)
                     );
@@ -352,25 +349,6 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
                 $uid
             );
         }
-    }
-
-    protected function downloadFileToTemporaryFile($basename, $content)
-    {
-        $filePath = tempnam(sys_get_temp_dir(), $basename);
-        $result = file_put_contents($filePath, $content);
-
-        if ($result === false) {
-            Brizy_Logger::instance()->error('Filed to write font content', ['filePath' => $filePath]);
-            throw new Exception(__('Failed to write font content', 'brizy'));
-        }
-
-        return array(
-            'name' => $basename,
-            'type' => Brizy_Public_AssetProxy::get_mime($filePath),
-            'tmp_name' => $filePath,
-            'error' => 0,
-            'size' => filesize($filePath),
-        );
     }
 
     protected function getManager($class)
@@ -499,7 +477,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
      * @return array
      * @throws Exception
      */
-    protected function addScreenshot(ZipArchive $z, $meta, $manager, array $data, $dir)
+    protected function addScreenshot(ZipArchive $z, $meta, Brizy_Editor_Screenshot_Manager $manager, array $data, $dir)
     {
         $screenUid = $meta->_thumbnailSrc;
         if ($screenUid) {
@@ -544,15 +522,4 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             $jsonUpload->disableJsonUpload();
         }
     }
-
-    private function validateImageContent($name, $content)
-    {
-        $tempName = get_temp_dir().md5($name);
-        file_put_contents($tempName, $content);
-        $isImage = file_is_valid_image($tempName);
-        unlink($tempName);
-
-        return $isImage;
-    }
-
 }

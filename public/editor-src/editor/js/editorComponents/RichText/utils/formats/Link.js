@@ -18,7 +18,7 @@ export default class linkType extends Link {
   static setAttributes(node, link) {
     const value = decodeFromString(link);
 
-    const { type, linkToSlide } = value;
+    const { type, linkToSlide, population } = value;
 
     node.removeAttribute("href");
 
@@ -27,6 +27,7 @@ export default class linkType extends Link {
     node.classList.remove(
       "link--anchor",
       "link--external",
+      "link--dynamic",
       "link--popup",
       "link--story",
       "link--upload",
@@ -40,6 +41,9 @@ export default class linkType extends Link {
         break;
       case "external":
         node.classList.add("link--external");
+        if (population) {
+          node.classList.add("link--dynamic");
+        }
         break;
       case "popup":
         node.classList.add("link--popup");
@@ -58,7 +62,7 @@ export default class linkType extends Link {
         return;
     }
 
-    if (!value[type]) {
+    if (!value[type] && !population) {
       node.classList.add("is-empty");
     }
   }

@@ -23,11 +23,6 @@ export type FromElementModelGetter = (
   withoutId?: boolean
 ) => MValue<Literal>;
 
-export const callGetter =
-  (s: string) =>
-  (g: FromElementModelGetter): MValue<Literal> =>
-    g(s);
-
 export type FromElementModel<T extends OptionName> = (
   get: FromElementModelGetter
 ) => Partial<OptionValue<T>>;
@@ -44,7 +39,7 @@ export type Props<Model, Patch = Model> = {
   value: Model;
   onChange: OnChange<Patch>;
   toolbar?: ToolbarItemsInstance;
-  label?: ReactNode;
+  label?: JSX.Element;
   description?: ReactNode;
 };
 

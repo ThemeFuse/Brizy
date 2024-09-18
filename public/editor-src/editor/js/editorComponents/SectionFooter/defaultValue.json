@@ -38,6 +38,9 @@
     "bgPopulationEntityId": "",
     "bgImageExtension": "",
 
+    "bgSize": "cover",
+    "bgRepeat": "off",
+
     "brightness": 100,
     "hue": 0,
     "saturation": 100,
@@ -309,6 +312,8 @@
     "shapeBottomIndex": "auto",
     "shapeTopHorizontal": "off",
     "shapeBottomHorizontal": "off",
+    "shapeTopFlip": "off",
+    "shapeBottomFlip": "off",
 
     "containerClassName": "",
 

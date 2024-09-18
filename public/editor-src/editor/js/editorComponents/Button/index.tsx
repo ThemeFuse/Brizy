@@ -7,10 +7,13 @@ import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
-import { makeOptionValueToAnimation } from "visual/component/Options/types/utils/makeValueToOptions";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import { hasSizing } from "visual/editorComponents/Button/utils";
+import {
+  getHoverClassName,
+  hasSizing,
+  isButtonFillHover
+} from "visual/editorComponents/Button/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
@@ -23,6 +26,7 @@ import { isStory } from "visual/utils/models";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueValue } from "visual/utils/onChange";
+import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import * as State from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
@@ -31,9 +35,10 @@ import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import { style, styleIcon } from "./styles";
+import { style, styleButtonFillAnimation, styleIcon } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { PatchValue, Props, Value } from "./types";
+import { omit } from "timm";
 
 const resizerPoints = [
   "topLeft",
@@ -75,7 +80,7 @@ export default class Button extends EditorComponent<Value, Props> {
     this.patchValue(patch);
 
   renderIcon(v: Value, vs: Value, vd: Value): ReactNode {
-    const { iconName, iconType } = v;
+    const { iconName, iconType, iconFilename } = v;
 
     const iconClassName = classnames(
       css(
@@ -86,7 +91,12 @@ export default class Button extends EditorComponent<Value, Props> {
     );
 
     return (
-      <ThemeIcon className={iconClassName} name={iconName} type={iconType} />
+      <ThemeIcon
+        className={iconClassName}
+        name={iconName}
+        type={iconType}
+        filename={iconFilename}
+      />
     );
   }
 
@@ -144,9 +154,16 @@ export default class Button extends EditorComponent<Value, Props> {
     const linkData = getLinkData<Value>(v);
     const id = getCSSId<Value>(v);
     const _className = Str.mRead(cssClass || customClassName);
+    const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
 
     const className = classnames(
       "brz-btn",
+      getHoverClassName(hoverName),
+      css(
+        this.getComponentId(),
+        this.getId(),
+        styleButtonFillAnimation(v, vs, vd)
+      ),
       { "brz-blocked": v.tabsState === "hover" },
       _className,
       css(
@@ -199,6 +216,7 @@ export default class Button extends EditorComponent<Value, Props> {
   }
 
   renderPopups(): ReactNode {
+    const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
       itemProps: (itemData: Block) => {
@@ -208,21 +226,28 @@ export default class Button extends EditorComponent<Value, Props> {
 
         const { blockId } = itemData;
 
+        let newMeta = omit(meta, ["globalBlockId"]);
+
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(getStore().getState());
-          const blockData = globalBlocks[itemData.value._id];
+          const globalBlockId = itemData.value._id;
+          const blockData = globalBlocks[globalBlockId];
 
           popupId = blockData.value.popupId;
+
+          newMeta = {
+            ...newMeta,
+            globalBlockId
+          };
         }
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
-            ? `${this.getId()}_${popupId}`
-            : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+          meta: newMeta,
+          ...(IS_EDITOR && {
+            instanceKey: `${this.getId()}_${popupId}`
+          })
         };
       }
     });
@@ -249,7 +274,10 @@ export default class Button extends EditorComponent<Value, Props> {
       hoverName,
       options: getHoverAnimationOptions(options, hoverName),
       animationId,
-      isHidden: isStory(Config.getAll()) || hoverName === "none"
+      isHidden:
+        isStory(Config.getAll()) ||
+        hoverName === "none" ||
+        isButtonFillHover(hoverName)
     };
   }
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {

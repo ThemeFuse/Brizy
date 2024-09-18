@@ -8,6 +8,7 @@ import {
 import { defaultValueValue } from "visual/utils/onChange";
 import type { GetItems } from "../EditorComponent/types";
 import type { Props, Value } from "./types";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string): unknown =>
@@ -21,7 +22,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const maskCustomUploadImageSrc = dvv("imagesMaskCustomUploadImageSrc");
   const maskShapeIsDisabled =
     maskShape === "none" ||
-    (maskShape === "custom" && !maskCustomUploadImageSrc);
+    (maskShape === SizeType.custom && !maskCustomUploadImageSrc);
 
   return [
     {
@@ -83,7 +84,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                     enabled: true,
                     content: t("Upload only [ .png or .svg ]")
                   },
-                  disabled: maskShape !== "custom"
+                  disabled: maskShape !== SizeType.custom
                 },
                 {
                   id: "groupSize",
@@ -99,7 +100,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                     {
                       id: "imagesMaskScale",
                       type: "slider",
-                      disabled: maskSize !== "custom",
+                      disabled: maskSize !== SizeType.custom,
                       config: {
                         min: 1,
                         max: maskScaleSuffix === "px" ? 500 : 100,
@@ -126,7 +127,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                       id: "imagesMaskPositionx",
                       label: t("X"),
                       type: "slider",
-                      disabled: maskPosition !== "custom",
+                      disabled: maskPosition !== SizeType.custom,
                       config: {
                         min: 1,
                         max: 100,
@@ -137,7 +138,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                       id: "imagesMaskPositiony",
                       label: t("Y"),
                       type: "slider",
-                      disabled: maskPosition !== "custom",
+                      disabled: maskPosition !== SizeType.custom,
                       config: {
                         min: 1,
                         max: 100,

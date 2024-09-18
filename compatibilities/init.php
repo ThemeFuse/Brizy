@@ -138,6 +138,10 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'JETPACK__PLUGIN_FILE' ) ) {
 			new Brizy_Compatibilities_Jetpack();
 		}
+
+		if ( defined( 'BUNNYCDN_WP_VERSION' ) ) {
+			new Brizy_Compatibilities_Bunnynet();
+		}
     }
 
 	public function after_setup_theme() {

@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 interface PortalProps {
@@ -11,7 +11,7 @@ export default function Portal({
   className,
   node,
   children
-}: PortalProps): ReactElement | null {
+}: PortalProps): JSX.Element | null {
   const elRef = useRef<HTMLElement | null>(null);
 
   // this is deliberately done in render instead of useState + useEffect

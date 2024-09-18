@@ -36,6 +36,8 @@ export function styleSection(
       standart: [
         "cssStyleBgImage",
         "cssStyleFilter",
+        "cssStyleBgSize",
+        "cssStyleBgRepeat",
         "cssStyleBgImagePosition",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",

@@ -1,7 +1,7 @@
-import { fromElementModel } from "visual/component/Options/types/dev/Motion/types/Value";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { renderStyles } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
+import { fromElementModel } from "visual/utils/options/Motion/types/Value";
 import { types as Devices } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 
@@ -41,6 +41,9 @@ export function styleColumn(v, vs, vd) {
         "cssStyleFlexColumnVerticalAlign"
       ]
     },
+    ".brz && > .brz-ed-sortable--empty": {
+      standart: ["cssStyleEmptyColumnHeight"]
+    },
     ".brz && .brz-columns__scroll-effect": {
       standart: ["cssStyleFlexColumnVerticalAlign"]
     },
@@ -63,6 +66,8 @@ export function styleColumn(v, vs, vd) {
           "cssStyleFilter",
           "cssStyleBgImagePosition",
           "cssStyleBgMediaImage",
+          "cssStyleBgSize",
+          "cssStyleBgRepeat",
           "cssStyleMaskShape",
           "cssStyleMaskCustomShape",
           "cssStyleMaskSize",
@@ -112,6 +117,9 @@ export function styleColumn(v, vs, vd) {
     };
   } else {
     styles[".brz &&:hover > *"] = {
+      interval: ["cssStyleVisible|||preview"]
+    };
+    styles[".brz &&:hover > .brz-column__items"] = {
       interval: ["cssStyleVisible|||preview"]
     };
   }

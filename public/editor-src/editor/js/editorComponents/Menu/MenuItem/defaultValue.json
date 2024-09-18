@@ -1,7 +1,6 @@
 {
   "content": {
     "id": "",
-    "itemId": "",
     "title": "",
     "attrTitle": "",
     "classes": "",
@@ -10,6 +9,7 @@
     "items": [],
     "iconName": "",
     "iconType": "",
+    "iconFilename": "",
     "current": null,
 
     "megaMenu": "off",

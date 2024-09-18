@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.4.43
+ * Version: 2.5.7
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -19,22 +19,23 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
 
 define('BRIZY_DEVELOPMENT', false );
 define('BRIZY_LOG', false );
-define('BRIZY_VERSION', '2.4.43');
+define('BRIZY_VERSION', '2.5.7');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
-define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '282-wp' );
-define('BRIZY_SYNC_VERSION', '282');
+define('BRIZY_MINIMUM_COMPILER_VERSION', '293-wp');
+define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '294-wp');
+define('BRIZY_SYNC_VERSION', '294');
 define('BRIZY_FILE', __FILE__);
 define('BRIZY_PLUGIN_BASE', plugin_basename(BRIZY_FILE));
 define('BRIZY_PLUGIN_PATH', dirname(BRIZY_FILE));
 define('BRIZY_PLUGIN_URL', rtrim(plugin_dir_url(BRIZY_FILE), "/"));
 define('BRIZY_MAX_REVISIONS_TO_KEEP', 30);
 
-include_once rtrim(BRIZY_PLUGIN_PATH, "/") . '/autoload.php';
-include_once rtrim(BRIZY_PLUGIN_PATH, "/") . '/languages/main.php';
+include_once rtrim(BRIZY_PLUGIN_PATH, "/").'/autoload.php';
+include_once rtrim(BRIZY_PLUGIN_PATH, "/").'/languages/main.php';
 
 if (BRIZY_DEVELOPMENT) {
     $dotenv = new \Symfony\Component\Dotenv\Dotenv('APP_ENV');
-    $dotenv->load(__DIR__ . '/.env');
+    $dotenv->load(__DIR__.'/.env');
 }
 
 add_action('plugins_loaded', 'brizy_load');
@@ -118,7 +119,7 @@ function brizy_install()
     Brizy_Logger::install();
     add_option('brizy-regenerate-permalinks', 1);
     do_action('brizy-activated');
-    set_transient( 'brizy_admin_notice', true, 7200 );
+    set_transient('brizy_admin_notice', true, 7200);
 }
 
 function brizy_clean()
@@ -130,7 +131,7 @@ function brizy_clean()
 
 function brizy_load_text_domain()
 {
-    load_plugin_textdomain('brizy', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('brizy', false, dirname(plugin_basename(__FILE__)).'/languages');
 }
 
 new Brizy_Compatibilities_Init();

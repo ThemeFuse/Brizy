@@ -2,13 +2,7 @@ import { EnterRounded } from "@brizy/ui-icons";
 import { Spacing } from "@brizy/ui/es/Space/utils";
 import { FieldsTheme } from "@brizy/ui/es/utils/getFieldsTheme";
 import { Gutter } from "@brizy/ui/lib/Layout/utils";
-import React, {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState
-} from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { Card } from "visual/component/Brizy-ui/Card";
 import { Icon } from "visual/component/Brizy-ui/Icon";
@@ -19,10 +13,10 @@ import { Space } from "visual/component/Brizy-ui/Space";
 import { t } from "visual/utils/i18n";
 import { cardSize } from "./constants";
 import { AiActionButton } from "./controls/AiActionButton";
-import { AiDropdown } from "./controls/AiDropdown";
-import { data } from "./data/aiText";
+// import { AiDropdown } from "./controls/AiDropdown";
+// import { data } from "./data/aiText";
 import { actions } from "./data/aiTextActions";
-import { DropdownButtonData } from "./types";
+// import { DropdownButtonData } from "./types";
 
 const theme: FieldsTheme = {
   background: "dark",
@@ -44,14 +38,14 @@ interface Props {
   isTitleSelected: boolean;
 }
 
-export const AiText: FC<Props> = ({
+export const AiText = ({
   onChange,
   value,
   loading,
   submitRequest,
   prompt,
   isTitleSelected
-}): ReactElement => {
+}: Props): ReactElement => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
@@ -94,14 +88,15 @@ export const AiText: FC<Props> = ({
                 action={action}
               />
             ))}
-            {data.map((item: DropdownButtonData, index: number) => (
+            {/* temporary commented https://github.com/bagrinsergiu/blox-editor/issues/26546*/}
+            {/* {data.map((item: DropdownButtonData, index: number) => (
               <AiDropdown
                 disabled={disabled}
                 onOptionClick={handleClick}
                 data={item}
                 key={index}
               />
-            ))}
+            ))} */}
           </Inline>
         </Card>
       </Space>

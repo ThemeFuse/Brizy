@@ -3,7 +3,7 @@ import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { NORMAL } from "visual/utils/stateMode";
 import type { Props, Value } from "../types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
@@ -54,7 +54,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         {
           id: "listPaginationColor",
           type: "colorPicker",
-          states: [NORMAL, HOVER]
+          states: [NORMAL]
         }
       ]
     },

@@ -1,12 +1,12 @@
 import classnames from "classnames";
-import React, { CSSProperties, ReactElement } from "react";
+import React, { CSSProperties, ReactElement, ReactNode } from "react";
 import { Popper } from "react-popper";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
+import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
+import { WithClassName } from "visual/types/attributes";
 import { clamp } from "visual/utils/math";
-import { WithClassName } from "visual/utils/options/attributes";
 import { attachRef } from "visual/utils/react";
 
 const TOOLBAR_MARGIN = 14;
@@ -45,6 +45,7 @@ interface Prs extends WithClassName {
   toolbar?: ToolbarItemsInstance;
   inPortal: boolean;
   node?: HTMLElement;
+  children: ReactNode;
 }
 
 export type Props = Partial<Prs>;
@@ -67,6 +68,7 @@ export class TooltipContent extends React.Component<Props, State> {
     offset: 15,
     toolbar: undefined,
     inPortal: false,
+    children: undefined,
     node: undefined
   };
 

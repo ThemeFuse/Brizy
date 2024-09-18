@@ -7,6 +7,7 @@ import {
   cssStyleBorderRadius,
   cssStyleBoxShadow,
   cssStyleColor,
+  cssStyleCustomIconColor,
   cssStyleDisplayFlex,
   cssStyleDisplayInlineBlock,
   cssStyleDisplayNone,
@@ -22,6 +23,7 @@ import {
   cssStyleSizeFontSizeIcon,
   cssStyleSizeMaxWidthSize,
   cssStyleTextAlign,
+  cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
@@ -37,14 +39,14 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
-  styleElementMMenu,
-  styleElementMMenuIconPosition,
-  styleElementMMenuIconSpacing,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuMode,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
   styleItemMarginRight,
@@ -243,6 +245,10 @@ export function cssStyleElementMMenuLetterSpacing({ v, device }) {
 
 export function cssStyleElementMMenuFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "mMenu" });
+}
+
+export function cssStyleElementMMenuTextTransform({ v, device, state }) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "mMenu" });
 }
 
 export function cssStyleElementMMenuColor({ v, device, state }) {
@@ -494,6 +500,11 @@ export function cssStyleElementMenuSubMenuLetterSpacing({ v, device }) {
 export function cssStyleElementMenuSubMenuFontVariation({ v, device }) {
   return cssStyleTypography2FontVariation({ v, device, prefix: "subMenu" });
 }
+
+export function cssStyleElementMenuSubMenuTextTransform({ v, device, state }) {
+  return cssStyleTextTransforms({ v, device, state, prefix: "subMenu" });
+}
+
 export function cssStyleElementMenuSubMenuColor({ v, device, state }) {
   return cssStyleColor({ v, device, state, prefix: "subMenuColor" });
 }
@@ -676,4 +687,13 @@ export function cssStyleElementMenuHamburgerBgImage({ v, device, state }) {
   }
 
   return cssStyleBgImage({ v, device, state });
+}
+
+export function cssStyleMenuCustomIconColor({ v, device, state }) {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state,
+    prefix: "mMenuColor"
+  });
 }

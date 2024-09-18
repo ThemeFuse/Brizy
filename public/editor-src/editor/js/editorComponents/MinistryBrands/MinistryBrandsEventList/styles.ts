@@ -205,12 +205,13 @@ export function style(
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder"
+        "cssStyleElementMinistryBrandsButtonsBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-ministryBrands__item--meta--button a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
     },
     ".brz && .brz-ministryBrands__item--meta--register-button:hover": {
       standart: [
@@ -219,12 +220,13 @@ export function style(
         "cssStyleElementMinistryBrandsRegisterButtonBgGradient",
         "cssStyleElementMinistryBrandsRegisterButtonColor",
         "cssStyleElementMinistryBrandsRegisterButtonBoxShadow",
-        "cssStyleElementMinistryBrandsRegisterButtonBorder"
+        "cssStyleElementMinistryBrandsRegisterButtonBorder",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-ministryBrands__item--meta--register-button a": {
+      standart: ["cssStyleElementMinistryBrandsRegisterButtonSize"]
     },
     ".brz && .brz-eventList__item": {
       standart: [

@@ -1,11 +1,17 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import Config from "visual/global/Config";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 export function getItems({ v, device }) {
+  const config = Config.getAll();
+
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   const coverImageSrc = dvv("coverImageSrc");
   const type = dvv("type");
+
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "videoPlaylist");
 
   const disabledZoomPlaySize = coverImageSrc
     ? []
@@ -108,8 +114,8 @@ export function getItems({ v, device }) {
                     type === "youtube"
                       ? t("YouTube")
                       : type === "vimeo"
-                      ? t("Vimeo")
-                      : ""
+                        ? t("Vimeo")
+                        : ""
                 }
               ]
             },
@@ -183,6 +189,9 @@ export function getItems({ v, device }) {
                   label: t("Cover"),
                   id: "cover",
                   type: "imageUpload",
+                  config: {
+                    pointer: isPointerEnabled
+                  },
                   devices: "desktop"
                 },
                 ...disabledZoomPlaySize

@@ -1,22 +1,28 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import { hoverEffects } from "visual/component/Options/types/dev/Animation/utils";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
+import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
+import { bgPaddingCSS, transitionCSS } from "./css";
+import type { Value } from "./types";
 
 export const title = t("Video");
 
-export const getItems: GetItems<ElementModel> = ({ v, state, device }) => {
+export const getItems: GetItems<Value> = ({ v, state, device }) => {
   const IS_STORY = isStory(Config.getAll());
 
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
+  const type = dvv("type");
+  const controls = dvv("controls");
   const hoverName = readString(dvv("hoverName")) ?? "none";
+
+  const isCustomVideo = type === "custom";
+  const isControlsEnabled = controls === "on";
 
   return [
     {
@@ -51,14 +57,17 @@ export const getItems: GetItems<ElementModel> = ({ v, state, device }) => {
                       id: "bgPadding",
                       type: "padding",
                       label: t("Padding"),
-                      position: 50
+                      position: 50,
+                      style: (d) =>
+                        bgPaddingCSS({ isControlsEnabled, isCustomVideo }, d)
                     },
                     {
                       id: "border",
                       type: "corners",
                       label: t("Corner"),
                       devices: "desktop",
-                      position: 65
+                      position: 65,
+                      selector: "{{WRAPPER}} .brz-video-content"
                     }
                   ]
                 },
@@ -78,25 +87,44 @@ export const getItems: GetItems<ElementModel> = ({ v, state, device }) => {
                         min: 0,
                         max: 99,
                         units: [{ title: "ms", value: "ms" }]
-                      }
+                      },
+                      style: transitionCSS
                     }
                   ]
                 }
               ]
             },
             {
-              id: "padding",
-              type: "padding",
-              label: t("Padding"),
+              id: "settingsTabsResponsive",
+              type: "tabs",
+              config: {
+                align: "start"
+              },
               devices: "responsive",
-              disabled: true
-            },
-            {
-              id: "bgPadding",
-              type: "padding",
-              label: t("Padding"),
-              devices: "responsive",
-              position: 50
+              tabs: [
+                {
+                  id: "settingsStyling",
+                  label: t("Basic"),
+                  icon: "nc-styling",
+                  position: 10,
+                  options: [
+                    {
+                      id: "padding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      disabled: true
+                    },
+                    {
+                      id: "bgPadding",
+                      type: "padding",
+                      label: t("Padding"),
+                      devices: "responsive",
+                      position: 50
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },

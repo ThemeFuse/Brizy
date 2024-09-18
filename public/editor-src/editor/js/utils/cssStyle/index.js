@@ -4,6 +4,8 @@ export * from "./cssStyle";
 export * from "./cssStyleAlign";
 // Animation
 export * from "./cssStyleAnimation";
+// Background
+export * from "./cssStyleBackground";
 // Bg Color
 export * from "./cssStyleBgColor";
 // Bg Gradient
@@ -12,6 +14,8 @@ export * from "./cssStyleBgGradient";
 export * from "./cssStyleBgImage";
 // Bg Map
 export * from "./cssStyleBgMap";
+// Background
+export * from "./cssStyleBackground";
 // Color
 export * from "./cssStyleBlendMode";
 //Border Style
@@ -34,6 +38,8 @@ export * from "./cssStyleElementAccordion";
 export * from "./cssStyleElementAlert";
 // Element Breadcrumbs
 export * from "./cssStyleElementBreadcrumbs";
+// Element EmbedCode
+export * from "./cssStyleElementEmbedCode";
 //Element Button
 export * from "./cssStyleElementButton";
 // Calendly
@@ -60,6 +66,8 @@ export * from "./cssStyleElementEcwidProducts";
 export * from "./cssStyleElementEcwidShoppingBag";
 // Facebook
 export * from "./cssStyleElementFacebook";
+// Element Form
+export * from "./cssStyleElementForm";
 // Element Form2
 export * from "./cssStyleElementForm2";
 // Element Icon
@@ -71,11 +79,9 @@ export * from "./cssStyleElementImage";
 // Element ImageGallery
 export * from "./cssStyleElementImageGallery";
 // Element Line
-export * from "./cssStyleElementLineBorder";
+export * from "./cssStyleLineBorder";
 // Element Login
 export * from "./cssStyleElementLogin";
-//Element Map
-export * from "./cssStyleElementMap";
 // Element Media
 export * from "./cssStyleElementMedia";
 // MegaMenu
@@ -94,8 +100,6 @@ export * from "./cssStyleElementMinistryEventDetail";
 export * from "./cssStyleElementMinistryGroupSlider";
 // Ministry Event Calendar
 export * from "./cssStyleElementMinistryEventCalendar";
-// Ministry Brands Sermon Layout
-export * from "./cssStyleElementSermonLayout";
 // Element Post Info
 export * from "./cssStyleElementPostInfo";
 // Element postNavigation
@@ -183,6 +187,7 @@ export * from "./cssStyleStroke";
 export * from "./cssStyleTextShadow";
 // Transform
 export * from "./cssStyleTransform";
+export * from "./cssStyleTextTransform";
 //Transition
 export * from "./cssStyleTransition";
 // Typography
@@ -201,7 +206,18 @@ export * from "./styleBgVideo";
 export * from "./cssStyleMask";
 // Variant
 export * from "./cssStyleElementShopifyVariant";
+// Table of Contents
+export * from "./cssStyleElementTableOfContents";
+// Share Button
+export * from "./cssStyleElementShareButton";
+// Background Slideshow
+export * from "./cssStyleBgSlideshow";
 
 // Generator v2 functions
 export * from "./cssStyle2";
 export * from "./utils";
+
+// Element Flipbox
+export * from "./cssStyleElementFlipbox";
+// Paypal
+export * from "./cssStyleElementPaypal";

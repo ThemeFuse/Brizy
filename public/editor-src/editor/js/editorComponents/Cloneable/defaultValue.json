@@ -30,6 +30,13 @@
     "offsetYAlignment": "top",
     "elementPosition": "relative",
 
+    "animationName": "none",
+    "animationDuration": 1000,
+    "animationDelay": 1000,
+    "animationInfiniteAnimation": false,
+
+    "tempAnimationName": "none",
+
     "motionActive": false,
     "motionVerticalEnabled": false,
     "motionVerticalSpeed": 0.5,
@@ -290,14 +297,5 @@
     "tempMobileMarginRightSuffix": "px",
     "tempMobileMarginBottomSuffix": "px",
     "tempMobileMarginLeftSuffix": "px"
-  },
-
-  "animation": {
-    "animationName": "none",
-    "animationDuration": 1000,
-    "animationDelay": 1000,
-    "animationInfiniteAnimation": false,
-
-    "tempAnimationName": "none"
   }
 }

@@ -1,22 +1,28 @@
 import classNames from "classnames";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import * as Option from "visual/component/Options/Type";
 import { useThrottleEffect } from "visual/component/hooks";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import * as Option from "visual/component/Options/Type";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { Config } from "./types/Config";
-import { Value, eq } from "./types/Value";
+import { eq, Value } from "./types/Value";
 import { sliderClassName } from "./utils";
 
 export type Props = Option.Props<Value> & WithConfig<Config> & WithClassName;
 
-export const Slider: FC<Props> = ({
+export const Slider = ({
   className,
   onChange,
   value,
   config = {},
   label
-}) => {
+}: Props): ReactElement => {
   const {
     debounceUpdate,
     updateRate = 16,

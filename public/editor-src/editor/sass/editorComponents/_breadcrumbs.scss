@@ -58,11 +58,15 @@
 
     .brz-ui-ed-breadcrumb-link {
       color: inherit;
-      text-decoration: none;
+      text-decoration: inherit;
     }
 
-    li:last-child {
+    li:has(.brz-ui-ed-breadcrumb-link):nth-last-child(-n + 2) {
       margin-right: 0;
+    }
+
+    li.brz-ui-ed-breadcrumb-separator:last-child {
+      display: none;
     }
   }
 }

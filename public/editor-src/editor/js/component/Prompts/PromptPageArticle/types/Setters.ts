@@ -1,4 +1,6 @@
 // region SetTitle
+import { Layout } from "visual/component/Prompts/common/PromptPage/types";
+
 export interface SetTitle {
   type: "SetTitle";
   payload: string;
@@ -13,10 +15,10 @@ export const setTitle = (payload: string): SetTitle => ({
 // region SetLayout
 export interface SetLayout {
   type: "SetLayout";
-  payload: string;
+  payload: Layout;
 }
 
-export const setLayout = (payload: string): SetLayout => ({
+export const setLayout = (payload: Layout): SetLayout => ({
   payload,
   type: "SetLayout"
 });

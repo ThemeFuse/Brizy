@@ -13,6 +13,104 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+
+    &-ms {
+      &-buttons {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .brz-forms2__item-button {
+          min-width: 10%;
+          flex-shrink: 1;
+          padding: 0;
+        }
+      }
+
+      &-next-button,
+      &-prev-button {
+        width: 100%;
+
+        a,
+        button {
+          width: 100%;
+        }
+      }
+
+      &-prev-button {
+        margin-right: 10px;
+
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+
+      &-progress {
+        flex: 1;
+
+        &-bar {
+          width: 100%;
+
+          &-text {
+            position: absolute;
+            right: 0;
+            margin-right: 10px;
+          }
+        }
+      }
+
+      &-content {
+        width: 100%;
+      }
+
+      &-indicators {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        overflow: auto hidden;
+      }
+
+      &-indicator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-basis: 0;
+        cursor: pointer;
+        position: relative;
+
+        &:first-child.brz-form-ms-indicator:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child.brz-form-ms-indicator:last-child {
+          padding-right: 0;
+        }
+
+        &-number,
+        &-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: content-box;
+        }
+
+        &-text {
+          text-align: center;
+          white-space: nowrap;
+
+          &-under {
+            white-space: nowrap;
+          }
+        }
+      }
+
+      &-divider {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   &__wrap,
@@ -47,11 +145,14 @@
     outline: none;
     color: inherit;
     font-size: inherit;
+    font-style: inherit;
     font-family: inherit;
     letter-spacing: inherit;
     font-weight: inherit;
     line-height: inherit;
     font-variation-settings: inherit;
+    text-transform: inherit;
+    text-decoration: inherit;
     box-shadow: none;
 
     &::placeholder {
@@ -76,6 +177,10 @@
   .brz-forms2__field-label {
     border: none;
     cursor: auto;
+
+    > div {
+      text-decoration: inherit;
+    }
   }
 
   // Radio
@@ -96,8 +201,9 @@
 
     .brz-forms2__radio-option-name {
       overflow-wrap: break-word;
-      margin-right: 10px;
+      margin-right: auto;
       max-width: 97%;
+      margin-left: 10px;
     }
 
     input.brz-input {
@@ -272,6 +378,7 @@
       margin-left: 10px;
       margin-right: auto;
     }
+
     .brz-input {
       display: none;
 
@@ -741,6 +848,10 @@
           padding-top: 0;
         }
       }
+    }
+
+    .brz-form-ms-buttons {
+      padding-bottom: 0;
     }
   }
 }

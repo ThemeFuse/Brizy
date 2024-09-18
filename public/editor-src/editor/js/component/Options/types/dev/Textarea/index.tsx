@@ -1,19 +1,19 @@
-import React, { FC, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Textarea as Control } from "visual/component/Controls/Textarea";
+import { useDebouncedEffect } from "visual/component/hooks";
 import {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import { useDebouncedEffect } from "visual/component/hooks";
 import {
   WithClassName,
   WithConfig,
   WithPlaceholder,
   WithSize
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
 
 export type Config = WithSize & {
-  lines: number;
+  lines?: number;
 };
 export type Model = SimpleValue<string>;
 export type Props = OptionProps<Model> &
@@ -21,14 +21,14 @@ export type Props = OptionProps<Model> &
   WithClassName &
   WithPlaceholder;
 
-export const Textarea: FC<Props> = ({
+export const Textarea = ({
   className,
   onChange,
   value: { value },
   config = {},
   placeholder,
   label
-}) => {
+}: Props): ReactElement => {
   const [_value, setValue] = useState(value);
 
   useDebouncedEffect(

@@ -15,6 +15,10 @@
     flex-shrink: 0;
   }
 
+  .brz-btn.brz-btn-submit {
+    display: inline-flex;
+  }
+
   // Input and Textarea
   .brz-input,
   .brz-textarea {
@@ -30,6 +34,9 @@
     letter-spacing: inherit;
     font-weight: inherit;
     line-height: inherit;
+    font-variation-settings: inherit;
+    text-transform: inherit;
+    font-style: inherit;
     box-shadow: none;
 
     &::placeholder {

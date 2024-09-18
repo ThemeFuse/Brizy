@@ -9,7 +9,10 @@ import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
-import { RuleList } from "../types";
+import { RuleList, RuleListItem, ValueItems } from "../types";
+import { Str } from "@brizy/readers";
+import { MValue } from "visual/utils/value";
+import classNames from "classnames";
 
 export function getRulesListIndexByRule(
   rulesList: RuleList[],
@@ -98,3 +101,33 @@ export function getUniqRules(rules: Rule[]): Rule[] {
 
   return [...rulesAsObject.values()];
 }
+
+export const getValue = (
+  items: RuleListItem[],
+  rule: CollectionItemRule
+): MValue<ValueItems> => {
+  const ruleValue = Str.read(rule.entityValues?.[0]);
+  if (!ruleValue) {
+    return undefined;
+  }
+
+  const foundItem = items.find((item) =>
+    item.items?.some((nestedItem) => Str.read(nestedItem.value) === ruleValue)
+  );
+
+  if (!foundItem || !foundItem.items) {
+    return undefined;
+  }
+
+  return foundItem.items.find(
+    (nestedItem) => Str.read(nestedItem.value) === ruleValue
+  );
+};
+
+export const getOptionItemClassNames = (active: boolean): string =>
+  classNames(
+    "brz-d-xs-flex brz-align-items-xs-center brz-ed-controls-type-option-item",
+    {
+      "brz-ed-controls-item-active": active
+    }
+  );

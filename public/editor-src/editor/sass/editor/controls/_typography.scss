@@ -5,6 +5,10 @@
   grid-template-columns: 228px 195px;
   width: 100%;
 
+  &--lg {
+    grid-template-columns: 190px 44px 195px;
+  }
+
   &--tabs-icon {
     .brz-ed-font__typography {
       padding: 0 0 10px 25px !important;
@@ -22,6 +26,32 @@
     grid-template-columns: 210px;
   }
 
+  &-font-transform {
+    color: $white;
+    display: flex;
+    padding: 15px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-right: 1px solid $toolbar-border;
+
+    .brz-ed-control__button.reverseTheme {
+      padding: 0;
+
+      .brz-ed-icon-svg {
+        font-size: 12px;
+      }
+    }
+
+    .brz-ed-control__icon-carousel {
+      cursor: pointer;
+
+      .brz-ed-icon-svg {
+        font-size: 12px;
+      }
+    }
+  }
+
   .brz-ed-font__typography {
     display: grid;
     grid-template-rows: 1fr auto;
@@ -32,6 +62,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      word-break: break-word;
 
       .brz-ed-font-variable-badge {
         width: 60px;
@@ -43,6 +74,7 @@
         font-weight: 700;
         padding: 5px;
         margin-right: 10px;
+        word-break: normal;
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -194,5 +226,10 @@
         }
       }
     }
+  }
+
+  &.brz-ed-sidebar-option__font-style-editor
+    .brz-ed-control__typography-font-transform {
+    padding: 0 15px 10px;
   }
 }

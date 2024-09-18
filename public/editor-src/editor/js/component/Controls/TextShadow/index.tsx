@@ -1,18 +1,21 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import {
-  Props as CProps,
-  ColorPickerSelect
+  ColorPickerSelect,
+  Props as CProps
 } from "visual/component/Controls/ColorPickerSelect";
-import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
+import {
+  ColorPickerInputs,
+  Props as ColorPickerInputsProps
+} from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
-import { Hex } from "visual/utils/color/Hex";
 import {
   WithClassName,
   WithOnChange2,
   WithValue
-} from "visual/utils/options/attributes";
+} from "visual/types/attributes";
+import { Hex } from "visual/utils/color/Hex";
 import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
 import { Meta, Value } from "./types";
 import { getModifiedField } from "./utils";
@@ -53,12 +56,12 @@ export function TextShadow<P extends string, O extends string>({
     },
     [onChange, value]
   );
-  const onHex = useCallback(
+  const onHex = useCallback<ColorPickerInputsProps["onChange"]>(
     (hex) => onChange({ ...value, hex }, { isChanged: "hex" }),
     [onChange, value]
   );
   const fieldChange = useCallback(
-    (fields) => {
+    (fields: Array<number>) => {
       const [blur, vertical, horizontal] = fields;
       const current = [value.blur, value.vertical, value.horizontal];
       const isChanged = getModifiedField(fields, current);

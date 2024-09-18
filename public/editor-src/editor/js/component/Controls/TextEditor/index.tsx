@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import _ from "underscore";
 import { Translate } from "visual/component/Translate";
 import { t } from "visual/utils/i18n";
-import { discardXSS } from "visual/utils/xss";
 import { DefaultProps, Props, State } from "./types";
 
 const keyCodes = {
@@ -107,8 +106,7 @@ export class TextEditor extends Component<Props, State> {
 
   handleInput = (e: Event): void => {
     const node = e.currentTarget as HTMLElement;
-
-    this.notifyChange(discardXSS(node) || "");
+    this.notifyChange(node.textContent || "");
   };
 
   notifyChange = _.debounce((value: string): void => {
@@ -124,8 +122,7 @@ export class TextEditor extends Component<Props, State> {
 
   handlePaste = (e: React.ClipboardEvent): void => {
     e.preventDefault();
-    const data = e.clipboardData.getData("text/plain");
-    const text = discardXSS(data);
+    const text = e.clipboardData.getData("text/plain");
 
     document.execCommand("insertHTML", false, text);
   };

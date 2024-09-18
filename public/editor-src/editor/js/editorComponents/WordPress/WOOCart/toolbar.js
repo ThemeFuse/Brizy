@@ -279,7 +279,7 @@ export function getItems({ v, device }) {
     },
     {
       id: "advancedSettings",
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       position: 110,
       devices: "desktop"
     }

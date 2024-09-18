@@ -21,6 +21,7 @@ export function styleDC(v, vs, vd) {
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3FontVariation",
         "cssStyleTypography3LetterSpacing",
+        "cssStyleTypography3TextTransform",
         "cssStyleElementRichTextDCUppercase"
       ]
     },
@@ -29,7 +30,8 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextDCColor",
         "cssStyleElementRichTextDCGradient",
         "cssStyleElementTitleTextShadow",
-        "cssStyleElementRichTextBgImage"
+        "cssStyleElementRichTextBgImage",
+        "cssStyleTypography3Script"
       ]
     },
     ".brz &&:hover span::before": {
@@ -55,7 +57,9 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextH1LineHeight",
         "cssStyleElementRichTextH1FontWeight",
         "cssStyleElementRichTextH1LetterSpacing",
-        "cssStyleElementRichTextH1FontVariation"
+        "cssStyleElementRichTextH1FontVariation",
+        "cssStyleElementRichTextH1TextTransform",
+        "cssStyleElementRichTextH1Script"
       ]
     },
     ".brz && h2": {
@@ -65,7 +69,9 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextH2LineHeight",
         "cssStyleElementRichTextH2FontWeight",
         "cssStyleElementRichTextH2LetterSpacing",
-        "cssStyleElementRichTextH2FontVariation"
+        "cssStyleElementRichTextH2FontVariation",
+        "cssStyleElementRichTextH2TextTransform",
+        "cssStyleElementRichTextH2Script"
       ]
     },
     ".brz && h3": {
@@ -75,7 +81,9 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextH3LineHeight",
         "cssStyleElementRichTextH3FontWeight",
         "cssStyleElementRichTextH3LetterSpacing",
-        "cssStyleElementRichTextH3FontVariation"
+        "cssStyleElementRichTextH3FontVariation",
+        "cssStyleElementRichTextH3TextTransform",
+        "cssStyleElementRichTextH3Script"
       ]
     },
     ".brz && h4": {
@@ -85,7 +93,9 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextH4LineHeight",
         "cssStyleElementRichTextH4FontWeight",
         "cssStyleElementRichTextH4LetterSpacing",
-        "cssStyleElementRichTextH4FontVariation"
+        "cssStyleElementRichTextH4FontVariation",
+        "cssStyleElementRichTextH4TextTransform",
+        "cssStyleElementRichTextH4Script"
       ]
     },
     ".brz && h5": {
@@ -95,7 +105,9 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextH5LineHeight",
         "cssStyleElementRichTextH5FontWeight",
         "cssStyleElementRichTextH5LetterSpacing",
-        "cssStyleElementRichTextH5FontVariation"
+        "cssStyleElementRichTextH5FontVariation",
+        "cssStyleElementRichTextH5TextTransform",
+        "cssStyleElementRichTextH5Script"
       ]
     },
     ".brz && h6": {
@@ -105,7 +117,9 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextH6LineHeight",
         "cssStyleElementRichTextH6FontWeight",
         "cssStyleElementRichTextH6LetterSpacing",
-        "cssStyleElementRichTextH6FontVariation"
+        "cssStyleElementRichTextH6FontVariation",
+        "cssStyleElementRichTextH6TextTransform",
+        "cssStyleElementRichTextH6Script"
       ]
     },
     ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span)":
@@ -116,7 +130,8 @@ export function styleDC(v, vs, vd) {
           "cssStyleTypography3LineHeight",
           "cssStyleTypography3FontWeight",
           "cssStyleTypography3LetterSpacing",
-          "cssStyleTypography3FontVariation"
+          "cssStyleTypography3FontVariation",
+          "cssStyleTypography3TextTransform"
         ]
       },
     ".brz && strong, .brz && b": {
@@ -125,7 +140,8 @@ export function styleDC(v, vs, vd) {
         "cssStyleElementRichTextFontSize",
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleTypography3FontVariation"
+        "cssStyleTypography3FontVariation",
+        "cssStyleTypography3TextTransform"
       ]
     }
   };
@@ -147,7 +163,9 @@ export function styleHeading(v, vs, vd) {
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleTypography3FontVariation"
+        "cssStyleTypography3FontVariation",
+        "cssStyleTypography3TextTransform",
+        "cssStyleTypography3Script"
       ]
     }
   };

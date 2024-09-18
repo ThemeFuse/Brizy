@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.4.3
-Requires PHP: 7.0.0
-Stable tag: 2.4.43
+Tested up to: 6.6.2
+Requires PHP: 7.2.24
+Stable tag: 2.5.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,85 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.5.7 - 2024-09-18 =
+* Fixed: Astra Pro compatibility issue
+
+= 2.5.6 - 2024-09-18 =
+* Fixed:  Simplified the method that obtain the attachment by UID
+
+= 2.5.5 - 2024-09-17 =
+* Fixed:  Simplified the method that obtain the attachment by UID
+
+= 2.5.4 - 2024-09-17 =
+* New: Hover animations for Buttons
+* New: Paypal element
+* New: Slideshow option for Section
+* New: Text transform options for typography
+* New: Subscript and superscript for Text element
+* New: Background color option for Video element
+* New: Background video for responsive modes for Section, Row and Column
+* New: Regenerate Global styles with AI
+* New: Ability to pin elements in left sidebar
+* Improved: Ability to copy and paste effects and animations
+* Improved: Box resizer restrictions for Map
+* Improved: Removed "To dashboard" button
+* Improved: After upload, Image element by default has original size
+* Improved: Increase width of column resizer bar
+* Improved: Tollbar options code base and migrate Map, Line and Video to new CSS generator
+* Improved: Center "Styling" and "Effects" toolbar buttons:
+* Fixed: Disabled zoom option for Section,Row and Column for respondive modes: 
+* Fixed: Background video error after cloning the container element:
+* Fixed: Text selection opacity if mask/gradinent is set
+* Fixed: Box resizer in responsive modes for all elements
+* Fixed: Copya and paste styles for responsive modes
+* Fixed: Bullet list alignment in Text element
+* Fixed: Text formatting after clear in Story
+* Fixed: Button size with default fill type
+* Fixed: Size of typography text decoration icons
+* Fixed: Background color does not remove on clear formatting on Text element
+* Fixed: Paste style of font style in Text element
+* Fixed: Section slider content snaps after slider load
+* Fixed: Slider block hover arrow color
+* Fixed: Slider block remains active after deleting
+* Fixed: Close dropdown of internal link after selection
+* Fixed: Compilation error
+* Fixed: Excerpt recursion when using Brizy posts in post loops
+* Fixed: Global block rule matching
+
+= 2.5.3 - 2024-08-16 =
+* Fixed: Send the form nonce on submit when the user is authenticated
+
+
+= 2.5.2 - 2024-08-01 =
+* Fixed: Assets not loading on subfolder WordPress instances
+
+
+= 2.5.1 - 2024-07-26 =
+* Fixed: Icons not loading on subfolder WordPress instances
+* Fixed: 404 templates not displaying correctly
+* Fixed: Restored backward compatibility support for Astra
+* Fixed: reCAPTCHA issues for current users
+* Fixed: Page content visibility in wp-admin when editing pages
+
+= 2.5.0 - 2024-07-22 =
+* New: HTML Compilation process for major page-loading improvements
+* Fixed: Copy-Paste Styles for Text Element when using selected text
+* Fixed: Various vulnerabilities
+* Fixed: Global Styles not saving current state in some instances
+* Fixed: Text multi-select with gradients bug
+* Fixed: Section background displaying incorrect option
+* Improved: Uploading images in WEBP format
+* Improved: Moved Form element from FREE to PRO
+* Improved: Added rich-text formatting clearance
+* Improved: Reload the preview tab if already open instead of new tab
+* Updated: Builder developer dependencies
+
+= 2.4.45 - 2024-07-05 =
+* Fixed: small fixes in how the uploaded files are hnadled
+
+= 2.4.44 - 2024-05-14 =
+* Fixed: Fixed vulnerabilities reported by Worldfence
 
 = 2.4.43 - 2024-03-26 =
 * Fixed: dynamic content

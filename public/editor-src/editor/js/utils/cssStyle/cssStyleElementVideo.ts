@@ -1,29 +1,13 @@
 import {
-  cssStyleBgColor,
-  cssStyleBgGradient,
-  cssStyleColor,
-  cssStylePadding,
-  cssStyleSizeFontSize,
   cssStyleSizeSize,
   cssStyleSizeSizeHeight
 } from "visual/utils/cssStyle";
 import {
   styleElementVideoCoverSrc,
-  styleElementVideoIconFontSize,
-  styleElementVideoRatio
+  styleElementVideoIconFontSize
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
 import { CSSValue } from "../style2/types";
-
-export function cssStyleElementVideoRatio({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const ratio = styleElementVideoRatio({ v, device, state });
-
-  return ratio === undefined ? "" : `aspect-ratio:${ratio};`;
-}
 
 export function cssStyleElementVideoBgSize({
   v,
@@ -85,77 +69,4 @@ export function cssStyleElementVideoCoverPosition({
   return positionX === undefined && positionY === undefined
     ? ""
     : `background-position:${positionX}% ${positionY}%;`;
-}
-
-export function cssStyleVideoControlsBgColor({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "controlsBg" });
-}
-
-export function cssStyleVideoIconControls({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "iconControlsColor" });
-}
-
-export function cssStyleElementVideoControlsIconFontSize({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleSizeFontSize({
-    v,
-    device,
-    state,
-    prefix: "controlsIconCustom"
-  });
-}
-
-export function cssStyleElementVideoBgColorPadding({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "paddingBg" });
-}
-
-export function cssStyleElementVideoBgGradientPadding({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "padding" });
-}
-
-export function cssStyleElementVideoCoverPaddingBG({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  const p = cssStylePadding({ v, device, state, prefix: "bg" });
-
-  const noEmptyGrouped =
-    p.paddingTop === p.paddingRight &&
-    p.paddingTop === p.paddingBottom &&
-    p.paddingTop === p.paddingLeft &&
-    p.paddingTop > 0;
-
-  const isCustomVideo = v.type === "custom";
-
-  const bottomMarginGrouped =
-    v.controls === "on" && isCustomVideo ? "margin-bottom:0;" : "";
-
-  const bottomMarginUngrouped =
-    v.controls === "on" && isCustomVideo
-      ? 0
-      : `${p.paddingBottom}${p.paddingBottomSuffix}`;
-
-  return noEmptyGrouped
-    ? `margin: ${p.paddingTop}${p.paddingTopSuffix};${bottomMarginGrouped}`
-    : `margin: ${p.paddingTop}${p.paddingTopSuffix} ${p.paddingRight}${p.paddingRightSuffix} ${bottomMarginUngrouped} ${p.paddingLeft}${p.paddingLeftSuffix};`;
 }

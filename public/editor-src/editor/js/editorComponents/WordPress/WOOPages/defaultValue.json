@@ -18,9 +18,6 @@
     "width": 100,
     "widthSuffix": "%",
 
-    "tabletWidthSuffix": null,
-    "mobileWidthSuffix": null,
-
     "customCSS": "",
 
     "bgColorType": "solid",

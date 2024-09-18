@@ -26,6 +26,7 @@
     "bgImageExtension": "",
     "bgSize": "cover",
     "bgRepeat": "off",
+    "bgPosition": "50% 50%",
 
     "bgAttachment": "none",
 
@@ -44,23 +45,53 @@
     "saturation": 100,
     "contrast": 100,
 
-    "tabletMedia": "image",
+    "tabletMedia": null,
 
     "tabletBgPopulation": "",
 
     "tabletBgAttachment": "none",
 
-    "mobileMedia": "image",
+    "mobileMedia": null,
 
     "mobileBgPopulation": "",
 
-    "mobileBgAttachment": "none"
+    "mobileBgAttachment": "none",
+
+    "popups": [],
+
+    "slideshow": "",
+    "slideshowLoop": "on",
+    "slideshowDuration": 1,
+    "slideshowDurationSuffix": "s",
+    "slideshowTransitionType": "fade",
+    "slideshowTransition": 1,
+    "slideshowTransitionSuffix": "s",
+    "kenBurnsEffect": "off"
   },
 
   "toolbar": {
     "tabsState": "",
     "tabsCurrentElement": "",
     "tabsColor": ""
+  },
+
+  "link": {
+    "linkSource": "",
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkPageSource": null,
+    "linkInternalBlank": "off",
+    "linkType": "external",
+    "linkExternal": "",
+    "linkAnchor": "",
+    "linkExternalBlank": "off",
+    "linkExternalRel": "off",
+    "linkExternalType": "linkExternal",
+    "linkPopulation": "",
+    "linkPopulationEntityId": "",
+    "linkPopulationEntityType": "",
+    "linkUpload": "",
+    "linkPopup": ""
   },
 
   "style": {
@@ -233,6 +264,8 @@
     "shapeBottomIndex": "auto",
     "shapeTopHorizontal": "off",
     "shapeBottomHorizontal": "off",
+    "shapeTopFlip": "off",
+    "shapeBottomFlip": "off",
 
     "customCSS": "",
 

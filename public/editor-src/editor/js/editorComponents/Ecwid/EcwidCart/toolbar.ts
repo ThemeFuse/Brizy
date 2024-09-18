@@ -116,8 +116,7 @@ export function getItems({
     },
     {
       id: "advancedSettings",
-      // @ts-expect-error old option
-      type: "legacy-advancedSettings",
+      type: "advancedSettings",
       disabled: true
     },
     {

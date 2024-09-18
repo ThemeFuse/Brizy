@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
@@ -8,9 +8,9 @@ import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
+import { WithClassName, WithId } from "visual/types/attributes";
 import { always, pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
-import { WithClassName, WithId } from "visual/utils/options/attributes";
 import { nextAlign } from "./utils";
 
 export interface Tab {
@@ -30,7 +30,7 @@ export interface Props extends OptionProps<undefined> {
 
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
-export const SidebarTabs: FC<Props> = ({ tabs, toolbar }) => {
+export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
   const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
   const dispatch = useDispatch();
   const onLock = useCallback(

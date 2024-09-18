@@ -50,6 +50,12 @@
     "typographyVariableFontWeight": 400,
     "typographyFontWidth": 100,
     "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
 
     "titleTypographyFontStyle": "",
     "titleTypographyFontFamilyType": "google",
@@ -61,6 +67,12 @@
     "titleTypographyVariableFontWeight": 700,
     "titleTypographyFontWidth": 100,
     "titleTypographyFontSoftness": 0,
+    "titleTypographyBold": false,
+    "titleTypographyItalic": false,
+    "titleTypographyUnderline": false,
+    "titleTypographyStrike": false,
+    "titleTypographyUppercase": false,
+    "titleTypographyLowercase": false,
 
     "dateTypographyFontStyle": "",
     "dateTypographyFontFamilyType": "google",
@@ -72,6 +84,12 @@
     "dateTypographyVariableFontWeight": 700,
     "dateTypographyFontWidth": 100,
     "dateTypographyFontSoftness": 0,
+    "dateTypographyBold": false,
+    "dateTypographyItalic": false,
+    "dateTypographyUnderline": false,
+    "dateTypographyStrike": false,
+    "dateTypographyUppercase": false,
+    "dateTypographyLowercase": false,
 
     "previewTypographyFontStyle": "",
     "previewTypographyFontFamilyType": "google",
@@ -83,6 +101,12 @@
     "previewTypographyVariableFontWeight": 400,
     "previewTypographyFontWidth": 100,
     "previewTypographyFontSoftness": 0,
+    "previewTypographyBold": false,
+    "previewTypographyItalic": false,
+    "previewTypographyUnderline": false,
+    "previewTypographyStrike": false,
+    "previewTypographyUppercase": false,
+    "previewTypographyLowercase": false,
 
     "metaLinksTypographyFontStyle": "",
     "metaLinksTypographyFontFamilyType": "google",
@@ -94,6 +118,12 @@
     "metaLinksTypographyVariableFontWeight": 400,
     "metaLinksTypographyFontWidth": 100,
     "metaLinksTypographyFontSoftness": 0,
+    "metaLinksTypographyBold": false,
+    "metaLinksTypographyItalic": false,
+    "metaLinksTypographyUnderline": false,
+    "metaLinksTypographyStrike": false,
+    "metaLinksTypographyUppercase": false,
+    "metaLinksTypographyLowercase": false,
 
     "detailButtonTypographyFontStyle": "",
     "detailButtonTypographyFontFamilyType": "google",
@@ -105,6 +135,12 @@
     "detailButtonTypographyVariableFontWeight": 400,
     "detailButtonTypographyFontWidth": 100,
     "detailButtonTypographyFontSoftness": 0,
+    "detailButtonTypographyBold": false,
+    "detailButtonTypographyItalic": false,
+    "detailButtonTypographyUnderline": false,
+    "detailButtonTypographyStrike": false,
+    "detailButtonTypographyUppercase": false,
+    "detailButtonTypographyLowercase": false,
 
     "subscribeEventButtonTypographyFontStyle": "button",
     "subscribeEventButtonTypographyFontFamilyType": "google",
@@ -255,6 +291,15 @@
     "mediaBorderBottomRightRadiusSuffix": "px",
     "mediaBorderBottomLeftRadiusSuffix": "px",
 
+    "buttonsBorderRadiusType": "custom",
+    "buttonsBorderRadius": 3,
+    "buttonsBorderRadiusSuffix": "px",
+
+    "buttonsBorderTopLeftRadius": 3,
+    "buttonsBorderTopRightRadius": 3,
+    "buttonsBorderBottomRightRadius": 3,
+    "buttonsBorderBottomLeftRadius": 3,
+
     "detailButtonBgColorType": "solid",
     "detailButtonBgColorHex": "#818a91",
     "detailButtonBgColorOpacity": 1,
@@ -269,6 +314,16 @@
     "detailButtonGradientActivePointer": "finishPointer",
     "detailButtonGradientLinearDegree": 45,
     "detailButtonGradientRadialDegree": 0,
+
+    "detailButtonFillType": "filled",
+
+    "detailButtonSize": "custom",
+
+    "detailButtonPaddingTB": 12,
+    "detailButtonPaddingRL": 24,
+
+    "detailButtonPaddingTBSuffix": "px",
+    "detailButtonPaddingRLSuffix": "px",
 
     "detailButtonBorderStyle": "solid",
     "detailButtonBorderColorHex": "#000000",
@@ -291,6 +346,16 @@
     "detailButtonBoxShadowVertical": 2,
     "detailButtonBoxShadowHorizontal": 2,
 
+    "subscribeEventButtonFillType": "filled",
+
+    "subscribeEventButtonSize": "custom",
+
+    "subscribeEventButtonPaddingTB": 12,
+    "subscribeEventButtonPaddingRL": 24,
+
+    "subscribeEventButtonPaddingTBSuffix": "px",
+    "subscribeEventButtonPaddingRLSuffix": "px",
+
     "subscribeEventButtonColorHex": "#ffffff",
     "subscribeEventButtonColorOpacity": 1,
     "subscribeEventButtonColorPalette": "color8",
@@ -298,6 +363,7 @@
     "subscribeEventButtonBgColorType": "solid",
     "subscribeEventButtonBgColorHex": "#ffffff",
     "subscribeEventButtonBgColorOpacity": 1,
+    "hoverSubscribeEventButtonBgColorOpacity": 0.8,
     "subscribeEventButtonBgColorPalette": "color3",
 
     "subscribeEventButtonGradientColorHex": "#ffffff",
@@ -381,6 +447,9 @@
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
+
+    "buttonsHoverTransition": 50,
+    "buttonsHoverTransitionSuffix": "",
 
     "maskShape": "none",
     "maskSize": "cover",

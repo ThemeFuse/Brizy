@@ -1,11 +1,12 @@
 import classNames from "classnames";
 import React, { ReactElement } from "react";
 import {
-  Tooltip,
-  Props as TooltipProps
+  Props as TooltipProps,
+  Tooltip
 } from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
-import { HelperPlacement } from "visual/utils/options/attributes";
+import { HelperPlacement } from "visual/types/attributes";
+import { Str } from "@brizy/readers";
 
 export interface Props {
   label?: string;
@@ -31,9 +32,9 @@ export const OptionLabel = ({
         <EditorIcon className={"brz-ed-option__label__icon"} icon={icon} />
       ) : null}
       {label ? (
-        <span title={label} className={labelClassName}>
+        <span className={labelClassName}>
           {/*Prevent CSS from braking words on hyphen character*/}
-          {label?.replace("-", "\u2011")}
+          {Str.is(label) ? label?.replace("-", "\u2011") : label}
         </span>
       ) : null}
       {helper && (

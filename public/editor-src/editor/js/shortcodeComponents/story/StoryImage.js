@@ -1,7 +1,8 @@
 import { t } from "visual/utils/i18n";
+import { SizeType } from "visual/global/Config/types/configs/common";
 
 export default {
-  id: "image",
+  id: "storyImage",
   title: t("Image"),
   icon: "nc-img",
   resolve: {
@@ -12,7 +13,8 @@ export default {
         {
           type: "Image",
           value: {
-            _styles: ["story-image"]
+            _styles: ["story-image"],
+            sizeType: SizeType.original
           }
         }
       ]

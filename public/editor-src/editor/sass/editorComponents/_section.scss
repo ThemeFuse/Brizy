@@ -5,6 +5,14 @@
   padding: 0;
   overflow: visible;
 
+  .brz-link-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
   &__content {
     position: relative;
     flex-direction: column;
@@ -32,13 +40,6 @@
     }
   }
 
-  .brz-slick-slider {
-    display: none;
-  }
-  .brz-slick-slider.slick-initialized {
-    display: block;
-  }
-
   // sometime have problems with paddings per slide
   > .brz-slick-slider {
     > .slick-list > .slick-track > .slick-slide {
@@ -56,7 +57,7 @@
   > .brz-slick-slider:not(.slick-initialized) {
     overflow: hidden;
 
-    > .brz-section__content:not(:first-child) {
+    > div:not(:first-child) {
       display: none;
     }
   }
@@ -84,10 +85,14 @@
     &-opened {
       transform: translate3d(0, 0, 0);
       opacity: 1;
-      transition: transform 0.2s linear, opacity 0.2s linear;
+      transition:
+        transform 0.2s linear,
+        opacity 0.2s linear;
     }
     &-closed {
-      transition: transform 0.2s linear, opacity 0.2s linear;
+      transition:
+        transform 0.2s linear,
+        opacity 0.2s linear;
       pointer-events: none;
     }
   }
@@ -266,6 +271,10 @@
     .brz-embed-code,
     .brz-rich-text a {
       pointer-events: initial;
+    }
+
+    .brz-embed-code {
+      font-size: initial;
     }
 
     // before initialized slider

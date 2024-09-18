@@ -37,11 +37,15 @@ describe("Testing cssStyleBoxShadow that should return CSS for box-shadow", () =
   };
 
   test("Empty, should return box-shadow: none;", () => {
-    expect(cssStyleBoxShadow({ meta: { isEmpty: true }, value })).toBe("");
+    expect(cssStyleBoxShadow({ meta: { isEmpty: true }, value })).toBe(
+      "box-shadow: none;"
+    );
   });
 
   test("Disabled, should return box-shadow: none;", () => {
-    expect(cssStyleBoxShadow({ meta: { isDisabled: true }, value })).toBe("");
+    expect(cssStyleBoxShadow({ meta: { isDisabled: true }, value })).toBe(
+      "box-shadow: none;"
+    );
   });
 
   test("Inset, should return inset box-shadow", () => {

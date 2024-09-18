@@ -1,42 +1,16 @@
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import {
-  getColorPaletteColor,
-  getColorPaletteColors,
-  hexToRgba,
-  makeRichTextColorPaletteCSS
-} from "visual/utils/color";
+import { hexToRgba } from "visual/utils/color";
 import { addFilter, applyFilter } from "visual/utils/filters";
-import {
-  getFontById,
-  getFontStyle,
-  getFontStyles,
-  getUsedFonts,
-  getUsedFontsDetails,
-  getWeight,
-  getWeightChoices,
-  makeSubsetGoogleFontsUrl,
-  weightTypes
-} from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory, setIds } from "visual/utils/models";
+import { isPopup, isStory } from "visual/utils/models";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import {
-  defaultValueKey,
-  defaultValueValue,
-  mobileSyncOnChange,
-  onChangeTypography,
-  onChangeTypographyMobile,
-  tabletSyncOnChange
-} from "visual/utils/onChange";
-import {
-  getDynamicContentByPlaceholder,
-  getDynamicContentChoices,
   getDynamicContentOption,
-  getOptionColorHexByPalette,
-  getShapes
+  getOptionColorHexByPalette
 } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkPopup } from "visual/utils/toolbar";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 global.Brizy = {
   config: Config,
@@ -48,43 +22,20 @@ global.Brizy = {
       NORMAL,
       HOVER
     },
+    isBackgroundPointerEnabled,
 
-    setIds,
     isPopup,
     isStory,
 
-    getDynamicContentChoices,
     getDynamicContentOption,
-    getDynamicContentByPlaceholder,
-    getShapes,
 
     getOptionColorHexByPalette,
     hexToRgba,
-    getColorPaletteColors,
-    getColorPaletteColor,
-    makeRichTextColorPaletteCSS,
-
-    getFontById,
-    getUsedFonts,
-    getUsedFontsDetails,
-    getFontStyles,
-    getFontStyle,
-    weightTypes,
-    getWeight,
-    getWeightChoices,
-    makeSubsetGoogleFontsUrl,
 
     defaultValueValue,
     defaultValueKey,
-    tabletSyncOnChange,
-    mobileSyncOnChange,
-    onChangeTypography,
-    onChangeTypographyMobile,
     DCTypes,
     NORMAL,
     HOVER
-  },
-  toolbar: {
-    toolbarLinkPopup
   }
 };

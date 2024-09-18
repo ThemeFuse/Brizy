@@ -58,7 +58,7 @@
     color: $popup__fonts__item__title-color;
   }
 
-  &__delete {
+  &__action {
     position: absolute;
     top: -7px;
     right: -7px;
@@ -68,7 +68,7 @@
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
 
-  &__item:hover .brz-ed-popup-fonts__delete {
+  &__item:hover .brz-ed-popup-fonts__action {
     opacity: 1;
     transform: scale(1);
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;

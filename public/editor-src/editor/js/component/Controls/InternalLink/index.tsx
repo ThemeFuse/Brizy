@@ -1,16 +1,16 @@
 import classNames from "classnames";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import { t } from "visual/utils/i18n";
 import { InternalLinkValue } from "./Components/InternalLinkValue";
 import { SelectDropdown } from "./Components/SelectDropdown";
 import { SelectItem, SelectItemNoResults } from "./Components/SelectItem";
-import { Props, Status } from "./types";
-import { isValuePopulated, trimTitle } from "./utils";
 import { SourceSelect } from "./Components/SourceSelect";
+import { Choice, Props, Status } from "./types";
+import { isValuePopulated, trimTitle } from "./utils";
 
-export const Control: React.FC<Props> = ({
+export const Control = ({
   className,
   value,
   placeholder,
@@ -26,7 +26,7 @@ export const Control: React.FC<Props> = ({
   onSearch,
   onChange,
   onSourceChange
-}) => {
+}: Props): ReactElement => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const inputValueClassName = classNames(
@@ -38,6 +38,14 @@ export const Control: React.FC<Props> = ({
 
   const _value = trimTitle(value?.title || placeholder || t("Type name"));
 
+  const handleClickItem = useCallback(
+    (item: Choice): void => {
+      onChange(item);
+      setIsOpen(false);
+    },
+    [onChange]
+  );
+
   const selectItems =
     status === Status.NO_RESULT ? (
       <SelectItemNoResults />
@@ -47,7 +55,7 @@ export const Control: React.FC<Props> = ({
           <SelectItem
             key={index}
             title={item.title}
-            onClick={(): void => onChange(item)}
+            onClick={() => handleClickItem(item)}
           />
         ))}
       </ul>

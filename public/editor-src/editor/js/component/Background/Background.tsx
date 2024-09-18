@@ -3,13 +3,20 @@ import React, {
   CSSProperties,
   Component,
   ReactElement,
-  RefObject
+  RefObject,
+  ReactNode
 } from "react";
 import ResizeAware from "react-resize-aware";
 import UIEvents from "visual/global/UIEvents";
+import { fromRecord as readImageItem } from "visual/utils/options/Gallery/utils";
+import { read as readJson } from "visual/utils/reader/json";
+import { isT } from "visual/utils/value";
+import type { Transition } from "./type";
+import { KenEffect } from "./type";
 import Image from "./types/Image";
 import Map from "./types/Map";
 import Shape from "./types/Shape";
+import Slideshow from "./types/Slideshow";
 import Video from "./types/Video";
 
 type Props = {
@@ -31,6 +38,13 @@ type Props = {
   shapeTop?: string;
   shapeBottom?: string;
   style?: CSSProperties;
+  slideshow?: string;
+  slideshowLoop?: string;
+  slideshowDuration?: number;
+  slideshowTransitionType?: Transition;
+  slideshowTransition?: number;
+  kenBurnsEffect?: KenEffect;
+  children: ReactNode;
 };
 
 type NeedMedia = {
@@ -47,7 +61,8 @@ const needRenderMedia = (data: NeedMedia): boolean =>
     "shapeBottom",
     "border",
     "boxShadow",
-    "opacity"
+    "opacity",
+    "slideshow"
   ].some((k: string) => data[k]);
 
 class Background extends Component<Props> {
@@ -86,11 +101,23 @@ class Background extends Component<Props> {
       shapeTop,
       shapeBottom,
       style,
+      slideshow,
+      slideshowLoop,
+      slideshowDuration,
+      slideshowTransitionType,
+      slideshowTransition,
+      kenBurnsEffect,
       children
     } = this.props;
     const needsResizeDetection = IS_EDITOR && (video || parallax);
 
     const videoSource = video || customVideo;
+
+    const parsedImages = readJson(slideshow);
+    const images = Array.isArray(parsedImages)
+      ? parsedImages.map(readImageItem).filter(isT)
+      : [];
+
     return (
       <>
         {needRenderMedia(this.props) && (
@@ -129,6 +156,16 @@ class Background extends Component<Props> {
             {opacity && <div className="brz-bg-color" />}
             {(shapeTop || shapeBottom) && (
               <Shape shapeTop={shapeTop} shapeBottom={shapeBottom} />
+            )}
+            {slideshow && (
+              <Slideshow
+                images={images}
+                slideshowLoop={slideshowLoop}
+                slideshowTransitionType={slideshowTransitionType}
+                slideshowDuration={slideshowDuration}
+                slideshowTransition={slideshowTransition}
+                kenBurnsEffect={kenBurnsEffect}
+              />
             )}
           </div>
         )}

@@ -60,6 +60,12 @@
     "labelVariableFontWeight": 400,
     "labelFontWidth": 100,
     "labelFontSoftness": 0,
+    "labelBold": false,
+    "labelItalic": false,
+    "labelUnderline": false,
+    "labelStrike": false,
+    "labelUppercase": false,
+    "labelLowercase": false,
 
     "labelHorizontalAlign": "left",
 
@@ -107,6 +113,12 @@
     "variableFontWeight": 400,
     "fontWidth": 100,
     "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
 
     "colorHex": "#73777f",
     "colorOpacity": 0.7,
@@ -132,6 +144,12 @@
     "checkboxVariableFontWeight": 400,
     "checkboxFontWidth": 100,
     "checkboxFontSoftness": 0,
+    "checkboxBold": false,
+    "checkboxItalic": false,
+    "checkboxUnderline": false,
+    "checkboxStrike": false,
+    "checkboxUppercase": false,
+    "checkboxLowercase": false,
 
     "selectColorHex": "#73777f",
     "selectColorOpacity": 0.7,

@@ -1,7 +1,10 @@
-import { once } from "underscore";
-import Conf, { Config } from "visual/global/Config";
-import { FontStyle as _FontStyle } from "visual/types";
-import { FONT_INITIAL } from "visual/utils/fonts/utils";
+import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { FontStyle } from "visual/types";
+import {
+  FONT_INITIAL,
+  makeGlobalStylesTextTransform
+} from "visual/utils/fonts/utils";
 import { isExternalPopup } from "visual/utils/models/modes";
 import {
   DESKTOP,
@@ -9,22 +12,14 @@ import {
   ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
-import { uuid } from "visual/utils/uuid";
+import { uidByConfig } from "visual/utils/uuid";
 import { getFontById } from "./getFontById";
-
-interface FontStyle extends _FontStyle {
-  fontSizeSuffix: string;
-  tabletFontSizeSuffix: string;
-  mobileFontSizeSuffix: string;
-}
-
-const getUid = once(() => uuid(4));
 
 export const makeStyleCSSVar = (data: {
   id: string;
   key: string;
   device: ResponsiveMode;
-  config: Config;
+  config: ConfigCommon;
 }): string => {
   const { id, key, device, config } = data;
   const _device = device === "desktop" ? "" : device;
@@ -34,7 +29,7 @@ export const makeStyleCSSVar = (data: {
     // unique per compile this is because external popup
     // possible to be included in the brizy page and created
     // conflicts with the current page global style
-    const uuid = getUid();
+    const uuid = uidByConfig(config);
     return `--brz-${id}${uuid}${_device}${key}`.toLowerCase();
   }
 
@@ -43,7 +38,7 @@ export const makeStyleCSSVar = (data: {
 };
 
 export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
-  const config = Conf.getAll();
+  const config = Config.getAll();
 
   const vars = fontStyles
     .map((style) => {
@@ -57,6 +52,12 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         variableFontWeight = 400,
         fontWidth = 100,
         fontSoftness = 0,
+        bold = false,
+        italic = false,
+        underline = false,
+        strike = false,
+        uppercase = false,
+        lowercase = false,
         mobileFontSize,
         mobileFontSizeSuffix,
         mobileFontWeight,
@@ -209,8 +210,44 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
         device: DESKTOP
       });
 
+      const textTransformStyle = makeGlobalStylesTextTransform(
+        {
+          bold,
+          italic,
+          underline,
+          strike,
+          uppercase,
+          lowercase,
+          id,
+          fontWeight,
+          tabletFontWeight,
+          mobileFontWeight
+        },
+        config
+      );
+
       // "px" on letterSpacing is hardcoded because we don't have another suffix on letterSpacing
-      return `${fontFamilyKey}:${fontFamily};${fontSizeKey}:${_fontSize};${fontSizeSuffixKey}:${fontSizeSuffix};${fontWeightKey}:${fontWeight};${letterSpacingKey}:${letterSpacing}px;${lineHeightKey}:${lineHeight};${fontVariationKey}:${fontVariation};${tabletFontSizeKey}:${_tabletFontSize};${tabletFontWeightKey}:${tabletFontWeight};${tabletLetterSpacingKey}:${tabletLetterSpacing}px;${tabletLineHeightKey}:${tabletLineHeight};${tabletFontVariationKey}:${tabletFontVariation};${mobileFontSizeKey}:${_mobileFontSize};${mobileFontWeightKey}:${mobileFontWeight};${mobileLetterSpacingKey}:${mobileLetterSpacing}px;${mobileLineHeightKey}:${mobileLineHeight};${tabletFontVariationKey}:${tabletFontVariation};${mobileFontVariationKey}:${mobileFontVariation};${storyFontSizeKey}:${storyFontSize};`;
+      return `
+      ${fontFamilyKey}:${fontFamily};
+      ${fontSizeKey}:${_fontSize};
+      ${fontSizeSuffixKey}:${fontSizeSuffix};
+      ${fontWeightKey}:${fontWeight};
+      ${letterSpacingKey}:${letterSpacing}px;
+      ${lineHeightKey}:${lineHeight};
+      ${fontVariationKey}:${fontVariation};
+      ${tabletFontSizeKey}:${_tabletFontSize};
+      ${tabletFontWeightKey}:${tabletFontWeight};
+      ${tabletLetterSpacingKey}:${tabletLetterSpacing}px;
+      ${tabletLineHeightKey}:${tabletLineHeight};
+      ${tabletFontVariationKey}:${tabletFontVariation};
+      ${mobileFontSizeKey}:${_mobileFontSize};
+      ${mobileFontWeightKey}:${mobileFontWeight};
+      ${mobileLetterSpacingKey}:${mobileLetterSpacing}px;
+      ${mobileLineHeightKey}:${mobileLineHeight};
+      ${mobileFontVariationKey}:${mobileFontVariation};
+      ${storyFontSizeKey}:${storyFontSize};
+      ${textTransformStyle}
+      `;
     })
     .join("");
 

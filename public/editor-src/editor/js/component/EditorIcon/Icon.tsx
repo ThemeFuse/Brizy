@@ -1,3 +1,4 @@
+import { PayPal } from "@brizy/builder-icons/src/Icons/PayPal";
 import { ShopifyList } from "@brizy/builder-icons/src/Icons/ShopifyList";
 import { ShopifyMeta } from "@brizy/builder-icons/src/Icons/ShopifyMeta";
 import { ShopifyMetafield } from "@brizy/builder-icons/src/Icons/ShopifyMetafield";
@@ -12,6 +13,8 @@ import { ShopifyVariantStyleImage } from "@brizy/builder-icons/src/Icons/Shopify
 import { ShopifyVariantStyleRadio } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleRadio";
 import { ShopifyVariantStyleSelect } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleSelect";
 import { ShopifyVendor } from "@brizy/builder-icons/src/Icons/ShopifyVendor";
+import { MinistryBrandsArticleDetail } from "@brizy/ui-icons/es/icons/MinistryBrandsArticleDetail";
+import { MinistryBrandsArticleLayout } from "@brizy/ui-icons/es/icons/MinistryBrandsArticleLayout";
 import { MinistryBrandsEventCalendar } from "@brizy/ui-icons/es/icons/MinistryBrandsEventCalendar";
 import { MinistryBrandsEventDetail } from "@brizy/ui-icons/es/icons/MinistryBrandsEventDetail";
 import { MinistryBrandsEventFeatured } from "@brizy/ui-icons/es/icons/MinistryBrandsEventFeatured";
@@ -26,6 +29,7 @@ import { MinistryBrandsSermonDetail } from "@brizy/ui-icons/es/icons/MinistryBra
 import { MinistryBrandsSermonFeatured } from "@brizy/ui-icons/es/icons/MinistryBrandsSermonFeatured";
 import { MinistryBrandsSermonLayout } from "@brizy/ui-icons/es/icons/MinistryBrandsSermonLayout";
 import { MinistryBrandsSermonList } from "@brizy/ui-icons/es/icons/MinistryBrandsSermonList";
+import { MinistryBrandsStaffList } from "@brizy/ui-icons/es/icons/MinistryBrandsStaffList";
 import { StarShapes } from "@brizy/ui-icons/es/icons/StarShapes";
 import React, { CSSProperties, MouseEvent } from "react";
 
@@ -44,6 +48,9 @@ const Icons = {
   "t2-group-featured": MinistryBrandsGroupFeatured,
   "t2-group-slider": MinistryBrandsGroupSlider,
   "t2-group-layout": MinistryBrandsGroupLayout,
+  "t2-article-detail": MinistryBrandsArticleDetail,
+  "t2-article-list": MinistryBrandsArticleLayout,
+  "t2-staff-detail": MinistryBrandsStaffList,
   "t2-shopify-price-style1": ShopifyPriceStyle1,
   "t2-shopify-price-style2": ShopifyPriceStyle2,
   "t2-shopify-price-style3": ShopifyPriceStyle3,
@@ -58,7 +65,8 @@ const Icons = {
   "t2-shopify-variant-style-select": ShopifyVariantStyleSelect,
   "t2-shopify-variant-style-radio": ShopifyVariantStyleRadio,
   "t2-shopify-variant-style-image": ShopifyVariantStyleImage,
-  "t2-star-shapes": StarShapes
+  "t2-star-shapes": StarShapes,
+  "t2-paypal": PayPal
 };
 
 export type IconNames = keyof typeof Icons;

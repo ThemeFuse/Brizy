@@ -1,7 +1,6 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -21,6 +20,7 @@ import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getInstanceParentId } from "visual/utils/toolbar";
 import { Value } from "./toolbarClose";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 // @ts-expect-error need to change to new options
 export const getItems: GetItems<Value> = ({
@@ -47,6 +47,8 @@ export const getItems: GetItems<Value> = ({
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedPopups?.create !== "function";
+  const disabledGlobalBlock =
+    typeof config.api?.globalPopups?.create !== "function";
   const popupSettings = config.ui?.popupSettings ?? {};
   const IS_GLOBAL_POPUP = isPopup(config);
 
@@ -83,7 +85,8 @@ export const getItems: GetItems<Value> = ({
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
 
-  const isExternalImage = dvv("bgImageType") === ImageType.External;
+  const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
+  const isPointerEnabled = isBackgroundPointerEnabled(config, "sectionPopup2");
 
   return [
     {
@@ -110,7 +113,7 @@ export const getItems: GetItems<Value> = ({
                   label: t("Make it Global"),
                   type: "globalBlock",
                   devices: "desktop",
-                  disabled: isCloud(config) && isShopify(config),
+                  disabled: disabledGlobalBlock,
                   config: {
                     _id: component.getId(),
                     parentId: getInstanceParentId(
@@ -129,7 +132,7 @@ export const getItems: GetItems<Value> = ({
                 },
                 {
                   id: "popupConditions",
-                  type: "legacy-popupConditions",
+                  type: "popupCondition",
                   disabled: !enableDisplayCondition,
                   position: 150
                 }
@@ -197,7 +200,7 @@ export const getItems: GetItems<Value> = ({
                   population: imageDynamicContentChoices,
                   config: {
                     disableSizes: isExternalImage,
-                    pointer: !isExternalImage
+                    pointer: !isExternalImage && isPointerEnabled
                   }
                 }
               ]

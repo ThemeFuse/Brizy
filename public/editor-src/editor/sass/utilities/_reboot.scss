@@ -16,15 +16,21 @@
 // 5. Setting @viewport causes scrollbars to overlap content in IE11 and Edge, so
 //    we force a non-overlapping, non-auto-hiding scrollbar to counteract.
 // 6. Change the default tap highlight to be completely transparent in iOS.
+// 7. Remove the margin in all browsers.
 @at-root {
-  html {
-    box-sizing: border-box; // 1
-    scroll-behavior: auto;
-  }
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box; // 1
+  body {
+    &.brz,
+    .brz {
+      box-sizing: border-box; // 1
+      scroll-behavior: auto;
+      margin: 0; // 7
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box; // 1
+      }
+    }
   }
 }
 
@@ -43,15 +49,11 @@
 }
 
 // Body
-//
-// 1. Remove the margin in all browsers.
-// 2. As a best practice, apply a default `background-color`.
+// 1. As a best practice, apply a default `background-color`.
 @at-root {
   body {
-    margin: 0; // 1
-
     &.brz-ed {
-      background-color: $body-bg; // 2
+      background-color: $body-bg; // 1
     }
 
     // For Wordpress themes

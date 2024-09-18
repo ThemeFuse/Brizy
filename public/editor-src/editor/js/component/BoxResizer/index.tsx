@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
 import Config from "visual/global/Config";
@@ -28,29 +28,28 @@ type Props = {
 
 let startValue: RM | null = null;
 
-const BoxResizer: React.FC<Props> = ({
+const BoxResizer = ({
   value,
   onChange,
   meta = {},
   ...props
-}) => {
+}: Props): ReactElement => {
   const restrictions = transformRestrictions(props.restrictions, value);
   const horizontalAlign = transformAlign(meta, "horizontalAlign");
   const verticalAlign =
     meta.column && transformAlign(meta.column as Meta, "verticalAlign");
-  const resizerV: RM = transformValue(value);
 
   // we don't just send value because of responsive
   // when we change device mode, editor doesn't rerender
   // and old props were using
   const getValue = useCallback((): RM => {
-    let transformedValue = transformValue(resizerV);
+    let transformedValue = transformValue(value);
     if (isStory(Config.getAll())) {
       transformedValue = resizerTransformStory(transformedValue, value);
     }
 
     return transformedValue;
-  }, [resizerV, value]);
+  }, [value]);
 
   // add useCallback hook
   const handleStart = (): void => {

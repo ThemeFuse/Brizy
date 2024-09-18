@@ -9,11 +9,26 @@ class Brizy_Admin_Rules_Manager {
 	static function getCurrentPageGroupAndType() {
 		global $wp_query;
 
-		if ( ! isset( $wp_query ) || is_admin() ) {
-			return null;
+		static $ruleMatches = [];
+
+		if(count($ruleMatches))
+			return $ruleMatches;
+
+		if ( is_admin() ) {
+			$postID  = isset( $_GET['post'] ) ? $_GET['post'] : null;
+			$action  = isset( $_GET['action'] ) ? $_GET['action'] : null;
+			$pagenow = isset( $GLOBALS['pagenow'] ) ? $GLOBALS['pagenow'] : null;
+
+			if ( ! empty( $postID ) && ! empty( $action ) && $action === 'in-front-editor' && ! empty( $pagenow ) && $pagenow === 'post.php' ) {
+				$ruleMatches[] = [
+					'applyFor'     => get_post_type( $postID ) === Brizy_Admin_Templates::CP_TEMPLATE ? Brizy_Admin_Rule::BRIZY_TEMPLATE : Brizy_Admin_Rule::POSTS,
+					'entityType'   => get_post_type( $postID ),
+					'entityValues' => [ $postID ],
+				];
+			}
+			return $ruleMatches;
 		}
 
-		$ruleMatches = [];
 
 		$defaultRule = [ 'applyFor' => Brizy_Admin_Rule::TEMPLATE, 'entityType' => null, 'entityValues' => [] ];
 
@@ -48,11 +63,11 @@ class Brizy_Admin_Rules_Manager {
 			$rule['entityType'] = 'shop_page';
 			$ruleMatches[]      = $rule;
 
-			$rule               = $defaultRule;
-			$rule['applyFor']   = Brizy_Admin_Rule::POSTS;
-			$rule['entityType'] = 'page';
+			$rule                   = $defaultRule;
+			$rule['applyFor']       = Brizy_Admin_Rule::POSTS;
+			$rule['entityType']     = 'page';
 			$rule['entityValues'][] = wc_get_page_id( 'shop' );
-			$ruleMatches[]      = $rule;
+			$ruleMatches[]          = $rule;
 
 		}
 
@@ -134,7 +149,7 @@ class Brizy_Admin_Rules_Manager {
 		}
 
 		$object = get_queried_object();
-		if ( ( $object instanceof WP_Post  ) && $object ) {
+		if ( ( $object instanceof WP_Post ) && $object ) {
 			$rule                   = $defaultRule;
 			$rule['applyFor']       = Brizy_Admin_Rule::POSTS;
 			$rule['entityType']     = $object->post_type;
@@ -150,17 +165,16 @@ class Brizy_Admin_Rules_Manager {
 //			$ruleMatches[]          = $rule;
 //		}
 
-        return $ruleMatches;
-    }
+		return $ruleMatches;
+	}
 
-    /**
-     * @return array|null
-     */
-    static function getCurrentPageGroupAndTypeForPopoup()
-    {
+	/**
+	 * @return array|null
+	 */
+	static function getCurrentPageGroupAndTypeForPopoup() {
 		return self::getCurrentPageGroupAndType();
 
-        global $wp_query;
+		global $wp_query;
 
 		if ( ! isset( $wp_query ) || is_admin() ) {
 			return null;
@@ -211,6 +225,21 @@ class Brizy_Admin_Rules_Manager {
 	 *
 	 * @return mixed
 	 */
+	static function sortRulesByWeight( $rules, $context ) {
+		$ruleManager = new Brizy_Admin_Rules_Manager();
+		// sort templates by rule set weight
+		usort( $rules, function ( $t1, $t2 ) use ( $ruleManager, $context ) {
+			$rule_weight_t1 = $t1->getRuleWeight( $context );
+			$rule_weight_t2 = $t2->getRuleWeight( $context );
+			if ( $rule_weight_t1 == $rule_weight_t2 ) {
+				return 0;
+			}
+
+			return ( $rule_weight_t1 < $rule_weight_t2 ) ? 1 : - 1;
+		} );
+
+		return $rules;
+	}
 	static function sortEntitiesByRuleWeight( $entities, $context ) {
 		$ruleManager = new Brizy_Admin_Rules_Manager();
 		// sort templates by rule set weight

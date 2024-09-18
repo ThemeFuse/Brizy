@@ -1,8 +1,10 @@
-import React, { FC } from "react";
+import React, { ReactElement } from "react";
 import { Switch as Control } from "visual/component/Controls/Switch";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/utils/options/attributes";
+import {
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
+import { WithClassName, WithConfig } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
 export type Config = {
@@ -14,13 +16,13 @@ export type Props = OptionProps<SimpleValue<Literal>> &
   WithConfig<Config> &
   WithClassName;
 
-export const Switch: FC<Props> = ({
+export const Switch = ({
   onChange,
   config,
   className,
   value: { value },
   label
-}) => {
+}: Props): ReactElement => {
   const on = config?.on ?? "on";
   const off = config?.off ?? "off";
   return (

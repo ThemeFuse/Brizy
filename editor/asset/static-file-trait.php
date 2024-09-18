@@ -78,35 +78,168 @@ trait Brizy_Editor_Asset_StaticFileTrait
         return true;
     }
 
-    protected function create_attachment($madia_name, $absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
+    protected function store_content_in_file($content, $asset_path, $overwrite = false)
     {
+        if (file_exists($asset_path) && !$overwrite) {
+            return true;
+        }
+
+        try {
+            // check destination dir
+            $dir_path = dirname($asset_path);
+
+            if (!file_exists($dir_path)) {
+                if (!file_exists($dir_path) && !mkdir($dir_path, 0755, true) && !is_dir($dir_path)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir_path));
+                }
+            }
+
+            if ($content !== false) {
+                file_put_contents($asset_path, $content);
+            } else {
+                return false;
+            }
+
+        } catch (Exception $e) {
+            // clean up
+            if ($asset_path) {
+                @unlink($asset_path);
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function create_attachment(
+        $madia_name,
+        $absolute_asset_path,
+        $relative_asset_path,
+        $post_id = null,
+        $uid = null
+    ) {
         return self::createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id, $uid);
     }
 
-    public static function createMediaAttachment($absolute_asset_path, $relative_asset_path, $post_id = null, $uid = null)
+    public static function createSideLoadMediaAttachment(
+        $tempFileArray,
+        $assetPath,
+        $postId = null,
+        $uid = null
+    ) {
+        $id = media_handle_sideload($tempFileArray, $postId, "Attached image file");
+
+        if (!$id || is_wp_error($id)) {
+            Brizy_Logger::instance()->critical('Unable to handle image sideload', [$id]);
+            throw new Exception('Unable to handle image side load');
+        }
+
+        $filePath = get_attached_file($id, true);
+
+        if (wp_mkdir_p(dirname($assetPath)) === false) {
+            Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
+            throw new Exception('Unable to create folder for block images');
+        }
+
+        @copy($filePath, $assetPath);
+
+        unlink($filePath);
+
+        update_attached_file($id, $assetPath);
+
+        update_post_meta($id, 'brizy_attachment_uid', $uid ? $uid : md5($id.time()));
+        if (!function_exists('wp_generate_attachment_metadata')) {
+            include_once ABSPATH."/wp-admin/includes/image.php";
+        }
+        $attach_data = wp_generate_attachment_metadata($id, $assetPath);
+        wp_update_attachment_metadata($id, $attach_data);
+    }
+
+    public static function createSideLoadMedia($tempFileArray, $assetPath, $postId = null, $uid = null)
     {
+
+        $overrides = array('test_form' => false);
+        $post = get_post($postId);
+
+        $time = date("Y/m");
+        if ($post && substr($post->post_date, 0, 4) > 0) {
+            $time = $post->post_date;
+        }
+
+        if (wp_mkdir_p(dirname($assetPath)) === false) {
+            Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
+            throw new Exception('Unable to create folder for block images');
+        }
+
+        $uploadData = wp_handle_sideload($tempFileArray, $overrides, $time);
+
+        if (isset($uploadData['error'])) {
+            return new WP_Error('upload_error', $uploadData['error']);
+        }
+
+        @copy($uploadData['file'], $assetPath);
+
+        unlink($uploadData['file']);
+
+        return $assetPath;
+    }
+
+    public static function createSideLoadFile($basename, $content)
+    {
+        $filePath = tempnam(sys_get_temp_dir(), $basename);
+        $result = file_put_contents($filePath, $content);
+
+        if ($result === false) {
+            Brizy_Logger::instance()->error('Filed to write content', ['filePath' => $filePath]);
+            throw new Exception(__('Failed to write content', 'brizy'));
+        }
+
+        return array(
+            'name' => $basename,
+            'type' => Brizy_Public_AssetProxy::get_mime($filePath),
+            'tmp_name' => $filePath,
+            'error' => 0,
+            'size' => filesize($filePath),
+        );
+    }
+
+
+    public static function createMediaAttachment(
+        $absolute_asset_path,
+        $relative_asset_path,
+        $post_id = null,
+        $uid = null
+    ) {
         $filetype = wp_check_filetype($absolute_asset_path);
+
+        if (!$filetype['type']) {
+            return false;
+        }
 
         $upload_path = wp_upload_dir();
 
         $attachment = array(
-            'guid' => $upload_path['baseurl'] . "/" . $relative_asset_path,
+            'guid' => $upload_path['baseurl']."/".$relative_asset_path,
             'post_mime_type' => $filetype['type'],
             'post_title' => basename($absolute_asset_path),
             'post_content' => '',
-            'post_status' => 'inherit'
+            'post_status' => 'inherit',
         );
 
-        $attachment_id = wp_insert_attachment($attachment, $relative_asset_path, $post_id);
+        $attachment_id = self::getAttachmentByGuid($upload_path['baseurl']."/".$relative_asset_path);
+        if (!$attachment_id) {
+            $attachment_id = wp_insert_attachment($attachment, $relative_asset_path, $post_id);
+        }
 
-        if (is_wp_error($attachment_id) || $attachment_id === 0) {
+        if (is_wp_error($attachment_id) || $attachment_id === 0 || $attachment_id === null) {
             return false;
         }
 
-        update_post_meta($attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5($attachment_id . time()));
+        update_post_meta($attachment_id, 'brizy_attachment_uid', $uid ? $uid : md5($attachment_id.time()));
 
         if (!function_exists('wp_generate_attachment_metadata')) {
-            include_once ABSPATH . "/wp-admin/includes/image.php";
+            include_once ABSPATH."/wp-admin/includes/image.php";
         }
 
         $attach_data = wp_generate_attachment_metadata($attachment_id, $absolute_asset_path);
@@ -125,7 +258,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
 
             $defaultHeaders = array(
                 'Content-Type' => self::get_mime($filename, 1),
-                'Cache-Control' => 'max-age=600'
+                'Cache-Control' => 'max-age=600',
             );
 
             $content = file_get_contents($filename);
@@ -245,5 +378,21 @@ trait Brizy_Editor_Asset_StaticFileTrait
         } else {
             return 'application/octet-stream';
         }
+    }
+
+
+    private static function getAttachmentByGuid($media_name)
+    {
+        global $wpdb;
+
+        return $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT 
+						p.ID
+					FROM {$wpdb->posts} p
+					WHERE p.guid = %s AND p.post_type = 'attachment'",
+                $media_name
+            )
+        );
     }
 }
