@@ -25,7 +25,6 @@ trait Brizy_Editor_Asset_AttachmentAware
 						AND p.post_status = 'inherit'
 					GROUP BY p.ID
 					ORDER BY p.post_date DESC",
-                $media_name,
                 $media_name
             )
         );
