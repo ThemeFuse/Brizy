@@ -15,7 +15,7 @@ export const Thumbnails = ({
     {pageBlocksAssembled.map((block) => {
       const { _id } = block.value;
 
-      if (block.type === "GlobalBlock") {
+      if (block.type === "GlobalBlock" && globalBlocks[_id]?.data) {
         block = globalBlocks[_id].data;
       }
 

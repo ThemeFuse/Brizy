@@ -74,7 +74,14 @@ const createAnchor = (data: {
     return sectionValue.anchorName;
   }
 
-  return href;
+  // Use the key:href(UID of the block) to ensure the `random_id`
+  // remains consistent across sections.
+  const uidPlaceholder = makePlaceholder({
+    content: "{{ random_id }}",
+    attr: { key: href }
+  });
+
+  return `${uidPlaceholder}_${href}`;
 };
 
 export const getHref = (type: Type, _href: string): string => {

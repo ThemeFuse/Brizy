@@ -404,7 +404,7 @@ class SectionPopup2 extends EditorComponent {
     );
 
     const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });
-    const popupId = _popupId || `${this.getId()}-${uidPlaceholder}`;
+    const popupId = _popupId || `${this.getId()}_${uidPlaceholder}`;
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>

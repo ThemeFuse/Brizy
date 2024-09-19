@@ -1,13 +1,19 @@
 import { parseStrict } from "fp-utilities";
-import { checkValue } from "visual/utils/checkValue";
+import { checkValue, checkValue2 } from "visual/utils/checkValue";
 import { mPipe, pipe } from "visual/utils/fp";
 import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
 import { MValue, onNullish } from "visual/utils/value";
-import type { Direction, Transition, Value } from "./types";
-import { BackgroundValue, FlipboxType } from "./types";
+import {
+  BackgroundValue,
+  Direction,
+  FlipboxType,
+  Transition,
+  Trigger,
+  Value
+} from "./types";
 
 export const getHeight = (
   node: HTMLElement,
@@ -48,6 +54,8 @@ export const readTransition = (v: unknown): MValue<Transition> =>
 
 export const readDirection = (v: unknown): MValue<Direction> =>
   checkValue<Direction>(["left", "right", "up", "down"])(v);
+
+export const readTrigger = checkValue2(Trigger);
 
 const backgroundValueReader = (prefix: "back" | "") =>
   parseStrict<Value, BackgroundValue>({
