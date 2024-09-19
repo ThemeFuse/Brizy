@@ -1,3 +1,4 @@
+import { Obj, Str } from "@brizy/readers";
 import { request } from "api/index";
 import { makeUrl } from "api/utils";
 import { ChoicesSync } from "types/Choices";
@@ -10,8 +11,6 @@ import {
   EkklesiaResponse
 } from "types/Ekklesia";
 import { t } from "utils/i18n";
-import { isObject } from "utils/reader/object";
-import { read as readString } from "utils/reader/string";
 import { Literal } from "utils/types";
 
 export const requestFields = (url: string): Promise<EkklesiaResponse> => {
@@ -29,12 +28,12 @@ export const keysHaveSubkey = (
 export const getOption = (
   obj: Record<string, Literal> | undefined
 ): ChoicesSync =>
-  isObject(obj)
+  Obj.isObject(obj)
     ? [
         { title: t("None"), value: "" },
         ...Object.entries(obj).map(([key, value]) => {
           return {
-            title: readString(value) ?? "",
+            title: Str.read(value) ?? "",
             value: key
           };
         })
