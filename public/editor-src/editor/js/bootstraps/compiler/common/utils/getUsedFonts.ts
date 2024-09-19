@@ -95,7 +95,7 @@ export const getUsedFonts = (data: Data): UsedFonts => {
         _font.system.push(font as SystemFont);
         break;
       case "adobe":
-        _font.adobe.push(<AdobeFont>font);
+        _font.adobe.push(font as AdobeFont);
         break;
       default:
         _font.google.push(font as GoogleFont);

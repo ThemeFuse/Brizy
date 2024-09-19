@@ -187,7 +187,7 @@ class Form2Field extends EditorComponent<Value, Props> {
       content: "{{ random_id }}",
       attr: { key: name }
     });
-    const labelId = `${uuid()}-${uidPlaceholder}`;
+    const labelId = `${uuid()}_${uidPlaceholder}`;
 
     const classNameField = classnames(
       "brz-forms2__item",

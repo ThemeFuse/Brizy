@@ -117,10 +117,10 @@ export default function ($node: JQuery): void {
   };
 
   const getLastPosition = (): void => {
-    const position = window.location.hash;
+    const position = window.location.hash.replace("#", "");
 
     if (position) {
-      const target = document.querySelector(position);
+      const target = document.getElementById(position);
       if (target) {
         handleHashChange(new Event("hashchange"));
       }

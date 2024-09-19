@@ -522,7 +522,7 @@ export default class Menu extends EditorComponent {
       mobile: mobileCloseDrawerIcon || closeDrawerIcon
     });
     const id = this.getId();
-    const htmlId = `${id}-${makePlaceholder({ content: "{{ random_id }}", attr: { key: "menu" } })}`;
+    const htmlId = `${id}_${makePlaceholder({ content: "{{ random_id }}", attr: { key: "menu" } })}`;
     const hasMMenu = this.hasMMenu();
     const mMenuProps = hasMMenu
       ? {

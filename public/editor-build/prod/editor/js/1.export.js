@@ -2,7 +2,7 @@ exports.id = 1;
 exports.ids = [1];
 exports.modules = {
 
-/***/ 7179:
+/***/ 7180:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;

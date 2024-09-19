@@ -58,7 +58,7 @@ async function extractFromEditor(paths) {
     const fileString = fs.readFileSync(file, "utf8");
 
     if (fileString) {
-      for (const translation of extractTranslationsFromT(fileString)) {
+      for (const translation of extractTranslationsFromT(fileString, file)) {
         translations.add(translation);
       }
     } else {

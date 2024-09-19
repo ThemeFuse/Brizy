@@ -211,7 +211,7 @@ class SectionMegaMenu extends EditorComponent {
     );
 
     const id = getModelId(v) ?? this.getId();
-    const htmlId = `${id}-${makePlaceholder({ content: "{{ random_id }}" })}`;
+    const htmlId = `${id}_${makePlaceholder({ content: "{{ random_id }}" })}`;
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>

@@ -366,10 +366,13 @@ export default class Section extends EditorComponent<Value, Props> {
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
 
-    const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });
+    const uidPlaceholder = makePlaceholder({
+      content: "{{ random_id }}",
+      attr: { key: this.getId() }
+    });
     const blockName = cssID
       ? cssID
-      : anchorName || `${uidPlaceholder}-${this.getId()}`;
+      : anchorName || `${uidPlaceholder}_${this.getId()}`;
 
     const props = {
       ...parseCustomAttributes(customAttributes),

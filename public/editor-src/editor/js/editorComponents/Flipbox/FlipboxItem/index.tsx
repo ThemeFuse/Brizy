@@ -2,6 +2,7 @@ import React, { createRef, JSX } from "react";
 import Background from "visual/component/Background";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { Trigger } from "../types";
 import { Content } from "./Content";
 import defaultValue from "./defaultValue.json";
 import Items from "./Items";
@@ -68,9 +69,9 @@ class FlipboxItem extends EditorComponent<Value, Props> {
   }
 
   renderForView(): JSX.Element {
-    const { type } = this.props;
+    const { type, trigger } = this.props;
 
-    const isActive = type === "front";
+    const isActive = type === "front" && trigger === Trigger.Click;
 
     return this.renderFlipboxItem(isActive);
   }

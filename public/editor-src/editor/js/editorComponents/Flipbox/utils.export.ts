@@ -1,6 +1,5 @@
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import * as Str from "visual/utils/reader/string";
 import {
   ChangeFlipboxState,
   IncreaseFlipboxHeight,
@@ -10,18 +9,24 @@ import {
 import { getHeight } from "./utils";
 
 const animationClassName = "brz-flipbox-back-active";
-const activeClassName = "brz-flipbox-item--active";
+export const activeClassName = "brz-flipbox-item--active";
 const flipboxFrontSideClassName = "brz-flipbox-item-front";
 const flipboxBackSideClassName = "brz-flipbox-item-back";
 const flipboxWrapperClassName = "brz-flipbox-content";
 
-const toggleActive: ToggleActive = (node, currentState) => {
-  const itemFront = node.querySelector<HTMLDivElement>(
+export const getFrontItem = (node: HTMLElement): HTMLElement | null =>
+  node.querySelector<HTMLDivElement>(
     `:scope > .brz-flipbox-content > .${flipboxFrontSideClassName}`
   );
-  const itemBack = node.querySelector<HTMLDivElement>(
+
+const getBackItem = (node: HTMLElement): HTMLElement | null =>
+  node.querySelector<HTMLDivElement>(
     `:scope > .brz-flipbox-content > .${flipboxBackSideClassName}`
   );
+
+const toggleActive: ToggleActive = (node, currentState) => {
+  const itemFront = getFrontItem(node);
+  const itemBack = getBackItem(node);
 
   if (itemFront && itemBack) {
     switch (currentState) {
@@ -37,10 +42,12 @@ const toggleActive: ToggleActive = (node, currentState) => {
   }
 };
 
-export const changeFlipboxState: ChangeFlipboxState = (node, currentState) => {
+export const changeFlipboxState: ChangeFlipboxState = (
+  node,
+  currentState,
+  trigger
+) => {
   const device = getCurrentDevice();
-
-  const trigger = Str.read(node.getAttribute(makeAttr("trigger"))) ?? "hover";
   const _trigger = device === "desktop" ? trigger : "click";
 
   if (_trigger === "click") {

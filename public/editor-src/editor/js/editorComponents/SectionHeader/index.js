@@ -486,10 +486,13 @@ export default class SectionHeader extends EditorComponent {
       cssClass
     } = v;
 
-    const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });
+    const uidPlaceholder = makePlaceholder({
+      content: "{{ random_id }}",
+      attr: { key: this.getId() }
+    });
     const blockName = cssID
       ? cssID
-      : anchorName || `${uidPlaceholder}-${this.getId()}`;
+      : anchorName || `${uidPlaceholder}_${this.getId()}`;
 
     const content = (
       <Animation

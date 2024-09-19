@@ -1,4 +1,4 @@
-import { FlipboxType } from "visual/editorComponents/Flipbox/types";
+import { FlipboxType, Trigger } from "./index";
 
 export interface ClickEvent extends MouseEvent {
   fromFlipbox?: boolean;
@@ -11,7 +11,8 @@ export type ToggleActive = (
 
 export type ChangeFlipboxState = (
   item: HTMLDivElement,
-  currentState: FlipboxType
+  currentState: FlipboxType,
+  trigger: Trigger
 ) => FlipboxType;
 
 export type ResetFlipboxState = (item: HTMLDivElement) => void;

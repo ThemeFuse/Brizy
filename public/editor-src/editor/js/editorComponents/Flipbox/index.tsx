@@ -11,8 +11,8 @@ import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
 import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
-import Items from "./Items";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as Flipboxpatch from "./patch";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
@@ -22,8 +22,8 @@ import {
   Meta,
   Patch,
   Props,
-  Value,
-  State as _State
+  State as _State,
+  Value
 } from "./types";
 import { getHeight } from "./utils";
 
@@ -202,6 +202,7 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
         v,
         animationClassName,
         flipboxActive,
+        trigger,
         setNode: this.setNode,
         updateHeight: this.updateHeight
       }

@@ -1,10 +1,5 @@
 import React, { JSX, useCallback, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Description } from "./components/Description";
-import { Items } from "./components/Items";
-import { apiKeys, getDefaultValue } from "./utils";
-import { isAdobeConnectData } from "../types";
-import { adobeConnectReader } from "../utils";
 import { BaseIntegrationContext } from "visual/component/Prompts/common/GlobalApps/type";
 import { PromptView } from "visual/component/Prompts/common/PromptView";
 import Config from "visual/global/Config";
@@ -14,7 +9,12 @@ import { addAdobeFonts } from "visual/utils/api/common";
 import { getAdobeFonts } from "visual/utils/api/index.wp";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../../common/GlobalApps/Context";
+import { isAdobeConnectData } from "../types";
+import { adobeConnectReader } from "../utils";
+import { Description } from "./components/Description";
+import { Items } from "./components/Items";
 import { OnBeforeLoadProps, Typekit } from "./types";
+import { apiKeys, getDefaultValue } from "./utils";
 
 const AdobeConnect = (): JSX.Element => {
   const { app, onChangePrev, onChangeNext } = useContext(Context);
@@ -105,7 +105,7 @@ const AdobeConnect = (): JSX.Element => {
         <Description>
           <div>
             {t(
-              "Manage the fonts that will be imported here by adding or removing them to the kit, in your Adobe account."
+              'In your Adobe account, find "My Adobe Fonts" on the right hand side. Click the Web Projects tab, copy the Project ID and paste it here in the field below.'
             )}
           </div>
         </Description>
