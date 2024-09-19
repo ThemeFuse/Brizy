@@ -7,11 +7,8 @@ import {
   ComponentsMeta,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent/types";
-import {
-  BackgroundValue,
-  FlipboxType
-} from "visual/editorComponents/Flipbox/types";
 import { WithClassName } from "visual/types/attributes";
+import { BackgroundValue, FlipboxType, Trigger } from "../types";
 
 export interface Value extends ElementModel {
   value: {
@@ -24,10 +21,11 @@ export interface Props extends WithClassName {
   meta: ComponentsMeta;
   animationClassName: string;
   flipboxActive: string;
-  extendParentToolbar: (toolbarExtend: ToolbarExtend) => void;
   type: FlipboxType;
-  setNode: (type: FlipboxType, node: HTMLDivElement) => void;
+  trigger: Trigger;
   updateHeight: VoidFunction;
+  extendParentToolbar: (toolbarExtend: ToolbarExtend) => void;
+  setNode: (type: FlipboxType, node: HTMLDivElement) => void;
 }
 
 export interface Component extends ReactComponent {

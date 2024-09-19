@@ -22,10 +22,16 @@ export type Transition =
 
 export type Direction = "left" | "right" | "up" | "down";
 
+export enum Trigger {
+  Click = "click",
+  Hover = "hover"
+}
+
 export interface Value extends ElementModel {
   flipboxActive: FlipboxType;
   transition: Transition;
   direction: Direction;
+  trigger: Trigger;
 }
 
 export interface Props extends WithClassName {

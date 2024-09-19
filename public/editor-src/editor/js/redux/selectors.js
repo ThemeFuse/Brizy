@@ -472,10 +472,14 @@ export const pageBlocksAssembledRawSelector = createSelector(
     const newBlocks = blocks.filter((block) => {
       if (block.type === "GlobalBlock") {
         const { _id } = block.value;
+        const globalBlock = globalBlocks[_id];
 
-        if (globalBlocks[_id]?.data) {
-          return canUseCondition(globalBlocks[_id], page);
+        // If the data is missing, globalBlocks was deleted.
+        if (!globalBlock?.data) {
+          return false;
         }
+
+        return canUseCondition(globalBlock, page);
       }
 
       return true;

@@ -136,23 +136,24 @@ export const changeRichText = ($: cheerio.Root): void => {
   });
 
   // replace Image
-  $richText
-    .find(".brz-text-mask, .brz-population-mask")
-    .each(function (this: cheerio.Cheerio) {
-      const $this = $(this);
-      const src = $this.attr("data-image_src") ?? "";
-      const population = $this.attr("data-image_population");
-      const fileName = $this.attr("data-image_file_name") ?? "image";
+  $richText.find(".brz-text-mask, .brz-population-mask").each(function (
+    this: cheerio.Cheerio
+  ) {
+    const $this = $(this);
+    const src = $this.attr("data-image_src") ?? "";
+    const population = $this.attr("data-image_population");
+    const fileName = $this.attr("data-image_file_name") ?? "image";
 
-      const imgUrl = getImageUrl({
-        fileName,
-        uid: src,
-        sizeType: SizeType.custom
-      });
+    const imgUrl = getImageUrl({
+      fileName,
+      uid: src,
+      sizeType: SizeType.custom
+    });
 
-      // required some property
-      const css = $this.css();
-      const newCSS = Object.entries(css).reduce((acc, [property, value]) => {
+    // required some property
+    const css = $this.css();
+    const newCSS = Object.entries(css).reduce(
+      (acc, [property, value]) => {
         // cheeriojs have bug for background-image: url("someurl")
         // this is small fix for this case
         if (!property.includes("http")) {
@@ -160,30 +161,32 @@ export const changeRichText = ($: cheerio.Root): void => {
         }
 
         return acc;
-      }, {} as Record<string, string>);
+      },
+      {} as Record<string, string>
+    );
 
-      $this.removeAttr("style");
+    $this.removeAttr("style");
 
-      if (population) {
-        $this.css({
-          ...newCSS,
-          "background-image": `url('${imagePopulationUrl(population, {
-            ...defaultImagePopulation
-          })}')`
-        });
-      } else if (imgUrl)
-        $this.css({
-          ...newCSS,
-          "background-image": `url('${imgUrl}')`
-        });
+    if (population) {
+      $this.css({
+        ...newCSS,
+        "background-image": `url('${imagePopulationUrl(population, {
+          ...defaultImagePopulation
+        })}')`
+      });
+    } else if (imgUrl)
+      $this.css({
+        ...newCSS,
+        "background-image": `url('${imgUrl}')`
+      });
 
-      $this.removeAttr("data-image_src");
-      $this.removeAttr("data-image_width");
-      $this.removeAttr("data-image_height");
-      $this.removeAttr("data-image_extension");
-      $this.removeAttr("data-image_file_name");
-      $this.removeAttr("data-image_population");
-    });
+    $this.removeAttr("data-image_src");
+    $this.removeAttr("data-image_width");
+    $this.removeAttr("data-image_height");
+    $this.removeAttr("data-image_extension");
+    $this.removeAttr("data-image_file_name");
+    $this.removeAttr("data-image_population");
+  });
 };
 
 function getLinkContentByType(type: LinkType, href: string): string {
@@ -193,7 +196,16 @@ function getLinkContentByType(type: LinkType, href: string): string {
       const pageDataNoRefs = pageDataNoRefsSelector(getStore().getState());
       const pageBlocks: Array<Block> = pageDataNoRefs.items || [];
       const blockByHref = pageBlocks.find((block) => block.value._id === href);
-      const anchorName = (blockByHref && blockByHref.value.anchorName) || href;
+
+      // Use the key:href(UID of the block) to ensure the `random_id`
+      // remains consistent across sections.
+      const uidPlaceholder = makePlaceholder({
+        content: "{{ random_id }}",
+        attr: { key: href }
+      });
+      const anchorName =
+        (blockByHref && blockByHref.value.anchorName) ||
+        `${uidPlaceholder}_${href}`;
 
       return `#${anchorName}`;
     }

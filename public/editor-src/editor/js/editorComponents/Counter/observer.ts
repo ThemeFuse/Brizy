@@ -6,7 +6,7 @@ const counters: CounterData[] = [];
 const handleObserve = (entries: IntersectionObserverEntry[]): void => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      const target = <HTMLElement>entry.target;
+      const target = entry.target as HTMLElement;
 
       const node = counters.find(compareNodes(target));
       const index = counters.findIndex(compareNodes(target));
