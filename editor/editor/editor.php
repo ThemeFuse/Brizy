@@ -2224,6 +2224,8 @@ class Brizy_Editor_Editor_Editor
             'formHelpVideo' => '21',
         ];
 
+	    $editorHelpVideos['showIcon'] = true;
+
         return $editorHelpVideos;
     }
 }
