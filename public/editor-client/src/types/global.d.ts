@@ -200,6 +200,16 @@ export interface VISUAL_CONFIG {
     handler?: DCHandler;
   };
   //#endregion
+
+  //#region Urls
+  urls?: Record<string, string>;
+  //#endregion
+
+  //#region WP
+  wp?: {
+    page?: string;
+  };
+  //#endregion
 }
 
 declare global {

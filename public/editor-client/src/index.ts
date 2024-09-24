@@ -78,8 +78,14 @@ const api = {
 };
 
 if (window.__VISUAL_CONFIG__) {
+  const { wp, urls } = window.__VISUAL_CONFIG__;
+  const hasScreenshotUrl = !!(wp?.page && urls?.site);
+
   // API
-  window.__VISUAL_CONFIG__.api = merge(window.__VISUAL_CONFIG__.api, api);
+  window.__VISUAL_CONFIG__.api = merge(
+    window.__VISUAL_CONFIG__.api,
+    set(api, ["screenshots", "hasScreenshotUrl"], hasScreenshotUrl)
+  );
 
   // AutoSave
   window.__VISUAL_CONFIG__.onAutoSave = autoSave;
