@@ -3,17 +3,17 @@ import { ChoicesSync } from "../types/Choices";
 import { Response } from "../types/Response";
 import { t } from "../utils/i18n";
 
-export const getCollectionItemsIds = {
+export const getCollectionItems = {
   async handler(
     res: Response<ChoicesSync>,
     rej: Response<string>,
-    extra: { id: string }
+    extra: { id: string; extraChoices?: ChoicesSync }
   ) {
     try {
       const data = await getCollectionSourceItems(extra.id);
 
       const items = [
-        { title: t("None"), value: "" },
+        ...(extra?.extraChoices ?? []),
         ...data.posts.map(({ ID, title }: { ID: string; title: string }) => ({
           value: `${ID}`,
           title
