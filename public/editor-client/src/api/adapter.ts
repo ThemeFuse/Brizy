@@ -215,10 +215,14 @@ export type GetCollections = (
 
 //#region Page
 
-type APIPage = Omit<Page, "data" | "dataVersion" | "compiled"> & {
+type APIPage = Omit<
+  Page,
+  "data" | "dataVersion" | "compiled" | "dependencies"
+> & {
   data: string;
   dataVersion: string;
   compiled?: string;
+  dependencies?: string;
 };
 
 export const stringifyPage = (page: Page): APIPage => {
@@ -226,12 +230,16 @@ export const stringifyPage = (page: Page): APIPage => {
   const compiled = _compiled
     ? JSON.stringify({ ..._compiled, html: encode(_compiled.html) })
     : undefined;
+  const dependencies = page.dependencies
+    ? JSON.stringify(page.dependencies)
+    : undefined;
 
   return {
     ..._page,
     data: JSON.stringify(data),
     dataVersion: `${dataVersion}`,
-    compiled
+    compiled,
+    dependencies
   };
 };
 
@@ -249,6 +257,7 @@ interface APIGlobalBlock {
   title?: string;
   tags?: string;
   compiled?: string;
+  dependencies?: string;
 }
 
 export const stringifyGlobalBlock = (
@@ -266,6 +275,9 @@ export const stringifyGlobalBlock = (
         html: encode(globalBlock.compiled.html)
       })
     : undefined;
+  const dependencies = globalBlock.dependencies
+    ? JSON.stringify(globalBlock.dependencies)
+    : undefined;
 
   return {
     data,
@@ -273,6 +285,7 @@ export const stringifyGlobalBlock = (
     rules,
     position,
     compiled,
+    dependencies,
     title: globalBlock.title,
     tags: globalBlock.tags,
     uid: globalBlock.uid,
