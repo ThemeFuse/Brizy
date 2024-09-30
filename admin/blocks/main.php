@@ -49,7 +49,7 @@ class Brizy_Admin_Blocks_Main {
 		$is_view_page = Brizy_Public_Main::is_view_page( $post );
 		$compiler     = $post->get_compiler();
 		if ( $is_view_page ) {
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueueMatchedGlobalBlockAssets' ] );
+			add_action( 'brizy_preview_enqueue_post', [ $this, 'enqueueMatchedGlobalBlockAssets' ] );
 		}
 	}
 
@@ -114,12 +114,24 @@ class Brizy_Admin_Blocks_Main {
 	 * This will not include the block that are include by uid with {{ brizy_dc_global_block }} placeholder
 	 * @return void
 	 */
-	public function enqueueMatchedGlobalBlockAssets() {
+	public function enqueueMatchedGlobalBlockAssets( $id ) {
+		$manager = Brizy_Public_AssetEnqueueManager::_init();
+		if ( ! in_array( get_post_type( $id ), [ self::CP_GLOBAL, Brizy_Admin_Popups_Main::CP_POPUP ] ) ) {
+			$matching_brizy_blocks = $this->getMatchingBrizyBlocks( get_post($id) );
+			foreach ( $matching_brizy_blocks as $block ) {
+				if ( ! $manager->isPostEnqueued( $block->getWpPostId() ) ) {
+					$manager->enqueuePost( $block );
+				}
+			}
+		}
+
+		/*
 		$post                  = get_post( Brizy_Editor::get()->currentPostId() );
 		$matching_brizy_blocks = $this->getMatchingBrizyBlocks( $post );
 		foreach ( $matching_brizy_blocks as $block ) {
 			Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $block );
 		}
+		 */
 	}
 
 	static public function registerCustomPosts() {
@@ -172,8 +184,8 @@ class Brizy_Admin_Blocks_Main {
 		static $globalBLocks = null;
 		if ( $globalBLocks ) {
 			//return $globalBLocks;
-		}
-		$ruleMatches = [];
+
+		}$ruleMatches = [];
 		if ( ! $wpPost ) {
 			$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 			$wpPost      = get_post( $ruleMatches[0]['entityValues'][0] );
