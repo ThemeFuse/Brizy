@@ -224,6 +224,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$position     = stripslashes( $this->param( 'position' ) );
 			$status       = stripslashes( $this->param( 'status' ) );
 			$rulesData    = stripslashes( $this->param( 'rules' ) );
+			$dependencies    = stripslashes( $this->param( 'dependencies' ) );
 
 			if ( ! in_array( $status, [ 'publish', 'draft' ] ) ) {
 				$this->error( 400, "Invalid status" );
@@ -247,6 +248,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block->set_editor_data( $editorData );
 			$block->set_needs_compile( true );
 			$block->setHtml( $html );
+
+			if(is_array($dependencies) && count($dependencies)>0){
+			    $block->setDependencies($dependencies);
+			}
 
 			if ( $status == 'publish' && $compiledData ) {
 
@@ -314,6 +319,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			$compiledData = stripslashes( $this->param( 'compiled' ) );
 			$status       = stripslashes( $this->param( 'status' ) );
+			$dependencies       = json_decode(stripslashes( $this->param( 'dependencies' ) ));
 
 			if ( ! in_array( $status, [ 'publish', 'draft' ] ) ) {
 				$this->error( 400, "Invalid post type" );
@@ -372,6 +378,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 			if ( $this->param( 'tags' ) ) {
 				$block->setTags( stripslashes( $this->param( 'tags' ) ) );
+			}
+
+			if(is_array($dependencies)){
+			    $block->setDependencies($dependencies);
 			}
 
 			if(!current_user_can('edit_pages')) {
@@ -461,6 +471,10 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 				if ( isset( $this->param( 'title' )[ $i ] ) ) {
 					$block->setTitle( stripslashes( $this->param( 'title' )[ $i ] ) );
+				}
+
+				if(is_array($this->param( 'dependencies' )[ $i ]) && count($this->param( 'dependencies' )[ $i ])>0){
+			         $block->setDependencies($this->param( 'dependencies' )[ $i ]);
 				}
 
 
