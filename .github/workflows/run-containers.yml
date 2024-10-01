@@ -161,7 +161,7 @@ jobs:
           done
           docker exec "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" mysql -uroot -pnopassword \
               -e "DROP SCHEMA IF EXISTS ${{ steps.vars.outputs.DB_NAME }}; CREATE SCHEMA ${{ steps.vars.outputs.DB_NAME }};"
-          docker exec -i "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" sh -c 'exec mysql -uroot -pnopassword ${{ steps.vars.outputs.DB_NAME }}' < $GITHUB_WORKSPACE/bb/mysql/configure/brizy_localhost-2021_03_09_10_19_48-dump.sql
+          docker exec -i "${{ steps.vars.outputs.MYSQL_CONTAINER_NAME }}" sh -c 'exec mysql -uroot -pnopassword ${{ steps.vars.outputs.DB_NAME }}' < $GITHUB_WORKSPACE/bb/mysql/configure/brizy_localhost-2024_10_01-dump.sql
 
       - name: Build Editor image
         id: build-editor-image
