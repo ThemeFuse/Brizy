@@ -59,10 +59,11 @@ function blockScreenshotData(block: Thumbnail, options: Options): Data | null {
   const blockId = readStr(block.value?._id);
 
   if (blockId && block.type === "GlobalBlock") {
-    block = globalBlocksAssembledSelector(getStore().getState())[blockId];
+    const globalBlock = globalBlocksAssembledSelector(getStore().getState())[
+      blockId
+    ];
     block = {
-      // @ts-expect-error Need transform globalBlocksAssembledSelector to ts
-      ...block.data,
+      ...globalBlock.data,
       meta: block.meta
     };
   }

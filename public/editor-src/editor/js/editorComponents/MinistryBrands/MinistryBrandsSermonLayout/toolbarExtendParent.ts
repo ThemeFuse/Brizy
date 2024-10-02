@@ -5,6 +5,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
 import type { Props, Value } from "./types";
+import { additionalColorOptions } from "./utils/toolbarExtensions";
 
 export const getItems: GetItems<Value, Props> = (data) => {
   const { v, device } = data;
@@ -361,7 +362,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>(data),
+    ...toolbarParentColors<Value, Props>(data, additionalColorOptions),
     {
       id: "horizontalAlign",
       type: "toggle",

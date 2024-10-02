@@ -58,6 +58,7 @@ import {
   GlobalBlock,
   GlobalBlockNormal,
   GlobalBlockPopup,
+  Page,
   PageCommon,
   Palette,
   Project,
@@ -83,7 +84,7 @@ import {
 //#region Common
 
 interface CompileData {
-  page: PageCommon;
+  page: Page;
   project: Project;
   globalBlocks: Array<GlobalBlock>;
 }

@@ -884,6 +884,8 @@ class Brizy_Public_EditorBuild_Prod_Texts {
 			"Italian" => __("Italian", "brizy"),
 			"Italic" => __("Italic", "brizy"),
 			"Item" => __("Item", "brizy"),
+			"Item Background" => __("Item Background", "brizy"),
+			"Item Padding" => __("Item Padding", "brizy"),
 			"Items" => __("Items", "brizy"),
 			"Items Spacing" => __("Items Spacing", "brizy"),
 			"JackInTheBox" => __("JackInTheBox", "brizy"),

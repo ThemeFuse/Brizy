@@ -33,6 +33,10 @@ export type Block = {
   meta?: Screenshot;
 };
 
+interface Dependency {
+  uid: string;
+}
+
 export enum BlockTypeRule {
   include = 1,
   exclude = 2
@@ -104,6 +108,9 @@ export interface GlobalBlockBase {
   dataVersion: number;
   title?: string;
   tags?: string;
+
+  // Used for Internal Global Popup(GlobalBlock -> Button -> GlobalPopup)
+  dependencies: Array<Dependency>;
 }
 
 export interface ExtraFontData {
@@ -201,6 +208,7 @@ export interface DataCommon {
   };
   dataVersion: number;
   status: "draft" | "publish" | "future"; // The future status is used for scheduled pages .
+  dependencies: Array<Dependency>;
 }
 
 interface DataWithTitle extends DataCommon {

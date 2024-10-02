@@ -6,21 +6,11 @@ import {
   pageSelector,
   projectSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { ActionTypes, ReduxAction } from "../../actions2";
+
+import { ActionTypes } from "../../actions2";
 import { apiAutoSave, apiOnChange } from "./utils";
 import { PageCommon } from "visual/types";
-
-interface Data {
-  action: ReduxAction;
-  state: ReduxState;
-  apiHandler: (
-    promise: Promise<unknown>,
-    action: ReduxAction,
-    onSuccess: VoidFunction,
-    onError: VoidFunction
-  ) => void;
-}
+import { Data } from "./types";
 
 export function handleGlobalBlocks({ action, state }: Data): void {
   switch (action.type) {

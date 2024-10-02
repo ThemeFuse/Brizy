@@ -1,5 +1,5 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, PageCommon, Project } from "visual/types";
+import { GlobalBlock, Page, Project } from "visual/types";
 import { Asset } from "../common/transforms/assets";
 import { Output as CompilerOutput } from "./bootstrap/types";
 
@@ -8,11 +8,11 @@ import { Output as CompilerOutput } from "./bootstrap/types";
 export interface Data {
   config: ConfigCommon;
   project: Project;
-  page: PageCommon;
+  page: Page;
   globalBlocks?: Array<GlobalBlock>;
   needToCompile: {
     project?: Project;
-    page?: PageCommon;
+    page?: Page;
     globalBlocks?: Array<GlobalBlock>;
   };
 }

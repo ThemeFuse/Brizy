@@ -161,7 +161,8 @@ const pageCommon: PageCommon = {
         blockId: ""
       }
     ]
-  }
+  },
+  dependencies: []
 };
 
 const page: Page = pageCommon;
@@ -357,7 +358,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -377,7 +379,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "popup",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -397,7 +400,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -417,7 +421,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -437,7 +442,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -457,7 +463,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -477,7 +484,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -497,7 +505,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       { ...page, id: "2" },
       false
@@ -517,7 +526,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -537,7 +547,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -565,7 +576,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -592,7 +604,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -619,7 +632,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -650,7 +664,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -677,7 +692,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -704,7 +720,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -731,7 +748,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -758,7 +776,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -788,7 +807,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -815,7 +835,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       true
@@ -842,7 +863,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -869,7 +891,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -896,7 +919,8 @@ describe("testing WP getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       page,
       false
@@ -1031,7 +1055,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       false
@@ -1051,7 +1076,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "popup",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       true
@@ -1071,7 +1097,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       true
@@ -1091,7 +1118,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       true
@@ -1111,7 +1139,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       false
@@ -1131,7 +1160,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       false
@@ -1151,7 +1181,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       false
@@ -1171,7 +1202,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       { ...pageCollection, id: "2" },
       false
@@ -1191,7 +1223,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       false
@@ -1211,7 +1244,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCollection,
       true
@@ -1240,7 +1274,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       {
         ...pageCollection,
@@ -1292,7 +1327,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       {
         ...pageCollection,
@@ -1346,7 +1382,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       {
         ...pageCollection,
@@ -1400,7 +1437,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       {
         ...pageCollection,
@@ -1454,7 +1492,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       {
         ...pageCollection,
@@ -1508,7 +1547,8 @@ describe("testing Cloud getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       {
         ...pageCollection,
@@ -1619,7 +1659,8 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCommon,
       true
@@ -1647,7 +1688,8 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
         meta: {
           type: "normal",
           extraFontStyles: []
-        }
+        },
+        dependencies: []
       },
       pageCommon,
       false

@@ -123,6 +123,22 @@ export type ActionDeleteGlobalBlock = {
   };
 };
 
+export type ActionAddGlobalBlockDependency = {
+  type: ActionTypes.ADD_GLOBAL_BLOCK_DEPENDENCY;
+  payload: {
+    globalBlockId: string;
+    dependencyId: string;
+  };
+};
+
+export type ActionRemoveGlobalBlockDependency = {
+  type: ActionTypes.REMOVE_GLOBAL_BLOCK_DEPENDENCY;
+  payload: {
+    globalBlockId: string;
+    dependencyId: string;
+  };
+};
+
 //#endregion
 
 //#region Global Popup
@@ -300,10 +316,14 @@ export type ReduxAction =
   | ActionUpdateBlocks
   | ActionMakeBlockToGlobalBlock
   | ActionMakeGlobalBlockToBlock
+  | ActionAddGlobalBlockDependency
+  | ActionRemoveGlobalBlockDependency
   | ActionMakePopupToGlobalPopup
   | ActionMakeGlobalPopupToPopup
   | ActionStoreWasChanged
   | ActionUpdatePageTitle
+  | ActionAddPageDependency
+  | ActionRemovePageDependency
   | AddNewGlobalStyle
   | RemoveGlobalStyle
   | EditGlobalStyleName
@@ -316,10 +336,28 @@ export type ActionUpdateAuthorized = {
   payload: Authorized;
 };
 
+//#region Page
+
 export type ActionUpdatePageTitle = {
   type: "UPDATE_PAGE_TITLE";
   payload: string;
 };
+
+export type ActionAddPageDependency = {
+  type: ActionTypes.ADD_PAGE_DEPENDENCY;
+  payload: {
+    id: string;
+  };
+};
+
+export type ActionRemovePageDependency = {
+  type: ActionTypes.REMOVE_PAGE_DEPENDENCY;
+  payload: {
+    id: string;
+  };
+};
+
+//#endregion
 
 export type ActionUpdateSyncAllowed = {
   type: "UPDATE_SYNC_ALLOWED";
@@ -698,6 +736,24 @@ export const updatePageLayout = (layout: Layout): ActionUpdatePageLayout => {
   };
 };
 
+export function addPageDependency(
+  payload: ActionAddPageDependency["payload"]
+): ActionAddPageDependency {
+  return {
+    type: ActionTypes.ADD_PAGE_DEPENDENCY,
+    payload
+  };
+}
+
+export function removePageDependency(
+  payload: ActionRemovePageDependency["payload"]
+): ActionRemovePageDependency {
+  return {
+    type: ActionTypes.REMOVE_PAGE_DEPENDENCY,
+    payload
+  };
+}
+
 export function addBlock(
   block: { block: Block; fonts: FontsPayload },
   meta = { insertIndex: 0 }
@@ -741,6 +797,24 @@ export function deleteGlobalBlock({
     payload: {
       id
     }
+  };
+}
+
+export function addGlobalBlockDependency(
+  payload: ActionAddGlobalBlockDependency["payload"]
+): ActionAddGlobalBlockDependency {
+  return {
+    type: ActionTypes.ADD_GLOBAL_BLOCK_DEPENDENCY,
+    payload
+  };
+}
+
+export function removeGlobalBlockDependency(
+  payload: ActionRemoveGlobalBlockDependency["payload"]
+): ActionRemoveGlobalBlockDependency {
+  return {
+    type: ActionTypes.REMOVE_GLOBAL_BLOCK_DEPENDENCY,
+    payload
   };
 }
 
@@ -864,7 +938,11 @@ export enum ActionTypes {
   "REMOVE_BLOCKS" = "REMOVE_BLOCKS",
   "UPDATE_PINNED_ELEMENTS" = "UPDATE_PINNED_ELEMENTS",
   "REGENERATE_COLORS" = "REGENERATE_COLORS",
-  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY"
+  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY",
+  "ADD_GLOBAL_BLOCK_DEPENDENCY" = "ADD_GLOBAL_BLOCK_DEPENDENCY",
+  "REMOVE_GLOBAL_BLOCK_DEPENDENCY" = "REMOVE_GLOBAL_BLOCK_DEPENDENCY",
+  "ADD_PAGE_DEPENDENCY" = "ADD_PAGE_DEPENDENCY",
+  "REMOVE_PAGE_DEPENDENCY" = "REMOVE_PAGE_DEPENDENCY"
 }
 
 // templates
