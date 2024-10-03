@@ -96,7 +96,9 @@ class Brizy_Editor_Editor_Editor
             'aiGlobalStyleUrl' => Brizy_Config::GENERATE_GLOBAL_STYLES_ENDPOINT,
         ];
 
-        $config = $this->getApiConfigFields($config, $context);
+        $config                   = $this->getApiConfigFields( $config, $context );
+		$config['api']['menuUrl'] = admin_url( 'nav-menus.php' );
+
         $config = $this->addLoopSourcesClientConfig(
             $config,
             $mode === 'template',
