@@ -15,6 +15,7 @@ import {
   defaultStories
 } from "./defaultTemplates";
 import { placeholderData, placeholders } from "./dynamicContent";
+import { getMenu } from "./Elements/Menu";
 import { handler as posts } from "./Elements/Posts";
 import { adobeFont, uploadedFonts } from "./fonts";
 import { globalBlocks } from "./globalBlocks/blocks";
@@ -107,6 +108,7 @@ if (window.__VISUAL_CONFIG__) {
   } else {
     set(window.__VISUAL_CONFIG__, ["elements", "posts", "handler"], posts);
   }
+  set(window.__VISUAL_CONFIG__, ["elements", "menu"], getMenu(config));
 
   // Dynamic Content
   if (window.__VISUAL_CONFIG__.dynamicContent) {
