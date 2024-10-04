@@ -9,10 +9,6 @@ import { throwOnNullish } from "./utils/throwOnNullish";
 import { MValue } from "./utils/types";
 
 interface DefaultTemplates {
-  kitsUrl: string;
-  popupsUrl: string;
-  storiesUrl: string;
-  layoutsUrl: string;
   layoutDataUrl: string;
   layoutsChunkUrl: string;
   layoutsPagesUrl: string;
@@ -24,7 +20,6 @@ interface DefaultTemplates {
   storiesChunkUrl: string;
   storiesPagesUrl: string;
   storiesDataUrl: string;
-  templatesUrl: string;
 }
 
 interface Actions {
@@ -83,6 +78,7 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  ekklesiaApiUrl?: string;
   iconsUrl?: string;
   iconUrl?: string;
   deleteIconUrl?: string;
@@ -105,22 +101,6 @@ export interface Config {
 }
 
 const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
-  kitsUrl: pipe(
-    mPipe(Obj.readKey("kitsUrl"), Str.read),
-    throwOnNullish("Invalid API Config: kits")
-  ),
-  layoutsUrl: pipe(
-    mPipe(Obj.readKey("layoutsUrl"), Str.read),
-    throwOnNullish("Invalid API Config: layouts")
-  ),
-  popupsUrl: pipe(
-    mPipe(Obj.readKey("popupsUrl"), Str.read),
-    throwOnNullish("Invalid API Config: popups")
-  ),
-  storiesUrl: pipe(
-    mPipe(Obj.readKey("storiesUrl"), Str.read),
-    throwOnNullish("Invalid API Config: stories")
-  ),
   layoutDataUrl: pipe(
     mPipe(Obj.readKey("layoutDataUrl"), Str.read),
     throwOnNullish("Invalid API Config: layouts")
@@ -164,10 +144,6 @@ const templatesReader = parseStrict<Record<string, unknown>, DefaultTemplates>({
   storiesDataUrl: pipe(
     mPipe(Obj.readKey("storiesDataUrl"), Str.read),
     throwOnNullish("Invalid API Config: stories")
-  ),
-  templatesUrl: pipe(
-    mPipe(Obj.readKey("templatesUrl"), Str.read),
-    throwOnNullish("Invalid API Config: templates")
   )
 });
 
@@ -236,7 +212,8 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   iconUrl: readIconUrl("iconUrl"),
   iconsUrl: readIconUrl("getIconsUrl"),
   uploadIconUrl: readIconUrl("uploadIconUrl"),
-  deleteIconUrl: readIconUrl("deleteIconUrl")
+  deleteIconUrl: readIconUrl("deleteIconUrl"),
+  ekklesiaApiUrl: optional(mPipe(Obj.readKey("ekklesiaApiUrl"), Str.read))
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({

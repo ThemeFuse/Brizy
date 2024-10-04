@@ -222,7 +222,7 @@ class Brizy_Admin_Blocks_Main
         } else {
             $template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
 
-            if ($template) {
+           if ($template) {
                 $ruleMatches = $this->getTemplateRuleMatches($template->getWpPost());
             } else {
                 $ruleMatches[] = [

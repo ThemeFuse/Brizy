@@ -47,7 +47,7 @@ export const addFile: AddFileData = {
           .then((res) => res.blob())
           .then((blob) => {
             const file = new File([blob], filename, { type: mimeType });
-            validateByComponent(file, componentId)
+            validateByComponent(file, componentId, url)
               .then(() => handleGetAttachmentById(res, attachment))
               .catch((e) => rej(e.message));
           });

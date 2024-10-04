@@ -11,7 +11,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
+                "url": "git@github.com:bagrinsergiu/brizy-merge-page-assets.git",
                 "reference": "61eea2244cb34ff8666b802aafa74f74dec869da"
             },
             "dist": {
@@ -40,10 +40,6 @@
                 "brizy",
                 "brizy merge assets"
             ],
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-merge-page-assets/tree/master",
-                "issues": "https://github.com/bagrinsergiu/brizy-merge-page-assets/issues"
-            },
             "time": "2022-09-27T14:56:05+00:00"
         },
         {
@@ -51,7 +47,7 @@
             "version": "1.5.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-migration-utils.git",
+                "url": "git@github.com:bagrinsergiu/brizy-migration-utils.git",
                 "reference": "81523e89975e56d192bb3a5622ddbe1d06e10809"
             },
             "dist": {
@@ -81,10 +77,6 @@
                 }
             ],
             "description": "Data migration utils",
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-migration-utils/tree/1.5.4",
-                "issues": "https://github.com/bagrinsergiu/brizy-migration-utils/issues"
-            },
             "time": "2022-07-08T10:43:38+00:00"
         },
         {
@@ -92,13 +84,13 @@
             "version": "v3.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a"
+                "url": "git@github.com:bagrinsergiu/brizy-content-placeholder.git",
+                "reference": "affd80ac76efac29ce0ee6baa0bfa7314f264612"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a",
-                "reference": "ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/affd80ac76efac29ce0ee6baa0bfa7314f264612",
+                "reference": "affd80ac76efac29ce0ee6baa0bfa7314f264612",
                 "shasum": ""
             },
             "require": {
@@ -124,11 +116,7 @@
                 "content",
                 "placeholders"
             ],
-            "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v3.0.4",
-                "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
-            },
-            "time": "2024-09-03T13:09:04+00:00"
+            "time": "2024-09-17T12:13:44+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -274,12 +262,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "4d36e9c16f4820c2ed9360bc818982f3c02a08f5"
+                "reference": "0ed4c8949a32986043e977dbe14776c14d644c45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4d36e9c16f4820c2ed9360bc818982f3c02a08f5",
-                "reference": "4d36e9c16f4820c2ed9360bc818982f3c02a08f5",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/0ed4c8949a32986043e977dbe14776c14d644c45",
+                "reference": "0ed4c8949a32986043e977dbe14776c14d644c45",
                 "shasum": ""
             },
             "require": {
@@ -322,7 +310,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/4.x"
             },
-            "time": "2024-03-17T09:03:35+00:00"
+            "time": "2024-09-17T19:36:00+00:00"
         },
         {
             "name": "phplrt/ast-contracts",
@@ -1165,16 +1153,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "ec444d3f3f6505bb28d11afa41e75faadebc10a1"
+                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/ec444d3f3f6505bb28d11afa41e75faadebc10a1",
-                "reference": "ec444d3f3f6505bb28d11afa41e75faadebc10a1",
+                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
+                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=7.2"
             },
             "default-branch": true,
             "type": "library",
@@ -1218,7 +1206,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.30.0"
+                "source": "https://github.com/symfony/polyfill-php73/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -1234,7 +1222,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-31T15:07:36+00:00"
+            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "tburry/pquery",
@@ -1432,5 +1420,5 @@
         "php": ">=5.6"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
