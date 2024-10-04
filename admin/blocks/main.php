@@ -117,7 +117,7 @@ class Brizy_Admin_Blocks_Main {
 	public function enqueueMatchedGlobalBlockAssets( $id ) {
 		$manager = Brizy_Public_AssetEnqueueManager::_init();
 		if ( ! in_array( get_post_type( $id ), [ self::CP_GLOBAL, Brizy_Admin_Popups_Main::CP_POPUP ] ) ) {
-			$matching_brizy_blocks = $this->getMatchingBrizyBlocks( get_post($id) );
+			$matching_brizy_blocks = $this->getMatchingBrizyBlocks( get_post( $id ) );
 			foreach ( $matching_brizy_blocks as $block ) {
 				if ( ! $manager->isPostEnqueued( $block->getWpPostId() ) ) {
 					$manager->enqueuePost( $block );
@@ -184,8 +184,8 @@ class Brizy_Admin_Blocks_Main {
 		static $globalBLocks = null;
 		if ( $globalBLocks ) {
 			//return $globalBLocks;
-
-		}$ruleMatches = [];
+		}
+		$ruleMatches = [];
 		if ( ! $wpPost ) {
 			$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 			$wpPost      = get_post( $ruleMatches[0]['entityValues'][0] );
@@ -351,11 +351,11 @@ class Brizy_Admin_Blocks_Main {
 				return $allDeps;
 			}
 
-			$deps = getDependencies( [], $wpPost, $blockManager );
+			$deps         = getDependencies( [], $wpPost, $blockManager );
 			$resultBlocks = array_map( function ( $uid ) use ( $blockManager ) {
 				return $blockManager->getEntity( $uid );
 			}, $deps );
-			$blocks = array_reduce( $resultBlocks, function ( $result, $object ) {
+			$blocks       = array_reduce( $resultBlocks, function ( $result, $object ) {
 				$result[ $object->getUid() ] = $object;
 
 				return $result;
@@ -363,26 +363,36 @@ class Brizy_Admin_Blocks_Main {
 
 			return $blocks;
 		}
-
-
-		$context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $wpPost );
-		$placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider( $context );
-		$extractor           = new \BrizyPlaceholders\Extractor( $placeholderProvider );
-		$blocks        = [];
-
-		list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $wpPost->get_compiled_html() );
-		foreach ( $placeholders as $i => $placeholder ) {
-			$attrs        = $placeholder->getAttributes();
-			$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-			if ( isset( $attrs['uid'] ) ) {
-				$block = $blockManager->getEntity( $attrs['uid'] );
-				// store global popups to be added in footer
-				if ( $placeholderInstances[ $i ] instanceof Brizy_Content_Placeholders_GlobalBlock ) {
-					$blocks[ $attrs['uid'] ] = $block;
+		if ( ! empty( $wpPost->get_compiled_html() ) ) {
+			$context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $wpPost );
+			$placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider( $context );
+			$extractor           = new \BrizyPlaceholders\Extractor( $placeholderProvider );
+			$blocks              = [];
+			list( $placeholders, $placeholderInstances, $content ) = $extractor->extract( $wpPost->get_compiled_html() );
+			foreach ( $placeholders as $i => $placeholder ) {
+				$attrs        = $placeholder->getAttributes();
+				$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+				if ( isset( $attrs['uid'] ) ) {
+					$block = $blockManager->getEntity( $attrs['uid'] );
+					// store global popups to be added in footer
+					if ( $placeholderInstances[ $i ] instanceof Brizy_Content_Placeholders_GlobalBlock ) {
+						$blocks[ $attrs['uid'] ] = $block;
+					}
 				}
 			}
+
+			return $blocks;
 		}
 
-		return $blocks;
+		// return all blocks
+		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
+		$blocks       = $blockManager->getEntities( [ 'post_status' => 'any' ] );
+		// include all blocks
+		$resultBlocks = [];
+		foreach ( $blocks as $block ) {
+			$resultBlocks[] = Brizy_Editor_Block::get( $block->getWpPostId() )->getUid();
+		}
+
+		return $resultBlocks;
 	}
 }
