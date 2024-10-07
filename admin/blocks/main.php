@@ -389,7 +389,7 @@ class Brizy_Admin_Blocks_Main {
 		// include all blocks
 		$resultBlocks = [];
 		foreach ( $blocks as $block ) {
-			$resultBlocks[] = Brizy_Editor_Block::get( $block->getWpPostId() )->getUid();
+			$resultBlocks[] = Brizy_Editor_Block::get( $block->getWpPostId() );
 		}
 
 		return $resultBlocks;

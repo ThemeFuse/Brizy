@@ -73,8 +73,9 @@ class Brizy_Public_AssetEnqueueManager
         $id = $post->getWpPost()->ID;
 
         if (!isset($this->posts[$id])) {
-            $this->posts[$id] = $post;
-        do_action( 'brizy_preview_enqueue_post', $id );}
+	        $this->posts[ $id ] = $post;
+	        do_action( 'brizy_preview_enqueue_post', $id );
+        }
     }
 
     /**
@@ -86,7 +87,7 @@ class Brizy_Public_AssetEnqueueManager
 
         if (isset($this->posts[$id])) {
             unset($this->posts[$id]);
-        do_action( 'brizy_preview_denqueue_post', $id );
+            do_action( 'brizy_preview_denqueue_post', $id );
 		}
 	}
 
