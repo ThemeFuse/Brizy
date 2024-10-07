@@ -2,7 +2,7 @@ exports.id = 4;
 exports.ids = [4];
 exports.modules = {
 
-/***/ 7183:
+/***/ 7187:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Kaltura_exports, {
   default: () => Kaltura
 });
 module.exports = __toCommonJS(Kaltura_exports);
-var import_react = __toESM(__webpack_require__(465));
-var import_utils = __webpack_require__(3793);
-var import_patterns = __webpack_require__(3796);
+var import_react = __toESM(__webpack_require__(466));
+var import_utils = __webpack_require__(3794);
+var import_patterns = __webpack_require__(3797);
 const SDK_URL = "https://cdn.embed.ly/player-0.1.0.min.js";
 const SDK_GLOBAL = "playerjs";
 class Kaltura extends import_react.Component {

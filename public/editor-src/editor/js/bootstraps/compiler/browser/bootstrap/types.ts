@@ -1,5 +1,5 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, PageCommon, Project } from "visual/types";
+import { GlobalBlock, Page, Project } from "visual/types";
 import {
   ScriptsFree,
   ScriptsPro,
@@ -30,11 +30,11 @@ export interface Static {
 
 export interface Props {
   config: ConfigCommon;
-  page: PageCommon;
+  page: Page;
   project: Project;
   globalBlocks?: Array<GlobalBlock>;
   needToCompile: {
-    page?: PageCommon;
+    page?: Page;
     project?: Project;
     globalBlocks?: Array<GlobalBlock>;
   };

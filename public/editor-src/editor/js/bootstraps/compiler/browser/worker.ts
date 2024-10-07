@@ -1,6 +1,6 @@
 import { wrap } from "comlink";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, PageCommon, Project } from "visual/types";
+import { GlobalBlock, Page, Project } from "visual/types";
 import { assetUrl } from "visual/utils/asset";
 import type { Compiler } from "./";
 import { Static } from "./bootstrap/types";
@@ -47,11 +47,11 @@ const initWorker = (config: ConfigCommon): Worker => {
 interface Compile {
   config: ConfigCommon;
   needToCompile: {
-    page?: PageCommon;
+    page?: Page;
     project?: Project;
     globalBlocks?: Array<GlobalBlock>;
   };
-  page: PageCommon;
+  page: Page;
   project: Project;
   globalBlocks?: Array<GlobalBlock>;
 }

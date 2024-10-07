@@ -316,10 +316,14 @@ export type ActionUpdateAuthorized = {
   payload: Authorized;
 };
 
+//#region Page
+
 export type ActionUpdatePageTitle = {
   type: "UPDATE_PAGE_TITLE";
   payload: string;
 };
+
+//#endregion
 
 export type ActionUpdateSyncAllowed = {
   type: "UPDATE_SYNC_ALLOWED";
