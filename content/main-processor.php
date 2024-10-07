@@ -40,6 +40,8 @@ class Brizy_Content_MainProcessor {
 	 */
 	public function process( $content ) {
 
+		if(is_null($content)) return null;
+
 		$processors = apply_filters( 'brizy_apply_content_processors', $this->processors );
 
 		foreach ( $processors as $processor ) {
