@@ -23,7 +23,7 @@ class Brizy_Admin_Popups_Main {
 			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
 		}
 		if ( ! Brizy_Public_Main::is_editing() ) {
-			//add_action('wp_enqueue_scripts', [$this, 'enqueuePopupScripts']);
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueuePopupScripts' ] );
 			add_action( 'brizy_preview_enqueue_post', [ $this, 'enqueuePopupScripts' ] );
 			//add_action('wp_head', [$this, 'wpHeadAppentPopupHtml']);
 			add_action( 'wp_footer', [ $this, 'wpFooterAppendPopupHtml' ] );
@@ -33,7 +33,11 @@ class Brizy_Admin_Popups_Main {
 	}
 
 	public function enqueuePopupScripts( $postId ) {
-		$matching_brizy_popups = $this->getMatchingBrizyPopups( get_post( $postId ) );
+		$wp_post = null;
+		if ( $postId ) {
+			$wp_post = get_post( $postId );
+		}
+		$matching_brizy_popups = $this->getMatchingBrizyPopups( $wp_post );
 		foreach ( $matching_brizy_popups as $popup ) {
 
 			try {
@@ -47,7 +51,7 @@ class Brizy_Admin_Popups_Main {
 				Brizy_Logger::instance()->exception( $e );
 			}
 			$manger = Brizy_Public_AssetEnqueueManager::_init();
-			if ( !$manger->isPostEnqueued( $popup ) ) {
+			if ( ! $manger->isPostEnqueued( $popup ) ) {
 				$manger->enqueuePost( $popup );
 			}
 		}
@@ -104,22 +108,22 @@ class Brizy_Admin_Popups_Main {
 			'attributes'         => __( 'Popup attributes:', 'brizy' ),
 		);
 		register_post_type( self::CP_POPUP, array(
-				'labels'              => $labels,
-				'public'              => false,
-				'has_archive'         => false,
-				'description'         => __( 'Popups', 'brizy' ),
-				'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
-				'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
-				'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
-				'query_var'           => false,
-				'rewrite'             => array( 'slug' => 'editor-popup' ),
-				'capability_type'     => 'page',
-				'hierarchical'        => false,
-				'show_in_rest'        => false,
-				'exclude_from_search' => true,
-				'can_export'          => true,
-				'supports'            => array( 'title', 'post_content', 'revisions' ),
-			) );
+			'labels'              => $labels,
+			'public'              => false,
+			'has_archive'         => false,
+			'description'         => __( 'Popups', 'brizy' ),
+			'publicly_queryable'  => Brizy_Editor_User::is_user_allowed(),
+			'show_ui'             => defined( 'BRIZY_PRO_VERSION' ),
+			'show_in_menu'        => Brizy_Admin_Settings::menu_slug(),
+			'query_var'           => false,
+			'rewrite'             => array( 'slug' => 'editor-popup' ),
+			'capability_type'     => 'page',
+			'hierarchical'        => false,
+			'show_in_rest'        => false,
+			'exclude_from_search' => true,
+			'can_export'          => true,
+			'supports'            => array( 'title', 'post_content', 'revisions' ),
+		) );
 		remove_post_type_support( self::CP_POPUP, 'page-attributes' );
 		add_filter( 'brizy_supported_post_types', function ( $posts ) {
 			$posts[] = self::CP_POPUP;
@@ -138,8 +142,8 @@ class Brizy_Admin_Popups_Main {
 			$manager = new Brizy_Admin_Rules_Manager();
 			if ( count( $manager->getRules( $post->ID ) ) == 0 ) {
 				$manager->saveRules( $post->ID, array(
-						new Brizy_Admin_Rule( null, Brizy_Admin_Rule::TYPE_INCLUDE, '', '', array() ),
-					) );
+					new Brizy_Admin_Rule( null, Brizy_Admin_Rule::TYPE_INCLUDE, '', '', array() ),
+				) );
 			}
 		}
 	}
@@ -201,12 +205,12 @@ class Brizy_Admin_Popups_Main {
 
 		$resultPopups = array();
 		$allPopups    = get_posts( array(
-				'post_type'   => self::CP_POPUP,
-				'numberposts' => - 1,
-				'post_status' => 'publish',
-			) );
-		$ruleManager = new Brizy_Admin_Rules_Manager();
-		$ruleSets    = [];
+			'post_type'   => self::CP_POPUP,
+			'numberposts' => - 1,
+			'post_status' => 'publish',
+		) );
+		$ruleManager  = new Brizy_Admin_Rules_Manager();
+		$ruleSets     = [];
 		foreach ( $allPopups as $aPopup ) {
 			$ruleSets[ $aPopup->ID ] = $ruleManager->getRuleSet( $aPopup->ID );
 		}
@@ -214,11 +218,11 @@ class Brizy_Admin_Popups_Main {
 			$applyFor     = $ruleMatch['applyFor'];
 			$entityType   = $ruleMatch['entityType'];
 			$entityValues = $ruleMatch['entityValues'];
-			$allPopups = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $allPopups, [
-					'type'         => $applyFor,
-					'entityType'   => $entityType,
-					'entityValues' => $entityValues,
-				] );
+			$allPopups    = Brizy_Admin_Rules_Manager::sortEntitiesByRuleWeight( $allPopups, [
+				'type'         => $applyFor,
+				'entityType'   => $entityType,
+				'entityValues' => $entityValues,
+			] );
 			foreach ( $allPopups as $aPopup ) {
 				try {
 					if ( $ruleSets[ $aPopup->ID ]->isMatching( $applyFor, $entityType, $entityValues ) ) {

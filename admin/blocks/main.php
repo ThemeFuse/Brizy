@@ -47,7 +47,6 @@ class Brizy_Admin_Blocks_Main {
 	public function initializePreviewActions( $post ) {
 		// make sure we include this only in preview and only pages edited with brizy
 		$is_view_page = Brizy_Public_Main::is_view_page( $post );
-		$compiler     = $post->get_compiler();
 		if ( $is_view_page ) {
 			add_action( 'brizy_preview_enqueue_post', [ $this, 'enqueueMatchedGlobalBlockAssets' ] );
 		}
