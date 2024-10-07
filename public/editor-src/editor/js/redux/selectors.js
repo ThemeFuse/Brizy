@@ -4,7 +4,7 @@ import _ from "underscore";
 import configRules from "visual/config/rules";
 import { getPositions } from "visual/utils/blocks/blocksConditions";
 import { canUseCondition } from "visual/utils/blocks/getAllowedGBIds";
-import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
+import { objectTraverse2 } from "visual/utils/object";
 import {
   blocksDataSelector,
   blocksOrderSelector,
@@ -71,46 +71,6 @@ export const globalBlocksPositionsSelector = createSelector(
 );
 
 // ! Add new selector for popups globalBlocks/
-
-export const globalBlocksAssembledSelector = createSelector(
-  globalBlocksSelector,
-  blocksDataSelector,
-  screenshotsSelector,
-  (globalBlocks, blocksData, screenshots) => {
-    return objectFromEntries(
-      Object.entries(globalBlocks).map((entry) => {
-        const [key, value] = entry;
-        const update = blocksData[key];
-        const screenshot = screenshots[key];
-
-        const value_ = produce(value, (draft) => {
-          draft.data = { ...draft.data, ...update };
-
-          if (screenshot) {
-            Object.assign(draft.data.value, screenshot);
-            Object.assign(draft.meta, screenshot);
-          }
-
-          objectTraverse2(draft.data.value, (obj) => {
-            if (
-              obj.type &&
-              obj.type !== "GlobalBlock" &&
-              obj.value &&
-              obj.value._id &&
-              screenshots[obj.value._id]
-            ) {
-              obj.meta = obj.meta || {};
-              Object.assign(obj.value, screenshots[obj.value._id]);
-              Object.assign(obj.meta, screenshots[obj.value._id]);
-            }
-          });
-        });
-
-        return [key, value_];
-      })
-    );
-  }
-);
 
 export const rulesSelector = createSelector(
   currentStyleSelector,

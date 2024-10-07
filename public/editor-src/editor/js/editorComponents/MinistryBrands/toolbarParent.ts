@@ -6,6 +6,7 @@ import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
+import { Props as TabProps } from "visual/component/Options/types/dev/Tabs/index";
 
 export const toolbarParentColors = <
   M extends ElementModel,
@@ -13,10 +14,11 @@ export const toolbarParentColors = <
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   S extends Record<string, any> = Record<string, unknown>
->({
-  v,
-  device
-}: Params<M, P, S>): ToolbarItemType[] => {
+>(
+  data: Params<M, P, S>,
+  additionalOptions?: TabProps["tabs"]
+): ToolbarItemType[] => {
+  const { v, device } = data;
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const { hex: parentBgColorHex } = getOptionColorHexByPalette(
@@ -79,7 +81,8 @@ export const toolbarParentColors = <
                   states: [NORMAL, HOVER]
                 }
               ]
-            }
+            },
+            ...(additionalOptions ?? [])
           ]
         }
       ]

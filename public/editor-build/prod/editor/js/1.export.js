@@ -2,7 +2,7 @@ exports.id = 1;
 exports.ids = [1];
 exports.modules = {
 
-/***/ 7180:
+/***/ 7184:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(DailyMotion_exports, {
   default: () => DailyMotion
 });
 module.exports = __toCommonJS(DailyMotion_exports);
-var import_react = __toESM(__webpack_require__(465));
-var import_utils = __webpack_require__(3793);
-var import_patterns = __webpack_require__(3796);
+var import_react = __toESM(__webpack_require__(466));
+var import_utils = __webpack_require__(3794);
+var import_patterns = __webpack_require__(3797);
 const SDK_URL = "https://api.dmcdn.net/all.js";
 const SDK_GLOBAL = "DM";
 const SDK_GLOBAL_READY = "dmAsyncInit";

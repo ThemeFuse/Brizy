@@ -1,6 +1,9 @@
 import { produce } from "immer";
 import { createSelector } from "reselect";
-import { ElementModelType } from "visual/component/Elements/Types";
+import {
+  ElementModel,
+  ElementModelType
+} from "visual/component/Elements/Types";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
@@ -17,6 +20,9 @@ import { getSurroundedGBIds } from "visual/utils/blocks/blocksConditions";
 import { getGroupFontsById } from "visual/utils/fonts";
 import { mapModels } from "visual/utils/models";
 import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
+import { getModelPopups } from "visual/utils/blocks/getModelPopups";
+import { getIn } from "timm";
+import { MValue } from "visual/utils/value";
 
 //#region === 0 DEPENDENCIES ===
 
@@ -209,13 +215,26 @@ export const blocksOrderRawSelector = createSelector(
   }
 );
 
+// Retrieve the IDs of globalBlocks between normal blocks,
+// excluding the top and bottom globalBlocks.
+export const middleGlobalBlocksIdSelector = createSelector(
+  blocksOrderSelector,
+  globalBlocksSelector,
+  (blocksOrder, globalBlocks) => {
+    const { top, bottom } = getSurroundedGBIds(blocksOrder, globalBlocks);
+    const betweenGBIds = [...top, ...bottom];
+    const orders = blocksOrder.filter((id) => !betweenGBIds.includes(id));
+    return orders.filter((id) => globalBlocks[id]);
+  }
+);
+
 // published globalBlocks + their updates
 // this is used when rendering globalBlocks refs in the page
 // and purposefully omits screenshots, to prevent a re-render when screenshots change
 export const globalBlocksAssembled2Selector = createSelector(
   globalBlocksSelector,
   blocksDataSelector,
-  (globalBlocks, blocksData) => {
+  (globalBlocks, blocksData): Record<string, GlobalBlock> => {
     return objectFromEntries(
       Object.entries(globalBlocks).map((entry) => {
         const [key, value] = entry;
@@ -357,6 +376,48 @@ export const globalPopupsInPageSelector = createSelector(
   }
 );
 
+export const globalBlocksAssembledSelector = createSelector(
+  globalBlocksSelector,
+  blocksDataSelector,
+  screenshotsSelector,
+  (globalBlocks, blocksData, screenshots): Record<string, GlobalBlock> => {
+    return objectFromEntries(
+      Object.entries(globalBlocks).map((entry) => {
+        const [key, value] = entry;
+        const update = blocksData[key];
+        const screenshot = screenshots[key];
+
+        const value_ = produce(value, (draft) => {
+          draft.data = { ...draft.data, ...update };
+
+          if (screenshot) {
+            Object.assign(draft.data.value, screenshot);
+            Object.assign(draft.meta, screenshot);
+          }
+
+          objectTraverse2(draft.data.value, (obj: ElementModel) => {
+            const _id = getIn(obj, ["value", "_id"]) as MValue<string>;
+            if (
+              obj.type &&
+              obj.type !== "GlobalBlock" &&
+              obj.value &&
+              _id &&
+              screenshots[_id]
+            ) {
+              obj.meta = obj.meta || {};
+              Object.assign(obj.value, screenshots[_id]);
+              // @ts-expect-error: Argument of type unknown is not assignable to parameter of type {}
+              Object.assign(obj.meta, screenshots[_id]);
+            }
+          });
+        });
+
+        return [key, value_];
+      })
+    );
+  }
+);
+
 //#endregion
 
 //#region === ANOMALIES ===
@@ -405,23 +466,9 @@ export const pageDataNoRefsSelector = createSelector(
   }
 );
 
-export const pageBlocksNoRefsSelector = createSelector(
-  pageDataNoRefsSelector,
-  (pageData) => pageData.items || []
+export const popupBlocksInPageSelector = createSelector(
+  pageDataDraftBlocksSelector,
+  getModelPopups
 );
-
-// export const popupBlocksInPageSelector = createSelector(
-//   pageBlocksNoRefsSelector,
-//   (pageBlocksNoRefs) => {
-//     const popups: Array<Block> = [];
-//     objectTraverse2(pageBlocksNoRefs, (obj: Record<string, unknown>) => {
-//       if (Array.isArray(obj.popups)) {
-//         popups.push(...obj.popups);
-//       }
-//     });
-//
-//     return uniq(popups, (p) => p.value._id);
-//   }
-// );
 
 //#endregion

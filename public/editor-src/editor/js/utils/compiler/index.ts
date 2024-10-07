@@ -6,7 +6,7 @@ import {
   PublishedPage,
   PublishedProject
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, PageCommon, Project } from "visual/types";
+import { GlobalBlock, Page, Project } from "visual/types";
 import { stringifyGlobalBlock } from "visual/utils/api/adapter";
 import { t } from "visual/utils/i18n";
 import { read as readStr } from "visual/utils/reader/string";
@@ -15,12 +15,12 @@ export interface Data {
   config: ConfigCommon;
   state: {
     project: Project;
-    page: PageCommon;
+    page: Page;
     globalBlocks: Array<GlobalBlock>;
   };
   needToCompile: {
     project?: Project;
-    page?: PageCommon;
+    page?: Page;
     globalBlocks?: Array<GlobalBlock>;
   };
 }

@@ -2,7 +2,7 @@ exports.id = 10;
 exports.ids = [10];
 exports.modules = {
 
-/***/ 7179:
+/***/ 7183:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Twitch_exports, {
   default: () => Twitch
 });
 module.exports = __toCommonJS(Twitch_exports);
-var import_react = __toESM(__webpack_require__(465));
-var import_utils = __webpack_require__(3793);
-var import_patterns = __webpack_require__(3796);
+var import_react = __toESM(__webpack_require__(466));
+var import_utils = __webpack_require__(3794);
+var import_patterns = __webpack_require__(3797);
 const SDK_URL = "https://player.twitch.tv/js/embed/v1.js";
 const SDK_GLOBAL = "Twitch";
 const PLAYER_ID_PREFIX = "twitch-player-";

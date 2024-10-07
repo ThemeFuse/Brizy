@@ -175,6 +175,16 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-ministryBrands__pagination span:hover.pagination_ellipsis": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsPaginationColor",
+        "cssStyleElementOfMinistryBrandsPaginationTypography"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
     ".brz && .brz-ministryBrands__pagination a#current": {
       standart: [
         "cssStyleElementOfMinistryBrandsPaginationColorActive",
@@ -309,6 +319,19 @@ export function style(
         "cssStyleElementMinistryNoResultsParagraphColor"
       ],
       interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-sermonLayout__item": {
+      standart: ["cssStyleElementOfMinistryBrandsItemPadding"]
+    },
+    ".brz && .brz-sermonLayout__item:hover": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsItemColor",
+        "cssStyleElementOfMinistryBrandsItemBgGradient"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
     }
   };
 

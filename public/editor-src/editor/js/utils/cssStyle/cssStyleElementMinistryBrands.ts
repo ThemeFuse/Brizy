@@ -1341,7 +1341,6 @@ export const cssStyleElementOfMinistryBrandsSocialBorder = ({
   });
 };
 
-
 export const cssStyleElementMinistryResultsHeadingTypography = ({
   v,
   device,
@@ -1431,4 +1430,28 @@ export function cssStyleMinistryBrandsButtonsHoverTransition({
     state,
     prefix: "buttons"
   });
+}
+
+export const cssStyleElementOfMinistryBrandsItemBgGradient = ({
+  v,
+  device,
+  state
+}: CSSValue): string => {
+  return cssStyleBgGradient({ v, device, state, prefix: "item" });
+};
+
+export function cssStyleElementOfMinistryBrandsItemColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "itemBg" });
+}
+
+export function cssStyleElementOfMinistryBrandsItemPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "item" });
 }

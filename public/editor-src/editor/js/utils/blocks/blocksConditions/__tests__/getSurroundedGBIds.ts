@@ -31,7 +31,8 @@ const globalBlock1: GlobalBlock = {
   position: null,
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock2: GlobalBlock = {
@@ -45,7 +46,8 @@ const globalBlock2: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock3: GlobalBlock = {
@@ -59,7 +61,8 @@ const globalBlock3: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock4: GlobalBlock = {
@@ -73,7 +76,8 @@ const globalBlock4: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock6: GlobalBlock = {
@@ -87,7 +91,8 @@ const globalBlock6: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: popupMeta
+  meta: popupMeta,
+  dependencies: []
 };
 
 describe("testing blocksConditions", () => {
