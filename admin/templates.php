@@ -487,7 +487,6 @@ class Brizy_Admin_Templates
         }
 
         Brizy_Public_AssetEnqueueManager::_init()->enqueuePost(self::getTemplate());
-        Brizy_Public_AssetEnqueueManager::_init()->enqueuePost(Brizy_Editor_Post::get(Brizy_Editor::get()->currentPostId()));
 
         do_action('brizy_preview_enqueue_scripts', self::getTemplate());
     }
