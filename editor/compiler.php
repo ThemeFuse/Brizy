@@ -79,7 +79,6 @@ class Brizy_Editor_Compiler {
 	}
 
 	private function updatePost( Brizy_Editor_Post $post, $pageData ) {
-		$pageData['html'] = Brizy_SiteUrlReplacer::hideSiteUrl( $pageData['html'] );
 		$post->set_compiled_html( $pageData['html'] );
 		$assets  = $pageData['assets'];
 		$scripts = [

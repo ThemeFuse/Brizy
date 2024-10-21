@@ -42,9 +42,7 @@ export const PayPal = ({
       onSave={onSave}
       onCancel={onCancel}
       validator={validator}
-      description={t(
-        "Allow Brizy to access your PayPal account via API access"
-      )}
+      description={t("Allow us to access your PayPal account via API access")}
     >
       <InputPlaceholder
         value={value ?? ""}

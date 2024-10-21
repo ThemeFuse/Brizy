@@ -9,6 +9,8 @@ class Brizy_Content_ShortcodeToPlaceholderProcessor implements Brizy_Editor_Cont
      */
     public function process( $content, Brizy_Content_Context $context ) {
 
+		if(is_null($content)) return null;
+
 		// Transform [brizy_shortcode_name attr="val"] to {{editor_shortcode_name attr='val'}}
         $regex = '@(\[)(brizy_)(.*?)(\])@';
 

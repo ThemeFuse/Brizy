@@ -422,6 +422,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$data        = $this->sanitizeJson(stripslashes( $this->param( 'data' ) ));
 			$atemplate   = $this->param( 'template' );
+			$dependencies   = json_decode(stripslashes($this->param( 'dependencies' )));
 			$dataVersion = (int) stripslashes( $this->param( 'dataVersion' ) );
 			$status      = stripslashes( $this->param( 'status' ) );
 
@@ -458,6 +459,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			if ( $atemplate ) {
 				$this->post->set_template( $atemplate );
+			}
+
+			if(is_array($dependencies)){
+			    $this->post->setDependencies($dependencies);
 			}
 
 			if ( $data ) {

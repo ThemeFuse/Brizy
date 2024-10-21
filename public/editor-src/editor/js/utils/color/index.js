@@ -38,7 +38,9 @@ export function parseColorString(colorString) {
 
 export const isHex = (v) => Hex.is(v ?? "");
 
-export function hexToRgba(hex, opacity) {
+export function hexToRgba(_hex, opacity) {
+  let hex = Hex.isShorthand(_hex) ? Hex.toLonghand(_hex) : _hex;
+
   if (isHex(hex)) {
     hex = hex.replace("#", "");
     opacity = !isNaN(opacity) ? opacity : 1;
@@ -53,7 +55,9 @@ export function hexToRgba(hex, opacity) {
   return undefined;
 }
 
-export function hexToRgb(hex) {
+export function hexToRgb(_hex) {
+  let hex = Hex.isShorthand(_hex) ? Hex.toLonghand(_hex) : _hex;
+
   if (isHex(hex)) {
     hex = hex.replace("#", "");
 

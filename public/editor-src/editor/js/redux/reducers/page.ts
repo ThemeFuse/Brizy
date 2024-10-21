@@ -2,8 +2,10 @@ import { produce } from "immer";
 import Config from "visual/global/Config";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import {
+  middleGlobalBlocksIdSelector,
   pageAssembledRawSelector,
   pageAssembledSelector,
+  popupBlocksInPageSelector,
   storeWasChangedSelector
 } from "visual/redux/selectors";
 import { ShopifyPage } from "visual/types";
@@ -33,8 +35,16 @@ export const page: RPage = (state, action, fullState) => {
         ? pageAssembledSelector(fullState)
         : pageAssembledRawSelector(fullState);
 
+      // Create globalBlocks Dependencies
+      const globalPopupsDeps: Array<string> = popupBlocksInPageSelector(
+        fullState
+      ).map((p) => p.value._id);
+      const globalBlocksDeps = middleGlobalBlocksIdSelector(fullState);
+      const dependencies = [...globalPopupsDeps, ...globalBlocksDeps];
+
       return produce<Page>(page, (draft) => {
         draft.status = status;
+        draft.dependencies = dependencies;
         draft.dataVersion = draft.dataVersion + 1;
       });
     }

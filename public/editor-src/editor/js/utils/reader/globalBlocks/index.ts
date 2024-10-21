@@ -15,6 +15,7 @@ import * as Num from "../number";
 import * as Obj from "../object";
 import * as Str from "../string";
 import * as Union from "../union";
+import { ArrayType } from "visual/utils/array/types";
 
 //#region Global Blocks Rules
 
@@ -119,6 +120,7 @@ type GBMeta = GlobalBlock["meta"];
 type GBPosition = GlobalBlock["position"];
 type GBStatus = GlobalBlock["status"];
 type GBRules = GlobalBlock["rules"];
+type GBDependency = ArrayType<GlobalBlock["dependencies"]>;
 
 const parseMeta = parseStrict<Record<string, unknown>, GBMeta>({
   // @ts-expect-error: Type "normal" | "popup" is not assignable to type "normal
@@ -170,6 +172,11 @@ export const parseGlobalBlock = (
       Obj.readKey("rules"),
       Arr.readWithItemReader(apiRuleToEditorRule),
       onNullish([] as GBRules)
+    ),
+    dependencies: pipe(
+      Obj.readKey("dependencies"),
+      Arr.readWithItemReader(Str.read),
+      onNullish([] as Array<GBDependency>)
     )
   });
 
@@ -207,8 +214,16 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
     const globalBlock = parseGlobalBlock(data);
 
     if (globalBlock) {
-      const { status, meta, uid, data, dataVersion, rules, position } =
-        globalBlock;
+      const {
+        status,
+        meta,
+        uid,
+        data,
+        dataVersion,
+        rules,
+        position,
+        dependencies
+      } = globalBlock;
       switch (meta.type) {
         case "popup": {
           output[uid] = {
@@ -218,7 +233,8 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
             status,
             meta,
             rules,
-            position
+            position,
+            dependencies
           };
           break;
         }
@@ -230,7 +246,8 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
             status,
             meta,
             rules,
-            position
+            position,
+            dependencies
           };
           break;
         }

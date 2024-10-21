@@ -11,6 +11,7 @@ export interface GlobalBlock {
   compiled?: Output;
   title?: string;
   tags?: string;
+  dependencies?: Record<string, unknown>;
 }
 
 export interface GlobalBlockConfig {

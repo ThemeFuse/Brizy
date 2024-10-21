@@ -13,7 +13,7 @@ import {
   blocksDataSelector,
   extraFontStylesSelector,
   globalBlocksAssembled2Selector,
-  pageBlocksNoRefsSelector,
+  pageBlocksDataSelector,
   pageSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
@@ -35,7 +35,7 @@ import { createScreenshot, getBlockType, openPromptCondition } from "./utils";
 
 const selector = (state: ReduxState): Selector => ({
   extraFontStyles: extraFontStylesSelector(state),
-  pageBlocks: pageBlocksNoRefsSelector(state),
+  pageBlocks: pageBlocksDataSelector(state),
   globalBlocks: globalBlocksAssembled2Selector(state),
   blocksData: blocksDataSelector(state),
   page: pageSelector(state)
@@ -79,7 +79,14 @@ export const GlobalBlockOption: Component = ({
     const blockData: Block = setIds(getBlockData(pageBlocks, _id));
 
     if (checked) {
-      if (node && blockData) {
+      if (!blockData) {
+        switchKey.current = uuid(4);
+        ToastNotification.error(t("Could not Create Global Block"));
+        PortalLoading.close(loading);
+        return;
+      }
+
+      if (node) {
         const screenshot: Screenshot | undefined = await createScreenshot(node);
         const meta: GlobalBlock["meta"] = {
           extraFontStyles,
@@ -103,6 +110,7 @@ export const GlobalBlockOption: Component = ({
           status: "draft",
           data: blockData,
           rules: [],
+          dependencies: [],
           dataVersion: 0,
           position: { align: "bottom", top: 0, bottom: 0 }
         } as GlobalBlock;
@@ -121,7 +129,8 @@ export const GlobalBlockOption: Component = ({
               dispatch(
                 makePopupToGlobalBlock({
                   block: globalBlock,
-                  fromBlockId: _id
+                  fromBlockId: _id,
+                  type: blockType === "popup" ? "popup" : "externalPopup"
                 })
               );
 
@@ -170,11 +179,11 @@ export const GlobalBlockOption: Component = ({
     } else {
       await pendingRequest();
 
-      if (isGlobalBlock()) {
+      if (globalBlocks[_id]?.data) {
         PortalLoading.close(loading);
 
         const data = {
-          block: blockData,
+          block: setIds(globalBlocks[_id].data),
           fromBlockId: _id
         };
 

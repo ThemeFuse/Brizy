@@ -721,6 +721,32 @@
     "metaPassagePaddingSuffix": "px",
     "metaPassagePaddingTop": 0,
     "metaPassagePaddingTopSuffix": "px",
-    "metaPassagePaddingType": "grouped"
+    "metaPassagePaddingType": "grouped",
+
+    "itemBgColorType": "solid",
+    "itemBgColorHex": "#ff0000",
+    "itemBgColorOpacity": 0,
+    "itemBgColorPalette": "",
+    "itemGradientColorHex": "#000000",
+    "itemGradientColorOpacity": 1,
+    "itemGradientColorPalette": "",
+    "itemGradientType": "linear",
+    "itemGradientStartPointer": 0,
+    "itemGradientFinishPointer": 100,
+    "itemGradientActivePointer": "finishPointer",
+    "itemGradientLinearDegree": 45,
+    "itemGradientRadialDegree": 0,
+
+    "itemPaddingType": "grouped",
+    "itemPadding": 0,
+    "itemPaddingSuffix": "px",
+    "itemPaddingTop": 0,
+    "itemPaddingTopSuffix": "px",
+    "itemPaddingRight": 0,
+    "itemPaddingRightSuffix": "px",
+    "itemPaddingBottom": 0,
+    "itemPaddingBottomSuffix": "px",
+    "itemPaddingLeft": 0,
+    "itemPaddingLeftSuffix": "px"
   }
 }

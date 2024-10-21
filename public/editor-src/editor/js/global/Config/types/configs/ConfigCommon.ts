@@ -22,6 +22,7 @@ import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
 import {
   FontStyle,
   GlobalBlock,
+  Page,
   PageCommon,
   Palette,
   Project,
@@ -161,9 +162,9 @@ export interface PublishedProject extends Project {
   compiled?: ProjectOutput;
 }
 
-export interface PublishedPage extends PageCommon {
+export type PublishedPage = Page & {
   compiled?: Output;
-}
+};
 
 export interface PublishedGlobalBlock extends APIGlobalBlock {
   compiled?: Output;

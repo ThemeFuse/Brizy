@@ -106,12 +106,9 @@
 
     a#off {
       cursor: default;
-      color: rgba(0, 0, 0, 0.3) !important;
-      &:hover {
-        color: rgba(0, 0, 0, 0.1) !important;
-      }
     }
 
+    & > span.pagination_ellipsis,
     & > a:not(:last-child) {
       margin-right: 0.5rem;
     }
