@@ -10,8 +10,8 @@ import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/in
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
 import Config from "visual/global/Config";
 import {
-  addFonts,
   FontsPayload,
+  addFonts,
   updateExtraFontStyles,
   updateGlobalBlock
 } from "visual/redux/actions2";
@@ -162,7 +162,7 @@ export const PromptAddPopup: FCC<Props> = ({
   const popupBlock = useMemo<Block | undefined>(
     () =>
       popups.find((block) => {
-        if (block.type === "GlobalBlock") {
+        if (block.type === "GlobalBlock" && globalBlocks[block.value._id]) {
           block = globalBlocks[block.value._id].data;
         }
         return block.value.popupId === _value;

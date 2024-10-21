@@ -31,7 +31,8 @@ const globalBlock1: GlobalBlock = {
   position: null,
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock2: GlobalBlock = {
@@ -45,7 +46,8 @@ const globalBlock2: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock3: GlobalBlock = {
@@ -59,7 +61,8 @@ const globalBlock3: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock4: GlobalBlock = {
@@ -73,7 +76,8 @@ const globalBlock4: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: normalMeta
+  meta: normalMeta,
+  dependencies: []
 };
 
 const globalBlock6: GlobalBlock = {
@@ -87,7 +91,8 @@ const globalBlock6: GlobalBlock = {
   },
   data: data,
   dataVersion: 0,
-  meta: popupMeta
+  meta: popupMeta,
+  dependencies: []
 };
 
 describe("testing blocksConditions", () => {
@@ -136,6 +141,17 @@ describe("testing blocksConditions", () => {
         block6: globalBlock6
       },
       { top: ["block2", "block3"], bottom: ["block6", "block5", "block4"] }
+    ],
+    [
+      ["block6"],
+      {
+        block2: globalBlock2,
+        block3: globalBlock3,
+        block4: globalBlock4,
+        block5: globalBlock1,
+        block6: globalBlock6
+      },
+      { top: [], bottom: [] }
     ]
   ])("getSurroundedGBIds nr %#", (pageBlockIds, globalBlocks, resolve) => {
     expect(getSurroundedGBIds(pageBlockIds, globalBlocks)).toStrictEqual(

@@ -12,6 +12,8 @@ class Brizy_Content_ReferencedGlobalBlockProcessor implements Brizy_Editor_Conte
 	 */
 	public function process( $content, Brizy_Content_Context $context ) {
 
+		if(is_null($content)) return null;
+
 		$placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider( $context );
 		$extractor           = new Extractor( $placeholderProvider );
 		$context->setProvider( $placeholderProvider );

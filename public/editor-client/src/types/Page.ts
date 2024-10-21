@@ -6,4 +6,5 @@ export interface Page {
   dataVersion: number;
   status: "draft" | "publish";
   compiled?: Output;
+  dependencies?: Record<string, unknown>;
 }

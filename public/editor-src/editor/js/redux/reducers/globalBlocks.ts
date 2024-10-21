@@ -15,6 +15,7 @@ import {
   getBlockAlignment,
   isPopup
 } from "visual/utils/blocks";
+import { getModelPopups } from "visual/utils/blocks/getModelPopups";
 import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
 
@@ -70,8 +71,16 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
     case "MAKE_POPUP_TO_GLOBAL_POPUP":
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
-      const { uid, data, status, meta, rules, dataVersion, position } =
-        action.payload.block;
+      const {
+        uid,
+        data,
+        status,
+        meta,
+        rules,
+        dataVersion,
+        position,
+        dependencies
+      } = action.payload.block;
 
       return produce(state, (draft) => ({
         [data.value._id]: {
@@ -81,7 +90,8 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           data,
           status,
           rules,
-          position
+          position,
+          dependencies
         },
         ...draft
       }));
@@ -255,6 +265,10 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           const isPopup =
             block.data.type === "SectionPopup" ||
             block.data.type === "SectionPopup2";
+
+          draft.dependencies = getModelPopups(draft.data)
+            .filter((block) => block.type === "GlobalBlock")
+            .map((b) => b.value._id);
 
           // The Popup doesn't have any positions on the page
           if (!isPopup) {

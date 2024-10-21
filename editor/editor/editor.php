@@ -367,7 +367,6 @@ class Brizy_Editor_Editor_Editor
 
     private function addPageData($config, $context)
     {
-
         $config['pageData'] = apply_filters('brizy_page_data', $this->post->createConfigData($context));
 
         return $config;
@@ -1010,7 +1009,6 @@ class Brizy_Editor_Editor_Editor
 
     private function addGlobalBlocksData($config)
     {
-
         $postTaxonomies = get_post_taxonomies($wp_post_id = (int)$config['wp']['page']);
         $postTerms = [];
         foreach ($postTaxonomies as $tax) {

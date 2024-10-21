@@ -129,7 +129,11 @@ export type ActionDeleteGlobalBlock = {
 
 export type ActionMakePopupToGlobalPopup = {
   type: "MAKE_POPUP_TO_GLOBAL_POPUP";
-  payload: { block: GlobalBlockPopup; fromBlockId: string };
+  payload: {
+    block: GlobalBlockPopup;
+    fromBlockId: string;
+    type: "popup" | "externalPopup";
+  };
 };
 
 export type ActionMakeGlobalPopupToPopup = {
@@ -316,10 +320,14 @@ export type ActionUpdateAuthorized = {
   payload: Authorized;
 };
 
+//#region Page
+
 export type ActionUpdatePageTitle = {
   type: "UPDATE_PAGE_TITLE";
   payload: string;
 };
+
+//#endregion
 
 export type ActionUpdateSyncAllowed = {
   type: "UPDATE_SYNC_ALLOWED";
@@ -444,16 +452,19 @@ export function makeGlobalToNormalBlock({
 
 export function makePopupToGlobalBlock({
   fromBlockId,
-  block
+  block,
+  type
 }: {
   fromBlockId: string;
   block: GlobalBlockPopup;
+  type: "popup" | "externalPopup";
 }): ActionMakePopupToGlobalPopup {
   return {
     type: "MAKE_POPUP_TO_GLOBAL_POPUP",
     payload: {
       fromBlockId,
-      block
+      block,
+      type
     }
   };
 }

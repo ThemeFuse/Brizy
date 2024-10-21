@@ -12,6 +12,8 @@ class Brizy_Content_WrapperToPlaceholderProcessor implements Brizy_Editor_Conten
      */
     public function process( $content, Brizy_Content_Context $context ) {
 
+		if(is_null($content)) return null;
+
 		$placeholderProvider = new Brizy_Content_Providers_WrapperPlaceholderProvider( $context );
 		$extractor           = new Extractor( $placeholderProvider );
 
