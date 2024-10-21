@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.6.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.5.8<br>
+Stable tag: 2.5.9<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,12 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.5.9 - 2024-10-21
+* Fixed: CSS styles in Hamburger Menu
+* Fixed: File upload extension issues
+* Fixed: Image links pointing incorrectly
+* Improved: Page, Popup and Global Blocks dependencies
 
 ### 2.5.8 - 2024-09-19
 * Fixed: Anchor link with dynamic ID placeholder 
