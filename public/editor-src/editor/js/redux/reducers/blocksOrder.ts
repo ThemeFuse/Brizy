@@ -75,6 +75,21 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
 
       return state;
     }
+
+    case "MAKE_POPUP_TO_GLOBAL_POPUP": {
+      const { type, block, fromBlockId } = action.payload;
+
+      if (type === "externalPopup") {
+        return replaceAt(
+          state,
+          state.findIndex((_id) => _id === fromBlockId),
+          block.data.value._id
+        );
+      }
+
+      return state;
+    }
+
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
       const { block, fromBlockId } = action.payload;
 

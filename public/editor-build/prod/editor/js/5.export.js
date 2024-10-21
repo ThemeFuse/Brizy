@@ -2,7 +2,7 @@ exports.id = 5;
 exports.ids = [5];
 exports.modules = {
 
-/***/ 7181:
+/***/ 7185:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Mixcloud_exports, {
   default: () => Mixcloud
 });
 module.exports = __toCommonJS(Mixcloud_exports);
-var import_react = __toESM(__webpack_require__(465));
-var import_utils = __webpack_require__(3793);
-var import_patterns = __webpack_require__(3796);
+var import_react = __toESM(__webpack_require__(466));
+var import_utils = __webpack_require__(3794);
+var import_patterns = __webpack_require__(3797);
 const SDK_URL = "https://widget.mixcloud.com/media/js/widgetApi.js";
 const SDK_GLOBAL = "Mixcloud";
 class Mixcloud extends import_react.Component {

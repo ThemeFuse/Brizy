@@ -3,7 +3,7 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import { GoogleFont } from "visual/types";
-import { isGlobalBlock } from "visual/types/utils";
+import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
 import { findFonts, getGoogleFonts } from "visual/utils/fonts";
 import { systemFont } from "visual/utils/fonts/utils";
 import { isPopup, isStory } from "visual/utils/models";
@@ -88,8 +88,33 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
 
   const commonConfig = { store, config };
   const state = store.getState();
-  const globalPopupsInPage = globalPopupsInPageSelector(state);
   let globalPopupsStatic = undefined;
+
+  if (isPopup(config)) {
+    const globalPopupsInPage = Object.values(
+      globalBlocksInPageSelector(state)
+    ).filter(isGlobalPopup);
+
+    if (globalPopupsInPage.length > 0) {
+      try {
+        globalPopupsStatic = await globalPopupsToStatic({
+          ...commonConfig,
+          compiledBlocks: globalPopupsInPage
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const data = await popupToStatic(commonConfig);
+    return {
+      page: data,
+      project: compiledProject,
+      globalBlocks: globalPopupsStatic
+    };
+  }
+
+  const globalPopupsInPage = globalPopupsInPageSelector(state);
 
   if (globalPopupsInPage.length > 0) {
     try {
@@ -100,15 +125,6 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  if (isPopup(config)) {
-    const data = await popupToStatic(commonConfig);
-    return {
-      page: data,
-      project: compiledProject,
-      globalBlocks: globalPopupsStatic
-    };
   }
 
   if (isStory(config)) {

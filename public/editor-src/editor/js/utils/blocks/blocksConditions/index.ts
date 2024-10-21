@@ -20,6 +20,7 @@ import {
   GlobalBlockPosition,
   Page
 } from "visual/types";
+import { isGlobalPopup } from "visual/types/utils";
 import { isTemplate } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { canUseCondition } from "../getAllowedGBIds";
@@ -202,6 +203,12 @@ export const getSurroundedGBIds = (
     if (pageBlocksIsAllGlobalBlocks) {
       pageBlocksIds.forEach((pageBlockId) => {
         const globalBlock = globalBlocks[pageBlockId];
+
+        // Case for internals/externals popup
+        // The popup don't have any position it's only one on the page
+        if (isGlobalPopup(globalBlock)) {
+          return;
+        }
 
         if (globalBlock?.position && globalBlock.position.align) {
           const { position } = globalBlock;
