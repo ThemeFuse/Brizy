@@ -204,8 +204,8 @@ class Brizy_Admin_Blocks_Main {
 			} else {
 				$ruleMatches[] = [
 					'applyFor'     => Brizy_Admin_Rule::POSTS,
-					'entityType'   => $wpPost->post_type,
-					'entityValues' => [ $wpPost->ID ],
+					'entityType'   => $wpPost ? $wpPost->post_type : null,
+					'entityValues' => $wpPost ? [$wpPost->ID] : [],
 				];
 			}
 		}
