@@ -788,7 +788,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 
 		add_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10, 2 );
-		$posts = Brizy_Editor_Post::get_post_list( $searchTerm, $postType, $excludePostType, 0, 10000 );
+		$posts = Brizy_Editor_Post::get_post_list( $searchTerm, $postType, $excludePostType, 0, 100000 );
 		remove_filter( 'posts_where', array( $this, 'brizy_post_title_filter' ), 10 );
 
 		$this->success( array( 'filter_term' => $searchTerm, 'posts' => $posts ) );
