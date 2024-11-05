@@ -13,7 +13,8 @@ class Brizy_Editor_Editor_ModuleGroups_SocialProvider implements Brizy_Editor_Ed
 			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'social', 'brizy' ), [
                 "Facebook",
                 "Twitter",
-                "FacebookComments"
+                "FacebookComments",
+				'InstagramFeed'
             ], 450 ),
 		];
 	}
