@@ -788,13 +788,15 @@ export const updatePage = (
     hash
   });
   const { is_autosave = 1 } = meta;
-  const { id, status, data, dataVersion, compiled } = stringifyPage(page);
+  const { id, status, data, dataVersion, compiled, dependencies } =
+    stringifyPage(page);
   const body = new URLSearchParams({
     id,
     status,
     data,
     dataVersion,
     ...(compiled && { compiled }),
+    ...(dependencies && { dependencies }),
     is_autosave: `${is_autosave}`
   });
 
@@ -1187,8 +1189,18 @@ export const createGlobalBlock = async (
     action: actions.createGlobalBlock,
     version: editorVersion
   });
-  const { uid, title, tags, data, position, rules, meta, status, compiled } =
-    stringifyGlobalBlock(globalBlock);
+  const {
+    uid,
+    title,
+    tags,
+    data,
+    position,
+    rules,
+    meta,
+    status,
+    compiled,
+    dependencies
+  } = stringifyGlobalBlock(globalBlock);
 
   const body = new URLSearchParams({
     uid,
@@ -1197,6 +1209,7 @@ export const createGlobalBlock = async (
     meta,
     status,
     ...(compiled && { compiled }),
+    ...(dependencies && { dependencies }),
     title: title ?? "",
     tags: tags ?? "",
     position: position ?? ""
@@ -1234,8 +1247,18 @@ export const updateGlobalBlock = async (
     version: editorVersion
   });
 
-  const { uid, title, tags, data, position, rules, meta, status, compiled } =
-    stringifyGlobalBlock(globalBlock);
+  const {
+    uid,
+    title,
+    tags,
+    data,
+    position,
+    rules,
+    meta,
+    status,
+    compiled,
+    dependencies
+  } = stringifyGlobalBlock(globalBlock);
   const body = new URLSearchParams({
     uid,
     data,
@@ -1243,6 +1266,7 @@ export const updateGlobalBlock = async (
     meta,
     status,
     ...(compiled && { compiled }),
+    ...(dependencies && { dependencies }),
     title: title ?? "",
     tags: tags ?? "",
     position: position ?? "",
@@ -1290,7 +1314,8 @@ export const updateGlobalBlocks = async (
         rules,
         meta,
         status,
-        compiled
+        compiled,
+        dependencies
       } = stringifyGlobalBlock(globalBlock);
 
       acc.uid.push(uid);
@@ -1302,6 +1327,7 @@ export const updateGlobalBlocks = async (
       acc.title.push(title ?? "");
       acc.tags.push(tags ?? "");
       acc.compiled.push(compiled ?? "");
+      acc.dependencies.push(dependencies ?? "");
 
       return acc;
     },
@@ -1315,7 +1341,8 @@ export const updateGlobalBlocks = async (
       title: [],
       tags: [],
       media: [],
-      compiled: []
+      compiled: [],
+      dependencies: []
     } as {
       uid: Array<string>;
       status: Array<string>;
@@ -1327,6 +1354,7 @@ export const updateGlobalBlocks = async (
       tags: Array<string>;
       media: Array<string>;
       compiled: Array<string>;
+      dependencies: Array<string>;
     }
   );
 
@@ -1341,6 +1369,7 @@ export const updateGlobalBlocks = async (
     tags: data.tags,
     media: data.media,
     compiled: data.compiled,
+    dependencies: data.dependencies,
     is_autosave: `${is_autosave}`
   });
   const body = new URLSearchParams(dataEncode);

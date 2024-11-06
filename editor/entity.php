@@ -5,6 +5,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	const COMPILER_EXTERNAL = 'server';
 
 	const BRIZY_DATA_VERSION_KEY = 'brizy_data_version';
+	const BRIZY_DEPENDENCIES_KEY = 'brizy_dependencies';
 
 	/**
 	 * @var string
@@ -33,6 +34,11 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 	protected $dataVersion = null;
 
 	/**
+	 * @var array
+	 */
+	protected $dependencies = [];
+
+	/**
 	 * @var null
 	 */
 	protected $compiler = self::COMPILER_EXTERNAL;
@@ -50,6 +56,8 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 		$this->setWpPostId( $postId );
 
 		$this->loadInstanceData();
+
+		$this->dependencies = get_post_meta( $this->getWpPostId(), self::BRIZY_DEPENDENCIES_KEY, true );
 	}
 
 	/**
@@ -221,6 +229,8 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 		// check entity versions before saving.
 		if ( (int) $autosave === 0 ) {
 			$this->saveDataVersion();
+
+			update_post_meta( $this->getWpPostId(), self::BRIZY_DEPENDENCIES_KEY, $this->dependencies );
 		}
 
 		$this->createUid();
@@ -403,4 +413,23 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
 		return $this->uid = $uid;
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getDependencies() {
+		return $this->dependencies;
+	}
+
+	/**
+	 * @param array $dependencies
+	 *
+	 * @return Brizy_Editor_Entity
+	 */
+	public function setDependencies( $dependencies ) {
+		$this->dependencies = $dependencies;
+
+		return $this;
+	}
+
 }

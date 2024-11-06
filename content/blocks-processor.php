@@ -12,6 +12,8 @@ class Brizy_Content_BlocksProcessor implements Brizy_Editor_Content_ProcessorInt
      */
     public function process( $content, Brizy_Content_Context $context ) {
 
+		 if(is_null($content)) return null;
+
 		$placeholderProvider = new Brizy_Content_Providers_GlobalBlocksProvider( $context );
 		$extractor           = new Extractor( $placeholderProvider );
 

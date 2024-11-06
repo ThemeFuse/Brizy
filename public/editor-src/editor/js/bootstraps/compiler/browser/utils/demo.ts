@@ -45,5 +45,6 @@ export const getDemoPage = (): PageCommon => ({
   id: "demo-id",
   slug: "",
   status: "publish",
-  title: "Demo page"
+  title: "Demo page",
+  dependencies: []
 });

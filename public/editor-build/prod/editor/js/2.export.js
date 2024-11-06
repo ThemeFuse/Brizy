@@ -2,7 +2,7 @@ exports.id = 2;
 exports.ids = [2];
 exports.modules = {
 
-/***/ 7176:
+/***/ 7180:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Facebook_exports, {
   default: () => Facebook
 });
 module.exports = __toCommonJS(Facebook_exports);
-var import_react = __toESM(__webpack_require__(465));
-var import_utils = __webpack_require__(3793);
-var import_patterns = __webpack_require__(3796);
+var import_react = __toESM(__webpack_require__(466));
+var import_utils = __webpack_require__(3794);
+var import_patterns = __webpack_require__(3797);
 const SDK_URL = "https://connect.facebook.net/en_US/sdk.js";
 const SDK_GLOBAL = "FB";
 const SDK_GLOBAL_READY = "fbAsyncInit";
