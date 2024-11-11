@@ -282,76 +282,7 @@ class Brizy_Editor_Editor_Editor {
 				[
 					"id"       => "addElements",
 					"type"     => "addElements",
-					"elements" => [
-						[
-							"label"       => "grid",
-							"moduleNames" => [
-								"Columns",
-								"Row"
-							],
-							"position"    => 50
-						],
-						[
-							"label"       => "essentials",
-							"moduleNames" => [
-								"Text",
-								"Image",
-								"Button",
-								"Icon",
-								"Spacer",
-								"Map",
-								"Form2",
-								"Line",
-								"MenuSimple",
-								"Menu",
-								"Search"
-							],
-							"position"    => 300
-						],
-						[
-							"label"       => "media",
-							"moduleNames" => [
-								"ImageGallery",
-								"Video",
-								"Audio",
-								"VideoPlaylist"
-							],
-							"position"    => 350
-						],
-						[
-							"label"       => "content",
-							"moduleNames" => [
-								"IconText",
-								"Lottie",
-								"Embed",
-								"StarRating",
-								"Alert",
-								"Counter",
-								"Countdown2",
-								"ProgressBar",
-								"Calendly",
-								"Carousel",
-								"Tabs",
-								"Accordion",
-								"Switcher",
-								"Table",
-								"Timeline",
-								"Login",
-								"Flipbox",
-								"Paypal"
-							],
-							"position"    => 400
-						],
-						[
-							"label"       => "social",
-							"moduleNames" => [
-								"Facebook",
-								"Twitter",
-								"FacebookComments"
-							],
-							"position"    => 450
-						]
-					]
+					"elements" => []
 				],
 				[
 					"id"   => "reorderBlock",
@@ -437,9 +368,15 @@ class Brizy_Editor_Editor_Editor {
 		if ( $context == self::COMPILE_CONTEXT ) {
 			return $config;
 		}
-		$moduleGroupCollector        = new Brizy_Editor_Editor_ModuleGroups_Manager();
-		$config['ui']['leftSidebar'] = array_merge( $config['ui']['leftSidebar'], [ 'moduleGroups' => $moduleGroupCollector->getAll( $config ) ] );
-
+		$moduleGroupCollector = new Brizy_Editor_Editor_ModuleGroups_Manager();
+		if ( isset( $config['ui']['leftSidebar']['topTabsOrder'] ) ) {
+			foreach ( $config['ui']['leftSidebar']['topTabsOrder'] as $i=>$conf ) {
+				if ( $conf['id'] == 'addElements' ) {
+					$config['ui']['leftSidebar']['topTabsOrder'][$i]['elements'] = $moduleGroupCollector->getAll( $config );
+					break;
+				}
+			}
+		}
 		return $config;
 	}
 
