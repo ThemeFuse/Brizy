@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React from "react";
+import Config, { isWp } from "visual/global/Config";
 import { CheckGroup as CheckboxControls } from "visual/component/Controls/CheckGroup";
 import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -10,7 +11,6 @@ import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import { css } from "visual/utils/cssStyle";
-import { IS_WP } from "visual/utils/env";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
@@ -35,12 +35,12 @@ const getFieldType = (type) => {
   }
 };
 
-const getFieldName = (type) => {
+const getFieldName = (type, isWp) => {
   switch (type) {
     case "Email":
-      return IS_WP ? "log" : "email";
+      return isWp ? "log" : "email";
     case "Password":
-      return IS_WP ? "pwd" : "password";
+      return isWp ? "pwd" : "password";
   }
 };
 
@@ -55,6 +55,7 @@ class LoginField extends EditorComponent {
     value: "",
     active: {}
   };
+  isWp = isWp(Config.getAll());
 
   handleActive = (active) => {
     this.setState({ active });
@@ -164,7 +165,7 @@ class LoginField extends EditorComponent {
               <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
                 <div className="brz-login__field">
                   <input
-                    name={IS_WP ? "log" : "email"}
+                    name={this.isWp ? "log" : "email"}
                     className="brz-input"
                     type="text"
                     placeholder={this.getPlaceholder(v)}
@@ -250,7 +251,7 @@ class LoginField extends EditorComponent {
                 <input
                   type={getFieldType(_type)}
                   maxLength={isEmail ? 255 : undefined}
-                  name={getFieldName(_type)}
+                  name={getFieldName(_type, this.isWp)}
                   className="brz-input"
                   placeholder={this.getPlaceholder(v)}
                   defaultValue=""

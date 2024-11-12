@@ -40,6 +40,7 @@ import { style, styleInner } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarCloseConfig from "./toolbarClose";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import { ContextMenuDisabled } from "visual/component/ContextMenu";
 
 /**
  * @deprecated use import {SectionPopup2Instances} from "visual/editorComponents/SectionPopup2/instances"
@@ -258,7 +259,9 @@ class SectionPopup2 extends EditorComponent {
               </Toolbar>
 
               <div className={classNameContainer}>
-                <EditorArrayComponent {...itemsProps} />
+                <ContextMenuDisabled>
+                  <EditorArrayComponent {...itemsProps} />
+                </ContextMenuDisabled>
               </div>
             </div>
           </SortableZIndex>

@@ -1,4 +1,4 @@
-import { match, optional, parse } from "fp-utilities";
+import { match, parse } from "fp-utilities";
 import Config, { isWp } from "visual/global/Config";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
@@ -16,7 +16,6 @@ import {
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
 import { mPipe } from "visual/utils/fp/mPipe";
-import { pipe } from "visual/utils/fp/pipe";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import {
@@ -26,7 +25,7 @@ import {
 } from "visual/utils/traverse";
 import { getUsedModelsImages } from "visual/utils/traverse/images";
 import { onNullish } from "visual/utils/value";
-import { BlogSourceItem, CollectionSourceItem, Rule } from "./types";
+import { BlogSourceItem } from "./types";
 
 //#region Saved blocks | Saved layout
 
@@ -58,23 +57,6 @@ export const makeBlockMeta = (
 //#endregion
 
 //#region Page
-
-export const parseCollectionSourceItem = parse<
-  Record<string, unknown>,
-  CollectionSourceItem
->({
-  id: mPipe(Obj.readKey("id"), Str.read),
-  title: mPipe(Obj.readKey("title"), Str.read, onNullish("")),
-  type: mPipe(Obj.readKey("type"), Str.read)
-});
-
-export const parsePageRules = parse<Record<string, unknown>, Rule>({
-  id: pipe(mPipe(Obj.readKey("id"), Str.read), onNullish("")),
-  blog_id: optional(mPipe(Obj.readKey("blog_id"), Str.read)),
-  title: pipe(mPipe(Obj.readKey("title"), Str.read), onNullish("")),
-  type: pipe(mPipe(Obj.readKey("type"), Str.read), onNullish(""))
-});
-
 export const parseBlogSourceItem = parse<
   Record<string, unknown>,
   BlogSourceItem

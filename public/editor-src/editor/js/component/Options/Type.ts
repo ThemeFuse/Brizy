@@ -18,10 +18,12 @@ export type OnChange<T, M = GlobalMeta> = (v: T, m?: M) => void;
 
 export type SimpleValue<T> = { value: T };
 
+export type FromElementModelGetterValue = MValue<Literal | boolean>;
+
 export type FromElementModelGetter = (
   k: string,
   withoutId?: boolean
-) => MValue<Literal>;
+) => FromElementModelGetterValue;
 
 export type FromElementModel<T extends OptionName> = (
   get: FromElementModelGetter

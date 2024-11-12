@@ -77,7 +77,7 @@ export function getItems({
       id: "toolbarColor",
       type: "popover",
       config: {
-        size: "auto",
+        size: "medium",
         title: t("Colors"),
         icon: {
           style: {
@@ -146,7 +146,7 @@ export function getItems({
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      position: 30,
+      position: 110,
       devices: "desktop",
       title: t("Settings")
     }

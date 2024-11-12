@@ -36,7 +36,8 @@
 
     "families": {
       "fontFamily": "lato",
-      "subTitleFontFamily": "lato"
+      "subTitleFontFamily": "lato",
+      "controlsFontFamily": "lato"
     },
 
     "fontStyle": "",
@@ -73,6 +74,26 @@
     "subTitleUppercase": false,
     "subTitleLowercase": false,
 
+    "controlsFontStyle": "",
+    "controlsFontFamilyType": "google",
+    "controlsFontSize": 16,
+    "controlsFontSizeSuffix": "px",
+    "controlsFontWeight": 400,
+    "controlsLineHeight": 1.1,
+    "controlsLetterSpacing": 0,
+    "controlsVariableFontWeight": 400,
+    "controlsFontWidth": 100,
+    "controlsFontSoftness": 0,
+    "controlsBold": false,
+    "controlsItalic": false,
+    "controlsUnderline": false,
+    "controlsStrike": false,
+    "controlsUppercase": false,
+    "controlsLowercase": false,
+
+    "controlsIconCustomSize": 16,
+    "controlsIconCustomSizeSuffix": "px",
+
     "colorType": "solid",
 
     "colorHex": "#0000ee",
@@ -97,6 +118,24 @@
 
     "tempIconColorOpacity": 1.0,
     "tempIconColorPalette": "color8",
+
+    "iconControlsColorType": "solid",
+
+    "iconControlsColorHex": "#0000ee",
+    "iconControlsColorOpacity": 1,
+    "iconControlsColorPalette": "color2",
+
+    "controlsBgColorType": "solid",
+
+    "controlsBgColorHex": "#0000ee",
+    "controlsBgColorOpacity": 1,
+    "controlsBgColorPalette": "color6",
+
+    "controlsSliderColorType": "solid",
+
+    "controlsSliderColorHex": "#05CAB6",
+    "controlsSliderColorOpacity": 1,
+    "controlsSliderColorPalette": "color3",
 
     "subTitleColorHex": "#0000ee",
     "subTitleColorOpacity": 1.0,

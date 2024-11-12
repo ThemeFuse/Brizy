@@ -20,6 +20,10 @@ import {
   GlobalBlockPosition,
   Page
 } from "visual/types";
+import {
+  ECWID_PRODUCT_CATEGORY_TYPE,
+  ECWID_PRODUCT_TYPE
+} from "visual/utils/ecwid";
 import { isGlobalPopup } from "visual/types/utils";
 import { isTemplate } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
@@ -41,13 +45,8 @@ import {
 export const PAGES_GROUP_ID = 1;
 export const CATEGORIES_GROUP_ID = 2;
 export const TEMPLATES_GROUP_ID = 16;
-
-// take a look where we can move this constants
-
 export const TEMPLATE_TYPE = "editor-template";
 export const CUSTOMER_TYPE = "customer";
-export const ECWID_PRODUCT_TYPE = "ecwid-product";
-export const ECWID_PRODUCT_CATEGORY_TYPE = "ecwid-product-category";
 
 function getGBIdsInPage(blocksOrder: PB, globalBlocks: GB): PB {
   return blocksOrder.filter((id) => globalBlocks[id]);

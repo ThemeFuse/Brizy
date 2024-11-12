@@ -1,6 +1,10 @@
 import { ElementProps } from "visual/component/Elements/Types";
 import { Active } from "../../type";
 import React from "react";
+import { MValue } from "visual/utils/value";
+import * as LinkTarget from "visual/component/Link/types/Target";
+import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
+import * as LinkType from "visual/component/Link/types/Type";
 
 type CheckboxActive = (active: Record<string, boolean>) => React.JSX.Element;
 
@@ -24,6 +28,11 @@ export interface CheckboxItemProps extends Common {
   handleChangeActive: (index: Active) => void;
   renderCheckboxIconPreview: CheckboxActive;
   renderCheckboxIconEditor: CheckboxActive;
+  typeCheckbox?: LinkType.Type;
+  hrefCheckbox?: MValue<string>;
+  targetCheckbox?: MValue<LinkTarget.Target>;
+  relCheckbox?: MValue<string>;
+  slideCheckbox?: MValue<StoryAnchorAttribute>;
 }
 
 export interface RadioItemProps extends Common {

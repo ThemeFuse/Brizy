@@ -2,7 +2,7 @@ import classnames from "classnames";
 import React, { Component } from "react";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { dataPeople } from "./dataPeople";
+import { getDataSkin } from "./getDataSkin";
 
 class WPComments extends Component {
   static defaultProps = {
@@ -161,7 +161,7 @@ class WPComments extends Component {
 
   renderForEdit() {
     const { skin, review } = this.props;
-    const comments = dataPeople[skin];
+    const comments = getDataSkin()[skin];
 
     const commentType = review === "true" ? "review" : "comment";
     const reviewText =

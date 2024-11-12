@@ -353,6 +353,7 @@ class Column extends EditorComponent {
           options={options}
           target={"parent"}
           isHidden={isHidden}
+          withoutWrapper={true}
         >
           {this.renderContent(v, vs, vd)}
         </HoverAnimation>
@@ -457,6 +458,7 @@ class Column extends EditorComponent {
                 options={options}
                 target={"parent"}
                 isHidden={isHidden}
+                withoutWrapper={true}
               >
                 {this.renderContent(v, vs, vd)}
               </HoverAnimation>

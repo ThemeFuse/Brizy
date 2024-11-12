@@ -102,6 +102,7 @@ import Video from "./Video";
 import VideoPlaylist from "./VideoPlaylist";
 import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Wrapper from "./Wrapper";
+import InstagramFeed from "./InstagramFeed";
 
 export default {
   Page,
@@ -197,6 +198,7 @@ export default {
   ShareButton,
   ShareButtonItem,
   Paypal,
+  InstagramFeed,
 
   // DC
   PostTitle,

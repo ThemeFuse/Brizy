@@ -20,6 +20,7 @@ export const getComponents = (
     ...(config.ui?.publish?.handler ? [PublishButton] : [])
   ];
 };
+
 export default [
   HelpButton,
   HiddenElementsToggle,

@@ -1,12 +1,9 @@
 import classnames from "classnames";
 import React from "react";
-import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
-import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { css } from "visual/utils/cssStyle";
-import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { getUrlQueryParam } from "visual/utils/url";
 import {
@@ -16,6 +13,14 @@ import {
 import defaultValue from "./defaultValue.json";
 import { styleContent } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import { isCustomVideo } from "visual/component/Controls/VideoPlaylist/utils";
+import {
+  ExternalVideoEdit,
+  CustomVideoEdit,
+  PlaylistPreview,
+  Sidebar
+} from "visual/component/Controls/VideoPlaylist";
+import { getVideoAttributes } from "./utils";
 
 class VideoPlaylistItem extends EditorComponent {
   static get componentId() {
@@ -24,16 +29,21 @@ class VideoPlaylistItem extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleTextChange = (title) => {
+  handleTitleChange = (title) => {
     this.patchValue({ title });
   };
 
-  handleText2Change = (subTitle) => {
+  handleSubtitleChange = (subTitle) => {
     this.patchValue({ subTitle });
   };
 
   getVideoSrc(v) {
-    const { video, controls, start, end, branding, intro, loop } = v;
+    const { video, controls, start, end, branding, intro, loop, type } = v;
+
+    if (isCustomVideo(type)) {
+      return video;
+    }
+
     const videoSrc = getVideoData(video);
 
     return videoSrc
@@ -63,7 +73,11 @@ class VideoPlaylistItem extends EditorComponent {
     }
   }
 
-  renderForEdit(v, vs, vd) {
+  handleCoverIconClick(e) {
+    e.preventDefault();
+  }
+
+  renderSidebar(v, vs, vd) {
     const {
       video,
       title,
@@ -71,9 +85,15 @@ class VideoPlaylistItem extends EditorComponent {
       coverImageSrc,
       coverImageFileName,
       coverSizeType,
-      customCSS
+      controls,
+      customCSS,
+      start,
+      end,
+      loop,
+      type
     } = v;
-    const { onActiveItem, active } = this.props;
+
+    const { onClick, active } = this.props;
     const videoSrc = this.getVideoSrc(v);
     const coverUrl = getImageUrl({
       uid: coverImageSrc,
@@ -93,35 +113,117 @@ class VideoPlaylistItem extends EditorComponent {
     );
 
     const imgHref = this.getImageHref(v);
-    const content = v.coverImageSrc ? (
-      <img className="brz-img" src={coverUrl} alt="cover" />
-    ) : video ? (
-      <img
-        className="brz-img"
-        src={`https://img.youtube.com/vi/${imgHref}/hqdefault.jpg`}
-        alt="cover"
-      />
-    ) : (
-      <Placeholder icon="play" />
-    );
+    const attributes = getVideoAttributes({
+      videoSrc,
+      start,
+      end,
+      loop,
+      controls
+    });
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
         <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <div
+          <Sidebar
+            videoSrc={video}
+            imgHref={imgHref}
             className={classNameContent}
-            {...makeDataAttr({ name: "link", value: videoSrc })}
-            onClick={onActiveItem}
-          >
-            <div className="brz-video-playlist-video-elem">{content}</div>
-            <div className="brz-video-playlist-title-video">
-              <TextEditor value={title} onChange={this.handleTextChange} />
-              <TextEditor value={subTitle} onChange={this.handleText2Change} />
-            </div>
-          </div>
+            coverUrl={coverUrl}
+            onClick={onClick}
+            coverImageSrc={coverImageSrc}
+            title={title}
+            subTitle={subTitle}
+            handleTitleChange={this.handleTitleChange}
+            handleSubtitleChange={this.handleSubtitleChange}
+            attributes={attributes}
+            type={type}
+          />
         </CustomCSS>
       </Toolbar>
     );
+  }
+
+  renderVideoEdit(v) {
+    const { type, coverImageSrc, start, end, controls, loop } = v;
+    const videoSrc = this.getVideoSrc(v);
+    const attributes = getVideoAttributes({
+      videoSrc,
+      start,
+      end,
+      loop,
+      controls
+    });
+
+    if (isCustomVideo(type)) {
+      return (
+        <CustomVideoEdit
+          coverImageSrc={coverImageSrc}
+          start={start}
+          end={end}
+          controls={controls}
+          loop={loop}
+          videoSrc={videoSrc}
+          type={type}
+          attributes={attributes}
+          hasPauseIcon={false}
+          hasUnmuteIcon={false}
+          handleCoverIconClick={this.handleCoverIconClick}
+        />
+      );
+    }
+
+    return (
+      <ExternalVideoEdit
+        coverImageSrc={coverImageSrc}
+        videoSrc={videoSrc}
+        attributes={attributes}
+        handleCoverIconClick={this.handleCoverIconClick}
+      />
+    );
+  }
+
+  renderVideoPreview(v) {
+    const { type, coverImageSrc, start, end, controls, loop } = v;
+    const videoSrc = this.getVideoSrc(v);
+    const attributes = getVideoAttributes({
+      videoSrc,
+      start,
+      end,
+      loop,
+      controls
+    });
+
+    return (
+      <PlaylistPreview
+        coverImageSrc={coverImageSrc}
+        start={start}
+        end={end}
+        controls={controls}
+        loop={loop}
+        videoSrc={videoSrc}
+        type={type}
+        attributes={attributes}
+        hasPauseIcon
+        hasUnmuteIcon
+        handleCoverIconClick={this.handleCoverIconClick}
+      />
+    );
+  }
+
+  renderForEdit(v, vs, vd) {
+    const { renderType } = this.props;
+
+    return renderType === "video"
+      ? this.renderVideoEdit(v)
+      : this.renderSidebar(v, vs, vd);
+  }
+
+  renderForView(v, vs, vd) {
+    const { renderType } = this.props;
+
+    return renderType === "video"
+      ? this.renderVideoPreview(v)
+      : this.renderSidebar(v, vs, vd);
   }
 }
 

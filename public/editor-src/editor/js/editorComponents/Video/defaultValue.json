@@ -17,9 +17,11 @@
     "lightbox": "off",
 
     "images": {
-      "coverImageSrc": ""
+      "coverImageSrc": "",
+      "maskCustomUploadImageSrc": ""
     },
     "coverImageFileName": null,
+    "maskCustomUploadImageFileName": "",
 
     "coverImageSrcPopulation": "",
     "coverImageSrcPopulationEntityType": "",
@@ -34,6 +36,12 @@
 
     "coverImageExtension": "",
     "coverImageType": "internal",
+
+    "maskCustomUploadImageWidth": 0,
+    "maskCustomUploadImageHeight": 0,
+
+    "maskCustomUploadImageExtension": "",
+    "maskCustomUploadImageType": "internal",
 
     "coverPositionY": 50,
     "coverPositionX": 50,
@@ -187,6 +195,17 @@
     "tempBorderTopRightRadiusSuffix": "px",
     "tempBorderBottomRightRadiusSuffix": "px",
     "tempBorderBottomLeftRadiusSuffix": "px",
+
+    "maskShape": "none",
+    "maskSize": "cover",
+    "maskPosition": "center center",
+    "maskRepeat": "no-repeat",
+    "maskScale": 50,
+    "maskScaleSuffix": "%",
+    "maskPositiony": 3,
+    "maskPositionySuffix": "%",
+    "maskPositionx": 3,
+    "maskPositionxSuffix": "%",
 
     "boxShadow": "none",
 

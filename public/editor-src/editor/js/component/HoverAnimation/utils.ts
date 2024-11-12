@@ -1,4 +1,3 @@
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Value } from "visual/utils/options/Animation/types/Value";
 import { isNullish } from "visual/utils/value";
 import { getAnimations } from "./animations";
@@ -40,12 +39,6 @@ export const isMultiAnimation = (
 ): keyframes is MultiAnimation => {
   return !Array.isArray(keyframes) && keyframes !== undefined;
 };
-export const disabledHoverForElements = [
-  ElementTypes.Image,
-  ElementTypes.Map,
-  ElementTypes.Video,
-  ElementTypes.ImageGallery
-];
 
 export const setAttribute = <T>(
   key: string,

@@ -1,5 +1,6 @@
 import {
   GenericToolbarItemType,
+  OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import { filter } from "visual/utils/options/filter";
@@ -26,7 +27,7 @@ const hasStates = (item: ToolbarItemType): boolean => {
     : false;
 };
 
-export const bindStateToOption = <T extends ToolbarItemType>(
+export const bindStateToOption = <T extends OptionDefinition | ToolbarItemType>(
   states: State.State[],
   option: T,
   device: ResponsiveMode

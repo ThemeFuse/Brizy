@@ -1,0 +1,157 @@
+@mixin custom-video {
+  .brz-video-playlist-main__custom,
+  .brz-video-elem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 150px;
+    padding-top: 0 !important;
+    flex-direction: column;
+
+    video {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: auto;
+      background: transparent;
+      object-fit: cover;
+    }
+
+    .brz-video-custom-video-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 20px;
+      padding-right: 20px;
+      width: 100%;
+      height: 50px;
+      z-index: 999;
+    }
+
+    .brz-video-custom-play-pause-btn {
+      display: flex;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .brz-video-custom-current-time {
+      margin-left: 25px;
+      text-decoration: inherit;
+    }
+
+    .brz-video-custom-total-time {
+      margin-left: 15px;
+      text-decoration: inherit;
+    }
+
+    .brz-video-custom-slider {
+      position: relative;
+      flex-grow: 1;
+      cursor: pointer;
+
+      .brz-video-custom-progress {
+        border-radius: inherit;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0 auto;
+        background-repeat: no-repeat;
+        opacity: 0.35;
+      }
+    }
+
+    .brz-video-custom-controls {
+      display: flex;
+      flex-grow: 1;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 3;
+
+      .brz-video-custom-slider {
+        margin-left: 16px;
+        margin-right: 16px;
+        border-radius: 5px;
+        height: 8px;
+        overflow: hidden;
+
+        .brz-video-custom-progress {
+          height: 100%;
+        }
+      }
+
+      span {
+        cursor: default;
+      }
+    }
+
+    .brz-video-custom-controls:empty {
+      display: none;
+    }
+
+    .brz-video-custom-volume {
+      position: relative;
+      display: flex;
+      margin-left: 15px;
+      justify-content: center;
+      align-items: center;
+      z-index: 3;
+
+      .brz-video-custom-fullscreen-btn {
+        display: flex;
+      }
+
+      .brz-video-custom-fullscreen-icon {
+        margin-right: 15px;
+        cursor: pointer;
+      }
+
+      .brz-video-custom-volume-btn {
+        display: flex;
+        cursor: pointer;
+      }
+
+      .brz-video-custom-volume-controls {
+        display: flex;
+        width: 60px;
+        height: 8px;
+        margin-left: 10px;
+        border-radius: 5px;
+        flex-direction: column;
+        overflow: hidden;
+
+        .brz-video-custom-progress {
+          bottom: 0;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .brz-video-custom-fullScreen-window-show {
+    video {
+      padding-bottom: 50px;
+    }
+
+    .brz-video-custom-video-controls {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}

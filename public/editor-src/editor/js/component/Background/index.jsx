@@ -89,7 +89,7 @@ const BackgroundContainer = ({ value, meta, children }) => {
     ...(media &&
       bg && {
         style: {
-          "--brz-background-image": `url("${bg}")`
+          "--brz-background-image": `url('${bg}')`
         }
       })
   };

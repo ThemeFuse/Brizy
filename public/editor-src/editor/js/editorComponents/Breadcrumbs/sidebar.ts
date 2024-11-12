@@ -2,15 +2,17 @@ import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { Value } from "./types";
 
-const helperHTML = `
+const getHtml = () => {
+  return `
 <p class="brz-p">${t(
-  "You can use the following selectors to create targeted CSS."
-)}</p>
+    "You can use the following selectors to create targeted CSS."
+  )}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
+};
 
 export const getItems: GetItems<Value> = () => {
   return [
@@ -49,7 +51,7 @@ export const getItems: GetItems<Value> = () => {
                       position: 45,
                       display: "block",
                       devices: "desktop",
-                      helper: { content: helperHTML },
+                      helper: { content: getHtml() },
                       placeholder: `element { ${t("CSS goes here")} }`
                     },
                     {

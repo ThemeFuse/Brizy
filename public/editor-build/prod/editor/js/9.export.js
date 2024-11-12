@@ -2,7 +2,7 @@ exports.id = 9;
 exports.ids = [9];
 exports.modules = {
 
-/***/ 7181:
+/***/ 6985:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Streamable_exports, {
   default: () => Streamable
 });
 module.exports = __toCommonJS(Streamable_exports);
-var import_react = __toESM(__webpack_require__(466));
-var import_utils = __webpack_require__(3794);
-var import_patterns = __webpack_require__(3797);
+var import_react = __toESM(__webpack_require__(470));
+var import_utils = __webpack_require__(3805);
+var import_patterns = __webpack_require__(3808);
 const SDK_URL = "https://cdn.embed.ly/player-0.1.0.min.js";
 const SDK_GLOBAL = "playerjs";
 class Streamable extends import_react.Component {

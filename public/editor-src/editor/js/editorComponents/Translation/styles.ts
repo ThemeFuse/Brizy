@@ -19,7 +19,7 @@ export function style(
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
-        // "cssStyleBorderRadius",
+        "cssStyleBorderRadius",
         "cssStyleBoxShadow",
         "cssStyleSizeWidth",
         "cssStyleSizeHeight",
@@ -60,7 +60,8 @@ export function style(
         "cssStyleBgColor",
         "cssStyleBorder",
         "cssStyleBoxShadow",
-        "cssStyleElementTranslationAlign"
+        "cssStyleElementTranslationAlign",
+        "cssStyleBorderRadius"
       ],
       interval: [
         "cssStyleHoverTransition",

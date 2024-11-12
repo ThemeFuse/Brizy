@@ -6,6 +6,7 @@ import {
 import { MValue } from "visual/utils/value";
 import { Literal } from "../types/Literal";
 import { TypeChoices } from "./types";
+import { Obj } from "@brizy/readers";
 
 type Options = DCGroup<"wp"> | DCGroup<"cloud">;
 
@@ -91,3 +92,6 @@ export const getDynamicContentChoices = (
 
   return [...choices, ...choicesReference];
 };
+
+export const isChoice = (v: unknown): v is Choice =>
+  Obj.isObject(v) && !Array.isArray(v) && Obj.hasKeys(["title", "value"], v);

@@ -1,10 +1,12 @@
+import { Str } from "@brizy/readers";
 import { Props as TabsOptionProps } from "visual/component/Options/types/dev/Tabs";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import Config from "visual/global/Config";
 import { loadCollectionItems, searchCollectionItems } from "visual/utils/api";
 import { ArrayType } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
-import { Context, V, VDecoded } from "../types";
+import { MValue } from "visual/utils/value";
+import { CloudComponentConfig, Context, V, VDecoded } from "../types";
 import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
 import {
   createFieldCollectionId,
@@ -15,21 +17,33 @@ import { orderByConverter } from "./utils.common";
 
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
 
-export function tabFilter(v: V, context: Context): TabOptionType {
+export function tabFilter(
+  v: V,
+  context: Context,
+  componentConfig: MValue<CloudComponentConfig>
+): TabOptionType {
   const config = Config.getAll();
 
+  const vd = decodeV(v);
+
+  const { exclude, querySource, getIncludeDisabledValue } =
+    componentConfig ?? {};
   const { elements = {} } = config;
   const { posts: postsElement } = elements ?? {};
 
-  const disableExclude = postsElement?.exclude === false;
+  const disableExclude = exclude === false || postsElement?.exclude === false;
   const disableOffset = postsElement?.offset === false;
   const disableOrderBy = postsElement?.orderBy === false;
   const disableOrder = postsElement?.order === false;
-  const disableQuerySource = postsElement?.querySource === false;
+  const disableQuerySource =
+    querySource === false || postsElement?.querySource === false;
 
-  const vd = decodeV(v);
   const isPosts = vd.type === "posts";
   const isCurrentQuery = vd.source === CURRENT_CONTEXT_TYPE;
+  const isIncludeDisabled =
+    typeof getIncludeDisabledValue === "function"
+      ? getIncludeDisabledValue(vd.source)
+      : false;
 
   const sourceChoices =
     context.collectionTypesInfo?.sources.map((collectionType) => ({
@@ -45,11 +59,13 @@ export function tabFilter(v: V, context: Context): TabOptionType {
   const collectionChoices = sourceChoices.filter(
     (c) => c.value !== CURRENT_CONTEXT_TYPE
   );
+
   const includeBy = getIncludeExclude({
     type: "include",
     vd,
     context,
-    disabled: !isPosts || isCurrentQuery
+    disabled: !isPosts || isCurrentQuery || isIncludeDisabled,
+    componentConfig
   });
   const excludeBy = getIncludeExclude({
     type: "exclude",
@@ -125,24 +141,28 @@ interface IncExcl {
   vd: VDecoded;
   context: Context;
   disabled: boolean;
+  componentConfig?: CloudComponentConfig;
 }
 
 function getIncludeExclude({
   type,
   vd,
   context,
-  disabled
+  disabled,
+  componentConfig
 }: IncExcl): ToolbarItemType {
   const config = Config.getAll();
 
   const include = type === "include";
   const prefix = include ? "inc" : "exc";
-  const source = vd.source;
+  const { source, component } = vd;
   const refs = context.collectionTypesInfo?.refsById[source] ?? [];
   const multiSelectPlaceholder = include ? t("All") : t("None");
 
   const includeQueryOneOption =
+    componentConfig?.includeQueryMultiOptions === false ||
     config?.elements?.posts?.includeQueryMultiOptions === false;
+  const isManualSource = source === "manual";
 
   const lvl1Option: ToolbarItemType = {
     id: `symbol_${source}_${prefix}By`,
@@ -155,7 +175,12 @@ function getIncludeExclude({
         value: createFieldCollectionId(ref.id, ref.fieldId),
         title: ref.title
       }))
-      .concat([{ value: "manual", title: getManualTitle(vd.component) }]),
+      .concat([
+        {
+          value: "manual",
+          title: getManualTitle({ type: component, isManualSource })
+        }
+      ]),
     config: {
       useAsSimpleSelect: includeQueryOneOption,
       showArrow: includeQueryOneOption
@@ -203,9 +228,9 @@ function getIncludeExclude({
     });
 
   if (vd.symbols[lvl1SymbolId]?.includes("manual")) {
-    const id = context.collectionTypesInfo?.sources.find(
-      (c) => c.id === source
-    )?.id;
+    const id =
+      Str.read(componentConfig?.manualId) ??
+      context.collectionTypesInfo?.sources.find((c) => c.id === source)?.id;
 
     if (id) {
       lvl2Options.push({

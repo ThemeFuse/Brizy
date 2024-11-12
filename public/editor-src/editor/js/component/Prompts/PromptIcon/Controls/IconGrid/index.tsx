@@ -1,18 +1,11 @@
 import classNames from "classnames";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import Config from "visual/global/Config";
 import SmartGrid from "visual/component/Prompts/common/SmartGrid";
 import { getIconClassName, getTypes } from "visual/config/icons";
 import { FCC } from "visual/utils/react/types";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { Props } from "./types";
-
-const typeIdsToNames = getTypes().reduce<Record<string, string>>(
-  (acc, { id, name }) => {
-    acc[id] = name;
-    return acc;
-  },
-  {}
-);
 
 export const IconGrid: FCC<Props> = ({ icons, value, onChange }) => {
   const [gridSize, setGridSize] = useState<{
@@ -24,6 +17,17 @@ export const IconGrid: FCC<Props> = ({ icons, value, onChange }) => {
   const rowCount = Math.floor(icons.length / 8) + 1;
   const activeRowIndex = Math.floor(activeIconIndex / 8);
   const prettyRowIndex = activeRowIndex === 0 ? 0 : activeRowIndex - 1;
+
+  const typeIdsToNames = useMemo(() => {
+    const config = Config.getAll();
+    return getTypes(config).reduce<Record<string, string>>(
+      (acc, { id, name }) => {
+        acc[id] = name;
+        return acc;
+      },
+      {}
+    );
+  }, []);
 
   useEffect(() => {
     if (node.current) {
@@ -90,7 +94,14 @@ export const IconGrid: FCC<Props> = ({ icons, value, onChange }) => {
             onClick={() => onChange({ type, name })}
           >
             <i
-              className={classNames(["brz-font-icon", getIconClassName(icon)])}
+              className={classNames([
+                "brz-font-icon",
+                getIconClassName({
+                  type,
+                  name,
+                  family: icon.family
+                })
+              ])}
             />
           </div>
         );

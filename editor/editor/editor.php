@@ -410,10 +410,6 @@ class Brizy_Editor_Editor_Editor
                     'fileUrl' => home_url('?'.Brizy_Editor::prefix('_attachment').'='),
                 ],
                 'templates' => [
-                    'kitsUrl' => Brizy_Config::getEditorTemplatesUrl('kits'),
-                    'layoutsUrl' => Brizy_Config::getEditorTemplatesUrl('layouts'),
-                    'popupsUrl' => Brizy_Config::getEditorTemplatesUrl('popups'),
-                    'storiesUrl' => Brizy_Config::getEditorTemplatesUrl('stories'),
                     'layoutsChunkUrl' => Brizy_Config::LAYOUTS_CHUNK_URL,
                     'layoutsPagesUrl' => Brizy_Config::LAYOUTS_PAGES_URL,
                     'layoutDataUrl' => Brizy_Config::LAYOUTS_PAGE_DATA_URL,
@@ -425,7 +421,6 @@ class Brizy_Editor_Editor_Editor
                     'storiesChunkUrl' => Brizy_Config::STORIES_CHUNK_URL,
                     'storiesPagesUrl' => Brizy_Config::STORIES_PAGES_URL,
                     'storiesDataUrl' => Brizy_Config::STORIES_DATA_URL,
-                    'templatesUrl' => Brizy_Config::TEMPLATES_URL,
                 ],
                 'templatesImageUrl' => Brizy_Config::TEMPLATES_IMAGE_URL,
             ],

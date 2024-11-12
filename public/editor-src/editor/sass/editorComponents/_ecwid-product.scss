@@ -1,6 +1,5 @@
 .brz-ecwid-wrapper
   .ecwid
-  .ec-storefront-v2
   div
   .ecwid-productBrowser
   div
@@ -412,10 +411,13 @@
   }
 }
 
+.brz-ecwid-wrapper.brz-ecwid-product-wrapper {
+  max-width: 100%;
+}
+
 @media (max-width: 767px) {
   .brz-ecwid-wrapper
     .ecwid
-    .ec-storefront-v2
     div
     .ecwid-productBrowser
     div
@@ -448,7 +450,6 @@
 @media (min-width: 767px) {
   .brz-ecwid-wrapper
     .ecwid
-    .ec-storefront-v2
     div
     .ecwid-productBrowser
     div

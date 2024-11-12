@@ -47,7 +47,6 @@ class Form2Fields extends EditorComponent<Value, Props> {
         { allowExtend: false }
       ),
       toolbarExtendSelect: this.makeToolbarPropsFromConfig2(
-        // @ts-expect-error: need to transform in .ts
         toolbarExtendSelect,
         sidebarExtendSelect,
         { allowExtend: false }

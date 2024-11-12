@@ -13,6 +13,8 @@ export function getItems({ v, device }) {
 
   const isPointerEnabled = isBackgroundPointerEnabled(config, "videoPlaylist");
 
+  const isUrlType = type === "url";
+
   const disabledZoomPlaySize = coverImageSrc
     ? []
     : [
@@ -99,7 +101,8 @@ export function getItems({ v, device }) {
                   type: "select",
                   choices: [
                     { value: "youtube", title: "YouTube" },
-                    { value: "vimeo", title: "Vimeo" }
+                    { value: "vimeo", title: "Vimeo" },
+                    { value: "url", title: "URL" }
                   ]
                 },
                 {
@@ -115,7 +118,10 @@ export function getItems({ v, device }) {
                       ? t("YouTube")
                       : type === "vimeo"
                         ? t("Vimeo")
-                        : ""
+                        : t("https://"),
+                  helper: {
+                    content: isUrlType ? t("Enter a link ending in .mp4") : ""
+                  }
                 }
               ]
             },

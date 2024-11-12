@@ -17,7 +17,15 @@ import * as Offset from "./types/Offset";
 import * as Rotate from "./types/Rotate";
 import * as Scale from "./types/Scale";
 import * as Skew from "./types/Skew";
-import { flattenObject, isEnabled, wrap } from "./utils";
+import {
+  flattEffects,
+  flattenObject,
+  getEnabledEffects,
+  getPatchType,
+  isEnabled,
+  wrap
+} from "./utils";
+import { OptionPatch } from "visual/component/Options/types";
 
 export const defaultValue: Value = {
   active: undefined,
@@ -51,14 +59,28 @@ export const fromElementModel: FromElementModel<"transform"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"transform"> = (patch) => {
-  const value = hasValue(patch) ? patch.value : {};
+export const toElementModel: ToElementModel<"transform"> = (_patch) => {
+  const value = hasValue(_patch) ? _patch.value : {};
+
+  const patch = {
+    ..._patch,
+    type: getPatchType(_patch)
+  } as OptionPatch<"transform">;
 
   const flattenAnchor = flattenObject({
     anchorPoint: value
   });
 
   switch (patch.type) {
+    case Type.multiple:
+      return {
+        active: patch.active,
+        ...(patch.active
+          ? { [capByPrefix(patch.active, "enabled")]: true }
+          : {}),
+        ...getEnabledEffects(patch),
+        ...flattEffects(patch)
+      };
     case Type.active:
       return {
         active: patch.active,

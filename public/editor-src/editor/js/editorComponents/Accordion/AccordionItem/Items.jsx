@@ -60,13 +60,14 @@ class AccordionItemItems extends EditorArrayComponent {
 
   getItemProps(itemData, itemIndex) {
     const cloneRemoveConfig = {
-      getItemsForDesktop: () => [
+      getItems: () => [
         {
           id: "duplicate",
           type: "button",
+          devices: "desktop",
           config: {
-            title: t("Duplicate"),
             icon: "nc-duplicate",
+            title: t("Duplicate"),
             reverseTheme: true
           },
           position: 200,
@@ -77,18 +78,18 @@ class AccordionItemItems extends EditorArrayComponent {
         {
           id: "remove",
           type: "button",
-          config: { title: t("Delete"), icon: "nc-trash", reverseTheme: true },
+          devices: "desktop",
+          config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           position: 210,
           onClick: () => {
             hideToolbar();
             this.removeItem(itemIndex);
           }
         }
-      ],
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+      ]
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
 
     return {
       meta: this.props.meta,

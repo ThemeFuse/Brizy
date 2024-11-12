@@ -2,15 +2,21 @@ import { Model } from "backbone";
 import { getAttachmentById } from "../api";
 import { UploadData } from "../types/File";
 import { Response } from "../types/Response";
-import { validateLottie } from "./lottieFile";
+import { isLottieFile, validateLottie } from "./lottieFile";
 
 export const validateByComponent = (
   file: File,
-  componentId: string
+  componentId: string,
+  url: string
 ): Promise<unknown> => {
   switch (componentId) {
-    case "Lottie":
-      return validateLottie(file);
+    case "Lottie": {
+      // we should validate only json lottie files
+      if (!isLottieFile(url)) {
+        return validateLottie(file);
+      }
+      return Promise.resolve();
+    }
     default:
       return Promise.resolve();
   }

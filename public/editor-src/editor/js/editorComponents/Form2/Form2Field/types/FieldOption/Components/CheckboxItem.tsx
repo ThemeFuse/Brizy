@@ -5,6 +5,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import { CheckboxItemProps } from "./type";
 import { FCC } from "visual/utils/react/types";
 import { Obj } from "@brizy/readers";
+import Link from "visual/component/Link";
 
 const CheckboxItem: FCC<CheckboxItemProps> = ({
   value,
@@ -17,7 +18,14 @@ const CheckboxItem: FCC<CheckboxItemProps> = ({
   isEditor,
   label,
   required,
-  type
+  type,
+  isCheckboxWithLink,
+  typeCheckbox,
+  hrefCheckbox,
+  targetCheckbox,
+  relCheckbox,
+  slideCheckbox,
+  className
 }) => {
   const _active = Obj.isObject(active);
 
@@ -40,7 +48,7 @@ const CheckboxItem: FCC<CheckboxItemProps> = ({
       active={isActive}
       onClick={handleCheckboxClick}
     >
-      <div className="brz-forms2__checkbox-option-name">
+      <div className={`brz-forms2__checkbox-option-name ${className}`}>
         <TextEditor
           className="brz-input"
           value={value}
@@ -63,7 +71,22 @@ const CheckboxItem: FCC<CheckboxItemProps> = ({
       required={required}
       type={type}
     >
-      <span className="brz-span brz-forms2__checkbox-option-name">{value}</span>
+      {isCheckboxWithLink ? (
+        <Link
+          className={`brz-forms2__checkbox-option-name brz-a ${className}`}
+          type={typeCheckbox}
+          href={hrefCheckbox}
+          target={targetCheckbox}
+          rel={relCheckbox}
+          slide={slideCheckbox}
+        >
+          {value}
+        </Link>
+      ) : (
+        <span className="brz-forms2__checkbox-option-name brz-span">
+          {value}
+        </span>
+      )}
     </CheckboxControlsItem>
   );
 };

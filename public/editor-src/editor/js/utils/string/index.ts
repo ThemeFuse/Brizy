@@ -1,4 +1,4 @@
-import { ToValue } from "visual/utils/value";
+import type { MValue, ToValue } from "visual/utils/value";
 
 /**
  * Converts a value to string
@@ -64,6 +64,16 @@ export const encodeToString = <T>(value: T): string => {
 
 export const decodeFromString = <T>(value: string): T => {
   return JSON.parse(decodeURIComponent(value));
+};
+
+export const parseFromString = <T>(value: string): MValue<T> => {
+  try {
+    return decodeFromString<T>(value);
+  } catch (e) {
+    if (process.env.NODE_ENV === "development") {
+      console.error(e);
+    }
+  }
 };
 
 export const toHashCode = (value: string): string => {

@@ -122,6 +122,19 @@ export function getItems({
                   }
                 }
               ]
+            },
+            {
+              id: "tabControls",
+              label: t("Controls"),
+              options: [
+                {
+                  id: "controls",
+                  type: "typography",
+                  config: {
+                    fontFamily: "desktop" === device
+                  }
+                }
+              ]
             }
           ]
         }
@@ -167,6 +180,40 @@ export function getItems({
               options: [
                 {
                   id: "iconColor",
+                  type: "colorPicker",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabIcons",
+              label: t("Icons"),
+              position: 30,
+              options: [
+                {
+                  id: "iconControlsColor",
+                  type: "colorPicker",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabBg",
+              label: t("Bar"),
+              options: [
+                {
+                  id: "controlsBgColor",
+                  type: "colorPicker",
+                  states: [NORMAL, HOVER]
+                }
+              ]
+            },
+            {
+              id: "tabBgProgress",
+              label: t("Slider"),
+              options: [
+                {
+                  id: "controlsSliderColor",
                   type: "colorPicker",
                   states: [NORMAL, HOVER]
                 }

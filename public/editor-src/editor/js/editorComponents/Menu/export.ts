@@ -10,7 +10,7 @@ import { DeviceMode } from "visual/types";
 import { BrizyProLibs } from "visual/types/global";
 import { getCurrentDevice } from "visual/utils/export";
 import * as Str from "visual/utils/reader/string";
-import { decodeFromString } from "visual/utils/string";
+import { parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
 import {
   getParentMegaMenuUid,
@@ -482,7 +482,7 @@ export default function ($node: JQuery): void {
         const device = lastCurrentDevice;
         const item = node.closest<HTMLElement>(".brz-menu__item");
         const menu = node.closest<HTMLElement>(".brz-menu");
-        const mods = decodeFromString<Settings["mods"]>(
+        const mods = parseFromString<Settings["mods"]>(
           menu?.dataset?.mods ?? ""
         );
         const isSubMenu = node.parentElement?.closest(".brz-menu__sub-menu");
@@ -534,17 +534,17 @@ export default function ($node: JQuery): void {
     const closingIconAttribute: string =
       Str.read(node.getAttribute("data-mmenu-closingicon")) || "";
 
-    const closingIconData: ClosingType = decodeFromString(closingIconAttribute);
+    const closingIconData = parseFromString<ClosingType>(closingIconAttribute);
 
     switch (lastCurrentDevice) {
       case "desktop":
-        hasClosingIcon = closingIconData.desktop === "on";
+        hasClosingIcon = closingIconData?.desktop === "on";
         break;
       case "tablet":
-        hasClosingIcon = closingIconData.tablet === "on";
+        hasClosingIcon = closingIconData?.tablet === "on";
         break;
       case "mobile":
-        hasClosingIcon = closingIconData.mobile === "on";
+        hasClosingIcon = closingIconData?.mobile === "on";
         break;
     }
 

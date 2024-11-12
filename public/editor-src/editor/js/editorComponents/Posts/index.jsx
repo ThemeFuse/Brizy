@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React from "react";
-import { Subject, from } from "rxjs";
+import { from, Subject } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -25,9 +25,9 @@ import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getCurrentPageId } from "visual/utils/env";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as json from "visual/utils/reader/json";
-import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import { getCollectionTypesInfo, migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
@@ -157,11 +157,18 @@ export class Posts extends EditorComponent {
         const config = Config.getAll();
 
         if (page) {
+          const { collectionFilters } = this.getComponentConfig() ?? {};
+
+          const params = collectionFilters ? { collectionFilters } : {};
+
+          const data = await defaultPostsSources(config, {
+            page,
+            filterManualId: collectionTypeId,
+            ...params
+          });
+
           return {
-            collectionTypesInfo: await defaultPostsSources(config, {
-              page,
-              filterManualId: collectionTypeId
-            })
+            collectionTypesInfo: data
           };
         }
 

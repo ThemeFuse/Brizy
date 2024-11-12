@@ -5,15 +5,15 @@ import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 import Editor from "visual/global/Editor";
 import { updateGlobalBlock } from "visual/redux/actions2";
 import { canUseCondition } from "visual/utils/blocks";
-import { Value, Props } from "./types";
+import { Props, Value } from "./types";
 import { connector } from "./connector";
 
 class GlobalBlock extends EditorComponent<Value, Props> {
+  static defaultValue = {};
+
   static get componentId(): "GlobalBlock" {
     return "GlobalBlock";
   }
-
-  static defaultValue = {};
 
   optionalSCU(nextProps: Props) {
     const props = this.props;
@@ -107,7 +107,6 @@ class GlobalBlock extends EditorComponent<Value, Props> {
 
     if (Component) {
       return (
-        // @ts-expect-error: Types of property component are incompatible.
         <Component
           {...this.props}
           {...otherData}
@@ -124,7 +123,6 @@ class GlobalBlock extends EditorComponent<Value, Props> {
       const NotFoundComponent = Editor.getNotFoundComponent();
 
       return (
-        // @ts-expect-error: Types of property component are incompatible.
         <NotFoundComponent
           {...this.props}
           meta={meta}
@@ -133,6 +131,7 @@ class GlobalBlock extends EditorComponent<Value, Props> {
           reduxState={this.getReduxState()}
           reduxDispatch={this.getReduxDispatch()}
           onChange={this.handleComponentChange}
+          //@ts-expect-error: need to transfer notFoundComponent in TS
           componentId={type}
         />
       );

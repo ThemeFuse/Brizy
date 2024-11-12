@@ -1,6 +1,12 @@
+import { pipe } from "@brizy/readers";
 import deepMerge from "deepmerge";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { hydrate } from "visual/redux/actions";
+import {
+  globalBlocksInPageRawSelector,
+  globalBlocksInPageSelector,
+  globalPopupsInPageSelector
+} from "visual/redux/selectors";
 import { createStore } from "visual/redux/store";
 import { GoogleFont } from "visual/types";
 import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
@@ -19,14 +25,11 @@ import { pageToStatic } from "../../common/toStatic/pageToStatic";
 import { popupToStatic } from "../../common/toStatic/popupToStatic";
 import { storyToStatic } from "../../common/toStatic/storyToStatic";
 import { Static } from "./types";
-import {
-  globalBlocksInPageSelector,
-  globalPopupsInPageSelector
-} from "visual/redux/selectors";
-import { pipe } from "@brizy/readers";
 
-const getGlobalBlocks = pipe(globalBlocksInPageSelector, Object.values, (o) =>
-  o.filter(isGlobalBlock)
+const getGlobalBlocks = pipe(
+  globalBlocksInPageRawSelector,
+  Object.values,
+  (o) => o.filter(isGlobalBlock)
 );
 
 export async function bootstrap(config: ConfigCommon): Promise<Static> {

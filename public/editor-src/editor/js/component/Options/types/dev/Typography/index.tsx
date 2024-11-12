@@ -15,6 +15,7 @@ import {
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import { WithClassName, WithConfig } from "visual/types/attributes";
+import { DESKTOP } from "visual/utils/devices";
 import {
   fontTransform,
   getFontStyles,
@@ -64,8 +65,16 @@ export const Typography = ({
   config,
   className
 }: Props): ReactElement => {
+  const dispatch = useDispatch();
+
+  const device = useSelector(deviceModeSelector);
+  const defaultFont = useSelector(getDefaultFontDetailsSelector);
+  const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
+    unDeletedFontsSelector
+  );
+
   const {
-    fontFamily = true,
+    fontFamily = device === DESKTOP,
     letterSpacing: {
       min: letterSpacingMin = -20,
       max: letterSpacingMax = 20
@@ -75,12 +84,7 @@ export const Typography = ({
     icons,
     scriptChoices
   } = config ?? {};
-  const dispatch = useDispatch();
-  const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
-    unDeletedFontsSelector
-  );
-  const device = useSelector(deviceModeSelector);
-  const defaultFont = useSelector(getDefaultFontDetailsSelector);
+
   const fonts = useMemo<FontsBlock>(
     () =>
       Object.entries(unDeletedFonts).reduce((acc: FontsBlock, [k, d]) => {
@@ -225,6 +229,8 @@ export const Typography = ({
     [scriptChoices]
   );
 
+  const fontSizeStep = _value.fontSizeSuffix === "px" ? 1 : 0.1;
+
   return (
     <Control
       onChange={_onChange}
@@ -262,7 +268,7 @@ export const Typography = ({
       lineHeightStep={0.1}
       sizeMin={sizeMin}
       sizeMax={sizeMax}
-      sizeStep={1}
+      sizeStep={fontSizeStep}
       letterSpacingLabel={t("Letter Space")}
       lineHeightLabel={t("Line Height")}
       sizeLabel={t("Size")}

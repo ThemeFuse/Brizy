@@ -73,6 +73,12 @@ export type GetCollectionSourceTypes = () => Promise<
   CloudCollectionSourceType[]
 >;
 
+export interface CollectionItem {
+  id: string;
+  title: string;
+  status: string;
+}
+
 export interface CollectionSourceItem {
   id: string;
   title: string;
