@@ -5,10 +5,10 @@ import { disableNavigation, maxColumn } from "./utils.common";
 
 const getItems =
   (context) =>
-  ({ v, device }) => {
+  ({ v, device, componentConfig }) => {
     const { icon: popoverIcon, title: popoverTitle } = getTypeInfo(v);
     const tabCurrentElement_ = tabCurrentElement(v, device);
-    const tabFilter_ = tabFilter(v, context);
+    const tabFilter_ = tabFilter(v, context, componentConfig);
     const tabNavigation_ = tabNavigation(v);
 
     return [

@@ -55,3 +55,5 @@ export const validateLottie = (file: File): Promise<LottieData> =>
 
     fileReader.readAsText(file);
   });
+
+export const isLottieFile = (file: string): boolean => /\.lottie$/i.test(file);

@@ -1,7 +1,7 @@
 import Config from "visual/global/Config";
 import { Static } from "./bootstrap/types";
 import "./utils/globals";
-import { readConfig } from "./utils/readConfig";
+import { readConfig } from "visual/bootstraps/common/readConfig";
 
 interface Compiled {
   compiled: Static;

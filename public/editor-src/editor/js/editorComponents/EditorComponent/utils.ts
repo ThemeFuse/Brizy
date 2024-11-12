@@ -1,7 +1,8 @@
 import deepMerge from "deepmerge";
-import { mPipe } from "fp-utilities";
+import { mPipe, or } from "fp-utilities";
 import { getIn } from "timm";
 import { flatten, intersection, isEmpty } from "underscore";
+import { Bool } from "@brizy/readers";
 import {
   ElementDefaultValue,
   ElementModel
@@ -11,6 +12,7 @@ import { OptionName, OptionValue } from "visual/component/Options/types";
 import {
   GetElementModelKeyFn,
   ParsedToolbarData,
+  ProElementTitle,
   ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import {
@@ -19,7 +21,7 @@ import {
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import Shortcodes from "visual/shortcodeComponents";
+import { getShortcodeComponents } from "visual/shortcodeComponents";
 import { DeviceMode, UserRole } from "visual/types";
 import { Dictionary } from "visual/types/utils";
 import * as Device from "visual/utils/devices";
@@ -30,7 +32,7 @@ import {
   RESPONSIVE,
   supportsMode
 } from "visual/utils/devices";
-import { IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
 import { findDeep } from "visual/utils/object";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { defaultValueKey2 } from "visual/utils/onChange/device";
@@ -56,6 +58,7 @@ import { camelCase } from "visual/utils/string";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Literal from "visual/utils/types/Literal";
 import { isNullish, isT } from "visual/utils/value";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 /**
  * Create an complete option id that consists from 2 parts: base id and suffix
@@ -286,14 +289,19 @@ export const filterCSSOptions = (
 
 export const getProTitle = (
   type: NoEmptyString,
-  model: ElementModel
-): string | undefined => {
-  const element = Object.values(Shortcodes)
+  model: ElementModel,
+  config: ConfigCommon
+): ProElementTitle | undefined => {
+  const shortcodes = getShortcodeComponents(config);
+  const element = Object.values(shortcodes)
     .flat()
-    .filter((item) => item.pro)
+    .filter((item) => typeof item.pro === "function" || item.pro)
     .map((item) => ({
       title: item.component.title,
-      type: getIn(item.component.resolve, ["value", "items", 0, "type"]) ?? ""
+      type: getIn(item.component.resolve, ["value", "items", 0, "type"]) ?? "",
+      upgradeMessage: item.component.upgradeMessage,
+      upgradeActionMessage: item.component.upgradeActionMessage,
+      pro: item.pro
     }))
     .filter((item) => {
       if (item.type === "Image") {
@@ -306,8 +314,15 @@ export const getProTitle = (
     })
     .find((item) => item.type === type);
 
-  if (element !== undefined && !IS_PRO) {
-    return element.title;
+  if (
+    element !== undefined &&
+    (typeof element.pro === "function" ? element.pro(config) : !isPro(config))
+  ) {
+    return {
+      title: element.title,
+      upgradeMessage: element.upgradeMessage,
+      upgradeActionMessage: element.upgradeActionMessage
+    };
   }
 
   return undefined;
@@ -362,7 +377,7 @@ function parseOption(
     const v = Obj.read(option.default);
 
     if (v) {
-      const getValue = mPipe(Obj.readKey(k), Literal.read);
+      const getValue = mPipe(Obj.readKey(k), or(Literal.read, Bool.read));
       return getValue(v);
     }
 

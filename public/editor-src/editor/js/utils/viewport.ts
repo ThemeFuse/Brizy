@@ -35,6 +35,17 @@ interface ScrollToActiveElement {
   previousTop?: number;
 }
 
+const getBiggestHeaderHeight = (document: Document): null | number => {
+  const headers = document.querySelectorAll<HTMLElement>(
+    ".brz-section__header--animated-opened, .brz-section__header--fixed"
+  );
+  if (headers.length === 0) return null;
+
+  const heights = Array.from(headers).map((header) => header.offsetHeight);
+
+  return Math.max(...heights);
+};
+
 export const scrollToActiveElement = async ({
   activeElement,
   document,
@@ -49,11 +60,22 @@ export const scrollToActiveElement = async ({
 
   if (isElementVisibile && isArranged) {
     const viewportHeight = innerHeight;
-    const scrollY =
-      top +
-      (document.scrollingElement?.scrollTop || 0) +
-      height / 2 -
-      viewportHeight / 2;
+    const scrollingElementTop = document.scrollingElement?.scrollTop || 0;
+    let scrollY = top + scrollingElementTop + height / 2 - viewportHeight / 2;
+
+    const headerHeight = getBiggestHeaderHeight(document);
+
+    if (headerHeight) {
+      const { y } = activeElement.getBoundingClientRect();
+      // detect y position after we would scroll to scrollY
+      const afterScrollY = y - (scrollY - scrollingElementTop);
+
+      // header overlaps activeElement
+      if (headerHeight >= afterScrollY) {
+        const overlapHeight = headerHeight - afterScrollY;
+        scrollY -= overlapHeight;
+      }
+    }
 
     scrollTo({
       top: scrollY,

@@ -5,7 +5,6 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { Slug, Value } from "./types";
 
-// @ts-expect-error wrong typing
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
@@ -123,7 +122,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
         }
       ]
     },
-    { id: "horizontalAlign", type: "toggle", disabled: true },
+    { id: "horizontalAlign", type: "toggle", disabled: true, choices: [] },
     {
       id: "contentHorizontalAlign",
       type: "toggle",

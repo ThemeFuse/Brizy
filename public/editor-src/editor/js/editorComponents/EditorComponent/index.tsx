@@ -10,11 +10,13 @@ import {
 import { OptionName, OptionValue } from "visual/component/Options/types";
 import Toolbar from "visual/component/Toolbar";
 import {
+  Meta,
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
+import Editor from "visual/global/Editor";
 import * as GlobalState from "visual/global/StateMode";
 import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
@@ -74,10 +76,8 @@ import {
   DefaultValueProcessed,
   ECDC,
   ECKeyDCInfo,
-  Meta,
   Model,
   NewToolbarConfig,
-  OldToolbarConfig,
   OnChangeMeta,
   SidebarConfig,
   ToolbarConfig,
@@ -88,16 +88,12 @@ import {
   filterCSSOptions,
   filterProOptions,
   flattenDefaultValue,
+  getElementModelKeyFn,
   getOptionValueByDevice,
   getToolbarData,
   inDevelopment,
-  makeToolbarPropsFromConfigDefaults,
-  getElementModelKeyFn
+  makeToolbarPropsFromConfigDefaults
 } from "./utils";
-
-const capitalize = ([first, ...rest]: string, lowerRest = false): string =>
-  first.toUpperCase() +
-  (lowerRest ? rest.join("").toLowerCase() : rest.join(""));
 
 export type Props<
   M extends ElementModel,
@@ -130,7 +126,8 @@ export class EditorComponent<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  S extends Record<string, any> = Record<string, unknown>
+  S extends Record<string, any> = Record<string, unknown>,
+  C extends Record<string, unknown> = Record<string, unknown>
 > extends React.Component<Props<M, P>, S> {
   /**
    *
@@ -190,6 +187,18 @@ export class EditorComponent<
   getComponentId(): string {
     return (this.constructor as typeof EditorComponent).componentId;
   }
+
+  getComponentConfig = (): MValue<C> => {
+    const configId = Str.read(this.getValue().configId);
+
+    if (configId) {
+      const shortcode = Editor.getShortcode(configId);
+
+      if (shortcode) {
+        return shortcode?.component?.config as C;
+      }
+    }
+  };
 
   optionalSCU(nextProps: Props<M, P>): boolean {
     const props = this.props;
@@ -343,7 +352,7 @@ export class EditorComponent<
 
   getToolbarOptions = (
     currentModel: ModelType,
-    toolbars: NewToolbarConfig<M>[]
+    toolbars: NewToolbarConfig<M, P, S>[]
   ): ToolbarItemType[] => {
     const v = getInitialV<M>(currentModel, this.getValue2());
     const { tabsState } = v;
@@ -355,7 +364,7 @@ export class EditorComponent<
           device: deviceModeSelector(this.getReduxState()),
           state: State.fromString(Str.read(tabsState) ?? "") ?? NORMAL,
           context: this.context,
-          component: this as Editor<M>,
+          component: this as Editor<M, P, S>,
           getValue: this.getValueByOptionId
         })
       )
@@ -615,7 +624,7 @@ export class EditorComponent<
 
   validatePatch(
     patch: Partial<Model<M>>,
-    item: ToolbarItemType,
+    item: OptionDefinition,
     state: State.State,
     device: Responsive.ResponsiveMode
   ): void {
@@ -768,209 +777,6 @@ export class EditorComponent<
     };
   }
 
-  makeToolbarPropsFromConfig(
-    config: OldToolbarConfig<M>,
-    sidebarConfig?: SidebarConfig<M, P, S>,
-    options = {} /* options */
-  ): ToolbarExtend {
-    const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =
-      this.props;
-    const {
-      allowExtendFromParent,
-      parentItemsFilter,
-      allowExtendFromChild,
-      allowExtendFromThirdParty,
-      thirdPartyExtendId = this.getComponentId(),
-
-      // sidebar
-      allowSidebarExtendFromParent,
-      allowSidebarExtendFromChild,
-      allowSidebarExtendFromThirdParty,
-      sidebarThirdPartyExtendId = thirdPartyExtendId
-    } = makeToolbarPropsFromConfigDefaults(options);
-
-    // WARNING: we use getStore instead of this.getReduxState()
-    // because the page does not rerender when changing deviceMode
-    // and thus we might get false (outdated) results
-    const getItems = (
-      deviceMode = deviceModeSelector(getStore().getState())
-    ): OptionDefinition[] => {
-      const getItemsFnName = `getItemsFor${capitalize(
-        deviceMode,
-        true
-      )}` as keyof OldToolbarConfig<M>;
-
-      if (process.env.NODE_ENV === "development") {
-        if (!config[getItemsFnName]) {
-          // eslint-disable-next-line no-console
-          console.warn(
-            `${this.getComponentId()}. ${getItemsFnName} not found in toolbarConfig`
-          );
-        }
-      }
-
-      const getItemsFn = config[
-        getItemsFnName
-      ] as OldToolbarConfig<M>[typeof getItemsFnName];
-      const v = this.getValue();
-      const stateMode = State.mRead(v.tabsState);
-      let items = this.bindToolbarItems(
-        v,
-        deviceMode,
-        stateMode,
-        getItemsFn?.(v, this) ?? []
-      );
-
-      // allow extend from parent
-      if (allowExtendFromParent && this.props.toolbarExtend) {
-        const { getItems } = this.props.toolbarExtend as ToolbarExtend;
-        let extendItems = getItems(deviceMode);
-
-        if (typeof parentItemsFilter === "function") {
-          extendItems = parentItemsFilter(extendItems);
-        }
-
-        items = mergeOptions(items, extendItems);
-      }
-
-      // allow extend from child
-      if (allowExtendFromChild && this.childToolbarExtend) {
-        const { getItems } = this.childToolbarExtend;
-        const extendItems = getItems(deviceMode);
-
-        items = mergeOptions(extendItems, items);
-      }
-
-      // allow extend from third party
-      if (allowExtendFromThirdParty) {
-        const thirdPartyConfig = applyFilter(
-          `toolbarItemsExtend_${thirdPartyExtendId}`,
-          null
-        );
-
-        if (thirdPartyConfig?.[getItemsFnName]) {
-          const thirdPartyItems = this.bindToolbarItems(
-            v,
-            deviceMode,
-            stateMode,
-            thirdPartyConfig[getItemsFnName](v, this)
-          );
-
-          items = mergeOptions(items, thirdPartyItems);
-        }
-      }
-
-      return items;
-    };
-
-    const getSidebarItems = (
-      deviceMode = deviceModeSelector(getStore().getState())
-    ): OptionDefinition[] => {
-      const v = this.getValue();
-      const stateMode = State.mRead(v.tabsState);
-
-      let items = this.bindToolbarItems(
-        v,
-        deviceMode,
-        stateMode,
-        sidebarConfig?.getItems?.({
-          v,
-          component: this,
-          device: deviceMode,
-          state: stateMode,
-          context: this.context,
-          getValue: this.getValueByOptionId
-        }) || []
-      );
-
-      // allow extend from parent
-      if (
-        allowSidebarExtendFromParent &&
-        (this.props.toolbarExtend as ToolbarExtend)?.getSidebarItems
-      ) {
-        const { getSidebarItems } = this.props.toolbarExtend as ToolbarExtend;
-        const extendItems = getSidebarItems(deviceMode);
-
-        items = mergeOptions(items, extendItems);
-      }
-
-      // allow extend from child
-      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
-        const { getSidebarItems } = this.childToolbarExtend;
-        const extendItems = getSidebarItems(deviceMode);
-
-        items = mergeOptions(extendItems, items);
-      }
-
-      // allow extend from third party
-      if (allowSidebarExtendFromThirdParty) {
-        const thirdPartyConfig = applyFilter(
-          `sidebarItemsExtend_${sidebarThirdPartyExtendId}`,
-          null
-        );
-
-        if (thirdPartyConfig?.getItems) {
-          const thirdPartyItems = this.bindToolbarItems(
-            v,
-            deviceMode,
-            stateMode,
-            thirdPartyConfig.getItems({
-              v,
-              component: this,
-              device: deviceMode,
-              state: stateMode
-            })
-          );
-
-          items = mergeOptions(items, thirdPartyItems);
-        }
-      }
-
-      return items;
-    };
-
-    const getSidebarTitle = (): string => {
-      let title = sidebarConfig?.title;
-
-      if (typeof title === "function") {
-        const v = this.getValue();
-        title = title({ v });
-      }
-
-      // allow extend from parent
-      if (allowSidebarExtendFromParent && this.props.toolbarExtend) {
-        const { getSidebarTitle } = this.props.toolbarExtend as ToolbarExtend;
-
-        title = getSidebarTitle() || title;
-      }
-
-      // allow extend from child
-      if (allowSidebarExtendFromChild && this.childToolbarExtend) {
-        const { getSidebarTitle } = this.childToolbarExtend;
-
-        title = getSidebarTitle() || title;
-      }
-
-      return title || "";
-    };
-
-    return {
-      getItems,
-      getSidebarItems,
-      getSidebarTitle,
-      onBeforeOpen: (): void => {
-        global.Brizy.activeEditorComponent = this;
-      },
-      onBeforeClose: (): void => {
-        global.Brizy.activeEditorComponent = null;
-      },
-      onOpen: onToolbarOpen,
-      onClose: onToolbarClose,
-      onMouseEnter: onToolbarEnter,
-      onMouseLeave: onToolbarLeave
-    };
-  }
-
   /**
    * @param {object} v
    * @param {string} device
@@ -984,62 +790,65 @@ export class EditorComponent<
     state: State.State,
     items: ToolbarItemType[]
   ): OptionDefinition[] {
-    return optionMap((option) => {
-      const { id, type, onChange: oldOnchange } = option;
+    return optionMap(
+      (option: OptionDefinition) => {
+        const { id, type, onChange: oldOnchange } = option;
 
-      const getKey = getElementModelKeyFn({ device, state, option });
+        const getKey = getElementModelKeyFn({ device, state, option });
 
-      option = bindStateToOption(GlobalState.states, option, device);
+        option = bindStateToOption(GlobalState.states, option, device);
 
-      //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
-      const isDev = inDevelopment(type);
-      const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
-        v !== undefined ? ({ [id]: v } as Partial<M>) : null;
-      const deps = option.dependencies || identity;
+        //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
+        const isDev = inDevelopment(type);
+        const defaultOnChange = (id: keyof M, v: Literal): Partial<M> | null =>
+          v !== undefined ? ({ [id]: v } as Partial<M>) : null;
+        const deps = option.dependencies || identity;
 
-      if (isDev) {
-        const optionModel = getOptionModel({
-          id,
-          type,
-          v,
-          breakpoint: device,
-          state
-        });
+        if (isDev) {
+          const optionModel = getOptionModel({
+            id,
+            type,
+            v,
+            breakpoint: device,
+            state
+          });
 
-        option.meta = getOptionMeta(type, optionModel);
+          option.meta = getOptionMeta(type, optionModel);
 
-        option.value = optionModel;
-      }
+          option.value = optionModel;
+        }
 
-      const elementModel = toElementModel<typeof type>(type, getKey);
+        const elementModel = toElementModel<typeof type>(type, getKey);
 
-      option.onChange =
-        option.isPro === true && !IS_PRO
-          ? noop
-          : (value: ElementModel | Literal, meta: Meta): void => {
-              const id = getKey("");
-              const patch: Partial<Model<M>> = isDev
-                ? deps(elementModel(value))
-                : oldOnchange
-                ? oldOnchange(value, meta)
-                : defaultOnChange(id, value as Literal);
+        option.onChange =
+          option.isPro === true && !IS_PRO
+            ? noop
+            : (value, meta): void => {
+                const id = getKey("");
+                const patch: Partial<Model<M>> | null | void = isDev
+                  ? deps(elementModel(value))
+                  : oldOnchange
+                    ? oldOnchange(value, meta)
+                    : defaultOnChange(id, value as Literal);
 
-              if (patch) {
-                if (process.env.NODE_ENV === "development") {
-                  this.validatePatch(patch, option, state, device);
+                if (patch) {
+                  if (process.env.NODE_ENV === "development") {
+                    this.validatePatch(patch, option, state, device);
+                  }
+
+                  this.patchValue(patch);
                 }
+              };
 
-                this.patchValue(patch);
-              }
-            };
-
-      return option;
-    }, optionMap(wrapOption, items));
+        return option;
+      },
+      optionMap(wrapOption, items)
+    );
   }
 
   makeToolbarPropsFromConfig2(
-    config: NewToolbarConfig<M, P, S>,
-    sidebarConfig?: SidebarConfig<M, P, S>,
+    config: NewToolbarConfig<M, P, S, C>,
+    sidebarConfig?: SidebarConfig<M, P, S, C>,
     options = {}
   ): ToolbarExtend {
     const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =
@@ -1087,7 +896,8 @@ export class EditorComponent<
           device: deviceMode,
           state: stateMode,
           context: this.context,
-          getValue: this.getValueByOptionId
+          getValue: this.getValueByOptionId,
+          componentConfig: this.getComponentConfig()
         }) ?? []
       );
 
@@ -1266,47 +1076,32 @@ export class EditorComponent<
       getDCOption: this.getDCOptionByType
     });
 
-    const generateNestedToolbar = (index: number) => {
-      const { selector } = toolbars[index];
-
-      const asOldOptions = (): NewToolbarConfig<M, P, S> => {
-        return {
-          getItems: () => {
-            const toolbar = toolbars[index].toolbar;
-            return typeof toolbar !== "undefined" ? toolbar : [];
-          }
-        };
-      };
-      const asOldSidebarOptions = (): NewToolbarConfig<M, P, S> => {
-        return {
-          getItems: () => {
-            const sidebar = toolbars[index].sidebar;
-            return typeof sidebar !== "undefined" ? sidebar : [];
-          }
-        };
-      };
-
-      const toolbarProps = this.makeToolbarPropsFromConfig2(
-        asOldOptions(),
-        asOldSidebarOptions()
-      );
-
-      if (index < toolbars.length - 1) {
-        return (
-          <Toolbar selector={selector} {...toolbarProps}>
-            {generateNestedToolbar(++index)}
-          </Toolbar>
-        );
+    const generate = (
+      toolbars: ToolbarConfig[],
+      child: ReactNode
+    ): ReactNode => {
+      if (!toolbars.length) {
+        return child;
       } else {
-        return (
+        const [toolbarData, ...rest] = toolbars;
+        const { selector, toolbar, sidebar } = toolbarData;
+
+        const toolbarProps = this.makeToolbarPropsFromConfig2(
+          { getItems: () => toolbar ?? [] },
+          { getItems: () => sidebar ?? [] }
+        );
+
+        const html = (
           <Toolbar selector={selector} {...toolbarProps}>
-            <>{children}</>
+            <>{child}</>
           </Toolbar>
         );
+
+        return generate(rest, html);
       }
     };
 
-    return generateNestedToolbar(0);
+    return generate(toolbars, children);
   }
 
   render(): ReactNode {
@@ -1342,5 +1137,6 @@ export type Editor<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  S extends Record<string, any> = Record<string, unknown>
-> = EditorComponent<M, P, S>;
+  S extends Record<string, any> = Record<string, unknown>,
+  C extends Record<string, unknown> = Record<string, unknown>
+> = EditorComponent<M, P, S, C>;

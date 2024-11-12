@@ -395,7 +395,7 @@ export function cssStyleElementEcwidMyAccountEmptyColor({
   return cssStyleColor({ v, device, state, prefix: "emptyColor" });
 }
 
-export function cssStyleElementEcwidMyAccountEmptyTypographyFontFamily({
+export function cssStyleElementEcwidMyAccountEmptyTypography({
   v,
   device,
   state
@@ -796,4 +796,43 @@ export function cssStyleElementEcwidMyAccountBreadcrumbsAlign({
   state
 }: CSSValue): string {
   return cssStyleTextAlign({ v, device, state, prefix: "breadcrumbs" });
+}
+
+export function cssStyleElementEcwidMyAccountTermsColor({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    prefix: "termsColor"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTermsTypography({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    prefix: "termsTypography"
+  });
+}
+
+export function cssStyleElementEcwidMyAccountTermsAlign({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const align = dvv("termsHorizontalAlign");
+
+  return `text-align: ${align};`;
 }

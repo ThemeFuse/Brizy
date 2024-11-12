@@ -28,6 +28,7 @@ import * as sidebar from "./sidebar";
 import { styleCloseButton, styleContainer, styleContainerWrap } from "./styles";
 import * as toolbar from "./toolbar";
 import * as toolbarExtend from "./toolbarExtend";
+import { ContextMenuDisabled } from "visual/component/ContextMenu";
 
 /**
  * @deprecated use import {SectionPopupInstances} from "visual/editorComponents/SectionPopup/instances";
@@ -201,7 +202,9 @@ class SectionPopup extends EditorComponent {
         <SortableZIndex zIndex={1}>
           <div className={classNameContainerWrap}>
             <div className={classNameContainer}>
-              <EditorArrayComponent {...itemsProps} />
+              <ContextMenuDisabled>
+                <EditorArrayComponent {...itemsProps} />
+              </ContextMenuDisabled>
             </div>
           </div>
         </SortableZIndex>

@@ -1,14 +1,6 @@
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { Value } from "./types/Value";
-
-function onOffToBool(v: "on" | "off"): boolean {
-  switch (v) {
-    case "off":
-      return false;
-    case "on":
-      return true;
-  }
-}
+import { onOffToBool } from "visual/utils/boolean";
 
 function descriptionPosition(v: "besideImage" | "belowImage"): boolean {
   switch (v) {

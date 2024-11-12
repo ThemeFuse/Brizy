@@ -7,7 +7,11 @@ import { ChoiceTypes, Ratio, VideoTypes } from "./types";
 export const containsShorts = (s: string): boolean => s.includes("/shorts/");
 
 const getTypes = (type: VideoTypes): ChoiceTypes => {
-  return { title: capitalize(type) as VideoTypes, value: type };
+  const title = (
+    type === "url" ? type.toUpperCase() : capitalize(type)
+  ) as VideoTypes;
+
+  return { title, value: type };
 };
 
 export const typesChoice = (config: ConfigCommon) => {

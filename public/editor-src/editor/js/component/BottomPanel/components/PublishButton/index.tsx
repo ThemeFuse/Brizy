@@ -463,16 +463,18 @@ class PublishButton extends Component<Props, State> {
                 }
 
                 const isHomePage = page.id === page?.layout?.isHomePage;
-                await shopifySyncPage(page.title, isHomePage);
+                await shopifySyncPage({
+                  config,
+                  title: page.title,
+                  isHomePage
+                });
 
                 break;
               }
               case "withRules": {
                 const selected = await getPageRelations(config);
                 const selectedIds = selected.map((i) => i.id);
-                const _items = await getCollectionSourceItemsById(
-                  config.templateType.id
-                );
+                const _items = await getCollectionSourceItemsById(config);
 
                 const items = _items.filter((item): item is SelectedItem =>
                   selectedIds.includes(item.id)
@@ -486,7 +488,11 @@ class PublishButton extends Component<Props, State> {
                     break;
                   }
 
-                  await shopifySyncRules(items, page.title);
+                  await shopifySyncRules({
+                    config,
+                    rules: items,
+                    title: page.title
+                  });
                 } else {
                   this.handlePublishWithRules("saveAndPublishLoading");
                 }
@@ -496,7 +502,7 @@ class PublishButton extends Component<Props, State> {
                 const selected = await getPageRelations(config);
                 const selectedIds = selected.map((i) => i.blog_id || i.id);
 
-                const items = await shopifyBlogItems();
+                const items = await shopifyBlogItems(config);
 
                 const selectedBlog = items.find((blog) =>
                   selectedIds.includes(blog.id)
@@ -510,11 +516,12 @@ class PublishButton extends Component<Props, State> {
                     break;
                   }
 
-                  await shopifySyncArticle(
-                    selectedBlog.id,
-                    selectedBlog.title,
-                    page.title
-                  );
+                  await shopifySyncArticle({
+                    config,
+                    blogId: selectedBlog.id,
+                    blogTitle: selectedBlog.title,
+                    title: page.title
+                  });
                 } else {
                   this.handlePublishWithArticle("saveAndPublishLoading");
                 }
@@ -598,7 +605,8 @@ class PublishButton extends Component<Props, State> {
             return t("Update");
           }
           case "draft":
-          case "future": {
+          case "future":
+          case "private": {
             return t("Save Draft");
           }
         }
@@ -638,6 +646,7 @@ class PublishButton extends Component<Props, State> {
                   return this.publish("updateLoading");
                 case "draft":
                 case "future":
+                case "private":
                   return this.draft("updateLoading");
               }
             }}

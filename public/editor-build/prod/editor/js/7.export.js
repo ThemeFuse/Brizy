@@ -2,7 +2,7 @@ exports.id = 7;
 exports.ids = [7];
 exports.modules = {
 
-/***/ 7189:
+/***/ 6993:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,7 +42,7 @@ __export(Preview_exports, {
   default: () => Preview
 });
 module.exports = __toCommonJS(Preview_exports);
-var import_react = __toESM(__webpack_require__(466));
+var import_react = __toESM(__webpack_require__(470));
 const ICON_SIZE = "64px";
 const cache = {};
 class Preview extends import_react.Component {

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useMemo } from "react";
+import Config from "visual/global/Config";
 import { TypeId } from "visual/config/icons/Type";
 import { FCC } from "visual/utils/react/types";
 import { ProContent } from "./ProContent";
@@ -18,7 +19,12 @@ export const RenderIcons: FCC<Props> = ({
   onSelectChange,
   onInputChange
 }) => {
-  const { proDescription } = getTypes().find(({ id }) => id === typeId) ?? {};
+  const proDescription = useMemo(() => {
+    const config = Config.getAll();
+    const { proDescription } =
+      getTypes(config).find(({ id }) => id === typeId) ?? {};
+    return proDescription;
+  }, [typeId]);
 
   if (proDescription) {
     return <ProContent />;

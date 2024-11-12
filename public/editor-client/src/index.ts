@@ -2,7 +2,7 @@ import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
-import { getCollectionItemsIds } from "./collectionItems/getCollectionItemsIds";
+import { getCollectionItems } from "./collectionItems/getCollectionItems";
 import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
 import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
@@ -65,7 +65,7 @@ const api = {
   defaultLayouts: defaultLayouts(config),
   collectionItems: {
     searchCollectionItems,
-    getCollectionItemsIds
+    getCollectionItems
   },
   collectionTypes: {
     loadCollectionTypes

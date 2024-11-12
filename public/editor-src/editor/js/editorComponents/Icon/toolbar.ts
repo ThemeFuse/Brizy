@@ -15,7 +15,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { Props, Value } from "./types";
 
-//@ts-expect-error old option
 export const getItems: GetItems<Value, Props> = ({
   v,
   device,

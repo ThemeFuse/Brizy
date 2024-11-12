@@ -3,7 +3,8 @@ import { Effect, EffectsWithAnchor, EffectValueWithAnchor } from "./Value";
 export enum Type {
   active = "active",
   enable = "enable",
-  effect = "effect"
+  effect = "effect",
+  multiple = "multiple"
 }
 
 export type Active = {
@@ -24,4 +25,10 @@ export type Eff<E extends EffectsWithAnchor> = {
   value: EffectValueWithAnchor<E>;
 };
 
-export type Patch = Active | Enable | Eff<EffectsWithAnchor>;
+export type Multiple = {
+  [key: string]: unknown;
+  active: Effect | undefined;
+  type: Type.multiple;
+};
+
+export type Patch = Active | Enable | Eff<EffectsWithAnchor> | Multiple;

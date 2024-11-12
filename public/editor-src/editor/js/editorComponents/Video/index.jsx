@@ -446,6 +446,7 @@ class Video extends EditorComponent {
               options={getHoverAnimationOptions(options, _hoverName)}
               isDisabledHover={isDisabledHover}
               isHidden={isHidden}
+              withoutWrapper={true}
             >
               <BoxResizer
                 points={resizerPoints}

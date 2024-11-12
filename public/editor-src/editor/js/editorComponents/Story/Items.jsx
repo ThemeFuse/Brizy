@@ -117,10 +117,11 @@ class StoryItems extends EditorArrayComponent {
   getToolbarSettings = (itemIndex) => {
     const dbValue = this.getDBValue();
     return {
-      getItemsForDesktop: () => [
+      getItems: () => [
         {
           id: "duplicate",
           type: "button",
+          devices: "desktop",
           config: {
             icon: "nc-duplicate",
             title: t("Duplicate"),
@@ -134,6 +135,7 @@ class StoryItems extends EditorArrayComponent {
         {
           id: "remove",
           type: "button",
+          devices: "desktop",
           config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           disabled: dbValue.length === 1,
           position: 250,
@@ -145,48 +147,49 @@ class StoryItems extends EditorArrayComponent {
         {
           id: "toolbarStories",
           type: "popover",
+          devices: "desktop",
           disabled: true,
           options: []
         },
         {
           id: "toolbarColor",
           type: "popover",
+          devices: "desktop",
           disabled: true,
           options: []
         },
         {
           id: "toolbarAutoplay",
           type: "popover",
+          devices: "desktop",
           disabled: true,
           options: []
         }
-      ],
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+      ]
     };
   };
 
   getItemProps() {
     const { meta, itemProps } = this.props;
     const toolbarExtendSettings = {
-      getItemsForDesktop: () => [
+      getItems: () => [
         {
           id: "duplicate",
           type: "button",
+          devices: "desktop",
           onClick: _.noop,
           disabled: true
         },
         {
           id: "remove",
           type: "button",
+          devices: "desktop",
           onClick: _.noop,
           disabled: true
         }
-      ],
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+      ]
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendSettings
     );
     return {
@@ -269,7 +272,7 @@ class StoryItems extends EditorArrayComponent {
       return (
         <Toolbar
           key={id}
-          {...this.makeToolbarPropsFromConfig(this.getToolbarSettings(index))}
+          {...this.makeToolbarPropsFromConfig2(this.getToolbarSettings(index))}
         >
           <Dot
             id={id}

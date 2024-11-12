@@ -3,6 +3,6 @@ import { IconData } from "../types";
 
 export interface Props {
   icons: Icon[];
-  value: IconData;
+  value: Partial<IconData>;
   onChange: (icon: IconData) => void;
 }

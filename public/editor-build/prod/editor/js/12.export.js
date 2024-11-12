@@ -2,7 +2,7 @@ exports.id = 12;
 exports.ids = [12];
 exports.modules = {
 
-/***/ 7178:
+/***/ 6982:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Vimeo_exports, {
   default: () => Vimeo
 });
 module.exports = __toCommonJS(Vimeo_exports);
-var import_react = __toESM(__webpack_require__(466));
-var import_utils = __webpack_require__(3794);
-var import_patterns = __webpack_require__(3797);
+var import_react = __toESM(__webpack_require__(470));
+var import_utils = __webpack_require__(3805);
+var import_patterns = __webpack_require__(3808);
 const SDK_URL = "https://player.vimeo.com/api/player.js";
 const SDK_GLOBAL = "Vimeo";
 const cleanUrl = (url) => {

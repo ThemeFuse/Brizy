@@ -8,16 +8,16 @@ import React, {
 import _ from "underscore";
 import { Control } from "visual/component/Controls/Population";
 import Config from "visual/global/Config";
-import { getCollectionTypes, getSourceIds } from "visual/utils/api";
+import { getCollectionItems, getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Str from "visual/utils/reader/string";
 import { auto, isAuto } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
-import { ActionTypes, reducer } from "./reducer";
 import { Choices, OptGroup } from "../../types/Choices";
 import { PopulationMethod } from "../../types/PopulationMethod";
-import { Value, ElementModelValue } from "./../../types/Value";
+import { ElementModelValue, Value } from "./../../types/Value";
+import { ActionTypes, reducer } from "./reducer";
 
 export interface Props<T extends Literal> {
   value: T;
@@ -81,9 +81,10 @@ export function PopulationSelect<T extends Literal>({
 
   const entityIdChoices = {
     load: () =>
-      getSourceIds(
+      getCollectionItems(
         Str.read(predefinedEntityType || entityType.value) ?? "",
-        config
+        config,
+        [{ title: t("Auto"), value: "" }]
       ),
     emptyLoad: {
       title: t("There are no choices")

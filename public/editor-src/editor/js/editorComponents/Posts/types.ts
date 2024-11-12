@@ -178,3 +178,17 @@ export type WPTaxQueryItem = {
 };
 
 //#endregion
+
+export interface CloudComponentConfig {
+  exclude?: boolean;
+  includeQueryMultiOptions?: boolean;
+  querySource?: boolean;
+  manualId?: string;
+  collectionFilters?: string;
+  getIncludeDisabledValue?: (source: string) => boolean;
+}
+
+export type GetManualTitle = (data: {
+  type?: string;
+  isManualSource?: boolean;
+}) => string;

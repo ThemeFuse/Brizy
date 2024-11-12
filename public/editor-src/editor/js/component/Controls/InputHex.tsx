@@ -12,12 +12,17 @@ import { Input } from "./Input";
 
 export type Props = WithClassName & WithValue<string> & WithOnChange<Hex>;
 
+const formatHexValue = (inputValue: string) => {
+  const formattedValue = inputValue.replace(/#/g, "");
+  return `#${formattedValue}`;
+};
+
 export const InputHex = ({
   className,
   value,
   onChange
-}: Props): JSX.Element => {
-  const [_value, setValue] = useState(value);
+}: Props): React.JSX.Element => {
+  const [_value, setValue] = useState(() => formatHexValue(value));
 
   useDebouncedEffect(
     () => {
@@ -28,13 +33,20 @@ export const InputHex = ({
     1000,
     [_value]
   );
-  useEffect(() => setValue(value), [value]);
+
+  useEffect(() => {
+    setValue(formatHexValue(value));
+  }, [value]);
+
+  const handleInputChange = (inputValue: string) => {
+    setValue(formatHexValue(inputValue));
+  };
 
   return (
     <Input
       className={classNames("brz-ed-control__input-hex", className)}
       value={_value}
-      onChange={setValue}
+      onChange={handleInputChange}
     />
   );
 };

@@ -270,7 +270,9 @@ class ControlInner extends Component<Props, State> {
     const { isEditMode, isPinMode } = this.props;
 
     return shortcodes.map(({ component, pro }, index) => {
-      const clickFn = isStory(Config.getAll())
+      const config = Config.getAll();
+
+      const clickFn = isStory(config)
         ? (): void => this.handleClick(shortcodes, index)
         : _.noop;
 
@@ -283,7 +285,7 @@ class ControlInner extends Component<Props, State> {
       const iconElem = this.renderIcon(
         component.title,
         component.icon,
-        !IS_PRO && pro
+        !IS_PRO && (typeof pro === "function" ? pro(config) : pro)
       );
 
       const iconContainer = (

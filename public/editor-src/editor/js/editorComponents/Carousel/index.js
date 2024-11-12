@@ -74,7 +74,8 @@ class Carousel extends EditorComponent {
       mobileSliderPaddingLeft,
       mobileSliderPaddingLeftSuffix,
       mobileSliderPaddingRight,
-      mobileSliderPaddingRightSuffix
+      mobileSliderPaddingRightSuffix,
+      mobileSlidesToShow
     } = v;
 
     const paddingW =
@@ -141,8 +142,8 @@ class Carousel extends EditorComponent {
       desktopWNoSpacing: Math.round(meta.desktopWNoSpacing / slidesToShow),
       tabletW: Math.round(tabletW / tabletSlidesToShow),
       tabletWNoSpacing: Math.round(meta.tabletWNoSpacing / tabletSlidesToShow),
-      mobileW: Math.round(mobileW),
-      mobileWNoSpacing: meta.mobileWNoSpacing,
+      mobileW: Math.round(mobileW / mobileSlidesToShow),
+      mobileWNoSpacing: Math.round(meta.mobileWNoSpacing / mobileSlidesToShow),
       inCarousel: true,
       inGrid: false
     };
@@ -166,6 +167,7 @@ class Carousel extends EditorComponent {
       orderBy,
       order,
       tabletSlidesToShow,
+      mobileSlidesToShow,
       customCSS
     } = v;
     const carouselClassName = classNames(
@@ -197,7 +199,8 @@ class Carousel extends EditorComponent {
       taxonomyId,
       orderBy,
       order,
-      tabletSlidesToShow
+      tabletSlidesToShow,
+      mobileSlidesToShow
     });
 
     return (

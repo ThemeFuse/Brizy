@@ -1,13 +1,13 @@
 import React, { ReactElement } from "react";
 import Prompts from "visual/component/Prompts";
 import Config from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types";
 import { updatePopupRules } from "visual/redux/actions";
 import { updateGBRules } from "visual/redux/actions2";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { GlobalBlock, Rule } from "visual/types";
 import { getRulesList } from "visual/utils/api";
-import { IS_CLOUD } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { isExternalPopup } from "visual/utils/models";
 
@@ -87,7 +87,7 @@ export function getOptions(
       if (!isExternalPopup(Config.getAll()) && save) {
         // ts-ignore added because cms's getRulesList method is expecting
         // CollectionItemId, wp is expecting nothing
-        const asyncGetValue = IS_CLOUD
+        const asyncGetValue = isCloud(config)
           ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
           : (): Promise<Rule[]> => getRulesList("");
 

@@ -83,6 +83,8 @@
     "tabletSliderPaddingLeft": 0,
     "tabletSliderPaddingLeftSuffix": "px",
 
+    "mobileSlidesToShow": 1,
+
     "mobileSliderPaddingType": "ungrouped",
     "mobileSliderPadding": 0,
     "mobileSliderPaddingSuffix": "px",

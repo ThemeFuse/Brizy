@@ -1,5 +1,5 @@
-import Config from "visual/global/Config";
-import { IS_CLOUD, IS_WP } from "visual/utils/env";
+import Config, { isWp } from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types";
 import { t } from "visual/utils/i18n";
 import { getMembershipChoices } from "visual/utils/membership";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -21,6 +21,8 @@ export const getItems =
   (canRegister) =>
   ({ v, device }) => {
     const config = Config.getAll();
+    const is_wp = isWp(config);
+    const is_cloud = isCloud(config);
     const dvv = (key) => defaultValueValue({ v, key, device });
 
     const typeChoices = [
@@ -69,7 +71,7 @@ export const getItems =
                     label: t("Default Roles"),
                     devices: "desktop",
                     placeholder: t("none"),
-                    disabled: !isRegister || IS_WP,
+                    disabled: !isRegister || is_wp,
                     choices: getMembershipChoices(config)
                   }
                 ]
@@ -96,35 +98,35 @@ export const getItems =
                     id: "showFirstName",
                     label: t("First Name"),
                     devices: "desktop",
-                    disabled: !isRegister || IS_WP,
+                    disabled: !isRegister || is_wp,
                     type: "switch"
                   },
                   {
                     id: "showLastName",
                     label: t("Last Name"),
                     devices: "desktop",
-                    disabled: !isRegister || IS_WP,
+                    disabled: !isRegister || is_wp,
                     type: "switch"
                   },
                   {
                     id: "showUsername",
                     label: t("Username"),
                     devices: "desktop",
-                    disabled: !isRegister || IS_WP,
+                    disabled: !isRegister || is_wp,
                     type: "switch"
                   },
                   {
                     id: "showPhoneNumber",
                     label: t("Phone Number"),
                     devices: "desktop",
-                    disabled: !isRegister || IS_WP,
+                    disabled: !isRegister || is_wp,
                     type: "switch"
                   },
                   {
                     id: "showRegisterInfo",
                     label: t("Register Info"),
                     devices: "desktop",
-                    disabled: !isRegister || IS_CLOUD,
+                    disabled: !isRegister || is_cloud,
                     type: "switch"
                   },
                   {

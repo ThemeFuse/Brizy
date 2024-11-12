@@ -45,6 +45,13 @@ const parallaxInitClassName = "brz-bg-image-parallax--init";
         window.innerHeight || 0
       );
 
+      const htmlTag = document.querySelector("html");
+
+      if (htmlTag) {
+        // scroll-behavior: "smooth" does not work with this lib
+        htmlTag.style.scrollBehavior = "initial";
+      }
+
       this.profileParallaxElements();
       this._attachEvents();
       this.d();

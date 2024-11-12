@@ -6,7 +6,7 @@ import { ScrollMotionsAttr, ScrollMotionsProps } from "./types";
 import { makeOptionToAttr } from "./utils";
 
 export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
-  const { className, options, children } = props;
+  const { className, options, children, needWrapper } = props;
   const nodeRef = useRef<HTMLDivElement | null>(null);
   const motion = useRef<Motions>();
   let attr: ScrollMotionsAttr | undefined;
@@ -72,9 +72,7 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
     return children(nodeRef, attr);
   }
 
-  return options === undefined ? (
-    children
-  ) : (
+  return options || needWrapper ? (
     <div
       {...attr?.options}
       ref={nodeRef}
@@ -82,5 +80,7 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
     >
       {children}
     </div>
+  ) : (
+    children
   );
 };

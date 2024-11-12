@@ -18,6 +18,7 @@ import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { pass } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";
 import { Dictionary } from "./utils";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export type V = Dictionary<unknown>;
 
@@ -205,7 +206,7 @@ export interface DataCommon {
     [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   dataVersion: number;
-  status: "draft" | "publish" | "future"; // The future status is used for scheduled pages .
+  status: "draft" | "publish" | "future" | "private"; // The future status is used for scheduled pages .
   dependencies: Array<Dependency>;
 }
 
@@ -513,9 +514,12 @@ export type Shortcode = {
     resolve: ElementModel;
     position?: number;
     hidden?: boolean;
+    config?: Record<string, unknown>;
+    upgradeMessage?: string;
+    upgradeActionMessage?: string;
   };
   keywords?: string;
-  pro: boolean;
+  pro: boolean | ((c: ConfigCommon) => boolean);
 };
 
 export type Shortcodes = {

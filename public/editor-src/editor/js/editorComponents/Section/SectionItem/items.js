@@ -21,10 +21,11 @@ class SectionItemItems extends EditorArrayComponent {
   getItemProps(itemData, itemIndex) {
     const meta = this.props.meta;
     const cloneRemoveConfig = {
-      getItemsForDesktop: () => [
+      getItems: () => [
         {
           id: "duplicate",
           type: "button",
+          devices: "desktop",
           config: {
             icon: "nc-duplicate",
             title: t("Duplicate"),
@@ -38,6 +39,7 @@ class SectionItemItems extends EditorArrayComponent {
         {
           id: "remove",
           type: "button",
+          devices: "desktop",
           config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           position: 250,
           onClick: () => {
@@ -45,11 +47,9 @@ class SectionItemItems extends EditorArrayComponent {
             this.removeItem(itemIndex);
           }
         }
-      ],
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+      ]
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
 
     return {
       meta,

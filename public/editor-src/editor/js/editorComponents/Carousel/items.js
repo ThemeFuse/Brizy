@@ -136,10 +136,11 @@ class Items extends EditorArrayComponent {
 
     if (dynamic === "off") {
       const cloneRemoveConfig = {
-        getItemsForDesktop: () => [
+        getItems: () => [
           {
             id: "emptyItem",
             type: "button",
+            devices: "desktop",
             config: {
               icon: "nc-add",
               title: t("Add New Column"),
@@ -153,6 +154,7 @@ class Items extends EditorArrayComponent {
           {
             id: "duplicate",
             type: "button",
+            devices: "desktop",
             config: {
               icon: "nc-duplicate",
               title: t("Duplicate"),
@@ -175,8 +177,8 @@ class Items extends EditorArrayComponent {
                 itemIndex === 0
                   ? "prev"
                   : itemIndex === items.length - 1
-                  ? "next"
-                  : undefined,
+                    ? "next"
+                    : undefined,
               onChange: (v) => {
                 switch (v) {
                   case "prev":
@@ -196,6 +198,7 @@ class Items extends EditorArrayComponent {
                 {
                   id: "remove",
                   type: "button",
+                  devices: "desktop",
                   config: {
                     title: t("Delete"),
                     icon: "nc-trash",
@@ -209,12 +212,10 @@ class Items extends EditorArrayComponent {
                 }
               ]
             : [])
-        ],
-        getItemsForTablet: () => [],
-        getItemsForMobile: () => []
+        ]
       };
 
-      toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+      toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
     }
 
     return {
@@ -293,7 +294,8 @@ class Items extends EditorArrayComponent {
       sliderAnimation,
       transitionSpeed,
       swipe,
-      tabletSlidesToShow
+      tabletSlidesToShow,
+      mobileSlidesToShow
     } = this.props;
 
     if (IS_PREVIEW) {
@@ -308,7 +310,7 @@ class Items extends EditorArrayComponent {
         {
           breakpoint: 767,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: mobileSlidesToShow,
             slidesToScroll: 1
           }
         }
@@ -379,7 +381,7 @@ class Items extends EditorArrayComponent {
           {
             breakpoint: 767,
             settings: {
-              slidesToShow: 1,
+              slidesToShow: mobileSlidesToShow,
               slidesToScroll: 1
             }
           }

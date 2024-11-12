@@ -2,8 +2,10 @@ import editorComponents, { NotFoundComponent } from "visual/editorComponents";
 import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import Editor from "visual/global/Editor";
-import shopifyComponents from "visual/shopifyShortcodeComponents";
-import shortcodeComponents from "visual/shortcodeComponents";
+import { getShopifyShortcodeComponents } from "visual/shopifyShortcodeComponents";
+import { getShortcodeComponents } from "visual/shortcodeComponents";
+
+const config = Config.getAll();
 
 // components
 for (const component of Object.values(editorComponents)) {
@@ -15,12 +17,10 @@ for (const component of Object.values(editorComponents)) {
 Editor.registerNotFoundComponent(NotFoundComponent);
 
 // shortcode
-Editor.registerShortcode(shortcodeComponents);
-
-const config = Config.getAll();
+Editor.registerShortcode(getShortcodeComponents(config));
 
 if (isCloud(config) && isShopify(config)) {
-  Editor.registerShopifyShortcode(shopifyComponents);
+  Editor.registerShopifyShortcode(getShopifyShortcodeComponents(config));
 }
 
 const thirdPartyComponents = config.thirdPartyComponents;

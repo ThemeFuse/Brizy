@@ -110,17 +110,18 @@ class Blocks extends EditorArrayComponent {
       disabled = !slider || slider === "off";
     }
     const cloneRemoveConfig = {
-      getItemsForDesktop: () => [
+      getItems: () => [
         {
           id: "duplicate",
           type: "button",
+          devices: "desktop",
           config: {
             icon: "nc-duplicate",
             title: t("Duplicate"),
             reverseTheme: true
           },
-          position: 200,
           disabled,
+          position: 200,
           onClick: () => {
             this.handleClone(itemData.value._id);
           }
@@ -128,17 +129,17 @@ class Blocks extends EditorArrayComponent {
         {
           id: "remove",
           type: "button",
+          devices: "desktop",
           config: { icon: "nc-trash", title: t("Delete"), reverseTheme: true },
           position: 250,
           onClick: () => {
+            hideToolbar();
             this.handleDelete(itemData.value._id);
           }
         }
-      ],
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+      ]
     };
-    const toolbarExtend = this.makeToolbarPropsFromConfig(cloneRemoveConfig);
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
 
     return { blockId, toolbarExtend };
   }

@@ -1,6 +1,7 @@
 import { parseStrict } from "fp-utilities";
 import {
   FromElementModel,
+  FromElementModelGetterValue,
   ToElementModel
 } from "visual/component/Options/Type";
 import { Value } from "visual/component/Options/types/dev/IconsPicker/types";
@@ -8,10 +9,9 @@ import * as Arr from "visual/utils/array";
 import { optional } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
 import * as Literal from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
 
 export const fromElementModel: FromElementModel<"iconsPicker"> = parseStrict<
-  (k: string) => MValue<Literal.Literal>,
+  (k: string) => FromElementModelGetterValue,
   Value
 >({
   value: (get) =>

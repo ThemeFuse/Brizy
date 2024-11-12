@@ -15,6 +15,7 @@ import {
   styleSizeHeaderWidth,
   styleSizeWidth
 } from "visual/utils/style2";
+import { Str } from "@brizy/readers";
 
 export function cssStyleElementTableIconSize({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -79,7 +80,9 @@ export function cssStyleElementTableAsideWidth({ v, device, state }) {
 
   if (aside === "on") {
     const width = styleSizeWidth({ v, device, state, prefix: "aside" });
-    return `min-width: ${width}px; width: ${width}px;`;
+    const dvv = (key) => defaultValueValue({ v, key, device, state });
+    const unit = Str.read(dvv("asideWidthSuffix")) || "px";
+    return `min-width: ${width}${unit}; width: ${width}${unit};`;
   }
 
   return "";
@@ -110,6 +113,8 @@ export function cssStyleTablePadding({ v, device, state, prefix = "table" }) {
 
 export function cssStyleElementTableHeaderWidth({ v, device, state }) {
   const width = styleSizeHeaderWidth({ v, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const unit = Str.read(dvv("headerWidthSuffix")) || "px";
 
-  return `width: ${width}px; min-width: ${width}px;`;
+  return `width: ${width}${unit}; min-width: ${width}${unit};`;
 }

@@ -16,7 +16,6 @@ import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { GetItems } from "../EditorComponent/types";
 import { Props, Value } from "./types";
 
-//@ts-expect-error Old options
 export const getItems: GetItems<Value, Props> = ({
   v,
   device,

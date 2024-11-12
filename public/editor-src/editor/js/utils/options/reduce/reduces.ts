@@ -22,7 +22,6 @@ export const withTabs = <K extends "tabs" | "sidebarTabs", T>(
   item: GenericToolbarItemType<K>
 ): T => {
   return (
-    // @ts-expect-error, reduce has 2 implementations and TS cannot decided which one to use
     item.tabs?.reduce((acc, tab) => tab.options?.reduce(fn, acc) ?? t0, t0) ??
     t0
   );

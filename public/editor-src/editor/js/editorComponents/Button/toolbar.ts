@@ -11,11 +11,9 @@ import {
 } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { Props, Value } from "./types";
 import { getMaxBorderRadius } from "./utils";
 
-// @ts-expect-error wrong typing
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const config = Config.getAll();
 
@@ -436,8 +434,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               id: "anchor",
               label: t("Block"),
               options: [
-                //@ts-expect-error Option doesn't work
-                toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP || IS_STORY })
+                {
+                  id: "linkAnchor",
+                  label: t("Block"),
+                  type: "blockThumbnail",
+                  disabled: IS_GLOBAL_POPUP || IS_STORY
+                }
               ]
             },
             {

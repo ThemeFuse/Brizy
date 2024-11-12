@@ -8,8 +8,9 @@ import * as Str from "visual/utils/reader/string";
 import { capitalize } from "visual/utils/string";
 import { getInstanceParentId } from "visual/utils/toolbar";
 import { Toggle } from "visual/utils/options/utils/Type";
+import { Value, Props, RenderType } from "./type";
 
-export const getItems: GetItems = ({ v, device, component }) => {
+export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const config = Config.getAll();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
@@ -60,9 +61,9 @@ export const getItems: GetItems = ({ v, device, component }) => {
           type: "select",
           devices: "desktop",
           choices: [
-            { title: t("Static"), value: "static" },
-            { title: t("Fixed"), value: "fixed" },
-            { title: t("Sticky"), value: "animated" }
+            { title: t("Static"), value: RenderType.Static },
+            { title: t("Fixed"), value: RenderType.Fixed },
+            { title: t("Sticky"), value: RenderType.Animated }
           ]
         },
         {

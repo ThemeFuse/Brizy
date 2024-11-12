@@ -9,10 +9,9 @@ import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
+import Config, { isWp } from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { IS_WP } from "visual/utils/env";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
@@ -40,6 +39,9 @@ class Map extends EditorComponent<Value> {
   static defaultValue = defaultValue;
 
   static experimentalDynamicContent = true;
+
+  isStory = isStory(Config.getAll());
+  isWp = isWp(Config.getAll());
 
   handleResizerChange = (patch: Patch): void =>
     this.patchValue(resizerTransformPatch(patch));
@@ -70,7 +72,6 @@ class Map extends EditorComponent<Value> {
   };
 
   renderForEdit(v: Value): JSX.Element {
-    const IS_STORY = isStory(Config.getAll());
     const { address, zoom, customCSS } = v;
 
     const { animationId, hoverName, options, isDisabledHover, isHidden } =
@@ -98,7 +99,8 @@ class Map extends EditorComponent<Value> {
               cssKeyframe={hoverName}
               options={options}
               isDisabledHover={isDisabledHover}
-              isHidden={isHidden || IS_STORY}
+              isHidden={isHidden || this.isStory}
+              withoutWrapper={true}
             >
               <BoxResizer
                 points={points}
@@ -110,7 +112,7 @@ class Map extends EditorComponent<Value> {
                 <AlphaMapEditor
                   address={address}
                   zoom={zoom}
-                  className={IS_WP ? "intrinsic-ignore" : ""}
+                  className={this.isWp ? "intrinsic-ignore" : ""}
                 />
               </BoxResizer>
             </HoverAnimation>
@@ -122,8 +124,6 @@ class Map extends EditorComponent<Value> {
 
   renderForView(v: Value): JSX.Element {
     const { address, zoom, customCSS } = v;
-    const IS_STORY = isStory(Config.getAll());
-
     const { animationId, options, isHidden, hoverName } = this.getHoverData(v);
 
     const wrapperClassName = this.getCSSClassnames({
@@ -143,12 +143,13 @@ class Map extends EditorComponent<Value> {
             animationId={animationId}
             cssKeyframe={hoverName}
             options={options}
-            isHidden={isHidden || IS_STORY}
+            isHidden={isHidden || this.isStory}
+            withoutWrapper={true}
           >
             <AlphaMapPreview
               address={address}
               zoom={zoom}
-              className={IS_WP ? "intrinsic-ignore" : ""}
+              className={this.isWp ? "intrinsic-ignore" : ""}
             />
           </HoverAnimation>
         </Wrapper>

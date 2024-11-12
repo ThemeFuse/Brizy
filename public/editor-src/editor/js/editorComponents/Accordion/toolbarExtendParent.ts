@@ -2,7 +2,6 @@ import { t } from "visual/utils/i18n";
 import { GetItems } from "../EditorComponent/types";
 import { Value } from "./toolbarExtend";
 
-// @ts-expect-error wrong typing
 export const getItems: GetItems<Value> = () => {
   return [
     {
@@ -25,7 +24,8 @@ export const getItems: GetItems<Value> = () => {
     {
       id: "horizontalAlign",
       type: "toggle",
-      disabled: true
+      disabled: true,
+      choices: []
     },
     {
       id: "advancedSettings",

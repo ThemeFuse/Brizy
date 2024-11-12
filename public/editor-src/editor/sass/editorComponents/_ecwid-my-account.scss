@@ -1,6 +1,5 @@
 .brz-ecwid-wrapper
   .ecwid
-  .ec-storefront-v2
   div
   .ecwid-productBrowser
   div
@@ -68,6 +67,21 @@
         .ec-page-title {
           padding: 0;
         }
+
+        .ec-cart-step--legallinks .ec-cart-step__section .ec-cart-step__text {
+          width: 100%;
+
+          .ec-link {
+            display: block;
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .ec-cart__body {
+      .ec-cart__checkout .ec-cart__agreement .ec-link {
+        display: block;
       }
     }
   }

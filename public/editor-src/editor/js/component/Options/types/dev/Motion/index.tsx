@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from "react";
 import { identity } from "underscore";
-import { DisabledIcon } from "visual/component/Controls/common/DisabledIcon";
 import { Icon } from "visual/component/Controls/common/Icon";
 import { Group } from "visual/component/Controls/Group";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
@@ -56,14 +55,9 @@ export const Motion = ({
       <OptionWrapper display={"block"} className={"brz-ed-option"}>
         {label}
         <FatIconsGrid>
-          {effects.map((v) =>
-            disabled.includes(v) ? (
-              <DisabledIcon
-                key={v}
-                icon={effectIcon(v)}
-                label={effectTitle(v)}
-              />
-            ) : (
+          {effects
+            .filter((effect) => !disabled.includes(effect))
+            .map((v) => (
               <Icon<Effect>
                 key={v}
                 id={v}
@@ -74,8 +68,7 @@ export const Motion = ({
                 onClick={onClick}
                 onCheck={onCheck}
               />
-            )
-          )}
+            ))}
         </FatIconsGrid>
       </OptionWrapper>
       {activeEffect && EffectComponent ? (

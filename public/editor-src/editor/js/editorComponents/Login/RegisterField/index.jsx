@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React from "react";
+import Config, { isWp } from "visual/global/Config";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
@@ -7,7 +8,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import { css } from "visual/utils/cssStyle";
-import { IS_WP } from "visual/utils/env";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
@@ -44,6 +44,8 @@ class RegisterField extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  isWp = isWp(Config.getAll());
 
   handleLabelChange = (label) => {
     this.patchValue({ label });
@@ -218,7 +220,7 @@ class RegisterField extends EditorComponent {
     const styleLabel = {
       height: v.label === "" ? 0 : "auto"
     };
-    return IS_WP ? (
+    return this.isWp ? (
       <div className={className}>
         {(type === "Name" || type === "RegisterEmail") && (
           <div className="brz-login__item">
@@ -358,7 +360,7 @@ class RegisterField extends EditorComponent {
     const styleLabel = {
       height: v.label === "" ? 0 : "auto"
     };
-    return IS_WP ? (
+    return this.isWp ? (
       <div className={className}>
         {(type === "Name" || type === "RegisterEmail") && (
           <div className="brz-login__item">

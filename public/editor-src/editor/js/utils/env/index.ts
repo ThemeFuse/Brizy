@@ -1,5 +1,5 @@
 import { match } from "fp-utilities";
-import Config, { Cloud, Config as Conf } from "visual/global/Config";
+import Config from "visual/global/Config";
 import { TemplateType } from "visual/global/Config/types/TemplateType";
 import {
   isCMS,
@@ -8,10 +8,12 @@ import {
 } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import * as Str from "visual/utils/reader/string";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 const config = Config.getAll();
 
-const getTemplate: (config: Conf) => TemplateType | undefined = match(
+// @ts-expect-error: Temporary
+const getTemplate: (config: ConfigCommon) => TemplateType | undefined = match(
   [isWp, (c): TemplateType | undefined => c.template_type],
   [
     isCloud,
@@ -23,7 +25,7 @@ const getTemplate: (config: Conf) => TemplateType | undefined = match(
 );
 
 // if array of rules is empty(wasn't added via WP) we should think that all modes are active
-const isTemplate = (config: Conf, type: TemplateType): boolean => {
+const isTemplate = (config: ConfigCommon, type: TemplateType): boolean => {
   const t = getTemplate(config);
 
   // @ts-expect-error, need to review if template could be actually an empty string
@@ -31,7 +33,7 @@ const isTemplate = (config: Conf, type: TemplateType): boolean => {
   return t === "" || t === type;
 };
 
-export const isPost = (config: Conf): boolean =>
+export const isPost = (config: ConfigCommon): boolean =>
   isWp(config) && config.wp.postType === "post";
 
 /**
@@ -39,36 +41,26 @@ export const isPost = (config: Conf): boolean =>
  */
 export const IS_PRO = !!config.pro;
 
-export const isPro = (config: Conf): boolean => !!config.pro;
+export const isPro = (config: ConfigCommon): boolean => !!config.pro;
 
-/**
- * @deprecated, use isWp(config) from visual/global/Config/types/configs/WP
- */
-export const IS_WP = isWp(config);
+export const isPage = (config: ConfigCommon): boolean => config.mode === "page";
 
-/**
- * @deprecated, use isCloud(config) from visual/global/Config/types/configs/Cloud
- */
-export const IS_CLOUD = isCloud(config);
-
-export const isPage = (config: Conf): boolean => config.mode === "page";
-
-export const isProductPage = (config: Conf): boolean =>
+export const isProductPage = (config: ConfigCommon): boolean =>
   config.mode === "product";
 
-export const isSingleTemplate = (config: Conf): boolean =>
+export const isSingleTemplate = (config: ConfigCommon): boolean =>
   isTemplate(config, "single");
 
-export const isArchiveTemplate = (config: Conf): boolean =>
+export const isArchiveTemplate = (config: ConfigCommon): boolean =>
   isTemplate(config, "archive");
 
-export const isProductTemplate = (config: Conf): boolean =>
+export const isProductTemplate = (config: ConfigCommon): boolean =>
   isTemplate(config, "product");
 
-export const isProductArchiveTemplate = (config: Conf): boolean =>
+export const isProductArchiveTemplate = (config: ConfigCommon): boolean =>
   isTemplate(config, "product_archive");
 
-export const isProtectedPage = (config: Conf): boolean => {
+export const isProtectedPage = (config: ConfigCommon): boolean => {
   if (isCloud(config) && isCMS(config) && "isProtected" in config.page) {
     return config.page.isProtected;
   }
@@ -76,22 +68,22 @@ export const isProtectedPage = (config: Conf): boolean => {
   return false;
 };
 
-export const isUserPage = (config: Conf): boolean =>
+export const isUserPage = (config: ConfigCommon): boolean =>
   isCloud(config) && config.page.provider === "customers";
 
-export const isResetPassPage = (config: Conf): boolean =>
+export const isResetPassPage = (config: ConfigCommon): boolean =>
   isCloud(config) && config.page.isResetPassPage;
 
-export const isCartPage = (config: Cloud): boolean =>
+export const isCartPage = (config: ConfigCommon): boolean =>
   isCloud(config) && config.page.slug === "cart";
 
-export const isCheckoutPage = (config: Cloud): boolean =>
+export const isCheckoutPage = (config: ConfigCommon): boolean =>
   isCloud(config) && config.page.slug === "checkout";
 
-export const isMyAccountPage = (config: Cloud): boolean =>
+export const isMyAccountPage = (config: ConfigCommon): boolean =>
   isCloud(config) && config.page.slug === "my-account";
 
-export const isBlogPage = (config: Cloud): boolean =>
+export const isBlogPage = (config: ConfigCommon): boolean =>
   isCloud(config) && config.page.collectionTypeSlug === "blog";
 
 //#region Page

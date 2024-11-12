@@ -25,12 +25,10 @@ export {
   apiSendHeartBeat
 };
 
-const config = Config.getAll();
 const DEBOUNCE_WAIT = 2000;
 
-export const debouncedApiAutoSave = _.debounce(
-  apiAutoSave,
-  config.autoSaveInterval ?? DEBOUNCE_WAIT
+export const debouncedApiAutoSave = _.once((interval: number = DEBOUNCE_WAIT) =>
+  _.debounce(apiAutoSave, interval)
 );
 
 export const debouncedApiPublish = _.debounce(apiPublish, DEBOUNCE_WAIT);
@@ -38,11 +36,11 @@ export const debouncedApiPublish = _.debounce(apiPublish, DEBOUNCE_WAIT);
 // Polling
 export function pollingSendHeartBeat(heartBeat: number) {
   let init = false;
-
+  const config = Config.getAll();
   const { sendHandler } = config.api?.heartBeat ?? {};
 
   if (typeof sendHandler === "undefined") {
-    return;
+    return Promise.resolve();
   }
 
   return new Promise((_res, rej) => {

@@ -1,4 +1,3 @@
-import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Shortcodes } from "visual/types";
@@ -10,16 +9,14 @@ import {
   WPShortCodes
 } from "./Shortcodes";
 
-const _config = Config.getAll();
-
-const IS_PRO = isPro(_config);
-
-const normalizeShortCodes = (config: ConfigCommon) => {
+export const getShortcodeComponents = (config: ConfigCommon): Shortcodes => {
   const moduleGroups = config.ui?.leftSidebar?.moduleGroups;
 
   if (!moduleGroups) {
     return {};
   }
+
+  const is_pro = isPro(config);
 
   return moduleGroups.reduce((components, { label, moduleNames }) => {
     const items = moduleNames
@@ -34,15 +31,9 @@ const normalizeShortCodes = (config: ConfigCommon) => {
       .filter(
         (element) =>
           Boolean(element.component) &&
-          (IS_PRO ? element.component.id !== ElementTypes.MenuSimple : true)
+          (is_pro ? element.component.id !== ElementTypes.MenuSimple : true)
       );
 
     return { ...components, [label]: items };
   }, {});
 };
-
-const config = ((): Shortcodes => {
-  return normalizeShortCodes(_config);
-})();
-
-export default config;

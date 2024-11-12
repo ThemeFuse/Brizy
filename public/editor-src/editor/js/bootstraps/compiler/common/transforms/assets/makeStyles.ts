@@ -1,8 +1,7 @@
 import LibsConfig from "visual/bootstraps/libs.json";
-import Config from "visual/global/Config";
+import Conf, { Config, isWp } from "visual/global/Config";
 import { ExtraFontData } from "visual/types";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
-import { IS_WP } from "visual/utils/env";
 import { makePrefetchFonts } from "visual/utils/fonts";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { toHashCode } from "visual/utils/string";
@@ -34,8 +33,11 @@ type MakeStyles = {
   pro?: StylesPro;
 };
 
-const withRel = (attr: Record<string, string>): Record<string, string> => {
-  return IS_WP ? attr : { ...attr, rel: "stylesheet" };
+const withRel = (
+  attr: Record<string, string>,
+  config: Config
+): Record<string, string> => {
+  return isWp(config) ? attr : { ...attr, rel: "stylesheet" };
 };
 
 const makePageMetaViewport = (): Asset => ({
@@ -69,10 +71,12 @@ const makePageFontsPrefetch = (fonts: Fonts): Array<Asset> => {
   return [];
 };
 
-const makePageFonts = (
-  fonts: Fonts,
-  extra?: ExtraFontData
-): (AssetGoogle | AssetUpload | AssetAdobe)[] => {
+const makePageFonts = (data: {
+  fonts: Fonts;
+  extra?: ExtraFontData;
+  config: Config;
+}): (AssetGoogle | AssetUpload | AssetAdobe)[] => {
+  const { fonts, extra, config } = data;
   const { google, upload, adobe } = getFontLinks({ ...fonts, extra });
   const pageFonts: (AssetGoogle | AssetUpload | AssetAdobe)[] = [];
 
@@ -84,10 +88,10 @@ const makePageFonts = (
       content: {
         type: "file",
         url: adobe,
-        attr: withRel({
-          class: "brz-link brz-link-adobe",
-          type: "text/css"
-        })
+        attr: withRel(
+          { class: "brz-link brz-link-adobe", type: "text/css" },
+          config
+        )
       },
       pro: true
     });
@@ -101,10 +105,10 @@ const makePageFonts = (
       content: {
         type: "file",
         url: google,
-        attr: withRel({
-          class: "brz-link brz-link-google",
-          type: "text/css"
-        })
+        attr: withRel(
+          { class: "brz-link brz-link-google", type: "text/css" },
+          config
+        )
       },
       pro: false
     });
@@ -118,10 +122,10 @@ const makePageFonts = (
       content: {
         type: "file",
         url: upload,
-        attr: withRel({
-          class: "brz-link brz-link-upload",
-          type: "text/css"
-        })
+        attr: withRel(
+          { class: "brz-link brz-link-upload", type: "text/css" },
+          config
+        )
       },
       pro: false
     });
@@ -216,7 +220,7 @@ interface Data {
 export const makeStyles = (data: Data): MakeStyles => {
   const { $root, fonts, css, extra } = data;
   const { free = [], pro = [] } = LibsConfig;
-  const config = Config.getAll();
+  const config = Conf.getAll();
 
   const main: Asset = {
     name: "main",
@@ -224,16 +228,14 @@ export const makeStyles = (data: Data): MakeStyles => {
     content: {
       type: "file",
       url: compileAssetUrl("editor/css/preview.min.css"),
-      attr: withRel({
-        class: "brz-link brz-link-preview"
-      })
+      attr: withRel({ class: "brz-link brz-link-preview" }, config)
     },
     pro: false
   };
   const generic: Asset[] = [];
 
   // project fonts
-  const pageFonts = makePageFonts(fonts, extra);
+  const pageFonts = makePageFonts({ fonts, extra, config });
 
   // page styles
   const pageStyles = makePageFontsPrefetch(fonts);
@@ -254,7 +256,7 @@ export const makeStyles = (data: Data): MakeStyles => {
   const dynamicStyles = makeDynamicStyle(css);
   generic.push(...dynamicStyles);
 
-  //ThirdParty styles
+  // thirdParty styles
   const thirdPartyUrls = config.thirdPartyUrls ?? [];
 
   thirdPartyUrls.forEach(({ styleUrl }) => {
@@ -286,10 +288,13 @@ export const makeStyles = (data: Data): MakeStyles => {
       content: {
         type: "file",
         url: compileAssetUrl(`editor/css/${name}.min.css`),
-        attr: withRel({
-          class: "brz-link brz-link-preview-lib",
-          ...makeDataAttr({ name: "group", value: name })
-        })
+        attr: withRel(
+          {
+            class: "brz-link brz-link-preview-lib",
+            ...makeDataAttr({ name: "group", value: name })
+          },
+          config
+        )
       },
       pro: false
     });
@@ -327,9 +332,7 @@ export const makeStyles = (data: Data): MakeStyles => {
       content: {
         type: "file",
         url: compileAssetProUrl(proConfig, "css/preview.pro.min.css"),
-        attr: withRel({
-          class: "brz-link brz-link-preview-pro"
-        })
+        attr: withRel({ class: "brz-link brz-link-preview-pro" }, config)
       },
       pro: true
     };
@@ -346,10 +349,13 @@ export const makeStyles = (data: Data): MakeStyles => {
         content: {
           type: "file",
           url: compileAssetProUrl(proConfig, `css/${name}-pro.min.css`),
-          attr: withRel({
-            class: "brz-link brz-link-preview-lib-pro",
-            ...makeDataAttr({ name: "group", value: name })
-          })
+          attr: withRel(
+            {
+              class: "brz-link brz-link-preview-lib-pro",
+              ...makeDataAttr({ name: "group", value: name })
+            },
+            config
+          )
         },
         pro: true
       });

@@ -18,8 +18,6 @@ import { TagEditable } from "./TagEditable";
 import { TagLists } from "./TagLists";
 import { Title } from "./Title";
 
-const { upgradeToPro } = Config.get("urls");
-
 const MAX_CONTAINER_WIDTH = 292;
 
 const animationStyle = {
@@ -71,6 +69,11 @@ class Thumbnail extends Component {
   };
 
   iconRef = React.createRef();
+
+  getProUrl() {
+    const { upgradeToPro } = Config.getAll().urls;
+    return upgradeToPro;
+  }
 
   getTags() {
     const { tags, data } = this.props;
@@ -194,7 +197,7 @@ class Thumbnail extends Component {
           overlay={
             <ProInfo
               text={t("Upgrade to PRO to use this block")}
-              url={upgradeToPro}
+              url={this.getProUrl()}
             />
           }
           onOpen={this.handleTooltipOpen}
@@ -265,7 +268,7 @@ class Thumbnail extends Component {
         overlay={
           <ProInfo
             text={t("Upgrade to PRO to use this block")}
-            url={upgradeToPro}
+            url={this.getProUrl()}
           />
         }
         onOpen={this.handleTooltipOpen}

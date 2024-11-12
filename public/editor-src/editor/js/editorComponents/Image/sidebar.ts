@@ -17,9 +17,8 @@ export const getItems: GetItems<V> = ({ v, device }) => {
   const imageSrc = dvv("imageSrc");
   const hoverName = readString(dvv("hoverName")) ?? "none";
 
-  const IS_STORY = isStory(Config.getAll());
-
-  const IS_WP = isWp(Config.getAll());
+  const is_story = isStory(Config.getAll());
+  const is_wp = isWp(Config.getAll());
 
   return [
     {
@@ -47,7 +46,31 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                     {
                       id: "border",
                       label: t("Corner"),
-                      type: "corners"
+                      type: "corners",
+                      position: 80
+                    },
+                    {
+                      id: "blendMode",
+                      label: t("Blending Mode"),
+                      type: "select",
+                      disabled: is_story,
+                      position: 100,
+                      choices: [
+                        { title: t("Normal"), value: "normal" },
+                        { title: t("Color"), value: "color" },
+                        { title: t("Color Burn"), value: "color-burn" },
+                        { title: t("Color Dodge"), value: "color-dodge" },
+                        { title: t("Darken"), value: "darken" },
+                        { title: t("Difference"), value: "difference" },
+                        { title: t("Exclusion"), value: "exclusion" },
+                        { title: t("Hue"), value: "hue" },
+                        { title: t("Lighten"), value: "lighten" },
+                        { title: t("Luminosity"), value: "luminosity" },
+                        { title: t("Multiply"), value: "multiply" },
+                        { title: t("Overlay"), value: "overlay" },
+                        { title: t("Saturation"), value: "saturation" },
+                        { title: t("Screen"), value: "screen" }
+                      ]
                     }
                   ]
                 },
@@ -83,7 +106,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                       type: "switch",
                       label: t("Show Original image"),
                       disabled:
-                        !IS_WP ||
+                        !is_wp ||
                         isSVGExtension(imageExtension) ||
                         isGIFExtension(imageExtension) ||
                         !imageSrc
@@ -119,7 +142,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                       id: "hover",
                       type: "animation",
                       devices: "desktop",
-                      disabled: IS_STORY,
+                      disabled: is_story,
                       config: {
                         types: hoverEffects,
                         replay: false,

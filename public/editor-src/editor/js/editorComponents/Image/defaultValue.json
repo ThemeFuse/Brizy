@@ -60,6 +60,8 @@
   },
 
   "style": {
+    "blendMode": "normal",
+
     "customCSS": "",
 
     "imageBrightness": 100,

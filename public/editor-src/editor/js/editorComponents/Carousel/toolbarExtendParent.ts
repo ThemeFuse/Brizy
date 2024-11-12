@@ -110,10 +110,9 @@ export function getItems({
                   id: "slidesToShow",
                   label: t("Columns"),
                   type: "slider",
-                  disabled: device === "mobile",
                   config: {
                     min: 1,
-                    max: 6
+                    max: device === "mobile" ? 3 : 6
                   }
                 },
                 {

@@ -1,6 +1,6 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import Config from "visual/global/Config";
-import { getSourceIds } from "visual/utils/api";
+import { getCollectionItems } from "visual/utils/api";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -24,7 +24,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
 
   const sourceType = Str.read(dvv("sourceType")) ?? "";
   const sourceItemsHandler =
-    config?.api?.collectionItems?.getCollectionItemsIds?.handler;
+    config?.api?.collectionItems?.getCollectionItems?.handler;
 
   const isCustomSize = dvv("size") === "custom";
   const isDefaultFillType = dvv("fillType") === "default";
@@ -52,7 +52,10 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
               type: "select",
               disabled: !sourceItemsHandler || sourceType === "",
               choices: {
-                load: () => getSourceIds(sourceType, config),
+                load: () =>
+                  getCollectionItems(sourceType, config, [
+                    { title: t("Auto"), value: "" }
+                  ]),
                 emptyLoad: {
                   title: t("There are no choices")
                 }
