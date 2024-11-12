@@ -290,12 +290,22 @@ export default class Button extends EditorComponent<Value, Props> {
       hasSizing(v, device, state) && IS_EDITOR && type !== "submit" ? (
         <div className="brz-btn--story-container">
           {renderIcon && this.renderIcon(v, vs, vd)}
-          <Text id="text" v={v} onChange={this.handleTextChange} />
+          <Text
+            id="text"
+            v={v}
+            onChange={this.handleTextChange}
+            allowLineBreak={true}
+          />
         </div>
       ) : (
         <>
           {renderIcon && this.renderIcon(v, vs, vd)}
-          <Text id="text" v={v} onChange={this.handleTextChange} />
+          <Text
+            id="text"
+            v={v}
+            onChange={this.handleTextChange}
+            allowLineBreak={true}
+          />
         </>
       );
 

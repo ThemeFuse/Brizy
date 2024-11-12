@@ -92,7 +92,7 @@ export function getItems({
           tabs: [
             {
               id: "tabConnectColor",
-              label: t("Color"),
+              label: t("Text"),
               options: [
                 {
                   id: "connectColor",

@@ -15,10 +15,7 @@ import {
   ElementModelType
 } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
-import {
-  disabledHoverForElements,
-  getHoverAnimationOptions
-} from "visual/component/HoverAnimation/utils";
+import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { currentUserRole, Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
@@ -39,6 +36,7 @@ import EditorComponent, {
 } from "visual/editorComponents/EditorComponent";
 import {
   OnChangeMeta,
+  ProElementTitle,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent/types";
 import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
@@ -46,7 +44,6 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { getStore } from "visual/redux/store";
 import { WithClassName } from "visual/types/attributes";
@@ -71,13 +68,15 @@ import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import { getAnimations } from "../../component/HoverAnimation/animations";
 import contextMenuConfig from "./contextMenu";
-import contextMenuConfigPro from "./contextMenuPro";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import Config from "visual/global/Config";
+import { t } from "visual/utils/i18n";
+import contextMenuConfigPro from "./contextMenuPro";
 
 export interface Value extends ElementModel, CssId {
   items: ElementModelType[];
@@ -104,6 +103,7 @@ type Static = WithClassName & {
   vd: Value;
   extraAttr?: SortableElementDataAttributes;
   ref?: Ref<unknown>;
+  needWrapper?: boolean;
 };
 
 export default class Wrapper extends EditorComponent<Value, Props> {
@@ -128,12 +128,14 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     return v.items[0] as MValue<{ type: string; value: ElementModel }>;
   }
 
-  getTitleIfPro(): string | undefined {
+  getTitleIfPro(): ProElementTitle | undefined {
     const model = this.getInnerElement();
 
     if (model !== undefined) {
+      const config = Config.getAll();
+
       return NoEmptyString.is(model.type)
-        ? getProTitle(model.type, model.value)
+        ? getProTitle(model.type, model.value, config)
         : undefined;
     }
 
@@ -237,11 +239,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   getHoverData(v: Value) {
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
-    const element = this.getInnerElement()?.type;
     const options = makeOptionValueToAnimation(v);
+
     const isHidden =
-      !element ||
-      disabledHoverForElements.includes(element as ElementTypes) ||
+      v.hideHoverWrapper === "on" ||
       !this.hoverAnimationOptionActive(hoverName);
 
     return {
@@ -252,15 +253,30 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     };
   }
 
-  renderStatic({ v, vs, vd, extraAttr, className, ref }: Static): ReactElement {
+  renderStatic({
+    v,
+    vs,
+    vd,
+    extraAttr,
+    className,
+    ref,
+    needWrapper = false
+  }: Static): ReactElement {
     const { customAttributes } = v;
     const proTitleElement = this.getTitleIfPro();
     const cssId = getCSSId<Value>(v);
 
-    if (proTitleElement) {
+    if (proTitleElement && proTitleElement.title) {
       const content = (
         <ProBlocked
-          text={proTitleElement}
+          text={proTitleElement.title}
+          message={
+            proTitleElement.upgradeMessage ?? t("Upgrade to PRO to use this")
+          }
+          upgradeText={
+            proTitleElement.upgradeActionMessage ?? t("Get a PRO plan")
+          }
+          upgradeLink={Config.getAll().urls.upgradeToPro}
           absolute={false}
           onRemove={this.handleRemove}
         />
@@ -330,11 +346,14 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       this.getHoverData(v);
     const { wrapperAnimationActive = false } = this.getMeta(v);
     const isDisabledHover = readBoolean(wrapperAnimationActive);
+    const withoutHoverWrapper = v.hideHoverWrapper === "on" && isHidden;
+
     const content = (
-      <TransformWrapper<Value> v={v}>
+      <TransformWrapper<Value> v={v} needWrapper={needWrapper}>
         <ScrollMotion
           className="brz-wrapper__scrollmotion"
           options={makeOptionValueToMotion(v)}
+          needWrapper={needWrapper}
         >
           <HoverAnimation
             animationId={animationId}
@@ -342,6 +361,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
             options={options}
             isDisabledHover={isDisabledHover}
             isHidden={isHidden}
+            withoutWrapper={withoutHoverWrapper}
           >
             {this.renderContent(v)}
           </HoverAnimation>
@@ -457,13 +477,20 @@ export default class Wrapper extends EditorComponent<Value, Props> {
             >
               {(ref, className): ReactNode =>
                 isRelative
-                  ? this.renderStatic({ v, vs, vd, extraAttr })
+                  ? this.renderStatic({
+                      v,
+                      vs,
+                      vd,
+                      extraAttr,
+                      needWrapper: true
+                    })
                   : this.renderStatic({
                       v,
                       vs,
                       vd,
                       className,
-                      ref
+                      ref,
+                      needWrapper: true
                     })
               }
             </Draggable>
@@ -492,6 +519,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
             cssKeyframe={cssKeyframe}
             options={options}
             isHidden={isHidden}
+            withoutWrapper={isHidden}
           >
             {this.renderContent(v)}
           </HoverAnimation>

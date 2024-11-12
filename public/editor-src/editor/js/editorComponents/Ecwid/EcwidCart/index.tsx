@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactNode, createRef } from "react";
+import React, { createRef, ReactNode } from "react";
 import { uniqueId } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -7,6 +7,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { css } from "visual/utils/cssStyle";
@@ -60,8 +61,8 @@ import { Value } from "./types/Value";
 import { valueToEciwdConfig } from "./utils";
 
 export class EcwidCart extends EditorComponent<Value> {
-  static get componentId(): "EcwidCart" {
-    return "EcwidCart";
+  static get componentId(): ElementTypes.EcwidCart {
+    return ElementTypes.EcwidCart;
   }
   static defaultValue = defaultValue;
 
@@ -117,7 +118,7 @@ export class EcwidCart extends EditorComponent<Value> {
     const className = classnames(
       "brz-ecwid-wrapper",
       "brz-ecwid-cart-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
 
     return (
@@ -1014,8 +1015,9 @@ export class EcwidCart extends EditorComponent<Value> {
     const className = classnames(
       "brz-ecwid-wrapper",
       "brz-ecwid-cart-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
+
     const storeId = makePlaceholder({
       content: "{{ecwid_store_id}}"
     });

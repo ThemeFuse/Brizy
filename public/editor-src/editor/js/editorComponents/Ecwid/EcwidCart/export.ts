@@ -7,9 +7,7 @@ export const fn: ExportFunction = ($node) => {
     const storeId = node.getAttribute("data-store-id") as EcwidStoreId | null;
 
     if (storeId) {
-      EcwidService.init(storeId, {
-        restoreUrl: true
-      }).cart(node);
+      EcwidService.init(storeId, {}).cart(node);
     }
   });
 };

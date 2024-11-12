@@ -75,6 +75,7 @@ export default (store) => (next) => {
 
 function handleProject({ action, state, oldState, apiHandler }) {
   const config = Config.getAll();
+  const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
 
   switch (action.type) {
     case ActionTypes.UPDATE_CURRENT_STYLE_ID:
@@ -85,7 +86,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
     case UPDATE_EXTRA_FONT_STYLES: {
       const project = projectAssembled(state);
 
-      debouncedApiAutoSave({ projectData: project }, config);
+      apiAutoSave({ projectData: project }, config);
       break;
     }
 
@@ -109,7 +110,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
       };
 
       // cancel pending request
-      debouncedApiAutoSave.cancel();
+      apiAutoSave.cancel();
 
       apiHandler(apiOnChange(data), action, onSuccess, onError);
       break;
@@ -142,7 +143,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
         };
 
         // cancel pending request
-        debouncedApiAutoSave.cancel();
+        apiAutoSave.cancel();
 
         apiHandler(apiOnChange(data), action, onSuccess, onError);
       }
@@ -170,7 +171,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
       };
 
       // cancel pending request
-      debouncedApiAutoSave.cancel();
+      apiAutoSave.cancel();
 
       apiHandler(onChange(data), action, onSuccess, onError);
       break;
@@ -195,7 +196,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
       };
 
       // cancel pending request
-      debouncedApiAutoSave.cancel();
+      apiAutoSave.cancel();
 
       apiHandler(apiOnChange(data), action, onSuccess, onError);
       break;
@@ -218,13 +219,15 @@ function handleProject({ action, state, oldState, apiHandler }) {
       ) {
         const project = projectAssembled(state);
 
-        debouncedApiAutoSave({ projectData: project }, config);
+        apiAutoSave({ projectData: project }, config);
       }
     }
   }
 }
 
 function handlePage({ action, state }) {
+  const config = Config.getAll();
+  const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
   switch (action.type) {
     case MAKE_BLOCK_TO_GLOBAL_BLOCK:
     case MAKE_GLOBAL_BLOCK_TO_BLOCK:
@@ -238,7 +241,7 @@ function handlePage({ action, state }) {
         draft.data.items = pageBlocksRawSelector(state);
       });
 
-      debouncedApiAutoSave({ pageData: page }, Config.getAll());
+      apiAutoSave({ pageData: page }, config);
       break;
     }
     case UPDATE_POPUP_RULES: {

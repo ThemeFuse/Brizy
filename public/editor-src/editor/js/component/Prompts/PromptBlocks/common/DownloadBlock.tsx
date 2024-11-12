@@ -10,6 +10,7 @@ import {
 } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { blockIsPro } from "visual/utils/traverse/blockIsPro";
+import { getContentType } from "visual/utils/url";
 import {
   getExportBlocksUrls,
   isBlock,
@@ -53,9 +54,19 @@ export const DownloadBlock = (props: Props): ReactElement => {
       const node = rootEl.current;
 
       if (node) {
-        const isPro = blockIsPro({ models: data });
+        const isPro = blockIsPro({ models: data, config });
         const url = getExportBlocksUrls(type, id, isPro);
-        setSrc(url);
+        const contentType = await getContentType(url);
+
+        if (
+          contentType === "application/zip" ||
+          contentType === "application/octet-stream"
+        ) {
+          setSrc(url);
+        } else {
+          showNotification(type);
+        }
+
         setLoading(false);
       }
     } catch (e) {
@@ -71,9 +82,8 @@ export const DownloadBlock = (props: Props): ReactElement => {
   }, [id, type, rootEl]);
 
   const handleCheck = useCallback(() => {
-    showNotification(type);
     setSrc(undefined);
-  }, [type]);
+  }, []);
 
   return (
     <div

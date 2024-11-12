@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Num } from "@brizy/readers";
 import EditorIcon from "visual/component/EditorIcon";
 import { ElementModel } from "visual/component/Elements/Types";
 import { EditorInstance, Props } from "visual/editorComponents/EditorComponent";
@@ -9,7 +10,6 @@ import {
   findMigrations,
   migrate
 } from "visual/utils/migration";
-import { read as readNumber } from "visual/utils/reader/number";
 import { MValue } from "visual/utils/value";
 
 type DBMigration<M> = M & {
@@ -38,7 +38,7 @@ export function withMigrations<
     constructor(props: Props<M, P>) {
       super(props);
 
-      const currentVersion = readNumber(this.props.dbValue?._version) ?? 1;
+      const currentVersion = Num.read(this.props.dbValue?._version) ?? 1;
       const foundMigrations = findMigrations(migrations, currentVersion);
 
       this.currentVersion = currentVersion;
@@ -78,7 +78,7 @@ export function withMigrations<
     }
 
     getDBValue() {
-      const newVersion = this.props.dbValue._version;
+      const newVersion = Num.read(this.props.dbValue._version);
 
       if (
         this.currentVersion &&

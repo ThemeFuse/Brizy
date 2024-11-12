@@ -1,16 +1,15 @@
 import { Category } from "visual/config/icons/Categories";
 import { categories as faCats } from "visual/config/icons/categories/fa";
 import { categories as ncCats } from "visual/config/icons/categories/nc";
-import { Icon } from "visual/config/icons/Icon";
 import { Type, TypeId } from "visual/config/icons/Type";
 import { types as freeTypes } from "visual/config/icons/types/free";
 import { types as proTypes } from "visual/config/icons/types/pro";
-import Config, { isWp } from "visual/global/Config";
+import { isWp } from "visual/global/Config";
 import { isPro } from "visual/utils/env";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-const allTypes = [...proTypes, ...freeTypes];
-export const getTypes = (): Type[] => {
-  const config = Config.getAll();
+export const getTypes = (config: ConfigCommon): Type[] => {
+  const allTypes = [...proTypes(config), ...freeTypes];
 
   if (isWp(config)) {
     return isPro(config)
@@ -21,16 +20,22 @@ export const getTypes = (): Type[] => {
   return allTypes;
 };
 
+interface Icon {
+  type: string;
+  name: string;
+  family?: string;
+}
+
 export const getIconClassName = (icon: Icon): string => {
   switch (icon.type) {
-    case TypeId.Outline:
-    case TypeId.Glyph: {
-      const typeName = getTypes()[icon.type].name;
+    case "outline":
+    case "glyph": {
+      const typeName = icon.type;
       return `nc-${typeName} nc-${typeName}-${icon.name}`;
     }
-    case TypeId.Fa:
+    case "fa":
       return `${icon.family ?? "fa"} fa-${icon.name}`;
-    case TypeId.Custom:
+    default:
       return "";
   }
 };

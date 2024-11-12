@@ -8,7 +8,8 @@ import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { EmailDisconnect } from "visual/component/Prompts/PromptForm/Step";
 import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
-import { IS_PRO, IS_WP } from "visual/utils/env";
+import Config, { isWp } from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import AppList from "../common/GlobalApps/StepsView/AppsList";
@@ -66,11 +67,12 @@ class Email extends BaseIntegration<Props, State, Context> {
 
   appsData: AppData[] = [];
   appsComponent = AppsComponent;
-  proExceptions = !IS_PRO;
+  proExceptions = !isPro(Config.getAll());
+  isWp = isWp(Config.getAll());
 
   async componentDidMount(): Promise<void> {
     const { Integrations } = await import("visual/config/integrations");
-    if (IS_WP) {
+    if (this.isWp) {
       this.appsData = Integrations.wpEmail;
     } else {
       this.appsData = Integrations.cloudEmail;

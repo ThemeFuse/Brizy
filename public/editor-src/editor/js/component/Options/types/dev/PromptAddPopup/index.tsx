@@ -59,11 +59,13 @@ export const PromptAddPopup: FCC<Props> = ({
           // legacy global popups do not have value.popupId so we add it
           popupId = uuid();
 
-          updateGlobalBlock({
-            uid: _id,
-            data: deepMerge(globalBlock, { value: { popupId } }),
-            meta: { is_autosave: 0 }
-          });
+          dispatch(
+            updateGlobalBlock({
+              uid: _id,
+              data: deepMerge(globalBlock, { value: { popupId } }),
+              meta: { is_autosave: 0 }
+            })
+          );
         }
 
         newPopups = insert(popups, popups.length, blockData);

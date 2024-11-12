@@ -3,15 +3,17 @@ import { t } from "visual/utils/i18n";
 export const title = ({ v }) =>
   v.type === "woo" ? t("Product Breadcrumbs") : t("Breadcrumbs");
 
-const helperHTML = `
+const getHtml = () => {
+  return `
 <p class="brz-p">${t(
-  "You can use the following selectors to create targeted CSS."
-)}</p>
+    "You can use the following selectors to create targeted CSS."
+  )}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
+};
 
 export function getItems() {
   return [
@@ -50,7 +52,7 @@ export function getItems() {
                       position: 45,
                       display: "block",
                       devices: "desktop",
-                      helper: { content: helperHTML },
+                      helper: { content: getHtml() },
                       placeholder: `element { ${t("CSS goes here")} }`
                     },
                     {

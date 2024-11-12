@@ -19,8 +19,9 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { Meta, Model } from "../EditorComponent/types";
+import { Model } from "../EditorComponent/types";
 import { Patch } from "visual/utils/patch/types";
+import { Meta } from "../ToolbarItemType";
 
 export interface Value extends ElementModel {
   twitterType: "embed" | "followButton" | "mentionButton";

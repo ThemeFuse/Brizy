@@ -1,5 +1,6 @@
 import { produce } from "immer";
 import { createSelector } from "reselect";
+import { getIn } from "timm";
 import {
   ElementModel,
   ElementModelType
@@ -17,14 +18,15 @@ import {
 import { NonEmptyArray } from "visual/utils/array/types";
 import { canUseCondition, createGlobalBlockSymbol } from "visual/utils/blocks";
 import { getSurroundedGBIds } from "visual/utils/blocks/blocksConditions";
+import { getModelPopups } from "visual/utils/blocks/getModelPopups";
 import { getGroupFontsById } from "visual/utils/fonts";
 import { mapModels } from "visual/utils/models";
 import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
-import { getModelPopups } from "visual/utils/blocks/getModelPopups";
-import { getIn } from "timm";
 import { MValue } from "visual/utils/value";
 
 //#region === 0 DEPENDENCIES ===
+
+export const stateSelector = (state: ReduxState): ReduxState => state;
 
 export const projectSelector = (state: ReduxState): ReduxState["project"] =>
   state.project;
@@ -352,6 +354,26 @@ export const globalBlocksInPageSelector = createSelector(
   }
 );
 
+// Retrieve all global blocks from the page, including their associated data.
+// This is used when compiling a page with Node.js.
+// The `canUseCondition` is intentionally omitted due to an older case where
+// some global blocks have empty rules, causing issues in the middle of the compilation.
+export const globalBlocksInPageRawSelector = createSelector(
+  blocksOrderSelector,
+  globalBlocksSelector,
+  (blocksOrder, globalBlocks) => {
+    return blocksOrder.reduce<Record<string, GlobalBlock>>((acc, id) => {
+      const block = globalBlocks[id];
+
+      if (block) {
+        acc[id] = block;
+      }
+
+      return acc;
+    }, {});
+  }
+);
+
 // Retrieve all global popups from page, including their data.
 // Used when try to compile page with node
 export const globalPopupsInPageSelector = createSelector(
@@ -360,8 +382,9 @@ export const globalPopupsInPageSelector = createSelector(
   (page, globalBlocks) => {
     const popups = new Map<string, GlobalBlockPopup>();
     objectTraverse2(page, (obj: Record<string, unknown>) => {
-      if (Array.isArray(obj.popups)) {
-        obj.popups.forEach((popup) => {
+      const popupList = obj.linkPopupPopups ?? obj.popups;
+      if (Array.isArray(popupList)) {
+        popupList.forEach((popup) => {
           if (popup.type === "GlobalBlock" && globalBlocks[popup.value._id]) {
             popups.set(
               popup.value._id,

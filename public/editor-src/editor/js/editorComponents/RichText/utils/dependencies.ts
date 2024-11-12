@@ -1,8 +1,8 @@
 import { setIn } from "timm";
 import { DeviceMode, TextScripts } from "visual/types";
+import { defaultValueValue } from "visual/utils/onChange";
 import { isObject } from "visual/utils/reader/object";
 import { capByPrefix, encodeToString } from "visual/utils/string";
-import { defaultValueValue } from "visual/utils/onChange";
 
 interface Value {
   linkType: string;
@@ -51,7 +51,8 @@ export const handleChangeLink = (v: Value, value: Patch) => {
       external: value.linkExternal ?? v.linkExternal,
       externalBlank: value.linkExternalBlank ?? v.linkExternalBlank,
       externalRel: value.linkExternalRel ?? v.linkExternalRel,
-      externalType: value.linkPopulation ? "population" : "external",
+      externalType:
+        value.linkPopulation || v.linkPopulation ? "population" : "external",
       population: value.linkPopulation ?? v.linkPopulation,
       populationEntityId:
         value.linkPopulationEntityId ?? v.linkPopulationEntityId,

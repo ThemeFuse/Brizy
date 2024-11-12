@@ -1,12 +1,13 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { renderStyles } from "visual/utils/cssStyle";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function styleContents(
   v: ElementModel,
   vs: ElementModel,
   vd: ElementModel
-): [string, string, string] {
-  const styles = {
+): OutputStyle {
+  const styles: Styles = {
     ".brz &&:hover": {
       standart: IS_PREVIEW
         ? [
@@ -167,19 +168,103 @@ export function styleContents(
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
       ]
-    }
-  };
-  return renderStyles({ v, vs, vd, styles });
-}
-
-export function styleSideBar(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): [string, string, string] {
-  const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleBgColor"],
+    },
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-current-time:hover":
+      {
+        standart: ["cssStyleVideoIconControls"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionTransform"
+        ]
+      },
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time:hover":
+      {
+        standart: ["cssStyleVideoIconControls"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionTransform"
+        ]
+      },
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-play-pause-btn > .brz-video-custom-play:hover":
+      {
+        standart: [
+          "cssStyleVideoIconControls",
+          "cssStyleElementVideoControlsIconFontSize"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionTransform"
+        ]
+      },
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-play-pause-btn > .brz-video-custom-pause:hover":
+      {
+        standart: [
+          "cssStyleVideoIconControls",
+          "cssStyleElementVideoControlsIconFontSize"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionTransform"
+        ]
+      },
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-mute:hover":
+      {
+        standart: [
+          "cssStyleVideoIconControls",
+          "cssStyleElementVideoControlsIconFontSize"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionTransform"
+        ]
+      },
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-fullscreen-icon:hover":
+      {
+        standart: [
+          "cssStyleVideoIconControls",
+          "cssStyleElementVideoControlsIconFontSize"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionTransform"
+        ]
+      },
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-unmute:hover":
+      {
+        standart: [
+          "cssStyleVideoIconControls",
+          "cssStyleElementVideoControlsIconFontSize"
+        ],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionTransform"
+        ]
+      },
+    ".brz && .brz-video-custom-slider:hover:before": {
+      standart: ["cssStyleVideoSlider", "cssStyleBorderRadius"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionTransform"
+      ]
+    },
+    ".brz && .brz-video-custom-slider:hover .brz-video-custom-progress": {
+      standart: ["cssStyleVideoSlider"],
+      interval: [
+        "cssStyleVideoSlider",
+        "cssStylePropertyHoverTransitionTransform"
+      ]
+    },
+    ".brz && .brz-video-custom-video-controls:hover": {
+      standart: [
+        "cssStyleVideoControlsBg",
+        "cssStyleElementVideoPlaylistControlsVideoTypography2FontFamily",
+        "cssStyleElementVideoPlaylistControlsVideoTypography2FontSize",
+        "cssStyleElementVideoPlaylistControlsVideoTypography2LineHeight",
+        "cssStyleElementVideoPlaylistControlsVideoTypography2FontWeight",
+        "cssStyleElementVideoPlaylistControlsVideoTypography2LetterSpacing",
+        "cssStyleElementVideoPlaylistControlsVideoTypography2FontVariation",
+        "cssStyleElementVideoPlaylistControlsVideoTextTransform"
+      ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
@@ -188,13 +273,12 @@ export function styleSideBar(
   };
   return renderStyles({ v, vs, vd, styles });
 }
-
 export function styleCover(
   v: ElementModel,
   vs: ElementModel,
   vd: ElementModel
-): [string, string, string] {
-  const styles = {
+): OutputStyle {
+  const styles: Styles = {
     ".brz &&:hover .brz-video-playlist__cover": {
       standart: ["cssStyleDisplayFlex"]
     },
@@ -211,5 +295,22 @@ export function styleCover(
     }
   };
 
+  return renderStyles({ v, vs, vd, styles });
+}
+
+export function styleSidebar(
+  v: ElementModel,
+  vs: ElementModel,
+  vd: ElementModel
+): OutputStyle {
+  const styles: Styles = {
+    ".brz &&:hover": {
+      standart: ["cssStyleBgColor"],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionTransform"
+      ]
+    }
+  };
   return renderStyles({ v, vs, vd, styles });
 }

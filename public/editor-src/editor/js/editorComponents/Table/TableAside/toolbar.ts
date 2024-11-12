@@ -19,6 +19,7 @@ const getItems =
     const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
     const isIconSet = dvv("name") === "" && dvv("type") === "";
+    const headerWidthSuffix = dvv("headerWidthSuffix");
 
     const disableIconOptions = (): ToolbarItemType[] => [
       {
@@ -74,61 +75,81 @@ const getItems =
           }
         ]
       },
-      // @ts-expect-error wrong typing
-      ...(isFirstItem
-        ? [
+      ...getExtraToolbarItems(
+        widthType,
+        isFromBody,
+        isFirstItem ?? false,
+        headerWidthSuffix
+      )
+    ];
+  };
+
+const getExtraToolbarItems = (
+  widthType: string,
+  isFromBody: boolean,
+  isFirstItem: boolean,
+  headerWidthSuffix: string
+): ToolbarItemType[] =>
+  isFirstItem
+    ? [
+        {
+          id: "toolbarSettings",
+          type: "popover",
+          disabled: true
+        },
+        {
+          id: "advancedSettings",
+          type: "advancedSettings",
+          roles: ["admin"],
+          position: 110,
+          devices: "desktop",
+          title: t("Settings")
+        }
+      ]
+    : [
+        {
+          id: "toolbarSettings",
+          type: "popover",
+          config: {
+            icon: "nc-cog",
+            title: t("Settings")
+          },
+          roles: ["admin"],
+          position: 110,
+          options: [
             {
-              id: "toolbarSettings",
-              type: "popover",
-              disabled: true
-            },
-            {
-              id: "advancedSettings",
-              type: "advancedSettings",
-              roles: ["admin"],
-              position: 110,
-              devices: "desktop",
-              title: t("Settings")
-            }
-          ]
-        : [
-            {
-              id: "toolbarSettings",
-              type: "popover",
+              id: "headerWidth",
+              label: t("Width"),
+              type: "slider",
+              position: 100,
+              disabled: widthType === "off" || isFromBody,
               config: {
-                icon: "nc-cog",
-                title: t("Settings")
-              },
-              roles: ["admin"],
-              position: 110,
-              options: [
-                {
-                  id: "headerWidth",
-                  label: t("Width"),
-                  type: "slider",
-                  position: 100,
-                  disabled: widthType === "off" || isFromBody,
-                  config: {
-                    min: 1,
-                    max: 1000,
-                    units: [{ value: "px", title: "px" }]
-                  }
-                },
-                !!isFromBody && {
+                min: 1,
+                max: headerWidthSuffix === "px" ? 1000 : 100,
+                units: [
+                  { value: "px", title: "px" },
+                  { value: "%", title: "%" }
+                ]
+              }
+            },
+            isFromBody
+              ? {
                   id: "widthType",
                   type: "select",
-                  disabled: true
-                },
-                !isFromBody && {
+                  disabled: true,
+                  choices: []
+                }
+              : ({} as ToolbarItemType),
+            !isFromBody
+              ? {
                   id: "asideWidth",
                   type: "slider",
                   disabled: true
                 }
-              ]
-            }
-          ])
-    ];
-  };
+              : ({} as ToolbarItemType)
+          ]
+        }
+      ];
 
 export default (
   isFirstItem: boolean,

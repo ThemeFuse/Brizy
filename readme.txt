@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.6.2
 Requires PHP: 7.2.24
-Stable tag: 2.5.9
+Stable tag: 2.6.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,24 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.6.0 - 2024-11-12 =
+* New: Added video "URL" option for the Playlist element 
+* New: Added "Blending Mode" styling option for the Image element 
+* New: Ability to add multi-line text in one Buttons 
+* New: Add mask on Video 
+* New:: Added decimal sizes for VW, EM, and REM font size option 
+* Fixed: Publish button not available on private pages 
+* Fixed: When scrolling to a block, consider the height of the menu
+* Fixed: Global block renaming
+* Fixed: Paralax effect 
+* Fixed: Download saved blocks and layouts on Firefox 
+* Fixed: Some WP templates broke the view in Editor 
+* Fixed: Translate Press switcher is not displayed correctly 
+* Fixed: Images loading in editor 
+* Fixed: Warnings displayed on Brizy pages 
+* Improved: Color Hex code input 
+* Updated: Brizy-ui library 
 
 = 2.5.9 - 2024-10-21 =
 * Fixed: CSS styles in Hamburger Menu

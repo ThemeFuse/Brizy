@@ -12,6 +12,7 @@ type Props = {
   v: V;
   tagName?: keyof JSX.IntrinsicElements;
   className?: string;
+  allowLineBreak?: boolean;
 
   // optional onChange makes sense for components that only
   // display dynamic content (like PostTitle)
@@ -23,6 +24,7 @@ export const Text = ({
   v,
   tagName = "span",
   className: className_,
+  allowLineBreak,
   onChange = _.noop
 }: Props): ReactElement => {
   const className = classnames(className_, `brz-${tagName}`);
@@ -43,6 +45,7 @@ export const Text = ({
       tagName={tagName}
       value={str.read(v[id])}
       onChange={(value: string): void => onChange({ [id]: value })}
+      allowLineBreak={allowLineBreak}
     />
   );
 };

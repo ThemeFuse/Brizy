@@ -31,12 +31,12 @@ const translationsMap = {
     v.type === "posts"
       ? t("Posts")
       : v.type === "upsell"
-      ? t("Upsell")
-      : v.type === "relatedProducts"
-      ? t("Related Products")
-      : v.type === "categories"
-      ? t("Categories")
-      : t("Products"),
+        ? t("Upsell")
+        : v.type === "relatedProducts"
+          ? t("Related Products")
+          : v.type === "categories"
+            ? t("Categories")
+            : t("Products"),
   Archives: t("Archives"),
   Menu: t("Menu"),
   FacebookButton: t("Facebook Button"),
@@ -67,6 +67,7 @@ const translationsMap = {
   Breadcrumbs: t("Breadcrumbs"),
   ShareButton: t("Share Button"),
   Paypal: t("Paypal"),
+  InstagramFeed: t("Instagram Feed"),
 
   // WP
   WPSidebar: t("Sidebar"),

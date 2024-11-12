@@ -24,7 +24,11 @@ import {
   isShopifyLayout
 } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import {
+  isCloud,
+  isShopify,
+  Shopify
+} from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   getShopifyTemplate,
@@ -51,7 +55,7 @@ import { Layout, Tabs } from "../common/PromptPage/types";
 import { Props, Valid } from "./types";
 
 export const PromptPageArticle = (props: Props): ReactElement => {
-  const _config = Config.getAll();
+  const _config = useMemo(() => Config.getAll(), []);
 
   const templateType = useMemo(() => {
     return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
@@ -78,17 +82,20 @@ export const PromptPageArticle = (props: Props): ReactElement => {
 
       return onSave()
         .then(() => {
-          return shopifySyncArticle(selected.id, selected.title, title).then(
-            () => {
-              if (typeof onAfterSave === "function") {
-                onAfterSave();
-              }
+          return shopifySyncArticle({
+            config: _config as Shopify,
+            blogId: selected.id,
+            blogTitle: selected.title,
+            title
+          }).then(() => {
+            if (typeof onAfterSave === "function") {
+              onAfterSave();
             }
-          );
+          });
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave]
+    [dispatch, onSave, onAfterSave, _config]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
@@ -96,7 +103,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
       const selectedP = getPageRelations(config).then((is) =>
         is.map((i) => i.blog_id || i.id)
       );
-      const itemsP = shopifyBlogItems();
+      const itemsP = shopifyBlogItems(config);
 
       const [items, selected] = await Promise.all([itemsP, selectedP]);
       const layouts = getChoices(config);

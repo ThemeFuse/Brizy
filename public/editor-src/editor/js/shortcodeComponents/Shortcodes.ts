@@ -1,7 +1,8 @@
 import Config, { isWp } from "visual/global/Config";
+import { Config as ConfigType } from "visual/global/Config/types";
 import Accordion from "./Accordion";
 import Alert from "./Alert";
-import Archive from "./Archive";
+import getArchive from "./Archive";
 import getAssetsPosts from "./AssetsPosts";
 import Audio from "./Audio";
 import getButton from "./Button";
@@ -125,8 +126,10 @@ import StoryProgressBar from "./story/StoryProgressBar";
 import StoryShape from "./story/StoryShape";
 import StoryText from "./story/StoryText";
 import StoryVideo from "./story/StoryVideo";
-
+import InstagramFeed from "./pro/InstagramFeed";
+import { getDaysLeft } from "visual/utils/ecwid";
 const config = Config.getAll();
+
 export const ProShortCodes = {
   Text: false,
   Image: false,
@@ -187,6 +190,7 @@ export const ProShortCodes = {
   Facebook: true,
   Twitter: true,
   FacebookComments: true,
+  InstagramFeed: true,
 
   Columns: false,
   Row: false,
@@ -208,10 +212,10 @@ export const ProShortCodes = {
   UserRoles: false,
   UserUsername: false,
 
-  Cart: false,
-  Product: false,
-  ShoppingBag: false,
-  MyAccount: false,
+  Cart: (c: ConfigType) => getDaysLeft(c) <= 0,
+  Product: (c: ConfigType) => getDaysLeft(c) <= 0,
+  ShoppingBag: (c: ConfigType) => getDaysLeft(c) <= 0,
+  MyAccount: (c: ConfigType) => getDaysLeft(c) <= 0,
 
   MinistryBrandsGroupLayout: false,
   MinistryBrandsGroupSlider: false,
@@ -336,6 +340,7 @@ export const ShortCodesKeywords = {
   Facebook: "Facebook social media networking",
   Twitter: "Twitter social media microblogging",
   FacebookComments: "Facebook comments social interaction feedback",
+  InstagramFeed: "Instagram feed social media integration display posts",
 
   Columns: "columns layout grid",
   Row: "row horizontal alignment series",
@@ -500,6 +505,7 @@ export const CloudShortCodes = {
   Facebook,
   Twitter,
   FacebookComments,
+  InstagramFeed,
 
   Columns: getColumns(config),
   Row: getRow(config),
@@ -552,7 +558,7 @@ export const CloudShortCodes = {
 };
 
 export const WPShortCodes = {
-  Archive,
+  Archive: getArchive(config),
   PostExcerpt: getPostExcerpt(config),
   PostTitle: getPostTitle(config),
   WOOCategories,

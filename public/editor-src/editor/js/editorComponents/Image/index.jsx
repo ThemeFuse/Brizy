@@ -725,6 +725,7 @@ class Image extends EditorComponent {
                 options={options}
                 isDisabledHover={isDisabledHover}
                 isHidden={isHidden}
+                withoutWrapper={true}
               >
                 <ImageWrapper
                   v={v}
@@ -828,6 +829,7 @@ class Image extends EditorComponent {
             cssKeyframe={hoverName}
             options={options}
             isHidden={isHidden}
+            withoutWrapper={true}
           >
             <Wrapper
               {...this.makeWrapperProps({

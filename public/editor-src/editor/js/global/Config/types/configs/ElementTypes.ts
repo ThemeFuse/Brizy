@@ -142,6 +142,8 @@ export enum ElementTypes {
   PostInfo = "PostInfo",
   PostNavigation = "PostNavigation",
   EcwidProduct = "EcwidProduct",
+  EcwidCart = "EcwidCart",
+  EcwidMyAccount = "EcwidMyAccount",
   Breadcrumbs = "Breadcrumbs",
   Radio = "Radio",
   Section = "Section",
@@ -149,6 +151,7 @@ export enum ElementTypes {
   SectionMegaMenu = "SectionMegaMenu",
   SectionPopup2 = "SectionPopup2",
   SectionPopup = "SectionPopup",
+  SectionHeader = "SectionHeader",
   SectionHeaderItem = "SectionHeaderItem",
   SectionHeaderStickyItem = "SectionHeaderStickyItem",
   SectionFooter = "SectionFooter",
@@ -170,7 +173,8 @@ export enum ElementTypes {
   Form2Field = "Form2Field",
   Select = "Select",
   Hidden = "Hidden",
-  Form2FieldItems = "Form2FieldItems"
+  Form2FieldItems = "Form2FieldItems",
+  InstagramFeed = "InstagramFeed"
 }
 
 export const readElementType = (v: unknown): MValue<ElementTypes> =>

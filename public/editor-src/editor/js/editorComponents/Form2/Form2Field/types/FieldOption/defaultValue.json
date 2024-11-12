@@ -1,6 +1,29 @@
 {
   "content": {
     "label": "",
-    "value": ""
+    "value": "",
+
+    "linkPopupPopups": [],
+
+    "checkboxUnderline": "off"
+  },
+
+  "link": {
+    "linkSource": "",
+    "linkPage": "",
+    "linkPageTitle": "",
+    "linkPageSource": "",
+    "linkInternalBlank": "off",
+    "linkType": "external",
+    "linkExternal": "",
+    "linkAnchor": "",
+    "linkExternalBlank": "off",
+    "linkExternalRel": "off",
+    "linkExternalType": "linkExternal",
+    "linkPopulation": "",
+    "linkPopulationEntityId": "",
+    "linkPopulationEntityType": "",
+    "linkUpload": "",
+    "linkPopup": ""
   }
 }

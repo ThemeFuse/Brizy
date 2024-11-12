@@ -124,6 +124,37 @@ describe("replacePlaceholders", () => {
       "https://brizy.local/?brizy_media=some-image.jpg&xxx=zxc[cxz]&brizy_crop=iW%3D[iWw]%26iH%3D[iHh]"
     );
   });
+
+  test("testing stripWWW param, should preserve www", () => {
+    const options: ResizeData = {
+      pattern: "{{ [baseUrl] }}",
+      baseUrl: "https://www.brizy.local",
+      fileName: "image.jpg",
+      uid: "1",
+      sizeType: "custom",
+      crop: { iW: 500, iH: "any" }
+    };
+
+    const result = replacePlaceholders(options);
+    expect(result).toBe("https://www.brizy.local");
+  });
+
+  test("testing stripWWW param with more baseUrl params, should preserve www", () => {
+    const options: ResizeData = {
+      pattern:
+        "{{ [baseUrl] }}/brizy_crop={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}%26{{ 123=[123] }}",
+      baseUrl: "https://www.brizy.local",
+      fileName: "image.jpg",
+      uid: "1",
+      sizeType: "custom",
+      crop: { iW: 500, iH: "any", oX: 50, oY: 60, cW: 70, cH: 80 }
+    };
+
+    const result = replacePlaceholders(options);
+    expect(result).toBe(
+      "https://www.brizy.local/brizy_crop=iW%3D500%26iH%3Dany%26oX%3D50%26oY%3D60%26cW%3D70%26cH%3D80%26123=[123]"
+    );
+  });
 });
 
 describe("generateUrl", () => {

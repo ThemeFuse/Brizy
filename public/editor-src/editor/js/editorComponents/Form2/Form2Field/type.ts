@@ -6,14 +6,16 @@ import {
 import { FormInputTypesName } from "./types";
 import { Literal } from "visual/utils/types/Literal";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
 
 export interface Props extends ElementProps {
-  labelType: string;
+  labelType: "inside" | "outside";
   placeholder: boolean;
   showPlaceholder: boolean;
   className: string;
   selectClassName: string;
   toolbarExtendLabel: ToolbarItemType;
+  toolbarExtendSelect: ToolbarExtend;
 }
 
 export interface Error {
@@ -33,6 +35,8 @@ export interface Value extends Omit<ElementModel, "items"> {
   fileTypeErrorMessage: string;
   numberMinMessage: string;
   numberMaxMessage: string;
+  placeholder?: string;
+  label?: string;
 }
 
 export interface InputTypeChoice {

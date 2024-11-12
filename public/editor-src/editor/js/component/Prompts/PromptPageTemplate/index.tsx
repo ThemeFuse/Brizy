@@ -22,7 +22,11 @@ import {
   isShopifyLayout
 } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import {
+  isCloud,
+  isShopify,
+  Shopify
+} from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   updateError,
@@ -70,7 +74,11 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
 
       return onSave()
         .then(() => {
-          return shopifySyncPage(title, isHomePage).then(() => {
+          return shopifySyncPage({
+            config: _config as Shopify,
+            title,
+            isHomePage
+          }).then(() => {
             if (typeof onAfterSave === "function") {
               onAfterSave();
             }
@@ -78,7 +86,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave, pageId]
+    [dispatch, onSave, onAfterSave, pageId, _config]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();

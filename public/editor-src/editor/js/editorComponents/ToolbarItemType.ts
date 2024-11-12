@@ -1,6 +1,7 @@
 import { Obj } from "@brizy/readers";
 import { ComponentProps } from "react";
 import {
+  OptionMeta,
   OptionName,
   OptionTypes,
   OptionValue
@@ -17,6 +18,7 @@ import { OptionStyle } from "visual/utils/cssStyle/types";
 import { Device } from "visual/utils/devices";
 import { Disabled } from "visual/utils/disabled";
 import { State } from "visual/utils/stateMode";
+import { MValue } from "visual/utils/value";
 
 export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
   WithLabel &
@@ -77,8 +79,12 @@ export const is =
   (o: unknown): o is ToolbarItemType =>
     checker(o);
 
+export type Meta = MValue<{ [k: string]: unknown }>;
+
 export type OptionDefinition<T extends OptionName = OptionName> =
   GenericToolbarItemType<T> & {
     value: OptionValue<T>;
-    onChange: (v: OptionValue<T>) => void;
+    onChange: (v: OptionValue<T>, meta: Meta) => void;
+    meta?: Partial<OptionMeta<T>>;
+    dependencies?: (v: OptionValue<T>) => void;
   };

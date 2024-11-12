@@ -28,7 +28,6 @@ import { HOVER, NORMAL, State } from "visual/utils/stateMode";
 import { getMaxContainerSuffix, getMinContainerSuffix } from "../utils";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
-// @ts-expect-error old options
 export const getItems: GetItems = ({
   v,
   device,

@@ -1,10 +1,11 @@
-import { OnChange } from "visual/component/Options/Type";
+import {
+  FromElementModelGetterValue,
+  OnChange
+} from "visual/component/Options/Type";
 import { pipe } from "visual/utils/fp";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
 import { EffectType } from "./types/EffectType";
 import { Value } from "./types/Value";
-import { WithDirection, setDirection } from "./types/WithDirection";
+import { setDirection, WithDirection } from "./types/WithDirection";
 import * as Bounce from "./types/effects/Bounce";
 import * as Buzz from "./types/effects/Buzz";
 import * as Fade from "./types/effects/Fade";
@@ -26,10 +27,10 @@ type GetDirection<T extends EffectType> = T extends Value["type"]
     : never
   : never;
 
-export type Get = (k: string) => MValue<Literal>;
+export type Get = (k: string) => FromElementModelGetterValue;
 export const call =
   (k: string) =>
-  (get: Get): MValue<Literal> =>
+  (get: Get): FromElementModelGetterValue =>
     get(k);
 
 export const onChangeDirection = <V extends WithDirection<unknown>>(

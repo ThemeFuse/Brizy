@@ -4,7 +4,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
+import { HOVER, NORMAL, State } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
 export function getItems({
@@ -60,7 +60,8 @@ export function getItems({
       options: [
         {
           id: "emptyColor",
-          type: "colorPicker"
+          type: "colorPicker",
+          states: [NORMAL, HOVER]
         }
       ]
     },

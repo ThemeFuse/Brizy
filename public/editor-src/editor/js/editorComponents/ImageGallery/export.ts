@@ -43,8 +43,9 @@ export default function ($node: JQuery): void {
 
     try {
       if (settings) {
-        const _settings =
-          decodeFromString<JustifySettings | IsotopeSettings>(settings);
+        const _settings = decodeFromString<JustifySettings | IsotopeSettings>(
+          settings
+        );
 
         const { type, settings: gallerySettings } = _settings;
 
@@ -239,7 +240,7 @@ export default function ($node: JQuery): void {
   // MagnificPopup
   root.querySelectorAll(".brz-image__gallery-lightbox").forEach((item) => {
     const aTag = item.querySelectorAll(
-      ".brz-image__gallery-item > .brz-image > a"
+      ".brz-image__gallery-item  .brz-image > a"
     );
 
     aTag.forEach((img, index) => {

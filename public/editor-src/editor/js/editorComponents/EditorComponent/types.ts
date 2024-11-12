@@ -1,6 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { OptionName, OptionValue } from "visual/component/Options/types";
 import {
+  Meta,
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
@@ -41,8 +42,6 @@ export type Model<M> = M & {
   tabsState?: State.State;
 };
 
-export type Meta = MValue<{ [k: string]: unknown }>;
-
 export type ContextGetItems<M extends ElementModel> = (
   v: M,
   c: Editor<M>
@@ -81,14 +80,16 @@ export type Params<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  S extends Record<string, any> = Record<string, unknown>
+  S extends Record<string, any> = Record<string, unknown>,
+  C extends Record<string, unknown> = Record<string, unknown>
 > = {
   v: M;
-  component: Editor<M, P, S>;
+  component: Editor<M, P, S, C>;
   device: Responsive.ResponsiveMode;
   state: State.State;
   context: EditorComponentContextValue;
   getValue: Getter;
+  componentConfig?: C;
 };
 
 export type GetItems<
@@ -96,17 +97,19 @@ export type GetItems<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  S extends Record<string, any> = Record<string, unknown>
-> = (d: Params<M, P, S>) => ToolbarItemType[];
+  S extends Record<string, any> = Record<string, unknown>,
+  C extends Record<string, unknown> = Record<string, unknown>
+> = (d: Params<M, P, S, C>) => ToolbarItemType[];
 
 export type SidebarConfig<
   M extends ElementModel,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  S extends Record<string, any> = Record<string, unknown>
+  S extends Record<string, any> = Record<string, unknown>,
+  C extends Record<string, unknown> = Record<string, unknown>
 > = {
-  getItems: GetItems<M, P, S>;
+  getItems: GetItems<M, P, S, C>;
   title?: string | ((d: { v: M }) => string);
 };
 
@@ -115,9 +118,10 @@ export type NewToolbarConfig<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   P extends Record<string, any> = Record<string, unknown>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  S extends Record<string, any> = Record<string, unknown>
+  S extends Record<string, any> = Record<string, unknown>,
+  C extends Record<string, unknown> = Record<string, unknown>
 > = {
-  getItems: GetItems<M, P, S>;
+  getItems: GetItems<M, P, S, C>;
 };
 
 export type OnChangeMeta<M> = Meta & {
@@ -130,12 +134,6 @@ export type Rule = string | { rule: string; mapper: <T>(m: T) => void };
 export type DefaultValueProcessed<T> = {
   defaultValueFlat: T;
   dynamicContentKeys: string[];
-};
-
-export type OldToolbarConfig<M> = {
-  getItemsForDesktop: (v: M, context?: unknown) => ToolbarItemType[];
-  getItemsForTablet: (v: M, context?: unknown) => ToolbarItemType[];
-  getItemsForMobile: (v: M, context?: unknown) => ToolbarItemType[];
 };
 
 export type ToolbarExtend = {
@@ -185,5 +183,11 @@ export interface ConfigGetter {
 export type GetElementModelKeyFn = (data: {
   device: Responsive.ResponsiveMode;
   state: State.State;
-  option: ToolbarItemType;
+  option: OptionDefinition;
 }) => (key: string) => string;
+
+export interface ProElementTitle {
+  title: string;
+  upgradeMessage?: string;
+  upgradeActionMessage?: string;
+}

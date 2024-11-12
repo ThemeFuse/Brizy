@@ -9,7 +9,7 @@ import { getTypes } from "visual/config/icons";
 
 export const Tabs: FCC<Props> = ({ onClick, onClose, currentTypeId }) => {
   const config = useMemo(() => Config.getAll(), []);
-  const tabs = _.sortBy(getTypes(), (type) => type.id)
+  const tabs = _.sortBy(getTypes(config), (type) => type.id)
     .filter(
       (tab) =>
         // hide custom tab if get custom icons handler is not defined

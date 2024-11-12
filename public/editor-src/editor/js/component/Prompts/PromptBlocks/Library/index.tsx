@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import _ from "underscore";
 import { ToastNotification } from "visual/component/Notifications";
 import { currentUserRole } from "visual/component/Roles";
-import Config from "visual/global/Config";
+import Config, { isWp } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { FontsPayload } from "visual/redux/actions2";
 import {
@@ -34,7 +34,6 @@ import {
 } from "visual/utils/api";
 import { updateSavedPopup } from "visual/utils/api/common";
 import { blockThumbnailData } from "visual/utils/blocks";
-import { IS_WP } from "visual/utils/env";
 import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import { read as JSONReader } from "visual/utils/reader/json";
@@ -110,10 +109,12 @@ class Library extends Component<
   unMount = false;
   withImportExport = true;
 
-  async componentDidMount(): Promise<void> {
-    const config = Config.getAll();
+  isWp = isWp(Config.getAll());
+  isCloud = isCloud(Config.getAll());
 
-    if (isCloud(config)) {
+  async componentDidMount(): Promise<void> {
+    if (this.isCloud) {
+      const config = Config.getAll();
       this.withImportExport = !config.user.isGuest;
     }
     this.updateBlocks();
@@ -308,7 +309,6 @@ class Library extends Component<
       produce((state: LibraryState) => {
         state.data[type] = state.data[type] ?? [];
 
-        //@ts-expect-error: Object is possibly 'undefined'.
         state.data[type].forEach((block, index: number) => {
           if (block.uid === uid) {
             //@ts-expect-error: Object is possibly 'undefined'.
@@ -693,7 +693,7 @@ class Library extends Component<
         showSearch={showSearch}
         showTitle={showTitle}
         sidebarSync={!hasWhiteLabel}
-        thumbnailSync={IS_WP}
+        thumbnailSync={this.isWp}
         thumbnailDownload={this.withImportExport}
         search={search}
         filter={filter}

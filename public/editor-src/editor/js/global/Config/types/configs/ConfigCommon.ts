@@ -3,6 +3,7 @@ import {
   ProjectOutput
 } from "visual/bootstraps/compiler/browser/types";
 import { ElementModel } from "visual/component/Elements/Types";
+import { ChoicesSync as ChoiceSync } from "visual/component/Options/types/dev/MultiSelect2/types";
 import {
   ChoicesAsync,
   ChoicesSync
@@ -32,6 +33,7 @@ import {
 import {
   AdobeAddAccount,
   AdobeFonts,
+  CollectionSourceItem,
   PostsSources
 } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
@@ -68,9 +70,9 @@ import {
   AddImageExtra,
   AdobeFontData,
   FormFieldsOption,
-  ImagePatterns,
   IconPattern,
   IconUploadData,
+  ImagePatterns,
   Response,
   ScreenshotData,
   SizeType
@@ -82,7 +84,11 @@ import {
   EkklesiaFields,
   EkklesiaModules
 } from "./modules/ekklesia/Ekklesia";
-import { ThirdPartyComponents, ThirdPartyComponentsHosts } from "./ThirdParty";
+import {
+  ThirdPartyComponents,
+  ThirdPartyComponentsHosts,
+  ThirdPartyUrls
+} from "./ThirdParty";
 
 export enum Mode {
   page = "page",
@@ -304,7 +310,7 @@ interface _ConfigCommon<Mode> {
 
   //#region Third Party
 
-  thirdPartyUrls?: Array<{ scriptUrl: string; styleUrl?: string }>;
+  thirdPartyUrls?: ThirdPartyUrls;
   thirdPartyComponents?: ThirdPartyComponents;
   thirdPartyComponentsHosts?: ThirdPartyComponentsHosts;
 
@@ -627,11 +633,27 @@ interface _ConfigCommon<Mode> {
         ) => void;
       };
 
-      getCollectionItemsIds: {
+      getCollectionItems: {
         handler: (
           res: Response<ChoicesSync>,
           rej: Response<string>,
-          extra: { id: string }
+          extra: {
+            id: string;
+            fields?: string;
+            status?: string;
+            extraChoices?: ChoiceSync;
+          }
+        ) => void;
+      };
+
+      getCollectionSourceItems: {
+        handler: (
+          res: Response<CollectionSourceItem[]>,
+          rej: Response<string>,
+          extra: {
+            searchCriteria: "id" | "slug";
+            searchValue: string;
+          }
         ) => void;
       };
     };
@@ -879,10 +901,12 @@ interface _ConfigCommon<Mode> {
     ShopCategories?: {
       source?: string;
       querySource?: string;
+      component?: string;
     };
     ShopPosts?: {
       source?: string;
       querySource?: string;
+      component?: string;
     };
   };
 
@@ -954,6 +978,7 @@ interface _ConfigCommon<Mode> {
       productCollectionTypeSlug?: string;
       categoryCollectionTypeSlug?: string;
       ecwidCategoryTypeId?: string;
+      ecwidProductTypeId?: string;
 
       //#endregion
 
@@ -992,7 +1017,11 @@ interface _ConfigCommon<Mode> {
         //#region ecwid api handlers
 
         getEcwidProducts?: {
-          handler?: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+          handler?: (
+            res: Response<ChoicesSync>,
+            rej: Response<string>,
+            args: { id: string }
+          ) => void;
         };
 
         //#endregion

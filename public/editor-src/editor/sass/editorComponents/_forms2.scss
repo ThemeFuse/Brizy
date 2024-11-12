@@ -252,8 +252,12 @@
       max-width: 97%;
     }
 
-    input.brz-input {
-      cursor: auto;
+    .brz-forms2__checkbox-option-name.brz-underline-on {
+      text-decoration: underline !important;
+    }
+
+    .brz-forms2__checkbox-option-name.brz-underline-off {
+      text-decoration: none !important;
     }
 
     .brz-control__radio-check {
@@ -338,11 +342,18 @@
       align-items: inherit;
       justify-content: inherit;
       width: 100%;
-      cursor: pointer;
     }
 
     &--check {
       display: none;
+    }
+    &--uncheck,
+    &--check {
+      cursor: pointer;
+    }
+
+    .brz-a.brz-forms2__checkbox-option-name {
+      color: inherit;
     }
 
     .brz-input {

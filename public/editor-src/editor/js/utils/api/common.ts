@@ -10,27 +10,20 @@ import {
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
 import { Config } from "visual/global/Config";
-import {
-  ConfigDCItem,
-  DCTypes
-} from "visual/global/Config/types/DynamicContent";
-import {
-  AutoSave,
-  ConfigCommon
-} from "visual/global/Config/types/configs/ConfigCommon";
+import { isShopifyShop } from "visual/global/Config/types/configs/Base";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
   BlocksArray,
   BlockWithThumbs,
+  CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
   KitItem,
   KitsWithThumbs,
+  LayoutsPages,
   LayoutsWithThumbs,
   PopupsWithThumbs,
-  StoriesWithThumbs,
-  CustomTemplatePage,
-  LayoutsPages
+  StoriesWithThumbs
 } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
 import {
   CreateSavedBlock,
@@ -46,13 +39,25 @@ import {
   UpdateSavedBlock,
   UpdateSavedLayout
 } from "visual/global/Config/types/configs/blocks/SavedBlocks";
+import type { Shopify } from "visual/global/Config/types/configs/Cloud";
+import type { Response } from "visual/global/Config/types/configs/common";
 import {
   AdobeFontData,
-  ScreenshotData,
-  IconUploadData
+  IconUploadData,
+  ScreenshotData
 } from "visual/global/Config/types/configs/common";
-import { EkklesiaExtra } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
-import { EkklesiaFields } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
+import {
+  AutoSave,
+  ConfigCommon
+} from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  EkklesiaExtra,
+  EkklesiaFields
+} from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
+import {
+  ConfigDCItem,
+  DCTypes
+} from "visual/global/Config/types/DynamicContent";
 import {
   FontStyle,
   GlobalBlock,
@@ -70,7 +75,11 @@ import { Dictionary } from "visual/types/utils";
 import {
   AdobeAddAccount,
   AdobeFonts,
+  BlogSourceItem,
+  CollectionSourceItem,
   PostsSources,
+  Rule as PublishRule,
+  SelectedItem,
   UploadIconData
 } from "visual/utils/api/types";
 import { getCompile } from "visual/utils/compiler";
@@ -795,23 +804,40 @@ export const getCollectionTypes = (
   });
 };
 
-export const getSourceIds = (
+export const getCollectionItems = (
   type: string,
-  config: ConfigCommon
-): Promise<ChoicesSync> => {
-  const sourceItemsHandler =
-    config?.api?.collectionItems?.getCollectionItemsIds?.handler;
+  config: ConfigCommon,
+  extraChoices?: ChoiceSync
+): Promise<ChoiceSync> => {
+  const get = config?.api?.collectionItems?.getCollectionItems?.handler;
 
   return new Promise((res, rej) => {
-    if (typeof sourceItemsHandler === "function") {
-      sourceItemsHandler(res, rej, { id: type });
+    if (typeof get === "function") {
+      get(res, rej, { id: type, extraChoices });
     } else {
-      rej(
-        t("Missing api collectionItems.getCollectionItemsIds.handler in config")
-      );
+      rej(t("Missing api collectionItems handler in config"));
     }
   });
 };
+
+export function getCollectionSourceItemsById(
+  config: Shopify
+): Promise<CollectionSourceItem[]> {
+  const { id } = config.templateType;
+  const { handler } =
+    config.api?.collectionItems?.getCollectionSourceItems ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej, {
+        searchCriteria: "id",
+        searchValue: id
+      });
+    } else {
+      rej(t("Missing getCollectionSourceItems in config"));
+    }
+  });
+}
 
 //#endregion
 
@@ -855,6 +881,7 @@ export const defaultPostsSources = (
   args: {
     page: PageCommon;
     filterManualId?: string;
+    collectionFilters?: string;
   }
 ): Promise<PostsSources> => {
   return new Promise((res, rej) => {
@@ -1034,19 +1061,135 @@ export const getGlobalTypography = (
 
 //#endregion
 
-//#region Ecwid
-
+//#region Shop
+//Ecwid
 export const getEcwidProducts = (config: ConfigCommon): Promise<Choice[]> => {
   const get = config?.modules?.shop?.api?.getEcwidProducts?.handler;
+  const id = config?.modules?.shop?.ecwidProductTypeId;
 
   return new Promise((res, rej) => {
-    if (typeof get === "function") {
-      get(res, rej);
+    if (typeof get === "function" && id) {
+      get(res, rej, { id });
     } else {
       rej(t("Missing getEcwidProducts api handler in config"));
     }
   });
 };
+
+// Shopify
+export function shopifySyncRules({
+  config,
+  rules,
+  title
+}: {
+  config: Shopify;
+  rules: SelectedItem[];
+  title: string;
+}) {
+  const {
+    page: { id }
+  } = config;
+  const { shop } = config.modules ?? {};
+  const handler = isShopifyShop(shop) && shop.api?.shopifySyncRules?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej, { id, rules, title });
+    } else {
+      rej(t("Missing shopifySyncRules handler"));
+    }
+  });
+}
+
+export function shopifyBlogItems(config: Shopify) {
+  const { shop } = config.modules ?? {};
+
+  const handler = isShopifyShop(shop) && shop.api?.shopifyBlogItems?.handler;
+
+  return new Promise(
+    (res: Response<BlogSourceItem[]>, rej: Response<string>) => {
+      if (typeof handler === "function") {
+        handler(res, rej);
+      } else {
+        rej(t("Missing shopifyBlogItems handler"));
+      }
+    }
+  );
+}
+export function shopifyUnpublishPage(config: Shopify) {
+  const { shop } = config.modules ?? {};
+
+  const handler =
+    isShopifyShop(shop) && shop.api?.shopifyUnpublishPage?.handler;
+
+  return new Promise((res: Response<{ message: string }>, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej);
+    } else {
+      rej(t("Missing shopifyUnpublishPage handler"));
+    }
+  });
+}
+
+export function shopifySyncArticle(props: {
+  config: Shopify;
+  blogId: string;
+  blogTitle: string;
+  title: string;
+}) {
+  const { config, ...extra } = props;
+  const {
+    page: { id }
+  } = config;
+  const { shop } = config.modules ?? {};
+
+  const handler = isShopifyShop(shop) && shop.api?.shopifySyncArticle?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof handler === "function") {
+      handler(res, rej, { id, ...extra });
+    } else {
+      rej(t("Missing shopifySyncArticle handler"));
+    }
+  });
+}
+
+export function shopifySyncPage(props: {
+  config: Shopify;
+  title: string;
+  isHomePage: boolean;
+}) {
+  const { config, ...extra } = props;
+  const {
+    page: { id }
+  } = config;
+  const { shop } = config.modules ?? {};
+
+  const handler = isShopifyShop(shop) && shop.api?.shopifySyncPage?.handler;
+
+  return new Promise(
+    (res: Response<{ message: string }>, rej: Response<string>) => {
+      if (typeof handler === "function") {
+        handler(res, rej, { id, ...extra });
+      } else {
+        rej(t("Missing shopifySyncPage handler"));
+      }
+    }
+  );
+}
+
+export function getPageRelations(config: Shopify) {
+  const { shop } = config.modules ?? {};
+  const handler = isShopifyShop(shop) && shop?.api?.getPageRelations?.handler;
+
+  return new Promise((res: Response<PublishRule[]>, rej: Response<string>) => {
+    if (typeof handler === "function") {
+      handler(res, rej);
+    } else {
+      rej(t("Missing getPageRelations api handler in config"));
+    }
+  });
+}
 
 //#endregion
 

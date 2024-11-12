@@ -48,7 +48,13 @@ export const Dropdown = (props: Props): ReactNode => {
   }, []);
 
   return createPortal(
-    <Menu onShown={handleOpen} onHidden={handleClose} animation={false} id={id}>
+    <Menu
+      onShown={handleOpen}
+      onHidden={handleClose}
+      animation={false}
+      id={id}
+      style={{ display: isOpen && items.length > 0 ? "block" : "none" }}
+    >
       <Items data={items} meta={itemsMeta} />
     </Menu>,
     document.body

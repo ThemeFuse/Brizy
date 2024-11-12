@@ -91,6 +91,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
                       >
                         <div
                           onClickCapture={(e) => {
+                            e.stopPropagation();
                             e.preventDefault();
 
                             if (

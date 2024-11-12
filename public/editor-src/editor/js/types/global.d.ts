@@ -8,6 +8,7 @@ import { FlatpickrFn } from "flatpickr/dist/types/instance";
 import ImagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import Lottie from "lottie-web";
+import { DotLottie } from "@lottiefiles/dotlottie-web";
 import Scrollbars from "perfect-scrollbar";
 import { Swiper } from "swiper";
 import { Autoplay, EffectFade } from "swiper/modules";
@@ -21,6 +22,7 @@ export type GalleryJustified = Gallery;
 export type GalleryIsotopeType = typeof Isotope;
 export type GalleryJustifiedType = typeof Gallery;
 export type SwiperType = Swiper;
+export type SwiperInstanceType = typeof Swiper;
 
 // Our own jquery plugins
 
@@ -35,7 +37,7 @@ interface BrizyLibs {
   // @ts-expect-error: Cannot use namespace 'Motion' as a type.
   Motions?: Motion;
   initEkklesiaPopups: typeof initEkklesiaPopups;
-  Swiper: SwiperType;
+  Swiper: SwiperInstanceType;
   Autoplay: Autoplay;
   EffectFade: EffectFade;
 }
@@ -51,6 +53,7 @@ interface BrizyProLibs {
   Isotope?: typeof Isotope;
   MMenu?: unknown;
   Lottie?: typeof Lottie;
+  DotLottie?: typeof DotLottie;
   Gallery?: typeof Gallery;
 }
 

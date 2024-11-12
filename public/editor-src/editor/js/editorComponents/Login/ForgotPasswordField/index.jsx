@@ -1,11 +1,11 @@
 import classnames from "classnames";
 import React from "react";
+import Config, { isWp } from "visual/global/Config";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import { css } from "visual/utils/cssStyle";
-import { IS_WP } from "visual/utils/env";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
@@ -15,6 +15,8 @@ class ForgotPasswordField extends EditorComponent {
   }
 
   static defaultValue = defaultValue;
+
+  isWp = isWp(Config.getAll());
 
   handleLabelChange = (label) => {
     this.patchValue({ label });
@@ -139,7 +141,7 @@ class ForgotPasswordField extends EditorComponent {
               <input
                 type="email"
                 maxLength="255"
-                name={IS_WP ? "user_login" : "email"}
+                name={this.isWp ? "user_login" : "email"}
                 className="brz-input"
                 placeholder={this.getPlaceholder(v)}
                 defaultValue=""

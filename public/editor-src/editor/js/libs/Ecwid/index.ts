@@ -32,14 +32,10 @@ const myAccountRedirects = () => {
   );
 
   if (node && node.children.length > 0) {
-    replaceFooterLink(node, ".footer__link--my-account", "/shop/my-account");
-    replaceFooterLink(
-      node,
-      ".footer__link--favorites",
-      "/my-account/favorites"
-    );
-    replaceFooterLink(node, ".footer__link--track-order", "/shop/track-orders");
-    replaceFooterLink(node, ".footer__link--shopping-cart", "/shop/cart");
+    replaceFooterLink(node, ".footer__link--my-account", "/account");
+    replaceFooterLink(node, ".footer__link--favorites", "/account/favorites");
+    replaceFooterLink(node, ".footer__link--track-order", "/account");
+    replaceFooterLink(node, ".footer__link--shopping-cart", "/cart");
 
     linksWasChanged = true;
   }
@@ -56,7 +52,7 @@ const shoppingBagRedirects = () => {
 
     if (clone) {
       clone.addEventListener("click", (e) => {
-        window.location.replace("/shop/cart");
+        window.location.replace("/cart");
         e.stopPropagation();
       });
 
@@ -105,7 +101,6 @@ declare global {
         };
       };
     };
-    pathBeforeEcwidChange?: string;
   }
 }
 
@@ -133,38 +128,35 @@ declare const Ecwid: {
     payload?: Record<string, string | number>
   ) => void;
   refreshConfig?: () => void;
-  resizeProductBrowser?: VoidFunction;
 };
 
 const defaultConfig: RedirectConfig = {
   redirect: {
-    fromFooter: {
-      "/shop/my-account": ".footer__link--my-account",
-      "/shop/track-orders": ".footer__link--track-order",
-      "/my-account/favorites": ".footer__link--favorites",
-      "/shop/cart": ".footer__link--shopping-cart"
-    },
-    fromContent: {
-      "/shop/cart": ".details-product-purchase__checkout",
-      "/my-account/thank-you": ".ec-form .form-control--done"
-    }
+    fromFooter: [
+      { route: "/account", selector: ".footer__link--my-account" },
+      { route: "/account", selector: ".footer__link--track-order" },
+      { route: "/account/favorites", selector: ".footer__link--favorites" },
+      { route: "/cart", selector: ".footer__link--shopping-cart" }
+    ],
+    fromContent: [
+      { route: "/cart", selector: ".details-product-purchase__checkout" }
+    ]
   }
 };
 
 const footerRoutes: {
   [k in FooterRoutes]: string;
 } = {
-  "/shop/my-account": "/shop/my-account",
-  "/shop/track-orders": "/shop/track-orders",
-  "/my-account/favorites": "/my-account/favorites",
-  "/shop/cart": "/shop/cart"
+  "/account": "/account",
+  "/account/favorites": "/account/favorites",
+  "/cart": "/cart"
 };
 
 const contentRoutes: {
   [k in ContentRoutes]: string;
 } = {
-  "/shop/cart": "/shop/cart",
-  "/my-account/thank-you": "/my-account/thank-you"
+  "/cart": "/cart",
+  "/account/thank-you": "/account/thank-you"
 };
 
 export class EcwidService {
@@ -195,6 +187,18 @@ export class EcwidService {
         map(([, b]) => b)
       )
       .subscribe((widget) => Ecwid.openPage(widget.type, widget.args));
+
+    this.$widgets.subscribe((widget) => {
+      try {
+        if (typeof Ecwid !== "undefined") {
+          Ecwid.openPage(widget.type, widget.args);
+        }
+      } catch (e) {
+        if (process.env.NODE_ENV === "development") {
+          console.error(e);
+        }
+      }
+    });
   }
 
   private loadScripts(node?: HTMLElement) {
@@ -219,19 +223,6 @@ export class EcwidService {
 
           if (this.config.redirect && node) {
             this.changeRedirectLinks(node);
-          }
-
-          if (Ecwid && Ecwid.resizeProductBrowser) {
-            Ecwid.resizeProductBrowser();
-          }
-
-          if (
-            window &&
-            window.pathBeforeEcwidChange &&
-            window.location.pathname !== window.pathBeforeEcwidChange &&
-            this.config.restoreUrl
-          ) {
-            window.history.pushState({}, "", window.pathBeforeEcwidChange);
           }
         });
       };
@@ -305,8 +296,6 @@ export class EcwidService {
   }
 
   public cart(node: HTMLElement) {
-    window.pathBeforeEcwidChange = window.location.pathname;
-
     const el = this.setId(node);
 
     this.openPage(EcwidWidget.cart(el.id), node);
@@ -327,8 +316,6 @@ export class EcwidService {
   }
 
   public myAccount(node: HTMLElement) {
-    window.pathBeforeEcwidChange = window.location.pathname;
-
     const el = this.setId(node);
     this.openPage(EcwidWidget.myAccount(el.id), node);
 
@@ -349,27 +336,27 @@ export class EcwidService {
   private changeRedirectLinks(node: HTMLElement) {
     if (this.config.redirect) {
       if (this.config.redirect.fromContent) {
-        Object.entries(this.config.redirect.fromContent).forEach(
-          ([route, selector]) => {
+        requestAnimationFrame(() => {
+          this.config.redirect?.fromContent.forEach(({ route, selector }) => {
             replaceContentLink(
               node,
               selector,
               contentRoutes[route as ContentRoutes]
             );
-          }
-        );
+          });
+        });
       }
 
       if (this.config.redirect.fromFooter) {
-        Object.entries(this.config.redirect.fromFooter).forEach(
-          ([route, selector]) => {
+        requestAnimationFrame(() => {
+          this.config.redirect?.fromFooter.forEach(({ route, selector }) => {
             replaceFooterLink(
               node,
               selector,
               footerRoutes[route as FooterRoutes]
             );
-          }
-        );
+          });
+        });
       }
     }
   }

@@ -69,7 +69,7 @@ module.exports = (options = {}) => {
       editor: [
         "./editor/js/bootstraps/initConfig/index.js",
         "./editor/js/bootstraps/editor/webpack-public-path.js",
-        "./editor/js/bootstraps/initBrizyGlobal.js",
+        "./editor/js/bootstraps/initBrizyGlobal.ts",
         "./editor/js/bootstraps/registerEditorParts.ts",
         "./editor/js/bootstraps/editor/index.tsx"
       ]
@@ -108,7 +108,6 @@ module.exports = (options = {}) => {
         TARGET: JSON.stringify(options.TARGET),
         IS_EDITOR: true,
         IS_PREVIEW: false,
-        IS_EXPORT: JSON.stringify(options.IS_EXPORT),
         AUTHORIZATION_URL: JSON.stringify(options.AUTHORIZATION_URL)
       }),
       new webpack.ProvidePlugin({

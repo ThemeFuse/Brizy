@@ -10,7 +10,8 @@ import {
   cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight
+  cssStyleTypography2LineHeight,
+  cssStyleSizeFontSize
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "../style2/types";
@@ -79,6 +80,71 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTextTransform({
     device,
     state,
     prefix: "subTitle"
+  });
+}
+
+export function cssStyleElementVideoPlaylistControlsVideoTypography2FontFamily({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontFamily({ v, device, prefix: "controls" });
+}
+
+export function cssStyleElementVideoPlaylistControlsVideoTypography2FontSize({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontSize({ v, device, prefix: "controls" });
+}
+
+export function cssStyleElementVideoPlaylistControlsVideoTypography2LineHeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2LineHeight({ v, device, prefix: "controls" });
+}
+
+export function cssStyleElementVideoPlaylistControlsVideoTypography2FontWeight({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontWeight({ v, device, prefix: "controls" });
+}
+
+export function cssStyleElementVideoPlaylistControlsVideoTypography2LetterSpacing({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    prefix: "controls"
+  });
+}
+
+export function cssStyleElementVideoPlaylistControlsVideoTypography2FontVariation({
+  v,
+  device
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    prefix: "controls"
+  });
+}
+
+export function cssStyleElementVideoPlaylistControlsVideoTextTransform({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    prefix: "controls"
   });
 }
 
@@ -205,4 +271,37 @@ export function cssStyleElementVideoPlaylistCoverPaddingBG({
   } else {
     return `margin:${p.paddingTop}${p.paddingTopSuffix} 0 ${p.paddingBottom}${p.paddingBottomSuffix} ${p.paddingLeft}${p.paddingLeftSuffix}; padding:0!important;`;
   }
+}
+
+export function cssStyleVideoControlsBg({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "controlsBg" });
+}
+
+export function cssStyleVideoIconControls({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleColor({ v, device, state, prefix: "iconControlsColor" });
+}
+
+export function cssStyleVideoSlider({ v, device, state }: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, prefix: "controlsSlider" });
+}
+
+export function cssStyleElementVideoControlsIconFontSize({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleSizeFontSize({
+    v,
+    device,
+    state,
+    prefix: "controlsIconCustom"
+  });
 }

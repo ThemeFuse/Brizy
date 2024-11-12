@@ -6,6 +6,7 @@ import {
   GlobalBlock,
   Rule as GlobalBlockRule
 } from "visual/types";
+import { ArrayType } from "visual/utils/array/types";
 import { pipe } from "visual/utils/fp";
 import { optional } from "visual/utils/reader/readWithParser";
 import { MValue, onNullish, throwOnNullish } from "visual/utils/value";
@@ -15,7 +16,6 @@ import * as Num from "../number";
 import * as Obj from "../object";
 import * as Str from "../string";
 import * as Union from "../union";
-import { ArrayType } from "visual/utils/array/types";
 
 //#region Global Blocks Rules
 
@@ -145,6 +145,7 @@ export const parseGlobalBlock = (
 ): MValue<GlobalBlock> => {
   const reader = parseStrict<Record<string, unknown>, GlobalBlock>({
     uid: pipe(mPipe(Obj.readKey("uid"), Str.read), throwOnNullish("uid")),
+    title: optional(pipe(Obj.readKey("title"), Str.read)),
     data: pipe(
       mPipe(Obj.readKey("data"), Obj.read as () => MValue<GBData>),
       throwOnNullish("data")
@@ -173,6 +174,7 @@ export const parseGlobalBlock = (
       Arr.readWithItemReader(apiRuleToEditorRule),
       onNullish([] as GBRules)
     ),
+    tags: optional(pipe(Obj.readKey("tags"), Str.read)),
     dependencies: pipe(
       Obj.readKey("dependencies"),
       Arr.readWithItemReader(Str.read),
@@ -218,22 +220,26 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
         status,
         meta,
         uid,
+        title,
         data,
         dataVersion,
         rules,
         position,
+        tags,
         dependencies
       } = globalBlock;
       switch (meta.type) {
         case "popup": {
           output[uid] = {
             uid,
+            title,
             data,
             dataVersion,
             status,
             meta,
             rules,
             position,
+            tags,
             dependencies
           };
           break;
@@ -241,12 +247,14 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
         case "normal": {
           output[uid] = {
             uid,
+            title,
             data,
             dataVersion,
             status,
             meta,
             rules,
             position,
+            tags,
             dependencies
           };
           break;

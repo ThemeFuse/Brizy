@@ -32,6 +32,8 @@ export function handlePublish({ action, state, oldState, apiHandler }: Data) {
 
     const globalBlocks = globalBlocksAssembledSelector(state);
 
+    const apiAutosave = debouncedApiAutoSave(config.autoSaveInterval);
+
     const allApi = [];
     let data: MValue<{
       page?: Page;
@@ -69,7 +71,7 @@ export function handlePublish({ action, state, oldState, apiHandler }: Data) {
       }
 
       // cancel possible pending requests
-      debouncedApiAutoSave.cancel();
+      apiAutosave.cancel();
       debouncedApiPublish.cancel();
     }
 

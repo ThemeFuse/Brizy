@@ -4,6 +4,12 @@
   width: 100%;
   display: inline-block;
   vertical-align: middle;
+  @include custom-video;
+
+  .brz-video-playlist-main__custom-video {
+    width: 100%;
+    height: calc(100% - 50px);
+  }
 
   .brz-play-button {
     line-height: 0;
@@ -211,7 +217,8 @@
       background-color: rgba(0, 0, 0, 0.3);
     }
     .brz-video-playlist-main__placeholder .brz-video-playlist-main__content,
-    .brz-video-playlist-main__video .brz-video-playlist-main__content {
+    .brz-video-playlist-main__video .brz-video-playlist-main__content,
+    .brz-video-playlist-main__video .brz-video-playlist-custom__video {
       width: 100%;
     }
     .brz-video-playlist-sidebar {
