@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.6.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.5.9<br>
+Stable tag: 2.510<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,24 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.510 - 2024-11-12
+* New: Added video "URL" option for the Playlist element 
+* New: Added "Blending Mode" styling option for the Image element 
+* New: Ability to add multi-line text in one Buttons 
+* New: Add mask on Video 
+* New:: Added decimal sizes for VW, EM, and REM font size option 
+* Fixed: Publish button not available on private pages 
+* Fixed: When scrolling to a block, consider the height of the menu
+* Fixed: Global block renaming
+* Fixed: Paralax effect 
+* Fixed: Download saved blocks and layouts on Firefox 
+* Fixed: Some WP templates broke the view in Editor 
+* Fixed: Translate Press switcher is not displayed correctly 
+* Fixed: Images loading in editor 
+* Fixed: Warnings displayed on Brizy pages 
+* Improved: Color Hex code input 
+* Updated: Brizy-ui library 
 
 ### 2.5.9 - 2024-10-21
 * Fixed: CSS styles in Hamburger Menu
