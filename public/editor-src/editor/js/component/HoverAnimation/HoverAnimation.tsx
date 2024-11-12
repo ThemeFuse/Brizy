@@ -22,6 +22,7 @@ interface Props {
   className?: string;
   isHidden?: boolean;
   isDisabledHover?: boolean;
+  withoutWrapper?: boolean;
 }
 
 export const HoverAnimation: FCC<Props> = ({
@@ -32,7 +33,8 @@ export const HoverAnimation: FCC<Props> = ({
   isHidden,
   className,
   target = "firstChild",
-  isDisabledHover = false
+  isDisabledHover = false,
+  withoutWrapper
 }) => {
   const [animationIsRunning, setAnimationIsRunning] = useState(false);
   const parent = useRef<HTMLDivElement | null>(null);
@@ -98,7 +100,7 @@ export const HoverAnimation: FCC<Props> = ({
     };
   }, [animationOptions, target]);
 
-  if (isHidden) return <>{children}</>;
+  if (isHidden && withoutWrapper) return <>{children}</>;
 
   const _onMouseEnter = (e: MouseEvent<Element>): void => {
     const { options } = animationOptions;

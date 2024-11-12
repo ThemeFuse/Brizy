@@ -1,4 +1,5 @@
 import { ComponentType } from "react";
+import { flatten } from "underscore";
 import type { EditorInstance as EditorComponent } from "visual/editorComponents/EditorComponent";
 import {
   ThirdPartyComponent,
@@ -6,6 +7,7 @@ import {
 } from "visual/global/Config/types/configs/ThirdParty";
 import type { Shortcode, Shortcodes } from "visual/types";
 import { applyFilter } from "visual/utils/filters";
+import { MValue } from "visual/utils/value";
 
 const components: Record<string, EditorComponent | null> = {};
 let notFoundComponent: undefined | EditorComponent;
@@ -66,6 +68,12 @@ const Editor = {
 
   getShortcodes(): Shortcodes {
     return applyFilter("getShortcodes", shortcodes);
+  },
+
+  getShortcode(id: string): MValue<Shortcode> {
+    const shortcodes = this.getShortcodes();
+    const flattenShortcodes = flatten(Object.values(shortcodes));
+    return flattenShortcodes.find((shortcode) => shortcode.component.id === id);
   },
 
   getShopifyShortcodes(): Shortcodes {

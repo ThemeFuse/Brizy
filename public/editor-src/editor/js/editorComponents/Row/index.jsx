@@ -343,6 +343,7 @@ class Row extends EditorComponent {
           options={options}
           target={"parent"}
           isHidden={isHidden}
+          withoutWrapper={true}
         >
           {this.renderContent(v, vs, vd)}
         </HoverAnimation>
@@ -444,6 +445,7 @@ class Row extends EditorComponent {
                 options={options}
                 target={"parent"}
                 isHidden={isHidden}
+                withoutWrapper={true}
               >
                 {this.renderContent(v, vs, vd)}
               </HoverAnimation>

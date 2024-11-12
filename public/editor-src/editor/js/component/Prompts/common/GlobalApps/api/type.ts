@@ -17,4 +17,4 @@ export type AddAccount = (data: {
   [apiKey: string]: string;
 }) => Promise<ResponseWithBody<unknown>>;
 
-export type DeleteAccount = (id: string) => Promise<ResponseWithBody<unknown>>;
+export type DeleteAccount = (id: string) => Promise<{ status: number }>;

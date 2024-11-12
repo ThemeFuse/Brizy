@@ -29,8 +29,18 @@ export default {
   "wrapper--accordion": {
     showToolbar: "on"
   },
+  "wrapper--image": {
+    hideHoverWrapper: "on"
+  },
+  "wrapper--map": {
+    hideHoverWrapper: "on"
+  },
+  "wrapper--video": {
+    hideHoverWrapper: "on"
+  },
   "wrapper--imageGallery": {
-    showToolbar: "on"
+    showToolbar: "on",
+    hideHoverWrapper: "on"
   },
   "wrapper--menu": {
     showToolbar: "on"

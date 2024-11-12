@@ -10,15 +10,17 @@ import type { Props, Value } from "./types";
 
 export const title = t("Gallery");
 
-const helperHTML = `
+const getHtml = () => {
+  return `
 <p class="brz-p">${t(
-  "You can use the following selectors to create targeted CSS."
-)}</p>
+    "You can use the following selectors to create targeted CSS."
+  )}</p>
 <p class="brz-p">
   <span class="brz-span brz-ed-tooltip__overlay-code">element</span> {...}
   <br class="brz-br">
   <span class="brz-span brz-ed-tooltip__overlay-code">element .child-element</span> {...}
 </p>`;
+};
 
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string): unknown =>
@@ -60,7 +62,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                       position: 45,
                       display: "block",
                       devices: "desktop",
-                      helper: { content: helperHTML },
+                      helper: { content: getHtml() },
                       placeholder: `element { ${t("CSS goes here")} }`
                     },
                     {

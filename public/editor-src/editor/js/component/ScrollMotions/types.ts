@@ -32,6 +32,7 @@ export interface ScrollMotionsProps {
   className?: string;
   options?: MotionSettings;
   children: ReactElement | FunctionAsAChild;
+  needWrapper?: boolean;
 }
 
 export type ScrollMotionAttr = ScrollAttr & MouseAttr & ResponsiveAttr;

@@ -1,4 +1,4 @@
-import { LottieEditor, LottieView } from "@brizy/component";
+import { DotLottieEditor, LottieEditor, LottieView } from "@brizy/component";
 import classnames from "classnames";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
@@ -25,8 +25,16 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Meta, State, Value } from "./type";
 import { Block } from "visual/types";
 import { Patch } from "visual/component/BoxResizer/types";
-import { getBoxResizerParams } from "./utils";
-import { TriggerType } from "@brizy/component/src/Flex/Lottie/types";
+import {
+  getBoxResizerParams,
+  getDirection,
+  getRendererType,
+  isLottieFile
+} from "./utils";
+import {
+  RendererType,
+  TriggerType
+} from "@brizy/component/src/Flex/Lottie/types";
 
 class Lottie extends EditorComponent<Value> {
   static get componentId(): ElementTypes.Lottie {
@@ -42,6 +50,17 @@ class Lottie extends EditorComponent<Value> {
   getAnimation = (
     link = "https://assets6.lottiefiles.com/private_files/lf30_1KyL2Q.json"
   ): void => {
+    if (isLottieFile(link)) {
+      this.setState({
+        animation: link,
+        previousLink: link
+      });
+    } else {
+      this.fetchAnimation(link);
+    }
+  };
+
+  fetchAnimation = (link: string): void => {
     fetch(link)
       .then((res) => res.json())
       .then(
@@ -73,6 +92,7 @@ class Lottie extends EditorComponent<Value> {
     prevState: Readonly<State>
   ): void {
     const { animationFile, animationLink } = this.getValue();
+
     const currentLink = animationFile
       ? customFileUrl(animationFile)
       : animationLink;
@@ -160,14 +180,17 @@ class Lottie extends EditorComponent<Value> {
     const isLoop = loop === "on";
     const isLazyload = lazyload === "on";
     const isAutoplay = trigger === TriggerType.OnLoad && autoplay === "on";
+    const animationData = animation ?? "";
+    const rendererType = getRendererType(renderer) ?? RendererType.SVG;
+    const _direction = getDirection(direction) ?? 1;
 
     const lottieReactConfig = {
       isLoop,
       isAutoplay,
-      animationData: animation ?? "",
+      animationData,
       speed,
-      direction,
-      renderer,
+      direction: _direction,
+      renderer: rendererType,
       trigger,
       lazyload: isLazyload
     };
@@ -176,6 +199,10 @@ class Lottie extends EditorComponent<Value> {
       "brz-lottie",
       css(this.getComponentId(), this.getId(), style(v, vs, vd))
     );
+
+    const LottieComponent = isLottieFile(animationData)
+      ? DotLottieEditor
+      : LottieEditor;
 
     return (
       <>
@@ -190,7 +217,7 @@ class Lottie extends EditorComponent<Value> {
               onChange={this.handleResizerChange}
               restrictions={restrictions}
             >
-              <LottieEditor
+              <LottieComponent
                 {...lottieReactConfig}
                 key={`renderer-${renderer}`}
               />
@@ -231,16 +258,19 @@ class Lottie extends EditorComponent<Value> {
     const isLoop = loop === "on";
     const isLazyload = lazyload === "on";
     const isAutoplay = trigger === TriggerType.OnLoad && autoplay === "on";
+    const animationData = _animationData ?? "";
+    const rendererType = getRendererType(renderer) ?? RendererType.SVG;
 
     const lottieViewProps = {
-      animationData: _animationData ?? "",
+      animationData,
       speed,
       isLoop,
       isAutoplay,
       direction,
-      renderer,
+      renderer: rendererType,
       trigger,
-      lazyload: isLazyload
+      lazyload: isLazyload,
+      isLottieFile: isLottieFile(animationData)
     };
 
     return (

@@ -4,8 +4,8 @@ import { Icon } from "visual/config/icons/Icon";
 
 export interface Category {
   id: Literal;
-  name: string;
   title: string;
+  name?: string;
 }
 
 export interface IconData extends Pick<Icon, "name"> {
@@ -13,16 +13,16 @@ export interface IconData extends Pick<Icon, "name"> {
 }
 
 export interface Props {
-  name: string;
-  type: string;
+  name?: string;
+  type?: string;
   typeId: TypeId;
   opened: boolean;
   search: string;
   categories: Category[];
   categoryId: Literal;
-  onTabClick: (id: TypeId) => VoidFunction;
-  onIconClick: (v: IconData) => VoidFunction;
-  onSelectChange: (id: Literal) => VoidFunction;
+  onTabClick: (id: TypeId) => void;
+  onIconClick: (v: IconData) => void;
+  onSelectChange: (id: Literal) => void;
   onInputChange: (value: string) => void;
-  onClose: VoidFunction;
+  onClose?: VoidFunction;
 }

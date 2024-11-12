@@ -61,70 +61,71 @@ class SectionItems extends EditorArrayComponent {
   getItemProps(itemData, itemIndex, items) {
     const { showSlider } = this.state;
     const { meta, itemProps } = this.props;
-    const desktopItems = showSlider
-      ? [
-          {
-            id: "order",
-            type: "order",
-            devices: "desktop",
-            position: 105,
-            roles: ["admin"],
-            disabled: items.length < 2,
-            config: {
-              disable:
-                itemIndex === 0
-                  ? "prev"
-                  : itemIndex === items.length - 1
-                  ? "next"
-                  : undefined,
-              onChange: (v) => {
-                switch (v) {
-                  case "prev":
-                    this.reorderItem(itemIndex, itemIndex - 1);
-                    break;
-                  case "next":
-                    this.reorderItem(itemIndex, itemIndex + 1);
-                    break;
+    const toolbarExtendSettings = {
+      getItems: () => {
+        return showSlider
+          ? [
+              {
+                id: "order",
+                type: "order",
+                devices: "desktop",
+                position: 105,
+                roles: ["admin"],
+                disabled: items.length < 2,
+                config: {
+                  disable:
+                    itemIndex === 0
+                      ? "prev"
+                      : itemIndex === items.length - 1
+                        ? "next"
+                        : undefined,
+                  onChange: (v) => {
+                    switch (v) {
+                      case "prev":
+                        this.reorderItem(itemIndex, itemIndex - 1);
+                        break;
+                      case "next":
+                        this.reorderItem(itemIndex, itemIndex + 1);
+                        break;
+                    }
+                  }
+                }
+              },
+              {
+                id: "duplicate",
+                type: "button",
+                devices: "desktop",
+                config: {
+                  icon: "nc-duplicate",
+                  title: t("Duplicate"),
+                  reverseTheme: true
+                },
+                position: 225,
+                onClick: () => {
+                  this.cloneItem(itemIndex);
+                }
+              },
+              {
+                id: "remove",
+                type: "button",
+                devices: "desktop",
+                config: {
+                  icon: "nc-trash",
+                  title: t("Delete"),
+                  reverseTheme: true
+                },
+                position: 250,
+                onClick: () => {
+                  hideToolbar();
+                  this.removeItem(itemIndex);
                 }
               }
-            }
-          },
-          {
-            id: "duplicate",
-            type: "button",
-            config: {
-              icon: "nc-duplicate",
-              title: t("Duplicate"),
-              reverseTheme: true
-            },
-            position: 225,
-            onClick: () => {
-              this.cloneItem(itemIndex);
-            }
-          },
-          {
-            id: "remove",
-            type: "button",
-            config: {
-              icon: "nc-trash",
-              title: t("Delete"),
-              reverseTheme: true
-            },
-            position: 250,
-            onClick: () => {
-              hideToolbar();
-              this.removeItem(itemIndex);
-            }
-          }
-        ]
-      : [];
-    const toolbarExtendSettings = {
-      getItemsForDesktop: () => desktopItems,
-      getItemsForTablet: () => [],
-      getItemsForMobile: () => []
+            ]
+          : [];
+      }
     };
 
-    const toolbarExtend = this.makeToolbarPropsFromConfig(
+    const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendSettings
     );
 

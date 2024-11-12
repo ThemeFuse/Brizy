@@ -30,6 +30,7 @@ type ComponentOptionProps = Omit<Props["data"], "label"> & {
 
 class Option extends React.Component<Props> {
   onChange = (...args: [unknown]): void => {
+    // @ts-expect-error: Expected 2 arguments, but got 1
     this.props.data.onChange(...args);
   };
 

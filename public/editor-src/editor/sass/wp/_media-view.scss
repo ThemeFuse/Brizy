@@ -61,7 +61,9 @@ $wp-heading-color: #23282d;
   color: #00a0d2;
 }
 .media-frame a:focus {
-  box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, 0.8);
+  box-shadow:
+    0 0 0 1px #5b9dd9,
+    0 0 2px 1px rgba(30, 140, 190, 0.8);
   outline: none;
   color: #124964;
 }
@@ -217,7 +219,9 @@ $wp-heading-color: #23282d;
   cursor: pointer;
   outline: none;
   text-align: center;
-  transition: color 0.1s ease-in-out, background 0.1s ease-in-out;
+  transition:
+    color 0.1s ease-in-out,
+    background 0.1s ease-in-out;
 
   &:hover,
   &:active {
@@ -496,18 +500,26 @@ $wp-heading-color: #23282d;
 .wp-core-ui .attachment:focus,
 .wp-core-ui .selected.attachment:focus,
 .wp-core-ui .attachment.details:focus {
-  box-shadow: inset 0 0 2px 3px #fff, inset 0 0 0 7px #5b9dd9;
+  box-shadow:
+    inset 0 0 2px 3px #fff,
+    inset 0 0 0 7px #5b9dd9;
   outline: none;
 }
 .wp-core-ui .selected.attachment {
-  box-shadow: inset 0 0 0 5px #fff, inset 0 0 0 7px #ccc;
+  box-shadow:
+    inset 0 0 0 5px #fff,
+    inset 0 0 0 7px #ccc;
 }
 .wp-core-ui .attachment.details {
-  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;
+  box-shadow:
+    inset 0 0 0 3px #fff,
+    inset 0 0 0 7px #0073aa;
 }
 .wp-core-ui .attachment-preview {
   position: relative;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   background: #eee;
   cursor: pointer;
 }
@@ -622,7 +634,9 @@ $wp-heading-color: #23282d;
   outline: none;
   background: #eee;
   cursor: pointer;
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 0 2px rgba(0, 0, 0, 0.15);
 }
 .wp-core-ui .attachment .check .media-modal-icon {
   display: block;
@@ -641,7 +655,9 @@ $wp-heading-color: #23282d;
 .wp-core-ui .attachment.selected .check:focus,
 .wp-core-ui .media-frame.mode-grid .attachment.selected .check {
   background-color: #0073aa;
-  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #0073aa;
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 0 2px #0073aa;
 }
 .wp-core-ui .attachment.details .check .media-modal-icon,
 .wp-core-ui
@@ -1046,13 +1062,17 @@ $wp-heading-color: #23282d;
 .wp-core-ui .media-selection .attachment:focus,
 .wp-core-ui .media-selection .selected.attachment:focus,
 .wp-core-ui .media-selection .attachment.details:focus {
-  box-shadow: 0 0 0 1px #fff, 0 0 2px 3px #5b9dd9;
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 2px 3px #5b9dd9;
 }
 .wp-core-ui .media-selection .selected.attachment {
   box-shadow: none;
 }
 .wp-core-ui .media-selection .attachment.details {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 3px #0073aa;
+  box-shadow:
+    0 0 0 1px #fff,
+    0 0 0 3px #0073aa;
 }
 .media-selection:after {
   content: "";
@@ -1062,7 +1082,11 @@ $wp-heading-color: #23282d;
   right: 0;
   bottom: 0;
   width: 25px;
-  background-image: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  background-image: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
 }
 .media-selection .attachment .filename {
   display: none;
@@ -1991,4 +2015,20 @@ $wp-heading-color: #23282d;
 }
 .media-frame-content[data-columns="12"] .attachment {
   width: 8.33%;
+}
+
+.ast-container {
+  position: relative;
+
+  & > #brz-ed-root {
+    position: initial;
+  }
+}
+
+.hfeed {
+  position: relative;
+
+  & > .site-content > #brz-ed-root {
+    position: initial;
+  }
 }

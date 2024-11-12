@@ -21,7 +21,7 @@ export function style(
         "cssStyleBoxShadow"
       ]
     },
-    ".brz &&:hover.brz-lottie .brz-ed-box__resizer div svg, .brz-lottie .brz-ed-box__resizer div canvas, &&.brz-lottie .brz-lottie-anim svg, &&.brz-lottie .brz-lottie__canvas canvas":
+    ".brz &&:hover.brz-lottie .brz-ed-box__resizer div svg, .brz-lottie .brz-ed-box__resizer div canvas, &&.brz-lottie .brz-lottie-anim svg, &&.brz-lottie canvas":
       { standart: ["cssStylePaddingBG"] }
   };
 

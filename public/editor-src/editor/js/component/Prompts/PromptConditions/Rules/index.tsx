@@ -16,11 +16,13 @@ import { pageSelector } from "visual/redux/selectors";
 import { AllRule, BlockTypeRule, CollectionTypeRule, Rule } from "visual/types";
 import {
   CUSTOMER_TYPE,
-  ECWID_PRODUCT_CATEGORY_TYPE,
-  ECWID_PRODUCT_TYPE,
   PAGES_GROUP_ID
 } from "visual/utils/blocks/blocksConditions";
-import { IS_CLOUD, IS_PRO } from "visual/utils/env";
+import {
+  ECWID_PRODUCT_CATEGORY_TYPE,
+  ECWID_PRODUCT_TYPE
+} from "visual/utils/ecwid";
+import { IS_PRO } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { isPopup } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
@@ -63,8 +65,9 @@ const Rules = (props: Props): ReactElement => {
   useEffect(() => {
     async function fetchData(getValueFn: AsyncGetValue): Promise<void> {
       let rules = await getValueFn();
+      const config = Config.getAll();
 
-      if (IS_CLOUD && !rules) {
+      if (isCloud(config) && !rules) {
         rules = [
           {
             type: 1

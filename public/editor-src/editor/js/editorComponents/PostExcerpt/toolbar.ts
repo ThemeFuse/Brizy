@@ -13,9 +13,8 @@ import {
 } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { isChoice } from "visual/utils/options/getDynamicContentChoices";
 
-// @ts-expect-error wrong typing
 export const getItems: GetItems<ElementModel> = ({
   v,
   device,
@@ -46,10 +45,11 @@ export const getItems: GetItems<ElementModel> = ({
   const contextConfig =
     context.dynamicContent.config ??
     ([] as unknown as DCGroup<"wp"> | DCGroup<"cloud">);
-  const predefinedChoices = getDynamicContentChoices(
-    contextConfig,
-    DCTypes.richText
-  );
+
+  const predefinedChoices =
+    getDynamicContentChoices(contextConfig, DCTypes.richText)?.filter(
+      isChoice
+    ) ?? [];
 
   const linkDC = getDynamicContentOption({
     options: component.context.dynamicContent.config,
@@ -123,7 +123,7 @@ export const getItems: GetItems<ElementModel> = ({
                   type: "predefinedPopulation",
                   disabled: disablePredefinedPopulation || !activeChoice,
                   config: {
-                    activeChoice,
+                    activeChoice: activeChoice ?? "",
                     choices: predefinedChoices
                   }
                 }
@@ -225,12 +225,12 @@ export const getItems: GetItems<ElementModel> = ({
               id: "anchor",
               label: t("Block"),
               options: [
-                toolbarLinkAnchor({
-                  v,
-                  device,
-                  state: "normal",
+                {
+                  id: "linkAnchor",
+                  label: t("Block"),
+                  type: "blockThumbnail",
                   disabled: IS_GLOBAL_POPUP
-                })
+                }
               ]
             },
             {

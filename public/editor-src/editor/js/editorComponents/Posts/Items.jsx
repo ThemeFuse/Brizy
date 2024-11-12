@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { createRef } from "react";
+import Config, { isWp } from "visual/global/Config";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import HotKeys from "visual/component/HotKeys";
@@ -13,7 +14,6 @@ import {
   makePlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
-import { IS_WP } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import {
   makeAttr,
@@ -43,6 +43,8 @@ export default class Items extends EditorArrayComponent {
     loopAttributes: {},
     meta: {}
   };
+
+  isWp = isWp(Config.getAll());
 
   componentDidMount() {
     const { needMasonry } = this.props;
@@ -281,7 +283,7 @@ export default class Items extends EditorArrayComponent {
   }
 
   renderForView(v) {
-    return IS_WP ? this.renderForViewWP(v) : this.renderForViewCloud(v);
+    return this.isWp ? this.renderForViewWP(v) : this.renderForViewCloud(v);
   }
 
   renderForViewWP(v) {

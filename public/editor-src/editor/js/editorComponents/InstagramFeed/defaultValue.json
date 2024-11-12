@@ -1,0 +1,29 @@
+{
+  "content": {
+    "embedUrl": "https://www.instagram.com/instagram",
+    "placeholderSpinner": "Loading...",
+    "linkText": "View on Instagram",
+
+    "captioned": false,
+    "placeholderSpinnerDisabled": false,
+    "placeholderDisabled": false,
+    "scriptLoadDisabled": false,
+
+    "embedUrlPopulation": "",
+    "embedUrlPopulationEntityType": "",
+    "embedUrlPopulationEntityId": "",
+
+    "linkTextPopulation": "",
+    "linkTextPopulationEntityType": "",
+    "linkTextPopulationEntityId": "",
+
+    "placeholderSpinnerPopulation": "",
+    "placeholderSpinnerPopulationEntityType": "",
+    "placeholderSpinnerPopulationEntityId": ""
+  },
+
+  "style": {
+    "width": 328,
+    "widthSuffix": "px"
+  }
+}

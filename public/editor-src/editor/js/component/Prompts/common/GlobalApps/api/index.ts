@@ -1,6 +1,6 @@
 import Config from "visual/global/Config";
-import { makeUrl, parseJSON } from "../../../common/utils";
 import { request } from "visual/utils/api";
+import { makeUrl, parseJSON } from "../../../common/utils";
 import { AccountsResolve, AddAccount, DeleteAccount } from "./type";
 
 type NormalizeAccountsResolve = {
@@ -73,15 +73,12 @@ export const addAccount: AddAccount = ({ group, service, ...data }) => {
     .then((res) => res);
 };
 
-export const deleteAccount: DeleteAccount = (id) => {
+export const deleteAccount: DeleteAccount = async (id) => {
   const { api } = Config.get("urls");
 
-  return request(`${api}/accounts/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8"
-    }
-  })
-    .then(parseJSON)
-    .then((res) => res);
+  const response = await request(`${api}/accounts/${id}`, {
+    method: "DELETE"
+  });
+
+  return { status: response.status };
 };

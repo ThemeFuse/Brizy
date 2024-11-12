@@ -1,4 +1,7 @@
-import { isSizeType } from "visual/global/Config/types/configs/common";
+import {
+  isSizeType,
+  SizeType
+} from "visual/global/Config/types/configs/common";
 import { getColor } from "visual/utils/color";
 import {
   OptionStyle,
@@ -146,3 +149,98 @@ export const transitionCSS: OptionStyle<"slider"> = ({ value: { value } }) => ({
         "filter, color, background, border-color, box-shadow, transform;"
     }
 });
+
+export const maskImageUrlCSS: OptionStyle<"imageUpload"> = ({
+  value: { src, fileName, sizeType }
+}) => {
+  const url = getImageUrl({
+    uid: src,
+    fileName,
+    sizeType: sizeType as SizeType
+  });
+
+  if (!url) return;
+  return {
+    "{{WRAPPER}}:hover .brz-video-content": {
+      "-webkit-mask-image": `url(${url});`,
+      "mask-image": `url(${url});`
+    }
+  };
+};
+
+export const maskImageRepeatCSS: OptionStyle<"select"> = ({
+  value: { value }
+}) => ({
+  "{{WRAPPER}}:hover .brz-video-content": {
+    "-webkit-mask-repeat": value,
+    "mask-repeat": value
+  }
+});
+
+export const maskImageSizeCSS: OptionStyle<"select"> = ({
+  value: { value }
+}) => {
+  switch (value) {
+    case "contain":
+    case "cover":
+      return {
+        "{{WRAPPER}}:hover .brz-video-content": {
+          "-webkit-mask-size": value,
+          "mask-size": value
+        }
+      };
+  }
+};
+
+export const maskImageScaleCSS: OptionStyle<"slider"> = ({
+  value: { value, unit }
+}) => ({
+  "{{WRAPPER}}:hover .brz-video-content": {
+    "-webkit-mask-size": `${value}${unit};`,
+    "mask-size": `${value}${unit};`
+  }
+});
+
+export const maskImagePositionX: OptionStyle<"slider"> = ({
+  value: { value, unit }
+}) => {
+  return {
+    "{{WRAPPER}}:hover .brz-video-content": {
+      "-webkit-mask-position-x": `${value}${unit};`,
+      "mask-position-x": `${value}${unit};`
+    }
+  };
+};
+
+export const maskImagePositionY: OptionStyle<"slider"> = ({
+  value: { value, unit }
+}) => {
+  return {
+    "{{WRAPPER}}:hover .brz-video-content": {
+      "-webkit-mask-position-y": `${value}${unit};`,
+      "mask-position-y": `${value}${unit};`
+    }
+  };
+};
+
+export const maskImagePosition: OptionStyle<"select"> = ({
+  value: { value }
+}) => {
+  switch (value) {
+    case "center center":
+    case "center left":
+    case "center right":
+    case "top center":
+    case "top right":
+    case "top left":
+    case "bottom center":
+    case "bottom left":
+    case "bottom right":
+      return {
+        "{{WRAPPER}}:hover .brz-video-content": {
+          "-webkit-mask-position": value,
+          "mask-position": value
+        }
+      };
+  }
+};

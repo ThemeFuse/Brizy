@@ -2,9 +2,9 @@ import classnames from "classnames";
 import jQuery from "jquery";
 import { ReactElement, RefObject, useRef } from "react";
 import { getStore } from "visual/redux/store";
-import { IS_WP } from "visual/utils/env";
 import "../lib/jquery.parallax.js";
 import { useLayoutEffect } from "../utils";
+import Config, { isWp } from "visual/global/Config";
 
 const destroyParallax = (node: HTMLElement): void => {
   if (node.parentElement) {
@@ -14,13 +14,14 @@ const destroyParallax = (node: HTMLElement): void => {
 
 const initParallax = (node: HTMLElement): void => {
   if (node.parentElement) {
+    const config = Config.getAll();
     jQuery(node.parentElement).parallax({
       bgClass: "brz-bg-image", // WARNING: intentionally not `brz-bg-image-parallax`
       wheelIgnoreClass: [
         "brz-ed-container-plus",
         "brz-ed-container-whiteout-show",
         "brz-content-show",
-        ...(IS_WP ? ["media-modal"] : [])
+        ...(isWp(config) ? ["media-modal"] : [])
       ]
     });
   }

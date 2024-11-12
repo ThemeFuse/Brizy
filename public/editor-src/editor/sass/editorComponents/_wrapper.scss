@@ -4,13 +4,20 @@
   min-width: 0;
   min-height: 1px;
 
+  &:has(.brz-wrapper-transform),
+  &:has(.brz-wrapper__scrollmotion),
+  &:has(.brz-hover-animation__container) {
+    &:has(.brz-menu) {
+      z-index: z("menu-transform");
+    }
+  }
+
   > .brz-wrapper-transform {
     flex: 1 0 100%;
     min-width: 0;
     display: inherit;
     justify-content: inherit;
     transition: transform 0.2s ease;
-    will-change: transform;
 
     > div.brz-wrapper__scrollmotion {
       flex: 1 0 100%;
@@ -35,6 +42,7 @@
     min-width: 0;
     align-items: center;
   }
+
   &__item {
     position: relative;
     min-height: 1px;

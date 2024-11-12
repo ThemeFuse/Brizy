@@ -1,11 +1,13 @@
 import { getIn } from "timm";
 import { Block, Shortcode } from "visual/types";
 import { ElementModel } from "visual/component/Elements/Types";
-import Shortcodes from "visual/shortcodeComponents";
+import { getShortcodeComponents } from "visual/shortcodeComponents";
 import { findDeep } from "visual/utils/object";
 import { isModel } from "visual/utils/models";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 type UsedModelsImage = {
+  config: ConfigCommon;
   models: Block | { items: Block[] };
   globalBlocks?: { [key: string]: Block };
 };
@@ -31,11 +33,13 @@ const proSections = [
 
 export const blockIsPro = ({
   models,
-  globalBlocks
+  globalBlocks,
+  config
 }: UsedModelsImage): boolean => {
+  const Shortcodes = getShortcodeComponents(config);
   const shortcodes = Object.values(Shortcodes)
     .reduce((acc, item) => acc.concat(item), [])
-    .filter(item => item.pro)
+    .filter((item) => item.pro)
     .map(excludeWrapper);
 
   const { obj } = findDeep(models, (model: ElementModel) => {
@@ -45,7 +49,7 @@ export const blockIsPro = ({
       const id = getIn(model, ["value", "_id"]) as string | undefined;
 
       if (id && globalBlocks[id]) {
-        return blockIsPro({ models: globalBlocks[id], globalBlocks });
+        return blockIsPro({ models: globalBlocks[id], globalBlocks, config });
       }
     }
 

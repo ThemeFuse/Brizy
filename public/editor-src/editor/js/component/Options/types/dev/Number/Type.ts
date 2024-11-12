@@ -10,7 +10,7 @@ export type Config = WithSize & {
   max?: number;
   step?: number;
   updateRate?: number;
-  spinner: boolean;
+  spinner?: boolean;
 };
 
 export type Props = OptionProps<SimpleValue<number>> &

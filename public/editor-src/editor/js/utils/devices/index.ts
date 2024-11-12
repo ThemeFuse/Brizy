@@ -89,3 +89,17 @@ export const supportsMode = (mode: ResponsiveMode, device: Device): boolean => {
       return isDesktop(mode);
   }
 };
+
+const iosDevices = [
+  "iPad Simulator",
+  "iPhone Simulator",
+  "iPod Simulator",
+  "iPad",
+  "iPhone",
+  "iPod"
+];
+
+export const isIOS = () =>
+  iosDevices.includes(navigator.platform) ||
+  // iPad on iOS 13 detection
+  (navigator.userAgent.includes("Mac") && "ontouchend" in document);

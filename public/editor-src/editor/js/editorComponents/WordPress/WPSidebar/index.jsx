@@ -58,7 +58,7 @@ class WPSidebar extends EditorComponent {
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig(toolbarConfig, sidebarConfig)}
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <Wrapper {...this.makeWrapperProps({ className: classNameWP })}>

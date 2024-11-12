@@ -19,7 +19,11 @@ import {
   isShopifyLayout
 } from "visual/component/Prompts/utils";
 import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import {
+  isCloud,
+  isShopify,
+  Shopify
+} from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   getShopifyTemplate,
@@ -94,10 +98,11 @@ export const PromptPageRules = (props: Props): JSX.Element => {
 
       return onSave()
         .then(() => {
-          return shopifySyncRules(
-            _items.filter((i): i is SelectedItem => i.selected),
+          return shopifySyncRules({
+            config: _config as Shopify,
+            rules: _items.filter((i): i is SelectedItem => i.selected),
             title
-          ).then(() => {
+          }).then(() => {
             if (typeof onAfterSave === "function") {
               onAfterSave();
             }
@@ -105,7 +110,7 @@ export const PromptPageRules = (props: Props): JSX.Element => {
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave]
+    [dispatch, onSave, onAfterSave, _config]
   );
   const getData = useCallback(async () => {
     const config = Config.getAll();
@@ -113,7 +118,7 @@ export const PromptPageRules = (props: Props): JSX.Element => {
       const selectedP = getPageRelations(config).then((is) =>
         is.map((i) => i.id)
       );
-      const itemsP = getCollectionSourceItemsById(config.templateType.id);
+      const itemsP = getCollectionSourceItemsById(config);
 
       const _items = await Promise.all([itemsP, selectedP]).then(
         ([items, selected]): Item[] =>

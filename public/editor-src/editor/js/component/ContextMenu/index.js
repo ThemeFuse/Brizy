@@ -134,3 +134,4 @@ export default rolesHOC({
 });
 
 export { default as ContextMenuExtend } from "./ContextMenuExtend";
+export { default as ContextMenuDisabled } from "./ContextMenuDisabled";

@@ -21,7 +21,8 @@ export class TextEditor extends Component<Props, State> {
     // this is essentially an uncontrolled component at the moment
     value: t("Editable Text"),
     tagName: "span",
-    className: ""
+    className: "",
+    allowLineBreak: false
   };
 
   contentRef = React.createRef<HTMLElement>();
@@ -82,7 +83,10 @@ export class TextEditor extends Component<Props, State> {
 
     // prevent enter
     if (keyCode === keyCodes.ENTER) {
-      e.preventDefault();
+      if (!this.props.allowLineBreak) {
+        e.preventDefault();
+      }
+
       return;
     }
 
@@ -106,7 +110,13 @@ export class TextEditor extends Component<Props, State> {
 
   handleInput = (e: Event): void => {
     const node = e.currentTarget as HTMLElement;
-    this.notifyChange(node.textContent || "");
+
+    // Use innerHTML to include <br> tags
+    const insertLineBreak = this.props.allowLineBreak
+      ? node.innerHTML
+      : node.textContent;
+
+    this.notifyChange(insertLineBreak || "");
   };
 
   notifyChange = _.debounce((value: string): void => {

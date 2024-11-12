@@ -2,8 +2,8 @@ import { TypeId } from "visual/config/icons/Type";
 
 export interface Props {
   currentTypeId: TypeId;
-  onClick: (id: TypeId) => VoidFunction;
-  onClose: VoidFunction;
+  onClick: (id: TypeId) => void;
+  onClose?: VoidFunction;
 }
 
 export interface ItemProps {

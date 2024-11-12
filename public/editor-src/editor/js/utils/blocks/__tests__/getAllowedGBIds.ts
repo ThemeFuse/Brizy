@@ -956,13 +956,13 @@ describe("testing Cloud getAllowedGBIds", () => {
     global.TARGET = "cloud";
     Config.init({
       ...configCommon,
-      //@ts-expect-error: implicit set cms
       platform: "cms",
       user: {
         isAuthorized: false,
         role: "admin",
         isGuest: false
       },
+      //@ts-expect-error: implicit set cms
       cms: cmsCommon,
       urls: urlsCommon,
       project: {
@@ -1601,10 +1601,12 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
     global.TARGET = "Cloud";
     Config.init({
       ...configCommon,
-      //@ts-expect-error: implicit set cms
       platform: "cms",
       page: {
-        //@ts-expect-error: implicit set customers
+        // @ts-expect-error: Uniq id
+        id: "" as const,
+        isProtected: false,
+        isResetPassPage: false,
         provider: "customers"
       },
       availableRoles: [{ role: "role-1", name: "admin" }],

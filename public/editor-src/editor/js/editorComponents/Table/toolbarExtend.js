@@ -1,6 +1,9 @@
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 
-export const getItems = () => {
+export const getItems = ({ v, device }) => {
+  const dvv = (key) => defaultValueValue({ key, v, device });
+
   return [
     {
       id: "toolbarSettings",
@@ -28,8 +31,11 @@ export const getItems = () => {
           position: 100,
           config: {
             min: 0,
-            max: 500,
-            units: [{ value: "px", title: "px" }]
+            max: dvv("asideWidthSuffix") === "px" ? 500 : 100,
+            units: [
+              { value: "px", title: "px" },
+              { value: "%", title: "%" }
+            ]
           }
         }
       ]

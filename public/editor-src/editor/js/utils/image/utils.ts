@@ -1,20 +1,20 @@
+import normalizeUrl from "normalize-url";
 import {
   defaultCrop,
   SizeType
 } from "visual/global/Config/types/configs/common";
+import { makeUrl } from "visual/utils/api";
 import { parseCropData } from "visual/utils/image/parsers";
+import { read as readStr } from "visual/utils/reader/string";
 import * as Str from "../reader/string";
 import {
   CustomSize,
   Data,
   DataUrl,
+  ImageType,
   PlaceholdersValues,
-  ResizeData,
-  ImageType
+  ResizeData
 } from "./types";
-import { makeUrl } from "visual/utils/api";
-import { read as readStr } from "visual/utils/reader/string";
-import normalizeUrl from "normalize-url";
 
 export const isCropSize = (d: Data): d is CustomSize =>
   d.sizeType === SizeType.custom;
@@ -86,11 +86,14 @@ export const replacePlaceholders = (options: ResizeData): string => {
     return value
       ? url.replace(placeholder, value)
       : knownPlaceholders.includes(placeholder)
-        ? url.replace(placeholder, "")
-        : url;
+      ? url.replace(placeholder, "")
+      : url;
   }, pattern);
 
-  return normalizeUrl(replaceSymbols(finalUrl), { sortQueryParameters: false });
+  return normalizeUrl(replaceSymbols(finalUrl), {
+    sortQueryParameters: false,
+    stripWWW: false
+  });
 };
 
 export const generateUrl = (options: DataUrl): string => {

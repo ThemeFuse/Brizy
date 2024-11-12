@@ -1,18 +1,19 @@
+import { Num, Str } from "@brizy/readers";
 import { OptionValue } from "visual/component/Options/types";
 import Config from "visual/global/Config";
 import { ReduxState } from "visual/redux/types";
 import { Fonts } from "visual/types";
 import { getFontCssStyle } from "visual/utils/fonts";
+import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import {
-  Weight,
+  empty as defaultWeight,
   fromNumber as readWeight,
-  empty as emptyWeight
+  Weight
 } from "visual/utils/fonts/Weight";
 import {
-  Positive,
   fromNumber as readPositive,
-  Zero
+  Positive
 } from "visual/utils/math/Positive";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
@@ -20,13 +21,7 @@ import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelF
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
 import { CSSValue as CSSValue_ } from "visual/utils/style2/types";
-import { isNullish, MValue, onNullish } from "visual/utils/value";
-import { Num, pipe, Str } from "@brizy/readers";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { mPipe } from "fp-utilities";
-
-const toPositive = pipe(mPipe(Num.read, readPositive), onNullish(Zero));
-const toWeight = pipe(mPipe(Num.read, readWeight), onNullish(emptyWeight));
+import { isNullish, MValue } from "visual/utils/value";
 
 type CSSValue = Omit<CSSValue_, "v"> & {
   v: OptionValue<"typography">;
@@ -89,7 +84,7 @@ export function styleTypographyFontSize({
   state,
   prefix = "",
   fontsData
-}: CSSValue): Positive {
+}: CSSValue): Positive | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -109,7 +104,11 @@ export function styleTypographyFontSize({
       }
     });
 
-  return toPositive(value);
+  const nValue = Num.read(value);
+
+  const data = nValue ? readPositive(nValue) : Str.read(value);
+
+  return data ?? 0;
 }
 
 export function styleTypographyFontSizeSuffix({
@@ -149,7 +148,7 @@ export function styleTypographyLineHeight({
   state,
   prefix = "",
   fontsData
-}: CSSValue): Positive {
+}: CSSValue): Positive | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -169,7 +168,11 @@ export function styleTypographyLineHeight({
       }
     });
 
-  return toPositive(value);
+  const nValue = Num.read(value);
+
+  const data = nValue ? readPositive(nValue) : Str.read(value);
+
+  return data ?? 0;
 }
 
 export function styleTypographyFontWeight({
@@ -178,7 +181,7 @@ export function styleTypographyFontWeight({
   state,
   prefix = "",
   fontsData
-}: CSSValue): Weight {
+}: CSSValue): Weight | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -198,7 +201,11 @@ export function styleTypographyFontWeight({
       }
     });
 
-  return toWeight(value);
+  const nValue = Num.read(value);
+
+  const data = nValue ? readWeight(nValue) : Str.read(value);
+
+  return data ?? defaultWeight;
 }
 
 export function styleTypographyLetterSpacing({

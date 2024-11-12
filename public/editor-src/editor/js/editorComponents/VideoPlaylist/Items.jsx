@@ -11,6 +11,7 @@ class VideoPlaylistItems extends EditorArrayComponent {
 
   static defaultProps = {
     meta: {},
+    renderType: "",
     onActiveChange: noop
   };
 
@@ -30,8 +31,8 @@ class VideoPlaylistItems extends EditorArrayComponent {
               itemIndex === 0
                 ? "prev"
                 : itemIndex === items.length - 1
-                ? "next"
-                : undefined,
+                  ? "next"
+                  : undefined,
             onChange: (v) => {
               switch (v) {
                 case "prev":
@@ -75,9 +76,10 @@ class VideoPlaylistItems extends EditorArrayComponent {
 
     return {
       meta: this.props.meta,
+      renderType: this.props.renderType,
       active: this.props.currentIndex === itemIndex,
       toolbarExtend: this.makeToolbarPropsFromConfig2(cloneRemoveConfig),
-      onActiveItem: () => {
+      onClick: () => {
         this.props.onActiveChange(itemIndex);
       }
     };

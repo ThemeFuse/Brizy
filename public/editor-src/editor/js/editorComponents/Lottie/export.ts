@@ -1,18 +1,18 @@
 import { getProLibs } from "visual/libs";
 import {
+  attachScrollHandler,
+  createTriggerHandler,
   getDirection,
   getRendererType,
   getTriggerType,
-  handleScroll
+  handleScroll,
+  handleScrollDotLottie
 } from "./utils";
 import {
   RendererType,
   TriggerType
 } from "@brizy/component/src/Flex/Lottie/types";
 import { Num, Str } from "@brizy/readers";
-import { throttle } from "underscore";
-import { getCurrentDevice } from "visual/utils/export";
-import { DESKTOP } from "visual/utils/responsiveMode";
 
 const observerCallbacks = new Map();
 
@@ -27,9 +27,9 @@ const observer = new IntersectionObserver((entries, observer) => {
 });
 
 export default function ($node: JQuery): void {
-  const { Lottie } = getProLibs();
+  const { Lottie, DotLottie } = getProLibs();
 
-  if (!Lottie) {
+  if (!Lottie || !DotLottie) {
     return;
   }
 
@@ -37,25 +37,30 @@ export default function ($node: JQuery): void {
 
   if (!node) return;
 
-  node.querySelectorAll(".brz-lottie-anim").forEach((node) => {
-    const animationLink =
-      Str.read(node.getAttribute("data-animate-name")) ?? "";
-    const loopAttr = node.getAttribute("data-anim-loop");
-    const loop = loopAttr === "true" || loopAttr === "on";
-    const loadLazy = node.getAttribute("data-anim-load") === "true";
-    const speed = Num.read(node.getAttribute("data-anim-speed")) ?? 1;
-    const trigger =
-      getTriggerType(node.getAttribute("data-anim-trigger")) ??
-      TriggerType.OnLoad;
-    const direction =
-      getDirection(Num.read(node.getAttribute("data-anim-direction"))) ?? 1;
+  node.querySelectorAll<HTMLElement>(".brz-lottie-anim").forEach((node) => {
+    const {
+      animateName,
+      animLoop,
+      animLoad,
+      animSpeed,
+      animTrigger,
+      animDirection,
+      renderType,
+      animAutoplay,
+      lottieFile
+    } = node.dataset;
 
-    const renderer =
-      getRendererType(node.getAttribute("data-render-type")) ??
-      RendererType.SVG;
-    const autoplayAttr = node.getAttribute("data-anim-autoplay");
+    const animationLink = Str.read(animateName) ?? "";
+    const loadLazy = animLoad === "true";
+    const speed = Num.read(animSpeed) ?? 1;
+    const trigger = getTriggerType(animTrigger) ?? TriggerType.OnLoad;
+    const direction = getDirection(Num.read(animDirection)) ?? 1;
+    const isLottieFile = lottieFile === "true";
+    const loop = animLoop === "true" || animLoop === "on";
+
+    const renderer = getRendererType(renderType) ?? RendererType.SVG;
     const autoplay =
-      (autoplayAttr === "true" || autoplayAttr === "on") &&
+      (animAutoplay === "true" || animAutoplay === "on") &&
       trigger === TriggerType.OnLoad;
 
     const initializeAnimation = () => {
@@ -71,13 +76,11 @@ export default function ($node: JQuery): void {
         }
       });
 
-      animation.addEventListener("DOMLoaded", () => {
-        if (trigger === TriggerType.OnScroll) {
-          handleScroll(animation, node);
-        }
+      const handleLottieScroll = () => handleScroll(animation, node);
 
-        window.Brz.emit("elements.lottie.loaded", node);
-      });
+      animation.addEventListener("DOMLoaded", () =>
+        attachScrollHandler(trigger, node, handleLottieScroll)
+      );
 
       if (trigger !== TriggerType.OnScroll) {
         animation.setSpeed(speed);
@@ -105,38 +108,61 @@ export default function ($node: JQuery): void {
         }
       };
 
-      switch (trigger) {
-        case TriggerType.OnClick: {
-          node.addEventListener("click", triggerHandler);
-          break;
-        }
-        case TriggerType.OnHover: {
-          const isDesktopMode = getCurrentDevice() === DESKTOP;
-
-          if (isDesktopMode) {
-            node.addEventListener("mouseenter", triggerHandler);
-          } else {
-            node.addEventListener("click", triggerHandler);
-          }
-          break;
-        }
-        case TriggerType.OnScroll: {
-          const scrollableContainer =
-            node.closest(".brz-popup2__inner") || document;
-
-          const scrollHandler = throttle(() => {
-            handleScroll(animation, node);
-          }, 16);
-
-          scrollableContainer.addEventListener("scroll", scrollHandler);
-          break;
-        }
-      }
+      createTriggerHandler(trigger, node, triggerHandler, () =>
+        handleScroll(animation, node)
+      );
     };
 
+    const initializeDotLottieAnimation = () => {
+      const canvasNode = document.createElement("canvas");
+      node.appendChild(canvasNode);
+
+      const animation = new DotLottie({
+        canvas: canvasNode,
+        loop,
+        autoplay,
+        src: animationLink,
+        mode: direction === -1 ? "reverse" : "forward",
+        speed
+      });
+
+      const handleScroll = () => handleScrollDotLottie(animation, node);
+
+      animation.addEventListener("load", () =>
+        attachScrollHandler(trigger, node, handleScroll)
+      );
+
+      let isPlaying = false;
+      animation.addEventListener("complete", () => {
+        isPlaying = false;
+      });
+
+      const triggerHandler = () => {
+        if (!isPlaying) {
+          if (direction === -1 && !loop) {
+            animation.setFrame(animation.totalFrames);
+          } else {
+            animation.setFrame(0);
+          }
+
+          animation.play();
+
+          isPlaying = true;
+        }
+      };
+
+      createTriggerHandler(trigger, node, triggerHandler, () =>
+        handleScrollDotLottie(animation, node)
+      );
+    };
+
+    const cb = isLottieFile
+      ? initializeDotLottieAnimation
+      : initializeAnimation;
+
     if (loadLazy) {
-      observerCallbacks.set(node, initializeAnimation);
+      observerCallbacks.set(node, cb);
       observer.observe(node);
-    } else initializeAnimation();
+    } else cb();
   });
 }

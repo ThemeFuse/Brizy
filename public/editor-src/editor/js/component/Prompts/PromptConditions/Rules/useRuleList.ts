@@ -9,11 +9,9 @@ import { isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
 import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
-import { getCollectionItems } from "visual/utils/api/cms";
+import { getCollectionItems } from "visual/utils/api/cms/";
 import {
   CUSTOMER_TYPE,
-  ECWID_PRODUCT_CATEGORY_TYPE,
-  ECWID_PRODUCT_TYPE,
   createEntityValue,
   createEntityValueAll
 } from "visual/utils/blocks/blocksConditions";
@@ -21,6 +19,10 @@ import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
+import {
+  ECWID_PRODUCT_CATEGORY_TYPE,
+  ECWID_PRODUCT_TYPE
+} from "visual/utils/ecwid";
 import { isOneOf } from "visual/utils/fp/isOneOf";
 import { t } from "visual/utils/i18n";
 import { CmsListItem, RuleList, RuleListItem } from "./types";
@@ -270,7 +272,7 @@ export default function useRuleList(
             ];
           }),
           catchError(() => of([])),
-          map((items) => ({ type: "ready", items } as const)),
+          map((items) => ({ type: "ready", items }) as const),
           tap(() => setListLoading(false))
         )
         .subscribe(setEcwidProductsList);
@@ -305,7 +307,7 @@ export default function useRuleList(
             ];
           }),
           catchError(() => of([])),
-          map((items) => ({ type: "ready", items } as const)),
+          map((items) => ({ type: "ready", items }) as const),
           tap(() => setListLoading(false))
         )
         .subscribe(setEcwidCategoriesList);

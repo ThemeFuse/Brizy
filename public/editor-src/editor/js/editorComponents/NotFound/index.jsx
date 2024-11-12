@@ -4,11 +4,10 @@ import Toolbar from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
 const toolbarConfig = {
-  getItemsForDesktop: () => [],
-  getItemsForTablet: () => [],
-  getItemsForMobile: () => []
+  getItems: () => []
 };
-const toolbarExtendFilter = items => items.filter(item => item.id === "remove"); // leave only delete
+const toolbarExtendFilter = (items) =>
+  items.filter((item) => item.id === "remove"); // leave only delete
 
 export class NotFound extends EditorComponent {
   static get componentId() {
@@ -32,7 +31,7 @@ export class NotFound extends EditorComponent {
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig(toolbarConfig, null, {
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, null, {
           parentItemsFilter: toolbarExtendFilter
         })}
       >

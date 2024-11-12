@@ -1,4 +1,7 @@
 import { ReduxState } from "visual/redux/types";
+import { Config } from "visual/global/Config";
+import { EditorType } from "./types";
+import { isPopup, isStory } from "visual/utils/models";
 
 export const areStatesEqual = (
   state: ReduxState,
@@ -12,3 +15,15 @@ export const areStatesEqual = (
     state.project.data.font === prevState.project.data.font
   );
 };
+
+export function getRenderType(config: Config): EditorType {
+  if (isPopup(config)) {
+    return "popup";
+  }
+
+  if (isStory(config)) {
+    return "story";
+  }
+
+  return "basic";
+}

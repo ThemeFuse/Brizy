@@ -10,17 +10,23 @@ import {
 import { hasAnchorPoint } from "visual/component/Controls/Transform/utils";
 import { MValue } from "visual/utils/value";
 import {
+  flattEffects,
   flattenObject,
   getAnchorVars,
+  getEnabledEffects,
   getFlipVars,
   getOffsetVars,
+  getPatchType,
   getRotateVars,
   getScaleVars,
   getSkewVars,
   getTransformCSSVars,
+  hasActive,
+  hasEffect,
   makeCSSVar,
   prefixKeys
 } from "../utils";
+import { OptionPatch } from "visual/component/Options/types";
 
 describe("hasAnchorPoint function", () => {
   test.each([
@@ -389,4 +395,156 @@ describe("getTransformCSSVars function", () => {
       output
     )
   );
+});
+
+describe("hasEffect function", () => {
+  test.each([
+    [{}, false],
+    [{ a: undefined }, false],
+    [{ b: { c: 1 } }, false]
+  ])("variables from %s hasn't effect", (input, output) =>
+    expect(hasEffect(input)).toBe(output)
+  );
+
+  test.each([
+    [
+      {
+        rotate: { rotate: 45 }
+      },
+      true
+    ],
+    [
+      {
+        offset: { offsetX: 10, offsetY: 20 }
+      },
+      true
+    ],
+    [
+      {
+        anchorPoint: { x: 0.5, y: 0.5 }
+      },
+      true
+    ]
+  ])("variables from %s have effect", (input, output) =>
+    expect(hasEffect(input)).toBe(output)
+  );
+
+  test("should pass if at least one effect is not undefined", () => {
+    const input = {
+      rotate: { rotate: 45 },
+      offset: undefined,
+      anchorPoint: undefined
+    };
+
+    expect(hasEffect(input)).toBe(true);
+  });
+});
+
+describe("hasActive function", () => {
+  test.each([
+    [{}, false],
+    [{ active: undefined }, false],
+    [{ active: "" }, false]
+  ])("variables from %s hasn't active", (input, output) =>
+    expect(hasActive(input)).toBe(output)
+  );
+
+  test("should pass if active is not undefined", () => {
+    const input = {
+      active: "rotate",
+      rotate: { rotate: 45 }
+    };
+
+    expect(hasActive(input)).toBe(true);
+  });
+});
+
+describe("getPatchType function", () => {
+  test.each([
+    [{}, undefined],
+    [{ active: undefined }, undefined],
+    [{ active: "", rotate: undefined }, undefined]
+  ])("variables from %s will return undefined", (input, output) =>
+    expect(getPatchType(input as OptionPatch<"transform">)).toBe(output)
+  );
+
+  test.each([
+    [{ active: "rotate" }, "active"],
+    [{ rotate: { rotate: 45 } }, "effect"],
+    [{ active: "rotate", rotate: { rotate: 45 } }, "multiple"]
+  ])("variables from %s have type", (input, output) =>
+    expect(getPatchType(input as OptionPatch<"transform">)).toBe(output)
+  );
+
+  test("should return the same type if it is defined", () => {
+    const input = {
+      type: "active",
+      active: "rotate",
+      rotate: { rotate: 45 }
+    };
+
+    expect(getPatchType(input as OptionPatch<"transform">)).toBe("active");
+  });
+});
+
+describe("getEnabledEffects function", () => {
+  test.each([
+    [{}, {}],
+    [{ rotate: undefined }, {}],
+    [{ rotate: undefined, offset: {} }, {}]
+  ])("variables %s haven't enabled effects", (input, output) =>
+    expect(getEnabledEffects(input)).toStrictEqual(output)
+  );
+
+  test("should return enabled effects", () => {
+    const input = {
+      offset: { offsetX: 10, offsetY: 20 },
+      active: "rotate",
+      rotate: { rotate: 45 },
+      skew: {},
+      scale: undefined
+    };
+
+    expect(getEnabledEffects(input)).toStrictEqual({
+      rotateEnabled: true,
+      offsetEnabled: true
+    });
+  });
+});
+
+describe("flattEffects function", () => {
+  test.each([
+    [{}, {}],
+    [{ rotate: undefined }, {}],
+    [
+      {
+        a: {
+          rotate: {
+            rotateX: 2
+          }
+        }
+      },
+      {}
+    ]
+  ])("variables %s will return empty object", (input, output) =>
+    expect(flattEffects(input)).toStrictEqual(output)
+  );
+
+  test("should return flatten effects", () => {
+    const input = {
+      rotate: { rotate: 45 },
+      offset: { offsetX: 10, offsetY: 20 },
+      skew: undefined,
+      active: "rotate",
+      a: {
+        b: "c"
+      }
+    };
+
+    expect(flattEffects(input)).toStrictEqual({
+      rotateRotate: 45,
+      offsetOffsetX: 10,
+      offsetOffsetY: 20
+    });
+  });
 });

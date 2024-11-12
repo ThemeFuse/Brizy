@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import React, { MouseEvent, useCallback } from "react";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 
 export interface Props {
@@ -10,6 +9,9 @@ export interface Props {
   text: string;
   needElementTitle?: boolean;
   onRemove?: VoidFunction;
+  message: string;
+  upgradeText: string;
+  upgradeLink: string;
 }
 
 export const ProBlocked = (props: Props): JSX.Element => {
@@ -18,7 +20,10 @@ export const ProBlocked = (props: Props): JSX.Element => {
     absolute,
     text,
     onRemove,
-    needElementTitle = true
+    needElementTitle = true,
+    message,
+    upgradeText,
+    upgradeLink
   } = props;
   const className = classnames(
     "brz-element__pro",
@@ -37,7 +42,7 @@ export const ProBlocked = (props: Props): JSX.Element => {
   return (
     <div className={className}>
       <p className="brz-p brz-element__pro-title">
-        <span>{t("Upgrade to PRO to use this")}</span>
+        <span>{message}</span>
         <strong>&nbsp;{text}&nbsp;</strong>
         {needElementTitle && <span>{t("element")}</span>}
       </p>
@@ -54,11 +59,11 @@ export const ProBlocked = (props: Props): JSX.Element => {
       </div>
       <a
         className="brz-a brz-element__pro-link"
-        href={Config.getAll().urls.upgradeToPro}
+        href={upgradeLink}
         rel="noopener noreferrer"
         target="_blank"
       >
-        <strong>{t("Get a PRO plan")}</strong>
+        <strong>{upgradeText}</strong>
       </a>
     </div>
   );

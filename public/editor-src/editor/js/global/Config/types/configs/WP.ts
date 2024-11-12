@@ -4,7 +4,6 @@ import { Module } from "../Module";
 import { Rule } from "../Rule";
 import { TemplateType } from "../TemplateType";
 import { Urls } from "../Urls";
-import { Config } from "../index";
 import { ConfigCommon } from "./ConfigCommon";
 
 type Term = {
@@ -81,4 +80,4 @@ export interface WP extends ConfigCommon {
 }
 
 // @ts-expect-error: unused variable
-export const isWp = (config: Config): config is WP => TARGET === "WP";
+export const isWp = (config: ConfigCommon): config is WP => TARGET === "WP";

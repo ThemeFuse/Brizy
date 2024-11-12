@@ -18,12 +18,14 @@ import {
   RendererType,
   TriggerType
 } from "@brizy/component/src/Flex/Lottie/types";
+import { isLottieFile } from "./utils";
 
-// @ts-expect-error old option
 export const getItems: GetItems<Value> = ({ v, device, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+  const isRendererDisabled =
+    isLottieFile(dvv("animationLink")) || isLottieFile(dvv("animationFile"));
 
   const { hex: bgColorHex } = getOptionColorHexByPalette(
     dvv("bgColorHex"),
@@ -73,7 +75,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
           label: t("Lottie File"),
           type: "fileUpload",
           config: {
-            allowedExtensions: [".json"],
+            allowedExtensions: [".json", ".lottie"],
             componentId: ElementTypes.Lottie
           }
         },
@@ -94,9 +96,10 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
           type: "select",
           label: t("Renderer"),
           choices: [
-            { title: "SVG", value: RendererType.SVG },
-            { title: "Canvas", value: RendererType.Canvas }
-          ]
+            { title: t("SVG"), value: RendererType.SVG },
+            { title: t("Canvas"), value: RendererType.Canvas }
+          ],
+          disabled: isRendererDisabled
         },
         {
           id: "lazyload",
