@@ -6,7 +6,6 @@
  * Time: 10:59 AM
  */
 
-
 class Brizy_Admin_Svg_Main {
 
 	const SVG_MIME = 'image/svg+xml';
@@ -16,7 +15,6 @@ class Brizy_Admin_Svg_Main {
 	 */
 	public static function _init() {
 		static $instance;
-
 		if ( ! $instance ) {
 			$instance = new self();
 		}
@@ -38,6 +36,7 @@ class Brizy_Admin_Svg_Main {
 		add_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 3 );
 		add_filter( 'wp_handle_upload_prefilter', array( $this, 'wp_handle_upload_prefilter' ) );
+		add_filter( 'wp_handle_sideload_prefilter', array( $this, 'wp_handle_upload_prefilter' ) );
 	}
 
 	public function disableSvgUpload() {
@@ -45,6 +44,7 @@ class Brizy_Admin_Svg_Main {
 		remove_filter( 'wp_check_filetype_and_ext', array( $this, 'wp_check_filetype_and_ext' ), 10, 4 );
 		remove_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 3 );
 		remove_filter( 'wp_handle_upload_prefilter', array( $this, 'wp_handle_upload_prefilter' ) );
+		remove_filter( 'wp_handle_sideload_prefilter', array( $this, 'wp_handle_upload_prefilter' ) );
 	}
 
 	public function addSvgMimeType( $mime_types ) {
@@ -58,9 +58,7 @@ class Brizy_Admin_Svg_Main {
 		if ( self::SVG_MIME !== $file['type'] ) {
 			return $file;
 		}
-
 		$dirtySVG = file_get_contents( $file['tmp_name'] );
-
 		$sanitizer = new \enshrined\svgSanitize\Sanitizer();
 		$cleanSVG  = $sanitizer->sanitize( $dirtySVG );
 		file_put_contents( $file['tmp_name'], $cleanSVG );
@@ -84,7 +82,6 @@ class Brizy_Admin_Svg_Main {
 			$wp_filetype = wp_check_filetype( $filename, $mimes );
 			$ext         = $wp_filetype['ext'];
 			$type        = $wp_filetype['type'];
-
 			if ( $ext === 'svg' ) {
 				return array( 'ext' => $ext, 'type' => $type, 'proper_filename' => false );
 			}
@@ -105,17 +102,13 @@ class Brizy_Admin_Svg_Main {
 		if ( 'image' !== $attachment_data['type'] || 'svg+xml' !== $attachment_data['subtype'] ) {
 			return $attachment_data;
 		}
-
 		if ( ! class_exists( 'SimpleXMLElement' ) ) {
 			return $attachment_data;
 		}
-
 		$svg = file_get_contents( get_attached_file( $attachment->ID ) );
-
 		if ( ! $svg ) {
 			return $attachment_data;
 		}
-
 		try {
 			$svg    = new \SimpleXMLElement( $svg );
 			$width  = (int) $svg['width'];
@@ -123,10 +116,8 @@ class Brizy_Admin_Svg_Main {
 		} catch ( \Exception $e ) {
 			return $attachment_data;
 		}
-
 		$src         = $url = $attachment_data['url'];
 		$orientation = $height > $width ? 'portrait' : 'landscape';
-
 		// Media Gallery
 		$attachment_data['image']         = compact( 'src', 'width', 'height' );
 		$attachment_data['thumb']         = compact( 'src', 'width', 'height' );

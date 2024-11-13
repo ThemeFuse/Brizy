@@ -14,7 +14,7 @@
     "bagrinsergiu/brizy-migration-utils": "^1.4",
     "bagrinsergiu/brizy-merge-page-assets": "dev-master",
     "bagrinsergiu/content-placeholder": "^3.0",
-    "enshrined/svg-sanitize": "^0.13",
+    "enshrined/svg-sanitize": "dev-master",
     "select2/select2": "^4.0",
     "symfony/dotenv": "^3",
     "tburry/pquery": "dev-master"
