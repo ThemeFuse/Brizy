@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.6.2<br>
+Tested up to: 6.7<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.6.0<br>
+Stable tag: 2.6.1<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.6.1 - 2024-11-15
+* Fixed: Invalidate cached image URLs after site migration.
 
 ### 2.6.0 - 2024-11-12
 * New: Added video "URL" option for the Playlist element 
