@@ -57,15 +57,10 @@ class Brizy_Editor_Compiler {
 	public function needsCompile( Brizy_Editor_Post $post ) {
 
 		$currentCompiler = preg_replace( "/((beta\d?)?-wp)$/", "", $post->get_compiler_version() );
-		$v2 = preg_replace( "/((beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
-
-
-		if ( $post->get_compiler() !== Brizy_Editor_Entity::COMPILER_EXTERNAL ) {
-			return false;
-		}
+		$v2              = preg_replace( "/((beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
 
 		if ( version_compare( $currentCompiler, $v2, "<" ) ) {
-			return true;
+            return true;
 		}
 
 		return false;
@@ -110,11 +105,11 @@ class Brizy_Editor_Compiler {
 	private function compilerParams( $pageData, $editorConfig ) {
 
 		return apply_filters( 'brizy_compiler_params', array(
-				'page_id'      => (int) $editorConfig['wp']['page'],
-				'free_version' => BRIZY_EDITOR_VERSION,
-				'free_url'     => $this->compilerDownloadUrl,
-				'config_json'  => json_encode( $editorConfig ),
-			) );
+			'page_id'      => (int) $editorConfig['wp']['page'],
+			'free_version' => BRIZY_EDITOR_VERSION,
+			'free_url'     => $this->compilerDownloadUrl,
+			'config_json'  => json_encode( $editorConfig ),
+		) );
 	}
 
 }
