@@ -261,9 +261,9 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 
         // set needs compile true only for pages that were edited with an editor that does not support compilation in browser
         $query = $wpdb->prepare(
-            'UPDATE wp_postmeta pm
-					   JOIN wp_postmeta m ON m.post_id=pm.post_id and m.meta_key="brizy_enabled" and m.meta_value=1
-					   LEFT JOIN wp_postmeta mm ON mm.post_id=pm.post_id and mm.meta_key="brizy-post-compiler-version"
+            'UPDATE '.$wpdb->postmeta.' pm
+					   JOIN '.$wpdb->postmeta.' m ON m.post_id=pm.post_id and m.meta_key="brizy_enabled" and m.meta_value=1
+					   LEFT JOIN '.$wpdb->postmeta.' mm ON mm.post_id=pm.post_id and mm.meta_key="brizy-post-compiler-version"
 					   SET pm.meta_value=1
 					   WHERE pm.meta_key="brizy-need-compile" and pm.meta_value=0 and CONVERT(REPLACE(IF(STRCMP(mm.meta_value,"dev") = 0,  0, mm.meta_value), " - wp", "") ,UNSIGNED )<%d'
             ,
