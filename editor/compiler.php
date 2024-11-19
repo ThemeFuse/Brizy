@@ -64,7 +64,6 @@ class Brizy_Editor_Compiler {
 		}
 
 		return false;
-		//return ! $post->isCompiledWithCurrentVersion() || $post->get_needs_compile();
 	}
 
 	private function updateProjectStyles( $styles ) {
