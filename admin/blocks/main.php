@@ -100,11 +100,11 @@ class Brizy_Admin_Blocks_Main {
 			$config['globalBlocks'] = [];
 		}
 		$tmp                    = array_merge( $config['globalBlocks'], $blockManager->createResponseForEntities( $blocks, [], $context ) );
-		$config['globalBlocks'] = array_reduce( $tmp, function ( $result, $object ) {
+		$config['globalBlocks'] = array_values( array_reduce( $tmp, function ( $result, $object ) {
 			$result[ $object['uid'] ] = $object;
 
 			return $result;
-		}, [] );
+		}, [] ) );
 
 		return $config;
 	}
@@ -184,36 +184,35 @@ class Brizy_Admin_Blocks_Main {
 
 		$ruleMatches = [];
 		if ( $wpPost instanceof WP_Post ) {
-			if ( $wpPost->post_type == 'editor-template') {
-            $ruleMatches = $this->getTemplateRuleMatches($wpPost);
-        } else {
-            $template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
-
-           if ($template) {
-                $ruleMatches = $this->getTemplateRuleMatches($template->getWpPost());
-            } else {
-                $ruleMatches[] = [
-                    'applyFor' => Brizy_Admin_Rule::POSTS,
-                    'entityType' => $wpPost->post_type,
-                    'entityValues' => [$wpPost->ID],];
+			if ( $wpPost->post_type == 'editor-template' ) {
+				$ruleMatches = $this->getTemplateRuleMatches( $wpPost );
+			} else {
+				$template = Brizy_Admin_Templates::instance()->getTemplateForCurrentPage();
+				if ( $template ) {
+					$ruleMatches = $this->getTemplateRuleMatches( $template->getWpPost() );
+				} else {
+					$ruleMatches[] = [
+						'applyFor'     => Brizy_Admin_Rule::POSTS,
+						'entityType'   => $wpPost->post_type,
+						'entityValues' => [ $wpPost->ID ],
+					];
 				}
 			}
 		} else {
 			$ruleMatches = Brizy_Admin_Rules_Manager::getCurrentPageGroupAndType();
 			if ( isset( $ruleMatches[0]['entityValues'][0] ) ) {
 				$wpPost = get_post( $ruleMatches[0]['entityValues'][0] );
-                }
-            }
-
-        $matching_blocks = [];
+			}
+		}
+		$matching_blocks = [];
 		if ( count( $ruleMatches ) ) {
-			$matching_blocks =$this->findMatchingBlocks($ruleMatches);
-}
-        $referenced = [];
-        if ($wpPost) {
-            try {
-                $referenced = $this->findReferencedInPage(Brizy_Editor_Post::get($wpPost));
-            } catch (\Exception $e) {
+			$matching_blocks = $this->findMatchingBlocks( $ruleMatches );
+		}
+		$referenced = [];
+		if ( $wpPost ) {
+			try {
+				$referenced = $this->findReferencedInPage( Brizy_Editor_Post::get( $wpPost ) );
+			} catch ( \Exception $e ) {
 
 			}
 		}
