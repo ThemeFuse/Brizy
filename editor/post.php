@@ -410,7 +410,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
      */
     public function set_compiled_html($compiled_html)
     {
-        Brizy_SiteUrlReplacer::hideSiteUrl($compiled_html);
+        $compiled_html = Brizy_SiteUrlReplacer::hideSiteUrl($compiled_html);
         $this->compiled_html = $compiled_html;
         return $this;
     }
