@@ -93,6 +93,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
         add_action($p . self::AJAX_MEDIA_METAKEY, array($this, 'get_media_key'));
         add_action($p . self::AJAX_CREATE_ATTACHMENT_UID, array($this, 'get_attachment_key'));
         add_action($p . self::AJAX_SET_FEATURED_IMAGE, array($this, 'set_featured_image'));
+        add_action($p . self::AJAX_REMOVE_FEATURED_IMAGE, array($this, 'remove_featured_image'));
         add_action($p . self::AJAX_SET_IMAGE_FOCAL_PT, array($this, 'set_featured_image_focal_point'));
         add_action($p . self::AJAX_TIMESTAMP, array($this, 'timestamp'));
         add_action($p . self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));

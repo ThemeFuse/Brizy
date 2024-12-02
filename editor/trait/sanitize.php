@@ -12,6 +12,7 @@ trait Brizy_Editor_Trait_Sanitize {
 		add_filter( 'safe_style_css', function ( $styles ) {
 			$styles[] = 'rgba';
 			$styles[] = 'var';
+
 			return $styles;
 		} );
 		$dataDecoded = wp_kses_post_deep( $dataDecoded );
