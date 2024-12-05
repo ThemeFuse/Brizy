@@ -409,35 +409,31 @@ class Brizy_Editor {
 	 * =====================================================================================================
 	 * =====================================================================================================
 	 */
-	function currentPostId() {
-		$pid = null;
-		global $wp_query;
+    function currentPostId()
+    {
+        $pid = null;
+        global $wp_query;
 
-		if ( isset( $_REQUEST['post'] ) ) {
-			$pid = (int) $_REQUEST['post'];
-		} elseif
-		( isset( $_REQUEST['page_id'] ) ) {
-			$pid = (int) $_REQUEST['page_id'];
-		} elseif
-		( isset( $_REQUEST['post_ID'] ) ) {
-			$pid = (int) $_POST['post_ID'];
-		} elseif
-		( isset( $_REQUEST['id'] ) ) {
-			$pid = (int) $_REQUEST['id'];
-		} elseif
-		( isset( $_REQUEST[ Brizy_Editor::prefix( '_post' ) ] ) ) {
-			$pid = (int) $_REQUEST[ Brizy_Editor::prefix( '_post' ) ];
-		} elseif ( $wp_query && $wp_query->is_posts_page ) {
-			$pid = (int) get_queried_object_id();
-		} elseif
-		( $wp_query && ( $apid = get_queried_object_id() ) && ( is_single() || is_page() ) && $wp_query->queried_object instanceof WP_Post ) {
-			$pid = (int) $apid;
-		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
-			$pid = wc_get_page_id( 'shop' );
-		}
+        if ($wp_query && $wp_query->is_posts_page) {
+            $pid = absint(get_queried_object_id());
+        } elseif ($wp_query && ($apid = get_queried_object_id()) && (is_single() || is_page()) && $wp_query->queried_object instanceof WP_Post) {
+            $pid = absint($apid);
+        } elseif (function_exists('is_shop') && is_shop()) {
+            $pid = wc_get_page_id('shop');
+        } elseif (isset($_REQUEST[Brizy_Editor::prefix('_post')])) {
+            $pid = absint($_REQUEST[Brizy_Editor::prefix('_post')]);
+        } elseif (isset($_REQUEST['post'])) {
+            $pid = absint($_REQUEST['post']);
+        } elseif (isset($_REQUEST['page_id'])) {
+            $pid = absint($_REQUEST['page_id']);
+        } elseif (isset($_REQUEST['post_ID'])) {
+            $pid = absint($_REQUEST['post_ID']);
+        } elseif (isset($_REQUEST['id'])) {
+            $pid = absint($_REQUEST['id']);
+        }
 
-		return $pid;
-	}
+        return $pid;
+    }
 
 	static public function get_slug() {
 		return apply_filters( 'brizy-slug', 'brizy' );
