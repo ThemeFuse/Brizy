@@ -402,10 +402,10 @@ class Brizy_Editor_Editor_Editor {
 					'fileUrl' => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
 				],
 				'templates'         => [
-					'layoutsChunkUrl' => Brizy_Config::LAYOUTS_CHUNK_URL,
+					'layoutsChunkUrl' => 'https://phplaravel-1109775-4184176.cloudwaysapps.com/api/get-layouts-chunk',
 					'layoutsPagesUrl' => Brizy_Config::LAYOUTS_PAGES_URL,
-					'layoutDataUrl'   => Brizy_Config::LAYOUTS_PAGE_DATA_URL,
-					'blocksChunkUrl'  => Brizy_Config::BLOCKS_CHUNK_URL,
+					'layoutDataUrl'   => 'https://phplaravel-1109775-4184176.cloudwaysapps.com/api/get-layouts-page',
+					'blocksChunkUrl'  => 'https://phplaravel-1109775-4184176.cloudwaysapps.com/api/get-kit-collections-chunk',
 					'blocksKitsUrl'   => Brizy_Config::BLOCKS_KITS_URL,
 					'blocksDataUrl'   => Brizy_Config::BLOCKS_DATA_URL,
 					'popupsChunkUrl'  => Brizy_Config::POPUPS_CHUNK_URL,
@@ -1003,10 +1003,10 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private function get_page_attachments() {
 		global $wpdb;
-		$query           = $wpdb->prepare( "SELECT 
+		$query           = $wpdb->prepare( "SELECT
 					pm.*
-				FROM 
-					{$wpdb->prefix}postmeta pm 
+				FROM
+					{$wpdb->prefix}postmeta pm
 				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
 				WHERE pm.meta_key='brizy_attachment_uid'
 				GROUP BY pm.post_id", $this->post->getUid() );
