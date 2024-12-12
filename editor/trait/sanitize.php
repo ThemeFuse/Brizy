@@ -15,10 +15,12 @@ trait Brizy_Editor_Trait_Sanitize {
 
 			return $styles;
 		} );
+
 		$dataDecoded = wp_kses_post_deep( $dataDecoded );
 		//$dataDecoded = $this->escapeJsonValues( $dataDecoded );
 		$data = json_encode( $dataDecoded );
 		$data = preg_replace( '/javascript:.*?"/', '"', $data );
+		$data = preg_replace( '/javascript%3A.*?%22/', '%22', $data );
 		$data = preg_replace( '/(on(click|mouseover|keydown|keyup|change|submit|load|error|focus|blur|select|dblclick))\s*[:=]\s*(\\\"|\\\')(.*?)(\3)/i', '', $data );
 
 		return $data;

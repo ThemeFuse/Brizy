@@ -411,6 +411,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
     public function set_compiled_html($compiled_html)
     {
         $compiled_html = Brizy_SiteUrlReplacer::hideSiteUrl($compiled_html);
+
+        if ( !current_user_can( 'unfiltered_html' ) ) {
+			$compiled_html = wp_kses_post($compiled_html);
+		}
+
         $this->compiled_html = $compiled_html;
         return $this;
     }
