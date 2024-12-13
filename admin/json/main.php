@@ -39,12 +39,11 @@ class Brizy_Admin_Json_Main {
 
     public function enableJsonUpload()
     {
-        add_filter('upload_mimes', [$this, 'addJsonMimeType']);
-        add_filter('wp_check_filetype_and_ext', [$this, 'checkJsonFiletype'], 10, 4);
+	    add_filter( 'upload_mimes', [ $this, 'addJsonMimeType' ] );
 
-        if (!defined('ALLOW_UNFILTERED_UPLOADS')) {
-            define('ALLOW_UNFILTERED_UPLOADS', true);
-        }
+	    if ( extension_loaded( 'fileinfo' ) ) {
+		    add_filter( 'wp_check_filetype_and_ext', [ $this, 'checkJsonFiletype' ], 10, 3 );
+	    }
     }
 
     public function disableJsonUpload()
@@ -53,13 +52,23 @@ class Brizy_Admin_Json_Main {
         remove_filter('wp_check_filetype_and_ext', [$this, 'checkJsonFiletype']);
     }
 
-    public function checkJsonFiletype($data, $file, $filename, $mimes)
-    {
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if ($ext === 'json') {
-            $data['ext']  = 'json';
-            $data['type'] = 'application/json';
-        }
-        return $data;
-    }
+	public function checkJsonFiletype( $data, $file, $filename ) {
+		$ext = pathinfo( $filename, PATHINFO_EXTENSION );
+
+		if ( $ext !== 'json' ) {
+			return $data;
+		}
+
+		$content = file_get_contents( $file );
+		$json    = json_decode( $content );
+
+		if ( ! $json ) {
+			return $data;
+		}
+
+		$data['ext']  = 'json';
+		$data['type'] = 'application/json';
+
+		return $data;
+	}
 }
