@@ -37,11 +37,29 @@ class Brizy_Admin_Json_Main {
         return $mimes;
     }
 
-	public function enableJsonUpload() {
-        add_filter('upload_mimes', [$this,'addJsonMimeType']);
-	}
+    public function enableJsonUpload()
+    {
+        add_filter('upload_mimes', [$this, 'addJsonMimeType']);
+        add_filter('wp_check_filetype_and_ext', [$this, 'checkJsonFiletype'], 10, 4);
 
-	public function disableJsonUpload() {
-        remove_filter('upload_mimes', [$this,'addJsonMimeType']);
-	}
+        if (!defined('ALLOW_UNFILTERED_UPLOADS')) {
+            define('ALLOW_UNFILTERED_UPLOADS', true);
+        }
+    }
+
+    public function disableJsonUpload()
+    {
+        remove_filter('upload_mimes', [$this, 'addJsonMimeType']);
+        remove_filter('wp_check_filetype_and_ext', [$this, 'checkJsonFiletype']);
+    }
+
+    public function checkJsonFiletype($data, $file, $filename, $mimes)
+    {
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if ($ext === 'json') {
+            $data['ext']  = 'json';
+            $data['type'] = 'application/json';
+        }
+        return $data;
+    }
 }
