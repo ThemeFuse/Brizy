@@ -317,6 +317,7 @@ export default class Button extends EditorComponent<Value, Props> {
           cssKeyframe={hoverName}
           options={options}
           isHidden={isHidden}
+          withoutWrapper={true}
         >
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
