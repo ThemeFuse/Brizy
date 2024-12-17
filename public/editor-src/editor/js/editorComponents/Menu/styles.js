@@ -341,7 +341,10 @@ export function styleMMenu(v, vs, vd) {
       ]
     },
     ".brz &&:hover .brz-menu__item .brz-a": {
-      interval: ["cssStyleElementMMenuItemHorizontalAlign"]
+      interval: [
+        "cssStyleElementMMenuItemHorizontalAlign",
+        "cssStyleElementMMenuItemTextHorizontalAlign"
+      ]
     },
     ".brz &&:hover .brz-mm-menu__item__icon": {
       interval: [

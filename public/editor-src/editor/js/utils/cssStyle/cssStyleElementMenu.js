@@ -39,14 +39,14 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuMode,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
-  styleElementMMenu,
-  styleElementMMenuIconPosition,
-  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
   styleItemMarginRight,
@@ -335,6 +335,14 @@ export function cssStyleElementMMenuItemHorizontalAlign({
   }
 
   return "";
+}
+
+export function cssStyleElementMMenuItemTextHorizontalAlign({
+  v,
+  device,
+  state
+}) {
+  return cssStyleTextAlign({ v, device, state, prefix: "mMenuItem" });
 }
 
 export function cssStyleElementMMenuIconColor({ v, device, state }) {
