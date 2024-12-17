@@ -210,6 +210,7 @@ class Icon extends EditorComponent<Value, Props> {
                   cssKeyframe={hoverName}
                   options={getHoverAnimationOptions(options, hoverName)}
                   isHidden={isHidden}
+                  withoutWrapper={true}
                 >
                   {content}
                 </HoverAnimation>
