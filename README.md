@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.7<br>
+Tested up to: 6.7.1<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.6.3<br>
+Stable tag: 2.6.4<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.6.4 - 2024-12-17
+* Fixed: Incorrect style of Tabs element in table and mobile
+* Fixed: Icon Box is not displayed correctly in preview
 
 ### 2.6.3 - 2024-11-19
 * Fixed: SQL query using wrong prefixes
