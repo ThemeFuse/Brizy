@@ -171,7 +171,7 @@ export interface KitItem {
 
 export interface KitType extends KitItem {
   name: string;
-  icon: string;
+  icon?: string;
 }
 
 export interface KitDataResult {

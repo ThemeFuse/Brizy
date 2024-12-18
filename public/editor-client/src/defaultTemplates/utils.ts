@@ -60,7 +60,6 @@ export const getUniqueKitTypes = (collections: Kit[]): KitType[] =>
         title: upperFirst(u),
         id: u,
         name: u,
-        icon: u === "light" ? "nc-light" : "nc-dark"
       }))
   )(collections);
 
