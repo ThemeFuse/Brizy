@@ -78,6 +78,7 @@ interface API {
   fileUrl: string;
   templates: DefaultTemplates;
   openAIUrl?: string;
+  ekklesiaApiUrl?: string;
   iconsUrl?: string;
   iconUrl?: string;
   deleteIconUrl?: string;
@@ -211,7 +212,8 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   iconUrl: readIconUrl("iconUrl"),
   iconsUrl: readIconUrl("getIconsUrl"),
   uploadIconUrl: readIconUrl("uploadIconUrl"),
-  deleteIconUrl: readIconUrl("deleteIconUrl")
+  deleteIconUrl: readIconUrl("deleteIconUrl"),
+  ekklesiaApiUrl: optional(mPipe(Obj.readKey("ekklesiaApiUrl"), Str.read))
 });
 
 const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
