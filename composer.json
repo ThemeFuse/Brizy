@@ -13,7 +13,7 @@
     "knplabs/gaufrette": "0.7",
     "bagrinsergiu/brizy-migration-utils": "^1.4",
     "bagrinsergiu/brizy-merge-page-assets": "dev-master",
-    "bagrinsergiu/content-placeholder": "^3.0",
+    "bagrinsergiu/content-placeholder": "^3.6",
     "enshrined/svg-sanitize": "^0.13",
     "select2/select2": "^4.0",
     "symfony/dotenv": "^3",
