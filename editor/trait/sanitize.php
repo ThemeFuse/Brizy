@@ -3,12 +3,14 @@
 trait Brizy_Editor_Trait_Sanitize {
 
 	public function sanitizeJson( $data ) {
+
 		if ( current_user_can( 'unfiltered_html' ) ) {
 			return $data;
 		}
 		if ( ! $dataDecoded = json_decode( $data, true ) ) {
 			return $data;
 		}
+
 		add_filter( 'safe_style_css', function ( $styles ) {
 			$styles[] = 'rgba';
 			$styles[] = 'var';
