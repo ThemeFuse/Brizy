@@ -32,4 +32,15 @@ class Brizy_Compatibilities_SeoPress {
 
 		return $rules;
 	}
+
+    public static function removePlaceholders() {
+        add_filter('seopress_titles_desc', array('Brizy_Compatibilities_SeoPress', 'filterSeoPressTitlesDesc'), 1, 2);
+    }
+
+    public static function filterSeoPressTitlesDesc($meta_description, $args = []) {
+        $meta_description = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $meta_description);
+        return $meta_description;
+    }
+
 }
+

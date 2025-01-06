@@ -43,7 +43,7 @@ class Brizy_Compatibilities_Init {
 			new Brizy_Compatibilities_SgOptimizer();
 		}
 
-		if ( defined( 'SEOPRESS_VERSION' ) ) {
+        if ( defined( 'SEOPRESS_VERSION' ) ) {
 			new Brizy_Compatibilities_SeoPress();
 		}
 
@@ -57,6 +57,11 @@ class Brizy_Compatibilities_Init {
 	}
 
 	public function action_plugins_loaded() {
+
+        if ( defined( 'SEOPRESS_VERSION' ) ) {
+            Brizy_Compatibilities_SeoPress::removePlaceholders();
+        }
+
 		if ( function_exists( 'wpseo_auto_load' ) ) {
 			new Brizy_Compatibilities_YoastSeo();
 		}
@@ -90,7 +95,7 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'WooCommerce' ) ) {
 			new Brizy_Compatibilities_Woocommerce();
         }
-    
+
 		if ( class_exists( 'bbPress' ) ) {
 			new Brizy_Compatibilities_Bbpress();
 		}
