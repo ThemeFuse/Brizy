@@ -31,7 +31,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 			if ( isset( $attributes['imageSrc'] ) ) {
 				$attachmentId = $this->getAttachmentIdByByUid( $attributes['imageSrc'], $context );
 			} elseif ( isset( $attributes['imagePlaceholder'] ) ) {
-				$attachmentId = $this->getAttachmentIdByPlaceholderName( $attributes['imagePlaceholder'], $context, $contentPlaceholder );
+				$attachmentId = $this->getAttachmentIdByPlaceholderName( base64_decode( $attributes['imagePlaceholder'] ), $context, $contentPlaceholder );
 			}
 
 			if ( $attachmentId ) {
@@ -88,12 +88,12 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		$pt  = $wpdb->posts;
 		$mt   = $wpdb->postmeta;
 		$attachmentId = $wpdb->get_var( $wpdb->prepare(
-			"SELECT 
+			"SELECT
 						{$pt}.ID
 					FROM {$pt}
 						INNER JOIN {$mt} ON ( {$pt}.ID = {$mt}.post_id )
-					WHERE 
-						( {$mt}.meta_key = 'brizy_attachment_uid' 
+					WHERE
+						( {$mt}.meta_key = 'brizy_attachment_uid'
 						AND {$mt}.meta_value = %s )
 						AND {$pt}.post_type = 'attachment'
 					ORDER BY {$pt}.post_date DESC",
