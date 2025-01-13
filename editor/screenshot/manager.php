@@ -139,26 +139,6 @@ class Brizy_Editor_Screenshot_Manager
     }
 
     /**
-     * @param $content
-     * @param $thumbnailFullPath
-     *
-     * @return bool
-     */
-    private function storeFile($content, $thumbnailFullPath)
-    {
-        $path = dirname($thumbnailFullPath);
-
-        if (!file_exists($path)) {
-            if (!@mkdir($path, 0755, true)) {
-                return false;
-            }
-        }
-
-        return file_put_contents($thumbnailFullPath, $content) !== false;
-    }
-
-
-    /**
      * @param $thumbnailFullPath
      *
      * @return bool
@@ -188,12 +168,10 @@ class Brizy_Editor_Screenshot_Manager
     {
         file_put_contents($tmpFilePath = tempnam(get_temp_dir(), 'screen'), $imageContent);
         $mime = Brizy_Public_AssetProxy::get_mime($tmpFilePath);
-
-        if ($mime !== 'image/jpeg') {
-            return false;
+	    unlink($tmpFilePath);
+	    if ($mime !== 'image/jpeg') {
+	        return false;
         }
-        unlink($tmpFilePath);
-
         return true;
     }
 

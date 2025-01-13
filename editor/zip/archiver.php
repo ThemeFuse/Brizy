@@ -339,7 +339,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 			}
 
 			Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment(
-				$original_asset_path,
+				$filePath,
 				$original_asset_path_relative,
 				$block->getWpPostId(),
 				$uid
