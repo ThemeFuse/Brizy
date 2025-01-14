@@ -98,7 +98,7 @@ class Brizy_Config
     {
         return new Brizy_Admin_UrlIterator(
             array(
-                'http://www.brizysites.com',
+                'http://beta1.brizydemo.com',
             )
         );
     }
