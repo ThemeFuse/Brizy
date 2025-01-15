@@ -4,7 +4,7 @@ import { FromElementModelGetter } from "visual/component/Options/Type";
 import * as Unit from "visual/utils/math/Unit";
 import * as Num from "visual/utils/math/number";
 import { callGetter } from "visual/utils/options/utils/wrap";
-import { prefixKeys } from "../utils";
+import { prefixKeys } from "../../utils/effects";
 import * as Viewport from "./Viewport";
 import { elementModelToViewport } from "./utils";
 

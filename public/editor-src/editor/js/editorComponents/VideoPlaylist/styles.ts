@@ -1,15 +1,18 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { isEditor, isView } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function styleContents(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
+  const { renderContext } = data;
+  const _isView = isView(renderContext);
+  const _isEditor = isEditor(renderContext);
   const styles: Styles = {
     ".brz &&:hover": {
-      standart: IS_PREVIEW
+      standart: _isView
         ? [
             "cssStyleSizeWidth",
             "cssStyleBorder",
@@ -24,7 +27,7 @@ export function styleContents(
       ]
     },
     ".brz &&:hover .brz-video-playlist__container": {
-      standart: IS_EDITOR
+      standart: _isEditor
         ? ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBgColor"]
         : ["cssStyleBgColor"],
       interval: [
@@ -58,10 +61,10 @@ export function styleContents(
 
     // Vertical
     ".brz &&.brz-video-playlist-vertical": {
-      standart: IS_PREVIEW ? ["cssStylePaddingBG"] : []
+      standart: _isView ? ["cssStylePaddingBG"] : []
     },
     ".brz &&.brz-video-playlist-vertical .brz-video-playlist__container": {
-      standart: IS_EDITOR ? ["cssStylePaddingBG"] : []
+      standart: _isEditor ? ["cssStylePaddingBG"] : []
     },
     ".brz &&.brz-video-playlist-vertical .brz-video-playlist-video-item": {
       standart: ["cssStyleElementVideoPlaylistGridItemWidth"]
@@ -271,12 +274,11 @@ export function styleContents(
       ]
     }
   };
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
+
 export function styleCover(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover .brz-video-playlist__cover": {
@@ -295,13 +297,11 @@ export function styleCover(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
 export function styleSidebar(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
@@ -312,5 +312,5 @@ export function styleSidebar(
       ]
     }
   };
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

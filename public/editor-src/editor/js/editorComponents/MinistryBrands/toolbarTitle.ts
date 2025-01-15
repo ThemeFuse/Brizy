@@ -1,8 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
@@ -17,11 +16,12 @@ export const getItems = <
   v,
   device
 }: Params<M, P, S>): ToolbarItemType[] => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: titleColorHex } = getOptionColorHexByPalette(
+  const titleColor = getColor(
+    dvv("titleColorPalette"),
     dvv("titleColorHex"),
-    dvv("titleColorPalette")
+    dvv("titleColorOpacity")
   );
   return [
     {
@@ -52,7 +52,7 @@ export const getItems = <
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(titleColorHex, dvv("titleColorOpacity"))
+            backgroundColor: titleColor
           }
         }
       },

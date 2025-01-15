@@ -1,7 +1,8 @@
-import { once } from "underscore";
-import { customAlphabet } from "nanoid";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Base64 } from "js-base64";
+import { customAlphabet } from "nanoid";
+import { once } from "underscore";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
 const fullSymbolList =
@@ -18,4 +19,12 @@ export const uidByConfig = (config: ConfigCommon): string => {
   const projectId = config.projectData?.id ?? getUid();
   const pageId = config.pageData?.id ?? getUid();
   return Base64.encode(`${projectId}-${pageId}`).replace("=", "");
+};
+
+export const uuidWithPlaceholderUuid = () => {
+  const uidPlaceholder = makePlaceholder({
+    content: "{{ random_id }}"
+  });
+
+  return `${uuid()}_${uidPlaceholder}`;
 };

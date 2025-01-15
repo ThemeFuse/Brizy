@@ -1,3 +1,5 @@
+import { Str } from "@brizy/readers";
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   EcwidProductColumns,
   EcwidProductThumb
@@ -31,7 +33,11 @@ import {
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
-import { styleAlignHorizontal, styleColor } from "visual/utils/style2";
+import {
+  styleAlignHorizontal,
+  styleColor,
+  styleSizeCustom
+} from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
 import { ACTIVE } from "../stateMode";
 import {
@@ -54,81 +60,53 @@ const getColumns = checkValue<EcwidProductColumns>([
   EcwidProductColumns.ThreeLeft
 ]);
 
-// Style Breadcrumbs
-export function cssStyleElementEcwidProductBreadcrumbsColor({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "breadcrumbsColor" });
-}
-
-export function cssStyleElementEcwidProductBreadcrumbsTypography({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return getAllCssStyleTypography({
-    v,
-    device,
-    state,
-    prefix: "breadcrumbsTypography"
-  });
-}
-
-export function cssStyleElementEcwidProductBreadcrumbsSpacing({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleSpacingWithPadding({
-    v,
-    device,
-    state,
-    prefix: "breadcrumbs",
-    direction: "bottom"
-  });
-}
-
 // Style Price
 export function cssStyleElementEcwidProductPriceColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "priceColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "priceColor" });
 }
 
 export function cssStyleElementEcwidProductPriceTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "priceTypography"
+    store,
+    prefix: "priceTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductPriceAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "price" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "price" });
 }
 
 export function cssStyleElementEcwidProductPriceSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "price",
     direction: "bottom"
   });
@@ -138,41 +116,49 @@ export function cssStyleElementEcwidProductPriceSpacing({
 export function cssStyleElementEcwidProductInStockColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "inStockColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "inStockColor" });
 }
 
 export function cssStyleElementEcwidProductInStockTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "inStockTypography"
+    store,
+    prefix: "inStockTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductInStockAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "inStock" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "inStock" });
 }
 
 export function cssStyleElementEcwidProductInStockSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "inStock",
     direction: "bottom"
   });
@@ -182,41 +168,49 @@ export function cssStyleElementEcwidProductInStockSpacing({
 export function cssStyleElementEcwidProductDetailsColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "detailsColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "detailsColor" });
 }
 
 export function cssStyleElementEcwidProductDetailsTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "detailsTypography"
+    store,
+    prefix: "detailsTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductDetailsAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "details" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "details" });
 }
 
 export function cssStyleElementEcwidProductDetailsSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "details",
     direction: "bottom"
   });
@@ -226,41 +220,49 @@ export function cssStyleElementEcwidProductDetailsSpacing({
 export function cssStyleElementEcwidProductSizeColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "sizeColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "sizeColor" });
 }
 
 export function cssStyleElementEcwidProductSizeTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "sizeTypography"
+    store,
+    prefix: "sizeTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductSizeAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "size" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "size" });
 }
 
 export function cssStyleElementEcwidProductSizeSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "size",
     direction: "bottom"
   });
@@ -270,22 +272,49 @@ export function cssStyleElementEcwidProductSizeSpacing({
 export function cssStyleElementEcwidProductCheckboxTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "checkboxTypography"
+    store,
+    prefix: "checkboxTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductCheckboxSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidthHeight({ v, device, state, prefix: "checkbox" });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const size = getSize(dvv("checkboxSize"));
+  const customSizeSuffix = Str.read(dvv("checkboxCustomSizeSuffix")) ?? "px";
+  const customSize = styleSizeCustom({
+    v,
+    device,
+    state,
+    store,
+    prefix: "checkbox"
+  });
+
+  switch (size) {
+    case "small":
+      return `min-width:16px;min-height:16px;`;
+    case "medium":
+      return `min-width:24px;min-height:24px;`;
+    case "large":
+      return `min-width:32px;min-height:32px;`;
+    case "custom":
+      return `min-width:${customSize}${customSizeSuffix};min-height:${customSize}${customSizeSuffix};`;
+    case undefined:
+      return "";
+  }
 }
 
 export function cssStyleElementEcwidProductCheckboxPadding({
@@ -315,25 +344,28 @@ export function cssStyleElementEcwidProductCheckboxPadding({
 export function cssStyleElementEcwidProductCheckboxColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "checkboxColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "checkboxColor" });
 }
 
 export function cssStyleElementEcwidProductCheckboxBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "checkboxBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "checkboxBg" });
 }
 
 export function cssStyleElementEcwidProductCheckboxBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "checkbox" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "checkbox" });
 }
 
 export function cssStyleElementEcwidProductCheckboxBorder({
@@ -347,38 +379,61 @@ export function cssStyleElementEcwidProductCheckboxBorder({
 export function cssStyleElementEcwidProductCheckboxBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "checkbox" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "checkbox" });
 }
 
 export function cssStyleElementEcwidProductCheckboxBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "checkbox" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "checkbox" });
 }
 
 export function cssStyleElementEcwidProductCheckboxActiveColor({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state: "active", prefix: "checkboxColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state: "active",
+    store,
+    prefix: "checkboxColor"
+  });
 }
 
 export function cssStyleElementEcwidProductCheckboxActiveBgColor({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state: "active", prefix: "checkboxBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state: "active",
+    store,
+    prefix: "checkboxBg"
+  });
 }
 
 export function cssStyleElementEcwidProductCheckboxActiveBgGradient({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state: "active", prefix: "checkbox" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state: "active",
+    store,
+    prefix: "checkbox"
+  });
 }
 
 export function cssStyleElementEcwidProductCheckboxActiveBorder({
@@ -390,17 +445,25 @@ export function cssStyleElementEcwidProductCheckboxActiveBorder({
 
 export function cssStyleElementEcwidProductCheckboxActiveBoxShadow({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state: "active", prefix: "checkbox" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state: "active",
+    store,
+    prefix: "checkbox"
+  });
 }
 
 export function cssStyleElementEcwidProductCheckboxAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "checkbox" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "checkbox" });
 }
 
 export function cssStyleElementEcwidProductCheckboxSpacing({
@@ -422,41 +485,49 @@ export function cssStyleElementEcwidProductCheckboxSpacing({
 export function cssStyleElementEcwidProductShareTitleColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "shareTitleColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "shareTitleColor" });
 }
 
 export function cssStyleElementEcwidProductShareTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "shareTitleTypography"
+    store,
+    prefix: "shareTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductShareTitleAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "shareTitle" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "shareTitle" });
 }
 
 export function cssStyleElementEcwidProductShareTitleSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "shareTitle",
     direction: "bottom"
   });
@@ -466,54 +537,63 @@ export function cssStyleElementEcwidProductShareTitleSpacing({
 export function cssStyleElementEcwidProductFavoriteTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "favoriteTypography"
+    store,
+    prefix: "favoriteTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductFavoriteSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "favorite" });
+  return cssStyleSizePadding({ v, device, state, store, prefix: "favorite" });
 }
 
 export function cssStyleElementEcwidProductFavoriteWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "favorite" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "favorite" });
 }
 
 export function cssStyleElementEcwidProductFavoriteColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "favoriteColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "favoriteColor" });
 }
 
 export function cssStyleElementEcwidProductFavoriteBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "favoriteBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "favoriteBg" });
 }
 
 export function cssStyleElementEcwidProductFavoriteBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "favorite" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "favorite" });
 }
 
 export function cssStyleElementEcwidProductFavoriteBorder({
@@ -527,36 +607,47 @@ export function cssStyleElementEcwidProductFavoriteBorder({
 export function cssStyleElementEcwidProductFavoriteBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "favorite" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "favorite" });
 }
 
 export function cssStyleElementEcwidProductFavoriteBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "favorite" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "favorite" });
 }
 
 export function cssStyleElementEcwidProductFavoriteAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "favorite" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "favorite"
+  });
 }
 
 export function cssStyleElementEcwidProductFavoriteSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "favorite",
     direction: "bottom"
   });
@@ -565,12 +656,14 @@ export function cssStyleElementEcwidProductFavoriteSpacing({
 export function cssStyleElementEcwidProductFavoriteButtonSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "favoriteRight",
     direction: "right"
   });
@@ -579,12 +672,14 @@ export function cssStyleElementEcwidProductFavoriteButtonSpacing({
 export function cssStyleElementEcwidProductFavoriteSpacingRightIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "favoriteRightIcon",
     direction: "right"
   });
@@ -593,12 +688,14 @@ export function cssStyleElementEcwidProductFavoriteSpacingRightIcon({
 export function cssStyleElementEcwidProductFavoriteIconSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeWidthHeight({
     v,
     device,
     state,
+    store,
     prefix: "favoriteIcon"
   });
 }
@@ -607,54 +704,63 @@ export function cssStyleElementEcwidProductFavoriteIconSize({
 export function cssStyleElementEcwidProductFavoritedTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "favoritedTypography"
+    store,
+    prefix: "favoritedTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductFavoritedSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "favorited" });
+  return cssStyleSizePadding({ v, device, state, store, prefix: "favorited" });
 }
 
 export function cssStyleElementEcwidProductFavoritedWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "favorited" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "favorited" });
 }
 
 export function cssStyleElementEcwidProductFavoritedColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "favoritedColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "favoritedColor" });
 }
 
 export function cssStyleElementEcwidProductFavoritedBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "favoritedBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "favoritedBg" });
 }
 
 export function cssStyleElementEcwidProductFavoritedBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "favorited" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "favorited" });
 }
 
 export function cssStyleElementEcwidProductFavoritedBorder({
@@ -668,28 +774,32 @@ export function cssStyleElementEcwidProductFavoritedBorder({
 export function cssStyleElementEcwidProductFavoritedBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "favorited" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "favorited" });
 }
 
 export function cssStyleElementEcwidProductFavoritedBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "favorited" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "favorited" });
 }
 
 export function cssStyleElementEcwidProductFavoritedSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "favorited",
     direction: "bottom"
   });
@@ -698,12 +808,14 @@ export function cssStyleElementEcwidProductFavoritedSpacing({
 export function cssStyleElementEcwidProductFavoritedSpacingRightIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "favoritedRightIcon",
     direction: "right"
   });
@@ -712,12 +824,14 @@ export function cssStyleElementEcwidProductFavoritedSpacingRightIcon({
 export function cssStyleElementEcwidProductFavoritedIconSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeWidthHeight({
     v,
     device,
     state,
+    store,
     prefix: "favoritedIcon"
   });
 }
@@ -725,12 +839,14 @@ export function cssStyleElementEcwidProductFavoritedIconSize({
 export function cssStyleElementEcwidProductFavoritedButtonSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "favoritedRight",
     direction: "right"
   });
@@ -740,54 +856,93 @@ export function cssStyleElementEcwidProductFavoritedButtonSpacing({
 export function cssStyleElementEcwidProductViewFavoritesTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "viewFavoritesTypography"
+    store,
+    prefix: "viewFavoritesTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "viewFavorites" });
+  return cssStyleSizePadding({
+    v,
+    device,
+    state,
+    store,
+    prefix: "viewFavorites"
+  });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "viewFavorites" });
+  return cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    store,
+    prefix: "viewFavorites"
+  });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "viewFavoritesColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "viewFavoritesColor"
+  });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "viewFavoritesBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "viewFavoritesBg"
+  });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "viewFavorites" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    prefix: "viewFavorites"
+  });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesBorder({
@@ -801,28 +956,44 @@ export function cssStyleElementEcwidProductViewFavoritesBorder({
 export function cssStyleElementEcwidProductViewFavoritesBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "viewFavorites" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    prefix: "viewFavorites"
+  });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "viewFavorites" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    store,
+    prefix: "viewFavorites"
+  });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "viewFavorites",
     direction: "bottom"
   });
@@ -832,13 +1003,17 @@ export function cssStyleElementEcwidProductViewFavoritesSpacing({
 export function cssStyleElementEcwidProductShareButtonsTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "shareButtonsTypography"
+    store,
+    prefix: "shareButtonsTypography",
+    renderContext
   });
 }
 
@@ -869,33 +1044,49 @@ export function cssStyleElementEcwidProductShareButtonsSize({
 export function cssStyleElementEcwidProductShareButtonsWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "shareButtons" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "shareButtons" });
 }
 
 export function cssStyleElementEcwidProductShareButtonsColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "shareButtonsColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "shareButtonsColor"
+  });
 }
 
 export function cssStyleElementEcwidProductShareButtonsBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "shareButtonsBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "shareButtonsBg" });
 }
 
 export function cssStyleElementEcwidProductShareButtonsBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "shareButtons" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    prefix: "shareButtons"
+  });
 }
 
 export function cssStyleElementEcwidProductShareButtonsBorder({
@@ -909,28 +1100,38 @@ export function cssStyleElementEcwidProductShareButtonsBorder({
 export function cssStyleElementEcwidProductShareButtonsBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "shareButtons" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    prefix: "shareButtons"
+  });
 }
 
 export function cssStyleElementEcwidProductShareButtonsBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "shareButtons" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "shareButtons" });
 }
 
 export function cssStyleElementEcwidProductShareButtonsAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "shareButtons"
   });
 }
@@ -938,12 +1139,14 @@ export function cssStyleElementEcwidProductShareButtonsAlign({
 export function cssStyleElementEcwidProductShareButtonsSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "shareButtons",
     direction: "bottom"
   });
@@ -952,12 +1155,14 @@ export function cssStyleElementEcwidProductShareButtonsSpacing({
 export function cssStyleElementEcwidProductShareButtonsSpacingRightIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "shareButtonsRightIcon",
     direction: "right"
   });
@@ -966,12 +1171,14 @@ export function cssStyleElementEcwidProductShareButtonsSpacingRightIcon({
 export function cssStyleElementEcwidProductShareButtonsIconSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeWidthHeight({
     v,
     device,
     state,
+    store,
     prefix: "shareButtonsIcon"
   });
 }
@@ -979,12 +1186,14 @@ export function cssStyleElementEcwidProductShareButtonsIconSize({
 export function cssStyleElementEcwidProductShareButtonsSpacingRight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "shareButtonsRight",
     direction: "right"
   });
@@ -1002,28 +1211,32 @@ export function cssStyleElementEcwidProductGalleryBorder({
 export function cssStyleElementEcwidProductGalleryBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "gallery" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "gallery" });
 }
 
 export function cssStyleElementEcwidProductGalleryBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "gallery" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "gallery" });
 }
 
 export function cssStyleElementEcwidProductGalleryWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeSpacingWidth({
     v,
     device,
     state,
+    store,
     prefix: "galleryWidth"
   });
 }
@@ -1031,12 +1244,14 @@ export function cssStyleElementEcwidProductGalleryWidth({
 export function cssStyleElementEcwidProductGalleryAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleMarginAlign({
     v,
     device,
     state,
+    store,
     prefix: "gallery"
   });
 }
@@ -1045,7 +1260,8 @@ export function cssStyleElementEcwidProductGalleryAlign({
 export function cssStyleElementEcwidProductThumbnailSpacingRightBottom({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -1057,6 +1273,7 @@ export function cssStyleElementEcwidProductThumbnailSpacingRightBottom({
         v,
         device,
         state,
+        store,
         prefix: "thumb",
         direction: "bottom"
       });
@@ -1065,6 +1282,7 @@ export function cssStyleElementEcwidProductThumbnailSpacingRightBottom({
         v,
         device,
         state,
+        store,
         prefix: "thumb",
         direction: "left"
       });
@@ -1077,7 +1295,8 @@ export function cssStyleElementEcwidProductThumbnailSpacingRightBottom({
 export function cssStyleElementEcwidProductThumbnailSpacingStyleCenter({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -1088,6 +1307,7 @@ export function cssStyleElementEcwidProductThumbnailSpacingStyleCenter({
         v,
         device,
         state,
+        store,
         prefix: "thumb",
         direction: "bottom"
       })
@@ -1118,7 +1338,8 @@ export function cssStyleElementEcwidProductThumbnailBetween({
 export function cssStyleElementEcwidProductThumbnailWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -1131,6 +1352,7 @@ export function cssStyleElementEcwidProductThumbnailWidth({
         v,
         device,
         state,
+        store,
         prefix: "thumbnailWidth"
       });
     case EcwidProductThumb.ImgFeed:
@@ -1142,7 +1364,8 @@ export function cssStyleElementEcwidProductThumbnailWidth({
 export function cssStyleElementEcwidProductThumbnailWidthCenter({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -1153,6 +1376,7 @@ export function cssStyleElementEcwidProductThumbnailWidthCenter({
         v,
         device,
         state,
+        store,
         prefix: "thumbnailWidth"
       })
     : "";
@@ -1167,20 +1391,29 @@ export function cssStyleElementEcwidProductThumbnailActiveBorder({
 
 export function cssStyleElementEcwidProductThumbnailActiveBoxShadow({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state: ACTIVE, prefix: "thumbnail" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state: ACTIVE,
+    store,
+    prefix: "thumbnail"
+  });
 }
 
 export function cssStyleElementEcwidProductFlagSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "flagLabel",
     direction: "bottom"
   });
@@ -1189,12 +1422,14 @@ export function cssStyleElementEcwidProductFlagSpacing({
 export function cssStyleElementEcwidProductFlagLabelColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "flagLabelColor"
   });
 }
@@ -1202,12 +1437,14 @@ export function cssStyleElementEcwidProductFlagLabelColor({
 export function cssStyleElementEcwidProductFlagColorBg({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleBgColorHex({
     v,
     device,
     state,
+    store,
     prefix: "flagBg"
   });
 }
@@ -1215,12 +1452,14 @@ export function cssStyleElementEcwidProductFlagColorBg({
 export function cssStyleElementEcwidProductFlagColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "flagBgColor"
   });
 }
@@ -1228,76 +1467,90 @@ export function cssStyleElementEcwidProductFlagColor({
 export function cssStyleElementEcwidProductFlagLabelTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "flagLabelTypography"
+    store,
+    prefix: "flagLabelTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductFlagLabelAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "flagLabel" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "flagLabel" });
 }
 
 // Style Checkout
 export function cssStyleElementEcwidProductCheckoutTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "checkoutTypography"
+    store,
+    prefix: "checkoutTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductCheckoutSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "checkout" });
+  return cssStyleSizePadding({ v, device, state, store, prefix: "checkout" });
 }
 
 export function cssStyleElementEcwidProductCheckoutWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "checkout" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "checkout" });
 }
 
 export function cssStyleElementEcwidProductCheckoutColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "checkoutColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "checkoutColor" });
 }
 
 export function cssStyleElementEcwidProductCheckoutBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "checkoutBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "checkoutBg" });
 }
 
 export function cssStyleElementEcwidProductCheckoutBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "checkout" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "checkout" });
 }
 
 export function cssStyleElementEcwidProductCheckoutBorder({
@@ -1311,36 +1564,47 @@ export function cssStyleElementEcwidProductCheckoutBorder({
 export function cssStyleElementEcwidProductCheckoutBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "checkout" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "checkout" });
 }
 
 export function cssStyleElementEcwidProductCheckoutBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "checkout" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "checkout" });
 }
 
 export function cssStyleElementEcwidProductCheckoutAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "checkout" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "checkout"
+  });
 }
 
 export function cssStyleElementEcwidProductCheckoutSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "checkout",
     direction: "bottom"
   });
@@ -1350,54 +1614,63 @@ export function cssStyleElementEcwidProductCheckoutSpacing({
 export function cssStyleElementEcwidProductAddToBagTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "addToBagTypography"
+    store,
+    prefix: "addToBagTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductAddToBagSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "addToBag" });
+  return cssStyleSizePadding({ v, device, state, store, prefix: "addToBag" });
 }
 
 export function cssStyleElementEcwidProductAddToBagWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "addToBag" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "addToBag" });
 }
 
 export function cssStyleElementEcwidProductAddToBagColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "addToBagColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "addToBagColor" });
 }
 
 export function cssStyleElementEcwidProductAddToBagBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "addToBagBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "addToBagBg" });
 }
 
 export function cssStyleElementEcwidProductAddToBagBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "addToBag" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "addToBag" });
 }
 
 export function cssStyleElementEcwidProductAddToBagBorder({
@@ -1411,36 +1684,47 @@ export function cssStyleElementEcwidProductAddToBagBorder({
 export function cssStyleElementEcwidProductAddToBagBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "addToBag" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "addToBag" });
 }
 
 export function cssStyleElementEcwidProductAddToBagBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "addToBag" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "addToBag" });
 }
 
 export function cssStyleElementEcwidProductAddToBagAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "addToBag" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "addToBag"
+  });
 }
 
 export function cssStyleElementEcwidProductAddToBagSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "addToBag",
     direction: "bottom"
   });
@@ -1455,10 +1739,8 @@ export function cssStyleElementEcwidProducButtonSpacing({
 
   const bottom = dvv("buttonSpacing");
   const bottomSuffix = dvv("buttonSpacingSuffix");
-  const right = dvv("buttonRightSpacing");
-  const rightSuffix = dvv("buttonRightSpacingSuffix");
 
-  return `margin: 0 ${right}${rightSuffix} ${bottom}${bottomSuffix} 0;`;
+  return `margin: 0 0 ${bottom}${bottomSuffix} 0;`;
 }
 
 export function cssStyleElementEcwidProductPaddingSidebar({
@@ -1510,17 +1792,19 @@ export function cssStyleElementEcwidProductPaddingGallery({
 export function cssStyleElementEcwidProductBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "productBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "productBg" });
 }
 
 export function cssStyleElementEcwidProductBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "product" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "product" });
 }
 
 export function cssStyleElementEcwidProductBorder({
@@ -1534,20 +1818,23 @@ export function cssStyleElementEcwidProductBorder({
 export function cssStyleElementEcwidProductBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "product" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "product" });
 }
 
 export function cssStyleElementEcwidProductButtonRightSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "buttonRight",
     direction: "right"
   });
@@ -1581,12 +1868,14 @@ export function cssStyleElementEcwidProductRadioColumns({
 export function cssStyleElementEcwidProductRadioSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "radio",
     direction: "bottom"
   });
@@ -1595,30 +1884,36 @@ export function cssStyleElementEcwidProductRadioSpacing({
 export function cssStyleElementEcwidProductRadioTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "radioTypography"
+    store,
+    prefix: "radioTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductRadioColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "radioBgColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "radioBgColor" });
 }
 
 export function cssStyleElementEcwidProductRadioColorIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColorHex({ v, device, state, prefix: "radioBg" });
+  return cssStyleBgColorHex({ v, device, state, store, prefix: "radioBg" });
 }
 
 export function cssStyleElementEcwidProductRadioBorderColorIcon({
@@ -1661,12 +1956,14 @@ export function cssStyleElementEcwidProductCheckbox2Columns({
 export function cssStyleElementEcwidProductCheckbox2Spacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "checkbox2",
     direction: "bottom"
   });
@@ -1675,30 +1972,36 @@ export function cssStyleElementEcwidProductCheckbox2Spacing({
 export function cssStyleElementEcwidProductCheckbox2Typography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "checkbox2Typography"
+    store,
+    prefix: "checkbox2Typography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductCheckbox2Color({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "checkbox2BgColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "checkbox2BgColor" });
 }
 
 export function cssStyleElementEcwidProductCheckbox2ColorIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColorHex({ v, device, state, prefix: "checkbox2Bg" });
+  return cssStyleBgColorHex({ v, device, state, store, prefix: "checkbox2Bg" });
 }
 
 export function cssStyleElementEcwidProductCheckbox2BorderColorIcon({
@@ -1706,7 +2009,12 @@ export function cssStyleElementEcwidProductCheckbox2BorderColorIcon({
   device,
   state
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, prefix: "checkbox2BgColor" });
+  const color = styleColor({
+    v,
+    device,
+    state,
+    prefix: "checkbox2BgColor"
+  });
 
   return `border-color:${color};`;
 }
@@ -1726,38 +2034,51 @@ export function cssStyleElementEcwidProductCheckbox2IconSize({
 export function cssStyleElementEcwidProductTextFieldTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "textFieldTypography"
+    store,
+    prefix: "textFieldTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductTextFieldWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "textField" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "textField" });
 }
 
 export function cssStyleElementEcwidProductTextFieldSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePaddingSelect({ v, device, state, prefix: "textField" });
+  return cssStyleSizePaddingSelect({
+    v,
+    device,
+    state,
+    store,
+    prefix: "textField"
+  });
 }
 
 export function cssStyleElementEcwidProductTextFieldColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "textFieldColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "textFieldColor" });
 }
 
 export function cssStyleElementEcwidProductTextFieldColorFocus({
@@ -1765,7 +2086,12 @@ export function cssStyleElementEcwidProductTextFieldColorFocus({
   device,
   state
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, prefix: "textFieldColor" });
+  const color = styleColor({
+    v,
+    device,
+    state,
+    prefix: "textFieldColor"
+  });
 
   return `-webkit-text-fill-color:${color} !important;`;
 }
@@ -1773,17 +2099,19 @@ export function cssStyleElementEcwidProductTextFieldColorFocus({
 export function cssStyleElementEcwidProductTextFieldBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "textFieldBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "textFieldBg" });
 }
 
 export function cssStyleElementEcwidProductTextFieldBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "textField" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "textField" });
 }
 
 export function cssStyleElementEcwidProductTextFieldBorder({
@@ -1797,25 +2125,34 @@ export function cssStyleElementEcwidProductTextFieldBorder({
 export function cssStyleElementEcwidProductTextFieldBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "textField" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "textField" });
 }
 
 export function cssStyleElementEcwidProductTextFieldBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "textField" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "textField" });
 }
 
 export function cssStyleElementEcwidProductTextFieldAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "textField" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "textField"
+  });
 }
 
 export function cssStyleElementEcwidProductTextFieldPlaceholder({
@@ -1834,12 +2171,14 @@ export function cssStyleElementEcwidProductTextFieldPlaceholder({
 export function cssStyleElementEcwidProductTextFieldSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "textField",
     direction: "bottom"
   });
@@ -1860,62 +2199,78 @@ export function cssStyleElementEcwidProductTextFieldPadding({
 export function cssStyleElementEcwidProductTextareaTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "textareaTypography"
+    store,
+    prefix: "textareaTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductTextareaWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "textarea" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "textarea" });
 }
 
 export function cssStyleElementEcwidProductTextareaHeight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix: "textarea" });
+  return cssStyleSizeHeight({ v, device, state, store, prefix: "textarea" });
 }
 
 export function cssStyleElementEcwidProductTextareaSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePaddingSelect({ v, device, state, prefix: "textarea" });
+  return cssStyleSizePaddingSelect({
+    v,
+    device,
+    state,
+    store,
+    prefix: "textarea"
+  });
 }
 
 export function cssStyleElementEcwidProductTextareaColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "textareaColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "textareaColor" });
 }
 
 export function cssStyleElementEcwidProductTextareaBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "textareaBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "textareaBg" });
 }
 
 export function cssStyleElementEcwidProductTextareaBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "textarea" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "textarea" });
 }
 
 export function cssStyleElementEcwidProductTextareaBorder({
@@ -1929,17 +2284,19 @@ export function cssStyleElementEcwidProductTextareaBorder({
 export function cssStyleElementEcwidProductTextareaBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "textarea" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "textarea" });
 }
 
 export function cssStyleElementEcwidProductTextareaBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "textarea" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "textarea" });
 }
 
 export function cssStyleElementEcwidProductTextareaPlaceholder({
@@ -1958,12 +2315,14 @@ export function cssStyleElementEcwidProductTextareaPlaceholder({
 export function cssStyleElementEcwidProductTextareaAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
+    store,
     prefix: "textarea"
   });
 }
@@ -1971,12 +2330,14 @@ export function cssStyleElementEcwidProductTextareaAlign({
 export function cssStyleElementEcwidProductTextareaSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "textarea",
     direction: "bottom"
   });
@@ -1985,54 +2346,69 @@ export function cssStyleElementEcwidProductTextareaSpacing({
 export function cssStyleElementEcwidProductDatepickerTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "datepickerTypography"
+    store,
+    prefix: "datepickerTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductDatepickerWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "datepicker" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "datepicker" });
 }
 
 export function cssStyleElementEcwidProductDatepickerSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePaddingSelect({ v, device, state, prefix: "datepicker" });
+  return cssStyleSizePaddingSelect({
+    v,
+    device,
+    state,
+    store,
+    prefix: "datepicker"
+  });
 }
 
 export function cssStyleElementEcwidProductDatepickerColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "datepickerColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "datepickerColor" });
 }
 
 export function cssStyleElementEcwidProductDatepickerBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "datepickerBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "datepickerBg" });
 }
 
 export function cssStyleElementEcwidProductDatepickerBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "datepicker" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "datepicker" });
 }
 
 export function cssStyleElementEcwidProductDatepickerBorder({
@@ -2046,17 +2422,25 @@ export function cssStyleElementEcwidProductDatepickerBorder({
 export function cssStyleElementEcwidProductDatepickerBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "datepicker" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    prefix: "datepicker"
+  });
 }
 
 export function cssStyleElementEcwidProductDatepickerBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "datepicker" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "datepicker" });
 }
 
 export function cssStyleElementEcwidProductDatepickerPlaceholder({
@@ -2075,12 +2459,14 @@ export function cssStyleElementEcwidProductDatepickerPlaceholder({
 export function cssStyleElementEcwidProductDatepickerSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "datepicker",
     direction: "bottom"
   });
@@ -2089,12 +2475,14 @@ export function cssStyleElementEcwidProductDatepickerSpacing({
 export function cssStyleElementEcwidProductDatepickerAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
+    store,
     prefix: "datepicker"
   });
 }
@@ -2104,7 +2492,12 @@ export function cssStyleElementEcwidProductDatepickerColorFocus({
   device,
   state
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, prefix: "datepickerColor" });
+  const color = styleColor({
+    v,
+    device,
+    state,
+    prefix: "datepickerColor"
+  });
 
   return `-webkit-text-fill-color:${color}!important;`;
 }
@@ -2124,54 +2517,69 @@ export function cssStyleElementEcwidProductDatepickerPadding({
 export function cssStyleElementEcwidProductSelectTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "selectTypography"
+    store,
+    prefix: "selectTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductSelectWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "select" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "select" });
 }
 
 export function cssStyleElementEcwidProductSelectSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePaddingSelect({ v, device, state, prefix: "select" });
+  return cssStyleSizePaddingSelect({
+    v,
+    device,
+    state,
+    store,
+    prefix: "select"
+  });
 }
 
 export function cssStyleElementEcwidProductSelectColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "selectColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "selectColor" });
 }
 
 export function cssStyleElementEcwidProductSelectBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "selectBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "selectBg" });
 }
 
 export function cssStyleElementEcwidProductSelectBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "select" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "select" });
 }
 
 export function cssStyleElementEcwidProductSelectBorder({
@@ -2185,25 +2593,34 @@ export function cssStyleElementEcwidProductSelectBorder({
 export function cssStyleElementEcwidProductSelectBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "select" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "select" });
 }
 
 export function cssStyleElementEcwidProductSelectBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "select" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "select" });
 }
 
 export function cssStyleElementEcwidProductSelectAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "select" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "select"
+  });
 }
 
 export function cssStyleElementEcwidProductSelectPlaceholder({
@@ -2222,12 +2639,14 @@ export function cssStyleElementEcwidProductSelectPlaceholder({
 export function cssStyleElementEcwidProductSelectSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "select",
     direction: "bottom"
   });
@@ -2260,54 +2679,69 @@ export function cssStyleElementEcwidProductSelectPadding({
 export function cssStyleElementEcwidProductFilesTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "filesTypography"
+    store,
+    prefix: "filesTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductFilesSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePaddingSelect({ v, device, state, prefix: "files" });
+  return cssStyleSizePaddingSelect({
+    v,
+    device,
+    state,
+    store,
+    prefix: "files"
+  });
 }
 
 export function cssStyleElementEcwidProductFilesWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "files" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "files" });
 }
 
 export function cssStyleElementEcwidProductFilesColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "filesColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "filesColor" });
 }
 
 export function cssStyleElementEcwidProductFilesBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "filesBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "filesBg" });
 }
 
 export function cssStyleElementEcwidProductFilesBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "files" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "files" });
 }
 
 export function cssStyleElementEcwidProductFilesBorder({
@@ -2321,25 +2755,34 @@ export function cssStyleElementEcwidProductFilesBorder({
 export function cssStyleElementEcwidProductFilesBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "files" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "files" });
 }
 
 export function cssStyleElementEcwidProductFilesBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "files" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "files" });
 }
 
 export function cssStyleElementEcwidProductFilesAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const textAlign = styleAlignHorizontal({ v, device, state, prefix: "files" });
+  const textAlign = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    store,
+    prefix: "files"
+  });
 
   return textAlign ? `text-align:-webkit-${textAlign};` : "";
 }
@@ -2347,12 +2790,14 @@ export function cssStyleElementEcwidProductFilesAlign({
 export function cssStyleElementEcwidProductFilesSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "files",
     direction: "bottom"
   });
@@ -2362,41 +2807,49 @@ export function cssStyleElementEcwidProductFilesSpacing({
 export function cssStyleElementEcwidProductSKUColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "SKUColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "SKUColor" });
 }
 
 export function cssStyleElementEcwidProductSKUTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "SKUTypography"
+    store,
+    prefix: "SKUTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductSKUAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "SKU" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "SKU" });
 }
 
 export function cssStyleElementEcwidProductSKUSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "SKU",
     direction: "bottom"
   });
@@ -2405,28 +2858,32 @@ export function cssStyleElementEcwidProductSKUSpacing({
 export function cssStyleElementEcwidProductQtyWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "qty" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "qty" });
 }
 
 export function cssStyleElementEcwidProductQtyHeight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix: "qty" });
+  return cssStyleSizeHeight({ v, device, state, store, prefix: "qty" });
 }
 
 export function cssStyleElementEcwidProductQtyAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "qty"
   });
 }
@@ -2434,25 +2891,28 @@ export function cssStyleElementEcwidProductQtyAlign({
 export function cssStyleElementEcwidProductQtyColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "qtyColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "qtyColor" });
 }
 
 export function cssStyleElementEcwidProductQtyBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "qtyBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "qtyBg" });
 }
 
 export function cssStyleElementEcwidProductQtyBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "qty" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "qty" });
 }
 
 export function cssStyleElementEcwidProductQtyBorder({
@@ -2466,28 +2926,32 @@ export function cssStyleElementEcwidProductQtyBorder({
 export function cssStyleElementEcwidProductQtyBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "qty" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "qty" });
 }
 
 export function cssStyleElementEcwidProductQtyBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "qty" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "qty" });
 }
 
 export function cssStyleElementEcwidProductQtySpacingRight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "qty",
     direction: "right"
   });
@@ -2496,12 +2960,14 @@ export function cssStyleElementEcwidProductQtySpacingRight({
 export function cssStyleElementEcwidProductQtySpacingBottom({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "qtyBottom",
     direction: "bottom"
   });
@@ -2510,41 +2976,49 @@ export function cssStyleElementEcwidProductQtySpacingBottom({
 export function cssStyleElementEcwidProductAttributeColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "attributeColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "attributeColor" });
 }
 
 export function cssStyleElementEcwidProductAttributeTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "attributeTypography"
+    store,
+    prefix: "attributeTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductAttributeAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "attribute" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "attribute" });
 }
 
 export function cssStyleElementEcwidProductAttributeSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "attribute",
     direction: "bottom"
   });
@@ -2553,41 +3027,49 @@ export function cssStyleElementEcwidProductAttributeSpacing({
 export function cssStyleElementEcwidProductShowMoreColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "showMoreColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "showMoreColor" });
 }
 
 export function cssStyleElementEcwidProductShowMoreTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "showMoreTypography"
+    store,
+    prefix: "showMoreTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductShowMoreAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "showMore" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "showMore" });
 }
 
 export function cssStyleElementEcwidProductShowMoreSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "showMore",
     direction: "bottom"
   });
@@ -2596,62 +3078,87 @@ export function cssStyleElementEcwidProductShowMoreSpacing({
 export function cssStyleElementEcwidProductWholesaleColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "wholesaleColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "wholesaleColor" });
 }
 
 export function cssStyleElementEcwidProductWholesalePriceColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "wholesalePriceColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "wholesalePriceColor"
+  });
 }
 
 export function cssStyleElementEcwidProductWholesaleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "wholesaleTypography"
+    store,
+    prefix: "wholesaleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductWholesalePriceTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "wholesalePriceTypography"
+    store,
+    prefix: "wholesalePriceTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductWholesalePriceAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "wholesalePrice" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "wholesalePrice"
+  });
 }
 
 export function cssStyleElementEcwidProductWholesalePriceSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "wholesalePrice",
     direction: "bottom"
   });
@@ -2660,12 +3167,14 @@ export function cssStyleElementEcwidProductWholesalePriceSpacing({
 export function cssStyleElementEcwidProductWholesalePriceRightSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "wholesalePriceRight",
     direction: "right"
   });
@@ -2687,41 +3196,61 @@ export function cssStyleElementEcwidProductWholesalePriceColumn({
 export function cssStyleElementEcwidProductWholesaleNoteColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "wholesaleNoteColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "wholesaleNoteColor"
+  });
 }
 
 export function cssStyleElementEcwidProductWholesaleNoteTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "wholesaleNoteTypography"
+    store,
+    prefix: "wholesaleNoteTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductWholesaleNoteAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "wholesaleNote" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "wholesaleNote"
+  });
 }
 
 export function cssStyleElementEcwidProductWholesaleNoteSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleNote",
     direction: "bottom"
   });
@@ -2730,62 +3259,87 @@ export function cssStyleElementEcwidProductWholesaleNoteSpacing({
 export function cssStyleElementEcwidProductSurchargeTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "surchargeTypography"
+    store,
+    prefix: "surchargeTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductSurchargeColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "surchargeColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "surchargeColor" });
 }
 
 export function cssStyleElementEcwidProductWholesaleTitleColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "wholesaleTitleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "wholesaleTitleColor"
+  });
 }
 
 export function cssStyleElementEcwidProductWholesaleTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "wholesaleTitleTypography"
+    store,
+    prefix: "wholesaleTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductWholesaleTitleAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "wholesaleTitle" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "wholesaleTitle"
+  });
 }
 
 export function cssStyleElementEcwidProductWholesaleTitleSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleTitle",
     direction: "bottom"
   });
@@ -2794,12 +3348,14 @@ export function cssStyleElementEcwidProductWholesaleTitleSpacing({
 export function cssStyleElementEcwidProductWholesaleTableHeaderColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleTableHeaderColor"
   });
 }
@@ -2807,25 +3363,31 @@ export function cssStyleElementEcwidProductWholesaleTableHeaderColor({
 export function cssStyleElementEcwidProductWholesaleTableHeaderTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "wholesaleTableHeaderTypography"
+    store,
+    prefix: "wholesaleTableHeaderTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductWholesaleTableHeaderAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleTableHeader"
   });
 }
@@ -2833,12 +3395,14 @@ export function cssStyleElementEcwidProductWholesaleTableHeaderAlign({
 export function cssStyleElementEcwidProductWholesaleTableHeaderSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleTableHeader",
     direction: "bottom"
   });
@@ -2847,12 +3411,14 @@ export function cssStyleElementEcwidProductWholesaleTableHeaderSpacing({
 export function cssStyleElementEcwidProductWholesaleTableBodyColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleTableBodyColor"
   });
 }
@@ -2860,25 +3426,31 @@ export function cssStyleElementEcwidProductWholesaleTableBodyColor({
 export function cssStyleElementEcwidProductWholesaleTableBodyTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "wholesaleTableBodyTypography"
+    store,
+    prefix: "wholesaleTableBodyTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductWholesaleTableBodyAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleTableBody"
   });
 }
@@ -2886,12 +3458,14 @@ export function cssStyleElementEcwidProductWholesaleTableBodyAlign({
 export function cssStyleElementEcwidProductWholesaleTableBodySpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "wholesaleTableBody",
     direction: "bottom"
   });
@@ -2900,25 +3474,31 @@ export function cssStyleElementEcwidProductWholesaleTableBodySpacing({
 export function cssStyleElementEcwidProductRelatedTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "relatedTitleTypography"
+    store,
+    prefix: "relatedTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductRelatedColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "relatedTitleColor"
   });
 }
@@ -2926,12 +3506,14 @@ export function cssStyleElementEcwidProductRelatedColor({
 export function cssStyleElementEcwidProductRelatedAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "relatedTitle"
   });
 }
@@ -2939,12 +3521,14 @@ export function cssStyleElementEcwidProductRelatedAlign({
 export function cssStyleElementEcwidProductRelatedSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "relatedTitle",
     direction: "bottom"
   });
@@ -2953,25 +3537,31 @@ export function cssStyleElementEcwidProductRelatedSpacing({
 export function cssStyleElementEcwidProductGridTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "gridTitleTypography"
+    store,
+    prefix: "gridTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductGridTitleColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "gridTitleColor"
   });
 }
@@ -2979,12 +3569,14 @@ export function cssStyleElementEcwidProductGridTitleColor({
 export function cssStyleElementEcwidProductGridTitleAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "gridTitle"
   });
 }
@@ -2992,12 +3584,14 @@ export function cssStyleElementEcwidProductGridTitleAlign({
 export function cssStyleElementEcwidProductGridTitleSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "gridTitle",
     direction: "bottom"
   });
@@ -3006,25 +3600,31 @@ export function cssStyleElementEcwidProductGridTitleSpacing({
 export function cssStyleElementEcwidProductGridSubtitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "gridSubtitleTypography"
+    store,
+    prefix: "gridSubtitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductGridSubtitleColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "gridSubtitleColor"
   });
 }
@@ -3032,12 +3632,14 @@ export function cssStyleElementEcwidProductGridSubtitleColor({
 export function cssStyleElementEcwidProductGridSubtitleAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "gridSubtitle"
   });
 }
@@ -3045,12 +3647,14 @@ export function cssStyleElementEcwidProductGridSubtitleAlign({
 export function cssStyleElementEcwidProductGridSubtitleSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "gridSubtitle",
     direction: "bottom"
   });
@@ -3059,25 +3663,31 @@ export function cssStyleElementEcwidProductGridSubtitleSpacing({
 export function cssStyleElementEcwidProductGridSKUInnerTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "gridSKUInnerTypography"
+    store,
+    prefix: "gridSKUInnerTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductGridSKUInnerColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "gridSKUInnerColor"
   });
 }
@@ -3085,12 +3695,14 @@ export function cssStyleElementEcwidProductGridSKUInnerColor({
 export function cssStyleElementEcwidProductGridSKUInnerAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "gridSKUInner"
   });
 }
@@ -3098,12 +3710,14 @@ export function cssStyleElementEcwidProductGridSKUInnerAlign({
 export function cssStyleElementEcwidProductGridSKUInnerSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "gridSKUInner",
     direction: "bottom"
   });
@@ -3112,25 +3726,31 @@ export function cssStyleElementEcwidProductGridSKUInnerSpacing({
 export function cssStyleElementEcwidProductGridPriceTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "gridPriceTypography"
+    store,
+    prefix: "gridPriceTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductGridPriceColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "gridPriceColor"
   });
 }
@@ -3138,12 +3758,14 @@ export function cssStyleElementEcwidProductGridPriceColor({
 export function cssStyleElementEcwidProductGridPriceAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleFlexColumnHorizontalAlign({
     v,
     device,
     state,
+    store,
     prefix: "gridPrice"
   });
 }
@@ -3151,12 +3773,14 @@ export function cssStyleElementEcwidProductGridPriceAlign({
 export function cssStyleElementEcwidProductGridPriceSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "gridPrice",
     direction: "bottom"
   });
@@ -3165,12 +3789,14 @@ export function cssStyleElementEcwidProductGridPriceSpacing({
 export function cssStyleElementEcwidProductGridBuyNowHight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeMinHeightPx({
     v,
     device,
     state,
+    store,
     prefix: "gridBuyNow"
   });
 }
@@ -3178,12 +3804,14 @@ export function cssStyleElementEcwidProductGridBuyNowHight({
 export function cssStyleElementEcwidProductGridBuyNowWith({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeMinWidth({
     v,
     device,
     state,
+    store,
     prefix: "gridBuyNow"
   });
 }
@@ -3191,25 +3819,31 @@ export function cssStyleElementEcwidProductGridBuyNowWith({
 export function cssStyleElementEcwidProductGridBuyNowTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "gridBuyNowTypography"
+    store,
+    prefix: "gridBuyNowTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductGridBuyNowColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "gridBuyNowColor"
   });
 }
@@ -3217,17 +3851,19 @@ export function cssStyleElementEcwidProductGridBuyNowColor({
 export function cssStyleElementEcwidProductGridBuyNowBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "gridBuyNowBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "gridBuyNowBg" });
 }
 
 export function cssStyleElementEcwidProductGridBuyNowBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "gridBuyNow" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "gridBuyNow" });
 }
 
 export function cssStyleElementEcwidProductGridBuyNowBorder({
@@ -3241,28 +3877,38 @@ export function cssStyleElementEcwidProductGridBuyNowBorder({
 export function cssStyleElementEcwidProductGridBuyNowBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "gridBuyNow" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    prefix: "gridBuyNow"
+  });
 }
 
 export function cssStyleElementEcwidProductGridBuyNowBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "gridBuyNow" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "gridBuyNow" });
 }
 
 export function cssStyleElementEcwidProductGridBuyNowAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "gridBuyNow"
   });
 }
@@ -3270,12 +3916,14 @@ export function cssStyleElementEcwidProductGridBuyNowAlign({
 export function cssStyleElementEcwidProductGridBuyNowSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "gridBuyNow",
     direction: "bottom"
   });
@@ -3284,17 +3932,19 @@ export function cssStyleElementEcwidProductGridBuyNowSpacing({
 export function cssStyleElementEcwidProductGridBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "gridBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "gridBg" });
 }
 
 export function cssStyleElementEcwidProductGridBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "grid" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "grid" });
 }
 
 export function cssStyleElementEcwidProductGridBorder({
@@ -3308,28 +3958,32 @@ export function cssStyleElementEcwidProductGridBorder({
 export function cssStyleElementEcwidProductGridBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "grid" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "grid" });
 }
 
 export function cssStyleElementEcwidProductGridBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "grid" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "grid" });
 }
 
 export function cssStyleElementEcwidProductGridSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacingWithPadding({
     v,
     device,
     state,
+    store,
     prefix: "grid",
     direction: "all"
   });
@@ -3338,25 +3992,28 @@ export function cssStyleElementEcwidProductGridSpacing({
 export function cssStyleElementEcwidProductArrowColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleFill({ v, device, state, prefix: "arrowColor" });
+  return cssStyleFill({ v, device, state, store, prefix: "arrowColor" });
 }
 
 export function cssStyleElementEcwidProductArrowBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "arrowBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "arrowBg" });
 }
 
 export function cssStyleElementEcwidProductArrowBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "arrow" });
+  return cssStyleBgGradient({ v, device, state, store, prefix: "arrow" });
 }
 
 export function cssStyleElementEcwidProductArrowBorder({
@@ -3370,28 +4027,32 @@ export function cssStyleElementEcwidProductArrowBorder({
 export function cssStyleElementEcwidProductArrowBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "arrow" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "arrow" });
 }
 
 export function cssStyleElementEcwidProductArrowBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "arrow" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "arrow" });
 }
 
 export function cssStyleElementEcwidProductArrowHeight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeHeight({
     v,
     device,
     state,
+    store,
     prefix: "arrow"
   });
 }
@@ -3399,12 +4060,14 @@ export function cssStyleElementEcwidProductArrowHeight({
 export function cssStyleElementEcwidProductTaxesColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "taxesColor"
   });
 }
@@ -3412,33 +4075,40 @@ export function cssStyleElementEcwidProductTaxesColor({
 export function cssStyleElementEcwidProductTaxesTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "taxesTypography"
+    store,
+    prefix: "taxesTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidProductTaxesAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "taxes" });
+  return cssStyleTextAlign({ v, device, state, store, prefix: "taxes" });
 }
 
 export function cssStyleElementEcwidProductTaxesSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "taxes",
     direction: "bottom"
   });

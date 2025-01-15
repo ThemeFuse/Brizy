@@ -1,6 +1,7 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  isSizeType,
-  SizeType
+  SizeType,
+  isSizeType
 } from "visual/global/Config/types/configs/common";
 import { getColor } from "visual/utils/color";
 import {
@@ -76,22 +77,25 @@ export const barBgColorCSS: OptionStyle<"colorPicker"> = ({
   }
 });
 
-export const coverImageCSS: OptionStyle<"imageUpload"> = ({
-  value: { src, sizeType, fileName, x, y }
-}) => {
-  if (readString(src) && src !== "" && isSizeType(sizeType)) {
-    return {
-      "{{WRAPPER}} .video-wrapper .brz-video__cover::before": {
-        "background-image": `url("${getImageUrl({
-          uid: src,
-          fileName,
-          sizeType
-        })}")`,
-        "background-position": `${x}% ${y}%`
-      }
-    };
-  }
-};
+export const coverImageCSS =
+  (config: ConfigCommon): OptionStyle<"imageUpload"> =>
+  ({ value: { src, sizeType, fileName, x, y } }) => {
+    if (readString(src) && src !== "" && isSizeType(sizeType)) {
+      return {
+        "{{WRAPPER}} .video-wrapper .brz-video__cover::before": {
+          "background-image": `url("${getImageUrl(
+            {
+              uid: src,
+              fileName,
+              sizeType
+            },
+            config
+          )}")`,
+          "background-position": `${x}% ${y}%`
+        }
+      };
+    }
+  };
 
 export const coverZoomCSS: OptionStyle<"slider"> = ({ value: { value } }) => ({
   "{{WRAPPER}} .video-wrapper .brz-video__cover::before": {
@@ -150,23 +154,26 @@ export const transitionCSS: OptionStyle<"slider"> = ({ value: { value } }) => ({
     }
 });
 
-export const maskImageUrlCSS: OptionStyle<"imageUpload"> = ({
-  value: { src, fileName, sizeType }
-}) => {
-  const url = getImageUrl({
-    uid: src,
-    fileName,
-    sizeType: sizeType as SizeType
-  });
+export const maskImageUrlCSS =
+  (config: ConfigCommon): OptionStyle<"imageUpload"> =>
+  ({ value: { src, fileName, sizeType } }) => {
+    const url = getImageUrl(
+      {
+        uid: src,
+        fileName,
+        sizeType: sizeType as SizeType
+      },
+      config
+    );
 
-  if (!url) return;
-  return {
-    "{{WRAPPER}}:hover .brz-video-content": {
-      "-webkit-mask-image": `url(${url});`,
-      "mask-image": `url(${url});`
-    }
+    if (!url) return;
+    return {
+      "{{WRAPPER}}:hover .brz-video-content": {
+        "-webkit-mask-image": `url(${url});`,
+        "mask-image": `url(${url});`
+      }
+    };
   };
-};
 
 export const maskImageRepeatCSS: OptionStyle<"select"> = ({
   value: { value }

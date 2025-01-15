@@ -1,40 +1,40 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCGroup, DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isPopup } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
-  getDynamicContentOption,
-  getOptionColorHexByPalette
+  getDynamicContentOption
 } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { isChoice } from "visual/utils/options/getDynamicContentChoices";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export const getItems: GetItems<ElementModel> = ({
   v,
   device,
   component,
-  context
+  context,
+  editorMode
 }) => {
-  const dvv = (key: string): unknown =>
+  const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
 
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isPopup = isPopup(editorMode);
 
   const activeChoice = config?.contentDefaults?.PostExcerpt?.textPopulation;
   const disablePredefinedPopulation =
@@ -141,7 +141,7 @@ export const getItems: GetItems<ElementModel> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: color
           }
         }
       },
@@ -229,7 +229,7 @@ export const getItems: GetItems<ElementModel> = ({
                   id: "linkAnchor",
                   label: t("Block"),
                   type: "blockThumbnail",
-                  disabled: IS_GLOBAL_POPUP
+                  disabled: _isPopup
                 }
               ]
             },
@@ -247,7 +247,7 @@ export const getItems: GetItems<ElementModel> = ({
                   },
                   disabled:
                     device === "desktop"
-                      ? inPopup || inPopup2 || IS_GLOBAL_POPUP
+                      ? inPopup || inPopup2 || _isPopup
                       : dvv("linkType") !== "popup" || linkPopup === "",
                   dependencies: popupToOldModel
                 }

@@ -1,6 +1,5 @@
 import { getIn } from "timm";
 import _ from "underscore";
-import Config from "visual/global/Config";
 import {
   ADD_BLOCK,
   EDITOR_RENDERED,
@@ -29,7 +28,10 @@ import {
 } from "visual/utils/api";
 import { createFullModelPath } from "visual/utils/models";
 import { findDeep } from "visual/utils/object";
-import { makeNodeScreenshot } from "visual/utils/screenshots";
+import {
+  isScreenshotSupported,
+  makeNodeScreenshot
+} from "visual/utils/screenshots";
 import { ActionTypes } from "../../actions2";
 import { debounceAdvanced, makeTaskQueue } from "./utils";
 
@@ -50,9 +52,21 @@ const blockIsInThePage = (blockId, store) =>
 const isDesktopMode = (store) =>
   deviceModeSelector(store.getState()) === "desktop";
 
-export default (store) => (next) => (action) => {
+export default (config) => (store) => (next) => (action) => {
   const prevState = store.getState();
   next(action);
+
+  (async () => {
+    const screenshotsSupported = await isScreenshotSupported(config);
+
+    if (screenshotsSupported) {
+      screenshotMiddleware({ prevState, store, config, next, action });
+    }
+  })();
+};
+
+function screenshotMiddleware(data) {
+  const { prevState, store, config, next, action } = data;
 
   if (action.type === UPDATE_UI && action.key === "deviceMode") {
     if (action.value === "desktop") {
@@ -69,7 +83,7 @@ export default (store) => (next) => (action) => {
     action.type === UPDATE_EXTRA_FONT_STYLES ||
     action.type === ActionTypes.IMPORT_TEMPLATE
   ) {
-    allBlocksDebounced(store, next);
+    allBlocksDebounced(store, config, next);
   }
 
   if (!isDesktopMode(store)) {
@@ -94,11 +108,11 @@ export default (store) => (next) => (action) => {
       };
     }
 
-    changedBlocksDebounced(prevState, store, next, options);
+    changedBlocksDebounced(prevState, store, config, next, options);
   }
-};
+}
 
-function allBlocks(store, next) {
+function allBlocks(store, config, next) {
   const changedBlocks = {
     page: new Set(),
     global: new Set()
@@ -123,12 +137,12 @@ function allBlocks(store, next) {
     }
   }
 
-  enqueueTasks(changedBlocks, store, next);
+  enqueueTasks(changedBlocks, store, config, next);
 }
 
 const allBlocksDebounced = _.debounce(allBlocks, DEBOUNCE_INTERVAL);
 
-function changedBlocks(prevState, store, next, options) {
+function changedBlocks(prevState, store, config, next, options) {
   const changedBlocks = {
     page: new Set(),
     global: new Set()
@@ -173,9 +187,7 @@ function changedBlocks(prevState, store, next, options) {
     }
   }
 
-  // console.log("changedBlocks", changedBlocks);
-
-  enqueueTasks(changedBlocks, store, next, options);
+  enqueueTasks(changedBlocks, store, config, next, options);
 }
 
 const changedBlocksDebounced = debounceAdvanced({
@@ -190,7 +202,7 @@ const changedBlocksDebounced = debounceAdvanced({
   }
 });
 
-async function enqueueTasks(changedBlocks, store, next, options = {}) {
+async function enqueueTasks(changedBlocks, store, config, next, options = {}) {
   const pageBlockTasks = Array.from(changedBlocks.page).map((block) => {
     return {
       id: block.value._id + (options.taskIdSuffix || ""),
@@ -199,7 +211,7 @@ async function enqueueTasks(changedBlocks, store, next, options = {}) {
           ? options.taskPriority
           : taskQueue.taskPriorities.NORMAL,
       cb: options.popup ? popupBlockTaskCb : pageBlockTaskCb,
-      cbArgs: [store, next, options, block]
+      cbArgs: [store, config, next, options, block]
     };
   });
   const globalBlockTasks = Array.from(changedBlocks.global).map((_id) => {
@@ -211,7 +223,7 @@ async function enqueueTasks(changedBlocks, store, next, options = {}) {
           : taskQueue.taskPriorities.NORMAL,
       cb: options.popup ? popupBlockInsideGlobalBlockTaskCb : globalBlockTaskCb,
       // cb: globalBlockTaskCb,
-      cbArgs: [store, next, options, _id]
+      cbArgs: [store, config, next, options, _id]
     };
   });
   const allTasks = [...pageBlockTasks, ...globalBlockTasks];
@@ -220,7 +232,14 @@ async function enqueueTasks(changedBlocks, store, next, options = {}) {
     taskQueue.enqueue(allTasks);
   }
 }
-async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
+async function pageBlockTaskCb(
+  store,
+  config,
+  next,
+  options,
+  block,
+  enqueueAgain
+) {
   const blockId = block.value._id;
   let screenshotId;
   let screenshot;
@@ -238,7 +257,7 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     try {
-      screenshot = await makeNodeScreenshot(node);
+      screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -261,7 +280,7 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     const screenshots = screenshotsSelector(store.getState());
-    const config = Config.getAll();
+
     if (!screenshots[blockId]) {
       const r = await apiCreateBlockScreenshot(
         { base64: screenshot.src, blockType: "normal" },
@@ -301,7 +320,14 @@ async function pageBlockTaskCb(store, next, options, block, enqueueAgain) {
     );
   }
 }
-async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
+async function globalBlockTaskCb(
+  store,
+  config,
+  next,
+  options,
+  _id,
+  enqueueAgain
+) {
   let screenshotId;
   let screenshot;
 
@@ -330,7 +356,7 @@ async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
     }
 
     try {
-      screenshot = await makeNodeScreenshot(node);
+      screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -354,7 +380,7 @@ async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
     }
 
     const screenshots = screenshotsSelector(store.getState());
-    const config = Config.getAll();
+
     const publishedScreenshot =
       screenshots._published[_id] && screenshots._published[_id]._thumbnailSrc;
     const latestScreenshot = screenshots[_id] && screenshots[_id]._thumbnailSrc;
@@ -414,7 +440,14 @@ async function globalBlockTaskCb(store, next, options, _id, enqueueAgain) {
     );
   }
 }
-async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
+async function popupBlockTaskCb(
+  store,
+  config,
+  next,
+  options,
+  block,
+  enqueueAgain
+) {
   const { dbId: popupDBId, domId: popupDOMId } = options.popup;
   const pageBlocks = getPageBlocks(store.getState());
   const path = createFullModelPath(pageBlocks, [popupDBId]);
@@ -432,7 +465,7 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     try {
-      screenshot = await makeNodeScreenshot(node);
+      screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -458,7 +491,7 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
     }
 
     const screenshots = screenshotsSelector(store.getState());
-    const config = Config.getAll();
+
     const publishedScreenshot =
       screenshots._published[popupId] &&
       screenshots._published[popupId]._thumbnailSrc;
@@ -523,6 +556,7 @@ async function popupBlockTaskCb(store, next, options, block, enqueueAgain) {
 }
 async function popupBlockInsideGlobalBlockTaskCb(
   store,
+  config,
   next,
   options,
   globalBlockId,
@@ -559,7 +593,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
     }
 
     try {
-      screenshot = await makeNodeScreenshot(node);
+      screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
         /* eslint-disable no-console */
@@ -593,8 +627,6 @@ async function popupBlockInsideGlobalBlockTaskCb(
       enqueueAgain();
       return;
     }
-
-    const config = Config.getAll();
 
     if (!popup.value._thumbnailSrc) {
       // if the popup block doesn't have a screenshot yet, create one

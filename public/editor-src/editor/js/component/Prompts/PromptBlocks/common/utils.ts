@@ -1,8 +1,8 @@
 import { match } from "fp-utilities";
-import Config from "visual/global/Config";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { objectToQueryString, urlContainsQueryString } from "visual/utils/url";
 import { BlockTypes } from "../types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const isBlock = (type: BlockTypes): type is "BLOCK" => type === "BLOCK";
 export const isPopup = (type: BlockTypes): type is "POPUP" => type === "POPUP";
@@ -16,9 +16,9 @@ export const createBlockId = (id: string, isPro: boolean): string => {
 export const getExportBlocksUrls = (
   type: BlockTypes,
   id: string,
-  isPro: boolean
+  isPro: boolean,
+  config: ConfigCommon
 ): string => {
-  const config = Config.getAll();
   const { editorVersion } = config;
 
   if (isWp(config)) {
@@ -41,7 +41,7 @@ export const getExportBlocksUrls = (
       : `${url}?${params}`;
   }
 
-  const url = `${config.urls.api}/zip_template/export`;
+  const url = `${config?.urls?.api}/zip_template/export`;
   const params = objectToQueryString({
     id,
     version: editorVersion,

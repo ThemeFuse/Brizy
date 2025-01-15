@@ -5,7 +5,7 @@ import { createFont } from "visual/component/Prompts/PromptFonts/api";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { addFonts } from "visual/redux/actions2";
 import { pendingRequest } from "visual/utils/api";
-import { weightTypes } from "visual/utils/fonts";
+import { getWeightTypes } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
 import ViewAdd from "./ViewAdd";
@@ -42,6 +42,7 @@ class Variation extends Component {
 
   getAddData() {
     const { weight, ttf, eot, woff, woff2 } = this.state.keyValue;
+    const weightTypes = getWeightTypes();
 
     return [
       {
@@ -94,6 +95,7 @@ class Variation extends Component {
     const {
       data: { fontName, weights }
     } = this.context.app;
+    const weightTypes = getWeightTypes();
 
     return weights.map((weight) => ({
       id: weight,

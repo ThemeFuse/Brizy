@@ -2,7 +2,6 @@ import React, { JSX, useCallback, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BaseIntegrationContext } from "visual/component/Prompts/common/GlobalApps/type";
 import { PromptView } from "visual/component/Prompts/common/PromptView";
-import Config from "visual/global/Config";
 import { addFonts } from "visual/redux/actions2";
 import { pendingRequest } from "visual/utils/api";
 import { addAdobeFonts } from "visual/utils/api/common";
@@ -14,10 +13,10 @@ import { adobeConnectReader } from "../utils";
 import { Description } from "./components/Description";
 import { Items } from "./components/Items";
 import { OnBeforeLoadProps, Typekit } from "./types";
-import { apiKeys, getDefaultValue } from "./utils";
+import { getApiKeys, getDefaultValue } from "./utils";
 
 const AdobeConnect = (): JSX.Element => {
-  const { app, onChangePrev, onChangeNext } = useContext(Context);
+  const { app, onChangePrev, onChangeNext, config } = useContext(Context);
   const { title = "", img = "" } = isAdobeConnectData(app)
     ? adobeConnectReader(app)
     : {};
@@ -42,12 +41,11 @@ const AdobeConnect = (): JSX.Element => {
   const handleNext = useCallback(async () => {
     try {
       const typekit = apiKeyValue.typekit;
-      const config = Config.getAll();
       const keysValue = Object.values(apiKeyValue);
 
       setNextLoading(true);
 
-      const { status } = await addAdobeFonts(config, {
+      const { status } = await addAdobeFonts(config.api, {
         group: "adobe",
         key: typekit
       });
@@ -56,7 +54,7 @@ const AdobeConnect = (): JSX.Element => {
         setNextLoading(false);
         setError(t("Something went wrong when creating an account"));
       } else {
-        const result = await getAdobeFonts(config);
+        const result = await getAdobeFonts(config.api);
 
         const fonts = result.kit.families;
         const adobeKitId = result.kit.id;
@@ -82,7 +80,14 @@ const AdobeConnect = (): JSX.Element => {
       setNextLoading(false);
       setError(t("An unexpected error occurred"));
     }
-  }, [apiKeyValue, dispatch, setNextLoading, setError, onChangeNext]);
+  }, [
+    config.api,
+    apiKeyValue,
+    dispatch,
+    setNextLoading,
+    setError,
+    onChangeNext
+  ]);
 
   const handlePrev = useCallback(async () => {
     setPrevLoading(true);
@@ -90,7 +95,7 @@ const AdobeConnect = (): JSX.Element => {
     onChangePrev("appList");
   }, [setPrevLoading, onChangePrev]);
 
-  const data = apiKeys.map(({ title, name }) => ({
+  const data = getApiKeys().map(({ title, name }) => ({
     title,
     name,
     value: apiKeyValue[name as keyof Typekit]

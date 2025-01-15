@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { ToolbarItemType } from "../ToolbarItemType";
 
-export const title = t("Excerpt");
+export const title = () => t("Excerpt");
 
 const getHtml = () => {
   return `

@@ -1,11 +1,8 @@
 import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./toolbarExtend";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { DynamicStylesProps } from "visual/types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -13,23 +10,25 @@ export function style(
     };
   } = {
     ".brz && > .brz-accordion__item:not(.brz-accordion__item--active):hover": {
-      standart: [
-        "cssStyleBoxShadow",
-        "cssStyleBorder",
-        "cssStyleColor",
-        "cssStyleBgColor"
-      ],
+      standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBgColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && > .brz-accordion__item:not(.brz-accordion__item--active):hover .brz-accordion__nav":
+      {
+        standart: ["cssStyleColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz && > .brz-accordion__item:hover": {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz && > .brz-accordion__item.brz-accordion__item--active": {
       standart: [
-        "cssStyleElementAccordionActiveColor",
         "cssStyleElementAccordionActiveBgColor",
         "cssStyleElementAccordionActiveBorder",
         "cssStyleElementAccordionActiveShadow"
@@ -39,6 +38,14 @@ export function style(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && > .brz-accordion__item.brz-accordion__item--active > .brz-accordion__nav":
+      {
+        standart: ["cssStyleElementAccordionActiveColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz && > .brz-accordion__item > .brz-accordion__nav": {
       standart: [
         "cssStyleElementAccordionNavAlign",
@@ -143,14 +150,10 @@ export function style(
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-2.brz-accordion__filter__item--active":
       { standart: ["cssStyleElementAccordionFilterActiveColor"] }
   };
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleAnimation(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleAnimation<T>(data: DynamicStylesProps<T>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -162,5 +165,5 @@ export function styleAnimation(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

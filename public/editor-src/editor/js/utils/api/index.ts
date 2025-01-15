@@ -5,6 +5,7 @@ import { isShopifyShop } from "visual/global/Config/types/configs/Base";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
+
 export * from "./cms";
 export * from "./cms/popup";
 export {
@@ -79,15 +80,19 @@ export { makeFormEncode, makeUrl, parseJSON } from "./utils";
 
 export function request(
   url: string,
-  config: RequestInit = {}
+  config: RequestInit = {},
+  _globalConfig?: ConfigCommon
 ): Promise<Response> {
+  const globalConfig = _globalConfig ?? Config.getAll();
+  const { tokenV1, editorVersion } = globalConfig;
+
   if (TARGET === "Cloud-localhost") {
     return fetch(url, {
       ...config,
       headers: {
         ...config.headers,
-        "x-editor-version": Config.get("editorVersion"),
-        "x-auth-user-token": Config.get("tokenV1")
+        "x-editor-version": editorVersion,
+        "x-auth-user-token": tokenV1 ?? ""
       }
     });
   } else {
@@ -96,7 +101,7 @@ export function request(
       ...config,
       headers: {
         ...config.headers,
-        "x-editor-version": Config.get("editorVersion")
+        "x-editor-version": editorVersion
       }
     });
   }

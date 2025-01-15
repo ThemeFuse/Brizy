@@ -1,17 +1,17 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { EcwidProductThumb, Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
+  const borderColor = getColor(
+    dvv("thumbnailBorderColorPalette"),
     dvv("thumbnailBorderColorHex"),
-    dvv("thumbnailBorderColorPalette")
+    dvv("thumbnailBorderColorOpacity")
   );
   const thumbStyle = dvv("thumbStyle");
 
@@ -116,10 +116,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              borderColorHex,
-              dvv("thumbnailBorderColorOpacity")
-            )
+            backgroundColor: borderColor
           }
         }
       },

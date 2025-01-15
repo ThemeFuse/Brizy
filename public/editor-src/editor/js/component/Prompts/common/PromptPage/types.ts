@@ -23,7 +23,7 @@ export enum Tabs {
   settings = "settings-tab"
 }
 
-export const tabs = [
+export const getTabs = () => [
   {
     id: Tabs.settings,
     icon: "nc-settings",

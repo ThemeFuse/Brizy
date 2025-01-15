@@ -45,6 +45,10 @@ export class AuthError extends CustomError {
   name = "Auth";
 }
 
+export class ConfigError extends CustomError {
+  name = "Config";
+}
+
 // Error Codes
 
 // polling

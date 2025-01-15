@@ -2,15 +2,16 @@ import classNames from "classnames";
 import React, {
   ComponentProps,
   ComponentType,
-  createElement,
-  forwardRef,
   PropsWithChildren,
   PropsWithRef,
   ReactElement,
   Ref,
-  RefObject
+  RefObject,
+  createElement,
+  forwardRef
 } from "react";
 import UIEvents from "visual/global/UIEvents";
+import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { WithClassName } from "visual/types/attributes";
 import { AnimationEvents } from "visual/utils/animation";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -70,17 +71,19 @@ class _Animation<
     this.mounted = true;
     this.updateRef();
 
+    const node = this.ref.current;
+
     if (this.props.animationClass) {
       this.animationStartedId = requestAnimationFrame(() => {
         this.handleAnimationStarted();
       });
 
-      mApply(
-        (n) => Observer.connect(n, this.handleIntersection),
-        this.ref.current
-      );
-      this.ref.current?.addEventListener("animationend", () => {
-        if (this.mounted) {
+      mApply((n) => Observer.connect(n, this.handleIntersection), node);
+
+      node?.addEventListener("animationend", (e) => {
+        const target = e.target as HTMLElement | null;
+
+        if (this.mounted && target && node.isEqualNode(target)) {
           this.handleAnimationFinished();
           this.setState({
             animationClass: "none"
@@ -94,19 +97,20 @@ class _Animation<
     this.updateRef();
 
     if (prevProps.animationClass !== this.props.animationClass) {
+      const node = this.ref.current;
+
       if (this.props.animationClass) {
         this.handleAnimationStarted();
-        mApply(
-          (n) => Observer.connect(n, this.handleIntersection),
-          this.ref.current
-        );
+        mApply((n) => Observer.connect(n, this.handleIntersection), node);
 
         mApply(cancelAnimationFrame, this.updateId);
         this.updateId = requestAnimationFrame(() => {
           this.setState({ animationClass: this.props.animationClass });
 
-          this.ref.current?.addEventListener("animationend", () => {
-            if (this.mounted) {
+          node?.addEventListener("animationend", (e) => {
+            const target = e.target as HTMLElement | null;
+
+            if (this.mounted && target && node.isEqualNode(target)) {
               this.setState({
                 animationClass: "none"
               });
@@ -115,7 +119,7 @@ class _Animation<
           });
         });
       } else {
-        mApply(Observer.disconnect, this.ref.current);
+        mApply(Observer.disconnect, node);
         this.handleAnimationFinished();
       }
     }
@@ -200,7 +204,12 @@ class _Animation<
   }
 
   render(): ReactElement {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return (
+      <RenderFor
+        forEdit={this.renderForEdit()}
+        forView={this.renderForView()}
+      />
+    );
   }
 
   ref: RefObject<Element> = React.createRef<Element>();

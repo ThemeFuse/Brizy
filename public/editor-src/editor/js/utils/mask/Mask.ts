@@ -1,7 +1,7 @@
 import { Choice } from "visual/component/Options/types/dev/Select/types";
 import { t } from "../i18n";
 
-export const MaskShapes: Choice[] = [
+export const getMaskShapes = (): Choice[] => [
   { title: t("None"), value: "none" },
   { title: "", value: "circle", icon: { name: "nc-mask-shape-circle" } },
   { title: "", value: "rhombus", icon: { name: "nc-mask-shape-rhombus" } },
@@ -25,7 +25,7 @@ export const MaskShapes: Choice[] = [
   { title: t("Custom"), value: "custom" }
 ];
 
-export const MaskPositions: Choice[] = [
+export const getMaskPositions = (): Choice[] => [
   { title: t("Center Center"), value: "center center" },
   { title: t("Center Left"), value: "center left" },
   { title: t("Center Right"), value: "center right" },
@@ -38,7 +38,7 @@ export const MaskPositions: Choice[] = [
   { title: t("Custom"), value: "custom" }
 ];
 
-export const MaskRepeat: Choice[] = [
+export const getMaskRepeat = (): Choice[] => [
   { title: t("No Repeat"), value: "no-repeat" },
   { title: t("Repeat"), value: "repeat" },
   { title: t("Repeat-X"), value: "repeat-x" },
@@ -47,7 +47,7 @@ export const MaskRepeat: Choice[] = [
   { title: t("Round"), value: "round" }
 ];
 
-export const MaskSizes: Choice[] = [
+export const getMaskSizes = (): Choice[] => [
   { title: t("Fit"), value: "contain" },
   { title: t("Fill"), value: "cover" },
   { title: t("Custom"), value: "custom" }

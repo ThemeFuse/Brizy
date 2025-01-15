@@ -1,7 +1,8 @@
 import { isT } from "fp-utilities";
 import _ from "underscore";
-import Config, { isWp } from "visual/global/Config";
+import { isWp } from "visual/global/Config";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   isCloud,
   isCollectionPage
@@ -12,10 +13,10 @@ import {
   CollectionItemRule,
   CollectionTypeRule,
   GlobalBlock,
+  isWPPage,
   Page,
   PageCollection,
-  Rule,
-  isWPPage
+  Rule
 } from "visual/types";
 import {
   isReferenceAllAuthor,
@@ -31,12 +32,12 @@ import {
 } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { isTemplate } from "visual/utils/models";
 import {
-  CUSTOMER_TYPE,
-  TEMPLATES_GROUP_ID,
-  TEMPLATE_TYPE,
   createEntityValue,
+  CUSTOMER_TYPE,
   getCurrentRule,
-  getEntityValue
+  getEntityValue,
+  TEMPLATE_TYPE,
+  TEMPLATES_GROUP_ID
 } from "./blocksConditions";
 import {
   isAllRule,
@@ -52,16 +53,20 @@ interface FieldsReferences {
   fieldId: string;
 }
 
-export function getAllowedGBIds(
-  pageBlocksIds: Page["id"][],
-  globalBlocks: ReduxState["globalBlocks"],
-  page: ReduxState["page"]
-): string[] {
+interface AllowedGBIds {
+  pageBlocksIds: Page["id"][];
+  globalBlocks: ReduxState["globalBlocks"];
+  page: ReduxState["page"];
+  config: ConfigCommon;
+}
+
+export function getAllowedGBIds(data: AllowedGBIds): string[] {
+  const { globalBlocks, pageBlocksIds, page, config } = data;
   return Object.entries(globalBlocks).reduce<string[]>(
     (acc, [currentGlobalBlockId, globalBlock]) => {
       const isInPage = pageBlocksIds.includes(currentGlobalBlockId);
 
-      if (!isInPage && canUseCondition(globalBlock, page)) {
+      if (!isInPage && canUseCondition({ globalBlock, page, config })) {
         acc.push(currentGlobalBlockId);
       }
 
@@ -71,26 +76,31 @@ export function getAllowedGBIds(
   );
 }
 
-export function canUseCondition(globalBlock: GlobalBlock, page: Page): boolean {
+interface Data {
+  globalBlock: GlobalBlock;
+  page: Page;
+  config: ConfigCommon;
+}
+
+export function canUseCondition(data: Data): boolean {
+  const { globalBlock, config } = data;
   if (isPopup(globalBlock.data)) {
     return true;
   }
 
-  return isTemplate(Config.getAll())
-    ? canUseConditionInTemplates(globalBlock, page)
-    : canUseConditionInPage(globalBlock, page);
+  return isTemplate(config)
+    ? canUseConditionInTemplates(data)
+    : canUseConditionInPage(data);
 }
 
-export function canUseConditionInTemplates(
-  { rules }: GlobalBlock,
-  page: Page
-): boolean {
-  const config = Config.getAll();
+export function canUseConditionInTemplates(data: Data): boolean {
+  const { config, globalBlock, page } = data;
 
   if (!isWp(config)) {
     return false;
   }
 
+  const rules = globalBlock.rules;
   const { ruleMatches } = config.wp;
 
   const templateCondition = rules.find((rule) => {
@@ -231,8 +241,15 @@ interface SplitRules {
   level3: AllRule | undefined;
 }
 
-export function pageSplitRules(rules: Rule[] = [], page: Page): SplitRules {
-  const currentRule = getCurrentRule(page);
+interface RuleData {
+  rules: Rule[];
+  page: Page;
+  config: ConfigCommon;
+}
+
+export function pageSplitRules(data: RuleData): SplitRules {
+  const { rules = [], page, config } = data;
+  const currentRule = getCurrentRule(page, config);
 
   return rules.reduce<SplitRules>(
     (acc, rule) => {
@@ -327,9 +344,10 @@ export function pageCMSSplitRules(
   return { referenceSingle, referenceAll };
 }
 
-function pageCustomerSplitRules(rules: Rule[]): Rule | undefined {
-  const config = Config.getAll();
-
+function pageCustomerSplitRules(
+  rules: Rule[],
+  config: ConfigCommon
+): Rule | undefined {
   if (isCloud(config) && isCustomerPage(config.page)) {
     const groups = config.availableRoles;
 
@@ -349,18 +367,18 @@ function pageCustomerSplitRules(rules: Rule[]): Rule | undefined {
   return undefined;
 }
 
-function pageWPSplitRules(rules: Rule[] = [], page: Page): ReferenceRule {
-  const config = Config.getAll();
+function pageWPSplitRules(data: RuleData): ReferenceRule {
+  const { rules = [], page, config } = data;
   const r = {
     referenceAll: undefined,
     referenceSingle: undefined
   };
 
-  if (!isWp(config) || !isWPPage(page)) {
+  if (!isWp(config) || !isWPPage(page, config)) {
     return r;
   }
 
-  const currentRule = getCurrentRule(page);
+  const currentRule = getCurrentRule(page, config);
   const { postAuthor, postTermParents, postTerms } = config.wp;
 
   const referenceRule = rules.filter(
@@ -426,20 +444,15 @@ function pageWPSplitRules(rules: Rule[] = [], page: Page): ReferenceRule {
   };
 }
 
-export function canUseConditionInPage(
-  globalBlock: GlobalBlock,
-  page: Page
-): boolean {
+export function canUseConditionInPage(data: Data): boolean {
+  const { globalBlock, page, config } = data;
+
   if (!globalBlock) {
     // Normally it should never happen.
     // Some projects has globalBlock into pageJson and doesn't have it into globalBlocks
     // and preview corrupts
-    if (IS_EDITOR) {
-      throw Error("GlobalBlock should exist");
-    } else {
-      // block will be ignored by compiler
-      return false;
-    }
+    console.error("Global block don't exists");
+    return false;
   }
 
   const { rules } = globalBlock;
@@ -448,13 +461,13 @@ export function canUseConditionInPage(
     level1: level1Rule,
     level2: level2Rule,
     level3: level3Rule
-  } = pageSplitRules(rules, page);
+  } = pageSplitRules({ rules, page, config });
 
   const referenceRule = pageCMSSplitRules(rules, page);
 
-  const wpReferenceRule = pageWPSplitRules(rules, page);
+  const wpReferenceRule = pageWPSplitRules({ rules, page, config });
 
-  const referenceCustomerRule = pageCustomerSplitRules(rules);
+  const referenceCustomerRule = pageCustomerSplitRules(rules, config);
 
   if (level1Rule) {
     return isIncludeCondition(level1Rule);

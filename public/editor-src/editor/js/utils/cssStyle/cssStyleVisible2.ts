@@ -1,11 +1,12 @@
-import { getMembershipRoles, Role } from "visual/utils/membership";
-import Config, { Config as ConfigType } from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { configSelector } from "visual/redux/selectors";
 import * as Arr from "visual/utils/array";
-import { CSSValue } from "visual/utils/style2/types";
+import { Role, getMembershipRoles } from "visual/utils/membership";
 import {
-  getTranslationsLanguages,
-  Language
+  Language,
+  getTranslationsLanguages
 } from "visual/utils/multilanguages";
+import { CSSValue } from "visual/utils/style2/types";
 
 type Value = {
   membership: "on" | "off";
@@ -17,7 +18,7 @@ type Value = {
 const getRolesData = (
   membership: "on" | "off",
   membershipRoles: string,
-  config: ConfigType
+  config: ConfigCommon
 ): {
   cssRoles: string;
   rolesCount: number;
@@ -54,7 +55,7 @@ const getRolesData = (
 
   const cssRoles =
     otherRoles
-      .map(item => `var(--role-${item}`)
+      .map((item) => `var(--role-${item}`)
       .join(", ")
       .replace(/\//g, "") + ",";
 
@@ -67,7 +68,7 @@ const getRolesData = (
 const getLangsData = (
   translations: "on" | "off",
   translationsLangs: string,
-  config: ConfigType
+  config: ConfigCommon
 ): {
   cssLangs: string;
   langsCount: number;
@@ -88,7 +89,7 @@ const getLangsData = (
 
   const cssLangs =
     otherLangs
-      .map(item => `var(--lang-${item}`)
+      .map((item) => `var(--lang-${item}`)
       .join(", ")
       .replace(/\//g, "") + ",";
 
@@ -100,10 +101,9 @@ const getLangsData = (
 
 function cssStyleShowEditorSection(
   v: Value,
-  display: "block" | "flex"
+  display: "block" | "flex",
+  config: ConfigCommon
 ): string {
-  const config = Config.getAll();
-
   const { membership, membershipRoles, translations, translationsLangs } = v;
 
   const rolesData = getRolesData(membership, membershipRoles, config);
@@ -120,10 +120,12 @@ function cssStyleShowEditorSection(
   return `display: ${_cssRoles} ${_cssLangs} ${display}${closeParentheses};`;
 }
 
-export function cssStyleShowBlock({ v }: CSSValue<Value>): string {
-  return cssStyleShowEditorSection(v, "block");
+export function cssStyleShowBlock({ v, store }: CSSValue<Value>): string {
+  const config = configSelector(store.getState());
+  return cssStyleShowEditorSection(v, "block", config);
 }
 
-export function cssStyleShowFlex({ v }: CSSValue<Value>): string {
-  return cssStyleShowEditorSection(v, "flex");
+export function cssStyleShowFlex({ v, store }: CSSValue<Value>): string {
+  const config = configSelector(store.getState());
+  return cssStyleShowEditorSection(v, "flex", config);
 }

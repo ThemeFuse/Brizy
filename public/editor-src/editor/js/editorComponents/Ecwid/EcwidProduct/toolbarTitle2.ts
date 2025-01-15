@@ -1,16 +1,16 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: title2ColorHex } = getOptionColorHexByPalette(
+  const title2Color = getColor(
+    dvv("title2ColorPalette"),
     dvv("title2ColorHex"),
-    dvv("title2ColorPalette")
+    dvv("title2ColorOpacity")
   );
 
   return [
@@ -63,10 +63,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              title2ColorHex,
-              dvv("title2ColorOpacity")
-            )
+            backgroundColor: title2Color
           }
         }
       },

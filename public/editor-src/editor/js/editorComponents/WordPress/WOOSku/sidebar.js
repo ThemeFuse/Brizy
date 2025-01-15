@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Product SKU");
+export const title = () => t("Product SKU");
 
 const getHtml = () => {
   return `

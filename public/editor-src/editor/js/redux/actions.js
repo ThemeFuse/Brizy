@@ -22,7 +22,9 @@ export function hydrate({
   page,
   globalBlocks,
   authorized,
-  syncAllowed
+  syncAllowed,
+  config,
+  configId
 }) {
   return {
     type: HYDRATE,
@@ -33,7 +35,9 @@ export function hydrate({
       page,
       globalBlocks,
       authorized,
-      syncAllowed
+      syncAllowed,
+      config,
+      configId
     }
   };
 }

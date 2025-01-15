@@ -1,7 +1,7 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
 
-export const title = t("Twitter");
+export const title = () => t("Twitter");
 
 const getHtml = () => {
   return `

@@ -11,6 +11,7 @@ import {
   TABLET
 } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
+import { Store } from "visual/redux/store";
 
 const transformIsActive = (v: ValuePartial): boolean =>
   !!(v.rotate || v.flip || v.offset || v.scale || v.skew);
@@ -25,7 +26,8 @@ const getter =
       state: NORMAL
     });
 
-export const hasTransform = (v: ElementModel): boolean => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const hasTransform = (v: ElementModel, _: Store): boolean => {
   const getDesktop = getter(DESKTOP, v);
   const getTablet = getter(TABLET, v);
   const getMobile = getter(MOBILE, v);

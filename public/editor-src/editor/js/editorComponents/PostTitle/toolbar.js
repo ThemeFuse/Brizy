@@ -1,30 +1,29 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isPopup } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   getDynamicContentChoices,
-  getDynamicContentOption,
-  getOptionColorHexByPalette
+  getDynamicContentOption
 } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 
-export function getItems({ v, device, component, context }) {
-  const config = Config.getAll();
+export function getItems({ v, device, component, context, editorMode }) {
+  const config = component.getGlobalConfig();
 
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isPopup = isPopup(editorMode);
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   const linkPopup = dvv("linkPopup");
@@ -102,7 +101,7 @@ export function getItems({ v, device, component, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: color
           }
         }
       },
@@ -228,7 +227,7 @@ export function getItems({ v, device, component, context }) {
                   v,
                   device,
                   state: "normal",
-                  disabled: IS_GLOBAL_POPUP
+                  disabled: _isPopup
                 })
               ]
             },
@@ -246,7 +245,7 @@ export function getItems({ v, device, component, context }) {
                   },
                   disabled:
                     device === "desktop"
-                      ? inPopup || inPopup2 || IS_GLOBAL_POPUP
+                      ? inPopup || inPopup2 || _isPopup
                       : dvv("linkType") !== "popup" || linkPopup === "",
                   dependencies: popupToOldModel
                 }

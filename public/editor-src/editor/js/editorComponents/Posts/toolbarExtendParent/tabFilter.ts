@@ -1,7 +1,7 @@
 import { Str } from "@brizy/readers";
 import { Props as TabsOptionProps } from "visual/component/Options/types/dev/Tabs";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { loadCollectionItems, searchCollectionItems } from "visual/utils/api";
 import { ArrayType } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
@@ -20,10 +20,9 @@ type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
 export function tabFilter(
   v: V,
   context: Context,
-  componentConfig: MValue<CloudComponentConfig>
+  componentConfig: MValue<CloudComponentConfig>,
+  config: ConfigCommon
 ): TabOptionType {
-  const config = Config.getAll();
-
   const vd = decodeV(v);
 
   const { exclude, querySource, getIncludeDisabledValue } =
@@ -65,13 +64,15 @@ export function tabFilter(
     vd,
     context,
     disabled: !isPosts || isCurrentQuery || isIncludeDisabled,
-    componentConfig
+    componentConfig,
+    config
   });
   const excludeBy = getIncludeExclude({
     type: "exclude",
     vd,
     context,
-    disabled: !isPosts || isCurrentQuery || disableExclude
+    disabled: !isPosts || isCurrentQuery || disableExclude,
+    config
   });
 
   return {
@@ -142,6 +143,7 @@ interface IncExcl {
   context: Context;
   disabled: boolean;
   componentConfig?: CloudComponentConfig;
+  config: ConfigCommon;
 }
 
 function getIncludeExclude({
@@ -149,10 +151,9 @@ function getIncludeExclude({
   vd,
   context,
   disabled,
-  componentConfig
+  componentConfig,
+  config
 }: IncExcl): ToolbarItemType {
-  const config = Config.getAll();
-
   const include = type === "include";
   const prefix = include ? "inc" : "exc";
   const { source, component } = vd;
@@ -228,8 +229,13 @@ function getIncludeExclude({
     });
 
   if (vd.symbols[lvl1SymbolId]?.includes("manual")) {
+    const manualId =
+      typeof componentConfig?.getManualId === "function"
+        ? componentConfig?.getManualId(source)
+        : undefined;
+
     const id =
-      Str.read(componentConfig?.manualId) ??
+      Str.read(manualId) ??
       context.collectionTypesInfo?.sources.find((c) => c.id === source)?.id;
 
     if (id) {

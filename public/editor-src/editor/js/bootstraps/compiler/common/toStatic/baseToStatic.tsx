@@ -1,19 +1,13 @@
 import cheerio from "cheerio";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import ReactDOMServer from "react-dom/server";
-import { Provider } from "react-redux";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
   fontsSelector,
   getDefaultFontDetailsSelector
 } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
-import {
-  clearCache as clearCSSCache,
-  css,
-  getCSSFromCache
-} from "visual/utils/cssStyle";
 import {
   clearFamilyCache,
   getUsedModelFontFamily
@@ -28,31 +22,22 @@ import { Output } from "./types";
 
 interface Props {
   store: Store;
-  config: ConfigCommon;
   Page: ReactElement;
+  sheet: Sheet;
 }
 
-export const baseToStatic = async (props: Props): Promise<Output> => {
-  const { store, Page } = props;
+export const baseToStatic = (props: Props): Output => {
+  const { store, sheet, Page } = props;
   const reduxState = store.getState();
   const projectDefaultFontId = defaultFontSelector(reduxState);
-
-  // @ts-expect-error: === TMP SSR ===
-  css.isServer = true;
-  // ===========
-
-  // Clear all css before execute
-  clearCSSCache();
 
   // Clear all extracted FontFamilies
   clearFamilyCache();
 
-  const html = ReactDOMServer.renderToStaticMarkup(
-    <Provider store={store}>{Page}</Provider>
-  );
+  const html = ReactDOMServer.renderToStaticMarkup(Page);
 
   // === Extract all css from CSS generator ===
-  const dynamicCss = getCSSFromCache();
+  const dynamicCss = sheet.getStyles();
   // ===========
 
   const $pageHTML = cheerio.load(
@@ -65,7 +50,7 @@ export const baseToStatic = async (props: Props): Promise<Output> => {
     { decodeEntities: false }
   );
 
-  changeRichText($pageHTML);
+  changeRichText($pageHTML, store);
   changeMenuUid($pageHTML);
   customAttributes($pageHTML);
 
@@ -90,7 +75,7 @@ export const baseToStatic = async (props: Props): Promise<Output> => {
   const body = dynamicContent($pageHTML("body").html() ?? "");
 
   // Clear all css after execute
-  clearCSSCache();
+  sheet.purge();
 
   // Clear all extracted FontFamilies
   clearFamilyCache();

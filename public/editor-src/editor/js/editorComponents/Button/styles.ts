@@ -1,18 +1,22 @@
-import { DeviceMode } from "visual/types";
+import { isEditor } from "visual/providers/RenderProvider";
+import { DeviceMode, DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Value } from "./types";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value,
-  hasSizing: boolean,
-  device: DeviceMode
-): [string, string, string] {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+interface BaseData extends DynamicStylesProps<Value> {
+  hasSizing: boolean;
+  device: DeviceMode;
+}
 
+export function style(data: BaseData): OutputStyle {
+  const { hasSizing, device, ...baseData } = data;
+  const { renderContext } = baseData;
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v: baseData.v, key, device });
+
+  const _isEditor = isEditor(renderContext);
   const type = dvv("type");
   const submitType = type === "submit";
 
@@ -28,7 +32,7 @@ export function style(
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
         "cssStyleColor",
-        ...(hasSizing && IS_EDITOR && !submitType ? [] : ["cssStyleBorder"]),
+        ...(hasSizing && _isEditor && !submitType ? [] : ["cssStyleBorder"]),
         "cssStyleBorderRadiusType",
         "cssStyleBoxShadow",
         "cssStylePaddingFourFields",
@@ -71,12 +75,12 @@ export function style(
     },
     ".brz &&:hover:after": {
       standart:
-        (hasSizing && IS_EDITOR) || submitType
+        (hasSizing && _isEditor) || submitType
           ? []
           : ["cssStyleSizeHeightPercentOnly"]
     },
     ".brz &&:hover > .brz-ed-box__resizer": {
-      standart: IS_EDITOR
+      standart: _isEditor
         ? ["cssStyleDisplayFlex", "cssStyleElementButtonIconPosition"]
         : []
     },
@@ -96,14 +100,10 @@ export function style(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...baseData, styles });
 }
 
-export function styleIcon(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleIcon(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
     ".brz &&:hover": {
       standart: [
@@ -114,13 +114,11 @@ export function styleIcon(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
 export function styleButtonFillAnimation(
-  v: Value,
-  vs: Value,
-  vd: Value
+  data: DynamicStylesProps<Value>
 ): OutputStyle {
   const styles: Styles = {
     ".brz &&.brz-btn--hover:not(.brz-btn--hover-in), .brz &&.brz-btn--hover-in:before":
@@ -144,5 +142,5 @@ export function styleButtonFillAnimation(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

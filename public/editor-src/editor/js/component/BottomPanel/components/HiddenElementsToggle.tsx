@@ -1,19 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
+import { useEditorMode } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
 import { showHiddenElementsSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { BottomPanelItem } from "./Item";
 
 function HiddenElementsToggle(): JSX.Element {
   const dispatch = useDispatch();
   const showHiddenElements = useSelector(showHiddenElementsSelector);
+  const editorMode = useEditorMode();
 
   // ! write less hacky later
-  if (isStory(Config.getAll())) {
+  if (isStory(editorMode)) {
     return <></>;
   }
 

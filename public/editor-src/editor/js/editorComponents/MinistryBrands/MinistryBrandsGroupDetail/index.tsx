@@ -5,9 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import {
   sidebarMinistryBrandsMetaCategory,
@@ -29,7 +27,7 @@ import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarParagraph from "../toolbarParagraph";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
-import { EkklesiaMessages } from "../utils/helpers";
+import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -40,6 +38,7 @@ export class MinistryBrandsGroupDetail extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsGroupDetail" {
     return "MinistryBrandsGroupDetail";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -56,14 +55,15 @@ export class MinistryBrandsGroupDetail extends EditorComponent<Value, Props> {
 
     this.props.extendParentToolbar(toolbarExtend);
     const { groupsRecent } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [{ value: { groupsRecent }, module: { key: "smallgroups" } }]
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["group_detail"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["group_detail"]);
       this.patchValue(changedKeys);
     }
   }
@@ -72,7 +72,17 @@ export class MinistryBrandsGroupDetail extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-groupDetail__wrapper",
       "brz-ministryBrands",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

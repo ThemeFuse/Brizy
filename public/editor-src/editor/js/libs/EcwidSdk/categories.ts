@@ -1,6 +1,8 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { EcwidCategoryId } from "visual/global/Ecwid";
 import { request } from "../../utils/api";
 import { Category } from "./types/Category";
+
 
 /**
  * https://api-docs.ecwid.com/reference/get-categories
@@ -40,14 +42,18 @@ export class Categories {
    *
    * https://api-docs.ecwid.com/reference/search-products
    */
-  search(): Promise<CategoriesList> {
-    return request(`${this.baseUrl}/categories`).then((r) => r.json());
+  search(config: ConfigCommon): Promise<CategoriesList> {
+    return request(`${this.baseUrl}/categories`, {}, config).then((r) =>
+      r.json()
+    );
   }
 
   /**
    * Get all details of a specific category in an Ecwid store by its ID.
    */
-  getById(id: EcwidCategoryId): Promise<Category> {
-    return request(`${this.baseUrl}/categories/${id}`).then((r) => r.json());
+  getById(id: EcwidCategoryId, config: ConfigCommon): Promise<Category> {
+    return request(`${this.baseUrl}/categories/${id}`, {}, config).then((r) =>
+      r.json()
+    );
   }
 }

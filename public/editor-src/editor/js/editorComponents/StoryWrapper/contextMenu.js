@@ -1,7 +1,7 @@
-import Editor from "visual/global/Editor";
+import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 import { t } from "visual/utils/i18n";
 
-const translationsMap = {
+const getTranslationsMap = () => ({
   RichText: t("Text"),
   Image: t("Image"),
   Video: t("Video"),
@@ -57,25 +57,27 @@ const translationsMap = {
   Shape: t("Shape"),
   Icon: t("Icon"),
   Button: t("Button")
-};
+});
 
 export default {
   getItems
 };
 
-function getItems(v) {
-  const { essentials } = Editor.getShortcodes();
+function getItems(v, component) {
+  const config = component.getGlobalConfig();
+  const { essentials } = getFlatShortcodes(config);
 
   const { icon = "" } =
     essentials?.find(
       (item) => item.component.resolve.value.items?.type === v.items[0].type
     ) || {};
+  const translations = getTranslationsMap();
 
   return [
     {
       id: "main",
       type: "group",
-      title: translationsMap[v.items[0].type], // TODO: See if we'll need icons & prop
+      title: translations[v.items[0].type], // TODO: See if we'll need icons & prop
       icon,
       items: []
     }

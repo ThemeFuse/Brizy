@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiText } from "visual/component/Controls/AiText";
 import { ToastNotification } from "visual/component/Notifications";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { sendToAi } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import {
@@ -14,7 +14,7 @@ export const Ai: Component = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
 
-  const config = Config.getAll();
+  const config = useConfig();
 
   let pureValue = purifyTextContent(props.value.value);
   let pureSelectedValue = "";

@@ -3,7 +3,7 @@ import {
   fontsSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
 import { Font } from "visual/types";
 import { ArrayType, NonEmptyArray } from "visual/utils/array/types";
@@ -42,10 +42,9 @@ export const getGroupFontsById = (fonts: RFonts, id: string): GroupFontById => {
   }, undefined as GroupFontById);
 };
 
-export const getDefaultFont = (): DefaultFont => {
-  const store = getStore().getState();
-  const font = defaultFontSelector(store);
-  const fonts = fontsSelector(store);
+export const getDefaultFont = (state: ReduxState): DefaultFont => {
+  const font = defaultFontSelector(state);
+  const fonts = fontsSelector(state);
 
   const groups = getGroupFontsById(fonts, font);
 
@@ -63,13 +62,15 @@ export const getDefaultFont = (): DefaultFont => {
 export const getFontById = ({
   type,
   family,
-  fonts
+  fonts,
+  store
 }: {
   type: ModelFamilyType;
   family: string;
   fonts?: ReduxState["fonts"];
+  store: Store;
 }): FontById => {
-  const _fonts = fonts ?? unDeletedFontsSelector(getStore().getState());
+  const _fonts = fonts ?? unDeletedFontsSelector(store.getState());
 
   const usedFonts = projectFontsData(_fonts);
 
@@ -81,7 +82,7 @@ export const getFontById = ({
     return fontTransform[type](font);
   }
 
-  const defaultFont = getDefaultFont();
+  const defaultFont = getDefaultFont(store.getState());
   const getFont = fontTransform[defaultFont.group];
 
   return getFont(defaultFont.font);

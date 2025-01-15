@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 export default class TextField extends Component {
@@ -44,10 +45,11 @@ export default class TextField extends Component {
   }
 
   render() {
-    const { _id, label, required, type } = this.props;
+    const { _id, label, required, type, renderContext } = this.props;
 
+    const _isEditor = isEditor(renderContext);
     let props;
-    if (IS_EDITOR) {
+    if (_isEditor) {
       props = {
         ref: this.content,
         type: "text",
@@ -68,6 +70,6 @@ export default class TextField extends Component {
       };
     }
 
-    return IS_EDITOR ? this.renderForEdit(props) : this.renderForView(props);
+    return _isEditor ? this.renderForEdit(props) : this.renderForView(props);
   }
 }

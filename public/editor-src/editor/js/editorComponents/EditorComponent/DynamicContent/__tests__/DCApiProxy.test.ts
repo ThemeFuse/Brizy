@@ -1,4 +1,5 @@
 import Base64 from "js-base64";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   BatchFetcher,
   DCApiProxyConfig,
@@ -8,10 +9,14 @@ import { dcApiProxyTestFetcher } from "../utils";
 
 jest.useFakeTimers();
 
+const emptyGlobalConfig = {} as ConfigCommon;
 const mockFetcher = () => jest.fn(dcApiProxyTestFetcher);
 
 describe("Testing 'DCApiProxy'", function () {
-  const config = (postId: string) => ({ postId });
+  const config = (postId: string) => ({
+    postId,
+    globalConfig: emptyGlobalConfig
+  });
   const fetcher = mockFetcher();
   const DCApiProxy = new DCApiProxy_({
     fetcher: new BatchFetcher(fetcher)
@@ -131,7 +136,8 @@ describe("Testing 'DCApiProxy'", function () {
   test("Should not cache responses if told so", async () => {
     const config = {
       postId: "p5",
-      cache: false
+      cache: false,
+      globalConfig: emptyGlobalConfig
     };
     const p1 = DCApiProxy.getDC(
       [
@@ -223,7 +229,10 @@ describe("Testing 'BatchFetcher'", () => {
     expectedPlaceholders: { [postId: string]: string[] };
   }
 
-  const config: (postId: string) => DCApiProxyConfig = (postId) => ({ postId });
+  const config: (postId: string) => DCApiProxyConfig = (postId) => ({
+    postId,
+    globalConfig: emptyGlobalConfig
+  });
 
   test.each<[BatchFetcherTestArgs]>([
     //#region 1 postId

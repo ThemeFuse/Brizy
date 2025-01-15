@@ -1,5 +1,11 @@
+import { Num as NumReader } from "@brizy/readers";
+import { ElementModel } from "visual/component/Elements/Types";
 import { wInFullPage } from "visual/config/columns";
-
+import * as Num from "visual/utils/math";
+import { defaultValueValue } from "visual/utils/onChange";
+import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { State as StateMode } from "visual/utils/stateMode";
+import * as Str from "visual/utils/string";
 import {
   styleBorderWidthGrouped,
   styleBorderWidthType,
@@ -15,12 +21,6 @@ import {
   stylePaddingUngroupedSuffix
 } from "visual/utils/style2";
 import { percentageToPixels } from "./percentageToPixels";
-import { defaultValueValue } from "visual/utils/onChange";
-import * as Num from "visual/utils/math";
-import * as Str from "visual/utils/string";
-import { ElementModel } from "visual/component/Elements/Types";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State as StateMode } from "visual/utils/stateMode";
 
 interface Margin {
   w: number;
@@ -73,31 +73,40 @@ interface WrapperContainerW {
 export const getMargin = ({ w, v, device, state, type }: Margin): number => {
   switch (type) {
     case "grouped": {
+      const margin =
+        NumReader.read(styleMarginGrouped({ v, device, state })) ?? 0;
+
       return percentageToPixels(
-        styleMarginGrouped({ v, device, state }) * 2,
+        margin * 2,
         styleMarginGroupedSuffix({ v, device, state }),
         w
       );
     }
     case "ungrouped": {
-      const left = styleMarginUngrouped({
-        v,
-        device,
-        state,
-        current: "marginLeft"
-      });
+      const left =
+        NumReader.read(
+          styleMarginUngrouped({
+            v,
+            device,
+            state,
+            current: "marginLeft"
+          })
+        ) ?? 0;
       const leftSuffix = styleMarginUngroupedSuffix({
         v,
         device,
         state,
         current: "marginLeftSuffix"
       });
-      const right = styleMarginUngrouped({
-        v,
-        device,
-        state,
-        current: "marginRight"
-      });
+      const right =
+        NumReader.read(
+          styleMarginUngrouped({
+            v,
+            device,
+            state,
+            current: "marginRight"
+          })
+        ) ?? 0;
       const rightSuffix = styleMarginUngroupedSuffix({
         v,
         device,
@@ -119,31 +128,40 @@ export const getMargin = ({ w, v, device, state, type }: Margin): number => {
 export const getPadding = ({ w, v, device, state, type }: Padding): number => {
   switch (type) {
     case "grouped": {
+      const padding =
+        NumReader.read(stylePaddingGrouped({ v, device, state })) ?? 0;
+
       return percentageToPixels(
-        stylePaddingGrouped({ v, device, state }) * 2,
+        padding * 2,
         styleMarginGroupedSuffix({ v, device, state }),
         w
       );
     }
     case "ungrouped": {
-      const left = stylePaddingUngrouped({
-        v,
-        device,
-        state,
-        current: "paddingLeft"
-      });
+      const left =
+        NumReader.read(
+          stylePaddingUngrouped({
+            v,
+            device,
+            state,
+            current: "paddingLeft"
+          })
+        ) ?? 0;
       const leftSuffix = stylePaddingUngroupedSuffix({
         v,
         device,
         state,
         current: "paddingLeftSuffix"
       });
-      const right = stylePaddingUngrouped({
-        v,
-        device,
-        state,
-        current: "paddingRight"
-      });
+      const right =
+        NumReader.read(
+          stylePaddingUngrouped({
+            v,
+            device,
+            state,
+            current: "paddingRight"
+          })
+        ) ?? 0;
       const rightSuffix = stylePaddingUngroupedSuffix({
         v,
         device,
@@ -165,13 +183,22 @@ export const getPadding = ({ w, v, device, state, type }: Padding): number => {
 export const getBorder = ({ v, device, state, type }: Border): number => {
   switch (type) {
     case "grouped": {
-      return styleBorderWidthGrouped({ v, device, state }) * 2;
+      const border =
+        NumReader.read(styleBorderWidthGrouped({ v, device, state })) ?? 0;
+
+      return border * 2;
     }
     case "ungrouped": {
-      return (
-        styleBorderWidthUngrouped({ v, device, state, current: "left" }) +
-        styleBorderWidthUngrouped({ v, device, state, current: "right" })
-      );
+      const leftBorder =
+        NumReader.read(
+          styleBorderWidthUngrouped({ v, device, state, current: "left" })
+        ) ?? 0;
+      const rightBorder =
+        NumReader.read(
+          styleBorderWidthUngrouped({ v, device, state, current: "right" })
+        ) ?? 0;
+
+      return leftBorder + rightBorder;
     }
     default: {
       return 0;

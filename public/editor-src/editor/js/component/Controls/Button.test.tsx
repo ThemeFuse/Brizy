@@ -1,43 +1,35 @@
-import { fireEvent, render } from "@testing-library/react";
 import React from "react";
-import Config from "visual/global/Config";
+import { fireEvent, renderWithProviders } from "test-utils";
 import { Button } from "./Button";
 
 describe("Test Button", () => {
-  beforeAll(() => {
-    global.IS_EDITOR = true;
-
-    Config.load({
-      // @ts-expect-error to find out what happens here
-      urls: {
-        editorIcons: "/"
-      }
-    });
-  });
-
   const onClick = jest.fn();
 
   describe("Snapshots", () => {
     test("If not label or icon provided, do not render anything", () => {
-      const button = render(<Button onClick={onClick} />);
+      const button = renderWithProviders(<Button onClick={onClick} />);
 
       expect(button.container.firstChild).toMatchSnapshot();
     });
 
     test("With icon", () => {
-      const button = render(<Button onClick={onClick} icon={"nc-cog"} />);
+      const button = renderWithProviders(
+        <Button onClick={onClick} icon={"nc-cog"} />
+      );
 
       expect(button.container.firstChild).toMatchSnapshot();
     });
 
     test("With label", () => {
-      const button = render(<Button onClick={onClick}>Test</Button>);
+      const button = renderWithProviders(
+        <Button onClick={onClick}>Test</Button>
+      );
 
       expect(button.container.firstChild).toMatchSnapshot();
     });
 
     test("With label add icon", () => {
-      const button = render(
+      const button = renderWithProviders(
         <Button onClick={onClick} icon={"nc-cog"}>
           Test
         </Button>
@@ -47,7 +39,7 @@ describe("Test Button", () => {
     });
 
     test("With label and icon and align Left", () => {
-      const button = render(
+      const button = renderWithProviders(
         <Button onClick={onClick} icon={"nc-cog"} align={"left"}>
           Test
         </Button>
@@ -57,7 +49,7 @@ describe("Test Button", () => {
     });
 
     test("With label and icon and align Right", () => {
-      const button = render(
+      const button = renderWithProviders(
         <Button onClick={onClick} icon={"nc-cog"} align={"left"}>
           Test
         </Button>
@@ -67,7 +59,7 @@ describe("Test Button", () => {
     });
 
     test("Reversed", () => {
-      const button = render(
+      const button = renderWithProviders(
         <Button onClick={onClick} icon={"nc-cog"} reverse={true}>
           Test
         </Button>
@@ -78,7 +70,7 @@ describe("Test Button", () => {
   });
 
   test("Test onClick", () => {
-    const button = render(
+    const button = renderWithProviders(
       <Button onClick={onClick} icon={"nc-cog"}>
         Test
       </Button>

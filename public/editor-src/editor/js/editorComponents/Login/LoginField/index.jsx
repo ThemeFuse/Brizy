@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React from "react";
-import Config, { isWp } from "visual/global/Config";
+import { isEditor } from "visual/providers/RenderProvider";
 import { CheckGroup as CheckboxControls } from "visual/component/Controls/CheckGroup";
 import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -10,7 +10,7 @@ import Toolbar from "visual/component/Toolbar";
 import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
-import { css } from "visual/utils/cssStyle";
+import { isWp } from "visual/global/Config";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
@@ -45,17 +45,16 @@ const getFieldName = (type, isWp) => {
 };
 
 class LoginField extends EditorComponent {
-  static get componentId() {
-    return "LoginField";
-  }
-
   static defaultValue = defaultValue;
-
   state = {
     value: "",
     active: {}
   };
-  isWp = isWp(Config.getAll());
+  isWp = isWp(this.getGlobalConfig());
+
+  static get componentId() {
+    return "LoginField";
+  }
 
   handleActive = (active) => {
     this.setState({ active });
@@ -83,7 +82,7 @@ class LoginField extends EditorComponent {
       return "";
     }
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -133,10 +132,16 @@ class LoginField extends EditorComponent {
       "brz-login-form__field",
       `brz-login-form__field-${type}`,
       `brz-login-form__field-remember-${remember}`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -223,10 +228,16 @@ class LoginField extends EditorComponent {
       "brz-login-form__field",
       `brz-login-form__field-${type}`,
       `brz-login-form__field-remember-${remember}`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

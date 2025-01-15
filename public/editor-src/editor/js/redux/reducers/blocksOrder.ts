@@ -1,7 +1,6 @@
 import { insert, removeAt, replaceAt } from "timm";
-import Config from "visual/global/Config";
 import { generateBlocksList } from "visual/utils/blocks";
-import { isPopup, isStory } from "visual/utils/models";
+import { isStory } from "visual/utils/models";
 import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
 
@@ -16,8 +15,9 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
   switch (action.type) {
     case "HYDRATE": {
       const items = action.payload.page.data?.items || [];
+      const { page, globalBlocks, config } = action.payload;
 
-      if (isStory(Config.getAll()) && items.length === 0) {
+      if (isStory(config) && items.length === 0) {
         return ["ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr"];
       }
 
@@ -28,11 +28,12 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
         (item: any) => item.value.globalBlockId || item.value._id
       );
 
-      return generateBlocksList(
+      return generateBlocksList({
         pageBlocksIds,
-        action.payload.globalBlocks,
-        action.payload.page
-      );
+        page,
+        globalBlocks,
+        config
+      });
     }
 
     case "ADD_GLOBAL_POPUP":
@@ -63,9 +64,9 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     }
 
     case "MAKE_GLOBAL_POPUP_TO_POPUP": {
-      if (isPopup(Config.getAll())) {
-        const { block, fromBlockId } = action.payload;
+      const { block, fromBlockId, type } = action.payload;
 
+      if (type == "external") {
         return replaceAt(
           state,
           state.findIndex((_id) => _id === fromBlockId),
@@ -77,9 +78,9 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     }
 
     case "MAKE_POPUP_TO_GLOBAL_POPUP": {
-      const { type, block, fromBlockId } = action.payload;
+      const { block, fromBlockId, type } = action.payload;
 
-      if (type === "externalPopup") {
+      if (type === "external") {
         return replaceAt(
           state,
           state.findIndex((_id) => _id === fromBlockId),

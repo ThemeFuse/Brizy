@@ -3,10 +3,12 @@ import type { ElementModel } from "visual/component/Elements/Types";
 import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import type { WithClassName } from "visual/types/attributes";
 
+
 export type Patch = Partial<Value>;
 
 export interface Meta {
   [k: string]: unknown;
+
   patch: Patch;
 }
 
@@ -52,6 +54,7 @@ export interface ContentProps {
 }
 
 export interface BackgroundValue {
+  bg: string;
   bgImageSrc: string;
   bgImageExtension: string;
   bgPopulation: string;

@@ -1,8 +1,5 @@
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import {
-  styleItemPaddingBottom,
-  styleItemPaddingLeft,
-  styleItemPaddingRight,
-  styleItemPaddingTop,
   stylePaddingGrouped,
   stylePaddingGroupedSuffix,
   stylePaddingType,
@@ -34,12 +31,18 @@ export function cssStylePaddingFourFields({ v, device, state, prefix = "" }) {
   }
 }
 
-export function cssStylePaddingPreview({ v, device, state }) {
-  if (IS_PREVIEW) return cssStylePaddingFourFields({ v, device, state });
+export function cssStylePaddingPreview({ v, device, state, renderContext }) {
+  if (isView(renderContext))
+    return cssStylePaddingFourFields({ v, device, state });
 }
 
-export function cssStylePaddingTopForEditorResizer({ v, device, state }) {
-  if (IS_EDITOR) {
+export function cssStylePaddingTopForEditorResizer({
+  v,
+  device,
+  state,
+  renderContext
+}) {
+  if (isEditor(renderContext)) {
     let r = "";
     const p = cssStylePadding({ v, device, state });
 
@@ -49,8 +52,13 @@ export function cssStylePaddingTopForEditorResizer({ v, device, state }) {
   }
 }
 
-export function cssStylePaddingBottomForEditorResizer({ v, device, state }) {
-  if (IS_EDITOR) {
+export function cssStylePaddingBottomForEditorResizer({
+  v,
+  device,
+  state,
+  renderContext
+}) {
+  if (isEditor(renderContext)) {
     let r = "";
     const p = cssStylePadding({ v, device, state });
 
@@ -60,8 +68,13 @@ export function cssStylePaddingBottomForEditorResizer({ v, device, state }) {
   }
 }
 
-export function cssStylePaddingRightLeftForEditor({ v, device, state }) {
-  if (IS_EDITOR) {
+export function cssStylePaddingRightLeftForEditor({
+  v,
+  device,
+  state,
+  renderContext
+}) {
+  if (isEditor(renderContext)) {
     let r = "";
     const p = cssStylePadding({ v, device, state });
 
@@ -165,16 +178,6 @@ export function cssStylePadding({ v, device, state, prefix = "" }) {
     paddingBottomSuffix,
     paddingLeftSuffix
   };
-}
-
-// #####
-export function cssStyleItemPadding({ v, device, state }) {
-  const paddingTop = styleItemPaddingTop({ v, device, state });
-  const paddingRight = styleItemPaddingRight({ v, device, state });
-  const paddingBottom = styleItemPaddingBottom({ v, device, state });
-  const paddingLeft = styleItemPaddingLeft({ v, device, state });
-
-  return `padding:${paddingTop} ${paddingRight} ${paddingBottom} ${paddingLeft};`;
 }
 
 export function cssStylePaddingBG({ v, device, state }) {

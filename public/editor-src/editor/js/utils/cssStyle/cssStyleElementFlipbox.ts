@@ -1,3 +1,4 @@
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import { cssStyleFlexColumnVerticalAlign } from "visual/utils/cssStyle/cssStyleAlign";
 import { cssStyleBgGradient } from "visual/utils/cssStyle/cssStyleBgGradient";
 import {
@@ -38,15 +39,19 @@ export const cssStyleElementFlipboxBackPadding = ({
 export const cssStyleElementFlipboxBackBgImage = ({
   v,
   device,
-  state
-}: CSSValue): string => cssStyleBgImage({ v, device, state, prefix: "back" });
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string =>
+  cssStyleBgImage({ v, device, state, store, renderContext, prefix: "back" });
 
 export const cssStyleElementFlipboxBackBgImagePosition = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string =>
-  cssStyleBgImagePosition({ v, device, state, prefix: "back" });
+  cssStyleBgImagePosition({ v, device, state, store, prefix: "back" });
 
 export const cssStyleElementFlipboxBackBgFilter = ({
   v,
@@ -63,20 +68,24 @@ export const cssStyleElementFlipboxBackBgBorder = ({
 export const cssStyleElementFlipboxBackBgBorderRadius = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string =>
-  cssStyleBorderRadius({ v, device, state, prefix: "back" });
+  cssStyleBorderRadius({ v, device, state, store, prefix: "back" });
 
 export const cssStyleElementFlipboxBackBgBoxShadow = ({
   v,
   device,
-  state
-}: CSSValue): string => cssStyleBoxShadow({ v, device, state, prefix: "back" });
+  state,
+  store
+}: CSSValue): string =>
+  cssStyleBoxShadow({ v, device, state, store, prefix: "back" });
 
 export const cssStyleElementFlipboxBackBgColor = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   const bgColor = styleBgColor({ v, device, state, prefix: "backBg" });
 
@@ -84,6 +93,7 @@ export const cssStyleElementFlipboxBackBgColor = ({
     v,
     device,
     state,
+    store,
     prefix: "backBg"
   });
 
@@ -95,13 +105,15 @@ export const cssStyleElementFlipboxBackBgColor = ({
 export const cssStyleElementFlipboxBackBgGradient = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string =>
-  cssStyleBgGradient({ v, device, state, prefix: "back" });
+  cssStyleBgGradient({ v, device, state, store, prefix: "back" });
 
 export const cssStyleElementFlipboxBackVerticalAlign = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string =>
-  cssStyleFlexColumnVerticalAlign({ v, device, state, prefix: "back" });
+  cssStyleFlexColumnVerticalAlign({ v, device, state, store, prefix: "back" });

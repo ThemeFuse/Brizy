@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import { noop } from "underscore";
+import { isEditor } from "visual/providers/RenderProvider";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -13,9 +14,9 @@ import * as toolbarLoginLink from "visual/editorComponents/Login/toolbarLoginLin
 import * as toolbarRegisterInfo from "visual/editorComponents/Login/toolbarRegisterInfo";
 import * as toolbarRegisterLink from "visual/editorComponents/Login/toolbarRegisterLink";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import Config, { isWp } from "visual/global/Config";
-import { css } from "visual/utils/cssStyle";
+import { isWp } from "visual/global/Config";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import * as Json from "visual/utils/reader/json";
 import { encodeToString } from "visual/utils/string";
@@ -33,7 +34,6 @@ import * as toolbarExtendCheckbox from "./toolbarExtendCheckbox";
 import * as toolbarExtendLabel from "./toolbarExtendLabel";
 import * as toolbarExtendLostPasswordConfig from "./toolbarExtendLostPassword";
 import toolbarExtendParentFn from "./toolbarExtendParent";
-import { t } from "visual/utils/i18n";
 
 class Login extends EditorComponent {
   static get componentId() {
@@ -46,10 +46,12 @@ class Login extends EditorComponent {
     extendParentToolbar: noop
   };
 
-  isWp = isWp(Config.getAll());
+  isWp = isWp(this.getGlobalConfig());
 
   canRegister = () => {
-    return this.isWp ? Config.getAll().wp.usersCanRegister === "1" : true;
+    return this.isWp
+      ? this.getGlobalConfig().wp.usersCanRegister === "1"
+      : true;
   };
 
   componentDidMount() {
@@ -270,7 +272,7 @@ class Login extends EditorComponent {
           sidebarExtendButton,
           { allowExtend: false }
         ),
-        attributes: IS_EDITOR
+        attributes: isEditor(this.renderContext)
           ? {}
           : {
               type: "submit",
@@ -449,10 +451,16 @@ class Login extends EditorComponent {
     const { type } = v;
     const className = classnames(
       "brz-login",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -489,10 +497,16 @@ class Login extends EditorComponent {
     } = v;
     const className = classnames(
       "brz-login",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

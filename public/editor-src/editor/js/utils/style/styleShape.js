@@ -1,35 +1,4 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { hexToRgba } from "visual/utils/color";
-import { svgToUri } from "visual/utils/icons";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-
-export function styleShapeType({ v, device, state, prefix }) {
-  const shapeType = defaultValueValue({
-    v,
-    key: `shape${prefix}Type`,
-    device,
-    state
-  });
-
-  const { hex: shapeColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: `shape${prefix}ColorHex`, device, state }),
-    defaultValueValue({ v, key: `shape${prefix}ColorPalette`, device, state })
-  );
-
-  const shapeColorOpacity = defaultValueValue({
-    v,
-    key: `shape${prefix}ColorOpacity`,
-    device,
-    state
-  });
-
-  return shapeType === "none"
-    ? "none"
-    : `url('${svgToUri(
-        shapeType,
-        hexToRgba(shapeColorHex, shapeColorOpacity)
-      )}')`;
-}
 
 export function styleShapeTopBackgroundSize({ v, device }) {
   return `100% ${defaultValueValue({

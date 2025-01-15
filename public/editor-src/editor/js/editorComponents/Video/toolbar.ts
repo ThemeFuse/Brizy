@@ -1,15 +1,17 @@
+import { Str } from "@brizy/readers";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
-import { defaultValueValue } from "visual/utils/onChange";
 import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskSizes
+} from "visual/utils/mask/Mask";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   barBgColorCSS,
@@ -31,25 +33,31 @@ import {
 } from "./css";
 import { Ratio, Value } from "./types";
 import { typesChoice } from "./utils";
-import { MaskPositions, MaskRepeat, MaskSizes } from "visual/utils/mask/Mask";
-import { Str } from "@brizy/readers";
 
 // @ts-expect-error: "advancedSettings" missing in new option-types
-export const getItems: GetItems<Value> = ({ v, device, context }) => {
-  const config = Config.getAll();
+export const getItems: GetItems<Value> = ({
+  v,
+  device,
+  context,
+  editorMode,
+  component
+}) => {
+  const config = component.getGlobalConfig();
 
-  const IS_STORY = isStory(config);
+  const _isStory = isStory(editorMode);
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
+  const borderColor = getColor(
+    dvv("borderColorPalette"),
     dvv("borderColorHex"),
-    dvv("borderColorPalette")
+    dvv("borderColorOpacity")
   );
 
   const videoDynamicContentChoices = getDynamicContentOption({
@@ -246,7 +254,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                     config: {
                       pointer: isPointerEnabled
                     },
-                    style: coverImageCSS
+                    style: coverImageCSS(config)
                   }
                 },
                 {
@@ -282,7 +290,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                   label: t("Open in Lightbox"),
                   type: "switch",
                   devices: "desktop",
-                  disabled: noCover || IS_STORY
+                  disabled: noCover || _isStory
                 },
                 {
                   id: "groupSettings",
@@ -372,9 +380,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: noCover
-              ? hexToRgba(borderColorHex, dvv("borderColorOpacity"))
-              : hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: noCover ? borderColor : bgColor
           }
         }
       },
@@ -498,7 +504,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                   type: "imageUpload",
                   devices: "desktop",
                   label: t("Image"),
-                  style: maskImageUrlCSS,
+                  style: maskImageUrlCSS(config),
                   config: {
                     pointer: false,
                     disableSizes: true,
@@ -517,7 +523,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes,
+                      choices: getMaskSizes(),
                       style: maskImageSizeCSS
                     },
                     {
@@ -546,7 +552,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                       type: "select",
                       label: t("Position"),
                       style: maskImagePosition,
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -580,7 +586,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                   type: "select",
                   style: maskImageRepeatCSS,
                   disabled: disableMaskRepeat,
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }
@@ -596,7 +602,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Settings")
       },
       position: 110,
-      disabled: IS_STORY,
+      disabled: _isStory,
       options: [
         {
           id: "size",
@@ -656,7 +662,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
       id: "advancedSettings",
       type: "advancedSettings",
       position: 110,
-      disabled: !IS_STORY,
+      disabled: !_isStory,
       devices: "desktop"
     }
   ];

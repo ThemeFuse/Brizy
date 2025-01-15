@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { ReactElement } from "react";
+import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
@@ -10,7 +11,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { WithClassName } from "visual/types/attributes";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -75,7 +75,7 @@ class Alert extends EditorComponent<Value, Props> {
     const { showCloseButtonAfter } = v;
 
     const iconClassnames = classnames("brz-alert-close", {
-      "brz-hidden": IS_PREVIEW && showCloseButtonAfter > 0
+      "brz-hidden": isView(this.props.renderContext) && showCloseButtonAfter > 0
     });
 
     return (
@@ -137,7 +137,17 @@ class Alert extends EditorComponent<Value, Props> {
   renderForEdit(v: Value, vs: Value, vd: Value): ReactElement {
     const className = classnames(
       "brz-alert",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -161,7 +171,17 @@ class Alert extends EditorComponent<Value, Props> {
 
     const className = classnames(
       "brz-alert",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     return (
       <Wrapper

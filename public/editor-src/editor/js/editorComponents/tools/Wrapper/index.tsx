@@ -1,14 +1,20 @@
 import classNames from "classnames";
 import React, {
   ComponentType,
-  forwardRef,
   MouseEventHandler,
   PropsWithChildren,
   ReactElement,
   ReactNode,
-  Ref
+  Ref,
+  forwardRef
 } from "react";
+import { useStore } from "react-redux";
 import { identity } from "underscore";
+import {
+  RenderType,
+  isEditor,
+  isView
+} from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import { ElementModel } from "visual/component/Elements/Types";
 import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
@@ -16,10 +22,10 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { DH, DW } from "visual/editorComponents/Story/utils";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
+import { EditorMode } from "visual/global/EditorModeContext";
+import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { WithClassName } from "visual/types/attributes";
-import { css } from "visual/utils/cssStyle";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
@@ -50,6 +56,8 @@ export interface Props<T extends Record<any, any>> extends WithClassName {
   componentId: string;
   id: string;
   onChange: (patch: Partial<ElementModel>) => void;
+  renderContext: RenderType;
+  editorMode: EditorMode;
   onClick?: MouseEventHandler<HTMLDivElement>;
   onDragStart?: (e: Event) => void;
   slide?: StoryAnchorAttribute;
@@ -75,27 +83,29 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
     meta: { sectionPopup, sectionPopup2 },
     onClick,
     onDragStart,
-    slide
+    slide,
+    renderContext
   }: PropsWithChildren<Props<T>>,
   ref: Ref<Element>
 ): ReactElement {
+  const store = useStore();
   const isAbsoluteOrFixed =
     v.elementPosition === "absolute" || v.elementPosition === "fixed";
+  const modelClassName = useCSS({
+    componentId: `${componentId}-${id}-${wrapperId}`,
+    id: `${id}-${wrapperId}`,
+    css: isAbsoluteOrFixed ? style({ v, vs, vd, store, renderContext }) : []
+  });
 
   const className = classNames(
     _className,
     Str.read(attributes?.className),
-    isAbsoluteOrFixed &&
-      css(
-        `${componentId}-${id}-${wrapperId}`,
-        `${id}-${wrapperId}`,
-        style(v, vs, vd)
-      )
+    modelClassName
   );
 
-  if (isAbsoluteOrFixed && IS_EDITOR) {
+  if (isAbsoluteOrFixed && isEditor(renderContext)) {
     const state = State.mRead(v.tabsState);
-    const device = deviceModeSelector(getStore().getState());
+    const device = deviceModeSelector(store.getState());
 
     const dvv = (key: string): MValue<Literal> => {
       return defaultValueValue({ v, key, device, state });
@@ -103,7 +113,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
 
     const handleDraggable = ({ x, y }: DraggableV): void => {
       const state = State.mRead(v.tabsState);
-      const device = deviceModeSelector(getStore().getState());
+      const device = deviceModeSelector(store.getState());
 
       const dvk = (key: string, value: number): ElementModel => ({
         [defaultValueKey({ key, device, state })]: value
@@ -177,7 +187,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
      * @ts-expect-error */
     <Animation<ComponentType<T>>
       iterationCount={
-        IS_PREVIEW ?? (sectionPopup || sectionPopup2 ? Infinity : 1)
+        isView(renderContext) ?? (sectionPopup || sectionPopup2 ? Infinity : 1)
       }
       component={component ?? "div"}
       componentProps={{ ...attributes, className, onClick, onDragStart, slide }}

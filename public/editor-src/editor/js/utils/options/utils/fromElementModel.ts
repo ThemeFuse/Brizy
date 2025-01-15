@@ -71,6 +71,7 @@ import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import { applyDefaultValueToOption } from "./defaultValue";
 import { fromElementModel as symbols } from "visual/utils/options/Symbols/converters";
+import { Store } from "visual/redux/store";
 
 type FromElementModelFns = {
   [K in OptionName]: FromElementModel<K>;
@@ -167,6 +168,7 @@ export const getOptionModel = <T extends OptionName>({
   id: string;
   v: ElementModel;
   breakpoint: BreakpointsNames;
+  store: Store;
   state?: State;
 }): OptionValue<T> => {
   const getModel = fromElementModel(type);
@@ -190,12 +192,14 @@ export const getOptionModelWithDesktopDefaults = <T extends OptionName>({
   id,
   v,
   breakpoint,
+  store,
   state = NORMAL
 }: {
   type: T;
   id: string;
   v: ElementModel;
   breakpoint: BreakpointsNames;
+  store: Store;
   state?: State;
 }): OptionValue<T> => {
   const desktopModel = getOptionModel<T>({
@@ -203,6 +207,7 @@ export const getOptionModelWithDesktopDefaults = <T extends OptionName>({
     type,
     v,
     state,
+    store,
     breakpoint: DESKTOP
   });
 
@@ -211,6 +216,7 @@ export const getOptionModelWithDesktopDefaults = <T extends OptionName>({
     type,
     v,
     state,
+    store,
     breakpoint
   });
 

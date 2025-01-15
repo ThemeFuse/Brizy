@@ -3,7 +3,6 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -23,7 +22,17 @@ export class Quantity extends EditorComponent<Value> {
     const { customCSS, itemId } = v;
     const className = classnames(
       "brz-shopify-quantity",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
@@ -32,7 +41,10 @@ export class Quantity extends EditorComponent<Value> {
           <Wrapper
             {...this.makeWrapperProps({
               className,
-              attributes: makeDataAttr({ name: "product-handle", value: itemId })
+              attributes: makeDataAttr({
+                name: "product-handle",
+                value: itemId
+              })
             })}
           >
             <input

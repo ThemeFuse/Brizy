@@ -1,8 +1,4 @@
 import {
-  cssStyleSizeMinHeightPx,
-  cssStyleSizeMinWidth
-} from "visual/utils/cssStyle";
-import {
   styleColor,
   styleTypography2FontSize,
   styleTypography2LineHeight
@@ -19,23 +15,17 @@ export function cssStyleElementSearchAutocompleteColor({
   return color === undefined ? "" : `-webkit-text-fill-color:${color};`;
 }
 
-export function cssStyleElementSearchMinWidth({ v, device, state }) {
-  return cssStyleSizeMinWidth({ v, device, state, prefix: "openButton" });
-}
-
-export function cssStyleElementSearchMinHeight({ v, device, state }) {
-  return cssStyleSizeMinHeightPx({ v, device, state, prefix: "openButton" });
-}
-
-export function cssStyleElementSearchLineHeight({ v, device }) {
+export function cssStyleElementSearchLineHeight({ v, device, store }) {
   const fontSize = styleTypography2FontSize({
     v,
     device,
+    store,
     prefix: "typography"
   });
   const lineHeight = styleTypography2LineHeight({
     v,
     device,
+    store,
     prefix: "typography"
   });
 

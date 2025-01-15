@@ -1,40 +1,41 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { hexToRgba } from "visual/utils/color";
-import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
-import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
-import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarLinkAnchor } from "visual/utils/toolbar";
-import { Value } from "./type";
 import {
   RendererType,
   TriggerType
 } from "@brizy/component/src/Flex/Lottie/types";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentOption } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { Value } from "./type";
 import { isLottieFile } from "./utils";
 
-export const getItems: GetItems<Value> = ({ v, device, component }) => {
+export const getItems: GetItems<Value> = ({
+  v,
+  device,
+  component,
+  editorMode
+}) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
   const isRendererDisabled =
     isLottieFile(dvv("animationLink")) || isLottieFile(dvv("animationFile"));
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
-  const config = Config.getAll();
-  const IS_STORY = isStory(config);
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isStory = isStory(editorMode);
+  const _isPopup = isPopup(editorMode);
 
   const linkDC = getDynamicContentOption({
     options: component.context.dynamicContent.config,
@@ -82,7 +83,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
         {
           id: "trigger",
           type: "select",
-          disabled: IS_STORY,
+          disabled: _isStory,
           label: t("Trigger On"),
           choices: [
             { title: t("Load"), value: TriggerType.OnLoad },
@@ -150,7 +151,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },
@@ -263,7 +264,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
               label: t("Block"),
               options: [
                 // @ts-expect-error: old
-                toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP || IS_STORY })
+                toolbarLinkAnchor({ v, disabled: _isPopup || _isStory })
               ]
             },
             {
@@ -273,7 +274,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
                 {
                   id: "linkPopup",
                   type: "promptAddPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
+                  disabled: inPopup || inPopup2 || _isPopup || _isStory,
                   label: t("Popup"),
                   config: {
                     popupKey: `${component.getId()}_${dvv("linkPopup")}`
@@ -290,7 +291,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
                   id: "linkToSlide",
                   type: "number",
                   label: t("Slide"),
-                  disabled: !IS_STORY,
+                  disabled: !_isStory,
                   config: {
                     min: 1,
                     max: 1000000

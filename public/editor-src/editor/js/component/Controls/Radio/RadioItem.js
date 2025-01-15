@@ -116,6 +116,8 @@ export default class RadioItem extends React.Component {
   }
 
   render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    const { isEditor } = this.props;
+
+    return isEditor ? this.renderForEdit() : this.renderForView();
   }
 }

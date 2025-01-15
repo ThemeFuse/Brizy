@@ -3,8 +3,10 @@ import React from "react";
 import Toolbar from "visual/component/Toolbar";
 import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { Model } from "visual/editorComponents/EditorComponent/types";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
-import { css } from "visual/utils/cssStyle";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { uuid } from "visual/utils/uuid";
 import { migrations } from "../migrations";
 import Form2FieldItems from "./Items";
@@ -12,12 +14,9 @@ import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
 import * as toolbar from "./toolbar";
+import { Error, FormInput, Props, Value } from "./type";
 import types from "./types/index";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Model } from "visual/editorComponents/EditorComponent/types";
-import { Value, Props, FormInput, Error } from "./type";
 import { Active } from "./types/type";
-import { makePlaceholder } from "visual/utils/dynamicContent";
 
 class Form2Field extends EditorComponent<Value, Props> {
   static get componentId(): ElementTypes.Form2Field {
@@ -72,10 +71,16 @@ class Form2Field extends EditorComponent<Value, Props> {
     const classNameField = classnames(
       "brz-forms2__item",
       className,
-      css(
+      this.css(
         `${this.getComponentId()}-field`,
         `${this.getId()}-field`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -116,6 +121,7 @@ class Form2Field extends EditorComponent<Value, Props> {
               onChange={(value: Partial<Model<Value>>) =>
                 this.patchValue(value)
               }
+              renderContext={this.renderContext}
             />
           </Toolbar>
         )}
@@ -131,6 +137,7 @@ class Form2Field extends EditorComponent<Value, Props> {
                 onChange={(value: Partial<Model<Value>>) =>
                   this.patchValue(value)
                 }
+                renderContext={this.renderContext}
               />
             )}
             {isSelect && (
@@ -143,6 +150,7 @@ class Form2Field extends EditorComponent<Value, Props> {
                 onChange={(value: Partial<Model<Value>>) =>
                   this.patchValue(value)
                 }
+                renderContext={this.renderContext}
               >
                 {/* @ts-expect-error: ArrayComponent to ts */}
                 <Form2FieldItems {...itemProps} />
@@ -160,6 +168,7 @@ class Form2Field extends EditorComponent<Value, Props> {
               onChange={(value: Partial<Model<Value>>) =>
                 this.patchValue(value)
               }
+              renderContext={this.renderContext}
             >
               {/* @ts-expect-error: ArrayComponent to ts */}
               <Form2FieldItems {...itemProps} />
@@ -193,10 +202,16 @@ class Form2Field extends EditorComponent<Value, Props> {
       "brz-forms2__item",
       className,
       { "brz-d-none": type === ElementTypes.Hidden },
-      css(
+      this.css(
         `${this.getComponentId()}-field`,
         `${this.getId()}-field`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -208,7 +223,7 @@ class Form2Field extends EditorComponent<Value, Props> {
       bindWithKey: "items",
       itemProps: {
         type,
-        ...(isRadioOrCheckbox ? { active } : {}),
+        ...(isRadioOrCheckbox ? { active, name } : {}),
         ...(isRadio ? { activeRadio } : {}),
         ...(required === "on" ? { required } : {}),
         label
@@ -226,6 +241,7 @@ class Form2Field extends EditorComponent<Value, Props> {
             id={labelId}
             value={v}
             onChange={(value: Partial<Model<Value>>) => this.patchValue(value)}
+            renderContext={this.renderContext}
           />
         )}
         {!isTypeWithItems ? (
@@ -236,6 +252,7 @@ class Form2Field extends EditorComponent<Value, Props> {
             error={this.getError(v)}
             showPlaceholder={showPlaceholder}
             labelType={labelType}
+            renderContext={this.renderContext}
             {...(isSelect ? { selectClassName } : {})}
           />
         ) : (
@@ -248,6 +265,7 @@ class Form2Field extends EditorComponent<Value, Props> {
             showPlaceholder={showPlaceholder}
             selectClassName={selectClassName}
             labelType={labelType}
+            renderContext={this.renderContext}
           >
             {/* @ts-expect-error: ArrayComponent to ts */}
             <Form2FieldItems {...itemProps} />

@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import Config from "visual/global/Config";
 import {
   filterSavedBlocks,
   filterSavedLayouts,
@@ -25,7 +24,7 @@ import { Props } from "./types";
 const EMPTY = "";
 
 export const Filter = <T extends BlockTypes>(props: Props<T>): ReactElement => {
-  const { type, value, onChange } = props;
+  const { type, value, onChange, api } = props;
   const [state, dispatch] = useReducer<Reducer<State, Actions.Actions>>(
     reducer,
     initState
@@ -41,11 +40,10 @@ export const Filter = <T extends BlockTypes>(props: Props<T>): ReactElement => {
   );
 
   useEffect(() => {
-    const config = Config.getAll();
     const update = match(
-      [isBlock, () => filterSavedBlocks(config)],
-      [isPopup, () => filterSavedPopups(config)],
-      [isLayout, () => filterSavedLayouts(config)]
+      [isBlock, () => filterSavedBlocks(api)],
+      [isPopup, () => filterSavedPopups(api)],
+      [isLayout, () => filterSavedLayouts(api)]
     );
 
     (async () => {
@@ -60,7 +58,7 @@ export const Filter = <T extends BlockTypes>(props: Props<T>): ReactElement => {
         }
       }
     })();
-  }, [type]);
+  }, [type, api]);
 
   return (
     <>

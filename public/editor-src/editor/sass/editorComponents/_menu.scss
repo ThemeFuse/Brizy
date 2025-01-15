@@ -94,6 +94,7 @@ $dropdown-arrow-size: 7px;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+      justify-content: inherit;
 
       > .brz-a {
         color: inherit;
@@ -104,6 +105,7 @@ $dropdown-arrow-size: 7px;
         font-size: inherit;
         display: inherit;
         align-items: inherit;
+        justify-content: inherit;
         text-decoration: $link-decoration;
 
         @include hover {

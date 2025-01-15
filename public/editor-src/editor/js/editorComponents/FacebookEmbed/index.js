@@ -5,7 +5,6 @@ import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
@@ -66,10 +65,16 @@ class FacebookEmbed extends EditorComponent {
 
     const className = classnames(
       "brz-fb-embed",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -79,7 +84,12 @@ class FacebookEmbed extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
-            <Facebook appId={appData.appId} type={t} data={data} />
+            <Facebook
+              appId={appData.appId}
+              type={t}
+              data={data}
+              renderContext={this.renderContext}
+            />
           </div>
         </CustomCSS>
       </Toolbar>
@@ -133,17 +143,28 @@ class FacebookEmbed extends EditorComponent {
 
     const className = classnames(
       "brz-fb-embed",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={className}>
-          <Facebook appId={appData.appId} type={t} data={data} />
+          <Facebook
+            appId={appData.appId}
+            type={t}
+            data={data}
+            renderContext={this.renderContext}
+          />
         </div>
       </CustomCSS>
     );

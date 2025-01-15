@@ -1,5 +1,6 @@
 import React, { ReactElement, useCallback, useContext, useState } from "react";
 import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
+import { useConfig } from "visual/global/hooks";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
@@ -23,6 +24,7 @@ export const EmailDisconnect = ({
   const [nextLoading, setNextLoading] = useState<boolean>(false);
   const [prevLoading, setPrevLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>(null);
+  const config = useConfig();
   const { onDisconnectApp } = useContext(Context);
 
   const { id } = app || {};
@@ -34,11 +36,14 @@ export const EmailDisconnect = ({
       return;
     }
 
-    const { status } = await deleteSmtpIntegration({
-      formId,
-      integration: id,
-      notificationId: notification?.id || ""
-    });
+    const { status } = await deleteSmtpIntegration(
+      {
+        formId,
+        integration: id,
+        notificationId: notification?.id || ""
+      },
+      config
+    );
 
     if (status === 200 || status === 204) {
       onDisconnectApp(id);
@@ -47,7 +52,14 @@ export const EmailDisconnect = ({
       setNextLoading(false);
       setError(t("Something went wrong"));
     }
-  }, [formId, id, notification, handleRemoveDeletedApp, onDisconnectApp]);
+  }, [
+    formId,
+    id,
+    notification,
+    handleRemoveDeletedApp,
+    config,
+    onDisconnectApp
+  ]);
 
   const handlePrev = useCallback(async () => {
     setPrevLoading(true);

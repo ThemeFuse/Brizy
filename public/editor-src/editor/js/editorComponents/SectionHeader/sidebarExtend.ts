@@ -2,8 +2,8 @@ import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
-import { Value, Props } from "./type";
-import { toolbarTagsChoices } from "./utils";
+import { Props, Value } from "./type";
+import { getToolbarTagsChoices } from "./utils";
 
 export const getItems: GetItems<Value, Props> = ({ context }) => {
   const richTextDC = getDynamicContentOption({
@@ -105,7 +105,7 @@ export const getItems: GetItems<Value, Props> = ({ context }) => {
                       label: t("HTML Tag"),
                       type: "select",
                       devices: "desktop",
-                      choices: toolbarTagsChoices
+                      choices: getToolbarTagsChoices()
                     }
                   ]
                 }

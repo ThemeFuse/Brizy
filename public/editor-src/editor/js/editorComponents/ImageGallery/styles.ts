@@ -1,11 +1,11 @@
+import { isView } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
+  const { renderContext } = data;
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -35,7 +35,7 @@ export function style(
 
     ".brz && .brz-image__gallery-item:hover .brz-picture": {
       standart: [
-        ...(IS_PREVIEW
+        ...(isView(renderContext)
           ? [
               "cssStyleElementImageGalleryBigImageImagesMaskShape",
               "cssStyleElementImageGalleryBigImageImagesMaskSize",
@@ -68,14 +68,10 @@ export function style(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleForFilter(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -164,14 +160,10 @@ export function styleForFilter(
       }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleBigImage(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleBigImage(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -186,14 +178,10 @@ export function styleBigImage(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleWrapper(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -205,5 +193,5 @@ export function styleWrapper(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

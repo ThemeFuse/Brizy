@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Props as OptionProps } from "visual/component/Options/Type";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxState } from "visual/redux/types";
 import { Block, ExtraFontStyle } from "visual/types";
 import { WithClassName, WithConfig } from "visual/types/attributes";
@@ -38,6 +39,7 @@ export interface HandleCreateBlock {
   blockId: Config["blockId"];
   blockType: Config["blockType"];
   extraFontStyles: ExtraFontStyle[];
+  config: ConfigCommon;
 }
 
 export interface Error {

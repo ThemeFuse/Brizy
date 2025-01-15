@@ -1,11 +1,10 @@
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 
-export const title = t("Accordion");
+export const title = () => t("Accordion");
 
-export function getItems() {
-  const IS_STORY = isStory(Config.getAll());
+export function getItems({ editorMode }) {
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -38,7 +37,7 @@ export function getItems() {
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       position: 100,
                       type: "slider",

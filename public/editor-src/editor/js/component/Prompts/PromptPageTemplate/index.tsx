@@ -1,6 +1,12 @@
 import React, { ReactElement, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Switch } from "visual/component/Controls/Switch";
+import Fixed from "visual/component/Prompts/Fixed";
+import {
+  setIsHomePage,
+  setLayout,
+  setTitle
+} from "visual/component/Prompts/PromptPageTemplate/types/Setters";
 import { Field } from "visual/component/Prompts/common/PromptPage/Field";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import {
@@ -9,25 +15,19 @@ import {
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import Fixed from "visual/component/Prompts/Fixed";
-import {
-  setIsHomePage,
-  setLayout,
-  setTitle
-} from "visual/component/Prompts/PromptPageTemplate/types/Setters";
 import {
   canSyncPage,
   getChoices,
   getShopifyLayout,
   isShopifyLayout
 } from "visual/component/Prompts/utils";
-import Config from "visual/global/Config";
 import {
+  Shopify,
   isCloud,
-  isShopify,
-  Shopify
+  isShopify
 } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import {
   updateError,
   updatePageIsHomePage,
@@ -42,12 +42,12 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { Layout, Tabs, tabs } from "../common/PromptPage/types";
+import { Layout, Tabs, getTabs } from "../common/PromptPage/types";
 import { reducer } from "./reducer";
 import { Props, Valid } from "./types";
 
 export const PromptPageTemplate = (props: Props): ReactElement => {
-  const _config = Config.getAll();
+  const _config = useConfig();
 
   const {
     pageId,
@@ -59,6 +59,11 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
     onSave,
     onAfterSave
   } = props;
+
+  const modules = (_config as Shopify).modules;
+  const page = (_config as Shopify).page;
+  const _isShopify = isCloud(_config) && isShopify(_config);
+  const templates = (_config as Shopify).templates;
 
   const isHomePage = pageId === selectedLayout?.isHomePage;
 
@@ -75,7 +80,8 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
       return onSave()
         .then(() => {
           return shopifySyncPage({
-            config: _config as Shopify,
+            modules,
+            page,
             title,
             isHomePage
           }).then(() => {
@@ -86,12 +92,11 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave, pageId, _config]
+    [dispatch, onSave, onAfterSave, pageId, modules, page]
   );
   const getData = useCallback(async () => {
-    const config = Config.getAll();
-    if (isCloud(config) && isShopify(config)) {
-      const layouts = getChoices(config);
+    if (_isShopify) {
+      const layouts = getChoices(templates);
 
       if (isNonEmptyArray(layouts)) {
         return {
@@ -105,7 +110,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
     }
 
     return Promise.reject();
-  }, [pageTitle, value, isHomePage]);
+  }, [pageTitle, value, isHomePage, _isShopify, templates]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -210,7 +215,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
     <Fixed opened={opened} onClose={onClose}>
       <div className="brz-ed-popup-wrapper">
         <Header
-          tabs={tabs.map((tab) => ({
+          tabs={getTabs().map((tab) => ({
             ...tab,
             active: tab.id === state.payload.activeTab,
             onClick: (): void => dispatchS(switchTab(tab.id))

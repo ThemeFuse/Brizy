@@ -1,13 +1,13 @@
-import editorComponents, { NotFoundComponent } from "visual/editorComponents";
+import getEditorComponents, {
+  NotFoundComponent
+} from "visual/editorComponents";
 import Config from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import Editor from "visual/global/Editor";
-import { getShopifyShortcodeComponents } from "visual/shopifyShortcodeComponents";
-import { getShortcodeComponents } from "visual/shortcodeComponents";
 
 const config = Config.getAll();
 
 // components
+const editorComponents = getEditorComponents(config);
 for (const component of Object.values(editorComponents)) {
   // @ts-expect-error: Argument of type 'typeof EditorComponent'
   Editor.registerComponent(component);
@@ -16,17 +16,10 @@ for (const component of Object.values(editorComponents)) {
 // @ts-expect-error: Argument of type 'typeof EditorComponent'
 Editor.registerNotFoundComponent(NotFoundComponent);
 
-// shortcode
-Editor.registerShortcode(getShortcodeComponents(config));
-
-if (isCloud(config) && isShopify(config)) {
-  Editor.registerShopifyShortcode(getShopifyShortcodeComponents(config));
-}
-
 const thirdPartyComponents = config.thirdPartyComponents;
 
 if (thirdPartyComponents) {
   Object.values(thirdPartyComponents).forEach((data) => {
-    Editor.registerThirdPartyElement(data);
+    Editor.registerThirdPartyElement(data, config);
   });
 }

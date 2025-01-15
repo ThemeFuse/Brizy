@@ -1,11 +1,11 @@
 import React, { ComponentProps, ReactElement, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
 import * as O from "visual/component/Options/Type";
-import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
-import { getStore } from "visual/redux/store";
-import { getColorPaletteColors as paletteColors } from "visual/utils/color";
+import { currentStyleSelector } from "visual/redux/selectors";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { Value } from "visual/utils/options/BackgroundColor/entities/Value";
@@ -23,20 +23,16 @@ export type Props = O.Props<Value> &
     };
   };
 
-const openSidebar = (): void => {
-  getStore().dispatch(
-    updateUI("leftSidebar", {
-      isOpen: true,
-      drawerContentType: LeftSidebarOptionsIds.globalStyle
-    })
-  );
-};
-
 export const BackgroundColor = ({
   value,
   onChange,
   config
 }: Props): ReactElement => {
+  const dispatch = useDispatch();
+  const { colorPalette } = useSelector(currentStyleSelector);
+
+  const globalConfig = useConfig();
+
   const _onChange: ComponentProps<typeof Bg>["onChange"] = (v, m) => {
     const isStart = !(value.type === "gradient" && value.active === "end");
 
@@ -91,29 +87,36 @@ export const BackgroundColor = ({
       }
     }
   };
-  const palette = paletteColors();
+  const openSidebar = () => {
+    dispatch(
+      updateUI("leftSidebar", {
+        isOpen: true,
+        drawerContentType: LeftSidebarOptionsIds.globalStyle
+      })
+    );
+  };
   const _value: Value = {
     ...value,
-    hex: paletteHex(value.palette, palette) ?? value.hex,
-    gradientHex: paletteHex(value.gradientPalette, palette) ?? value.gradientHex
+    hex: paletteHex(value.palette, colorPalette) ?? value.hex,
+    gradientHex:
+      paletteHex(value.gradientPalette, colorPalette) ?? value.gradientHex
   };
 
   const enableGlobalStyle = useMemo((): boolean => {
-    const config = Config.getAll();
     const { bottomTabsOrder = [], topTabsOrder = [] } =
-      config.ui?.leftSidebar ?? {};
+      globalConfig?.ui?.leftSidebar ?? {};
 
-    return [...bottomTabsOrder, ...topTabsOrder].includes(
-      LeftSidebarOptionsIds.globalStyle
+    return [...bottomTabsOrder, ...topTabsOrder].some(
+      (tab) => tab.type === LeftSidebarOptionsIds.globalStyle
     );
-  }, []);
+  }, [globalConfig?.ui?.leftSidebar]);
 
   return (
     <Bg
       value={toBgControlValue(_value)}
       onChange={_onChange}
       paletteOpenSettings={enableGlobalStyle ? openSidebar : undefined}
-      palette={paletteColors()}
+      palette={colorPalette}
       opacity={config?.opacity ?? true}
       withNone={config?.withNone ?? true}
       gradientColors={[_value.hex, _value.gradientHex]}

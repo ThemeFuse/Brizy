@@ -1,10 +1,10 @@
 import { getIn } from "timm";
-import { Block, Shortcode } from "visual/types";
 import { ElementModel } from "visual/component/Elements/Types";
-import { getShortcodeComponents } from "visual/shortcodeComponents";
-import { findDeep } from "visual/utils/object";
-import { isModel } from "visual/utils/models";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
+import { Block, Shortcode } from "visual/types";
+import { isModel } from "visual/utils/models";
+import { findDeep } from "visual/utils/object";
 
 type UsedModelsImage = {
   config: ConfigCommon;
@@ -36,7 +36,7 @@ export const blockIsPro = ({
   globalBlocks,
   config
 }: UsedModelsImage): boolean => {
-  const Shortcodes = getShortcodeComponents(config);
+  const Shortcodes = getFlatShortcodes(config);
   const shortcodes = Object.values(Shortcodes)
     .reduce((acc, item) => acc.concat(item), [])
     .filter((item) => item.pro)

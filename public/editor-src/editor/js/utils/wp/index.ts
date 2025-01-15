@@ -1,6 +1,21 @@
-import Config from "visual/global/Config";
+import { isWp } from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-export const hasSidebars = (): boolean => Config.get("wp").hasSidebars;
+export const hasSidebars = (config: ConfigCommon): boolean => {
+  if (isWp(config)) {
+    return config.wp.hasSidebars;
+  }
+  return false;
+};
 
-export const pluginActivated = (plugin: string): boolean =>
-  Boolean(Config.get("wp").plugins[plugin]);
+export const pluginActivated = (
+  config: ConfigCommon,
+  plugin: string
+): boolean => {
+  if (isWp(config)) {
+    const plugins = config.wp.plugins;
+    return Boolean(plugins[plugin]);
+  }
+
+  return false;
+};

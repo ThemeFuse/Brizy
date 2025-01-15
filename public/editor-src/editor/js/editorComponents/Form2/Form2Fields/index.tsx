@@ -1,10 +1,9 @@
 import classnames from "classnames";
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { FormFields } from "./Components/FormFields";
-import defaultValue from "./defaultValue.json";
 import Form2FieldsItems from "./Items";
+import defaultValue from "./defaultValue.json";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendLabel from "./sidebarExtendLabel";
 import * as sidebarExtendSelect from "./sidebarExtendSelect";
@@ -23,19 +22,26 @@ class Form2Fields extends EditorComponent<Value, Props> {
 
   renderForEdit(v: Value, vs: Value, vd: Value): React.JSX.Element {
     const { labelType, placeholder, multistep, active } = this.props;
+    const stylesData = {
+      v,
+      vs,
+      vd,
+      store: this.getReduxStore(),
+      renderContext: this.renderContext
+    };
 
     const className = classnames(
-      css(
+      this.css(
         `${this.getComponentId()}-fields`,
         `${this.getId()}-fields`,
-        styleFormFields(v, vs, vd)
+        styleFormFields(stylesData)
       )
     );
     const selectClassName = classnames(
-      css(
+      this.css(
         `${this.getComponentId()}-field_select`,
         `${this.getId()}-field_select`,
-        styleFormSelect(v, vs, vd)
+        styleFormSelect(stylesData)
       )
     );
 

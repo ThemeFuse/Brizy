@@ -1,33 +1,30 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { isPopup } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getInstanceParentId } from "visual/utils/toolbar";
 import { Value } from "./toolbarClose";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 // @ts-expect-error need to change to new options
 export const getItems: GetItems<Value> = ({
   v,
   device,
   component,
-  context
+  context,
+  editorMode
 }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
@@ -35,22 +32,23 @@ export const getItems: GetItems<Value> = ({
   const widthSuffix = dvv("widthSuffix");
   const columnsHeightStyle = dvv("columnsHeightStyle");
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.image
   });
 
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
   const disabledSavedBlock =
     typeof config.api?.savedPopups?.create !== "function";
   const disabledGlobalBlock =
     typeof config.api?.globalPopups?.create !== "function";
   const popupSettings = config.ui?.popupSettings ?? {};
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isPopup = isPopup(editorMode);
 
   const enableDisplayCondition = popupSettings.displayCondition;
   const enableDelete = popupSettings.deletePopup;
@@ -60,7 +58,7 @@ export const getItems: GetItems<Value> = ({
   const enableScrollPageBehind = popupSettings.scrollPageBehind === true;
   const enableclickOutsideToClose = popupSettings.clickOutsideToClose === true;
 
-  const blockType = IS_GLOBAL_POPUP ? "externalPopup" : "popup";
+  const blockType = _isPopup ? "externalPopup" : "popup";
 
   const columnsHeightStylePicker =
     columnsHeightStyle === "custom"
@@ -98,7 +96,7 @@ export const getItems: GetItems<Value> = ({
       },
       position: 70,
       devices: "desktop",
-      disabled: IS_GLOBAL_POPUP && enabledEmbedded,
+      disabled: _isPopup && enabledEmbedded,
       options: [
         {
           id: "tabsPopup",
@@ -215,7 +213,7 @@ export const getItems: GetItems<Value> = ({
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes
+                  choices: getMaskShapes()
                 },
                 {
                   id: "maskCustomUpload",
@@ -241,7 +239,7 @@ export const getItems: GetItems<Value> = ({
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -267,7 +265,7 @@ export const getItems: GetItems<Value> = ({
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -298,7 +296,7 @@ export const getItems: GetItems<Value> = ({
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }
@@ -314,7 +312,7 @@ export const getItems: GetItems<Value> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },

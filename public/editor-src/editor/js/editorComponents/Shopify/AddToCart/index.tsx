@@ -1,12 +1,12 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
+import { isView } from "visual/providers/RenderProvider";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import PortalToolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import * as Str from "visual/utils/reader/string";
@@ -47,12 +47,23 @@ export class AddToCart extends EditorComponent<Value> {
       );
     }
   }
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { itemId, customCSS } = v;
 
     const className = classnames(
       "brz-shopify-add-to-cart",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const _itemId =
@@ -85,7 +96,7 @@ export class AddToCart extends EditorComponent<Value> {
           >
             {this.renderIcon(v)}
             <Text id="text" v={v} onChange={this.handleTextChange} />
-            {IS_PREVIEW && (
+            {isView(this.renderContext) && (
               <ThemeIcon
                 className="brz-shopify-add-to-cart--spinner brz-invisible"
                 name="circle-02"

@@ -1,3 +1,4 @@
+import { Str } from "@brizy/readers";
 import {
   cssStyleBgColor,
   cssStyleColor,
@@ -15,24 +16,6 @@ import {
   styleSizeHeaderWidth,
   styleSizeWidth
 } from "visual/utils/style2";
-import { Str } from "@brizy/readers";
-
-export function cssStyleElementTableIconSize({ v, device, state }) {
-  const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const iconSize = dvv("iconSize");
-  const iconCustomSize = dvv("iconCustomSize");
-
-  switch (iconSize) {
-    case "small":
-      return "font-size: 16px;";
-    case "medium":
-      return "font-size: 24px;";
-    case "large":
-      return "font-size: 32px;";
-    case "custom":
-      return `font-size: ${iconCustomSize}px;`;
-  }
-}
 
 export function cssStyleElementTableSpacing({ v, device, state }) {
   const iconPosition = styleElementTableIconPosition({ v, device, state });

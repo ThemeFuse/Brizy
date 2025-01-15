@@ -1,5 +1,6 @@
 import React from "react";
 import { noop } from "underscore";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { BaseKey } from "./BaseApp";
 import { BaseIntegrationContext } from "./type";
 
@@ -23,5 +24,6 @@ export const Context = React.createContext<BaseIntegrationContext>({
   onConnectApp: noop,
   onDisconnectApp: noop,
   onChangeProgress: noop,
-  onError: noop
+  onError: noop,
+  config: {} as ConfigCommon
 });

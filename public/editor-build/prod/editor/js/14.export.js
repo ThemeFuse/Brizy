@@ -2,7 +2,7 @@ exports.id = 14;
 exports.ids = [14];
 exports.modules = {
 
-/***/ 6980:
+/***/ 7006:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(YouTube_exports, {
   default: () => YouTube
 });
 module.exports = __toCommonJS(YouTube_exports);
-var import_react = __toESM(__webpack_require__(470));
-var import_utils = __webpack_require__(3805);
-var import_patterns = __webpack_require__(3808);
+var import_react = __toESM(__webpack_require__(24));
+var import_utils = __webpack_require__(3837);
+var import_patterns = __webpack_require__(3840);
 const SDK_URL = "https://www.youtube.com/iframe_api";
 const SDK_GLOBAL = "YT";
 const SDK_GLOBAL_READY = "onYouTubeIframeAPIReady";

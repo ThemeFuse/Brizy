@@ -1,7 +1,8 @@
-import Editor from "visual/global/Editor";
+import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 import { t } from "visual/utils/i18n";
+import { getThirdPartyShortcodeTitle } from "./utils";
 
-const translationsMap = {
+const getTranslationsMap = () => ({
   RichText: t("Text"),
   Image: t("Image"),
   Video: t("Video"),
@@ -99,6 +100,7 @@ const translationsMap = {
   EcwidProduct: t("Product"),
   EcwidProducts: t("Products"),
   EcwidShoppingBag: t("Shopping Bag"),
+  EcwidFavorites: t("Favorites"),
 
   // Shopify
   AddToCart: t("Add To Cart"),
@@ -196,23 +198,28 @@ const translationsMap = {
 
   // Leadific
   Leadific: t("Leadific")
-};
+});
 
 export default {
   getItems
 };
 
-function getItems(v) {
-  const shortcodes = Editor.getShortcodes();
+function getItems(v, component) {
+  const config = component.getGlobalConfig();
+  const shortcodes = getFlatShortcodes(config);
   const { items } = v;
-  const { icon = "" } =
-    Object.values(shortcodes)
-      .flat()
-      .find(
-        (item) => item.component.resolve.value.items?.type === items[0]?.type
-      ) || {};
 
-  let title = translationsMap[items[0]?.type]; // TODO: See if we'll need icons & prop
+  const flattedShortcodes = Object.values(shortcodes).flat();
+  const { icon = "" } =
+    flattedShortcodes.find(
+      (item) => item.component.resolve.value.items?.type === items[0]?.type
+    ) || {};
+
+  const translates = getTranslationsMap();
+  const thirdPartyId = items[0]?.value?.thirdPartyId;
+  let title =
+    translates[items[0]?.type] ??
+    getThirdPartyShortcodeTitle(flattedShortcodes, thirdPartyId); // TODO: See if we'll need icons & prop
 
   if (typeof title === "function") {
     title = title(items[0]?.value);

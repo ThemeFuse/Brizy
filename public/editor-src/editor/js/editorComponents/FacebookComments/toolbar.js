@@ -1,13 +1,10 @@
-import Config from "visual/global/Config";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
-const wordpress = Boolean(Config.get("wp"));
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device, state, component }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const type = dvv("type");
@@ -15,12 +12,13 @@ export function getItems({ v, device, state }) {
   const review = dvv("review") === "true";
   const WPComments = type !== "WPComments";
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
+  const borderColor = getColor(
+    dvv("borderColorPalette"),
     dvv("borderColorHex"),
-    dvv("borderColorPalette")
+    dvv("borderColorOpacity")
   );
 
-  const choicesType = wordpress
+  const choicesType = component.getGlobalConfig().wp
     ? [
         { title: t("Facebook"), value: "facebook" },
         { title: t("Disqus"), value: "disqus" },
@@ -211,10 +209,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              borderColorHex,
-              dvv("borderColorOpacity")
-            )
+            backgroundColor: borderColor
           }
         }
       },

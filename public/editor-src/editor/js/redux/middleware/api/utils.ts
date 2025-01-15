@@ -1,6 +1,8 @@
 import _ from "underscore";
-import Config from "visual/global/Config";
-import { PublishData } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConfigCommon,
+  PublishData
+} from "visual/global/Config/types/configs/ConfigCommon";
 import {
   autoSave as apiAutoSave,
   createGlobalBlock as apiCreateGlobalBlock,
@@ -34,9 +36,8 @@ export const debouncedApiAutoSave = _.once((interval: number = DEBOUNCE_WAIT) =>
 export const debouncedApiPublish = _.debounce(apiPublish, DEBOUNCE_WAIT);
 
 // Polling
-export function pollingSendHeartBeat(heartBeat: number) {
+export function pollingSendHeartBeat(heartBeat: number, config: ConfigCommon) {
   let init = false;
-  const config = Config.getAll();
   const { sendHandler } = config.api?.heartBeat ?? {};
 
   if (typeof sendHandler === "undefined") {

@@ -4,59 +4,50 @@ class Brizy_Compatibilities_Init {
 
 	public function __construct() {
 		$this->load_compatibilites();
-		add_action( 'plugins_loaded',    [ $this, 'action_plugins_loaded' ], 0 );
+		add_action( 'plugins_loaded', [ $this, 'action_plugins_loaded' ], 0 );
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ] );
 	}
 
 	private function load_compatibilites() {
 		global $wp_version;
-
 		if ( function_exists( 'w3tc_add_ob_callback' ) || function_exists( 'w3tc_class_autoload' ) ) {
 			new Brizy_Compatibilities_Wtc();
 		}
-
 		$version_compare = version_compare( $wp_version, '5' );
-
 		if ( function_exists( 'gutenberg_init' ) || $version_compare >= 0 ) {
 			new Brizy_Compatibilities_Gutenberg();
 		}
-
 		if ( function_exists( 'autoptimize' ) ) {
 			new Brizy_Compatibilities_Autoptimize();
 		}
-
 		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
 			new Brizy_Compatibilities_WPML();
 		}
-
 		if ( function_exists( 'fvm_cachepath' ) ) {
 			new Brizy_Compatibilities_FastVelocityMinify();
 		}
-
 		if ( class_exists( 'Phast_Plugins_Bootstrap' ) ) {
 			new Brizy_Compatibilities_Phastpress();
 		}
-
 		new Brizy_Compatibilities_WordpressMuDomainMapping();
-
 		if ( $this->is_plugin_active( 'sg-cachepress/sg-cachepress.php' ) ) {
 			new Brizy_Compatibilities_SgOptimizer();
 		}
-
-		if ( defined( 'SEOPRESS_VERSION' ) ) {
-			new Brizy_Compatibilities_SeoPress();
-		}
-
 		if ( function_exists( 'WPNCEasyWP' ) ) {
 			new Brizy_Compatibilities_NcEasywp();
 		}
-
 		if ( defined( 'ASTRA_EXT_FILE' ) ) {
 			new Brizy_Compatibilities_AstraAddon();
 		}
 	}
 
 	public function action_plugins_loaded() {
+
+
+		if ( defined( 'SEOPRESS_VERSION' ) ) {
+			new Brizy_Compatibilities_SeoPress();
+		}
+
 		if ( function_exists( 'wpseo_auto_load' ) ) {
 			new Brizy_Compatibilities_YoastSeo();
 		}
@@ -66,89 +57,69 @@ class Brizy_Compatibilities_Init {
 				new Brizy_Compatibilities_BrokenLinkChecker();
 			}
 		}
-
 		if ( defined( 'LSCWP_V' ) ) {
 			new Brizy_Compatibilities_LiteSpeed();
 		}
-
 		if ( defined( 'TRP_GP_PLUGIN_VERSION' ) ) {
 			new Brizy_Compatibilities_TpAddOnLanguageByGetParameter();
 		}
-
 		if ( defined( 'EM_POST_TYPE_LOCATION' ) ) {
 			new Brizy_Compatibilities_EventsManager();
 		}
-
 		if ( defined( 'POLYLANG_VERSION' ) ) {
 			new Brizy_Compatibilities_Polylang();
 		}
-
 		if ( class_exists( 'TRP_Translate_Press' ) ) {
 			new Brizy_Compatibilities_TranslatePress();
 		}
-
 		if ( class_exists( 'WooCommerce' ) ) {
 			new Brizy_Compatibilities_Woocommerce();
-        }
-    
+		}
 		if ( class_exists( 'bbPress' ) ) {
 			new Brizy_Compatibilities_Bbpress();
 		}
-
 		if ( class_exists( 'Tribe__Events__Main' ) ) {
 			new Brizy_Compatibilities_TheEventsCalendar();
 		}
-
 		if ( defined( 'BRIZY_PRO_VERSION' ) ) {
 			new Brizy_Compatibilities_BrizyProCompatibility();
 		}
-
 		if ( defined( 'JOB_MANAGER_VERSION' ) ) {
 			new Brizy_Compatibilities_WpJobManager();
 		}
-
 		if ( function_exists( 'wp_copyright_protection' ) ) {
 			new Brizy_Compatibilities_WpCopyrightProtection();
 		}
-
 		if ( defined( 'DS_LIVE_COMPOSER_VER' ) ) {
 			new Brizy_Compatibilities_LiveComposerPageBuilder();
 		}
-
 		if ( class_exists( 'Wp_Ultimo' ) ) {
 			new Brizy_Compatibilities_WpUltimo();
 		}
-
 		if ( defined( 'PERFMATTERS_VERSION' ) ) {
 			new Brizy_Compatibilities_Perfmatters();
 		}
-
 		if ( class_exists( 'COMPLIANZ' ) ) {
 			new Brizy_Compatibilities_ComplianzGpdr();
 		}
-
 		if ( class_exists( 'WP_Import' ) ) {
 			new Brizy_Compatibilities_WordpressImporter();
 		}
-
 		if ( class_exists( 'WP_Optimize' ) ) {
 			new Brizy_Compatibilities_WpOptimize();
 		}
-
 		if ( defined( 'JETPACK__PLUGIN_FILE' ) ) {
 			new Brizy_Compatibilities_Jetpack();
 		}
-
 		if ( defined( 'BUNNYCDN_WP_VERSION' ) ) {
 			new Brizy_Compatibilities_Bunnynet();
 		}
-    }
+	}
 
 	public function after_setup_theme() {
 		if ( function_exists( 'tf_autoload' ) ) {
 			new Brizy_Compatibilities_Tfuse();
 		}
-
 		new Brizy_Compatibilities_WpThemes();
 	}
 
@@ -158,13 +129,10 @@ class Brizy_Compatibilities_Init {
 		if ( is_array( $apply_filters ) && in_array( $plugin_file, $apply_filters ) ) {
 			return true;
 		}
-
 		if ( ! is_multisite() ) {
 			return false;
 		}
-
 		$plugins = get_site_option( 'active_sitewide_plugins' );
-
 		if ( isset( $plugins[ $plugin_file ] ) ) {
 			return true;
 		}

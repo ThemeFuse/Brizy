@@ -1,13 +1,12 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import type { Value } from "./types";
 
-export const title = t("Progress");
+export const title = () => t("Progress");
 
-export const getItems: GetItems<Value> = () => {
-  const IS_STORY = isStory(Config.getAll());
+export const getItems: GetItems<Value> = ({ editorMode }) => {
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -49,7 +48,7 @@ export const getItems: GetItems<Value> = () => {
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       position: 100,
                       type: "slider",

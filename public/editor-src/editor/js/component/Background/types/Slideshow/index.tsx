@@ -9,6 +9,8 @@ import { SwiperOptions } from "swiper/types/swiper-options";
 import { SlideshowPreview } from "visual/component/Background/types/Slideshow/SlideshowPreview";
 import type { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { useConfig } from "visual/global/hooks";
+import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { read as readString } from "visual/utils/reader/string";
@@ -18,6 +20,7 @@ import { Slide } from "./Slide";
 
 interface Props {
   images: Image[];
+  renderContext: RenderType;
   slideshowLoop?: string;
   slideshowDuration?: number;
   slideshowTransitionType?: Transition;
@@ -25,12 +28,9 @@ interface Props {
   kenBurnsEffect?: KenEffect;
 }
 
-const modules = IS_EDITOR ? [EffectFade, Autoplay] : [];
-const Swiper = IS_EDITOR ? SwiperControl : undefined;
-const SwiperSlide = IS_EDITOR ? SwiperSlideControl : undefined;
-
 const Slideshow = ({
   images,
+  renderContext,
   slideshowLoop = "on",
   slideshowDuration = 1,
   slideshowTransitionType = Transition.Fade,
@@ -38,6 +38,13 @@ const Slideshow = ({
   kenBurnsEffect = KenEffect.Off
 }: Props): ReactElement | null => {
   const { uid: _uid, fileName: _fileName } = images[0] ?? {};
+  const config = useConfig();
+
+  const _isEditor = isEditor(renderContext);
+
+  const modules = _isEditor ? [EffectFade, Autoplay] : [];
+  const Swiper = _isEditor ? SwiperControl : undefined;
+  const SwiperSlide = _isEditor ? SwiperSlideControl : undefined;
 
   const isSlideDown = slideshowTransitionType === Transition.SlideDown;
   const isFade = slideshowTransitionType === Transition.Fade;
@@ -71,13 +78,16 @@ const Slideshow = ({
     const fileName = readString(_fileName) ?? "";
 
     return {
-      backgroundImage: `url(${getImageUrl({
-        uid,
-        fileName,
-        sizeType: SizeType.original
-      })})`
+      backgroundImage: `url(${getImageUrl(
+        {
+          uid,
+          fileName,
+          sizeType: SizeType.original
+        },
+        config
+      )})`
     };
-  }, [_uid, _fileName]);
+  }, [_uid, _fileName, config]);
 
   const options: SwiperOptions = useMemo(() => {
     const dir =
@@ -134,7 +144,7 @@ const Slideshow = ({
     );
   }
 
-  if (IS_PREVIEW || !Swiper || !SwiperSlide) {
+  if (isView(renderContext) || !Swiper || !SwiperSlide) {
     const attr = {
       [makeAttr("loop")]: slideshowLoop,
       [makeAttr("duration")]: slideshowDuration,

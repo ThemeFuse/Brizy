@@ -6,9 +6,7 @@ import {
 import { isExternalPopup } from "visual/utils/models";
 import { rulesAmountSelector, triggersSelector } from "visual/redux/selectors";
 
-export const useConditions = ({
-  config
-}: ConditionsProps) => {
+export const useConditions = ({ config }: ConditionsProps) => {
   const triggers: Trigger[] | null = useSelector(triggersSelector);
   const amountSelector = useSelector(rulesAmountSelector);
   let rulesAmount = 0;

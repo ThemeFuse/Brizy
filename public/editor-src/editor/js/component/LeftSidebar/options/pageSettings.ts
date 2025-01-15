@@ -1,6 +1,8 @@
 import { isT } from "fp-utilities";
-import { Config } from "visual/global/Config";
-import { LeftSidebarPageSettingsOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConfigCommon,
+  LeftSidebarPageSettingsOptionsIds
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 
 interface Option {
@@ -9,7 +11,7 @@ interface Option {
   roles?: Array<string>;
 }
 
-const settings: Record<LeftSidebarPageSettingsOptionsIds, Option> = {
+const getSettings = (): Record<LeftSidebarPageSettingsOptionsIds, Option> => ({
   [LeftSidebarPageSettingsOptionsIds.featuredImage]: {
     type: LeftSidebarPageSettingsOptionsIds.featuredImage,
     label: t("Featured Image")
@@ -27,10 +29,10 @@ const settings: Record<LeftSidebarPageSettingsOptionsIds, Option> = {
     type: LeftSidebarPageSettingsOptionsIds.language,
     label: t("Show If Language")
   }
-};
+});
 
-export const getPageSettings = (config: Config): Array<Option> => {
-  const { leftSidebar = {} } = config.ui ?? {};
+export const getPageSettings = (ui: ConfigCommon["ui"]): Array<Option> => {
+  const { leftSidebar = {} } = ui ?? {};
   const { options = {} } = leftSidebar.pageSettings ?? {};
   const enabledOptions = Object.entries(options).reduce<
     Array<LeftSidebarPageSettingsOptionsIds>
@@ -45,6 +47,6 @@ export const getPageSettings = (config: Config): Array<Option> => {
   if (enabledOptions.length === 0) {
     return [];
   }
-
+  const settings = getSettings();
   return enabledOptions.map((type) => settings[type]).filter(isT);
 };

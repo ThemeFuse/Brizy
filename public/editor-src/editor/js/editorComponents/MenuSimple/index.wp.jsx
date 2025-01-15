@@ -4,7 +4,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { getMenus } from "visual/utils/api";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -26,7 +25,7 @@ export default class MenuSimpleWP extends EditorComponent {
   };
 
   componentDidMount() {
-    getMenus().then((menus) => {
+    getMenus(this.getGlobalConfig()).then((menus) => {
       this.setState({ menus });
 
       const v = this.getValue();
@@ -39,10 +38,16 @@ export default class MenuSimpleWP extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const className = classnames(
       "brz-menu-simple",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

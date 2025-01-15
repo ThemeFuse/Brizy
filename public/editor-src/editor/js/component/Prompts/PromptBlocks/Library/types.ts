@@ -1,4 +1,5 @@
 import { ComponentType } from "react";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   SavedBlockAPIMeta,
   SavedLayoutAPIMeta
@@ -22,6 +23,9 @@ export interface Thumbs extends BlockScreenshots {
   showRemoveIcon: boolean;
   loading: boolean;
   keywords?: string;
+  isPro?: boolean;
+  isStory?: boolean;
+  upgradeToPro?: string;
 }
 
 export type LayoutData = Omit<SavedLayoutAPIMeta, "isCloudEntity" | "meta">;
@@ -63,6 +67,7 @@ export type LibraryProps = {
   onClose: () => void;
   HeaderSlotLeft: ComponentType;
   getParentNode?: () => HTMLElement | null;
+  config: ConfigCommon;
 };
 
 export type LibraryStateProps = {

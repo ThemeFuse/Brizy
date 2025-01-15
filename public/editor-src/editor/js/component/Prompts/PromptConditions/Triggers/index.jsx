@@ -9,11 +9,11 @@ import { Scrollbar } from "visual/component/Scrollbar";
 import { updateTriggers } from "visual/redux/actions";
 import { triggersSelector } from "visual/redux/selectors";
 import { pendingRequest } from "visual/utils/api";
-import { IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import Buttons from "../Buttons";
 import ItemWrapper from "../common/ItemWrapper";
-import items from "./items";
+import getItems from "./items";
 
 class Triggers extends React.Component {
   constructor(props) {
@@ -29,10 +29,11 @@ class Triggers extends React.Component {
       values: values,
       loading: false
     };
+    this.isPro = isPro(props.config);
   }
 
   handleChange = () => {
-    if (IS_PRO) {
+    if (this.isPro) {
       const { values, triggerOnce } = this.state;
 
       const triggerOnceObj = {
@@ -60,13 +61,13 @@ class Triggers extends React.Component {
   };
 
   handleTriggerOnceChange = (triggerOnce) => {
-    if (IS_PRO) {
+    if (this.isPro) {
       this.setState({ triggerOnce });
     }
   };
 
   handleWrapperTriggerChange = (index, value) => {
-    if (IS_PRO) {
+    if (this.isPro) {
       this.setState({
         values: setIn(this.state.values, [index], {
           ...this.state.values[index],
@@ -77,7 +78,7 @@ class Triggers extends React.Component {
   };
 
   handleWrapperTriggerRemove = (index) => {
-    if (IS_PRO) {
+    if (this.isPro) {
       this.setState({ values: removeAt(this.state.values, index) });
     }
   };
@@ -85,7 +86,7 @@ class Triggers extends React.Component {
   handleTriggerChange(oldTriggerIndex, newName) {
     const { values } = this.state;
 
-    const { defaultValue } = items.find(({ id }) => id === newName);
+    const { defaultValue } = getItems().find(({ id }) => id === newName);
 
     const newTriggers = setIn(values, [oldTriggerIndex], {
       ...values[oldTriggerIndex],
@@ -99,7 +100,7 @@ class Triggers extends React.Component {
   }
 
   handleValueChange = (index, value) => {
-    if (IS_PRO) {
+    if (this.isPro) {
       this.setState({
         values: setIn(this.state.values, [index, "value"], value)
       });
@@ -107,7 +108,7 @@ class Triggers extends React.Component {
   };
 
   handleAdd = () => {
-    if (IS_PRO) {
+    if (this.isPro) {
       const { values } = this.state;
       const availableItems = this.getAvailableItems();
 
@@ -138,7 +139,7 @@ class Triggers extends React.Component {
       return acc;
     }, {});
 
-    return items
+    return getItems()
       .filter(({ id, duplicatesAmount = 1 }) => {
         const isAlreadyInValues = values.find((trigger) => trigger.id === id);
         const currentDuplicatesAreLess =
@@ -208,12 +209,13 @@ class Triggers extends React.Component {
 
     const content = values.map((trigger, index) => {
       const { Component, ...item } =
-        items.find(({ id }) => id === trigger.id) || {};
+        getItems().find(({ id }) => id === trigger.id) || {};
 
       const content = Component ? (
         <Component
           {...item}
           {...trigger}
+          availableRoles={this.props.config?.wp?.availableRoles}
           onChange={(value) => this.handleValueChange(index, value)}
         />
       ) : null;

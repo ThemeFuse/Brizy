@@ -2,6 +2,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
 import * as LinkTarget from "visual/component/Link/types/Target";
 import * as LinkType from "visual/component/Link/types/Type";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import {
   getPopulatedEntityValues,
@@ -47,7 +48,7 @@ export interface Link {
 
 const isNan = pipe(Num.read, isNullish);
 
-const getLightBoxUrl = (v: Value): MValue<string> => {
+const getLightBoxUrl = (v: Value, config: ConfigCommon): MValue<string> => {
   const {
     linkLightBox,
     linkType: _linkType,
@@ -87,11 +88,14 @@ const getLightBoxUrl = (v: Value): MValue<string> => {
         }),
         defaultImagePopulation
       )
-    : getImageUrl({
-        uid: imageSrc,
-        fileName: imageFileName,
-        sizeType: SizeType.custom
-      });
+    : getImageUrl(
+        {
+          uid: imageSrc,
+          fileName: imageFileName,
+          sizeType: SizeType.custom
+        },
+        config
+      );
 };
 
 const getExternal = (v: Value): MValue<string> => {
@@ -119,7 +123,10 @@ const getExternal = (v: Value): MValue<string> => {
   return Str.read(v[linkExternalType]);
 };
 
-export const getLinkData = <T extends Value>(v: T): Link => {
+export const getLinkData = <T extends Value>(
+  v: T,
+  config: ConfigCommon
+): Link => {
   const {
     linkLightBox,
     linkAnchor,
@@ -143,7 +150,7 @@ export const getLinkData = <T extends Value>(v: T): Link => {
     external: getExternal(v),
     popup: Str.read(linkPopup),
     upload: Str.read(linkUpload),
-    lightBox: getLightBoxUrl(v),
+    lightBox: getLightBoxUrl(v, config),
 
     // TODO: Builder need to be check where is used
     action: ""

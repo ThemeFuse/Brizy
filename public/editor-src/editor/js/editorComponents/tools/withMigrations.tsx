@@ -1,9 +1,11 @@
-import React, { ReactNode } from "react";
 import { Num } from "@brizy/readers";
+import React, { ReactNode } from "react";
+import { RenderType } from "visual/providers/RenderProvider";
 import EditorIcon from "visual/component/EditorIcon";
 import { ElementModel } from "visual/component/Elements/Types";
 import { EditorInstance, Props } from "visual/editorComponents/EditorComponent";
 import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   Deps,
   Migration,
@@ -17,7 +19,7 @@ type DBMigration<M> = M & {
 };
 
 interface DepsGetValue<T> {
-  getValue: () => Promise<T>;
+  getValue: (renderContext: RenderType, config: ConfigCommon) => Promise<T>;
 }
 
 export function withMigrations<
@@ -43,6 +45,8 @@ export function withMigrations<
 
       this.currentVersion = currentVersion;
 
+      const config = this.getGlobalConfig();
+
       if (foundMigrations.length > 0) {
         if (deps?.getValue) {
           this.state = {
@@ -51,7 +55,7 @@ export function withMigrations<
           };
 
           deps
-            .getValue()
+            .getValue(this.props.renderContext, config)
             .then((r) => {
               // @ts-expect-error: { _version: number; }' is assignable to the constraint of type 'M'
               this.dbValueMigrated = {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useRender } from "visual/providers/RenderProvider";
 import {
   deviceStateValueByKey,
   makeKeyByStateDevice,
@@ -75,11 +76,14 @@ const getMedia = (v) => {
 };
 
 const BackgroundContainer = ({ value, meta, children }) => {
+  const { renderType } = useRender();
+
   const { media, opacity } = getMediaProps(value);
   const bg = value.bg || value.hoverBg;
 
   let props = {
     opacity,
+    renderContext: renderType,
     image: media && getImage(value),
     parallax: getParallax(value, meta),
     boxShadow: getBoxShadow(value),

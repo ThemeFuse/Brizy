@@ -5,6 +5,7 @@ import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
@@ -100,7 +101,7 @@ class AccordionItemItems extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { className, isActive } = this.props;
 
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

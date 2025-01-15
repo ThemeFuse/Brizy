@@ -1,7 +1,6 @@
+import { Str } from "@brizy/readers";
+import { Config, isWp } from "visual/global/Config";
 import { ReduxState } from "visual/redux/types";
-import { Config } from "visual/global/Config";
-import { EditorType } from "./types";
-import { isPopup, isStory } from "visual/utils/models";
 
 export const areStatesEqual = (
   state: ReduxState,
@@ -16,14 +15,10 @@ export const areStatesEqual = (
   );
 };
 
-export function getRenderType(config: Config): EditorType {
-  if (isPopup(config)) {
-    return "popup";
+export const getPageId = (config: Config): string => {
+  if (isWp(config)) {
+    return Str.read(config.wp?.page) ?? "";
   }
 
-  if (isStory(config)) {
-    return "story";
-  }
-
-  return "basic";
-}
+  return Str.read(config.page?.id) ?? "";
+};

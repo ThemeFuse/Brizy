@@ -1,10 +1,9 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import Config from "visual/global/Config";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
-export function getItems({ v, device }) {
-  const config = Config.getAll();
+export function getItems({ v, device, component }) {
+  const config = component.getGlobalConfig();
 
   const dvv = (key) => defaultValueValue({ v, key, device });
 

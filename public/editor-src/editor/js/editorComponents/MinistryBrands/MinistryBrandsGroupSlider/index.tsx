@@ -6,9 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Model } from "visual/editorComponents/EditorComponent/types";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import { read as readNum } from "visual/utils/reader/number";
 import { read as readString } from "visual/utils/reader/string";
 import * as sidebarConfig from "../sidebar";
@@ -27,7 +25,7 @@ import * as toolbarImage from "../toolbarImage";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars//toolbarMetaItemLinkColor";
-import { EkklesiaMessages } from "../utils/helpers";
+import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarArrow from "./toolbarArrow";
@@ -42,6 +40,7 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsGroupSlider" {
     return "MinistryBrandsGroupSlider";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -58,7 +57,7 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
 
     this.props.extendParentToolbar(toolbarExtend);
     const { category, group } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [
@@ -68,7 +67,8 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["group_slider"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["group_slider"]);
       this.patchValue(changedKeys);
     }
   }
@@ -97,7 +97,17 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-groupSlider__wrapper",
       "brz-ministryBrands",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

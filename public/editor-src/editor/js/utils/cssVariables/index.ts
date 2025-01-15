@@ -1,13 +1,10 @@
-import Config from "visual/global/Config";
+import { Theme } from "visual/global/Config/types/configs/ConfigCommon";
 
-export const makeVariablesColor = () => {
-  const config = Config.getAll();
-  const variables = config?.ui?.theme?.colors ?? {};
-
-  if (Object.keys(variables).length > 0) {
+export const makeVariablesColor = (colors: Theme["colors"]) => {
+  if (Object.keys(colors).length > 0) {
     const varConfig: string[] = [];
 
-    Object.entries(variables).forEach((entry) => {
+    Object.entries(colors).forEach((entry) => {
       const [key, value] = entry;
       if (value) {
         const vars = `${key}:${value}`;

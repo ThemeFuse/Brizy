@@ -1,6 +1,6 @@
+import { Num, Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
-import { hexToRgba } from "visual/utils/color";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { getColor } from "visual/utils/color";
 import { State } from "visual/utils/stateMode";
 import { styleState } from "visual/utils/style";
 import { isNullish } from "visual/utils/value";
@@ -22,30 +22,38 @@ export function cssStyleDropShadow({
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
-  const dropShadowColorHex = dvv(capByPrefix(prefix, "colorHex"));
-  const dropShadowColorOpacity = dvv(capByPrefix(prefix, "colorOpacity"));
-  const dropShadowColorPalette = dvv(capByPrefix(prefix, "colorPalette"));
+  const dropShadowColorHex = Str.read(dvv(capByPrefix(prefix, "colorHex")));
+  const dropShadowColorPalette = Str.read(
+    dvv(capByPrefix(prefix, "colorPalette"))
+  );
+  const dropShadowColorOpacity = Num.read(
+    dvv(capByPrefix(prefix, "colorOpacity"))
+  );
 
   const dropShadowBlur = dvv(capByPrefix(prefix, "blur"));
   const dropShadowVertical = dvv(capByPrefix(prefix, "vertical"));
   const dropShadowHorizontal = dvv(capByPrefix(prefix, "horizontal"));
 
-  const { hex } = getOptionColorHexByPalette(
-    dropShadowColorHex,
-    dropShadowColorPalette
-  );
-  const dropShadowColor = hexToRgba(hex, dropShadowColorOpacity);
-
   const dropShadowIsNullish = [
     dropShadowHorizontal,
     dropShadowVertical,
-    dropShadowBlur,
-    dropShadowColor
+    dropShadowBlur
   ].some((el) => isNullish(el));
 
-  if (dropShadowIsNullish) {
+  if (
+    dropShadowIsNullish ||
+    isNullish(dropShadowColorHex) ||
+    isNullish(dropShadowColorPalette) ||
+    isNullish(dropShadowColorOpacity)
+  ) {
     return "";
   }
 
-  return `filter : drop-shadow(${dropShadowHorizontal}px ${dropShadowVertical}px ${dropShadowBlur}px ${dropShadowColor});`;
+  const dropShadowColor = getColor(
+    dropShadowColorPalette,
+    dropShadowColorHex,
+    dropShadowColorOpacity
+  );
+
+  return `--shadowColor: ${dropShadowColor} ${dropShadowHorizontal}px ${dropShadowVertical}px ${dropShadowBlur}px; filter: drop-shadow(var(--shadowColor));`;
 }

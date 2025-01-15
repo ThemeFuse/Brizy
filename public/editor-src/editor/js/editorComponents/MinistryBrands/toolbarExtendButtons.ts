@@ -1,9 +1,8 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
@@ -19,16 +18,20 @@ export const getItems = <
   v,
   device
 }: Params<M, P, S>): ToolbarItemType[] => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const detailButtonColorOpacity = dvv("detailButtonColorOpacity");
+  const detailButtonBgColorOpacity = dvv("detailButtonBgColorOpacity");
 
-  const { hex: detailButtonBgColorHex } = getOptionColorHexByPalette(
+  const detailButtonBgColor = getColor(
+    dvv("detailButtonBgColorPalette"),
     dvv("detailButtonBgColorHex"),
-    dvv("detailButtonBgColorPalette")
+    detailButtonBgColorOpacity
   );
 
-  const { hex: detailButtonColorHex } = getOptionColorHexByPalette(
+  const detailButtonColor = getColor(
+    dvv("detailButtonColorPalette"),
     dvv("detailButtonColorHex"),
-    dvv("detailButtonColorPalette")
+    detailButtonColorOpacity
   );
 
   const detailButtonTypographyFontSize =
@@ -41,9 +44,6 @@ export const getItems = <
     detailButtonTypographyFontSize,
     detailButtonTypographyLineHeight
   );
-
-  const detailButtonColorOpacity = dvv("detailButtonColorOpacity");
-  const detailButtonBgColorOpacity = dvv("detailButtonBgColorOpacity");
 
   const fillType = dvv("detailButtonFillType");
 
@@ -174,9 +174,7 @@ export const getItems = <
         icon: {
           style: {
             backgroundColor:
-              fillType === "filled"
-                ? hexToRgba(detailButtonBgColorHex, detailButtonBgColorOpacity)
-                : hexToRgba(detailButtonColorHex, detailButtonColorOpacity)
+              fillType === "filled" ? detailButtonBgColor : detailButtonColor
           }
         }
       },

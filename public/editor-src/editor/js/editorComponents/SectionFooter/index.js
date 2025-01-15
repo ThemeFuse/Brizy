@@ -16,17 +16,13 @@ import {
   wInTabletPage
 } from "visual/config/columns";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import {
-  makePlaceholder,
   makeEndPlaceholder,
+  makePlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
-import { IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
@@ -59,6 +55,8 @@ class SectionFooter extends EditorComponent {
   mounted = false;
 
   collapsibleToolbarRef = React.createRef();
+
+  isPro = isPro(this.getGlobalConfig());
 
   state = {
     isDragging: false,
@@ -133,7 +131,7 @@ class SectionFooter extends EditorComponent {
 
   getMeta() {
     const { meta } = this.props;
-    const device = deviceModeSelector(this.getReduxState());
+    const device = this.getDeviceMode();
 
     const size = this.dvv("containerSize", DESKTOP);
     const tabletSize = this.dvv("containerSize", TABLET);
@@ -182,7 +180,7 @@ class SectionFooter extends EditorComponent {
     if (!validateKeyByProperty(v, "animationName", "none")) {
       return undefined;
     }
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
 
     const animationName = this.dvv("animationName", device);
     const animationDuration = this.dvv("animationDuration", device);
@@ -194,12 +192,16 @@ class SectionFooter extends EditorComponent {
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classnames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
@@ -225,10 +227,16 @@ class SectionFooter extends EditorComponent {
     const classNameContainer = classnames(
       "brz-container",
       v.containerClassName,
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const itemsProps = this.makeSubcomponentProps({
@@ -244,6 +252,7 @@ class SectionFooter extends EditorComponent {
           onStart={this.onPaddingResizerStart}
           onChange={this.handlePaddingResizerChange}
           onEnd={this.onPaddingResizerEnd}
+          renderContext={this.renderContext}
         >
           <SectionFooterItems {...itemsProps} />
         </PaddingResizer>
@@ -254,7 +263,7 @@ class SectionFooter extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { className, customClassName, cssClass, customAttributes } = v;
 
-    return IS_PRO ? (
+    return this.isPro ? (
       <ContainerBorder
         type="footer"
         hiddenInResponsive={true}
@@ -277,10 +286,16 @@ class SectionFooter extends EditorComponent {
                   "brz-footer",
                   className,
                   cssClass || customClassName,
-                  css(
-                    `${this.constructor.componentId}-section`,
+                  this.css(
+                    `${this.getComponentId()}-section`,
                     `${this.getId()}-section`,
-                    styleSection(v, vs, vd)
+                    styleSection({
+                      v,
+                      vs,
+                      vd,
+                      store: this.getReduxStore(),
+                      renderContext: this.renderContext
+                    })
                   )
                 )
               }}
@@ -309,7 +324,7 @@ class SectionFooter extends EditorComponent {
   renderLangOrMemberOrAll(content, v) {
     const { membership, translations, translationsLangs, membershipRoles } = v;
 
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const onlyCloud = !(isCloud(config) && isShopify(config));
     const roles = JSON.parse(membershipRoles).join(",");
@@ -407,10 +422,16 @@ class SectionFooter extends EditorComponent {
               "brz-footer",
               className,
               cssClass || customClassName,
-              css(
+              this.css(
                 `${this.getComponentId()}-section`,
                 `${this.getId()}-section`,
-                styleSection(v, vs, vd)
+                styleSection({
+                  v,
+                  vs,
+                  vd,
+                  store: this.getReduxStore(),
+                  renderContext: this.renderContext
+                })
               )
             )
           }}

@@ -1,12 +1,14 @@
 import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 
 export default function LoggedIn(props) {
-  const { value: triggerValue = {}, onChange = () => {} } = props;
-  const { availableRoles } = Config.get("wp");
+  const {
+    value: triggerValue = {},
+    availableRoles = [],
+    onChange = () => {}
+  } = props;
 
   let content = null;
   if (triggerValue.value === "custom") {

@@ -1,37 +1,29 @@
 import { Middleware } from "redux";
 import thunk from "redux-thunk";
-import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { RenderType, isView } from "visual/providers/RenderProvider";
 import { api, error, screenshots, sideEffects } from "visual/redux/middleware";
-import { browserSupports } from "visual/utils/screenshots";
 
-const hasApiScreenshot = (config: ConfigCommon): boolean => {
-  const screenshots = config.api?.screenshots;
-
-  return (
-    typeof screenshots?.create === "function" &&
-    typeof screenshots?.update === "function"
-  );
-};
-
-const isScreenshotSupported = async (): Promise<boolean> => {
-  try {
-    const browserSupport = await browserSupports();
-    const config = Config.getAll();
-    return browserSupport && hasApiScreenshot(config);
-  } catch (e) {
-    return false;
+export default function getMiddleware(
+  config: ConfigCommon,
+  render: RenderType
+): Array<Middleware> {
+  if (typeof window === "undefined") {
+    return [thunk];
   }
-};
 
-export default async function getMiddleware(): Promise<Array<Middleware>> {
-  const screenshotsSupported = await isScreenshotSupported();
+  if (isView(render)) {
+    return [
+      thunk,
+      sideEffects({ document, parentDocument: window.parent.document })
+    ];
+  }
 
   return [
     thunk,
     sideEffects({ document, parentDocument: window.parent.document }),
     error,
-    ...(screenshotsSupported ? [screenshots] : []),
-    api
+    screenshots(config),
+    api(config)
   ];
 }

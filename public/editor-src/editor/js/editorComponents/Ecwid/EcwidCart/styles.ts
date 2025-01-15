@@ -1,8 +1,11 @@
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types/Value";
+import { DynamicStylesProps } from "visual/types";
 
-export function style(v: Value, vs: Value, vd: Value): OutputStyle {
+
+
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser": {
       standart: [
@@ -71,84 +74,6 @@ export function style(v: Value, vs: Value, vd: Value): OutputStyle {
           "cssStyleElementEcwidCartTitleSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-page-title .ec-breadcrumbs":
-      {
-        standart: [
-          "cssStyleElementEcwidMyAccountBreadcrumbsAlign",
-          "cssStyleElementEcwidProductBreadcrumbsSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-page-title .ec-breadcrumbs .breadcrumbs__link:hover":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionElementEcwid"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-page-title .breadcrumbs__delimiter:hover":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionElementEcwid"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs":
-      {
-        standart: [
-          "cssStyleElementEcwidMyAccountBreadcrumbsAlign",
-          "cssStyleElementEcwidProductBreadcrumbsSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs .breadcrumbs__link:hover":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionElementEcwid"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .breadcrumbs__delimiter:hover":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionElementEcwid"
-        ]
-      },
-
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs":
-      {
-        standart: [
-          "cssStyleElementEcwidMyAccountBreadcrumbsAlign",
-          "cssStyleElementEcwidProductBreadcrumbsSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .ec-breadcrumbs .breadcrumbs__link:hover":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionElementEcwid"
-        ]
-      },
-
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-page-title .page-title__name":
       {
         standart: [
@@ -837,5 +762,5 @@ export function style(v: Value, vs: Value, vd: Value): OutputStyle {
       }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

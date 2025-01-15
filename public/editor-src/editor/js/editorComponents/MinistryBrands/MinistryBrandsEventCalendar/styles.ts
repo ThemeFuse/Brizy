@@ -1,11 +1,11 @@
+import { isEditor } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
+  const { v, renderContext } = data;
   const { visibleMonth = 1 } = v;
   const styles: {
     [k: string]: {
@@ -42,7 +42,7 @@ export function style(
     },
     [`.brz && .brz-eventCalendar .brz-eventCalendar_wrap .brz-eventCalendar-layout .brz-eventCalendar-month.brz-eventCalendar-month${visibleMonth}`]:
       {
-        standart: IS_EDITOR ? ["cssStyleDisplayBlock"] : []
+        standart: isEditor(renderContext) ? ["cssStyleDisplayBlock"] : []
       },
     ".brz && .brz-eventCalendar-month1 .brz-eventCalendar-row:nth-child(even) td:not(.brz-eventCalendar-day-np):hover":
       {
@@ -351,5 +351,5 @@ export function style(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

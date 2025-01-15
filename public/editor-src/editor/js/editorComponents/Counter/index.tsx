@@ -14,7 +14,6 @@ import EditorComponent, {
   Props as PrevProps
 } from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { roundTo } from "visual/utils/math";
 import * as Str from "visual/utils/reader/string";
@@ -113,28 +112,46 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
     const className = classnames(
       "brz-counter",
       `brz-counter-${type}`,
-      css(
+      this.css(
         `${this.getComponentId()}-counter`,
         `${this.getId()}-counter`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     const classNameNumber = classnames(
       "brz-counter-figures",
-      css(
+      this.css(
         `${this.getComponentId()}-number`,
         `${this.getId()}-number`,
-        styleNumber(v, vs, vd)
+        styleNumber({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     const classNameChart = classnames(
       `brz-counter-chart-${type}`,
-      css(
+      this.css(
         `${this.getComponentId()}-count`,
         `${this.getId()}-count`,
-        styleChart({ ...v, end: final }, vs, vd)
+        styleChart({
+          v: { ...v, end: final },
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

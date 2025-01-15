@@ -1,5 +1,6 @@
 import Quill from "quill";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
+
 let Inline = Quill.import("blots/inline");
 
 export function getStyle(backgroundGradient) {
@@ -9,6 +10,8 @@ export function getStyle(backgroundGradient) {
     linearAngle,
     startPointer,
     finishPointer,
+    startPalette,
+    finishPalette,
     startHex,
     finishHex,
     startOpacity,
@@ -20,8 +23,8 @@ export function getStyle(backgroundGradient) {
       ? `${linearAngle}deg`
       : `circle ${radialPosition}px`;
 
-  const hex1 = hexToRgba(startHex, startOpacity);
-  const hex2 = hexToRgba(finishHex, finishOpacity);
+  const hex1 = getColor(startPalette, startHex, startOpacity);
+  const hex2 = getColor(finishPalette, finishHex, finishOpacity);
 
   return `${type}(${position}, ${hex1} ${startPointer}%, ${hex2} ${finishPointer}%)`;
 }
@@ -35,9 +38,9 @@ class BackgroundGradient extends Inline {
   }
 
   static formats(node) {
-    const getAttr = name => {
+    const getAttr = (name) => {
       const value = node.getAttribute(name);
-      const isNumber = v => !isNaN(parseFloat(v)) && isFinite(v);
+      const isNumber = (v) => !isNaN(parseFloat(v)) && isFinite(v);
 
       return isNumber(value) ? Number(value) : value;
     };

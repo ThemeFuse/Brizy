@@ -41,6 +41,18 @@ export enum MessageStatus {
   Empty = "empty"
 }
 
+export interface ResponseMessages {
+  [MessageStatus.Success]: string;
+  [MessageStatus.Error]: string;
+  [MessageStatus.Empty]: string;
+}
+
+export interface GetFormMessageData {
+  status: MessageStatus;
+  form: HTMLFormElement | null;
+  text?: string;
+}
+
 export interface AllFormData {
   data: Partial<DataValue>[];
   formData: FormData;

@@ -13,6 +13,7 @@ import { SortablePluginOptions } from "visual/component/Sortable/plugin/types";
 import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents from "visual/global/UIEvents";
+import { isEditor, isView, useRender } from "visual/providers/RenderProvider";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
@@ -109,9 +110,10 @@ const Sortable = (props: Props): ReactElement => {
     onStart
   } = props;
   const { deviceMode } = useSelector(uiSelector);
+  const { renderType } = useRender();
   const dispatch = useDispatch();
   const nodeRef = useRef(null);
-  const dataProps: SortableAttr | undefined = IS_PREVIEW
+  const dataProps: SortableAttr | undefined = isView(renderType)
     ? undefined
     : {
         "data-brz-sortable-type": type,
@@ -177,7 +179,7 @@ const Sortable = (props: Props): ReactElement => {
     showLines
   ]);
 
-  if (!children && IS_EDITOR) {
+  if (!children && isEditor(renderType)) {
     return (
       <div ref={nodeRef} {...dataProps} className="brz-ed-sortable--empty">
         <div

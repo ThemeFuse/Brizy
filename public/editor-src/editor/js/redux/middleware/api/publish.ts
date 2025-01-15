@@ -1,27 +1,31 @@
 import { fromJS } from "immutable";
 import _ from "underscore";
-import { GlobalBlock, Page, Project } from "visual/types";
-import { isStory } from "visual/utils/models";
-import { isT, MValue } from "visual/utils/value";
-import {
-  apiPublish,
-  debouncedApiAutoSave,
-  debouncedApiPublish,
-  onUpdate
-} from "./utils";
 import {
   changedGBIdsSelector,
   globalBlocksAssembledSelector,
   pageSelector,
   projectSelector
 } from "visual/redux/selectors";
-import Config from "visual/global/Config";
+import { GlobalBlock, Page, Project } from "visual/types";
+import { isStory } from "visual/utils/models";
+import { MValue, isT } from "visual/utils/value";
 import { PUBLISH } from "../../actions2";
 import { Data } from "./types";
+import {
+  apiPublish,
+  debouncedApiAutoSave,
+  debouncedApiPublish,
+  onUpdate
+} from "./utils";
 
-export function handlePublish({ action, state, oldState, apiHandler }: Data) {
+export function handlePublish({
+  action,
+  state,
+  oldState,
+  config,
+  apiHandler
+}: Data) {
   if (action.type === PUBLISH) {
-    const config = Config.getAll();
     const { onSuccess = _.noop, onError = _.noop } = action.meta ?? {};
 
     const oldProject = projectSelector(oldState);

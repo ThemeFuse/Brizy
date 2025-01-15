@@ -1,4 +1,3 @@
-export { getOptionColorHexByPalette } from "./getOptionColorHexByPalette";
 export { getOptionFontByGlobal } from "./getOptionFontByGlobal";
 export { getDynamicContentChoices } from "./getDynamicContentChoices";
 export { getDynamicContentByPlaceholder } from "./getDynamicContentByPlaceholder";

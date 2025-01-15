@@ -35,7 +35,7 @@ export const CheckGroup = ({ onChange, config, label }: Props): JSX.Element => {
             className={className}
             name={title || icon}
             value={value}
-            isEditor={IS_EDITOR}
+            isEditor
           >
             {icon && (
               <div className="brz-ed-option__check-group__icon">

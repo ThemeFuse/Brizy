@@ -1,32 +1,28 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
-import { t } from "visual/utils/i18n";
-import { ImageType } from "visual/utils/image/types";
-import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
-import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
-} from "visual/utils/mask/Mask";
-import { isPopup, isStory } from "visual/utils/models";
-import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
-import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
-import { read as readString } from "visual/utils/reader/string";
-import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarImageTags, toolbarLinkAnchor } from "visual/utils/toolbar";
-import { getImageDCSize } from "./utils";
 import {
   isImagePointerEnabled,
   isImageZoomEnabled
 } from "visual/global/Config/types/configs/featuresValue";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
+import { t } from "visual/utils/i18n";
+import { ImageType } from "visual/utils/image/types";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
+import {
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
+} from "visual/utils/mask/Mask";
+import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentOption } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
+import { read as readString } from "visual/utils/reader/string";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { toolbarImageTags, toolbarLinkAnchor } from "visual/utils/toolbar";
 import { SizeType } from "../../global/Config/types/configs/common";
+import { getImageDCSize } from "./utils";
 
 export default ({
   desktopContainerWidth,
@@ -54,8 +50,9 @@ export default ({
 
 export const getItems =
   ({ property }) =>
-  ({ v, device, component, context }) => {
-    const config = Config.getAll();
+  ({ v, device, component, context, editorMode }) => {
+    const config = component.getGlobalConfig();
+    const _isStory = isStory(editorMode);
 
     const inPopup = Boolean(component.props.meta.sectionPopup);
     const inPopup2 = Boolean(component.props.meta.sectionPopup2);
@@ -78,14 +75,14 @@ export const getItems =
       options: context.dynamicContent.config,
       type: DCTypes.link
     });
-    const { hex: borderColorHex } = getOptionColorHexByPalette(
+    const borderColorOpacity = dvv("borderColorOpacity");
+    const borderColor = getColor(
+      dvv("borderColorPalette"),
       dvv("borderColorHex"),
-      dvv("borderColorPalette")
+      borderColorOpacity
     );
 
     const _enableTags = enableTags && !isBigImageFromGallery;
-
-    const borderColorOpacity = dvv("borderColorOpacity");
 
     const maskShape = readString(dvv("maskShape")) ?? "none";
     const maskPosition = readString(dvv("maskPosition")) ?? "center center";
@@ -201,7 +198,7 @@ export const getItems =
                       isSVGExtension(imageExtension) ||
                       isGIFExtension(imageExtension) ||
                       isBigImageFromGallery ||
-                      isStory(config) ||
+                      _isStory ||
                       isExternalImage,
                     devices: "desktop"
                   }
@@ -220,7 +217,7 @@ export const getItems =
                           label: t("Shape"),
                           devices: "desktop",
                           type: "select",
-                          choices: MaskShapes
+                          choices: getMaskShapes()
                         },
                         {
                           id: "maskCustomUpload",
@@ -247,7 +244,7 @@ export const getItems =
                               id: "maskSize",
                               label: t("Size"),
                               type: "select",
-                              choices: MaskSizes
+                              choices: getMaskSizes()
                             },
                             {
                               id: "maskScale",
@@ -273,7 +270,7 @@ export const getItems =
                               id: "maskPosition",
                               type: "select",
                               label: t("Position"),
-                              choices: MaskPositions
+                              choices: getMaskPositions()
                             },
                             {
                               id: "maskPositionx",
@@ -304,7 +301,7 @@ export const getItems =
                           label: t("Repeat"),
                           type: "select",
                           disabled: maskShapeIsDisabled || maskSize === "cover",
-                          choices: MaskRepeat
+                          choices: getMaskRepeat()
                         }
                       ])
                 ]
@@ -333,7 +330,7 @@ export const getItems =
           title: t("Colors"),
           icon: {
             style: {
-              backgroundColor: hexToRgba(borderColorHex, borderColorOpacity)
+              backgroundColor: borderColor
             }
           }
         },
@@ -464,7 +461,7 @@ export const getItems =
                 options: [
                   toolbarLinkAnchor({
                     v,
-                    disabled: isStory(config)
+                    disabled: _isStory
                   })
                 ]
               },
@@ -476,9 +473,9 @@ export const getItems =
                     id: "linkPopup",
                     type: "promptAddPopup",
                     disabled:
-                      isStory(config) ||
+                      _isStory ||
                       (device === "desktop"
-                        ? inPopup || inPopup2 || isPopup(config)
+                        ? inPopup || inPopup2 || isPopup(editorMode)
                         : dvv("linkType") !== "popup" || linkPopup === ""),
                     label: t("Popup"),
                     config: {
@@ -497,7 +494,7 @@ export const getItems =
                     id: "linkToSlide",
                     type: "number",
                     label: t("Slide"),
-                    disabled: !isStory(config),
+                    disabled: !_isStory,
                     config: {
                       min: 1,
                       max: 1000000
@@ -518,7 +515,7 @@ export const getItems =
         },
         roles: ["admin"],
         position: 110,
-        disabled: (inGallery && !isBigImageFromGallery) || isStory(config),
+        disabled: (inGallery && !isBigImageFromGallery) || _isStory,
         options: [
           {
             id: "width",
@@ -606,7 +603,7 @@ export const getItems =
       {
         id: "advancedSettings",
         type: "advancedSettings",
-        disabled: !isStory(config),
+        disabled: !_isStory,
         position: 110
       }
     ];

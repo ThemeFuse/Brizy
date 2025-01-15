@@ -1,6 +1,7 @@
 import React, { ComponentType, ReactElement } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import Link from "visual/component/Link";
+import { useConfig } from "visual/global/hooks";
 import { getLinkData } from "visual/utils/models/link";
 import { read } from "visual/utils/reader/object";
 
@@ -18,7 +19,8 @@ export const withLink =
     const link = read(props.v) ?? {};
     const { linkProps } = props;
 
-    const linkData = getLinkData(link);
+    const config = useConfig();
+    const linkData = getLinkData(link, config);
 
     if (linkData.href) {
       return (

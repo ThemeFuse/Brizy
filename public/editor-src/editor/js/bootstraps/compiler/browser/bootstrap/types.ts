@@ -1,6 +1,7 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { GlobalBlock, Page, Project } from "visual/types";
 import {
+  Asset,
   ScriptsFree,
   ScriptsPro,
   StylesFree,
@@ -23,9 +24,14 @@ export interface GlobalBlockStatic extends Output {
   uid: string;
 }
 
+export interface ProjectOutput {
+  styles: Array<Asset>;
+}
+
 export interface Static {
   page: Output;
   globalBlocks?: Array<GlobalBlockStatic>;
+  project?: ProjectOutput;
 }
 
 export interface Props {

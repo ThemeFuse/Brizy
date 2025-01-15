@@ -1,11 +1,11 @@
+import { isEditor } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from "./toolbar";
 
-export function styleSection(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleSection(data: DynamicStylesProps<Value>): OutputStyle {
+  const { renderContext, v } = data;
   const { maskShape = "none" } = v;
   const styles: {
     [k: string]: {
@@ -94,21 +94,17 @@ export function styleSection(
     }
   };
 
-  if (IS_EDITOR) {
+  if (isEditor(renderContext)) {
     // Added offset for toolbar when uses marginTop in negative value
     styles[".brz &&:hover .brz-ed-collapsible"] = {
       standart: ["cssStyleSectionToolbarOffset"]
     };
   }
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleContainer(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleContainer(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -121,5 +117,5 @@ export function styleContainer(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

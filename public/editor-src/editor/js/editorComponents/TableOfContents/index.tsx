@@ -9,7 +9,7 @@ import EditorComponent, {
   Props as PrevProps
 } from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
+import { isEditor } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { encodeToString } from "visual/utils/string";
@@ -188,7 +188,7 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
   getIcon(active: boolean, navIcon: string): ReactElement {
     const icon = active ? `up-arrow-${navIcon}` : `down-arrow-${navIcon}`;
 
-    return IS_EDITOR ? (
+    return isEditor(this.renderContext) ? (
       <ThemeIcon type="editor" name={icon} />
     ) : (
       <>
@@ -227,7 +227,7 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
           );
         })}
       </List>
-    ) : IS_EDITOR ? (
+    ) : isEditor(this.renderContext) ? (
       <Error message={t("No headings were found.")} />
     ) : (
       ""
@@ -287,7 +287,17 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
     const className = classnames(
       "brz-toc",
       { "brz-toc--opened": !isMinimized },
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
@@ -320,7 +330,17 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
       "brz-toc",
       { "brz-toc--opened": !isMinimized },
       { "brz-toc-b-none": isMinimized },
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const dataAttributes = {

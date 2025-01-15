@@ -9,16 +9,15 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
   Props as NextProps
 } from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import {
   GalleryIsotope,
   GalleryIsotopeType,
   GalleryJustified,
   GalleryJustifiedType
 } from "visual/types/global";
-import { css } from "visual/utils/cssStyle";
 import { applyFilter } from "visual/utils/filters";
 import { getImageUrl } from "visual/utils/image";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
@@ -64,7 +63,6 @@ import {
   multiUpload
 } from "./utils";
 import { arrangeGridByTags } from "./utils.export";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
 class ImageGallery extends EditorComponent<Value, Props> {
   static get componentId(): "ImageGallery" {
@@ -213,7 +211,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
   };
 
   handleValueChange(newValue: Value, meta: Meta): void {
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const oldValue = this.getValue();
     const v = merge(oldValue, newValue);
     const { items: oldItems } = this.getValue();
@@ -421,10 +419,16 @@ class ImageGallery extends EditorComponent<Value, Props> {
     const filterClassName = classnames(
       "brz-image__gallery-filter",
       `brz-image__gallery-filter--${filterStyle}`,
-      css(
+      this.css(
         `${this.getComponentId()}-filter`,
         `${this.getId()}-filter`,
-        styleForFilter(v, vs, vd)
+        styleForFilter({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const className = classnames(
@@ -513,16 +517,19 @@ class ImageGallery extends EditorComponent<Value, Props> {
 
   getImagesSrc = (): MValue<string>[] => {
     const { items } = this.getValue();
+    const config = this.getGlobalConfig();
 
     return items
       .map((item) => {
         const value = item.value as Value;
-
-        return getImageUrl({
-          uid: Str.read(value.imageSrc) ?? "",
-          sizeType: readSizeType(value.sizeType) ?? SizeType.custom,
-          fileName: value.imageFileName ?? ""
-        });
+        return getImageUrl(
+          {
+            uid: Str.read(value.imageSrc) ?? "",
+            sizeType: readSizeType(value.sizeType) ?? SizeType.custom,
+            fileName: value.imageFileName ?? ""
+          },
+          config
+        );
       })
       .filter(Boolean);
   };
@@ -576,16 +583,22 @@ class ImageGallery extends EditorComponent<Value, Props> {
         "brz-image__gallery-placeholder": !images.length,
         "brz-image__gallery-lightbox brz-cursor-pointer": lightBox === "on"
       },
-      css(
+      this.css(
         `${this.getComponentId()}-bigImage`,
         `${this.getId()}-bigImage`,
-        styleBigImage(v, vs, vd)
+        styleBigImage({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     const lightBoxContent =
       lightBox === "on" &&
-      IS_PREVIEW &&
+      isView(this.renderContext) &&
       images.slice(1).map((image, index) => {
         const _image = Str.read(image) ?? "";
         return (
@@ -632,10 +645,16 @@ class ImageGallery extends EditorComponent<Value, Props> {
       `brz-image__gallery-${layout}`,
       { "brz-image__gallery-lightbox": lightBox === "on" },
       { "brz-image__gallery-with-thumb": layout === "bigImage" },
-      css(
+      this.css(
         `${this.getComponentId()}-gallery`,
         `${this.getId()}-gallery`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -683,10 +702,16 @@ class ImageGallery extends EditorComponent<Value, Props> {
     const classNameWrapper = classnames(
       "brz-image__gallery",
       { [`brz-image__gallery-${thumbStyle}`]: layout === "bigImage" },
-      css(
+      this.css(
         `${this.getComponentId()}-galleryWrapper`,
         `${this.getId()}-galleryWrapper`,
-        styleWrapper(v, vs, vd)
+        styleWrapper({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -702,7 +727,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
               <div
                 className={className}
                 ref={this.handleRef}
-                {...(IS_PREVIEW
+                {...(isView(this.renderContext)
                   ? {
                       "data-settings": encodeToString(
                         makeOptionValueToSettings(v, breakpoints)
@@ -715,7 +740,9 @@ class ImageGallery extends EditorComponent<Value, Props> {
               </div>
             </div>
           </Wrapper>
-          {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
+          {isEditor(this.renderContext) && (
+            <ResizeAware onResize={this.handleResize} />
+          )}
         </Fragment>
       </CustomCSS>
     );

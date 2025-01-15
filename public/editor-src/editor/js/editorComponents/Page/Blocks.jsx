@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { isView } from "visual/providers/RenderProvider";
 import {
   FirstBlockAdder,
   LastBlockAdder,
@@ -9,7 +10,6 @@ import HotKeys from "visual/component/HotKeys";
 import Prompts from "visual/component/Prompts";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Config from "visual/global/Config";
 import {
   addBlock,
   addGlobalBlock,
@@ -17,7 +17,6 @@ import {
   removeBlock
 } from "visual/redux/actions2";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 import { setIds, stripSystemKeys } from "visual/utils/models";
 
@@ -81,7 +80,7 @@ class Blocks extends EditorArrayComponent {
       this.handleAddGlobalBlock(data, insertIndex);
     const changeTemplateCb = (data) =>
       this.handleAddTemplate(data, insertIndex);
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
     const showGlobal = typeof config.api?.globalBlocks?.create === "function";
     const showSaved = typeof config.api?.savedBlocks?.create === "function";
 
@@ -104,7 +103,7 @@ class Blocks extends EditorArrayComponent {
     const { blockId } = itemData;
     let disabled = false;
     if (itemData.type === "GlobalBlock") {
-      const blocksData = blocksDataSelector(getStore().getState());
+      const blocksData = blocksDataSelector(this.getReduxState());
       const slider = blocksData[itemData.value._id]?.value?.slider;
 
       disabled = !slider || slider === "off";
@@ -145,7 +144,7 @@ class Blocks extends EditorArrayComponent {
   }
 
   renderItemWrapper(item, itemKey, itemIndex, itemData, itemsArray) {
-    if (IS_PREVIEW) {
+    if (isView(this.props.renderContext)) {
       return item;
     }
 
@@ -176,7 +175,7 @@ class Blocks extends EditorArrayComponent {
   }
 
   renderItemsContainer(items, itemsValue) {
-    if (IS_PREVIEW) {
+    if (isView(this.props.renderContext)) {
       return items;
     }
 

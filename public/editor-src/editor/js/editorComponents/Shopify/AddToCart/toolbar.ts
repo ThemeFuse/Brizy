@@ -1,25 +1,23 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { getCollectionItems } from "visual/utils/api";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import * as Str from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from ".";
 
-export const getItems: GetItems<Value> = ({ v, device, state }) => {
-  const config = Config.getAll();
+export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
+  const config = component.getGlobalConfig();
 
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const iconName = dvv("iconName");
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
   const sourceType = Str.read(dvv("sourceType")) ?? "";
@@ -240,7 +238,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },

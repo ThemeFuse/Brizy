@@ -5,7 +5,7 @@ import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { css } from "visual/utils/cssStyle";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
@@ -86,7 +86,17 @@ export default class WOOCart extends EditorComponent {
       "brz-woocart__parent",
       `brz-woocart--${purchasesType}`,
       className_,
-      css(this.constructor.componentId, id, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        id,
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const placeholder = makePlaceholder({
       content: "{{editor_product_cart}}"
@@ -144,7 +154,7 @@ export default class WOOCart extends EditorComponent {
                       attributes: { id: id }
                     })}
                   >
-                    {IS_EDITOR && (
+                    {isEditor(this.renderContext) && (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
                           toolbarSidebarSettings,

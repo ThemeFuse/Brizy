@@ -1,9 +1,10 @@
-import React, { ReactNode, ReactElement, useState } from "react";
-import Config from "visual/global/Config";
+import React, { ReactElement, ReactNode, useState } from "react";
 import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
-import Link from "./Options/types/Link";
-import { t } from "visual/utils/i18n";
 import { Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
+import { t } from "visual/utils/i18n";
+import Link from "./Options/types/Link";
 
 interface Props {
   config: Cloud;
@@ -36,14 +37,14 @@ const SettingComponent = ({ config }: Props): ReactElement => {
   );
 };
 
-const _SettingComponent = (): ReactNode => {
-  const config = Config.getAll();
+export const _SettingComponent = (): ReactNode => {
+  const config = useConfig();
 
   return isCloud(config) ? <SettingComponent config={config} /> : null;
 };
 
 export const Settings = {
-  id: "settings",
+  id: LeftSidebarOptionsIds.settings,
   type: "custom",
   Component: _SettingComponent
 };

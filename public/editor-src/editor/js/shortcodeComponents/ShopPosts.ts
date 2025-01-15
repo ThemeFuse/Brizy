@@ -33,7 +33,8 @@ export default function (config: ConfigCommon) {
       exclude: false,
       includeQueryMultiOptions: false,
       querySource: false,
-      manualId,
+      getManualId: (source: string) =>
+        source === "manual" ? manualId : undefined,
       collectionFilters: ECWID_PRODUCT_TYPE,
       getIncludeDisabledValue: (source: string) =>
         contentDefaults?.component === ECWID_PRODUCT_TYPE && manualId === source

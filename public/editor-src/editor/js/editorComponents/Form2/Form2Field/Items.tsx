@@ -1,7 +1,7 @@
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Value } from "./type";
 import { Form2FieldOption } from "../migrations/type";
+import { Value } from "./type";
 
 class Form2FieldItems extends EditorArrayComponent {
   static get componentId(): ElementTypes.Form2FieldItems {
@@ -13,13 +13,15 @@ class Form2FieldItems extends EditorArrayComponent {
     const itemProps = this.props.itemProps;
 
     // @ts-expect-error EditorArrayComponent should be converted to .ts
-    const { type, toolbarExtend, activeRadio, handleRadioChange } = itemProps;
+    const { type, toolbarExtend, activeRadio, handleRadioChange, name } =
+      itemProps;
     const { attr } = this.props;
 
     return {
       ...props,
       attr,
       type,
+      name,
       onRemove: (e: MouseEvent): void => {
         e.stopPropagation();
         this.removeItem(itemIndex);

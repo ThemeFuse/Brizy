@@ -1,4 +1,3 @@
-import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Subscription } from "visual/global/Config/types/shopify/Subscription";
 import {
@@ -62,8 +61,10 @@ export const isCollectionPage = (p: Page): p is PageCollection => {
   return "collectionType" in p;
 };
 
-export const isShopifyPage = (page: Page): page is ShopifyPage => {
-  const config = Config.getAll();
+export const isShopifyPage = (
+  page: Page,
+  config: ConfigCommon
+): page is ShopifyPage => {
   return isCloud(config) && isShopify(config) && !("rules" in page);
 };
 

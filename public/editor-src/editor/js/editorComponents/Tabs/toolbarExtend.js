@@ -1,20 +1,21 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ key, v, device });
-
+  const bgColorOpacity = dvv("bgColorOpacity");
   // Color
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    bgColorOpacity
   );
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   const isVerticalMode = dvv("verticalMode") === "on";
@@ -186,10 +187,7 @@ export function getItems({ v, device }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor:
-              dvv("bgColorOpacity") > 0
-                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
-                : hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: bgColorOpacity > 0 ? bgColor : color
           }
         }
       },

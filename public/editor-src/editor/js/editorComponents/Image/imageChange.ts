@@ -9,7 +9,7 @@ import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
-import { Unit, isUnit } from "./types";
+import { isUnit, Unit } from "./types";
 import {
   ImageDCPatch,
   ImagePatch,
@@ -25,6 +25,7 @@ import {
   isPredefinedSize
 } from "./utils";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 
 export interface Size {
   width: number;
@@ -232,13 +233,14 @@ export const patchOnImageChange = (
 
 export const patchOnSizeTypeChange = (
   cW: number,
-  patch: SizeTypePatch
+  patch: SizeTypePatch,
+  imageSizes: ImageDataSize[]
 ): PatchSize => {
   const type = patch.sizeType;
   const patchSize: PatchSize = {
     sizeType: type
   };
-  const size = getImageSize(type);
+  const size = getImageSize(type, imageSizes);
 
   if (isPredefinedSize(size)) {
     const resize = Math.roundTo((size.width / cW) * 100, 2);
@@ -264,7 +266,8 @@ export const patchOnDCChange = (
   cW: number,
   patch: ImageDCPatch,
   wrapperSizes: Size,
-  context: EditorComponentContextValue
+  context: EditorComponentContextValue,
+  imageSizes: ImageDataSize[]
 ): PatchDC => {
   if (!patch.imagePopulation) {
     return {
@@ -286,7 +289,7 @@ export const patchOnDCChange = (
     };
   }
 
-  const size = getImageSize(dcSize);
+  const size = getImageSize(dcSize, imageSizes);
 
   if (isPredefinedSize(size)) {
     const resize = Math.roundTo((size.width / cW) * 100, 2);

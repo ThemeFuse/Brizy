@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import React, { CSSProperties, ReactElement, ReactNode } from "react";
+import { ReactReduxContext } from "react-redux";
 import { Popper } from "react-popper";
 import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { WithClassName } from "visual/types/attributes";
 import { clamp } from "visual/utils/math";
 import { attachRef } from "visual/utils/react";
@@ -75,6 +75,8 @@ export class TooltipContent extends React.Component<Props, State> {
   isRepositioning: boolean;
   contentRef: React.RefObject<HTMLDivElement>;
   popperUpdateFunctionRef = React.createRef<VoidFunction>();
+
+  static contextType = ReactReduxContext;
 
   constructor(props: Props) {
     super(props);
@@ -167,7 +169,8 @@ export class TooltipContent extends React.Component<Props, State> {
     let placementStyle: CSSProperties = {};
 
     const getLeft = (): number => {
-      const deviceMode = deviceModeSelector(getStore().getState());
+      const { store } = this.context;
+      const deviceMode = deviceModeSelector(store.getState());
       const isDesktop = deviceMode === "desktop";
       const padding = isDesktop ? 31 : 0;
       const minX = padding;

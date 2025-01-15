@@ -1,8 +1,7 @@
 export { getFontById, getGroupFontsById, getDefaultFont } from "./getFontById";
-export { getUsedFonts, getUsedFontsDetails } from "./getUsedFonts";
 export { getFontStyles } from "./getFontStyles";
 export { getFontStyle } from "./getFontStyle";
-export { weightTypes, getWeight, getWeightChoices } from "./getFontWeight";
+export { getWeightTypes, getWeightChoices } from "./getFontWeight";
 export {
   makeSubsetGoogleFontsUrl,
   makeUploadFontsUrl,

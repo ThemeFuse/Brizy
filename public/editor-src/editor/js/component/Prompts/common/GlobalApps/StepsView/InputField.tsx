@@ -17,7 +17,14 @@ export const InputField = (props: InputFieldProps): ReactElement => {
   );
 
   if (type === "radio" && choices) {
-    return <RadioItemField choices={choices} name={name} onChange={onChange} />;
+    return (
+      <RadioItemField
+        choices={choices}
+        name={name}
+        onChange={onChange}
+        isEditor={true}
+      />
+    );
   }
 
   return (

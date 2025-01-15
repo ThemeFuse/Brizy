@@ -1,5 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as FacebookApi from "react-facebook";
+import { isEditor } from "visual/providers/RenderProvider";
+
+let isFacebookReady = false;
+
+const FacebookWrapper = ({ children }) => {
+  const data = useContext(FacebookApi.FacebookContext);
+  const { isReady } = data;
+
+  if (isReady && window.FB && !isFacebookReady) {
+    window.FB.__buffer = window.FB.__buffer || true;
+  }
+
+  return children;
+};
 
 class Facebook extends React.Component {
   static defaultProps = {
@@ -15,7 +29,9 @@ class Facebook extends React.Component {
 
     return (
       <Provider appId={appId}>
-        <Component {...data} />
+        <FacebookWrapper>
+          <Component {...data} />
+        </FacebookWrapper>
       </Provider>
     );
   }
@@ -33,7 +49,9 @@ class Facebook extends React.Component {
   }
 
   render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return isEditor(this.props.renderContext)
+      ? this.renderForEdit()
+      : this.renderForView();
   }
 }
 

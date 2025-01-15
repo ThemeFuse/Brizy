@@ -1,14 +1,10 @@
 import classnames from "classnames";
-import React, { useState } from "react";
+import React from "react";
 import Placeholder from "visual/component/Placeholder";
-import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContent } from "visual/editorComponents/EditorComponent/DynamicContent/DynamicContent";
-import Config from "visual/global/Config";
-import { pageSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
@@ -28,7 +24,7 @@ export default class MenuSimple extends EditorComponent {
 
   getDBValue() {
     const dbValue = super.getDBValue();
-    const menusConfig = Config.get("menuData");
+    const menusConfig = this.getGlobalConfig().menuData;
 
     return dbValue.menuName || menusConfig.length === 0
       ? dbValue
@@ -39,12 +35,18 @@ export default class MenuSimple extends EditorComponent {
   }
 
   renderErrors(v) {
-    const menusConfig = Config.get("menuData");
+    const config = this.getGlobalConfig();
+    const { menuData: menusConfig, elements } = config;
     let errMsg;
 
-    if (menusConfig.length === 0) {
+    if (menusConfig.length === 0 && isEditor(this.renderContext)) {
+      const { menu } = elements ?? {};
+      const { onOpen, createMenuLabel = t("Create a menu") } = menu ?? {};
+
       errMsg = (
-        <CloudCreateMenuButton>{t("Create a menu")}</CloudCreateMenuButton>
+        <CloudCreateMenuButton onOpen={onOpen}>
+          {createMenuLabel}
+        </CloudCreateMenuButton>
       );
     }
 
@@ -63,20 +65,26 @@ export default class MenuSimple extends EditorComponent {
     const className = classnames(
       "brz-menu-simple",
       "brz-menu-simple--cloud",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const errors = this.renderErrors(v);
 
     if (errors) {
-      return IS_EDITOR ? errors : null;
+      return isEditor(this.renderContext) ? errors : null;
     }
 
     const { menuName, tabletToggleMenu, mobileToggleMenu } = v;
-    const toolbarConfig = toolbarConfigFn(Config.get("menuData"));
+    const toolbarConfig = toolbarConfigFn(this.getGlobalConfig().menuData);
     const placeholder = makePlaceholder({
       content: "{{ brizy_dc_simple_menu }}",
       attr: { menuId: menuName }
@@ -87,12 +95,17 @@ export default class MenuSimple extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
         <div className={className}>
-          <DynamicContent placeholder={placeholder}>
+          <DynamicContent
+            placeholder={placeholder}
+            renderContext={this.renderContext}
+          >
             {({ status, data }) => {
               if (status === "success") {
                 let ret = (
                   <div
-                    className={IS_EDITOR ? "brz-blocked" : undefined}
+                    className={
+                      isEditor(this.renderContext) ? "brz-blocked" : undefined
+                    }
                     dangerouslySetInnerHTML={{
                       __html: data
                     }}
@@ -152,34 +165,8 @@ export default class MenuSimple extends EditorComponent {
   }
 }
 
-function CloudCreateMenuButton({ children }) {
-  if (IS_PREVIEW) {
-    return null;
-  }
-
-  const [opened, setOpened] = useState(false);
-  const siteUrl = Config.get("urls").site;
-  const projectId = Config.get("project").id;
-  const pageId = pageSelector(getStore().getState()).id;
-  let iframeSrc = `${siteUrl}/projects/${projectId}/settings?page_id=${pageId}`;
-
-  return (
-    <>
-      <a
-        className="brz-a"
-        href="#"
-        onClick={(e) => {
-          e.preventDefault();
-          setOpened(true);
-        }}
-      >
-        {children}
-      </a>
-      <PromptThirdParty
-        iframeSrc={iframeSrc}
-        opened={opened}
-        onClose={() => setOpened(false)}
-      />
-    </>
-  );
-}
+const CloudCreateMenuButton = ({ children, onOpen }) => (
+  <span className="brz-a" onClick={onOpen}>
+    {children}
+  </span>
+);

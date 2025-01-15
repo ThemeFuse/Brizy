@@ -10,9 +10,9 @@ import Scrollbars from "react-custom-scrollbars";
 import { ConnectedProps, connect } from "react-redux";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
+import { ToastNotification } from "visual/component/Notifications";
 import { LayoutData } from "visual/component/Prompts/PromptBlocks/Layouts/types";
 import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
-import Config from "visual/global/Config";
 import { fontsSelector, stylesSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { Block, Style } from "visual/types";
@@ -20,7 +20,6 @@ import { defaultLayoutsData, defaultStoriesData } from "visual/utils/api";
 import { flatMap } from "visual/utils/array";
 import { ArrayType } from "visual/utils/array/types";
 import { placeholderBlockThumbnailUrl } from "visual/utils/blocks";
-import { IS_PRO } from "visual/utils/env";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import * as Num from "visual/utils/math/number";
@@ -31,9 +30,8 @@ import {
 } from "visual/utils/traverse";
 import { Button } from "../../common/Button";
 import ImageLoad from "../common/ImageLoad";
-import { ToastNotification } from "visual/component/Notifications";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-const urls = Config.get("urls");
 const TRANSITION_DELAY = 500;
 
 const animationStyle = {
@@ -62,6 +60,9 @@ export interface Props {
   onClose: VoidFunction;
   onBack: VoidFunction;
   onAddBlocks: (b: PromptBlockTemplate) => void;
+  isPro: boolean;
+  upgradeToPro: string;
+  config: ConfigCommon;
 }
 
 type AllProps = ConnectedProps<typeof connector> & Props;
@@ -88,7 +89,10 @@ class Details extends Component<AllProps, State> {
     },
     onClose: _.noop,
     onAddBlocks: _.noop,
-    onBack: _.noop
+    onBack: _.noop,
+    isPro: false,
+    upgradeToPro: "",
+    config: {} as ConfigCommon
   };
 
   state: State = {
@@ -103,6 +107,10 @@ class Details extends Component<AllProps, State> {
   thumbnailDetails = React.createRef<HTMLDivElement>();
 
   timeoutId: undefined | number;
+
+  isPro = this.props.isPro;
+
+  upgradeToPro = this.props.upgradeToPro;
 
   getTransition(height: number): number {
     return height / TRANSITION_DELAY;
@@ -152,7 +160,8 @@ class Details extends Component<AllProps, State> {
         data,
         projectFonts: usedFonts,
         onAddBlocks,
-        onClose
+        onClose,
+        config
       } = this.props;
       const { active: pageId, replaceStyle, loading } = this.state;
 
@@ -172,8 +181,8 @@ class Details extends Component<AllProps, State> {
 
       const page =
         this.props.type === "layouts"
-          ? await defaultLayoutsData(Config.getAll(), activePage)
-          : await defaultStoriesData(Config.getAll(), activePage);
+          ? await defaultLayoutsData(config.api, activePage)
+          : await defaultStoriesData(config.api, activePage);
 
       const { blocks } = page as { blocks: Block[] };
       const modelFonts = getUsedModelsFonts({ models: blocks });
@@ -190,9 +199,11 @@ class Details extends Component<AllProps, State> {
         modelFonts.push(...fonts);
       }
 
-      const fonts = await normalizeFonts(
-        getBlocksStylesFonts(modelFonts, usedFonts)
-      );
+      const fonts = await normalizeFonts({
+        config,
+        renderContext: "editor",
+        newFonts: getBlocksStylesFonts(modelFonts, usedFonts)
+      });
 
       this.setState({ loading: false }, () => {
         onAddBlocks({
@@ -264,7 +275,7 @@ class Details extends Component<AllProps, State> {
         </div>
       );
     });
-    const pageIsPro = !IS_PRO && pro;
+    const pageIsPro = !this.isPro && pro;
 
     const previewClassName = classnames(
       "brz-ed-popup-two-details-preview",
@@ -375,7 +386,7 @@ class Details extends Component<AllProps, State> {
                     type="link"
                     color="pro"
                     size={2}
-                    href={urls.upgradeToPro}
+                    href={this.upgradeToPro}
                     target="_blank"
                     leftIcon="nc-lock"
                   >

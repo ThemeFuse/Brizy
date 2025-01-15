@@ -1,8 +1,7 @@
 import classnames from "classnames";
 import React, { Component, ComponentType, ReactElement } from "react";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ArrayType } from "visual/utils/array/types";
-import { isStory } from "visual/utils/models";
 import Thumbnail from "./Thumbnail";
 
 export interface Responsive {
@@ -15,6 +14,9 @@ export interface Responsive {
 export interface Data {
   type?: string;
   uid?: string;
+  isPro?: boolean;
+  isStory?: boolean;
+  upgradeToPro?: string;
 }
 
 export interface Props<T extends Data> {
@@ -29,6 +31,10 @@ export interface Props<T extends Data> {
   onThumbnailAdd: (b: T) => void;
   onThumbnailRemove?: (b: T) => void;
   onUpdate?: (b: T) => void;
+  isPro: boolean;
+  isStory: boolean;
+  upgradeToPro?: string;
+  config: ConfigCommon;
 }
 
 export interface ThumbnailProps<T extends Data> {
@@ -41,6 +47,10 @@ export interface ThumbnailProps<T extends Data> {
   onAdd: Props<T>["onThumbnailAdd"];
   onRemove: Props<T>["onThumbnailRemove"];
   onUpdate: Props<T>["onUpdate"];
+  isPro: boolean;
+  isStory: boolean;
+  upgradeToPro?: string;
+  config: ConfigCommon;
 }
 
 interface State {
@@ -52,12 +62,12 @@ export default class ThumbnailGrid<T extends Data> extends Component<
   State
 > {
   static defaultProps = {
-    columns: isStory(Config.getAll()) ? 5 : 4,
+    columns: 4,
     responsive: [
       {
         breakpoint: 1460,
         settings: {
-          columns: isStory(Config.getAll()) ? 4 : 3
+          columns: 3
         }
       },
       {
@@ -113,7 +123,11 @@ export default class ThumbnailGrid<T extends Data> extends Component<
       onThumbnailAdd,
       onThumbnailRemove,
       ThumbnailComponent,
-      onUpdate
+      onUpdate,
+      isStory,
+      isPro,
+      upgradeToPro,
+      config
     } = this.props;
     const { currentColumns } = this.state;
     const arr: Array<Array<ReactElement>> = [];
@@ -124,8 +138,7 @@ export default class ThumbnailGrid<T extends Data> extends Component<
 
     const gridClassName = classnames(
       "brz-ed-popup-two-blocks__grid__column",
-      isStory(Config.getAll()) &&
-        "brz-ed-popup-two-blocks__grid__column-stories"
+      isStory && "brz-ed-popup-two-blocks__grid__column-stories"
     );
 
     const columns = data
@@ -145,6 +158,10 @@ export default class ThumbnailGrid<T extends Data> extends Component<
             onAdd={onThumbnailAdd}
             onRemove={onThumbnailRemove}
             onUpdate={onUpdate}
+            isPro={isPro}
+            isStory={isStory}
+            upgradeToPro={upgradeToPro}
+            config={config}
           />
         );
         const columnIndex = index % currentColumns;

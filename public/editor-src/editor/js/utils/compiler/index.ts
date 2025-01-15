@@ -1,5 +1,6 @@
 import { isT } from "fp-utilities";
 import { getCompileHTML } from "visual/bootstraps/compiler/browser/compile";
+import { isCloud } from "visual/global/Config/types";
 import {
   ConfigCommon,
   PublishedGlobalBlock,
@@ -56,7 +57,7 @@ export const getCompile = async (data: Data): Promise<Compiled> => {
         );
 
         if (globalBlock) {
-          const toApi = stringifyGlobalBlock(globalBlock);
+          const toApi = stringifyGlobalBlock(globalBlock, isCloud(config));
           return { ...toApi, compiled };
         }
       })

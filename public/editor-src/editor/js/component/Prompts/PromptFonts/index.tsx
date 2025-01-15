@@ -2,10 +2,11 @@ import React, { Component, ReactElement } from "react";
 import { noop } from "underscore";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
-import { List } from "./List";
 import Integration from "./Integration";
+import { List } from "./List";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-const TABS = [
+const getTabs = () => [
   {
     id: "upload",
     title: t("Add New"),
@@ -23,6 +24,7 @@ const TABS = [
 type Props = {
   opened: boolean;
   onClose: () => void;
+  config: ConfigCommon;
 };
 
 class PromptFonts extends Component<Props> {
@@ -32,14 +34,15 @@ class PromptFonts extends Component<Props> {
   };
 
   render(): ReactElement {
-    const { opened, onClose } = this.props;
+    const { opened, onClose, config } = this.props;
     return (
       <Tabs
         opened={opened}
-        tabs={TABS}
+        tabs={getTabs()}
         currentTab="upload"
         blockTabsWhenLoading={false}
         onClose={onClose}
+        config={config}
       />
     );
   }

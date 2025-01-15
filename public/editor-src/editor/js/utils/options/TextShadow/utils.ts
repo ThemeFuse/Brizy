@@ -18,7 +18,7 @@ export const getPalette: (v: Value) => Palette | undefined = match(
 
 export type SelectType = "none" | "shadow";
 
-export const options: Array<{ id: SelectType; title: string }> = [
+export const getOptions = (): Array<{ id: SelectType; title: string }> => [
   { id: "none", title: t("None") },
   { id: "shadow", title: t("Shadow") }
 ];

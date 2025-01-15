@@ -1,4 +1,5 @@
 import React from "react";
+import { isEditor } from "visual/providers/RenderProvider";
 import { ElementPatch } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -26,10 +27,11 @@ class Form2Step extends EditorComponent<Value, Props> {
     const { totalCount, active, activeStep, count, onActiveChange } =
       this.props;
 
+    const _isEditor = isEditor(this.renderContext);
     let { viewType } = this.props;
 
     if (viewType === ViewType.None) {
-      if (IS_EDITOR) {
+      if (_isEditor) {
         // INFO: in editor we always render indicators for user so he can switch steps,
         // in preview steps can be changed by passing current step
         viewType = ViewType.Icon;
@@ -38,7 +40,7 @@ class Form2Step extends EditorComponent<Value, Props> {
       }
     }
 
-    const progressStyle = IS_EDITOR
+    const progressStyle = _isEditor
       ? {
           backgroundColor: count <= activeStep ? "" : "transparent"
         }
@@ -57,6 +59,7 @@ class Form2Step extends EditorComponent<Value, Props> {
             order={count}
             onActiveChange={onActiveChange}
             onChange={this.handleTextChange}
+            renderContext={this.renderContext}
           />
         </Toolbar>
         {!(viewType === ViewType.Progress) && count < totalCount && <Divider />}

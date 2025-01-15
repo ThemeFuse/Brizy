@@ -1,12 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
@@ -48,13 +45,16 @@ export function getItems({
 
   const boxedLayout = dvv("layout") === "boxed";
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
+  const borderColor = getColor(
+    dvv("borderColorPalette"),
     dvv("borderColorHex"),
-    dvv("borderColorPalette")
+    dvv("borderColorOpacity")
   );
-  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+
+  const boxShadowColor = getColor(
+    dvv("boxShadowColorPalette"),
     dvv("boxShadowColorHex"),
-    dvv("boxShadowColorPalette")
+    dvv("boxShadowColorOpacity")
   );
 
   const linkDC = getDynamicContentOption({
@@ -436,9 +436,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: buttonType
-              ? hexToRgba(boxShadowColorHex, dvv("boxShadowColorOpacity"))
-              : hexToRgba(borderColorHex, dvv("borderColorOpacity"))
+            backgroundColor: buttonType ? boxShadowColor : borderColor
           }
         }
       },

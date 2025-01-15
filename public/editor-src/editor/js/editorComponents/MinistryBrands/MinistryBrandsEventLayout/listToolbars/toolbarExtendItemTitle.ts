@@ -1,17 +1,17 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import type { Props, Value } from "../types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: listItemTitleColorHex } = getOptionColorHexByPalette(
+  const listItemTitleColor = getColor(
+    dvv("listItemTitleColorPalette"),
     dvv("listItemTitleColorHex"),
-    dvv("listItemTitleColorPalette")
+    dvv("listItemTitleColorOpacity")
   );
   return [
     {
@@ -42,10 +42,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              listItemTitleColorHex,
-              dvv("listItemTitleColorOpacity")
-            )
+            backgroundColor: listItemTitleColor
           }
         }
       },

@@ -11,14 +11,13 @@ import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";
-import Config from "visual/global/Config";
 import {
   ConfigCommon,
   HelpVideos
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { EditorMode, isPopup, isStory } from "visual/global/EditorModeContext";
 import { BlockMetaType } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
 import { get } from "visual/utils/object/get";
 import { capitalize } from "visual/utils/string";
 import Blocks from "./Blocks";
@@ -49,6 +48,8 @@ interface TabComponentProps<T extends BlockMetaType, A extends PromptTabsId> {
   onClose: VoidFunction;
   onAddBlocks: (block: OnChanges<T>[A]) => void;
   getParentNode?: () => HTMLElement | null;
+  config: ConfigCommon;
+  editorMode: EditorMode;
 }
 
 interface Tab<ID extends PromptTabsId, T extends BlockMetaType> {
@@ -59,11 +60,12 @@ interface Tab<ID extends PromptTabsId, T extends BlockMetaType> {
 }
 
 const getTabs = <T extends BlockMetaType>(
-  config: ConfigCommon,
-  type: BlockMetaType
+  config: ConfigCommon["api"],
+  type: BlockMetaType,
+  editorMode: EditorMode
 ): Array<Tab<PromptTabsId, T>> => {
   const { defaultLayouts, defaultStories, defaultKits, defaultPopups } =
-    config.api ?? {};
+    config ?? {};
 
   const hasDefaultLayouts =
     !!defaultLayouts?.getMeta && !!defaultLayouts?.getData;
@@ -74,8 +76,9 @@ const getTabs = <T extends BlockMetaType>(
   const hasDefaultKits = !!defaultKits?.getMeta && !!defaultKits?.getData;
   const hasDefaultPopups = !!defaultPopups?.getMeta && !!defaultPopups?.getData;
 
-  const _isStory = isStory(Config.getAll());
-  const _isPopup = type === "popup";
+  const _isStory = isStory(editorMode);
+  const _isPopup = isPopup(editorMode);
+  const _isPopupBlock = type === "popup";
   const tabs: Array<Tab<"template" | "blocks", T>> = [];
 
   if (hasDefaultStories && _isStory) {
@@ -100,7 +103,7 @@ const getTabs = <T extends BlockMetaType>(
     });
   }
 
-  if (hasDefaultKits && !_isPopup) {
+  if (hasDefaultKits && !_isPopupBlock) {
     tabs.push({
       id: "blocks",
       title: defaultKits?.label ?? t("Blocks"),
@@ -111,7 +114,7 @@ const getTabs = <T extends BlockMetaType>(
     });
   }
 
-  if (hasDefaultPopups && _isPopup) {
+  if (hasDefaultPopups && _isPopupBlock) {
     tabs.push({
       id: "blocks",
       title: defaultPopups?.label ?? t("Popups"),
@@ -124,13 +127,13 @@ const getTabs = <T extends BlockMetaType>(
 
   const globalBlockTab: Tab<"global", T> = {
     id: "global",
-    title: isPopup(config) ? t("Global Popups") : t("Global Blocks"),
+    title: _isPopup ? t("Global Popups") : t("Global Blocks"),
     icon: "nc-global",
     renderTab(props): ReactElement {
       return <Global {...props} />;
     }
   };
-  const { savedLayouts, savedBlocks, savedPopups } = config.api ?? {};
+  const { savedLayouts, savedBlocks, savedPopups } = config ?? {};
   const hasLayout = savedLayouts?.get && savedLayouts?.getByUid;
   const hasBlock = savedBlocks?.get && savedBlocks?.getByUid;
   const hasPopup = savedPopups?.get && savedPopups?.getByUid;
@@ -139,7 +142,7 @@ const getTabs = <T extends BlockMetaType>(
     return [...tabs, globalBlockTab];
   }
 
-  if (isPopup(config) && hasPopup) {
+  if (_isPopup && hasPopup) {
     return [
       ...tabs,
       {
@@ -172,8 +175,12 @@ const getTabs = <T extends BlockMetaType>(
   return tabs;
 };
 
+type Props<T extends BlockMetaType> = {
+  editorMode: EditorMode;
+} & PromptBlocksProps<T>;
+
 class PromptBlocks<T extends BlockMetaType> extends Component<
-  PromptBlocksProps<T>,
+  Props<T>,
   PromptBlocksState
 > {
   static defaultProps: PromptBlocksProps<BlockMetaType> = {
@@ -200,14 +207,19 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
     onChangeTemplate: _.noop,
     onChangeSaved: _.noop,
     onChangeGlobal: _.noop,
-    onClose: _.noop
+    onClose: _.noop,
+    config: {} as ConfigCommon
   };
 
   wrapper = React.createRef<HTMLDivElement>();
 
   mounted = false;
 
-  tabs = getTabs<T>(Config.getAll(), this.props.type);
+  tabs = getTabs<T>(
+    this.props.config?.api,
+    this.props.type,
+    this.props.editorMode
+  );
 
   state: PromptBlocksState = {
     currentTab: this.props.activeTab || "blocks",
@@ -313,7 +325,7 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
       );
     });
 
-    const { video, idHelpVideosIcons } = Config.getAll().ui?.help ?? {};
+    const { video, idHelpVideosIcons } = this.props.config.ui?.help ?? {};
 
     const idVideoBlocksLayout =
       idHelpVideosIcons?.[HelpVideos.blocksLayoutsHelpVideo];
@@ -355,7 +367,9 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
       showSearch: this.hasSearch(currentTab),
       showSidebar: this.hasSidebar(currentTab),
       onAddBlocks: this.handleChange,
-      getParentNode: this.getWrapper
+      getParentNode: this.getWrapper,
+      config: this.props.config,
+      editorMode: this.props.editorMode
     });
   }
 

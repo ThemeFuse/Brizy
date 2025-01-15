@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import { ContextMenuDisabled } from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import { Roles } from "visual/component/Roles";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
@@ -16,8 +17,8 @@ import {
 } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isEditor } from "visual/providers/RenderProvider";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -28,7 +29,6 @@ import * as sidebar from "./sidebar";
 import { styleCloseButton, styleContainer, styleContainerWrap } from "./styles";
 import * as toolbar from "./toolbar";
 import * as toolbarExtend from "./toolbarExtend";
-import { ContextMenuDisabled } from "visual/component/ContextMenu";
 
 /**
  * @deprecated use import {SectionPopupInstances} from "visual/editorComponents/SectionPopup/instances";
@@ -54,7 +54,7 @@ class SectionPopup extends EditorComponent {
 
     this.instanceKey = this.props.instanceKey || this.getId();
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       this.state = {
         isOpened: this.props.isOpened
       };
@@ -172,18 +172,30 @@ class SectionPopup extends EditorComponent {
     const classNameContainer = classnames(
       "brz-container",
       v.containerClassName,
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const classNameContainerWrap = classnames(
       "brz-container__wrap",
-      css(
-        `${this.constructor.componentId}-containerWrap`,
+      this.css(
+        `${this.getComponentId()}-containerWrap`,
         `${this.getId()}-containerWrap`,
-        styleContainerWrap(v, vs, vd)
+        styleContainerWrap({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const itemsProps = this.makeSubcomponentProps({
@@ -199,7 +211,7 @@ class SectionPopup extends EditorComponent {
 
     return (
       <Background value={v} meta={meta}>
-        <SortableZIndex zIndex={1}>
+        <SortableZIndex zIndex={1} renderContext={this.renderContext}>
           <div className={classNameContainerWrap}>
             <div className={classNameContainer}>
               <ContextMenuDisabled>
@@ -229,10 +241,16 @@ class SectionPopup extends EditorComponent {
       _className,
       className,
       customClassName,
-      css(
-        `${this.constructor.componentId}-close`,
+      this.css(
+        `${this.getComponentId()}-close`,
         `${this.getId()}-close`,
-        styleCloseButton(v, vs, vd)
+        styleCloseButton({
+          v,
+          vs,
+          vd,
+          store: this.getReduxState(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -278,10 +296,16 @@ class SectionPopup extends EditorComponent {
       _className,
       className,
       customClassName,
-      css(
-        `${this.constructor.componentId}-close`,
+      this.css(
+        `${this.getComponentId()}-close`,
         `${this.getId()}-close`,
-        styleCloseButton(v, vs, vd)
+        styleCloseButton({
+          v,
+          vs,
+          vd,
+          store: this.getReduxState(),
+          renderContext: this.renderContext
+        })
       )
     );
 

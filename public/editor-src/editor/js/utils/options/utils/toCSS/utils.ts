@@ -1,4 +1,6 @@
 import type { OptionName, OptionValue } from "visual/component/Options/types";
+import { RenderType } from "visual/providers/RenderProvider";
+import { Store } from "visual/redux/store";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
 import { getTypographyValues } from "visual/utils/options/Typography/utils";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -13,11 +15,15 @@ import { OptionNameWithStyles } from "./types";
 export const normalizeOptionModel = <T extends OptionName = OptionName>({
   type,
   optionModel,
-  extraData
+  extraData,
+  store,
+  renderContext
 }: {
   type: T;
   optionModel: OptionValue<T>;
+  store: Store;
   extraData: { device: BreakpointsNames; state: State };
+  renderContext: RenderType;
 }): OptionValue<T> => {
   if (type === "typography") {
     const { device, state } = extraData;
@@ -25,7 +31,9 @@ export const normalizeOptionModel = <T extends OptionName = OptionName>({
     return getTypographyValues({
       device: device as ResponsiveMode,
       state,
-      value: optionModel as OptionValue<"typography">
+      store,
+      value: optionModel as OptionValue<"typography">,
+      renderContext
     }) as OptionValue<T>;
   }
 
@@ -34,17 +42,23 @@ export const normalizeOptionModel = <T extends OptionName = OptionName>({
 
 export const getCSSByOptionType = <
   T extends OptionNameWithStyles = OptionNameWithStyles
->(
-  type: T,
-  data: CSSValue & { id: string }
-): MValue<string> => {
-  const { id, state, device, v } = data;
+>({
+  type,
+  data,
+  renderContext
+}: {
+  type: T;
+  data: CSSValue & { id: string };
+  renderContext: RenderType;
+}): MValue<string> => {
+  const { id, state, device, v, store } = data;
 
   const optionModel = getOptionModel<T>({
     type,
     v,
     breakpoint: device,
     state,
+    store,
     id
   });
 
@@ -54,7 +68,9 @@ export const getCSSByOptionType = <
     model: normalizeOptionModel({
       type,
       optionModel,
-      extraData: { device, state }
+      store,
+      extraData: { device, state },
+      renderContext
     }),
     meta: optionMeta
   });

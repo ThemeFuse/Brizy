@@ -1,20 +1,22 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { Props, Value } from "./index";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
 
-  const { hex: labelBgColorHex } = getOptionColorHexByPalette(
+  const labelBgColorOpacity = dvv("labelBgColorOpacity");
+  const labelBgColor = getColor(
+    dvv("labelBgColorPalette"),
     dvv("labelBgColorHex"),
-    dvv("labelBgColorPalette")
+    labelBgColorOpacity
   );
-  const { hex: labelColorHex } = getOptionColorHexByPalette(
+  const labelColor = getColor(
+    dvv("labelColorPalette"),
     dvv("labelColorHex"),
-    dvv("labelColorPalette")
+    dvv("labelColorOpacity")
   );
 
   return [
@@ -43,10 +45,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor:
-              dvv("bgColorOpacity") > 0
-                ? hexToRgba(labelBgColorHex, dvv("labelBgColorOpacity"))
-                : hexToRgba(labelColorHex, dvv("labelColorOpacity"))
+            backgroundColor: labelBgColorOpacity ? labelBgColor : labelColor
           }
         }
       },

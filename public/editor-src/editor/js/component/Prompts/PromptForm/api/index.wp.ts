@@ -1,6 +1,7 @@
+import { Str } from "@brizy/readers";
 import _ from "underscore";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import Config from "visual/global/Config";
+import Config, { WP } from "visual/global/Config";
 import { request } from "visual/utils/api/index.wp";
 import {
   AddRecaptcha,
@@ -287,17 +288,17 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
   );
 };
 
-export const deleteSmtpIntegration: DeleteSmtpIntegration = ({
-  formId,
-  integration
-}) => {
+export const deleteSmtpIntegration: DeleteSmtpIntegration = (
+  { formId, integration },
+  config
+) => {
   const {
     api: { url, hash, deleteIntegration }
-  } = Config.get("wp");
+  } = (config as WP).wp;
 
-  const version = Config.get("editorVersion");
+  const version = config.editorVersion;
   const reqUrl = makeUrl(url, {
-    action: deleteIntegration,
+    action: Str.read(deleteIntegration) ?? "",
     hash: hash,
     version,
     formId,

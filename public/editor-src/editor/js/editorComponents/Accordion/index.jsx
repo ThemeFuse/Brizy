@@ -5,9 +5,6 @@ import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -47,7 +44,7 @@ class Accordion extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -71,7 +68,7 @@ class Accordion extends EditorComponent {
 
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -89,12 +86,16 @@ class Accordion extends EditorComponent {
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classNames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
@@ -113,7 +114,17 @@ class Accordion extends EditorComponent {
 
     const className = classNames(
       "brz-accordion",
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);

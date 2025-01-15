@@ -1,9 +1,8 @@
 import { addLast, getIn, setIn } from "timm";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { setIds } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
 
 const TableRow = {
@@ -40,13 +39,17 @@ export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ key, v, device });
 
   // Color
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColorOpacity = dvv("bgColorOpacity");
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    bgColorOpacity
   );
-  const { hex: colorHex } = getOptionColorHexByPalette(
+
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   return [
@@ -187,10 +190,7 @@ export function getItems({ v, device }) {
         size: "medium",
         icon: {
           style: {
-            backgroundColor:
-              dvv("bgColorOpacity") > 0
-                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
-                : hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: bgColorOpacity > 0 ? bgColor : color
           }
         }
       },

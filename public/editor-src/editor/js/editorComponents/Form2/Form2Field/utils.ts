@@ -1,5 +1,4 @@
 import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
-import Config from "visual/global/Config";
 import {
   FormFieldsOption,
   Response
@@ -7,15 +6,19 @@ import {
 import { t } from "visual/utils/i18n";
 import types, { FormInputTypesName } from "./types";
 import { InputType, InputTypeChoice } from "./type";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { MValue } from "visual/utils/value";
 
-export const getThirtyOptions = (fieldId: string): ChoicesAsync["load"] => {
+export const getThirtyOptions = (
+  fieldId: string,
+  config: ConfigCommon
+): ChoicesAsync["load"] => {
   const uniqueField: FormFieldsOption = {
     title: t("Unique Id"),
     value: fieldId
   };
 
   return () => {
-    const config = Config.getAll();
     const handler = config.integrations?.form?.fields?.handler;
 
     if (typeof handler !== "function") {
@@ -36,9 +39,7 @@ const getInputType = (item: InputType): InputTypeChoice => {
   return { title: item.componentTitle, value: item.componentType };
 };
 
-export function inputTypesChoice() {
-  const config = Config.getAll();
-  const inputTypes = config.elements?.form?.inputTypes;
+export function inputTypesChoice(inputTypes: MValue<FormInputTypesName[]>) {
   const _types = types as Record<FormInputTypesName, InputType>;
 
   const isProvidedInputTypes =
@@ -47,7 +48,7 @@ export function inputTypesChoice() {
   if (isProvidedInputTypes) {
     return inputTypes
       .filter((key) => _types[key as FormInputTypesName])
-      .map((key) => getInputType(_types[key]));
+      .map((key) => getInputType(_types[key as FormInputTypesName]));
   }
 
   return Object.values(_types).map(getInputType);

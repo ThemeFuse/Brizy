@@ -1,10 +1,9 @@
-import Config from "visual/global/Config";
+import { WithEditorMode, isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { ToolbarItemType } from "../ToolbarItemType";
 
-export function getItems(): ToolbarItemType[] {
-  const IS_STORY = isStory(Config.getAll());
+export function getItems({ editorMode }: WithEditorMode): ToolbarItemType[] {
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -56,7 +55,7 @@ export function getItems(): ToolbarItemType[] {
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       position: 100,
                       type: "slider",

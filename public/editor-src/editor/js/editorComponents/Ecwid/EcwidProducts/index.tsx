@@ -1,19 +1,18 @@
 import classNames from "classnames";
 import React, { ReactNode, createRef } from "react";
 import { uniqueId } from "underscore";
+import { isView } from "visual/providers/RenderProvider";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import * as sidebarButton from "../sidebarButton";
 import * as sidebarDisable from "../sidebarDisable";
-import * as toolbarFooter from "../toolbarFooter";
+import { ecwidToolbarFooter } from "../toolbarFooter";
 import * as toolbarSKU from "../toolbarSKU";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendParent from "./sidebar";
@@ -59,11 +58,11 @@ export class EcwidProducts extends EditorComponent<Value> {
     );
     this.props.extendParentToolbar(toolbarExtend);
 
-    if (!IS_EDITOR) {
+    if (isView(this.renderContext)) {
       return;
     }
 
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     if (
       this.containerRef.current &&
@@ -93,7 +92,17 @@ export class EcwidProducts extends EditorComponent<Value> {
     const className = classNames(
       "brz-ecwid-wrapper",
       "brz-ecwid-products-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
@@ -218,7 +227,7 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                                 return (
                                                                   <Toolbar
                                                                     {...this.makeToolbarPropsFromConfig2(
-                                                                      toolbarFooter,
+                                                                      ecwidToolbarFooter(),
                                                                       sidebarDisable
                                                                     )}
                                                                     selector=".ec-footer"
@@ -413,7 +422,17 @@ export class EcwidProducts extends EditorComponent<Value> {
     const className = classNames(
       "brz-ecwid-wrapper",
       "brz-ecwid-products-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const storeId = makePlaceholder({
       content: "{{ecwid_store_id}}"

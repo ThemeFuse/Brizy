@@ -1,6 +1,7 @@
 import { match } from "fp-utilities";
 import { Config } from "visual/global/Config/types";
 import { Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { WP, isWp } from "visual/global/Config/types/configs/WP";
 import { t } from "visual/utils/i18n";
 
@@ -19,13 +20,13 @@ export const hasMembership = (m: M, mRoles: string): boolean => {
   }
 };
 
-export const getMembershipRoles = (config: Config): Role[] => {
+export const getMembershipRoles = (config: ConfigCommon): Role[] => {
   const availableRoles = match(
     [isWp, (c: WP): Role[] => c.wp.availableRoles],
     [isCloud, (c: Cloud): Role[] => c.availableRoles]
   );
 
-  return availableRoles(config) || [];
+  return availableRoles(config as Config) || [];
 };
 
 export const getMembershipChoices = (

@@ -1,20 +1,21 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import type { Value } from "./types";
 import { StyleType } from "./types";
 
-export const getItems: GetItems<Value> = ({ v, device, context }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+export const getItems: GetItems<Value> = ({
+  v,
+  device,
+  context,
+  editorMode
+}) => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const type = dvv("type");
 
@@ -22,9 +23,10 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     options: context.dynamicContent.config,
     type: DCTypes.richText
   });
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   const isRadial = type === StyleType.Radial;
@@ -32,7 +34,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const isEmpty = type === StyleType.Empty;
   const isPie = type === StyleType.Pie;
 
-  const IS_STORY = isStory(Config.getAll());
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -187,7 +189,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: color
           }
         }
       },
@@ -268,7 +270,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Settings")
       },
       position: 110,
-      disabled: isSimple || IS_STORY,
+      disabled: isSimple || _isStory,
       options: [
         {
           id: "width",
@@ -329,7 +331,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
       id: "advancedSettings",
       type: "advancedSettings",
       position: 110,
-      disabled: !isSimple && !IS_STORY,
+      disabled: !isSimple && !_isStory,
       title: t("Settings"),
       roles: ["admin"],
       devices: "desktop"

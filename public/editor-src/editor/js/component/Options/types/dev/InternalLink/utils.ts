@@ -46,8 +46,10 @@ export const normalizeItems = (items: ChoicesSync): Choice[] => {
   return items.map(normalizeItem);
 };
 
-export const getCollectionChoices = (config: ConfigCommon): ChoicesAsync => ({
-  load: () => getCollectionTypes(config),
+export const getCollectionChoices = (
+  api: ConfigCommon["api"]
+): ChoicesAsync => ({
+  load: () => getCollectionTypes(api),
   emptyLoad: {
     title: t("There are no choices")
   }

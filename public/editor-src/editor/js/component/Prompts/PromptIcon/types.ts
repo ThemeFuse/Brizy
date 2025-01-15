@@ -1,5 +1,6 @@
 import { TypeId } from "visual/config/icons/Type";
 import { Literal } from "visual/utils/types/Literal";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export interface Icon {
   name: string;
@@ -13,6 +14,7 @@ export interface Props {
   opened?: boolean;
   onClose?: VoidFunction;
   onChange: (i: Icon) => void;
+  config: ConfigCommon;
 }
 
 export interface State {

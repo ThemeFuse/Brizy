@@ -1,4 +1,6 @@
 import { useContext, useEffect, useMemo, useReducer, useRef } from "react";
+import { useConfig } from "visual/global/hooks";
+import { isView, useRender } from "visual/providers/RenderProvider";
 import { EditorComponentContext } from "../EditorComponentContext";
 import { DCApiProxyInstance } from "./DCApiProxy";
 
@@ -64,6 +66,7 @@ function reducer(state: State, action: Action): State {
 
   return state;
 }
+
 const initialState: State = { status: "initial" };
 
 export function useDC(
@@ -71,6 +74,9 @@ export function useDC(
   delayMs = 0
 ): State {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { renderType } = useRender();
+  const IS_VIEW = isView(renderType);
+  const config = useConfig();
 
   const fetchController = useRef<AbortController>();
   const delayTimeout = useRef<number>();
@@ -88,7 +94,7 @@ export function useDC(
       placeholder === undefined ||
       placeholder === null ||
       placeholder === "" ||
-      IS_PREVIEW
+      IS_VIEW
     ) {
       return;
     }
@@ -104,14 +110,14 @@ export function useDC(
 
     // isInitial dependency is not nedded
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [placeholder]);
+  }, [placeholder, IS_VIEW]);
 
   useEffect(() => {
     if (
       placeholder === undefined ||
       placeholder === null ||
       placeholder === "" ||
-      IS_PREVIEW ||
+      IS_VIEW ||
       isInitial
     ) {
       return;
@@ -128,7 +134,7 @@ export function useDC(
       dispatch({ type: "wait_fetch" });
     }
 
-    const apiProxyConfig = { postId: itemId };
+    const apiProxyConfig = { postId: itemId, globalConfig: config };
 
     // 2. fetch
     const cached = DCApiProxyInstance.getFromCache(placeholder, apiProxyConfig);
@@ -157,13 +163,13 @@ export function useDC(
           window.clearTimeout(delayTimeout.current);
         });
     }
-  }, [delayMs, placeholder, itemId, isInitial]);
+  }, [delayMs, placeholder, itemId, isInitial, IS_VIEW, config]);
 
   if (placeholder === undefined || placeholder === null || placeholder === "") {
     return { status: "empty" };
   }
 
-  if (IS_PREVIEW) {
+  if (IS_VIEW) {
     return { status: "success", data: placeholder };
   }
 

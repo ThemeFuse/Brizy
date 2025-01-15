@@ -1,12 +1,11 @@
-import { produce } from "immer";
-import { NumberSpec } from "visual/utils/math/number";
-import { getStore } from "visual/redux/store";
-import { rulesSelector } from "visual/redux/selectors";
-import { ElementModel } from "visual/component/Elements/Types";
 import { Obj } from "@brizy/readers";
+import { produce } from "immer";
+import { ElementModel } from "visual/component/Elements/Types";
+import { NumberSpec } from "visual/utils/math/number";
 
 export function setOffsetsToElementFromWrapper(
   storyWrapper: ElementModel,
+  rules: Record<string, string>,
   delta = 5
 ): ElementModel {
   // @ts-expect-error: Object is of type 'unknown'.
@@ -20,13 +19,12 @@ export function setOffsetsToElementFromWrapper(
     offsetX: number;
     offsetY: number;
   } = elem;
-  const currentStyleRules = rulesSelector(getStore().getState());
-
   const offsetsExists = NumberSpec.read(offsetX) && NumberSpec.read(offsetY);
-  if (!offsetsExists && _styles && currentStyleRules) {
+
+  if (!offsetsExists && _styles && rules) {
     const styles = _styles.reduce(
       (acc, style) => {
-        const rule = Obj.readKey(style)(currentStyleRules);
+        const rule = Obj.readKey(style)(rules);
         return rule ? Object.assign(acc, rule) : acc;
       },
       { offsetX: 0, offsetY: 0 } as Partial<ElementModel>

@@ -13,33 +13,30 @@ import EditorComponent, {
   Props as EDProps
 } from "visual/editorComponents/EditorComponent";
 import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
-import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isEditor } from "visual/providers/RenderProvider";
 import {
-  makePlaceholder,
   makeEndPlaceholder,
+  makePlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
 import { isPro } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
 import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import { MValue } from "visual/utils/value";
+import { ComponentsMeta } from "../EditorComponent/types";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleSection } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import { Meta, Props, RenderType, States, Value } from "./type";
 import { STICKY_ITEM_INDEX, fixedContainerPlus } from "./utils";
-import { Value, Meta, Props, RenderType, States } from "./type";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { ComponentsMeta } from "../EditorComponent/types";
-import { MValue } from "visual/utils/value";
-import { t } from "visual/utils/i18n";
 
 export default class SectionHeader extends EditorComponent<
   Value,
@@ -62,6 +59,8 @@ export default class SectionHeader extends EditorComponent<
 
   sectionNode = React.createRef<HTMLDivElement>();
   stickyNode = React.createRef<HTMLDivElement>();
+
+  isPro = isPro(this.getGlobalConfig());
 
   shouldComponentUpdate(
     nextProps: EDProps<Value, Props>,
@@ -231,7 +230,7 @@ export default class SectionHeader extends EditorComponent<
 
   dvv = (key: string): unknown => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -249,12 +248,16 @@ export default class SectionHeader extends EditorComponent<
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classnames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
@@ -268,7 +271,7 @@ export default class SectionHeader extends EditorComponent<
       />
     );
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       // Render in #brz-ed-root because have problems with mmenu z-index
       const node = document.getElementById("brz-ed-root");
 
@@ -299,12 +302,21 @@ export default class SectionHeader extends EditorComponent<
   ): React.JSX.Element {
     const className = classnames(
       "brz-section__header--animated",
-      { "brz-section__header--animated-closed": IS_EDITOR && !isSticky },
+      {
+        "brz-section__header--animated-closed":
+          isEditor(this.renderContext) && !isSticky
+      },
       { "brz-section__header--animated-opened": isSticky },
-      css(
-        `${this.getComponentId()}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -322,7 +334,7 @@ export default class SectionHeader extends EditorComponent<
     });
 
     return (
-      <SortableZIndex zIndex={1}>
+      <SortableZIndex zIndex={1} renderContext={this.renderContext}>
         <div className={className}>
           <ToolbarExtend position="fixed">
             {
@@ -353,12 +365,14 @@ export default class SectionHeader extends EditorComponent<
     const toolbarPosition = isSticky ? "fixed" : "absolute";
 
     return (
-      <SortableZIndex zIndex={1}>
+      <SortableZIndex zIndex={1} renderContext={this.renderContext}>
         <div className={className} ref={this.stickyNode}>
           <ToolbarExtend position={toolbarPosition}>
             {this.renderStatic(v)}
           </ToolbarExtend>
-          {IS_EDITOR && <ResizeAware onResize={this.handleUpdateHeight} />}
+          {isEditor(this.renderContext) && (
+            <ResizeAware onResize={this.handleUpdateHeight} />
+          )}
         </div>
       </SortableZIndex>
     );
@@ -404,10 +418,16 @@ export default class SectionHeader extends EditorComponent<
       "brz-section brz-section__header",
       className,
       cssClass || customClassName,
-      css(
-        `${this.getComponentId()}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -419,10 +439,7 @@ export default class SectionHeader extends EditorComponent<
       className: classNameSection
     };
 
-    const config = Config.getAll();
-    const IS_PRO = isPro(config);
-
-    return IS_PRO ? (
+    return this.isPro ? (
       <Animation
         component={tagName}
         componentProps={props}
@@ -435,7 +452,7 @@ export default class SectionHeader extends EditorComponent<
         <ProBlocked
           text="Header"
           message={t("Upgrade to PRO to use this")}
-          upgradeLink={Config.getAll().urls.upgradeToPro}
+          upgradeLink={this.getGlobalConfig()?.urls?.upgradeToPro}
           upgradeText={t("Get a PRO plan")}
           absolute={false}
           onRemove={this.handleRemove}
@@ -450,7 +467,7 @@ export default class SectionHeader extends EditorComponent<
   ): React.JSX.Element {
     const { membership, membershipRoles, translationsLangs, translations } = v;
 
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
     const roles = JSON.parse(membershipRoles).join(",");
     const languages = JSON.parse(translationsLangs).join(",");
     const onlyCloud = !(isCloud(config) && isShopify(config));
@@ -536,10 +553,16 @@ export default class SectionHeader extends EditorComponent<
       "brz-section brz-section__header",
       className,
       cssClass || customClassName,
-      css(
-        `${this.getComponentId()}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

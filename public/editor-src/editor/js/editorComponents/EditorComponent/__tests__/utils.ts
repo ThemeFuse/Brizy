@@ -25,6 +25,7 @@ import {
   optionMode,
   setOptionPrefix
 } from "../utils";
+import { createStore } from "visual/redux/store";
 
 // region Mocks
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
@@ -321,6 +322,8 @@ describe("Testing 'flattenDefaultValue_' function", () => {
 });
 
 describe("Testing 'getToolbarData' function", () => {
+  const store = createStore();
+
   const testCase: [
     ToolbarItemType[],
     {
@@ -564,7 +567,7 @@ describe("Testing 'getToolbarData' function", () => {
   test.each(testCase)(
     "default value & DCKeys parsing",
     (toolbarConfig, expected) => {
-      const _parsedToolbarData = getToolbarData(toolbarConfig);
+      const _parsedToolbarData = getToolbarData(store, toolbarConfig);
       expect(_parsedToolbarData.dv).toStrictEqual(expected.defaultValue);
       expect(_parsedToolbarData.DCKeys).toStrictEqual(expected.DCKeys);
     }
@@ -675,6 +678,7 @@ describe("Testing 'getOptionValueByDevice' function ", () => {
     mobileCountry: "Moldova",
     variant: "primary"
   };
+  const store = createStore();
 
   const testCasesByDevice: {
     input: { id: string; currentDevice: DeviceMode };
@@ -748,7 +752,7 @@ describe("Testing 'getOptionValueByDevice' function ", () => {
 
   test.each(testCasesByDevice)("getValueByDevice", ({ input, result }) => {
     const { value } =
-      getOptionValueByDevice({ ...input, v, toolbarConfig }) ?? {};
+      getOptionValueByDevice({ ...input, v, toolbarConfig, store }) ?? {};
 
     expect(value).toStrictEqual(result);
   });

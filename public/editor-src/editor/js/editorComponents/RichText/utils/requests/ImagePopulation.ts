@@ -1,13 +1,15 @@
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const getImagePopulation = async (
   placeholder: string,
-  id: string
+  id: string,
+  config: ConfigCommon
 ): Promise<string> => {
   if (!id || !placeholder) {
     return "";
   }
-  const apiProxyConfig = { postId: id };
+  const apiProxyConfig = { postId: id, globalConfig: config };
   const cached = DCApiProxyInstance.getFromCache(placeholder, apiProxyConfig);
 
   if (cached) {

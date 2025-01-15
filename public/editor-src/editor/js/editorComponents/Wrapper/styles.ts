@@ -1,8 +1,11 @@
+import { isEditor } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./index";
 
-export function styleWrapper(v: Value, vs: Value, vd: Value): OutputStyle {
+export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
+  const { renderContext } = data;
   const styles: Styles = {
     ".brz &&:hover": {
       interval: [
@@ -29,7 +32,7 @@ export function styleWrapper(v: Value, vs: Value, vd: Value): OutputStyle {
     }
   };
 
-  if (IS_EDITOR) {
+  if (isEditor(renderContext)) {
     styles[
       ".brz &&:hover > *:not(.brz-ed-border__inner):not(.brz-ed-border__button)"
     ] = {
@@ -37,15 +40,15 @@ export function styleWrapper(v: Value, vs: Value, vd: Value): OutputStyle {
     };
   }
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleAnimation(v: Value, vs: Value, vd: Value): OutputStyle {
+export function styleAnimation(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: ["cssStyleAnimationAll"]
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

@@ -7,25 +7,25 @@ import {
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
+import { OptionPatch } from "visual/component/Options/types";
 import { hasValue } from "visual/types/attributes";
 import { always } from "visual/utils/fp";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { capByPrefix } from "visual/utils/string";
+import {
+  flattEffects,
+  flattenObject,
+  getEnabledEffects,
+  getPatchType
+} from "../utils/effects";
+import { Effects } from "./types";
 import * as AnchorPoint from "./types/AnchorPoint";
 import * as Flip from "./types/Flip";
 import * as Offset from "./types/Offset";
 import * as Rotate from "./types/Rotate";
 import * as Scale from "./types/Scale";
 import * as Skew from "./types/Skew";
-import {
-  flattEffects,
-  flattenObject,
-  getEnabledEffects,
-  getPatchType,
-  isEnabled,
-  wrap
-} from "./utils";
-import { OptionPatch } from "visual/component/Options/types";
+import { isEnabled, wrap } from "./utils";
 
 export const defaultValue: Value = {
   active: undefined,
@@ -64,8 +64,12 @@ export const toElementModel: ToElementModel<"transform"> = (_patch) => {
 
   const patch = {
     ..._patch,
-    type: getPatchType(_patch)
+    type: getPatchType(_patch, Effects)
   } as OptionPatch<"transform">;
+
+  if (!patch.type) {
+    return {};
+  }
 
   const flattenAnchor = flattenObject({
     anchorPoint: value
@@ -79,7 +83,7 @@ export const toElementModel: ToElementModel<"transform"> = (_patch) => {
           ? { [capByPrefix(patch.active, "enabled")]: true }
           : {}),
         ...getEnabledEffects(patch),
-        ...flattEffects(patch)
+        ...flattEffects(patch, Effects)
       };
     case Type.active:
       return {

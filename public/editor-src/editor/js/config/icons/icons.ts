@@ -1,4 +1,4 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getCustomIcons as getCustomIconsApi } from "visual/utils/api";
 import { toArray } from "visual/utils/array";
 import { mPipe } from "visual/utils/fp";
@@ -15,9 +15,10 @@ const readCustomIcons = (value: unknown): CustomIcon[] => {
   return toArray(value).map(mPipe(readObj, readCustom)).filter(isT);
 };
 
-export const getTypeIcons = (type: TypeId): Promise<Icon[] | CustomIcon[]> => {
-  const config = Config.getAll();
-
+export const getTypeIcons = (
+  type: TypeId,
+  config: ConfigCommon
+): Promise<Icon[] | CustomIcon[]> => {
   switch (type) {
     case TypeId.Outline:
       return import("./iconTypes/outline.json").then(readIcons);

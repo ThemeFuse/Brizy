@@ -1,17 +1,14 @@
+import { Num, Str } from "@brizy/readers";
+import { mPipe } from "fp-utilities";
 import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import { Black } from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
-import { mPipe } from "visual/utils/fp";
-import * as Num from "visual/utils/math/number";
-import * as Str from "visual/utils/string/specs";
 import { Value } from "./entities/Value";
 import * as Palette from "./entities/palette";
-import { paletteHex } from "./utils";
 
 export const defaultValue: Value = {
   hex: Black,
@@ -27,16 +24,13 @@ export const fromElementModel: FromElementModel<"colorPicker"> = (get) => {
     defaultValue.palette;
 
   return {
-    hex:
-      paletteHex(palette, paletteColors()) ??
-      mPipe(get, Str.read, Hex.fromString)("hex") ??
-      defaultValue.hex,
+    hex: mPipe(get, Str.read, Hex.fromString)("hex") ?? defaultValue.hex,
     opacity:
-      mPipe(() => get("opacity"), Num.read, Opacity.fromNumber)() ??
+      mPipe(get, Num.read, Opacity.fromNumber)("opacity") ??
       defaultValue.opacity,
     palette: palette,
     tempOpacity:
-      mPipe(() => get("tempOpacity"), Num.read, Opacity.fromNumber)() ??
+      mPipe(get, Num.read, Opacity.fromNumber)("tempOpacity") ??
       defaultValue.tempOpacity,
     tempPalette:
       mPipe(get, Str.read, Palette.fromString)("tempPalette") ??

@@ -1,11 +1,11 @@
 import classnames from "classnames";
 import React from "react";
-import Config, { isWp } from "visual/global/Config";
+import { isEditor } from "visual/providers/RenderProvider";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
-import { css } from "visual/utils/cssStyle";
+import { isWp } from "visual/global/Config";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
@@ -16,7 +16,7 @@ class ForgotPasswordField extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  isWp = isWp(Config.getAll());
+  isWp = isWp(this.getGlobalConfig());
 
   handleLabelChange = (label) => {
     this.patchValue({ label });
@@ -36,7 +36,7 @@ class ForgotPasswordField extends EditorComponent {
       return "";
     }
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -48,10 +48,16 @@ class ForgotPasswordField extends EditorComponent {
     const className = classnames(
       "brz-login-form__field",
       `brz-login-form__field-${v.type}`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -117,10 +123,16 @@ class ForgotPasswordField extends EditorComponent {
     const className = classnames(
       "brz-login-form__field",
       `brz-login-form__field-${v.type}`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

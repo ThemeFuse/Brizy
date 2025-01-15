@@ -5,9 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
@@ -34,7 +32,7 @@ import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
-import { EkklesiaMessages } from "../utils/helpers";
+import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -63,14 +61,15 @@ export class MinistryBrandsEventDetail extends EditorComponent<Value, Props> {
 
     this.props.extendParentToolbar(toolbarExtend);
     const { recentEvents } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [{ value: { recentEvents }, module: { key: "events" } }]
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["event_detail"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["event_detail"]);
       this.patchValue(changedKeys);
     }
   }
@@ -79,7 +78,17 @@ export class MinistryBrandsEventDetail extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-eventDetail__wrapper",
       "brz-ministryBrands",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

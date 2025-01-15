@@ -1,12 +1,10 @@
 import { renderStyles } from "visual/utils/cssStyle";
 import { Value } from "./toolbar";
+import { DynamicStylesProps } from "visual/types";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 
-export function styleSection(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
-  const { maskShape = "none" } = v;
+export function styleSection(data: DynamicStylesProps<Value>): OutputStyle {
+  const { maskShape = "none" } = data.v;
 
   const styles: {
     [k: string]: {
@@ -96,14 +94,10 @@ export function styleSection(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleContainer(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleContainer(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -116,5 +110,5 @@ export function styleContainer(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

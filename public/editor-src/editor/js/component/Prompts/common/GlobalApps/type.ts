@@ -1,3 +1,4 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { BaseKey } from "./BaseApp";
 
 export type FormField = {
@@ -16,6 +17,7 @@ export interface BaseIntegrationProps {
   onLoading: (l: boolean) => void;
   onTabUpdate: () => void;
   onClose: () => void;
+  config: ConfigCommon;
 }
 
 export interface BaseIntegrationState {
@@ -46,6 +48,7 @@ export interface BaseIntegrationContext {
   onDisconnectApp: (appId: string) => void;
   onChangeProgress: (progress: { showProgress: boolean }) => void;
   onError: (error: null | string) => void;
+  config: ConfigCommon;
 }
 
 export type AppData = {

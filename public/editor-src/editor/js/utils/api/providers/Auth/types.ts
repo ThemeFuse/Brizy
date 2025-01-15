@@ -5,7 +5,7 @@ export interface AuthProviderResponse {
 }
 
 export interface APIAuthProvider {
-  send(): Promise<AuthProviderResponse>;
+  send(config: ConfigCommon): Promise<AuthProviderResponse>;
 }
 
 export type Auth = Required<ConfigCommon>["auth"];

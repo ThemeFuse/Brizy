@@ -7,12 +7,9 @@ import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import LazyLoadImage from "visual/component/LazyLoadImage";
 import { ProInfo } from "visual/component/ProInfo";
-import Config from "visual/global/Config";
 import { authorizedSelector } from "visual/redux/selectors";
-import { IS_PRO } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { imageWrapperSize } from "visual/utils/image";
-import { isStory } from "visual/utils/models";
 import { DownloadBlock } from "./DownloadBlock";
 import { TagEditable } from "./TagEditable";
 import { TagLists } from "./TagLists";
@@ -42,7 +39,11 @@ class Thumbnail extends Component {
     onRemove: _.noop,
     onImageLoaded: _.noop,
     onSync: _.noop,
-    onUpdate: _.noop
+    onUpdate: _.noop,
+    isPro: false,
+    isStory: false,
+    upgradeToPro: "",
+    config: {}
   };
 
   static propTypes = {
@@ -59,7 +60,9 @@ class Thumbnail extends Component {
     onRemove: PropTypes.func,
     onImageLoaded: PropTypes.func,
     onSync: PropTypes.func,
-    onUpdate: PropTypes.func
+    onUpdate: PropTypes.func,
+    isPro: PropTypes.bool,
+    isStory: PropTypes.bool
   };
 
   state = {
@@ -70,8 +73,10 @@ class Thumbnail extends Component {
 
   iconRef = React.createRef();
 
+  isPro = this.props.isPro;
+
   getProUrl() {
-    const { upgradeToPro } = Config.getAll().urls;
+    const { upgradeToPro } = this.props;
     return upgradeToPro;
   }
 
@@ -177,7 +182,7 @@ class Thumbnail extends Component {
     const {
       data: { pro }
     } = this.props;
-    const blankIsPro = !IS_PRO && pro;
+    const blankIsPro = !this.isPro && pro;
     const title = this.props.data?.blankTitle ?? t("Create your own");
     const className = classnames(
       "brz-ed-popup-two-block-item",
@@ -417,7 +422,7 @@ class Thumbnail extends Component {
 
   renderDownloadIcon() {
     const { uid, type } = this.props.data;
-    return <DownloadBlock id={uid} type={type} />;
+    return <DownloadBlock id={uid} type={type} config={this.props.config} />;
   }
 
   render() {
@@ -427,17 +432,18 @@ class Thumbnail extends Component {
       showTitle,
       showDownload,
       tags,
-      data: { blank, showRemoveIcon, pro, loading, inactive, renderWrapper }
+      data: { blank, showRemoveIcon, pro, loading, inactive, renderWrapper },
+      isStory
     } = this.props;
     const { blockTooltipOpen } = this.state;
     const showDownLine = showTitle || showDownload || tags;
-    const blockIsPro = !IS_PRO && pro;
+    const blockIsPro = !this.isPro && pro;
     const isBlank =
       (typeof blank === "string" && blank === "blank") ||
       (typeof blank === "boolean" && blank);
     const className = classnames(
       "brz-ed-popup-two-block",
-      isStory(Config.getAll()) && "brz-ed-popup-two-block-stories",
+      isStory && "brz-ed-popup-two-block-stories",
       blockIsPro && "brz-ed-popup-two-block--pro",
       isLayout && "brz-ed-popup-two-block--layout",
       inactive && "inactive",
@@ -491,14 +497,15 @@ class Layout extends Component {
   render() {
     const {
       data: { name, pagesCount },
+      isStory,
+      config,
       ...otherProps
     } = this.props;
     const { thumbnailLoaded } = this.state;
-    const IS_STORY = isStory(Config.getAll());
 
     const infoClassName = classnames(
       "brz-ed-popup-two-block-info",
-      IS_STORY && "brz-ed-popup-two-block-info-stories"
+      isStory && "brz-ed-popup-two-block-info-stories"
     );
 
     return (
@@ -510,17 +517,19 @@ class Layout extends Component {
           {...otherProps}
           data={this.props.data}
           isLayout={true}
+          isStory={isStory}
           onImageLoaded={this.handleLoaded}
+          config={config}
         />
         <div className="brz-ed-popup-two-block-info-downline">
           <div className="brz-ed-popup-two-block-info-title">{name}</div>
           <div className="brz-ed-popup-two-block-info-title">
             {pagesCount}{" "}
             {pagesCount > 1
-              ? IS_STORY
+              ? isStory
                 ? t("stories")
                 : t("layouts")
-              : IS_STORY
+              : isStory
                 ? t("story")
                 : t("layout")}
           </div>

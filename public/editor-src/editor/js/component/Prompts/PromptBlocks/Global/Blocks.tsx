@@ -8,10 +8,9 @@ import React, {
 import Sidebar, {
   SidebarOption
 } from "visual/component/Prompts/PromptBlocks/common/Sidebar";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { BlockMetaType } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { isPopup } from "visual/utils/models";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
 import { Control as Select } from "../common/Select";
@@ -33,6 +32,11 @@ export interface Props<T extends Thumbnail> {
   onAdd: (data: T) => void;
   onRemove?: (data: T) => void;
   onUpdate?: (data: T) => void;
+  isPopup: boolean;
+  isPro: boolean;
+  isStory: boolean;
+  upgradeToPro?: string;
+  config: ConfigCommon;
 }
 
 const defaultFilter = {
@@ -49,6 +53,11 @@ export const Blocks = <T extends Thumbnail>(props: Props<T>): ReactElement => {
     showSidebar,
     HeaderSlotLeft,
     loading,
+    isPopup,
+    isPro,
+    isStory,
+    upgradeToPro,
+    config,
     onAdd,
     onRemove,
     onUpdate
@@ -56,14 +65,12 @@ export const Blocks = <T extends Thumbnail>(props: Props<T>): ReactElement => {
   const currentFilterRef = useRef<Filter>(defaultFilter);
 
   const messageType = useMemo(() => {
-    const config = Config.getAll();
-
-    if (isPopup(config)) {
+    if (isPopup) {
       return "conditionPopup";
     }
 
     return type === "popup" ? "popup" : "block";
-  }, [type]);
+  }, [type, isPopup]);
 
   const tags = useMemo(() => getTags(data), [data]);
 
@@ -126,6 +133,10 @@ export const Blocks = <T extends Thumbnail>(props: Props<T>): ReactElement => {
                 onAdd={onAdd}
                 onRemove={onRemove}
                 onUpdate={onUpdate}
+                isStory={isStory}
+                isPro={isPro}
+                upgradeToPro={upgradeToPro}
+                config={config}
               />
             )}
           </>

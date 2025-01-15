@@ -1,3 +1,4 @@
+import { Base64 } from "js-base64";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Image } from "./index.jsx";
@@ -12,11 +13,13 @@ class WPImage extends Image {
     }
 
     if (imagePopulation) {
+      // prettier-ignore
+      const imagePlaceholder = Base64.encode(imagePopulation.replace(/"/g, "\\\""));
+
       return {
         alt: makePlaceholder({
           content: "{{ brizy_dc_image_alt }}",
-          // prettier-ignore
-          attr: { imagePlaceholder: imagePopulation.replace(/"/g, "\\\"") }
+          attr: { imagePlaceholder }
         })
       };
     }

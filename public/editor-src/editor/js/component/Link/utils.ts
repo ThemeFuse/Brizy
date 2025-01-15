@@ -1,7 +1,8 @@
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { ElementModel } from "visual/component/Elements/Types";
 import * as LinkType from "visual/component/Link/types/Type";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { Store } from "visual/redux/store";
 import { customFileUrl } from "visual/utils/customFile";
 import {
   getPopulatedEntityValues,
@@ -84,19 +85,24 @@ const createAnchor = (data: {
   return `${uidPlaceholder}_${href}`;
 };
 
-export const getHref = (type: Type, _href: string): string => {
+export const getHref = (
+  type: Type,
+  _href: string,
+  store: Store,
+  renderContext: RenderType
+): string => {
   let href;
 
   switch (type) {
     case "anchor":
-      if (IS_EDITOR) {
+      if (isEditor(renderContext)) {
         href = `#${_href}`;
       } else {
         // while the orthodox way of getting data from the store is be using connect from react-redux
         // it could be problematic in this case because of potential problems caused be rerenders triggered by connect
         // because Link can hold in children heavy react trees (like columns)
         const pageDataNoRefs = pageDataNoRefsSelector(
-          getStore().getState()
+          store.getState()
         ) as MValue<Data>;
         const pageBlocks = pageDataNoRefs?.items || [];
         const blockByHref = pageBlocks.find(

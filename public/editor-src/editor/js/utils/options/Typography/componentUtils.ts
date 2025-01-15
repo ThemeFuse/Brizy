@@ -1,10 +1,14 @@
 import { flatten, partition } from "underscore";
 import { FontObject } from "visual/component/Controls/FontFamily/types";
 import { DividedFonts } from "visual/component/Controls/Typography/types/FontFamily";
+import { Store } from "visual/redux/store";
 import { DeviceMode } from "visual/types";
-import { fontTransform, getFontStyle } from "visual/utils/fonts";
+import {
+  fontTransform,
+  getDefaultFont,
+  getFontStyle
+} from "visual/utils/fonts";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
-import { DefaultFont } from "visual/utils/fonts/getFontById";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   defaultValue,
@@ -22,19 +26,21 @@ const hasFont = (fonts: FontsBlock, fontId: string): boolean => {
 };
 
 /**
- * @param device
- * @param fonts
- * @param defaultFont
- * @param {Typography} m
  * @return {Typography}
+ * @param data
  */
-export const getValue = (
-  device: DeviceMode,
-  fonts: FontsBlock,
-  defaultFont: DefaultFont,
-  m: Value
-): Value => {
-  const v = getFontStyle(m.fontStyle) || m;
+export const getValue = (data: {
+  device: DeviceMode;
+  fonts: FontsBlock;
+  store: Store;
+  value: Value;
+}): Value => {
+  const { device, value: m, fonts, store } = data;
+  const v =
+    getFontStyle({
+      id: m.fontStyle,
+      store
+    }) || m;
   const get = (key: string): MValue<Literal> =>
     key === "fontStyle" ? m.fontStyle : defaultValueValue({ key, v, device });
 
@@ -74,7 +80,7 @@ export const getValue = (
     };
   }
 
-  const { group, font } = defaultFont;
+  const { group, font } = getDefaultFont(store.getState());
   const getFont = fontTransform[group];
 
   const { id: family, variations } = getFont(font);

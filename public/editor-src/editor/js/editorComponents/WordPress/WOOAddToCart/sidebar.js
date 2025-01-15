@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Add to cart");
+export const title = () => t("Add to cart");
 
 const getHtml = () => {
   return `

@@ -20,40 +20,87 @@ import {
   styleElementWOOAttributesStyleBorder
 } from "visual/utils/style2";
 
-export function cssStyleElementWOOAdditionalTitleFontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "title" });
+export function cssStyleElementWOOAdditionalTitleFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "title",
+    renderContext
+  });
 }
 
-export function cssStyleElementWOOAdditionalTitleFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "title" });
+export function cssStyleElementWOOAdditionalTitleFontSize({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "title" });
 }
 
-export function cssStyleElementWOOAdditionalTitleLineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "title" });
+export function cssStyleElementWOOAdditionalTitleLineHeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "title" });
 }
 
-export function cssStyleElementWOOAdditionalTitleFontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "title" });
+export function cssStyleElementWOOAdditionalTitleFontWeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "title" });
 }
 
-export function cssStyleElementWOOAdditionalTitleLetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "title" });
+export function cssStyleElementWOOAdditionalTitleLetterSpacing({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "title"
+  });
 }
 
-export function cssStyleElementWOOAdditionalTitleFontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "title" });
+export function cssStyleElementWOOAdditionalTitleFontVariation({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementWOOAdditionalTitleTextTransform({
   v,
   state,
-  device
+  device,
+  store
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "title" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "title" });
 }
 
-export function cssStyleElementWOOAdditionalTitleColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "titleColor" });
+export function cssStyleElementWOOAdditionalTitleColor({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleColor({ v, device, state, store, prefix: "titleColor" });
 }
 
 export function cssStyleElementWOOAdditionalTitleSpacing({ v, device }) {
@@ -64,49 +111,97 @@ export function cssStyleElementWOOAdditionalTitleSpacing({ v, device }) {
 
 export function cssStyleElementWOOAttributesAttributesFontFamily({
   v,
-  device
+  device,
+  store,
+  renderContext
 }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "attributes" });
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "attributes",
+    renderContext
+  });
 }
 
-export function cssStyleElementWOOAttributesAttributesFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "attributes" });
+export function cssStyleElementWOOAttributesAttributesFontSize({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    prefix: "attributes"
+  });
 }
 
 export function cssStyleElementWOOAttributesAttributesLineHeight({
   v,
-  device
+  device,
+  store
 }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "attributes" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    prefix: "attributes"
+  });
 }
 
 export function cssStyleElementWOOAttributesAttributesFontWeight({
   v,
-  device
+  device,
+  store
 }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "attributes" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    prefix: "attributes"
+  });
 }
 
 export function cssStyleElementWOOAttributesAttributesLetterSpacing({
   v,
-  device
+  device,
+  store
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "attributes" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "attributes"
+  });
 }
 
 export function cssStyleElementWOOAttributesAttributesFontVariation({
   v,
-  device
+  device,
+  store
 }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "attributes" });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "attributes"
+  });
 }
 
 export function cssStyleElementWOOAttributesAttributesTextTransform({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "attributes" });
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    store,
+    prefix: "attributes"
+  });
 }
 
 export function cssStyleElementWOOAttributesSpacing({ v, device, state }) {

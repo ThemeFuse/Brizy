@@ -1,24 +1,25 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import Config from "visual/global/Config";
 import { isWp } from "visual/global/Config/types/configs/WP";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
 import type { V } from "./types";
 
-export const getItems: GetItems<V> = ({ v, device }) => {
+export const getItems: GetItems<V> = ({ v, device, component, editorMode }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+
+  const config = component.getGlobalConfig();
 
   const imageExtension = dvv("imageExtension");
   const imageSrc = dvv("imageSrc");
   const hoverName = readString(dvv("hoverName")) ?? "none";
 
-  const is_story = isStory(Config.getAll());
-  const is_wp = isWp(Config.getAll());
+  const _isStory = isStory(editorMode);
+  const is_wp = isWp(config);
 
   return [
     {
@@ -53,7 +54,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                       id: "blendMode",
                       label: t("Blending Mode"),
                       type: "select",
-                      disabled: is_story,
+                      disabled: _isStory,
                       position: 100,
                       choices: [
                         { title: t("Normal"), value: "normal" },
@@ -142,7 +143,7 @@ export const getItems: GetItems<V> = ({ v, device }) => {
                       id: "hover",
                       type: "animation",
                       devices: "desktop",
-                      disabled: is_story,
+                      disabled: _isStory,
                       config: {
                         types: hoverEffects,
                         replay: false,

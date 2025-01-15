@@ -1,9 +1,13 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getAdobeFonts } from "visual/utils/api";
 
-export const normalizeAdobeFonts = async (config: ConfigCommon, id: string) => {
+export const normalizeAdobeFonts = async (
+  api: ConfigCommon["api"],
+  id: string
+) => {
   try {
-    const fonts = await getAdobeFonts(config);
+    const fonts = await getAdobeFonts(api);
+
     return {
       adobe: {
         id,

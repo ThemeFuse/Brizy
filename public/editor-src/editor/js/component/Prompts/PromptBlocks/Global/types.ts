@@ -4,6 +4,7 @@ import { ReduxState } from "visual/redux/types";
 import { BlockMetaType } from "visual/types";
 import { BlockScreenshots } from "visual/utils/screenshots/types";
 import { NormalOrPopup } from "../types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export type PromptGlobalBlock<T extends BlockMetaType> = {
   fonts: FontsPayload;
@@ -17,6 +18,7 @@ export interface Props<T extends BlockMetaType> {
   onAddBlocks: (b: PromptGlobalBlock<T>) => void;
   onClose: VoidFunction;
   HeaderSlotLeft?: ComponentType;
+  config: ConfigCommon;
 }
 
 export interface StateToProps {

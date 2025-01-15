@@ -193,13 +193,6 @@ export {
   onChangeBorderColorFieldsSubMenu2
 } from "./onChangeElementMenu";
 
-// Typography ... ToDo.. must be changes with new typography and deleted in future
-export {
-  onChangeTypography,
-  onChangeTypographyTablet,
-  onChangeTypographyMobile
-} from "./typography";
-
 // ToDo.. must be deleted in future
 export {
   tabletSyncOnChange,

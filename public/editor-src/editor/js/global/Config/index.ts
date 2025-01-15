@@ -12,6 +12,10 @@ type KeysOfUnion<T> = T extends T ? keyof T : never;
 
 let _config = {} as Config;
 
+/**
+ * @deprecated - Use the React hook useConfig or the function getConfigById() instead.
+ *
+ */
 export default {
   init(config: Config): void {
     _config = config;

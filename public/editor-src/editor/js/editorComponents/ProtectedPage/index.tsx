@@ -9,7 +9,6 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
   Props as EProps
 } from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { encodeToString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
@@ -42,6 +41,7 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
   static get componentId(): "ProtectedPage" {
     return "ProtectedPage";
   }
+
   static defaultValue = defaultValue;
 
   handleResizerChange = (patch: Partial<ElementModel>): void => {
@@ -85,7 +85,17 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-protected",
       _className,
-      css(this.getComponentId(), this.getId(), styles(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styles({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const resizerRestrictions = {
       width: {
@@ -145,7 +155,17 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-protected",
       _className,
-      css(this.getComponentId(), this.getId(), styles(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styles({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const messages = encodeToString({

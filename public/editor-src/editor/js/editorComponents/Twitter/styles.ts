@@ -1,11 +1,9 @@
 import { renderStyles } from "visual/utils/cssStyle";
 import { Value } from "./index";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { DynamicStylesProps } from "visual/types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -17,5 +15,5 @@ export function style(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

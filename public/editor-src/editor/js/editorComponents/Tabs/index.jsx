@@ -4,9 +4,6 @@ import { noop } from "underscore";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import {
@@ -74,7 +71,7 @@ export default class Tabs extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -86,7 +83,7 @@ export default class Tabs extends EditorComponent {
 
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -104,12 +101,16 @@ export default class Tabs extends EditorComponent {
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classnames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
@@ -169,7 +170,17 @@ export default class Tabs extends EditorComponent {
       verticalMode === "on" ? "brz-tabs--vertical" : "brz-tabs--horizontal",
       `brz-tabs--${navStyle}`,
       `brz-tabs--${verticalAlign}`,
-      css(this.constructor.componentId, this.getId(), styleTabs(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleTabs({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const classNameNav = classnames(
       "brz-tabs__nav",

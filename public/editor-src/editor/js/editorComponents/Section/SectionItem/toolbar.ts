@@ -1,56 +1,53 @@
 import { KenEffect, Transition } from "visual/component/Background/type";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { isPopup } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { BgPosition, BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { read as readArr } from "visual/utils/reader/array";
 import { read as jsonRead } from "visual/utils/reader/json";
 import { read as readString } from "visual/utils/reader/string";
-import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { getMaxContainerSuffix, getMinContainerSuffix } from "../utils";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 export const getItems: GetItems = ({
   v,
   device,
   component,
   state,
-  context
+  context,
+  editorMode
 }) => {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const dvvState = (key: string, state: State): unknown =>
     defaultValueValue({ v, key, device, state });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.image
   });
 
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
   const customVideo = isPro(config)
     ? [
         {
@@ -98,7 +95,7 @@ export const getItems: GetItems = ({
     type: DCTypes.link
   });
 
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isPopup = isPopup(editorMode);
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
@@ -176,16 +173,22 @@ export const getItems: GetItems = ({
                   label: t("Position"),
                   disabled: !slideshowMedia,
                   choices: [
-                    { title: "Default", value: BgPosition.Default },
-                    { title: "Center Center", value: BgPosition.CenterCenter },
-                    { title: "Center Left", value: BgPosition.CenterLeft },
-                    { title: "Center Right", value: BgPosition.CenterRight },
-                    { title: "Top Center", value: BgPosition.TopCenter },
-                    { title: "Top Left", value: BgPosition.TopLeft },
-                    { title: "Top Right", value: BgPosition.TopRight },
-                    { title: "Bottom Center", value: BgPosition.BottomCenter },
-                    { title: "Bottom Left", value: BgPosition.BottomLeft },
-                    { title: "Bottom Right", value: BgPosition.BottomRight }
+                    { title: t("Default"), value: BgPosition.Default },
+                    { title: t("Center Left"), value: BgPosition.CenterLeft },
+                    {
+                      title: t("Center Center"),
+                      value: BgPosition.CenterCenter
+                    },
+                    { title: t("Center Right"), value: BgPosition.CenterRight },
+                    { title: t("Top Center"), value: BgPosition.TopCenter },
+                    { title: t("Top Left"), value: BgPosition.TopLeft },
+                    { title: t("Top Right"), value: BgPosition.TopRight },
+                    {
+                      title: t("Bottom Center"),
+                      value: BgPosition.BottomCenter
+                    },
+                    { title: t("Bottom Left"), value: BgPosition.BottomLeft },
+                    { title: t("Bottom Right"), value: BgPosition.BottomRight }
                   ]
                 },
                 {
@@ -326,11 +329,11 @@ export const getItems: GetItems = ({
                   devices: "desktop",
                   disabled: !slideshowMedia,
                   choices: [
-                    { title: "Fade", value: Transition.Fade },
-                    { title: "Slide Left", value: Transition.SlideLeft },
-                    { title: "Slide Right", value: Transition.SlideRight },
-                    { title: "Slide Up", value: Transition.SlideUp },
-                    { title: "Slide Down", value: Transition.SlideDown }
+                    { title: t("Fade"), value: Transition.Fade },
+                    { title: t("Slide Left"), value: Transition.SlideLeft },
+                    { title: t("Slide Right"), value: Transition.SlideRight },
+                    { title: t("Slide Up"), value: Transition.SlideUp },
+                    { title: t("Slide Down"), value: Transition.SlideDown }
                   ]
                 },
                 {
@@ -365,7 +368,7 @@ export const getItems: GetItems = ({
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes,
+                  choices: getMaskShapes(),
                   disabled: disableMaskTab
                 },
                 {
@@ -392,7 +395,7 @@ export const getItems: GetItems = ({
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -418,7 +421,7 @@ export const getItems: GetItems = ({
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -449,7 +452,7 @@ export const getItems: GetItems = ({
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }
@@ -465,7 +468,7 @@ export const getItems: GetItems = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },
@@ -586,7 +589,7 @@ export const getItems: GetItems = ({
                   v,
                   device,
                   state: "normal",
-                  disabled: IS_GLOBAL_POPUP
+                  disabled: _isPopup
                 })
               ]
             },
@@ -601,7 +604,7 @@ export const getItems: GetItems = ({
                   config: {
                     popupKey: `${component.getId()}_${linkPopup}`
                   },
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  disabled: inPopup || inPopup2 || _isPopup,
                   dependencies: popupToOldModel
                 }
               ]

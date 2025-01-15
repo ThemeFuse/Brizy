@@ -19,10 +19,11 @@ import Toolbar, {
 import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import {
+  ComponentsMeta,
+  ToolbarExtend
+} from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { CssId } from "visual/utils/models/cssId";
 import {
   defaultValueValue,
@@ -40,16 +41,13 @@ import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import {
-  ComponentsMeta,
-  ToolbarExtend
-} from "visual/editorComponents/EditorComponent/types";
 
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 type Item = {
   type: string;
   value: ElementModel;
 };
+
 interface Value extends ElementModel, CssId {
   items: Item[];
 }
@@ -80,7 +78,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
             )
         : null;
     const state = State.mRead(v.tabsState);
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const dvv = (key: string): MValue<Literal> =>
       defaultValueValue({ v, key, device, state });
     const isRelative = Position.getPosition(dvv) === "relative";
@@ -117,7 +115,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
                 }
               ),
               extendParentToolbar: this.handleExtendParentToolbar,
-              meta: {...this.props.meta, wrapperId: this.getId()},
+              meta: { ...this.props.meta, wrapperId: this.getId() },
               wrapperExtend: {
                 ref,
                 attributes: attr,
@@ -197,7 +195,17 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
     const _className = Str.mRead(cssClass || customClassName);
 
     return classNames(
-      css(this.getComponentId(), this.getId(), styleWrapper(v, vs, vd)),
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleWrapper({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      ),
       "brz-wrapper",
       _className
     );
@@ -206,10 +214,16 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
   getAnimationClassName = (v: Value, vs: Value, vd: Value): string => {
     return classNames(
       validateKeyByProperty(v, "animationName", "none") &&
-        css(
+        this.css(
           `${this.getComponentId()}-animation,`,
           `${this.getId()}-animation`,
-          styleAnimation(v, vs, vd)
+          styleAnimation({
+            v,
+            vs,
+            vd,
+            store: this.getReduxStore(),
+            renderContext: this.renderContext
+          })
         )
     );
   };
@@ -223,7 +237,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >
-        <SortableHandle>
+        <SortableHandle renderContext={this.renderContext}>
           <Button />
         </SortableHandle>
       </Toolbar>

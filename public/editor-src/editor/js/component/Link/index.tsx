@@ -1,20 +1,22 @@
 import classNames from "classnames";
 import React, {
   CSSProperties,
-  forwardRef,
   PropsWithChildren,
   ReactElement,
   Ref,
+  forwardRef,
   useEffect,
   useRef
 } from "react";
+import { useStore } from "react-redux";
+import { useRender } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRef } from "visual/utils/react";
 import { mRead } from "visual/utils/string/specs";
 import { StoryAnchorAttribute } from "./types/Slide";
-import { empty as defaultTarget, Target } from "./types/Target";
-import { empty as defaultType, Type } from "./types/Type";
+import { Target, empty as defaultTarget } from "./types/Target";
+import { Type, empty as defaultType } from "./types/Type";
 import { getAttr, getHref, getRel, getTarget } from "./utils";
 
 type Props = PropsWithChildren<
@@ -47,13 +49,15 @@ const _Link = (
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
+  const store = useStore();
   const innerRef = useRef<HTMLAnchorElement>();
+  const { renderType } = useRender();
   const _className = classNames(
     "brz-a",
     { "brz-anchor": type === "anchor" },
     className
   );
-  const _href = getHref(type, mRead(href));
+  const _href = getHref(type, mRead(href), store, renderType);
   const _target = getTarget(type, target);
   const attrs = getAttr(attr);
   const _rel = getRel(mRead(rel));

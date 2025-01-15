@@ -3,6 +3,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { SavedBlock as Control } from "visual/component/Controls/SavedBlock";
 import { ToastNotification } from "visual/component/Notifications";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
+import { useConfig } from "visual/global/hooks";
 import {
   extraFontStylesSelector,
   pageDataNoRefsSelector
@@ -30,6 +31,7 @@ export const SavedBlockOption: Component = ({
     pageBlocks: { items: pageItems },
     extraFontStyles
   } = useSelector(selector, shallowEqual);
+  const globalConfig = useConfig();
 
   const {
     blockId,
@@ -76,7 +78,8 @@ export const SavedBlockOption: Component = ({
           blockType,
           block,
           extraFontStyles,
-          blockId
+          blockId,
+          config: globalConfig
         });
       } catch (err: unknown) {
         if (isError(err)) {

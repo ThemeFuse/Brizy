@@ -1,23 +1,10 @@
 import { Base64 } from "js-base64";
+import { ConfigCommon, Mode } from "visual/global/Config/types/configs/ConfigCommon";
 import { V } from "visual/types";
-import {
-  DCPlaceholderObj,
-  placeholderName
-} from "visual/utils/dynamicContent/types";
+import { DCPlaceholderObj, placeholderName } from "visual/utils/dynamicContent/types";
 import { ECKeyDCInfo } from "../../types";
-import {
-  dcApiProxyTestFetcher,
-  dcKeyToKey,
-  hasDC,
-  isDCKey,
-  keyDCInfo,
-  keyToDCAttrKey,
-  keyToDCEntityIdKey,
-  keyToDCEntityTypeKey,
-  keyToDCFallback2Key,
-  keyToDCKey,
-  placeholderObjFromECKeyDCInfo
-} from "../utils";
+import { dcApiProxyTestFetcher, dcKeyToKey, hasDC, isDCKey, keyDCInfo, keyToDCAttrKey, keyToDCEntityIdKey, keyToDCEntityTypeKey, keyToDCFallback2Key, keyToDCKey, placeholderObjFromECKeyDCInfo } from "../utils";
+
 
 //#region keys
 
@@ -356,6 +343,37 @@ describe("Testing 'placeholderObjFromECKeyDCInfo' function", () => {
 
 //#endregion
 
+export const mockConfigCommon: ConfigCommon = {
+  branding: {
+    name: "brizy"
+  },
+  user: {
+    isGuest: false,
+    isAuthorized: false,
+    role: "admin"
+  },
+  editorVersion: "1",
+  mode: Mode.page,
+  taxonomies: [],
+  postTypesTaxs: [],
+  imageSizes: [],
+  project: {
+    id: "",
+    heartBeatInterval: 1,
+    status: {
+      locked: false,
+      lockedBy: false
+    }
+  },
+  server: {
+    maxUploadFileSize: 40
+  },
+  container: {
+    id: 545
+  },
+  onUpdate: () => {}
+};
+
 describe("Testing 'dcApiProxyTestFetcher' function", () => {
   const c = Base64.encode("22a");
 
@@ -478,7 +496,8 @@ describe("Testing 'dcApiProxyTestFetcher' function", () => {
     //#endregion
   ])("no. %#", async (placeholdersByPostId, expected) => {
     const r = await dcApiProxyTestFetcher({
-      placeholders: placeholdersByPostId
+      placeholders: placeholdersByPostId,
+      config: mockConfigCommon
     });
 
     expect(r).toStrictEqual(expected);

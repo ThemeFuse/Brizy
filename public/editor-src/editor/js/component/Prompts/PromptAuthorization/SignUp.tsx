@@ -9,7 +9,6 @@ import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { Spacer } from "visual/component/Controls/Spacer";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
-import Config, { isWp } from "visual/global/Config";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
@@ -114,8 +113,14 @@ class SignUp extends Component<SingUpProps, SignUpState> {
   };
 
   handleConnect = async (): Promise<void> => {
-    const { onSuccess, onClose, updateAuthorization, updateSyncAllowed } =
-      this.props;
+    const {
+      onSuccess,
+      onClose,
+      updateAuthorization,
+      updateSyncAllowed,
+      checkCompatibilityAfter,
+      config
+    } = this.props;
     const { email, password, confirmPassword, firstName, lastName } =
       this.state.formData;
 
@@ -155,13 +160,16 @@ class SignUp extends Component<SingUpProps, SignUpState> {
       firstName.trim() &&
       lastName.trim()
     ) {
-      signUp({
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword
-      })
+      signUp(
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmPassword
+        },
+        config
+      )
         .then((r: Response) => {
           if (!r.status || r.status >= 400) {
             throw r;
@@ -169,8 +177,8 @@ class SignUp extends Component<SingUpProps, SignUpState> {
             updateAuthorization("connected");
             setAuthorized("connected");
 
-            if (isWp(Config.getAll())) {
-              checkCompatibility().then((r) => {
+            if (checkCompatibilityAfter) {
+              checkCompatibility(config).then((r) => {
                 const { status, data } = r || {};
 
                 if (!status || status >= 400) {

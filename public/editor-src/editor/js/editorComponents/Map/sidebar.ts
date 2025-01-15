@@ -1,15 +1,14 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import type { GetItems } from "../EditorComponent/types";
 import type { Value } from "./type";
 
-export const getItems: GetItems<Value> = ({ v, device, state }) => {
-  const IS_STORY = isStory(Config.getAll());
+export const getItems: GetItems<Value> = ({ v, device, state, editorMode }) => {
+  const _isStory = isStory(editorMode);
 
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -71,7 +70,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       position: 100,
                       type: "slider",
@@ -153,7 +152,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                       id: "hover",
                       type: "animation",
                       devices: "desktop",
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       config: {
                         types: hoverEffects,
                         replay: false,

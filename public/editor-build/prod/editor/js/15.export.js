@@ -3,15 +3,15 @@ exports.id = 15;
 exports.ids = [15];
 exports.modules = {
 
-/***/ 6978:
+/***/ 7004:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Icon: () => (/* binding */ Icon)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1476);
-/* harmony import */ var _utils_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6979);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1508);
+/* harmony import */ var _utils_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7005);
 
 
 var Icon = function(param) {
@@ -27,15 +27,15 @@ var Icon = function(param) {
 
 /***/ }),
 
-/***/ 6979:
+/***/ 7005:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Icons: () => (/* binding */ Icons)
 /* harmony export */ });
-/* harmony import */ var _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2250);
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2206);
+/* harmony import */ var _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2282);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2238);
 function _define_property(obj, key, value) {
     if (key in obj) {
         Object.defineProperty(obj, key, {

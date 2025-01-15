@@ -1,6 +1,6 @@
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
-import { Value } from "./types/Value";
 import { onOffToBool } from "visual/utils/boolean";
+import { Value } from "./types/Value";
 
 export function valueToEciwdConfig(v: Value): EcwidConfig {
   return {
@@ -11,6 +11,6 @@ export function valueToEciwdConfig(v: Value): EcwidConfig {
     checkout_show_state_input: onOffToBool(v.inputDisplay),
     checkout_show_address_line_2: onOffToBool(v.addressDisplay),
     shopping_cart_products_collapsed_on_desktop: onOffToBool(v.collapseDesktop),
-    show_breadcrumbs: onOffToBool(v.breadcrumbsDisplay)
+    show_breadcrumbs: false
   };
 }

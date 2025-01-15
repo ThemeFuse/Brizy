@@ -1,18 +1,49 @@
 import { ImageType } from "visual/utils/image/types";
 import { V } from "../types";
 import {
-  ImageValue,
-  PredefinedCustomSize,
   calcWrapperOriginalSizes,
   calcWrapperPredefinedSizes,
   getImageSize,
-  getSizeType
+  getSizeType,
+  ImageValue,
+  PredefinedCustomSize
 } from "../utils";
 
 // init config before start the tests
 beforeEach(() => {
   require("visual/bootstraps/initConfig");
 });
+
+export const imageSizes = [
+  {
+    label: "Original",
+    name: "original"
+  },
+  {
+    width: 150,
+    height: 150,
+    label: "Thumbnail - 150 x 150",
+    name: "thumbnail"
+  },
+  {
+    width: 300,
+    height: 300,
+    label: "Medium - 300 x 300",
+    name: "medium"
+  },
+  {
+    width: 1024,
+    height: 1024,
+    label: "Large - 1024 x 1024",
+    name: "large"
+  },
+  {
+    width: 1536,
+    height: 1536,
+    label: "1536x1536 - 1536 x 1536",
+    name: "1536x1536"
+  }
+];
 
 describe("Testing 'Calc for image wrapper' functions", () => {
   test("calcWrapperPredefinedSizes", () => {
@@ -90,14 +121,14 @@ describe("Testing 'Calc for image wrapper' functions", () => {
 
 describe("Testing 'Getters Image' functions", () => {
   test("getImageSize", () => {
-    expect(getImageSize("custom")).toBe("custom");
-    expect(getImageSize("thumbnail")).toStrictEqual({
+    expect(getImageSize("custom", imageSizes)).toBe("custom");
+    expect(getImageSize("thumbnail", imageSizes)).toStrictEqual({
       width: 150,
       height: 150,
       widthSuffix: "px",
       heightSuffix: "px"
     });
-    expect(getImageSize("someType")).toBe("original");
+    expect(getImageSize("someType", imageSizes)).toBe("original");
   });
 
   test("getSizeType", () => {

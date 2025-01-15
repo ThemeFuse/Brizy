@@ -22,9 +22,10 @@ export function cssStyleElementProtectedPageAutocompleteColor({
 export function cssStyleElementProtectedPageInputWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "input" });
 }
 
 export function cssStyleElementProtectedPageInputSpacing({

@@ -2,13 +2,25 @@ import {
   styleTypographyFontFamily,
   styleTypographyFontSize,
   styleTypographyFontSizeSuffix,
-  styleTypographyLineHeight,
   styleTypographyFontWeight,
-  styleTypographyLetterSpacing
+  styleTypographyLetterSpacing,
+  styleTypographyLineHeight
 } from "visual/utils/style2";
 
-export function cssStyleTypographyFontFamily({ v, device, state }) {
-  const fontFamily = styleTypographyFontFamily({ v, device, state });
+export function cssStyleTypographyFontFamily({
+  v,
+  device,
+  state,
+  store,
+  renderContext
+}) {
+  const fontFamily = styleTypographyFontFamily({
+    v,
+    device,
+    state,
+    store,
+    renderContext
+  });
   return fontFamily === undefined ? "" : `font-family:${fontFamily};`;
 }
 

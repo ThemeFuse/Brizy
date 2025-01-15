@@ -21,34 +21,25 @@ import classnames from "classnames";
 import React from "react";
 import { connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import {
   globalBlocksSelector,
-  pageBlocksAssembledSelector,
+  pageBlocksDataAssembledSelector,
   pageSelector
 } from "visual/redux/selectors";
-import { canUseCondition } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
 import BlockThumbnail from "./BlockThumbnail";
 
-const DragHandle = ({ item }) => <BlockThumbnail blockData={item} />;
+const DragHandle = ({ item }) => {
+  const config = useConfig();
+  const { screenshot } = config.urls;
 
-const SortableItem = ({ item, globalBlocks, page, onRemove, id }) => {
-  if (item.type === "GlobalBlock") {
-    const { _id } = item.value;
+  return <BlockThumbnail blockData={item} screenshot={screenshot} />;
+};
 
-    try {
-      if (!canUseCondition(globalBlocks[_id], page)) {
-        return <div />;
-      }
-    } catch {
-      return <div />;
-    }
-  }
-
+const SortableItem = ({ item, onRemove, id }) => {
   const { active, attributes, listeners, transform, transition, setNodeRef } =
     useSortable({ id });
 
@@ -76,8 +67,6 @@ const SortableItem = ({ item, globalBlocks, page, onRemove, id }) => {
 const SortableList = ({
   isSorting,
   items,
-  globalBlocks,
-  page,
   onItemRemove,
   onSortEnd,
   onSortStart
@@ -97,8 +86,6 @@ const SortableList = ({
       <SortableItem
         key={item.value._id}
         item={item}
-        globalBlocks={globalBlocks}
-        page={page}
         id={id}
         onRemove={() => onItemRemove(i)}
       />
@@ -140,6 +127,12 @@ const SortableList = ({
 };
 
 class DrawerComponent extends React.Component {
+  state = {
+    blocks: [],
+    isSorting: false
+  };
+  content = React.createRef();
+
   static getDerivedStateFromProps(props, state) {
     // the 'optimistic' flag tells us to keep the state
     // to perform an optimistic update until we get new props.
@@ -159,13 +152,6 @@ class DrawerComponent extends React.Component {
 
     return null;
   }
-
-  state = {
-    blocks: [],
-    isSorting: false
-  };
-
-  content = React.createRef();
 
   handleSortStart = () => {
     this.setState({ isSorting: true });
@@ -229,18 +215,15 @@ class DrawerComponent extends React.Component {
 
   render() {
     const { blocks, isSorting } = this.state;
-    const { page, globalBlocks } = this.props;
 
     return (
       <SortableList
         helperClass="brz-ed-sidebar-block-item-helper"
         isSorting={isSorting}
         items={blocks}
-        globalBlocks={globalBlocks}
         distance={5}
         useDragHandle={true}
         innerRef={this.content}
-        page={page}
         contentWindow={this.getContentWindow}
         getContainer={this.getContainer}
         onSortStart={this.handleSortStart}
@@ -252,20 +235,17 @@ class DrawerComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  pageBlocks: pageBlocksAssembledSelector(state),
+  pageBlocks: pageBlocksDataAssembledSelector(state),
   globalBlocks: globalBlocksSelector(state),
   page: pageSelector(state)
 });
 
-const _config = Config.getAll();
-const helpIcon = _config?.ui?.help?.showIcon;
-
-export const BlocksSortable = {
+export const getBlocksSortable = ({ helpIcon, disabled }) => ({
   id: LeftSidebarOptionsIds.reorderBlock,
   type: "drawer",
   icon: "nc-reorder",
   withHelpIcon: helpIcon,
-  disabled: isPopup(Config.getAll()) || isStory(Config.getAll()),
+  disabled,
   drawerTitle: t("Reorder Blocks"),
   drawerComponent: connect(mapStateToProps)(DrawerComponent)
-};
+});

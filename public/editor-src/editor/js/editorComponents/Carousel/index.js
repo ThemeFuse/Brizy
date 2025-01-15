@@ -4,7 +4,6 @@ import { noop } from "underscore";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { percentageToPixels } from "visual/utils/meta";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
@@ -172,7 +171,17 @@ class Carousel extends EditorComponent {
     } = v;
     const carouselClassName = classNames(
       "brz-carousel",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const toolbarConfig = toolbarConfigFn(v, this.handleValueChange);

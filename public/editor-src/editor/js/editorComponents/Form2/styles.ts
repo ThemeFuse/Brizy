@@ -1,8 +1,10 @@
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
+import { DynamicStylesProps } from "visual/types";
 
-export function styleForm(v: Value, vs: Value, vd: Value): OutputStyle {
+
+export function styleForm(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: ["cssStyleSizeWidthStoryOnly"]
@@ -30,5 +32,5 @@ export function styleForm(v: Value, vs: Value, vd: Value): OutputStyle {
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

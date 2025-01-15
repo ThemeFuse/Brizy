@@ -13,15 +13,16 @@ import {
 } from "visual/component/Options/Type";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { useConfig, usePro } from "visual/global/hooks";
 import {
   filterByState,
   itemStates,
   stateIcon,
   stateTitle
 } from "visual/utils/options/StateMode/utils";
+import { FCP } from "visual/utils/react/types";
 import * as State from "visual/utils/stateMode";
 import { isT } from "visual/utils/value";
-import { FCP } from "visual/utils/react/types";
 
 export interface Props extends OptionProps<SimpleValue<State.State>> {
   options: ToolbarItemType[];
@@ -58,6 +59,10 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
     []
   );
 
+  const config = useConfig();
+
+  const pro = usePro();
+
   switch (statesList.length) {
     case 0:
       return null;
@@ -69,6 +74,8 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
           data={options.map((o) => filterByState(states[0], o)).filter(isT)}
           toolbar={toolbar}
           location={location}
+          isPro={pro}
+          upgradeToPro={config?.urls?.upgradeToPro}
         />
       );
     default:
@@ -93,6 +100,8 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
                 data={options.map((o) => filterByState(state, o)).filter(isT)}
                 toolbar={toolbar}
                 location={location}
+                isPro={pro}
+                upgradeToPro={config?.urls?.upgradeToPro}
               />
             </Tab>
           ))}

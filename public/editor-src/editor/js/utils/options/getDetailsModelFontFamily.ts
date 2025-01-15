@@ -1,4 +1,6 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { RenderType, isView } from "visual/providers/RenderProvider";
+import { Store } from "visual/redux/store";
 import { Fonts } from "visual/types";
 import {
   getDefaultFont,
@@ -16,6 +18,7 @@ interface Data {
   familyType: FontFamilyType;
   style?: string;
   fonts?: Fonts;
+  store: Store;
 }
 
 const familyCache = new Map();
@@ -34,33 +37,41 @@ export function clearFamilyCache() {
 // Stored all FontFamily to cache,
 // then used for Export to know all fontFamily used in Models.
 function storeFamilyToCache(data: Data) {
-  const { style, family, familyType } = data;
+  const { style, family, familyType, store } = data;
 
   if (!style) {
     familyCache.set(family, familyType);
     return;
   }
 
-  const fontStyle = getFontStyle(style);
+  const fontStyle = getFontStyle({
+    id: style,
+    store
+  });
 
   if (fontStyle) {
     const fontFamily = fontStyle["fontFamily"] || family;
     const fontFamilyType = fontStyle["fontFamilyType"] || familyType;
     familyCache.set(fontFamily, fontFamilyType);
   } else {
-    const defaultFont = getDefaultFont();
+    const defaultFont = getDefaultFont(store.getState());
     familyCache.set(defaultFont.font, defaultFont.group);
   }
 }
 
-export function getDetailsModelFontFamily(
-  data: Data,
-  config: ConfigCommon
-): MValue<string> {
-  const { family, familyType, style, fonts } = data;
+export function getDetailsModelFontFamily({
+  data,
+  config,
+  renderContext
+}: {
+  data: Data;
+  config: ConfigCommon;
+  renderContext: RenderType;
+}): MValue<string> {
+  const { family, familyType, style, fonts, store } = data;
 
-  if (IS_PREVIEW) {
-    storeFamilyToCache({ style, family, familyType });
+  if (isView(renderContext)) {
+    storeFamilyToCache(data);
   }
 
   if (style && style !== "custom") {
@@ -72,5 +83,5 @@ export function getDetailsModelFontFamily(
     })}, ${FONT_INITIAL})`;
   }
 
-  return getFontById({ type: familyType, family, fonts }).family;
+  return getFontById({ type: familyType, family, fonts, store }).family;
 }

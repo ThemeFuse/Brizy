@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
+import { omit } from "timm";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import ClickOutside from "visual/component/ClickOutside";
 import ContextMenu from "visual/component/ContextMenu";
@@ -15,14 +17,11 @@ import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey2 } from "visual/utils/onChange/device";
 import {
@@ -30,17 +29,17 @@ import {
   getDynamicContentChoices
 } from "visual/utils/options";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
-import { withMigrations } from "../tools/withMigrations";
 import { Wrapper } from "../tools/Wrapper";
+import { withMigrations } from "../tools/withMigrations";
+import Quill, { triggerCodes } from "./Quill";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
 import * as RichTextPatch from "./patch";
-import Quill, { triggerCodes } from "./Quill";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
-import { tagId, TypographyTags } from "./toolbar/utils";
+import { TypographyTags, tagId } from "./toolbar/utils";
 import {
   dcItemOptionParser,
   getFilteredPopups,
@@ -56,15 +55,10 @@ import {
 import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
-import { omit } from "timm";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
 class RichText extends EditorComponent {
-  static get componentId() {
-    return "RichText";
-  }
-
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
   prepopulation = null;
@@ -78,12 +72,16 @@ class RichText extends EditorComponent {
   quillRef = React.createRef();
   toolbarRef = React.createRef();
   toolbarOpen = false;
-  // Can be enabled by Config
-
   renderDC =
     !(
-      typeof Config.getAll().dynamicContent?.getPlaceholderData === "function"
-    ) || IS_PREVIEW;
+      typeof this.getGlobalConfig().dynamicContent?.getPlaceholderData ===
+      "function"
+    ) || isView(this.renderContext);
+  // Can be enabled by Config
+
+  static get componentId() {
+    return "RichText";
+  }
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -106,7 +104,11 @@ class RichText extends EditorComponent {
         const placeholder = element.getAttribute("data-image_population");
 
         if (placeholder) {
-          const newUrl = await getImagePopulation(placeholder, itemId);
+          const newUrl = await getImagePopulation(
+            placeholder,
+            itemId,
+            this.getGlobalConfig()
+          );
           if (newUrl) {
             element.classList.add("brz-population-mask__style");
             element.style.backgroundImage = `url("${newUrl}")`;
@@ -168,8 +170,7 @@ class RichText extends EditorComponent {
     const newState = {
       formats
     };
-    const config = Config.getAll();
-    const dynamicContentGroups = config.dynamicContent?.groups;
+    const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
 
     if (
       !Array.isArray(dynamicContentGroups) &&
@@ -211,8 +212,7 @@ class RichText extends EditorComponent {
   handleActiveClick = (event, formats) => {
     this.toolbarRef.current.handleNodeClick(event);
 
-    const config = Config.getAll();
-    const dynamicContentGroups = config.dynamicContent?.groups;
+    const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
 
     if (
       !Array.isArray(dynamicContentGroups) &&
@@ -329,16 +329,20 @@ class RichText extends EditorComponent {
   handleKeyDown = (e, { keyName }) => {
     e.preventDefault();
 
+    const config = this.getGlobalConfig();
+
     const handlePaste = () => {
-      const innerElement = getInnerElement();
-      const device = deviceModeSelector(this.getReduxState());
+      const state = this.getReduxState();
+      const innerElement = getInnerElement(state, config.menuData);
+      const device = deviceModeSelector(state);
       if (!innerElement) return;
 
       handlePasteStyles({
         innerElement,
         onChange: this.handleChange,
         v: this.getValue(),
-        device
+        device,
+        config
       });
     };
 
@@ -357,7 +361,11 @@ class RichText extends EditorComponent {
       case "ctrl+\\":
       case "cmd+\\":
       case "right_cmd+\\":
-        handleClearFormatting(this.handleChange);
+        handleClearFormatting({
+          onChange: this.handleChange,
+          editorMode: this.props.editorMode,
+          config
+        });
         return;
       default:
         break;
@@ -368,23 +376,39 @@ class RichText extends EditorComponent {
   getClassName(v, vs, vd) {
     const cssDCStyle =
       v.textPopulation &&
-      css(
+      this.css(
         "dc" + this.getComponentId(),
         "dc" + this.getId(),
-        styleDC(v, vs, vd)
+        styleDC({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       );
 
     return classNames(
       "brz-rich-text",
       {
-        notranslate: IS_EDITOR,
+        notranslate: isEditor(this.renderContext),
         "brz-rich-text__custom": !v.textPopulation,
         "brz-rich-text__population": v.textPopulation,
         "brz-rich-text__population-cloud":
-          v.textPopulation && isCloud(Config.getAll())
+          v.textPopulation && isCloud(this.getGlobalConfig())
       },
       v.className,
-      css(this.getComponentId(), this.getId(), style(v, vs, vd)),
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      ),
       cssDCStyle
     );
   }
@@ -579,9 +603,7 @@ class RichText extends EditorComponent {
 
       if (itemData.type === "GlobalBlock") {
         // TODO: some kind of error handling
-        itemData = blocksDataSelector(getStore().getState())[
-          itemData.value._id
-        ];
+        itemData = blocksDataSelector(this.getReduxState())[itemData.value._id];
       }
 
       return itemData ? [...acc, itemData] : acc;
@@ -605,7 +627,7 @@ class RichText extends EditorComponent {
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
           const globalBlockId = itemData.value._id;
-          const blockData = blocksDataSelector(getStore().getState())[
+          const blockData = blocksDataSelector(this.getReduxState())[
             globalBlockId
           ];
 
@@ -619,7 +641,7 @@ class RichText extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(IS_EDITOR && {
+          ...(isEditor(this.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -640,7 +662,7 @@ class RichText extends EditorComponent {
     );
 
     if (this._dc?.lastCache?.text || this.renderDC) {
-      if (IS_PREVIEW) {
+      if (isView(this.renderContext)) {
         content = <span>{text}</span>;
       } else {
         content = (
@@ -682,13 +704,14 @@ class RichText extends EditorComponent {
       "delete",
       "clearFormatting"
     ];
-    const config = Config.getAll();
 
     const newV = {
       ...v,
       selectedValue,
       popups: this.tmpPopups || v.popups
     };
+
+    const config = this.getGlobalConfig();
 
     const toolbarConfig = toolbarConfigFn(newV, this.handleChange);
 
@@ -707,6 +730,8 @@ class RichText extends EditorComponent {
     let content = (
       <Quill
         ref={this.quillRef}
+        store={this.getReduxStore()}
+        sheet={this.context.sheet}
         componentId={this.getId()}
         value={v.text}
         selectedValue={this.getSelectedValue}
@@ -714,7 +739,12 @@ class RichText extends EditorComponent {
         onClick={this.handleActiveClick}
         onTextChange={this.handleTextChange}
         isToolbarOpen={this.getToolbarOpen}
-        initDelay={inPopup || inPopup2 || isPopup(config) ? 1000 : 0}
+        initDelay={
+          inPopup || inPopup2 || isPopup(this.props.editorMode) ? 1000 : 0
+        }
+        renderContext={this.renderContext}
+        editorMode={this.props.editorMode}
+        dcGroups={config?.dynamicContent?.groups}
       />
     );
     let toolbarOptions = {
@@ -753,7 +783,7 @@ class RichText extends EditorComponent {
                 })}
               >
                 <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-                  {isStory(config) ? (
+                  {isStory(this.props.editorMode) ? (
                     <BoxResizer
                       points={resizerPoints}
                       meta={{
@@ -782,7 +812,16 @@ class RichText extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    let content = <Quill value={v.text} />;
+    let content = (
+      <Quill
+        store={this.getReduxStore()}
+        sheet={this.context.sheet}
+        value={v.text}
+        renderContext={this.renderContext}
+        editorMode={this.props.editorMode}
+        dcGroups={this.getGlobalConfig()?.dynamicContent?.groups}
+      />
+    );
 
     if (v.textPopulation) {
       content = this.renderLink(v);

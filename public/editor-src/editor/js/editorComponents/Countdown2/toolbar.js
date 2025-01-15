@@ -1,22 +1,19 @@
 import _ from "underscore";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
-export function getItems({ v, device, state, context }) {
+export function getItems({ v, device, state, context, editorMode }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const { hex: numberColor } = getOptionColorHexByPalette(
+  const numberColor = getColor(
+    dvv("numberColorPalette"),
     dvv("numberColorHex"),
-    dvv("numberColorPalette")
+    dvv("numberColorOpacity")
   );
   const noBorder =
     dvv("bgColorOpacity") === 0 && dvv("borderColorOpacity") === 0;
@@ -33,7 +30,7 @@ export function getItems({ v, device, state, context }) {
     type: DCTypes.link
   });
 
-  const IS_STORY = isStory(Config.getAll());
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -291,7 +288,7 @@ export function getItems({ v, device, state, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(numberColor, dvv("numberColorOpacity"))
+            backgroundColor: numberColor
           }
         }
       },
@@ -453,7 +450,7 @@ export function getItems({ v, device, state, context }) {
           id: "width",
           label: t("Width"),
           type: "slider",
-          disabled: IS_STORY,
+          disabled: _isStory,
           config: {
             min: 1,
             max: dvv("widthSuffix") === "px" ? 1000 : 100,
@@ -467,7 +464,7 @@ export function getItems({ v, device, state, context }) {
           id: "height",
           label: t("Height"),
           type: "slider",
-          disabled: noBorder && !IS_STORY,
+          disabled: noBorder && !_isStory,
           config: {
             min: dvv("heightSuffix") === "%" ? 5 : 50,
             max: 300,

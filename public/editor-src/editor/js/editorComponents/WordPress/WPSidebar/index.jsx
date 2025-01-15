@@ -5,7 +5,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { getSidebars } from "visual/utils/api";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -25,7 +24,7 @@ class WPSidebar extends EditorComponent {
   };
 
   componentDidMount() {
-    getSidebars().then((sidebars) => {
+    getSidebars(this.getGlobalConfig()).then((sidebars) => {
       this.setState({ sidebars });
 
       const v = this.getValue();
@@ -44,10 +43,16 @@ class WPSidebar extends EditorComponent {
 
     const classNameWP = classnames(
       "brz-wp__sidebar",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       className
     );

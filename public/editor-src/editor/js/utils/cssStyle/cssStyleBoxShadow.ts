@@ -47,12 +47,14 @@ export function cssStyleBoxShadow({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const shadow = cssStyleBoxShadowSuffixForGlamour({
     v,
     device,
     state,
+    store,
     prefix
   });
 
@@ -76,21 +78,22 @@ export function cssStyleBoxShadowSection({
   return type === "inset"
     ? `box-shadow:${horizontal}px ${vertical}px ${blur}px ${spread}px ${color} inset; display:block;`
     : type === "" ||
-      type === "off" ||
-      (horizontal === 0 && vertical === 0 && blur === 0 && spread === 0)
-    ? "box-shadow:none;"
-    : "";
+        type === "off" ||
+        (horizontal === 0 && vertical === 0 && blur === 0 && spread === 0)
+      ? "box-shadow:none;"
+      : "";
 }
 
 export function cssStyleBoxShadowSectionOutset({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const type = styleBoxShadowType({ v, device, state, prefix });
 
   return type && type !== "inset" && type !== "none"
-    ? cssStyleBoxShadow({ v, device, state })
+    ? cssStyleBoxShadow({ v, device, store, state })
     : "";
 }

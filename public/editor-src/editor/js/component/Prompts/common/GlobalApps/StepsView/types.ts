@@ -9,6 +9,7 @@ export interface RadioItemProps {
   choices: Choice[];
   name: string;
   onChange: (value: string, name: string) => void;
+  isEditor: boolean;
 }
 
 interface DataField {

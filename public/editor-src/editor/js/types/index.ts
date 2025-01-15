@@ -1,8 +1,10 @@
 import { ElementModel } from "editor/js/component/Elements/Types";
 import { Layout } from "visual/component/Prompts/common/PromptPage/types";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
+import { RenderType } from "visual/providers/RenderProvider";
+import { Store } from "visual/redux/store";
 import { NewType } from "visual/types/NewType";
 import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { checkValue2 } from "visual/utils/checkValue";
@@ -18,7 +20,6 @@ import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { pass } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";
 import { Dictionary } from "./utils";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export type V = Dictionary<unknown>;
 
@@ -201,6 +202,7 @@ export interface Project {
 
 export interface DataCommon {
   id: string;
+  matchingItemId?: string;
   data: {
     items: Block[];
     [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -262,8 +264,8 @@ export interface EcwidCategoryPage extends DataWithTitle {
 }
 
 // @ts-expect-error: is declared but its value is never read.
-export const isWPPage = (page: Page): page is PageWP => {
-  return isWp(Config.getAll());
+export const isWPPage = (page: Page, config: ConfigCommon): page is PageWP => {
+  return isWp(config);
 };
 
 export type Page =
@@ -504,6 +506,14 @@ export const isExtraFontStyle = (item: unknown): item is ExtraFontStyle =>
 
 export type FontStyles = FontStyle | ExtraFontStyle;
 
+export interface DynamicStylesProps<V> {
+  v: V;
+  vs: V;
+  vd: V;
+  store: Store;
+  renderContext: RenderType;
+}
+
 // Shortcodes
 
 export type Shortcode = {
@@ -525,6 +535,13 @@ export type Shortcode = {
 export type Shortcodes = {
   [k: string]: Shortcode[];
 };
+
+export interface ShortcodeComponent {
+  tabId: string;
+  shortcodes: Shortcodes;
+}
+
+export type ShortcodeComponents = ShortcodeComponent[];
 
 export type UserRole = string;
 

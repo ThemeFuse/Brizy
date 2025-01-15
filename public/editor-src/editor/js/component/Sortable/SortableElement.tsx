@@ -1,4 +1,5 @@
 import React from "react";
+import { isView, useRender } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 export interface SortableElementDataAttributes {
@@ -23,6 +24,7 @@ export const SortableElement: (props: Props) => React.ReactElement = ({
   subtype,
   useHandle
 }) => {
+  const { renderType } = useRender();
   const sortableUseHandleDataFromAttr = useHandle
     ? makeDataAttr({
         name: "sortable-use-handle",
@@ -30,7 +32,7 @@ export const SortableElement: (props: Props) => React.ReactElement = ({
       })
     : {};
 
-  const dataProps: SortableElementDataAttributes = IS_PREVIEW
+  const dataProps: SortableElementDataAttributes = isView(renderType)
     ? {}
     : {
         ...makeDataAttr({

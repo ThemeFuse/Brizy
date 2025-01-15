@@ -24,6 +24,7 @@ import { storeWasChanged } from "./storeWasChanged";
 import { styles } from "./styles";
 import { syncAllowed } from "./syncAllowed";
 import { ui } from "./ui";
+import { configId } from "./config";
 
 export default historyReducerEnhancer(
   combineReducersCustom(
@@ -45,7 +46,8 @@ export default historyReducerEnhancer(
       currentStyle,
       ui,
       storeWasChanged,
-      extraStyles
+      extraStyles,
+      configId
     },
     {
       screenshots

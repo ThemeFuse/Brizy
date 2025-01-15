@@ -1,7 +1,8 @@
 import React, { MouseEvent, useCallback, useRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
-import Config from "visual/global/Config";
+import type { Config } from "visual/global/Config/types";
+import { useConfig } from "visual/global/hooks";
 import { t } from "visual/utils/i18n";
 import { BottomPanelItem } from "./Item";
 
@@ -15,7 +16,7 @@ const hotKeysForPreview = [
 ];
 
 export function PreviewButton(): JSX.Element {
-  const config = Config.getAll();
+  const config = useConfig() as Config;
   const previewWindow = useRef<Window | null>(null);
   const refAnchor = useRef<HTMLAnchorElement>(null);
   const previewUrl = config.urls.pagePreview;

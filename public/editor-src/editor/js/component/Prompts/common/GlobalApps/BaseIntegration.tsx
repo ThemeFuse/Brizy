@@ -68,7 +68,8 @@ class BaseIntegration<
       onConnectApp: this.handleConnectApp,
       onDisconnectApp: this.handleDisconnectApp,
       onChangeProgress: this.handleProgress,
-      onError: this.handleError
+      onError: this.handleError,
+      config: this.props.config
     };
   }
 

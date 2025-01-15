@@ -5,8 +5,8 @@ import React, {
   useRef,
   useState
 } from "react";
-import { createPortal } from "react-dom";
 import { Menu } from "react-contexify";
+import { createPortal } from "react-dom";
 import Items from "./Items";
 
 interface Meta {
@@ -46,6 +46,10 @@ export const Dropdown = (props: Props): ReactNode => {
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
+
+  if (typeof window === "undefined") {
+    return;
+  }
 
   return createPortal(
     <Menu

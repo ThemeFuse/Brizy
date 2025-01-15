@@ -1,6 +1,7 @@
 import { DangerouslySetHtmlContent } from "@brizy/component/src/common/components/DangerouslySetHtmlContent";
 import classnames from "classnames";
 import React from "react";
+import { isView } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
@@ -69,6 +70,7 @@ class Tab extends EditorComponent {
     const labelClassName = classnames("brz-tabs__nav--mobile", {
       "brz-tabs__nav--mobile--active": active
     });
+    const IS_VIEW = isView(this.renderContext);
 
     return (
       <div className={className}>
@@ -85,16 +87,14 @@ class Tab extends EditorComponent {
               <DangerouslySetHtmlContent
                 tagName={"span"}
                 html={labelText}
-                ssr={IS_PREVIEW}
+                ssr={IS_VIEW}
               />
             </div>
           </Toolbar>
         </div>
         <Animation
           iterationCount={
-            IS_PREVIEW && (meta.sectionPopup || meta.sectionPopup2)
-              ? Infinity
-              : 1
+            IS_VIEW && (meta.sectionPopup || meta.sectionPopup2) ? Infinity : 1
           }
           component={"div"}
           componentProps={{

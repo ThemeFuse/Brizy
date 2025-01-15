@@ -1,7 +1,6 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
@@ -9,9 +8,10 @@ export function getItems({ v, device, state }) {
 
   const boxedLayout = dvv("layout") === "boxed";
 
-  const { hex: boxShadowColorHex } = getOptionColorHexByPalette(
+  const boxShadowColor = getColor(
+    dvv("boxShadowColorPalette"),
     dvv("boxShadowColorHex"),
-    dvv("boxShadowColorPalette")
+    dvv("boxShadowColorOpacity")
   );
 
   return [
@@ -148,10 +148,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              boxShadowColorHex,
-              dvv("boxShadowColorOpacity")
-            )
+            backgroundColor: boxShadowColor
           }
         }
       },

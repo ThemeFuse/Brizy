@@ -1,14 +1,6 @@
-import { produce } from "immer";
 import _ from "underscore";
 import { ElementModelType } from "visual/component/Elements/Types";
-import Config from "visual/global/Config";
-import {
-  globalBlocksAssembledSelector,
-  screenshotsSelector
-} from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { Screenshot } from "visual/types";
-import { read as readStr } from "visual/utils/reader/string";
 import {
   isAbsoluteUrl,
   objectToQueryString,
@@ -20,21 +12,24 @@ interface Thumbnail extends ElementModelType {
   meta?: Partial<Screenshot>;
 }
 
-interface Options {
-  searchScreenshotInStoreFirst?: boolean;
-}
-
 interface Data {
   url: string;
   width: number;
   height: number;
 }
 
+type WithScreenshotUrl<T> = T & {
+  screenshotUrl: string;
+};
+
 export const blockThumbnailData = (
   block: Thumbnail,
-  options: Options = {}
+  screenshot?: string
 ): Data => {
-  const screenshotData = blockScreenshotData(block, options);
+  const screenshotData = screenshot
+    ? blockScreenshotData(block, screenshot)
+    : null;
+
   let data;
 
   // 1. see if it has a screenshot
@@ -55,31 +50,10 @@ export const blockThumbnailData = (
 const getScreenshots = (block: Thumbnail): Partial<Screenshot> =>
   block.meta || (block.value as Partial<Screenshot>) || {};
 
-function blockScreenshotData(block: Thumbnail, options: Options): Data | null {
-  const blockId = readStr(block.value?._id);
-
-  if (blockId && block.type === "GlobalBlock") {
-    const globalBlock = globalBlocksAssembledSelector(getStore().getState())[
-      blockId
-    ];
-
-    if (globalBlock) {
-      block = {
-        ...globalBlock.data,
-        meta: block.meta
-      };
-    }
-  }
-
-  if (blockId && options.searchScreenshotInStoreFirst === true) {
-    const screenshots = screenshotsSelector(getStore().getState());
-
-    if (screenshots[blockId]) {
-      block = produce(block, (draft) => {
-        draft.meta = { ...draft.meta, ...screenshots[blockId] };
-      });
-    }
-  }
+function blockScreenshotData(
+  block: Thumbnail,
+  screenshotUrl: string
+): Data | null {
   const { _thumbnailSrc, _thumbnailWidth, _thumbnailHeight } =
     getScreenshots(block);
 
@@ -93,7 +67,8 @@ function blockScreenshotData(block: Thumbnail, options: Options): Data | null {
     }
 
     const getUrl = _.compose(
-      TARGET === "WP" ? blockScreenshotUrlWP : blockScreenshotUrlCloud,
+      (block: WithScreenshotUrl<Screenshot>) =>
+        blockScreenshotUrl({ ...block, screenshotUrl }),
       getScreenshots
     );
 
@@ -107,32 +82,18 @@ function blockScreenshotData(block: Thumbnail, options: Options): Data | null {
   return null;
 }
 
-function blockScreenshotUrlCloud({
+function blockScreenshotUrl({
   _thumbnailSrc,
-  _thumbnailTime
-}: Screenshot): string {
-  const screenshotUrl = Config.get("urls").screenshot;
+  _thumbnailTime,
+  screenshotUrl
+}: WithScreenshotUrl<Screenshot>): string {
   const qs = objectToQueryString({
     t: _thumbnailTime || Date.now()
   });
 
-  return `${screenshotUrl}/${_thumbnailSrc}?${qs}`;
-}
+  const blockUrl = `${screenshotUrl}${_thumbnailSrc}`;
 
-function blockScreenshotUrlWP({
-  _thumbnailSrc,
-  _thumbnailTime
-}: Screenshot): string {
-  const siteUrl = Config.get("urls").site;
-  const page = Config.get("wp").page;
-  const prefix = Config.get("prefix") ?? "brizy";
-  const qs = objectToQueryString({
-    [`${prefix}_post`]: page,
-    [`${prefix}_block_screenshot`]: _thumbnailSrc,
-    t: _thumbnailTime || Date.now()
-  });
-
-  return urlContainsQueryString(siteUrl)
-    ? `${siteUrl}&${qs}`
-    : `${siteUrl}?${qs}`;
+  return urlContainsQueryString(blockUrl)
+    ? `${blockUrl}&${qs}`
+    : `${blockUrl}?${qs}`;
 }

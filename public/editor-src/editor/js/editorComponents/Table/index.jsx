@@ -3,7 +3,6 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { NORMAL } from "visual/utils/stateMode";
 import defaultValue from "./defaultValue.json";
 import { calculateMeta } from "./meta";
@@ -19,6 +18,7 @@ class Table extends EditorComponent {
   static get componentId() {
     return "Table";
   }
+
   static defaultProps = {
     meta: {}
   };
@@ -64,7 +64,7 @@ class Table extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -78,7 +78,17 @@ class Table extends EditorComponent {
       { "brz-table__disabled-tableHead": tableHead === "off" },
       { "brz-table__disabled-tableAside": tableAside === "off" },
       { "brz-table__custom--width": widthType === "custom" },
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const headProps = this.makeSubcomponentProps({
       bindWithKey: "items",

@@ -12,8 +12,6 @@
 
     "addressDisplay": "off",
 
-    "breadcrumbsDisplay": "off",
-
     "collapseDesktop": "on"
   },
 
@@ -22,7 +20,6 @@
       "titleTypographyFontFamily": "lato",
       "title2TypographyFontFamily": "lato",
       "buttonTypographyFontFamily": "lato",
-      "breadcrumbsTypographyFontFamily": "lato",
       "productNameTypographyFontFamily": "lato",
       "productSizeTypographyFontFamily": "lato",
       "paymentTypographyFontFamily": "lato",
@@ -95,36 +92,6 @@
 
     "titleSpacing": 10,
     "titleSpacingSuffix": "px",
-
-    "breadcrumbsTypographyFontStyle": "",
-    "breadcrumbsTypographyFontFamilyType": "google",
-    "breadcrumbsTypographyFontSize": 12,
-    "breadcrumbsTypographyFontSizeSuffix": "px",
-    "breadcrumbsTypographyFontWeight": 400,
-    "breadcrumbsTypographyLetterSpacing": 1.3,
-    "breadcrumbsTypographyLineHeight": 1,
-    "breadcrumbsTypographyVariableFontWeight": 400,
-    "breadcrumbsTypographyFontWidth": 100,
-    "breadcrumbsTypographyFontSoftness": 0,
-    "breadcrumbsTypographyBold": false,
-    "breadcrumbsTypographyItalic": false,
-    "breadcrumbsTypographyUnderline": false,
-    "breadcrumbsTypographyStrike": false,
-    "breadcrumbsTypographyUppercase": false,
-    "breadcrumbsTypographyLowercase": false,
-
-    "breadcrumbsColorHex": "#000000",
-    "breadcrumbsColorOpacity": 1,
-    "breadcrumbsColorPalette": "color7",
-
-    "hoverBreadcrumbsColorHex": "#0da1cd",
-    "hoverBreadcrumbsColorOpacity": 1,
-    "hoverBreadcrumbsColorPalette": "",
-
-    "breadcrumbsHorizontalAlign": "left",
-
-    "breadcrumbsSpacing": 10,
-    "breadcrumbsSpacingSuffix": "px",
 
     "subtitleColorHex": "#000000",
     "subtitleColorOpacity": 0.8,

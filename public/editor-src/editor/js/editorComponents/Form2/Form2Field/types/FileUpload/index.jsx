@@ -2,7 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import { t } from "visual/utils/i18n";
 import { encodeToString } from "visual/utils/string";
-import { makeDataAttr } from "../../../../../utils/i18n/attribute";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import TextField from "../common/TextField";
 import Upload from "./Upload";
 
@@ -43,7 +43,7 @@ export default class FileUpload extends TextField {
 
   renderForEdit(v) {
     const { labelType, attr, showPlaceholder } = v;
-    const { fileText } = this.props;
+    const { fileText, renderContext } = this.props;
 
     return labelType === "outside" ? (
       <Upload
@@ -54,6 +54,7 @@ export default class FileUpload extends TextField {
         onChange={this.handleValueChange}
         onChangeText={this.handleTextChange}
         showPlaceholder={showPlaceholder}
+        renderContext={renderContext}
       />
     ) : (
       <Upload
@@ -63,12 +64,13 @@ export default class FileUpload extends TextField {
         onChange={this.handleValueChange}
         onChangeText={this.handleTextChange}
         showPlaceholder={showPlaceholder}
+        renderContext={renderContext}
       />
     );
   }
 
   renderForView(v) {
-    const { fileText } = this.props;
+    const { fileText, renderContext } = this.props;
 
     return (
       <Upload
@@ -76,6 +78,7 @@ export default class FileUpload extends TextField {
         fileText={fileText}
         multiple={false}
         className={this.getClassName(v)}
+        renderContext={renderContext}
       />
     );
   }

@@ -1,16 +1,17 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { Value, Props } from "./types";
+import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
-  const dvv = (key: string): unknown =>
+  const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
-  const { hex: selectBgColorHex } = getOptionColorHexByPalette(
+
+  const selectBgColor = getColor(
+    dvv("selectColorPalette"),
     dvv("selectColorHex"),
-    dvv("selectColorPalette")
+    dvv("selectColorOpacity")
   );
 
   return [
@@ -22,10 +23,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              selectBgColorHex,
-              dvv("selectBgColorOpacity")
-            )
+            backgroundColor: selectBgColor
           }
         }
       },

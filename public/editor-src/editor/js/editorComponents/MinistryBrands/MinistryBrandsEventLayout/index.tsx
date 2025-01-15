@@ -3,11 +3,10 @@ import React, { ReactNode } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import type { Model } from "visual/editorComponents/EditorComponent/types";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
@@ -19,7 +18,7 @@ import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
 import * as toolbarTitle from "../toolbarTitle";
-import { EkklesiaMessages } from "../utils/helpers";
+import { getEkklesiaMessages } from "../utils/helpers";
 import * as toolbarExtendDayEvents from "./calendarToolbars/toolbarExtendDayEvents";
 import * as toolbarExtendCalendarDays from "./calendarToolbars/toolbarExtendDays";
 import * as toolbarExtendCalendarHeading from "./calendarToolbars/toolbarExtendHeading";
@@ -38,7 +37,6 @@ import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarImage from "./toolbarImage";
 import type { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
-import type { Model } from "visual/editorComponents/EditorComponent/types";
 
 export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsEventLayout" {
@@ -68,7 +66,7 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
       addCategoryFilterParent2,
       addCategoryFilterParent3
     } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [
@@ -89,7 +87,8 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["event_layout"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["event_layout"]);
       this.patchValue(changedKeys);
     }
   }
@@ -111,7 +110,17 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const className = classnames(
       "brz-eventLayout__wrapper",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

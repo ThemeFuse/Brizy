@@ -9,15 +9,11 @@ import {
   wInTabletPage
 } from "visual/config/columns";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import {
-  makePlaceholder,
   makeEndPlaceholder,
+  makePlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -31,15 +27,13 @@ import { handleLinkChange } from "visual/utils/patch/Link";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import { Literal } from "visual/utils/types/Literal";
-import defaultValue from "./defaultValue.json";
 import SectionItems from "./Items";
+import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleSection } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import { Meta, Patch, Props, Value } from "./type";
 import { getV } from "./utils";
-
-const config = Config.getAll();
 
 export default class Section extends EditorComponent<Value, Props> {
   static get componentId(): ElementTypes.Section {
@@ -109,7 +103,7 @@ export default class Section extends EditorComponent<Value, Props> {
 
   dvv = (key: string): MValue<Literal> => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -127,17 +121,22 @@ export default class Section extends EditorComponent<Value, Props> {
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classnames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
   renderItems(v: Value): JSX.Element {
-    const device = deviceModeSelector(this.getReduxState());
+    const device = this.getDeviceMode();
+    // const store = this.getReduxStore();
     const margin = fromElementModel(getV(v, device));
 
     const {
@@ -246,10 +245,16 @@ export default class Section extends EditorComponent<Value, Props> {
       "brz-section",
       className,
       cssClass || customClassName,
-      css(
-        `${this.getComponentId()}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -276,6 +281,8 @@ export default class Section extends EditorComponent<Value, Props> {
 
   renderLangOrMemberOrAll(content: JSX.Element, v: Value): JSX.Element {
     const { membershipRoles, translationsLangs, membership, translations } = v;
+
+    const config = this.getGlobalConfig();
 
     const onlyCloud = !(isCloud(config) && isShopify(config));
     const roles = JSON.parse(membershipRoles).join(",");
@@ -357,10 +364,16 @@ export default class Section extends EditorComponent<Value, Props> {
       "brz-section",
       className,
       cssClass || customClassName,
-      css(
-        `${this.getComponentId()}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

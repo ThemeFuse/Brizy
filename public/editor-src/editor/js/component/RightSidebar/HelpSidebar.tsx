@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { noop } from "underscore";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
 import { always, pipe } from "visual/utils/fp";
@@ -18,16 +18,16 @@ export const HelpSidebar = (): ReactElement => {
   const selector = pipe(uiSelector, prop("rightSidebar"));
   const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
 
-  const config = Config.getAll();
-  const dataLinks = useMemo(() => config.ui?.help?.video ?? [], [config]);
-  const urlSupport = useMemo(() => config.urls.support, [config]);
+  const { ui, urls } = useConfig();
+  const dataLinks = useMemo(() => ui?.help?.video ?? [], [ui?.help?.video]);
+  const urlSupport = useMemo(() => urls?.support ?? "", [urls?.support]);
   const helpImage = useMemo(
     () =>
-      config.ui?.help?.header ?? {
+      ui?.help?.header ?? {
         url: "",
         src: ""
       },
-    [config]
+    [ui?.help?.header]
   );
 
   const onLock = useCallback(

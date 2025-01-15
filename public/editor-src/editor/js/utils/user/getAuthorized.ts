@@ -1,4 +1,4 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Authorized } from "visual/types";
 
 const storageAuthorizedKey = "brz-authorized";
@@ -27,8 +27,12 @@ const getStorageAuthorized = (): Authorized => {
   }
 };
 
-export const getAuthorized = (): Authorized => {
-  const user = Config.get("user");
+export const getAuthorized = (config: ConfigCommon): Authorized => {
+  const user = config.user;
+
+  if (!user) {
+    return "disconnect";
+  }
 
   if (user.isAuthorized) {
     return "connected";

@@ -1,4 +1,4 @@
-import Config, { isWp } from "visual/global/Config";
+import { isWp } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types";
 import { t } from "visual/utils/i18n";
 import { getMembershipChoices } from "visual/utils/membership";
@@ -19,8 +19,8 @@ const getShowLinkLabel = (type) => {
 
 export const getItems =
   (canRegister) =>
-  ({ v, device }) => {
-    const config = Config.getAll();
+  ({ v, device, component }) => {
+    const config = component.getGlobalConfig();
     const is_wp = isWp(config);
     const is_cloud = isCloud(config);
     const dvv = (key) => defaultValueValue({ v, key, device });

@@ -6,18 +6,20 @@ import {
 } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
 
-export const translationsMap: Partial<{ [k in ElementTypes]: string }> = {
+export const getTranslationsMap = (): Partial<{
+  [k in ElementTypes]: string;
+}> => ({
   Button: t("Button"),
   Icon: t("Icon")
-};
+});
 
 const suffix = "Container";
 
 export default {
   getItems: (v: ElementModel): ContextMenuItem[] => {
     const type = readElementType(v.items?.[0]?.type);
-
-    const title = type ? (translationsMap[type] ?? "") + ` ${suffix}` : suffix;
+    const translation = getTranslationsMap();
+    const title = type ? (translation[type] ?? "") + ` ${suffix}` : suffix;
 
     return [
       {

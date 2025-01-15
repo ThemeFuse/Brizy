@@ -1,6 +1,6 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Store } from "visual/redux/store";
 import {
-  getColorPaletteColors,
   makeGlobalStylesColorPalette,
   makeRichTextColorPaletteCSS
 } from "visual/utils/color";
@@ -13,6 +13,7 @@ import {
 import { isExternalPopup } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 import { projectClassName } from "../utils/projectClassName";
+import { currentStyleSelector } from "visual/redux/selectors";
 
 function parseDynamicFontStyles(config: ConfigCommon): string[] {
   const fontStyles = new Set<string>();
@@ -38,7 +39,10 @@ function arrayToObject<T extends string>(
   }, {} as ArrayToObject);
 }
 
-export const getProjectStyles = (config: ConfigCommon): string => {
+export const getProjectStyles = (
+  config: ConfigCommon,
+  store: Store
+): string => {
   let getClassName = (c: string): string => c;
   const globalClassName = projectClassName(config);
 
@@ -47,23 +51,31 @@ export const getProjectStyles = (config: ConfigCommon): string => {
     getClassName = (className: string): string =>
       `.${globalClassName} ${className}`;
   }
+  const globalPalette = currentStyleSelector(store.getState()).colorPalette;
 
-  const typographyStyles = makeGlobalStylesTypography(getFontStyles());
+  const typographyStyles = makeGlobalStylesTypography({
+    fontStyles: getFontStyles({ store }),
+    store
+  });
 
   const richTextColorPalette = makeRichTextColorPaletteCSS(
-    getColorPaletteColors(),
+    globalPalette,
     getClassName
   );
 
-  const globalStyleColorPalette = makeGlobalStylesColorPalette(
-    getColorPaletteColors()
-  );
+  const globalStyleColorPalette = makeGlobalStylesColorPalette(globalPalette);
 
   return `${richTextColorPalette}${globalStyleColorPalette}${typographyStyles}`;
 };
 
-export const getTypographyStyles = (config: ConfigCommon): MValue<string> => {
-  const allPossibleFontStyles = getFontStyles({ includeDeleted: true });
+export const getTypographyStyles = (
+  config: ConfigCommon,
+  store: Store
+): MValue<string> => {
+  const allPossibleFontStyles = getFontStyles({
+    includeDeleted: true,
+    store
+  });
   const parsedDynamicFontStyles = parseDynamicFontStyles(config);
   const parsedDynamicFontStylesObj = arrayToObject(parsedDynamicFontStyles);
 
@@ -75,5 +87,5 @@ export const getTypographyStyles = (config: ConfigCommon): MValue<string> => {
     return undefined;
   }
 
-  return makeRichTextDynamicFontStylesCSS(dynamicFontStylesToLoad);
+  return makeRichTextDynamicFontStylesCSS(dynamicFontStylesToLoad, store);
 };

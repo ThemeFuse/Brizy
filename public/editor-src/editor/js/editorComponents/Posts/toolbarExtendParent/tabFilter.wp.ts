@@ -1,8 +1,10 @@
 import { Props as TabsOptionProps } from "visual/component/Options/types/dev/Tabs";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ArrayType } from "visual/utils/array/types";
 import { t } from "visual/utils/i18n";
-import { Context, V, VDecoded } from "../types";
+import { MValue } from "visual/utils/value";
+import { CloudComponentConfig, Context, V, VDecoded } from "../types";
 import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
 import { orderByConverter } from "./utils.common";
 import {
@@ -14,9 +16,15 @@ import {
   termsSearch
 } from "./utils.wp";
 
+
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
 
-export function tabFilter(v: V, context: Context): TabOptionType | undefined {
+export function tabFilter(
+  v: V,
+  context: Context,
+  componentConfig: MValue<CloudComponentConfig>,
+  config: ConfigCommon
+): TabOptionType | undefined {
   const isPosts = v.type === "posts";
   const isArchive = v.type === "archives";
   const isProducts = v.type === "products";
@@ -33,12 +41,16 @@ export function tabFilter(v: V, context: Context): TabOptionType | undefined {
   const includeBy = getIncludeExclude(
     "include",
     vd,
-    (!isPosts && !isProducts) || isCurrentQuery
+    (!isPosts && !isProducts) || isCurrentQuery,
+    componentConfig,
+    config
   );
   const excludeBy = getIncludeExclude(
     "exclude",
     vd,
-    (!isPosts && !isProducts) || isCurrentQuery
+    (!isPosts && !isProducts) || isCurrentQuery,
+    componentConfig,
+    config
   );
 
   const orderByChoices = orderByConverter(
@@ -102,7 +114,10 @@ function getSource(vd: VDecoded, context: Context): ToolbarItemType {
 function getIncludeExclude(
   type: "include" | "exclude",
   vd: VDecoded,
-  disabled: boolean
+  disabled: boolean,
+  // @ts-expect-error is not used, but was sent to preserve the same structure as in Cloud
+  componentConfig: MValue<CloudComponentConfig>,
+  config: ConfigCommon
 ): ToolbarItemType {
   const include = type === "include";
   const prefix = include ? "inc" : "exc";
@@ -112,20 +127,20 @@ function getIncludeExclude(
     {
       id: "term",
       title: t("Category"),
-      load: termsLoad,
-      search: termsSearch
+      load: termsLoad(config),
+      search: termsSearch(config)
     },
     {
       id: "author",
       title: t("Author"),
-      load: authorsLoad,
-      search: authorsSearch
+      load: authorsLoad(config),
+      search: authorsSearch(config)
     },
     {
       id: "manual",
       title: t("Manual"),
-      load: manualLoad([source], []), // search only in posts of type {source}
-      search: manualSearch([source], []) // search only in posts of type {source}
+      load: manualLoad([source], [], config), // search only in posts of type {source}
+      search: manualSearch([source], [], config) // search only in posts of type {source}
     }
   ];
 

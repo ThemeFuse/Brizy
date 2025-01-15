@@ -1,27 +1,26 @@
 import classNames from "classnames";
-import React, { createRef, ReactNode } from "react";
+import React, { ReactNode, createRef } from "react";
 import { uniqueId } from "underscore";
+import { isView } from "visual/providers/RenderProvider";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { encodeToString } from "visual/utils/string";
 import * as sidebarExtendParent from "../sidebar";
 import * as sidebarButton from "../sidebarButton";
 import * as sidebarDisable from "../sidebarDisable";
 import * as sidebarImage from "../sidebarImage";
 import * as sidebarInput from "../sidebarInput";
-import * as toolbarBreadcrumbs from "../toolbarBreadcrumbs";
 import * as toolbarConnectLink from "../toolbarConnectLink";
-import * as toolbarFooter from "../toolbarFooter";
-import * as toolbarTitle from "../toolbarTitle";
-import * as toolbarTitle2 from "../toolbarTitle2";
+import { ecwidToolbarFooter } from "../toolbarFooter";
+import { ecwidToolbarTitle } from "../toolbarTitle";
+import { ecwidToolbarTitle2 } from "../toolbarTitle2";
 import defaultValue from "./defaultValue.json";
 import * as sidebarUser from "./sidebarUser";
 import { style } from "./styles";
@@ -61,11 +60,11 @@ export class EcwidMyAccount extends EditorComponent<Value> {
     );
     this.props.extendParentToolbar(toolbarExtend);
 
-    if (!IS_EDITOR) {
+    if (isView(this.renderContext)) {
       return;
     }
 
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     if (
       this.containerRef.current &&
@@ -75,7 +74,10 @@ export class EcwidMyAccount extends EditorComponent<Value> {
       const v = this.getValue();
       const cnf = valueToEciwdConfig(v);
 
-      this.ecwid = EcwidService.init(config.modules.shop.storeId, cnf);
+      this.ecwid = EcwidService.init(config.modules.shop.storeId, {
+        ...cnf,
+        redirect: undefined
+      });
       this.ecwid.myAccount(this.containerRef.current);
     }
   }
@@ -95,12 +97,25 @@ export class EcwidMyAccount extends EditorComponent<Value> {
     const className = classNames(
       "brz-ecwid-wrapper",
       "brz-ecwid-my-account-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarTitle, sidebarDisable)}
+        {...this.makeToolbarPropsFromConfig2(
+          ecwidToolbarTitle(),
+          sidebarDisable
+        )}
         selector=".page-title__name.ec-header-h1"
         selectorSearchStrategy="dom-tree"
       >
@@ -127,358 +142,334 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                       return (
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
-                            toolbarBreadcrumbs,
+                            toolbarConnectLink,
                             sidebarDisable
                           )}
-                          selector=".ec-breadcrumbs"
+                          selector=".ec-cart__account-info .ec-cart-step__body .ec-cart-step__section"
                           selectorSearchStrategy="dom-tree"
                         >
-                          {({ open: openBreadcrumbs }) => {
+                          {({ open: openConnectLink }) => {
                             return (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarConnectLink,
+                                  toolbarShopTitle,
                                   sidebarDisable
                                 )}
-                                selector=".ec-cart-step__text, .ec-cart-step__change.ec-link"
+                                selector=".ec-cart-step__title.ec-header-h4"
                                 selectorSearchStrategy="dom-tree"
                               >
-                                {({ open: openConnectLink }) => {
+                                {({ open: openShopTitle }) => {
                                   return (
                                     <Toolbar
                                       {...this.makeToolbarPropsFromConfig2(
-                                        toolbarShopTitle,
-                                        sidebarDisable
+                                        toolbarProducts,
+                                        sidebarImage,
+                                        {
+                                          allowExtend: false
+                                        }
                                       )}
-                                      selector=".ec-cart-step__title.ec-header-h4"
+                                      selector=".ec-cart__products"
                                       selectorSearchStrategy="dom-tree"
                                     >
-                                      {({ open: openShopTitle }) => {
+                                      {({ open: openProducts }) => {
                                         return (
                                           <Toolbar
                                             {...this.makeToolbarPropsFromConfig2(
-                                              toolbarProducts,
-                                              sidebarImage,
-                                              {
-                                                allowExtend: false
-                                              }
+                                              ecwidToolbarTitle2(),
+                                              sidebarDisable
                                             )}
-                                            selector=".ec-cart__products"
+                                            selector=".page-title__name.ec-header-h4"
                                             selectorSearchStrategy="dom-tree"
                                           >
-                                            {({ open: openProducts }) => {
+                                            {({ open: openTitle2 }) => {
                                               return (
                                                 <Toolbar
                                                   {...this.makeToolbarPropsFromConfig2(
-                                                    toolbarTitle2,
+                                                    toolbarDescription,
                                                     sidebarDisable
                                                   )}
-                                                  selector="h3.page-title__name.ec-header-h4"
+                                                  selector=".ec-cart-email__text"
                                                   selectorSearchStrategy="dom-tree"
                                                 >
-                                                  {({ open: openTitle2 }) => {
+                                                  {({
+                                                    open: openDescription
+                                                  }) => {
                                                     return (
                                                       <Toolbar
                                                         {...this.makeToolbarPropsFromConfig2(
-                                                          toolbarDescription,
-                                                          sidebarDisable
+                                                          toolbarInput,
+                                                          sidebarInput,
+                                                          {
+                                                            allowExtend: false
+                                                          }
                                                         )}
-                                                        selector=".ec-cart-email__text"
+                                                        selector=".ec-cart-email__input"
                                                         selectorSearchStrategy="dom-tree"
                                                       >
                                                         {({
-                                                          open: openDescription
+                                                          open: openInput
                                                         }) => {
                                                           return (
                                                             <Toolbar
                                                               {...this.makeToolbarPropsFromConfig2(
-                                                                toolbarInput,
-                                                                sidebarInput,
-                                                                {
-                                                                  allowExtend:
-                                                                    false
-                                                                }
+                                                                toolbarAgreement,
+                                                                sidebarDisable
                                                               )}
-                                                              selector=".ec-cart-email__input"
+                                                              selector=".ec-cart__agreement"
                                                               selectorSearchStrategy="dom-tree"
                                                             >
                                                               {({
-                                                                open: openInput
+                                                                open: openAgreement
                                                               }) => {
                                                                 return (
                                                                   <Toolbar
                                                                     {...this.makeToolbarPropsFromConfig2(
-                                                                      toolbarAgreement,
-                                                                      sidebarDisable
+                                                                      toolbarButton,
+                                                                      sidebarButton,
+                                                                      {
+                                                                        allowExtend:
+                                                                          false
+                                                                      }
                                                                     )}
-                                                                    selector=".ec-cart__agreement"
+                                                                    selector=".form-control__button"
                                                                     selectorSearchStrategy="dom-tree"
                                                                   >
                                                                     {({
-                                                                      open: openAgreement
+                                                                      open: openButton
                                                                     }) => {
                                                                       return (
                                                                         <Toolbar
                                                                           {...this.makeToolbarPropsFromConfig2(
-                                                                            toolbarButton,
-                                                                            sidebarButton,
-                                                                            {
-                                                                              allowExtend:
-                                                                                false
-                                                                            }
+                                                                            ecwidToolbarFooter(),
+                                                                            sidebarDisable
                                                                           )}
-                                                                          selector=".form-control__button"
+                                                                          selector=".ec-footer__row"
                                                                           selectorSearchStrategy="dom-tree"
                                                                         >
                                                                           {({
-                                                                            open: openButton
+                                                                            open: openFooter
                                                                           }) => {
                                                                             return (
                                                                               <Toolbar
                                                                                 {...this.makeToolbarPropsFromConfig2(
-                                                                                  toolbarFooter,
+                                                                                  toolbarEmpty,
                                                                                   sidebarDisable
                                                                                 )}
-                                                                                selector=".ec-footer__row"
+                                                                                selector=".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text"
                                                                                 selectorSearchStrategy="dom-tree"
                                                                               >
                                                                                 {({
-                                                                                  open: openFooter
+                                                                                  open: openEmpty
                                                                                 }) => {
                                                                                   return (
                                                                                     <Toolbar
                                                                                       {...this.makeToolbarPropsFromConfig2(
-                                                                                        toolbarEmpty,
+                                                                                        toolbarTerms,
                                                                                         sidebarDisable
                                                                                       )}
-                                                                                      selector=".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text"
+                                                                                      selector=".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text .ec-link, .ec-cart__agreement .ec-link"
                                                                                       selectorSearchStrategy="dom-tree"
                                                                                     >
                                                                                       {({
-                                                                                        open: openEmpty
+                                                                                        open: openTerms
                                                                                       }) => {
                                                                                         return (
-                                                                                          <Toolbar
-                                                                                            {...this.makeToolbarPropsFromConfig2(
-                                                                                              toolbarTerms,
-                                                                                              sidebarDisable
-                                                                                            )}
-                                                                                            selector=".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text .ec-link, .ec-cart__agreement .ec-link"
-                                                                                            selectorSearchStrategy="dom-tree"
+                                                                                          <CustomCSS
+                                                                                            selectorName={this.getId()}
+                                                                                            css={
+                                                                                              customCSS
+                                                                                            }
                                                                                           >
-                                                                                            {({
-                                                                                              open: openTerms
-                                                                                            }) => {
-                                                                                              return (
-                                                                                                <CustomCSS
-                                                                                                  selectorName={this.getId()}
-                                                                                                  css={
-                                                                                                    customCSS
-                                                                                                  }
-                                                                                                >
-                                                                                                  <Wrapper
-                                                                                                    {...this.makeWrapperProps(
-                                                                                                      {
-                                                                                                        className
-                                                                                                      }
-                                                                                                    )}
-                                                                                                  >
-                                                                                                    <div
-                                                                                                      onClickCapture={(
+                                                                                            <Wrapper
+                                                                                              {...this.makeWrapperProps(
+                                                                                                {
+                                                                                                  className
+                                                                                                }
+                                                                                              )}
+                                                                                            >
+                                                                                              <div
+                                                                                                onClickCapture={(
+                                                                                                  e
+                                                                                                ) => {
+                                                                                                  e.stopPropagation();
+                                                                                                  e.preventDefault();
+
+                                                                                                  if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".page-title__name.ec-header-h1"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openTitle(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart-step__icon.ec-cart-step__icon--custom"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openUser(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart-step__title.ec-header-h6"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openAccountTitle(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart__account-info .ec-cart-step__body .ec-cart-step__section"
+                                                                                                    ) ||
+                                                                                                    (e.target &&
+                                                                                                      e.target instanceof
+                                                                                                        HTMLElement &&
+                                                                                                      (
                                                                                                         e
-                                                                                                      ) => {
-                                                                                                        e.stopPropagation();
-                                                                                                        e.preventDefault();
+                                                                                                          .target
+                                                                                                          .nextSibling as HTMLElement | null
+                                                                                                      )?.classList?.contains(
+                                                                                                        "ec-link"
+                                                                                                      ))
+                                                                                                  ) {
+                                                                                                    openConnectLink(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart-step__title.ec-header-h4"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openShopTitle(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart__products"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openProducts(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".page-title__name.ec-header-h4"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openTitle2(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart-email__text"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openDescription(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart-email__input"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openInput(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    !(
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.classList.contains(
+                                                                                                      "ec-link"
+                                                                                                    ) &&
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart__agreement"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openAgreement(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".form-control__button"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openButton(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-footer__row"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openFooter(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text .ec-link"
+                                                                                                    ) ||
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart__agreement .ec-link"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openTerms(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  } else if (
+                                                                                                    (
+                                                                                                      e.target as HTMLElement | null
+                                                                                                    )?.closest(
+                                                                                                      ".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text"
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    openEmpty(
+                                                                                                      e.nativeEvent
+                                                                                                    );
+                                                                                                  }
 
-                                                                                                        if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".page-title__name.ec-header-h1"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openTitle(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-step__icon.ec-cart-step__icon--custom"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openUser(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-step__title.ec-header-h6"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openAccountTitle(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-breadcrumbs"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openBreadcrumbs(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-step__change.ec-link"
-                                                                                                          ) ||
-                                                                                                          (e.target &&
-                                                                                                            e.target instanceof
-                                                                                                              HTMLElement &&
-                                                                                                            (
-                                                                                                              e
-                                                                                                                .target
-                                                                                                                .nextSibling as HTMLElement | null
-                                                                                                            )?.classList?.contains(
-                                                                                                              "ec-link"
-                                                                                                            ))
-                                                                                                        ) {
-                                                                                                          openConnectLink(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-step__title.ec-header-h4"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openShopTitle(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart__products"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openProducts(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            "h3.page-title__name.ec-header-h4"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openTitle2(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-email__text"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openDescription(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-email__input"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openInput(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          !(
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.classList.contains(
-                                                                                                            "ec-link"
-                                                                                                          ) &&
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart__agreement"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openAgreement(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".form-control__button"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openButton(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-footer__row"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openFooter(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text .ec-link"
-                                                                                                          ) ||
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart__agreement .ec-link"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openTerms(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        } else if (
-                                                                                                          (
-                                                                                                            e.target as HTMLElement | null
-                                                                                                          )?.closest(
-                                                                                                            ".ec-cart-step__body .ec-cart-step__section .ec-cart-step__text"
-                                                                                                          )
-                                                                                                        ) {
-                                                                                                          openEmpty(
-                                                                                                            e.nativeEvent
-                                                                                                          );
-                                                                                                        }
-
-                                                                                                        return false;
-                                                                                                      }}
-                                                                                                      className="brz-ecwid-my-account"
-                                                                                                      id={
-                                                                                                        this
-                                                                                                          .uniqueId
-                                                                                                      }
-                                                                                                      ref={
-                                                                                                        this
-                                                                                                          .containerRef
-                                                                                                      }
-                                                                                                    />
-                                                                                                  </Wrapper>
-                                                                                                </CustomCSS>
-                                                                                              );
-                                                                                            }}
-                                                                                          </Toolbar>
+                                                                                                  return false;
+                                                                                                }}
+                                                                                                className="brz-ecwid-my-account"
+                                                                                                id={
+                                                                                                  this
+                                                                                                    .uniqueId
+                                                                                                }
+                                                                                                ref={
+                                                                                                  this
+                                                                                                    .containerRef
+                                                                                                }
+                                                                                              />
+                                                                                            </Wrapper>
+                                                                                          </CustomCSS>
                                                                                         );
                                                                                       }}
                                                                                     </Toolbar>
@@ -525,10 +516,22 @@ export class EcwidMyAccount extends EditorComponent<Value> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
+    const cnf = valueToEciwdConfig(v);
+
     const className = classNames(
       "brz-ecwid-wrapper",
       "brz-ecwid-my-account-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const storeId = makePlaceholder({
       content: "{{ecwid_store_id}}"
@@ -536,7 +539,11 @@ export class EcwidMyAccount extends EditorComponent<Value> {
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
-        <div className="brz-ecwid-my-account" data-store-id={storeId} />
+        <div
+          className="brz-ecwid-my-account"
+          data-store-id={storeId}
+          data-storefront={encodeToString(cnf)}
+        />
       </Wrapper>
     );
   }

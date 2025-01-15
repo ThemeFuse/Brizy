@@ -1,15 +1,11 @@
 import { Num } from "@brizy/readers";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import {
   alignCSS,
@@ -43,8 +39,13 @@ const getColorLabel = (style: string) => {
   }
 };
 
-export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
-  const IS_STORY = isStory(Config.getAll());
+export const getItems: GetItems<Value, Props> = ({
+  v,
+  device,
+  context,
+  editorMode
+}) => {
+  const _isStory = isStory(editorMode);
 
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
@@ -59,9 +60,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
   const defaultStyle = style === "default";
   const isDefaultLineStyle = isDefaultLineType(lineStyle);
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
+  const borderColor = getColor(
+    dvv("borderColorPalette"),
     dvv("borderColorHex"),
-    dvv("borderColorPalette")
+    dvv("borderColorOpacity")
   );
 
   const richTextDC = getDynamicContentOption({
@@ -363,10 +365,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              borderColorHex,
-              dvv("borderColorOpacity")
-            )
+            backgroundColor: borderColor
           }
         }
       },
@@ -467,7 +466,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
         icon: "nc-cog",
         title: t("Settings")
       },
-      disabled: IS_STORY,
+      disabled: _isStory,
       position: 110,
       options: [
         {
@@ -526,7 +525,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      disabled: !IS_STORY,
+      disabled: !_isStory,
       position: 110
     }
   ];

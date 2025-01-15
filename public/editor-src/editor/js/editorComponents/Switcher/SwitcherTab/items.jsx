@@ -1,4 +1,5 @@
 import React from "react";
+import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
@@ -99,7 +100,7 @@ class SwitcherTab extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return items;
     }
 

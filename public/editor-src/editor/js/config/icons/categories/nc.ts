@@ -1,7 +1,7 @@
 import { Category } from "visual/config/icons/Categories";
 import { t } from "visual/utils/i18n";
 
-export const categories: Category[] = [
+export const getCategories = (): Category[] => [
   // { id: 0, title: t("All Categories") }, Nu exista
   { id: 1, title: t("Animals/Nature") },
   { id: 2, title: t("Arrows") },

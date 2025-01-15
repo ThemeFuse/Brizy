@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import SlickSlider from "react-slick";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
@@ -149,7 +150,7 @@ class SectionItems extends EditorArrayComponent {
     if (showSlider) {
       const { sliderDots, sliderArrows, sliderAnimation } = this.props;
 
-      if (IS_EDITOR) {
+      if (isEditor(this.renderContext)) {
         ret = (
           <SlickSlider
             className={`brz-slick-slider brz-slick-slider--${sliderAnimation}`}
@@ -186,7 +187,7 @@ class SectionItems extends EditorArrayComponent {
         );
       }
 
-      if (IS_PREVIEW) {
+      if (isView(this.renderContext)) {
         const {
           sliderAutoPlay,
           sliderAutoPlaySpeed,

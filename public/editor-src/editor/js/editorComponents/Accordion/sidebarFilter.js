@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Accordion Tags");
+export const title = () => t("Accordion Tags");
 
 export function getItems() {
   return [

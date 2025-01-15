@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import Scrollbars from "react-custom-scrollbars";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import ThumbnailGrid from "../../../common/ThumbnailGrid";
 import { Thumbnail } from "../../types";
 
@@ -10,10 +11,43 @@ export interface Props<T extends Thumbnail> {
   onAdd: (t: T) => void;
   onRemove?: (t: T) => void;
   onUpdate?: (t: T) => void;
+  isPro: boolean;
+  isStory: boolean;
+  upgradeToPro?: string;
+  config: ConfigCommon;
 }
 
+const storyGrid = {
+  columns: 5,
+  responsive: [
+    {
+      breakpoint: 1460,
+      settings: {
+        columns: 4
+      }
+    },
+    {
+      breakpoint: 1200,
+      settings: {
+        columns: 3
+      }
+    }
+  ]
+};
+
 export const Grid = <T extends Thumbnail>(props: Props<T>): ReactElement => {
-  const { data, tags, showTitle, onAdd, onRemove, onUpdate } = props;
+  const {
+    data,
+    tags,
+    showTitle,
+    isPro,
+    isStory,
+    upgradeToPro,
+    config,
+    onAdd,
+    onRemove,
+    onUpdate
+  } = props;
   return (
     <div className="brz-ed-popup-two-body__content">
       <Scrollbars>
@@ -24,6 +58,11 @@ export const Grid = <T extends Thumbnail>(props: Props<T>): ReactElement => {
           onThumbnailAdd={onAdd}
           onThumbnailRemove={onRemove}
           onUpdate={onUpdate}
+          isStory={isStory}
+          isPro={isPro}
+          upgradeToPro={upgradeToPro}
+          config={config}
+          {...(isStory ? storyGrid : {})}
         />
       </Scrollbars>
     </div>

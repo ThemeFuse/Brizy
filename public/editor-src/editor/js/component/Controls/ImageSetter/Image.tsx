@@ -4,6 +4,7 @@ import {
   Props
 } from "visual/component/Controls/ImageSetter/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { useConfig } from "visual/global/hooks";
 import { getImageUrl, imageWrapperSize } from "visual/utils/image";
 import Draggable from "./Draggable";
 
@@ -28,6 +29,8 @@ function Image(props: Props) {
   const [prevX, setPrevX] = useState<number | null>(null);
   const [prevY, setPrevY] = useState<number | null>(null);
 
+  const config = useConfig();
+
   if (prevX !== _x) {
     setX(_x);
     setPrevX(_x);
@@ -47,12 +50,15 @@ function Image(props: Props) {
 
   const imgUrl = customUrl
     ? src
-    : getImageUrl({
-        fileName,
-        uid: src,
-        sizeType: SizeType.custom,
-        crop: { iW: MAX_IMAGE_SETTER_WIDTH, iH: "any" }
-      });
+    : getImageUrl(
+        {
+          fileName,
+          uid: src,
+          sizeType: SizeType.custom,
+          crop: { iW: MAX_IMAGE_SETTER_WIDTH, iH: "any" }
+        },
+        config
+      );
 
   const { width, height } = imageWrapperSize(
     _width,

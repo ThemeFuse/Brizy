@@ -4,9 +4,7 @@ import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import Config from "visual/global/Config";
 import { globalBlocksAssembledSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { setIds } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 import { addIn } from "./helpers/addRemove";
@@ -29,6 +27,8 @@ import {
 } from "./helpers/normalize";
 import { normalizeFromTo } from "./helpers/path";
 import { FromTo, isAddable, isColumn, isRow, isShortcode } from "./types";
+import { Store } from "visual/redux/store";
+import { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
 
 function getValue(
   value: ElementModelType,
@@ -176,13 +176,14 @@ function getValue(
 
 export default function changeValueAfterDND(
   oldValue: ElementModelType,
-  _fromTo: FromTo
+  _fromTo: FromTo,
+  store: Store,
+  menuData: MValue<MenuData[]>
 ): ElementModelType {
-  const config = Config.getAll();
-  const { getState, dispatch } = getStore();
+  const { getState, dispatch } = store;
   const globalBlocks = globalBlocksAssembledSelector(getState());
   const oldValueWithoutGB = attachMenu({
-    config,
+    menuData,
     model: gbTransform(oldValue, globalBlocks),
     omitSymbols: true
   });
@@ -190,7 +191,7 @@ export default function changeValueAfterDND(
 
   let value = attachGlobalBlocks(oldValue, fromTo.from, globalBlocks);
   value = attachGlobalBlocks(value, fromTo.to, globalBlocks);
-  value = attachMenu({ model: value, config });
+  value = attachMenu({ model: value, menuData });
 
   const _value = getValue(value, fromTo);
 

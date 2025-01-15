@@ -1,51 +1,28 @@
 import React, { ReactElement } from "react";
-import { createRoot } from "react-dom/client";
+import { createPortal } from "react-dom";
 import EditorIcon from "visual/component/EditorIcon";
 
-type RenderNode = HTMLElement | null;
-type CloseNode = HTMLElement | null | undefined;
-
-class PortalLoading {
-  static opened: Set<HTMLElement> = new Set();
-
-  static render(node: RenderNode): HTMLElement | undefined {
-    const rootNode = node || document.body;
-    const doc = rootNode && rootNode.ownerDocument;
-
-    if (rootNode && doc) {
-      const loading: ReactElement = (
-        <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
-      );
-
-      const rootContainer: HTMLDivElement = doc.createElement("div");
-      rootContainer.className = "brz-ed-portal__loading";
-
-      rootNode.append(rootContainer);
-      PortalLoading.opened.add(rootContainer);
-
-      const root = createRoot(rootContainer);
-      root.render(loading);
-
-      return rootContainer;
-    }
-  }
-
-  static close(node: CloseNode): void {
-    if (node) {
-      node.remove();
-      PortalLoading.opened.delete(node);
-    }
-  }
-
-  static closeAll(): void {
-    // Remove All node append
-    PortalLoading.opened.forEach((node) => {
-      node.remove();
-    });
-
-    // Clear Set
-    PortalLoading.opened.clear();
-  }
+interface Props {
+  node: HTMLElement | null;
 }
 
-export { PortalLoading };
+export function PortalLoading(props: Props) {
+  const { node } = props;
+
+  if (!node) {
+    return null;
+  }
+
+  const doc = node.ownerDocument;
+
+  const loading: ReactElement = (
+    <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
+  );
+
+  const rootContainer: HTMLDivElement = doc.createElement("div");
+  rootContainer.className = "brz-ed-portal__loading";
+
+  node.append(rootContainer);
+
+  return createPortal(loading, rootContainer);
+}

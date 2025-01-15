@@ -11,9 +11,6 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { getWrapperContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
 import {
@@ -68,7 +65,7 @@ export default class Cloneable extends EditorComponent {
   handleDraggable = ({ x, y }) => {
     const v = this.getValue();
     const state = State.mRead(v.tabsState);
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
 
     const dvk = (key, value) => ({
       [defaultValueKey({ key, device, state })]: value
@@ -93,7 +90,7 @@ export default class Cloneable extends EditorComponent {
 
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -150,12 +147,16 @@ export default class Cloneable extends EditorComponent {
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classnames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
@@ -164,16 +165,23 @@ export default class Cloneable extends EditorComponent {
 
     const classNameContainer = classnames(
       "brz-d-xs-flex brz-flex-xs-wrap",
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       className
     );
 
     const { minItems, maxItems, blockType } = v;
-    const motion = makeOptionValueToMotion(v);
+    const store = this.getReduxStore();
+    const motion = makeOptionValueToMotion({ v, store });
     const itemsProps = this.makeSubcomponentProps({
       blockType,
       minItems,
@@ -203,7 +211,7 @@ export default class Cloneable extends EditorComponent {
 
   containerSize = () => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const meta = this.getMeta(v);
     const innerWidth = window.innerWidth;
     const innerHeight = window.innerHeight;
@@ -219,10 +227,16 @@ export default class Cloneable extends EditorComponent {
 
     const className = classnames(
       "brz-wrapper-clone",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       cssClass || customClassName,
       propsClassName
@@ -357,10 +371,16 @@ export default class Cloneable extends EditorComponent {
 
     const className = classnames(
       "brz-wrapper-clone",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       cssClass || customClassName,
       propsClassName
@@ -382,11 +402,12 @@ export default class Cloneable extends EditorComponent {
       </Animation>
     );
   }
+
   renderToolbar = (Button) => (
     <Toolbar
       {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
     >
-      <SortableHandle>
+      <SortableHandle renderContext={this.renderContext}>
         <Button />
       </SortableHandle>
     </Toolbar>

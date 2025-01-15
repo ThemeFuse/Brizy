@@ -1,12 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import { DynamicStylesProps } from "visual/types";
 
-export function styleContent(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): OutputStyle {
+export function styleContent(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: ["cssStyleBorderRadius"],
@@ -22,5 +19,5 @@ export function styleContent(
       standart: ["cssStyleBorderRadius"]
     }
   };
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

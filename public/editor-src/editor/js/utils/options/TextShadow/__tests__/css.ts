@@ -56,4 +56,16 @@ describe("Testing cssStyleTextShadow that should return CSS for text-shadow", ()
       })
     ).toBe("text-shadow:4px 5px 2px  rgba(var(--brz-global-color3),1);");
   });
+
+  test("Without palette(undefined)", () => {
+    expect(
+      cssStyleTextShadow({
+        meta: { isEmpty: false },
+        value: {
+          ...value,
+          palette: undefined
+        }
+      })
+    ).toBe("text-shadow:4px 5px 2px  rgba(255, 0, 0, 1);");
+  });
 });

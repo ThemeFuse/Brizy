@@ -41,7 +41,7 @@ export function changeContentVisibility({
   items[currentIndex].classList.add(activeClassName);
 }
 
-export const EkklesiaMessages = {
+export const getEkklesiaMessages = () => ({
   event_calendar: t(
     "Ministry Content - Event Calendar - module fields have been updated."
   ),
@@ -99,13 +99,14 @@ export const EkklesiaMessages = {
   article_featured: t(
     "Ministry Content - Article Featured - module fields have been updated."
   )
-};
+});
 
-export const helperDateFormatInputHTML = `<span class="brz-span">${t(
-  "Available formatting styles can be found"
-)} <a class="brz-a" target="_blank" href="https://www.php.net/manual/en/function.date.php">${t(
-  "here"
-)}</a></span>`;
+export const getHelperDateFormatInputHTML = () =>
+  `<span class="brz-span">${t(
+    "Available formatting styles can be found"
+  )} <a class="brz-a" target="_blank" href="https://www.php.net/manual/en/function.date.php">${t(
+    "here"
+  )}</a></span>`;
 
 export const getButtonMaxBorderRadius = (
   fontSize: number,

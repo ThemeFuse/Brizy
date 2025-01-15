@@ -1,12 +1,14 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
 import type { Value } from "./types";
 
-export const getItems: GetItems<Value> = ({ v, device }) => {
-  const IS_STORY = isStory(Config.getAll());
+export const getItems: GetItems<Value> = ({ v, device, editorMode, component }) => {
+  const _isStory = isStory(editorMode);
+  const config = component.getGlobalConfig();
+
+  const { showIntegrations = false } = config.integrations?.form ?? {};
 
   return [
     {
@@ -83,7 +85,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
           id: "submitHeight",
           label: t("Height"),
           type: "slider",
-          disabled: !IS_STORY,
+          disabled: !_isStory,
           config: {
             min: 1,
             max: 100,
@@ -113,6 +115,12 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
         { icon: "nc-text-align-right", title: t("Align"), value: "right" }
       ]
     },
-    toolbarElementForm2Apps({ v, device, devices: "desktop", state: "normal" })
+    toolbarElementForm2Apps({
+      v,
+      device,
+      devices: "desktop",
+      state: "normal",
+      showIntegrations
+    })
   ];
 };

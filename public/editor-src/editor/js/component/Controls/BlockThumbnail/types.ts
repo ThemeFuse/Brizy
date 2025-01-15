@@ -1,6 +1,6 @@
 import { JSX } from "react";
 import { ElementModelType2 } from "visual/component/Elements/Types";
-import { Block, GlobalBlock } from "visual/types";
+import { Block } from "visual/types";
 
 export interface ThumbnailImage {
   blockData: Block;
@@ -19,8 +19,7 @@ export interface ThumbnailLabelProps {
 }
 
 export interface ThumbnailsProps extends Common {
-  pageBlocksAssembled: PreloadThumbnailProps[];
-  globalBlocks: Record<string, GlobalBlock>;
+  blocks: PreloadThumbnailProps[];
   value: string;
   anchorInputs: AnchorInput[];
 }

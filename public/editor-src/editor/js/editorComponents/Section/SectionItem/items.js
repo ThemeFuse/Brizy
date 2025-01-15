@@ -1,4 +1,5 @@
 import React from "react";
+import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
@@ -89,7 +90,7 @@ class SectionItemItems extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { className } = this.props;
 
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

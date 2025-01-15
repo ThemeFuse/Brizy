@@ -3,11 +3,12 @@ import React, { ReactElement, useEffect, useMemo } from "react";
 import { Popover as Control } from "visual/component/Controls/Popover";
 import { ToolbarItem } from "visual/component/Controls/Popover/types";
 import Options from "visual/component/Options";
+import { targetExceptions } from "visual/component/Options/constants";
+import { useConfig, usePro } from "visual/global/hooks";
+import { FCP } from "visual/utils/react/types";
 import { ToolbarItems } from "./ToolbarItem";
 import { Props } from "./types";
 import { getTrigger } from "./utils";
-import { FCP } from "visual/utils/react/types";
-import { targetExceptions } from "visual/component/Options/constants";
 
 export const Popover: FCP<Props, ReactElement | null> = ({
   className,
@@ -42,6 +43,10 @@ export const Popover: FCP<Props, ReactElement | null> = ({
     }
   }, [onOpenDirect, toolbar, id]);
 
+  const cnfg = useConfig();
+
+  const pro = usePro();
+
   return options?.length ? (
     <Control
       title={config?.title}
@@ -52,7 +57,13 @@ export const Popover: FCP<Props, ReactElement | null> = ({
       toolbar={toolbar}
       clickOutsideExceptions={clickOutsideExceptions}
     >
-      <Options wrapOptions={false} data={options} toolbar={toolbar} />
+      <Options
+        wrapOptions={false}
+        data={options}
+        toolbar={toolbar}
+        isPro={pro}
+        upgradeToPro={cnfg?.urls?.upgradeToPro}
+      />
     </Control>
   ) : null;
 };

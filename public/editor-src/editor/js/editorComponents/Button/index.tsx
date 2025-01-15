@@ -1,5 +1,7 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
+import { omit } from "timm";
+import { isEditor } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
@@ -17,12 +19,9 @@ import {
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import Config from "visual/global/Config";
-import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { isStory } from "visual/global/EditorModeContext";
+import { blocksDataSelector } from "visual/redux/selectors";
 import { Block } from "visual/types";
-import { css } from "visual/utils/cssStyle";
-import { isStory } from "visual/utils/models";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -38,7 +37,6 @@ import * as sidebarConfig from "./sidebar";
 import { style, styleButtonFillAnimation, styleIcon } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { PatchValue, Props, Value } from "./types";
-import { omit } from "timm";
 
 const resizerPoints = [
   "topLeft",
@@ -61,13 +59,12 @@ const restrictions = {
 };
 
 export default class Button extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): "Button" {
     return "Button";
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
 
   patchValue(patch: PatchValue, meta = {}) {
     const link = handleLinkChange(patch);
@@ -83,10 +80,16 @@ export default class Button extends EditorComponent<Value, Props> {
     const { iconName, iconType, iconFilename } = v;
 
     const iconClassName = classnames(
-      css(
+      this.css(
         `${this.getComponentId()}-icon`,
         `${this.getId()}-icon`,
-        styleIcon(v, vs, vd)
+        styleIcon({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -102,7 +105,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
   renderSubmit(v: Value, vs: Value, vd: Value, content: ReactNode): ReactNode {
     const { cssClass, customClassName, tabsState, type } = v;
-    const device = deviceModeSelector(this.getReduxState());
+    const device = this.getDeviceMode();
     const state = State.mRead(tabsState);
     const id = getCSSId<Value>(v);
     const populationClassName = Str.mRead(cssClass || customClassName);
@@ -112,14 +115,22 @@ export default class Button extends EditorComponent<Value, Props> {
       { "brz-blocked": v.tabsState === "hover" },
       "brz-btn-submit",
       populationClassName,
-      css(
+      this.css(
         `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd, hasSizing(v, device, state), device)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          device,
+          hasSizing: hasSizing(v, device, state),
+          renderContext: this.renderContext
+        })
       )
     );
 
-    const componentType = IS_EDITOR ? "a" : "button";
+    const componentType = isEditor(this.renderContext) ? "a" : "button";
 
     return (
       <Wrapper
@@ -148,10 +159,11 @@ export default class Button extends EditorComponent<Value, Props> {
 
   renderLink(v: Value, vs: Value, vd: Value, content: ReactNode): ReactNode {
     const { actionClosePopup, customClassName, cssClass, tabsState } = v;
+    const config = this.getGlobalConfig();
 
     const state = State.mRead(tabsState);
-    const device = deviceModeSelector(this.getReduxState());
-    const linkData = getLinkData<Value>(v);
+    const device = this.getDeviceMode();
+    const linkData = getLinkData<Value>(v, config);
     const id = getCSSId<Value>(v);
     const _className = Str.mRead(cssClass || customClassName);
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
@@ -159,17 +171,31 @@ export default class Button extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-btn",
       getHoverClassName(hoverName),
-      css(
+      this.css(
         this.getComponentId(),
         this.getId(),
-        styleButtonFillAnimation(v, vs, vd)
+        styleButtonFillAnimation({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       { "brz-blocked": v.tabsState === "hover" },
       _className,
-      css(
+      this.css(
         `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd, hasSizing(v, device, state), device)
+        style({
+          v,
+          vs,
+          vd,
+          device,
+          store: this.getReduxStore(),
+          hasSizing: hasSizing(v, device, state),
+          renderContext: this.renderContext
+        })
       ),
       {
         "brz-popup2__action-close":
@@ -186,7 +212,7 @@ export default class Button extends EditorComponent<Value, Props> {
       ...(id && { id })
     };
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       props.onDragStart = (e: Event) => {
         e.preventDefault();
         return false;
@@ -230,7 +256,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
 
@@ -242,10 +268,11 @@ export default class Button extends EditorComponent<Value, Props> {
           };
         }
 
+        const _isEditor = isEditor(this.renderContext);
         return {
           blockId,
           meta: newMeta,
-          ...(IS_EDITOR && {
+          ...(_isEditor && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -258,7 +285,7 @@ export default class Button extends EditorComponent<Value, Props> {
 
   dvv = (key: string): MValue<Literal> => {
     const v = this.getValue();
-    const device = deviceModeSelector(this.getReduxState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -266,7 +293,8 @@ export default class Button extends EditorComponent<Value, Props> {
 
   getHoverData(v: Value) {
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
-    const options = makeOptionValueToAnimation(v);
+    const store = this.getReduxStore();
+    const options = makeOptionValueToAnimation({ v, store });
     const { cloneableAnimationId } = this.props.meta;
     const animationId = Str.read(cloneableAnimationId) ?? this.getId();
 
@@ -275,19 +303,21 @@ export default class Button extends EditorComponent<Value, Props> {
       options: getHoverAnimationOptions(options, hoverName),
       animationId,
       isHidden:
-        isStory(Config.getAll()) ||
+        isStory(this.props.editorMode) ||
         hoverName === "none" ||
         isButtonFillHover(hoverName)
     };
   }
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { type, iconName, iconType, customCSS, tabsState } = v;
     const state = State.mRead(tabsState);
-    const device = deviceModeSelector(this.getReduxState());
+    const device = this.getDeviceMode();
 
+    const _isEditor = isEditor(this.renderContext);
     const renderIcon = iconName && iconType;
     const content =
-      hasSizing(v, device, state) && IS_EDITOR && type !== "submit" ? (
+      hasSizing(v, device, state) && _isEditor && type !== "submit" ? (
         <div className="brz-btn--story-container">
           {renderIcon && this.renderIcon(v, vs, vd)}
           <Text
@@ -329,7 +359,7 @@ export default class Button extends EditorComponent<Value, Props> {
             </CustomCSS>
           </Toolbar>
         </HoverAnimation>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
     );

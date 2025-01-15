@@ -8,7 +8,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getBoxResizerParams } from "visual/editorComponents/ProgressBar/utils";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -44,10 +43,16 @@ export default class ProgressBar extends EditorComponent<Value> {
     const _showPercentage = showPercentage === "on";
 
     const classNameBar = classnames(
-      css(
+      this.css(
         `${this.getComponentId()}-bar`,
         `${this.getId()}-bar`,
-        styleBar(v, vs, vd)
+        styleBar({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -59,10 +64,16 @@ export default class ProgressBar extends EditorComponent<Value> {
         "brz-without-percent": showPercentage === "off",
         "brz-without-text": progressBarStyle === "style1" && showText === "off"
       },
-      css(
+      this.css(
         `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        styleBg(v, vs, vd)
+        styleBg({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -130,10 +141,16 @@ export default class ProgressBar extends EditorComponent<Value> {
     const _showPercentage = showPercentage === "on";
 
     const classNameBar = classnames(
-      css(
+      this.css(
         `${this.getComponentId()}-bar`,
         `${this.getId()}-bar`,
-        styleBar(v, vs, vd)
+        styleBar({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -145,10 +162,16 @@ export default class ProgressBar extends EditorComponent<Value> {
         "brz-without-percent": showPercentage === "off",
         "brz-without-text": progressBarStyle === "style1" && showText === "off"
       },
-      css(
+      this.css(
         `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        styleBg(v, vs, vd)
+        styleBg({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

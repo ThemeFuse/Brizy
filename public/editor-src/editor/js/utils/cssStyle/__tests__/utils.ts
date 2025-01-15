@@ -1,10 +1,7 @@
 import { CSSProperties } from "react";
+import { RenderType } from "visual/providers/RenderProvider";
+import { createStore } from "visual/redux/store";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
-import {
-  AllCSSKeys,
-  GeneratedCSS,
-  OutputStyle
-} from "visual/utils/cssStyle/types";
 import {
   borderElementModel,
   borderOptionWithSelector,
@@ -14,8 +11,16 @@ import {
   heightOptionWithStyle,
   mockAllCssObjects
 } from "visual/utils/cssStyle/__tests__/cssStyle";
-import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import {
+  AllCSSKeys,
+  GeneratedCSS,
+  OutputStyle
+} from "visual/utils/cssStyle/types";
+import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import { DESKTOP, MOBILE, ResponsiveMode, TABLET } from "../../responsiveMode";
+import {
+  addBreakpointForInterval,
+  addBreakpointForStandart,
   addBreakpointsToCSS,
   addBreakpointsToFilteredCSS,
   addSameClassNameToIncreaseSpecificity,
@@ -123,9 +128,14 @@ describe("Testing addSameClassNameToIncreaseSpecificity that should add an extra
 });
 
 describe("Testing getCSSObjectFromStyle that should return CSSObject or undefined", () => {
+  const store = createStore();
+  const renderContext: RenderType = "editor";
+
   test("Empty data, should return undefined", () => {
     expect(
       getCSSObjectFromStyle({
+        renderContext,
+        store,
         v: {},
         breakpoint: "desktop",
         option: { id: "asd", type: "slider" }
@@ -135,6 +145,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
   test("Test with option, but empty value", () => {
     expect(
       getCSSObjectFromStyle({
+        renderContext,
+        store,
         v: {},
         breakpoint: "desktop",
         option: heightOptionWithStyle
@@ -144,6 +156,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
   test("Test with option with valid values", () => {
     expect(
       getCSSObjectFromStyle({
+        renderContext,
+        store,
         v: { height: 20, heightSuffix: "px" },
         breakpoint: "desktop",
         option: heightOptionWithStyle
@@ -153,6 +167,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
   test("Test with option with valid values + hover", () => {
     expect(
       getCSSObjectFromStyle({
+        renderContext,
+        store,
         v: { height: 30, heightSuffix: "px", hoverHeight: 50 },
         breakpoint: "desktop",
         option: heightOptionWithStyle
@@ -162,6 +178,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
   test("Test with option with valid values + active", () => {
     expect(
       getCSSObjectFromStyle({
+        renderContext,
+        store,
         v: { height: 40, heightSuffix: "px", activeHeight: 60 },
         breakpoint: "desktop",
         option: heightOptionWithStyle
@@ -171,6 +189,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
   test("Test with option with valid values + hover + active", () => {
     expect(
       getCSSObjectFromStyle({
+        renderContext,
+        store,
         v: {
           height: 10,
           heightSuffix: "px",
@@ -185,9 +205,14 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
 });
 
 describe("Testing getCSSFromSelector that should return css or undefined", () => {
+  const store = createStore();
+  const renderContext: RenderType = "editor";
+
   test("Empty data, should return border without styles", () => {
     expect(
       getCSSFromSelector({
+        renderContext,
+        store,
         v: {},
         breakpoint: "desktop",
         option: borderOptionWithSelector
@@ -198,6 +223,8 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
   test("Wrong option", () => {
     expect(
       getCSSFromSelector({
+        renderContext,
+        store,
         v: {},
         breakpoint: "desktop",
         option: heightOptionWithStyle
@@ -207,6 +234,8 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
   test("Valid Data", () => {
     expect(
       getCSSFromSelector({
+        renderContext,
+        store,
         v: borderElementModel,
         breakpoint: "desktop",
         option: borderOptionWithSelector
@@ -216,6 +245,8 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
   test("With hover", () => {
     expect(
       getCSSFromSelector({
+        renderContext,
+        store,
         v: {
           ...borderElementModel,
           hoverBorderColorHex: "#FF0000"
@@ -728,9 +759,14 @@ describe("Testing mergeStyles that convert cssObjects to CSS and group it by sel
 });
 
 describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS object with new styles", () => {
+  const store = createStore();
+  const renderContext: RenderType = "editor";
+
   test("Option with selector, should return undefined", () => {
     expect(
       getNewGeneratesCSSfromStyle({
+        renderContext,
+        store,
         v: {},
         breakpoint: "desktop",
         option: borderOptionWithSelector,
@@ -742,6 +778,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
   test("Height option with styles, should return cssObject with height", () => {
     expect(
       getNewGeneratesCSSfromStyle({
+        renderContext,
+        store,
         v: heightElementModel,
         breakpoint: "desktop",
         option: heightOptionWithStyle,
@@ -756,6 +794,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
   test("Height option with styles for tablet, should return cssObject with height for tablet", () => {
     expect(
       getNewGeneratesCSSfromStyle({
+        renderContext,
+        store,
         v: heightElementModel,
         breakpoint: "tablet",
         option: heightOptionWithStyle,
@@ -770,6 +810,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
   test("Height option with hover and tablet breakpoint", () => {
     expect(
       getNewGeneratesCSSfromStyle({
+        renderContext,
+        store,
         v: {
           ...heightElementModel,
           tabletHeight: 30
@@ -787,6 +829,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
   test("Height option with active and mobile breakpoint", () => {
     expect(
       getNewGeneratesCSSfromStyle({
+        renderContext,
+        store,
         v: heightElementModel,
         breakpoint: "mobile",
         option: heightOptionWithStyle,
@@ -801,9 +845,14 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
 });
 
 describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS object with new styles", () => {
+  const store = createStore();
+  const renderContext: RenderType = "editor";
+
   test("Option with style", () => {
     expect(
       getNewGeneratesCSSfromSelector({
+        renderContext,
+        store,
         v: {},
         breakpoint: "desktop",
         option: heightOptionWithStyle,
@@ -815,6 +864,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
   test("Border option with selector, should return cssObject with border", () => {
     expect(
       getNewGeneratesCSSfromSelector({
+        renderContext,
+        store,
         v: borderElementModel,
         breakpoint: "desktop",
         option: borderOptionWithSelector,
@@ -836,6 +887,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
   test("Border option with selector for tablet, should return cssObject with border for tablet", () => {
     expect(
       getNewGeneratesCSSfromSelector({
+        renderContext,
+        store,
         v: borderElementModel,
         breakpoint: "tablet",
         option: borderOptionWithSelector,
@@ -857,6 +910,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
   test("Border option with hover and tablet breakpoint", () => {
     expect(
       getNewGeneratesCSSfromSelector({
+        renderContext,
+        store,
         v: {
           ...borderElementModel,
           borderWidth: 30
@@ -881,6 +936,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
   test("Height option with active and mobile breakpoint", () => {
     expect(
       getNewGeneratesCSSfromSelector({
+        renderContext,
+        store,
         v: borderElementModel,
         breakpoint: "mobile",
         option: borderOptionWithSelector,
@@ -903,6 +960,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
   test("Border option with hover set int selector", () => {
     expect(
       getNewGeneratesCSSfromSelector({
+        renderContext,
+        store,
         v: {
           ...borderElementModel,
           borderWidth: 30
@@ -994,5 +1053,63 @@ describe("replaceHoverAndActive function", () => {
     ["button:hover.active:hover"]
   ])(`%s is not equal with ${output}`, (input) => {
     expect(replaceHoverAndActive(input)).toBe(output);
+  });
+});
+
+describe("Testing addBreakpointForStandart fn which add breakpoints for devices in old CSS generator for cssStyle functions called in standart", () => {
+  test.each([
+    [{ device: DESKTOP, state: NORMAL }, ""],
+    [{ device: DESKTOP, state: HOVER }, "@media(min-width:991px){"],
+    [{ device: DESKTOP, state: ACTIVE }, ""],
+    [
+      { device: TABLET, state: NORMAL },
+      "@media(max-width:991px) and (min-width:768px){"
+    ],
+    [
+      { device: TABLET, state: HOVER },
+      "@media(max-width:991px) and (min-width:768px){"
+    ],
+    [
+      { device: TABLET, state: ACTIVE },
+      "@media(max-width:991px) and (min-width:768px){"
+    ],
+    [{ device: MOBILE, state: NORMAL }, "@media(max-width:767px){"],
+    [{ device: MOBILE, state: HOVER }, "@media(max-width:767px){"],
+    [{ device: MOBILE, state: ACTIVE }, "@media(max-width:767px){"]
+  ])(`%s is not equal with %s`, ({ device, state }, expected) => {
+    expect(
+      addBreakpointForStandart(device as ResponsiveMode, state, {
+        desktop: 1500,
+        tablet: 991,
+        mobile: 767
+      })
+    ).toBe(expected);
+  });
+});
+
+describe("Testing addBreakpointForInterval fn which add breakpoints for devices in old CSS generator for cssStyle functions called in interval", () => {
+  test.each([
+    [DESKTOP, "@media(min-width:991px){"],
+    [TABLET, "@media(max-width:991px) and (min-width:768px){"],
+    [MOBILE, "@media(max-width:767px){"]
+  ])(`%s is not equal with %s`, (device, expected) => {
+    expect(
+      addBreakpointForInterval(device as ResponsiveMode, {
+        desktop: 1500,
+        tablet: 991,
+        mobile: 767
+      })
+    ).toBe(expected);
+  });
+
+  test.each([
+    [TABLET, ""],
+    [MOBILE, ""]
+  ])(`%s is not equal with %s`, (device, expected) => {
+    expect(
+      addBreakpointForInterval(device as ResponsiveMode, {
+        desktop: 1500
+      })
+    ).toBe(expected);
   });
 });

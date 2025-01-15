@@ -3,11 +3,11 @@ import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
 import { currentRoleSelector } from "visual/redux/selectors";
-import { getMembershipRoles } from "visual/utils/membership";
 import { t } from "visual/utils/i18n";
+import { getMembershipRoles } from "visual/utils/membership";
 
 export interface Props {
   label: string;
@@ -17,6 +17,7 @@ export interface Props {
 export const Roles = (props: Props): ReactElement => {
   const currentRole = useSelector(currentRoleSelector) ?? "default";
   const dispatch = useDispatch();
+  const config = useConfig();
 
   const { label, className: _className } = props;
   const className = classnames(
@@ -24,14 +25,14 @@ export const Roles = (props: Props): ReactElement => {
     _className
   );
 
-  const renderOptions = useMemo(() => {
-    const config = Config.getAll();
+  const _membershipRoles = useMemo(() => getMembershipRoles(config), [config]);
 
+  const renderOptions = useMemo(() => {
     const membershipRoles = [
       { role: "default", name: t("Default") },
       { role: "not_logged", name: t("Not logged") },
       { role: "logged", name: t("Logged") },
-      ...getMembershipRoles(config)
+      ..._membershipRoles
     ];
 
     return membershipRoles.map((item, index) => (
@@ -39,7 +40,7 @@ export const Roles = (props: Props): ReactElement => {
         {item.name}
       </SelectItem>
     ));
-  }, []);
+  }, [_membershipRoles]);
 
   const handleChangeRole = useCallback(
     (role: string) => {

@@ -1,4 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { Store } from "visual/redux/store";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
 
@@ -12,6 +13,7 @@ export type CSSValue<
   prefix?: string;
   mode?: string;
   props?: P;
+  store: Store;
 };
 
 export interface GradientCssDeclaration {

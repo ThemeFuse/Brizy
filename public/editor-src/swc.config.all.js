@@ -91,3 +91,25 @@ exports.preview = (options) => {
     env: clonedEnv
   };
 };
+
+exports.module = (options) => {
+  return {
+    module: {
+      type: "es6"
+    },
+    sourceMap: !options.IS_PRODUCTION,
+    minify: options.IS_PRODUCTION,
+    jsc: {
+      target: "es2021",
+      parser: {
+        syntax: "typescript",
+        tsx: true
+      },
+      transform: {
+        react: {
+          runtime: "automatic"
+        }
+      }
+    }
+  };
+};

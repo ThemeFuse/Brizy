@@ -51,6 +51,7 @@ trait Brizy_Editor_Asset_StaticFileTrait
         try {
             // check destination dir
             $dir_path = dirname($asset_path);
+            $basename = basename( $asset_path );
 
             if (!file_exists($dir_path)) {
                 if (!file_exists($dir_path) && !mkdir($dir_path, 0755, true) && !is_dir($dir_path)) {
@@ -60,11 +61,16 @@ trait Brizy_Editor_Asset_StaticFileTrait
 
             $content = self::get_asset_content($asset_source);
 
-            if ($content !== false) {
-                file_put_contents($asset_path, $content);
-            } else {
-                return false;
-            }
+	        $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+		        $basename,
+		        $content
+	        );
+
+	        $filePath = Brizy_Editor_Asset_StaticFileTrait::createSideLoadMedia( $tempFile, $asset_path );
+
+	        if ( $filePath instanceof WP_Error ) {
+		        throw new Exception( "Unable to store the thumbnail" );
+	        }
 
         } catch (Exception $e) {
             // clean up
@@ -78,6 +84,15 @@ trait Brizy_Editor_Asset_StaticFileTrait
         return true;
     }
 
+	/**
+	 * @deprcated "Do not use this method anymore"
+	 *
+	 * @param $content
+	 * @param $asset_path
+	 * @param $overwrite
+	 *
+	 * @return bool
+	 */
     protected function store_content_in_file($content, $asset_path, $overwrite = false)
     {
         if (file_exists($asset_path) && !$overwrite) {
@@ -178,7 +193,9 @@ trait Brizy_Editor_Asset_StaticFileTrait
             return new WP_Error('upload_error', $uploadData['error']);
         }
 
-        @copy($uploadData['file'], $assetPath);
+        if(!@copy($uploadData['file'], $assetPath)) {
+            return new WP_Error('upload_error', "Unable to copy file in: ".htmlentities($assetPath));
+        }
 
         unlink($uploadData['file']);
 

@@ -1,288 +1,310 @@
-import Config, { isWp } from "visual/global/Config";
-import { Config as ConfigType } from "visual/global/Config/types";
-import Accordion from "./Accordion";
-import Alert from "./Alert";
+import { isWp } from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Shortcode } from "visual/types";
+import { getDaysLeft } from "visual/utils/ecwid";
+import getAccordion from "./Accordion";
+import getAlert from "./Alert";
 import getArchive from "./Archive";
 import getAssetsPosts from "./AssetsPosts";
-import Audio from "./Audio";
+import getAudio from "./Audio";
 import getButton from "./Button";
 import getColumns from "./Columns";
-import Countdown2 from "./Countdown2";
-import Counter from "./Counter";
-import Cart from "./Ecwid/Cart";
-import MyAccount from "./Ecwid/MyAccount";
-import Product from "./Ecwid/Product";
-import ShoppingBag from "./Ecwid/ShoppingBag";
+import getCountdown2 from "./Countdown2";
+import getCounter from "./Counter";
+import getCart from "./Ecwid/Cart";
+import getFavorites from "./Ecwid/Favorites";
+import getMyAccount from "./Ecwid/MyAccount";
+import getProduct from "./Ecwid/Product";
+import getShoppingBag from "./Ecwid/ShoppingBag";
 import getForm2 from "./Form2";
 import getIcon from "./Icon";
-import IconText from "./IconText";
+import getIconText from "./IconText";
 import getImage from "./Image";
-import Leadific from "./Leadific/Leadific";
-import Line from "./Line";
-import Map from "./Map";
-import MenuSimple from "./MenuSimple";
-import MinistryBrandsArticleDetail from "./MinistryBrands/MinistryBrandsArticleDetail";
-import MinistryBrandsArticleFeatured from "./MinistryBrands/MinistryBrandsArticleFeatured";
-import MinistryBrandsArticleList from "./MinistryBrands/MinistryBrandsArticleList";
-import MinistryBrandsEventCalendar from "./MinistryBrands/MinistryBrandsEventCalendar";
-import MinistryBrandsEventDetail from "./MinistryBrands/MinistryBrandsEventDetail";
-import MinistryBrandsEventFeatured from "./MinistryBrands/MinistryBrandsEventFeatured";
-import MinistryBrandsEventLayout from "./MinistryBrands/MinistryBrandsEventLayout";
-import MinistryBrandsEventList from "./MinistryBrands/MinistryBrandsEventList";
-import MinistryBrandsFormWidget from "./MinistryBrands/MinistryBrandsFormWidget";
-import MinistryBrandsGroupDetail from "./MinistryBrands/MinistryBrandsGroupDetail";
-import MinistryBrandsGroupFeatured from "./MinistryBrands/MinistryBrandsGroupFeatured";
-import MinistryBrandsGroupLayout from "./MinistryBrands/MinistryBrandsGroupLayout";
-import MinistryBrandsGroupList from "./MinistryBrands/MinistryBrandsGroupList";
-import MinistryBrandsGroupSlider from "./MinistryBrands/MinistryBrandsGroupSlider";
-import MinistryBrandsPrayerWidget from "./MinistryBrands/MinistryBrandsPrayerWidget";
-import MinistryBrandsSermonDetail from "./MinistryBrands/MinistryBrandsSermonDetail";
-import MinistryBrandsSermonFeatured from "./MinistryBrands/MinistryBrandsSermonFeatured";
-import MinistryBrandsSermonLayout from "./MinistryBrands/MinistryBrandsSermonLayout";
-import MinistryBrandsSermonList from "./MinistryBrands/MinistryBrandsSermonList";
-import MinistryBrandsStaffDetail from "./MinistryBrands/MinistryBrandsStaffDetail";
+import getLeadific from "./Leadific/Leadific";
+import getLine from "./Line";
+import getMap from "./Map";
+import getMenuSimple from "./MenuSimple";
+import getMinistryBrandsArticleDetail from "./MinistryBrands/MinistryBrandsArticleDetail";
+import getMinistryBrandsArticleFeatured from "./MinistryBrands/MinistryBrandsArticleFeatured";
+import getMinistryBrandsArticleList from "./MinistryBrands/MinistryBrandsArticleList";
+import getMinistryBrandsEventCalendar from "./MinistryBrands/MinistryBrandsEventCalendar";
+import getMinistryBrandsEventDetail from "./MinistryBrands/MinistryBrandsEventDetail";
+import getMinistryBrandsEventFeatured from "./MinistryBrands/MinistryBrandsEventFeatured";
+import getMinistryBrandsEventLayout from "./MinistryBrands/MinistryBrandsEventLayout";
+import getMinistryBrandsEventList from "./MinistryBrands/MinistryBrandsEventList";
+import getMinistryBrandsFormWidget from "./MinistryBrands/MinistryBrandsFormWidget";
+import getMinistryBrandsGroupDetail from "./MinistryBrands/MinistryBrandsGroupDetail";
+import getMinistryBrandsGroupFeatured from "./MinistryBrands/MinistryBrandsGroupFeatured";
+import getMinistryBrandsGroupLayout from "./MinistryBrands/MinistryBrandsGroupLayout";
+import getMinistryBrandsGroupList from "./MinistryBrands/MinistryBrandsGroupList";
+import getMinistryBrandsGroupSlider from "./MinistryBrands/MinistryBrandsGroupSlider";
+import getMinistryBrandsPrayerWidget from "./MinistryBrands/MinistryBrandsPrayerWidget";
+import getMinistryBrandsSermonDetail from "./MinistryBrands/MinistryBrandsSermonDetail";
+import getMinistryBrandsSermonFeatured from "./MinistryBrands/MinistryBrandsSermonFeatured";
+import getMinistryBrandsSermonLayout from "./MinistryBrands/MinistryBrandsSermonLayout";
+import getMinistryBrandsSermonList from "./MinistryBrands/MinistryBrandsSermonList";
+import getMinistryBrandsStaffDetail from "./MinistryBrands/MinistryBrandsStaffDetail";
 import getPaypal from "./Paypal";
 import getPostExcerpt from "./PostExcerpt";
 import getPostTitle from "./PostTitle";
 import getPosts from "./Posts";
-import ProgressBar from "./ProgressBar";
-import ProtectedPage from "./ProtectedPage";
+import getProgressBar from "./ProgressBar";
+import getProtectedPage from "./ProtectedPage";
 import getRow from "./Row";
-import ShareButton from "./ShareButton";
+import getShareButton from "./ShareButton";
 import getShopCategories from "./ShopCategories";
 import getShopPosts from "./ShopPosts";
-import Spacer from "./Spacer";
-import Tabs from "./Tabs";
+import {
+  getAddToCart,
+  getBlogPostExcerpt,
+  getBlogPostList,
+  getBlogPostMeta,
+  getCollectionList,
+  getPrice,
+  getProductDescription,
+  getProductImage,
+  getProductList,
+  getProductMetafield,
+  getProductTitle,
+  getQuantity,
+  getVariant,
+  getVendor
+} from "./Shopify";
+import getSpacer from "./Spacer";
+import getTabs from "./Tabs";
 import getText from "./Text";
-import Translation from "./Translation";
-import UserEmail from "./UserEmail";
-import UserFirstName from "./UserFirstName";
-import UserLastName from "./UserLastName";
-import UserPhoneNumber from "./UserPhoneNumber";
-import UserRoles from "./UserRoles";
-import UserUsername from "./UserUsername";
-import Video from "./Video";
-import WOOCategories from "./WOOCategories";
-import WOOPages from "./WOOPages";
-import WPCustomShortcode from "./WPCustomShortcode";
+import getTranslation from "./Translation";
+import getUserEmail from "./UserEmail";
+import getUserFirstName from "./UserFirstName";
+import getUserLastName from "./UserLastName";
+import getUserPhoneNumber from "./UserPhoneNumber";
+import getUserRoles from "./UserRoles";
+import getUserUsername from "./UserUsername";
+import getVideo from "./Video";
+import getWOOCategories from "./WOOCategories";
+import getWOOPages from "./WOOPages";
+import getWPCustomShortcode from "./WPCustomShortcode";
 import getFeaturedImage from "./WPFeaturedImage";
-import WPSidebar from "./WPSidebar";
-import Breadcrumbs from "./pro/Breadcrumbs";
-import Embed from "./pro/Embed";
-import Calendly from "./pro/Calendly";
-import Carousel from "./pro/Carousel";
-import Facebook from "./pro/Facebook";
-import FacebookComments from "./pro/FacebookComments";
+import getWPSidebar from "./WPSidebar";
+import getBreadcrumbs from "./pro/Breadcrumbs";
+import getCalendly from "./pro/Calendly";
+import getCarousel from "./pro/Carousel";
+import getEmbed from "./pro/Embed";
+import getFacebook from "./pro/Facebook";
+import getFacebookComments from "./pro/FacebookComments";
 import getFlipbox from "./pro/Flipbox";
-import ImageGallery from "./pro/ImageGallery";
-import Login from "./pro/Login";
+import getImageGallery from "./pro/ImageGallery";
+import getInstagramFeed from "./pro/InstagramFeed";
+import getLogin from "./pro/Login";
 import getLottie from "./pro/Lottie";
-import Menu from "./pro/Menu";
-import PostInfo from "./pro/PostInfo";
-import PostNavigation from "./pro/PostNavigation";
-import Products from "./pro/Products";
-import ResetPassword from "./pro/ResetPassword";
-import Review from "./pro/Review.js";
-import Search from "./pro/Search";
-import StarRating from "./pro/StarRating";
-import Switcher from "./pro/Switcher";
-import Table from "./pro/Table";
+import getMenu from "./pro/Menu";
+import getPostInfo from "./pro/PostInfo";
+import getPostNavigation from "./pro/PostNavigation";
+import getProducts from "./pro/Products";
+import getResetPassword from "./pro/ResetPassword";
+import getReview from "./pro/Review";
+import getSearch from "./pro/Search";
+import getStarRating from "./pro/StarRating";
+import getSwitcher from "./pro/Switcher";
+import getTable from "./pro/Table";
 import getTableOfContents from "./pro/TableOfContents";
-import Timeline from "./pro/Timeline";
-import Twitter from "./pro/Twitter";
-import VideoPlaylist from "./pro/VideoPlaylist";
-import WOOAddToCart from "./pro/WOOAddToCart";
-import WOOArchives from "./pro/WOOArchives";
-import WOOAttributes from "./pro/WOOAttributes";
-import WOOBreadcrumbs from "./pro/WOOBreadcrumbs.js";
-import WOOCart from "./pro/WOOCart";
-import WOOExcerpt from "./pro/WOOExcerpt";
-import WOOGallery from "./pro/WOOGallery";
-import WOOPrice from "./pro/WOOPrice";
-import WOOProductContent from "./pro/WOOProductContent.js";
-import WOOProductMeta from "./pro/WOOProductMeta";
-import WOOProductTitle from "./pro/WOOProductTitle";
-import WOORating from "./pro/WOORating";
-import WOOSku from "./pro/WOOSku";
-import WOOStock from "./pro/WOOStock";
-import WOOUpsell from "./pro/WOOUpsell.js";
-import WPBreadcrumbs from "./pro/WPBreadcrumbs";
+import getTimeline from "./pro/Timeline";
+import getTwitter from "./pro/Twitter";
+import getVideoPlaylist from "./pro/VideoPlaylist";
+import getWOOAddToCart from "./pro/WOOAddToCart";
+import getWOOArchives from "./pro/WOOArchives";
+import getWOOAttributes from "./pro/WOOAttributes";
+import getWOOBreadcrumbs from "./pro/WOOBreadcrumbs";
+import getWOOCart from "./pro/WOOCart";
+import getWOOExcerpt from "./pro/WOOExcerpt";
+import getWOOGallery from "./pro/WOOGallery";
+import getWOOPrice from "./pro/WOOPrice";
+import getWOOProductContent from "./pro/WOOProductContent";
+import getWOOProductMeta from "./pro/WOOProductMeta";
+import getWOOProductTitle from "./pro/WOOProductTitle";
+import getWOORating from "./pro/WOORating";
+import getWOOSku from "./pro/WOOSku";
+import getWOOStock from "./pro/WOOStock";
+import getWOOUpsell from "./pro/WOOUpsell";
+import getWPBreadcrumbs from "./pro/WPBreadcrumbs";
 import getPostContent from "./pro/WPPostContent";
-import WPPostInfo from "./pro/WPPostInfo";
-import WPPostNavigation from "./pro/WPPostNavigation";
-import StoryLottie from "./pro/story/StoryLottie";
-import StoryStarRating from "./pro/story/StoryStarRating";
-import StoryButton from "./story/StoryButton";
-import StoryCountdown2 from "./story/StoryCountdown2";
-import StoryCounter from "./story/StoryCounter";
-import StoryEmbed from "./story/StoryEmbed";
+import getWPPostInfo from "./pro/WPPostInfo";
+import getWPPostNavigation from "./pro/WPPostNavigation";
+import getStoryLottie from "./pro/story/StoryLottie";
+import getStoryStarRating from "./pro/story/StoryStarRating";
+import getStoryButton from "./story/StoryButton";
+import getStoryCountdown2 from "./story/StoryCountdown2";
+import getStoryCounter from "./story/StoryCounter";
+import getStoryEmbed from "./story/StoryEmbed";
 import getStoryForm2 from "./story/StoryForm2";
-import StoryIcon from "./story/StoryIcon";
-import StoryImage from "./story/StoryImage";
-import StoryLeadific from "./story/StoryLeadific";
-import StoryLine from "./story/StoryLine";
-import StoryMap from "./story/StoryMap";
-import StoryProgressBar from "./story/StoryProgressBar";
-import StoryShape from "./story/StoryShape";
-import StoryText from "./story/StoryText";
-import StoryVideo from "./story/StoryVideo";
-import InstagramFeed from "./pro/InstagramFeed";
-import { getDaysLeft } from "visual/utils/ecwid";
-const config = Config.getAll();
+import getStoryIcon from "./story/StoryIcon";
+import getStoryImage from "./story/StoryImage";
+import getStoryLeadific from "./story/StoryLeadific";
+import getStoryLine from "./story/StoryLine";
+import getStoryMap from "./story/StoryMap";
+import getStoryProgressBar from "./story/StoryProgressBar";
+import getStoryShape from "./story/StoryShape";
+import getStoryText from "./story/StoryText";
+import getStoryVideo from "./story/StoryVideo";
 
-export const ProShortCodes = {
-  Text: false,
-  Image: false,
-  Button: false,
-  Icon: false,
-  Spacer: false,
-  Map: false,
-  Form2: true,
-  Line: false,
-  Menu: true,
-  MenuSimple: false,
-  Login: true,
-  Translation: false,
-  ShareButton: false,
+export function getProShortCodes(
+  config: ConfigCommon
+): Record<string, Shortcode["pro"]> {
+  return {
+    Text: false,
+    Image: false,
+    Button: false,
+    Icon: false,
+    Spacer: false,
+    Map: false,
+    Form2: true,
+    Line: false,
+    Menu: true,
+    MenuSimple: false,
+    Login: true,
+    Translation: false,
+    ShareButton: false,
 
-  ImageGallery: true,
-  Video: false,
-  Audio: false,
-  VideoPlaylist: true,
-  Flipbox: true,
+    ImageGallery: true,
+    Video: false,
+    Audio: false,
+    VideoPlaylist: true,
+    Flipbox: true,
 
-  IconText: false,
-  Lottie: true,
-  Embed: true,
-  StarRating: true,
-  Alert: false,
-  Counter: false,
-  Countdown2: false,
-  ProgressBar: false,
-  Calendly: true,
-  TableOfContents: true,
-  Carousel: true,
-  Tabs: false,
-  Accordion: false,
-  Switcher: true,
-  Table: true,
-  Timeline: true,
+    IconText: false,
+    Lottie: true,
+    Embed: true,
+    StarRating: true,
+    Alert: false,
+    Counter: false,
+    Countdown2: false,
+    ProgressBar: false,
+    Calendly: true,
+    TableOfContents: true,
+    Carousel: true,
+    Tabs: false,
+    Accordion: false,
+    Switcher: true,
+    Table: true,
+    Timeline: true,
 
-  StoryButton: false,
-  StoryIcon: false,
-  StoryEmbed: true,
-  StoryText: false,
-  StoryMap: false,
-  StoryProgressBar: false,
-  StoryLine: false,
-  StoryCountdown2: false,
-  StoryCounter: false,
-  StoryShape: false,
-  StoryForm2: true,
-  StoryStarRating: true,
-  StoryLottie: true,
+    StoryButton: false,
+    StoryIcon: false,
+    StoryEmbed: true,
+    StoryText: false,
+    StoryMap: false,
+    StoryProgressBar: false,
+    StoryLine: false,
+    StoryCountdown2: false,
+    StoryCounter: false,
+    StoryShape: false,
+    StoryForm2: true,
+    StoryStarRating: true,
+    StoryLottie: true,
 
-  StoryImage: false,
-  StoryVideo: false,
+    StoryImage: false,
+    StoryVideo: false,
 
-  StoryLeadific: false,
+    StoryLeadific: false,
 
-  Facebook: true,
-  Twitter: true,
-  FacebookComments: true,
-  InstagramFeed: true,
+    Facebook: true,
+    Twitter: true,
+    FacebookComments: true,
+    InstagramFeed: true,
 
-  Columns: false,
-  Row: false,
+    Columns: false,
+    Row: false,
 
-  ProtectedPage: false,
-  ResetPassword: false,
+    ProtectedPage: false,
+    ResetPassword: false,
 
-  Posts: isWp(Config.getAll()),
-  PostTitle: isWp(Config.getAll()),
-  PostInfo: true,
-  PostNavigation: true,
-  AssetsPosts: false,
-  Breadcrumbs: true,
+    Posts: isWp(config),
+    PostTitle: isWp(config),
+    PostInfo: true,
+    PostNavigation: true,
+    AssetsPosts: false,
+    Breadcrumbs: true,
 
-  UserFirstName: false,
-  UserLastName: false,
-  UserEmail: false,
-  UserPhoneNumber: false,
-  UserRoles: false,
-  UserUsername: false,
+    UserFirstName: false,
+    UserLastName: false,
+    UserEmail: false,
+    UserPhoneNumber: false,
+    UserRoles: false,
+    UserUsername: false,
 
-  Cart: (c: ConfigType) => getDaysLeft(c) <= 0,
-  Product: (c: ConfigType) => getDaysLeft(c) <= 0,
-  ShoppingBag: (c: ConfigType) => getDaysLeft(c) <= 0,
-  MyAccount: (c: ConfigType) => getDaysLeft(c) <= 0,
+    Cart: (c) => getDaysLeft(c) <= 0,
+    Product: (c) => getDaysLeft(c) <= 0,
+    ShoppingBag: (c) => getDaysLeft(c) <= 0,
+    MyAccount: (c) => getDaysLeft(c) <= 0,
+    Favorites: (c) => getDaysLeft(c) <= 0,
 
-  MinistryBrandsGroupLayout: false,
-  MinistryBrandsGroupSlider: false,
-  MinistryBrandsEventLayout: false,
-  MinistryBrandsEventCalendar: false,
-  MinistryBrandsSermonLayout: false,
-  MinistryBrandsSermonList: false,
-  MinistryBrandsSermonFeatured: false,
-  MinistryBrandsSermonDetail: false,
-  MinistryBrandsGroupList: false,
-  MinistryBrandsGroupDetail: false,
-  MinistryBrandsEventFeatured: false,
-  MinistryBrandsGroupFeatured: false,
-  MinistryBrandsEventList: false,
-  MinistryBrandsEventDetail: false,
-  MinistryBrandsFormWidget: false,
-  MinistryBrandsPrayerWidget: false,
-  MinistryBrandsArticleDetail: false,
-  MinistryBrandsArticleList: false,
-  MinistryBrandsStaffDetail: false,
-  MinistryBrandsArticleFeatured: false,
+    MinistryBrandsGroupLayout: false,
+    MinistryBrandsGroupSlider: false,
+    MinistryBrandsEventLayout: false,
+    MinistryBrandsEventCalendar: false,
+    MinistryBrandsSermonLayout: false,
+    MinistryBrandsSermonList: false,
+    MinistryBrandsSermonFeatured: false,
+    MinistryBrandsSermonDetail: false,
+    MinistryBrandsGroupList: false,
+    MinistryBrandsGroupDetail: false,
+    MinistryBrandsEventFeatured: false,
+    MinistryBrandsGroupFeatured: false,
+    MinistryBrandsEventList: false,
+    MinistryBrandsEventDetail: false,
+    MinistryBrandsFormWidget: false,
+    MinistryBrandsPrayerWidget: false,
+    MinistryBrandsArticleDetail: false,
+    MinistryBrandsArticleList: false,
+    MinistryBrandsStaffDetail: false,
+    MinistryBrandsArticleFeatured: false,
 
-  Paypal: false,
+    Paypal: false,
 
-  Leadific: false,
+    Leadific: false,
 
-  ShopPosts: false,
-  ShopCategories: false,
+    ShopPosts: false,
+    ShopCategories: false,
 
-  Search: true,
+    Search: true,
 
-  WPSidebar: false,
-  WPCustomShortcode: false,
+    WPSidebar: false,
+    WPCustomShortcode: false,
 
-  WOOCategories: false,
-  WOOPages: false,
-  Products: true,
-  WOOCart: true,
+    WOOCategories: false,
+    WOOPages: false,
+    Products: true,
+    WOOCart: true,
 
-  WPFeaturedImage: true,
+    WPFeaturedImage: true,
 
-  PostExcerpt: true,
-  WPPostContent: true,
-  WPPostInfo: true,
-  WPBreadcrumbs: true,
-  WPPostNavigation: true,
+    PostExcerpt: true,
+    WPPostContent: true,
+    WPPostInfo: true,
+    WPBreadcrumbs: true,
+    WPPostNavigation: true,
 
-  WOOProductTitle: true,
-  WOOExcerpt: true,
-  WOOProductContent: true,
-  WOOPrice: true,
-  WOOGallery: true,
-  WOOAddToCart: true,
-  WOOStock: true,
-  WOOSku: true,
-  WOOProductMeta: true,
-  WOORating: true,
-  WOOAttributes: true,
-  WOOUpsell: true,
-  WOOBreadcrumbs: true,
-  Review: true,
+    WOOProductTitle: true,
+    WOOExcerpt: true,
+    WOOProductContent: true,
+    WOOPrice: true,
+    WOOGallery: true,
+    WOOAddToCart: true,
+    WOOStock: true,
+    WOOSku: true,
+    WOOProductMeta: true,
+    WOORating: true,
+    WOOAttributes: true,
+    WOOUpsell: true,
+    WOOBreadcrumbs: true,
+    Review: true,
 
-  WOOArchives: true,
-  Archive: true
-};
+    WOOArchives: true,
+    Archive: true
+  };
+}
 
-export const ShortCodesKeywords = {
+export const ShortCodesKeywords: Record<string, string> = {
   Text: "text content paragraph copy",
   Image: "image picture photo graphic",
   Button: "button CTA action link",
@@ -361,6 +383,7 @@ export const ShortCodesKeywords = {
   Product: "product item merchandise",
   ShoppingBag: "shopping bag purchase buying",
   MyAccount: "my account user profile personal information",
+  Favorites: "favorites products buy",
 
   MinistryBrandsGroupLayout:
     "Ministry Brands Group Layout organization layout group structure",
@@ -443,149 +466,165 @@ export const ShortCodesKeywords = {
   Archive: "archive, collection, list"
 };
 
-export const CloudShortCodes = {
-  Text: getText(config),
-  Image: getImage(config),
-  Button: getButton(config),
-  Icon: getIcon(config),
-  Spacer,
-  Map,
-  Form2: getForm2(),
-  Line,
-  Menu,
-  MenuSimple,
-  Login,
-  Translation,
-  Posts: getPosts(config),
-  ShareButton,
+export function getSampleShortCodes(config: ConfigCommon) {
+  return {
+    Text: getText(config),
+    Image: getImage(config),
+    Button: getButton(config),
+    Icon: getIcon(config),
+    Spacer: getSpacer(),
+    Map: getMap(),
+    Form2: getForm2(),
+    Line: getLine(),
+    Menu: getMenu(),
+    MenuSimple: getMenuSimple(),
+    Login: getLogin(),
+    Translation: getTranslation(),
+    Posts: getPosts(config),
+    ShareButton: getShareButton(),
 
-  ImageGallery,
-  Video,
-  Audio,
-  VideoPlaylist,
-  Paypal: getPaypal(),
+    ImageGallery: getImageGallery(),
+    Video: getVideo(),
+    Audio: getAudio(),
+    VideoPlaylist: getVideoPlaylist(),
+    Paypal: getPaypal(),
 
-  IconText,
-  Lottie: getLottie(config),
-  Embed,
-  StarRating,
-  Alert,
-  Counter,
-  Countdown2,
-  ProgressBar,
-  Calendly,
-  TableOfContents: getTableOfContents(),
-  Carousel,
-  Tabs,
-  Accordion,
-  Switcher,
-  Table,
-  Timeline,
-  Flipbox: getFlipbox(),
+    IconText: getIconText(),
+    Lottie: getLottie(config),
+    Embed: getEmbed(),
+    StarRating: getStarRating(),
+    Alert: getAlert(),
+    Counter: getCounter(),
+    Countdown2: getCountdown2(),
+    ProgressBar: getProgressBar(),
+    Calendly: getCalendly(),
+    TableOfContents: getTableOfContents(),
+    Carousel: getCarousel(),
+    Tabs: getTabs(),
+    Accordion: getAccordion(),
+    Switcher: getSwitcher(),
+    Table: getTable(),
+    Timeline: getTimeline(),
+    Flipbox: getFlipbox(),
 
-  StoryButton,
-  StoryIcon,
-  StoryEmbed,
-  StoryText,
-  StoryMap,
-  StoryProgressBar,
-  StoryLine,
-  StoryCountdown2,
-  StoryCounter,
-  StoryShape,
-  StoryForm2: getStoryForm2(),
-  StoryStarRating,
-  StoryLottie,
+    StoryButton: getStoryButton(),
+    StoryIcon: getStoryIcon(),
+    StoryEmbed: getStoryEmbed(),
+    StoryText: getStoryText(),
+    StoryMap: getStoryMap(),
+    StoryProgressBar: getStoryProgressBar(),
+    StoryLine: getStoryLine(),
+    StoryCountdown2: getStoryCountdown2(),
+    StoryCounter: getStoryCounter(),
+    StoryShape: getStoryShape(),
+    StoryForm2: getStoryForm2(),
+    StoryStarRating: getStoryStarRating(),
+    StoryLottie: getStoryLottie(),
 
-  StoryImage,
-  StoryVideo,
+    StoryImage: getStoryImage(),
+    StoryVideo: getStoryVideo(),
 
-  StoryLeadific,
+    StoryLeadific: getStoryLeadific(),
 
-  Facebook,
-  Twitter,
-  FacebookComments,
-  InstagramFeed,
+    Facebook: getFacebook(),
+    Twitter: getTwitter(),
+    FacebookComments: getFacebookComments(),
+    InstagramFeed: getInstagramFeed(),
 
-  Columns: getColumns(config),
-  Row: getRow(config),
+    Columns: getColumns(config),
+    Row: getRow(config),
 
-  AssetsPosts: getAssetsPosts(config),
+    AssetsPosts: getAssetsPosts(config),
 
-  ProtectedPage,
-  ResetPassword,
+    ProtectedPage: getProtectedPage(),
+    ResetPassword: getResetPassword(),
 
-  UserFirstName,
-  UserLastName,
-  UserEmail,
-  UserPhoneNumber,
-  UserRoles,
-  UserUsername,
+    UserFirstName: getUserFirstName(),
+    UserLastName: getUserLastName(),
+    UserEmail: getUserEmail(),
+    UserPhoneNumber: getUserPhoneNumber(),
+    UserRoles: getUserRoles(),
+    UserUsername: getUserUsername(),
 
-  Cart,
-  ShoppingBag,
-  MyAccount,
-  ShopPosts: getShopPosts(config),
-  ShopCategories: getShopCategories(config),
+    Cart: getCart(),
+    ShoppingBag: getShoppingBag(),
+    MyAccount: getMyAccount(),
+    Favorites: getFavorites(),
+    ShopPosts: getShopPosts(config),
+    ShopCategories: getShopCategories(config),
 
-  MinistryBrandsGroupLayout,
-  MinistryBrandsGroupSlider,
-  MinistryBrandsEventLayout,
-  MinistryBrandsEventCalendar,
-  MinistryBrandsSermonLayout,
-  MinistryBrandsSermonList,
-  MinistryBrandsSermonFeatured,
-  MinistryBrandsSermonDetail,
-  MinistryBrandsGroupList,
-  MinistryBrandsGroupDetail,
-  MinistryBrandsEventFeatured,
-  MinistryBrandsGroupFeatured,
-  MinistryBrandsEventList,
-  MinistryBrandsEventDetail,
-  MinistryBrandsFormWidget,
-  MinistryBrandsPrayerWidget,
-  MinistryBrandsArticleDetail,
-  MinistryBrandsArticleList,
-  MinistryBrandsStaffDetail,
-  MinistryBrandsArticleFeatured,
+    MinistryBrandsGroupLayout: getMinistryBrandsGroupLayout(),
+    MinistryBrandsGroupSlider: getMinistryBrandsGroupSlider(),
+    MinistryBrandsEventLayout: getMinistryBrandsEventLayout(),
+    MinistryBrandsEventCalendar: getMinistryBrandsEventCalendar(),
+    MinistryBrandsSermonLayout: getMinistryBrandsSermonLayout(),
+    MinistryBrandsSermonList: getMinistryBrandsSermonList(),
+    MinistryBrandsSermonFeatured: getMinistryBrandsSermonFeatured(),
+    MinistryBrandsSermonDetail: getMinistryBrandsSermonDetail(),
+    MinistryBrandsGroupList: getMinistryBrandsGroupList(),
+    MinistryBrandsGroupDetail: getMinistryBrandsGroupDetail(),
+    MinistryBrandsEventFeatured: getMinistryBrandsEventFeatured(),
+    MinistryBrandsGroupFeatured: getMinistryBrandsGroupFeatured(),
+    MinistryBrandsEventList: getMinistryBrandsEventList(),
+    MinistryBrandsEventDetail: getMinistryBrandsEventDetail(),
+    MinistryBrandsFormWidget: getMinistryBrandsFormWidget(),
+    MinistryBrandsPrayerWidget: getMinistryBrandsPrayerWidget(),
+    MinistryBrandsArticleDetail: getMinistryBrandsArticleDetail(),
+    MinistryBrandsArticleList: getMinistryBrandsArticleList(),
+    MinistryBrandsStaffDetail: getMinistryBrandsStaffDetail(),
+    MinistryBrandsArticleFeatured: getMinistryBrandsArticleFeatured(),
 
-  Leadific,
+    Leadific: getLeadific(),
 
-  Product,
-  PostInfo,
-  PostNavigation,
-  Breadcrumbs
-};
+    Product: getProduct(),
+    PostInfo: getPostInfo(),
+    PostNavigation: getPostNavigation(),
+    Breadcrumbs: getBreadcrumbs(),
 
-export const WPShortCodes = {
-  Archive: getArchive(config),
-  PostExcerpt: getPostExcerpt(config),
-  PostTitle: getPostTitle(config),
-  WOOCategories,
-  WOOPages,
-  WPCustomShortcode,
-  WPFeaturedImage: getFeaturedImage(config),
-  WPSidebar,
-  Products,
-  Review,
-  Search,
-  WOOAddToCart,
-  WOOArchives,
-  WOOAttributes,
-  WOOBreadcrumbs,
-  WOOCart,
-  WOOExcerpt,
-  WOOGallery,
-  WOOPrice,
-  WOOProductContent,
-  WOOProductMeta,
-  WOOProductTitle,
-  WOORating,
-  WOOSku,
-  WOOStock,
-  WOOUpsell,
-  WPBreadcrumbs,
-  WPPostContent: getPostContent(config),
-  WPPostInfo,
-  WPPostNavigation
-};
+    Archive: getArchive(config),
+    PostExcerpt: getPostExcerpt(config),
+    PostTitle: getPostTitle(config),
+    WOOCategories: getWOOCategories(),
+    WOOPages: getWOOPages(),
+    WPCustomShortcode: getWPCustomShortcode(),
+    WPFeaturedImage: getFeaturedImage(config),
+    WPSidebar: getWPSidebar(),
+    Products: getProducts(),
+    Review: getReview(),
+    Search: getSearch(),
+    WOOAddToCart: getWOOAddToCart(),
+    WOOArchives: getWOOArchives(),
+    WOOAttributes: getWOOAttributes(),
+    WOOBreadcrumbs: getWOOBreadcrumbs(),
+    WOOCart: getWOOCart(),
+    WOOExcerpt: getWOOExcerpt(),
+    WOOGallery: getWOOGallery(),
+    WOOPrice: getWOOPrice(),
+    WOOProductContent: getWOOProductContent(),
+    WOOProductMeta: getWOOProductMeta(),
+    WOOProductTitle: getWOOProductTitle(),
+    WOORating: getWOORating(),
+    WOOSku: getWOOSku(),
+    WOOStock: getWOOStock(),
+    WOOUpsell: getWOOUpsell(),
+    WPBreadcrumbs: getWPBreadcrumbs(),
+    WPPostContent: getPostContent(config),
+    WPPostInfo: getWPPostInfo(),
+    WPPostNavigation: getWPPostNavigation(),
+
+    ProductTitle: getProductTitle(config),
+    ProductDescription: getProductDescription(config),
+    ProductImage: getProductImage(config),
+    ProductMetafield: getProductMetafield(config),
+    ProductList: getProductList(config),
+    AddToCart: getAddToCart(config),
+    Price: getPrice(config),
+    Quantity: getQuantity(config),
+    Variant: getVariant(config),
+    Vendor: getVendor(config),
+    CollectionList: getCollectionList(config),
+    BlogPostList: getBlogPostList(config),
+    BlogPostMeta: getBlogPostMeta(config),
+    BlogPostExcerpt: getBlogPostExcerpt(config)
+  };
+}

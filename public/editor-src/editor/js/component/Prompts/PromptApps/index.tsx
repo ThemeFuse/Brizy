@@ -1,10 +1,11 @@
 import React, { Component, ReactElement } from "react";
 import { noop } from "underscore";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import Integration from "./Integration";
 
-const TABS = [
+const getTabs = () => [
   {
     id: "app",
     title: t("APPS"),
@@ -18,7 +19,8 @@ type Props = {
   group: string;
   opened: boolean;
   onClose: () => void;
-}
+  config: ConfigCommon;
+};
 
 class PromptApps extends Component<Props> {
   static defaultProps = {
@@ -29,7 +31,8 @@ class PromptApps extends Component<Props> {
   };
 
   render(): ReactElement {
-    const { service, group, opened, onClose } = this.props;
+    const { service, group, opened, onClose, config } = this.props;
+    const tabs = getTabs();
 
     return (
       <Tabs
@@ -37,8 +40,9 @@ class PromptApps extends Component<Props> {
         service={service}
         group={group}
         opened={opened}
-        tabs={TABS}
+        tabs={tabs}
         onClose={onClose}
+        config={config}
       />
     );
   }

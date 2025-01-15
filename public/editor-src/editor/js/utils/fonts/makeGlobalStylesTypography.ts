@@ -1,5 +1,6 @@
 import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Store } from "visual/redux/store";
 import { FontStyle } from "visual/types";
 import {
   FONT_INITIAL,
@@ -37,7 +38,15 @@ export const makeStyleCSSVar = (data: {
   return `--brz-${id}${_device}${key}`.toLowerCase();
 };
 
-export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
+interface Data {
+  fontStyles: FontStyle[];
+  store: Store;
+}
+
+export const makeGlobalStylesTypography = ({
+  fontStyles,
+  store
+}: Data): string => {
   const config = Config.getAll();
 
   const vars = fontStyles
@@ -82,7 +91,8 @@ export const makeGlobalStylesTypography = (fontStyles: FontStyle[]): string => {
           ? FONT_INITIAL
           : getFontById({
               family: style.fontFamily,
-              type: style.fontFamilyType
+              type: style.fontFamilyType,
+              store
             }).family;
 
       const _fontSize = `${fontSize}${fontSizeSuffix ?? "px"}`;

@@ -1,12 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
@@ -36,13 +33,15 @@ export function getItems({
   const labelOff = label === "off";
   const isStyle1 = dvv("ratingStyle") === "style1";
 
-  const { hex: ratingColorHex } = getOptionColorHexByPalette(
+  const ratingColor = getColor(
+    dvv("ratingColorPalette"),
     dvv("ratingColorHex"),
-    dvv("ratingColorPalette")
+    dvv("ratingColorOpacity")
   );
-  const { hex: style2RatingColorHex } = getOptionColorHexByPalette(
+  const style2RatingColor = getColor(
+    dvv("style2BgColorPalette"),
     dvv("style2BgColorHex"),
-    dvv("style2BgColorPalette")
+    dvv("style2BgColorOpacity")
   );
 
   const richTextDC = getDynamicContentOption({
@@ -256,9 +255,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: isStyle1
-              ? hexToRgba(ratingColorHex, dvv("ratingColorOpacity"))
-              : hexToRgba(style2RatingColorHex, dvv("style2BgColorOpacity"))
+            backgroundColor: isStyle1 ? ratingColor : style2RatingColor
           }
         }
       },

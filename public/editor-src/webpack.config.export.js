@@ -24,6 +24,7 @@ exports.node = (options) => {
     /\/editor\/js\/component\/Options\//,
     /\/editor\/js\/utils\/toolbar\//,
     /\/node_modules\/lottie-react\//,
+    /\/node_modules\/lottie-web\//,
     /\/node_modules\/jquery\//,
     /\/node_modules\/react-facebook\//
   ];
@@ -124,6 +125,7 @@ exports.browser = (options) => {
     /\/editor\/js\/component\/Options\//,
     /\/editor\/js\/utils\/toolbar\//,
     /\/node_modules\/lottie-react\//,
+    /\/node_modules\/lottie-web\//,
     /\/node_modules\/jquery\//,
     /\/node_modules\/react-facebook\//
   ];

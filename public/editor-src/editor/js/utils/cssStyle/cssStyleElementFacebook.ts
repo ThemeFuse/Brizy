@@ -5,16 +5,17 @@ import { defaultValueValue } from "../onChange";
 export function cssStyleElementFacebookWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const facebookType = dvv("facebookType");
 
   switch (facebookType) {
     case "group":
-      return cssStyleSizeWidth({ v, device, state });
+      return cssStyleSizeWidth({ v, device, state, store });
     case "page":
-      return cssStyleSizeWidth({ v, device, state, prefix: "page" });
+      return cssStyleSizeWidth({ v, device, state, store, prefix: "page" });
   }
 
   return "";
@@ -23,12 +24,13 @@ export function cssStyleElementFacebookWidth({
 export function cssStyleElementFacebookAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const facebookType = dvv("facebookType");
 
   return facebookType === "page"
-    ? cssStyleMarginAlign({ v, device, state, prefix: "page" })
-    : cssStyleMarginAlign({ v, device, state });
+    ? cssStyleMarginAlign({ v, device, state, store, prefix: "page" })
+    : cssStyleMarginAlign({ v, device, state, store });
 }

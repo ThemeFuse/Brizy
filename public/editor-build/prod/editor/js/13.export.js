@@ -2,7 +2,7 @@ exports.id = 13;
 exports.ids = [13];
 exports.modules = {
 
-/***/ 6986:
+/***/ 7012:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Wistia_exports, {
   default: () => Wistia
 });
 module.exports = __toCommonJS(Wistia_exports);
-var import_react = __toESM(__webpack_require__(470));
-var import_utils = __webpack_require__(3805);
-var import_patterns = __webpack_require__(3808);
+var import_react = __toESM(__webpack_require__(24));
+var import_utils = __webpack_require__(3837);
+var import_patterns = __webpack_require__(3840);
 const SDK_URL = "https://fast.wistia.com/assets/external/E-v1.js";
 const SDK_GLOBAL = "Wistia";
 const PLAYER_ID_PREFIX = "wistia-player-";

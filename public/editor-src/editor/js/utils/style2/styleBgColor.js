@@ -1,8 +1,7 @@
-import { capByPrefix } from "visual/utils/string";
+import { getColor, getColorPalette } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getColor } from "visual/utils/color";
+import { capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 
 const getState = (v, state) =>
   styleState({ v, state }) === "hover" ? "hover" : state;
@@ -10,7 +9,7 @@ const getState = (v, state) =>
 export function styleBgColor({ v, device, state, prefix = "bg" }) {
   state = getState(v, state);
 
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const palette = dvv(capByPrefix(prefix, "colorPalette"));
   const hex = dvv(capByPrefix(prefix, "colorHex"));
@@ -22,10 +21,9 @@ export function styleBgColor({ v, device, state, prefix = "bg" }) {
 export function styleBgColorHex({ v, device, state, prefix = "bg" }) {
   state = getState(v, state);
 
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const colorPalette = dvv(capByPrefix(prefix, "colorPalette"));
+  const colorHex = dvv(capByPrefix(prefix, "colorHex"));
 
-  return getOptionColorHexByPalette(
-    dvv(capByPrefix(prefix, "colorHex")),
-    dvv(capByPrefix(prefix, "colorPalette"))
-  ).hex;
+  return getColorPalette(colorPalette, colorHex);
 }

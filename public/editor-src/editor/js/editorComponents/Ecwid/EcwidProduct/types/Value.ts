@@ -19,7 +19,6 @@ export interface Value extends ElementModel {
   customCSS: string;
 
   positionName: number;
-  positionBreadcrumbs: number;
   positionPrice: number;
   positionAddToBag: number;
   positionDescription: number;
@@ -27,7 +26,6 @@ export interface Value extends ElementModel {
   positionShareTitle: number;
 
   attributesDisplay: Switch;
-  breadcrumbsDisplay: Switch;
   carouselImage: Switch;
   cutProductDescription: Switch;
   descriptionDisplay: Switch;

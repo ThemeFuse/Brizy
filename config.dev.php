@@ -33,7 +33,7 @@ class Brizy_Config
     const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'editor-build'.DIRECTORY_SEPARATOR.'dev';
     const EDITOR_BUILD_RELATIVE_PATH = 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
     const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
-    const CLOUD_ENDPOINT = 'http://www.brizysites.com';
+    const CLOUD_ENDPOINT = 'https://beta1.brizydemo.com';
     const CLOUD_EDITOR_VERSIONS = '/api/versions';
     const CLOUD_LIBRARY = '/dev/library';
     const CLOUD_SIGNIN = '/api/sign_ins';

@@ -1,6 +1,7 @@
 import { produce } from "immer";
 import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
+import { isPro } from "visual/utils/env";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import {
   AppData,
@@ -11,8 +12,6 @@ import {
 } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 import { createForm, createIntegration, getForm, getIntegration } from "./api";
-
-const IS_PRO = Config.get("pro");
 
 type Props = BaseIntegrationProps & {
   formId: string;
@@ -27,7 +26,7 @@ type Context = BaseIntegrationContext & {
 class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
   appsData: AppData[] = [];
   appsComponent = AppsComponent;
-  proExceptions = !IS_PRO;
+  proExceptions = !isPro(Config.getAll());
 
   async componentDidMount(): Promise<void> {
     const { Integrations } = await import("visual/config/integrations");

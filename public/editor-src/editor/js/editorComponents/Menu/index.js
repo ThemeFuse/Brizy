@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { useState } from "react";
+import React from "react";
 import { merge } from "timm";
 import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
@@ -7,40 +7,36 @@ import ContextMenu from "visual/component/ContextMenu";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Portal from "visual/component/Portal";
-import { PromptThirdParty } from "visual/component/Prompts/PromptThirdParty";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { wInMMenu } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
 import UIEvents from "visual/global/UIEvents";
-import { pageSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
+import { isView } from "visual/providers/RenderProvider";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { isPro } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
+import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { encodeToString } from "visual/utils/string";
 import { styleElementMMenu, styleElementMenuMode } from "visual/utils/style2";
 import { Wrapper } from "../tools/Wrapper";
 import contextMenuConfig from "./contextMenu";
+import { MenuPreviewMock } from "./controls/MenuPreviewMock";
+import { NavContainer } from "./controls/NavContainer";
 import defaultValue from "./defaultValue.json";
 import * as sidebarClose from "./sidebarClose";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
-import { styleMenu, styleMenuContainer, styleMMenu } from "./styles";
+import { styleMMenu, styleMenu, styleMenuContainer } from "./styles";
 import * as toolbarClose from "./toolbarClose";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { itemsToSymbols, normalizeMenuItems, symbolsToItems } from "./utils";
 import { isClonedSlide } from "./utils.common";
-import { MenuPreviewMock } from "./controls/MenuPreviewMock";
-import { NavContainer } from "./controls/NavContainer";
-import { makePlaceholder } from "visual/utils/dynamicContent";
-
-const IS_PRO = Config.get("pro");
 
 export default class Menu extends EditorComponent {
   static get componentId() {
@@ -59,6 +55,8 @@ export default class Menu extends EditorComponent {
   nodeRef = React.createRef();
 
   mMenu = null;
+
+  isPro = isPro(this.getGlobalConfig());
 
   getMeta(v) {
     const { meta } = this.props;
@@ -86,14 +84,9 @@ export default class Menu extends EditorComponent {
     };
   }
 
-  getDeviceMode() {
-    return getStore().getState().ui.deviceMode;
-  }
-
   hasMMenu() {
     const v = this.getValue();
-
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       const mMenu = styleElementMMenu({ v, device: DESKTOP });
       const tabletMMenu = styleElementMMenu({ v, device: TABLET });
       const mobileMMenu = styleElementMMenu({ v, device: MOBILE });
@@ -157,6 +150,15 @@ export default class Menu extends EditorComponent {
     return this.nodeRef.current;
   };
 
+  setRef = (ref) => {
+    attachRef(ref, this.nodeRef);
+    const extend = this.props.wrapperExtend;
+
+    if (extend) {
+      attachRef(ref, extend.ref);
+    }
+  };
+
   getDefaultValue() {
     return {
       ...super.getDefaultValue(),
@@ -165,7 +167,7 @@ export default class Menu extends EditorComponent {
   }
 
   getDBValue() {
-    const menusConfig = Config.get("menuData");
+    const menusConfig = this.getGlobalConfig().menuData;
 
     if (menusConfig.length === 0) {
       return { ...this.props.dbValue, items: [] };
@@ -265,15 +267,27 @@ export default class Menu extends EditorComponent {
     const { className: _className, items, menuSelected } = v;
     const hasMMenu = this.hasMMenu() && !!id;
     const styleClassName = hasMMenu
-      ? css(
+      ? this.css(
           `${this.getComponentId()}-mmenu`,
           `${this.getId()}-mmenu`,
-          styleMMenu(v, vs, vd)
+          styleMMenu({
+            v,
+            vs,
+            vd,
+            store: this.getReduxStore(),
+            renderContext: this.renderContext
+          })
         )
-      : css(
+      : this.css(
           `${this.getComponentId()}-menu`,
           `${this.getId()}-menu`,
-          styleMenu(v, vs, vd)
+          styleMenu({
+            v,
+            vs,
+            vd,
+            store: this.getReduxStore(),
+            renderContext: this.renderContext
+          })
         );
 
     const itemsProps = this.makeSubcomponentProps({
@@ -327,15 +341,27 @@ export default class Menu extends EditorComponent {
     const { className: _className, items, menuSelected } = v;
     const hasMMenu = this.hasMMenu() && !!id;
     const styleClassName = hasMMenu
-      ? css(
+      ? this.css(
           `${this.getComponentId()}-mmenu`,
           `${this.getId()}-mmenu`,
-          styleMMenu(v, vs, vd)
+          styleMMenu({
+            v,
+            vs,
+            vd,
+            store: this.getReduxStore(),
+            renderContext: this.renderContext
+          })
         )
-      : css(
+      : this.css(
           `${this.getComponentId()}-menu`,
           `${this.getId()}-menu`,
-          styleMenu(v, vs, vd)
+          styleMenu({
+            v,
+            vs,
+            vd,
+            store: this.getReduxStore(),
+            renderContext: this.renderContext
+          })
         );
     const mods = {
       [DESKTOP]: styleElementMenuMode({ v, device: DESKTOP }),
@@ -409,31 +435,20 @@ export default class Menu extends EditorComponent {
   }
 
   renderErrors(v) {
-    const menusConfig = Config.get("menuData");
+    const config = this.getGlobalConfig();
+    const { menuData: menusConfig, elements } = config;
     let errMsg;
+    const _isView = isView(this.renderContext);
 
     if (menusConfig.length === 0) {
-      const dashboardNavMenu = Config.get("urls").dashboardNavMenu;
+      const { menu } = elements ?? {};
+      const { onOpen, createMenuLabel = t("Create a menu") } = menu ?? {};
 
-      if (TARGET === "WP") {
-        errMsg = (
-          <>
-            <a
-              className="brz-a"
-              href={dashboardNavMenu}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("Create a menu")}
-            </a>
-            {t("in your WordPress admin")}
-          </>
-        );
-      } else {
-        errMsg = (
-          <CloudCreateMenuButton>{t("Create a menu")}</CloudCreateMenuButton>
-        );
-      }
+      errMsg = !_isView && (
+        <span className="brz-a" onClick={onOpen}>
+          {createMenuLabel}
+        </span>
+      );
     }
 
     if (!errMsg) {
@@ -468,10 +483,16 @@ export default class Menu extends EditorComponent {
     ];
     const className = classnames(
       "brz-menu__container",
-      css(
+      this.css(
         `${this.getComponentId()}-menu-container`,
         `${this.getId()}-menu-container`,
-        styleMenuContainer(v, vs, vd)
+        styleMenuContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -481,7 +502,11 @@ export default class Menu extends EditorComponent {
         onClickOutside={this.closeMMenu}
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+          <ContextMenu
+            {...this.makeContextMenuProps(contextMenuConfig, {
+              setRef: this.setRef
+            })}
+          >
             <Wrapper
               {...this.makeWrapperProps({
                 className,
@@ -537,10 +562,16 @@ export default class Menu extends EditorComponent {
 
     const className = classnames(
       "brz-menu__container",
-      css(
+      this.css(
         `${this.getComponentId()}-menu-container`,
         `${id}-menu-container`,
-        styleMenuContainer(v, vs, vd)
+        styleMenuContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -553,7 +584,7 @@ export default class Menu extends EditorComponent {
               <div className="brz-mm-menu__icon">
                 <ThemeIcon name="menu-3" type="editor" />
               </div>
-              {IS_PRO && this.renderMenuForView(v, vs, vd, htmlId)}
+              {this.isPro && this.renderMenuForView(v, vs, vd, htmlId)}
             </>
           )}
         </div>
@@ -654,36 +685,4 @@ export default class Menu extends EditorComponent {
 
     return classNames;
   }
-}
-
-function CloudCreateMenuButton({ children }) {
-  if (IS_PREVIEW) {
-    return null;
-  }
-
-  const [opened, setOpened] = useState(false);
-  const siteUrl = Config.get("urls").site;
-  const projectId = Config.get("project").id;
-  const pageId = pageSelector(getStore().getState()).id;
-  let iframeSrc = `${siteUrl}/projects/${projectId}/settings?page_id=${pageId}`;
-
-  return (
-    <>
-      <a
-        className="brz-a"
-        href="#"
-        onClick={(e) => {
-          e.preventDefault();
-          setOpened(true);
-        }}
-      >
-        {children}
-      </a>
-      <PromptThirdParty
-        iframeSrc={iframeSrc}
-        opened={opened}
-        onClose={() => setOpened(false)}
-      />
-    </>
-  );
 }

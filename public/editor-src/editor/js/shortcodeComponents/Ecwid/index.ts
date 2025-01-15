@@ -1,30 +1,23 @@
-import { Shortcode } from "visual/types";
-import Cart from "./Cart";
-import MyAccount from "./MyAccount";
-import Product from "./Product";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Shortcode } from "visual/types";
 import { getDaysLeft } from "../../utils/ecwid";
-import ShoppingBag from "./ShoppingBag";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import getCart from "./Cart";
+import getFavorites from "./Favorites";
+import getMyAccount from "./MyAccount";
+import getProduct from "./Product";
+import getShoppingBag from "./ShoppingBag";
 
-const config: Shortcode[] = [
-  {
-    component: Cart,
-    pro: (c: ConfigCommon): boolean => getDaysLeft(c) <= 0
-  },
-  {
-    component: Product,
-    pro: (c: ConfigCommon): boolean => getDaysLeft(c) <= 0
-  },
-  // remove later
-  // { component: Products, pro: false },
-  {
-    component: ShoppingBag,
-    pro: (c: ConfigCommon): boolean => getDaysLeft(c) <= 0
-  },
-  {
-    component: MyAccount,
-    pro: (c: ConfigCommon): boolean => getDaysLeft(c) <= 0
-  }
-];
+const pro = (c: ConfigCommon): boolean => getDaysLeft(c) <= 0;
 
+function config(): Shortcode[] {
+  return [
+    { component: getCart(), pro },
+    { component: getProduct(), pro },
+    // remove later
+    // { component: Products, pro: false },
+    { component: getShoppingBag(), pro },
+    { component: getMyAccount(), pro },
+    { component: getFavorites(), pro }
+  ];
+}
 export default config;

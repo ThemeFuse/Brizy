@@ -6,7 +6,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
@@ -15,11 +14,11 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class FacebookPage extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "FacebookPage";
   }
-
-  static defaultValue = defaultValue;
 
   getAppData() {
     //const { social = [] } = Config.get("applications");
@@ -52,10 +51,16 @@ class FacebookPage extends EditorComponent {
 
     const className = classnames(
       "brz-fb-page",
-      css(
-        `${this.constructor.componentId}`,
+      this.css(
+        `${this.getComponentId()}`,
         `${this.getId()}`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -70,6 +75,7 @@ class FacebookPage extends EditorComponent {
               key={this.key}
               type="Page"
               data={data}
+              renderContext={this.renderContext}
             />
           </div>
         </CustomCSS>
@@ -106,17 +112,28 @@ class FacebookPage extends EditorComponent {
     };
     const className = classnames(
       "brz-fb-page",
-      css(
-        `${this.constructor.componentId}`,
+      this.css(
+        `${this.getComponentId()}`,
         `${this.getId()}`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={className}>
-          <Facebook appId={appData.appId} type="Page" data={data} />
+          <Facebook
+            appId={appData.appId}
+            type="Page"
+            data={data}
+            renderContext={this.renderContext}
+          />
         </div>
       </CustomCSS>
     );

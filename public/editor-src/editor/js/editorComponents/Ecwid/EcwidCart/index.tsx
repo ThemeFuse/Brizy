@@ -1,28 +1,27 @@
 import classnames from "classnames";
-import React, { createRef, ReactNode } from "react";
+import React, { ReactNode, createRef } from "react";
 import { uniqueId } from "underscore";
+import { isView } from "visual/providers/RenderProvider";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { encodeToString } from "visual/utils/string";
 import * as sidebarExtendParent from "../sidebar";
 import * as sidebarButton from "../sidebarButton";
 import * as sidebarDisable from "../sidebarDisable";
 import * as sidebarImage from "../sidebarImage";
 import * as sidebarInput from "../sidebarInput";
-import * as toolbarBreadcrumbs from "../toolbarBreadcrumbs";
 import * as toolbarConnectLink from "../toolbarConnectLink";
-import * as toolbarFooter from "../toolbarFooter";
+import { ecwidToolbarFooter } from "../toolbarFooter";
 import * as toolbarSKU from "../toolbarSKU";
-import * as toolbarTitle from "../toolbarTitle";
-import * as toolbarTitle2 from "../toolbarTitle2";
+import { ecwidToolbarTitle } from "../toolbarTitle";
+import { ecwidToolbarTitle2 } from "../toolbarTitle2";
 import defaultValue from "./defaultValue.json";
 import * as sidebarClose from "./sidebarClose";
 import * as sidebarCollapsedImage from "./sidebarCollapsedImage";
@@ -64,6 +63,7 @@ export class EcwidCart extends EditorComponent<Value> {
   static get componentId(): ElementTypes.EcwidCart {
     return ElementTypes.EcwidCart;
   }
+
   static defaultValue = defaultValue;
 
   private ecwid: EcwidService | undefined;
@@ -84,18 +84,18 @@ export class EcwidCart extends EditorComponent<Value> {
     );
     this.props.extendParentToolbar(toolbarExtend);
 
-    if (!IS_EDITOR) {
+    if (isView(this.renderContext)) {
       return;
     }
 
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     if (
       this.containerRef.current &&
       isCloud(config) &&
       config.modules?.shop?.type === "ecwid"
     ) {
-      const v = this.getDBValue();
+      const v = this.getValue();
       const cnf = valueToEciwdConfig(v);
 
       this.ecwid = EcwidService.init(config.modules.shop.storeId, cnf);
@@ -104,7 +104,7 @@ export class EcwidCart extends EditorComponent<Value> {
   }
 
   componentDidUpdate(): void {
-    const newConfig = valueToEciwdConfig(this.getDBValue());
+    const newConfig = valueToEciwdConfig(this.getValue());
     const oldConfig = this.ecwid?.getConfig();
 
     if (!oldConfig || !eq(oldConfig, newConfig)) {
@@ -118,12 +118,25 @@ export class EcwidCart extends EditorComponent<Value> {
     const className = classnames(
       "brz-ecwid-wrapper",
       "brz-ecwid-cart-wrapper",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
       <Toolbar
-        {...this.makeToolbarPropsFromConfig2(toolbarTitle, sidebarDisable)}
+        {...this.makeToolbarPropsFromConfig2(
+          ecwidToolbarTitle(),
+          sidebarDisable
+        )}
         selector=".ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .page-title__name, .ec-store .ec-store__content-wrapper .ec-page-title .page-title__name"
         selectorSearchStrategy="dom-tree"
       >
@@ -131,7 +144,7 @@ export class EcwidCart extends EditorComponent<Value> {
           return (
             <Toolbar
               {...this.makeToolbarPropsFromConfig2(
-                toolbarTitle2,
+                ecwidToolbarTitle2(),
                 sidebarDisable
               )}
               selector=".ec-cart .ec-cart__body .ec-cart__body-inner .ec-page-title .page-title__name"
@@ -141,774 +154,749 @@ export class EcwidCart extends EditorComponent<Value> {
                 return (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarBreadcrumbs,
-                      sidebarDisable
+                      toolbarImage,
+                      sidebarImage,
+                      {
+                        allowExtend: false
+                      }
                     )}
-                    selector=".ec-breadcrumbs"
+                    selector=".ec-cart-item__image"
                     selectorSearchStrategy="dom-tree"
                   >
-                    {({ open: openBreadcrumbs }) => {
+                    {({ open: openImage }) => {
                       return (
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
-                            toolbarImage,
-                            sidebarImage,
-                            {
-                              allowExtend: false
-                            }
+                            toolbarProductName,
+                            sidebarDisable
                           )}
-                          selector=".ec-cart-item__image"
+                          selector="a.ec-cart-item__title"
                           selectorSearchStrategy="dom-tree"
                         >
-                          {({ open: openImage }) => {
+                          {({ open: openProductName }) => {
                             return (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarProductName,
+                                  toolbarProductSize,
                                   sidebarDisable
                                 )}
-                                selector="a.ec-cart-item__title"
+                                selector=".ec-cart-item__options.ec-text-muted"
                                 selectorSearchStrategy="dom-tree"
                               >
-                                {({ open: openProductName }) => {
+                                {({ open: openProductSize }) => {
                                   return (
                                     <Toolbar
                                       {...this.makeToolbarPropsFromConfig2(
-                                        toolbarProductSize,
-                                        sidebarDisable
+                                        toolbarClose,
+                                        sidebarClose
                                       )}
-                                      selector=".ec-cart-item__options.ec-text-muted"
+                                      selector=".ec-cart-item__control"
                                       selectorSearchStrategy="dom-tree"
                                     >
-                                      {({ open: openProductSize }) => {
+                                      {({ open: openClose }) => {
                                         return (
                                           <Toolbar
                                             {...this.makeToolbarPropsFromConfig2(
-                                              toolbarClose,
-                                              sidebarClose
+                                              toolbarSKU,
+                                              sidebarDisable
                                             )}
-                                            selector=".ec-cart-item__control"
+                                            selector=".ec-cart-item__sku.ec-text-muted"
                                             selectorSearchStrategy="dom-tree"
                                           >
-                                            {({ open: openClose }) => {
+                                            {({ open: openSKU }) => {
                                               return (
                                                 <Toolbar
                                                   {...this.makeToolbarPropsFromConfig2(
-                                                    toolbarSKU,
+                                                    toolbarQty,
                                                     sidebarDisable
                                                   )}
-                                                  selector=".ec-cart-item__sku.ec-text-muted"
+                                                  selector=".ec-cart-item__count"
                                                   selectorSearchStrategy="dom-tree"
                                                 >
-                                                  {({ open: openSKU }) => {
+                                                  {({ open: openQty }) => {
                                                     return (
                                                       <Toolbar
                                                         {...this.makeToolbarPropsFromConfig2(
-                                                          toolbarQty,
+                                                          toolbarPrice,
                                                           sidebarDisable
                                                         )}
-                                                        selector=".ec-cart-item__count"
+                                                        selector=".ec-cart-item__price-inner, .ec-cart-item-sum.ec-cart-item-sum--cta"
                                                         selectorSearchStrategy="dom-tree"
                                                       >
                                                         {({
-                                                          open: openQty
+                                                          open: openPrice
                                                         }) => {
                                                           return (
                                                             <Toolbar
                                                               {...this.makeToolbarPropsFromConfig2(
-                                                                toolbarPrice,
+                                                                toolbarSummaryTitle,
                                                                 sidebarDisable
                                                               )}
-                                                              selector=".ec-cart-item__price-inner, .ec-cart-item-sum.ec-cart-item-sum--cta"
+                                                              selector=".ec-cart-summary__row.ec-cart-summary__row--total .ec-cart-summary__cell.ec-cart-summary__title"
                                                               selectorSearchStrategy="dom-tree"
                                                             >
                                                               {({
-                                                                open: openPrice
+                                                                open: openSummaryTitle
                                                               }) => {
                                                                 return (
                                                                   <Toolbar
                                                                     {...this.makeToolbarPropsFromConfig2(
-                                                                      toolbarSummaryTitle,
+                                                                      toolbarSummaryPrice,
                                                                       sidebarDisable
                                                                     )}
-                                                                    selector=".ec-cart-summary__row.ec-cart-summary__row--total .ec-cart-summary__cell.ec-cart-summary__title"
+                                                                    selector=".ec-cart-summary__total"
                                                                     selectorSearchStrategy="dom-tree"
                                                                   >
                                                                     {({
-                                                                      open: openSummaryTitle
+                                                                      open: openSummaryPrice
                                                                     }) => {
                                                                       return (
                                                                         <Toolbar
                                                                           {...this.makeToolbarPropsFromConfig2(
-                                                                            toolbarSummaryPrice,
+                                                                            toolbarSubtotalTitle,
                                                                             sidebarDisable
                                                                           )}
-                                                                          selector=".ec-cart-summary__total"
+                                                                          selector=".ec-cart-summary__row.ec-cart-summary__row--items .ec-cart-summary__cell.ec-cart-summary__title"
                                                                           selectorSearchStrategy="dom-tree"
                                                                         >
                                                                           {({
-                                                                            open: openSummaryPrice
+                                                                            open: openSubtotalTitle
                                                                           }) => {
                                                                             return (
                                                                               <Toolbar
                                                                                 {...this.makeToolbarPropsFromConfig2(
-                                                                                  toolbarSubtotalTitle,
+                                                                                  toolbarSubtotalPrice,
                                                                                   sidebarDisable
                                                                                 )}
-                                                                                selector=".ec-cart-summary__row.ec-cart-summary__row--items .ec-cart-summary__cell.ec-cart-summary__title"
+                                                                                selector=".ec-cart-summary__row--items .ec-cart-summary__price span"
                                                                                 selectorSearchStrategy="dom-tree"
                                                                               >
                                                                                 {({
-                                                                                  open: openSubtotalTitle
+                                                                                  open: openSubtotalPrice
                                                                                 }) => {
                                                                                   return (
                                                                                     <Toolbar
                                                                                       {...this.makeToolbarPropsFromConfig2(
-                                                                                        toolbarSubtotalPrice,
+                                                                                        toolbarTaxesTitle,
                                                                                         sidebarDisable
                                                                                       )}
-                                                                                      selector=".ec-cart-summary__row--items .ec-cart-summary__price span"
+                                                                                      selector=".ec-cart-summary__row--taxes .ec-cart-summary__title"
                                                                                       selectorSearchStrategy="dom-tree"
                                                                                     >
                                                                                       {({
-                                                                                        open: openSubtotalPrice
+                                                                                        open: openTaxesTitle
                                                                                       }) => {
                                                                                         return (
                                                                                           <Toolbar
                                                                                             {...this.makeToolbarPropsFromConfig2(
-                                                                                              toolbarTaxesTitle,
+                                                                                              toolbarTaxesPrice,
                                                                                               sidebarDisable
                                                                                             )}
-                                                                                            selector=".ec-cart-summary__row--taxes .ec-cart-summary__title"
+                                                                                            selector=".ec-cart-summary__row--taxes .ec-cart-summary__price"
                                                                                             selectorSearchStrategy="dom-tree"
                                                                                           >
                                                                                             {({
-                                                                                              open: openTaxesTitle
+                                                                                              open: openTaxesPrice
                                                                                             }) => {
                                                                                               return (
                                                                                                 <Toolbar
                                                                                                   {...this.makeToolbarPropsFromConfig2(
-                                                                                                    toolbarTaxesPrice,
+                                                                                                    toolbarSummaryNote,
                                                                                                     sidebarDisable
                                                                                                   )}
-                                                                                                  selector=".ec-cart-summary__row--taxes .ec-cart-summary__price"
+                                                                                                  selector=".ec-cart-summary__cell.ec-cart-summary__note"
                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                 >
                                                                                                   {({
-                                                                                                    open: openTaxesPrice
+                                                                                                    open: openSummaryNote
                                                                                                   }) => {
                                                                                                     return (
                                                                                                       <Toolbar
                                                                                                         {...this.makeToolbarPropsFromConfig2(
-                                                                                                          toolbarSummaryNote,
+                                                                                                          toolbarConnectLink,
                                                                                                           sidebarDisable
                                                                                                         )}
-                                                                                                        selector=".ec-cart-summary__cell.ec-cart-summary__note"
+                                                                                                        selector=".ec-cart-shopping__wrap"
                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                       >
                                                                                                         {({
-                                                                                                          open: openSummaryNote
+                                                                                                          open: openConnectLink
                                                                                                         }) => {
                                                                                                           return (
                                                                                                             <Toolbar
                                                                                                               {...this.makeToolbarPropsFromConfig2(
-                                                                                                                toolbarConnectLink,
+                                                                                                                toolbarEmpty,
                                                                                                                 sidebarDisable
                                                                                                               )}
-                                                                                                              selector=".ec-cart-shopping__wrap"
+                                                                                                              selector=".ec-cart__message"
                                                                                                               selectorSearchStrategy="dom-tree"
                                                                                                             >
                                                                                                               {({
-                                                                                                                open: openConnectLink
+                                                                                                                open: openEmpty
                                                                                                               }) => {
                                                                                                                 return (
                                                                                                                   <Toolbar
                                                                                                                     {...this.makeToolbarPropsFromConfig2(
-                                                                                                                      toolbarEmpty,
+                                                                                                                      toolbarEmail,
                                                                                                                       sidebarDisable
                                                                                                                     )}
-                                                                                                                    selector=".ec-cart__message"
+                                                                                                                    selector=".ec-cart-email__text"
                                                                                                                     selectorSearchStrategy="dom-tree"
                                                                                                                   >
                                                                                                                     {({
-                                                                                                                      open: openEmpty
+                                                                                                                      open: openEmail
                                                                                                                     }) => {
                                                                                                                       return (
                                                                                                                         <Toolbar
                                                                                                                           {...this.makeToolbarPropsFromConfig2(
-                                                                                                                            toolbarEmail,
+                                                                                                                            toolbarCheckbox,
                                                                                                                             sidebarDisable
                                                                                                                           )}
-                                                                                                                          selector=".ec-cart-email__text"
+                                                                                                                          selector=".form-control--checkbox.form-control"
                                                                                                                           selectorSearchStrategy="dom-tree"
                                                                                                                         >
                                                                                                                           {({
-                                                                                                                            open: openEmail
+                                                                                                                            open: openCheckbox
                                                                                                                           }) => {
                                                                                                                             return (
                                                                                                                               <Toolbar
                                                                                                                                 {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                  toolbarCheckbox,
-                                                                                                                                  sidebarDisable
+                                                                                                                                  toolbarButton,
+                                                                                                                                  sidebarButton,
+                                                                                                                                  {
+                                                                                                                                    allowExtend:
+                                                                                                                                      false
+                                                                                                                                  }
                                                                                                                                 )}
-                                                                                                                                selector=".form-control--checkbox.form-control"
+                                                                                                                                selector=".form-control__button"
                                                                                                                                 selectorSearchStrategy="dom-tree"
                                                                                                                               >
                                                                                                                                 {({
-                                                                                                                                  open: openCheckbox
+                                                                                                                                  open: openButton
                                                                                                                                 }) => {
                                                                                                                                   return (
                                                                                                                                     <Toolbar
                                                                                                                                       {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                        toolbarButton,
-                                                                                                                                        sidebarButton,
-                                                                                                                                        {
-                                                                                                                                          allowExtend:
-                                                                                                                                            false
-                                                                                                                                        }
+                                                                                                                                        toolbarSubtitles,
+                                                                                                                                        sidebarDisable
                                                                                                                                       )}
-                                                                                                                                      selector=".form-control__button"
+                                                                                                                                      selector=".ec-cart__cert.ec-text-muted, .ec-cart-next__text.ec-text-muted"
                                                                                                                                       selectorSearchStrategy="dom-tree"
                                                                                                                                     >
                                                                                                                                       {({
-                                                                                                                                        open: openButton
+                                                                                                                                        open: openSubtitles
                                                                                                                                       }) => {
                                                                                                                                         return (
                                                                                                                                           <Toolbar
                                                                                                                                             {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                              toolbarSubtitles,
-                                                                                                                                              sidebarDisable
+                                                                                                                                              toolbarInput,
+                                                                                                                                              sidebarInput,
+                                                                                                                                              {
+                                                                                                                                                allowExtend:
+                                                                                                                                                  false
+                                                                                                                                              }
                                                                                                                                             )}
-                                                                                                                                            selector=".ec-cart__cert.ec-text-muted, .ec-cart-next__text.ec-text-muted"
+                                                                                                                                            selector=".ec-cart-email__input"
                                                                                                                                             selectorSearchStrategy="dom-tree"
                                                                                                                                           >
                                                                                                                                             {({
-                                                                                                                                              open: openSubtitles
+                                                                                                                                              open: openInput
                                                                                                                                             }) => {
                                                                                                                                               return (
                                                                                                                                                 <Toolbar
                                                                                                                                                   {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                    toolbarInput,
-                                                                                                                                                    sidebarInput,
-                                                                                                                                                    {
-                                                                                                                                                      allowExtend:
-                                                                                                                                                        false
-                                                                                                                                                    }
+                                                                                                                                                    toolbarNext,
+                                                                                                                                                    sidebarDisable
                                                                                                                                                   )}
-                                                                                                                                                  selector=".ec-cart-email__input"
+                                                                                                                                                  selector=".ec-cart-next__header.ec-header-h4"
                                                                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                                                                 >
                                                                                                                                                   {({
-                                                                                                                                                    open: openInput
+                                                                                                                                                    open: openNext
                                                                                                                                                   }) => {
                                                                                                                                                     return (
                                                                                                                                                       <Toolbar
                                                                                                                                                         {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                          toolbarNext,
+                                                                                                                                                          toolbarPayment,
                                                                                                                                                           sidebarDisable
                                                                                                                                                         )}
-                                                                                                                                                        selector=".ec-cart-next__header.ec-header-h4"
+                                                                                                                                                        selector=".ec-cart-next__title"
                                                                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                                                                       >
                                                                                                                                                         {({
-                                                                                                                                                          open: openNext
+                                                                                                                                                          open: openPayment
                                                                                                                                                         }) => {
                                                                                                                                                           return (
                                                                                                                                                             <Toolbar
                                                                                                                                                               {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                toolbarPayment,
+                                                                                                                                                                ecwidToolbarFooter(),
                                                                                                                                                                 sidebarDisable
                                                                                                                                                               )}
-                                                                                                                                                              selector=".ec-cart-next__title"
+                                                                                                                                                              selector=".ec-footer"
                                                                                                                                                               selectorSearchStrategy="dom-tree"
                                                                                                                                                             >
                                                                                                                                                               {({
-                                                                                                                                                                open: openPayment
+                                                                                                                                                                open: openFooter
                                                                                                                                                               }) => {
                                                                                                                                                                 return (
                                                                                                                                                                   <Toolbar
                                                                                                                                                                     {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                      toolbarFooter,
-                                                                                                                                                                      sidebarDisable
+                                                                                                                                                                      toolbarGrid,
+                                                                                                                                                                      sidebarGrid,
+                                                                                                                                                                      {
+                                                                                                                                                                        allowExtend:
+                                                                                                                                                                          false
+                                                                                                                                                                      }
                                                                                                                                                                     )}
-                                                                                                                                                                    selector=".ec-footer"
+                                                                                                                                                                    selector=".ec-related-products .grid-product__image"
                                                                                                                                                                     selectorSearchStrategy="dom-tree"
                                                                                                                                                                   >
                                                                                                                                                                     {({
-                                                                                                                                                                      open: openFooter
+                                                                                                                                                                      open: openGrid
                                                                                                                                                                     }) => {
                                                                                                                                                                       return (
                                                                                                                                                                         <Toolbar
                                                                                                                                                                           {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                            toolbarGrid,
-                                                                                                                                                                            sidebarGrid,
-                                                                                                                                                                            {
-                                                                                                                                                                              allowExtend:
-                                                                                                                                                                                false
-                                                                                                                                                                            }
+                                                                                                                                                                            toolbarGridTitle,
+                                                                                                                                                                            sidebarDisable
                                                                                                                                                                           )}
-                                                                                                                                                                          selector=".ec-related-products .grid-product__image"
+                                                                                                                                                                          selector=".ec-related-products .grid-product__title"
                                                                                                                                                                           selectorSearchStrategy="dom-tree"
                                                                                                                                                                         >
                                                                                                                                                                           {({
-                                                                                                                                                                            open: openGrid
+                                                                                                                                                                            open: openGridTitle
                                                                                                                                                                           }) => {
                                                                                                                                                                             return (
                                                                                                                                                                               <Toolbar
                                                                                                                                                                                 {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                                  toolbarGridTitle,
+                                                                                                                                                                                  toolbarGridSubtitle,
                                                                                                                                                                                   sidebarDisable
                                                                                                                                                                                 )}
-                                                                                                                                                                                selector=".ec-related-products .grid-product__title"
+                                                                                                                                                                                selector=".ec-related-products .grid-product__subtitle"
                                                                                                                                                                                 selectorSearchStrategy="dom-tree"
                                                                                                                                                                               >
                                                                                                                                                                                 {({
-                                                                                                                                                                                  open: openGridTitle
+                                                                                                                                                                                  open: openGridSubtitle
                                                                                                                                                                                 }) => {
                                                                                                                                                                                   return (
                                                                                                                                                                                     <Toolbar
                                                                                                                                                                                       {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                                        toolbarGridSubtitle,
+                                                                                                                                                                                        toolbarGridSKUInner,
                                                                                                                                                                                         sidebarDisable
                                                                                                                                                                                       )}
-                                                                                                                                                                                      selector=".ec-related-products .grid-product__subtitle"
+                                                                                                                                                                                      selector=".ec-related-products .grid-product__sku"
                                                                                                                                                                                       selectorSearchStrategy="dom-tree"
                                                                                                                                                                                     >
                                                                                                                                                                                       {({
-                                                                                                                                                                                        open: openGridSubtitle
+                                                                                                                                                                                        open: openGridSKUInner
                                                                                                                                                                                       }) => {
                                                                                                                                                                                         return (
                                                                                                                                                                                           <Toolbar
                                                                                                                                                                                             {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                                              toolbarGridSKUInner,
+                                                                                                                                                                                              toolbarGridPrice,
                                                                                                                                                                                               sidebarDisable
                                                                                                                                                                                             )}
-                                                                                                                                                                                            selector=".ec-related-products .grid-product__sku"
+                                                                                                                                                                                            selector=".ec-related-products .grid-product__price"
                                                                                                                                                                                             selectorSearchStrategy="dom-tree"
                                                                                                                                                                                           >
                                                                                                                                                                                             {({
-                                                                                                                                                                                              open: openGridSKUInner
+                                                                                                                                                                                              open: openGridPrice
                                                                                                                                                                                             }) => {
                                                                                                                                                                                               return (
                                                                                                                                                                                                 <Toolbar
                                                                                                                                                                                                   {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                                                    toolbarGridPrice,
+                                                                                                                                                                                                    toolbarTotalProductsCount,
                                                                                                                                                                                                     sidebarDisable
                                                                                                                                                                                                   )}
-                                                                                                                                                                                                  selector=".ec-related-products .grid-product__price"
+                                                                                                                                                                                                  selector=".ec-cart-item__sum .ec-cart-item-sum--items"
                                                                                                                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                 >
                                                                                                                                                                                                   {({
-                                                                                                                                                                                                    open: openGridPrice
+                                                                                                                                                                                                    open: openTotalProductsCount
                                                                                                                                                                                                   }) => {
                                                                                                                                                                                                     return (
                                                                                                                                                                                                       <Toolbar
                                                                                                                                                                                                         {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                                                          toolbarTotalProductsCount,
-                                                                                                                                                                                                          sidebarDisable
+                                                                                                                                                                                                          toolbarCollapsedImage,
+                                                                                                                                                                                                          sidebarCollapsedImage,
+                                                                                                                                                                                                          {
+                                                                                                                                                                                                            allowExtend:
+                                                                                                                                                                                                              false
+                                                                                                                                                                                                          }
                                                                                                                                                                                                         )}
-                                                                                                                                                                                                        selector=".ec-cart-item__sum .ec-cart-item-sum--items"
+                                                                                                                                                                                                        selector=".ec-cart__products--short-desktop .ec-cart-item__image"
                                                                                                                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                       >
                                                                                                                                                                                                         {({
-                                                                                                                                                                                                          open: openTotalProductsCount
+                                                                                                                                                                                                          open: openCollapsedImage
                                                                                                                                                                                                         }) => {
                                                                                                                                                                                                           return (
-                                                                                                                                                                                                            <Toolbar
-                                                                                                                                                                                                              {...this.makeToolbarPropsFromConfig2(
-                                                                                                                                                                                                                toolbarCollapsedImage,
-                                                                                                                                                                                                                sidebarCollapsedImage,
-                                                                                                                                                                                                                {
-                                                                                                                                                                                                                  allowExtend:
-                                                                                                                                                                                                                    false
-                                                                                                                                                                                                                }
-                                                                                                                                                                                                              )}
-                                                                                                                                                                                                              selector=".ec-cart__products--short-desktop .ec-cart-item__image"
-                                                                                                                                                                                                              selectorSearchStrategy="dom-tree"
+                                                                                                                                                                                                            <CustomCSS
+                                                                                                                                                                                                              selectorName={this.getId()}
+                                                                                                                                                                                                              css={
+                                                                                                                                                                                                                customCSS
+                                                                                                                                                                                                              }
                                                                                                                                                                                                             >
-                                                                                                                                                                                                              {({
-                                                                                                                                                                                                                open: openCollapsedImage
-                                                                                                                                                                                                              }) => {
-                                                                                                                                                                                                                return (
-                                                                                                                                                                                                                  <CustomCSS
-                                                                                                                                                                                                                    selectorName={this.getId()}
-                                                                                                                                                                                                                    css={
-                                                                                                                                                                                                                      customCSS
+                                                                                                                                                                                                              <Wrapper
+                                                                                                                                                                                                                {...this.makeWrapperProps(
+                                                                                                                                                                                                                  {
+                                                                                                                                                                                                                    className
+                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                )}
+                                                                                                                                                                                                              >
+                                                                                                                                                                                                                <div
+                                                                                                                                                                                                                  onClickCapture={(
+                                                                                                                                                                                                                    e
+                                                                                                                                                                                                                  ) => {
+                                                                                                                                                                                                                    e.stopPropagation();
+                                                                                                                                                                                                                    e.preventDefault();
+
+                                                                                                                                                                                                                    if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .page-title__name, .ec-store .ec-store__content-wrapper .ec-page-title .page-title__name"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openTitle(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart .ec-cart__body .ec-cart__body-inner .ec-page-title .page-title__name"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openTitle2(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart__products--short-desktop .ec-cart-item__image"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openCollapsedImage(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-item__image"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openImage(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        "a.ec-cart-item__title"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openProductName(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-item__options.ec-text-muted"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openProductSize(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-item__control"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openClose(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-item__sku.ec-text-muted"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openSKU(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-item__count"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openQty(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-item__price-inner, .ec-cart-item-sum.ec-cart-item-sum--cta"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openPrice(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-summary__row.ec-cart-summary__row--total .ec-cart-summary__cell.ec-cart-summary__title"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openSummaryTitle(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-summary__total"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openSummaryPrice(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-summary__row.ec-cart-summary__row--items .ec-cart-summary__cell.ec-cart-summary__title"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openSubtotalTitle(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-summary__row--items .ec-cart-summary__price span"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openSubtotalPrice(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-summary__row--taxes .ec-cart-summary__title"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openTaxesTitle(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-summary__row--taxes .ec-cart-summary__price"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openTaxesPrice(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-summary__cell.ec-cart-summary__note"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openSummaryNote(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-shopping__wrap"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openConnectLink(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart__message"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openEmpty(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-email__text"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openEmail(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".form-control--checkbox.form-control"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openCheckbox(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".form-control__button"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openButton(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart__cert.ec-text-muted, .ec-cart-next__text.ec-text-muted"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openSubtitles(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-email__input"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openInput(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-next__header.ec-header-h4"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openNext(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-next__title"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openPayment(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-footer"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openFooter(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-related-products .grid-product__image"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openGrid(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-related-products .grid-product__title"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openGridTitle(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-related-products .grid-product__subtitle"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openGridSubtitle(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-related-products .grid-product__sku"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openGridSKUInner(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-related-products .grid-product__price"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openGridPrice(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                    } else if (
+                                                                                                                                                                                                                      (
+                                                                                                                                                                                                                        e.target as HTMLElement | null
+                                                                                                                                                                                                                      )?.closest(
+                                                                                                                                                                                                                        ".ec-cart-item__sum"
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    ) {
+                                                                                                                                                                                                                      openTotalProductsCount(
+                                                                                                                                                                                                                        e.nativeEvent
+                                                                                                                                                                                                                      );
                                                                                                                                                                                                                     }
-                                                                                                                                                                                                                  >
-                                                                                                                                                                                                                    <Wrapper
-                                                                                                                                                                                                                      {...this.makeWrapperProps(
-                                                                                                                                                                                                                        {
-                                                                                                                                                                                                                          className
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                      )}
-                                                                                                                                                                                                                    >
-                                                                                                                                                                                                                      <div
-                                                                                                                                                                                                                        onClickCapture={(
-                                                                                                                                                                                                                          e
-                                                                                                                                                                                                                        ) => {
-                                                                                                                                                                                                                          e.stopPropagation();
-                                                                                                                                                                                                                          e.preventDefault();
 
-                                                                                                                                                                                                                          if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .page-title__name, .ec-store .ec-store__content-wrapper .ec-page-title .page-title__name"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openTitle(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart .ec-cart__body .ec-cart__body-inner .ec-page-title .page-title__name"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openTitle2(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-breadcrumbs"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openBreadcrumbs(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart__products--short-desktop .ec-cart-item__image"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openCollapsedImage(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-item__image"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openImage(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              "a.ec-cart-item__title"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openProductName(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-item__options.ec-text-muted"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openProductSize(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-item__control"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openClose(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-item__sku.ec-text-muted"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openSKU(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-item__count"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openQty(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-item__price-inner, .ec-cart-item-sum.ec-cart-item-sum--cta"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openPrice(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-summary__row.ec-cart-summary__row--total .ec-cart-summary__cell.ec-cart-summary__title"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openSummaryTitle(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-summary__total"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openSummaryPrice(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-summary__row.ec-cart-summary__row--items .ec-cart-summary__cell.ec-cart-summary__title"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openSubtotalTitle(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-summary__row--items .ec-cart-summary__price span"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openSubtotalPrice(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-summary__row--taxes .ec-cart-summary__title"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openTaxesTitle(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-summary__row--taxes .ec-cart-summary__price"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openTaxesPrice(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-summary__cell.ec-cart-summary__note"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openSummaryNote(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-shopping__wrap"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openConnectLink(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart__message"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openEmpty(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-email__text"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openEmail(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".form-control--checkbox.form-control"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openCheckbox(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".form-control__button"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openButton(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart__cert.ec-text-muted, .ec-cart-next__text.ec-text-muted"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openSubtitles(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-email__input"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openInput(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-next__header.ec-header-h4"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openNext(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-next__title"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openPayment(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-footer"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openFooter(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-related-products .grid-product__image"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openGrid(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-related-products .grid-product__title"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openGridTitle(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-related-products .grid-product__subtitle"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openGridSubtitle(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-related-products .grid-product__sku"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openGridSKUInner(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-related-products .grid-product__price"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openGridPrice(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          } else if (
-                                                                                                                                                                                                                            (
-                                                                                                                                                                                                                              e.target as HTMLElement | null
-                                                                                                                                                                                                                            )?.closest(
-                                                                                                                                                                                                                              ".ec-cart-item__sum"
-                                                                                                                                                                                                                            )
-                                                                                                                                                                                                                          ) {
-                                                                                                                                                                                                                            openTotalProductsCount(
-                                                                                                                                                                                                                              e.nativeEvent
-                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                          }
-
-                                                                                                                                                                                                                          return false;
-                                                                                                                                                                                                                        }}
-                                                                                                                                                                                                                        className="brz-ecwid-cart"
-                                                                                                                                                                                                                        id={
-                                                                                                                                                                                                                          this
-                                                                                                                                                                                                                            .uniqueId
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                        ref={
-                                                                                                                                                                                                                          this
-                                                                                                                                                                                                                            .containerRef
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                      />
-                                                                                                                                                                                                                    </Wrapper>
-                                                                                                                                                                                                                  </CustomCSS>
-                                                                                                                                                                                                                );
-                                                                                                                                                                                                              }}
-                                                                                                                                                                                                            </Toolbar>
+                                                                                                                                                                                                                    return false;
+                                                                                                                                                                                                                  }}
+                                                                                                                                                                                                                  className="brz-ecwid-cart"
+                                                                                                                                                                                                                  id={
+                                                                                                                                                                                                                    this
+                                                                                                                                                                                                                      .uniqueId
+                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                  ref={
+                                                                                                                                                                                                                    this
+                                                                                                                                                                                                                      .containerRef
+                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                />
+                                                                                                                                                                                                              </Wrapper>
+                                                                                                                                                                                                            </CustomCSS>
                                                                                                                                                                                                           );
                                                                                                                                                                                                         }}
                                                                                                                                                                                                       </Toolbar>
@@ -1012,10 +1000,22 @@ export class EcwidCart extends EditorComponent<Value> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
+    const cnf = valueToEciwdConfig(v);
+
     const className = classnames(
       "brz-ecwid-wrapper",
       "brz-ecwid-cart-wrapper",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const storeId = makePlaceholder({
@@ -1024,7 +1024,11 @@ export class EcwidCart extends EditorComponent<Value> {
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
-        <div className="brz-ecwid-cart" data-store-id={storeId} />
+        <div
+          className="brz-ecwid-cart"
+          data-store-id={storeId}
+          data-storefront={encodeToString(cnf)}
+        />
       </Wrapper>
     );
   }

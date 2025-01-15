@@ -1,5 +1,4 @@
 import { produce } from "immer";
-import Config from "visual/global/Config";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
   isCloud,
@@ -7,10 +6,9 @@ import {
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
-import { pageSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import {
   BlockTypeRule,
   CloudReferenceAllEntity,
@@ -20,11 +18,11 @@ import {
   GlobalBlockPosition,
   Page
 } from "visual/types";
+import { isGlobalPopup } from "visual/types/utils";
 import {
   ECWID_PRODUCT_CATEGORY_TYPE,
   ECWID_PRODUCT_TYPE
 } from "visual/utils/ecwid";
-import { isGlobalPopup } from "visual/types/utils";
 import { isTemplate } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { canUseCondition } from "../getAllowedGBIds";
@@ -323,15 +321,18 @@ function turnPositionsIntoObject(
 // this method is calling from redux/globalBlocks
 // we can't get pageId from config because -
 // if there is are not pages we create one on client side.
-export function getCurrentRule(page = pageSelector(getStore().getState())): {
+export function getCurrentRule(
+  page: Page,
+  config: ConfigCommon
+): {
   group: CollectionTypeRule["appliedFor"];
   type: CollectionTypeRule["entityType"];
   id: Page["id"] | EcwidCategoryId | EcwidProductId;
 } {
-  const config = Config.getAll();
   let group = PAGES_GROUP_ID;
   let type = "page";
-  let id: string | EcwidProductId | EcwidCategoryId = page.id;
+  let id: string | EcwidProductId | EcwidCategoryId =
+    page.matchingItemId ?? page.id;
 
   if (isCollectionPage(page)) {
     type = page.collectionType.id;
@@ -443,9 +444,10 @@ export function getBlockAlignment(
 export function changeRule(
   globalBlock: GlobalBlock,
   shouldAddIncludeCondition: boolean,
-  page: Page
+  page: Page,
+  config: ConfigCommon
 ): GlobalBlock {
-  const currentRule = getCurrentRule(page);
+  const currentRule = getCurrentRule(page, config);
 
   const newGlobalBlock = {
     ...globalBlock,
@@ -456,7 +458,11 @@ export function changeRule(
     )
   };
 
-  const blockIsVisible = canUseCondition(newGlobalBlock, page);
+  const blockIsVisible = canUseCondition({
+    globalBlock: newGlobalBlock,
+    page,
+    config
+  });
   if (
     (!shouldAddIncludeCondition && blockIsVisible) ||
     (shouldAddIncludeCondition && !blockIsVisible)

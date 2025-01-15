@@ -5,6 +5,7 @@ import {
 } from "visual/component/Prompts/common/PromptPage/types";
 import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { State } from "visual/component/Prompts/common/states/Classic/types/State";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyPage } from "visual/types";
 import { BlogSourceItem } from "visual/utils/api/types";
 import { Setters } from "./types/Setters";
@@ -18,6 +19,7 @@ export interface Props {
   onSave: () => Promise<unknown>;
   onCancel: VoidFunction;
   onAfterSave?: VoidFunction;
+  config: ConfigCommon;
 }
 
 export interface Invalid {
