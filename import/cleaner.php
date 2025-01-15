@@ -58,31 +58,32 @@ class Brizy_Import_Cleaner {
 		$this->fileSystem->delete( $this->urlBuilder->brizy_upload_path(), true );
 	}
 
-	/**
-	 * @throws Exception
-	 */
-	private function cleanTables() {
+    /**
+     * @throws Exception
+     */
+    private function cleanTables() {
 
-		$this->wpdb->query(
-			$this->wpdb->prepare(
-				"DELETE p, m, tr, tt, t, tm
-				    FROM {$this->wpdb->posts} p
-				    LEFT JOIN {$this->wpdb->term_relationships} tr ON p.ID = tr.object_id
-				    LEFT JOIN {$this->wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
-				    LEFT JOIN {$this->wpdb->terms} t ON t.term_id = tt.term_id
-				    LEFT JOIN {$this->wpdb->termmeta} tm ON tm.term_id = t.term_id
-				    LEFT JOIN {$this->wpdb->postmeta} m ON p.ID = m.post_id
-				    WHERE p.post_type <> %s AND p.post_type <> %s",
-				Brizy_Editor_Project::BRIZY_PROJECT,
-				'wp_global_styles'
-			)
-		);
+        $this->wpdb->query(
+            $this->wpdb->prepare(
+                "DELETE p, m, tr, tt, t, tm
+                FROM {$this->wpdb->posts} p
+                LEFT JOIN {$this->wpdb->term_relationships} tr ON p.ID = tr.object_id
+                LEFT JOIN {$this->wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+                LEFT JOIN {$this->wpdb->terms} t ON t.term_id = tt.term_id
+                LEFT JOIN {$this->wpdb->termmeta} tm ON tm.term_id = t.term_id
+                LEFT JOIN {$this->wpdb->postmeta} m ON p.ID = m.post_id
+                WHERE p.post_type <> %s AND p.post_type <> %s AND p.post_type <> %s",
+                Brizy_Editor_Project::BRIZY_PROJECT,
+                'wp_global_styles',
+                'wpcode'
+            )
+        );
 
-		$this->wpdb->query( "DELETE FROM {$this->wpdb->commentmeta}" );
-		$this->wpdb->query( "DELETE FROM {$this->wpdb->comments}" );
+        $this->wpdb->query( "DELETE FROM {$this->wpdb->commentmeta}" );
+        $this->wpdb->query( "DELETE FROM {$this->wpdb->comments}" );
 
-		$this->project->setDataAsJson( json_encode( new stdClass() ) )->saveStorage();
+        $this->project->setDataAsJson( json_encode( new stdClass() ) )->saveStorage();
 
-		$this->project->cleanClassCache();
-	}
+        $this->project->cleanClassCache();
+    }
 }
