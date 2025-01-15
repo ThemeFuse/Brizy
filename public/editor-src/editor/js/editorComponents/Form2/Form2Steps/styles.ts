@@ -2,13 +2,13 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { StylesProps } from "./types";
+import type { DynamicStylesProps } from "visual/types";
 
-export function style(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel,
-  props: StylesProps
-): OutputStyle {
+
+interface Style extends DynamicStylesProps<ElementModel> {
+  props: StylesProps;
+}
+export function style(data: Style): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: [
@@ -134,5 +134,5 @@ export function style(
       }
   };
 
-  return renderStyles({ v, vs, vd, styles, props });
+  return renderStyles({ ...data, styles });
 }

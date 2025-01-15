@@ -1,27 +1,35 @@
-import Config from "visual/global/Config";
+import { Str } from "@brizy/readers";
+import { isEditor, isView } from "visual/providers/RenderProvider";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { OutputOptionStyle } from "visual/utils/cssStyle/types";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./type";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { Str } from "@brizy/readers";
 
-export const getItems: GetItems<Value> = ({ v, device, context }) => {
+export const getItems: GetItems<Value> = ({
+  v,
+  device,
+  context,
+  renderContext,
+  editorMode
+}) => {
   const { hoverName } = v;
-  const dvv = (key: string): unknown =>
+  const dvv = <T>(key: string): T =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
-    dvv("borderColorHex"),
-    dvv("borderColorPalette")
+  const borderColorHex = dvv<string>("borderColorHex");
+  const borderColorPalette = dvv<string>("borderColorPalette");
+  const borderColorOpacity = dvv<number>("borderColorOpacity");
+
+  const borderColorColor = getColor(
+    borderColorPalette,
+    borderColorHex,
+    borderColorOpacity
   );
 
   const richTextDC = getDynamicContentOption({
@@ -29,7 +37,9 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     type: DCTypes.richText
   });
 
-  const IS_STORY = isStory(Config.getAll());
+  const _isEditor = isEditor(renderContext);
+  const _isView = isView(renderContext);
+  const _isStory = isStory(editorMode);
 
   const hoverSelector =
     hoverName === "none" ? ".brz-map_styles" : ` .brz-ui-ed-map-content`;
@@ -87,10 +97,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              borderColorHex,
-              dvv("borderColorOpacity")
-            )
+            backgroundColor: borderColorColor
           }
         }
       },
@@ -152,7 +159,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Settings")
       },
       position: 110,
-      disabled: IS_STORY,
+      disabled: _isStory,
       options: [
         {
           id: "size",
@@ -201,14 +208,14 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
               },
 
               "{{WRAPPER}} > .brz-ed-box__resizer":
-                IS_EDITOR && hasElementPosition
+                _isEditor && hasElementPosition
                   ? {
                       height: "unset"
                     }
                   : {},
 
               "{{WRAPPER}} > .brz-ui-ed-map-content":
-                IS_PREVIEW && hasElementPosition
+                _isView && hasElementPosition
                   ? {
                       height: "unset"
                     }
@@ -271,7 +278,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
       type: "advancedSettings",
       devices: "desktop",
       position: 110,
-      disabled: !IS_STORY
+      disabled: !_isStory
     }
   ];
 };

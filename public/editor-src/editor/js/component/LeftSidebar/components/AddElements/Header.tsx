@@ -1,11 +1,11 @@
-import { foundUrl, HelpVideo } from "@brizy/builder-ui-components";
+import { HelpVideo, foundUrl } from "@brizy/builder-ui-components";
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import {
   HeaderIcon,
   TooltipIcon
 } from "visual/component/Controls/LeftSidebar/AddElements";
-import Config from "visual/global/Config";
 import { HelpVideos } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { t } from "visual/utils/i18n";
 
 export interface Props {
@@ -14,7 +14,10 @@ export interface Props {
 
 export const Header = (props: Props): ReactElement => {
   const { children } = props;
-  const { video, idHelpVideosIcons } = Config.getAll().ui?.help ?? {};
+
+  const config = useConfig();
+
+  const { video, idHelpVideosIcons } = config?.ui?.help ?? {};
 
   const [isEdit, setEdit] = useState(false);
   const [isPin, setPin] = useState(false);

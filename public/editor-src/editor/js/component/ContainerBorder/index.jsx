@@ -1,9 +1,9 @@
 import classnames from "classnames";
+import { ReactReduxContext } from "react-redux";
 import T from "prop-types";
 import React from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import ContainerBorderButton from "./ContainerBorderButton";
 
@@ -35,6 +35,8 @@ export default class ContainerBorder extends React.Component {
     ],
     hiddenInResponsive: false
   };
+
+  static contextType = ReactReduxContext;
 
   containerRef = React.createRef();
 
@@ -117,7 +119,8 @@ export default class ContainerBorder extends React.Component {
 
   handleToolbarOpen = (e) => {
     const { hiddenInResponsive } = this.props;
-    this.device = deviceModeSelector(getStore().getState());
+    const { store } = this.context;
+    this.device = deviceModeSelector(store.getState());
 
     // we are clear timeout for last toolbarClose
     clearTimeout(this.isHiddenTime);

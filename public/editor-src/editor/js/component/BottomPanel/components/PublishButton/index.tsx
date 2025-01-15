@@ -9,8 +9,9 @@ import {
   getPromptPageArticleHeadTitle,
   getPromptPageRulesHeadTitle
 } from "visual/component/Prompts/utils";
-import Config from "visual/global/Config";
+import { Config } from "visual/global/Config/InitConfig";
 import {
+  Shopify,
   isCMS,
   isCloud,
   isShopify,
@@ -20,12 +21,19 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { getShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import {
+  EditorMode,
+  EditorModeContext,
+  isPopup,
+  isStory
+} from "visual/global/EditorModeContext";
+import {
   fetchPageSuccess,
   removeBlocks,
   updateError,
   updatePageStatus
 } from "visual/redux/actions2";
 import {
+  configIdSelector,
   extraFontStylesSelector,
   pageDataNoRefsSelector2,
   pageSelector,
@@ -48,12 +56,13 @@ import { SelectedItem } from "visual/utils/api/types";
 import { SYNC_ERROR } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { isNumber } from "visual/utils/math";
-import { isPopup, isStory } from "visual/utils/models";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { uuid } from "visual/utils/uuid";
+import { MValue } from "visual/utils/value";
 import { BottomPanelItem } from "../Item";
 import { Controls, Props as ControlsProps } from "./Control";
 import {
+  Mode,
   getButtonLabel,
   getMode,
   getTooltipPageIcon,
@@ -74,19 +83,17 @@ const mapState = (
   page: Page;
   pageData: Page["data"];
   extraFontStyles: ReduxState["extraFontStyles"];
-  mode: "withRules" | "withTemplate" | "withArticle" | undefined;
   storeWasChanged: StoreChanged;
   currentStyle: Style;
+  configId: ReduxState["configId"];
 } => {
-  const config = Config.getAll();
   return {
     page: pageSelector(state),
     pageData: pageDataNoRefsSelector2(state),
     extraFontStyles: extraFontStylesSelector(state),
-
     storeWasChanged: storeWasChangedSelector(state),
-    mode: _getMode(config),
-    currentStyle: state.currentStyle
+    currentStyle: state.currentStyle,
+    configId: configIdSelector(state)
   };
 };
 const mapDispatch = {
@@ -119,9 +126,25 @@ class PublishButton extends Component<Props, State> {
   updateLoading: Promise<void> | undefined;
   saveAndPublishLoading: Promise<void> | undefined;
 
+  configComputedValues: {
+    isCloud: boolean;
+    isShopify: boolean;
+    isEnabledSavedLayouts: boolean;
+    mode: MValue<Mode>;
+  };
+
+  constructor(props: Props) {
+    super(props);
+    this.configComputedValues = this.getValuesByConfig();
+  }
+
+  componentDidUpdate() {
+    this.configComputedValues = this.getValuesByConfig();
+  }
+
   publish = (loading: "updateLoading" | "draftLoading"): void => {
-    const config = Config.getAll();
-    const { mode, storeWasChanged } = this.props;
+    const { storeWasChanged } = this.props;
+    const { mode, isShopify } = this.configComputedValues;
 
     switch (mode) {
       case "withTemplate": {
@@ -168,16 +191,17 @@ class PublishButton extends Component<Props, State> {
       }
     }
 
-    if (isCloud(config) && isShopify(config)) {
+    if (isShopify) {
       this.setState({ readyForPublish: true });
     }
   };
 
   draft = (loading: "updateLoading" | "draftLoading"): void => {
-    const { mode, page } = this.props;
-    const config = Config.getAll();
+    const { page } = this.props;
+    const { mode, isShopify } = this.configComputedValues;
+    const config = this.getConfig();
 
-    if (isCloud(config) && isShopify(config)) {
+    if (isShopify) {
       switch (mode) {
         case "withTemplate":
         case "withRules":
@@ -207,8 +231,7 @@ class PublishButton extends Component<Props, State> {
     loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading"
   ): void {
     const { page } = this.props;
-
-    const config = Config.getAll();
+    const config = this.getConfig();
     const templateType = getShopifyTemplate(config);
 
     const data: PromptsProps = {
@@ -216,8 +239,8 @@ class PublishButton extends Component<Props, State> {
       mode: "single",
       props: {
         headTitle: getPromptPageRulesHeadTitle(templateType),
-        pageTitle: isShopifyPage(page) ? page.title : undefined,
-        selectedLayout: isShopifyPage(page) ? page.layout : undefined,
+        pageTitle: isShopifyPage(page, config) ? page.title : undefined,
+        selectedLayout: isShopifyPage(page, config) ? page.layout : undefined,
         onClose: (): void => {
           this.setState({ [loading]: false });
         },
@@ -238,6 +261,7 @@ class PublishButton extends Component<Props, State> {
 
   handlePublishWithLayout(loading: "updateLoading" | "draftLoading"): void {
     const { page } = this.props;
+    const config = this.getConfig();
 
     const data: PromptsProps = {
       prompt: "pageTemplate",
@@ -245,8 +269,8 @@ class PublishButton extends Component<Props, State> {
       props: {
         pageId: page.id,
         headTitle: t("YOUR PAGE IS READY TO BE PUBLISHED"),
-        selectedLayout: isShopifyPage(page) ? page.layout : undefined,
-        pageTitle: isShopifyPage(page) ? page.title : undefined,
+        selectedLayout: isShopifyPage(page, config) ? page.layout : undefined,
+        pageTitle: isShopifyPage(page, config) ? page.title : undefined,
         onClose: (): void => {
           this.setState({ [loading]: false });
         },
@@ -269,8 +293,7 @@ class PublishButton extends Component<Props, State> {
     loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading"
   ): void {
     const { page } = this.props;
-
-    const config = Config.getAll();
+    const config = this.getConfig();
     const templateType = getShopifyTemplate(config);
 
     const data: PromptsProps = {
@@ -278,8 +301,8 @@ class PublishButton extends Component<Props, State> {
       mode: "single",
       props: {
         headTitle: getPromptPageArticleHeadTitle(templateType),
-        pageTitle: isShopifyPage(page) ? page.title : undefined,
-        selectedLayout: isShopifyPage(page) ? page.layout : undefined,
+        pageTitle: isShopifyPage(page, config) ? page.title : undefined,
+        selectedLayout: isShopifyPage(page, config) ? page.layout : undefined,
         onClose: (): void => {
           this.setState({ [loading]: false });
         },
@@ -353,6 +376,7 @@ class PublishButton extends Component<Props, State> {
 
   handleSavePage = async (): Promise<void> => {
     const { pageData, extraFontStyles, currentStyle } = this.props;
+    const config = this.getConfig();
 
     if (this.state.layoutLoading || pageData.items.length === 0) {
       return;
@@ -374,16 +398,16 @@ class PublishButton extends Component<Props, State> {
 
     if (screenshotsSupported) {
       const node = document.querySelector("#brz-ed-page__blocks");
-      const { src, width, height } = await makeNodeScreenshot(node).catch(
-        () => ({
-          src: undefined,
-          width: undefined,
-          height: undefined
-        })
-      );
+      const { src, width, height } = await makeNodeScreenshot(
+        node,
+        config
+      ).catch(() => ({
+        src: undefined,
+        width: undefined,
+        height: undefined
+      }));
 
       if (src && isNumber(width) && isNumber(height)) {
-        const config = Config.getAll();
         const { id } = await createBlockScreenshot(
           { base64: src, blockType: "layout" },
           config
@@ -411,7 +435,6 @@ class PublishButton extends Component<Props, State> {
         title: currentStyle.title + "-" + layoutId.slice(0, 4)
       }
     };
-    const config = Config.getAll();
     await createSavedLayout(data, config).catch((e) => {
       ToastNotification.error(t("Could not save layout"));
       console.error(e);
@@ -432,15 +455,16 @@ class PublishButton extends Component<Props, State> {
   };
 
   getSaveAndPublishOption() {
-    const config = Config.getAll();
-    const { mode, page, updateError } = this.props;
+    const { page, updateError } = this.props;
+    const { mode, isShopify } = this.configComputedValues;
+    const config = this.getConfig();
 
     return {
       title: t("Save & Publish"),
       icon: "nc-shopify-logo",
       loading: this.state.saveAndPublishLoading,
       onClick: async () => {
-        if (isCloud(config) && isShopify(config) && isShopifyPage(page)) {
+        if (isShopify && isShopifyPage(page, config)) {
           const canSync = canSyncPage(config);
           const syncErrorData = {
             upgradeToProUrl: (config as ConfigCommon)?.modules?.shop
@@ -448,7 +472,6 @@ class PublishButton extends Component<Props, State> {
           };
 
           this.setState({ updateLoading: true });
-
           try {
             switch (mode) {
               case "withTemplate": {
@@ -464,7 +487,8 @@ class PublishButton extends Component<Props, State> {
 
                 const isHomePage = page.id === page?.layout?.isHomePage;
                 await shopifySyncPage({
-                  config,
+                  modules: (config as Shopify).modules,
+                  page: (config as Shopify).page,
                   title: page.title,
                   isHomePage
                 });
@@ -472,9 +496,12 @@ class PublishButton extends Component<Props, State> {
                 break;
               }
               case "withRules": {
-                const selected = await getPageRelations(config);
+                const selected = await getPageRelations(config.modules);
                 const selectedIds = selected.map((i) => i.id);
-                const _items = await getCollectionSourceItemsById(config);
+                const _items = await getCollectionSourceItemsById(
+                  config.templateType,
+                  config.api
+                );
 
                 const items = _items.filter((item): item is SelectedItem =>
                   selectedIds.includes(item.id)
@@ -489,7 +516,8 @@ class PublishButton extends Component<Props, State> {
                   }
 
                   await shopifySyncRules({
-                    config,
+                    page: config.page,
+                    modules: config.modules,
                     rules: items,
                     title: page.title
                   });
@@ -499,7 +527,7 @@ class PublishButton extends Component<Props, State> {
                 break;
               }
               case "withArticle": {
-                const selected = await getPageRelations(config);
+                const selected = await getPageRelations(config.modules);
                 const selectedIds = selected.map((i) => i.blog_id || i.id);
 
                 const items = await shopifyBlogItems(config);
@@ -538,14 +566,13 @@ class PublishButton extends Component<Props, State> {
     };
   }
 
-  getTooltipItems(): ControlsProps["addonAfter"] {
-    const config = Config.getAll();
-    const enabledSavedLayout =
-      typeof config.api?.savedLayouts?.create === "function";
-    const { mode, page } = this.props;
+  getTooltipItems(editorMode: EditorMode): ControlsProps["addonAfter"] {
+    const { page } = this.props;
+    const { mode, isEnabledSavedLayouts } = this.configComputedValues;
+
     const items = [];
 
-    if (!isPopup(config) && !isStory(config)) {
+    if (!isPopup(editorMode) && !isStory(editorMode)) {
       items.push({
         title: t("Clear Layout"),
         icon: "nc-trash",
@@ -555,7 +582,7 @@ class PublishButton extends Component<Props, State> {
         }
       });
 
-      if (enabledSavedLayout) {
+      if (isEnabledSavedLayouts) {
         items.push({
           title: t("Save Layout"),
           icon: "nc-save-section",
@@ -591,7 +618,8 @@ class PublishButton extends Component<Props, State> {
   }
 
   getLabel(): string {
-    const { page, mode, storeWasChanged } = this.props;
+    const { page, storeWasChanged } = this.props;
+    const { mode } = this.configComputedValues;
 
     switch (mode) {
       case "withTemplate":
@@ -625,44 +653,63 @@ class PublishButton extends Component<Props, State> {
   };
 
   render(): ReactElement {
-    const config = Config.getAll();
     const { storeWasChanged } = this.props;
     const { readyForPublish } = this.state;
+    const { isShopify } = this.configComputedValues;
 
-    const isReadyForPublish =
-      isCloud(config) && isShopify(config) ? !readyForPublish : true;
+    const isReadyForPublish = isShopify ? !readyForPublish : true;
 
     return (
-      <>
-        <BottomPanelItem paddingSize="small">
-          <Controls
-            disabled={
-              storeWasChanged !== StoreChanged.changed && isReadyForPublish
-            }
-            addonAfter={this.getTooltipItems()}
-            onClick={(): void => {
-              switch (this.props.page.status) {
-                case "publish":
-                  return this.publish("updateLoading");
-                case "draft":
-                case "future":
-                case "private":
-                  return this.draft("updateLoading");
-              }
-            }}
-            status={this.props.page.status}
-            loading={this.state.updateLoading}
-          >
-            {this.getLabel()}
-          </Controls>
-        </BottomPanelItem>
-        <HotKeys
-          id="key-helper-update-page"
-          keyNames={["ctrl+S", "cmd+S", "right_cmd+S"]}
-          onKeyDown={this.updateOnKeyDown}
-        />
-      </>
+      <EditorModeContext.Consumer>
+        {(editorMode) => (
+          <>
+            <BottomPanelItem paddingSize="small">
+              <Controls
+                disabled={
+                  storeWasChanged !== StoreChanged.changed && isReadyForPublish
+                }
+                addonAfter={this.getTooltipItems(editorMode)}
+                onClick={(): void => {
+                  switch (this.props.page.status) {
+                    case "publish":
+                      return this.publish("updateLoading");
+                    case "draft":
+                    case "future":
+                    case "private":
+                      return this.draft("updateLoading");
+                  }
+                }}
+                status={this.props.page.status}
+                loading={this.state.updateLoading}
+              >
+                {this.getLabel()}
+              </Controls>
+            </BottomPanelItem>
+            <HotKeys
+              id="key-helper-update-page"
+              keyNames={["ctrl+S", "cmd+S", "right_cmd+S"]}
+              onKeyDown={this.updateOnKeyDown}
+            />
+          </>
+        )}
+      </EditorModeContext.Consumer>
     );
+  }
+
+  getConfig() {
+    return Config.get(this.props.configId) as Shopify;
+  }
+
+  getValuesByConfig() {
+    const config = this.getConfig();
+
+    return {
+      isCloud: isCloud(config),
+      isShopify: isCloud(config) && isShopify(config),
+      isEnabledSavedLayouts:
+        typeof config.api?.savedLayouts?.create === "function",
+      mode: _getMode(config)
+    };
   }
 }
 

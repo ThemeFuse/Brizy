@@ -1,20 +1,15 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor as getGlobalColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Color, ItemValue, Network, TargetUrl, View } from "../types";
 import { getColor, getTargetUrl, getView } from "../utils";
 
 export const getItems: GetItems<ItemValue> = ({ v, device, context }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
-
-  const iconBgColorOpacity = dvv("iconBgColorOpacity");
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const view = getView(dvv("view"));
   const colorType = getColor(dvv("colorType"));
@@ -25,9 +20,10 @@ export const getItems: GetItems<ItemValue> = ({ v, device, context }) => {
   const officialColor = colorType === Color.Official;
   const currentUrl = targetUrl === TargetUrl.CurrentUrl;
 
-  const { hex: iconBgColorHex } = getOptionColorHexByPalette(
+  const iconBgColor = getGlobalColor(
+    dvv("iconBgColorPalette"),
     dvv("iconBgColorHex"),
-    dvv("iconBgColorPalette")
+    dvv("iconBgColorOpacity")
   );
 
   const richTextDC = getDynamicContentOption({
@@ -273,7 +269,7 @@ export const getItems: GetItems<ItemValue> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(iconBgColorHex, iconBgColorOpacity)
+            backgroundColor: iconBgColor
           }
         }
       },

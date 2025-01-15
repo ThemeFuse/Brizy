@@ -38,14 +38,19 @@ export function cssStyleCustomPosition(d: CSSValue): string {
   return elementPosition === undefined ? "" : `position:${elementPosition};`;
 }
 
-export function cssStyleCustomWidth({ v, device, state }: CSSValue): string {
+export function cssStyleCustomWidth({
+  v,
+  device,
+  state,
+  store
+}: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
   const elementPosition = dvv("elementPosition");
 
   return elementPosition === "relative"
     ? ""
-    : cssStyleSizeWidth({ v, device, state });
+    : cssStyleSizeWidth({ v, device, state, store });
 }
 
 export function cssStyleOffset(d: CSSValue): string {

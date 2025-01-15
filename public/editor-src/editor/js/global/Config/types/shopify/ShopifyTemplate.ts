@@ -1,6 +1,6 @@
-import { Config } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types";
 import { isShopify } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { MValue } from "visual/utils/value";
 
 export enum ShopifyTemplate {
@@ -14,7 +14,9 @@ export enum ShopifyTemplate {
 export const isShopifyTemplate = (s: string): s is ShopifyTemplate =>
   Object.values(ShopifyTemplate).includes(s as ShopifyTemplate);
 
-export const getShopifyTemplate = (config: Config): MValue<ShopifyTemplate> =>
+export const getShopifyTemplate = (
+  config: ConfigCommon
+): MValue<ShopifyTemplate> =>
   isCloud(config) &&
   isShopify(config) &&
   isShopifyTemplate(config.templateType.type)

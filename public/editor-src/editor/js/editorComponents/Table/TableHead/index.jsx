@@ -2,7 +2,6 @@ import classnames from "classnames";
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebar";
 import { style } from "./styles";
@@ -24,7 +23,17 @@ class TableHead extends EditorComponent {
 
     const className = classnames(
       "brz-table__head",
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const toolbarExtend = this.makeToolbarPropsFromConfig2(

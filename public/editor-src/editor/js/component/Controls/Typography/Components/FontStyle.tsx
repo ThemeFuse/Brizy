@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import React, { useMemo } from "react";
+import React from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
-import Config from "visual/global/Config";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { useConfig } from "visual/global/hooks";
 import { FontStyleProps as Props } from "../types/Props";
 
 export const FontStyle = ({
@@ -15,12 +15,8 @@ export const FontStyle = ({
   value
 }: Props): JSX.Element => {
   const _className = classNames("brz-ed-control__font-style", className);
-
-  const disableSettings = useMemo(() => {
-    const config = Config.getAll();
-
-    return isCloud(config) && isShopify(config);
-  }, []);
+  const config = useConfig();
+  const disableSettings = isCloud(config) && isShopify(config);
 
   return (
     <div className={_className}>

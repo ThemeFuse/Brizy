@@ -1,5 +1,7 @@
 import classNames from "classnames";
 import React, { Fragment } from "react";
+import { omit } from "timm";
+import { isEditor } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -17,12 +19,9 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import Config from "visual/global/Config";
+import { isPopup } from "visual/global/EditorModeContext";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
-import { isPopup } from "visual/utils/models";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import {
@@ -42,24 +41,19 @@ import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleContainer, styleRow } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import { omit } from "timm";
 
 class Row extends EditorComponent {
-  static get componentId() {
-    return "Row";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   mounted = false;
-
   toolbarRef = React.createRef();
+
+  static get componentId() {
+    return "Row";
+  }
 
   componentDidMount() {
     this.mounted = true;
@@ -84,7 +78,7 @@ class Row extends EditorComponent {
 
     if (
       value.items.length === 0 &&
-      (!inPopup || !inPopup2 || !isPopup(Config.getAll()))
+      (!inPopup || !inPopup2 || !isPopup(this.props.editorMode))
     ) {
       this.selfDestruct();
     } else {
@@ -189,10 +183,16 @@ class Row extends EditorComponent {
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classNames(
-      css(
+      this.css(
         `${this.getComponentId()}-animation-${slug}`,
         `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
+        styleAnimation({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
   };
@@ -203,7 +203,7 @@ class Row extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >
-        <SortableHandle>
+        <SortableHandle renderContext={this.renderContext}>
           <ContainerBorderButton className="brz-ed-border__button--row" />
         </SortableHandle>
       </Toolbar>
@@ -212,7 +212,8 @@ class Row extends EditorComponent {
 
   getHoverData = (v) => {
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
-    const options = makeOptionValueToAnimation(v);
+    const store = this.getReduxStore();
+    const options = makeOptionValueToAnimation({ v, store });
 
     return {
       hoverName,
@@ -228,10 +229,16 @@ class Row extends EditorComponent {
       "brz-row",
       { "brz-row--inner": this.isInnerRow() },
       className,
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -269,7 +276,7 @@ class Row extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
 
@@ -279,11 +286,10 @@ class Row extends EditorComponent {
           };
           popupId = blockData.value.popupId;
         }
-
         return {
           blockId,
           meta: newMeta,
-          ...(IS_EDITOR && {
+          ...(isEditor(this.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -305,10 +311,16 @@ class Row extends EditorComponent {
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,
-      css(
-        `${this.constructor.componentId}-row`,
+      this.css(
+        `${this.getComponentId()}-row`,
         `${this.getId()}-row`,
-        styleRow(v, vs, vd)
+        styleRow({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       cssClass || customClassName
     );
@@ -332,10 +344,11 @@ class Row extends EditorComponent {
       );
     }
     const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
+    const store = this.getReduxStore();
     const content = (
       <ScrollMotion
         className="brz-row__scroll-motion"
-        options={makeOptionValueToMotion(v)}
+        options={makeOptionValueToMotion({ v, store })}
       >
         <HoverAnimation
           animationId={animationId}
@@ -396,7 +409,7 @@ class Row extends EditorComponent {
             </ContextMenu>
           )}
         </SortableElement>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </Fragment>
     );
@@ -405,22 +418,30 @@ class Row extends EditorComponent {
   renderForView(v, vs, vd) {
     const { className, tagName, customClassName, cssClass, customAttributes } =
       v;
-    const linkData = getLinkData(v);
+    const config = this.getGlobalConfig();
+    const linkData = getLinkData(v, config);
     const id = getCSSId(v);
     const { sectionPopup, sectionPopup2 } = this.props.meta;
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,
-      css(
-        `${this.constructor.componentId}-row`,
+      this.css(
+        `${this.getComponentId()}-row`,
         `${this.getId()}-row`,
-        styleRow(v, vs, vd)
+        styleRow({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
     const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
+    const store = this.getReduxStore();
 
     return (
       <Fragment>
@@ -437,7 +458,7 @@ class Row extends EditorComponent {
           >
             <ScrollMotion
               className="brz-row__scroll-motion"
-              options={makeOptionValueToMotion(v)}
+              options={makeOptionValueToMotion({ v, store })}
             >
               <HoverAnimation
                 animationId={animationId}
@@ -461,7 +482,7 @@ class Row extends EditorComponent {
             )}
           </Animation>
         </CustomCSS>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </Fragment>
     );

@@ -25,7 +25,7 @@ class Brizy_Config
     const PLATFORM_CLIENT_SECRET = "3kfsu3y91csg08oskg8kowg4844go0o88sow48c00wwsgwk00s";
     const PLATFORM_EMAIL = "admin@admin.com";
 
-    const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
+    const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing-wordpress/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
     const SUPPORT_URL = "https://support.brizy.io";
     const ABOUT_URL = "https://www.brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";

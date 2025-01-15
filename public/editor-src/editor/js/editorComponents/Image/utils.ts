@@ -1,7 +1,8 @@
 import { Value as ImageUploadValue } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { ImageDataSize } from "visual/global/Config/types/ImageSize";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { flatMap } from "visual/utils/array";
 import { getImageUrl } from "visual/utils/image";
@@ -13,7 +14,7 @@ import { Choice } from "visual/utils/options/getDynamicContentChoices";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
-import { isNullish, MValue } from "visual/utils/value";
+import { MValue, isNullish } from "visual/utils/value";
 import { ImageSize, Unit, V } from "./types";
 
 export interface ImageValue {
@@ -235,13 +236,14 @@ export const isCustomSize = (size: ALLSizes): size is CustomSize => {
   return size === SizeType.custom;
 };
 
-export const getImageSize = (size: string): ALLSizes => {
+export const getImageSize = (
+  size: string,
+  imageSizes: ImageDataSize[]
+): ALLSizes => {
   if (size === SizeType.custom) {
     return SizeType.custom;
   }
 
-  const config = Config.getAll();
-  const { imageSizes } = config;
   const imageData = imageSizes?.find(({ name }) => name === size);
 
   if (
@@ -277,7 +279,8 @@ export const showOriginalImage = (v: V): boolean =>
 export function getCustomImageUrl(
   v: Partial<ImageUploadValue>,
   wrapperSize: WrapperSizes,
-  imageSize: ImageSize
+  imageSize: ImageSize,
+  config: ConfigCommon
 ): { url: string; source: string | null } {
   const cW = Math.round(wrapperSize.width);
   const cH = Math.round(wrapperSize.height);
@@ -285,14 +288,17 @@ export function getCustomImageUrl(
   const src = v.src ?? "";
   const sizeType = v.sizeType ?? "";
   const fileName = v.fileName ?? "";
-  const size = getImageSize(sizeType);
+  const size = getImageSize(sizeType, config.imageSizes);
 
   if (isPredefinedSize(size) || isOriginalSize(size)) {
-    const url = getImageUrl({
-      uid: src,
-      fileName: fileName,
-      sizeType: sizeType as SizeType
-    });
+    const url = getImageUrl(
+      {
+        uid: src,
+        fileName: fileName,
+        sizeType: sizeType as SizeType
+      },
+      config
+    );
 
     return {
       source: `${url}`,
@@ -314,20 +320,26 @@ export function getCustomImageUrl(
     cH: Math.round(cH)
   };
 
-  const url = getImageUrl({
-    uid: src,
-    crop: options,
-    fileName,
-    sizeType: SizeType.custom,
-    imageType: v.imageType
-  });
-  const retinaUrl = getImageUrl({
-    uid: src,
-    crop: multiplier(options, 2),
-    fileName,
-    sizeType: SizeType.custom,
-    imageType: v.imageType
-  });
+  const url = getImageUrl(
+    {
+      uid: src,
+      crop: options,
+      fileName,
+      sizeType: SizeType.custom,
+      imageType: v.imageType
+    },
+    config
+  );
+  const retinaUrl = getImageUrl(
+    {
+      uid: src,
+      crop: multiplier(options, 2),
+      fileName,
+      sizeType: SizeType.custom,
+      imageType: v.imageType
+    },
+    config
+  );
 
   return {
     source: `${url ?? ""}`,

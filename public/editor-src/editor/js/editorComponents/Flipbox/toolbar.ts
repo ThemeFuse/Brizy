@@ -1,17 +1,14 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { NORMAL } from "visual/utils/stateMode";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const isFrontSide = dvv("flipboxActive") === "front";
   const isBackSide = dvv("flipboxActive") === "back";
@@ -23,14 +20,16 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
     transition === "fade";
   const disableShadow = transition === "slide" || transition === "push";
 
-  const { hex: frontBgColorHex } = getOptionColorHexByPalette(
-    v.bgColorHex,
-    v.bgColorPalette
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
+    dvv("bgColorHex"),
+    dvv("bgColorOpacity")
   );
 
-  const { hex: backBgColorHex } = getOptionColorHexByPalette(
-    v.backBgColorHex,
-    v.backBgColorPalette
+  const backBgColor = getColor(
+    dvv("backBgColorPalette"),
+    dvv("backBgColorHex"),
+    dvv("backBgColorOpacity")
   );
 
   const imageDynamicContentChoices = getDynamicContentOption({
@@ -146,7 +145,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(frontBgColorHex, v.bgColorOpacity)
+            backgroundColor: bgColor
           }
         }
       },
@@ -243,7 +242,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(backBgColorHex, v.backBgColorOpacity)
+            backgroundColor: backBgColor
           }
         }
       },

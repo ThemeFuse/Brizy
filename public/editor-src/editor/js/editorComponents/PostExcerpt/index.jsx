@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { Fragment } from "react";
+import { omit } from "timm";
 import CustomCSS from "visual/component/CustomCSS";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
@@ -8,9 +9,8 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
 import { getLinkData } from "visual/utils/models/link";
 import { handleLinkChange } from "visual/utils/patch/Link";
@@ -20,7 +20,6 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { getPlaceholder, getPlaceholderIcon } from "./utils";
-import { omit } from "timm";
 
 export default class PostExcerpt extends EditorComponent {
   static get componentId() {
@@ -60,7 +59,7 @@ export default class PostExcerpt extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
 
@@ -74,7 +73,7 @@ export default class PostExcerpt extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(IS_EDITOR && {
+          ...(isEditor(this.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -96,10 +95,21 @@ export default class PostExcerpt extends EditorComponent {
     } = v;
     const className = classnames(
       "brz-wp-post-excerpt",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd)),
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      ),
       className_
     );
-    const linkData = getLinkData(v);
+    const config = this.getGlobalConfig();
+    const linkData = getLinkData(v, config);
 
     const attr = getPopulatedEntityValues(
       textPopulationEntityId,
@@ -140,7 +150,7 @@ export default class PostExcerpt extends EditorComponent {
             </Wrapper>
           </CustomCSS>
         </Toolbar>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </Fragment>
     );

@@ -1,6 +1,5 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { styleState } from "visual/utils/style";
 
 const getState = (v, state) =>
@@ -28,11 +27,11 @@ export function cssStyleElementCounterTextShadow({ v, state }) {
   const textShadowVertical = dvv("textShadowVertical");
   const textShadowHorizontal = dvv("textShadowHorizontal");
 
-  const { hex } = getOptionColorHexByPalette(
+  const shadowColor = getColor(
+    textShadowColorPalette,
     textShadowColorHex,
-    textShadowColorPalette
+    textShadowColorOpacity
   );
-  const shadowColor = hexToRgba(hex, textShadowColorOpacity);
 
   return `text-shadow:${textShadowHorizontal}px ${textShadowVertical}px ${textShadowBlur}px ${shadowColor};`;
 }

@@ -1,14 +1,13 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import type { GetItems } from "../EditorComponent/types";
 import type { Props, Value } from "./types";
 
-export const title = t("Gallery");
+export const title = () => t("Gallery");
 
 const getHtml = () => {
   return `
@@ -22,12 +21,17 @@ const getHtml = () => {
 </p>`;
 };
 
-export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
+export const getItems: GetItems<Value, Props> = ({
+  v,
+  device,
+  state,
+  editorMode
+}) => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
   const hoverName = readString(dvv("hoverName")) ?? "none";
 
-  const IS_STORY = isStory(Config.getAll());
+  const _isStory = isStory(editorMode);
   return [
     {
       id: "sidebarTabs",
@@ -108,7 +112,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                       id: "hover",
                       type: "animation",
                       devices: "desktop",
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       config: {
                         types: hoverEffects,
                         replay: false,

@@ -2,17 +2,20 @@ import { produce } from "immer";
 import { createSelector } from "reselect";
 import _ from "underscore";
 import configRules from "visual/config/rules";
+import { getConfigById } from "visual/global/Config/InitConfig";
 import { getPositions } from "visual/utils/blocks/blocksConditions";
 import { canUseCondition } from "visual/utils/blocks/getAllowedGBIds";
 import { objectTraverse2 } from "visual/utils/object";
 import {
   blocksDataSelector,
   blocksOrderSelector,
+  configIdSelector,
   copiedElementSelector,
   currentStyleIdSelector,
   currentStyleSelector,
   extraFontStylesSelector,
   extraStylesSelector,
+  filteredFontsSelector,
   globalBlocksAssembled2Selector,
   globalBlocksSelector,
   pageBlocksRawSelector,
@@ -20,8 +23,7 @@ import {
   pageSelector,
   projectSelector,
   screenshotsSelector,
-  stylesSelector,
-  filteredFontsSelector
+  stylesSelector
 } from "./selectors-new";
 
 // temporary until all selectors won't be migrated to TS
@@ -57,10 +59,15 @@ export const globalBlocksPositionsSelector = createSelector(
   globalBlocksSelector,
   blocksOrderSelector,
   globalBlocksWithoutPopupsSelector,
-  (page, globalBlocks, blocksOrder, globalBlocksWithoutPopups) => {
+  configIdSelector,
+  (page, globalBlocks, blocksOrder, globalBlocksWithoutPopups, configId) => {
+    const config = getConfigById(configId);
+
     const newBlocksOrder = blocksOrder.filter((_id) => {
-      if (globalBlocks[_id]) {
-        return canUseCondition(globalBlocks[_id], page);
+      const globalBlock = globalBlocks[_id];
+
+      if (globalBlock) {
+        return canUseCondition({ globalBlock, page, config });
       }
 
       return true;
@@ -428,7 +435,10 @@ export const pageBlocksAssembledRawSelector = createSelector(
   pageBlocksSelector,
   globalBlocksSelector,
   screenshotsSelector,
-  (page, blocks, globalBlocks, screenshots) => {
+  configIdSelector,
+  (page, blocks, globalBlocks, screenshots, configId) => {
+    const config = getConfigById(configId);
+
     const newBlocks = blocks.filter((block) => {
       if (block.type === "GlobalBlock") {
         const { _id } = block.value;
@@ -439,7 +449,7 @@ export const pageBlocksAssembledRawSelector = createSelector(
           return false;
         }
 
-        return canUseCondition(globalBlock, page);
+        return canUseCondition({ globalBlock, page, config });
       }
 
       return true;

@@ -1,12 +1,11 @@
-import Config from "visual/global/Config";
+import { Params } from "visual/editorComponents/EditorComponent/types";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { ToolbarItemType } from "../ToolbarItemType";
 import { Value } from "./toolbar";
 
-export const title = t("Rating");
+export const title = () => t("Rating");
 
 const getHtml = () => {
   return `
@@ -22,11 +21,9 @@ const getHtml = () => {
 
 export function getItems({
   v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+  device,
+  editorMode
+}: Params<Value>): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const isStyle1 = dvv("ratingStyle") === "style1";
@@ -76,7 +73,7 @@ export function getItems({
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: isStory(Config.getAll()),
+                      disabled: isStory(editorMode),
                       position: 70,
                       devices: "desktop",
                       type: "slider",

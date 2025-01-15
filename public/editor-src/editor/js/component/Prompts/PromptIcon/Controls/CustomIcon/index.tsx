@@ -10,7 +10,6 @@ import { Icon } from "visual/component/Brizy-ui/Icon";
 import { IconSet } from "visual/component/Brizy-ui/IconSet";
 import { ToastNotification } from "visual/component/Notifications";
 import { IconTypes } from "visual/config/icons/Type";
-import Config from "visual/global/Config";
 import { addCustomIcon, deleteCustomIcon } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { templateIconUrl } from "visual/utils/icons";
@@ -23,7 +22,8 @@ export const CustomIcon = ({
   icons,
   onChange,
   canUpload = true,
-  name
+  name,
+  config
 }: Props): JSX.Element => {
   const [_icons, setIcons] = useState(icons);
 
@@ -57,8 +57,6 @@ export const CustomIcon = ({
 
   const handleRemove = useCallback(
     async (id: Literal) => {
-      const config = Config.getAll();
-
       const index = Num.read(id);
 
       if (index === undefined) {
@@ -68,7 +66,7 @@ export const CustomIcon = ({
       const { name } = _icons[index] ?? {};
 
       try {
-        await deleteCustomIcon(name, config);
+        await deleteCustomIcon(name, config.api);
         setIcons((icons) => icons.filter((icon) => icon.name !== name));
       } catch (e) {
         typeof e === "string"
@@ -76,14 +74,12 @@ export const CustomIcon = ({
           : ToastNotification.error(t("Failed to delete icon"));
       }
     },
-    [_icons]
+    [_icons, config.api]
   );
 
   const handleUpload = useCallback(async () => {
-    const config = Config.getAll();
-
     try {
-      const uploadedIcons = await addCustomIcon(config, {
+      const uploadedIcons = await addCustomIcon(config.api, {
         acceptedExtensions: [".svg", ".ico"]
       });
 
@@ -94,7 +90,7 @@ export const CustomIcon = ({
         ? ToastNotification.error(e)
         : ToastNotification.error(t("Failed to upload icon"));
     }
-  }, []);
+  }, [config.api]);
 
   const handleChange = useCallback(
     (index: Literal) => {

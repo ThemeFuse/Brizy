@@ -6,7 +6,7 @@ export interface Props {
   onEdit?: VoidFunction;
   onDelete?: VoidFunction;
   onCreate?: VoidFunction;
-  popupBlock?: Block;
+  block?: Block;
   className?: string;
   canDelete?: boolean;
 }

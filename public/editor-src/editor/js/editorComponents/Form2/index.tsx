@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { FormEvent } from "react";
 import { noop } from "underscore";
+import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementPatch, ElementProps } from "visual/component/Elements/Types";
@@ -9,11 +10,9 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getBoxResizerParams } from "visual/editorComponents/Form2/utils";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
+import { isStory } from "visual/global/EditorModeContext";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
-import { isStory } from "visual/utils/models";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
 import { MValue } from "visual/utils/value";
 import { Button, MSButtons, SubmitButton } from "./Components/Buttons";
@@ -29,12 +28,7 @@ import * as toolbarExtendParent from "./toolbarExtendParent";
 import type { State, Value } from "./types";
 
 export default class Form2 extends EditorComponent<Value, ElementProps, State> {
-  static get componentId(): ElementTypes.Form2 {
-    return ElementTypes.Form2;
-  }
-
   static defaultValue = defaultValue;
-
   static defaultProps = {
     meta: {},
     onToolbarOpen: noop,
@@ -43,10 +37,13 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     onToolbarLeave: noop,
     extendParentToolbar: noop
   };
-
   state = {
     active: 1
   };
+
+  static get componentId(): ElementTypes.Form2 {
+    return ElementTypes.Form2;
+  }
 
   handleResizerChange = (patch: ElementPatch<Value>): void =>
     this.patchValue(patch);
@@ -123,7 +120,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     const itemsProps = this.getPrevAndNextButtonsItemProps(3, 4);
 
     const style = {
-      display: IS_PREVIEW ? "none" : ""
+      display: isView(this.renderContext) ? "none" : ""
     };
 
     return (
@@ -150,10 +147,10 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     const totalSteps = this.getTotalSteps(v);
 
     const className = classnames({
-      "brz-form-ms-buttons--story": isStory(Config.getAll())
+      "brz-form-ms-buttons--story": isStory(this.props.editorMode)
     });
 
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return (
         <MSButtons className={className}>
           {this.renderPrevButton()}
@@ -206,6 +203,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
 
   renderButton(v: Value): React.JSX.Element {
     const { multistep } = v;
+    const IS_VIEW = isView(this.renderContext);
 
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -224,11 +222,11 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
       "brz-forms2",
       "brz-forms2__item",
       "brz-forms2__item-button",
-      { "brz-forms2-story": isStory(Config.getAll()) }
+      { "brz-forms2-story": isStory(this.props.editorMode) }
     );
 
     const style = {
-      display: IS_PREVIEW && multistep === "on" ? "none" : ""
+      display: IS_VIEW && multistep === "on" ? "none" : ""
     };
 
     return (
@@ -240,7 +238,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
         >
           {/*@ts-expect-error EditorArrayComponent should be converted to .ts*/}
           <EditorArrayComponent {...itemsProps} />
-          {IS_PREVIEW && (
+          {IS_VIEW && (
             <ThemeIcon
               className="brz-form-spinner brz-invisible brz-ed-animated--spin"
               name="circle-02"
@@ -259,10 +257,16 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     const className = classnames(
       "brz-forms2",
-      css(
+      this.css(
         `${this.getComponentId()}-form`,
         `${this.getId()}-form`,
-        styleForm(v, vs, vd)
+        styleForm({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -285,7 +289,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper {...this.makeWrapperProps({ className })}>
-          {isStory(Config.getAll()) ? (
+          {isStory(this.props.editorMode) ? (
             <BoxResizer
               points={points}
               meta={meta}
@@ -304,7 +308,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): React.JSX.Element {
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const {
       _id,
@@ -321,10 +325,16 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     const className = classnames(
       "brz-forms2",
-      css(
+      this.css(
         `${this.getComponentId()}-form`,
         `${this.getId()}-form`,
-        styleForm(v, vs, vd)
+        styleForm({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -337,7 +347,10 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
       [makeAttr("success")]: messageSuccess,
       [makeAttr("error")]: messageError,
       [makeAttr("redirect")]: messageRedirect,
-      [makeAttr("form-type")]: formType
+      [makeAttr("form-type")]: formType,
+      [makeAttr("default-success", true)]: "Your email was sent successfully",
+      [makeAttr("default-error", true)]: "Your email was not sent",
+      [makeAttr("default-empty", true)]: "Please check your entry and try again"
     };
 
     return (

@@ -1,6 +1,5 @@
 import { produce } from "immer";
 import _ from "underscore";
-import Config from "visual/global/Config";
 import { StoreChanged } from "visual/redux/types";
 import { onChange } from "visual/utils/api";
 import {
@@ -20,10 +19,10 @@ import {
   UPDATE_TRIGGERS
 } from "../../actions";
 import {
-  ActionTypes,
   ADD_FONTS,
   ADD_GLOBAL_BLOCK,
   ADD_GLOBAL_POPUP,
+  ActionTypes,
   DELETE_FONTS,
   PUBLISH,
   UPDATE_CURRENT_KIT_ID,
@@ -55,7 +54,7 @@ import {
   pollingSendHeartBeat
 } from "./utils";
 
-export default (store) => (next) => {
+export default (config) => (store) => (next) => {
   const apiHandler = apiCatch.bind(null, store.dispatch);
 
   return (action) => {
@@ -65,16 +64,15 @@ export default (store) => (next) => {
 
     const state = store.getState();
 
-    handlePublish({ action, state, oldState, apiHandler });
-    handleProject({ action, state, oldState, apiHandler });
-    handlePage({ action, state, apiHandler });
-    handleGlobalBlocks({ action, state, oldState, apiHandler });
-    handleHeartBeat({ action, state, apiHandler });
+    handlePublish({ action, state, oldState, config, apiHandler });
+    handleProject({ action, state, oldState, config, apiHandler });
+    handlePage({ action, state, config, apiHandler });
+    handleGlobalBlocks({ action, state, oldState, config, apiHandler });
+    handleHeartBeat({ action, state, config, apiHandler });
   };
 };
 
-function handleProject({ action, state, oldState, apiHandler }) {
-  const config = Config.getAll();
+function handleProject({ action, state, oldState, config, apiHandler }) {
   const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
 
   switch (action.type) {
@@ -225,8 +223,7 @@ function handleProject({ action, state, oldState, apiHandler }) {
   }
 }
 
-function handlePage({ action, state }) {
-  const config = Config.getAll();
+function handlePage({ action, state, config }) {
   const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
   switch (action.type) {
     case MAKE_BLOCK_TO_GLOBAL_BLOCK:
@@ -251,15 +248,12 @@ function handlePage({ action, state }) {
         dataVersion: state.page.dataVersion
       };
 
-      apiUpdatePopupRules(data, Config.getAll())
-        .then(syncSuccess)
-        .catch(syncFail);
+      apiUpdatePopupRules(data, config).then(syncSuccess).catch(syncFail);
       break;
     }
     case UPDATE_TRIGGERS: {
       const { page } = state;
       const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
-      const config = Config.getAll();
       const project = projectSelector(state);
       const data = {
         config,
@@ -303,15 +297,15 @@ function handlePage({ action, state }) {
   }
 }
 
-const startHeartBeat = (apiHandler) => {
-  const { heartBeatInterval } = Config.get("project");
-  apiHandler(pollingSendHeartBeat(heartBeatInterval));
+const startHeartBeat = (apiHandler, config) => {
+  const { heartBeatInterval } = config.project;
+
+  apiHandler(pollingSendHeartBeat(heartBeatInterval, config));
 };
 
 const startHeartBeatOnce = _.once(startHeartBeat);
 
-function handleHeartBeat({ action, state, apiHandler }) {
-  const config = Config.getAll();
+function handleHeartBeat({ action, state, config, apiHandler }) {
   const { sendHandler } = config.api.heartBeat ?? {};
 
   if (action.type === ActionTypes.UPDATE_ERROR || action.type === HYDRATE) {
@@ -319,7 +313,7 @@ function handleHeartBeat({ action, state, apiHandler }) {
     const projectUnLocked = !error || error.code !== PROJECT_LOCKED_ERROR;
 
     if (projectUnLocked && typeof sendHandler === "function") {
-      startHeartBeatOnce(apiHandler);
+      startHeartBeatOnce(apiHandler, config);
     }
   }
 }

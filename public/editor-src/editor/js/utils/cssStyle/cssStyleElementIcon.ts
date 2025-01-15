@@ -1,4 +1,3 @@
-import Config from "visual/global/Config";
 import {
   cssStyleBgColor,
   cssStyleBgGradient,
@@ -9,6 +8,7 @@ import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { checkValue } from "../checkValue";
 import { CSSValue } from "../style2/types";
+import { configSelector } from "visual/redux/selectors-new";
 
 type FillType = "filled" | "outline" | "default";
 
@@ -18,18 +18,17 @@ export const getFillType = checkValue<FillType>([
   "default"
 ]);
 
-const config = Config.getAll();
-const IS_STORY = isStory(config);
-
 export function cssStyleElementIconSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "icon",
     direction: "right"
   });
@@ -38,10 +37,11 @@ export function cssStyleElementIconSpacing({
 export function cssStyleElementIconSizeStory({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return IS_STORY
-    ? cssStyleSizeSize({ v, device, state, prefix: "custom" })
+  return isStory(configSelector(store.getState()))
+    ? cssStyleSizeSize({ v, device, state, store, prefix: "custom" })
     : "";
 }
 
@@ -52,7 +52,8 @@ export function cssStyleElementIconPropertyHoverTransition(): string {
 export function cssStyleElementIconPadding({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -63,20 +64,23 @@ export function cssStyleElementIconPadding({
     return "padding: 0;";
   }
 
-  return `padding: ${padding}${IS_STORY ? "%" : "px"};`;
+  const _isStory = isStory(configSelector(store.getState()))
+
+  return `padding: ${padding}${_isStory ? "%" : "px"};`;
 }
 
 export function cssStyleElementIconBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const fillType = getFillType(dvv("fillType"));
 
   switch (fillType) {
     case "filled":
-      return cssStyleBgColor({ v, device, state });
+      return cssStyleBgColor({ v, device, store, state });
     case "outline":
       return "background: transparent;";
     case "default":
@@ -90,6 +94,7 @@ export function cssStyleElementIconBgGradient({
   v,
   device,
   state,
+  store,
   prefix
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -97,7 +102,7 @@ export function cssStyleElementIconBgGradient({
 
   switch (fillType) {
     case "filled":
-      return cssStyleBgGradient({ v, device, state, prefix });
+      return cssStyleBgGradient({ v, device, state, store, prefix });
     case "outline":
     case "default":
       return "background-image: none;";

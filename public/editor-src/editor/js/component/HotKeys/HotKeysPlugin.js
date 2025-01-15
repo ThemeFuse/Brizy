@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactReduxContext } from "react-redux";
 import { toCode, _modifier } from "./utils";
 
 let listeningKeys = {};
@@ -10,8 +11,11 @@ class HotKeysPlugin extends React.Component {
     items: [],
     shouldKeyDownHandle: () => true,
     shouldKeyUpHandle: () => true,
-    filterItems: items => items
+    filterItems: (items) => items
   };
+
+  static contextType = ReactReduxContext;
+
   componentDidMount() {
     const { items } = this.props;
 
@@ -26,10 +30,10 @@ class HotKeysPlugin extends React.Component {
     }
 
     items.forEach(({ keyNames, ...rest }) => {
-      const newKeyNames = keyNames.map(keyName =>
+      const newKeyNames = keyNames.map((keyName) =>
         keyName
           .split("+")
-          .map(item => toCode(item))
+          .map((item) => toCode(item))
           .join("+")
       );
 
@@ -66,7 +70,7 @@ class HotKeysPlugin extends React.Component {
 
     listeningKeys = Object.entries(listeningKeys).reduce(
       (acc, [key, value]) => {
-        acc[key] = value.filter(item => item.id !== id);
+        acc[key] = value.filter((item) => item.id !== id);
         if (acc[key].length === 0) {
           delete acc[key];
         }
@@ -90,7 +94,7 @@ class HotKeysPlugin extends React.Component {
     downKeysMap = [];
   };
 
-  handleKeyUp = e => {
+  handleKeyUp = (e) => {
     this.handleChange(e);
     if (
       _modifier["⌘"] === e.keyCode ||
@@ -99,16 +103,16 @@ class HotKeysPlugin extends React.Component {
     ) {
       downKeysMap = [];
     } else {
-      downKeysMap = downKeysMap.filter(key => key !== e.keyCode);
+      downKeysMap = downKeysMap.filter((key) => key !== e.keyCode);
     }
   };
 
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     if (
       downKeysMap.includes(_modifier["⌘"]) ||
       downKeysMap.includes(_modifier["right_⌘"])
     ) {
-      downKeysMap = downKeysMap.filter(key =>
+      downKeysMap = downKeysMap.filter((key) =>
         Object.values(_modifier).includes(key)
       );
     }
@@ -124,7 +128,14 @@ class HotKeysPlugin extends React.Component {
     if (listeningKeys[pressedKeys]) {
       // to think how to do it less hackly
       /* eslint-disable no-unused-vars */
-      const filteredItems = this.props.filterItems(listeningKeys[pressedKeys]);
+      // Extracting the store from redux-context to minimize performance issues
+      // caused by re-rendering all components on the page
+      const { store } = this.context;
+      const state = store.getState();
+      const filteredItems = this.props.filterItems(
+        listeningKeys[pressedKeys],
+        state
+      );
       if (e.type === "keydown") {
         filteredItems.forEach(({ onKeyDown, onKeyUp, ...rest }) => {
           this.props.shouldKeyDownHandle(e, rest) && onKeyDown(e, rest);

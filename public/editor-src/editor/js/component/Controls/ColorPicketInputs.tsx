@@ -5,8 +5,8 @@ import { InputHex } from "visual/component/Controls/InputHex";
 import EditorIcon from "visual/component/EditorIcon";
 import { EyeDropper } from "visual/component/EyeDropper";
 import { OnChange } from "visual/component/Options/Type";
-import Config from "visual/global/Config";
-import { isStory } from "visual/utils/models";
+import { isStory } from "visual/global/EditorModeContext";
+import { useEditorMode } from "visual/global/hooks";
 import { Hex } from "visual/utils/color/Hex";
 
 export type Props = {
@@ -33,11 +33,12 @@ export const ColorPickerInputs = ({
     [eyeDropperStatus]
   );
   const handleOutsideClick = useCallback(() => setEyeDropperStatus(false), []);
+  const editorMode = useEditorMode();
 
   return (
     <div className="brz-ed-control__color-picker-inputs">
       <div className="brz-ed-control__color-picker-inputs__hex-container">
-        {isStory(Config.getAll()) ? null : (
+        {isStory(editorMode) ? null : (
           <EditorIcon
             className={classNames(
               "brz-ed-control__color-picker-inputs__eye-dropper",

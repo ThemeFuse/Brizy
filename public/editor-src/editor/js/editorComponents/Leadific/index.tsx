@@ -5,9 +5,9 @@ import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { Block } from "visual/types";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getLinkData } from "visual/utils/models/link";
 import EditorArrayComponent from "../EditorArrayComponent";
@@ -23,6 +23,7 @@ class Leadific extends EditorComponent<Value, Props> {
   static get componentId(): string {
     return "Leadific";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -62,7 +63,7 @@ class Leadific extends EditorComponent<Value, Props> {
         return {
           blockId,
           meta,
-          ...(IS_EDITOR && {
+          ...(isEditor(this.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -75,11 +76,22 @@ class Leadific extends EditorComponent<Value, Props> {
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { leadificCustomFields = "" } = v;
-    const linkData = getLinkData(v);
+    const config = this.getGlobalConfig();
+    const linkData = getLinkData(v, config);
 
     const className = classnames(
       "brz-leadific",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const text = (
@@ -122,4 +134,5 @@ class Leadific extends EditorComponent<Value, Props> {
     );
   }
 }
+
 export default Leadific;

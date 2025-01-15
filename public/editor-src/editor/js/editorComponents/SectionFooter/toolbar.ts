@@ -3,37 +3,33 @@ import {
   getMaxContainerSuffix,
   getMinContainerSuffix
 } from "visual/editorComponents/Section/utils";
-import Config from "visual/global/Config";
+import { Cloud } from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { getColor } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
+import { Toggle } from "visual/utils/options/utils/Type";
 import * as Str from "visual/utils/reader/string";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import {
-  getInstanceParentId,
-} from "visual/utils/toolbar";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 import { capitalize } from "visual/utils/string";
-import { Toggle } from "visual/utils/options/utils/Type";
+import { getInstanceParentId } from "visual/utils/toolbar";
+
 
 export const getItems: GetItems = ({ v, device, component, context }) => {
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
   const disabledGlobalBlock =
@@ -46,9 +42,10 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
     defaultValueValue({ v, key, device, state: "normal" });
   const sectionHeightSuffix = dvv("sectionHeightSuffix");
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -143,7 +140,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
               type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("membership") === "off",
-              choices: getAllMembershipChoices(config)
+              choices: getAllMembershipChoices(config as Cloud)
             }
           ]
         },
@@ -163,7 +160,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
               type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("translations") === "off",
-              choices: getLanguagesChoices(config)
+              choices: getLanguagesChoices(config as Cloud)
             }
           ]
         }
@@ -232,7 +229,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes
+                  choices: getMaskShapes()
                 },
                 {
                   id: "maskCustomUpload",
@@ -258,7 +255,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -284,7 +281,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -315,7 +312,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }
@@ -331,7 +328,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },

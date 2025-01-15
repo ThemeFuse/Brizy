@@ -1,8 +1,10 @@
-import React, { ReactElement, useCallback, useRef } from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { getOptions } from "visual/component/ConditionsComponent";
 import { Switch as Control } from "visual/component/Controls/Switch";
 import { ToastNotification } from "visual/component/Notifications";
-import Config from "visual/global/Config";
+import Prompts from "visual/component/Prompts";
+import { useConfig } from "visual/global/hooks";
 import {
   makeGlobalBlockToPopup,
   makeGlobalToNormalBlock,
@@ -30,8 +32,8 @@ import { getBlockData, setIds } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 import { PortalLoading } from "./PortalLoading";
 import { getOpenedPopupId, openPopupById } from "./popupHandlers";
-import { Component, Selector } from "./types";
-import { createScreenshot, getBlockType, openPromptCondition } from "./utils";
+import { Component, OpenPromptCondition, Selector } from "./types";
+import { createScreenshot, getBlockType } from "./utils";
 
 const selector = (state: ReduxState): Selector => ({
   extraFontStyles: extraFontStylesSelector(state),
@@ -52,6 +54,9 @@ export const GlobalBlockOption: Component = ({
   );
   const dispatch = useDispatch();
   const switchKey = useRef(uuid(4));
+  const globalConfig = useConfig();
+  const [loading, setLoading] = useState(false);
+  const portalRef = useRef<HTMLElement | null>(null);
 
   const { _id, parentId, blockType = "normal" } = config || {};
 
@@ -64,6 +69,24 @@ export const GlobalBlockOption: Component = ({
     return globalBlocksIds.includes(_id);
   }, [_id, globalBlocks]);
 
+  const openPromptCondition = useCallback(
+    ({ type, blockId, rules }: OpenPromptCondition): void => {
+      if (!blockId) {
+        return ToastNotification.error(t("Something went wrong"));
+      }
+
+      const data = { value: blockId, type, rules, dispatch };
+      Prompts.open({
+        prompt: "conditions",
+        mode: "single",
+        props: {
+          options: getOptions(data, globalConfig)
+        }
+      });
+    },
+    [dispatch, globalConfig]
+  );
+
   const handleChange = async (checked: boolean): Promise<void> => {
     // if '_id' starts from number - document.getElementById(_id) will throw an error.
     // Because while they are valid in the HTML5 spec,
@@ -75,19 +98,23 @@ export const GlobalBlockOption: Component = ({
     }
 
     const node: HTMLElement | null = document.querySelector(`[id='${_id}']`);
-    const loading = PortalLoading.render(node);
     const blockData: Block = setIds(getBlockData(pageBlocks, _id));
+    setLoading(true);
+    portalRef.current = node;
 
     if (checked) {
       if (!blockData) {
+        setLoading(false);
         switchKey.current = uuid(4);
         ToastNotification.error(t("Could not Create Global Block"));
-        PortalLoading.close(loading);
         return;
       }
 
       if (node) {
-        const screenshot: Screenshot | undefined = await createScreenshot(node);
+        const screenshot: Screenshot | undefined = await createScreenshot(
+          node,
+          globalConfig
+        );
         const meta: GlobalBlock["meta"] = {
           extraFontStyles,
           type: getBlockType(blockType)
@@ -115,32 +142,38 @@ export const GlobalBlockOption: Component = ({
           position: { align: "bottom", top: 0, bottom: 0 }
         } as GlobalBlock;
         const newBlockId = blockData.value._id;
-        const config = Config.getAll();
 
         if (!isPopup(blockData) && page) {
-          globalBlock = changeRule(globalBlock, true, page);
+          globalBlock = changeRule(globalBlock, true, page, globalConfig);
         }
 
         if (isGlobalPopup(globalBlock)) {
           try {
-            const popup = await createGlobalPopup(globalBlock, config);
+            const popup = await createGlobalPopup(globalBlock, globalConfig);
 
             if (popup.data) {
+              const data = { block: globalBlock, fromBlockId: _id };
               dispatch(
-                makePopupToGlobalBlock({
-                  block: globalBlock,
-                  fromBlockId: _id,
-                  type: blockType === "popup" ? "popup" : "externalPopup"
-                })
+                makePopupToGlobalBlock(
+                  blockType === "normal"
+                    ? { ...data, type: "normal" }
+                    : { ...data, type: "external" }
+                )
               );
 
               const popupId = blockType === "popup" && getOpenedPopupId();
               if (popupId) {
-                requestAnimationFrame(() => openPopupById(popupId));
+                // Using setTimeout to reopen the popup because when switching between global and normal blocks,
+                // the section is unmounted
+                setTimeout(() => openPopupById(popupId), 200);
               }
 
               if (blockType === "externalPopup") {
-                openPromptCondition({ type: "popup", _id: newBlockId });
+                openPromptCondition({
+                  type: "popup",
+                  blockId: newBlockId,
+                  rules: globalBlock.rules
+                });
               }
             } else {
               switchKey.current = uuid(4);
@@ -153,7 +186,7 @@ export const GlobalBlockOption: Component = ({
           }
         } else {
           try {
-            const block = await createGlobalBlock(globalBlock, config);
+            const block = await createGlobalBlock(globalBlock, globalConfig);
 
             if (block.data) {
               dispatch(
@@ -162,7 +195,11 @@ export const GlobalBlockOption: Component = ({
                   fromBlockId: _id
                 })
               );
-              openPromptCondition({ type: "block", _id: newBlockId });
+              openPromptCondition({
+                type: "block",
+                blockId: newBlockId,
+                rules: globalBlock.rules
+              });
             } else {
               switchKey.current = uuid(4);
               ToastNotification.error(t("Could not Create Global Block"));
@@ -174,13 +211,13 @@ export const GlobalBlockOption: Component = ({
           }
         }
 
-        PortalLoading.close(loading);
+        setLoading(false);
       }
     } else {
       await pendingRequest();
 
       if (globalBlocks[_id]?.data) {
-        PortalLoading.close(loading);
+        setLoading(false);
 
         const data = {
           block: setIds(globalBlocks[_id].data),
@@ -191,14 +228,22 @@ export const GlobalBlockOption: Component = ({
           case "popup": {
             const popupId = getOpenedPopupId();
 
-            parentId && dispatch(makeGlobalBlockToPopup({ ...data, parentId }));
+            parentId &&
+              dispatch(
+                makeGlobalBlockToPopup({ ...data, type: "normal", parentId })
+              );
             if (popupId) {
-              requestAnimationFrame(() => openPopupById(popupId));
+              // Using setTimeout to reopen the popup because when switching between global and normal blocks,
+              // the section is unmounted
+              setTimeout(() => openPopupById(popupId), 200);
             }
             break;
           }
-          case "normal":
           case "externalPopup": {
+            dispatch(makeGlobalBlockToPopup({ ...data, type: "external" }));
+            break;
+          }
+          case "normal": {
             dispatch(makeGlobalToNormalBlock(data));
             break;
           }
@@ -216,6 +261,7 @@ export const GlobalBlockOption: Component = ({
         value={isGlobalBlock()}
         onChange={handleChange}
       />
+      {loading && <PortalLoading node={portalRef.current} />}
     </>
   );
 };

@@ -8,7 +8,7 @@ import { CustomError } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { MNullish, isNullish, isT } from "visual/utils/value";
 import * as TMP from "./correctors";
-import { getConnection } from "./graphql/apollo";
+import { CreateApolloClientProps, getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
 import { GetCollectionItem_collectionItem as CollectionItem } from "./graphql/types/GetCollectionItem";
 import { GetCollectionTypesWithFields_collectionTypes as CollectionTypesWithFields } from "./graphql/types/GetCollectionTypesWithFields";
@@ -27,11 +27,11 @@ const onCatch = (m: string) => (): never => {
   throw new CustomError(m);
 };
 
-export function getCollectionTypesWithFields(): Promise<
-  CollectionTypesWithFields[]
-> {
+export function getCollectionTypesWithFields(
+  data: CreateApolloClientProps
+): Promise<CollectionTypesWithFields[]> {
   return (
-    Gql.getCollectionTypesWithFields(getConnection())
+    Gql.getCollectionTypesWithFields(getConnection(data))
       .then((r) => r.data?.collectionTypes)
       .then(errOnEmpty(t("Invalid api data")))
       .then((collections) => collections.filter(isT))
@@ -43,6 +43,7 @@ export function getCollectionTypesWithFields(): Promise<
 
 export function getCollectionItems(
   collectionId: string,
+  connection: CreateApolloClientProps,
   filters?: {
     include?: string[];
     search?: string;
@@ -53,7 +54,7 @@ export function getCollectionItems(
   const itemsPerPage = paginationData.count;
 
   return (
-    Gql.getCollectionItems(getConnection(), {
+    Gql.getCollectionItems(getConnection(connection), {
       collectionTypeId: collectionId,
       page,
       itemsPerPage
@@ -75,11 +76,13 @@ interface CustomerAndCollectionTypes {
   collectionTypes: CustomerAndCollectionCollection[];
 }
 
-export function getCustomersAndCollectionTypes(): Promise<CustomerAndCollectionTypes> {
+export function getCustomersAndCollectionTypes(
+  data: CreateApolloClientProps
+): Promise<CustomerAndCollectionTypes> {
   const page = paginationData.page;
   const itemsPerPage = paginationData.count;
 
-  return Gql.getCustomersAndCollectionTypes(getConnection(), {
+  return Gql.getCustomersAndCollectionTypes(getConnection(data), {
     page,
     itemsPerPage
   })
@@ -95,4 +98,5 @@ export function getCustomersAndCollectionTypes(): Promise<CustomerAndCollectionT
     }))
     .catch(onCatch(t("Failed to fetch api data")));
 }
+
 //#endregion

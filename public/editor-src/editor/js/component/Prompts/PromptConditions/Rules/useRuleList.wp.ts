@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { setIn } from "timm";
+import { useConfig } from "visual/global/hooks";
 import { Rule } from "visual/types";
 import {
   getGroupList,
@@ -28,12 +29,13 @@ export default function useRuleList(
 ): [boolean, RuleList[]] {
   const [rulesList, setRulesList] = useState<RuleList[]>([]);
   const [listLoading, setListLoading] = useState(true);
+  const config = useConfig();
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
       setListLoading(true);
 
-      const groupList = (await getGroupList(type)) || [];
+      const groupList = (await getGroupList(type, config)) || [];
       // @ts-expect-error need transformer to ts getGroupList
       const rulesList = groupList.map(({ items }) => items).flat();
 
@@ -42,7 +44,7 @@ export default function useRuleList(
     }
 
     fetchData();
-  }, [type]);
+  }, [type, config]);
 
   useEffect(() => {
     async function updateRuleList(): Promise<void> {
@@ -69,7 +71,10 @@ export default function useRuleList(
             switch (group) {
               case PAGES_GROUP_ID:
               case TEMPLATES_GROUP_ID: {
-                const posts = await getRulePostsGroupList(rule.entityType);
+                const posts = await getRulePostsGroupList(
+                  rule.entityType,
+                  config
+                );
 
                 newItems = posts.map(({ value, title, items }) => {
                   if (Array.isArray(items)) {
@@ -94,7 +99,7 @@ export default function useRuleList(
                 break;
               }
               case CATEGORIES_GROUP_ID: {
-                const terms = await getTerms(rule.entityType);
+                const terms = await getTerms(rule.entityType, config);
                 newItems = terms.map(({ name, term_id }) => ({
                   title: name,
                   value: `${term_id}`,
@@ -121,7 +126,7 @@ export default function useRuleList(
     }
 
     rulesList.length && updateRuleList();
-  }, [rules, rulesList]);
+  }, [rules, rulesList, config]);
 
   return [listLoading, rulesList];
 }

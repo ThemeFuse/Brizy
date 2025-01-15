@@ -2,7 +2,7 @@ exports.id = 11;
 exports.ids = [11];
 exports.modules = {
 
-/***/ 6990:
+/***/ 7016:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(Vidyard_exports, {
   default: () => Vidyard
 });
 module.exports = __toCommonJS(Vidyard_exports);
-var import_react = __toESM(__webpack_require__(470));
-var import_utils = __webpack_require__(3805);
-var import_patterns = __webpack_require__(3808);
+var import_react = __toESM(__webpack_require__(24));
+var import_utils = __webpack_require__(3837);
+var import_patterns = __webpack_require__(3840);
 const SDK_URL = "https://play.vidyard.com/embed/v4.js";
 const SDK_GLOBAL = "VidyardV4";
 const SDK_GLOBAL_READY = "onVidyardAPI";

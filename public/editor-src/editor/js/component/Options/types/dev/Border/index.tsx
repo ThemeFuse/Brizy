@@ -1,25 +1,25 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { identity as id } from "underscore";
 import {
   Border as Control,
   Props as ControlProps
 } from "visual/component/Controls/Border";
 import * as Option from "visual/component/Options/Type";
-import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
+import { currentStyleSelector } from "visual/redux/selectors";
 import { WithClassName, WithConfig } from "visual/types/attributes";
-import { getColorPaletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { Config } from "visual/utils/options/Border/entities/Config";
-import * as BorderStyle from "visual/utils/options/Border/entities/style";
 import { Value } from "visual/utils/options/Border/entities/Value";
+import * as BorderStyle from "visual/utils/options/Border/entities/style";
 import * as Width from "visual/utils/options/Border/entities/width";
 import { Meta } from "visual/utils/options/Border/meta";
 import * as BorderModel from "visual/utils/options/Border/model";
-import { getStyleObject, _setOpacity } from "visual/utils/options/Border/utils";
+import { _setOpacity, getStyleObject } from "visual/utils/options/Border/utils";
 import { paletteHex } from "visual/utils/options/ColorPicker/utils";
 
 export interface Props
@@ -35,12 +35,16 @@ export const Border = ({
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
+
+  const globalConfig = useConfig();
+
   const styles = config?.styles ?? BorderStyle.styles;
   const hasNone = styles.includes(BorderStyle.empty);
   const minWidth = useMemo(
     () => (hasNone ? id : (v: number): number => Math.max(1, v)),
     [hasNone]
   );
+  const { colorPalette } = useSelector(currentStyleSelector);
 
   const changeStyle = useCallback<ControlProps["onChangeStyle"]>(
     (v) => onChange(BorderModel.setStyle(v, value)),
@@ -118,22 +122,20 @@ export const Border = ({
   );
 
   const enableGlobalStyle = useMemo((): boolean => {
-    const config = GlobalConfig.getAll();
     const { bottomTabsOrder = [], topTabsOrder = [] } =
-      config.ui?.leftSidebar ?? {};
+      globalConfig?.ui?.leftSidebar ?? {};
 
-    return [...bottomTabsOrder, ...topTabsOrder].includes(
-      LeftSidebarOptionsIds.globalStyle
+    return [...bottomTabsOrder, ...topTabsOrder].some(
+      (tab) => tab.type === LeftSidebarOptionsIds.globalStyle
     );
-  }, []);
+  }, [globalConfig?.ui?.leftSidebar]);
 
-  const palette = getColorPaletteColors();
-  const hex = paletteHex(value.palette, palette) ?? value.hex;
+  const hex = paletteHex(value.palette, colorPalette) ?? value.hex;
 
   return (
     <Control
       className={className}
-      paletteList={getColorPaletteColors()}
+      paletteList={colorPalette}
       paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
       enableOpacity={config?.opacity ?? true}
       styles={styles.map(getStyleObject).filter(Boolean)}

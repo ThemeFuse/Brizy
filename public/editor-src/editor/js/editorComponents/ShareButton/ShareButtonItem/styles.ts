@@ -1,8 +1,9 @@
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { ItemValue } from "../types";
+import { DynamicStylesProps } from "visual/types";
 
-export function style(v: ItemValue, vs: ItemValue, vd: ItemValue): OutputStyle {
+export function style(data: DynamicStylesProps<ItemValue>): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: [
@@ -48,5 +49,5 @@ export function style(v: ItemValue, vs: ItemValue, vd: ItemValue): OutputStyle {
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

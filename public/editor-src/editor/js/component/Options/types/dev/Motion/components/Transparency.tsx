@@ -8,12 +8,12 @@ import { Direction, Props } from "./Direction";
 import { UnitSlider } from "./UnitSlider";
 import { Viewport } from "./Viewport";
 
-const directionTitle: { [k in TDirection]: string } = {
+const getDirectionTitle = (): { [k in TDirection]: string } => ({
   in: t("In"),
   out: t("Out"),
   inOut: t("In Out"),
   outIn: t("Out In")
-};
+});
 
 export const Transparency: JSXElementConstructor<EffectProps<V>> = ({
   value,
@@ -32,7 +32,7 @@ export const Transparency: JSXElementConstructor<EffectProps<V>> = ({
     [value, onChange]
   );
   const directions = useMemo<Props<V["direction"]>["directions"]>(
-    () => Object.entries(directionTitle) as [TDirection, string][],
+    () => Object.entries(getDirectionTitle()) as [TDirection, string][],
     []
   );
   return (

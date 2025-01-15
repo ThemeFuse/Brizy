@@ -1,3 +1,4 @@
+import { Json } from "@brizy/readers";
 import classNames from "classnames";
 import React from "react";
 import { BreadcrumbsEditor } from "visual/component/BrizyBuilder";
@@ -8,17 +9,15 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getCurrentPageId } from "visual/utils/env";
+import { BreadcrumbsPreview } from "./components/BreadcrumbsPreview";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { Value } from "./types";
 import { readBreadcrumbs } from "./utils";
-import { Json } from "@brizy/readers";
-import { BreadcrumbsPreview } from "./components/BreadcrumbsPreview";
 
 const placeholderStyle = {
   height: "40px"
@@ -48,7 +47,8 @@ class Breadcrumbs extends EditorComponent<Value> {
     });
 
     DCApiProxyInstance.getDC([placeholder], {
-      postId: getCurrentPageId()
+      postId: getCurrentPageId(),
+      globalConfig: this.getGlobalConfig()
     }).then((res) => this.setState({ breadcrumbContent: Json.read(res[0]) }));
   }
 
@@ -59,7 +59,17 @@ class Breadcrumbs extends EditorComponent<Value> {
     const items = readBreadcrumbs(breadcrumbContent);
     const className = classNames(
       "brz-breadcrumbs",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return items.length ? (
@@ -81,7 +91,17 @@ class Breadcrumbs extends EditorComponent<Value> {
     const { customCss } = v;
     const className = classNames(
       "brz-breadcrumbs",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

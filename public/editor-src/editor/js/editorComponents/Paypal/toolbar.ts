@@ -1,13 +1,10 @@
 import { Str } from "@brizy/readers";
 import type { ElementProps } from "visual/component/Elements/Types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { GetItems } from "../EditorComponent/types";
 import { BillingCycle, Currency, PaypalPaymenType, Value } from "./types";
@@ -28,7 +25,7 @@ export const getItems: GetItems<Value, ElementProps> = ({
 }) => {
   const { tax, donationAmount } = v;
 
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const type = Str.read(dvv("type")) ?? PaypalPaymenType.checkout;
   const iconIsDisabled = !dvv("iconName");
@@ -37,9 +34,10 @@ export const getItems: GetItems<Value, ElementProps> = ({
 
   const maxBillingCycleDuration = getSubscriptionRange(billingCycle);
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
   const richTextDC = getDynamicContentOption({
@@ -382,7 +380,7 @@ export const getItems: GetItems<Value, ElementProps> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },

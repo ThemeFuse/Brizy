@@ -1,8 +1,7 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
@@ -18,9 +17,10 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: parentBgColorHex } = getOptionColorHexByPalette(
+  const parentBgColor = getColor(
     dvv("parentBgColorHex"),
-    dvv("parentBgColorPalette")
+    dvv("parentBgColorPalette"),
+    dvv("parentBgColorOpacity")
   );
   return [
     {
@@ -31,8 +31,8 @@ export function getItems({
       devices: "desktop",
       options: [
         {
-          id: "breadcrumbs",
-          label: t("Breadcrumbs"),
+          id: "footerDisplay",
+          label: t("Footer"),
           type: "switch"
         },
         {
@@ -40,11 +40,6 @@ export function getItems({
           label: t("Sign in link"),
           type: "switch",
           disabled: dvv("footerDisplay") === "off"
-        },
-        {
-          id: "footerDisplay",
-          label: t("Footer"),
-          type: "switch"
         }
       ]
     },
@@ -56,10 +51,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              parentBgColorHex,
-              dvv("parentBgColorOpacity")
-            )
+            backgroundColor: parentBgColor
           }
         }
       },

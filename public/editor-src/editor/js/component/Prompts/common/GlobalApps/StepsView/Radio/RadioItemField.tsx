@@ -5,7 +5,8 @@ import { RadioItemProps } from "../types";
 export const RadioItemField = ({
   choices,
   name,
-  onChange
+  onChange,
+  isEditor
 }: RadioItemProps): ReactElement => {
   const handleRadioChange = useCallback(
     (value: string) => {
@@ -22,7 +23,7 @@ export const RadioItemField = ({
       defaultValue={choices[0].id}
     >
       {choices.map(({ name, id }) => (
-        <RadioItem key={id} value={id}>
+        <RadioItem key={id} value={id} isEditor={isEditor}>
           {name}
         </RadioItem>
       ))}

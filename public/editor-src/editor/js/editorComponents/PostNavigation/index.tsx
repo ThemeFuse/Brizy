@@ -9,7 +9,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import defaultValue from "./defaultValue.json";
@@ -36,7 +35,17 @@ class PostNavigation extends EditorComponent<Value> {
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const className = classNames(
       "brz-post-navigation",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const { showPost, showTitle, prevLabel, nextLabel } = v;
 
@@ -65,7 +74,17 @@ class PostNavigation extends EditorComponent<Value> {
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {
     const className = classNames(
       "brz-post-navigation",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const { showPost, showTitle, prevLabel, nextLabel } = v;

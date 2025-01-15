@@ -17,8 +17,8 @@ export function cssStyleRowMinHeight({ v, device }: CSSValue): string {
           device
         })}${styleElementColumnMinHeightSuffix({ v, device })}`
       : minHeightType === "fullHeight"
-      ? "100vh"
-      : "auto";
+        ? "100vh"
+        : "auto";
 
   return `min-height: ${minHeight};`;
 }
@@ -26,10 +26,11 @@ export function cssStyleRowMinHeight({ v, device }: CSSValue): string {
 export function cssStyleRowReverseColumn({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const flexDirection =
-    styleReverseColumnsRow({ v, device, state }) === "on"
+    styleReverseColumnsRow({ v, device, state, store }) === "on"
       ? "row-reverse"
       : "row";
   const flexWrap =

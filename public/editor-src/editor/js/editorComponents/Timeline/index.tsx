@@ -6,7 +6,6 @@ import { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent, {
   Props as EProps
 } from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { getContainerW, getMargin } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
@@ -162,7 +161,17 @@ export default class Timeline extends EditorComponent<Value, Props> {
       verticalMode === "on"
         ? "brz-timeline__tabs--vertical"
         : "brz-timeline__tabs--horizontal",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const itemProps = this.makeSubcomponentProps({

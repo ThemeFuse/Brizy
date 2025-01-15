@@ -1,5 +1,4 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
@@ -8,10 +7,12 @@ import * as Str from "visual/utils/reader/string";
 import { capitalize } from "visual/utils/string";
 import { getInstanceParentId } from "visual/utils/toolbar";
 import { Toggle } from "visual/utils/options/utils/Type";
-import { Value, Props, RenderType } from "./type";
+import { Props, RenderType, Value } from "./type";
+import { Cloud } from "visual/global/Config";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
+
   const disabledSavedBlock =
     typeof config.api?.savedBlocks?.create !== "function";
   const disabledGlobalBlock =
@@ -109,7 +110,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("membership") === "off",
-              choices: getAllMembershipChoices(config)
+              choices: getAllMembershipChoices(config as Cloud)
             }
           ]
         },
@@ -129,7 +130,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               type: "multiSelect",
               placeholder: t("Select"),
               disabled: dvv("translations") === "off",
-              choices: getLanguagesChoices(config)
+              choices: getLanguagesChoices(config as Cloud)
             }
           ]
         }

@@ -22,7 +22,6 @@ import {
   getClosestParent,
   getElementOfArrayLoop,
   getParentWhichContainsStyleProperty,
-  getStyles,
   setStyles
 } from "./styles";
 
@@ -33,7 +32,6 @@ export {
   setIds,
   stripIds,
   setStyles,
-  getStyles,
   getElementOfArrayLoop,
   getClosestParent,
   getParentWhichContainsStyleProperty,

@@ -16,6 +16,7 @@ import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
 import { Store } from "visual/redux/store";
 import Gallery from "../libs/gallery";
+import { ReactElement } from "react";
 
 export type GalleryIsotope = Isotope;
 export type GalleryJustified = Gallery;
@@ -28,6 +29,11 @@ export type SwiperInstanceType = typeof Swiper;
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
+}
+
+declare module "react-dom" {
+  export function renderToStaticMarkup(element: ReactElement): string;
+  export function renderToString(element: ReactElement): string;
 }
 
 interface BrizyLibs {

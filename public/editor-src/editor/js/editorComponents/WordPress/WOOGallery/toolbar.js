@@ -1,15 +1,15 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
-    defaultValueValue({ v, key: "borderColorHex", device, state }),
-    defaultValueValue({ v, key: "borderColorPalette", device, state })
+  const borderColor = getColor(
+    dvv("borderColorPalette"),
+    dvv("borderColorHex"),
+    dvv("borderColorOpacity")
   );
 
   return [
@@ -21,10 +21,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              borderColorHex,
-              dvv("borderColorOpacity")
-            )
+            backgroundColor: borderColor
           }
         }
       },

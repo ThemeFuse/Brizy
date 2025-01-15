@@ -36,9 +36,13 @@ class GoogleConnect extends Component {
   static async onBeforeLoad(context) {
     const {
       app: { id, data },
-      onChange
+      onChange,
+      config
     } = context;
-    const googleFonts = await getGoogleFonts();
+    const googleFonts = await getGoogleFonts({
+      config,
+      renderContext: "editor"
+    });
 
     onChange(id, { ...data, fonts: googleFonts });
   }
@@ -167,6 +171,7 @@ class GoogleConnect extends Component {
 const mapStateToProps = (state) => ({
   fonts: fontsSelector(state)
 });
+
 const mapDispatchToProps = {
   addFonts
 };

@@ -1,11 +1,6 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { Type } from "../../utils/effects";
 import { Effect, EffectValue } from "./Value";
-
-export enum Type {
-  active = "active",
-  enable = "enable",
-  effect = "effect"
-}
 
 export type Active = {
   type: Type.active;
@@ -50,7 +45,13 @@ export const eff = <E extends Effect>(
   value
 });
 
-export type Patch = Active | Enable | Eff<Effect>;
+export type Multiple = {
+  value: Record<Effect, EffectValue<Effect>>;
+  active: Effect | undefined;
+  type: Type.multiple;
+};
+
+export type Patch = Active | Enable | Eff<Effect> | Multiple;
 
 export const isMouseEffect = (e: Effect): e is "mouseTrack" | "mouseTilt" =>
   e === "mouseTilt" || e === "mouseTrack";

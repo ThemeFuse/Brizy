@@ -1,9 +1,10 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { AuthError } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { request } from "../../";
 import { APIAuthProvider, AuthProviderResponse } from "./types";
 import { decrypt } from "./utils";
+
 
 export class AuthProvider implements APIAuthProvider {
   private readonly authUrl: string;
@@ -12,8 +13,7 @@ export class AuthProvider implements APIAuthProvider {
     this.authUrl = url;
   }
 
-  async send(): Promise<AuthProviderResponse> {
-    const config = Config.getAll();
+  async send(config: ConfigCommon): Promise<AuthProviderResponse> {
     const { auth } = config;
 
     if (auth) {
@@ -30,12 +30,16 @@ export class AuthProvider implements APIAuthProvider {
           return Promise.resolve({ message: "success" });
         }
       } catch (e) {
-        const r = await request(this.authUrl, {
-          method: "POST",
-          body: new URLSearchParams({
-            token: auth.token
-          })
-        });
+        const r = await request(
+          this.authUrl,
+          {
+            method: "POST",
+            body: new URLSearchParams({
+              token: auth.token
+            })
+          },
+          config
+        );
         if (!r.ok) {
           throw new AuthError(t("Failed to authenticate: invalid token"));
         }

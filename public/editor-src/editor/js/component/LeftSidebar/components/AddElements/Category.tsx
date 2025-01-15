@@ -2,9 +2,7 @@ import classnames from "classnames";
 import React, { ReactElement, ReactNode } from "react";
 import _ from "underscore";
 import Sortable from "visual/component/Sortable";
-import Config from "visual/global/Config";
 import { Shortcode } from "visual/types";
-import { isStory } from "visual/utils/models";
 import { SortData } from "./types";
 
 const sortableBlindZone = {
@@ -23,13 +21,15 @@ export interface Props {
   shortcodes: Shortcode[];
   children: ReactNode;
   onChange: (data: SortData, shortcodes: Shortcode[]) => void;
+  showLines?: boolean;
 }
 
 export class Category extends React.Component<Props> {
   static defaultProps = {
     category: "",
     shortcodes: [],
-    onChange: _.noop
+    onChange: _.noop,
+    showLines: false
   };
 
   handleChange = (data: SortData): void => {
@@ -39,7 +39,7 @@ export class Category extends React.Component<Props> {
   };
 
   render(): ReactElement {
-    const { category, children } = this.props;
+    const { category, children, showLines } = this.props;
     const className = classnames("brz-ed-sidebar__add-elements", {
       [`brz-ed-sidebar__add-elements--${category}`]: category
     });
@@ -47,7 +47,7 @@ export class Category extends React.Component<Props> {
     return (
       <Sortable
         type="addable"
-        showLines={!isStory(Config.getAll())}
+        showLines={showLines}
         blindZone={sortableBlindZone}
         dragOffset={sortableDragOffset}
         onSort={this.handleChange}

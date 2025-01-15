@@ -183,8 +183,8 @@ export interface CloudComponentConfig {
   exclude?: boolean;
   includeQueryMultiOptions?: boolean;
   querySource?: boolean;
-  manualId?: string;
   collectionFilters?: string;
+  getManualId?: (source?: string) => boolean;
   getIncludeDisabledValue?: (source: string) => boolean;
 }
 

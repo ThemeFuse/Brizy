@@ -1,5 +1,4 @@
 import { match, parse } from "fp-utilities";
-import Config, { isWp } from "visual/global/Config";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
   AllRule,
@@ -96,59 +95,57 @@ export type ApiRule =
   | ApiCollectionTypeRule
   | ApiAllRule;
 
-export const editorRuleToApiRule: (v: GlobalBlockRule) => ApiRule = match(
-  [
-    isCollectionItemRule,
-    (rule: CollectionItemRule): ApiCollectionItemRule => {
-      const isWP = isWp(Config.getAll());
-      return isWP
-        ? {
-            type: rule.type,
-            appliedFor: rule.appliedFor,
-            entityType: rule.entityType,
-            entityValues: rule.entityValues
-          }
-        : {
-            type: rule.type,
-            mode: rule.mode,
-            appliedFor: rule.appliedFor,
-            entityType: rule.entityType,
-            entityValues: rule.entityValues
-          };
-    }
-  ],
-  [
-    isCollectionTypeRule,
-    (rule: CollectionTypeRule): ApiCollectionTypeRule => {
-      return {
+export const editorRuleToApiRule = (v: GlobalBlockRule, withMode?: boolean) =>
+  match(
+    [
+      isCollectionItemRule,
+      (rule: CollectionItemRule): ApiCollectionItemRule => ({
         type: rule.type,
         appliedFor: rule.appliedFor,
         entityType: rule.entityType,
-        entityValues: []
-      };
-    }
-  ],
-  [
-    isAllRule,
-    (rule: AllRule): ApiAllRule => {
-      return {
-        type: rule.type,
-        appliedFor: null,
-        entityType: "",
-        entityValues: []
-      };
-    }
-  ]
-);
+        entityValues: rule.entityValues,
+        ...(withMode
+          ? {
+              mode: rule.mode
+            }
+          : {})
+      })
+    ],
+    [
+      isCollectionTypeRule,
+      (rule: CollectionTypeRule): ApiCollectionTypeRule => {
+        return {
+          type: rule.type,
+          appliedFor: rule.appliedFor,
+          entityType: rule.entityType,
+          entityValues: []
+        };
+      }
+    ],
+    [
+      isAllRule,
+      (rule: AllRule): ApiAllRule => {
+        return {
+          type: rule.type,
+          appliedFor: null,
+          entityType: "",
+          entityValues: []
+        };
+      }
+    ]
+  )(v);
 
 //#endregion
 
 //#region GlobalBlocks
 
 export const stringifyGlobalBlock = (
-  globalBlock: GlobalBlock
+  globalBlock: GlobalBlock,
+  withMode?: boolean
 ): APIGlobalBlock => {
-  const rules = globalBlock.rules.map(editorRuleToApiRule);
+  const rules = globalBlock.rules.map((rule) =>
+    editorRuleToApiRule(rule, withMode)
+  );
 
   return { ...globalBlock, rules };
 };

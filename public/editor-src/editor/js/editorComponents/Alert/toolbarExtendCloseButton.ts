@@ -1,7 +1,6 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
@@ -17,9 +16,10 @@ export function getItems({
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: closeColorHex } = getOptionColorHexByPalette(
+  const closeColor = getColor(
+    dvv("closeColorPalette"),
     dvv("closeColorHex"),
-    dvv("closeColorPalette")
+    dvv("closeColorOpacity")
   );
 
   return [
@@ -144,7 +144,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(closeColorHex, dvv("closeColorOpacity"))
+            backgroundColor: closeColor
           }
         }
       },

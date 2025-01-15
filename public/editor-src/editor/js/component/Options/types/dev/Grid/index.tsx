@@ -3,6 +3,7 @@ import { Grid as Control } from "visual/component/Controls/Grid";
 import { Column } from "visual/component/Controls/Grid/Column";
 import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
+import { useConfig, usePro } from "visual/global/hooks";
 import { WithClassName, WithConfig } from "visual/types/attributes";
 import { Column as ColumnType, Config } from "./types";
 
@@ -24,6 +25,10 @@ export const Grid = ({
     [columns]
   );
 
+  const cnfg = useConfig();
+
+  const pro = usePro();
+
   return columns ? (
     <Control
       className={className}
@@ -32,7 +37,13 @@ export const Grid = ({
     >
       {columns.map((col, k) => (
         <Column className={col.className} key={k} align={col.align ?? "start"}>
-          <Options wrapOptions={false} data={col.options} toolbar={toolbar} />
+          <Options
+            wrapOptions={false}
+            data={col.options}
+            toolbar={toolbar}
+            isPro={pro}
+            upgradeToPro={cnfg?.urls?.upgradeToPro}
+          />
         </Column>
       ))}
     </Control>

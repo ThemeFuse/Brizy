@@ -1,11 +1,10 @@
+import { Obj } from "@brizy/readers";
 import { getIn, setIn } from "timm";
 import Editor from "visual/global/Editor";
 import { DESKTOP, RESPONSIVE } from "visual/utils/devices";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-import { getStore } from "visual/redux/store";
 import { capByPrefix } from "../string";
-import { Obj } from "@brizy/readers";
 
 const filterKeys = [
   capByPrefix("temp", "tablet"),
@@ -106,8 +105,7 @@ export function getStateModeKeys(v) {
   }, {});
 }
 
-export function getStyles({ value, type }) {
-  const { deviceMode } = getStore().getState().ui;
+function getStyles({ value, type }, deviceMode) {
   const { defaultValue } = Editor.getComponent(type);
 
   if (deviceMode === DESKTOP) {
@@ -126,8 +124,10 @@ export function getStyles({ value, type }) {
   }
 }
 
-export function setStyles(componentValue, depth = 0, i = 0) {
-  const styles = getStyles(componentValue);
+export function setStyles(data) {
+  const { componentValue, deviceMode, depth = 0 } = data;
+  let i = data.i ?? 0;
+  const styles = getStyles(componentValue, deviceMode);
 
   let newValue = setIn(
     componentValue,
@@ -146,8 +146,8 @@ export function setStyles(componentValue, depth = 0, i = 0) {
       ) {
         newItem = newValue.value.items[index];
       }
-      return setStyles(
-        {
+      return setStyles({
+        componentValue: {
           ...item,
           value: {
             ...newItem.value,
@@ -155,8 +155,9 @@ export function setStyles(componentValue, depth = 0, i = 0) {
           }
         },
         depth,
-        i
-      );
+        i,
+        deviceMode
+      });
     });
     newValue = setIn(newValue, ["value", "items"], newItems);
   }

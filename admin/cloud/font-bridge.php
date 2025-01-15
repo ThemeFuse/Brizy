@@ -15,7 +15,7 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 *
 	 * @param Brizy_Admin_Cloud_Client $client
 	 */
-	public function __construct(  $client ) {
+	public function __construct( $client ) {
 		parent::__construct( $client );
 
 		$this->fontManager = new Brizy_Admin_Fonts_Manager();
@@ -69,26 +69,13 @@ class Brizy_Admin_Cloud_FontBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	}
 
 	private function downloadFileToTemporaryFile( $url ) {
-		$filePath = tempnam( sys_get_temp_dir(), basename( $url ) );
 		$content  = Brizy_Editor_Asset_StaticFile::get_asset_content( $url );
-		$result   = file_put_contents( $filePath, $content );
 
-		if ( $result === false ) {
-			Brizy_Logger::instance()->critical( 'Filed to write font content',
-				[
-					'url'      => $url,
-					'filePath' => $filePath
-				] );
-			throw new Exception( 'Filed to write font content' );
-		}
-
-		return array(
-			'name'     => basename( $url ),
-			'type'     => Brizy_Public_AssetProxy::get_mime( $filePath ),
-			'tmp_name' => $filePath,
-			'error'    => 0,
-			'size'     => filesize( $filePath )
+		return Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+			basename( $url ),
+			$content
 		);
+
 	}
 
 	/**

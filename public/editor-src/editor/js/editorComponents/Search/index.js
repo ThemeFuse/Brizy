@@ -1,18 +1,16 @@
-import React from "react";
 import classnames from "classnames";
-import Config from "visual/global/Config";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import React from "react";
+import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
-import { css } from "visual/utils/cssStyle";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebar from "./sidebar";
 import { styles } from "./styles";
 import * as toolbar from "./toolbar";
-import * as sidebar from "./sidebar";
-import defaultValue from "./defaultValue.json";
-import BoxResizer from "visual/component/BoxResizer";
-import { Wrapper } from "../tools/Wrapper";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
@@ -20,18 +18,19 @@ export default class Search extends EditorComponent {
   static get componentId() {
     return "Search";
   }
+
   static defaultValue = defaultValue;
 
   inputRef = React.createRef();
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
-  handleInputChange = e =>
+  handleInputChange = (e) =>
     this.patchValue({
       label: e.target.value
     });
 
-  handleInputClick = e => {
+  handleInputClick = (e) => {
     e.preventDefault();
 
     this.inputRef.current?.classList.add("brz-ed-dd-cancel");
@@ -68,10 +67,16 @@ export default class Search extends EditorComponent {
       "brz-search-container",
       `brz-search-container--${searchStyle}`,
       _className,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styles(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styles({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const resizerRestrictions = {
@@ -129,13 +134,19 @@ export default class Search extends EditorComponent {
         searchStyle === "fullScreen" ? "minimal" : searchStyle
       }`,
       _className,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styles(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styles({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
-    const formAction = Config.get("urls").site;
+    const formAction = this.getGlobalConfig()?.urls?.site;
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>

@@ -5,10 +5,8 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
@@ -18,7 +16,7 @@ import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
-import { EkklesiaMessages } from "../utils/helpers";
+import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -29,6 +27,7 @@ export class MinistryBrandsArticleList extends EditorComponent<Value, Props> {
   static get componentId(): ElementTypes.MinistryBrandsArticleList {
     return ElementTypes.MinistryBrandsArticleList;
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -45,7 +44,7 @@ export class MinistryBrandsArticleList extends EditorComponent<Value, Props> {
 
     this.props.extendParentToolbar(toolbarExtend);
     const { category, group, series } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [
@@ -56,7 +55,8 @@ export class MinistryBrandsArticleList extends EditorComponent<Value, Props> {
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["article_list"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["article_list"]);
       this.patchValue(changedKeys);
     }
   }
@@ -65,7 +65,17 @@ export class MinistryBrandsArticleList extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-articleList__wrapper",
       "brz-ministryBrands",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

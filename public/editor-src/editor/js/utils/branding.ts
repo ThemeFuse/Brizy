@@ -1,8 +1,7 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 // replaces branded text for white labeling purposes
-export const brizyToBranding = (s: string): string => {
-  const config = Config.getAll();
+export const brizyToBranding = (s: string, config: ConfigCommon): string => {
   const branding = config.branding;
 
   if (!branding) {

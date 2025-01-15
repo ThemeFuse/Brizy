@@ -1,7 +1,6 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export default (menus) => {
@@ -20,9 +19,10 @@ const getItems =
   ({ v, device }) => {
     const dvv = (key) => defaultValueValue({ v, key, device });
 
-    const { hex: colorHex } = getOptionColorHexByPalette(
+    const color = getColor(
+      dvv("colorPalette"),
       dvv("colorHex"),
-      dvv("colorPalette")
+      dvv("colorOpacity")
     );
 
     return [
@@ -87,7 +87,7 @@ const getItems =
           size: "auto",
           icon: {
             style: {
-              backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+              backgroundColor: color
             }
           }
         },

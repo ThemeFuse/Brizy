@@ -6,11 +6,13 @@ import { cssStyleColor } from "./cssStyleColor";
 export function cssStyleElementCarouselColorDots({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "sliderDotsColor"
   });
@@ -19,11 +21,13 @@ export function cssStyleElementCarouselColorDots({
 export function cssStyleElementCarouselColorArrow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "sliderArrowsColor"
   });
@@ -54,7 +58,7 @@ export function cssStyleElementCarouselMarginPadding({
   const paddingTopSuffix = dvv("sliderPaddingTopSuffix");
   const paddingBottomSuffix = dvv("sliderPaddingBottomSuffix");
 
-  return `padding-top: ${paddingTop}${paddingTopSuffix}; 
+  return `padding-top: ${paddingTop}${paddingTopSuffix};
           padding-bottom: ${paddingBottom}${paddingBottomSuffix};
           margin-left:${sliderMargin}${sliderMarginSuffix};
           margin-right:${sliderMargin}${sliderMarginSuffix};`;

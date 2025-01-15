@@ -9,7 +9,7 @@ import Scrollbars from "react-custom-scrollbars";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   CustomTemplatePage,
   LayoutsWithThumbs,
@@ -17,6 +17,7 @@ import {
   TemplateWithThumbs,
   TemplateWithThumbsAndPages
 } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
+import { EditorMode, isStory } from "visual/global/EditorModeContext";
 import {
   defaultLayoutPages,
   defaultLayoutsMeta,
@@ -25,13 +26,16 @@ import {
   defaultStoriesPages
 } from "visual/utils/api";
 import { isBlock } from "visual/utils/api/common";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import Thumbnail, { LayoutThumbnail } from "../common/Thumbnail";
-import ThumbnailGrid, { ThumbnailProps } from "../common/ThumbnailGrid";
-import { Data as ThumbnailData } from "../common/ThumbnailGrid";
+import ThumbnailGrid, {
+  Data as ThumbnailData,
+  ThumbnailProps
+} from "../common/ThumbnailGrid";
 import { PromptBlockTemplate } from "../types";
 import Details from "./Details";
 import { Category, Filter, isStoryData } from "./types";
@@ -46,6 +50,8 @@ export interface Props {
   onAddBlocks: (b: PromptBlockTemplate) => void;
   onClose: VoidFunction;
   onNext: VoidFunction;
+  config: ConfigCommon;
+  editorMode: EditorMode;
 }
 
 interface State {
@@ -58,14 +64,33 @@ const defaultFilter: Filter = {
   search: ""
 };
 
+const storyGrid = {
+  columns: 5,
+  responsive: [
+    {
+      breakpoint: 1460,
+      settings: {
+        columns: 4
+      }
+    },
+    {
+      breakpoint: 1200,
+      settings: {
+        columns: 3
+      }
+    }
+  ]
+};
+
 export default class List extends Component<Props, State> {
-  static defaultProps: Props = {
+  static defaultProps: Omit<Props, "editorMode"> = {
     type: "layouts",
     showSidebar: true,
     showSearch: true,
     onAddBlocks: _.noop,
     onClose: _.noop,
-    onNext: _.noop
+    onNext: _.noop,
+    config: {} as ConfigCommon
   };
 
   state: State = {
@@ -75,7 +100,7 @@ export default class List extends Component<Props, State> {
 
   async componentDidMount(): Promise<void> {
     try {
-      const data = await this.getData();
+      const data = await this.getData(this.props.config.api);
 
       this.setState({ data });
     } catch (e) {
@@ -84,17 +109,18 @@ export default class List extends Component<Props, State> {
     }
   }
 
-  async getData(): Promise<StoriesWithThumbs | LayoutsWithThumbs> {
+  async getData(
+    api: ConfigCommon["api"]
+  ): Promise<StoriesWithThumbs | LayoutsWithThumbs> {
     return this.props.type === "layouts"
-      ? await defaultLayoutsMeta(Config.getAll())
-      : await defaultStoriesMeta(Config.getAll());
+      ? await defaultLayoutsMeta(api)
+      : await defaultStoriesMeta(api);
   }
 
-  async getPages(id: string) {
-    const config = Config.getAll();
+  async getPages(id: string, api: ConfigCommon["api"]) {
     return this.props.type === "layouts"
-      ? await defaultLayoutPages(config, id)
-      : await defaultStoriesPages(config, id);
+      ? await defaultLayoutPages(api, id)
+      : await defaultStoriesPages(api, id);
   }
 
   filterFn = (item: TemplateWithThumbs, cf: Filter): boolean => {
@@ -126,7 +152,10 @@ export default class List extends Component<Props, State> {
     thumbnailData: TemplateWithThumbs
   ): Promise<void> => {
     try {
-      const data = await this.getPages(thumbnailData.layoutId);
+      const data = await this.getPages(
+        thumbnailData.layoutId,
+        this.props.config.api
+      );
 
       this.setState({
         detailsData: {
@@ -142,8 +171,8 @@ export default class List extends Component<Props, State> {
   };
 
   handleBlankThumbnailAdd = async (data: CustomTemplatePage): Promise<void> => {
-    const { onAddBlocks, onClose } = this.props;
-    const blockData = await defaultStoriesData(Config.getAll(), data);
+    const { onAddBlocks, onClose, config } = this.props;
+    const blockData = await defaultStoriesData(config.api, data);
     const blockId = data.id;
     const resolve = isBlock(blockData)
       ? { ...blockData, blockId: blockId }
@@ -192,7 +221,7 @@ export default class List extends Component<Props, State> {
     data,
     ...props
   }: ThumbnailProps<Data>): ReactElement => {
-    const { type } = this.props;
+    const { type, config } = this.props;
 
     if (type === "stories" && data.blank) {
       return (
@@ -200,15 +229,20 @@ export default class List extends Component<Props, State> {
           {...props}
           data={data}
           onAdd={this.handleBlankThumbnailAdd}
+          isPro={isPro(config)}
+          isStory={isStory(this.props.editorMode)}
+          upgradeToPro={config.urls?.upgradeToPro}
+          config={config}
         />
       );
     }
 
+    // removed here config
     return <LayoutThumbnail data={data} {...props} />;
   };
 
   renderList(data: StoriesWithThumbs | LayoutsWithThumbs): ReactElement {
-    const { showSidebar, showSearch } = this.props;
+    const { showSidebar, showSearch, config } = this.props;
     const blocks = this.getLayoutData(data);
 
     const countersSectionBlocks: { [k: string]: number } = {};
@@ -237,6 +271,8 @@ export default class List extends Component<Props, State> {
     )
       .concat(data.categories)
       .filter(({ hidden }) => hidden !== true);
+
+    const _isStory = isStory(this.props.editorMode);
 
     return (
       <DataFilter<Data, Filter>
@@ -279,6 +315,11 @@ export default class List extends Component<Props, State> {
                     data={filteredThumbnails}
                     ThumbnailComponent={this.renderThumbnail}
                     onThumbnailAdd={this.handleThumbnailAdd}
+                    isPro={isPro(config)}
+                    isStory={_isStory}
+                    upgradeToPro={config.urls?.upgradeToPro}
+                    config={config}
+                    {...(_isStory ? storyGrid : {})}
                   />
                 ) : (
                   <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
@@ -296,7 +337,7 @@ export default class List extends Component<Props, State> {
   }
 
   renderDetails(data: State["detailsData"]): ReactElement {
-    const { type, onAddBlocks, onClose, HeaderSlotLeft } = this.props;
+    const { type, onAddBlocks, onClose, HeaderSlotLeft, config } = this.props;
     return (
       <Details
         type={type}
@@ -307,6 +348,9 @@ export default class List extends Component<Props, State> {
           this.setState({ detailsData: undefined });
         }}
         onClose={onClose}
+        config={config}
+        isPro={isPro(config)}
+        upgradeToPro={config?.urls?.upgradeToPro}
       />
     );
   }

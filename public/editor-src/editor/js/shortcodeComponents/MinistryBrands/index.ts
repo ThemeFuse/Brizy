@@ -1,41 +1,46 @@
 import { Shortcode } from "visual/types";
-import MinistryBrandsEventCalendar from "./MinistryBrandsEventCalendar";
-import MinistryBrandsEventDetail from "./MinistryBrandsEventDetail";
-import MinistryBrandsEventFeatured from "./MinistryBrandsEventFeatured";
-import MinistryBrandsEventLayout from "./MinistryBrandsEventLayout";
-import MinistryBrandsEventList from "./MinistryBrandsEventList";
-import MinistryBrandsFormWidget from "./MinistryBrandsFormWidget";
-import MinistryBrandsGroupDetail from "./MinistryBrandsGroupDetail";
-import MinistryBrandsGroupFeatured from "./MinistryBrandsGroupFeatured";
-import MinistryBrandsGroupLayout from "./MinistryBrandsGroupLayout";
-import MinistryBrandsGroupList from "./MinistryBrandsGroupList";
-import MinistryBrandsGroupSlider from "./MinistryBrandsGroupSlider";
-import MinistryBrandsSermonDetail from "./MinistryBrandsSermonDetail";
-import MinistryBrandsSermonFeatured from "./MinistryBrandsSermonFeatured";
-import MinistryBrandsSermonLayout from "./MinistryBrandsSermonLayout";
-import MinistryBrandsSermonList from "./MinistryBrandsSermonList";
+import getMinistryBrandsEventCalendar from "./MinistryBrandsEventCalendar";
+import getMinistryBrandsEventDetail from "./MinistryBrandsEventDetail";
+import getMinistryBrandsEventFeatured from "./MinistryBrandsEventFeatured";
+import getMinistryBrandsEventLayout from "./MinistryBrandsEventLayout";
+import getMinistryBrandsEventList from "./MinistryBrandsEventList";
+import getMinistryBrandsFormWidget from "./MinistryBrandsFormWidget";
+import getMinistryBrandsGroupDetail from "./MinistryBrandsGroupDetail";
+import getMinistryBrandsGroupFeatured from "./MinistryBrandsGroupFeatured";
+import getMinistryBrandsGroupLayout from "./MinistryBrandsGroupLayout";
+import getMinistryBrandsGroupList from "./MinistryBrandsGroupList";
+import getMinistryBrandsGroupSlider from "./MinistryBrandsGroupSlider";
+import getMinistryBrandsSermonDetail from "./MinistryBrandsSermonDetail";
+import getMinistryBrandsSermonFeatured from "./MinistryBrandsSermonFeatured";
+import getMinistryBrandsSermonLayout from "./MinistryBrandsSermonLayout";
+import getMinistryBrandsSermonList from "./MinistryBrandsSermonList";
 
-export const sermons: Shortcode[] = [
-  { component: MinistryBrandsSermonLayout, pro: false },
-  { component: MinistryBrandsSermonList, pro: false },
-  { component: MinistryBrandsSermonFeatured, pro: false },
-  { component: MinistryBrandsSermonDetail, pro: false }
-];
-
-export const events: Shortcode[] = [
-  { component: MinistryBrandsEventCalendar, pro: false },
-  { component: MinistryBrandsEventLayout, pro: false },
-  { component: MinistryBrandsEventFeatured, pro: false },
-  { component: MinistryBrandsEventList, pro: false },
-  { component: MinistryBrandsEventDetail, pro: false }
-];
-export const groups: Shortcode[] = [
-  { component: MinistryBrandsGroupLayout, pro: false },
-  { component: MinistryBrandsGroupSlider, pro: false },
-  { component: MinistryBrandsGroupList, pro: false },
-  { component: MinistryBrandsGroupFeatured, pro: false },
-  { component: MinistryBrandsGroupDetail, pro: false }
-];
-export const forms: Shortcode[] = [
-  { component: MinistryBrandsFormWidget, pro: false }
-];
+export function sermons(): Shortcode[] {
+  return [
+    { component: getMinistryBrandsSermonLayout(), pro: false },
+    { component: getMinistryBrandsSermonList(), pro: false },
+    { component: getMinistryBrandsSermonFeatured(), pro: false },
+    { component: getMinistryBrandsSermonDetail(), pro: false }
+  ];
+}
+export function events(): Shortcode[] {
+  return [
+    { component: getMinistryBrandsEventCalendar(), pro: false },
+    { component: getMinistryBrandsEventLayout(), pro: false },
+    { component: getMinistryBrandsEventFeatured(), pro: false },
+    { component: getMinistryBrandsEventList(), pro: false },
+    { component: getMinistryBrandsEventDetail(), pro: false }
+  ];
+}
+export function groups(): Shortcode[] {
+  return [
+    { component: getMinistryBrandsGroupLayout(), pro: false },
+    { component: getMinistryBrandsGroupSlider(), pro: false },
+    { component: getMinistryBrandsGroupList(), pro: false },
+    { component: getMinistryBrandsGroupFeatured(), pro: false },
+    { component: getMinistryBrandsGroupDetail(), pro: false }
+  ];
+}
+export function forms(): Shortcode[] {
+  return [{ component: getMinistryBrandsFormWidget(), pro: false }];
+}

@@ -8,7 +8,6 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import UIEvents from "visual/global/UIEvents";
 import { addBlock, addGlobalPopup } from "visual/redux/actions2";
-import { getStore } from "visual/redux/store";
 import { setIds, stripSystemKeys } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 import defaultValue from "./defaultValue.json";
@@ -50,20 +49,20 @@ class PagePopup extends EditorComponent {
 
   handleDNDSort = (data) => {
     const { dbValue } = this.props;
-
-    const newValue = changeValueAfterDND(dbValue, data);
+    const store = this.getReduxStore();
+    const newValue = changeValueAfterDND(dbValue, data, store);
 
     this.props.onChange(newValue);
   };
 
   handleAddGlobalPopup = (data) => {
-    const { dispatch } = getStore();
+    const dispatch = this.getReduxDispatch();
     const meta = { insertIndex: 0 };
     dispatch(addGlobalPopup(data, meta));
   };
 
   handleBlocksAdd = (data) => {
-    const { dispatch } = getStore();
+    const dispatch = this.getReduxDispatch();
     const meta = { insertIndex: 0 };
     const { block, ...rest } = data;
     const blockStripped = stripSystemKeys(block);
@@ -82,8 +81,7 @@ class PagePopup extends EditorComponent {
         blocksType: false,
         globalSearch: false,
         onChangeBlocks: this.handleBlocksAdd,
-        onChangeGlobal: this.handleAddGlobalPopup,
-        onChangeSaved: this.handleAddSavedBlock
+        onChangeGlobal: this.handleAddGlobalPopup
       }
     };
     Prompts.open(data);

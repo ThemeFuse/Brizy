@@ -1,15 +1,24 @@
+import { Arr } from "@brizy/readers";
+import { mPipe } from "fp-utilities";
+import { TypographyProps } from "visual/component/Controls/Typography/types/Props";
 import { OptionValue } from "visual/component/Options/types";
+import { RenderType } from "visual/providers/RenderProvider";
 import { currentStyleSelector } from "visual/redux/selectors";
 import {
   extraFontStylesSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors-new";
-import { getStore } from "visual/redux/store";
+import { Store } from "visual/redux/store";
+import { TextScripts } from "visual/types";
+import { getDefaultFont } from "visual/utils/fonts";
+import { t } from "visual/utils/i18n";
 import { TypographyValues } from "visual/utils/options/Typography/types";
 import * as Bool from "visual/utils/reader/bool";
 import * as Str from "visual/utils/reader/string";
+import * as Union from "visual/utils/reader/union";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
+import { MValue } from "visual/utils/value";
 import {
   styleTextTransformBold,
   styleTextTransformItalic,
@@ -23,81 +32,57 @@ import {
   styleTypographyLetterSpacing,
   styleTypographyLineHeight
 } from "./styleFns";
-import { TextScripts } from "visual/types";
-import { mPipe } from "fp-utilities";
-import { Arr } from "@brizy/readers";
-import * as Union from "visual/utils/reader/union";
-import { TypographyProps } from "visual/component/Controls/Typography/types/Props";
-import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
 
 export const getTypographyValues = ({
   device,
   state,
-  value: v
+  store,
+  value: v,
+  renderContext
 }: {
   device: ResponsiveMode;
   state: State;
+  store: Store;
   value: OptionValue<"typography">;
+  renderContext: RenderType;
 }): TypographyValues => {
-  const store = getStore().getState();
-
+  const reduxState = store.getState();
   const fontsData = {
-    fonts: unDeletedFontsSelector(store),
-    fontStyles: currentStyleSelector(store).fontStyles,
-    extraFontStyles: extraFontStylesSelector(store)
+    fonts: unDeletedFontsSelector(reduxState),
+    fontStyles: currentStyleSelector(reduxState).fontStyles,
+    extraFontStyles: extraFontStylesSelector(reduxState),
+    defaultFont: getDefaultFont(reduxState)
   };
 
   const { fontStyle, fontFamilyType } = v;
+  const data = { v, device, state, fontsData, store };
 
-  const fontFamily = styleTypographyFontFamily({ v, device, state, fontsData });
-
-  const fontSize = styleTypographyFontSize({ v, device, state, fontsData });
-
-  const fontSizeSuffix = styleTypographyFontSizeSuffix({
-    v,
-    device,
-    state,
-    fontsData
+  const fontFamily = styleTypographyFontFamily({
+    ...data,
+    renderContext
   });
 
-  const fontWeight = styleTypographyFontWeight({ v, device, state, fontsData });
+  const fontSize = styleTypographyFontSize(data);
 
-  const lineHeight = styleTypographyLineHeight({ v, device, state, fontsData });
+  const fontSizeSuffix = styleTypographyFontSizeSuffix(data);
 
-  const letterSpacing = styleTypographyLetterSpacing({
-    v,
-    device,
-    state,
-    fontsData
-  });
+  const fontWeight = styleTypographyFontWeight(data);
 
-  const variableFontWeight = styleTypography2FontVariation({
-    v,
-    device,
-    state,
-    fontsData
-  });
+  const lineHeight = styleTypographyLineHeight(data);
 
-  const bold = styleTextTransformBold({ v, device, state, fontsData });
+  const letterSpacing = styleTypographyLetterSpacing(data);
+
+  const variableFontWeight = styleTypography2FontVariation(data);
+
+  const bold = styleTextTransformBold(data);
   const boldValue = readTextTransformValue(bold, "bold");
 
-  const italic = styleTextTransformItalic({ v, device, state, fontsData });
+  const italic = styleTextTransformItalic(data);
   const textStyle = readTextTransformValue(italic, "italic");
 
-  const textDecoration = styleTextTransformTextDecoration({
-    v,
-    device,
-    state,
-    fontsData
-  });
+  const textDecoration = styleTextTransformTextDecoration(data);
 
-  const textTransform = styleTextTransformUpperLowerCase({
-    v,
-    device,
-    state,
-    fontsData
-  });
+  const textTransform = styleTextTransformUpperLowerCase(data);
 
   const _textStyle = textStyle ? `font-style:${textStyle};` : "";
   const _textDecoration = textDecoration

@@ -16,7 +16,6 @@ import {
 } from "visual/config/columns";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { css } from "visual/utils/cssStyle";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -170,10 +169,16 @@ export default class SectionHeaderItem extends EditorComponent {
     return classnames(
       "brz-section__menu-item",
       className,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
   }
@@ -202,10 +207,16 @@ export default class SectionHeaderItem extends EditorComponent {
     const className = classnames(
       "brz-container",
       v.containerClassName,
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -222,6 +233,7 @@ export default class SectionHeaderItem extends EditorComponent {
           onStart={this.onPaddingResizerStart}
           onChange={this.handlePaddingResizerChange}
           onEnd={this.onPaddingResizerEnd}
+          renderContext={this.renderContext}
         >
           <SectionHeaderItemItems {...itemsProps} />
         </PaddingResizer>

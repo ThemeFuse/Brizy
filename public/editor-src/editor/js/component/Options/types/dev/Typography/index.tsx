@@ -1,15 +1,15 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { Typography as Control } from "visual/component/Controls/Typography";
 import * as Option from "visual/component/Options/Type";
 import Prompts from "visual/component/Prompts";
 import { currentUserRole } from "visual/component/Roles";
-import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { isStory } from "visual/global/EditorModeContext";
+import { useConfig, useEditorMode } from "visual/global/hooks";
 import { setDeviceMode, updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
-  getDefaultFontDetailsSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
@@ -66,12 +66,23 @@ export const Typography = ({
   className
 }: Props): ReactElement => {
   const dispatch = useDispatch();
-
+  const store = useStore();
   const device = useSelector(deviceModeSelector);
-  const defaultFont = useSelector(getDefaultFontDetailsSelector);
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
     unDeletedFontsSelector
   );
+  const editorMode = useEditorMode();
+  const globalConfig = useConfig();
+  const _isStory = isStory(editorMode);
+
+  const { bottomTabsOrder = [], topTabsOrder = [] } =
+    globalConfig.ui?.leftSidebar ?? {};
+
+  const enableGlobalStyle = useMemo((): boolean => {
+    return [...bottomTabsOrder, ...topTabsOrder].some(
+      (tab) => tab.type === LeftSidebarOptionsIds.globalStyle
+    );
+  }, [bottomTabsOrder, topTabsOrder]);
 
   const {
     fontFamily = device === DESKTOP,
@@ -100,7 +111,14 @@ export const Typography = ({
       }, {}),
     [unDeletedFonts]
   );
-  const _value = getValue(device, fonts, defaultFont, value);
+  const _value = useMemo(() => {
+    return getValue({
+      device,
+      fonts,
+      store,
+      value
+    });
+  }, [device, fonts, store, value]);
   const _onChange = useCallback(
     (v: Value[keyof Value] | Font, meta: { isChanged: keyof Value }): void => {
       const withFontFamily = fontFamily !== false;
@@ -182,19 +200,19 @@ export const Typography = ({
       })
     );
   }, [dispatch]);
-  const enableGlobalStyle = useMemo((): boolean => {
-    const config = GlobalConfig.getAll();
-    const { bottomTabsOrder = [], topTabsOrder = [] } =
-      config.ui?.leftSidebar ?? {};
-    return [...bottomTabsOrder, ...topTabsOrder].includes(
-      LeftSidebarOptionsIds.globalStyle
-    );
-  }, []);
-  const styles = [{ id: "", title: t("Custom") }, ...getFontStyles()];
-  const weights = getWeightChoices({
-    type: _value.fontFamilyType,
-    family: _value.fontFamily
-  });
+
+  const styles = useMemo(
+    () => [{ id: "", title: t("Custom") }, ...getFontStyles({ store })],
+    [store]
+  );
+
+  const weights = useMemo(() => {
+    return getWeightChoices({
+      type: _value.fontFamilyType,
+      family: _value.fontFamily,
+      store
+    });
+  }, [_value.fontFamily, _value.fontFamilyType, store]);
 
   const showTextTransform = device === "desktop";
 
@@ -280,6 +298,8 @@ export const Typography = ({
       onIconClick={onIconClick}
       variations={variations}
       showTextTransform={showTextTransform}
+      showFontSize={_isStory}
+      showFontStyles={!_isStory}
     />
   );
 };

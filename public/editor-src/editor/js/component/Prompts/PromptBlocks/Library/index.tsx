@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import _ from "underscore";
 import { ToastNotification } from "visual/component/Notifications";
 import { currentUserRole } from "visual/component/Roles";
-import Config, { isWp } from "visual/global/Config";
+import { isWp } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontsPayload } from "visual/redux/actions2";
 import {
   authorizedSelector,
@@ -80,7 +81,8 @@ class Library extends Component<
     onAddBlocks: _.noop,
     onClose: _.noop,
     HeaderSlotLeft: Component,
-    getParentNode: () => null
+    getParentNode: () => null,
+    config: {} as ConfigCommon
   };
 
   state: LibraryState = {
@@ -97,7 +99,7 @@ class Library extends Component<
     importLoading: false,
     exportLoading: false,
     updateLoading: false,
-    types: getBlocksType(this.props.type, Config.getAll())
+    types: getBlocksType(this.props.type, this.props.config?.api)
   };
 
   pagination: Partial<Record<BlockTypes, Pagination>> = {
@@ -109,13 +111,13 @@ class Library extends Component<
   unMount = false;
   withImportExport = true;
 
-  isWp = isWp(Config.getAll());
-  isCloud = isCloud(Config.getAll());
+  isWp = isWp(this.props.config);
+  isCloud = isCloud(this.props.config);
 
   async componentDidMount(): Promise<void> {
     if (this.isCloud) {
-      const config = Config.getAll();
-      this.withImportExport = !config.user.isGuest;
+      const { config } = this.props;
+      this.withImportExport = !config?.user?.isGuest;
     }
     this.updateBlocks();
   }
@@ -154,7 +156,7 @@ class Library extends Component<
   async getBlocks(filter?: string): Promise<BlockData[]> {
     try {
       const byFilter = filter ? { filterBy: filter } : undefined;
-      const blocks = await getSavedBlocks(Config.getAll(), byFilter);
+      const blocks = await getSavedBlocks(this.props.config?.api, byFilter);
 
       return blocks.map((block) => ({
         ...this.makeThumbsData(block),
@@ -176,7 +178,7 @@ class Library extends Component<
   async getLayout(filter?: string): Promise<BlockData[]> {
     try {
       const byFilter = filter ? { filterBy: filter } : undefined;
-      const blocks = await getSavedLayouts(Config.getAll(), byFilter);
+      const blocks = await getSavedLayouts(this.props.config?.api, byFilter);
 
       return blocks.map((block) => ({
         ...this.makeThumbsData(block),
@@ -199,7 +201,7 @@ class Library extends Component<
   async getPopups(filter?: string): Promise<BlockData[]> {
     try {
       const byFilter = filter ? { filterBy: filter } : undefined;
-      const blocks = await getSavedPopups(Config.getAll(), byFilter);
+      const blocks = await getSavedPopups(this.props.config.api, byFilter);
 
       return blocks.map((block) => ({
         ...this.makeThumbsData(block),
@@ -221,13 +223,19 @@ class Library extends Component<
   async getAssets(
     block: Partial<SavedLayout | SavedBlock>
   ): Promise<GetAssets> {
-    const { projectFonts, projectExtraFontStyles } = this.props;
+    const { projectFonts, projectExtraFontStyles, config } = this.props;
     const { extraFontStyles = [] } = block.meta || {};
     const blockFonts = getUsedModelsFonts({ models: block });
     const stylesFonts = getUsedStylesFonts(extraFontStyles);
-    const fonts: FontsPayload = await normalizeFonts(
-      getBlocksStylesFonts([...blockFonts, ...stylesFonts], projectFonts)
-    );
+
+    const fonts: FontsPayload = await normalizeFonts({
+      config: config,
+      renderContext: "editor",
+      newFonts: getBlocksStylesFonts(
+        [...blockFonts, ...stylesFonts],
+        projectFonts
+      )
+    });
 
     const filteredStyles = extraFontStyles.filter(
       ({ id }: { id: string }) =>
@@ -242,12 +250,12 @@ class Library extends Component<
   }
 
   async handleAddLayout(uid: string, replaceStyle: boolean): Promise<void> {
-    const { onAddBlocks, onClose } = this.props;
+    const { onAddBlocks, onClose, config } = this.props;
 
     try {
       const { data, meta, globalStyles } = await getSavedLayoutById(
         uid,
-        Config.getAll()
+        config.api
       );
       const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
@@ -271,10 +279,10 @@ class Library extends Component<
   }
 
   async handleAddBlock(uid: string): Promise<void> {
-    const { onAddBlocks, onClose } = this.props;
+    const { onAddBlocks, onClose, config } = this.props;
 
     try {
-      const { data, meta } = await getSavedBlockById(uid, Config.getAll());
+      const { data, meta } = await getSavedBlockById(uid, config.api);
       const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
       if (!this.unMount) {
@@ -288,10 +296,10 @@ class Library extends Component<
   }
 
   async handleAddPopup(uid: string): Promise<void> {
-    const { onAddBlocks, onClose } = this.props;
+    const { onAddBlocks, onClose, config } = this.props;
 
     try {
-      const { data, meta } = await getSavedPopupById(uid, Config.getAll());
+      const { data, meta } = await getSavedPopupById(uid, config.api);
       const { fonts, extraFontStyles } = await this.getAssets({ data, meta });
 
       if (!this.unMount) {
@@ -366,6 +374,7 @@ class Library extends Component<
   handleItemUpdate = async (data: BlockData): Promise<void> => {
     this.setState({ updateLoading: true });
     const { data: rollbackData } = this.state;
+    const { config } = this.props;
 
     const { type } = data;
 
@@ -381,12 +390,11 @@ class Library extends Component<
       dataVersion: data.dataVersion,
       globalStyles: JSON.stringify(newGlobalStyles)
     };
-    const config = Config.getAll();
 
     const update = match(
-      [isBlock, () => updateSavedBlock(requestData, config)],
-      [isPopup, () => updateSavedPopup(requestData, config)],
-      [isLayout, () => updateSavedLayout(requestData, config)]
+      [isBlock, () => updateSavedBlock(requestData, config.api)],
+      [isPopup, () => updateSavedPopup(requestData, config.api)],
+      [isLayout, () => updateSavedLayout(requestData, config.api)]
     );
 
     this.setState(
@@ -433,15 +441,15 @@ class Library extends Component<
 
     switch (type) {
       case BLOCK: {
-        deleteSavedBlock(data, Config.getAll());
+        deleteSavedBlock(data, this.props.config.api);
         break;
       }
       case POPUP: {
-        deleteSavedPopup(data, Config.getAll());
+        deleteSavedPopup(data, this.props.config.api);
         break;
       }
       case LAYOUT: {
-        deleteSavedLayout(data, Config.getAll());
+        deleteSavedLayout(data, this.props.config.api);
         break;
       }
     }
@@ -456,12 +464,12 @@ class Library extends Component<
 
   handleImport = async (type: BlockTypes): Promise<void> => {
     this.setState({ importLoading: true });
-    const config = Config.getAll();
+    const { config } = this.props;
 
     const fetch = match(
-      [isBlock, () => importSaveBlocks(config)],
-      [isPopup, () => importSavePopups(config)],
-      [isLayout, () => importSavedLayout(config)]
+      [isBlock, () => importSaveBlocks(config.api)],
+      [isPopup, () => importSavePopups(config.api)],
+      [isLayout, () => importSavedLayout(config.api)]
     );
 
     try {
@@ -631,11 +639,17 @@ class Library extends Component<
   makeThumbsData(
     block: SavedBlockAPIMetaWithoutSync | SavedLayoutAPIMetaWithoutSync
   ): Thumbs {
-    const { url, width, height } = blockThumbnailData({
-      type: "",
-      value: {},
-      meta: block.meta
-    });
+    const { config } = this.props;
+    const { screenshot } = config.urls ?? {};
+
+    const { url, width, height } = blockThumbnailData(
+      {
+        type: "",
+        value: {},
+        meta: block.meta
+      },
+      screenshot
+    );
     const isAdminRole = currentUserRole() === "admin";
 
     return {
@@ -706,6 +720,7 @@ class Library extends Component<
         onImport={this.withImportExport ? this.handleImport : undefined}
         onUpdate={this.handleItemUpdate}
         onFilterChange={this.handleFilterChange}
+        config={this.props?.config}
       />
     );
   }

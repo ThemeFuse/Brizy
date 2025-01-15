@@ -31,9 +31,10 @@ export function cssStyleElementWOOGalleryBorderRadiusThumbnail({
 export function cssStyleElementWOOGalleryBoxShadowThumbnail({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleBoxShadow({ v, device, prefix: "thumbnail", state });
+  return cssStyleBoxShadow({ v, device, prefix: "thumbnail", state, store });
 }
 
 export function cssStyleElementWOOGallerySpacing({ v, device, state }) {
@@ -54,8 +55,8 @@ export function cssStyleElementWOOGalleryParentSize({ v, device, state }) {
     ? v.thumbStyle === "bottom"
       ? `margin-bottom: -${between}px;`
       : v.thumbStyle === "top"
-      ? `margin-bottom: ${(between - spacing) * -1}px;`
-      : "margin-bottom: 0;"
+        ? `margin-bottom: ${(between - spacing) * -1}px;`
+        : "margin-bottom: 0;"
     : "";
 }
 
@@ -89,11 +90,22 @@ export function cssStyleElementWOOGalleryThumbnailSize({ v, device, state }) {
   );
 }
 
-export function cssStyleElementWOOGalleryChildStyle({ v, device, state }) {
+export function cssStyleElementWOOGalleryChildStyle({
+  v,
+  device,
+  store,
+  state
+}) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const thumbStyle = dvv("thumbStyle");
-  const minWidth = cssStyleSizeMinWidth({ v, device, state, prefix: "thumb" });
-  const width = cssStyleSizeWidth({ v, device, state, prefix: "thumb" });
+  const minWidth = cssStyleSizeMinWidth({
+    v,
+    device,
+    state,
+    store,
+    prefix: "thumb"
+  });
+  const width = cssStyleSizeWidth({ v, device, state, store, prefix: "thumb" });
 
   return thumbStyle === "left" || thumbStyle === "right"
     ? `${minWidth} ${width}`
@@ -110,14 +122,14 @@ export function cssStyleElementWOOGallerySpacingStyleLeftRigth({
   return v.thumbStyle === "left"
     ? `margin-right: ${spacing}px;`
     : v.thumbStyle === "right"
-    ? `margin-left: ${spacing}px;`
-    : "margin-right:0; margin-left:0;";
+      ? `margin-left: ${spacing}px;`
+      : "margin-right:0; margin-left:0;";
 }
 
 export function cssStyleElementWOOGalleryZoomReposition({ v }) {
   return v.thumbStyle === "right"
     ? "left: 1rem; right: auto;"
     : v.thumbStyle === "top"
-    ? "bottom: 1rem; top: auto;"
-    : "";
+      ? "bottom: 1rem; top: auto;"
+      : "";
 }

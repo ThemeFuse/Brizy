@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
 import { ToastNotification } from "visual/component/Notifications";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { importKit, updateCurrentKitId } from "visual/redux/actions2";
 import {
   fontsSelector,
@@ -16,6 +16,7 @@ import {
   defaultPopupsData,
   defaultPopupsMeta
 } from "visual/utils/api";
+import { isPro } from "visual/utils/env";
 import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import { isExternalPopup } from "visual/utils/models";
@@ -35,7 +36,8 @@ class BlocksContainer extends Component {
     type: "normal", // normal | popup
     HeaderSlotLeft: _.noop(),
     onAddBlocks: _.noop,
-    onClose: _.noop
+    onClose: _.noop,
+    config: {}
   };
 
   state = {
@@ -48,31 +50,31 @@ class BlocksContainer extends Component {
   };
 
   mounted = false;
-  async getMeta(kit) {
+  async getMeta(kit, api) {
     try {
       return this.props.type === "popup"
-        ? await defaultPopupsMeta(Config.getAll())
-        : await defaultKitsMeta(Config.getAll(), kit);
+        ? await defaultPopupsMeta(api)
+        : await defaultKitsMeta(api, kit);
     } catch (e) {
       console.error(e);
       ToastNotification.error(t("Something went wrong on getting meta"));
     }
   }
 
-  async getKits() {
+  async getKits(api) {
     try {
-      return await defaultKits(Config.getAll());
+      return await defaultKits(api);
     } catch (e) {
       console.error(e);
       ToastNotification.error(t("Something went wrong on getting meta"));
     }
   }
 
-  async getBlockResolve(kit) {
+  async getBlockResolve(kit, api) {
     try {
       return this.props.type === "popup"
-        ? await defaultPopupsData(Config.getAll(), kit)
-        : await defaultKitsData(Config.getAll(), kit);
+        ? await defaultPopupsData(api, kit)
+        : await defaultKitsData(api, kit);
     } catch (e) {
       console.error(e);
       ToastNotification.error(
@@ -115,7 +117,7 @@ class BlocksContainer extends Component {
     return kits.find(({ id }) => id === kitId);
   }
 
-  getPopupData({ blocks, categories = [], types = [] }) {
+  getPopupData({ blocks, categories = [] }) {
     const allCategoriesData = [
       { id: "*", title: t("All Categories") },
       ...categories
@@ -124,7 +126,7 @@ class BlocksContainer extends Component {
     const blocksData = blocks.map((block) => ({
       ...block,
       pro:
-        isExternalPopup(Config.getAll()) && block.blank === "blank"
+        isExternalPopup(this.props.config) && block.blank === "blank"
           ? false
           : block.pro
     }));
@@ -133,7 +135,9 @@ class BlocksContainer extends Component {
     );
 
     return {
-      types,
+      types: [
+        { title: t("Light"), id: "light", name: "light", icon: "nc-light" }
+      ],
       blocks: blocksData,
       categories: categoriesData
     };
@@ -141,13 +145,14 @@ class BlocksContainer extends Component {
 
   async componentDidMount() {
     this.mounted = true;
+    const { type, config } = this.props;
 
-    if (this.props.type === "normal") {
-      const kits = await this.getKits();
+    if (type === "normal") {
+      const kits = await this.getKits(config.api);
 
       const activeKit = this.getActiveKit(kits) ?? kits[0];
 
-      const metaData = await this.getMeta(activeKit);
+      const metaData = await this.getMeta(activeKit, config.api);
 
       if (this.mounted) {
         const state = this.getKitData(metaData, kits);
@@ -158,7 +163,7 @@ class BlocksContainer extends Component {
         });
       }
     } else {
-      const metaData = await this.getMeta();
+      const metaData = await this.getMeta(undefined, config.api);
 
       if (this.mounted) {
         const state = this.getPopupData(metaData);
@@ -176,9 +181,9 @@ class BlocksContainer extends Component {
   }
 
   handleThumbnailAdd = async (thumbnailData) => {
-    const { projectFonts, onAddBlocks, onClose, type } = this.props;
+    const { projectFonts, onAddBlocks, onClose, type, config } = this.props;
 
-    const blockData = await this.getBlockResolve(thumbnailData);
+    const blockData = await this.getBlockResolve(thumbnailData, config.api);
 
     const resolve = {
       ...blockData,
@@ -189,7 +194,11 @@ class BlocksContainer extends Component {
       getUsedModelsFonts({ models: resolve }),
       projectFonts
     );
-    const fonts = await normalizeFonts(fontsDiff);
+    const fonts = await normalizeFonts({
+      renderContext: "editor",
+      newFonts: fontsDiff,
+      config
+    });
 
     onAddBlocks({
       block: resolve,
@@ -199,7 +208,8 @@ class BlocksContainer extends Component {
   };
 
   handleImportKit = async (kitId) => {
-    const { selectedKit, projectFonts, projectStyles, dispatch } = this.props;
+    const { selectedKit, projectFonts, projectStyles, dispatch, config } =
+      this.props;
     const { kits } = this.state;
 
     if (selectedKit === kitId) {
@@ -213,7 +223,7 @@ class BlocksContainer extends Component {
     const activeKit = kits.find((kit) => kit.id === kitId);
 
     if (activeKit) {
-      const metaData = await this.getMeta(activeKit);
+      const metaData = await this.getMeta(activeKit, config.api);
       const newState = this.getKitData(metaData, kits);
       const { styles } = newState;
 
@@ -228,9 +238,11 @@ class BlocksContainer extends Component {
           (acc, { fontStyles }) => acc.concat(getUsedStylesFonts(fontStyles)),
           []
         );
-        const fonts = await normalizeFonts(
-          getBlocksStylesFonts(stylesFonts, projectFonts)
-        );
+        const fonts = await normalizeFonts({
+          config,
+          renderContext: "editor",
+          newFonts: getBlocksStylesFonts(stylesFonts, projectFonts)
+        });
 
         dispatch(
           importKit({
@@ -250,7 +262,9 @@ class BlocksContainer extends Component {
 
   render() {
     const { kits, types, blocks, categories, loading } = this.state;
-    const { showSearch, showSidebar, selectedKit, HeaderSlotLeft } = this.props;
+    const { showSearch, showSidebar, selectedKit, HeaderSlotLeft, config } =
+      this.props;
+    const _isStory = isStory(this.props.editorMode);
 
     return (
       <Blocks
@@ -265,6 +279,9 @@ class BlocksContainer extends Component {
         HeaderSlotLeft={HeaderSlotLeft}
         onChangeKit={this.handleImportKit}
         onChange={this.handleThumbnailAdd}
+        isPro={isPro(config)}
+        isStory={_isStory}
+        upgradeToPro={config.urls.upgradeToPro}
       />
     );
   }

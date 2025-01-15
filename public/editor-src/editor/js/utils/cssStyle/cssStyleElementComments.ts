@@ -1,3 +1,4 @@
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleColor,
   cssStyleSizeFontSize,
@@ -22,91 +23,124 @@ import { CSSValue } from "../style2/types";
 
 export function cssStyleElementCommentsNameFontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "name" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "name",
+    renderContext
+  });
 }
 
 export function cssStyleElementCommentsNameFontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "name" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "name" });
 }
 
 export function cssStyleElementCommentsNameLineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "name" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "name" });
 }
 
 export function cssStyleElementCommentsNameFontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "name" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "name" });
 }
 
 export function cssStyleElementCommentsNameLetterSpacing({
   v,
   device,
-  state
-}: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "name" });
-}
-
-export function cssStyleElementCommentsNameFontVariation({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "name" });
-}
-
-export function cssStyleElementCommentsNameTextTransform({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "name" });
-}
-
-export function cssStyleElementCommentsCommentFontFamily({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "comment" });
-}
-
-export function cssStyleElementCommentsCommentFontSize({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "comment" });
-}
-
-export function cssStyleElementCommentsCommentLineHeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "comment" });
-}
-
-export function cssStyleElementCommentsCommentFontWeight({
-  v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "comment" });
-}
-
-export function cssStyleElementCommentsCommentLetterSpacing({
-  v,
-  device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
+    store,
+    state,
+    prefix: "name"
+  });
+}
+
+export function cssStyleElementCommentsNameFontVariation({
+  v,
+  device,
+  store
+}: CSSValue): string {
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "name" });
+}
+
+export function cssStyleElementCommentsNameTextTransform({
+  v,
+  device,
+  store,
+  state
+}: CSSValue): string {
+  return cssStyleTextTransforms({ v, device, store, state, prefix: "name" });
+}
+
+export function cssStyleElementCommentsCommentFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "comment",
+    renderContext
+  });
+}
+
+export function cssStyleElementCommentsCommentFontSize({
+  v,
+  device,
+  store
+}: CSSValue): string {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "comment" });
+}
+
+export function cssStyleElementCommentsCommentLineHeight({
+  v,
+  device,
+  store
+}: CSSValue): string {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "comment" });
+}
+
+export function cssStyleElementCommentsCommentFontWeight({
+  v,
+  device,
+  store
+}: CSSValue): string {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "comment" });
+}
+
+export function cssStyleElementCommentsCommentLetterSpacing({
+  v,
+  device,
+  store,
+  state
+}: CSSValue): string {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
     state,
     prefix: "comment"
   });
@@ -114,86 +148,123 @@ export function cssStyleElementCommentsCommentLetterSpacing({
 
 export function cssStyleElementCommentsCommentFontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "comment" });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "comment"
+  });
 }
 
 export function cssStyleElementCommentsCommentTextTransform({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "comment" });
+  return cssStyleTextTransforms({ v, device, store, state, prefix: "comment" });
 }
 
 export function cssStyleElementCommentsDateFontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "date" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "date",
+    renderContext
+  });
 }
 
 export function cssStyleElementCommentsDateFontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "date" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "date" });
 }
 
 export function cssStyleElementCommentsDateLineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "date" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "date" });
 }
 
 export function cssStyleElementCommentsDateFontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "date" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "date" });
 }
 
 export function cssStyleElementCommentsDateLetterSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "date" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    state,
+    prefix: "date"
+  });
 }
 
 export function cssStyleElementCommentsDateFontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "date" });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "date" });
 }
 
 export function cssStyleElementCommentsDateTextTransform({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "date" });
+  return cssStyleTextTransforms({ v, device, store, state, prefix: "date" });
 }
 
 export function cssStyleElementCommentsReplyFontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "reply" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "reply",
+    renderContext
+  });
 }
 
 export function cssStyleElementCommentsReplyFontSize({
   v,
   device,
+  store,
   state,
   prefix = "reply"
 }: CSSValue): string {
   return `font-size:${styleTypography2FontSize({
     v,
     device,
+    store,
     state,
     prefix
   })}px !important;`;
@@ -202,12 +273,14 @@ export function cssStyleElementCommentsReplyFontSize({
 export function cssStyleElementCommentsReplyLineHeight({
   v,
   device,
+  store,
   state,
   prefix = "reply"
 }: CSSValue): string {
   return `line-height:${styleTypography2LineHeight({
     v,
     device,
+    store,
     state,
     prefix
   })} !important;`;
@@ -216,12 +289,14 @@ export function cssStyleElementCommentsReplyLineHeight({
 export function cssStyleElementCommentsReplyFontWeight({
   v,
   device,
+  store,
   state,
   prefix = "reply"
 }: CSSValue): string {
   return `font-weight:${styleTypography2FontWeight({
     v,
     device,
+    store,
     state,
     prefix
   })} !important;`;
@@ -230,12 +305,14 @@ export function cssStyleElementCommentsReplyFontWeight({
 export function cssStyleElementCommentsReplyLetterSpacing({
   v,
   device,
+  store,
   state,
   prefix = "reply"
 }: CSSValue): string {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
+    store,
     state,
     prefix
   })}px !important;`;
@@ -243,35 +320,52 @@ export function cssStyleElementCommentsReplyLetterSpacing({
 
 export function cssStyleElementCommentsReplyFontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "reply" });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "reply"
+  });
 }
 
 export function cssStyleElementCommentsReplyTextTransform({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "reply" });
+  return cssStyleTextTransforms({ v, device, store, state, prefix: "reply" });
 }
 
 export function cssStyleElementCommentsPostButtonFontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "postButton" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "postButton",
+    renderContext
+  });
 }
 
 export function cssStyleElementCommentsPostButtonFontSize({
   v,
   device,
+  store,
   state,
   prefix = "postButton"
 }: CSSValue): string {
   return `font-size:${styleTypography2FontSize({
     v,
     device,
+    store,
     state,
     prefix
   })}px !important;`;
@@ -280,12 +374,14 @@ export function cssStyleElementCommentsPostButtonFontSize({
 export function cssStyleElementCommentsPostButtonLineHeight({
   v,
   device,
+  store,
   state,
   prefix = "postButton"
 }: CSSValue): string {
   return `line-height:${styleTypography2LineHeight({
     v,
     device,
+    store,
     state,
     prefix
   })} !important;`;
@@ -294,12 +390,14 @@ export function cssStyleElementCommentsPostButtonLineHeight({
 export function cssStyleElementCommentsPostButtonFontWeight({
   v,
   device,
+  store,
   state,
   prefix = "postButton"
 }: CSSValue): string {
   return `font-weight:${styleTypography2FontWeight({
     v,
     device,
+    store,
     state,
     prefix
   })} !important;`;
@@ -308,12 +406,14 @@ export function cssStyleElementCommentsPostButtonFontWeight({
 export function cssStyleElementCommentsPostButtonLetterSpacing({
   v,
   device,
+  store,
   state,
   prefix = "postButton"
 }: CSSValue): string {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
+    store,
     state,
     prefix
   })}px !important;`;
@@ -321,17 +421,30 @@ export function cssStyleElementCommentsPostButtonLetterSpacing({
 
 export function cssStyleElementCommentsPostButtonFontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "postButton" });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "postButton"
+  });
 }
 
 export function cssStyleElementCommentsPostButtonTextTransform({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "postButton" });
+  return cssStyleTextTransforms({
+    v,
+    device,
+    store,
+    state,
+    prefix: "postButton"
+  });
 }
 
 export function cssStyleElementCommentsLogoSize({
@@ -397,17 +510,19 @@ export function cssStyleElementCommentsColorLink({
 export function cssStyleElementCommentsNameColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "nameColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "nameColor" });
 }
 
 export function cssStyleElementCommentsCommentsColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "commentsColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "commentsColor" });
 }
 
 export function cssStyleElementCommentsChildMargin({
@@ -425,23 +540,26 @@ export function cssStyleElementCommentsChildMargin({
 export function cssStyleElementCommentsStarsColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "starsColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "starsColor" });
 }
 
 export function cssStyleElementCommentsStarsBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "starsBgColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "starsBgColor" });
 }
 
 export function cssStyleElementCommentsStarsSize({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeFontSize({ v, device, state, prefix: "stars" });
+  return cssStyleSizeFontSize({ v, device, store, state, prefix: "stars" });
 }

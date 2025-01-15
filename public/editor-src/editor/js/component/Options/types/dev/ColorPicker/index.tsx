@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ColorPicker3,
   Props as ColorPicker3Props
@@ -10,19 +10,19 @@ import {
   Props as ColorPickerInputsProps
 } from "visual/component/Controls/ColorPicketInputs";
 import * as Option from "visual/component/Options/Type";
-import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
+import { currentStyleSelector } from "visual/redux/selectors";
 import { WithClassName, WithConfig } from "visual/types/attributes";
-import { getColorPaletteColors as paletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
-import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { Value } from "visual/utils/options/ColorPicker/entities/Value";
+import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import {
-  setHex,
   setOpacity as _setOpacity,
+  setHex,
   setPalette
 } from "visual/utils/options/ColorPicker/model";
 import * as Utils from "visual/utils/options/ColorPicker/utils";
@@ -49,6 +49,10 @@ export const ColorPicker = ({
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
+  const { colorPalette } = useSelector(currentStyleSelector);
+
+  const globalConfig = useConfig();
+
   const className = classNames(
     "brz-ed-option__colorPicker",
     _className,
@@ -104,19 +108,18 @@ export const ColorPicker = ({
   );
 
   const enableGlobalStyle = useMemo((): boolean => {
-    const config = GlobalConfig.getAll();
     const { bottomTabsOrder = [], topTabsOrder = [] } =
-      config.ui?.leftSidebar ?? {};
+      globalConfig?.ui?.leftSidebar ?? {};
 
-    return [...bottomTabsOrder, ...topTabsOrder].includes(
-      LeftSidebarOptionsIds.globalStyle
+    return [...bottomTabsOrder, ...topTabsOrder].some(
+      (tab) => tab.type === LeftSidebarOptionsIds.globalStyle
     );
-  }, []);
+  }, [globalConfig?.ui?.leftSidebar]);
 
   const isPaletteHidden = config?.isPaletteHidden;
   const palette = useMemo(
-    () => (isPaletteHidden ? undefined : paletteColors()),
-    [isPaletteHidden]
+    () => (isPaletteHidden ? undefined : colorPalette),
+    [isPaletteHidden, colorPalette]
   );
 
   return (

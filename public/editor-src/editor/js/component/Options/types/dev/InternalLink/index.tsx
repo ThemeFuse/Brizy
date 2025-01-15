@@ -10,7 +10,7 @@ import _ from "underscore";
 import { Control } from "visual/component/Controls/InternalLink";
 import { Status } from "visual/component/Controls/InternalLink/types";
 import { ToastNotification } from "visual/component/Notifications";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { read } from "visual/utils/reader/string";
 import { Literal } from "visual/utils/types/Literal";
 import { ActionTypes, State, reducer } from "./reducer";
@@ -26,14 +26,15 @@ export const InternalLink = ({
   placeholder,
   config
 }: Props): ReactElement => {
-  const { handler, choices } = useMemo(() => {
-    const editorConfig = Config.getAll();
-    const { handler } =
-      editorConfig?.api?.collectionItems?.searchCollectionItems ?? {};
+  const globalConfig = useConfig();
+  const api = globalConfig.api;
 
-    const choices = getCollectionChoices(editorConfig);
+  const { handler, choices } = useMemo(() => {
+    const { handler } = api?.collectionItems?.searchCollectionItems ?? {};
+
+    const choices = getCollectionChoices(api);
     return { handler, choices };
-  }, []);
+  }, [api]);
 
   const source = value?.source ?? "";
 

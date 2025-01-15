@@ -3,7 +3,5 @@ export enum Effects {
   offset = "offset",
   skew = "skew",
   scale = "scale",
-  flip = "flip",
-  active = "active",
-  anchorPoint = "anchorPoint"
+  flip = "flip"
 }

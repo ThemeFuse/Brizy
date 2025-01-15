@@ -1,9 +1,11 @@
 {
   "extends": "@brizy/tsconfig/react.json",
   "compilerOptions": {
+    "noEmit": false,
     "baseUrl": ".",
     "paths": {
-      "visual/*": ["editor/js/*"]
+      "visual/*": ["editor/js/*"],
+      "test-utils": ["./jest-utils/test-utils"]
     }
   },
   "include": [
@@ -19,3 +21,4 @@
     "**/libs/**"
   ]
 }
+

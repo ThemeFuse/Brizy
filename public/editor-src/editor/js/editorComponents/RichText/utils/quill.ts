@@ -10,7 +10,7 @@ import Pre from "./formats/Pre";
 import DCBlock from "./formats/DCBlock";
 import BackgroundImage from "./formats/BackgroundImage";
 import BackgroundGradient from "./formats/BackgroundGradient";
-import TextBackgroundGradient from "./formats/TextBackgroundGradient"
+import TextBackgroundGradient from "./formats/TextBackgroundGradient";
 
 import PlainClipboard from "./formats/PlainClipboard";
 
@@ -80,7 +80,7 @@ if (IS_EDITOR) {
   Quill.register(DCBlock, true);
   Quill.register(BackgroundGradient, true);
   Quill.register(TextBackgroundGradient, true);
-  
+
   Quill.register("modules/clipboard", PlainClipboard, true);
 }
 

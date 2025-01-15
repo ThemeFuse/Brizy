@@ -184,7 +184,7 @@ const makeDCColor = ($doc: cheerio.Root): Asset[] => {
 const makeDynamicStyle = (css: DynamicCSS): Asset[] => {
   let cssText = "";
 
-  for (const [, cssModel] of css) {
+  for (const cssModel of css) {
     cssText += cssModel.cssText;
     cssText += "\n";
   }

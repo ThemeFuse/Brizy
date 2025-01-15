@@ -3,10 +3,9 @@ import React from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import { Multistep } from "./Components/Multistep";
-import defaultValue from "./defaultValue.json";
 import Form2StepFieldItems from "./Items";
+import defaultValue from "./defaultValue.json";
 import * as sidebarExtend from "./sidebarExtend";
 import { style } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
@@ -66,10 +65,17 @@ class Form2Steps extends EditorComponent<ElementModel, Props> {
 
     const className = classnames(
       `brz-form-ms-indicators-${viewType}`,
-      css(
+      this.css(
         `${this.getComponentId()}-${this.getId()}-indicators`,
         `${this.getId()}-indicators`,
-        style(v, vs, vd, { viewType })
+        style({
+          v,
+          vs,
+          vd,
+          props: { viewType },
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

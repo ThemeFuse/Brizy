@@ -3,11 +3,12 @@ import React, {
   CSSProperties,
   Component,
   ReactElement,
-  RefObject,
-  ReactNode
+  ReactNode,
+  RefObject
 } from "react";
 import ResizeAware from "react-resize-aware";
 import UIEvents from "visual/global/UIEvents";
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { fromRecord as readImageItem } from "visual/utils/options/Gallery/utils";
 import { read as readJson } from "visual/utils/reader/json";
 import { isT } from "visual/utils/value";
@@ -45,6 +46,7 @@ type Props = {
   slideshowTransition?: number;
   kenBurnsEffect?: KenEffect;
   children: ReactNode;
+  renderContext: RenderType;
 };
 
 type NeedMedia = {
@@ -107,9 +109,10 @@ class Background extends Component<Props> {
       slideshowTransitionType,
       slideshowTransition,
       kenBurnsEffect,
-      children
+      children,
+      renderContext
     } = this.props;
-    const needsResizeDetection = IS_EDITOR && (video || parallax);
+    const needsResizeDetection = isEditor(renderContext) && (video || parallax);
 
     const videoSource = video || customVideo;
 
@@ -123,7 +126,7 @@ class Background extends Component<Props> {
         {needRenderMedia(this.props) && (
           <div style={style} className="brz-bg">
             {image && (
-              <Image showParallax={parallax}>
+              <Image showParallax={parallax} renderContext={renderContext}>
                 {({ innerRef, attr }): ReactElement => (
                   <div ref={innerRef as RefObject<HTMLDivElement>} {...attr} />
                 )}
@@ -148,15 +151,6 @@ class Background extends Component<Props> {
                 )}
               </Video>
             )}
-            {map && (
-              <div className="brz-bg-map">
-                {map && <Map map={map} mapZoom={mapZoom} />}
-              </div>
-            )}
-            {opacity && <div className="brz-bg-color" />}
-            {(shapeTop || shapeBottom) && (
-              <Shape shapeTop={shapeTop} shapeBottom={shapeBottom} />
-            )}
             {slideshow && (
               <Slideshow
                 images={images}
@@ -165,7 +159,17 @@ class Background extends Component<Props> {
                 slideshowDuration={slideshowDuration}
                 slideshowTransition={slideshowTransition}
                 kenBurnsEffect={kenBurnsEffect}
+                renderContext={renderContext}
               />
+            )}
+            {map && (
+              <div className="brz-bg-map">
+                {map && <Map map={map} mapZoom={mapZoom} />}
+              </div>
+            )}
+            {opacity && <div className="brz-bg-color" />}
+            {(shapeTop || shapeBottom) && (
+              <Shape shapeTop={shapeTop} shapeBottom={shapeBottom} />
             )}
           </div>
         )}

@@ -1,6 +1,5 @@
-import Config from "visual/global/Config";
+import { isPopup } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isPopup } from "visual/utils/models";
 
 export default {
   getItems
@@ -21,7 +20,7 @@ function getItems(v, component) {
           v.showToolbar === "off" ||
           inPopup ||
           inPopup2 ||
-          isPopup(Config.getAll()) ||
+          isPopup(component.props.editorMode) ||
           meta.isInSubMenu
         );
       },

@@ -6,7 +6,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -16,11 +15,11 @@ import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendParentConfig from "./toolbarExtend";
 
 class FacebookComments extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "FacebookComments";
   }
-
-  static defaultValue = defaultValue;
 
   getAppDataEditor() {
     //const { social = [] } = Config.get("applications");
@@ -63,7 +62,7 @@ class FacebookComments extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -112,10 +111,16 @@ class FacebookComments extends EditorComponent {
     const className = classnames(
       "brz-comments",
       { "brz-fb-comments": type === "facebook" },
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -125,7 +130,12 @@ class FacebookComments extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
-            <Comments appId={appData.appId} type={type} data={data[type]} />
+            <Comments
+              appId={appData.appId}
+              type={type}
+              data={data[type]}
+              renderContext={this.renderContext}
+            />
           </div>
         </CustomCSS>
       </Toolbar>
@@ -168,17 +178,28 @@ class FacebookComments extends EditorComponent {
 
     const className = classnames(
       "brz-comments",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={className}>
-          <Comments appId={appData.appId} type={type} data={data[type]} />
+          <Comments
+            appId={appData.appId}
+            type={type}
+            data={data[type]}
+            renderContext={this.renderContext}
+          />
         </div>
       </CustomCSS>
     );

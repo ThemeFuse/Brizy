@@ -1,10 +1,15 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import { decodeV } from "../utils.common";
 import { tagsFilterLoad } from "./utils.wp";
 
-export function tagsFilter(v: ElementModel): ToolbarItemType[] {
+
+export function tagsFilter(
+  v: ElementModel,
+  config: ConfigCommon
+): ToolbarItemType[] {
   const accepted = ["posts", "products"];
   const vd = decodeV(v);
   const source = vd.source;
@@ -31,7 +36,7 @@ export function tagsFilter(v: ElementModel): ToolbarItemType[] {
           disabled: filtersIsOff,
           placeholder: t("Select tags"),
           choices: {
-            load: tagsFilterLoad(source),
+            load: tagsFilterLoad(source, config),
             emptyLoad: { title: t("Don't have tags") }
           }
         },

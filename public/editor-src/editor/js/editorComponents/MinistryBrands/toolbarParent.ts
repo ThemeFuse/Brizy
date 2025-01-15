@@ -1,12 +1,11 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { hexToRgba } from "visual/utils/color";
+import { Props as TabProps } from "visual/component/Options/types/dev/Tabs/index";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
-import { Props as TabProps } from "visual/component/Options/types/dev/Tabs/index";
 
 export const toolbarParentColors = <
   M extends ElementModel,
@@ -19,11 +18,12 @@ export const toolbarParentColors = <
   additionalOptions?: TabProps["tabs"]
 ): ToolbarItemType[] => {
   const { v, device } = data;
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: parentBgColorHex } = getOptionColorHexByPalette(
+  const parentBgColor = getColor(
+    dvv("parentBgColorPalette"),
     dvv("parentBgColorHex"),
-    dvv("parentBgColorPalette")
+    dvv("parentBgColorOpacity")
   );
 
   return [
@@ -37,10 +37,7 @@ export const toolbarParentColors = <
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              parentBgColorHex,
-              dvv("parentBgColorOpacity")
-            )
+            backgroundColor: parentBgColor
           }
         }
       },

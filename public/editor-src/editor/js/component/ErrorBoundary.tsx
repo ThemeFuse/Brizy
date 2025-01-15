@@ -1,17 +1,19 @@
 import React, {
-  Component,
   CSSProperties,
+  Component,
   ErrorInfo,
   MouseEvent,
   ReactNode
 } from "react";
 import { noop } from "underscore";
 import Config from "visual/global/Config";
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 
 type ErrorBoundaryProps = {
   onRemove: () => void;
   children: ReactNode;
+  renderContext: RenderType;
 };
 
 type ErrorBoundaryState = {
@@ -20,7 +22,7 @@ type ErrorBoundaryState = {
 };
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  static defaultProps: ErrorBoundaryProps = {
+  static defaultProps: Partial<ErrorBoundaryProps> = {
     onRemove: noop,
     children: undefined
   };
@@ -117,7 +119,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   render(): ReactNode {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return isEditor(this.props.renderContext)
+      ? this.renderForEdit()
+      : this.renderForView();
   }
 }
 

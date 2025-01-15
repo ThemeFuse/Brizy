@@ -1,29 +1,30 @@
 import React, { useMemo } from "react";
 import _ from "underscore";
 import { PromiseComponent } from "visual/component/PromiseComponent";
-import { getTypeIcons } from "visual/config/icons/icons";
 import { TypeId } from "visual/config/icons/Type";
-import Config from "visual/global/Config";
+import { getTypeIcons } from "visual/config/icons/icons";
+import { useConfig } from "visual/global/hooks";
 import { FCC } from "visual/utils/react/types";
 import { CustomIcon } from "../CustomIcon";
 import { normalizeCustomIcons } from "../CustomIcon/utils";
 import { CustomIconProps as Props } from "./types";
 
 export const RenderCustom: FCC<Props> = ({ name, onIconClick }) => {
-  const canUpload = useMemo(
-    () => typeof Config.getAll().api?.customIcon?.add === "function",
-    []
-  );
+  const config = useConfig();
+  const { add } = config.api?.customIcon ?? {};
+
+  const canUpload = useMemo(() => typeof add === "function", [add]);
 
   return (
     <PromiseComponent
-      getPromise={() => getTypeIcons(TypeId.Custom)}
+      getPromise={() => getTypeIcons(TypeId.Custom, config)}
       renderWaiting={() => (
         <CustomIcon
           icons={[]}
           canUpload={false}
           onChange={_.noop}
           name={name}
+          config={config}
         />
       )}
       renderResolved={(icons) => {
@@ -35,6 +36,7 @@ export const RenderCustom: FCC<Props> = ({ name, onIconClick }) => {
             onChange={onIconClick}
             canUpload={canUpload}
             name={name}
+            config={config}
           />
         );
       }}

@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { ComponentType, ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
@@ -7,9 +8,9 @@ import {
   NewToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import Editor from "visual/global/Editor";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
 import { Wrapper } from "../tools/Wrapper";
-import classNames from "classnames";
 
 export interface Value extends ElementModel {
   thirdPartyId: string;
@@ -38,6 +39,12 @@ interface Options<
 class ThirdParty extends EditorComponent<Value, Props> {
   static get componentId(): string {
     return "ThirdParty";
+  }
+
+  getComponentId(): string {
+    const parentId = super.getComponentId();
+    const { thirdPartyId } = this.getValue();
+    return `${parentId}-${thirdPartyId}`;
   }
 
   static experimentalDynamicContent = true;
@@ -114,13 +121,13 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
     const v = this.getValue();
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       if (this.componentConfig) {
         return this.renderToolbars(this.renderForEdit(v, editor));
       }
       return this.renderForEdit(v, editor);
     }
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return this.renderForEdit(v, view);
     }
   }

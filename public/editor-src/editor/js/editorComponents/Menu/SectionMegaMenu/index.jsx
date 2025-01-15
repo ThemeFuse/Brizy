@@ -1,7 +1,7 @@
 import classnames from "classnames";
+import { mPipe, pass } from "fp-utilities";
 import React from "react";
 import _ from "underscore";
-import { mPipe, pass } from "fp-utilities";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu from "visual/component/ContextMenu";
@@ -10,9 +10,11 @@ import { CustomTag } from "visual/component/CustomTag";
 import { Roles } from "visual/component/Roles";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getContainerW } from "visual/utils/meta";
+import { getCSSId } from "visual/utils/models/cssId";
 import { DESKTOP, TABLET } from "visual/utils/responsiveMode";
+import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
@@ -20,9 +22,6 @@ import SectionMegaMenuItems from "./items";
 import * as sidebarConfig from "./sidebar";
 import { styleContainer, styleSection } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { makePlaceholder } from "visual/utils/dynamicContent";
-import { getCSSId } from "visual/utils/models/cssId";
-import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 
 const getModelId = mPipe(getCSSId, pass(NoEmptyString.is));
 
@@ -115,10 +114,16 @@ class SectionMegaMenu extends EditorComponent {
     const className = classnames(
       "brz-container",
       v.containerClassName,
-      css(
-        `${this.constructor.componentId}-bg`,
+      this.css(
+        `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const itemsProps = this.makeSubcomponentProps({
@@ -140,10 +145,16 @@ class SectionMegaMenu extends EditorComponent {
       "brz-mega-menu",
       className,
       cssClass || customClassName,
-      css(
+      this.css(
         `${this.getComponentId()}-section`,
         `${this.getId()}-section`,
-        styleSection(v, vs, vd)
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -203,10 +214,16 @@ class SectionMegaMenu extends EditorComponent {
       "brz-mega-menu",
       className,
       cssClass || customClassName,
-      css(
+      this.css(
         `${this.getComponentId()}-section`,
         `${this.getId()}-section`,
-        styleSection(v, vs, vd)
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

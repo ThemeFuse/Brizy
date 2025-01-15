@@ -1,18 +1,15 @@
 import { Category } from "visual/config/icons/Categories";
-import { categories as faCats } from "visual/config/icons/categories/fa";
-import { categories as ncCats } from "visual/config/icons/categories/nc";
 import { Type, TypeId } from "visual/config/icons/Type";
+import { getCategories as faCats } from "visual/config/icons/categories/fa";
+import { getCategories as ncCats } from "visual/config/icons/categories/nc";
 import { types as freeTypes } from "visual/config/icons/types/free";
 import { types as proTypes } from "visual/config/icons/types/pro";
-import { isWp } from "visual/global/Config";
-import { isPro } from "visual/utils/env";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-export const getTypes = (config: ConfigCommon): Type[] => {
-  const allTypes = [...proTypes(config), ...freeTypes];
+export const getTypes = (isPro: boolean, isWp: boolean): Type[] => {
+  const allTypes = [...proTypes(isPro), ...freeTypes];
 
-  if (isWp(config)) {
-    return isPro(config)
+  if (isWp) {
+    return isPro
       ? allTypes
       : [...freeTypes, ...allTypes.filter((type) => type.proDescription)];
   }
@@ -44,9 +41,9 @@ export const getCategories = (type: TypeId): Category[] => {
   switch (type) {
     case TypeId.Outline:
     case TypeId.Glyph:
-      return ncCats;
+      return ncCats();
     case TypeId.Fa:
-      return faCats;
+      return faCats();
     case TypeId.Custom:
       return [];
   }

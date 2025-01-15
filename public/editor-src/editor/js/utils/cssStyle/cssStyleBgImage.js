@@ -1,3 +1,4 @@
+import { isEditor } from "visual/providers/RenderProvider";
 import {
   cssStyleDisplayBlock,
   cssStyleDisplayNone
@@ -22,18 +23,25 @@ function styleBgAttachment({ v, isSlider }) {
   return backgroundAttachment[isSlider ? "none" : bgAttachment];
 }
 
-export function cssStyleBgImage({ v, device, state, prefix = "" }) {
-  const bgImage = IS_EDITOR
-    ? styleBgImage({ v, device, state, prefix })
-    : styleExportBgImage({ v, device, state, prefix });
+export function cssStyleBgImage({
+  v,
+  device,
+  state,
+  renderContext,
+  store,
+  prefix = ""
+}) {
+  const bgImage = isEditor(renderContext)
+    ? styleBgImage({ v, device, state, store, prefix })
+    : styleExportBgImage({ v, device, state, store, prefix });
 
   return `background-image:${bgImage};`;
 }
 
-export function cssStyleBgImageHover({ v, device }) {
-  const bgImage = IS_EDITOR
-    ? styleBgImage({ v, device, state: "hover" })
-    : styleExportBgImage({ v, device, state: "hover" });
+export function cssStyleBgImageHover({ v, store, device, renderContext }) {
+  const bgImage = isEditor(renderContext)
+    ? styleBgImage({ v, device, store, state: "hover" })
+    : styleExportBgImage({ v, device, store, state: "hover" });
 
   return bgImage ? `content: "";background-image:${bgImage};` : "";
 }
@@ -49,18 +57,24 @@ export function cssStyleBgMediaImage({ v, device }) {
   return cssStyleDisplayNone();
 }
 
-export function cssStyleBgImagePosition({ v, device, state, prefix = "" }) {
-  const bgImage = styleBgImage({ v, device, state, prefix });
-  const positionX = styleBgPositionX({ v, device, state, prefix });
-  const positionY = styleBgPositionY({ v, device, state, prefix });
+export function cssStyleBgImagePosition({
+  v,
+  device,
+  state,
+  store,
+  prefix = ""
+}) {
+  const bgImage = styleBgImage({ v, device, state, store, prefix });
+  const positionX = styleBgPositionX({ v, device, state, store, prefix });
+  const positionY = styleBgPositionY({ v, device, state, store, prefix });
 
   return bgImage === "none"
     ? ""
     : `background-position:${positionX} ${positionY};`;
 }
 
-export function cssStyleBgImageAttachment({ v, device, state, props }) {
-  const dvv = (key) => defaultValueValue({ v, key, device, state });
+export function cssStyleBgImageAttachment({ v, device, state, store, props }) {
+  const dvv = (key) => defaultValueValue({ v, key, device, store, state });
   const { isSlider } = props.meta.section;
   const bgAttachment = styleBgAttachment({ v, isSlider });
   const bgSize = dvv("bgSize");

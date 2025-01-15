@@ -52,7 +52,7 @@ export const hexToString = (
     return `rgba(var(${makeStylePaletteCSSVar(palette, config)}),${opacity})`;
   }
 
-  return `${hexToRgba(hex, opacity)}`;
+  return `${hexToRgba(hex, parseInt(opacity))}`;
 };
 
 export const gradientValues = (

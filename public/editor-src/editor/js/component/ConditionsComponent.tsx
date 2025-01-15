@@ -1,11 +1,13 @@
 import React, { ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
 import Prompts from "visual/component/Prompts";
-import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { updatePopupRules } from "visual/redux/actions";
 import { updateGBRules } from "visual/redux/actions2";
 import { globalBlocksSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { GlobalBlock, Rule } from "visual/types";
 import { getRulesList } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
@@ -33,18 +35,19 @@ type Options = {
   onChange?: (data: ChangeCallbackData) => void;
 }[];
 
-export function getOptions(
-  type: "block" | "popup" | undefined,
-  value: string
-): Options {
+interface OptionsData {
+  type: "block" | "popup";
+  value: string;
+  rules: GlobalBlock["rules"];
+  dispatch: Dispatch;
+}
+
+export function getOptions(data: OptionsData, config: ConfigCommon): Options {
+  const { type, value, rules, dispatch } = data;
   let options: Options = [];
 
   switch (type) {
     case "block": {
-      const state = getStore().getState();
-      const globalBlocks = globalBlocksSelector(state);
-      const { rules } = globalBlocks[value] as GlobalBlock;
-
       options = [
         {
           id: "rules",
@@ -55,15 +58,11 @@ export function getOptions(
           value: rules,
           context: "block",
           onChange: ({ data: { rules }, meta }: ChangeCallbackData): void => {
-            getStore().dispatch(
-              updateGBRules({
-                data: {
-                  rules,
-                  id: value
-                },
-                meta
-              })
-            );
+            const data = {
+              data: { rules, id: value },
+              meta
+            };
+            dispatch(updateGBRules(data));
           }
         }
       ];
@@ -80,16 +79,20 @@ export function getOptions(
           title: t("WHAT WILL TRIGGER THE POPUP TO OPEN")
         }
       ];
-      const config = Config.getAll();
       const { popupConditions } = config.api ?? {};
       const save = popupConditions?.conditions?.save;
 
-      if (!isExternalPopup(Config.getAll()) && save) {
-        // ts-ignore added because cms's getRulesList method is expecting
-        // CollectionItemId, wp is expecting nothing
+      if (!isExternalPopup(config) && save) {
         const asyncGetValue = isCloud(config)
-          ? (): Promise<Rule[]> => getRulesList(Config.get("page")?.id)
-          : (): Promise<Rule[]> => getRulesList("");
+          ? (): Promise<Rule[]> =>
+              getRulesList(config.page.id, {
+                uri: config?.api?.brizyApiUrl ?? "",
+                authorization: config.tokenV2
+                  ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
+                  : undefined
+              })
+          : // @ts-expect-error it's not possible to create normal types because different data is used on Cloud/WP
+            (): Promise<Rule[]> => getRulesList(config);
 
         options.push({
           id: "rules",
@@ -100,8 +103,7 @@ export function getOptions(
           context: "popup",
           asyncGetValue,
           onChange: (data) => {
-            // @ts-expect-error: Type 'string' is not assignable to type '"UPDATE_BLOCKS"'.
-            getStore().dispatch(updatePopupRules(data));
+            dispatch(updatePopupRules(data));
           }
         });
       }
@@ -123,12 +125,18 @@ export const ConditionsComponent = ({
   context: "block" | "popup";
   children: React.ReactElement;
 }): ReactElement => {
+  const globalBlocks = useSelector(globalBlocksSelector);
+  const dispatch = useDispatch();
+  const config = useConfig();
+  const { rules } = globalBlocks[value] ?? { rules: [] };
+
   const handleMouseDown = (): void => {
+    const data = { type: context, value, rules, dispatch };
     Prompts.open({
       prompt: "conditions",
       mode: "single",
       props: {
-        options: getOptions(context, value)
+        options: getOptions(data, config)
       }
     });
   };

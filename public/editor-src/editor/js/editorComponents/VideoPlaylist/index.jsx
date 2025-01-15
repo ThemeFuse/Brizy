@@ -3,7 +3,6 @@ import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { Wrapper } from "../tools/Wrapper";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -31,7 +30,7 @@ class VideoPlaylist extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -77,25 +76,43 @@ class VideoPlaylist extends EditorComponent {
       "brz-video-playlist",
       `brz-video-playlist-${positionItem}`,
       `brz-video-playlist-${positionThumbs}`,
-      css(
-        `${this.constructor.componentId}`,
+      this.css(
+        `${this.getComponentId()}`,
         `${this.getId()}`,
-        styleContents(v, vs, vd)
+        styleContents({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
-      css(
-        `${this.constructor.componentId}-cover`,
+      this.css(
+        `${this.getComponentId()}-cover`,
         `${this.getId()}-cover`,
-        styleCover(itemV, vs, vd)
+        styleCover({
+          v: itemV,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     const classNameSidebar = classnames(
       "brz-video-playlist-col",
       "brz-video-playlist-sidebar",
-      css(
-        `${this.constructor.componentId}-sidebar`,
+      this.css(
+        `${this.getComponentId()}-sidebar`,
         `${this.getId()}-sidebar`,
-        styleSidebar(v, vs, vd)
+        styleSidebar({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -155,25 +172,43 @@ class VideoPlaylist extends EditorComponent {
       "brz-video-playlist",
       `brz-video-playlist-${positionItem}`,
       `brz-video-playlist-${positionThumbs}`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleContents(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleContents({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
-      css(
-        `${this.constructor.componentId}-cover`,
+      this.css(
+        `${this.getComponentId()}-cover`,
         `${this.getId()}-cover`,
-        styleCover(itemV, vs, vd)
+        styleCover({
+          v: itemV,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     const classNameSidebar = classnames(
       "brz-video-playlist-col",
       "brz-video-playlist-sidebar",
-      css(
-        `${this.constructor.componentId}-sidebar`,
+      this.css(
+        `${this.getComponentId()}-sidebar`,
         `${this.getId()}-sidebar`,
-        styleSidebar(v, vs, vd)
+        styleSidebar({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

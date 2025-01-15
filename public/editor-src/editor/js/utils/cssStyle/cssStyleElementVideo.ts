@@ -23,9 +23,10 @@ export function cssStyleElementVideoBgSize({
 export function cssStyleElementVideoIconFontSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const fontSize = styleElementVideoIconFontSize({ v, device, state });
+  const fontSize = styleElementVideoIconFontSize({ v, device, state, store });
 
   return fontSize === undefined ? "" : `font-size:${fontSize}px;`;
 }
@@ -33,25 +34,28 @@ export function cssStyleElementVideoIconFontSize({
 export function cssStyleElementVideoIconWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeSize({ v, device, state, prefix: "icon" });
+  return cssStyleSizeSize({ v, device, state, store, prefix: "icon" });
 }
 
 export function cssStyleElementVideoIconHeight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeSizeHeight({ v, device, state, prefix: "icon" });
+  return cssStyleSizeSizeHeight({ v, device, state, store, prefix: "icon" });
 }
 
 export function cssStyleElementVideoCoverSrc({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const coverSrc = styleElementVideoCoverSrc({ v, device, state });
+  const coverSrc = styleElementVideoCoverSrc({ v, device, state, store });
 
   return coverSrc ? `background-image:${coverSrc};` : "";
 }

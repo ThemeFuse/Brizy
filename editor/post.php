@@ -6,6 +6,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 {
 
     use Brizy_Editor_AutoSaveAware;
+    use Brizy_Editor_Trait_Sanitize;
 
     const BRIZY_POST = 'brizy-post';
     const BRIZY_POST_NEEDS_COMPILE_KEY = 'brizy-need-compile';
@@ -410,7 +411,8 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
      */
     public function set_compiled_html($compiled_html)
     {
-        Brizy_SiteUrlReplacer::hideSiteUrl($compiled_html);
+        $compiled_html = Brizy_SiteUrlReplacer::hideSiteUrl($compiled_html);
+		$compiled_html = $this->sanitizeHtml($compiled_html);
         $this->compiled_html = $compiled_html;
         return $this;
     }

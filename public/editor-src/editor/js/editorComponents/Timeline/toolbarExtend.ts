@@ -4,14 +4,16 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { is } from "visual/utils/string/NoEmptyString";
 import { Props, Value } from "./index";
 
-const spaceTranslate = t("Space");
-const verticalTranslate = is(t("Vertical")) ? t("Vertical") : "Vertical";
-const horizontalTranslate = is(t("Horizontal"))
-  ? t("Horizontal")
-  : "Horizontal";
-
-const verticalLabel = `${verticalTranslate[0]}. ${spaceTranslate}`;
-const horizontalLabel = `${horizontalTranslate[0]}. ${spaceTranslate}`;
+const getVerticalLabel = () => {
+  const verticalTranslate = is(t("Vertical")) ? t("Vertical") : "Vertical";
+  return `${verticalTranslate[0]}. ${t("Space")}`;
+};
+const getHorizontalLabel = () => {
+  const horizontalTranslate = is(t("Horizontal"))
+    ? t("Horizontal")
+    : "Horizontal";
+  return `${horizontalTranslate[0]}. ${t("Space")}`;
+};
 
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -83,7 +85,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 },
                 {
                   id: "spacing",
-                  label: vertical ? verticalLabel : horizontalLabel,
+                  label: vertical ? getVerticalLabel() : getHorizontalLabel(),
                   type: "slider",
                   config: {
                     min: 0,
@@ -92,7 +94,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 },
                 {
                   id: "verticalSpacing",
-                  label: verticalLabel,
+                  label: getVerticalLabel(),
                   disabled: vertical,
                   type: "slider",
                   config: {
@@ -103,7 +105,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                 {
                   id: "horizontalSpacing",
                   disabled: !vertical,
-                  label: horizontalLabel,
+                  label: getHorizontalLabel(),
                   type: "slider",
                   config: {
                     min: 0,

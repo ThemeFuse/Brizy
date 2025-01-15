@@ -1,31 +1,26 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import {
   getMaxContainerSuffix,
   getMinContainerSuffix
 } from "visual/editorComponents/Section/utils";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { getColor } from "visual/utils/color";
+import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { read as readString } from "visual/utils/reader/string";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { BgRepeat, BgSize } from "visual/utils/containers/types";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import Config from "visual/global/Config";
+
 
 export interface Value extends ElementModel {
   containerType: string;
@@ -35,24 +30,23 @@ export interface Value extends ElementModel {
   bgColorOpacity: number;
 }
 
-export function getItems({
+export const getItems: GetItems<Value> = ({
   v,
   device,
-  context
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
-  const config = Config.getAll();
+  context,
+  component
+}) => {
+  const config = component.getGlobalConfig();
 
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
+
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.image
@@ -137,7 +131,7 @@ export function getItems({
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes
+                  choices: getMaskShapes()
                 },
                 {
                   id: "maskCustomUpload",
@@ -163,7 +157,7 @@ export function getItems({
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -189,7 +183,7 @@ export function getItems({
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -220,7 +214,7 @@ export function getItems({
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }
@@ -236,7 +230,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },
@@ -375,4 +369,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

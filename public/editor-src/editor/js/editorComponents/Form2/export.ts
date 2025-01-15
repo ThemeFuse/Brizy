@@ -4,19 +4,30 @@ import PerfectScrollbar from "perfect-scrollbar";
 import { getFreeLibs } from "visual/libs";
 import { makeDataAttrString } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
-import { isNullish, MValue } from "visual/utils/value";
+import { MValue, isNullish } from "visual/utils/value";
 import { initMultiStep } from "./initMultiStep";
 import {
   AllFormData,
   DataValue,
   DoneResponse,
   Errors,
-  MessageStatus
+  GetFormMessageData,
+  MessageStatus,
+  ResponseMessages
 } from "./types";
+import { getTranslatedResponseMessages } from "./utils";
 
 let isSubmitEnabled = true;
 const recaptchaSelector =
   '.brz-g-recaptcha[data-sitekey]:not([data-sitekey=""])';
+
+const defaultResponseMessages: ResponseMessages = {
+  success: "Your email was sent successfully",
+  error: "Your email was not sent",
+  empty: "Please check your entry and try again"
+};
+
+const responseMessages = new Map<HTMLFormElement, ResponseMessages>();
 
 export default function ($node: JQuery): void {
   const root = $node.get(0);
@@ -244,7 +255,7 @@ const updatePattern = (form: HTMLElement): void => {
 };
 
 function validateFormItem(node: HTMLFormElement): boolean {
-  const form = node.closest<HTMLElement>(".brz-form");
+  const form = node.closest<HTMLFormElement>(".brz-form");
   const parentElem = node.closest(".brz-forms2__item");
   const { value, dataset: data, required: isRequired } = node;
   const { brzType, brzError, brzFileMaxSize } = data;
@@ -284,13 +295,14 @@ function validateFormItem(node: HTMLFormElement): boolean {
     const _brzMax = Num.read(brzMax);
 
     if (Boolean(value) && _brzMin && toNum < _brzMin) {
-      const messages = getFormMessage(
-        MessageStatus.Error,
-        `${
+      const messages = getFormMessage({
+        status: MessageStatus.Error,
+        form,
+        text: `${
           _error?.minNumError ||
           "Selected quantity is less than stock status, min:"
         } ${brzMin}`
-      );
+      });
 
       if (form) {
         showFormMessage(form, messages);
@@ -303,13 +315,14 @@ function validateFormItem(node: HTMLFormElement): boolean {
       result = false;
     }
     if (Boolean(value) && _brzMax && toNum > _brzMax) {
-      const messages = getFormMessage(
-        MessageStatus.Error,
-        `${
+      const messages = getFormMessage({
+        status: MessageStatus.Error,
+        text: `${
           _error?.maxNumError ||
           "Selected quantity is more than stock status, max:"
-        } ${brzMax}`
-      );
+        } ${brzMax}`,
+        form
+      });
 
       if (form) {
         showFormMessage(form, messages);
@@ -356,13 +369,14 @@ function validateFormItem(node: HTMLFormElement): boolean {
         "brz-forms2__item--error",
         "brz-forms2__item--error-pattern"
       );
-      const messages = getFormMessage(
-        MessageStatus.Error,
-        `${
+      const messages = getFormMessage({
+        status: MessageStatus.Error,
+        text: `${
           _error?.fileMaxSizeError ||
           "This file exceeds the maximum allowed size."
-        } ${brzFileMaxSize}`
-      );
+        } ${brzFileMaxSize}`,
+        form
+      });
 
       if (form) {
         showFormMessage(form, messages);
@@ -375,13 +389,14 @@ function validateFormItem(node: HTMLFormElement): boolean {
         "brz-forms2__item--error-pattern"
       );
       const ext = accepts?.map((ext) => ext.replace(".", "")).join(", ");
-      const messages = getFormMessage(
-        MessageStatus.Error,
-        `${
+      const messages = getFormMessage({
+        status: MessageStatus.Error,
+        text: `${
           _error?.fileTypeError ||
           "Only files with the following extensions are allowed:"
-        } ${ext}`
-      );
+        } ${ext}`,
+        form
+      });
 
       if (form) {
         showFormMessage(form, messages);
@@ -451,6 +466,12 @@ export function validateForm(form: HTMLElement): boolean {
 
 function initForm(form: HTMLElement): void {
   const $form = $(form);
+  const formNode = form.querySelector<HTMLFormElement>("form");
+
+  if (formNode) {
+    const messages = getTranslatedResponseMessages(formNode);
+    responseMessages.set(formNode, messages);
+  }
 
   const submitButton = form.querySelector(".brz-btn");
   const spinner = form.querySelector(".brz-form-spinner");
@@ -589,7 +610,11 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
     } else {
       showFormMessage(
         nodeForm,
-        getFormMessage(MessageStatus.Success, successMessage)
+        getFormMessage({
+          status: MessageStatus.Success,
+          text: successMessage,
+          form: nodeForm
+        })
       );
 
       if (brzRedirect && brzRedirect !== "") {
@@ -605,7 +630,11 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
     form.classList.add("brz-forms2__send--fail");
     showFormMessage(
       nodeForm,
-      getFormMessage(MessageStatus.Error, errorMessage)
+      getFormMessage({
+        status: MessageStatus.Error,
+        text: errorMessage,
+        form: nodeForm
+      })
     );
   };
 
@@ -713,15 +742,17 @@ function getFormData(form: HTMLElement): AllFormData {
   };
 }
 
-function getFormMessage(status: MessageStatus, text?: string): HTMLDivElement {
-  const defaultTexts: { [k in MessageStatus]: string } = {
-    success: "Your email was sent successfully",
-    error: "Your email was not sent",
-    empty: "Please check your entry and try again"
-  };
+function getFormMessage({
+  status,
+  text,
+  form
+}: GetFormMessageData): HTMLDivElement {
   const alert = document.createElement("div");
+  const messages = form ? responseMessages.get(form) : undefined;
+  const message = messages ? messages[status] : undefined;
+
   alert.className = `brz-forms2__alert brz-forms2__alert--${status}`;
-  alert.innerHTML = text || defaultTexts[status];
+  alert.innerHTML = text || message || defaultResponseMessages[status];
 
   return alert;
 }

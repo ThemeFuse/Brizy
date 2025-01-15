@@ -1,8 +1,11 @@
+import { isEditor } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
-export function style(v: Value, vs: Value, vd: Value): OutputStyle {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
+  const { renderContext } = data;
   const styles: Styles = {
     ".brz &&": {
       standart: ["cssStyleColumnHeight"]
@@ -41,7 +44,11 @@ export function style(v: Value, vs: Value, vd: Value): OutputStyle {
     // condition appears because we don't render  in preview .brz-flipbox-sortable-wrapper
     ".brz && > .brz-flipbox-content > .brz-flipbox-item-front > .brz-flipbox-sortable-wrapper":
       {
-        standart: [...(IS_EDITOR ? ["cssStyleFlexColumnVerticalAlign"] : [])]
+        standart: [
+          ...(isEditor(renderContext)
+            ? ["cssStyleFlexColumnVerticalAlign"]
+            : [])
+        ]
       },
     //#endregion
 
@@ -79,11 +86,13 @@ export function style(v: Value, vs: Value, vd: Value): OutputStyle {
     ".brz && > .brz-flipbox-content > .brz-flipbox-item-back > .brz-flipbox-sortable-wrapper":
       {
         standart: [
-          ...(IS_EDITOR ? ["cssStyleElementFlipboxBackVerticalAlign"] : [])
+          ...(isEditor(renderContext)
+            ? ["cssStyleElementFlipboxBackVerticalAlign"]
+            : [])
         ]
       }
     //#endregion
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

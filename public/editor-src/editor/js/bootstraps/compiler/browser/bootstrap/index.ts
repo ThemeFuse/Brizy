@@ -4,8 +4,9 @@ import { createStore } from "visual/redux/store";
 import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
 import { systemFont } from "visual/utils/fonts/utils";
 import { isPopup, isStory } from "visual/utils/models";
+import { uuid } from "visual/utils/uuid";
 import { MValue } from "visual/utils/value";
-import "../../../registerEditorParts";
+import { compileProject } from "../../common/compileProject";
 import { globalBlocksToStatic } from "../../common/toStatic/globalBlocksToStatic";
 import { globalPopupsToStatic } from "../../common/toStatic/globalPopupsToStatic";
 import { pageToStatic } from "../../common/toStatic/pageToStatic";
@@ -32,6 +33,7 @@ export async function bootstrap(data: Props): Promise<Static> {
   const _fonts = deepMerge(fonts, {
     system: { data: systemFont }
   });
+  const configId = uuid();
 
   store.dispatch(
     //@ts-expect-error: To Ts
@@ -40,6 +42,8 @@ export async function bootstrap(data: Props): Promise<Static> {
       project,
       fonts: _fonts,
       globalBlocks,
+      config,
+      configId,
       projectStatus: {}
     })
   );
@@ -48,9 +52,13 @@ export async function bootstrap(data: Props): Promise<Static> {
   const compiledPopups = compiledGlobalBlocks.filter(isGlobalPopup);
   let globalPopupsStatic: MValue<Array<GlobalBlockStatic>> = undefined;
 
+  const compiledProject = needToCompile.project
+    ? { styles: compileProject(config, store) }
+    : undefined;
+
   if (compiledPopups.length > 0) {
     try {
-      globalPopupsStatic = await globalPopupsToStatic({
+      globalPopupsStatic = globalPopupsToStatic({
         ...commonConfig,
         compiledBlocks: compiledPopups
       });
@@ -60,29 +68,40 @@ export async function bootstrap(data: Props): Promise<Static> {
   }
 
   if (isPopup(config)) {
-    const data = await popupToStatic(commonConfig);
-    return { page: data, globalBlocks: globalPopupsStatic };
+    const data = popupToStatic({ ...commonConfig, config });
+    return {
+      project: compiledProject,
+      page: data,
+      globalBlocks: globalPopupsStatic
+    };
   }
 
   if (isStory(config)) {
-    const data = await storyToStatic(commonConfig);
-    return { page: data, globalBlocks: globalPopupsStatic };
+    const data = storyToStatic(commonConfig);
+    return {
+      project: compiledProject,
+      page: data,
+      globalBlocks: globalPopupsStatic
+    };
   }
 
   const globalBlocksStatic =
     compiledGlobalBlocks.length > 0
-      ? await globalBlocksToStatic({
+      ? globalBlocksToStatic({
           ...commonConfig,
           compiledBlocks: compiledGlobalBlocks.filter(isGlobalBlock)
         })
       : undefined;
-  const pageStatic = await pageToStatic(commonConfig);
+
+  const hasGlobalBlocks = Array.isArray(config.globalBlocks);
+  const pageStatic = pageToStatic({ ...commonConfig, hasGlobalBlocks });
   const allStaticGlobalBlocks = [
     ...(globalPopupsStatic ?? []),
     ...(globalBlocksStatic ?? [])
   ];
 
   return {
+    project: compiledProject,
     page: pageStatic,
     globalBlocks:
       allStaticGlobalBlocks.length > 0 ? allStaticGlobalBlocks : undefined

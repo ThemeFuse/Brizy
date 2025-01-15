@@ -2,12 +2,15 @@ import { Rule } from "visual/types";
 import { ApiRule } from "visual/utils/api/adapter";
 import { t } from "visual/utils/i18n";
 import { apiRuleToEditorRule } from "visual/utils/reader/globalBlocks";
-import { getConnection } from "./graphql/apollo";
+import { CreateApolloClientProps, getConnection } from "./graphql/apollo";
 import * as Gql from "./graphql/gql";
 import { onCatch } from "./utils";
 
-export function getRulesList(collectionItemId: string): Promise<Rule[]> {
-  return Gql.collectionItemFieldBySlug(getConnection(), {
+export function getRulesList(
+  collectionItemId: string,
+  connection: CreateApolloClientProps
+): Promise<Rule[]> {
+  return Gql.collectionItemFieldBySlug(getConnection(connection), {
     collectionItemId: collectionItemId,
     collectionItemFieldSlug: "rules"
   })

@@ -1,4 +1,4 @@
-interface UrlsCommon {
+export interface UrlsCommon {
   about: string;
   api: string;
   projectCloneLink: string;
@@ -16,6 +16,8 @@ interface UrlsCommon {
   worker: string;
   collaborationToolUrl?: string;
   templateIcons: string;
+  screenshot: string;
+  changeTemplate?: string;
 
   // On Compile time
   compileAssets?: string;
@@ -30,6 +32,7 @@ interface WPUrls extends UrlsCommon {
   dashboardNavMenu: string;
   pluginSettings: string;
   templateThumbnails: string;
+  screenshot: string;
 }
 
 interface CloudUrls extends UrlsCommon {

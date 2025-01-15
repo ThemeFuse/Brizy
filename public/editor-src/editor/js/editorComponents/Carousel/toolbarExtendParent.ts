@@ -1,29 +1,19 @@
 import { ChoicesSync } from "visual/component/Options/types/dev/MultiSelect2/types";
-import Config from "visual/global/Config";
-import { hexToRgba } from "visual/utils/color";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getOptionColorHexByPalette,
-  getTaxonomies
-} from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ToolbarItemType } from "../ToolbarItemType";
+import { getTaxonomies } from "visual/utils/options";
 import { Value } from "./types";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, component }) => {
   const dvv = (key: string) =>
     defaultValueValue({ key, v, device, state: "normal" });
 
-  const { hex: sliderArrowsColorHex } = getOptionColorHexByPalette(
+  const sliderArrowsColor = getColor(
+    dvv("sliderArrowsColorPalette"),
     dvv("sliderArrowsColorHex"),
-    dvv("sliderArrowsColorPalette")
+    dvv("sliderArrowsColorOpacity")
   );
 
   const sliderArrowsChoices = [
@@ -48,11 +38,14 @@ export function getItems({
   ];
 
   const getCategories = () => {
-    const taxonomies = getTaxonomies();
+    const config = component.getGlobalConfig();
+    const taxonomies = getTaxonomies(config.taxonomies);
 
     return taxonomies.flatMap((category) => category.optgroup) as ChoicesSync;
   };
-  const wordpress = Boolean(Config.get("wp"));
+
+  //@ts-expect-error review here when ConfigCommon is ready
+  const wordpress = !!component.getGlobalConfig().wp;
 
   return [
     {
@@ -242,7 +235,6 @@ export function getItems({
           devices: "desktop",
           type: "select",
           choices: getCategories(),
-          //@ts-expect-error: Old function
           dependencies: ({ taxonomy }: { taxonomy: string }) => {
             const [, taxonomyId] = taxonomy.split("|");
             return {
@@ -286,10 +278,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              sliderArrowsColorHex,
-              dvv("sliderArrowsColorOpacity")
-            )
+            backgroundColor: sliderArrowsColor
           }
         }
       },
@@ -337,4 +326,4 @@ export function getItems({
       devices: "desktop"
     }
   ];
-}
+};

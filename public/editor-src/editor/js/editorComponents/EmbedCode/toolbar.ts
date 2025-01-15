@@ -1,30 +1,26 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import Config from "visual/global/Config";
-import { hexToRgba } from "visual/utils/color";
+import { Params } from "visual/editorComponents/EditorComponent/types";
+import { isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
+import { Value } from "./types";
 
 export function getItems({
   v,
-  device
-}: {
-  v: ElementModel;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
-  const config = Config.getAll();
+  device,
+  editorMode
+}: Params<Value>): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
+  const borderColor = getColor(
+    dvv("borderColorPalette"),
     dvv("borderColorHex"),
-    dvv("borderColorPalette")
+    dvv("borderColorOpacity")
   );
 
-  const IS_STORY = isStory(config);
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -56,10 +52,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              borderColorHex,
-              dvv("borderColorOpacity")
-            )
+            backgroundColor: borderColor
           }
         }
       },
@@ -114,7 +107,7 @@ export function getItems({
         icon: "nc-cog",
         title: t("Settings")
       },
-      disabled: IS_STORY,
+      disabled: _isStory,
       position: 110,
       options: [
         {
@@ -208,7 +201,7 @@ export function getItems({
       id: "advancedSettings",
       type: "advancedSettings",
       position: 110,
-      disabled: !IS_STORY,
+      disabled: !_isStory,
       devices: "desktop"
     }
   ];

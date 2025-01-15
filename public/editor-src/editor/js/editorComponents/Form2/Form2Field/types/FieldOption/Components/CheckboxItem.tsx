@@ -1,11 +1,11 @@
+import { Obj, Str } from "@brizy/readers";
 import React from "react";
 import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
-import EditorIcon from "visual/component/EditorIcon";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import { CheckboxItemProps } from "./type";
-import { FCC } from "visual/utils/react/types";
-import { Obj } from "@brizy/readers";
+import EditorIcon from "visual/component/EditorIcon";
 import Link from "visual/component/Link";
+import { FCC } from "visual/utils/react/types";
+import { CheckboxItemProps } from "./type";
 
 const CheckboxItem: FCC<CheckboxItemProps> = ({
   value,
@@ -25,9 +25,11 @@ const CheckboxItem: FCC<CheckboxItemProps> = ({
   targetCheckbox,
   relCheckbox,
   slideCheckbox,
-  className
+  className,
+  name
 }) => {
   const _active = Obj.isObject(active);
+  const _name = Str.read(name);
 
   const handleCheckboxClick = () => {
     if (_active) {
@@ -70,6 +72,7 @@ const CheckboxItem: FCC<CheckboxItemProps> = ({
       label={label}
       required={required}
       type={type}
+      name={_name}
     >
       {isCheckboxWithLink ? (
         <Link

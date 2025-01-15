@@ -1,18 +1,14 @@
 import { ComponentType } from "react";
-import { flatten } from "underscore";
 import type { EditorInstance as EditorComponent } from "visual/editorComponents/EditorComponent";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   ThirdPartyComponent,
   ThirdPartyConfig
 } from "visual/global/Config/types/configs/ThirdParty";
-import type { Shortcode, Shortcodes } from "visual/types";
-import { applyFilter } from "visual/utils/filters";
-import { MValue } from "visual/utils/value";
+import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 
 const components: Record<string, EditorComponent | null> = {};
 let notFoundComponent: undefined | EditorComponent;
-let shortcodes: Shortcodes = {};
-let shopifyShortcodes: Shortcodes = {};
 const thirdPartyShortcodes: Record<
   string,
   {
@@ -56,70 +52,17 @@ const Editor = {
     return notFoundComponent;
   },
 
-  // shortcodes
-
-  registerShortcode(shortcodeComponents: Shortcodes): void {
-    shortcodes = shortcodeComponents;
-  },
-
-  registerShopifyShortcode(shopifyComponents: Shortcodes): void {
-    shopifyShortcodes = shopifyComponents;
-  },
-
-  getShortcodes(): Shortcodes {
-    return applyFilter("getShortcodes", shortcodes);
-  },
-
-  getShortcode(id: string): MValue<Shortcode> {
-    const shortcodes = this.getShortcodes();
-    const flattenShortcodes = flatten(Object.values(shortcodes));
-    return flattenShortcodes.find((shortcode) => shortcode.component.id === id);
-  },
-
-  getShopifyShortcodes(): Shortcodes {
-    return applyFilter("getShopifyShortcodes", shopifyShortcodes);
-  },
-
-  registerThirdPartyElement(element: ThirdPartyComponent): void {
-    const validConfig = isValidThirdPartyConfig(element);
+  registerThirdPartyElement(
+    element: ThirdPartyComponent,
+    config: ConfigCommon
+  ): void {
+    const validConfig = isValidThirdPartyConfig(element, config);
 
     if (!validConfig) {
-      throw new Error("Invalid third party element config");
+      console.error("Invalid third party element config");
+      return;
     }
 
-    const { category } = element;
-    const elementCategory = category ?? "customComponent";
-    const elementShortcode = elementCategory.toUpperCase();
-
-    if (!shortcodes[elementShortcode]) {
-      shortcodes[elementShortcode] = [];
-    }
-
-    const shortcodeConfig: Shortcode = {
-      pro: false,
-      keywords: element?.keywords ?? "",
-      component: {
-        id: element.id,
-        title: element.title ?? "Component",
-        icon: element.icon ?? "nc-wp-shortcode-element",
-        resolve: {
-          type: "Wrapper",
-          value: {
-            _styles: ["wrapper", "wrapper--toolbar"],
-            items: [
-              {
-                type: "ThirdParty",
-                value: {
-                  thirdPartyId: element.id
-                }
-              }
-            ]
-          }
-        }
-      }
-    };
-
-    shortcodes[elementShortcode].push(shortcodeConfig);
     const { component, ...options } = element;
     thirdPartyShortcodes[element.id] = {
       component: component,
@@ -132,16 +75,21 @@ const Editor = {
   }
 };
 
-function isValidThirdPartyConfig(component: ThirdPartyComponent): boolean {
+function isValidThirdPartyConfig(
+  component: ThirdPartyComponent,
+  config: ConfigCommon
+): boolean {
   const componentId = component?.id;
 
   if (!componentId) {
     return false;
   }
 
-  const customComponents = shortcodes["customComponent"] ?? [];
+  const shortcodes = getFlatShortcodes(config);
 
-  return !customComponents.some((e) => e.component.id === componentId);
+  return Object.values(shortcodes)
+    .flat()
+    .some((e) => e.component.id === componentId);
 }
 
 export default Editor;

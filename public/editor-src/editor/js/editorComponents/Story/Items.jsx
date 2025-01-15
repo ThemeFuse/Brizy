@@ -12,6 +12,7 @@ import classnames from "classnames";
 import React from "react";
 import SlickSlider from "react-slick";
 import _ from "underscore";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import debounceRenderHOC from "visual/component/DebounceRenderHOC";
 import EditorIcon from "visual/component/EditorIcon";
 import Prompts from "visual/component/Prompts";
@@ -20,7 +21,6 @@ import { hideToolbar } from "visual/component/Toolbar";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { importStory } from "visual/redux/actions2";
-import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 
 const Dot = debounceRenderHOC((props) => {
@@ -237,7 +237,8 @@ class StoryItems extends EditorArrayComponent {
     const insertIndex = dbValue.length;
     const meta = { insertIndex };
     this.setState({ active: insertIndex });
-    getStore().dispatch(importStory(data, meta));
+    const dispatch = this.getReduxDispatch();
+    dispatch(importStory(data, meta));
   };
 
   handleAddNewElement = () => {
@@ -300,7 +301,7 @@ class StoryItems extends EditorArrayComponent {
   };
 
   renderItemsContainer(items, v) {
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       return (
         <SlickSlider
           className={"brz-slick-slider"}
@@ -331,7 +332,7 @@ class StoryItems extends EditorArrayComponent {
         </SlickSlider>
       );
     }
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       const { sliderAutoPlay, sliderAutoPlaySpeed, sliderLoop } = this.props;
       const responsive = [
         {

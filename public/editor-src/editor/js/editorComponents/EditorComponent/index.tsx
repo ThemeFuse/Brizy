@@ -15,15 +15,26 @@ import {
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
+import { getConfigById } from "visual/global/Config/InitConfig";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Editor from "visual/global/Editor";
+import { EditorMode } from "visual/global/EditorModeContext";
 import * as GlobalState from "visual/global/StateMode";
-import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { RenderType, isView } from "visual/providers/RenderProvider";
+import { createCache, createSheet } from "visual/providers/StyleProvider/Sheet";
+import {
+  configIdSelector,
+  deviceModeSelector,
+  rulesSelector
+} from "visual/redux/selectors";
+import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
+import {
+  getFlatShortcodes,
+  getShortcode
+} from "visual/shortcodeComponents/utils";
 import { WithClassName } from "visual/types/attributes";
 import {
-  css,
   filterMergedStylesByDevice,
   getInitialV,
   replaceCSSDuplicatesWithEmptyString
@@ -38,13 +49,13 @@ import {
   concatFinalCSS,
   mergeStylesArray
 } from "visual/utils/cssStyle/utils";
-import { isPro, IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import { defaultValueKey } from "visual/utils/onChange/device";
 import {
   Choices,
-  getDynamicContentOption,
-  Handler
+  Handler,
+  getDynamicContentOption
 } from "visual/utils/options/getDynamicContentOption";
 import { TypeChoices } from "visual/utils/options/types";
 import { mergeOptions, optionMap } from "visual/utils/options/utils";
@@ -60,7 +71,7 @@ import { NORMAL } from "visual/utils/stateMode";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
 import { Literal } from "visual/utils/types/Literal";
 import { uuid } from "visual/utils/uuid";
-import { isT, MValue } from "visual/utils/value";
+import { MValue, isT } from "visual/utils/value";
 import {
   DCObjResult,
   getDCObjEditor,
@@ -104,6 +115,7 @@ export type Props<
   dbValue: Model<M>;
   defaultValue: Model<M>;
   path: string[];
+  reduxStore: Store;
   reduxState: ReduxState;
   reduxDispatch: unknown;
   meta: ComponentsMeta;
@@ -117,6 +129,8 @@ export type Props<
   toolbarExtend?: ToolbarExtend;
   wrapperExtend?: WrapperProps<P>;
   extendParentToolbar: (childToolbarExtend: ToolbarExtend) => void;
+  renderContext: RenderType;
+  editorMode: EditorMode;
 } & P;
 
 const tempPatch = new Map<string, Partial<Model<ElementModel>>>();
@@ -150,6 +164,7 @@ export class EditorComponent<
   _defaultValueProcessedCache?: DefaultValueProcessed<M>;
   _dc: ECDC = {};
   childToolbarExtend?: ToolbarExtend;
+  renderContext = this.props.renderContext;
 
   /**
    * @return {string}
@@ -172,7 +187,8 @@ export class EditorComponent<
     return getOptionValueByDevice({
       v,
       id,
-      currentDevice: deviceModeSelector(this.getReduxState()),
+      store: this.getReduxStore(),
+      currentDevice: this.getDeviceMode(),
       toolbarConfig: this._initialToolbarsConfig
     });
   };
@@ -190,9 +206,11 @@ export class EditorComponent<
 
   getComponentConfig = (): MValue<C> => {
     const configId = Str.read(this.getValue().configId);
+    const config = this.getGlobalConfig();
+    const shortcodes = getFlatShortcodes(config);
 
     if (configId) {
-      const shortcode = Editor.getShortcode(configId);
+      const shortcode = getShortcode(configId, shortcodes);
 
       if (shortcode) {
         return shortcode?.component?.config as C;
@@ -200,18 +218,26 @@ export class EditorComponent<
     }
   };
 
+  getDeviceMode = () => {
+    // WARNING: we use this.getReduxStore().getState() instead of this.getReduxState()
+    // because the page does not rerender when changing deviceMode
+    // and thus we might get false (outdated) results
+    const state = this.getReduxStore().getState();
+    return deviceModeSelector(state);
+  };
+
   optionalSCU(nextProps: Props<M, P>): boolean {
     const props = this.props;
 
     // check dbValue
     if (props.dbValue !== nextProps.dbValue) {
-      // console.log("scu", this.constructor.componentId, "dbValue", true);
+      // console.log("scu", this.getComponentId(), "dbValue", true);
       return true;
     }
 
     // check redux
     if (props.reduxState.fonts !== nextProps.reduxState.fonts) {
-      // console.log("scu", this.constructor.componentId, "project", true);
+      // console.log("scu", this.getComponentId(), "project", true);
       return true;
     }
 
@@ -219,11 +245,11 @@ export class EditorComponent<
       props.reduxState.project.data.font !==
       nextProps.reduxState.project.data.font
     ) {
-      // console.log("scu", this.constructor.componentId, "project", true);
+      // console.log("scu", this.getComponentId(), "project", true);
       return true;
     }
 
-    // console.log("scu", this.constructor.componentId, false);
+    // console.log("scu", this.getComponentId(), false);
     return false;
   }
 
@@ -241,8 +267,17 @@ export class EditorComponent<
     return this.props.reduxState;
   }
 
+  getReduxStore(): Props<M, P>["reduxStore"] {
+    return this.props.reduxStore;
+  }
+
   getReduxDispatch(): Props<M, P>["reduxDispatch"] {
     return this.props.reduxDispatch;
+  }
+
+  getGlobalConfig(): ConfigCommon {
+    const configId = configIdSelector(this.getReduxState());
+    return getConfigById(configId);
   }
 
   processToolbarValues(): void {
@@ -259,10 +294,11 @@ export class EditorComponent<
       });
 
       this._initialToolbarsConfig = toolbars;
+      const store = this.getReduxStore();
 
       toolbars.forEach(({ toolbar, sidebar }) => {
-        const toolbarData = getToolbarData(toolbar);
-        const sidebarData = getToolbarData(sidebar);
+        const toolbarData = getToolbarData(store, toolbar);
+        const sidebarData = getToolbarData(store, sidebar);
 
         this._defaultToolbarValues = {
           ...this._defaultToolbarValues,
@@ -361,11 +397,13 @@ export class EditorComponent<
       toolbars.map((toolbar) =>
         toolbar.getItems({
           v,
-          device: deviceModeSelector(this.getReduxState()),
+          device: this.getDeviceMode(),
           state: State.fromString(Str.read(tabsState) ?? "") ?? NORMAL,
           context: this.context,
           component: this as Editor<M, P, S>,
-          getValue: this.getValueByOptionId
+          getValue: this.getValueByOptionId,
+          renderContext: this.renderContext,
+          editorMode: this.props.editorMode
         })
       )
     );
@@ -376,7 +414,7 @@ export class EditorComponent<
     toolbars: NewToolbarConfig<M, P, S>[],
     sidebars?: NewToolbarConfig<M, P, S>[]
   ): ToolbarItemType[] => {
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
     const thirdPartyExtendId = this.getComponentId();
 
     const toolbarFreeOptions = this.getToolbarOptions(currentModel, toolbars);
@@ -441,22 +479,28 @@ export class EditorComponent<
       toolbars,
       sidebars
     );
+    const store = this.getReduxStore();
 
     const defaultCSSObj = getCSSObjects({
       currentModel: ModelType.Default,
       model,
-      options: defaultOptions
+      store,
+      options: defaultOptions,
+      renderContext: this.renderContext
     });
-
     const rulesCSSObj = getCSSObjects({
       currentModel: ModelType.Rules,
       model,
-      options: rulesOptions
+      store,
+      options: rulesOptions,
+      renderContext: this.renderContext
     });
     const customCSSObj = getCSSObjects({
       currentModel: ModelType.Custom,
       model,
-      options: customOptions
+      store,
+      options: customOptions,
+      renderContext: this.renderContext
     });
 
     const css: [
@@ -479,6 +523,12 @@ export class EditorComponent<
 
     return replaceCSSDuplicatesWithEmptyString(output);
   }
+
+  css = (componentId: string, id: string, css: OutputStyle) => {
+    const cache = createCache({ id, componentId, sheet: this.context.sheet });
+    const sheet = createSheet({ cache, css });
+    return sheet.className;
+  };
 
   getCSSClassnames({
     toolbars,
@@ -503,14 +553,23 @@ export class EditorComponent<
       ? concatFinalCSS(cssFromStylesFn, cssFromToolbarOptions)
       : cssFromToolbarOptions;
 
-    return classNames(
-      extraClassNames,
-      css(this.getComponentId(), this.getId(), _css)
-    );
+    const cache = createCache({
+      id: this.getId(),
+      componentId: this.getComponentId(),
+      sheet: this.context.sheet
+    });
+
+    const sheet = createSheet({
+      cache,
+      css: _css,
+      className: extraClassNames
+    });
+
+    return sheet.className;
   }
 
   getDCValue(v: M): DCObjResult {
-    const _config = Config.getAll();
+    const _config = this.getGlobalConfig();
     const DCKeys = [
       ...this.getDefaultValueProcessed().dynamicContentKeys,
       ...(this._DCKeys ?? [])
@@ -530,7 +589,7 @@ export class EditorComponent<
       typeof _config.dynamicContent?.getPlaceholderData === "function";
 
     // Can be disabled by Config
-    if (!replaceDC || IS_PREVIEW) {
+    if (!replaceDC || isView(this.renderContext)) {
       return getDCObjPreview(dcObjKeysAfterHook).value;
     }
 
@@ -543,7 +602,8 @@ export class EditorComponent<
 
       return {};
     } else {
-      const dcObj = getDCObjEditor(dcObjKeysAfterHook, this.context);
+      const dcObjEditor = getDCObjEditor(_config);
+      const dcObj = dcObjEditor(dcObjKeysAfterHook, this.context);
 
       if (dcObj.type === "complete") {
         this._dc.keys = dcObj.details;
@@ -723,7 +783,9 @@ export class EditorComponent<
       ref: (v: HTMLElement | null): void => {
         attachRef(v, extend.ref || null);
         attachRef(v, props.ref || null);
-      }
+      },
+      renderContext: this.renderContext,
+      editorMode: this.props.editorMode
     };
   };
 
@@ -755,7 +817,10 @@ export class EditorComponent<
       defaultValue: defaultValue && defaultValue[bindWithKey],
       dbValue: dbValue && dbValue[bindWithKey],
       reduxState: this.getReduxState(),
+      reduxStore: this.getReduxStore(),
       reduxDispatch: this.getReduxDispatch(),
+      renderContext: this.renderContext,
+      editorMode: this.props.editorMode,
       onChange: onChange
     };
   }
@@ -790,13 +855,15 @@ export class EditorComponent<
     state: State.State,
     items: ToolbarItemType[]
   ): OptionDefinition[] {
+    const is_pro = isPro(this.getGlobalConfig());
+
     return optionMap(
       (option: OptionDefinition) => {
         const { id, type, onChange: oldOnchange } = option;
 
         const getKey = getElementModelKeyFn({ device, state, option });
-
-        option = bindStateToOption(GlobalState.states, option, device);
+        const states = GlobalState.getStates(this.getGlobalConfig());
+        option = bindStateToOption(states, option, device);
 
         //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
         const isDev = inDevelopment(type);
@@ -809,6 +876,7 @@ export class EditorComponent<
             id,
             type,
             v,
+            store: this.getReduxStore(),
             breakpoint: device,
             state
           });
@@ -821,7 +889,7 @@ export class EditorComponent<
         const elementModel = toElementModel<typeof type>(type, getKey);
 
         option.onChange =
-          option.isPro === true && !IS_PRO
+          option.isPro === true && !is_pro
             ? noop
             : (value, meta): void => {
                 const id = getKey("");
@@ -868,11 +936,8 @@ export class EditorComponent<
       sidebarThirdPartyExtendId = thirdPartyExtendId
     } = makeToolbarPropsFromConfigDefaults(options);
 
-    // WARNING: we use getStore instead of this.getReduxState()
-    // because the page does not rerender when changing deviceMode
-    // and thus we might get false (outdated) results
     const getItems = (
-      deviceMode = deviceModeSelector(getStore().getState())
+      deviceMode = this.getDeviceMode()
     ): OptionDefinition[] => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
@@ -897,7 +962,9 @@ export class EditorComponent<
           state: stateMode,
           context: this.context,
           getValue: this.getValueByOptionId,
-          componentConfig: this.getComponentConfig()
+          componentConfig: this.getComponentConfig(),
+          renderContext: this.renderContext,
+          editorMode: this.props.editorMode
         }) ?? []
       );
 
@@ -943,7 +1010,9 @@ export class EditorComponent<
               component: this,
               device: deviceMode,
               state: stateMode,
-              context: this.context
+              context: this.context,
+              renderContext: this.renderContext,
+              editorMode: this.props.editorMode
             })
           );
 
@@ -955,7 +1024,7 @@ export class EditorComponent<
     };
 
     const getSidebarItems = (
-      deviceMode = deviceModeSelector(getStore().getState())
+      deviceMode = this.getDeviceMode()
     ): OptionDefinition[] => {
       const v = this.getValue();
       const stateMode = State.mRead(v.tabsState);
@@ -970,7 +1039,9 @@ export class EditorComponent<
           device: deviceMode,
           state: stateMode,
           context: this.context,
-          getValue: this.getValueByOptionId
+          getValue: this.getValueByOptionId,
+          renderContext: this.renderContext,
+          editorMode: this.props.editorMode
         }) || []
       );
 
@@ -1013,7 +1084,9 @@ export class EditorComponent<
               component: this,
               device: deviceMode,
               state: stateMode,
-              context: this.context
+              context: this.context,
+              renderContext: this.renderContext,
+              editorMode: this.props.editorMode
             })
           );
 
@@ -1107,16 +1180,13 @@ export class EditorComponent<
   render(): ReactNode {
     const { v, vs, vd } = this.getValue2();
 
-    if (IS_EDITOR) {
-      if (this.componentConfig) {
-        return this.renderToolbars(this.renderForEdit(v, vs, vd));
-      }
-      return this.renderForEdit(v, vs, vd);
-    }
-
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return this.renderForView(v, vs, vd);
     }
+
+    return this.componentConfig
+      ? this.renderToolbars(this.renderForEdit(v, vs, vd))
+      : this.renderForEdit(v, vs, vd);
   }
 
   renderForEdit(v: M, vs: M, vd: M): ReactNode {

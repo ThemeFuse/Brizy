@@ -1,4 +1,5 @@
 import { defaultCrop } from "visual/global/Config/types/configs/common";
+import { configSelector } from "visual/redux/selectors";
 import { getImageUrl } from "visual/utils/image";
 import {
   UNSPLASH_BG_IMAGE_WIDTH,
@@ -13,12 +14,14 @@ export function styleBgImage({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const isHover = styleState({ v, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const dvvHover = (key: string) =>
     defaultValueValue({ v, key, device, state: "hover" });
+  const config = configSelector(store.getState());
 
   const media = dvv("media");
   const bgImageSrc = dvv(capByPrefix(prefix, "bgImageSrc"));
@@ -45,26 +48,32 @@ export function styleBgImage({
     hoverMedia === "image" && (hoverBgImageSrc !== "" || hoverBgPopulation)
       ? hoverBgPopulation
         ? `var(--brz-background-image)`
-        : `url("${getImageUrl({
-            uid: hoverBgImageSrc,
-            fileName: hoverBgImageFileName,
-            sizeType: bgSizeType,
-            imageType: hoverBgImageType,
-            crop: hoverCrop
-          })}")`
+        : `url("${getImageUrl(
+            {
+              uid: hoverBgImageSrc,
+              fileName: hoverBgImageFileName,
+              sizeType: bgSizeType,
+              imageType: hoverBgImageType,
+              crop: hoverCrop
+            },
+            config
+          )}")`
       : "none";
 
   const normal =
     media === "image" && (bgImageSrc !== "" || bgPopulation)
       ? bgPopulation
         ? `var(--brz-background-image)`
-        : `url("${getImageUrl({
-            uid: bgImageSrc,
-            fileName: bgImageFileName,
-            sizeType: bgSizeType,
-            imageType: bgImageType,
-            crop
-          })}")`
+        : `url("${getImageUrl(
+            {
+              uid: bgImageSrc,
+              fileName: bgImageFileName,
+              sizeType: bgSizeType,
+              imageType: bgImageType,
+              crop
+            },
+            config
+          )}")`
       : "none";
 
   return isHover === "hover" ? hover : normal;
@@ -74,9 +83,11 @@ export function styleExportBgImage({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
 
   const media = dvv("media");
   const bgImageSrc = dvv(capByPrefix(prefix, "bgImageSrc"));
@@ -91,13 +102,16 @@ export function styleExportBgImage({
   return media === "image" && (bgImageSrc !== "" || bgPopulation)
     ? bgPopulation
       ? `var(--brz-background-image)`
-      : `url("${getImageUrl({
-          sizeType: bgSizeType,
-          uid: bgImageSrc,
-          fileName: bgImageFileName,
-          imageType: bgImageType,
-          crop
-        })}")`
+      : `url("${getImageUrl(
+          {
+            sizeType: bgSizeType,
+            uid: bgImageSrc,
+            fileName: bgImageFileName,
+            imageType: bgImageType,
+            crop
+          },
+          config
+        )}")`
     : "none";
 }
 

@@ -7,6 +7,7 @@ import {
   pasteStylesKeyModifier
 } from "visual/component/ContextMenu/utils";
 import { hideToolbar } from "visual/component/Toolbar";
+import { rulesSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { setOffsetsToElementFromWrapper } from "visual/utils/models";
 
@@ -36,6 +37,7 @@ const getItems = (itemIndex) => (v, component) => {
           helperText: () => pasteKeyModifier,
           inactive: !copiedElement,
           onChange: () => {
+            const rules = rulesSelector(component.getReduxStore().getState());
             component.paste(itemIndex, (sourceV) => {
               const { offsetX = 0, offsetY = 0 } =
                 v[itemIndex].value.items[0].value;
@@ -49,7 +51,7 @@ const getItems = (itemIndex) => (v, component) => {
                 ["value", "items", 0, "value", "offsetY"],
                 offsetY
               );
-              return setOffsetsToElementFromWrapper(newV);
+              return setOffsetsToElementFromWrapper(newV, rules);
             });
           }
         },
@@ -66,11 +68,14 @@ const getItems = (itemIndex) => (v, component) => {
           type: "button",
           title: t("Duplicate"),
           helperText: () => duplicateKeyModifier,
-          onChange: () =>
+          onChange: () => {
+            const rules = rulesSelector(component.getReduxStore().getState());
+
             component.insertItem(
               itemIndex + 1,
-              setOffsetsToElementFromWrapper(v[itemIndex])
-            )
+              setOffsetsToElementFromWrapper(v[itemIndex], rules)
+            );
+          }
         },
         {
           id: "remove",

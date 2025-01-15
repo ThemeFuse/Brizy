@@ -15,7 +15,8 @@ import { cardSize } from "./constants";
 import { AiActionButton } from "./controls/AiActionButton";
 // import { AiDropdown } from "./controls/AiDropdown";
 // import { data } from "./data/aiText";
-import { actions } from "./data/aiTextActions";
+import { getActions } from "./data/aiTextActions";
+
 // import { DropdownButtonData } from "./types";
 
 const theme: FieldsTheme = {
@@ -73,6 +74,8 @@ export const AiText = ({
   useEffect(() => {
     setButtonDisabled(value.length === 0 || loading);
   }, [value, loading]);
+
+  const actions = getActions();
 
   return (
     <Card width="407px" size={cardSize} borderStyle="none" color="transparent">

@@ -4,7 +4,6 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import toolbarConfigFn from "./toolbar";
@@ -31,7 +30,17 @@ class TableAside extends EditorComponent {
     const className = classnames(
       "brz-table__th",
       "brz-table__aside",
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const content = (

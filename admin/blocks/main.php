@@ -100,11 +100,11 @@ class Brizy_Admin_Blocks_Main {
 			$config['globalBlocks'] = [];
 		}
 		$tmp                    = array_merge( $config['globalBlocks'], $blockManager->createResponseForEntities( $blocks, [], $context ) );
-		$config['globalBlocks'] = array_reduce( $tmp, function ( $result, $object ) {
+		$config['globalBlocks'] = array_values( array_reduce( $tmp, function ( $result, $object ) {
 			$result[ $object['uid'] ] = $object;
 
 			return $result;
-		}, [] );
+		}, [] ) );
 
 		return $config;
 	}
@@ -204,12 +204,10 @@ class Brizy_Admin_Blocks_Main {
 				$wpPost = get_post( $ruleMatches[0]['entityValues'][0] );
 			}
 		}
-
 		$matching_blocks = [];
 		if ( count( $ruleMatches ) ) {
 			$matching_blocks = $this->findMatchingBlocks( $ruleMatches );
 		}
-
 		$referenced = [];
 		if ( $wpPost ) {
 			try {

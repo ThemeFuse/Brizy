@@ -1,6 +1,8 @@
 import classnames from "classnames";
 import React from "react";
+import { omit } from "timm";
 import _ from "underscore";
+import { isEditor } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -19,8 +21,6 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
@@ -42,7 +42,6 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleColumn, styleItems } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { omit } from "timm";
 
 class Column extends EditorComponent {
   static get componentId() {
@@ -188,10 +187,16 @@ class Column extends EditorComponent {
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
     return classnames(
-      css(
+      this.css(
         `${this.getComponentId()}-animation-${slug}`,
         `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
+        styleAnimation({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
   };
@@ -211,7 +216,7 @@ class Column extends EditorComponent {
           attachRef(el, this.getRef(el));
         }}
       >
-        <SortableHandle>
+        <SortableHandle renderContext={this.renderContext}>
           <ContainerBorderButton />
         </SortableHandle>
       </Toolbar>
@@ -220,7 +225,8 @@ class Column extends EditorComponent {
 
   getHoverData = (v) => {
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
-    const options = makeOptionValueToAnimation(v);
+    const store = this.getReduxStore();
+    const options = makeOptionValueToAnimation({ v, store });
 
     return {
       hoverName,
@@ -262,10 +268,16 @@ class Column extends EditorComponent {
   renderContent(v, vs, vd) {
     const className = classnames(
       "brz-column__items",
-      css(
-        `${this.constructor.componentId}-bg`,
+      this.css(
+        `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        styleItems(v, vs, vd)
+        styleItems({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -296,7 +308,7 @@ class Column extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
           popupId = blockData.value.popupId;
@@ -310,7 +322,7 @@ class Column extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(IS_EDITOR && {
+          ...(isEditor(this.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -332,19 +344,26 @@ class Column extends EditorComponent {
       "brz-columns",
       { "brz-columns__posts": posts },
       { "brz-columns--empty": items.length === 0 },
-      css(
-        `${this.constructor.componentId}-column`,
+      this.css(
+        `${this.getComponentId()}-column`,
         `${this.getId()}-column`,
-        styleColumn(v, vs, vd)
+        styleColumn({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
+    const store = this.getReduxStore();
     const { animationId, hoverName, options, isHidden } = this.getHoverData(v);
     const content = (
       <ScrollMotion
-        options={makeOptionValueToMotion(v)}
+        options={makeOptionValueToMotion({ v, store })}
         className="brz-columns__scroll-effect"
       >
         <HoverAnimation
@@ -409,7 +428,7 @@ class Column extends EditorComponent {
             </ContextMenu>
           )}
         </SortableElement>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
     );
@@ -422,18 +441,25 @@ class Column extends EditorComponent {
     const id = getCSSId(v);
     const classNameColumn = classnames(
       "brz-columns",
-      css(
-        `${this.constructor.componentId}-column`,
+      this.css(
+        `${this.getComponentId()}-column`,
         `${this.getId()}-column`,
-        styleColumn(v, vs, vd)
+        styleColumn({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       cssClass || customClassName
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
     const { animationId, hoverName, options, isHidden } = this.getHoverData(v);
-
-    const linkData = getLinkData(v);
+    const store = this.getReduxStore();
+    const config = this.getGlobalConfig();
+    const linkData = getLinkData(v, config);
 
     return (
       <>
@@ -449,7 +475,7 @@ class Column extends EditorComponent {
             animationClass={animationClassName}
           >
             <ScrollMotion
-              options={makeOptionValueToMotion(v)}
+              options={makeOptionValueToMotion({ v, store })}
               className="brz-columns__scroll-effect"
             >
               <HoverAnimation
@@ -474,7 +500,7 @@ class Column extends EditorComponent {
             )}
           </Animation>
         </CustomCSS>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
     );

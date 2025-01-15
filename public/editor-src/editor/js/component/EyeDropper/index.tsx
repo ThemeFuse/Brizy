@@ -14,6 +14,7 @@ import { EditorIcon } from "visual/component/EditorIcon";
 import { useThrottleOnChange } from "visual/component/hooks";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
+import { useConfig } from "visual/global/hooks";
 import { Hex, fromRgb } from "visual/utils/color/Hex";
 import { always } from "visual/utils/fp";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
@@ -31,6 +32,7 @@ export const EyeDropper = ({ onPick }: Props): JSX.Element | null => {
   const scrollRef = useRef<Coords>({ x: 0, y: 0 });
   const coordsRef = useRef<Coords>({ x: 0, y: 0 });
   const colorRef = useRef<Hex | null>(null);
+  const config = useConfig();
 
   const updatePointer = () => {
     if (pointerRef.current !== null) {
@@ -139,7 +141,9 @@ export const EyeDropper = ({ onPick }: Props): JSX.Element | null => {
           .pipe(
             switchMap(() => {
               return from(
-                makeNodeScreenshot(state.context.node, { maxWidth: 10000 })
+                makeNodeScreenshot(state.context.node, config, {
+                  maxWidth: 10000
+                })
               ).pipe(
                 switchMap(({ src }) => {
                   const image = document.createElement("img");
@@ -176,7 +180,7 @@ export const EyeDropper = ({ onPick }: Props): JSX.Element | null => {
         };
       }
     }
-  }, [state]);
+  }, [state, config]);
 
   switch (state.type) {
     case Type.Idle:

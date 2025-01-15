@@ -1,39 +1,69 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Shortcodes } from "visual/types";
+import { Shortcode, ShortcodeComponents } from "visual/types";
+import { isLeftSidebarAddElements } from "visual/types/utils";
 import { isPro } from "visual/utils/env";
 import {
-  CloudShortCodes,
-  ProShortCodes,
   ShortCodesKeywords,
-  WPShortCodes
+  getProShortCodes,
+  getSampleShortCodes
 } from "./Shortcodes";
+import { getThirdPartyShortcodesData } from "./utils";
 
-export const getShortcodeComponents = (config: ConfigCommon): Shortcodes => {
-  const moduleGroups = config.ui?.leftSidebar?.moduleGroups;
+type ShortcodeSource = {
+  [key: string]: Shortcode["component"];
+};
 
-  if (!moduleGroups) {
-    return {};
-  }
+export function getShortcodeComponents(
+  config: ConfigCommon
+): ShortcodeComponents {
+  const sidebarConfig = config.ui?.leftSidebar;
+  if (!sidebarConfig) return [];
+
+  const { topTabsOrder = [], bottomTabsOrder = [] } = sidebarConfig;
+
+  const elementTabs = [...topTabsOrder, ...bottomTabsOrder]
+    .filter(isLeftSidebarAddElements)
+    .map(({ id, elements }) => ({ tabId: id, elements }));
+
+  if (elementTabs.length === 0) return [];
 
   const is_pro = isPro(config);
 
-  return moduleGroups.reduce((components, { label, moduleNames }) => {
-    const items = moduleNames
-      .map((component) => ({
-        component:
-          CloudShortCodes[component as keyof typeof CloudShortCodes] ||
-          WPShortCodes[component as keyof typeof WPShortCodes],
-        pro: ProShortCodes[component as keyof typeof ProShortCodes],
-        keywords:
-          ShortCodesKeywords[component as keyof typeof ShortCodesKeywords]
-      }))
-      .filter(
-        (element) =>
-          Boolean(element.component) &&
-          (is_pro ? element.component.id !== ElementTypes.MenuSimple : true)
-      );
+  const { keywords: thirdPartyKeywords, shortcodeData: thirdPartyShortcodes } =
+    getThirdPartyShortcodesData(config);
 
-    return { ...components, [label]: items };
-  }, {});
-};
+  const shortcodesSources: ShortcodeSource = {
+    ...getSampleShortCodes(config),
+    ...thirdPartyShortcodes
+  };
+
+  const keywords = {
+    ...ShortCodesKeywords,
+    ...thirdPartyKeywords
+  };
+
+  const proShortcodes = getProShortCodes(config);
+
+  return elementTabs.map(({ tabId, elements }) => {
+    const shortcodes = Object.fromEntries(
+      elements?.map(({ label, moduleNames }) => {
+        const components = moduleNames
+          .map((component) => ({
+            component: shortcodesSources[component],
+            pro: proShortcodes[component],
+            keywords: keywords[component]
+          }))
+          .filter(
+            (item) =>
+              item.component &&
+              (!is_pro || item.component.id !== ElementTypes.MenuSimple)
+          );
+
+        return [label, components];
+      }) ?? []
+    );
+
+    return { tabId, shortcodes };
+  });
+}

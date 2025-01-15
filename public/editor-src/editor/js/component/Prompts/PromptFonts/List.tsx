@@ -1,8 +1,9 @@
 import classNames from "classnames";
-import React, { MouseEvent, useCallback, useMemo, useState, JSX } from "react";
+import React, { JSX, MouseEvent, useCallback, useMemo, useState } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
+import { useConfig } from "visual/global/hooks";
 import { deleteFont, updateDefaultFont } from "visual/redux/actions2";
 import {
   defaultFontSelector,
@@ -25,6 +26,7 @@ export const List = (): JSX.Element => {
   const fonts = useSelector(unDeletedFontsSelector);
   const defaultFont = useSelector(defaultFontSelector);
   const dispatch = useDispatch();
+  const config = useConfig();
 
   const handleUpdate = useCallback(
     (fontId: string): void => {
@@ -38,7 +40,7 @@ export const List = (): JSX.Element => {
       if (font.brizyId) setLoading(font.brizyId);
 
       if (type === "upload") {
-        await apiDeleteFont((font as UploadedFont).id);
+        await apiDeleteFont((font as UploadedFont).id, config);
       } else {
         await pendingRequest();
       }
@@ -52,7 +54,7 @@ export const List = (): JSX.Element => {
         })
       );
     },
-    [dispatch]
+    [dispatch, config]
   );
 
   const sorted = useMemo(() => {

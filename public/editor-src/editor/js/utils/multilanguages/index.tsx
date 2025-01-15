@@ -2,10 +2,11 @@ import { match } from "fp-utilities";
 import { Config } from "visual/global/Config/types";
 import {
   CMS,
-  isCloud,
   isCMS,
+  isCloud,
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 
 export type M = "on" | "off";
@@ -23,7 +24,7 @@ export const hasMultiLanguage = (m: M, mLanguages: string): boolean => {
   }
 };
 
-export const getTranslationsLanguages = (config: Config): Language[] => {
+export const getTranslationsLanguages = (config: ConfigCommon): Language[] => {
   const availableRoles = match(
     [
       isWp,
@@ -44,7 +45,7 @@ export const getTranslationsLanguages = (config: Config): Language[] => {
     ]
   );
 
-  return availableRoles(config) || [];
+  return availableRoles(config as Config) || [];
 };
 
 export const getLanguagesChoices = (

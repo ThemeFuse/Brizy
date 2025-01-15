@@ -1,9 +1,5 @@
-import Config from "visual/global/Config";
-import { translate } from "./translate";
+import { I18n } from "./I18n";
 
 export const t = (key: string): string => {
-  const config = Config.getAll();
-  const dictionary = config?.l10n ?? {};
-
-  return translate(dictionary, key);
+  return I18n.t(key);
 };

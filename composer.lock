@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44f2e7124193d88cb00f4d5eab0216ac",
+    "content-hash": "cb0b555224ee1fe6024e6df332d49b92",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -93,12 +93,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a"
+                "reference": "6ff633bc24f32e1a1623782d95fca3348ce03995"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a",
-                "reference": "ea4b9b0c8e90828ea9bc67c3b0783fd1e256872a",
+                "url": "https://api.github.com/repos/bagrinsergiu/brizy-content-placeholder/zipball/6ff633bc24f32e1a1623782d95fca3348ce03995",
+                "reference": "6ff633bc24f32e1a1623782d95fca3348ce03995",
                 "shasum": ""
             },
             "require": {
@@ -125,10 +125,10 @@
                 "placeholders"
             ],
             "support": {
-                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v3.0.4",
+                "source": "https://github.com/bagrinsergiu/brizy-content-placeholder/tree/v3.0.6",
                 "issues": "https://github.com/bagrinsergiu/brizy-content-placeholder/issues"
             },
-            "time": "2024-09-03T13:09:04+00:00"
+            "time": "2025-01-06T14:02:50+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -274,12 +274,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "8a21ec3182533ee6448a4efb8d238a4163b89297"
+                "reference": "715f4d25e225bc47b293a8b997fe6ce99bf987d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8a21ec3182533ee6448a4efb8d238a4163b89297",
-                "reference": "8a21ec3182533ee6448a4efb8d238a4163b89297",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/715f4d25e225bc47b293a8b997fe6ce99bf987d2",
+                "reference": "715f4d25e225bc47b293a8b997fe6ce99bf987d2",
                 "shasum": ""
             },
             "require": {
@@ -288,7 +288,7 @@
             },
             "require-dev": {
                 "ircmaxell/php-yacc": "^0.0.7",
-                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
             "bin": [
                 "bin/php-parse"
@@ -322,7 +322,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/4.x"
             },
-            "time": "2024-08-11T14:55:47+00:00"
+            "time": "2024-09-29T15:01:53+00:00"
         },
         {
             "name": "phplrt/ast-contracts",
@@ -1055,16 +1055,16 @@
             "type": "component",
             "extra": {
                 "component": {
-                    "scripts": [
-                        "dist/js/select2.js"
-                    ],
-                    "styles": [
-                        "dist/css/select2.css"
-                    ],
                     "files": [
                         "dist/js/select2.js",
                         "dist/js/i18n/*.js",
                         "dist/css/select2.css"
+                    ],
+                    "styles": [
+                        "dist/css/select2.css"
+                    ],
+                    "scripts": [
+                        "dist/js/select2.js"
                     ]
                 }
             },
@@ -1180,8 +1180,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
@@ -1431,6 +1431,6 @@
     "platform": {
         "php": ">=5.6"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

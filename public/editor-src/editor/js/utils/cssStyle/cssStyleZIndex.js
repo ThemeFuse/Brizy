@@ -1,8 +1,8 @@
-import { styleZIndex } from "visual/utils/style2";
 import { defaultValueValue } from "visual/utils/onChange";
+import { styleZIndex } from "visual/utils/style2";
 
 export function cssStyleZIndex({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const zIndex = styleZIndex({ v, device, state });
   const isRelative = dvv("elementPosition") === "relative";
@@ -17,12 +17,4 @@ export function cssStyleZIndexStory({ v, device, state }) {
   const zIndex = styleZIndex({ v, device, state });
 
   return `z-index: ${zIndex + 1};`;
-}
-
-export function cssStyleZIndexMode({ v, device, state, mode = "editor" }) {
-  const zIndex = cssStyleZIndex({ v, device, state });
-
-  return (IS_EDITOR && mode === "editor") || (IS_PREVIEW && mode === "preview")
-    ? zIndex
-    : "";
 }

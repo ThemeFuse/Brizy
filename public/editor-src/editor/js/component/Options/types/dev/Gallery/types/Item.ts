@@ -1,4 +1,5 @@
 import * as GalleryItem from "visual/component/Controls/Gallery/types/Item";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { WithId } from "visual/types/attributes";
 import { getImageUrl } from "visual/utils/image";
@@ -53,16 +54,22 @@ export const error = <T>(id: T, payload: string): Error<T> => ({
 
 export type Item<T> = Thumbnail<T> | Loading<T> | Error<T>;
 
-export const toGalleryItem = <T>(item: Item<T>): GalleryItem.Item<T> => {
+export const toGalleryItem = <T>(
+  item: Item<T>,
+  config: ConfigCommon
+): GalleryItem.Item<T> => {
   switch (item.__type) {
     case "thumbnail": {
       const url =
-        getImageUrl({
-          uid: item.payload.uid,
-          fileName: item.payload.fileName ?? "",
-          sizeType: SizeType.custom,
-          crop: { iW: 100, iH: 100, cH: 100, cW: 100, oX: 0, oY: 0 }
-        }) ?? "";
+        getImageUrl(
+          {
+            uid: item.payload.uid,
+            fileName: item.payload.fileName ?? "",
+            sizeType: SizeType.custom,
+            crop: { iW: 100, iH: 100, cH: 100, cW: 100, oX: 0, oY: 0 }
+          },
+          config
+        ) ?? "";
 
       return GalleryItem.thumbnail(item.id, url);
     }

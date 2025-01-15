@@ -1,35 +1,35 @@
-import React, { ReactElement } from "react";
-import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import Editor from "visual/global/Editor";
+import React from "react";
+import { useConfig } from "visual/global/hooks";
+import { Shortcodes } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { Control, Props } from "./Control";
 import { Header } from "./Header";
 
-const BaseDrawer = (props: Props): ReactElement => {
-  return <Control {...props} shortcodes={Editor.getShortcodes()} />;
+interface Option {
+  id: string;
+  icon?: string;
+  title?: string;
+  shortcodes?: Shortcodes;
+}
+
+const DrawerComponent = (props: Props) => {
+  const config = useConfig();
+  return <Control {...props} config={config} />;
 };
 
-const ShopifyDrawer = (props: Props): ReactElement => {
-  return <Control {...props} shortcodes={Editor.getShopifyShortcodes()} />;
-};
-
-export const Base = {
-  id: LeftSidebarOptionsIds.addElements,
-  icon: "nc-add",
+export const getBaseDrawer = ({
+  id,
+  icon,
+  title,
+  shortcodes = {}
+}: Option) => ({
+  id,
+  icon: icon ?? "nc-add",
   type: "drawer",
-  drawerTitle: t("Add Elements"),
+  drawerTitle: title ?? t("Add Elements"),
   showInDeviceModes: ["desktop"],
-  drawerComponent: BaseDrawer,
+  drawerComponent: (props: Props) => (
+    <DrawerComponent {...props} shortcodes={shortcodes} />
+  ),
   wrapperHeaderComponent: Header
-};
-
-export const Shopify = {
-  // TODO: Temporary need review this
-  id: `${LeftSidebarOptionsIds.addElements}Shopify`,
-  icon: "nc-shopify-logo",
-  type: "drawer",
-  drawerTitle: t("Add Shopify Elements"),
-  showInDeviceModes: ["desktop"],
-  drawerComponent: ShopifyDrawer,
-  wrapperHeaderComponent: Header
-};
+});

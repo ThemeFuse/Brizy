@@ -1,12 +1,11 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { EditorMode, isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { getDynamicContentOption } from "visual/utils/options";
 
-export const title = t("Popup Close Icon");
+export const title = () => t("Popup Close Icon");
 const getHtml = () => {
   return `
 <p class="brz-p">${t(
@@ -20,11 +19,13 @@ const getHtml = () => {
 };
 
 export function getItems({
-  context
+  context,
+  editorMode
 }: {
   context: EditorComponentContextValue;
+  editorMode: EditorMode;
 }): ToolbarItemType[] {
-  const IS_STORY = isStory(Config.getAll());
+  const _isStory = isStory(editorMode);
   const richTextDC = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.richText
@@ -116,7 +117,7 @@ export function getItems({
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       position: 100,
                       type: "slider",

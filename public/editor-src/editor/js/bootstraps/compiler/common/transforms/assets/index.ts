@@ -109,10 +109,9 @@ export interface ScriptsPro {
 interface CSS {
   className: string;
   cssText: string;
-  node?: HTMLElement;
 }
 
-export type DynamicCSS = Map<string, CSS>;
+export type DynamicCSS = Array<CSS>;
 
 interface Data {
   $root: cheerio.Root;

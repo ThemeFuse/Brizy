@@ -8,7 +8,8 @@ import { setIn } from "timm";
 import { ElementModel } from "visual/component/Elements/Types";
 import { FromElementModelGetter } from "visual/component/Options/Type";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
+import Config from "visual/global/Config";
 import { defaultValueValue } from "visual/utils/onChange/device";
 import { fromElementModel } from "visual/utils/options/Motion/converters";
 import { Value as MotionValue } from "visual/utils/options/Motion/types/Value";
@@ -17,6 +18,7 @@ import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { encodeToString } from "visual/utils/string";
 import { MouseAttr, ScrollAttr, ScrollMotionAttr } from "./types";
+import { Store } from "visual/redux/store";
 
 const optionTypeScrollToAttr = (settings: ScrollSettings): ScrollAttr => {
   switch (settings.type) {
@@ -248,13 +250,15 @@ export const makeOptionToAttr = (options: MotionSettings): ScrollMotionAttr => {
   return attr;
 };
 
-export const makeOptionValueToMotion = (
-  v: ElementModel,
-  prefix: undefined | string = "motion"
-): MotionSettings | undefined => {
+export const makeOptionValueToMotion = (data: {
+  v: ElementModel;
+  store: Store;
+  prefix?: string;
+}): MotionSettings | undefined => {
+  const { v, prefix = "motion" } = data;
   let settings = undefined;
 
-  if (IS_PRO) {
+  if (isPro(Config.getAll())) {
     const getDesktop: FromElementModelGetter = (k) =>
       defaultValueValue({
         v,

@@ -1,11 +1,9 @@
 import { renderStyles } from "visual/utils/cssStyle";
 import { Value } from "./types/Value";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { DynamicStylesProps } from "visual/types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser":
       {
@@ -305,5 +303,5 @@ export function style(
       }
   };
 
-  return renderStyles({ v, vs, vd, styles }) as [string, string, string];
+  return renderStyles({ ...data, styles });
 }

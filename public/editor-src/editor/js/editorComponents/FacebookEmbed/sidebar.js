@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Facebook Embed");
+export const title = () => t("Facebook Embed");
 
 const getHtml = () => {
   return `

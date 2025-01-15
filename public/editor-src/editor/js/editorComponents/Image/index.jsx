@@ -15,17 +15,15 @@ import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/Dyn
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
-import Config from "visual/global/Config";
-import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
+import { isStory } from "visual/global/EditorModeContext";
+import { isEditor, isView } from "visual/providers/RenderProvider";
+import { blocksDataSelector } from "visual/redux/selectors";
 import { imagePopulationUrl } from "visual/utils/image";
 import {
   isGIFExtension,
   isSVGExtension,
   isUnsplashImage
 } from "visual/utils/image/utils";
-import { isStory } from "visual/utils/models";
 import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
@@ -41,8 +39,9 @@ import {
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { SizeType } from "../../global/Config/types/configs/common";
 import { Wrapper } from "../tools/Wrapper";
-import defaultValue from "./defaultValue.json";
 import ImageContent from "./Image";
+import ImageWrapper from "./Wrapper";
+import defaultValue from "./defaultValue.json";
 import {
   elementModelToValue,
   patchOnDCChange,
@@ -68,26 +67,19 @@ import {
   multiplier,
   showOriginalImage
 } from "./utils";
-import ImageWrapper from "./Wrapper";
 
 class Image extends EditorComponent {
-  static get componentId() {
-    return "Image";
-  }
-
   static defaultProps = {
     meta: {},
     onResize: _.noop
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   prevWrapperSizes = {
     cW: 0,
     cH: 0
   };
+  container = React.createRef();
 
   constructor(props) {
     super(props);
@@ -102,7 +94,9 @@ class Image extends EditorComponent {
     };
   }
 
-  container = React.createRef();
+  static get componentId() {
+    return "Image";
+  }
 
   componentDidMount() {
     this.mounted = true;
@@ -120,7 +114,8 @@ class Image extends EditorComponent {
   }
 
   handleImageChange(patch) {
-    const device = deviceModeSelector(getStore().getState());
+    const { imageSizes: cfgImageSizes } = this.getGlobalConfig();
+    const device = this.getDeviceMode();
     const { v } = this.getValue2();
     const dvv = (key) => defaultValueValue({ v, device, key });
     const value = elementModelToValue(v);
@@ -150,7 +145,13 @@ class Image extends EditorComponent {
       const wrapperSize = this.getWrapperSizes(v)[device];
       const containerWidth = this.getContainerSize()[device];
 
-      return patchOnDCChange(containerWidth, patch, wrapperSize, context);
+      return patchOnDCChange(
+        containerWidth,
+        patch,
+        wrapperSize,
+        context,
+        cfgImageSizes
+      );
     }
 
     if (imageUnit !== undefined) {
@@ -163,7 +164,11 @@ class Image extends EditorComponent {
     if (imageSizeType !== undefined && imageSizeType.sizeType !== sizeType) {
       const containerWidth = this.getContainerSize()[device];
 
-      return patchOnSizeTypeChange(containerWidth, imageSizeType);
+      return patchOnSizeTypeChange(
+        containerWidth,
+        imageSizeType,
+        cfgImageSizes
+      );
     }
 
     if (imageLinkDC) {
@@ -174,9 +179,7 @@ class Image extends EditorComponent {
   }
 
   handleResize = () => {
-    const IS_STORY = isStory(Config.getAll());
-
-    if (!IS_STORY) {
+    if (!isStory(this.props.editorMode)) {
       this.updateContainerWidth();
     }
 
@@ -240,7 +243,7 @@ class Image extends EditorComponent {
       return;
     }
 
-    const deviceMode = getStore().getState().ui.deviceMode;
+    const deviceMode = this.getDeviceMode();
     const width = this.getWidth();
 
     if (width !== undefined) {
@@ -293,10 +296,13 @@ class Image extends EditorComponent {
     }
 
     const dvv = (key) => defaultValueValue({ v, key, device });
+    const config = this.getGlobalConfig();
+
     return getCustomImageUrl(
       fromElementModel(dvv),
       wrapperSizes[device],
-      imageSizes[device]
+      imageSizes[device],
+      config
     );
   }
 
@@ -311,6 +317,9 @@ class Image extends EditorComponent {
   }
 
   getWrapperSizes(v) {
+    const config = this.getGlobalConfig();
+    const { imageSizes: cfgImageSizes } = config;
+
     const { containerWidth, tabletContainerWidth, mobileContainerWidth } =
       this.state;
     const {
@@ -330,9 +339,9 @@ class Image extends EditorComponent {
     const _tabletSizeType = getSizeType(v, TABLET);
     const _mobileSizeType = getSizeType(v, MOBILE);
 
-    const sizeType = getImageSize(_sizeType);
-    const tabletSizeType = getImageSize(_tabletSizeType);
-    const mobileSizeType = getImageSize(_mobileSizeType);
+    const sizeType = getImageSize(_sizeType, cfgImageSizes);
+    const tabletSizeType = getImageSize(_tabletSizeType, cfgImageSizes);
+    const mobileSizeType = getImageSize(_mobileSizeType, cfgImageSizes);
     const { desktop, tablet, mobile } = this.getContainerSize();
 
     if (isPredefinedSize(sizeType) && !isSvgOfGif) {
@@ -472,7 +481,7 @@ class Image extends EditorComponent {
       dbValue.sizeType !== undefined &&
       dbValue.sizeType !== SizeType.custom
     ) {
-      const { imageSizes } = Config.getAll();
+      const { imageSizes } = this.getGlobalConfig();
       const imageData = imageSizes?.find(
         ({ name }) => name === dbValue.sizeType
       );
@@ -492,7 +501,7 @@ class Image extends EditorComponent {
 
   getDCValueHook(dcKeys, v) {
     const wrapperSizes = this.getWrapperSizes(v);
-    const { deviceMode } = getStore().getState().ui;
+    const deviceMode = this.getDeviceMode();
     const dvv = (key) => defaultValueValue({ v, key, device: deviceMode });
 
     return dcKeys.map((dcKey) => {
@@ -513,7 +522,7 @@ class Image extends EditorComponent {
         const fallbackImage = fromElementModel(
           (k) => v[createOptionId(keyToDCFallback2Key(dcKey.key), k)]
         );
-
+        const config = this.getGlobalConfig();
         const fallbackUrl = getCustomImageUrl(
           fallbackImage,
           this.getWrapperSizes(v)[deviceMode],
@@ -531,8 +540,9 @@ class Image extends EditorComponent {
               zoom: dvv("zoom")
             },
             this.props.meta[`${deviceMode}W`],
-            IS_PREVIEW
-          )
+            isView(this.renderContext)
+          ),
+          config
         ).source;
 
         return {
@@ -542,7 +552,7 @@ class Image extends EditorComponent {
             ...dcKey.attr,
             cW: Math.round(cW),
             cH: Math.round(cH),
-            disableCrop: IS_EDITOR
+            disableCrop: isEditor(this.renderContext)
           },
           ...(fallbackUrl ? { fallback: fallbackUrl } : {})
         };
@@ -566,7 +576,7 @@ class Image extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
 
@@ -581,7 +591,7 @@ class Image extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(IS_EDITOR && {
+          ...(isEditor(this.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -603,11 +613,10 @@ class Image extends EditorComponent {
       inGallery
     } = gallery;
     const { clonedFromGallery = false } = v;
-    const IS_STORY = isStory(Config.getAll());
     const animationId = Str.read(wrapperAnimationId) ?? this.getId();
     if (inGallery && !clonedFromGallery) {
       const hoverName = Str.read(galleryHoverName) ?? "none";
-      const isHidden = IS_STORY || hoverName === "none";
+      const isHidden = isStory(this.props.editorMode) || hoverName === "none";
       const optionsFromGallery = {
         duration: Num.read(galleryHoverDuration) ?? 1000,
         infiniteAnimation: galleryHoverInfiniteAnimation ?? false
@@ -622,8 +631,9 @@ class Image extends EditorComponent {
     }
     const { hoverName } = v;
     const _hoverName = Str.read(hoverName) ?? "none";
-    const isHidden = IS_STORY || _hoverName === "none";
-    const options = makeOptionValueToAnimation(v);
+    const isHidden = isStory(this.props.editorMode) || _hoverName === "none";
+    const store = this.getReduxStore();
+    const options = makeOptionValueToAnimation({ v, store });
 
     return {
       hoverName: _hoverName,
@@ -635,7 +645,7 @@ class Image extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { className, actionClosePopup, imageType } = v;
-    const IS_STORY = isStory(Config.getAll());
+    const config = this.getGlobalConfig();
     const { gallery = {} } = this.props.renderer
       ? this.props.renderer
       : { gallery: {} };
@@ -656,7 +666,7 @@ class Image extends EditorComponent {
 
     const linked = v.linkExternal !== "" || v.linkPopulation !== "";
 
-    const link = getLinkData(v);
+    const link = getLinkData(v, config);
 
     const linkProps = {
       slide: link.slide,
@@ -665,8 +675,8 @@ class Image extends EditorComponent {
 
     const parentClassName = classnames(
       "brz-image",
-      IS_STORY && "brz-image--story",
-      { "brz-story-linked": IS_STORY && linked },
+      isStory(this.props.editorMode) && "brz-image--story",
+      { "brz-story-linked": isStory(this.props.editorMode) && linked },
       this.getLightboxClassName(),
       className,
       {
@@ -677,16 +687,23 @@ class Image extends EditorComponent {
 
     const classNameContent = classnames(
       "brz-ed-image__content",
-      css(
+      this.css(
         // hard to explain, but because styles are generated from props in this case
         // we can't rely on the usual way of using css(),
         // so we trick it with a custom class for both default and custom classNames
-        // `${this.constructor.componentId}-content`,
-        `${this.constructor.componentId}-${this.getId()}-content`,
+        // `${this.getComponentId()}-content`,
+        `${this.getComponentId()}-${this.getId()}-content`,
         `${this.getId()}-content`,
-        styleContent(v, vs, vd, {
-          ...wrapperSizes,
-          showOriginalImage: showOriginalImage(v)
+        styleContent({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext,
+          props: {
+            ...wrapperSizes,
+            showOriginalImage: showOriginalImage(v)
+          }
         })
       )
     );
@@ -728,11 +745,12 @@ class Image extends EditorComponent {
                 withoutWrapper={true}
               >
                 <ImageWrapper
+                  store={this.getReduxStore()}
                   v={v}
                   vs={vs}
                   vd={vd}
                   _id={this.getId()}
-                  componentId={this.constructor.componentId}
+                  componentId={this.getComponentId()}
                   wrapperSizes={wrapperSizes}
                   meta={meta}
                   onChange={this.handleBoxResizerChange}
@@ -742,24 +760,28 @@ class Image extends EditorComponent {
                   context={this.context}
                 >
                   <ImageContent
+                    store={this.getReduxStore()}
                     v={v}
                     vs={vs}
                     vd={vd}
                     _id={this.getId()}
-                    componentId={this.constructor.componentId}
+                    componentId={this.getComponentId()}
                     wrapperSizes={wrapperSizes}
                     getResponsiveUrls={getResponsiveUrls}
                     meta={meta}
                     gallery={gallery}
                     linkProps={linkProps}
+                    renderContext={this.renderContext}
                   />
                 </ImageWrapper>
               </HoverAnimation>
             </CustomCSS>
           </Wrapper>
         </Toolbar>
-        {IS_EDITOR && <ResizeAware onResize={this.handleResize} />}
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {isEditor(this.renderContext) && (
+          <ResizeAware onResize={this.handleResize} />
+        )}
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </Fragment>
     );
@@ -767,7 +789,7 @@ class Image extends EditorComponent {
 
   renderForView(v, vs, vd) {
     const { className, actionClosePopup } = v;
-    const IS_STORY = isStory(Config.getAll());
+    const config = this.getGlobalConfig();
     const isAbsoluteOrFixed =
       v.elementPosition === "absolute" || v.elementPosition === "fixed";
     const { animationId, hoverName, options, isHidden } =
@@ -784,7 +806,7 @@ class Image extends EditorComponent {
       props: this.props
     };
 
-    const link = getLinkData(v);
+    const link = getLinkData(v, config);
 
     const linkProps = {
       slide: link.slide
@@ -796,7 +818,7 @@ class Image extends EditorComponent {
 
     const parentClassName = classnames(
       "brz-image",
-      { "brz-story-linked": IS_STORY && linked },
+      { "brz-story-linked": isStory(this.props.editorMode) && linked },
       { "brz-image--hovered": hoverName !== "none" },
       isAbsoluteOrFixed && "brz-image--story",
       this.getLightboxClassName(),
@@ -805,18 +827,32 @@ class Image extends EditorComponent {
         "brz-popup2__action-close":
           link.type === "action" && actionClosePopup === "on"
       },
-      css(
+      this.css(
         `${this.getComponentId()}-${this.getId()}-parent`,
         `${this.getId()}-parent`,
-        style(v, vs, vd, styleProps)
+        style({
+          v,
+          vs,
+          vd,
+          props: styleProps,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     const hoverAnimationClassName = classnames(
-      css(
+      this.css(
         `${this.getComponentId()}-${this.getId()}-parent-hover`,
         `${this.getId()}-parent-hover`,
-        styleHover(v, vs, vd, styleProps)
+        styleHover({
+          v,
+          vs,
+          vd,
+          props: styleProps,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -843,7 +879,7 @@ class Image extends EditorComponent {
                 vd={vd}
                 link={linkValue}
                 _id={this.getId()}
-                componentId={this.constructor.componentId}
+                componentId={this.getComponentId()}
                 wrapperSizes={wrapperSizes}
                 meta={this.props.meta}
                 extraAttributes={extraAttributes}
@@ -852,11 +888,13 @@ class Image extends EditorComponent {
                 }
                 linkProps={linkProps}
                 onChange={this.handleChange}
+                store={this.getReduxStore()}
+                renderContext={this.renderContext}
               />
             </Wrapper>
           </HoverAnimation>
         </CustomCSS>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </Fragment>
     );

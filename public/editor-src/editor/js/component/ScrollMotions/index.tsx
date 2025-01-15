@@ -1,6 +1,7 @@
 import { Motions } from "@brizy/motion";
 import classnames from "classnames";
 import React, { ReactElement, useEffect, useRef } from "react";
+import { isView, useRender } from "visual/providers/RenderProvider";
 import { applyFilter } from "visual/utils/filters";
 import { ScrollMotionsAttr, ScrollMotionsProps } from "./types";
 import { makeOptionToAttr } from "./utils";
@@ -10,6 +11,7 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
   const nodeRef = useRef<HTMLDivElement | null>(null);
   const motion = useRef<Motions>();
   let attr: ScrollMotionsAttr | undefined;
+  const { renderType } = useRender();
 
   useEffect(() => {
     const node = nodeRef.current;
@@ -61,7 +63,7 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (IS_PREVIEW && options) {
+  if (isView(renderType) && options) {
     attr = {
       options: makeOptionToAttr(options),
       class: "brz-motion--effects"

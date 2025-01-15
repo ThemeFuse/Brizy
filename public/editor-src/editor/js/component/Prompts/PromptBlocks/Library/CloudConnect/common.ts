@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import { logout, sync } from "visual/component/Prompts/PromptAuthorization/api";
+import { useConfig } from "visual/global/hooks";
 import { t } from "visual/utils/i18n";
 
 type Disconnect = {
@@ -14,6 +15,7 @@ export const useDisconnect = (): Disconnect => {
   const [isDisconnect, updateDisconnect] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, updateError] = useState<Response | undefined>(undefined);
+  const config = useConfig();
 
   const setDisconnect = (): void => {
     setLoading(true);
@@ -21,7 +23,7 @@ export const useDisconnect = (): Disconnect => {
 
   useEffect(() => {
     if (loading) {
-      logout()
+      logout(config)
         .then((r) => {
           if (!r.status || r.status >= 400) {
             updateError(r);
@@ -37,7 +39,7 @@ export const useDisconnect = (): Disconnect => {
           ToastNotification.error(t("Something went wrong"));
         });
     }
-  }, [loading]);
+  }, [loading, config]);
 
   useEffect(() => {
     if (isDisconnect) {
@@ -59,6 +61,7 @@ export const useSync = (): Sync => {
   const [isSync, updateSync] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, updateError] = useState<Response | undefined>(undefined);
+  const config = useConfig();
 
   const setSync = (): void => {
     setLoading(true);
@@ -66,7 +69,7 @@ export const useSync = (): Sync => {
 
   useEffect(() => {
     if (loading) {
-      sync()
+      sync(config)
         .then((r) => {
           if (!r.status || r.status >= 400) {
             updateError(r);
@@ -84,7 +87,7 @@ export const useSync = (): Sync => {
           ToastNotification.error(t("Unsuccessful sync"));
         });
     }
-  }, [loading]);
+  }, [loading, config]);
 
   return { isSync, error, loading, setSync };
 };

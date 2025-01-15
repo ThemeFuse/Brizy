@@ -1,15 +1,11 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { DESKTOP } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
@@ -19,22 +15,21 @@ export const getItems: GetItems<Value, Props> = ({
   v,
   device,
   component,
-  context
+  context,
+  editorMode
 }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
-
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
-  const config = Config.getAll();
-
-  const IS_STORY = isStory(config);
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isStory = isStory(editorMode);
+  const _isPopup = isPopup(editorMode);
 
   const linkDC = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -70,7 +65,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "sizeGroup",
                   type: "group",
                   position: 60,
-                  disabled: IS_STORY,
+                  disabled: _isStory,
                   options: [
                     {
                       id: "size",
@@ -164,8 +159,8 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "slider",
                   config: {
                     min: 0,
-                    max: IS_STORY ? 50 : 180,
-                    units: IS_STORY
+                    max: _isStory ? 50 : 180,
+                    units: _isStory
                       ? [{ title: "%", value: "%" }]
                       : [{ title: "px", value: "px" }]
                   }
@@ -184,7 +179,7 @@ export const getItems: GetItems<Value, Props> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: color
           }
         }
       },
@@ -313,7 +308,7 @@ export const getItems: GetItems<Value, Props> = ({
               label: t("Block"),
               options: [
                 //@ts-expect-error Option doesn't work
-                toolbarLinkAnchor({ v, disabled: IS_GLOBAL_POPUP || IS_STORY })
+                toolbarLinkAnchor({ v, disabled: _isPopup || _isStory })
               ]
             },
             {
@@ -323,7 +318,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "linkPopup",
                   type: "promptAddPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
+                  disabled: inPopup || inPopup2 || _isPopup || _isStory,
                   label: t("Popup"),
                   config: {
                     popupKey: `${component.getId()}_${dvv("linkPopup")}`
@@ -340,7 +335,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "linkToSlide",
                   type: "number",
                   label: t("Slide"),
-                  disabled: !IS_STORY,
+                  disabled: !_isStory,
                   config: {
                     min: 1,
                     max: 1000000

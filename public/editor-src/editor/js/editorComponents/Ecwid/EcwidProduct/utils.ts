@@ -1,6 +1,6 @@
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
-import { Value } from "./types/Value";
 import { onOffToBool } from "visual/utils/boolean";
+import { Value } from "./types/Value";
 
 function descriptionPosition(v: "besideImage" | "belowImage"): boolean {
   switch (v) {
@@ -13,8 +13,9 @@ function descriptionPosition(v: "besideImage" | "belowImage"): boolean {
 
 export function valueToEciwdConfig(v: Value): EcwidConfig {
   return {
+    product_details_show_navigation_arrows: false,
+    product_details_show_breadcrumbs: false,
     product_details_show_product_name: onOffToBool(v.nameDisplay),
-    product_details_show_breadcrumbs: onOffToBool(v.breadcrumbsDisplay),
     product_details_show_product_sku: onOffToBool(v.skuDisplay),
     product_details_show_product_price: onOffToBool(v.priceDisplay),
     product_details_show_subtitle: onOffToBool(v.subtitleDisplay),
@@ -41,7 +42,6 @@ export function valueToEciwdConfig(v: Value): EcwidConfig {
     ),
     product_details_show_product_photo_zoom: onOffToBool(v.galleryHoverZoom),
     product_details_position_product_name: v.positionName,
-    product_details_position_breadcrumbs: v.positionBreadcrumbs,
     product_details_position_product_price: v.positionPrice,
     product_details_position_buy_button: v.positionAddToBag,
     product_details_position_product_description: v.positionDescription,

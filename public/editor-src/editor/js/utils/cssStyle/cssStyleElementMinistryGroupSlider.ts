@@ -1,3 +1,4 @@
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBorder,
@@ -23,12 +24,14 @@ import { ACTIVE } from "../stateMode";
 export function cssStyleElementMinistryGroupSliderTitleSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "title",
     direction: "bottom"
   });
@@ -37,25 +40,31 @@ export function cssStyleElementMinistryGroupSliderTitleSpacing({
 export function cssStyleElementMinistryGroupSliderMetaTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "metaTypography"
+    store,
+    prefix: "metaTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementMinistryGroupSliderMetaSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleElementOfMinistryBrandsSpacing({
     v,
     device,
     state,
+    store,
     prefix: "meta"
   });
 }
@@ -63,12 +72,14 @@ export function cssStyleElementMinistryGroupSliderMetaSpacing({
 export function cssStyleElementMinistryGroupSliderPreviewSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "preview",
     direction: "bottom"
   });
@@ -77,9 +88,10 @@ export function cssStyleElementMinistryGroupSliderPreviewSpacing({
 export function cssStyleElementMinistryGroupSliderImageWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "image" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "image" });
 }
 
 export function cssStyleElementMinistryGroupSliderImageBorder({
@@ -93,28 +105,32 @@ export function cssStyleElementMinistryGroupSliderImageBorder({
 export function cssStyleElementMinistryGroupSliderImageBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "image" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "image" });
 }
 
 export function cssStyleElementMinistryGroupSliderImageBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "image" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "image" });
 }
 
 export function cssStyleElementMinistryGroupSliderImageSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     prefix: "image",
     direction: "bottom"
   });
@@ -123,12 +139,14 @@ export function cssStyleElementMinistryGroupSliderImageSpacing({
 export function cssStyleElementMinistryGroupSliderArrowSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeFontSizeIcon({
     v,
     device,
     state,
+    store,
     prefix: "arrow"
   });
 }
@@ -136,12 +154,14 @@ export function cssStyleElementMinistryGroupSliderArrowSize({
 export function cssStyleElementMinistryGroupSliderArrowSpacingLeft({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStylePositionElement({
     v,
     device,
     state,
+    store,
     prefix: "arrow",
     direction: "left"
   });
@@ -150,12 +170,14 @@ export function cssStyleElementMinistryGroupSliderArrowSpacingLeft({
 export function cssStyleElementMinistryGroupSliderArrowSpacingRight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStylePositionElement({
     v,
     device,
     state,
+    store,
     prefix: "arrow",
     direction: "right"
   });
@@ -164,12 +186,14 @@ export function cssStyleElementMinistryGroupSliderArrowSpacingRight({
 export function cssStyleElementMinistryGroupSliderArrowColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "arrowColor"
   });
 }
@@ -177,12 +201,14 @@ export function cssStyleElementMinistryGroupSliderArrowColor({
 export function cssStyleElementMinistryGroupSliderItemsAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
     state,
+    store,
     prefix: "items"
   });
 }
@@ -190,12 +216,14 @@ export function cssStyleElementMinistryGroupSliderItemsAlign({
 export function cssStyleElementMinistryGroupSliderItemsImageAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleMarginAlign({
     v,
     device,
     state,
+    store,
     prefix: "items"
   });
 }
@@ -226,49 +254,58 @@ export function cssStyleElementMinistryGroupSliderSlidesToShow({
 export function cssStyleElementMinistryGroupSliderButtonTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
-    prefix: "buttonTypography"
+    store,
+    prefix: "buttonTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "button" });
+  return cssStyleSizePadding({ v, device, state, store, prefix: "button" });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "button" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "button" });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "buttonColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "buttonColor" });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleElementMinistryBrandsButtonsBgColor({
     v,
     device,
     state,
+    store,
     prefix: "button"
   });
 }
@@ -276,12 +313,14 @@ export function cssStyleElementMinistryGroupSliderButtonBgColor({
 export function cssStyleElementMinistryGroupSliderButtonBgGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleElementMinistryBrandsButtonsBgGradient({
     v,
     device,
     state,
+    store,
     prefix: "button"
   });
 }
@@ -297,27 +336,31 @@ export function cssStyleElementMinistryGroupSliderButtonBorder({
 export function cssStyleElementMinistryGroupSliderButtonBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "button" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "button" });
 }
 
 export function cssStyleElementMinistryGroupSliderDotsColorColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "dotsBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "dotsBg" });
 }
 
 export function cssStyleElementMinistryGroupSliderDotsColorColorActive({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
   return cssStyleBgColor({
     v,
     device,
     state: ACTIVE,
+    store,
     prefix: "dotsBg"
   });
 }

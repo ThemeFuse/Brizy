@@ -86,3 +86,41 @@
     }
   }
 }
+
+&.brz:not(.brz-ed) {
+  .brz-ecwid-my-account-wrapper {
+    .ecwid-productBrowser {
+      .ec-cart-step--bag {
+        .ec-cart-step__body {
+          .ec-cart__products {
+            pointer-events: none;
+
+            .ec-cart-item--summary {
+              .ec-cart-item-sum--cta {
+                display: none !important;
+              }
+            }
+          }
+        }
+      }
+
+      .ec-cart-step--favorites {
+        .ec-cart-step__body {
+          .ec-cart__products {
+            pointer-events: none;
+
+            .ec-cart-item--summary {
+              .ec-cart-item-sum--cta {
+                display: none !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .ecwid-productBrowser-AccountRootPage {
+      background-color: inherit !important;
+    }
+  }
+}

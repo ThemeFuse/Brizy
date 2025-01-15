@@ -1,11 +1,11 @@
+import { isEditor } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from ".";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
+  const { renderContext } = data;
   const styles = {
     ".brz &&:hover": {
       standart: [
@@ -131,18 +131,12 @@ export function style(
   };
 
   return renderStyles({
-    v,
-    vs,
-    vd,
-    styles: IS_EDITOR ? styles : styleSelectView
+    ...data,
+    styles: isEditor(renderContext) ? styles : styleSelectView
   });
 }
 
-export function styleDropdown(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function styleDropdown(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
     ".brz && .brz-translation__select-list:hover": {
       standart: ["cssStyleElementTranslationBoxShadow"],
@@ -183,5 +177,5 @@ export function styleDropdown(
       }
   };
 
-  return renderStyles({ v, vs, vd, styles }) as [string, string, string];
+  return renderStyles({ ...data, styles });
 }

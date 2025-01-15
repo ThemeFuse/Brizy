@@ -5,7 +5,6 @@ import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -37,7 +36,17 @@ export default class StarRating extends EditorComponent {
     } = v;
     const className = classnames(
       "brz-starrating",
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const labelElement = (
@@ -95,7 +104,17 @@ export default class StarRating extends EditorComponent {
     } = v;
     const className = classnames(
       "brz-starrating",
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const labelElement = (
       <Text

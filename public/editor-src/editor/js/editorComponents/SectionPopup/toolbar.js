@@ -1,24 +1,21 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getInstanceParentId } from "visual/utils/toolbar";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 export function getItems({ v, device, component, context }) {
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -95,7 +92,7 @@ export function getItems({ v, device, component, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },

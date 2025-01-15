@@ -1,3 +1,9 @@
+import { Obj } from "@brizy/readers";
+import {
+  LeftSidebarAddElementsType,
+  LeftSidebarOptionBase,
+  LeftSidebarOptionsIds
+} from "visual/global/Config/types/configs/ConfigCommon";
 import {
   EntityTypeRule,
   GlobalBlock,
@@ -138,3 +144,13 @@ export const isGlobalPopup = (b: GlobalBlock): b is GlobalBlockPopup => {
 };
 
 //#endregion
+
+// #region LeftSidebar
+export const isLeftSidebarAddElements = (
+  v: LeftSidebarOptionBase
+): v is LeftSidebarAddElementsType =>
+  Obj.isObject(v) &&
+  v.type === LeftSidebarOptionsIds.addElements &&
+  Obj.hasKey("elements", v);
+
+// #endregion

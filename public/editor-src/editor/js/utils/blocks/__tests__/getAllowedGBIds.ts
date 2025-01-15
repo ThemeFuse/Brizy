@@ -1,20 +1,20 @@
 import { noop } from "underscore";
-import Config from "visual/global/Config";
+import { Config } from "visual/global/Config";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ConfigCommon,
   Mode
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   AllRule,
   BlockTypeRule,
   CollectionItemRule,
   CollectionTypeRule,
-  DataCommon as PageCommon,
   GlobalBlock,
   Page,
   PageCollection,
+  DataCommon as PageCommon,
   Rule
 } from "visual/types";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
@@ -43,7 +43,8 @@ export const urlsCommon = {
   pluginSettings: "",
   templateIcons: "",
   templateThumbnails: "",
-  projectCloneLink: ""
+  projectCloneLink: "",
+  screenshot: ""
 };
 
 const cmsCommon = {
@@ -92,6 +93,9 @@ export const configCommon: ConfigCommon = {
   },
   server: {
     maxUploadFileSize: 40
+  },
+  container: {
+    id: 545
   },
   onUpdate: noop
 };
@@ -201,92 +205,93 @@ describe("testing WP getAllowedGBIds", () => {
     entityValues: ["1"]
   };
 
+  const baseTerm = {
+    count: 0,
+    filter: "",
+    name: "",
+    parent: 0,
+    slug: "",
+    term_group: 0,
+    term_taxonomy_id: 0,
+    description: ""
+  };
+  const config = {
+    ...configCommon,
+    user: {
+      isAuthorized: false,
+      role: "admin" as const,
+      isGuest: false
+    },
+    modules: undefined,
+    urls: {
+      ...urlsCommon,
+      assetsExternal: "",
+      blockThumbnails: "",
+      changeTemplate: "",
+      dashboardNavMenu: "",
+      pluginSettings: "",
+      templateIcons: "",
+      templateThumbnails: ""
+    },
+    dynamicContent: {
+      groups: {
+        [DCTypes.image]: [],
+        [DCTypes.link]: [],
+        [DCTypes.richText]: []
+      }
+    },
+    wp: {
+      ...configWp,
+      page: "1",
+      postAuthor: 1,
+      postTermParents: [
+        {
+          ...baseTerm,
+          taxonomy: "category",
+          term_id: 1
+        },
+        {
+          ...baseTerm,
+          taxonomy: "post_tag",
+          term_id: 2
+        }
+      ],
+      postTerms: [
+        {
+          ...baseTerm,
+          taxonomy: "category",
+          term_id: 1
+        },
+        {
+          ...baseTerm,
+          taxonomy: "post_tag",
+          term_id: 2
+        },
+        {
+          ...baseTerm,
+          taxonomy: "post_tag",
+          term_id: 3
+        },
+        {
+          ...baseTerm,
+          taxonomy: "post_tag",
+          term_id: 4
+        }
+      ],
+      ruleMatches: [
+        {
+          type: 1,
+          group: PAGES_GROUP_ID,
+          entityType: "page",
+          values: []
+        }
+      ]
+    }
+  };
+
   beforeAll(() => {
     // @ts-expect-error: the TARGET is added from webpack, here we are hardcoded
     global.TARGET = "WP";
-    const baseTerm = {
-      count: 0,
-      filter: "",
-      name: "",
-      parent: 0,
-      slug: "",
-      term_group: 0,
-      term_taxonomy_id: 0,
-      description: ""
-    };
-    Config.init({
-      ...configCommon,
-      user: {
-        isAuthorized: false,
-        role: "admin",
-        isGuest: false
-      },
-      modules: undefined,
-      urls: {
-        ...urlsCommon,
-        assetsExternal: "",
-        blockThumbnails: "",
-        changeTemplate: "",
-        dashboardNavMenu: "",
-        pluginSettings: "",
-        templateIcons: "",
-        templateThumbnails: ""
-      },
-      dynamicContent: {
-        groups: {
-          [DCTypes.image]: [],
-          [DCTypes.link]: [],
-          [DCTypes.richText]: []
-        }
-      },
-      wp: {
-        ...configWp,
-        page: "1",
-        postAuthor: 1,
-        postTermParents: [
-          {
-            ...baseTerm,
-            taxonomy: "category",
-            term_id: 1
-          },
-          {
-            ...baseTerm,
-            taxonomy: "post_tag",
-            term_id: 2
-          }
-        ],
-        postTerms: [
-          {
-            ...baseTerm,
-            taxonomy: "category",
-            term_id: 1
-          },
-          {
-            ...baseTerm,
-            taxonomy: "post_tag",
-            term_id: 2
-          },
-          {
-            ...baseTerm,
-            taxonomy: "post_tag",
-            term_id: 3
-          },
-          {
-            ...baseTerm,
-            taxonomy: "post_tag",
-            term_id: 4
-          }
-        ],
-        ruleMatches: [
-          {
-            type: 1,
-            group: PAGES_GROUP_ID,
-            entityType: "page",
-            values: []
-          }
-        ]
-      }
-    });
   });
 
   afterAll(() => {
@@ -339,7 +344,7 @@ describe("testing WP getAllowedGBIds", () => {
       }
     ]
   ])("pageSplitRules nr %#", (rules, page, resolve) => {
-    expect(pageSplitRules(rules, page)).toStrictEqual(resolve);
+    expect(pageSplitRules({ rules, page, config })).toStrictEqual(resolve);
   });
 
   test.each<[GlobalBlock, Page, boolean]>([
@@ -928,7 +933,7 @@ describe("testing WP getAllowedGBIds", () => {
 
     //#endregion
   ])("canUseConditionInPage nr %#", (globalBlock, page, resolve) => {
-    expect(canUseConditionInPage(globalBlock, page)).toBe(resolve);
+    expect(canUseConditionInPage({ globalBlock, page, config })).toBe(resolve);
   });
 });
 
@@ -950,35 +955,35 @@ describe("testing Cloud getAllowedGBIds", () => {
     entityType: "collectionItem/1",
     entityValues: ["1"]
   };
+  const config: Config = {
+    ...configCommon,
+    platform: "cms",
+    user: {
+      isAuthorized: false,
+      role: "admin" as const,
+      isGuest: false
+    },
+    // @ts-expect-error: CMS
+    cms: cmsCommon,
+    urls: urlsCommon,
+    project: {
+      ...configCommon.project,
+      id: 1,
+      apiVersion: 2,
+      protectedPagePassword: ""
+    },
+    dynamicContent: {
+      groups: {
+        [DCTypes.image]: [],
+        [DCTypes.link]: [],
+        [DCTypes.richText]: []
+      }
+    }
+  };
 
   beforeAll(() => {
     // @ts-expect-error: the IS_CLOUD is added from webpack, here we are hardcoded
     global.TARGET = "cloud";
-    Config.init({
-      ...configCommon,
-      platform: "cms",
-      user: {
-        isAuthorized: false,
-        role: "admin",
-        isGuest: false
-      },
-      //@ts-expect-error: implicit set cms
-      cms: cmsCommon,
-      urls: urlsCommon,
-      project: {
-        ...configCommon.project,
-        id: 1,
-        apiVersion: 2,
-        protectedPagePassword: ""
-      },
-      dynamicContent: {
-        groups: {
-          [DCTypes.image]: [],
-          [DCTypes.link]: [],
-          [DCTypes.richText]: []
-        }
-      }
-    });
   });
 
   //#region pageSplitRules
@@ -1032,7 +1037,7 @@ describe("testing Cloud getAllowedGBIds", () => {
       }
     ]
   ])("pageSplitRules nr %#", (rules, page, resolve) => {
-    expect(pageSplitRules(rules, page)).toStrictEqual(resolve);
+    expect(pageSplitRules({ rules, page, config })).toStrictEqual(resolve);
   });
 
   //#endregion
@@ -1581,7 +1586,7 @@ describe("testing Cloud getAllowedGBIds", () => {
       false
     ]
   ])("canUseConditionInPage nr %#", (globalBlock, page, resolve) => {
-    expect(canUseConditionInPage(globalBlock, page)).toBe(resolve);
+    expect(canUseConditionInPage({ globalBlock, page, config })).toBe(resolve);
   });
 
   //#endregion
@@ -1596,41 +1601,42 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
     entityValues: ["1"]
   };
 
+  const config: Config = {
+    ...configCommon,
+    platform: "cms",
+    page: {
+      // @ts-expect-error: Uniq id
+      id: "" as const,
+      isProtected: false,
+      isResetPassPage: false,
+      provider: "customers"
+    },
+    availableRoles: [{ role: "role-1", name: "admin" }],
+    user: {
+      isAuthorized: false,
+      role: "admin",
+      isGuest: false
+    },
+    cms: cmsCommon,
+    urls: urlsCommon,
+    project: {
+      ...configCommon.project,
+      id: 1,
+      apiVersion: 2,
+      protectedPagePassword: ""
+    },
+    dynamicContent: {
+      groups: {
+        [DCTypes.image]: [],
+        [DCTypes.link]: [],
+        [DCTypes.richText]: []
+      }
+    }
+  };
+
   beforeAll(() => {
     // @ts-expect-error: the IS_CLOUD is added from webpack, here we are hardcoded
     global.TARGET = "Cloud";
-    Config.init({
-      ...configCommon,
-      platform: "cms",
-      page: {
-        // @ts-expect-error: Uniq id
-        id: "" as const,
-        isProtected: false,
-        isResetPassPage: false,
-        provider: "customers"
-      },
-      availableRoles: [{ role: "role-1", name: "admin" }],
-      user: {
-        isAuthorized: false,
-        role: "admin",
-        isGuest: false
-      },
-      cms: cmsCommon,
-      urls: urlsCommon,
-      project: {
-        ...configCommon.project,
-        id: 1,
-        apiVersion: 2,
-        protectedPagePassword: ""
-      },
-      dynamicContent: {
-        groups: {
-          [DCTypes.image]: [],
-          [DCTypes.link]: [],
-          [DCTypes.richText]: []
-        }
-      }
-    });
   });
 
   afterAll(() => {
@@ -1697,6 +1703,6 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
       false
     ]
   ])(`canUseConditionInPage nr %#`, (globalBlock, page, resolve) => {
-    expect(canUseConditionInPage(globalBlock, page)).toBe(resolve);
+    expect(canUseConditionInPage({ globalBlock, page, config })).toBe(resolve);
   });
 });

@@ -5,6 +5,8 @@ import {
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
+import { EditorMode } from "visual/global/EditorModeContext";
+import { RenderType } from "visual/providers/RenderProvider";
 import { Dictionary } from "visual/types/utils";
 import { Choices, Handler } from "visual/utils/options/getDynamicContentOption";
 import { TypeChoices } from "visual/utils/options/types";
@@ -90,6 +92,8 @@ export type Params<
   context: EditorComponentContextValue;
   getValue: Getter;
   componentConfig?: C;
+  renderContext: RenderType;
+  editorMode: EditorMode;
 };
 
 export type GetItems<

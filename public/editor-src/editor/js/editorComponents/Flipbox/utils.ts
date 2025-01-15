@@ -15,6 +15,7 @@ import {
   Value
 } from "./types";
 
+
 export const getHeight = (
   node: HTMLElement,
   settings?: { resetTransition: boolean; resetTransform: boolean }
@@ -59,6 +60,10 @@ export const readTrigger = checkValue2(Trigger);
 
 const backgroundValueReader = (prefix: "back" | "") =>
   parseStrict<Value, BackgroundValue>({
+    bg: pipe(
+      mPipe(Obj.readKey(capByPrefix(prefix, "bg")), Str.read),
+      onNullish("")
+    ),
     bgImageSrc: pipe(
       mPipe(Obj.readKey(capByPrefix(prefix, "bgImageSrc")), Str.read),
       onNullish("")

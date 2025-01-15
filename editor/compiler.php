@@ -59,6 +59,10 @@ class Brizy_Editor_Compiler {
 		$currentCompiler = preg_replace( "/((beta\d?)?-wp)$/", "", $post->get_compiler_version() );
 		$v2              = preg_replace( "/((beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
 
+		if(BRIZY_EDITOR_VERSION=='dev') {
+			$v2 = BRIZY_EDITOR_VERSION;
+		}
+
 		if ( version_compare( $currentCompiler, $v2, "<" ) ) {
             return true;
 		}

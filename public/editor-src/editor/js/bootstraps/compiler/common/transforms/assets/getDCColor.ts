@@ -9,7 +9,7 @@ interface DecodedColor {
   [k: string]: {
     hex: Hex | undefined;
     opacity: Opacity | undefined;
-    colorPalette: Palette[] | undefined;
+    colorPalette: Palette | undefined;
   };
 }
 
@@ -17,27 +17,31 @@ export const getDCColor = ($: cheerio.Root): string[] => {
   const rules: string[] = [];
   const $richText = $(".brz-rich-text");
 
-  $richText
-    .find(".brz-tp__dc-block[data-color]")
-    .each(function (this: cheerio.Element) {
-      const $this = $(this);
-      const color = $this.attr("data-color") || "";
-      const decodedColor = decodeFromString<DecodedColor>(color);
-      const className = `dc-color-${uuid(5)}`;
-      $this.addClass(className);
-      $this.removeAttr("data-color");
+  $richText.find(".brz-tp__dc-block[data-color]").each(function (
+    this: cheerio.Element
+  ) {
+    const $this = $(this);
+    const color = $this.attr("data-color") || "";
+    const decodedColor = decodeFromString<DecodedColor>(color);
+    const className = `dc-color-${uuid(5)}`;
+    $this.addClass(className);
+    $this.removeAttr("data-color");
 
-      const currentRule: string = Object.entries(decodedColor)
-        .reduce((acc, [key, value]) => {
-          const newClassName = `.${className} ${key}`;
-          acc.push(makeRichTextDCColorCSS(newClassName, value));
+    const currentRule: string = Object.entries(decodedColor)
+      .reduce((acc, [key, value]) => {
+        const newClassName = `.${className} ${key}`;
+        const css = makeRichTextDCColorCSS(newClassName, value);
 
-          return acc;
-        }, [] as string[])
-        .join("");
+        if (css) {
+          acc.push(css);
+        }
 
-      rules.push(currentRule);
-    });
+        return acc;
+      }, [] as string[])
+      .join("");
+
+    rules.push(currentRule);
+  });
 
   // HACK.Sometimes usual paragraph has data-color attribute
   $richText.find("[data-color]").each(function (this: cheerio.Cheerio) {

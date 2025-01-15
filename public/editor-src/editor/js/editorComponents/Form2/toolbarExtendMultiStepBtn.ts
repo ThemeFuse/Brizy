@@ -1,11 +1,10 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import type { Value } from "./types";
 
-export const getItems: GetItems<Value> = () => {
-  const IS_STORY = isStory(Config.getAll());
+export const getItems: GetItems<Value> = ({ editorMode }) => {
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -16,7 +15,7 @@ export const getItems: GetItems<Value> = () => {
         title: t("Settings")
       },
       position: 110,
-      disabled: !IS_STORY,
+      disabled: !_isStory,
       options: [
         {
           id: "submitHeight",
@@ -49,7 +48,7 @@ export const getItems: GetItems<Value> = () => {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      disabled: IS_STORY
+      disabled: _isStory
     }
   ];
 };

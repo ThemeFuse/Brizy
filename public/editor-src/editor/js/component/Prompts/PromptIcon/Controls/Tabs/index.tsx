@@ -1,15 +1,22 @@
-import React, { useMemo } from "react";
+import React from "react";
 import _ from "underscore";
+import { getTypes } from "visual/config/icons";
 import { TypeId } from "visual/config/icons/Type";
-import Config from "visual/global/Config";
+import { isWp } from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { FCC } from "visual/utils/react/types";
 import { TabItem } from "./TabItem";
 import { Props } from "./types";
-import { getTypes } from "visual/config/icons";
 
-export const Tabs: FCC<Props> = ({ onClick, onClose, currentTypeId }) => {
-  const config = useMemo(() => Config.getAll(), []);
-  const tabs = _.sortBy(getTypes(config), (type) => type.id)
+export const Tabs: FCC<Props> = ({
+  onClick,
+  onClose,
+  currentTypeId,
+  config
+}) => {
+  const _isPro = isPro(config);
+  const _isWp = isWp(config);
+  const tabs = _.sortBy(getTypes(_isPro, _isWp), (type) => type.id)
     .filter(
       (tab) =>
         // hide custom tab if get custom icons handler is not defined

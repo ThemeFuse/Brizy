@@ -1,6 +1,6 @@
 import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
 import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import { t } from "visual/utils/i18n";
 
 const toolbarConfig = {
@@ -13,10 +13,6 @@ export class NotFound extends EditorComponent {
   static get componentId() {
     return "NotFound";
   }
-
-  static defaultProps = {
-    message: t("Missing Element")
-  };
 
   static defaultValue = {};
 

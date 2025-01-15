@@ -1,7 +1,9 @@
 import classnames from "classnames";
-import React, { Component } from "react";
+import React, { Component, forwardRef } from "react";
 import _ from "underscore";
 import { Translate } from "visual/component/Translate";
+import { useTranslation } from "visual/providers/I18nProvider";
+import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import { t } from "visual/utils/i18n";
 import { DefaultProps, Props, State } from "./types";
 
@@ -15,14 +17,56 @@ const keyCodes = {
   Z: 90
 };
 
-export class TextEditor extends Component<Props, State> {
-  static defaultProps: DefaultProps = {
-    // TODO: refactor value prop name to defaultValue because
-    // this is essentially an uncontrolled component at the moment
-    value: t("Editable Text"),
+interface ControlProps {
+  value?: string;
+  tagName?: keyof JSX.IntrinsicElements;
+  contentEditable?: boolean;
+  className?: string;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+  onPaste?: React.ClipboardEventHandler<HTMLElement>;
+  onBlur?: React.FocusEventHandler<HTMLElement>;
+}
+
+const Control = forwardRef<HTMLElement, ControlProps>((props, ref) => {
+  const { t } = useTranslation();
+  const {
+    tagName = "span",
+    className: className_,
+    value = t("Editable Text"),
+    onClick,
+    onKeyDown,
+    onPaste,
+    onBlur,
+    contentEditable
+  } = props;
+  const className = classnames(
+    className_,
+    `brz-${tagName}`,
+    "brz-text__editor"
+  );
+
+  return (
+    <Translate
+      tagName={tagName}
+      ref={ref}
+      className={className}
+      contentEditable={contentEditable}
+      dangerouslySetInnerHTML={{ __html: value }}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+      onPaste={onPaste}
+      onBlur={onBlur}
+    />
+  );
+});
+
+export class _TextEditor extends Component<Props, State> {
+  static defaultProps: Props = {
     tagName: "span",
     className: "",
-    allowLineBreak: false
+    allowLineBreak: false,
+    onChange: _.noop
   };
 
   contentRef = React.createRef<HTMLElement>();
@@ -43,13 +87,13 @@ export class TextEditor extends Component<Props, State> {
     const element = this.contentRef.current;
 
     if (element !== null) {
-      this.lastNotifiedValue = this.props.value;
+      this.lastNotifiedValue = this.props.value ?? t("Editable Text");
       element.addEventListener("input", this.handleInput);
     }
   }
 
   componentDidUpdate(): void {
-    this.lastNotifiedValue = this.props.value;
+    this.lastNotifiedValue = this.props.value ?? t("Editable Text");
 
     // this code shouldn't be here because
     // at componentDidUpdate the value in the DOM
@@ -140,22 +184,17 @@ export class TextEditor extends Component<Props, State> {
   render(): React.ReactElement {
     const {
       tagName,
-      value,
-      className: className_
+      value = t("Editable Text"),
+      className
     } = this.props as Props & DefaultProps;
-    const className = classnames(
-      className_,
-      `brz-${tagName}`,
-      "brz-text__editor"
-    );
 
     return (
-      <Translate
-        tagName={tagName}
+      <Control
         ref={this.contentRef}
         className={className}
-        contentEditable={IS_EDITOR}
-        dangerouslySetInnerHTML={{ __html: value }}
+        value={value}
+        tagName={tagName}
+        contentEditable={true}
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}
         onPaste={this.handlePaste}
@@ -164,3 +203,8 @@ export class TextEditor extends Component<Props, State> {
     );
   }
 }
+
+export const TextEditor = renderHOC<Props>({
+  ForEdit: (props) => <_TextEditor {...props} />,
+  ForView: (props) => <Control {...props} />
+});

@@ -12,7 +12,7 @@ const getHtml = () => {
 </p>`;
 };
 
-export const title = t("Product Gallery");
+export const title = () => t("Product Gallery");
 
 export function getItems() {
   return [

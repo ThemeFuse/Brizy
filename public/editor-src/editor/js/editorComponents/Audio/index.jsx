@@ -1,15 +1,14 @@
-import { Audio as AudioComponent } from "@brizy/component";
-import { SoundCloud } from "@brizy/component";
+import { Audio as AudioComponent, SoundCloud } from "@brizy/component";
 import classnames from "classnames";
 import React from "react";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
+import { currentStyleSelector } from "visual/redux/selectors-new";
 import { customFileUrl } from "visual/utils/customFile";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -108,6 +107,24 @@ class Audio extends EditorComponent {
     };
   }
 
+  getColor(v) {
+    const { controlsHex, controlsPalette } = v;
+    let color = controlsHex;
+
+    if (controlsPalette) {
+      const state = this.getReduxState();
+      const palette = currentStyleSelector(state).colorPalette;
+      const selectedPalette = palette.find(
+        (color) => color.id === controlsPalette
+      );
+      if (selectedPalette) {
+        color = selectedPalette.hex;
+      }
+    }
+
+    return color.split("#")[1];
+  }
+
   renderSoundCloud(v) {
     const {
       url,
@@ -120,16 +137,10 @@ class Audio extends EditorComponent {
       playCounts,
       username,
       artWork,
-      controlsHex,
-      controlsPalette,
       style
     } = v;
 
-    const { hex: controlsColorHex } = getOptionColorHexByPalette(
-      controlsHex,
-      controlsPalette
-    );
-    const controlsColor = controlsColorHex.split("#")[1];
+    const controlsColor = this.getColor(v);
 
     return url ? (
       <SoundCloud
@@ -145,7 +156,7 @@ class Audio extends EditorComponent {
         showUsername={username === "on"}
         showArtwork={artWork === "on"}
         controlsColor={controlsColor}
-        className={IS_EDITOR ? "brz-blocked" : ""}
+        className={isEditor(this.renderContext) ? "brz-blocked" : ""}
       />
     ) : (
       <Placeholder icon="sound-cloud" />
@@ -164,29 +175,47 @@ class Audio extends EditorComponent {
 
     const classNameAudio = classnames(
       "brz-custom-audio",
-      css(
-        `${this.constructor.componentId}-bg2`,
+      this.css(
+        `${this.getComponentId()}-bg2`,
         `${this.getId()}-bg2`,
-        styleWrapperAudio(v, vs, vd)
+        styleWrapperAudio({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const classNameControls = classnames(
       "brz-audio-controls",
-      css(
-        `${this.constructor.componentId}-controls`,
+      this.css(
+        `${this.getComponentId()}-controls`,
         `${this.getId()}-controls`,
-        styleControls(v, vs, vd)
+        styleControls({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
-    const classNameIcon = css(
-      `${this.constructor.componentId}-icon`,
+    const classNameIcon = this.css(
+      `${this.getComponentId()}-icon`,
       `${this.getId()}-icon`,
-      styleIcon(v, vs, vd)
+      styleIcon({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
 
     const audioSource = customFileUrl(audio) ?? "";
 
-    return IS_PREVIEW ? (
+    return isView(this.renderContext) ? (
       <AudioComponent
         src={audioSource}
         isLoop={loop === "on"}
@@ -218,10 +247,16 @@ class Audio extends EditorComponent {
     const classNameContent = classnames(
       { "brz-audio": type === "custom" },
       { "brz-soundcloud": type === "soundcloud" },
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleContent(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleContent({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -246,10 +281,16 @@ class Audio extends EditorComponent {
     const classNameContent = classnames(
       { "brz-audio": type === "custom" },
       { "brz-soundcloud": type === "soundcloud" },
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleContent(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleContent({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

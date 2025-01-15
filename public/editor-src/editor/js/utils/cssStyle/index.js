@@ -1,5 +1,7 @@
 // Style Render
 export * from "./cssStyle";
+// Generator v2 functions
+export * from "./cssStyle2";
 // Align
 export * from "./cssStyleAlign";
 // Animation
@@ -14,8 +16,8 @@ export * from "./cssStyleBgGradient";
 export * from "./cssStyleBgImage";
 // Bg Map
 export * from "./cssStyleBgMap";
-// Background
-export * from "./cssStyleBackground";
+// Background Slideshow
+export * from "./cssStyleBgSlideshow";
 // Color
 export * from "./cssStyleBlendMode";
 //Border Style
@@ -38,12 +40,8 @@ export * from "./cssStyleElementAccordion";
 export * from "./cssStyleElementAlert";
 // Element Breadcrumbs
 export * from "./cssStyleElementBreadcrumbs";
-// Element EmbedCode
-export * from "./cssStyleElementEmbedCode";
 //Element Button
 export * from "./cssStyleElementButton";
-// Calendly
-export * from "./cssStyleElementCalendly";
 // Element Carousel
 export * from "./cssStyleElementCarousel";
 //Element Cloneable
@@ -64,8 +62,14 @@ export * from "./cssStyleElementEcwidProduct";
 export * from "./cssStyleElementEcwidProducts";
 // Element Ecwid Shopping Bag
 export * from "./cssStyleElementEcwidShoppingBag";
+// Element EmbedCode
+export * from "./cssStyleElementEmbedCode";
+// Ministry Brands Event Layout
+export * from "./cssStyleElementEventLayout";
 // Facebook
 export * from "./cssStyleElementFacebook";
+// Element Flipbox
+export * from "./cssStyleElementFlipbox";
 // Element Form
 export * from "./cssStyleElementForm";
 // Element Form2
@@ -78,8 +82,6 @@ export * from "./cssStyleElementIconBox";
 export * from "./cssStyleElementImage";
 // Element ImageGallery
 export * from "./cssStyleElementImageGallery";
-// Element Line
-export * from "./cssStyleLineBorder";
 // Element Login
 export * from "./cssStyleElementLogin";
 // Element Media
@@ -92,14 +94,14 @@ export * from "./cssStyleElementMenu";
 export * from "./cssStyleElementMenuSimple";
 // Ministry Brands
 export * from "./cssStyleElementMinistryBrands";
-// Ministry Brands Event Layout
-export * from "./cssStyleElementEventLayout";
+// Ministry Event Calendar
+export * from "./cssStyleElementMinistryEventCalendar";
 // Ministry Brands Event Detail
 export * from "./cssStyleElementMinistryEventDetail";
 // Ministry Group Slider
 export * from "./cssStyleElementMinistryGroupSlider";
-// Ministry Event Calendar
-export * from "./cssStyleElementMinistryEventCalendar";
+// Paypal
+export * from "./cssStyleElementPaypal";
 // Element Post Info
 export * from "./cssStyleElementPostInfo";
 // Element postNavigation
@@ -114,18 +116,24 @@ export * from "./cssStyleElementProtectedPage";
 export * from "./cssStyleElementRichText";
 // Element Search
 export * from "./cssStyleElementSearch";
+// Share Button
+export * from "./cssStyleElementShareButton";
 // ShopifyAddToCart
 export * from "./cssStyleElementShopifyAddToCart";
-// Quantity
-export * from "./cssStyleElementShopifyQuantity";
 // Price
 export * from "./cssStyleElementShopifyPrice";
+// Quantity
+export * from "./cssStyleElementShopifyQuantity";
+// Variant
+export * from "./cssStyleElementShopifyVariant";
 // Star Rating
 export * from "./cssStyleElementStarRating";
 //Switcher
 export * from "./cssStyleElementSwitcher";
 // Element Table
 export * from "./cssStyleElementTable";
+// Table of Contents
+export * from "./cssStyleElementTableOfContents";
 // Tabs
 export * from "./cssStyleElementTabs";
 // Timeline
@@ -163,6 +171,8 @@ export * from "./cssStyleFilter";
 export * from "./cssStyleFlexColumn";
 // Margin
 export * from "./cssStyleMargin";
+// Mask
+export * from "./cssStyleMask";
 // Padding
 export * from "./cssStylePadding";
 // Position
@@ -185,9 +195,9 @@ export * from "./cssStyleStory";
 export * from "./cssStyleStroke";
 //Box Shadow
 export * from "./cssStyleTextShadow";
+export * from "./cssStyleTextTransform";
 // Transform
 export * from "./cssStyleTransform";
-export * from "./cssStyleTextTransform";
 //Transition
 export * from "./cssStyleTransition";
 // Typography
@@ -202,22 +212,4 @@ export * from "./cssStyleVisible2";
 export * from "./cssStyleZIndex";
 // Bg Video
 export * from "./styleBgVideo";
-// Mask
-export * from "./cssStyleMask";
-// Variant
-export * from "./cssStyleElementShopifyVariant";
-// Table of Contents
-export * from "./cssStyleElementTableOfContents";
-// Share Button
-export * from "./cssStyleElementShareButton";
-// Background Slideshow
-export * from "./cssStyleBgSlideshow";
-
-// Generator v2 functions
-export * from "./cssStyle2";
 export * from "./utils";
-
-// Element Flipbox
-export * from "./cssStyleElementFlipbox";
-// Paypal
-export * from "./cssStyleElementPaypal";

@@ -1,9 +1,12 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { request } from "visual/utils/api";
 import { SignIn, SignUp } from "./types";
 
-export const signIn = (data: SignIn): Promise<Response> => {
-  const apiUrl = Config.get("urls").api;
+export const signIn = (
+  data: SignIn,
+  config: ConfigCommon
+): Promise<Response> => {
+  const apiUrl = config?.urls?.api;
 
   return request(`${apiUrl}/sign_ins`, {
     method: "POST",
@@ -11,8 +14,11 @@ export const signIn = (data: SignIn): Promise<Response> => {
   });
 };
 
-export const signUp = (data: SignUp): Promise<Response> => {
-  const apiUrl = Config.get("urls").api;
+export const signUp = (
+  data: SignUp,
+  config: ConfigCommon
+): Promise<Response> => {
+  const apiUrl = config?.urls?.api;
   const { email, password, confirmPassword } = data;
 
   return request(`${apiUrl}/sign_ups`, {
@@ -25,8 +31,11 @@ export const signUp = (data: SignUp): Promise<Response> => {
   });
 };
 
-export const recoveryEmail = (email: string): Promise<Response> => {
-  const apiUrl = Config.get("urls").api;
+export const recoveryEmail = (
+  email: string,
+  config: ConfigCommon
+): Promise<Response> => {
+  const apiUrl = config?.urls?.api;
 
   return request(`${apiUrl}/recover_passwords`, {
     method: "POST",
@@ -34,23 +43,34 @@ export const recoveryEmail = (email: string): Promise<Response> => {
   });
 };
 
-export const logout = (): Promise<Response> => {
-  const apiUrl = Config.get("urls").api;
+export const logout = (config: ConfigCommon): Promise<Response> => {
+  const apiUrl = config?.urls?.api;
 
-  return request(`${apiUrl}/logout`, {
-    method: "POST"
-  });
+  return request(
+    `${apiUrl}/logout`,
+    {
+      method: "POST"
+    },
+    config
+  );
 };
 
-export const sync = (): Promise<Response> => {
-  const apiUrl = Config.get("urls").api;
+export const sync = (config: ConfigCommon): Promise<Response> => {
+  const apiUrl = config?.urls?.api;
 
-  return request(`${apiUrl}/sync`, {
-    method: "POST"
-  });
+  return request(
+    `${apiUrl}/sync`,
+    {
+      method: "POST"
+    },
+    config
+  );
 };
 
-export const checkCompatibility = (): Promise<{
+export const checkCompatibility = (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _: ConfigCommon
+): Promise<{
   status: number;
   data?: { isSyncAllowed: boolean };
 }> => {

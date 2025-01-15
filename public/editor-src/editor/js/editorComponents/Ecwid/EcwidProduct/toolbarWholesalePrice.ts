@@ -1,16 +1,16 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: wholesalePriceColorHex } = getOptionColorHexByPalette(
+  const wholesalePriceColor = getColor(
+    dvv("wholesalePriceColorPalette"),
     dvv("wholesalePriceColorHex"),
-    dvv("wholesalePriceColorPalette")
+    dvv("wholesalePriceColorOpacity")
   );
 
   return [
@@ -88,10 +88,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              wholesalePriceColorHex,
-              dvv("wholesalePriceColorOpacity")
-            )
+            backgroundColor: wholesalePriceColor
           }
         }
       },

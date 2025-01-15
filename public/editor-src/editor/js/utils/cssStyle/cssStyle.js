@@ -1,30 +1,34 @@
-import Config from "visual/global/Config";
-import { murmurhash2 } from "visual/utils/crypto";
+import { configIdSelector } from "visual/redux/selectors";
 import * as onStyles from "visual/utils/cssStyle";
-import { makeAttr } from "visual/utils/i18n/attribute";
+import {
+  addBreakpointForInterval,
+  addBreakpointForStandart
+} from "visual/utils/cssStyle";
+import { DESKTOP } from "visual/utils/devices";
 import { isStory } from "visual/utils/models";
-import { uuid } from "visual/utils/uuid";
 
-const devices = isStory(Config.getAll())
-  ? {
-      desktop: 1500
-    }
-  : {
-      desktop: 1500,
-      tablet: 991,
-      mobile: 767
-    };
+export { css, css1 } from "./css/tujur";
 
-const states = isStory(Config.getAll())
-  ? {
-      normal: "normal"
-    }
-  : {
-      normal: "normal",
-      hover: "hover"
-    };
+export const getDevices = (config) =>
+  isStory(config)
+    ? {
+        desktop: 1500
+      }
+    : {
+        desktop: 1500,
+        tablet: 991,
+        mobile: 767
+      };
 
-let legacyByDefault = {};
+const getStates = (config) =>
+  isStory(config)
+    ? {
+        normal: "normal"
+      }
+    : {
+        normal: "normal",
+        hover: "hover"
+      };
 
 /**
  *
@@ -32,18 +36,37 @@ let legacyByDefault = {};
  * @param {ElementModel} param.v
  * @param {ElementModel} param.vs
  * @param {ElementModel} param.vd
+ * @param {string} param.renderContext - provide the render Context "editor" | "view"
  * @param {object} param.styles
+ * @param {object} param.store
  * @param {object} [param.props]
  * @return {[string, string, string]}
  */
-export function renderStyles({ v, vs, vd, styles, props }) {
+export function renderStyles({
+  v,
+  vs,
+  vd,
+  renderContext,
+  styles,
+  props,
+  store
+}) {
+  if (
+    //TODO: REMOVE. Temporary throw error if renderContext is not provided
+    typeof renderContext === "undefined" &&
+    process.env.NODE_ENV === "development"
+  ) {
+    throw new Error("Render context is undefined");
+  }
   if (vd) {
     const { defaultCSS, rulesCSS, customCSS } = loopStyles({
       v,
       vs,
       vd,
+      renderContext,
       styles,
-      props
+      props,
+      store
     });
 
     return [defaultCSS, rulesCSS, customCSS];
@@ -54,7 +77,7 @@ export function renderStyles({ v, vs, vd, styles, props }) {
   }
 }
 
-function loopStyles({ v, vs, vd, styles, props }) {
+function loopStyles({ v, vs, vd, renderContext, styles, store, props }) {
   let outV = "";
   let outVS = "";
   let outVD = "";
@@ -62,6 +85,10 @@ function loopStyles({ v, vs, vd, styles, props }) {
   let legacyVS = {};
   let legacyVD = {};
   let mode = "";
+  let legacyByDefault = {};
+  const config = configIdSelector(store.getState());
+  const devices = getDevices(config);
+  const states = getStates(config);
 
   /* eslint-disable no-unused-vars */
   Object.entries(devices).forEach(function ([device, deviceValue]) {
@@ -87,48 +114,111 @@ function loopStyles({ v, vs, vd, styles, props }) {
                 throw `The style function ${styleFn} is missing`;
               }
 
-              outV = onStyles[styleFn]({
+              const desktopOutV = onStyles[styleFn]({
+                v,
+                device: DESKTOP,
+                state,
+                mode,
+                props,
+                store,
+                renderContext
+              });
+
+              const desktopOutVS = onStyles[styleFn]({
+                v: vs,
+                device: DESKTOP,
+                state,
+                mode,
+                props,
+                store,
+                renderContext
+              });
+
+              const desktopOutVD = onStyles[styleFn]({
+                v: vd,
+                device: DESKTOP,
+                state,
+                mode,
+                props,
+                store,
+                renderContext
+              });
+
+              const currentOutV = onStyles[styleFn]({
                 v,
                 device,
                 state,
                 mode,
-                props
+                props,
+                store,
+                renderContext
               });
+
+              outV =
+                device === DESKTOP
+                  ? desktopOutV
+                  : currentOutV === desktopOutV && styleKeyKey === "standart"
+                    ? ""
+                    : currentOutV;
+
               legacyV = legacyByOut({
                 legacy: legacyV,
                 out: outV,
                 styleKey,
                 state,
+                device,
                 currentStyle
               });
 
-              outVS = onStyles[styleFn]({
+              const currentOutVS = onStyles[styleFn]({
                 v: vs,
                 device,
                 state,
+                renderContext,
                 mode,
-                props
+                props,
+                store
               });
+
+              outVS =
+                device === DESKTOP
+                  ? desktopOutVS
+                  : currentOutVS === desktopOutVS && styleKeyKey === "standart"
+                    ? ""
+                    : currentOutVS;
+
               legacyVS = legacyByOut({
                 legacy: legacyVS,
                 out: outVS,
                 styleKey,
                 state,
+                device,
                 currentStyle
               });
 
-              outVD = onStyles[styleFn]({
+              const currentOutVD = onStyles[styleFn]({
                 v: vd,
                 device,
                 state,
+                renderContext,
                 mode,
-                props
+                props,
+                store
               });
+
+              outVD =
+                device === DESKTOP
+                  ? desktopOutVD
+                  : currentOutVD === desktopOutVD && styleKeyKey === "standart"
+                    ? ""
+                    : currentOutVD;
+
               legacyVD = legacyByOut({
                 legacy: legacyVD,
                 out: outVD,
                 styleKey,
                 state,
+                device,
                 currentStyle
               });
             });
@@ -138,18 +228,39 @@ function loopStyles({ v, vs, vd, styles, props }) {
     });
   });
 
-  const defaultCSS = cssOutput({ v: undefined, styles, legacy: legacyVD });
+  const defaultCSS = cssOutput({
+    v: undefined,
+    styles,
+    legacy: legacyVD,
+    legacyByDefault,
+    devices,
+    states
+  });
 
   legacyByDefault = legacyVD;
-  const rulesCSS = cssOutput({ v: vs, styles, legacy: legacyVS });
+  const rulesCSS = cssOutput({
+    v: vs,
+    styles,
+    legacy: legacyVS,
+    legacyByDefault,
+    devices,
+    states
+  });
 
   legacyByDefault = legacyVS;
-  const customCSS = cssOutput({ v, styles, legacy: legacyV });
+  const customCSS = cssOutput({
+    v,
+    styles,
+    legacy: legacyV,
+    legacyByDefault,
+    devices,
+    states
+  });
 
   return { defaultCSS, rulesCSS, customCSS };
 }
 
-function cssOutput({ v, styles, legacy }) {
+function cssOutput({ v, styles, legacy, legacyByDefault, devices, states }) {
   let goStandart = "";
   let goInterval = "";
   let gooutStandart = "";
@@ -174,12 +285,16 @@ function cssOutput({ v, styles, legacy }) {
           goInterval = "";
 
           Object.entries(type).forEach(function ([typeKey, cssArray]) {
-            let go = cssArray[devicesCounter];
+            let go = cssArray[device];
+
+            const previousModelStyle =
+              legacyByDefault?.[state]?.[className]?.[typeKey];
+            const currentModelStyle = legacy?.[state]?.[className]?.[typeKey];
 
             if (
               v &&
-              JSON.stringify(legacyByDefault[state][className][typeKey]) ===
-                JSON.stringify(legacy[state][className][typeKey])
+              JSON.stringify(previousModelStyle) ===
+                JSON.stringify(currentModelStyle)
             ) {
               go = "";
             }
@@ -219,35 +334,16 @@ function cssOutput({ v, styles, legacy }) {
       }
 
       if (gooutStandart !== "") {
-        standartCss =
-          device === "desktop" && state === "hover"
-            ? `@media(min-width:${devicesArray[devicesCounter + 1][1]}px){`
-            : device === "desktop"
-            ? ""
-            : devicesCounter === devicesArray.length - 1
-            ? `@media(max-width:${deviceValue}px){`
-            : `@media(max-width:${
-                devicesArray[devicesCounter][1]
-              }px) and (min-width:${
-                devicesArray[devicesCounter + 1][1] + 1
-              }px){`;
+        standartCss = addBreakpointForStandart(device, state, devices);
 
         goout += standartCss + gooutStandart + (standartCss !== "" ? "}" : "");
       }
 
       if (gooutInterval !== "") {
         intervalCss =
-          devicesArray.length > 1 // asta e nevoie pentru stories pentru ca acolo e doar un singur device
-            ? devicesCounter === 0
-              ? `@media(min-width:${devicesArray[devicesCounter + 1][1]}px){`
-              : devicesCounter === devicesArray.length - 1
-              ? `@media(max-width:${deviceValue}px){`
-              : `@media(max-width:${
-                  devicesArray[devicesCounter][1]
-                }px) and (min-width:${
-                  devicesArray[devicesCounter + 1][1] + 1
-                }px){`
-            : "";
+          Object.keys(devices).length === 1
+            ? ""
+            : addBreakpointForInterval(device, devices);
 
         goout += intervalCss + gooutInterval + (intervalCss !== "" ? "}" : "");
       }
@@ -258,14 +354,18 @@ function cssOutput({ v, styles, legacy }) {
   return goout;
 }
 
-function legacyByOut({ legacy, out, styleKey, state, currentStyle }) {
+function legacyByOut({ legacy, out, styleKey, state, device, currentStyle }) {
+  if (!out) {
+    return legacy;
+  }
+
   if (
     state === "hover" &&
     legacy.normal &&
     legacy.normal[styleKey] &&
     legacy.normal[styleKey][currentStyle]
   ) {
-    out = legacy.normal[styleKey][currentStyle][0] === out ? "" : out;
+    out = legacy.normal[styleKey][currentStyle][DESKTOP] === out ? "" : out;
   }
 
   // Codul asta era initial pentru a redue CSS intre devices dar el creaza probleme la show on devices
@@ -280,277 +380,17 @@ function legacyByOut({ legacy, out, styleKey, state, currentStyle }) {
   if (legacy[state]) {
     if (legacy[state][styleKey]) {
       if (legacy[state][styleKey][currentStyle]) {
-        legacy[state][styleKey][currentStyle].push(out);
+        legacy[state][styleKey][currentStyle][device] = out;
       } else {
-        legacy[state][styleKey][currentStyle] = [out];
+        legacy[state][styleKey][currentStyle] = {};
+        legacy[state][styleKey][currentStyle][device] = out;
       }
     } else {
-      legacy[state][styleKey] = { [currentStyle]: [out] };
+      legacy[state][styleKey] = { [currentStyle]: { [device]: out } };
     }
   } else {
-    legacy[state] = { [styleKey]: { [currentStyle]: [out] } };
+    legacy[state] = { [styleKey]: { [currentStyle]: { [device]: out } } };
   }
 
   return legacy;
-}
-
-// ====== tujur ======
-/**
- *
- * @param {string} defaultID
- * @param {string} elementID
- * @param {object} defaultStyle
- * @param {object} rulesStyle
- * @param {object} elementStyle
- *
- * @return {string}
- */
-export function css(
-  defaultID,
-  elementID,
-  [defaultStyle, rulesStyle, elementStyle]
-) {
-  let defaultData;
-  if (defaultStyle) {
-    defaultData = cssCache.get(defaultID);
-    // we don't treat the else clause because we assume that
-    // default styles will be the same for a given id no matter
-    // how many times this function will be called
-    if (!defaultData) {
-      const className = `brz-css-${uuid(5)}`;
-      const cssText = replacePlaceholders(defaultStyle, className);
-      let node;
-
-      if (!css.isServer) {
-        node = document.createElement("style");
-        if (process.env.NODE_ENV === "development") {
-          node.setAttribute(makeAttr("css"), `default-${defaultID}`);
-        }
-        node.appendChild(document.createTextNode(""));
-        node.childNodes[0].nodeValue = cssText;
-
-        insertStyleNodeIntoDOM("default", node);
-      }
-
-      defaultData = {
-        node,
-        className,
-        cssText
-      };
-
-      cssOrdered.default.push(defaultData);
-      cssCache.set(defaultID, defaultData);
-    } else {
-      const { node, className, cssText } = defaultData;
-      const cssTextNext = replacePlaceholders(defaultStyle, className);
-
-      if (cssTextNext !== cssText) {
-        if (!css.isServer) {
-          node.childNodes[0].nodeValue = cssTextNext;
-        }
-
-        defaultData.cssText = cssTextNext;
-      }
-    }
-  }
-
-  let rulesData;
-  if (rulesStyle) {
-    const rulesStyleHash = murmurhash2(rulesStyle);
-
-    rulesData = cssCache.get(rulesStyleHash);
-    if (!rulesData) {
-      const className = `brz-css-${uuid(5)}`;
-      const cssText = replacePlaceholders(rulesStyle, className);
-      let node;
-
-      if (!css.isServer) {
-        node = document.createElement("style");
-        if (process.env.NODE_ENV === "development") {
-          node.setAttribute(makeAttr("css"), `rules-${defaultID}`);
-        }
-        node.appendChild(document.createTextNode(""));
-        node.childNodes[0].nodeValue = cssText;
-
-        insertStyleNodeIntoDOM("rules", node);
-      }
-
-      rulesData = {
-        node,
-        className,
-        cssText
-      };
-
-      cssOrdered.rules.push(rulesData);
-      cssCache.set(rulesStyleHash, rulesData);
-    }
-  }
-
-  let elementData;
-  if (elementStyle) {
-    elementData = cssCache.get(elementID);
-    if (!elementData) {
-      const className = `brz-css-${uuid(5)}`;
-      const cssText = replacePlaceholders(elementStyle, className);
-      let node;
-
-      if (!css.isServer) {
-        node = document.createElement("style");
-        if (process.env.NODE_ENV === "development") {
-          node.setAttribute(makeAttr("css"), `custom-${defaultID}`);
-        }
-        node.appendChild(document.createTextNode(""));
-        node.childNodes[0].nodeValue = cssText;
-
-        insertStyleNodeIntoDOM("custom", node);
-      }
-
-      elementData = {
-        node,
-        className,
-        cssText
-      };
-
-      cssOrdered.custom.push(elementData);
-      cssCache.set(elementID, elementData);
-    } else {
-      const { node, className, cssText } = elementData;
-      const cssTextNext = replacePlaceholders(elementStyle, className);
-
-      if (cssTextNext !== cssText) {
-        if (!css.isServer) {
-          node.childNodes[0].nodeValue = cssTextNext;
-        }
-
-        elementData.cssText = cssTextNext;
-      }
-    }
-  }
-
-  return [
-    ...(defaultData ? [defaultData.className] : []),
-    ...(rulesData ? [rulesData.className] : []),
-    ...(elementData ? [elementData.className] : [])
-  ].join(" ");
-}
-
-export function css1(
-  elementID,
-  elementStyle,
-  replacePlaceholdersCb = replacePlaceholders
-) {
-  let elementData;
-  elementData = cssCache.get(elementID);
-  if (!elementData) {
-    const className = `brz-css-${uuid(5)}`;
-    const cssText = replacePlaceholdersCb(elementStyle, className);
-    let node;
-
-    if (!css.isServer) {
-      node = document.createElement("style");
-      if (process.env.NODE_ENV === "development") {
-        node.setAttribute(makeAttr("css"), "");
-      }
-      node.appendChild(document.createTextNode(""));
-      node.childNodes[0].nodeValue = cssText;
-
-      insertStyleNodeIntoDOM("custom", node);
-    }
-
-    elementData = {
-      node,
-      className,
-      cssText
-    };
-    cssOrdered.custom.push(elementData);
-    cssCache.set(elementID, elementData);
-  } else {
-    const { node, className, cssText } = elementData;
-    const cssTextNext = replacePlaceholdersCb(elementStyle, className);
-
-    if (cssTextNext !== cssText) {
-      if (!css.isServer) {
-        node.childNodes[0].nodeValue = cssTextNext;
-      }
-
-      elementData = {
-        node,
-        className,
-        cssText: cssTextNext
-      };
-      cssCache.set(elementID, elementData);
-    }
-  }
-
-  return {
-    className: elementData.className,
-    cssText: elementData.cssText,
-    clean() {
-      const elementData = cssCache.get(elementID);
-
-      document.head.removeChild(elementData.node);
-      cssCache.delete(elementID);
-    }
-  };
-}
-
-export function clearCache() {
-  for (const [key] of cssCache) {
-    cssCache.clear(key);
-  }
-}
-
-export function replacePlaceholders(styles, className) {
-  const s = styles.replace(/{{WRAPPER}}/gm, `.${className}`);
-  return s.replace(/&&/gm, `.${className}`);
-}
-
-function insertStyleNodeIntoDOM(styleType, styleNode) {
-  const default_ = cssOrdered.default; // can't use default as a identifier
-  const rules = cssOrdered.rules;
-  const custom = cssOrdered.custom;
-  let refNode;
-
-  switch (styleType) {
-    case "default":
-      refNode = default_.length > 0 ? default_[default_.length - 1].node : null;
-      break;
-    case "rules":
-      refNode =
-        rules.length > 0
-          ? rules[rules.length - 1].node
-          : default_.length > 0
-          ? default_[default_.length - 1].node
-          : null;
-      break;
-    case "custom":
-      refNode =
-        custom.length > 0
-          ? custom[custom.length - 1].node
-          : rules.length > 0
-          ? rules[rules.length - 1].node
-          : default_.length > 0
-          ? default_[default_.length - 1].node
-          : null;
-      break;
-    default:
-      throw new Error("invalid tujur css node type: " + styleType);
-  }
-
-  if (refNode) {
-    refNode.insertAdjacentElement("afterend", styleNode);
-  } else {
-    document.head.appendChild(styleNode);
-  }
-}
-
-const cssCache = new Map();
-const cssOrdered = {
-  default: [],
-  rules: [],
-  custom: []
-};
-
-export function getCSSFromCache() {
-  return cssCache;
 }

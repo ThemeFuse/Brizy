@@ -1,18 +1,15 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 import {
-  getColorPaletteColor,
+  getColor,
   hexToRgba,
   makeStylePaletteCSSVar
 } from "visual/utils/color";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { read as readNum } from "visual/utils/reader/number";
 import { read as readStr } from "visual/utils/reader/string";
 import { NORMAL } from "visual/utils/stateMode";
@@ -20,7 +17,6 @@ import { capByPrefix } from "visual/utils/string";
 import { getPopulationColor } from "../utils/dependencies";
 import { ColorOption } from "./types";
 import { colorValues, gradientValues } from "./utils";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 const getColorValue = ({ hex, opacity }) => hexToRgba(hex, opacity);
 
@@ -37,28 +33,6 @@ export const shadowToString = (value, config) => {
     hex: value.hex,
     opacity: value.opacity
   })} ${value.horizontal}px ${value.vertical}px ${value.blur}px`;
-};
-
-export const getColorValues = (v, patch, prefix = "") => {
-  const bgColorPaletteKey = capByPrefix(prefix, "bgColorPalette");
-  const gradientColorPaletteKey = capByPrefix(prefix, "gradientColorPalette");
-
-  const isColorPalette =
-    patch[bgColorPaletteKey] !== v[bgColorPaletteKey] &&
-    getColorPaletteColor(patch[bgColorPaletteKey]);
-
-  const bgColorHex = isColorPalette
-    ? getColorPaletteColor(patch[bgColorPaletteKey]).hex
-    : patch[capByPrefix(prefix, "bgColorHex")];
-  const gradientColorHex = patch[gradientColorPaletteKey]
-    ? getColorPaletteColor(patch[gradientColorPaletteKey]).hex
-    : patch[capByPrefix(prefix, "gradientColorHex")];
-
-  return {
-    ...patch,
-    [capByPrefix(prefix, "bgColorHex")]: bgColorHex,
-    [capByPrefix(prefix, "gradientColorHex")]: gradientColorHex
-  };
 };
 
 export const changeColor = (value, type, config, prefix = "") => {
@@ -208,9 +182,7 @@ export const getShadowData = (value, config) => {
   };
 };
 
-function getSimpleColorOptions(v, { context, device }, onChange) {
-  const config = Config.getAll();
-
+function getSimpleColorOptions(v, { context, device }, onChange, config) {
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.image,
@@ -236,13 +208,7 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
                 withNone: false
               },
               dependencies: (value) => {
-                onChange(
-                  changeColor(
-                    getColorValues(v, value),
-                    ColorOption.Color,
-                    config
-                  )
-                );
+                onChange(changeColor(value, ColorOption.Color, config));
               }
             }
           ]
@@ -258,12 +224,7 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
               title: t("Text Bg. Color"),
               dependencies: (value) => {
                 onChange(
-                  changeColor(
-                    getColorValues(v, value, "text"),
-                    ColorOption.Background,
-                    config,
-                    "text"
-                  )
+                  changeColor(value, ColorOption.Background, config, "text")
                 );
               }
             }
@@ -356,9 +317,7 @@ function getSimpleColorOptions(v, { context, device }, onChange) {
   ];
 }
 
-function getTextPopulationOptions() {
-  const config = Config.getAll();
-
+function getTextPopulationOptions(config, onChange) {
   const isPointerEnabled = isBackgroundPointerEnabled(config, "richText");
 
   return [
@@ -374,7 +333,10 @@ function getTextPopulationOptions() {
             {
               id: "",
               type: "backgroundColor",
-              states: [NORMAL]
+              states: [NORMAL],
+              dependencies: (value) => {
+                onChange(changeColor(value, ColorOption.Color, config));
+              }
             }
           ]
         },
@@ -418,7 +380,7 @@ function getTextPopulationOptions() {
   ];
 }
 
-const getColorToolbar = (v, { device, context }, onChange) => {
+const getColorToolbar = (v, { device, context }, onChange, config) => {
   const {
     isPopulationBlock,
     populationColor,
@@ -432,11 +394,11 @@ const getColorToolbar = (v, { device, context }, onChange) => {
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   if (textPopulation) {
-    const { hex: colorHex } = getOptionColorHexByPalette(
+    backgroundColor = getColor(
+      dvv("bgColorPalette"),
       dvv("bgColorHex"),
-      dvv("bgColorPalette")
+      colorOpacity
     );
-    backgroundColor = hexToRgba(colorHex, colorOpacity);
   } else {
     // something the color is not defined
     backgroundColor = getColorValue(color ?? {});
@@ -460,8 +422,8 @@ const getColorToolbar = (v, { device, context }, onChange) => {
     options: isPopulationBlock
       ? getPopulationColorOptions({ populationColor }, onChange)
       : v.textPopulation
-        ? getTextPopulationOptions()
-        : getSimpleColorOptions(v, { device, context }, onChange)
+        ? getTextPopulationOptions(config, onChange)
+        : getSimpleColorOptions(v, { device, context }, onChange, config)
   };
 };
 

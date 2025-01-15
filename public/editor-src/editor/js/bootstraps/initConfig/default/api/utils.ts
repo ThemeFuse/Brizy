@@ -43,11 +43,10 @@ export const searchCollectionItems: CollectionItemsBySearch = (
   data,
   config
 ) => {
-  // @ts-expect-error: TODO All this code will removed after create Client in Brizy-Cloud
   const { urls, project } = config;
 
   const url = makeUrl(
-    `${urls.api}/projects/${project.id}/build_collection_item_placeholders`,
+    `${urls?.api}/projects/${project.id}/build_collection_item_placeholders`,
     { type: data.id, title: data.search }
   );
 
@@ -62,10 +61,9 @@ export const getShopifyMetafields = (
   data: { sourceType: string },
   config: ConfigCommon
 ) => {
-  // @ts-expect-error: TODO All this code will removed after create Client in Brizy-Cloud
   const { project, urls } = config;
 
-  const url = `${urls.api}/projects/${project.id}/shopify/metafields?collectionTypeSlug=${data.sourceType}`;
+  const url = `${urls?.api}/projects/${project.id}/shopify/metafields?collectionTypeSlug=${data.sourceType}`;
 
   return request(
     url,
@@ -83,10 +81,9 @@ export const getShopifyBlogPostMeta = (
   data: { sourceType: string },
   config: ConfigCommon
 ) => {
-  // @ts-expect-error: TODO All this code will removed after create Client in Brizy-Cloud
   const { project, urls } = config;
 
-  const baseUrl = `${urls.api}/projects/${project.id}/collection/items`;
+  const baseUrl = `${urls?.api}/projects/${project.id}/collection/items`;
 
   const url = makeUrl(baseUrl, {
     collectionTypeSlug: data.sourceType

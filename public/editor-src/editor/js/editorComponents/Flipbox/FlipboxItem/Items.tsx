@@ -8,6 +8,7 @@ import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { NewToolbarConfig } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import contextMenuExtendConfigFn from "./contextMenu";
 
@@ -65,7 +66,7 @@ class FlipboxItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items: Array<JSX.Element>): JSX.Element {
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return <>{items}</>;
     }
 

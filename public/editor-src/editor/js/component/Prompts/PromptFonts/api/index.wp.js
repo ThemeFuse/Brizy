@@ -4,6 +4,7 @@ import Config from "visual/global/Config";
 import { request } from "visual/utils/api/index.wp";
 import { getFontVariation, normalizeFonts } from "./utils";
 
+
 export const createFont = async ({ id, name, files }) => {
   const { api } = Config.get("wp");
   const version = Config.get("editorVersion");
@@ -41,9 +42,9 @@ export const createFont = async ({ id, name, files }) => {
     .then((res) => normalizeFonts(res, variations));
 };
 
-export const deleteFont = (fontId) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const deleteFont = (fontId, config) => {
+  const { api } = config.wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
     action: api.deleteFont,
     hash: api.hash,
@@ -51,9 +52,13 @@ export const deleteFont = (fontId) => {
     id: fontId
   });
 
-  return request(url, {
-    method: "POST"
-  })
+  return request(
+    url,
+    {
+      method: "POST"
+    },
+    config
+  )
     .then(parseJSON)
     .then((res) => res);
 };

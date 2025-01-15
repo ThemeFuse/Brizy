@@ -7,14 +7,16 @@ import React, {
   useState
 } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import { FontStyle } from "visual/component/Controls/FontStyleEditor";
 import { FontStyleItem } from "visual/component/Controls/FontStyleEditor/FontStyle";
+import { Label } from "visual/component/Controls/LeftSidebar/Styling/Label";
 import { optionValueToModel } from "visual/component/Options/types/dev/FontStyleEditor/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import { deviceModeSelector } from "visual/redux/selectors-new";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { DeviceMode } from "visual/types";
 import { getFontById } from "visual/utils/fonts";
+import { ModelFamilyType } from "visual/utils/fonts/getFontById";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { FCC } from "visual/utils/react/types";
@@ -28,8 +30,6 @@ import {
   Props,
   Styles
 } from "./types";
-import { ModelFamilyType } from "visual/utils/fonts/getFontById";
-import { Label } from "visual/component/Controls/LeftSidebar/Styling/Label";
 
 const animateClassName = "brz-ed-option__font-style-editor--animate";
 
@@ -48,6 +48,7 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
   } = value;
 
   const deviceMode = useSelector(deviceModeSelector);
+  const store = useStore();
 
   const [item, setItem] = useState({
     brzNewItem: false,
@@ -185,8 +186,11 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
       }
 
       return {
-        fontFamily: getFontById({ family: fontFamily, type: fontFamilyType })
-          .family,
+        fontFamily: getFontById({
+          family: fontFamily,
+          type: fontFamilyType,
+          store
+        }).family,
         fontWeight: bold ? "bold" : _fontWeight,
         fontStyle: italic ? "italic" : "normal",
         textDecoration: decoration ? decoration : "none",
@@ -197,7 +201,7 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
             : "none"
       };
     },
-    [deviceMode]
+    [deviceMode, store]
   );
 
   const getToolbarItems = useCallback(

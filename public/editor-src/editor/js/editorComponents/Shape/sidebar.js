@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Shape");
+export const title = () => t("Shape");
 
 const getHtml = () => {
   return `

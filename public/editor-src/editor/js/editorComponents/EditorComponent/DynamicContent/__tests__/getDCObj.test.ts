@@ -1,4 +1,5 @@
 import Base64 from "js-base64";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { placeholderName } from "visual/utils/dynamicContent/types";
 import { EditorComponentContextValue } from "../../EditorComponentContext";
 import { ECKeyDCInfo } from "../../types";
@@ -12,6 +13,8 @@ import {
 import { dcApiProxyTestFetcher } from "../utils";
 
 jest.useFakeTimers();
+
+const emptyGlobalConfig = {} as ConfigCommon;
 
 describe("Testing 'getDCObjPreview' function", () => {
   test.each<[ECKeyDCInfo[], DCObjComplete]>([
@@ -408,7 +411,8 @@ describe("Testing 'getDCObjEditor_' function", () => {
     }
   });
   const makeConfig = (postId: string): DCApiProxyConfig => ({
-    postId
+    postId,
+    globalConfig: emptyGlobalConfig
   });
 
   test.each<[ECKeyDCInfo[], DCObjComplete]>([
@@ -619,7 +623,9 @@ describe("Testing 'getDCObjEditor_' function", () => {
       );
     }
 
-    expect(getDCObjEditor_(apiProxy)(dcKeys, context)).toStrictEqual(expected);
+    expect(
+      getDCObjEditor_(apiProxy, emptyGlobalConfig)(dcKeys, context)
+    ).toStrictEqual(expected);
     expect(fetcher.mock.calls.length).toEqual(0);
   });
 
@@ -938,7 +944,10 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const postId = "123";
     const context = makeEditorComponentContext(postId);
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
+    const incomplete = getDCObjEditor_(apiProxy, emptyGlobalConfig)(
+      dcKeys,
+      context
+    );
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }
@@ -1067,7 +1076,10 @@ describe("Testing 'getDCObjEditor_' function", () => {
       );
     }
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
+    const incomplete = getDCObjEditor_(apiProxy, emptyGlobalConfig)(
+      dcKeys,
+      context
+    );
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }
@@ -1299,7 +1311,10 @@ describe("Testing 'getDCObjEditor_' function", () => {
     const postId = "123";
     const context = makeEditorComponentContext(postId);
 
-    const incomplete = getDCObjEditor_(apiProxy)(dcKeys, context);
+    const incomplete = getDCObjEditor_(apiProxy, emptyGlobalConfig)(
+      dcKeys,
+      context
+    );
     if (incomplete.type !== "incomplete") {
       throw new Error("obj should be incomplete");
     }

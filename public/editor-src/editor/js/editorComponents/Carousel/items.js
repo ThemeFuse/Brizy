@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import ReactDOM from "react-dom";
 import SlickSlider from "react-slick";
+import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
@@ -228,7 +229,7 @@ class Items extends EditorArrayComponent {
   }
 
   renderItemWrapper(item, itemKey, itemIndex) {
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return (
         <div key={itemKey} className="brz-carousel__item">
           {item}
@@ -298,7 +299,7 @@ class Items extends EditorArrayComponent {
       mobileSlidesToShow
     } = this.props;
 
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       const responsive = [
         {
           breakpoint: 991,

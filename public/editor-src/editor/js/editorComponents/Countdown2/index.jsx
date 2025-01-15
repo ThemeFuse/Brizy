@@ -8,7 +8,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import "visual/libs/countdown2/jquery.countdown";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { capitalize } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
@@ -165,18 +164,30 @@ class Countdown2 extends EditorComponent {
       { "brz-countdown2-style1": v.style === "style1" },
       { "brz-countdown2-style2": v.style === "style2" },
       { "brz-countdown2-style3": v.style === "style3" },
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const classNameMessage = classnames(
       "brz-countdown2-message",
-      css(
-        `${this.constructor.componentId}-message`,
+      this.css(
+        `${this.getComponentId()}-message`,
         `${this.getId()}-message`,
-        styleMessage(v, vs, vd)
+        styleMessage({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -232,18 +243,30 @@ class Countdown2 extends EditorComponent {
     const className = classnames(
       "brz-countdown2",
       `brz-countdown2-${v.style}`,
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const classNameMessage = classnames(
       "brz-countdown2-message",
-      css(
-        `${this.constructor.componentId}-message`,
+      this.css(
+        `${this.getComponentId()}-message`,
         `${this.getId()}-message`,
-        styleMessage(v, vs, vd)
+        styleMessage({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

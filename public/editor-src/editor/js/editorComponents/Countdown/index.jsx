@@ -7,7 +7,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import "visual/libs/countdown/jquery.countdown";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -130,10 +129,16 @@ class Countdown extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const className = classnames(
       "brz-countdown",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          renderContext: this.renderContext,
+          store: this.getReduxStore()
+        })
       )
     );
 

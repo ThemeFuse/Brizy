@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useReducer
 } from "react";
-import { forkJoin, of, Subscription } from "rxjs";
+import { Subscription, forkJoin, of } from "rxjs";
 import { catchError, mapTo, switchMap } from "rxjs/operators";
 import { noop } from "underscore";
 import { Button } from "visual/component/Controls/Button";
@@ -48,9 +48,9 @@ export interface Props {
   validator: Validator;
 }
 
-const tab = [{ id: "", icon: "nc-extensions-2", title: t("Connect") }];
-
-const API_KEY_ERROR = t("Enter API key");
+const getTabs = () => [
+  { id: "", icon: "nc-extensions-2", title: t("Connect") }
+];
 
 export const PromptFrame = ({
   img,
@@ -132,6 +132,8 @@ export const PromptFrame = ({
     }
   }, [onCancel, isCanceling]);
 
+  const tabs = getTabs();
+
   return (
     <>
       {label}
@@ -144,7 +146,7 @@ export const PromptFrame = ({
       </Button>
       {isClosed ? null : (
         <Tabs
-          tabs={tab}
+          tabs={tabs}
           onChange={noop}
           value={""}
           onClose={() => dispatch(Actions.close)}
@@ -153,7 +155,7 @@ export const PromptFrame = ({
             img={img}
             title={img}
             description={description}
-            error={hasApiKeyError ? API_KEY_ERROR : undefined}
+            error={hasApiKeyError ? t("Enter API key") : undefined}
             isSaving={isSaving}
             isCanceling={isCanceling}
             onClickSave={() => dispatch(Actions.save)}

@@ -1,15 +1,17 @@
-import { ComponentType } from "react";
-import { insert } from "timm";
-import { Config } from "visual/global/Config";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import { getStore } from "visual/redux/store";
+import { ComponentType, ElementType } from "react";
+import {
+  ConfigCommon,
+  LeftSidebarOption,
+  LeftSidebarOptionsIds
+} from "visual/global/Config/types/configs/ConfigCommon";
+import { EditorMode, isPopup, isStory } from "visual/global/EditorModeContext";
+import { getShortcodeComponents } from "visual/shortcodeComponents";
+import { DeviceMode, Shortcodes } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { isExternalStory } from "visual/utils/models";
-import { Base, Shopify } from "../components/AddElements";
-import { BlocksSortable } from "../components/BlocksSortable";
+import { getBaseDrawer } from "../components/AddElements";
+import { getBlocksSortable } from "../components/BlocksSortable";
 import { custom } from "../components/Custom";
-import { DeviceModes } from "../components/DeviceModes";
+import { getDevicesModes } from "../components/DeviceModes";
 import { Settings } from "../components/Settings";
 import { Styling } from "../components/Styling";
 import { getMoreOptions } from "./moreOptions";
@@ -25,8 +27,8 @@ export interface Option {
   drawerTitle?: string;
   disabled?: boolean;
   showInDeviceModes?: Array<string>;
-  drawerComponent?: ComponentType;
-  wrapperHeaderComponent?: ComponentType;
+  drawerComponent?: ElementType;
+  wrapperHeaderComponent?: ElementType;
   component?: ComponentType;
   options?: Array<unknown>;
 }
@@ -36,28 +38,48 @@ interface Options {
   bottom: Option[];
 }
 
-const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
-  const { urls } = config;
-  const leftSidebar = config.ui?.leftSidebar ?? {};
+type GetOptionType = (args: {
+  id: string;
+  title?: string;
+  icon?: string;
+  shortcodes?: Shortcodes;
+}) => Option;
 
-  const pageSettingsOptions = getPageSettings(config);
-  const moreOptions = getMoreOptions(config);
+export type OptionType = Option | GetOptionType;
+
+interface GetItemsProps {
+  config: ConfigCommon;
+  device: DeviceMode;
+  editorMode: EditorMode;
+}
+
+const getItems = ({
+  config,
+  device,
+  editorMode
+}: GetItemsProps): Record<LeftSidebarOptionsIds, OptionType> => {
+  const { ui, urls } = config;
+  const leftSidebar = ui?.leftSidebar ?? {};
+
+  const pageSettingsOptions = getPageSettings(ui);
+  const moreOptions = getMoreOptions(ui);
 
   const onClick = (): void => {
-    const { collaborationToolUrl: url } = urls;
-    const currentDeviceMode = getStore().getState().ui.deviceMode;
-
-    if (url) {
-      window.open(`${url}&device=${currentDeviceMode}`, "_blank");
+    if (urls?.collaborationToolUrl) {
+      window.open(`${urls.collaborationToolUrl}&device=${device}`, "_blank");
     }
   };
+  const _isPopup = isPopup(editorMode);
+  const _isStory = isStory(editorMode);
+  const helpIcon = config?.ui?.help?.showIcon;
 
   return {
     [LeftSidebarOptionsIds.cms]: custom(leftSidebar[LeftSidebarOptionsIds.cms]),
-    // @ts-expect-error: 'disabledElements' is declared here.
-    [LeftSidebarOptionsIds.addElements]: Base,
-    [LeftSidebarOptionsIds.reorderBlock]: BlocksSortable,
-    // @ts-expect-error connected components
+    [LeftSidebarOptionsIds.addElements]: getBaseDrawer,
+    [LeftSidebarOptionsIds.reorderBlock]: getBlocksSortable({
+      helpIcon,
+      disabled: _isPopup || _isStory
+    }),
     [LeftSidebarOptionsIds.globalStyle]: Styling,
     [LeftSidebarOptionsIds.collaboration]: {
       id: LeftSidebarOptionsIds.collaboration,
@@ -66,7 +88,7 @@ const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
       title: t("Collaborate"),
       onClick: onClick
     },
-    [LeftSidebarOptionsIds.deviceMode]: DeviceModes,
+    [LeftSidebarOptionsIds.deviceMode]: getDevicesModes({ disabled: _isStory }),
     [LeftSidebarOptionsIds.pageSettings]: {
       id: LeftSidebarOptionsIds.pageSettings,
       icon: "nc-page",
@@ -75,6 +97,7 @@ const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
       disabled: pageSettingsOptions.length === 0,
       options: pageSettingsOptions
     },
+    [LeftSidebarOptionsIds.settings]: Settings,
     [LeftSidebarOptionsIds.more]: {
       id: LeftSidebarOptionsIds.more,
       icon: "nc-back",
@@ -86,32 +109,55 @@ const getItems = (config: Config): Record<LeftSidebarOptionsIds, Option> => {
   };
 };
 
-export const getOptions = (config: Config): Options => {
+const getTabsOrder = (
+  tabOrder: LeftSidebarOption[],
+  options: Record<LeftSidebarOptionsIds, OptionType>,
+  config: ConfigCommon
+): Option[] => {
+  const tabs: Option[] = [];
+  const shortcodes = getShortcodeComponents(config);
+
+  tabOrder.forEach(({ type, id, title, icon }) => {
+    const filteredShortcodes =
+      shortcodes.find((shortcode) => shortcode.tabId === id)?.shortcodes ?? {};
+
+    const currentOption = options[type];
+
+    let option: Option;
+
+    if (typeof currentOption === "function") {
+      option = currentOption({
+        id,
+        title,
+        icon,
+        shortcodes: filteredShortcodes
+      });
+    } else {
+      option = currentOption;
+    }
+
+    tabs.push(option);
+  });
+
+  return tabs;
+};
+
+export const getOptions = (
+  config: ConfigCommon,
+  device: DeviceMode,
+  editorMode: EditorMode
+): Options => {
   const { leftSidebar = {} } = config.ui ?? {};
   const { topTabsOrder = [], bottomTabsOrder = [] } = leftSidebar;
 
-  const top: Option[] = [];
-  let bottom: Option[] = [];
-  const options = getItems(config);
-
-  topTabsOrder.forEach((id) => {
-    top.push(options[id]);
-
-    // INFO: is not good how it was made, normally need to work with __VISUAL_CONFIG__ but it goes like this because of necessity of second moduleGroups
-    if (id === "addElements" && isCloud(config) && isShopify(config)) {
-      // TODO: need to review this when Shopify will be...
-      // @ts-expect-error: 'disabledElements' is declared here.
-      top.push(Shopify);
-    }
-  });
-  bottomTabsOrder.forEach((id) => {
-    bottom.push(options[id]);
+  const options = getItems({
+    config,
+    device,
+    editorMode
   });
 
-  if (isExternalStory(config)) {
-    // TODO: Temporary this code need to be on backend
-    bottom = insert(bottom, bottom.length - 1, Settings);
-  }
+  const top = getTabsOrder(topTabsOrder, options, config);
+  const bottom = getTabsOrder(bottomTabsOrder, options, config);
 
   return {
     top,

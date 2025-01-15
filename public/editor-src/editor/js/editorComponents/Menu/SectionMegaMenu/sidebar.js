@@ -2,7 +2,7 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
 
-export const title = t("Mega Menu");
+export const title = () => t("Mega Menu");
 
 export function getItems({ context }) {
   const toolbarTagsChoices = [

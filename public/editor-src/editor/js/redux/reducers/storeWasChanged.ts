@@ -20,6 +20,7 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case "MAKE_GLOBAL_POPUP_TO_POPUP":
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK":
     case "ADD_GLOBAL_BLOCK":
+    case "ADD_GLOBAL_POPUP":
     case ActionTypes.UPDATE_CURRENT_STYLE_ID:
     case ActionTypes.UPDATE_CURRENT_STYLE:
     case ActionTypes.REGENERATE_TYPOGRAPHY:

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { ReactNode } from "react";
 import { uniqueId } from "underscore";
+import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -11,12 +12,8 @@ import {
   resizerTransformPatch
 } from "visual/editorComponents/Icon/utils";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { defaultValueKey } from "visual/utils/onChange";
 import defaultValue from "./defaultValue.json";
@@ -38,7 +35,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
   private uniqueId = `${EcwidShoppingBag.componentId}-${uniqueId()}`;
 
   handleResizerChange = (patch: Patch): void => {
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const sizeKey = defaultValueKey({ key: "size", device, state: "normal" });
 
     this.patchValue({
@@ -48,11 +45,11 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
   };
 
   componentDidMount(): void {
-    if (!IS_EDITOR) {
+    if (isView(this.renderContext)) {
       return;
     }
 
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     if (isCloud(config) && config.modules?.shop?.type === "ecwid") {
       EcwidService.init(config.modules.shop.storeId, {}).shoppingCart();
@@ -65,7 +62,17 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
     const className = classNames(
       "brz-ecwid-wrapper",
       "brz-ecwid-shopping-bag-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
@@ -132,7 +139,17 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
     const className = classNames(
       "brz-ecwid-wrapper",
       "brz-ecwid-shopping-bag-wrapper",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const storeId = makePlaceholder({
       content: "{{ecwid_store_id}}"

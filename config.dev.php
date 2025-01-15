@@ -24,7 +24,7 @@ class Brizy_Config
     const PLATFORM_CLIENT_SECRET = "3dfj9r23uqgws0kws0cgsgs0008owcwo4o0o08sgs8o4wgco4";
     const PLATFORM_EMAIL = "admin@admin.com";
 
-    const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
+    const UPGRADE_TO_PRO_URL = "https://www.brizy.io/pricing-wordpress/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash/";
     const EDITOR_NEW_TEMPLEATES_URL = "https://phplaravel-1109775-4184176.cloudwaysapps.com/";
     const SUPPORT_URL = "https://support.brizy.io";
     const ABOUT_URL = "https://brizy.io";
@@ -33,7 +33,7 @@ class Brizy_Config
     const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'editor-build'.DIRECTORY_SEPARATOR.'dev';
     const EDITOR_BUILD_RELATIVE_PATH = 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
     const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
-    const CLOUD_ENDPOINT = 'http://www.brizysites.com';
+    const CLOUD_ENDPOINT = 'https://beta1.brizydemo.com';
     const CLOUD_EDITOR_VERSIONS = '/api/versions';
     const CLOUD_LIBRARY = '/dev/library';
     const CLOUD_SIGNIN = '/api/sign_ins';
@@ -98,7 +98,7 @@ class Brizy_Config
     {
         return new Brizy_Admin_UrlIterator(
             array(
-                'http://www.brizysites.com',
+                'http://beta1.brizydemo.com',
             )
         );
     }

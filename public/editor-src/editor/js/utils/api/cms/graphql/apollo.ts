@@ -5,7 +5,6 @@ import {
   createHttpLink
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import Config from "visual/global/Config";
 
 export type ApolloClient = ApolloClientClass<NormalizedCacheObject>;
 
@@ -52,13 +51,12 @@ export function createApolloClient({
 
 let connection: ApolloClient | undefined = undefined;
 
-export const getConnection = (): ApolloClient =>
+export const getConnection = ({
+  uri,
+  authorization
+}: CreateApolloClientProps): ApolloClient =>
   connection ??
   (connection = createApolloClient({
-    uri: Config.getAll().api?.brizyApiUrl ?? "",
-    authorization: Config.get("tokenV2")
-      ? `${Config.get("tokenV2").token_type} ${
-          Config.get("tokenV2").access_token
-        }`
-      : undefined
+    uri,
+    authorization
   }));

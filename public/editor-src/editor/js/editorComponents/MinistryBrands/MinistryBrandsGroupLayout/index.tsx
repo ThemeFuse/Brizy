@@ -5,9 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
@@ -30,7 +28,7 @@ import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
-import { EkklesiaMessages } from "../utils/helpers";
+import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -41,6 +39,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
   static get componentId(): "MinistryBrandsGroupLayout" {
     return "MinistryBrandsGroupLayout";
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -63,7 +62,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
       addCategoryFilterParent2,
       addCategoryFilterParent3
     } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [
@@ -87,7 +86,8 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["group_layout"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["group_layout"]);
       this.patchValue(changedKeys);
     }
   }
@@ -95,7 +95,17 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
   renderForEdit(v: Value, vs: Value, vd: Value): ReactElement {
     const className = classNames(
       "brz-groupLayout__wrapper",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
@@ -212,7 +222,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                             <Toolbar
                               {...this.makeToolbarPropsFromConfig2(
                                 toolbarExtendButtons,
-                    sidebarExtendButtons,
+                                sidebarExtendButtons,
                                 {
                                   allowExtend: false
                                 }

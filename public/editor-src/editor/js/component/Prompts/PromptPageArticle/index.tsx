@@ -1,6 +1,13 @@
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import Radio, { RadioItem } from "visual/component/Controls/Radio";
+import Fixed from "visual/component/Prompts/Fixed";
+import { reducer } from "visual/component/Prompts/PromptPageArticle/reducer";
+import {
+  setBlog,
+  setLayout,
+  setTitle
+} from "visual/component/Prompts/PromptPageArticle/types/Setters";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import {
@@ -9,13 +16,6 @@ import {
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import Fixed from "visual/component/Prompts/Fixed";
-import { reducer } from "visual/component/Prompts/PromptPageArticle/reducer";
-import {
-  setBlog,
-  setLayout,
-  setTitle
-} from "visual/component/Prompts/PromptPageArticle/types/Setters";
 import {
   canSyncPage,
   getChoices,
@@ -23,16 +23,15 @@ import {
   getTabsByItemsNumber,
   isShopifyLayout
 } from "visual/component/Prompts/utils";
-import Config from "visual/global/Config";
 import {
+  Shopify,
   isCloud,
-  isShopify,
-  Shopify
+  isShopify
 } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  getShopifyTemplate,
-  ShopifyTemplate
+  ShopifyTemplate,
+  getShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import {
   updateError,
@@ -55,11 +54,9 @@ import { Layout, Tabs } from "../common/PromptPage/types";
 import { Props, Valid } from "./types";
 
 export const PromptPageArticle = (props: Props): ReactElement => {
-  const _config = useMemo(() => Config.getAll(), []);
-
   const templateType = useMemo(() => {
-    return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
-  }, [_config]);
+    return getShopifyTemplate(props.config) ?? ShopifyTemplate.Product;
+  }, [props.config]);
 
   const {
     headTitle,
@@ -68,7 +65,8 @@ export const PromptPageArticle = (props: Props): ReactElement => {
     selectedLayout,
     onClose,
     onSave,
-    onAfterSave
+    onAfterSave,
+    config
   } = props;
 
   const { value } = selectedLayout || { value: undefined };
@@ -83,7 +81,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
       return onSave()
         .then(() => {
           return shopifySyncArticle({
-            config: _config as Shopify,
+            config: config as Shopify,
             blogId: selected.id,
             blogTitle: selected.title,
             title
@@ -95,18 +93,17 @@ export const PromptPageArticle = (props: Props): ReactElement => {
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave, _config]
+    [dispatch, onSave, onAfterSave, config]
   );
   const getData = useCallback(async () => {
-    const config = Config.getAll();
     if (isCloud(config) && isShopify(config)) {
-      const selectedP = getPageRelations(config).then((is) =>
+      const selectedP = getPageRelations(config.modules).then((is) =>
         is.map((i) => i.blog_id || i.id)
       );
       const itemsP = shopifyBlogItems(config);
 
       const [items, selected] = await Promise.all([itemsP, selectedP]);
-      const layouts = getChoices(config);
+      const layouts = getChoices(config.templates);
 
       if (isNonEmptyArray(layouts)) {
         return {
@@ -121,7 +118,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
     }
 
     return Promise.reject();
-  }, [pageTitle, value]);
+  }, [pageTitle, value, config]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -144,7 +141,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
         size={3}
         loading={state.type === "Saving"}
         onClick={(): void => {
-          const configCommon = _config as ConfigCommon;
+          const configCommon = config as ConfigCommon;
           const canSync = canSyncPage(configCommon);
 
           if (canSync) {

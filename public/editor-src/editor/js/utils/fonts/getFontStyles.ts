@@ -2,7 +2,7 @@ import {
   currentStyleSelector,
   extraFontStylesSelector
 } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
 import { FontStyle } from "visual/types";
 
@@ -11,15 +11,21 @@ interface AllFontStyles {
   extraFontStyles?: ReduxState["extraFontStyles"];
 }
 
+interface Data {
+  store: Store;
+  includeDeleted?: boolean;
+}
+
 export function getFontStyles(
-  { includeDeleted = false } = {},
+  data: Data,
   _allFontStyles?: AllFontStyles
 ): Array<FontStyle> {
+  const { includeDeleted = false, store } = data;
   let fontStyles = _allFontStyles?.fontStyles;
   let extraFontStyles = _allFontStyles?.extraFontStyles;
 
   if (fontStyles === undefined || extraFontStyles === undefined) {
-    const state = getStore().getState();
+    const state = store.getState();
 
     fontStyles = currentStyleSelector(state).fontStyles;
     extraFontStyles = extraFontStylesSelector(state);

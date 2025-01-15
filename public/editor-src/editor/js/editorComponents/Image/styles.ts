@@ -1,28 +1,23 @@
-import { renderStyles } from "visual/utils/cssStyle";
 import { ElementModel, ElementProps } from "visual/component/Elements/Types";
+import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
-export function styleHover(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel,
-  props: ElementProps
-): OutputStyle {
+interface Props extends DynamicStylesProps<ElementModel> {
+  props: ElementProps;
+}
+
+export function styleHover(data: Props): OutputStyle {
   const styles: Styles = {
     ".brz &&.brz-hover-animation__container": {
       standart: ["cssStyleElementImageMaxWidthPreview"]
     }
   };
 
-  return renderStyles({ v, vs, vd, styles, props });
+  return renderStyles({ ...data, styles });
 }
 
-export function style(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel,
-  props: ElementProps
-): OutputStyle {
+export function style(data: Props): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover:not(.brz-image--hovered)": {
       standart: ["cssStyleElementImageMaxWidthPreview"]
@@ -60,15 +55,10 @@ export function style(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles, props });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleContent(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel,
-  props: ElementProps
-): OutputStyle {
+export function styleContent(data: Props): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: [
@@ -79,15 +69,11 @@ export function styleContent(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles, props });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleWrapper(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel,
-  props: ElementProps
-): OutputStyle {
+export function styleWrapper(data: Props): OutputStyle {
+  const { v } = data;
   const { maskShape = "none" } = v;
   const styles: Styles = {
     ".brz &&:hover": {
@@ -122,13 +108,11 @@ export function styleWrapper(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles, props });
+  return renderStyles({ ...data, styles });
 }
 
 export function styleWrapperContainer(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
+  data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
@@ -142,15 +126,10 @@ export function styleWrapperContainer(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }
 
-export function styleImage(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel,
-  props: ElementProps
-): OutputStyle {
+export function styleImage(data: Props): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: [
@@ -162,15 +141,10 @@ export function styleImage(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles, props });
+  return renderStyles({ ...data, styles });
 }
 
-export function stylePicture(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel,
-  props: ElementProps
-): OutputStyle {
+export function stylePicture(data: Props): OutputStyle {
   const styles: Styles = {
     ".brz &&:hover": {
       standart: ["cssStyleElementImagePictureSizePreview"]
@@ -183,5 +157,5 @@ export function stylePicture(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles, props });
+  return renderStyles({ ...data, styles });
 }

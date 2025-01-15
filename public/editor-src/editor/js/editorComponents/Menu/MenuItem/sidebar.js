@@ -8,7 +8,7 @@ export default (level, isMMenu) => {
   };
 };
 
-export const title = t("Menu Items");
+export const title = () => t("Menu Items");
 
 export const getItemsSimple =
   (level) =>
@@ -37,8 +37,9 @@ export const getItemsSimple =
     ];
   };
 
-// eslint-disable-next-line no-unused-vars
-export const getItemsMMenu = (_) => ({ device, state }) => {
+export const getItemsMMenu =
+  () =>
+  ({ device, state }) => {
     return [
       {
         id: "borderRadiusPicker",

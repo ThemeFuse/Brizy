@@ -1,15 +1,12 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
 import { getDynamicContentOption } from "visual/utils/options";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { handleChangeLink, patchTextTransform } from "../utils/dependencies";
 import getColorToolbar from "./color";
 import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
 import { mergeTypographyFontFamily } from "./utils/index";
-
-const proEnabled = Boolean(Config.get("pro"));
 
 const scriptChoices = ["sub", "super"];
 
@@ -51,18 +48,18 @@ const getBlockTag = (value) => {
 
 const getItems =
   (v, onChange) =>
-  ({ device, component, context }) => {
-    const config = Config.getAll();
+  ({ device, component, context, editorMode }) => {
+    const config = component.getGlobalConfig();
 
-    const IS_STORY = isStory(config);
-    const IS_GLOBAL_POPUP = isPopup(config);
+    const _isStory = isStory(editorMode);
+    const _isPopup = isPopup(editorMode);
     const inPopup = Boolean(component.props.meta?.sectionPopup);
     const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
     const isPopulationBlock = v.population && v.population.display === "block";
 
     let disablePopup;
     if (device === "desktop") {
-      disablePopup = inPopup || inPopup2 || IS_GLOBAL_POPUP;
+      disablePopup = inPopup || inPopup2 || _isPopup;
     } else {
       disablePopup = v.linkType !== "popup" || v.linkPopup === "";
     }
@@ -105,6 +102,8 @@ const getItems =
       !!v.population ||
       !!v.textPopulation ||
       typeof config?.api?.textAI?.handler !== "function";
+
+    const proEnabled = !!config.pro;
 
     return [
       {
@@ -461,7 +460,8 @@ const getItems =
       getColorToolbar(
         { ...v, isPopulationBlock },
         { device, component, context },
-        onChange
+        onChange,
+        config
       ),
       // is needed to disabled wrapper align
       {
@@ -626,8 +626,8 @@ const getItems =
                     ...toolbarLinkAnchor({ v }),
                     disabled:
                       device !== "desktop" ||
-                      isPopup(config) ||
-                      isStory(config),
+                      isPopup(editorMode) ||
+                      isStory(editorMode),
                     ...(v.textPopulation
                       ? {}
                       : {
@@ -668,7 +668,7 @@ const getItems =
                       popupKey: `${component.getId()}_${linkPopup}`,
                       canDelete: device === "desktop"
                     },
-                    disabled: disablePopup || IS_STORY,
+                    disabled: disablePopup || _isStory,
                     ...(v.textPopulation
                       ? {}
                       : {
@@ -689,7 +689,7 @@ const getItems =
                     id: "linkToSlide",
                     type: "number",
                     label: t("Slide"),
-                    disabled: !IS_STORY,
+                    disabled: !_isStory,
                     config: {
                       min: 1,
                       max: 1000000
@@ -732,7 +732,7 @@ const getItems =
             id: "marginTop",
             label: t("Gap Above"),
             type: "slider",
-            disabled: IS_STORY,
+            disabled: _isStory,
             config: {
               min: 0,
               max: 100,
@@ -745,7 +745,7 @@ const getItems =
             id: "marginBottom",
             label: t("Gap Below"),
             type: "slider",
-            disabled: IS_STORY,
+            disabled: _isStory,
             config: {
               min: 0,
               max: 100,

@@ -44,3 +44,8 @@ export type PromptFontsProps = {
 export type PromptKeyHelperProps = {
   onClose?: () => void;
 };
+
+export type PromptsOpenProps<T> = Omit<
+  T,
+  Extract<keyof T, "config" | "editorMode">
+>;

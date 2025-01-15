@@ -1,25 +1,35 @@
-import Config from "visual/global/Config";
+import { configSelector } from "visual/redux/selectors";
 import { getFontCssStyle } from "visual/utils/fonts";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
 import { isNullish } from "visual/utils/value";
 
-export function styleTypographyFontFamily({ v, device, state }) {
+export function styleTypographyFontFamily({
+  v,
+  device,
+  state,
+  store,
+  renderContext
+}) {
   const { fontFamily, fontFamilyType } = v;
 
   if (isNullish(fontFamily) || isNullish(fontFamilyType)) {
     return "";
   }
+
+  const config = configSelector(store.getState());
   const fontStyle = defaultValueValue({ v, key: "fontStyle", device, state });
 
-  return getDetailsModelFontFamily(
-    {
+  return getDetailsModelFontFamily({
+    data: {
       family: fontFamily,
       familyType: fontFamilyType,
-      style: fontStyle
+      style: fontStyle,
+      store
     },
-    Config.getAll()
-  );
+    config,
+    renderContext
+  });
 }
 
 export function styleTypographyFontSize({ v, device, state }) {

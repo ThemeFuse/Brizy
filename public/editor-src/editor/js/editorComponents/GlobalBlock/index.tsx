@@ -1,12 +1,12 @@
-import React from "react";
 import { fromJS } from "immutable";
+import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 import Editor from "visual/global/Editor";
 import { updateGlobalBlock } from "visual/redux/actions2";
 import { canUseCondition } from "visual/utils/blocks";
-import { Props, Value } from "./types";
 import { connector } from "./connector";
+import { Props, Value } from "./types";
 
 class GlobalBlock extends EditorComponent<Value, Props> {
   static defaultValue = {};
@@ -34,16 +34,16 @@ class GlobalBlock extends EditorComponent<Value, Props> {
 
     // check redux
     if (props.fonts !== nextProps.fonts) {
-      // console.log("scu", this.constructor.componentId, "project", true);
+      // console.log("scu", this.getComponentId(), "project", true);
       return true;
     }
 
     if (props.defaultFont !== nextProps.defaultFont) {
-      // console.log("scu", this.constructor.componentId, "project", true);
+      // console.log("scu", this.getComponentId(), "project", true);
       return true;
     }
 
-    // console.log("scu", this.constructor.componentId, false);
+    // console.log("scu", this.getComponentId(), false);
     return false;
   }
 
@@ -79,21 +79,23 @@ class GlobalBlock extends EditorComponent<Value, Props> {
   renderForEdit() {
     const _id = this.getId();
     const { globalBlocks, page } = this.props;
+    const globalBlock = globalBlocks[_id];
 
     // sometime users are delete global blocks from BD
     // but in pageData exist, in this case we need to check
     // if have some global block with id
-    if (!globalBlocks[_id]) {
+    if (!globalBlock) {
       return null;
     }
 
     // if all rules was removed in globalBlock - it still exists
     // into pageJson, but shouldn't be shown
-    if (!canUseCondition(globalBlocks[_id], page)) {
+    const config = this.getGlobalConfig();
+    if (!canUseCondition({ globalBlock, page, config })) {
       return null;
     }
 
-    const { type, value, ...otherData } = globalBlocks[_id].data;
+    const { type, value, ...otherData } = globalBlock.data;
 
     if (type === "GlobalBlock") {
       throw new Error(`Global block not found ${_id}`);
@@ -143,21 +145,23 @@ class GlobalBlock extends EditorComponent<Value, Props> {
     // Here, we need to return only placeholders.
     const _id = this.getId();
     const { globalBlocks, page } = this.props;
+    const globalBlock = globalBlocks[_id];
 
     // sometime users are delete global blocks from BD
     // but in pageData exist, in this case we need to check
     // if have some global block with id
-    if (!globalBlocks[_id]) {
+    if (!globalBlock) {
       return null;
     }
 
     // if all rules was removed in globalBlock - it still exists
     // into pageJson, but shouldn't be shown
-    if (!canUseCondition(globalBlocks[_id], page)) {
+    const config = this.getGlobalConfig();
+    if (!canUseCondition({ globalBlock, page, config })) {
       return null;
     }
 
-    const { type } = globalBlocks[_id].data;
+    const { type } = globalBlock.data;
 
     if (type === "GlobalBlock") {
       throw new Error(`Global block not found ${_id}`);

@@ -9,22 +9,22 @@ import React, {
 } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { getDynamicContentPlaceholders } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
-import { optionsToChoices } from "visual/utils/options/getDynamicContentChoices";
 import {
   configChoicesToSelectItemChoices,
   findDCChoiceByPlaceholder
 } from "visual/utils/options/Population/utils";
+import { optionsToChoices } from "visual/utils/options/getDynamicContentChoices";
 import { FCP } from "visual/utils/react/types";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { auto, isAuto } from "visual/utils/string/specs";
+import { PopulationMethod } from "../../types/PopulationMethod";
 import Input from "../Input";
 import { Loading } from "../Loading";
 import { PopulationSelect } from "../Select";
-import { PopulationMethod } from "../../types/PopulationMethod";
 import { Props } from "./types";
 
 const EMPTY = "";
@@ -42,6 +42,8 @@ export const PopulationChoices: FCP<Props, ReactElement> = (props) => {
     onChange
   } = props;
   const { population, populationEntityType = auto } = value;
+
+  const config = useConfig();
 
   const configChoices = useMemo(() => {
     return configChoicesToSelectItemChoices({ iconOnly, mockValue }, _choices);
@@ -62,11 +64,9 @@ export const PopulationChoices: FCP<Props, ReactElement> = (props) => {
   useEffect(() => {
     (async () => {
       if (!isAuto(populationEntityType) && type) {
-        const _config = Config.getAll();
-
         try {
           const choices =
-            (await getDynamicContentPlaceholders(_config, {
+            (await getDynamicContentPlaceholders(config.dynamicContent, {
               entityType: populationEntityType,
               groupType: type
             })) ?? [];
@@ -101,7 +101,14 @@ export const PopulationChoices: FCP<Props, ReactElement> = (props) => {
         setIsLoaded(true);
       }
     })();
-  }, [configChoices, populationEntityType, type, mockValue, iconOnly]);
+  }, [
+    configChoices,
+    populationEntityType,
+    type,
+    mockValue,
+    iconOnly,
+    config.dynamicContent
+  ]);
 
   const existChoices = choices.length > 0;
 

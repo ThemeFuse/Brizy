@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import { ContextMenuDisabled } from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
@@ -21,13 +22,12 @@ import {
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
-import Config from "visual/global/Config";
-import { css } from "visual/utils/cssStyle";
+import { isPopup } from "visual/global/EditorModeContext";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -40,7 +40,6 @@ import { style, styleInner } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarCloseConfig from "./toolbarClose";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import { ContextMenuDisabled } from "visual/component/ContextMenu";
 
 /**
  * @deprecated use import {SectionPopup2Instances} from "visual/editorComponents/SectionPopup2/instances"
@@ -49,25 +48,18 @@ import { ContextMenuDisabled } from "visual/component/ContextMenu";
 export const SectionPopup2Instances = Instances;
 
 class SectionPopup2 extends EditorComponent {
-  static get componentId() {
-    return "SectionPopup2";
-  }
-
   static defaultProps = {
     meta: {},
     onOpen: () => {},
     onClose: () => {}
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
-  // this is a used as a hack to reopen the
-  // popup after it is unmounted when switching
   // from Global to normal
   static tmpGlobal = null;
 
+  // this is a used as a hack to reopen the
+  // popup after it is unmounted when switching
   collapsibleToolbarRef = React.createRef();
 
   constructor(...args) {
@@ -75,7 +67,7 @@ class SectionPopup2 extends EditorComponent {
 
     this.instanceKey = this.props.instanceKey || this.getId();
 
-    if (IS_EDITOR) {
+    if (isEditor(this.props.renderContext)) {
       const isOpened =
         this.props.isOpened || SectionPopup2.tmpGlobal === this.getId();
 
@@ -87,6 +79,10 @@ class SectionPopup2 extends EditorComponent {
       this.popupsContainer = document.getElementById("brz-popups");
       this.el = document.createElement("div");
     }
+  }
+
+  static get componentId() {
+    return "SectionPopup2";
   }
 
   componentDidMount() {
@@ -203,17 +199,23 @@ class SectionPopup2 extends EditorComponent {
     const _closeCustomID = mRead(closeCustomID) || undefined;
     const className = classnames(
       "brz-popup2__close",
-      IS_PREVIEW && showCloseButtonAfter && "brz-hidden",
+      isView(this.renderContext) && showCloseButtonAfter && "brz-hidden",
       closeCustomClassName
     );
     const innerClassName = classnames(
       "brz-popup2__inner",
       "brz-d-xs-flex",
       "brz-flex-xs-wrap",
-      css(
-        `${this.constructor.componentId}-bg`,
+      this.css(
+        `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        styleInner(v, vs, vd)
+        styleInner({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const classNameContainer = classnames("brz-container", containerClassName);
@@ -239,7 +241,7 @@ class SectionPopup2 extends EditorComponent {
     return (
       <Background value={v} meta={meta}>
         <div className={innerClassName}>
-          <SortableZIndex zIndex={1}>
+          <SortableZIndex zIndex={1} renderContext={this.renderContext}>
             <div className="brz-container__wrap">
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
@@ -284,8 +286,7 @@ class SectionPopup2 extends EditorComponent {
       customCSS
     } = v;
     const id = this.getId();
-    const config = Config.getAll();
-    const isGlobal = isPopup(config);
+    const isGlobal = isPopup(this.props.editorMode);
     const inMegaMenu = meta.megaMenu;
     const classNamePopup = classnames(
       "brz-popup2",
@@ -299,10 +300,16 @@ class SectionPopup2 extends EditorComponent {
       className,
       _className,
       customClassName,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -377,7 +384,7 @@ class SectionPopup2 extends EditorComponent {
       popupId: _popupId
     } = v;
     const { className: _className, meta = {} } = this.props;
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
     const inMegaMenu = meta.megaMenu;
     const popupSettings = config.ui?.popupSettings ?? {};
     const scrollPageBehind = popupSettings.scrollPageBehind;
@@ -403,7 +410,17 @@ class SectionPopup2 extends EditorComponent {
       className,
       _className,
       customClassName,
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        `${this.getComponentId()}`,
+        `${this.getId()}`,
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });

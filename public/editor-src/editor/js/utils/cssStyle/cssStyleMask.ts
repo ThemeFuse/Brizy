@@ -168,6 +168,7 @@ export function cssStyleMaskCustomShape({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
@@ -178,13 +179,14 @@ export function cssStyleMaskCustomShape({
     return "";
   }
 
-  return styleMaskCustomShape({ v, device, state, prefix });
+  return styleMaskCustomShape({ v, device, state, store, prefix });
 }
 
 export function cssStyleMaskDropShadow({
   v,
   device,
   state,
+  store,
   prefix = "maskShadow"
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
@@ -194,5 +196,5 @@ export function cssStyleMaskDropShadow({
 
   return maskShape === "none"
     ? ""
-    : cssStyleDropShadow({ v, device, state, prefix });
+    : cssStyleDropShadow({ v, device, state, store, prefix });
 }

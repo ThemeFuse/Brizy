@@ -2,6 +2,7 @@ import React, { Component, ReactElement } from "react";
 import { ConnectedProps, connect } from "react-redux";
 import Tooltip from "visual/component/Controls/Tooltip";
 import { ToastNotification } from "visual/component/Notifications";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
 import { deleteGlobalBlock, updateGlobalBlock } from "visual/redux/actions2";
 import {
   fontsSelector,
@@ -14,6 +15,7 @@ import {
   blockThumbnailData,
   createGlobalBlockSymbol
 } from "visual/utils/blocks";
+import { isPro } from "visual/utils/env";
 import { normalizeFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
 import {
@@ -44,17 +46,21 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   };
 
   getBlocks(): Array<Thumbnail> {
-    const { type, globalBlocks, globalBlocksInPage } = this.props;
+    const { type, globalBlocks, globalBlocksInPage, config } = this.props;
     const blocks = Object.values(globalBlocks).filter(
       ({ data, meta = {} }) => !data.deleted && meta.type === type
     );
+    const { screenshot } = config.urls ?? {};
 
     return blocks.map((block) => {
-      const { url, width, height } = blockThumbnailData({
-        type: "",
-        value: {},
-        meta: block.meta
-      });
+      const { url, width, height } = blockThumbnailData(
+        {
+          type: "",
+          value: {},
+          meta: block.meta
+        },
+        screenshot
+      );
 
       const { uid, title = t("Untitled"), tags } = block;
       const inactive = type === "normal" && !!globalBlocksInPage[uid];
@@ -77,13 +83,18 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   }
 
   handleAdd = async ({ uid }: Thumbnail): Promise<void> => {
-    const { globalBlocks, projectFonts, onAddBlocks, onClose } = this.props;
+    const { globalBlocks, projectFonts, onAddBlocks, onClose, config } =
+      this.props;
     const block = createGlobalBlockSymbol({ uid });
     const fontsDiff = getBlocksStylesFonts(
       getUsedModelsFonts({ models: block, globalBlocks }),
       projectFonts
     );
-    const fonts = await normalizeFonts(fontsDiff);
+    const fonts = await normalizeFonts({
+      config: config,
+      renderContext: "editor",
+      newFonts: fontsDiff
+    });
 
     onAddBlocks({ block, fonts });
     onClose();
@@ -128,7 +139,8 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   }
 
   render(): ReactElement {
-    const { type, showSearch, showSidebar, HeaderSlotLeft } = this.props;
+    const { type, showSearch, showSidebar, HeaderSlotLeft, config } =
+      this.props;
     const blocks = this.getBlocks();
 
     return (
@@ -139,9 +151,14 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
         showTitle={true}
         data={blocks}
         HeaderSlotLeft={HeaderSlotLeft}
+        isPopup={isPopup(config.mode)}
         onAdd={this.handleAdd}
         onRemove={this.handleRemove}
         onUpdate={this.handleUpdate}
+        isPro={isPro(config)}
+        isStory={isStory(config.mode)}
+        upgradeToPro={config?.urls?.upgradeToPro}
+        config={config}
       />
     );
   }

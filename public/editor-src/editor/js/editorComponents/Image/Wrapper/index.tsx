@@ -3,17 +3,18 @@ import classnames from "classnames";
 import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { getSizeType } from "visual/editorComponents/Image/utils";
-import { css } from "visual/utils/cssStyle";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { useRender } from "visual/providers/RenderProvider";
+import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { clamp } from "visual/utils/math";
 import { mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
 import { FCC } from "visual/utils/react/types";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { styleWrapper, styleWrapperContainer } from "../styles";
-import { ImageProps, Meta, Patch, Styles, V } from "../types";
+import { ImageProps, Meta, Patch, V } from "../types";
 import { showOriginalImage } from "../utils";
 import useResizerPoints from "./useResizerPoints";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
 const Image: FCC<ImageProps> = (props) => {
   const {
@@ -25,28 +26,38 @@ const Image: FCC<ImageProps> = (props) => {
     wrapperSizes,
     meta,
     context,
+    store,
     onChange,
     onStart,
     onEnd
   } = props;
   const { maskShape = "none" } = v;
   const { points, restrictions } = useResizerPoints({ ...props, context });
+  const { renderType } = useRender();
+  const modelClassName = useCSS({
+    // hard to explain, but because styles are generated from props in this case
+    // we can't rely on the usual way of using css(),
+    // so we trick it with a custom class for both default and custom classNames
+    // `${componentId}-wrapper`,
+    componentId: `${componentId}-${_id}-wrapper`,
+    id: `${_id}-wrapper`,
+    css: styleWrapper({
+      v,
+      vs,
+      vd,
+      props: {
+        ...wrapperSizes,
+        showOriginalImage: showOriginalImage(v)
+      },
+      store,
+      renderContext: renderType
+    })
+  });
 
   const classNameWrapper = classnames(
     "brz-ed-image__wrapper",
     { "brz-img__original": showOriginalImage(v) },
-    css(
-      // hard to explain, but because styles are generated from props in this case
-      // we can't rely on the usual way of using css(),
-      // so we trick it with a custom class for both default and custom classNames
-      // `${componentId}-wrapper`,
-      `${componentId}-${_id}-wrapper`,
-      `${_id}-wrapper`,
-      styleWrapper(v, vs, vd, {
-        ...wrapperSizes,
-        showOriginalImage: showOriginalImage(v)
-      }) as Styles
-    )
+    modelClassName
   );
 
   const handleOnResize = useCallback(
@@ -55,14 +66,15 @@ const Image: FCC<ImageProps> = (props) => {
     },
     [onChange, v]
   );
+  const containerModelClassName = useCSS({
+    componentId: `${componentId}-${_id}-wrapper-container`,
+    id: `${_id}-wrapper-container`,
+    css: styleWrapperContainer({ v, vs, vd, store, renderContext: renderType })
+  });
 
   const classNameWrapperContainer = classnames(
     "brz-ed-image__wrapper-container",
-    css(
-      `${componentId}-${_id}-wrapper-container`,
-      `${_id}-wrapper-container`,
-      styleWrapperContainer(v, vs, vd)
-    )
+    containerModelClassName
   );
 
   return (

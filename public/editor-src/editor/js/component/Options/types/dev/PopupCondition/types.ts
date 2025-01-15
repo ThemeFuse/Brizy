@@ -1,6 +1,6 @@
-import { Config } from "visual/global/Config";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export interface Props {
   className: string;
@@ -14,7 +14,7 @@ export interface Trigger {
 }
 
 export interface ConditionsProps {
-  config: Config;
+  config: ConfigCommon;
 }
 
 export type Value = MValue<Literal>;

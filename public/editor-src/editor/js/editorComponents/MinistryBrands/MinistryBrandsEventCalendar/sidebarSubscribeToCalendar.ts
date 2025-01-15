@@ -1,9 +1,8 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import Config from "visual/global/Config";
+import { WithEditorMode, isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 
-export function getItems(): ToolbarItemType[] {
+export function getItems({ editorMode }: WithEditorMode): ToolbarItemType[] {
   return [
     {
       id: "moreSettingsAdvanced",
@@ -18,7 +17,7 @@ export function getItems(): ToolbarItemType[] {
             {
               id: "subscribeToCalendarHoverTransition",
               label: t("Hover Transition"),
-              disabled: isStory(Config.getAll()),
+              disabled: isStory(editorMode),
               devices: "desktop",
               position: 100,
               type: "slider",

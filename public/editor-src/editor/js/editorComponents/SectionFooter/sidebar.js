@@ -1,25 +1,25 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { getShapes } from "visual/utils/options";
 
-export const title = t("Footer");
+export const title = () => t("Footer");
 
 export function getItems({ v, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
+  const shapeTopColor = getColor(
+    dvv("shapeTopColorPalette"),
     dvv("shapeTopColorHex"),
-    dvv("shapeTopColorPalette")
+    dvv("shapeTopColorOpacity")
   );
-  const { hex: shapeBottomColorHex } = getOptionColorHexByPalette(
+
+  const shapeBottomColor = getColor(
+    dvv("shapeBottomColorPalette"),
     dvv("shapeBottomColorHex"),
-    dvv("shapeBottomColorPalette")
+    dvv("shapeBottomColorOpacity")
   );
 
   const toolbarTagsChoices = [
@@ -124,10 +124,7 @@ export function getItems({ v, device, context }) {
                                 title: t("Color"),
                                 icon: {
                                   style: {
-                                    backgroundColor: hexToRgba(
-                                      shapeTopColorHex,
-                                      dvv("shapeTopColorOpacity")
-                                    )
+                                    backgroundColor: shapeTopColor
                                   }
                                 }
                               },
@@ -196,10 +193,7 @@ export function getItems({ v, device, context }) {
                                 title: t("Color"),
                                 icon: {
                                   style: {
-                                    backgroundColor: hexToRgba(
-                                      shapeBottomColorHex,
-                                      dvv("shapeBottomColorOpacity")
-                                    )
+                                    backgroundColor: shapeBottomColor
                                   }
                                 }
                               },

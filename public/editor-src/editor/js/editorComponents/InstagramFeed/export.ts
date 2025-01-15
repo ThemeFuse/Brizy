@@ -9,6 +9,9 @@ const initInstagram = (id: string): void => {
   js.setAttribute("id", id);
   js.setAttribute("async", "true");
   js.setAttribute("src", "https://www.instagram.com/embed.js");
+  js.onload = () => {
+    window.Brz.emit("instagram.ready");
+  };
   document.body.appendChild(js);
 };
 

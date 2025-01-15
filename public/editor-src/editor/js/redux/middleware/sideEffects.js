@@ -1,4 +1,3 @@
-import jQuery from "jquery";
 import _ from "underscore";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 import { StoreChanged } from "visual/redux/types";
@@ -15,6 +14,7 @@ import {
   makeUploadFontsUrl,
   projectFontsData
 } from "visual/utils/fonts";
+import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl.ts";
 import {
   getClosestSections,
   isElementInViewport,
@@ -44,7 +44,6 @@ import {
   storeWasChangedSelector,
   unDeletedFontsSelector
 } from "../selectors";
-import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl.ts";
 
 export default (config) => (store) => (next) => (action) => {
   const callbacks = {
@@ -146,7 +145,7 @@ function handleStoreChange(callbacks) {
 }
 
 function handleHydrate(callbacks) {
-  callbacks.onAfterNext.push(({ state, store, config }) => {
+  callbacks.onAfterNext.push(({ state, store, config, action }) => {
     const { document, parentDocument } = config;
     const currentFonts = projectFontsData(unDeletedFontsSelector(state));
     const { colorPalette, fontStyles: _fontStyles } =
@@ -157,79 +156,87 @@ function handleHydrate(callbacks) {
 
     const defaultFont = getDefaultFontDetailsSelector(state);
     // Generate default @fontFace uses in project font
-    const $defaultFonts = jQuery("<style>")
-      .attr("id", "brz-project-default-font")
-      .html(makeDefaultFontCSS(defaultFont));
+    const defaultFonts = document.createElement("style");
+    defaultFonts.id = "brz-project-default-font";
+    defaultFonts.innerHTML = makeDefaultFontCSS(defaultFont);
 
-    jQuery("head", document).append($defaultFonts);
-    jQuery("head", parentDocument).append($defaultFonts.clone());
+    document.head.appendChild(defaultFonts);
+    parentDocument.head.appendChild(defaultFonts.cloneNode());
 
     // added project fonts to Head
     if (currentFonts.google?.length) {
-      const $googleFonts = jQuery("<link>").attr({
-        href: makeSubsetGoogleFontsUrl(currentFonts.google),
-        type: "text/css",
-        rel: "stylesheet"
-      });
+      const googleFonts = document.createElement("link");
+      googleFonts.href = makeSubsetGoogleFontsUrl(currentFonts.google);
+      googleFonts.setAttribute("type", "text/css");
+      googleFonts.setAttribute("rel", "stylesheet");
 
-      jQuery("head", document).append($googleFonts);
-      jQuery("head", parentDocument).append($googleFonts.clone());
+      document.head.appendChild(googleFonts);
+      parentDocument.head.appendChild(googleFonts.cloneNode());
     }
 
     if (currentFonts.adobe?.length && adobeKitId) {
-      const $adobeFonts = jQuery("<link>").attr({
-        href: makeAdobeFontsUrl(adobeKitId),
-        type: "text/css",
-        rel: "stylesheet"
-      });
+      const adobeFonts = document.createElement("link");
+      adobeFonts.href = makeAdobeFontsUrl(adobeKitId);
+      adobeFonts.setAttribute("type", "text/css");
+      adobeFonts.setAttribute("rel", "stylesheet");
 
-      jQuery("head", document).append($adobeFonts);
-      jQuery("head", parentDocument).append($adobeFonts.clone());
+      document.head.append(adobeFonts);
+      parentDocument.head.append(adobeFonts.cloneNode());
     }
 
     if (currentFonts.upload?.length) {
-      const $uploadFonts = jQuery("<link>").attr({
-        href: makeUploadFontsUrl(currentFonts.upload),
-        type: "text/css",
-        rel: "stylesheet"
-      });
-      jQuery("head", document).append($uploadFonts);
-      jQuery("head", parentDocument).append($uploadFonts.clone());
+      const uploadFonts = document.createElement("link");
+      uploadFonts.href = makeUploadFontsUrl(currentFonts.upload);
+      uploadFonts.setAttribute("type", "text/css");
+      uploadFonts.setAttribute("rel", "stylesheet");
+
+      document.head.append(uploadFonts);
+      parentDocument.head.append(uploadFonts.cloneNode());
     }
 
     // Typography
-    const typographyStyle = jQuery("<style>")
-      .attr("id", "brz-typography-styles")
-      .html(makeGlobalStylesTypography(fontStyles));
-    jQuery("head", document).append(typographyStyle);
+    const typographyStyle = document.createElement("style");
+    typographyStyle.id = "brz-typography-styles";
+    typographyStyle.innerHTML = makeGlobalStylesTypography({
+      fontStyles,
+      store: store
+    });
+
+    document.head.appendChild(typographyStyle);
 
     // Config _variables scss
-    const themeVariables = makeVariablesColor();
+    const colors = action.payload.config?.ui?.theme?.colors ?? {};
+    const themeVariables = makeVariablesColor(colors);
+
     if (themeVariables) {
-      const configVariables = jQuery("<style>")
-        .attr({ type: "text/css", rel: "stylesheet", id: "themeVariables" })
-        .html(themeVariables);
+      const configVariables = document.createElement("style");
+      configVariables.id = "themeVariables";
+      configVariables.innerHTML = themeVariables;
+      configVariables.setAttribute("type", "text/css");
+      configVariables.setAttribute("rel", "stylesheet");
 
-      jQuery("head", document).append(configVariables);
-      jQuery("head", parentDocument).append(configVariables.clone());
+      document.head.appendChild(configVariables);
+      parentDocument.head.appendChild(configVariables.cloneNode());
     }
-    // ColorPalette
-    const $richTextPaletteStyle = jQuery("<style>")
-      .attr("id", "brz-rich-text-colors")
-      .html(makeRichTextColorPaletteCSS(colorPalette));
-    const $globalColorStyles = jQuery("<style>")
-      .attr("id", "brz-global-colors")
-      .html(makeGlobalStylesColorPalette(colorPalette));
 
-    jQuery("head", document).append($richTextPaletteStyle);
-    jQuery("head", document).append($globalColorStyles);
+    // ColorPalette
+    const richTextPaletteStyle = document.createElement("style");
+    richTextPaletteStyle.id = "brz-rich-text-colors";
+    richTextPaletteStyle.innerHTML = makeRichTextColorPaletteCSS(colorPalette);
+
+    const globalColorStyles = document.createElement("style");
+    globalColorStyles.id = "brz-global-colors";
+    globalColorStyles.innerHTML = makeGlobalStylesColorPalette(colorPalette);
+
+    document.head.appendChild(richTextPaletteStyle);
+    document.head.appendChild(globalColorStyles);
 
     // Hidden Elements
     document.body.style.setProperty("--elements-visibility", "none");
 
     // clipboard sync between tabs
-    jQuery(window).on("storage", (e) => {
-      const { key, newValue, oldValue } = e.originalEvent;
+    window.addEventListener("storage", (e) => {
+      const { key, newValue, oldValue } = e;
       if (key === "copiedStyles" && newValue && newValue !== oldValue) {
         store.dispatch(updateCopiedElement(JSON.parse(newValue)));
       }
@@ -265,37 +272,43 @@ function handleFontsChange(callbacks) {
           href = makeSubsetGoogleFontsUrl(fonts);
         }
 
-        const $addedFont = jQuery("<link>").attr({
-          href,
-          type: "text/css",
-          rel: "stylesheet"
-        });
+        const addedFont = document.createElement("link");
+        addedFont.href = href;
+        addedFont.setAttribute("type", "text/css");
+        addedFont.setAttribute("rel", "stylesheet");
 
-        jQuery("head", document).append($addedFont);
-        jQuery("head", parentDocument).append($addedFont.clone());
+        document.head.appendChild(addedFont);
+        parentDocument.head.appendChild(addedFont.cloneNode());
       });
     }
   });
 }
 
 function handleStylesChange(callbacks) {
-  callbacks.onAfterNext.push(({ state }) => {
+  callbacks.onAfterNext.push(({ state, store }) => {
     const { colorPalette, fontStyles: _fontStyles } =
       currentStyleSelector(state);
-    const extraFontStyles = extraFontStylesSelector(state);
-    const fontStyles = [..._fontStyles, ...extraFontStyles];
 
-    jQuery("#brz-rich-text-colors").html(
-      makeRichTextColorPaletteCSS(colorPalette)
-    );
+    const richTextColor = document.querySelector("#brz-rich-text-colors");
+    const globalColor = document.querySelector("#brz-global-colors");
+    const globalFontStyles = document.querySelector("#brz-typography-styles");
 
-    jQuery("#brz-global-colors").html(
-      makeGlobalStylesColorPalette(colorPalette)
-    );
+    if (richTextColor) {
+      richTextColor.innerHTML = makeRichTextColorPaletteCSS(colorPalette);
+    }
 
-    jQuery("#brz-typography-styles").html(
-      makeGlobalStylesTypography(fontStyles)
-    );
+    if (globalColor) {
+      globalColor.innerHTML = makeGlobalStylesColorPalette(colorPalette);
+    }
+
+    if (globalFontStyles) {
+      const extraFontStyles = extraFontStylesSelector(state);
+      const fontStyles = [..._fontStyles, ...extraFontStyles];
+      globalFontStyles.innerHTML = makeGlobalStylesTypography({
+        fontStyles,
+        store
+      });
+    }
   });
 }
 
@@ -422,7 +435,7 @@ function handleCopiedElementChange(callbacks) {
 }
 
 function handleHistoryChange(callbacks) {
-  callbacks.onAfterNext.push(({ state }) => {
+  callbacks.onAfterNext.push(({ state, store }) => {
     const { currSnapshot, prevSnapshot } = historySelector(state);
     const currStyleId = currSnapshot?.currentStyleId;
     const prevStyleId = prevSnapshot?.currentStyleId;
@@ -432,20 +445,27 @@ function handleHistoryChange(callbacks) {
     if (currStyleId !== prevStyleId || currStyle !== prevStyle) {
       const { colorPalette, fontStyles: _fontStyles } =
         currentStyleSelector(state);
-      const extraFontStyles = extraFontStylesSelector(state);
-      const fontStyles = [..._fontStyles, ...extraFontStyles];
 
-      jQuery("#brz-typography-styles").html(
-        makeGlobalStylesTypography(fontStyles)
-      );
+      const richTextColor = document.querySelector("#brz-rich-text-colors");
+      const globalColor = document.querySelector("#brz-global-colors");
+      const globalFontStyles = document.querySelector("#brz-typography-styles");
 
-      jQuery("#brz-rich-text-colors").html(
-        makeRichTextColorPaletteCSS(colorPalette)
-      );
+      if (richTextColor) {
+        richTextColor.innerHTML = makeRichTextColorPaletteCSS(colorPalette);
+      }
 
-      jQuery("#brz-global-colors").html(
-        makeGlobalStylesColorPalette(colorPalette)
-      );
+      if (globalColor) {
+        globalColor.innerHTML = makeGlobalStylesColorPalette(colorPalette);
+      }
+
+      if (globalFontStyles) {
+        const extraFontStyles = extraFontStylesSelector(state);
+        const fontStyles = [..._fontStyles, ...extraFontStyles];
+        globalFontStyles.innerHTML = makeGlobalStylesTypography({
+          fontStyles,
+          store
+        });
+      }
     }
   });
 }

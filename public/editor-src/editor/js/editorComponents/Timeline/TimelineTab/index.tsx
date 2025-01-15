@@ -6,7 +6,6 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
-import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import { style } from "./styles";
@@ -63,7 +62,17 @@ export default class TimelineTab extends EditorComponent<Value, Props> {
         ? "brz-timeline__tab--vertical"
         : "brz-timeline__tab--horizontal",
       customClassName,
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

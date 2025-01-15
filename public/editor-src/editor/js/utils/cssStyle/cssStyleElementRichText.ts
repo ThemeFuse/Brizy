@@ -1,21 +1,25 @@
+import { Num, Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
 import Config from "visual/global/Config";
-import { hexToRgba } from "visual/utils/color";
 import {
+  WithRenderContext,
+  isEditor
+} from "visual/providers/RenderProvider";
+import { getColor } from "visual/utils/color";
+import {
+  cssStyleTextScript,
   cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
   cssStyleTypography2FontSize,
   cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight,
-  cssStyleTextScript
+  cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { read as readNum } from "visual/utils/reader/number";
 import { readToggle } from "visual/utils/options/ToggleButton/utils";
+import { read as readNum } from "visual/utils/reader/number";
 import { State } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import {
@@ -31,6 +35,7 @@ import {
   styleElementRichTextDCGradientBackground,
   styleElementRichTextGradient
 } from "visual/utils/style2/styleElementRichText";
+import { isNullish } from "visual/utils/value";
 import { styleState, styleTypography2FontSize } from "../style2";
 import { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
@@ -65,10 +70,16 @@ export function cssStyleElementRichTextMarginBottom({
 export function cssStyleElementRichTextGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
+  if (v.colorType !== "gradient") {
+    return "";
+  }
+
   const bgGradient = styleElementRichTextGradient({
     v,
+    store,
     device,
     state
   });
@@ -80,7 +91,7 @@ export function cssStyleElementRichTextGradient({
     "color: transparent !important"
   ];
 
-  return v.colorType === "gradient" ? styles.join(";") + ";" : "";
+  return styles.join(";") + ";";
 }
 
 export function cssStyleElementRichTextFontSize(d: CSSValue): string {
@@ -118,11 +129,13 @@ export function cssStyleElementRichTextFontSize(d: CSSValue): string {
 export function cssStyleElementRichTextBgImage({
   v,
   device,
-  state
-}: CSSValue): string {
-  const bgImage = IS_EDITOR
-    ? styleBgImage({ v, device, state })
-    : styleExportBgImage({ v, device, state });
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  const bgImage = isEditor(renderContext)
+    ? styleBgImage({ v, device, state, store })
+    : styleExportBgImage({ v, device, state, store });
 
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -150,13 +163,17 @@ export function cssStyleElementRichTextFontFamily({
   v,
   device,
   prefix = "typography",
-  state
-}: CSSValue): string {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   const family = styleTypography2FontFamily({
     v,
     device,
     prefix,
-    state
+    state,
+    store,
+    renderContext
   });
 
   return family ? `font-family:${family} !important;` : "";
@@ -175,22 +192,30 @@ export function cssStyleElementRichTextColor({
   const dvv = (key: string): string =>
     defaultValueValue({ v, key, device, state: _state });
 
-  const { hex } = getOptionColorHexByPalette(
-    dvv(capByPrefix("color", "hex")),
-    dvv("block-colorPalette")
-  );
+  const colorHex = Str.read(dvv(capByPrefix("color", "hex")));
+  const colorPalette = Str.read(dvv("block-colorPalette"));
+  const colorOpacity = Num.read(dvv(capByPrefix("color", "opacity")));
 
-  const rgb = hexToRgba(hex, dvv(capByPrefix("color", "opacity"))) ?? "";
+  if (
+    isNullish(colorHex) ||
+    isNullish(colorPalette) ||
+    isNullish(colorOpacity)
+  ) {
+    return "";
+  }
 
-  return rgb === undefined ? "" : `color:${rgb};`;
+  const color = getColor(colorPalette, colorHex, colorOpacity);
+
+  return `color:${color};`;
 }
 
 export function cssStyleElementRichTextDCColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "bgColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "bgColor" });
 }
 
 export function cssStyleElementRichTextDCBackground({
@@ -206,12 +231,18 @@ export function cssStyleElementRichTextDCBackground({
 export function cssStyleElementRichTextDCGradient({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
+  if (v.bgColorType !== "gradient") {
+    return "";
+  }
+
   const dcGradient = styleElementRichTextDCGradient({
     v,
     device,
-    state
+    state,
+    store
   });
 
   const styles = [
@@ -222,377 +253,507 @@ export function cssStyleElementRichTextDCGradient({
     "color: transparent !important"
   ];
 
-  return v.bgColorType === "gradient" ? styles.join(";") + ";" : "";
+  return styles.join(";") + ";";
 }
 
 export function cssStyleElementRichTextDCGradientBackground({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
+  if (v.textBgColorType !== "gradient") {
+    return "";
+  }
+
   const dcGradient = styleElementRichTextDCGradientBackground({
     v,
     device,
-    state
+    state,
+    store
   });
 
-  return v.textBgColorType === "gradient"
-    ? `background-image: ${dcGradient};`
-    : "";
+  return `background-image: ${dcGradient};`;
 }
 
 export function cssStyleElementRichTextH1FontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "h1" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "h1",
+    renderContext
+  });
 }
 
 export function cssStyleElementRichTextH1FontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "h1" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "h1" });
 }
 
 export function cssStyleElementRichTextH1LineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "h1" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "h1" });
 }
 
 export function cssStyleElementRichTextH1FontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "h1" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "h1" });
 }
 
 export function cssStyleElementRichTextH1LetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h1" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    prefix: "h1"
+  });
 }
 
 export function cssStyleElementRichTextH1FontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "h1" });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "h1" });
 }
 
 export function cssStyleElementRichTextH1TextTransform({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "h1" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "h1" });
 }
 
 export function cssStyleElementRichTextH1Script({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextScript({ v, device, state, prefix: "h1" });
+  return cssStyleTextScript({ v, device, state, store, prefix: "h1" });
 }
 
 export function cssStyleElementRichTextH2FontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "h2" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "h2",
+    renderContext
+  });
 }
 
 export function cssStyleElementRichTextH2FontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "h2" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH2LineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "h2" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH2FontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "h2" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH2LetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h2" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    prefix: "h2"
+  });
 }
 
 export function cssStyleElementRichTextH2FontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "h2" });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH2TextTransform({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "h2" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH2Script({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextScript({ v, device, state, prefix: "h2" });
+  return cssStyleTextScript({ v, device, state, store, prefix: "h2" });
 }
 
 export function cssStyleElementRichTextH3FontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "h3" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "h3",
+    renderContext
+  });
 }
 
 export function cssStyleElementRichTextH3FontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "h3" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "h3" });
 }
 
 export function cssStyleElementRichTextH3LineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "h3" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "h3" });
 }
 
 export function cssStyleElementRichTextH3FontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "h3" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "h3" });
 }
 
 export function cssStyleElementRichTextH3LetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h3" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    prefix: "h3"
+  });
 }
 
 export function cssStyleElementRichTextH3FontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "h3" });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "h3" });
 }
 
 export function cssStyleElementRichTextH3TextTransform({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "h3" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "h3" });
 }
 
 export function cssStyleElementRichTextH3Script({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextScript({ v, device, state, prefix: "h3" });
+  return cssStyleTextScript({ v, device, state, store, prefix: "h3" });
 }
 
 export function cssStyleElementRichTextH4FontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "h4" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "h4",
+    renderContext
+  });
 }
 
 export function cssStyleElementRichTextH4FontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "h4" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH4LineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "h4" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH4FontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "h4" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH4LetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h4" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    prefix: "h4"
+  });
 }
 
 export function cssStyleElementRichTextH4FontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "h4" });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH4TextTransform({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "h4" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH4Script({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextScript({ v, device, state, prefix: "h4" });
+  return cssStyleTextScript({ v, device, state, store, prefix: "h4" });
 }
 
 export function cssStyleElementRichTextH5FontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "h5" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "h5",
+    renderContext
+  });
 }
 
 export function cssStyleElementRichTextH5FontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "h5" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "h5" });
 }
 
 export function cssStyleElementRichTextH5LineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "h5" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "h5" });
 }
 
 export function cssStyleElementRichTextH5FontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "h5" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "h5" });
 }
 
 export function cssStyleElementRichTextH5LetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h5" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    prefix: "h5"
+  });
 }
 
 export function cssStyleElementRichTextH5FontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "h5" });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "h5" });
 }
 
 export function cssStyleElementRichTextH5TextTransform({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "h5" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "h5" });
 }
 
 export function cssStyleElementRichTextH5Script({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextScript({ v, device, state, prefix: "h5" });
+  return cssStyleTextScript({ v, device, state, store, prefix: "h5" });
 }
 
 export function cssStyleElementRichTextH6FontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "h6" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "h6",
+    renderContext
+  });
 }
 
 export function cssStyleElementRichTextH6FontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "h6" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextH6LineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "h6" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextH6FontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "h6" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextH6LetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, prefix: "h6" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    prefix: "h6"
+  });
 }
 
 export function cssStyleElementRichTextH6FontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "h6" });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextH6TextTransform({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, prefix: "h6" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextH6Script({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextScript({ v, device, state, prefix: "h6" });
+  return cssStyleTextScript({ v, device, state, store, prefix: "h6" });
 }
 
 export function cssStyleElementRichTextDCUppercase({
@@ -612,9 +773,10 @@ export function cssStyleElementRichTextAlign({
   v,
   device,
   state,
+  store,
   prefix = "content"
 }: CSSValue): string {
-  const align = styleAlignHorizontal({ v, device, state, prefix });
+  const align = styleAlignHorizontal({ v, device, state, store, prefix });
 
   return align ? `text-align:${align}!important;` : "";
 }

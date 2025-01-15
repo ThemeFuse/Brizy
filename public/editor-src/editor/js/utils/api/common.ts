@@ -10,11 +10,20 @@ import {
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
 import { Config } from "visual/global/Config";
+import {
+  ConfigDCItem,
+  DCTypes
+} from "visual/global/Config/types/DynamicContent";
 import { isShopifyShop } from "visual/global/Config/types/configs/Base";
+import { Shopify, isCloud } from "visual/global/Config/types/configs/Cloud";
+import {
+  AutoSave,
+  ConfigCommon
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
-  BlocksArray,
   BlockWithThumbs,
+  BlocksArray,
   CustomTemplatePage,
   DefaultBlock,
   DefaultBlockWithID,
@@ -39,7 +48,6 @@ import {
   UpdateSavedBlock,
   UpdateSavedLayout
 } from "visual/global/Config/types/configs/blocks/SavedBlocks";
-import type { Shopify } from "visual/global/Config/types/configs/Cloud";
 import type { Response } from "visual/global/Config/types/configs/common";
 import {
   AdobeFontData,
@@ -47,17 +55,9 @@ import {
   ScreenshotData
 } from "visual/global/Config/types/configs/common";
 import {
-  AutoSave,
-  ConfigCommon
-} from "visual/global/Config/types/configs/ConfigCommon";
-import {
   EkklesiaExtra,
   EkklesiaFields
 } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
-import {
-  ConfigDCItem,
-  DCTypes
-} from "visual/global/Config/types/DynamicContent";
 import {
   FontStyle,
   GlobalBlock,
@@ -191,11 +191,11 @@ export function onChange(data: OnChange): Promise<void> {
 //#region Saved blocks
 
 export const getSavedBlocks = async (
-  config: ConfigCommon,
+  api: ConfigCommon["api"],
   filter?: { filterBy: string }
 ): Promise<Array<SavedBlockAPIMeta>> => {
   return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
+    const { savedBlocks } = api ?? {};
     const get = savedBlocks?.get;
 
     if (!get) {
@@ -208,10 +208,10 @@ export const getSavedBlocks = async (
 
 export const getSavedBlockById = (
   uid: string,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedBlock> => {
   return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
+    const { savedBlocks } = api ?? {};
     const getSavedBlockById = savedBlocks?.getByUid;
 
     if (!getSavedBlockById) {
@@ -251,10 +251,10 @@ export const createSavedBlock = (
 
 export const deleteSavedBlock = (
   savedBlock: DeleteSavedBlock,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ) => {
   return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
+    const { savedBlocks } = api ?? {};
     const deleteSavedBlock = savedBlocks?.delete;
 
     if (!deleteSavedBlock) {
@@ -267,10 +267,10 @@ export const deleteSavedBlock = (
 
 export const updateSavedBlock = (
   savedBlock: UpdateSavedBlock,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ) => {
   return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
+    const { savedBlocks } = api ?? {};
     const updateSavedBlock = savedBlocks?.update;
 
     if (!updateSavedBlock) {
@@ -282,10 +282,10 @@ export const updateSavedBlock = (
 };
 
 export const importSaveBlocks = async (
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedBlockImport> => {
   return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
+    const { savedBlocks } = api ?? {};
     const importSavedBlocks = savedBlocks?.import;
 
     if (!importSavedBlocks) {
@@ -297,10 +297,10 @@ export const importSaveBlocks = async (
 };
 
 export const filterSavedBlocks = (
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedBlockFilter> => {
   return new Promise((res, rej) => {
-    const { savedBlocks } = config.api ?? {};
+    const { savedBlocks } = api ?? {};
     const filterSavedBlocks = savedBlocks?.filter?.handler;
 
     if (!filterSavedBlocks) {
@@ -316,11 +316,11 @@ export const filterSavedBlocks = (
 //#region Saved popups
 
 export const getSavedPopups = async (
-  config: ConfigCommon,
+  api: ConfigCommon["api"],
   filter?: { filterBy: string }
 ): Promise<Array<SavedBlockAPIMeta>> => {
   return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
+    const { savedPopups } = api ?? {};
     const get = savedPopups?.get;
 
     if (!get) {
@@ -333,10 +333,10 @@ export const getSavedPopups = async (
 
 export const getSavedPopupById = (
   uid: string,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedBlock> => {
   return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
+    const { savedPopups } = api ?? {};
     const getSavedPopupById = savedPopups?.getByUid;
 
     if (!getSavedPopupById) {
@@ -376,10 +376,10 @@ export const createSavedPopup = (
 
 export const deleteSavedPopup = (
   savedBlock: DeleteSavedBlock,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ) => {
   return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
+    const { savedPopups } = api ?? {};
     const deleteSavedPopup = savedPopups?.delete;
 
     if (!deleteSavedPopup) {
@@ -392,10 +392,10 @@ export const deleteSavedPopup = (
 
 export const updateSavedPopup = (
   savedBlock: UpdateSavedBlock,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ) => {
   return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
+    const { savedPopups } = api ?? {};
     const updateSavedPopup = savedPopups?.update;
 
     if (!updateSavedPopup) {
@@ -407,10 +407,10 @@ export const updateSavedPopup = (
 };
 
 export const importSavePopups = async (
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedBlockImport> => {
   return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
+    const { savedPopups } = api ?? {};
     const importSavedPopups = savedPopups?.import;
 
     if (!importSavedPopups) {
@@ -422,10 +422,10 @@ export const importSavePopups = async (
 };
 
 export const filterSavedPopups = (
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedBlockFilter> => {
   return new Promise((res, rej) => {
-    const { savedPopups } = config.api ?? {};
+    const { savedPopups } = api ?? {};
     const filterSavedPopups = savedPopups?.filter?.handler;
 
     if (!filterSavedPopups) {
@@ -441,11 +441,11 @@ export const filterSavedPopups = (
 //#region Saved layouts
 
 export const getSavedLayouts = (
-  config: ConfigCommon,
+  api: ConfigCommon["api"],
   filter?: { filterBy: string }
 ): Promise<Array<SavedLayoutAPIMeta>> => {
   return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
+    const { savedLayouts } = api ?? {};
     const get = savedLayouts?.get;
 
     if (!get) {
@@ -458,10 +458,10 @@ export const getSavedLayouts = (
 
 export const getSavedLayoutById = (
   id: string,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedLayout> => {
   return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
+    const { savedLayouts } = api ?? {};
     const getByUid = savedLayouts?.getByUid;
 
     if (!getByUid) {
@@ -501,10 +501,10 @@ export const createSavedLayout = (
 
 export const deleteSavedLayout = (
   savedLayout: DeleteSavedLayout,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ) => {
   return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
+    const { savedLayouts } = api ?? {};
     const deleteSavedLayout = savedLayouts?.delete;
 
     if (!deleteSavedLayout) {
@@ -517,10 +517,10 @@ export const deleteSavedLayout = (
 
 export const updateSavedLayout = (
   savedLayout: UpdateSavedLayout,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ) => {
   return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
+    const { savedLayouts } = api ?? {};
     const updateSavedLayout = savedLayouts?.update;
 
     if (!updateSavedLayout) {
@@ -532,10 +532,10 @@ export const updateSavedLayout = (
 };
 
 export const importSavedLayout = (
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedLayoutImport> => {
   return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
+    const { savedLayouts } = api ?? {};
     const importSavedLayout = savedLayouts?.import;
 
     if (!importSavedLayout) {
@@ -547,10 +547,10 @@ export const importSavedLayout = (
 };
 
 export const filterSavedLayouts = (
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<SavedLayoutFilter> => {
   return new Promise((res, rej) => {
-    const { savedLayouts } = config.api ?? {};
+    const { savedLayouts } = api ?? {};
     const filterSavedLayouts = savedLayouts?.filter?.handler;
 
     if (!filterSavedLayouts) {
@@ -581,8 +581,10 @@ export function updatePopupRules(
     if (!save) {
       rej(t("API: No popupConditions save found."));
     } else {
+      const _isCloud = isCloud(config);
+
       save(res, rej, {
-        rules: data.rules.map(editorRuleToApiRule),
+        rules: data.rules.map((rule) => editorRuleToApiRule(rule, _isCloud)),
         dataVersion: data.dataVersion
       });
     }
@@ -593,9 +595,11 @@ export function updatePopupRules(
 
 //#region default Templates
 
-export const defaultKits = (config: ConfigCommon): Promise<Array<KitItem>> => {
+export const defaultKits = (
+  config: ConfigCommon["api"]
+): Promise<Array<KitItem>> => {
   return new Promise((res, rej) => {
-    const { defaultKits } = config.api ?? {};
+    const { defaultKits } = config ?? {};
     const getKits = defaultKits?.getKits;
     if (!getKits) {
       rej(t("API: No Kits getKits() found."));
@@ -606,11 +610,11 @@ export const defaultKits = (config: ConfigCommon): Promise<Array<KitItem>> => {
 };
 
 export const defaultKitsMeta = (
-  config: ConfigCommon,
+  config: ConfigCommon["api"],
   id: string
 ): Promise<KitsWithThumbs> => {
   return new Promise((res, rej) => {
-    const { defaultKits } = config.api ?? {};
+    const { defaultKits } = config ?? {};
     const getMeta = defaultKits?.getMeta;
     if (!getMeta) {
       rej(t("API: No Kits getMeta() found."));
@@ -621,11 +625,11 @@ export const defaultKitsMeta = (
 };
 
 export const defaultKitsData = (
-  config: ConfigCommon,
+  config: ConfigCommon["api"],
   kit: BlockWithThumbs
 ): Promise<DefaultBlock> => {
   return new Promise((res, rej) => {
-    const { defaultKits } = config.api ?? {};
+    const { defaultKits } = config ?? {};
     const getData = defaultKits?.getData;
     if (!getData) {
       rej(t("API: No Kits getData() found."));
@@ -636,10 +640,10 @@ export const defaultKitsData = (
 };
 
 export const defaultPopupsMeta = (
-  config: ConfigCommon
+  config: ConfigCommon["api"]
 ): Promise<PopupsWithThumbs> => {
   return new Promise((res, rej) => {
-    const { defaultPopups } = config.api ?? {};
+    const { defaultPopups } = config ?? {};
     const getMeta = defaultPopups?.getMeta;
     if (!getMeta) {
       rej(t("API: No Popups getMeta() found."));
@@ -650,11 +654,11 @@ export const defaultPopupsMeta = (
 };
 
 export const defaultPopupsData = (
-  config: ConfigCommon,
+  config: ConfigCommon["api"],
   blockID: string
 ): Promise<DefaultBlockWithID> => {
   return new Promise((res, rej) => {
-    const { defaultPopups } = config.api ?? {};
+    const { defaultPopups } = config ?? {};
     const getData = defaultPopups?.getData;
     if (!getData) {
       rej(t("API: No Popups getData() found."));
@@ -665,10 +669,10 @@ export const defaultPopupsData = (
 };
 
 export const defaultLayoutsMeta = (
-  config: ConfigCommon
+  config: ConfigCommon["api"]
 ): Promise<LayoutsWithThumbs> => {
   return new Promise((res, rej) => {
-    const { defaultLayouts } = config.api ?? {};
+    const { defaultLayouts } = config ?? {};
 
     const getMeta = defaultLayouts?.getMeta;
 
@@ -681,11 +685,11 @@ export const defaultLayoutsMeta = (
 };
 
 export const defaultLayoutPages = (
-  config: ConfigCommon,
+  config: ConfigCommon["api"],
   id: string
 ): Promise<LayoutsPages> => {
   return new Promise((res, rej) => {
-    const { defaultLayouts } = config.api ?? {};
+    const { defaultLayouts } = config ?? {};
 
     const getPages = defaultLayouts?.getPages;
 
@@ -698,11 +702,11 @@ export const defaultLayoutPages = (
 };
 
 export const defaultLayoutsData = (
-  config: ConfigCommon,
+  config: ConfigCommon["api"],
   page: CustomTemplatePage
 ): Promise<BlocksArray<DefaultBlockWithID>> => {
   return new Promise((res, rej) => {
-    const { defaultLayouts } = config.api ?? {};
+    const { defaultLayouts } = config ?? {};
 
     const getData = defaultLayouts?.getData;
 
@@ -715,10 +719,10 @@ export const defaultLayoutsData = (
 };
 
 export const defaultStoriesMeta = (
-  config: ConfigCommon
+  config: ConfigCommon["api"]
 ): Promise<StoriesWithThumbs> => {
   return new Promise((res, rej) => {
-    const { defaultStories } = config.api ?? {};
+    const { defaultStories } = config ?? {};
     const getMeta = defaultStories?.getMeta;
     if (!getMeta) {
       rej(t("API: No Stories getMeta() found."));
@@ -729,11 +733,11 @@ export const defaultStoriesMeta = (
 };
 
 export const defaultStoriesPages = (
-  config: ConfigCommon,
+  config: ConfigCommon["api"],
   id: string
 ): Promise<LayoutsPages> => {
   return new Promise((res, rej) => {
-    const { defaultStories } = config.api ?? {};
+    const { defaultStories } = config ?? {};
     const getPages = defaultStories?.getPages;
     if (!getPages) {
       rej(t("API: No Stories getPages() found."));
@@ -750,11 +754,11 @@ export const isBlock = (data: StoryData): data is DefaultBlock => {
 };
 
 export const defaultStoriesData = (
-  config: ConfigCommon,
+  config: ConfigCommon["api"],
   story: CustomTemplatePage
 ): Promise<StoryData> => {
   return new Promise((res, rej) => {
-    const { defaultStories } = config.api ?? {};
+    const { defaultStories } = config ?? {};
     const getData = defaultStories?.getData;
     if (!getData) {
       rej(t("API: No Stories getData() found."));
@@ -784,14 +788,14 @@ export function getUploadedFonts(config: ConfigCommon) {
 //#region  collections
 
 export const getCollectionTypes = (
-  config: ConfigCommon,
+  config?: ConfigCommon["api"],
   extraData?: {
     defaultTitle?: string;
     defaultValue?: string;
   }
 ): Promise<ChoicesSync> => {
   const collectionTypesHandler =
-    config?.api?.collectionTypes?.loadCollectionTypes.handler;
+    config?.collectionTypes?.loadCollectionTypes.handler;
 
   return new Promise((res, rej) => {
     if (typeof collectionTypesHandler === "function") {
@@ -809,7 +813,7 @@ export const getCollectionItems = (
   config: ConfigCommon,
   extraChoices?: ChoiceSync
 ): Promise<ChoiceSync> => {
-  const get = config?.api?.collectionItems?.getCollectionItems?.handler;
+  const get = config.api?.collectionItems?.getCollectionItems?.handler;
 
   return new Promise((res, rej) => {
     if (typeof get === "function") {
@@ -821,11 +825,11 @@ export const getCollectionItems = (
 };
 
 export function getCollectionSourceItemsById(
-  config: Shopify
+  templateType: Shopify["templateType"],
+  api: Shopify["api"]
 ): Promise<CollectionSourceItem[]> {
-  const { id } = config.templateType;
-  const { handler } =
-    config.api?.collectionItems?.getCollectionSourceItems ?? {};
+  const { id } = templateType;
+  const { handler } = api?.collectionItems?.getCollectionSourceItems ?? {};
 
   return new Promise((res, rej) => {
     if (typeof handler === "function") {
@@ -900,9 +904,11 @@ export const defaultPostsSources = (
 
 //#region Adobe Fonts
 
-export const getAdobeFonts = (config: ConfigCommon): Promise<AdobeFonts> => {
+export const getAdobeFonts = (
+  api: ConfigCommon["api"]
+): Promise<AdobeFonts> => {
   return new Promise((res, rej) => {
-    const get = config.api?.fonts?.adobeFont?.get;
+    const get = api?.fonts?.adobeFont?.get;
     if (typeof get === "function") {
       get(res, rej);
     } else {
@@ -912,10 +918,10 @@ export const getAdobeFonts = (config: ConfigCommon): Promise<AdobeFonts> => {
 };
 
 export const addAdobeFonts = (
-  config: ConfigCommon,
+  api: ConfigCommon["api"],
   data: AdobeFontData
 ): Promise<AdobeAddAccount> => {
-  const add = config.api?.fonts?.adobeFont?.add;
+  const add = api?.fonts?.adobeFont?.add;
   return new Promise((res, rej) => {
     if (typeof add === "function") {
       add(res, rej, data);
@@ -932,7 +938,7 @@ export const addAdobeFonts = (
 export const getEkklesiaChoiches = <
   T extends keyof EkklesiaFields = keyof EkklesiaFields
 >(
-  config: Config,
+  config: ConfigCommon,
   keys: EkklesiaParams<T>,
   extra?: EkklesiaExtra
 ): ChoicesAsync | ChoiceSync => {
@@ -959,7 +965,7 @@ export const getEkklesiaChoiches = <
 export const updateEkklesiaFields = async <
   T extends keyof EkklesiaFields = keyof EkklesiaFields
 >(
-  config: Config,
+  config: ConfigCommon,
   {
     fields
   }: {
@@ -1078,18 +1084,18 @@ export const getEcwidProducts = (config: ConfigCommon): Promise<Choice[]> => {
 
 // Shopify
 export function shopifySyncRules({
-  config,
+  page,
+  modules,
   rules,
   title
 }: {
-  config: Shopify;
+  page: Shopify["page"];
+  modules: Shopify["modules"];
   rules: SelectedItem[];
   title: string;
 }) {
-  const {
-    page: { id }
-  } = config;
-  const { shop } = config.modules ?? {};
+  const { id } = page;
+  const { shop } = modules ?? {};
   const handler = isShopifyShop(shop) && shop.api?.shopifySyncRules?.handler;
 
   return new Promise((res, rej) => {
@@ -1116,6 +1122,7 @@ export function shopifyBlogItems(config: Shopify) {
     }
   );
 }
+
 export function shopifyUnpublishPage(config: Shopify) {
   const { shop } = config.modules ?? {};
 
@@ -1155,22 +1162,21 @@ export function shopifySyncArticle(props: {
 }
 
 export function shopifySyncPage(props: {
-  config: Shopify;
+  modules: Shopify["modules"];
+  page: Shopify["page"];
   title: string;
   isHomePage: boolean;
 }) {
-  const { config, ...extra } = props;
-  const {
-    page: { id }
-  } = config;
-  const { shop } = config.modules ?? {};
+  const { modules, page, ...extra } = props;
+
+  const { shop } = modules ?? {};
 
   const handler = isShopifyShop(shop) && shop.api?.shopifySyncPage?.handler;
 
   return new Promise(
     (res: Response<{ message: string }>, rej: Response<string>) => {
       if (typeof handler === "function") {
-        handler(res, rej, { id, ...extra });
+        handler(res, rej, { id: page.id, ...extra });
       } else {
         rej(t("Missing shopifySyncPage handler"));
       }
@@ -1178,8 +1184,8 @@ export function shopifySyncPage(props: {
   );
 }
 
-export function getPageRelations(config: Shopify) {
-  const { shop } = config.modules ?? {};
+export function getPageRelations(modules: Shopify["modules"]) {
+  const { shop } = modules ?? {};
   const handler = isShopifyShop(shop) && shop?.api?.getPageRelations?.handler;
 
   return new Promise((res: Response<PublishRule[]>, rej: Response<string>) => {
@@ -1252,10 +1258,10 @@ export const getCustomIcons = (
 };
 
 export const addCustomIcon = (
-  config: ConfigCommon,
+  api: ConfigCommon["api"],
   { acceptedExtensions }: UploadIconData
 ): Promise<IconUploadData[]> => {
-  const { add } = config?.api?.customIcon ?? {};
+  const { add } = api?.customIcon ?? {};
 
   return new Promise((res, rej) => {
     if (typeof add === "function") {
@@ -1268,9 +1274,9 @@ export const addCustomIcon = (
 
 export const deleteCustomIcon = (
   uid: string,
-  config: ConfigCommon
+  api: ConfigCommon["api"]
 ): Promise<string> => {
-  const { delete: deleteIcon } = config?.api?.customIcon ?? {};
+  const { delete: deleteIcon } = api?.customIcon ?? {};
 
   return new Promise((res, rej) => {
     if (typeof deleteIcon === "function") {
@@ -1286,10 +1292,10 @@ export const deleteCustomIcon = (
 //#region Dynamic Content
 
 export const getDynamicContentPlaceholders = async (
-  config: ConfigCommon,
+  dynamicContent: ConfigCommon["dynamicContent"],
   extraData: { entityType: string; groupType: DCTypes }
 ): Promise<ConfigDCItem[]> => {
-  const handler = config.dynamicContent?.handler;
+  const handler = dynamicContent?.handler;
 
   return new Promise((res, rej) => {
     if (typeof handler === "function") {
@@ -1300,15 +1306,18 @@ export const getDynamicContentPlaceholders = async (
   });
 };
 
-export function getDynamicContent(config: ConfigCommon) {
-  const handler = config.dynamicContent?.getPlaceholderData;
+export function getDynamicContent() {
   return ({
     placeholders,
-    signal
+    signal,
+    config
   }: {
     placeholders: Dictionary<string[]>;
     signal?: AbortSignal;
+    config: ConfigCommon;
   }): Promise<Dictionary<string[]>> => {
+    const handler = config.dynamicContent?.getPlaceholderData;
+
     return new Promise((res, rej) => {
       if (typeof handler === "function") {
         handler(res, rej, { placeholders, signal });
@@ -1334,8 +1343,8 @@ export function sendHeartBeat(config: ConfigCommon): Promise<unknown> {
   });
 }
 
-export function sendHeartBeatTakeOver(config: Config): Promise<unknown> {
-  const { takeOverHandler } = config.api?.heartBeat ?? {};
+export function sendHeartBeatTakeOver(api: Config["api"]): Promise<unknown> {
+  const { takeOverHandler } = api?.heartBeat ?? {};
   return new Promise((res, rej) => {
     if (typeof takeOverHandler === "function") {
       takeOverHandler(res, rej);

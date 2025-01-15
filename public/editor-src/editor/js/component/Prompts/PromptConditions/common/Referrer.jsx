@@ -27,10 +27,10 @@ const SOCIAL_NETWORKS = {
   linkedin: "LinkedIn"
 };
 
-const OTHER = {
+const getOther = () => ({
   external: t("External Links"),
   internal: t("Internal Links")
-};
+});
 
 export default function Referrer(props) {
   const { value: triggerValue = "", onChange = () => {} } = props;
@@ -96,7 +96,7 @@ export default function Referrer(props) {
             <SelectOptgroup
               key="Other"
               title={t("Other")}
-              items={renderSelectChoices(OTHER)}
+              items={renderSelectChoices(getOther())}
             >
               <span className="brz-span">Other</span>
             </SelectOptgroup>

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import _ from "underscore";
 import { Control } from "visual/component/Controls/Population";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { getCollectionItems, getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
@@ -40,7 +40,7 @@ export function PopulationSelect<T extends Literal>({
   className,
   onChange
 }: Props<T>): ReactElement {
-  const config = Config.getAll();
+  const config = useConfig();
 
   const [state, dispatch] = useReducer(reducer, {
     isOpen: false,
@@ -70,7 +70,7 @@ export function PopulationSelect<T extends Literal>({
 
   const entityTypeChoices = {
     load: () =>
-      getCollectionTypes(config, {
+      getCollectionTypes(config.api, {
         defaultTitle: t("Auto"),
         defaultValue: auto
       }),

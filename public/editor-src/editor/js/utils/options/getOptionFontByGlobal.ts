@@ -1,24 +1,21 @@
-import { ExtraFontStyle, FontStyle } from "visual/types";
 import { getFontStyle } from "visual/utils/fonts";
 import { Literal, read } from "visual/utils/types/Literal";
 import { Obj } from "@brizy/readers";
 import { mPipe } from "fp-utilities";
+import { Store } from "visual/redux/store";
 
 interface Data {
   key: string;
   value: Literal;
   style?: string;
-  styles?: {
-    fontStyles: Array<FontStyle>;
-    extraFontStyles: Array<ExtraFontStyle>;
-  };
+  store: Store;
 }
 
 export function getOptionFontByGlobal(data: Data): Literal {
-  const { key, value, style, styles } = data;
+  const { key, value, style, store } = data;
 
   if (style) {
-    const fontStyle = getFontStyle(style, styles);
+    const fontStyle = getFontStyle({ id: style, store });
     const getKey = mPipe(Obj.read, Obj.readKey(key), read);
     const value = getKey(fontStyle);
 

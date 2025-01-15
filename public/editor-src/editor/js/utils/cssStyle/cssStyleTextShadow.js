@@ -1,6 +1,5 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
 import {
@@ -71,8 +70,11 @@ export function cssStyleTextShadow2({ v, state, device, prefix = "" }) {
   const textShadowVertical = dvv(capByPrefix(prefix, "textShadowVertical"));
   const textShadowHorizontal = dvv(capByPrefix(prefix, "textShadowHorizontal"));
 
-  const { hex } = getOptionColorHexByPalette(textShadowHex, textShadowPalette);
-  const shadowColor = hexToRgba(hex, textShadowOpacity);
+  const shadowColor = getColor(
+    textShadowPalette,
+    textShadowHex,
+    textShadowOpacity
+  );
 
   return `text-shadow:${textShadowHorizontal}px ${textShadowVertical}px ${textShadowBlur}px ${shadowColor};`;
 }

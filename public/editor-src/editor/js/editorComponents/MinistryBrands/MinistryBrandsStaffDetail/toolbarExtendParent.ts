@@ -1,19 +1,12 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
 import { Props, Value } from "./types";
 
-export const getItems: GetItems<Value, Props> = ({
-  v,
-  device,
-  state,
-  component,
-  context,
-  getValue
-}) => {
-  const config = Config.getAll();
+export const getItems: GetItems<Value, Props> = (props) => {
+  const config = props.component.getGlobalConfig();
+
 
   return [
     {
@@ -152,14 +145,7 @@ export const getItems: GetItems<Value, Props> = ({
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>({
-      v,
-      device,
-      state,
-      component,
-      context,
-      getValue
-    }),
+    ...toolbarParentColors<Value, Props>(props),
     {
       id: "toolbarSettings",
       type: "popover",

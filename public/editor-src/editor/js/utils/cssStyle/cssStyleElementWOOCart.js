@@ -64,339 +64,415 @@ export function cssStyleElementWOOCartPurchasesColor({
 export function cssStyleElementWOOCartPurchasesFontFamily({
   v,
   device,
-  prefix = "purchases"
+  store,
+  prefix = "purchases",
+  renderContext
 }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementWOOCartPurchasesFontSize({
   v,
   device,
+  store,
   prefix = "purchases"
 }) {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartPurchasesLineHeight({
   v,
   device,
+  store,
   prefix = "purchases"
 }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartPurchasesFontWeight({
   v,
   device,
+  store,
   prefix = "purchases"
 }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartPurchasesLetterSpacing({
   v,
   device,
+  store,
   prefix = "purchases"
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix });
+  return cssStyleTypography2LetterSpacing({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartPurchasesFontVariation({
   v,
   device,
+  store,
   prefix = "purchases"
 }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartPurchasesTextTransform({
   v,
   device,
+  store,
   state,
   prefix = "purchases"
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix });
+  return cssStyleTextTransforms({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartTitleFontFamily({
   v,
   device,
-  prefix = "title"
+  store,
+  prefix = "title",
+  renderContext
 }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementWOOCartTitleFontSize({
   v,
   device,
+  store,
   prefix = "title"
 }) {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartTitleLineHeight({
   v,
   device,
+  store,
   prefix = "title"
 }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartTitleFontWeight({
   v,
   device,
+  store,
   prefix = "title"
 }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartTitleLetterSpacing({
   v,
   device,
+  store,
   prefix = "title"
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix });
+  return cssStyleTypography2LetterSpacing({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartTitleFontVariation({
   v,
   device,
+  store,
   prefix = "title"
 }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartTitleTextTransform({
   v,
   device,
+  store,
   state,
   prefix = "title"
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix });
+  return cssStyleTextTransforms({ v, device, store, state, prefix });
 }
 export function cssStyleElementWOOCartCostFontFamily({
   v,
   device,
-  prefix = "cost"
+  store,
+  prefix = "cost",
+  renderContext
 }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementWOOCartCostFontSize({
   v,
   device,
+  store,
   prefix = "cost"
 }) {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartCostLineHeight({
   v,
   device,
+  store,
   prefix = "cost"
 }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartCostFontWeight({
   v,
   device,
+  store,
   prefix = "cost"
 }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartCostLetterSpacing({
   v,
   device,
+  store,
   prefix = "cost"
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix });
+  return cssStyleTypography2LetterSpacing({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartCostFontVariation({
   v,
   device,
+  store,
   prefix = "cost"
 }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartCostTextTransform({
   v,
   device,
+  store,
   state,
   prefix = "cost"
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix });
+  return cssStyleTextTransforms({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalFontFamily({
   v,
   device,
-  prefix = "subtotal"
+  store,
+  prefix = "subtotal",
+  renderContext
 }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementWOOCartSubtotalFontSize({
   v,
   device,
+  store,
   prefix = "subtotal"
 }) {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalLineHeight({
   v,
   device,
+  store,
   prefix = "subtotal"
 }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalFontWeight({
   v,
   device,
+  store,
   prefix = "subtotal"
 }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalLetterSpacing({
   v,
   device,
+  store,
   prefix = "subtotal"
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix });
+  return cssStyleTypography2LetterSpacing({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalFontVariation({
   v,
   device,
+  store,
   prefix = "subtotal"
 }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalTextTransform({
   v,
   device,
+  store,
   state,
   prefix = "subtotal"
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix });
+  return cssStyleTextTransforms({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartButtonFontFamily({
   v,
   device,
-  prefix = "button"
+  store,
+  prefix = "button",
+  renderContext
 }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementWOOCartButtonFontSize({
   v,
   device,
+  store,
   prefix = "button"
 }) {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartButtonLineHeight({
   v,
   device,
+  store,
   prefix = "button"
 }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartButtonFontWeight({
   v,
   device,
+  store,
   prefix = "button"
 }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartButtonLetterSpacing({
   v,
   device,
+  store,
   prefix = "button"
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix });
+  return cssStyleTypography2LetterSpacing({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartButtonFontVariation({
   v,
   device,
+  store,
   prefix = "button"
 }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix });
+  return cssStyleTypography2FontVariation({ v, device, store, prefix });
 }
 
 export function cssStyleElementWOOCartButtonTextTransform({
   v,
   device,
+  store,
   prefix = "button",
   state
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix });
+  return cssStyleTextTransforms({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartTitleColor({
   v,
   device,
+  store,
   state,
   prefix = "titleColor"
 }) {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartCostColor({
   v,
   device,
+  store,
   state,
   prefix = "costColor"
 }) {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalColor({
   v,
   device,
+  store,
   state,
   prefix = "subtotalColor"
 }) {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartButtonColor({
   v,
   device,
+  store,
   state,
   prefix = "buttonColor"
 }) {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartButtonBgColor({
   v,
   device,
+  store,
   state,
   prefix = "buttonBg"
 }) {
-  return cssStyleBgColor({ v, device, state, prefix });
+  return cssStyleBgColor({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartSidebarBgColor({
   v,
   device,
+  store,
   state,
   prefix = "sidebarBg"
 }) {
-  return cssStyleBgColor({ v, device, state, prefix });
+  return cssStyleBgColor({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementWOOCartButtonDirection({ v, device, state }) {
@@ -415,8 +491,8 @@ export function cssStyleElementWOOCartButtonSpacing({ v, device, state }) {
   return spacing === undefined
     ? ""
     : direction === "inline"
-    ? `width: calc(50% - ${spacing / 2}px);`
-    : `width: 100%; margin-bottom: ${spacing}px;`;
+      ? `width: calc(50% - ${spacing / 2}px);`
+      : `width: 100%; margin-bottom: ${spacing}px;`;
 }
 
 export function cssStyleElementWOOCartButtonBorderRadius({ v, device, state }) {
@@ -475,8 +551,13 @@ export function cssStyleElementWOOCartSidebarVerticalAlign({
     : align[verticalAlign];
 }
 
-export function cssStyleElementWOOCartSidebarWidth({ v, device, state }) {
-  return cssStyleSizeWidth({ v, device, state, prefix: "sidebar" });
+export function cssStyleElementWOOCartSidebarWidth({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "sidebar" });
 }
 
 export function cssStyleElementWOOCartSidebarHeight({ v, device, state }) {
@@ -517,13 +598,20 @@ export function cssStyleElementWOOCartBubbleBg({
   v,
   device,
   state,
+  store,
   prefix = "bubbleBg"
 }) {
   return styleElementWOOCartPurchasesType({ v, device, state }) !== "bubble"
     ? "background-color: transparent;"
-    : cssStyleBgColorHex({ v, device, state, prefix });
+    : cssStyleBgColorHex({ v, device, state, store, prefix });
 }
 
-export function cssStyleElementWOOCartIconSize({ v, device, state }) {
-  return cssStyleSizeFontSize({ v, device, state, prefix: "iconCustom" });
+export function cssStyleElementWOOCartIconSize({ v, device, store, state }) {
+  return cssStyleSizeFontSize({
+    v,
+    device,
+    state,
+    store,
+    prefix: "iconCustom"
+  });
 }

@@ -4,7 +4,6 @@ import { noop } from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { Scrollbar } from "visual/component/Scrollbar";
-import Config from "visual/global/Config";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
   isCloud,
@@ -12,6 +11,8 @@ import {
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
+import { isPopup } from "visual/global/EditorModeContext";
+import { useConfig, useEditorMode } from "visual/global/hooks";
 import { pageSelector } from "visual/redux/selectors";
 import { AllRule, BlockTypeRule, CollectionTypeRule, Rule } from "visual/types";
 import {
@@ -22,9 +23,8 @@ import {
   ECWID_PRODUCT_CATEGORY_TYPE,
   ECWID_PRODUCT_TYPE
 } from "visual/utils/ecwid";
-import { IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { isPopup } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import Buttons from "../Buttons";
 import ConditionChoices from "./ConditionChoices";
@@ -61,11 +61,13 @@ const Rules = (props: Props): ReactElement => {
   const [loading, setLoading] = useState(false);
   const [listLoading, rulesList] = useRuleList(rules, context);
   const page = useSelector(pageSelector);
+  const config = useConfig();
+  const _isPro = isPro(config);
+  const editorMode = useEditorMode();
 
   useEffect(() => {
     async function fetchData(getValueFn: AsyncGetValue): Promise<void> {
       let rules = await getValueFn();
-      const config = Config.getAll();
 
       if (isCloud(config) && !rules) {
         rules = [
@@ -81,13 +83,11 @@ const Rules = (props: Props): ReactElement => {
     }
 
     asyncGetValue && fetchData(asyncGetValue);
-  }, [asyncGetValue]);
+  }, [config, asyncGetValue]);
 
   function handleAdd(): void {
-    if (IS_PRO) {
-      const config = Config.getAll();
-
-      if (isPopup(config)) {
+    if (_isPro) {
+      if (isPopup(editorMode)) {
         const rule: AllRule = {
           type: BlockTypeRule.include
         };
@@ -124,7 +124,7 @@ const Rules = (props: Props): ReactElement => {
   }
 
   function handleChange(): void {
-    if (IS_PRO) {
+    if (_isPro) {
       setLoading(true);
 
       onChange({
@@ -143,7 +143,7 @@ const Rules = (props: Props): ReactElement => {
   }
 
   function handleConditionChange(rules: Rule[]): void {
-    if (IS_PRO) {
+    if (_isPro) {
       setRules(rules);
     }
   }

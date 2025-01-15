@@ -1,17 +1,18 @@
-import Config, { WP } from "visual/global/Config";
+import { Str } from "@brizy/readers";
+import { WP } from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Rule } from "visual/types";
 import { apiRuleToEditorRule } from "visual/utils/reader/globalBlocks";
 import {
   GetAuthors,
-  GetPosts,
   GetPostTaxonomies,
+  GetPosts,
   GetRulePostsGroupList,
   GetTerms,
-  GetTermsBy,
-  GetWPCollectionSourceItems,
-  GetWPCollectionSourceTypes
+  GetTermsBy
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
+
 
 export {
   addCustomIcon,
@@ -89,18 +90,18 @@ export function request(
 //#endregion
 
 //#region Rules
-
-export function getRulesList(): Promise<Rule> {
+export function getRulesList(config: ConfigCommon): Promise<Rule> {
+  const wpConfig = config as WP;
   const {
     api: { getRuleList, hash, url },
     page
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
+  } = wpConfig.wp;
+  const version = wpConfig.editorVersion;
 
   return request(url, {
     method: "POST",
     body: new URLSearchParams({
-      action: getRuleList,
+      action: Str.read(getRuleList) ?? "",
       post: page,
       version,
       hash
@@ -110,13 +111,16 @@ export function getRulesList(): Promise<Rule> {
     .then(({ data }) => data.map(apiRuleToEditorRule));
 }
 
-export async function getGroupList(type: "block" | "popup"): Promise<unknown> {
+export async function getGroupList(
+  type: "block" | "popup",
+  config: ConfigCommon
+): Promise<unknown> {
   const {
     editorVersion,
     wp: {
       api: { url, hash, getRuleGroupList }
     }
-  } = Config.getAll() as WP;
+  } = config as WP;
 
   const body = new URLSearchParams({
     hash,
@@ -141,60 +145,25 @@ export async function getGroupList(type: "block" | "popup"): Promise<unknown> {
 
 //#endregion
 
-//#region Image
-
-export async function getImageUid(id: string): Promise<{ uid: string }> {
-  const {
-    editorVersion,
-    wp: {
-      page,
-      api: { url, hash, getMediaUid }
-    }
-  } = Config.getAll() as WP;
-
-  const body = new URLSearchParams({
-    hash,
-    version: editorVersion,
-    action: getMediaUid,
-    post_id: page,
-    attachment_id: id
-  });
-
-  const r = await request(url, {
-    method: "POST",
-    body
-  });
-
-  const rj = await r.json();
-
-  if (rj.success) {
-    return rj.data;
-  } else {
-    throw rj;
-  }
-}
-
-//#endregion
-
 //#region Featured Image
-
 export async function updateFeaturedImage(
-  post: string,
-  attachmentId: string
+  attachmentId: string,
+  config: ConfigCommon
 ): Promise<unknown> {
   const {
     editorVersion,
     wp: {
+      page: post,
       api: { url, hash, setFeaturedImage }
     }
-  } = Config.getAll() as WP;
+  } = config as WP;
 
   const body = new URLSearchParams({
     hash,
     version: editorVersion,
     action: setFeaturedImage,
-    post: post,
-    attachmentId: attachmentId
+    post,
+    attachmentId
   });
 
   const r = await request(url, {
@@ -212,26 +181,27 @@ export async function updateFeaturedImage(
 }
 
 export async function updateFeaturedImageFocalPoint(
-  post: string,
   attachmentId: string,
   pointX: string,
-  pointY: string
+  pointY: string,
+  config: ConfigCommon
 ): Promise<unknown> {
   const {
     editorVersion,
     wp: {
+      page: post,
       api: { url, hash, setFeaturedImageFocalPoint }
     }
-  } = Config.getAll() as WP;
+  } = config as WP;
 
   const body = new URLSearchParams({
     hash,
     version: editorVersion,
     action: setFeaturedImageFocalPoint,
-    post: post,
-    attachmentId: attachmentId,
-    pointX: pointX,
-    pointY: pointY
+    post,
+    attachmentId,
+    pointX,
+    pointY
   });
 
   const r = await request(url, {
@@ -248,13 +218,16 @@ export async function updateFeaturedImageFocalPoint(
   }
 }
 
-export async function removeFeaturedImage(post: string): Promise<unknown> {
+export async function removeFeaturedImage(
+  config: ConfigCommon
+): Promise<unknown> {
   const {
     editorVersion,
     wp: {
+      page: post,
       api: { url, hash, removeFeaturedImage }
     }
-  } = Config.getAll() as WP;
+  } = config as WP;
 
   const body = new URLSearchParams({
     hash,
@@ -280,14 +253,13 @@ export async function removeFeaturedImage(post: string): Promise<unknown> {
 //#endregion
 
 //#region Sidebars
-
-export async function getSidebars(): Promise<unknown> {
+export async function getSidebars(config: ConfigCommon): Promise<unknown> {
   const {
     editorVersion,
     wp: {
       api: { url, hash, getSidebars }
     }
-  } = Config.getAll() as WP;
+  } = config as WP;
 
   const body = new URLSearchParams({
     hash,
@@ -313,13 +285,16 @@ export async function getSidebars(): Promise<unknown> {
 
 //#region Shortcode Content
 
-export async function shortcodeContent(shortcode: string): Promise<unknown> {
+export async function shortcodeContent(
+  shortcode: string,
+  config: ConfigCommon
+): Promise<unknown> {
   const {
     editorVersion,
     wp: {
       api: { url, hash, shortcodeContent }
     }
-  } = Config.getAll() as WP;
+  } = config as WP;
 
   const body = new URLSearchParams({
     hash,
@@ -346,13 +321,13 @@ export async function shortcodeContent(shortcode: string): Promise<unknown> {
 
 //#region GetMenus
 
-export async function getMenus(): Promise<unknown> {
+export async function getMenus(config: ConfigCommon): Promise<unknown> {
   const {
     editorVersion,
     wp: {
       api: { url, hash, getMenus }
     }
-  } = Config.getAll() as WP;
+  } = config as WP;
 
   const body = new URLSearchParams({
     hash,
@@ -376,52 +351,20 @@ export async function getMenus(): Promise<unknown> {
 
 //#endregion
 
-//#region Attachment byId
-
-export async function getAttachmentById(id: string): Promise<{ uid: string }> {
-  const {
-    editorVersion,
-    wp: {
-      api: { url, hash, getAttachmentUid }
-    }
-  } = Config.getAll() as WP;
-
-  const body = new URLSearchParams({
-    hash,
-    version: editorVersion,
-    action: getAttachmentUid,
-    attachment_id: id
-  });
-
-  const r = await request(url, {
-    method: "POST",
-    body
-  });
-
-  const rj = await r.json();
-
-  if (rj.success) {
-    return rj.data;
-  } else {
-    throw rj;
-  }
-}
-
-//#endregion
-
 export const getAuthors: GetAuthors = async ({
   include = [],
   search = "",
-  abortSignal
-} = {}) => {
+  abortSignal,
+  config
+}) => {
   const {
     api: { url, hash, getUsers }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
+  } = (config as WP).wp;
+  const version = config.editorVersion;
   const body = new URLSearchParams({
     hash,
     version,
-    action: getUsers
+    action: Str.read(getUsers) ?? ""
   });
 
   if (search !== "") {
@@ -445,13 +388,18 @@ export const getAuthors: GetAuthors = async ({
   }
 };
 
-export const getTerms: GetTerms = async (taxonomy) => {
-  const { url, hash, getTerms } = Config.get("wp").api;
-  const version = Config.get("editorVersion");
+export const getTerms: GetTerms = async (taxonomy, config) => {
+  const { url, hash, getTerms } = (config as WP).wp.api;
+  const version = config.editorVersion;
 
   return request(url, {
     method: "POST",
-    body: new URLSearchParams({ hash, version, taxonomy, action: getTerms })
+    body: new URLSearchParams({
+      hash,
+      version,
+      taxonomy,
+      action: Str.read(getTerms) ?? ""
+    })
   })
     .then((r) => r.json())
     .then(({ data }) => data);
@@ -460,16 +408,17 @@ export const getTerms: GetTerms = async (taxonomy) => {
 export const getTermsBy: GetTermsBy = async ({
   include = [],
   search = "",
-  abortSignal
-} = {}) => {
+  abortSignal,
+  config
+}) => {
   const {
     api: { url, hash, getTermsBy }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
+  } = (config as WP).wp;
+  const version = config.editorVersion;
   const body = new URLSearchParams({
     hash,
     version,
-    action: getTermsBy
+    action: Str.read(getTermsBy) ?? ""
   });
 
   if (search !== "") {
@@ -501,16 +450,17 @@ export const getPosts: GetPosts = async ({
   search = "",
   postType,
   excludePostType,
-  abortSignal
-} = {}) => {
+  abortSignal,
+  config
+}) => {
   const {
     api: { url, hash, searchPosts }
-  } = Config.get("wp");
-  const version = Config.get("editorVersion");
+  } = (config as WP).wp;
+  const version = config.editorVersion;
   const body = new URLSearchParams({
     hash,
     version,
-    action: searchPosts
+    action: Str.read(searchPosts) ?? ""
   });
 
   if (search !== "") {
@@ -548,10 +498,11 @@ export const getPosts: GetPosts = async ({
 
 export const getPostTaxonomies: GetPostTaxonomies = async ({
   taxonomy,
-  abortSignal
+  abortSignal,
+  config
 }) => {
-  const { url, hash, getPostTaxonomies } = Config.get("wp").api;
-  const version = Config.get("editorVersion");
+  const { url, hash, getPostTaxonomies } = (config as WP).wp.api;
+  const version = config.editorVersion;
 
   return request(url, {
     method: "POST",
@@ -559,7 +510,7 @@ export const getPostTaxonomies: GetPostTaxonomies = async ({
       hash,
       version,
       post_type: taxonomy,
-      action: getPostTaxonomies
+      action: Str.read(getPostTaxonomies) ?? ""
     }),
     signal: abortSignal
   })
@@ -573,55 +524,14 @@ export const getPostTaxonomies: GetPostTaxonomies = async ({
     });
 };
 
-export const getCollectionSourceTypes: GetWPCollectionSourceTypes =
-  async () => {
-    const config = Config.getAll() as WP;
-
-    const data = config.wp.postTypes;
-
-    return Promise.resolve(data);
-  };
-
-export const getCollectionSourceItems: GetWPCollectionSourceItems = async (
-  id
-) => {
-  const config = Config.getAll() as WP;
-
-  const { wp, editorVersion } = config;
-  const { url, hash, getPostObjects } = wp.api;
-
-  return await request(url, {
-    method: "POST",
-    body: new URLSearchParams({
-      hash,
-      version: editorVersion,
-      postType: id,
-      action: getPostObjects
-    })
-  })
-    .then((r) => r.json())
-    .then((result) => {
-      if (!result?.data) {
-        throw "Something went wrong";
-      }
-
-      return result.data;
-    })
-    .catch((e) => {
-      if (process.env.NODE_ENV === "development") {
-        console.error(e);
-      }
-      return [];
-    });
-};
-
 //#region Rules
 
 export const getRulePostsGroupList: GetRulePostsGroupList = async (
-  postType
+  postType,
+  config
 ) => {
-  const config = Config.getAll() as WP;
-  const { wp, editorVersion } = config;
+  const wpConfig = config as WP;
+  const { wp, editorVersion } = wpConfig;
   const { url, hash, rulePostsGroupList } = wp.api;
 
   return await request(url, {
@@ -656,10 +566,6 @@ export const getRulePostsGroupList: GetRulePostsGroupList = async (
 export function getCollectionTypesWithFields() {
   return Promise.reject("Not implemented");
 }
-
-export const uploadFile = (): Promise<string> => {
-  return Promise.reject("Not implemented");
-};
 
 export const getMetafields = () => {
   return Promise.reject("Not implemented");

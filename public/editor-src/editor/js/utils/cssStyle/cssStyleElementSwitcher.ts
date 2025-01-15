@@ -86,16 +86,24 @@ export function cssStyleElementSwitcherNav2Width({
 export function cssStyleElementSwitcherNav2Height({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeSizeHeight({ v, device, state, prefix: "navStyle2" });
+  return cssStyleSizeSizeHeight({
+    v,
+    device,
+    state,
+    store,
+    prefix: "navStyle2"
+  });
 }
 
 export function cssStyleElementSwitcherNavBeforeBg({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state: "active", prefix: "bg" });
+  return cssStyleBgColor({ v, device, state: "active", store, prefix: "bg" });
 }
 
 export function cssStyleElementSwitcherNavSpacing({
@@ -109,26 +117,30 @@ export function cssStyleElementSwitcherNavSpacing({
 
 export function cssStyleElementSwitcherActiveTextColor({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state: "active", prefix: "color" });
+  return cssStyleColor({ v, device, state: "active", store, prefix: "color" });
 }
 
 export function cssStyleElementSwitcherActiveCustomIconColor({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
   return cssStyleCustomIconColor({
     v,
     device,
-    state: ACTIVE
+    state: ACTIVE,
+    store
   });
 }
 
 export function cssStyleElementSwitcherWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "navStyle1" });
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "navStyle1" });
 }

@@ -1,15 +1,15 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const { hex: labelColorHex } = getOptionColorHexByPalette(
+  const labelColor = getColor(
+    dvv("labelColorPalette"),
     dvv("labelColorHex"),
-    dvv("labelColorPalette")
+    dvv("labelColorOpacity")
   );
 
   return [
@@ -85,7 +85,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(labelColorHex, dvv("labelColorOpacity"))
+            backgroundColor: labelColor
           }
         }
       },

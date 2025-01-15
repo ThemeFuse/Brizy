@@ -7,7 +7,6 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { css } from "visual/utils/cssStyle";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -40,7 +39,18 @@ export default class EmbedCode extends EditorComponent<Value, ComponentsMeta> {
 
     const className = classNames(
       "brz-embed-code",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext,
+          editorMode: this.props.editorMode
+        })
+      )
     );
 
     const resizerRestrictions = {
@@ -106,7 +116,18 @@ export default class EmbedCode extends EditorComponent<Value, ComponentsMeta> {
 
     const className = classNames(
       "brz-embed-code",
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext,
+          editorMode: this.props.editorMode
+        })
+      )
     );
 
     return (

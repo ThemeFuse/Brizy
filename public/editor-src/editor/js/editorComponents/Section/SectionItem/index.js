@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import { mergeDeep } from "timm";
 import _ from "underscore";
+import { isEditor } from "visual/providers/RenderProvider";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
@@ -12,9 +13,7 @@ import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
+import { blocksDataSelector } from "visual/redux/selectors";
 import { hasMembership } from "visual/utils/membership";
 import { getLinkData } from "visual/utils/models/link";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
@@ -115,7 +114,7 @@ class SectionItem extends EditorComponent {
 
   getMeta() {
     const { meta } = this.props;
-    const device = deviceModeSelector(this.getReduxState());
+    const device = this.getDeviceMode();
 
     const size = this.dvv("containerSize", DESKTOP);
     const tabletSize = this.dvv("containerSize", TABLET);
@@ -203,10 +202,16 @@ class SectionItem extends EditorComponent {
     const classNameContainer = classnames(
       "brz-container",
       v.containerClassName,
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const itemsProps = this.makeSubcomponentProps({
@@ -222,6 +227,7 @@ class SectionItem extends EditorComponent {
           onStart={this.onPaddingResizerStart}
           onChange={this.handlePaddingResizerChange}
           onEnd={this.onPaddingResizerEnd}
+          renderContext={this.renderContext}
         >
           <Items {...itemsProps} />
         </PaddingResizer>
@@ -240,7 +246,7 @@ class SectionItem extends EditorComponent {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const blockData = globalBlocks[itemData.value._id];
 
           popupId = blockData.value.popupId;
@@ -248,11 +254,11 @@ class SectionItem extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: IS_EDITOR
+          instanceKey: isEditor(this.renderContext)
             ? `${this.getId()}_${popupId}`
             : itemData.type === "GlobalBlock"
-            ? `global_${popupId}`
-            : popupId
+              ? `global_${popupId}`
+              : popupId
         };
       }
     });
@@ -267,10 +273,17 @@ class SectionItem extends EditorComponent {
       "brz-section__content",
       `brz-section--${containerType}`,
       className,
-      css(
-        `${this.constructor.componentId}-bg`,
+      this.css(
+        `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd, this.props)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          props: this.props,
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -296,7 +309,7 @@ class SectionItem extends EditorComponent {
                   {this.renderItems(v, vs, vd)}
                   {shouldRenderPopup(
                     v,
-                    blocksDataSelector(getStore().getState())
+                    blocksDataSelector(this.getReduxState())
                   ) && this.renderPopups()}
                 </ToolbarExtend>
               </Roles>
@@ -313,14 +326,22 @@ class SectionItem extends EditorComponent {
       "brz-section__content",
       `brz-section--${containerType}`,
       className,
-      css(
-        `${this.constructor.componentId}-bg`,
+      this.css(
+        `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd, this.props)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          props: this.props,
+          renderContext: this.renderContext
+        })
       )
     );
 
-    const linkData = getLinkData(v);
+    const config = this.getGlobalConfig();
+    const linkData = getLinkData(v, config);
 
     return (
       <>
@@ -338,7 +359,7 @@ class SectionItem extends EditorComponent {
             )}
           </div>
         </CustomCSS>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
     );

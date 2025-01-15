@@ -1,6 +1,8 @@
 import { produce } from "immer";
 import { ElementModel, ModelType } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { RenderType } from "visual/providers/RenderProvider";
+import { Store } from "visual/redux/store";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { getBreakpoints } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
@@ -18,15 +20,19 @@ import { replaceHoverAndActive } from "./utils";
 export const getCSSObjects = ({
   currentModel,
   model,
-  options
+  store,
+  options,
+  renderContext
 }: {
   options: ToolbarItemType[];
   currentModel: ModelType;
+  store: Store;
   model: {
     vd: ElementModel;
     vs: ElementModel;
     v: ElementModel;
   };
+  renderContext: RenderType;
 }): CSS => {
   const initialAcc: CSS = {
     desktop: [],
@@ -55,8 +61,10 @@ export const getCSSObjects = ({
           v,
           breakpoint,
           option,
+          store,
           state: NORMAL,
-          allCSS: acc
+          allCSS: acc,
+          renderContext
         });
 
         if (normalCSS) {
@@ -69,8 +77,10 @@ export const getCSSObjects = ({
               v,
               breakpoint,
               option,
+              store,
               state: HOVER,
-              allCSS: acc
+              allCSS: acc,
+              renderContext
             });
 
             if (hoverCSS) {
@@ -83,8 +93,10 @@ export const getCSSObjects = ({
               v,
               breakpoint,
               option,
+              store,
               state: ACTIVE,
-              allCSS: acc
+              allCSS: acc,
+              renderContext
             });
 
             if (activeCSS) {
@@ -102,8 +114,10 @@ export const getCSSObjects = ({
           v,
           breakpoint,
           option,
+          store,
           state: NORMAL,
-          allCSS: acc
+          allCSS: acc,
+          renderContext
         });
 
         Object.assign(acc, normalCSS);
@@ -114,8 +128,10 @@ export const getCSSObjects = ({
               v,
               breakpoint,
               option,
+              store,
               state: HOVER,
-              allCSS: acc
+              allCSS: acc,
+              renderContext
             });
 
             Object.assign(acc, hoverCSS);
@@ -126,8 +142,10 @@ export const getCSSObjects = ({
               v,
               breakpoint,
               option,
+              store,
               state: ACTIVE,
-              allCSS: acc
+              allCSS: acc,
+              renderContext
             });
 
             Object.assign(acc, activeCSS);

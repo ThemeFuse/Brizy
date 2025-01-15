@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import Config from "visual/global/Config";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import {
+  configSelector,
   middleGlobalBlocksIdSelector,
   pageAssembledRawSelector,
   pageAssembledSelector,
@@ -31,7 +31,8 @@ export const page: RPage = (state, action, fullState) => {
         return state;
       }
 
-      const page = isPopup(Config.getAll())
+      const config = configSelector(fullState);
+      const page = isPopup(config)
         ? pageAssembledSelector(fullState)
         : pageAssembledRawSelector(fullState);
 
@@ -63,7 +64,8 @@ export const page: RPage = (state, action, fullState) => {
       });
     }
     case "UPDATE_PAGE_LAYOUT": {
-      if (isShopifyPage(state)) {
+      const config = configSelector(fullState);
+      if (isShopifyPage(state, config)) {
         return produce<ShopifyPage>(state, (draft) => {
           draft.layout.value = action.payload.layout;
           draft.dataVersion = draft.dataVersion + 1;
@@ -72,7 +74,8 @@ export const page: RPage = (state, action, fullState) => {
       return state;
     }
     case "UPDATE_PAGE_TITLE": {
-      if (isShopifyPage(state)) {
+      const config = configSelector(fullState);
+      if (isShopifyPage(state, config)) {
         return produce<ShopifyPage>(state, (draft) => {
           draft.title = action.payload;
           draft.dataVersion = draft.dataVersion + 1;
@@ -81,7 +84,8 @@ export const page: RPage = (state, action, fullState) => {
       return state;
     }
     case "UPDATE_PAGE_IS_HOME_PAGE": {
-      if (isShopifyPage(state)) {
+      const config = configSelector(fullState);
+      if (isShopifyPage(state, config)) {
         return produce<ShopifyPage>(state, (draft) => {
           draft.layout.isHomePage = action.payload.isHomePage;
           draft.dataVersion = draft.dataVersion + 1;

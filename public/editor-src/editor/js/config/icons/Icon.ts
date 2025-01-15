@@ -1,8 +1,7 @@
-import { Num, Obj, pipe, Str } from "@brizy/readers";
+import { Num, Obj, Str, pipe } from "@brizy/readers";
 import { mPipe, optional, parseStrict } from "fp-utilities";
 import { toArray } from "visual/utils/array";
 import { always } from "visual/utils/fp";
-import { t } from "visual/utils/i18n";
 import { Reader } from "visual/utils/types/Type";
 import { throwOnNullish } from "visual/utils/value";
 import * as Cat from "./Categories";
@@ -53,7 +52,7 @@ export const read: Reader<Icon> = (v) => {
 export const readCustom = parseStrict<Record<string, unknown>, CustomIcon>({
   name: pipe(
     mPipe(Obj.readKey("name"), Str.read),
-    throwOnNullish(t("Invalid Icon name"))
+    throwOnNullish("Invalid Icon name")
   ),
   filename: optional(mPipe(Obj.readKey("filename"), Str.read)),
   type: always(IconTypes.Custom)

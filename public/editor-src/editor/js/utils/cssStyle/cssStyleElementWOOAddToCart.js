@@ -48,12 +48,22 @@ export function cssStyleElementWOOAddToCartSpacing({ v, device }) {
     : marginType[position];
 }
 
-export function cssStyleElementWOOAddToCartInputWidth({ v, device, state }) {
-  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputWidth({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleSizeWidth({ v, device, state, store, prefix: "input" });
 }
 
-export function cssStyleElementWOOAddToCartInputHeight({ v, device, state }) {
-  return cssStyleSizeHeight({ v, device, state, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputHeight({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleSizeHeight({ v, device, state, store, prefix: "input" });
 }
 
 export function cssStyleElementWOOAddToCartInputPosition({ v, device }) {
@@ -91,185 +101,385 @@ export function cssStyleElementWOOAddToCartInputAlign({ v, device }) {
   return `align-items: ${flexDirection[positionValue]};`;
 }
 
-export function cssStyleElementWOOAddToCartInputFontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "input",
+    renderContext
+  });
 }
 
-export function cssStyleElementWOOAddToCartInputFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputFontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "input" });
 }
 
-export function cssStyleElementWOOAddToCartInputLineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputLineHeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "input" });
 }
 
-export function cssStyleElementWOOAddToCartInputFontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputFontWeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "input" });
 }
 
-export function cssStyleElementWOOAddToCartInputLetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputLetterSpacing({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "input"
+  });
 }
 
-export function cssStyleElementWOOAddToCartInputFontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputFontVariation({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "input"
+  });
 }
 
 export function cssStyleElementWOOAddToCartInputTextTransform({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "input" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "input" });
 }
 
-export function cssStyleElementWOOAddToCartInputColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "inputColor" });
+export function cssStyleElementWOOAddToCartInputColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, prefix: "inputColor", store });
 }
 
-export function cssStyleElementWOOAddToCartButtonColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "buttonColor" });
+export function cssStyleElementWOOAddToCartButtonColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, prefix: "buttonColor", store });
 }
 
-export function cssStyleElementWOOAddToCartLabelFontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "label" });
+export function cssStyleElementWOOAddToCartLabelFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "label",
+    renderContext
+  });
 }
 
-export function cssStyleElementWOOAddToCartLabelFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "label" });
+export function cssStyleElementWOOAddToCartLabelFontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "label" });
 }
 
-export function cssStyleElementWOOAddToCartLabelLineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "label" });
+export function cssStyleElementWOOAddToCartLabelLineHeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "label" });
 }
 
-export function cssStyleElementWOOAddToCartLabelFontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "label" });
+export function cssStyleElementWOOAddToCartLabelFontWeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "label" });
 }
 
-export function cssStyleElementWOOAddToCartLabelLetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "label" });
+export function cssStyleElementWOOAddToCartLabelLetterSpacing({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "label"
+  });
 }
 
-export function cssStyleElementWOOAddToCartLabelFontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "label" });
+export function cssStyleElementWOOAddToCartLabelFontVariation({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "label"
+  });
 }
 
 export function cssStyleElementWOOAddToCartLabelTextTransform({
   v,
   state,
-  device
+  device,
+  store
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "label" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "label" });
 }
 
-export function cssStyleElementWOOAddToCartValueFontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "value" });
+export function cssStyleElementWOOAddToCartValueFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "value",
+    renderContext
+  });
 }
 
-export function cssStyleElementWOOAddToCartValueFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "value" });
+export function cssStyleElementWOOAddToCartValueFontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "value" });
 }
 
-export function cssStyleElementWOOAddToCartValueLineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "value" });
+export function cssStyleElementWOOAddToCartValueLineHeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "value" });
 }
 
-export function cssStyleElementWOOAddToCartValueFontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "value" });
+export function cssStyleElementWOOAddToCartValueFontWeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "value" });
 }
 
-export function cssStyleElementWOOAddToCartValueLetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "value" });
+export function cssStyleElementWOOAddToCartValueLetterSpacing({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "value"
+  });
 }
 
-export function cssStyleElementWOOAddToCartValueFontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "value" });
+export function cssStyleElementWOOAddToCartValueFontVariation({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "value"
+  });
 }
 
 export function cssStyleElementWOOAddToCartValueTextTransform({
   v,
   state,
-  device
+  device,
+  store
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "value" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "value" });
 }
 
-export function cssStyleElementWOOAddToCartLabelColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "labelColor" });
+export function cssStyleElementWOOAddToCartLabelColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, prefix: "labelColor", store });
 }
 
-export function cssStyleElementWOOAddToCartValueColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "valueColor" });
+export function cssStyleElementWOOAddToCartValueColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, prefix: "valueColor", store });
 }
 
-export function cssStyleElementWOOAddToCartClearFontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "clear" });
+export function cssStyleElementWOOAddToCartClearFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "clear",
+    renderContext
+  });
 }
 
-export function cssStyleElementWOOAddToCartClearFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "clear" });
+export function cssStyleElementWOOAddToCartClearFontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "clear" });
 }
 
-export function cssStyleElementWOOAddToCartClearLineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "clear" });
+export function cssStyleElementWOOAddToCartClearLineHeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "clear" });
 }
 
-export function cssStyleElementWOOAddToCartClearFontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "clear" });
+export function cssStyleElementWOOAddToCartClearFontWeight({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "clear" });
 }
 
-export function cssStyleElementWOOAddToCartClearLetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "clear" });
+export function cssStyleElementWOOAddToCartClearLetterSpacing({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "clear"
+  });
 }
 
-export function cssStyleElementWOOAddToCartClearFontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "clear" });
+export function cssStyleElementWOOAddToCartClearFontVariation({
+  v,
+  device,
+  store
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "clear"
+  });
 }
 
 export function cssStyleElementWOOAddToCartClearTextTransform({
   v,
   state,
-  device
+  device,
+  store
 }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "clear" });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "clear" });
 }
 
-export function cssStyleElementWOOAddToCartClearColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "clearColor" });
+export function cssStyleElementWOOAddToCartClearColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, prefix: "clearColor", store });
 }
 
 export function cssStyleElementWOOAddToCartTableMargin({ v }) {
   return `margin-bottom: ${v.tableSpacing}px;`;
 }
 
-export function cssStyleElementWOOAddToCartTableBorder({ v, device, state }) {
-  return cssStyleBorder({ v, device, state, prefix: "table" });
+export function cssStyleElementWOOAddToCartTableBorder({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleBorder({ v, device, state, prefix: "table", store });
 }
 
-export function cssStyleElementWOOAddToCartInputBg({ v, device, state }) {
+export function cssStyleElementWOOAddToCartInputBg({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleBgColor({
     v,
     device,
     state,
+    store,
     prefix: "inputBg"
   });
 }
 
-export function cssStyleElementWOOAddToCartTableBg({ v, device, state }) {
+export function cssStyleElementWOOAddToCartTableBg({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleBgColor({
     v,
     device,
     state,
+    store,
     prefix: "tableBg"
   });
 }
 
-export function cssStyleElementWOOAddToCartLabelBg({ v, device, state }) {
+export function cssStyleElementWOOAddToCartLabelBg({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleBgColor({
     v,
     device,
     state,
+    store,
     prefix: "labelBg"
   });
 }
@@ -281,23 +491,25 @@ export function cssStyleElementWOOAddToCartInputBorder({ v, device, state }) {
 export function cssStyleElementWOOAddToCartInputBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleBoxShadow({ v, device, prefix: "input", state });
+  return cssStyleBoxShadow({ v, device, prefix: "input", state, store });
 }
 
 export function cssStyleElementWOOAddToCartTableBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleBoxShadow({ v, device, prefix: "table", state });
+  return cssStyleBoxShadow({ v, device, prefix: "table", state, store });
 }
 
 export function cssStyleElementWOOAddToCartBorder({ v, device }) {
   return cssStyleBorder({ v, device, prefix: "button" });
 }
 
-export function cssStyleElementWOOAddToCartBorderRadius({ v, device }) {
-  return cssStyleBorderRadius({ v, device, prefix: "button" });
+export function cssStyleElementWOOAddToCartBorderRadius({ v, device, store }) {
+  return cssStyleBorderRadius({ v, device, prefix: "button", store });
 }

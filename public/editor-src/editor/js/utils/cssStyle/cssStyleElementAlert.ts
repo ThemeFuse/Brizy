@@ -1,3 +1,4 @@
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBoxShadow,
   cssStyleColor,
@@ -23,9 +24,10 @@ import { CSSValue } from "../style2/types";
 export function cssStyleAlertContainerShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "container" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "container" });
 }
 
 //#region close button
@@ -126,8 +128,8 @@ export function cssStyleElementAlertCloseButtonBorderRadius({
     closeBorderRadiusShape === "square"
       ? 0
       : closeBorderRadiusShape === "rounded"
-      ? 50
-      : closeBorderRadius;
+        ? 50
+        : closeBorderRadius;
 
   return `border-radius:${radius}px;`;
 }
@@ -152,12 +154,14 @@ export function cssStyleElementAlertCloseButtonPosition({
 export function cssStyleElementAlertTitleAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const contentAlign = styleAlignHorizontal({
     v,
     device,
     state,
+    store,
     prefix: "title"
   });
 
@@ -175,59 +179,75 @@ export function cssStyleElementAlertTitleShadow({
 export function cssStyleElementAlertTitleColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "titleColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "titleColor" });
 }
 
 export function cssStyleElementAlertTitleFontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "title" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "title",
+    renderContext
+  });
 }
 
 export function cssStyleElementAlertTitleFontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "title" });
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "title" });
 }
 
 export function cssStyleElementAlertTitleLineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "title" });
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "title" });
 }
 
 export function cssStyleElementAlertTitleFontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "title" });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "title" });
 }
 
 export function cssStyleElementAlertTitleLetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
+    store,
     prefix: "title"
   });
 }
 
 export function cssStyleElementAlertTitleFontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    store,
     prefix: "title"
   });
 }
@@ -235,14 +255,10 @@ export function cssStyleElementAlertTitleFontVariation({
 export function cssStyleElementAlertTitleTextTransform({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleTextTransforms({
-    v,
-    device,
-    state,
-    prefix: "title"
-  });
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "title" });
 }
 
 //#endregion
@@ -278,12 +294,14 @@ export function cssStyleAlertPadding({ v, device, state }: CSSValue): string {
 export function cssStyleElementAlertDescriptionAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const contentAlign = styleAlignHorizontal({
     v,
     device,
     state,
+    store,
     prefix: "description"
   });
 
@@ -301,47 +319,76 @@ export function cssStyleElementAlertDescriptionShadow({
 export function cssStyleElementAlertDescriptionColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "descriptionColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "descriptionColor" });
 }
 
 export function cssStyleElementAlertDescriptionFontFamily({
   v,
-  device
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "description" });
+  device,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "description",
+    renderContext
+  });
 }
 
 export function cssStyleElementAlertDescriptionFontSize({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix: "description" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    prefix: "description"
+  });
 }
 
 export function cssStyleElementAlertDescriptionLineHeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "description" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    prefix: "description"
+  });
 }
 
 export function cssStyleElementAlertDescriptionFontWeight({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "description" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    prefix: "description"
+  });
 }
 
 export function cssStyleElementAlertDescriptionLetterSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
+    store,
     state,
     prefix: "description"
   });
@@ -349,11 +396,13 @@ export function cssStyleElementAlertDescriptionLetterSpacing({
 
 export function cssStyleElementAlertDescriptionFontVariation({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    store,
     prefix: "description"
   });
 }
@@ -361,11 +410,13 @@ export function cssStyleElementAlertDescriptionFontVariation({
 export function cssStyleElementAlertDescriptionTextTransform({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
+    store,
     state,
     prefix: "description"
   });

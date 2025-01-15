@@ -1,5 +1,4 @@
 import { produce } from "immer";
-import Config from "visual/global/Config";
 import { getUploadedFonts } from "visual/utils/api";
 import { getGoogleFonts } from "visual/utils/fonts";
 import { t } from "visual/utils/i18n";
@@ -38,7 +37,7 @@ export const projectFontsData = (projectFonts) => {
       case "upload":
         return { ...acc, upload: data };
       case "system":
-      return { ...acc, system: data };
+        return { ...acc, system: data };
       default:
         return { ...acc, google: [...(acc.google || []), ...data] };
     }
@@ -111,14 +110,20 @@ export const fontTransform = {
   system: getSystemDetails
 };
 
-export const normalizeFonts = async (newFonts) => {
+/**
+ * Normalize Fonts function
+ * @param {Object} obj - props
+ * @param {Object} obj.newFonts - newFonts
+ * @param {Object} obj.config - ConfigCommon
+ * @param {string} obj.renderContext - RenderType: "editor" | "view"
+ */
+export const normalizeFonts = async ({ newFonts, config, renderContext }) => {
   if (newFonts.length === 0) {
     return [];
   }
 
   const fonts = new Map();
   const makeFontWithId = (font) => ({ brizyId: uuid(), ...font });
-  const config = Config.getAll();
 
   let uploadedFonts = [];
   try {
@@ -127,7 +132,7 @@ export const normalizeFonts = async (newFonts) => {
     console.log(e);
   }
 
-  const googleFonts = await getGoogleFonts();
+  const googleFonts = await getGoogleFonts({ config, renderContext });
 
   newFonts.forEach(({ type, family }) => {
     if (type === "google") {

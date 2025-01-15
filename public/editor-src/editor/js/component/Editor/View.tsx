@@ -1,35 +1,23 @@
 import React from "react";
-import { getRenderType } from "visual/component/Editor/utils";
-import Loadable from "@loadable/component";
-import Config from "visual/global/Config";
+import {
+  EditorMode,
+  getCommonEditorMode
+} from "visual/global/EditorModeContext";
+import { Page } from "./View/Page";
+import { Popup } from "./View/Popup";
+import { Story } from "./View/Story";
 
-const LoadablePopup = Loadable(async () => {
-  const { Popup } = await import("./View/Popup");
-  return Popup;
-});
-
-const LoadableStory = Loadable(async () => {
-  const { Story } = await import("./View/Story");
-  return Story;
-});
-
-const LoadablePage = Loadable(async () => {
-  const { Page } = await import("./View/Page");
-  return Page;
-});
-
-const View = () => {
-  const type = getRenderType(Config.getAll());
-
+const View = ({ editorMode }: { editorMode: EditorMode }) => {
+  const type = getCommonEditorMode(editorMode);
   switch (type) {
     case "popup": {
-      return <LoadablePopup />;
+      return <Popup mode={editorMode} />;
     }
     case "story": {
-      return <LoadableStory />;
+      return <Story mode={editorMode} />;
     }
-    case "basic": {
-      return <LoadablePage />;
+    case "page": {
+      return <Page mode={editorMode} />;
     }
   }
 };

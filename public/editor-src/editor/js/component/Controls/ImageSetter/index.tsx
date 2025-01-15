@@ -6,18 +6,19 @@ import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   AddImageData,
+  AddImageExtra,
   Response,
   SizeType
 } from "visual/global/Config/types/configs/common";
+import { getFileFormat } from "visual/utils/customFile/utils";
 import { t } from "visual/utils/i18n";
 import { getImageUrl, preloadImage } from "visual/utils/image";
 import { ImageType } from "visual/utils/image/types";
 import Image from "./Image";
 import { Meta } from "./types";
-import { getFileFormat } from "visual/utils/customFile/utils";
 
 export interface Value {
   src: string;
@@ -30,6 +31,15 @@ export interface Value {
   imageType: ImageType;
   altTitle?: string;
 }
+
+type AddMedia = {
+  label?: string;
+  handler: (
+    res: Response<AddImageData>,
+    rej: Response<string>,
+    extra: AddImageExtra
+  ) => void;
+};
 
 export interface Props<T extends ReactText> {
   className?: string;
@@ -49,6 +59,8 @@ export interface Props<T extends ReactText> {
   sizes?: Array<{ value: T; label: string }>;
   onSizeChange?: (v: T) => void;
   acceptedExtensions?: Extensions[];
+  addMedia?: AddMedia;
+  globalConfig: ConfigCommon;
 }
 
 interface State {
@@ -150,10 +162,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
   };
 
   handleImageChange = () => {
-    const { api = {} } = Config.getAll();
-    const { media = {} } = api;
-
-    if (media.addMedia) {
+    if (this.props.addMedia) {
       this.setState({ loading: true });
 
       const response: Response<Partial<AddImageData>> = ({
@@ -177,11 +186,16 @@ export class ImageSetter<T extends ReactText> extends React.Component<
           return;
         }
 
-        const src = getImageUrl({
-          uid,
-          fileName,
-          sizeType: SizeType.original
-        });
+        const { globalConfig } = this.props;
+
+        const src = getImageUrl(
+          {
+            uid,
+            fileName,
+            sizeType: SizeType.original
+          },
+          globalConfig
+        );
 
         preloadImage(src)
           .then(({ width, height }) => {
@@ -218,7 +232,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
         ToastNotification.error(message);
       };
 
-      media.addMedia.handler(response, reject, {
+      this.props.addMedia.handler(response, reject, {
         acceptedExtensions: this._extensions
       });
     } else {

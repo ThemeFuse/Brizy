@@ -35,6 +35,7 @@ export type ReduxState = {
     [key: string]: Block;
   };
   fonts: Fonts;
+  configId: string;
   ui: {
     deviceMode: DeviceMode;
     activeElement: Element | null;

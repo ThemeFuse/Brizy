@@ -1,5 +1,5 @@
-import React, { ComponentType, ReactElement, useMemo } from "react";
-import Config from "visual/global/Config";
+import React, { ComponentType, ReactElement } from "react";
+import { useConfig } from "visual/global/hooks";
 import { getComponents } from "./items";
 
 const objectIsReactClassObject = (o: unknown): o is { displayName: string } => {
@@ -13,14 +13,12 @@ const isComponentType = (c: unknown): c is ComponentType =>
   typeof c === "function" || objectIsReactClassObject(c);
 
 export default function BottomPanel(): JSX.Element {
-  const panelItems = useMemo(() => {
-    const config = Config.getAll();
-    return getComponents(config)
-      .filter(isComponentType)
-      .map((Item, index): ReactElement => {
-        return <Item key={index} />;
-      });
-  }, []);
+  const config = useConfig();
+  const panelItems = getComponents(config)
+    .filter(isComponentType)
+    .map((Item, index): ReactElement => {
+      return <Item key={index} />;
+    });
 
   return (
     <div className="brz-ed-fixed-bottom-panel">

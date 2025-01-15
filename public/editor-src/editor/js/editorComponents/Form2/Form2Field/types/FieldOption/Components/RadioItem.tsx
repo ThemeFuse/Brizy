@@ -26,7 +26,7 @@ const RadioItem: FCC<RadioItemProps> = ({
         unCheckIcon="check-circle-off"
         active={active}
         onClick={handleRadioIconClick}
-        isEditor={isEditor}
+        isEditor={true}
       >
         <div className="brz-forms2__radio-option-name">
           <TextEditor

@@ -3,20 +3,30 @@ import { BoundsStatic, RangeStatic } from "quill";
 import React, { ReactNode } from "react";
 import { connect } from "react-redux";
 import _ from "underscore";
+import {
+  RenderType,
+  isEditor,
+  isView
+} from "visual/providers/RenderProvider";
 import { Translate } from "visual/component/Translate";
-import Config from "visual/global/Config";
-import { ConfigDCItem } from "visual/global/Config/types/DynamicContent";
+import {
+  ConfigDCItem,
+  DCGroupCloud
+} from "visual/global/Config/types/DynamicContent";
+import { EditorMode, isStory } from "visual/global/EditorModeContext";
+import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
+import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
 import { css1 } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { isStory } from "visual/utils/models";
 import * as Arr from "visual/utils/reader/array";
 import { diff } from "visual/utils/reader/object";
 import { uuid } from "visual/utils/uuid";
+import { MValue } from "visual/utils/value";
 import { styleHeading } from "./styles";
 import { createLabel, getFormats, mapBlockElements } from "./utils";
 import bindings from "./utils/bindings";
@@ -55,11 +65,16 @@ type Props = {
   defaultFont: DefaultFont;
   fonts: ReduxState["fonts"];
   selectedValue: (v: string) => void;
+  store: Store;
+  sheet: Sheet;
 
   onSelectionChange: (format: Formats, coords: Coords) => void;
   onTextChange: (text: string) => void;
   onClick: (event: React.MouseEvent<HTMLDivElement>, format: Formats) => void;
   isToolbarOpen: () => boolean;
+  renderContext: RenderType;
+  editorMode: EditorMode;
+  dcGroups: MValue<DCGroupCloud>;
 };
 
 class QuillComponent extends React.Component<Props> {
@@ -71,6 +86,10 @@ class QuillComponent extends React.Component<Props> {
   currentSelection: null | RangeStatic = null;
 
   private lastUpdatedValue = "";
+  save = _.debounce((text: string) => {
+    this.lastUpdatedValue = text;
+    this.props.onTextChange(text);
+  }, 500);
 
   componentDidMount(): void {
     const { initDelay } = this.props;
@@ -98,7 +117,11 @@ class QuillComponent extends React.Component<Props> {
       this.reinitPluginWithValue(value);
 
       // If toolbar is opened need synchronize the state
-      if (reinitForValue && !isStory(Config.getAll()) && isToolbarOpen()) {
+      if (
+        reinitForValue &&
+        !isStory(this.props.editorMode) &&
+        isToolbarOpen()
+      ) {
         onSelectionChange(
           this.getSelectionFormat(),
           this.getCoords(quill.selection.savedRange)
@@ -106,6 +129,7 @@ class QuillComponent extends React.Component<Props> {
       }
     }
   }
+
   shouldComponentUpdate(nextProps: Props): boolean {
     const { fonts, value } = nextProps;
 
@@ -170,7 +194,9 @@ class QuillComponent extends React.Component<Props> {
         history: {
           maxStack: 0
         },
-        keyboard: { bindings },
+        keyboard: {
+          bindings: isEditor(this.props.renderContext) ? bindings() : {}
+        },
         clipboard: {
           matchVisual: false
         }
@@ -254,16 +280,15 @@ class QuillComponent extends React.Component<Props> {
 
     if (_selectedDomNode) {
       const quillFormat = quill.getFormat(selection);
-      return getFormats(jQuery(_selectedDomNode), quillFormat);
+      return getFormats(
+        jQuery(_selectedDomNode),
+        quillFormat,
+        this.props.dcGroups
+      );
     } else {
       return {};
     }
   }
-
-  save = _.debounce((text: string) => {
-    this.lastUpdatedValue = text;
-    this.props.onTextChange(text);
-  }, 500);
 
   handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const node = this.content.current;
@@ -303,7 +328,8 @@ class QuillComponent extends React.Component<Props> {
   };
 
   changeRichTextFonts(html: string): string {
-    if (IS_EDITOR) {
+    const { store, sheet } = this.props;
+    if (isEditor(this.props.renderContext)) {
       return mapBlockElements(html, ($elem: JQuery) => {
         const uniqId = uuid(5);
 
@@ -322,12 +348,19 @@ class QuillComponent extends React.Component<Props> {
         const { v, vs, vd } = classNamesToV2(
           $elem.attr("class")?.split(" ") ?? []
         );
-        const styles = styleHeading(v, vs, vd);
+        const styles = styleHeading({
+          v,
+          vs,
+          vd,
+          store,
+          renderContext: this.props.renderContext
+        });
 
         const { className } = css1(
           uniqId,
           // data under the index 2 - contain element's style
-          styles[2]
+          styles[2],
+          sheet
         );
 
         const extraClassNames = this.getExtraClassNames($elem);
@@ -337,11 +370,11 @@ class QuillComponent extends React.Component<Props> {
   }
 
   render(): ReactNode {
-    const { value } = this.props;
+    const { value, renderContext } = this.props;
 
     const newValue = this.changeRichTextFonts(value);
 
-    if (IS_PREVIEW) {
+    if (isView(renderContext)) {
       return (
         <Translate
           dangerouslySetInnerHTML={{
@@ -386,7 +419,8 @@ class QuillComponent extends React.Component<Props> {
 
   getClassName(classList: string[], uniqId: string): string {
     const { v, vs, vd } = classNamesToV2(classList);
-    const styles = styleHeading(v, vs, vd);
+    const { store, sheet, renderContext } = this.props;
+    const styles = styleHeading({ v, vs, vd, store, renderContext });
 
     const { className } = css1(
       // uniqId - there can be multiple paragraphs into one richTextShortcode
@@ -394,6 +428,7 @@ class QuillComponent extends React.Component<Props> {
       uniqId,
       // data under the index 2 - contain element's style
       styles[2],
+      sheet,
       (styles, className) => {
         return styles.replace(/&&/gm, `[data-generated-css=${className}]`);
       }
@@ -441,9 +476,7 @@ class QuillComponent extends React.Component<Props> {
     display: ConfigDCItem["display"];
     placeholder: ConfigDCItem["placeholder"];
   }): void => {
-    const config = Config.getAll();
-    const dcOptionRichText = config?.dynamicContent?.groups?.richText;
-
+    const dcOptionRichText = this.props.dcGroups?.richText;
     const { label: _label, display, placeholder } = data;
     let label = createLabel(_label);
 

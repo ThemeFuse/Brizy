@@ -5,6 +5,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { collapse, expand } from "../utils";
 import ItemItems from "./Items";
@@ -122,7 +123,7 @@ class AccordionItem extends EditorComponent {
   getIcon(active, navIcon) {
     const icon = active ? `up-arrow-${navIcon}` : `down-arrow-${navIcon}`;
 
-    return IS_EDITOR ? (
+    return isEditor(this.renderContext) ? (
       <ThemeIcon
         className="brz-accordion-icon brz-accordion__nav--icon"
         type="editor"
@@ -176,7 +177,7 @@ class AccordionItem extends EditorComponent {
     } = this.props;
     const className = classnames(
       "brz-accordion__item-content brz-d-xs-flex brz-flex-xs-column",
-      { "brz-accordion--sortable": IS_EDITOR }
+      { "brz-accordion--sortable": isEditor(this.renderContext) }
     );
 
     const itemsProps = this.makeSubcomponentProps({
@@ -190,7 +191,9 @@ class AccordionItem extends EditorComponent {
       <Animation
         ref={this.content}
         iterationCount={
-          IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
+          isView(this.renderContext) && (sectionPopup || sectionPopup2)
+            ? Infinity
+            : 1
         }
         component={"div"}
         componentProps={{

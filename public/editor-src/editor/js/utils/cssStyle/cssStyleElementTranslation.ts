@@ -12,9 +12,10 @@ import { cssStyleSizeWidthHeight } from "./cssStyleSize";
 export function cssStyleElementTranslationFlagSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeWidthHeight({ v, device, state, prefix: "flag" });
+  return cssStyleSizeWidthHeight({ v, device, state, store, prefix: "flag" });
 }
 
 export function cssStyleElementTranslationFlagSpacing({
@@ -65,17 +66,19 @@ export function cssStyleElementTranslationPreviewArrowColorOpen({
 export function cssStyleElementTranslationColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "selectColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "selectColor" });
 }
 
 export function cssStyleElementTranslationBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "selectBg" });
+  return cssStyleBgColor({ v, device, state, store, prefix: "selectBg" });
 }
 
 export function cssStyleElementTranslationBorder({
@@ -89,9 +92,10 @@ export function cssStyleElementTranslationBorder({
 export function cssStyleElementTranslationBoxShadow({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "select" });
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "select" });
 }
 // #endregion
 
@@ -109,12 +113,14 @@ export function cssStyleElementTranslationWidth({
 export function cssStyleElementTranslationAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
+    store,
     prefix: "select"
   });
 }

@@ -4,6 +4,7 @@ class Brizy_Compatibilities_SeoPress {
 
 	public function __construct() {
 			add_filter( 'rewrite_rules_array', array( $this, 'fixRewriteRules' ), 9998 );
+			add_filter('seopress_titles_desc', array($this, 'filterSeoPressTitlesDesc'), 1, 2);
 	}
 
 	/**
@@ -32,4 +33,12 @@ class Brizy_Compatibilities_SeoPress {
 
 		return $rules;
 	}
+
+
+    public  function filterSeoPressTitlesDesc($meta_description, $args = []) {
+        $meta_description = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $meta_description);
+        return $meta_description;
+    }
+
 }
+

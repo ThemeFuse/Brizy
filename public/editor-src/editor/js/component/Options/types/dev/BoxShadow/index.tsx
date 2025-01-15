@@ -1,17 +1,17 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BoxShadow as ShadowControl,
   Props as ShadowProps
 } from "visual/component/Controls/BoxShadow";
 import { TypeObject } from "visual/component/Controls/BoxShadow/types";
 import * as Option from "visual/component/Options/Type";
-import GlobalConfig from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
+import { currentStyleSelector } from "visual/redux/selectors";
 import { WithClassName, WithConfig } from "visual/types/attributes";
-import { getColorPaletteColors } from "visual/utils/color";
 import * as Hex from "visual/utils/color/Hex";
 import * as Blur from "visual/utils/cssProps/Blur";
 import * as Opacity from "visual/utils/cssProps/opacity";
@@ -30,8 +30,8 @@ import {
   setVertical
 } from "visual/utils/options/BoxShadow/model";
 import {
-  getTypesItems,
-  _setOpacity
+  _setOpacity,
+  getTypesItems
 } from "visual/utils/options/BoxShadow/utils";
 import { paletteHex } from "visual/utils/options/ColorPicker/utils";
 
@@ -48,6 +48,10 @@ export const BoxShadow = ({
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
+  const { colorPalette } = useSelector(currentStyleSelector);
+
+  const globalConfig = useConfig();
+
   const _className = classNames("brz-ed-option__boxShadow", className);
 
   const { type, opacity } = config ?? {};
@@ -122,19 +126,17 @@ export const BoxShadow = ({
   );
 
   const enableGlobalStyle = useMemo((): boolean => {
-    const config = GlobalConfig.getAll();
     const { bottomTabsOrder = [], topTabsOrder = [] } =
-      config.ui?.leftSidebar ?? {};
+      globalConfig?.ui?.leftSidebar ?? {};
 
-    return [...bottomTabsOrder, ...topTabsOrder].includes(
-      LeftSidebarOptionsIds.globalStyle
+    return [...bottomTabsOrder, ...topTabsOrder].some(
+      (tab) => tab.type === LeftSidebarOptionsIds.globalStyle
     );
-  }, []);
+  }, [globalConfig?.ui?.leftSidebar]);
 
-  const palette = getColorPaletteColors();
   const _value: Value = {
     ...value,
-    hex: paletteHex(value.palette, palette) ?? value.hex
+    hex: paletteHex(value.palette, colorPalette) ?? value.hex
   };
 
   return (
@@ -144,7 +146,7 @@ export const BoxShadow = ({
       value={_value}
       onChange={onValueChange}
       types={types}
-      palette={getColorPaletteColors()}
+      palette={colorPalette}
       paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
     />
   );

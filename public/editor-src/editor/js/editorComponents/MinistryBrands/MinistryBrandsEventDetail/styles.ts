@@ -1,11 +1,10 @@
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
+  const { v } = data;
   const { maskShape = "none" } = v;
   const styles: {
     [k: string]: {
@@ -257,5 +256,5 @@ export function style(
       }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

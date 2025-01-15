@@ -50,4 +50,12 @@ export const myAccount = (id: string): MyAccount => ({
 });
 // endregion
 
-export type EcwidWidget = Products | Product | Cart | MyAccount;
+type Favorites = Base<"account/favorites", {}>;
+
+export const favorites = (id: string): Favorites => ({
+  id,
+  args: {},
+  type: "account/favorites"
+});
+
+export type EcwidWidget = Products | Product | Cart | MyAccount | Favorites;

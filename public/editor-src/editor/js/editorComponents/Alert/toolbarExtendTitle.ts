@@ -1,11 +1,8 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
@@ -23,9 +20,10 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
 
-  const { hex: titleColorHex } = getOptionColorHexByPalette(
+  const titleColor = getColor(
+    dvv("titleColorPalette"),
     dvv("titleColorHex"),
-    dvv("titleColorPalette")
+    dvv("titleColorOpacity")
   );
 
   const richTextDC = getDynamicContentOption({
@@ -92,7 +90,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(titleColorHex)
+            backgroundColor: titleColor
           }
         }
       },

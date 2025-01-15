@@ -1,4 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
 
 export type Switch = "on" | "off";
 
@@ -17,4 +18,11 @@ export interface Value extends ElementModel {
   signinLink?: Switch;
   skuDisplay?: Switch;
   weightDisplay?: Switch;
+}
+
+export interface EcwidToolbarCSSData {
+  [optionId: string]: {
+    selector?: string;
+    style?: OptionStyle;
+  };
 }

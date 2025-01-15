@@ -3,6 +3,7 @@ import React, { CSSProperties, useMemo } from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { ViewType } from "visual/editorComponents/Form2/Form2Steps/types";
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { FCC } from "visual/utils/react/types";
 import type { Value } from "../types";
 
@@ -15,6 +16,7 @@ interface Props {
   order: number;
   onActiveChange: VoidFunction;
   onChange: (d: Partial<Value>) => void;
+  renderContext: RenderType;
 }
 
 export const Nav: FCC<Props> = ({
@@ -25,7 +27,8 @@ export const Nav: FCC<Props> = ({
   progressValue,
   order,
   onActiveChange,
-  onChange
+  onChange,
+  renderContext
 }) => {
   const { iconName, iconType } = useMemo(
     () => ({ iconName: v.iconName, iconType: v.iconType }),
@@ -76,7 +79,7 @@ export const Nav: FCC<Props> = ({
           <span className="brz-form-ms-progress-bar" style={progressStyle} />
           <span
             className={classnames("brz-form-ms-progress-bar-text", {
-              "brz-d-none": IS_EDITOR && !active
+              "brz-d-none": isEditor(renderContext) && !active
             })}
           >
             {progressValue}

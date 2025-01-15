@@ -1,10 +1,12 @@
 import { flatten } from "underscore";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { VariationFont } from "visual/types";
 import { request } from "visual/utils/api";
 import { CreateFont, UploadFont } from "../api/types";
 import { getFontVariation, normalizeFonts } from "./utils";
+
 
 export const createFont = async ({ id, name, files }: CreateFont) => {
   const { api } = Config.get("urls");
@@ -38,12 +40,18 @@ export const createFont = async ({ id, name, files }: CreateFont) => {
     .then((res) => normalizeFonts(res, variations));
 };
 
-export const deleteFont = (fontId: string) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
-  const url = makeUrl(`${api}/fonts/${fontId}`, { container: containerId });
-
-  return request(url, {
-    method: "DELETE"
+export const deleteFont = (fontId: string, config: ConfigCommon) => {
+  const { api } = config?.urls ?? {};
+  const { id: containerId } = config.container;
+  const url = makeUrl(`${api}/fonts/${fontId}`, {
+    container: containerId.toString()
   });
+
+  return request(
+    url,
+    {
+      method: "DELETE"
+    },
+    config
+  );
 };

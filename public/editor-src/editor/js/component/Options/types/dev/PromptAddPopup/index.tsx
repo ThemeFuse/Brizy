@@ -8,7 +8,7 @@ import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types
 import { hideToolbar } from "visual/component/Toolbar";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import {
   FontsPayload,
   addFonts,
@@ -16,7 +16,7 @@ import {
   updateGlobalBlock
 } from "visual/redux/actions2";
 import {
-  globalBlocksAssembled2Selector,
+  globalBlocksAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
 import { Block } from "visual/types";
@@ -32,11 +32,14 @@ export const PromptAddPopup: FCC<Props> = ({
   onChange
 }) => {
   const dispatch = useDispatch();
+
+  const globalConfig = useConfig();
+
   const { value: _value, popups } = value;
 
   const { popupKey = "", canDelete = true } = config ?? {};
 
-  const globalBlocks = useSelector(globalBlocksAssembled2Selector);
+  const globalBlocks = useSelector(globalBlocksAssembledSelector);
   const pageBlocks = useSelector(pageBlocksSelector);
 
   const handleAddBlocks = useCallback(
@@ -116,9 +119,10 @@ export const PromptAddPopup: FCC<Props> = ({
   );
 
   const handleCreate = useCallback(() => {
-    const config = Config.getAll();
-    const showGlobal = typeof config.api?.globalPopups?.create === "function";
-    const showSaved = typeof config.api?.savedBlocks?.create === "function";
+    const showGlobal =
+      typeof globalConfig?.api?.globalPopups?.create === "function";
+    const showSaved =
+      typeof globalConfig?.api?.savedBlocks?.create === "function";
 
     const data: PromptsProps<"popup"> = {
       prompt: "blocks",
@@ -135,7 +139,12 @@ export const PromptAddPopup: FCC<Props> = ({
       }
     };
     Prompts.open(data);
-  }, [handleAddBlocks, handleAddSavedBlock]);
+  }, [
+    handleAddBlocks,
+    handleAddSavedBlock,
+    globalConfig?.api?.globalPopups?.create,
+    globalConfig?.api?.savedBlocks?.create
+  ]);
 
   const handleEdit = () => {
     new Map([...SectionPopupInstances, ...SectionPopup2Instances])
@@ -161,16 +170,25 @@ export const PromptAddPopup: FCC<Props> = ({
     });
   }, [_value, popups, globalBlocks, onChange]);
 
-  const popupBlock = useMemo<Block | undefined>(
-    () =>
+  const block = useMemo<Block | undefined>(() => {
+    const block =
       popups.find((block) => {
         if (block.type === "GlobalBlock" && globalBlocks[block.value._id]) {
           block = globalBlocks[block.value._id].data;
         }
         return block.value.popupId === _value;
-      }) ?? pageBlocks.find((block: Block) => block.value._id === _value),
-    [popups, _value, globalBlocks, pageBlocks]
-  );
+      }) ?? pageBlocks.find((block: Block) => block.value._id === _value);
+
+    if (!block) {
+      return;
+    }
+
+    if (block.type === "GlobalBlock" && globalBlocks[block.value._id].data) {
+      return globalBlocks[block.value._id].data;
+    }
+
+    return block;
+  }, [popups, _value, globalBlocks, pageBlocks]);
 
   return (
     <Control
@@ -178,7 +196,7 @@ export const PromptAddPopup: FCC<Props> = ({
       onDelete={canDelete ? handleDelete : undefined}
       onEdit={handleEdit}
       onCreate={handleCreate}
-      popupBlock={popupBlock}
+      block={block}
     />
   );
 };

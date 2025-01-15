@@ -4,7 +4,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
 import { styleItem } from "./styles";
@@ -24,7 +23,17 @@ class ShareButton extends EditorComponent<Value, Props> {
 
     const className = classnames(
       "brz-shareButton",
-      css(this.getComponentId(), this.getId(), styleItem(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleItem({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const itemProps = this.makeSubcomponentProps({

@@ -1,9 +1,7 @@
 import { Type, TypeId } from "visual/config/icons/Type";
-import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-export const types = (config: ConfigCommon): Type[] => [
+export const types = (isPro: boolean): Type[] => [
   {
     id: TypeId.Outline,
     name: "outline",
@@ -21,6 +19,6 @@ export const types = (config: ConfigCommon): Type[] => [
     name: "custom",
     title: t("Custom"),
     icon: "nc-star",
-    proDescription: !isPro(config)
+    proDescription: !isPro
   }
 ];

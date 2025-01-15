@@ -1,25 +1,26 @@
+import { Num } from "@brizy/readers";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("subscribeToCalendarBgPalette"),
     dvv("subscribeToCalendarBgColorHex"),
-    dvv("subscribeToCalendarBgPalette")
+    dvv("subscribeToCalendarBgColorOpacity")
   );
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("subscribeToCalendarColorPalette"),
     dvv("subscribeToCalendarColorHex"),
-    dvv("subscribeToCalendarColorPalette")
+    dvv("subscribeToCalendarColorOpacity")
   );
 
   const subscribeToCalendarTypographyFontSize =
@@ -32,9 +33,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
     subscribeToCalendarTypographyFontSize,
     subscribeToCalendarTypographyLineHeight
   );
-
-  const colorOpacity = dvv("subscribeToCalendarColorOpacity");
-  const bgColorOpacity = dvv("subscribeToCalendarBgColorOpacity");
 
   const fillType = dvv("subscribeToCalendarFillType");
 
@@ -239,10 +237,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         size: "medium",
         icon: {
           style: {
-            backgroundColor:
-              fillType === "filled"
-                ? hexToRgba(bgColorHex, bgColorOpacity)
-                : hexToRgba(colorHex, colorOpacity)
+            backgroundColor: fillType === "filled" ? bgColor : color
           }
         }
       },

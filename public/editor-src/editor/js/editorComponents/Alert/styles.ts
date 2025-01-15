@@ -1,11 +1,11 @@
+import { isView } from "visual/providers/RenderProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./index";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
+  const { renderContext } = data;
+  const IS_VIEW = isView(renderContext);
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -20,7 +20,7 @@ export function style(
         "cssStyleAlertContainerShadow",
         "cssStyleBorderRadius",
         // it is necessary because in preview we don't have <BoxResizer/>
-        ...(IS_PREVIEW ? ["cssStyleAlertPadding"] : [])
+        ...(IS_VIEW ? ["cssStyleAlertPadding"] : [])
       ],
       interval: ["cssStyleHoverTransition"]
     },
@@ -79,5 +79,5 @@ export function style(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

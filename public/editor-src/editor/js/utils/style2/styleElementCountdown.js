@@ -4,12 +4,14 @@ import { getOptionFontByGlobal } from "visual/utils/options";
 export function styleTypographyElementCountdownLabelFontSize({
   v,
   device,
-  state
+  state,
+  store
 }) {
   const fontSize = getOptionFontByGlobal({
     key: defaultValueKey({ key: "fontSize", device, state }),
     value: defaultValueValue({ v, key: "fontSize", device, state }),
-    style: defaultValueValue({ v, key: "fontStyle", device, state })
+    style: defaultValueValue({ v, key: "fontStyle", device, state }),
+    store
   });
 
   const getLabelSize = (fontSize) => {

@@ -1,3 +1,4 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Link, Value, getLinkData } from "../link";
 
@@ -88,6 +89,6 @@ describe("Testing 'getLinkData' function", () => {
       }
     ]
   ])("no. %#", (v, expected) => {
-    expect(getLinkData(v)).toStrictEqual(expected);
+    expect(getLinkData(v, {} as ConfigCommon)).toStrictEqual(expected);
   });
 });

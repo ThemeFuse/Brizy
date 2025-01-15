@@ -1,9 +1,18 @@
 import $ from "jquery";
 import { makeDataAttrString } from "visual/utils/i18n/attribute";
+import { getTranslatedResponseMessages } from "../Form2/utils";
 
 const recaptchaSelector =
   // eslint-disable-next-line
   '.brz-g-recaptcha[data-sitekey]:not([data-sitekey=""])';
+
+const defaultMessages = {
+  success: "Your email was sent successfully",
+  error: "Your email was not sent",
+  empty: "Please check your entry and try again"
+};
+
+const resMessages = new Map();
 
 export default function ($node) {
   const root = $node.get(0);
@@ -119,6 +128,12 @@ function validateForm(form) {
 
 function initForm(form) {
   const $form = $(form);
+  const formNode = form.querySelector("form");
+
+  if (formNode) {
+    const messages = getTranslatedResponseMessages(formNode);
+    resMessages.set(formNode, messages);
+  }
 
   $form.on("blur", "form input, form textarea", function () {
     validateFormItem(this);
@@ -209,7 +224,14 @@ function handleSimpleSubmit(form, data) {
     if (success === false) {
       handleError();
     } else {
-      showFormMessage(form, getFormMessage("success", successMessage));
+      showFormMessage(
+        form,
+        getFormMessage({
+          status: "success",
+          text: successMessage,
+          form: nodeForm
+        })
+      );
 
       if (brzRedirect !== "") {
         window.location.replace(brzRedirect);
@@ -222,7 +244,10 @@ function handleSimpleSubmit(form, data) {
 
   const handleError = () => {
     form.classList.add("brz-form__send--fail");
-    showFormMessage(form, getFormMessage("error", errorMessage));
+    showFormMessage(
+      form,
+      getFormMessage({ status: "error", text: errorMessage, form: nodeForm })
+    );
   };
 
   const handleAlways = () => {
@@ -266,24 +291,22 @@ function getFormData(form) {
   return data;
 }
 
-function getFormMessage(status, text) {
-  const defaultTexts = {
-    success: "Your email was sent successfully",
-    error: "Your email was not sent",
-    empty: "Please check your entry and try again"
-  };
+function getFormMessage({ status, text, form }) {
+  const messages = form ? resMessages.get(form) : undefined;
+  const message = messages ? messages[status] : undefined;
+
   switch (status) {
     case "success": {
       const alert = document.createElement("div");
       alert.className = "brz-forms__alert brz-forms__alert--success";
-      alert.innerHTML = text || defaultTexts.success;
+      alert.innerHTML = text || message || defaultMessages.success;
 
       return alert;
     }
     case "error": {
       const alert = document.createElement("div");
       alert.className = "brz-forms__alert brz-forms__alert--error";
-      alert.innerHTML = text || defaultTexts.error;
+      alert.innerHTML = text || message || defaultMessages.error;
 
       return alert;
     }

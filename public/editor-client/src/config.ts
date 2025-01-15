@@ -84,6 +84,7 @@ interface API {
   uploadIconUrl?: string;
   imagePatterns: ImagePatterns;
   templatesImageUrl: string;
+  menuUrl: string;
 }
 
 export interface Config {
@@ -207,6 +208,10 @@ const apiReader = parseStrict<PLUGIN_ENV["api"], API>({
   templatesImageUrl: pipe(
     mPipe(Obj.readKey("templatesImageUrl"), Str.read),
     throwOnNullish("Invalid API: templatesImageUrl")
+  ),
+  menuUrl: pipe(
+    mPipe(Obj.readKey("menuUrl"), Str.read),
+    throwOnNullish("Invalid API: menuUrl")
   ),
   iconUrl: readIconUrl("iconUrl"),
   iconsUrl: readIconUrl("getIconsUrl"),

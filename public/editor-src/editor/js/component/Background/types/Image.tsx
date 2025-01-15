@@ -1,10 +1,13 @@
 import classnames from "classnames";
 import jQuery from "jquery";
 import { ReactElement, RefObject, useRef } from "react";
-import { getStore } from "visual/redux/store";
+import { useStore } from "react-redux";
+import { isWp } from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import { deviceModeSelector } from "visual/redux/selectors";
 import "../lib/jquery.parallax.js";
 import { useLayoutEffect } from "../utils";
-import Config, { isWp } from "visual/global/Config";
 
 const destroyParallax = (node: HTMLElement): void => {
   if (node.parentElement) {
@@ -12,22 +15,22 @@ const destroyParallax = (node: HTMLElement): void => {
   }
 };
 
-const initParallax = (node: HTMLElement): void => {
+const initParallax = (node: HTMLElement, wheelIgnoreClass?: string[]): void => {
   if (node.parentElement) {
-    const config = Config.getAll();
     jQuery(node.parentElement).parallax({
       bgClass: "brz-bg-image", // WARNING: intentionally not `brz-bg-image-parallax`
       wheelIgnoreClass: [
         "brz-ed-container-plus",
         "brz-ed-container-whiteout-show",
         "brz-content-show",
-        ...(isWp(config) ? ["media-modal"] : [])
+        ...(wheelIgnoreClass ?? [])
       ]
     });
   }
 };
 
 type Props = {
+  renderContext: RenderType;
   showParallax?: boolean;
   children: (d: {
     innerRef?: RefObject<HTMLElement>;
@@ -37,13 +40,24 @@ type Props = {
   }) => ReactElement;
 };
 
-const Image = ({ showParallax, children }: Props): ReactElement => {
-  const currentDeviceMode = getStore().getState().ui.deviceMode;
+const Image = ({
+  showParallax,
+  children,
+  renderContext
+}: Props): ReactElement => {
+  const store = useStore();
+
+  // Using the direct Store because when the builder changes the deviceMode,
+  // all components can't be re-rendered
+  const currentDeviceMode = deviceModeSelector(store.getState());
   showParallax = showParallax && currentDeviceMode === "desktop";
   const className = classnames("brz-bg-image", {
     "brz-bg-image-parallax": showParallax,
-    "brz-bg-image-parallax--init": showParallax && IS_EDITOR
+    "brz-bg-image-parallax--init": showParallax && isEditor(renderContext)
   });
+
+  const config = useConfig();
+  const isWP = isWp(config);
 
   const imageRef = useRef<HTMLElement>(null);
   const isInitialMount = useRef(true);
@@ -58,16 +72,17 @@ const Image = ({ showParallax, children }: Props): ReactElement => {
   );
 
   useLayoutEffect(() => {
+    const wheelIgnoreClass = isWP ? ["media-modal"] : undefined;
     if (isInitialMount.current) {
       isInitialMount.current = false;
 
       if (imageRef.current && showParallax) {
-        initParallax(imageRef.current);
+        initParallax(imageRef.current, wheelIgnoreClass);
       }
     } else {
       if (imageRef.current) {
         showParallax
-          ? initParallax(imageRef.current)
+          ? initParallax(imageRef.current, wheelIgnoreClass)
           : destroyParallax(imageRef.current);
       }
     }

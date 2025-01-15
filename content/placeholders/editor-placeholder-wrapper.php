@@ -62,7 +62,7 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
         if (isset($contentPlaceholders[0])) {
             $contentPlaceholders[0]->setAttributes(array_merge($contentPlaceholders[0]->getAttributes(), $attributes));
             $contentPlaceholders[0]->setContent($placeholder->getContent());
-            $build_placeholder = $contentPlaceholders[0]->buildPlaceholder();
+            $build_placeholder = $contentPlaceholders[0]->buildPlaceholder("\&#x27;");
 
             return $build_placeholder;
         }

@@ -10,7 +10,7 @@ export const css: CSSStyleFn<"textShadow"> = ({ meta, value }): string => {
     return "text-shadow: none;";
   }
 
-  const { palette, hex, opacity, horizontal, vertical, blur } = value;
+  const { palette = "", hex, opacity, horizontal, vertical, blur } = value;
 
   const color = getColor(palette, hex, opacity);
 

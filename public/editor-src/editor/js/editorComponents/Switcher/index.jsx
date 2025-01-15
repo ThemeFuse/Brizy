@@ -7,9 +7,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -45,7 +42,7 @@ class Switcher extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -61,7 +58,7 @@ class Switcher extends EditorComponent {
 
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -79,12 +76,16 @@ class Switcher extends EditorComponent {
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classNames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
@@ -103,7 +104,17 @@ class Switcher extends EditorComponent {
     const className = classNames(
       "brz-switcher__nav2--control",
       { "brz-switcher__nav2--control--active": activeTab === 0 },
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
@@ -212,7 +223,17 @@ class Switcher extends EditorComponent {
     const classNameSwitcher = classNames(
       "brz-switcher",
       { "brz-switcher--style2": switcherStyle === "style-2" },
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const classNameNav = classNames("brz-switcher__nav", {
       "brz-switcher__nav--active": activeTab === 0

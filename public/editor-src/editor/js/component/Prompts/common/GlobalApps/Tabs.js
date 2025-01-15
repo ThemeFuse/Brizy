@@ -6,7 +6,6 @@ import EditorIcon from "visual/component/EditorIcon";
 import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";
 import { getUrlVideoId } from "visual/component/Prompts/common/GlobalApps/utils";
-import Config from "visual/global/Config";
 
 class Tabs extends Component {
   constructor(props) {
@@ -28,7 +27,8 @@ class Tabs extends Component {
     tabs: [],
     currentTab: "",
     blockTabsWhenLoading: true,
-    onClose: noop
+    onClose: noop,
+    config: {}
   };
 
   handleLoading = (loading) => {
@@ -66,7 +66,7 @@ class Tabs extends Component {
 
   renderHeader() {
     const { currentTab, tabs } = this.state;
-    const { onClose } = this.props;
+    const { onClose, config } = this.props;
 
     const headerTabs = tabs.map((tab) => {
       const { id, icon, img, title } = tab;
@@ -98,7 +98,7 @@ class Tabs extends Component {
       );
     });
 
-    const { video, idHelpVideosIcons } = Config.getAll().ui?.help ?? {};
+    const { video, idHelpVideosIcons } = config.ui?.help ?? {};
 
     const url = foundUrl(
       video ?? [],

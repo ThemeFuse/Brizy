@@ -1,3 +1,4 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontsPayload } from "visual/redux/actions2";
 import {
   Block,
@@ -56,6 +57,8 @@ export interface PromptBlocksProps<T extends BlockMetaType> {
   onChangeSaved?: (b: PromptBlockTemplate) => void;
   onChangeGlobal?: (b: PromptGlobalBlock<T>) => void;
   onClose?: () => void;
+
+  config: ConfigCommon;
 }
 
 export type PromptBlocksState = {

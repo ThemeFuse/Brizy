@@ -1,43 +1,63 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from "classnames";
 import React from "react";
+import { isEditor } from "visual/providers/RenderProvider";
 import Placeholder from "visual/component/Placeholder";
 import { withLink } from "visual/component/hooks/withLink";
-import { css } from "visual/utils/cssStyle";
+import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { stylePicture } from "../styles";
-import { ImageProps, Styles } from "../types";
+import { ImageProps } from "../types";
 import { showOriginalImage } from "../utils";
 import OriginalImage from "./OriginalImage";
 import Population from "./Population";
 import SimpleImage from "./SimpleImage";
 
 const Content = (props: ImageProps): JSX.Element => {
-  const { v, vs, vd, _id, componentId, wrapperSizes, extraAttributes, meta } =
-    props;
+  const {
+    v,
+    vs,
+    vd,
+    _id,
+    componentId,
+    wrapperSizes,
+    extraAttributes,
+    meta,
+    store,
+    renderContext
+  } = props;
   const { imageSrc, imageExtension, imagePopulation } = v;
+  const modelClassName = useCSS({
+    // hard to explain, but because styles are generated from props in this case
+    // we can't rely on the usual way of using css(),
+    // so we trick it with a custom class for both default and custom classNames
+    // `${componentId}-picture`,
+    componentId: `${componentId}-${_id}-picture`,
+    id: `${_id}-picture`,
+    css: stylePicture({
+      v,
+      vs,
+      vd,
+      props: {
+        ...wrapperSizes,
+        showOriginalImage: showOriginalImage(v)
+      },
+      store,
+      renderContext
+    })
+  });
 
-  const pictureClassName = IS_EDITOR
+  const _isEditor = isEditor(renderContext);
+  const pictureClassName = _isEditor
     ? "brz-picture"
     : classnames(
         "brz-picture",
         "brz-d-block",
         "brz-p-relative",
-        css(
-          // hard to explain, but because styles are generated from props in this case
-          // we can't rely on the usual way of using css(),
-          // so we trick it with a custom class for both default and custom classNames
-          // `${componentId}-picture`,
-          `${componentId}-${_id}-picture`,
-          `${_id}-picture`,
-          stylePicture(v, vs, vd, {
-            ...wrapperSizes,
-            showOriginalImage: showOriginalImage(v)
-          }) as Styles
-        )
+        modelClassName
       );
 
-  if (IS_EDITOR && imagePopulation) {
+  if (_isEditor && imagePopulation) {
     return meta._dc?.lastCache?.imageSrc ? (
       <Population v={v} attr={extraAttributes} />
     ) : (

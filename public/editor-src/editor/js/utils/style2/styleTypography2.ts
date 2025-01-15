@@ -1,24 +1,30 @@
-import Config from "visual/global/Config";
+import { Str } from "@brizy/readers";
+import { WithRenderContext } from "visual/providers/RenderProvider";
+import { configSelector } from "visual/redux/selectors";
+import { DESKTOP, Device } from "visual/utils/devices";
 import { getFontCssStyle } from "visual/utils/fonts";
 import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
 import { read as readStr } from "visual/utils/reader/string";
-import { capByPrefix } from "visual/utils/string";
-import { isNullish, MValue } from "visual/utils/value";
-import { CSSValue } from "./types";
-import { Str } from "@brizy/readers";
-import { DESKTOP, Device } from "visual/utils/devices";
 import { NORMAL } from "visual/utils/stateMode";
+import { capByPrefix } from "visual/utils/string";
+import { MValue, isNullish } from "visual/utils/value";
+import { CSSValue } from "./types";
 import { isCustomFontStyle } from "./utils";
 
 export function styleTypography2FontFamily({
   v,
   device,
   state,
-  prefix = ""
-}: CSSValue) {
+  store,
+  prefix = "",
+  renderContext
+}: CSSValue & WithRenderContext) {
+  if (!store) {
+    throw Error("Missing Store");
+  }
   const dvv = (key: string, deviceMode?: Device) =>
     defaultValueValue({ v, key, device: deviceMode ?? device, state });
   const dvk = (key: string, deviceMode?: Device) =>
@@ -59,20 +65,25 @@ export function styleTypography2FontFamily({
     return "";
   }
 
-  return getDetailsModelFontFamily(
-    {
+  const config = configSelector(store.getState());
+
+  return getDetailsModelFontFamily({
+    data: {
       family,
       familyType,
+      store,
       style: fontStyle
     },
-    Config.getAll()
-  );
+    config,
+    renderContext
+  });
 }
 
 export function styleTypography2FontSize({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): number {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
@@ -87,7 +98,8 @@ export function styleTypography2FontSize({
     getOptionFontByGlobal({
       key: dvk("fontSize"),
       value: dvv(fontSizeKey),
-      style: dvv(fontStyleKey)
+      style: dvv(fontStyleKey),
+      store
     });
 
   return value as number;
@@ -97,6 +109,7 @@ export function styleTypography2FontSizeSuffix({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
@@ -112,7 +125,8 @@ export function styleTypography2FontSizeSuffix({
       getOptionFontByGlobal({
         key: dvk("fontSizeSuffix"),
         value: dvv(fontSizeSuffixKey),
-        style: dvv(fontStyleKey)
+        style: dvv(fontStyleKey),
+        store
       }) || "px";
     return value as string;
   }
@@ -122,6 +136,7 @@ export function styleTypography2LineHeight({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
@@ -136,7 +151,8 @@ export function styleTypography2LineHeight({
     getOptionFontByGlobal({
       key: dvk("lineHeight"),
       value: dvv(lineHeightKey),
-      style: dvv(fontStyleKey)
+      style: dvv(fontStyleKey),
+      store
     });
 
   return Str.read(value) ?? "";
@@ -146,6 +162,7 @@ export function styleTypography2FontWeight({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
@@ -160,7 +177,8 @@ export function styleTypography2FontWeight({
     getOptionFontByGlobal({
       key: dvk("fontWeight"),
       value: dvv(fontWeightKey),
-      style: dvv(fontStyleKey)
+      style: dvv(fontStyleKey),
+      store
     });
 
   return Str.read(value) ?? "";
@@ -170,6 +188,7 @@ export function styleTypography2LetterSpacing({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
@@ -190,7 +209,8 @@ export function styleTypography2LetterSpacing({
     `${getOptionFontByGlobal({
       key: dvk("letterSpacing"),
       value: dvv(letterSpacingKey),
-      style: dvv(fontStyleKey)
+      style: dvv(fontStyleKey),
+      store
     })}${suffix}`
   );
 }
@@ -199,6 +219,7 @@ export function styleTypography2FontVariation({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -227,7 +248,8 @@ export function styleTypography2FontVariation({
     getOptionFontByGlobal({
       key: fontVariationKey,
       value,
-      style: dvv(fontStyleKey)
+      style: dvv(fontStyleKey),
+      store
     });
 
   return Str.read(_value) ?? "";

@@ -1,12 +1,9 @@
 import classnames from "classnames";
-import { default as React } from "react";
+import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import FacebookPlugin from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Wrapper } from "../tools/Wrapper";
@@ -16,17 +13,16 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class Facebook extends EditorComponent {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId() {
     return "Facebook";
   }
 
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
-
   dvv = (key) => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
 
     return defaultValueValue({ v, key, device });
   };
@@ -97,10 +93,16 @@ class Facebook extends EditorComponent {
           facebookType === "button" && size === "small"
       },
       _className,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -122,8 +124,8 @@ class Facebook extends EditorComponent {
             ? showFriends === "on"
               ? "standard"
               : showCounter === "on"
-              ? "button_count"
-              : "button"
+                ? "button_count"
+                : "button"
             : "box_count",
         showFaces: showFriends === "on",
         size,
@@ -181,6 +183,7 @@ class Facebook extends EditorComponent {
         <CustomCSS selectorName={this.getId()} css={customCSS}>
           <Wrapper {...this.makeWrapperProps({ className })}>
             <FacebookPlugin
+              renderContext={this.renderContext}
               appId={appData.appId}
               type={typeData[facebookType]}
               data={data[facebookType]}
@@ -235,10 +238,16 @@ class Facebook extends EditorComponent {
           facebookType === "button" && size === "small"
       },
       _className,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -254,8 +263,8 @@ class Facebook extends EditorComponent {
             ? showFriends === "on"
               ? "standard"
               : showCounter === "on"
-              ? "button_count"
-              : "button"
+                ? "button_count"
+                : "button"
             : "box_count",
         "data-show-faces": showFriends,
         "data-size": size,
@@ -319,6 +328,7 @@ class Facebook extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={className}>
           <FacebookPlugin
+            renderContext={this.renderContext}
             appId={appData.appId}
             type={typeData[facebookType]}
             data={data[facebookType]}

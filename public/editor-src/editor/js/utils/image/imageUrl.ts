@@ -1,20 +1,21 @@
-import Config, { isWp } from "visual/global/Config";
+import { isWp } from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { getFileFormat } from "visual/utils/customFile/utils";
 import { isDynamicContent } from "visual/utils/dynamicContent";
 import { parseImagePatterns } from "visual/utils/image/parsers";
 import {
-  is as isNoEmptyString,
-  NoEmptyString
+  NoEmptyString,
+  is as isNoEmptyString
 } from "visual/utils/string/NoEmptyString";
 import { isAbsoluteUrl } from "visual/utils/url";
 import { MValue } from "visual/utils/value";
 import { Data, DataUrl, ImageType } from "./types";
 import {
-  getUnsplashCrop,
-  isUnsplashImage,
   generateUrl,
-  isCropSize
+  getUnsplashCrop,
+  isCropSize,
+  isUnsplashImage
 } from "./utils";
-import { getFileFormat } from "visual/utils/customFile/utils";
 
 const getUrl = (data: Data, options: DataUrl): string => {
   if (isCropSize(data)) {
@@ -24,10 +25,10 @@ const getUrl = (data: Data, options: DataUrl): string => {
   return generateUrl(options);
 };
 
-export const getImageUrl = ({
-  imageType = ImageType.Internal,
-  ...data
-}: Data): MValue<string> => {
+export const getImageUrl = (
+  { imageType = ImageType.Internal, ...data }: Data,
+  config: ConfigCommon
+): MValue<string> => {
   if (!isNoEmptyString(data.uid)) {
     return undefined;
   }
@@ -40,7 +41,6 @@ export const getImageUrl = ({
     return data.uid;
   }
 
-  const config = Config.getAll();
   const { api = {} } = config ?? {};
   const { media = {} } = api;
   const { isOldImage, imagePatterns, mediaResizeUrl } = media;

@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React, {
   ComponentType,
-  createRef,
   HTMLAttributes,
   ReactElement,
   ReactNode,
-  Ref
+  Ref,
+  createRef
 } from "react";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -17,7 +17,7 @@ import {
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { ProBlocked } from "visual/component/ProBlocked";
-import { currentUserRole, Roles } from "visual/component/Roles";
+import { Roles, currentUserRole } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import {
@@ -44,10 +44,8 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { WithClassName } from "visual/types/attributes";
-import { css } from "visual/utils/cssStyle";
+import { t } from "visual/utils/i18n";
 import { getWrapperContainerW } from "visual/utils/meta";
 import { CssId, getCSSId } from "visual/utils/models/cssId";
 import {
@@ -68,19 +66,18 @@ import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import { getAnimations } from "../../component/HoverAnimation/animations";
 import contextMenuConfig from "./contextMenu";
+import contextMenuConfigPro from "./contextMenuPro";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
-import contextMenuConfigPro from "./contextMenuPro";
 
 export interface Value extends ElementModel, CssId {
   items: ElementModelType[];
 }
+
 type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
 type Props = {
   meta: {
@@ -132,10 +129,8 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const model = this.getInnerElement();
 
     if (model !== undefined) {
-      const config = Config.getAll();
-
       return NoEmptyString.is(model.type)
-        ? getProTitle(model.type, model.value, config)
+        ? getProTitle(model.type, model.value, this.getGlobalConfig())
         : undefined;
     }
 
@@ -239,7 +234,8 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   getHoverData(v: Value) {
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
-    const options = makeOptionValueToAnimation(v);
+    const store = this.getReduxStore();
+    const options = makeOptionValueToAnimation({ v, store });
 
     const isHidden =
       v.hideHoverWrapper === "on" ||
@@ -276,7 +272,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
           upgradeText={
             proTitleElement.upgradeActionMessage ?? t("Get a PRO plan")
           }
-          upgradeLink={Config.getAll().urls.upgradeToPro}
+          upgradeLink={this.getGlobalConfig()?.urls?.upgradeToPro}
           absolute={false}
           onRemove={this.handleRemove}
         />
@@ -347,12 +343,13 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const { wrapperAnimationActive = false } = this.getMeta(v);
     const isDisabledHover = readBoolean(wrapperAnimationActive);
     const withoutHoverWrapper = v.hideHoverWrapper === "on" && isHidden;
+    const store = this.getReduxStore();
 
     const content = (
       <TransformWrapper<Value> v={v} needWrapper={needWrapper}>
         <ScrollMotion
           className="brz-wrapper__scrollmotion"
-          options={makeOptionValueToMotion(v)}
+          options={makeOptionValueToMotion({ v, store })}
           needWrapper={needWrapper}
         >
           <HoverAnimation
@@ -437,7 +434,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   containerSize = (): { width: number; height: number } => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const meta = this.getMeta(v);
     const innerWidth = window.innerWidth;
     const innerHeight = window.innerHeight;
@@ -446,7 +443,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   dvv = (key: string): MValue<Literal> => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -507,11 +504,12 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
     const { cssKeyframe, animationId, options, isHidden } =
       this.getHoverData(v);
+    const store = this.getReduxStore();
 
     const content = (
       <TransformWrapper<Value> v={v}>
         <ScrollMotion
-          options={makeOptionValueToMotion(v)}
+          options={makeOptionValueToMotion({ v, store })}
           className="brz-wrapper__scrollmotion"
         >
           <HoverAnimation
@@ -549,7 +547,17 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const _className = Str.mRead(cssClass || customClassName);
 
     return classNames(
-      css(this.getComponentId(), this.getId(), styleWrapper(v, vs, vd)),
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleWrapper({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      ),
       "brz-wrapper",
       _className
     );
@@ -571,12 +579,16 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
     const slug = `${animationName}-${animationDuration}-${animationDelay}-${animationInfiniteAnimation}`;
 
-    return classNames(
-      css(
-        `${this.getComponentId()}-animation-${slug}`,
-        `${this.getId()}-animation-${slug}`,
-        styleAnimation(v, vs, vd)
-      )
+    return this.css(
+      `${this.getComponentId()}-animation-${slug}`,
+      `${this.getId()}-animation-${slug}`,
+      styleAnimation({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        renderContext: this.renderContext
+      })
     );
   };
 
@@ -587,7 +599,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
   handleDraggable = ({ x, y }: DraggableV): void => {
     const v = this.getValue();
     const state = State.mRead(v.tabsState);
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
 
     const dvk = (key: string, value: number): ElementModel => ({
       [defaultValueKey({ key, device, state })]: value
@@ -609,7 +621,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >
-        <SortableHandle>
+        <SortableHandle renderContext={this.renderContext}>
           <Button />
         </SortableHandle>
       </Toolbar>

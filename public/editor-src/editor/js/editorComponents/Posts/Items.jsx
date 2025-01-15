@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import React, { createRef } from "react";
-import Config, { isWp } from "visual/global/Config";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import HotKeys from "visual/component/HotKeys";
@@ -9,6 +8,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { isWp } from "visual/global/Config";
 import {
   makeEndPlaceholder,
   makePlaceholder,
@@ -44,7 +44,7 @@ export default class Items extends EditorArrayComponent {
     meta: {}
   };
 
-  isWp = isWp(Config.getAll());
+  isWp = isWp(this.getGlobalConfig());
 
   componentDidMount() {
     const { needMasonry } = this.props;

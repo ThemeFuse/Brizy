@@ -9,6 +9,7 @@ export function cssStyleBgColor({
   v,
   device,
   state,
+  store,
   prefix = "bg"
 }: CSSValue): string {
   const bgColor = styleBgColor({ v, device, state, prefix });
@@ -16,7 +17,8 @@ export function cssStyleBgColor({
   const bgGradient = styleBgGradient({
     v,
     device,
-    state
+    state,
+    store
   });
 
   return bgColor === undefined || bgGradient !== "none"
@@ -35,6 +37,11 @@ export function cssStyleBgColorHex({
   return bgColorHex === undefined ? "" : `background-color:${bgColorHex};`;
 }
 
-export function cssStyleBg2Color({ v, device, state }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "bg2" });
+export function cssStyleBg2Color({
+  v,
+  device,
+  state,
+  store
+}: CSSValue): string {
+  return cssStyleBgColor({ v, device, state, store, prefix: "bg2" });
 }

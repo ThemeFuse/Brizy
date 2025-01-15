@@ -1,7 +1,9 @@
 import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-export function assetUrl(url: string): string {
-  const config = Config.getAll();
+export function assetUrl(url: string, _config?: ConfigCommon): string {
+  const config = _config ?? Config.getAll();
+  // @ts-expect-error: Need to move urls from WP | Cloud to ConfigCommon
   const { assets } = config.urls;
   return `${assets}/${url}`;
 }

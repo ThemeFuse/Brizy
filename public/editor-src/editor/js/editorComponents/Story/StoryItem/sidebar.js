@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Story");
+export const title = () => t("Story");
 
 export function getItems() {
   return [

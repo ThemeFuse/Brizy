@@ -2,6 +2,7 @@ import deepMerge from "deepmerge";
 import React from "react";
 import { getIn, mergeDeep, setIn } from "timm";
 import _ from "underscore";
+import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
@@ -9,9 +10,6 @@ import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import Config from "visual/global/Config";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { clamp, isNumeric } from "visual/utils/math";
@@ -21,8 +19,6 @@ import { attachRef } from "visual/utils/react";
 import { capByPrefix } from "visual/utils/string";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { getElemWidthWithoutPaddings, normalizeRowColumns } from "./utils";
-
-const config = Config.getAll();
 
 const MAX_ITEMS_IN_ROW = 6;
 
@@ -115,7 +111,7 @@ class RowItems extends EditorArrayComponent {
 
   changeColumnWidths(index, valueInPercent, position) {
     const dbValue = this.getDBValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const widthKey = defaultValueKey({ key: "width", device });
 
     const { min, max } = this.getColumnWidthLimitsPercent(index, position);
@@ -165,7 +161,7 @@ class RowItems extends EditorArrayComponent {
 
   getColumnWidthByIndex(index) {
     const dbValue = this.getDBValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const widthKey = defaultValueKey({ key: "width", device });
     // by default column has width = 50, but it doesn't contain into db
     // if component wasn't changed this way we use || 50 for desktop
@@ -208,7 +204,7 @@ class RowItems extends EditorArrayComponent {
   }
 
   getColumnWidthLimitsPercent(index, position, columnWidths) {
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     if (device !== "desktop") {
       return { min: 5, max: 100 };
     }
@@ -444,11 +440,16 @@ class RowItems extends EditorArrayComponent {
 
   addColumn(index) {
     const v = this.getValue();
+
     const itemData = {
       ...v[0],
       value: {
         items: [],
-        ...(getIn(config.contentDefaults.Row, ["items", 0, "value"]) ?? {})
+        ...(getIn(this.getGlobalConfig().contentDefaults.Row, [
+          "items",
+          0,
+          "value"
+        ]) ?? {})
       }
     };
 
@@ -508,7 +509,7 @@ class RowItems extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { containerClassName: className } = this.props;
 
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

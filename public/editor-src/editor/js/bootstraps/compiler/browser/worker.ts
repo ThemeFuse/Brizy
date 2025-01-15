@@ -9,7 +9,6 @@ import { _Worker } from "visual/utils/worker";
 // Note: Workers are build in a separated files
 // See webpack.config.worker.js
 const getWorkerUrl = (config: ConfigCommon): string => {
-  //@ts-expect-error: Temporary need to move the urls types to ConfigCommon
   const base = config.urls?.worker ?? assetUrl("editor/js");
   const version = config.editorVersion ?? "latest";
   return `${base}/compiler.min.js?ver=${version}`;

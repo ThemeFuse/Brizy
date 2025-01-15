@@ -44,38 +44,64 @@ export function cssStyleElementPostsPaginationSpacing({ v, device, state }) {
   return `margin-top: ${paginationSpacing}px;`;
 }
 
-export function cssStyleElementPostsPaginationFontFamily({ v, device, state }) {
+export function cssStyleElementPostsPaginationFontFamily({
+  v,
+  device,
+  state,
+  store,
+  renderContext
+}) {
   return cssStyleTypography2FontFamily({
     v,
     device,
     state,
-    prefix: "pagination"
+    store,
+    prefix: "pagination",
+    renderContext
   });
 }
 
-export function cssStyleElementPostsPaginationFontSize({ v, device, state }) {
+export function cssStyleElementPostsPaginationFontSize({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2FontSize({
     v,
     device,
     state,
+    store,
     prefix: "pagination"
   });
 }
 
-export function cssStyleElementPostsPaginationLineHeight({ v, device, state }) {
+export function cssStyleElementPostsPaginationLineHeight({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2LineHeight({
     v,
     device,
     state,
+    store,
     prefix: "pagination"
   });
 }
 
-export function cssStyleElementPostsPaginationFontWeight({ v, device, state }) {
+export function cssStyleElementPostsPaginationFontWeight({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2FontWeight({
     v,
     device,
     state,
+    store,
     prefix: "pagination"
   });
 }
@@ -83,12 +109,14 @@ export function cssStyleElementPostsPaginationFontWeight({ v, device, state }) {
 export function cssStyleElementPostsPaginationLetterSpacing({
   v,
   device,
-  state
+  state,
+  store
 }) {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
+    store,
     prefix: "pagination"
   });
 }
@@ -96,12 +124,14 @@ export function cssStyleElementPostsPaginationLetterSpacing({
 export function cssStyleElementPostsPaginationFontVariation({
   v,
   device,
-  state
+  state,
+  store
 }) {
   return cssStyleTypography2FontVariation({
     v,
     device,
     state,
+    store,
     prefix: "pagination"
   });
 }
@@ -109,56 +139,100 @@ export function cssStyleElementPostsPaginationFontVariation({
 export function cssStyleElementPostsPaginationTextTransform({
   v,
   device,
-  state
+  state,
+  store
 }) {
   return cssStyleTextTransforms({
     v,
     device,
     state,
+    store,
     prefix: "pagination"
   });
 }
 
-export function cssStyleElementPostsPaginationColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "paginationColor" });
+export function cssStyleElementPostsPaginationColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, prefix: "paginationColor", store });
 }
 
-export function cssStyleElementPostsPaginationBgColor({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "paginationBg" });
+export function cssStyleElementPostsPaginationBgColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleBgColor({ v, device, state, prefix: "paginationBg", store });
 }
 
-export function cssStyleElementPostsPaginationBorder({ v, device, state }) {
-  return cssStyleBorder({ v, device, state, prefix: "pagination" });
+export function cssStyleElementPostsPaginationBorder({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleBorder({ v, device, state, prefix: "pagination", store });
 }
 
-export function cssStyleElementPostsPaginationActiveColor({ v, device }) {
+export function cssStyleElementPostsPaginationActiveColor({
+  v,
+  device,
+  store
+}) {
   return cssStyleColor({
     v,
     device,
     state: ACTIVE,
+    store,
     prefix: "paginationColor"
   });
 }
 
-export function cssStyleElementPostsPaginationActiveBgColor({ v, device }) {
+export function cssStyleElementPostsPaginationActiveBgColor({
+  v,
+  device,
+  store
+}) {
   return cssStyleBgColor({
     v,
     device,
     state: ACTIVE,
+    store,
     prefix: "paginationBg"
   });
 }
 
-export function cssStyleElementPostsPaginationActiveBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "pagination" });
+export function cssStyleElementPostsPaginationActiveBorder({
+  v,
+  device,
+  store
+}) {
+  return cssStyleBorder({
+    v,
+    device,
+    state: ACTIVE,
+    store,
+    prefix: "pagination"
+  });
 }
 
 export function cssStyleElementPostsPaginationBorderRadius({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleBorderRadius({ v, device, state, prefix: "pagination" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    prefix: "pagination"
+  });
 }
 
 // Tags
@@ -172,9 +246,16 @@ export function cssStyleElementPostsFilterDisplay({ v, device, state }) {
 export function cssStyleElementPostsFilterHorizontalAlign({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "filter" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementPostsFilterSpacing({ v, device, state }) {
@@ -197,109 +278,183 @@ export function cssStyleElementPostsFilterAfterSpacing({ v, device, state }) {
   return `margin-bottom: ${afterFilterSpacing}px;`;
 }
 
-export function cssStyleElementPostsFilterFontFamily({ v, device, state }) {
+export function cssStyleElementPostsFilterFontFamily({
+  v,
+  device,
+  state,
+  store,
+  renderContext
+}) {
   return cssStyleTypography2FontFamily({
     v,
     device,
     state,
-    prefix: "filter"
+    store,
+    prefix: "filter",
+    renderContext
   });
 }
 
-export function cssStyleElementPostsFilterFontSize({ v, device, state }) {
+export function cssStyleElementPostsFilterFontSize({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2FontSize({
     v,
     device,
     state,
+    store,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterLineHeight({ v, device, state }) {
+export function cssStyleElementPostsFilterLineHeight({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2LineHeight({
     v,
     device,
     state,
+    store,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterFontWeight({ v, device, state }) {
+export function cssStyleElementPostsFilterFontWeight({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2FontWeight({
     v,
     device,
     state,
+    store,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterLetterSpacing({ v, device, state }) {
+export function cssStyleElementPostsFilterLetterSpacing({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
+    store,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterFontVariation({ v, device, state }) {
+export function cssStyleElementPostsFilterFontVariation({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTypography2FontVariation({
     v,
     device,
     state,
+    store,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterTextTransform({ v, device, state }) {
+export function cssStyleElementPostsFilterTextTransform({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleTextTransforms({
     v,
     device,
     state,
+    store,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "filterColor" });
+export function cssStyleElementPostsFilterColor({ v, device, state, store }) {
+  return cssStyleColor({ v, device, state, store, prefix: "filterColor" });
 }
 
-export function cssStyleElementPostsFilterBgColor({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "filterBg" });
+export function cssStyleElementPostsFilterBgColor({ v, device, state, store }) {
+  return cssStyleBgColor({ v, device, state, store, prefix: "filterBg" });
 }
 
-export function cssStyleElementPostsFilterBorder({ v, device, state }) {
-  return cssStyleBorder({ v, device, state, prefix: "filter" });
+export function cssStyleElementPostsFilterBorder({ v, device, state, store }) {
+  return cssStyleBorder({ v, device, state, store, prefix: "filter" });
 }
 
-export function cssStyleElementPostsFilterBorderRadius({ v, device, state }) {
-  return cssStyleBorderRadius({ v, device, state, prefix: "filter" });
+export function cssStyleElementPostsFilterBorderRadius({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "filter" });
 }
 
-export function cssStyleElementPostsFilterShadow({ v, device, state }) {
-  return cssStyleBoxShadow({ v, device, state, prefix: "filter" });
+export function cssStyleElementPostsFilterShadow({ v, device, state, store }) {
+  return cssStyleBoxShadow({ v, device, state, store, prefix: "filter" });
 }
 
 export function cssStyleElementPostsFilterPaddingFourFields({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStylePaddingFourFields({ v, device, state, prefix: "filter" });
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    store,
+    prefix: "filter"
+  });
 }
 
-export function cssStyleElementPostsFilterActiveColor({ v, device }) {
-  return cssStyleColor({ v, device, state: ACTIVE, prefix: "filterColor" });
+export function cssStyleElementPostsFilterActiveColor({ v, store, device }) {
+  return cssStyleColor({
+    v,
+    device,
+    state: ACTIVE,
+    store,
+    prefix: "filterColor"
+  });
 }
 
-export function cssStyleElementPostsFilterActiveBgColor({ v, device }) {
-  return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "filterBg" });
+export function cssStyleElementPostsFilterActiveBgColor({ v, store, device }) {
+  return cssStyleBgColor({
+    v,
+    device,
+    state: ACTIVE,
+    store,
+    prefix: "filterBg"
+  });
 }
 
-export function cssStyleElementPostsFilterActiveBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "filter" });
+export function cssStyleElementPostsFilterActiveBorder({ v, store, device }) {
+  return cssStyleBorder({ v, device, state: ACTIVE, store, prefix: "filter" });
 }
 
-export function cssStyleElementPostsFilterActiveShadow({ v, device }) {
-  return cssStyleBoxShadow({ v, device, state: ACTIVE, prefix: "filter" });
+export function cssStyleElementPostsFilterActiveShadow({ v, store, device }) {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state: ACTIVE,
+    store,
+    prefix: "filter"
+  });
 }

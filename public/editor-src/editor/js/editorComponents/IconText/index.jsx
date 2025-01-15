@@ -1,20 +1,19 @@
-import React from "react";
-import CustomCSS from "visual/component/CustomCSS";
 import classnames from "classnames";
+import React from "react";
 import { noop } from "underscore";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { css } from "visual/utils/cssStyle";
-import * as toolbarExtendParent from "./toolbarExtendParent";
-import * as sidebarExtendParent from "./sidebarExtendParent";
-import * as toolbarExtendIcon from "./toolbarExtendIcon";
-import * as sidebarExtendIcon from "./sidebarExtendIcon";
-import * as toolbarExtendText from "./toolbarExtendText";
-import * as sidebarExtendText from "./sidebarExtendText";
-import * as toolbarExtendButton from "./toolbarExtendButton";
-import * as sidebarExtendButton from "./sidebarExtendButton";
+import EditorComponent from "visual/editorComponents/EditorComponent";
 import defaultValue from "./defaultValue.json";
+import * as sidebarExtendButton from "./sidebarExtendButton";
+import * as sidebarExtendIcon from "./sidebarExtendIcon";
+import * as sidebarExtendParent from "./sidebarExtendParent";
+import * as sidebarExtendText from "./sidebarExtendText";
 import { style } from "./styles";
+import * as toolbarExtendButton from "./toolbarExtendButton";
+import * as toolbarExtendIcon from "./toolbarExtendIcon";
+import * as toolbarExtendParent from "./toolbarExtendParent";
+import * as toolbarExtendText from "./toolbarExtendText";
 
 const ICON_ITEM_INDEX = 0;
 const TEXT_ITEM_INDEX = 1;
@@ -38,7 +37,7 @@ class IconText extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -107,10 +106,16 @@ class IconText extends EditorComponent {
 
     const className = classnames(
       "brz-icon-text",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

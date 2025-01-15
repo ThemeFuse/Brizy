@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { Component } from "react";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getDataSkin } from "./getDataSkin";
 
@@ -242,7 +243,9 @@ class WPComments extends Component {
   }
 
   render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return isEditor(this.props.renderContext)
+      ? this.renderForEdit()
+      : this.renderForView();
   }
 }
 

@@ -1,34 +1,37 @@
 import classnames from "classnames";
-import React from "react";
+import React, { useCallback } from "react";
+import { useDispatch, useStore } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
-import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents from "visual/global/UIEvents";
 import { setDeviceMode } from "visual/redux/actions2";
-import { getStore } from "visual/redux/store";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { DeviceMode } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
-
-const getCurrentDeviceMode = () => getStore().getState().ui.deviceMode;
+import { FCC } from "visual/utils/react/types";
 
 const DeviceModeMobile = {
   id: "mobile",
   type: "link",
   label: t("Mobile"),
   icon: "nc-phone",
-  extraProps: () => {
+  extraProps: ({
+    deviceMode,
+    setDeviceMode
+  }: {
+    deviceMode: DeviceMode;
+    setDeviceMode: (d: DeviceMode) => void;
+  }) => {
     return {
       className: classnames({
-        "brz-ed-sidebar__popover__item--active":
-          getCurrentDeviceMode() === "mobile"
+        "brz-ed-sidebar__popover__item--active": deviceMode === "mobile"
       }),
       onClick: () => {
-        if (getCurrentDeviceMode() === "mobile") {
+        if (deviceMode === "mobile") {
           return;
         }
 
-        getStore().dispatch(setDeviceMode("mobile"));
+        setDeviceMode("mobile");
         setTimeout(() => {
           UIEvents.emit("deviceMode.change", "mobile");
         }, 300);
@@ -42,18 +45,23 @@ const DeviceModeTablet = {
   type: "link",
   label: t("Tablet"),
   icon: "nc-tablet",
-  extraProps: () => {
+  extraProps: ({
+    deviceMode,
+    setDeviceMode
+  }: {
+    deviceMode: DeviceMode;
+    setDeviceMode: (d: DeviceMode) => void;
+  }) => {
     return {
       className: classnames({
-        "brz-ed-sidebar__popover__item--active":
-          getCurrentDeviceMode() === "tablet"
+        "brz-ed-sidebar__popover__item--active": deviceMode === "tablet"
       }),
       onClick: () => {
-        if (getCurrentDeviceMode() === "tablet") {
+        if (deviceMode === "tablet") {
           return;
         }
 
-        getStore().dispatch(setDeviceMode("tablet"));
+        setDeviceMode("tablet");
         setTimeout(() => {
           UIEvents.emit("deviceMode.change", "tablet");
         }, 300);
@@ -67,18 +75,23 @@ const DeviceModeDesktop = {
   type: "link",
   label: t("Desktop"),
   icon: "nc-desktop",
-  extraProps: () => {
+  extraProps: ({
+    deviceMode,
+    setDeviceMode
+  }: {
+    deviceMode: DeviceMode;
+    setDeviceMode: (d: DeviceMode) => void;
+  }) => {
     return {
       className: classnames({
-        "brz-ed-sidebar__popover__item--active":
-          getCurrentDeviceMode() === "desktop"
+        "brz-ed-sidebar__popover__item--active": deviceMode === "desktop"
       }),
       onClick: () => {
-        if (getCurrentDeviceMode() === "desktop") {
+        if (deviceMode === "desktop") {
           return;
         }
 
-        getStore().dispatch(setDeviceMode("desktop"));
+        setDeviceMode("desktop");
         setTimeout(() => {
           UIEvents.emit("deviceMode.change", "desktop");
         }, 300);
@@ -86,6 +99,11 @@ const DeviceModeDesktop = {
     };
   }
 };
+const DeviceModeOptions = [
+  DeviceModeDesktop,
+  DeviceModeTablet,
+  DeviceModeMobile
+];
 
 const plusShortcuts = [
   "ctrl+plus",
@@ -105,71 +123,80 @@ const minusShortcuts = [
   "right_cmd+right_minus"
 ];
 
-function handleHotKeys(
-  e: React.KeyboardEvent,
-  { keyName }: { keyName: string }
-) {
-  e.preventDefault();
-  const getCurrentDeviceMode = () => getStore().getState().ui.deviceMode;
-  const { options } = DeviceModes;
-  let index = options.findIndex(({ id }) => id === getCurrentDeviceMode());
+const WithHotKeys: FCC = ({ children }) => {
+  const store = useStore();
+  const dispatch = useDispatch();
 
-  if (plusShortcuts.includes(keyName)) {
-    index--;
-  } else {
-    index++;
-  }
+  const handleHotKeys = useCallback(
+    (e: React.KeyboardEvent, { keyName }: { keyName: string }) => {
+      e.preventDefault();
+      const deviceMode = deviceModeSelector(store.getState());
+      let index = DeviceModeOptions.findIndex(({ id }) => id === deviceMode);
 
-  if (index === options.length) {
-    index = 0;
-  } else if (index < 0) {
-    index = options.length - 1;
-  }
+      if (plusShortcuts.includes(keyName)) {
+        index--;
+      } else {
+        index++;
+      }
 
-  getStore().dispatch(setDeviceMode(options[index].id as DeviceMode));
-  setTimeout(() => {
-    UIEvents.emit("deviceMode.change", options[index].id);
-  }, 300);
-}
+      if (index === DeviceModeOptions.length) {
+        index = 0;
+      } else if (index < 0) {
+        index = DeviceModeOptions.length - 1;
+      }
+
+      dispatch(setDeviceMode(DeviceModeOptions[index].id as DeviceMode));
+      setTimeout(() => {
+        UIEvents.emit("deviceMode.change", DeviceModeOptions[index].id);
+      }, 300);
+    },
+    [store, dispatch]
+  );
+
+  return (
+    <>
+      {children}
+      <HotKeys
+        keyNames={[...plusShortcuts, ...minusShortcuts]}
+        id="key-helper-device-modes"
+        onKeyDown={handleHotKeys}
+      />
+    </>
+  );
+};
 
 const DevicesRender = (element: React.ReactElement) => (
-  <>
-    {element}
-    <HotKeys
-      keyNames={[...plusShortcuts, ...minusShortcuts]}
-      id="key-helper-device-modes"
-      onKeyDown={handleHotKeys}
-    />
-  </>
+  <WithHotKeys>{element}</WithHotKeys>
 );
 
-export const DeviceModes = {
-  id: LeftSidebarOptionsIds.deviceMode,
-  type: "popover",
-  className: "brz-ed-sidebar__popover--deviceMode",
-  options: [DeviceModeDesktop, DeviceModeTablet, DeviceModeMobile],
-  render: DevicesRender,
-  disabled: isStory(Config.getAll()),
+export function getDevicesModes({ disabled = false }: { disabled: boolean }) {
+  return {
+    id: LeftSidebarOptionsIds.deviceMode,
+    type: "popover",
+    className: "brz-ed-sidebar__popover--deviceMode",
+    options: DeviceModeOptions,
+    render: DevicesRender,
+    disabled,
 
-  extraProps: () => {
-    const currentDeviceMode = getCurrentDeviceMode();
-    let icon = "";
-    let title = "";
+    extraProps: ({ deviceMode }: { deviceMode: DeviceMode }) => {
+      let icon = "";
+      let title = "";
 
-    if (currentDeviceMode === "mobile") {
-      icon = "nc-phone";
-      title = t("Mobile view");
-    } else if (currentDeviceMode === "tablet") {
-      icon = "nc-tablet";
-      title = t("Tablet view");
-    } else {
-      icon = "nc-desktop";
-      title = t("Desktop view");
+      if (deviceMode === "mobile") {
+        icon = "nc-phone";
+        title = t("Mobile view");
+      } else if (deviceMode === "tablet") {
+        icon = "nc-tablet";
+        title = t("Tablet view");
+      } else {
+        icon = "nc-desktop";
+        title = t("Desktop view");
+      }
+
+      return {
+        icon,
+        title
+      };
     }
-
-    return {
-      icon,
-      title
-    };
-  }
-};
+  };
+}

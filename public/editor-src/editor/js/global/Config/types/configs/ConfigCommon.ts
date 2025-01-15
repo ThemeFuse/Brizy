@@ -19,6 +19,7 @@ import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
+import { UrlsCommon } from "visual/global/Config/types/Urls";
 import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
 import {
   FontStyle,
@@ -39,10 +40,17 @@ import {
 import { Literal } from "visual/utils/types/Literal";
 import { Pro } from "../Pro";
 import { User } from "../User";
+import type { Compiler } from "./Compiler";
+import { ElementTypes } from "./ElementTypes";
 import {
+  ThirdPartyComponents,
+  ThirdPartyComponentsHosts,
+  ThirdPartyUrls
+} from "./ThirdParty";
+import {
+  Block as APIGlobalBlock,
   APIGlobalBlocks,
-  APIGlobalPopups,
-  Block as APIGlobalBlock
+  APIGlobalPopups
 } from "./blocks/GlobalBlocks";
 import {
   BlocksArray,
@@ -77,18 +85,11 @@ import {
   ScreenshotData,
   SizeType
 } from "./common";
-import type { Compiler } from "./Compiler";
-import { ElementTypes } from "./ElementTypes";
 import {
   EkklesiaExtra,
   EkklesiaFields,
   EkklesiaModules
 } from "./modules/ekklesia/Ekklesia";
-import {
-  ThirdPartyComponents,
-  ThirdPartyComponentsHosts,
-  ThirdPartyUrls
-} from "./ThirdParty";
 
 export enum Mode {
   page = "page",
@@ -121,6 +122,12 @@ export interface MenuItem {
   };
 }
 
+export interface MenuData {
+  id: string;
+  name: string;
+  items: MenuItem[];
+}
+
 export enum LeftSidebarOptionsIds {
   cms = "cms",
   addElements = "addElements",
@@ -129,6 +136,7 @@ export enum LeftSidebarOptionsIds {
   collaboration = "collaboration",
   deviceMode = "deviceMode",
   pageSettings = "pageSettings",
+  settings = "settings",
   more = "more"
 }
 
@@ -143,6 +151,36 @@ export enum LeftSidebarMoreOptionsIds {
   link = "link",
   shortcuts = "shortcuts"
 }
+
+export interface LeftSidebarOptionBase {
+  id: string;
+  icon?: string;
+  title?: string;
+}
+
+interface LeftSidebarCommonOption extends LeftSidebarOptionBase {
+  type:
+    | LeftSidebarOptionsIds.cms
+    | LeftSidebarOptionsIds.reorderBlock
+    | LeftSidebarOptionsIds.globalStyle
+    | LeftSidebarOptionsIds.collaboration
+    | LeftSidebarOptionsIds.deviceMode
+    | LeftSidebarOptionsIds.pageSettings
+    | LeftSidebarOptionsIds.settings
+    | LeftSidebarOptionsIds.more;
+}
+
+export interface LeftSidebarAddElementsType extends LeftSidebarOptionBase {
+  type: LeftSidebarOptionsIds.addElements;
+  elements: {
+    label: string;
+    moduleNames: Array<ElementTypes>;
+  }[];
+}
+
+export type LeftSidebarOption =
+  | LeftSidebarCommonOption
+  | LeftSidebarAddElementsType;
 
 export interface LeftSidebarMoreOptions {
   type: LeftSidebarMoreOptionsIds;
@@ -244,8 +282,266 @@ export type HelpVideosData = {
   [k in HelpVideosKeys]: string;
 };
 
+export interface CustomFile {
+  fileUrl?: string;
+
+  addFile?: {
+    label?: string;
+    handler: (
+      res: Response<AddFileData>,
+      rej: Response<string>,
+      extra: AddFileExtra
+    ) => void;
+  };
+}
+
+export interface API {
+  // Used only in Posts(Migration) & GlobalBlocks PopupConditions
+  /** @deprecated */
+  brizyApiUrl?: string;
+
+  //AI
+  textAI?: {
+    handler: (
+      res: Response<string>,
+      rej: Response<string>,
+      data: { prompt: string; action?: string }
+    ) => void;
+  };
+
+  // Media
+  media?: {
+    isOldImage?: boolean;
+
+    mediaResizeUrl?: string;
+
+    addMedia?: {
+      label?: string;
+      handler: (
+        res: Response<AddImageData>,
+        rej: Response<string>,
+        extra: AddImageExtra
+      ) => void;
+    };
+
+    // Image Gallery
+    addMediaGallery?: {
+      label?: string;
+      handler: (
+        res: Response<Array<AddImageData>>,
+        rej: Response<string>,
+        extra: AddImageExtra
+      ) => void;
+    };
+
+    imagePatterns?: ImagePatterns;
+  };
+
+  fonts?: {
+    adobeFont?: {
+      get: (res: Response<AdobeFonts>, rej: Response<string>) => void;
+      add: (
+        res: Response<AdobeAddAccount>,
+        rej: Response<string>,
+        extra: AdobeFontData
+      ) => void;
+    };
+  };
+
+  // File
+  customFile?: CustomFile;
+
+  // Icon
+  customIcon?: {
+    iconUrl?: string;
+    iconPattern?: IconPattern;
+    add?: (
+      res: Response<IconUploadData[]>,
+      rej: Response<string>,
+      extra: Pick<AddFileExtra, "acceptedExtensions">
+    ) => void;
+    get?: (res: Response<IconUploadData[]>, rej: Response<string>) => void;
+    delete?: (
+      res: Response<string>,
+      rej: Response<string>,
+      extra: { uid: string }
+    ) => void;
+  };
+
+  sourceTypes?: {
+    getSourceChoices: () => ChoicesAsync;
+  };
+
+  sourceItems?: {
+    handler: (
+      res: Response<ChoicesSync>,
+      rej: Response<string>,
+      args: {
+        id: string;
+      }
+    ) => void;
+  };
+
+  // Collection Items
+  collectionItems?: {
+    loadCollectionItems: {
+      handler: (
+        res: Response<ChoicesSync>,
+        rej: Response<string>,
+        extra: { collectionId: string; value: Literal[]; fieldId?: string }
+      ) => void;
+    };
+
+    searchCollectionItems: {
+      handler: (
+        res: Response<ChoicesSync>,
+        rej: Response<string>,
+        extra: { collectionId: string; search: string; fieldId?: string }
+      ) => void;
+    };
+
+    getCollectionItems: {
+      handler: (
+        res: Response<ChoicesSync>,
+        rej: Response<string>,
+        extra: {
+          id: string;
+          fields?: string;
+          status?: string;
+          extraChoices?: ChoiceSync;
+        }
+      ) => void;
+    };
+
+    getCollectionSourceItems: {
+      handler: (
+        res: Response<CollectionSourceItem[]>,
+        rej: Response<string>,
+        extra: {
+          searchCriteria: "id" | "slug";
+          searchValue: string;
+        }
+      ) => void;
+    };
+  };
+
+  // Collection Types
+  collectionTypes?: {
+    loadCollectionTypes: {
+      handler: (
+        res: Response<ChoicesSync>,
+        rej: Response<string>,
+        extraData?: { defaultTitle?: string; defaultValue?: string }
+      ) => void;
+    };
+  };
+
+  // SavedBlocks
+  savedBlocks?: APISavedBlocks;
+
+  // SavedLayouts
+  savedLayouts?: APISavedLayouts;
+
+  // SavedPopups
+  savedPopups?: APISavedPopups;
+
+  // GlobalBlocks
+  globalBlocks?: APIGlobalBlocks;
+
+  // GlobalPopups
+  globalPopups?: APIGlobalPopups;
+
+  defaultKits?: DefaultTemplateKits<
+    KitsWithThumbs,
+    DefaultBlock,
+    Array<KitItem>
+  >;
+  defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
+  defaultLayouts?: DefaultTemplateWithPages<
+    LayoutsWithThumbs,
+    BlocksArray<DefaultBlockWithID>,
+    LayoutsPages
+  >;
+  defaultStories?: DefaultTemplateWithPages<
+    StoriesWithThumbs,
+    BlocksArray<DefaultBlock> | DefaultBlock,
+    LayoutsPages
+  >;
+
+  // Popup Conditions
+  popupConditions?: {
+    conditions?: {
+      save: (
+        res: Response<Array<Rule>>,
+        rej: Response<string>,
+        extra: { rules: Array<Rule>; dataVersion: number }
+      ) => void;
+    };
+  };
+
+  modules?: {
+    leadific?: {
+      getCustomFields?: {
+        handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
+      };
+    };
+    ekklesia?: {
+      getEkklesiaFields?: {
+        handler: <T extends keyof EkklesiaFields = keyof EkklesiaFields>(
+          res: Response<ChoicesSync | ChoicesSync>,
+          rej: Response<string>,
+          keys: EkklesiaParams<T>,
+          extra?: EkklesiaExtra
+        ) => void;
+      };
+      updateEkklesiaFields?: {
+        handler: <T extends keyof EkklesiaFields = keyof EkklesiaFields>(
+          res: Response<EkklesiaKeys>,
+          rej: Response<string>,
+          keys: {
+            fields: Array<EkklesiaFieldMap[T]>;
+          },
+          extra?: EkklesiaExtra
+        ) => EkklesiaKeys;
+      };
+    };
+  };
+
+  heartBeat?: {
+    sendHandler?: (
+      res: Response<{
+        locked: boolean;
+        lockedBy: boolean | { user_email: string };
+      }>,
+      rej: Response<string>
+    ) => void;
+    takeOverHandler?: (res: Response<unknown>, rej: Response<string>) => void;
+  };
+  // Screenshots
+  screenshots?: {
+    create?: (
+      res: Response<{ id: string }>,
+      rej: Response<string>,
+      extra: ScreenshotData
+    ) => void;
+    update?: (
+      res: Response<{ id: string }>,
+      rej: Response<string>,
+      extra: ScreenshotData & { id: string }
+    ) => void;
+  };
+}
+
 interface _ConfigCommon<Mode> {
   tokenV1?: string;
+
+  /**
+   * @deprecated The token will not be in the future
+   */
+  tokenV2?: {
+    token_type: string;
+    access_token: string;
+  };
 
   auth?: {
     token: string;
@@ -262,14 +558,22 @@ interface _ConfigCommon<Mode> {
     };
   };
 
-  user: User;
+  container: {
+    id: number;
+  };
+
+  user?: User;
 
   branding: {
     name: string;
   };
   editorVersion: string;
 
-  mode?: Mode;
+  /**
+   * @deprecated mode is deprecated; in future it will be deleted from the config,
+   * this value must be passed as props or from contextProvider to relevant components.
+   */
+  mode: Mode;
 
   taxonomies: Taxonomy[]; // is this property common or just wp?
   postTypesTaxs: PostTypesTax[]; // is this property common or just wp?
@@ -283,11 +587,7 @@ interface _ConfigCommon<Mode> {
     maxUploadFileSize: number;
   };
 
-  menuData?: {
-    id: string;
-    name: string;
-    items: MenuItem[];
-  }[];
+  menuData?: MenuData[];
 
   projectData?: Project;
 
@@ -338,8 +638,8 @@ interface _ConfigCommon<Mode> {
     //#region LeftSidebar
 
     leftSidebar?: {
-      topTabsOrder?: Array<LeftSidebarOptionsIds>;
-      bottomTabsOrder?: Array<LeftSidebarOptionsIds>;
+      topTabsOrder?: Array<LeftSidebarOption>;
+      bottomTabsOrder?: Array<LeftSidebarOption>;
 
       [LeftSidebarOptionsIds.pageSettings]?: {
         options?: {
@@ -517,253 +817,7 @@ interface _ConfigCommon<Mode> {
 
   //#region API
 
-  api?: {
-    // Used only in Posts(Migration) & GlobalBlocks PopupConditions
-    /** @deprecated */
-    brizyApiUrl?: string;
-
-    //AI
-    textAI?: {
-      handler: (
-        res: Response<string>,
-        rej: Response<string>,
-        data: { prompt: string; action?: string }
-      ) => void;
-    };
-
-    // Media
-    media?: {
-      isOldImage?: boolean;
-
-      mediaResizeUrl?: string;
-
-      addMedia?: {
-        label?: string;
-        handler: (
-          res: Response<AddImageData>,
-          rej: Response<string>,
-          extra: AddImageExtra
-        ) => void;
-      };
-
-      // Image Gallery
-      addMediaGallery?: {
-        label?: string;
-        handler: (
-          res: Response<Array<AddImageData>>,
-          rej: Response<string>,
-          extra: AddImageExtra
-        ) => void;
-      };
-
-      imagePatterns?: ImagePatterns;
-    };
-
-    fonts?: {
-      adobeFont?: {
-        get: (res: Response<AdobeFonts>, rej: Response<string>) => void;
-        add: (
-          res: Response<AdobeAddAccount>,
-          rej: Response<string>,
-          extra: AdobeFontData
-        ) => void;
-      };
-    };
-
-    // File
-    customFile?: {
-      fileUrl?: string;
-
-      addFile?: {
-        label?: string;
-        handler: (
-          res: Response<AddFileData>,
-          rej: Response<string>,
-          extra: AddFileExtra
-        ) => void;
-      };
-    };
-
-    // Icon
-    customIcon?: {
-      iconUrl?: string;
-      iconPattern?: IconPattern;
-      add?: (
-        res: Response<IconUploadData[]>,
-        rej: Response<string>,
-        extra: Pick<AddFileExtra, "acceptedExtensions">
-      ) => void;
-      get?: (res: Response<IconUploadData[]>, rej: Response<string>) => void;
-      delete?: (
-        res: Response<string>,
-        rej: Response<string>,
-        extra: { uid: string }
-      ) => void;
-    };
-
-    sourceTypes?: {
-      getSourceChoices: () => ChoicesAsync;
-    };
-
-    sourceItems?: {
-      handler: (
-        res: Response<ChoicesSync>,
-        rej: Response<string>,
-        args: {
-          id: string;
-        }
-      ) => void;
-    };
-
-    // Collection Items
-    collectionItems?: {
-      loadCollectionItems: {
-        handler: (
-          res: Response<ChoicesSync>,
-          rej: Response<string>,
-          extra: { collectionId: string; value: Literal[]; fieldId?: string }
-        ) => void;
-      };
-
-      searchCollectionItems: {
-        handler: (
-          res: Response<ChoicesSync>,
-          rej: Response<string>,
-          extra: { collectionId: string; search: string; fieldId?: string }
-        ) => void;
-      };
-
-      getCollectionItems: {
-        handler: (
-          res: Response<ChoicesSync>,
-          rej: Response<string>,
-          extra: {
-            id: string;
-            fields?: string;
-            status?: string;
-            extraChoices?: ChoiceSync;
-          }
-        ) => void;
-      };
-
-      getCollectionSourceItems: {
-        handler: (
-          res: Response<CollectionSourceItem[]>,
-          rej: Response<string>,
-          extra: {
-            searchCriteria: "id" | "slug";
-            searchValue: string;
-          }
-        ) => void;
-      };
-    };
-
-    // Collection Types
-    collectionTypes?: {
-      loadCollectionTypes: {
-        handler: (
-          res: Response<ChoicesSync>,
-          rej: Response<string>,
-          extraData?: { defaultTitle?: string; defaultValue?: string }
-        ) => void;
-      };
-    };
-
-    // SavedBlocks
-    savedBlocks?: APISavedBlocks;
-
-    // SavedLayouts
-    savedLayouts?: APISavedLayouts;
-
-    // SavedPopups
-    savedPopups?: APISavedPopups;
-
-    // GlobalBlocks
-    globalBlocks?: APIGlobalBlocks;
-
-    // GlobalPopups
-    globalPopups?: APIGlobalPopups;
-
-    defaultKits?: DefaultTemplateKits<
-      KitsWithThumbs,
-      DefaultBlock,
-      Array<KitItem>
-    >;
-    defaultPopups?: DefaultTemplate<PopupsWithThumbs, DefaultBlockWithID>;
-    defaultLayouts?: DefaultTemplateWithPages<
-      LayoutsWithThumbs,
-      BlocksArray<DefaultBlockWithID>,
-      LayoutsPages
-    >;
-    defaultStories?: DefaultTemplateWithPages<
-      StoriesWithThumbs,
-      BlocksArray<DefaultBlock> | DefaultBlock,
-      LayoutsPages
-    >;
-
-    // Popup Conditions
-    popupConditions?: {
-      conditions?: {
-        save: (
-          res: Response<Array<Rule>>,
-          rej: Response<string>,
-          extra: { rules: Array<Rule>; dataVersion: number }
-        ) => void;
-      };
-    };
-
-    modules?: {
-      leadific?: {
-        getCustomFields?: {
-          handler: (res: Response<ChoicesSync>, rej: Response<string>) => void;
-        };
-      };
-      ekklesia?: {
-        getEkklesiaFields?: {
-          handler: <T extends keyof EkklesiaFields = keyof EkklesiaFields>(
-            res: Response<ChoicesSync | ChoicesSync>,
-            rej: Response<string>,
-            keys: EkklesiaParams<T>,
-            extra?: EkklesiaExtra
-          ) => void;
-        };
-        updateEkklesiaFields?: {
-          handler: <T extends keyof EkklesiaFields = keyof EkklesiaFields>(
-            res: Response<EkklesiaKeys>,
-            rej: Response<string>,
-            keys: {
-              fields: Array<EkklesiaFieldMap[T]>;
-            },
-            extra?: EkklesiaExtra
-          ) => EkklesiaKeys;
-        };
-      };
-    };
-
-    heartBeat?: {
-      sendHandler?: (
-        res: Response<{
-          locked: boolean;
-          lockedBy: boolean | { user_email: string };
-        }>,
-        rej: Response<string>
-      ) => void;
-      takeOverHandler?: (res: Response<unknown>, rej: Response<string>) => void;
-    };
-    // Screenshots
-    screenshots?: {
-      create?: (
-        res: Response<{ id: string }>,
-        rej: Response<string>,
-        extra: ScreenshotData
-      ) => void;
-      update?: (
-        res: Response<{ id: string }>,
-        rej: Response<string>,
-        extra: ScreenshotData & { id: string }
-      ) => void;
-    };
-  };
+  api?: API;
 
   //#endregion
 
@@ -950,15 +1004,14 @@ interface _ConfigCommon<Mode> {
     video?: {
       types?: Array<VideoTypes>;
     };
+
+    menu?: {
+      onOpen?: VoidFunction;
+      createMenuLabel?: string;
+    };
   };
 
   //#endregion
-
-  // #region Localisation
-
-  l10n?: Record<string, string>;
-
-  // #endregion
 
   //#region modules
 
@@ -1034,6 +1087,8 @@ interface _ConfigCommon<Mode> {
 
     //#endregion
   };
+
+  urls?: UrlsCommon;
 }
 
 export type ConfigCommon = _ConfigCommon<Mode>;

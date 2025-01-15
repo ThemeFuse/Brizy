@@ -1,14 +1,10 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
 import { getLeadificCustomFields } from "visual/utils/api";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
@@ -21,22 +17,23 @@ export const getItems: GetItems<Value, Props> = ({
   device,
   context,
   component,
-  state
+  state,
+  editorMode
 }) => {
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
 
-  const IS_STORY = isStory(config);
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isStory = isStory(editorMode);
+  const _isPopup = isPopup(editorMode);
 
   const inPopup = Boolean(component.props.meta?.sectionPopup);
   const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
 
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
   const linkPopup = Str.read(dvv("linkPopup"));
 
@@ -108,7 +105,7 @@ export const getItems: GetItems<Value, Props> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: color
           }
         }
       },
@@ -214,7 +211,7 @@ export const getItems: GetItems<Value, Props> = ({
                   v,
                   device,
                   state,
-                  disabled: IS_GLOBAL_POPUP || IS_STORY
+                  disabled: _isPopup || _isStory
                 })
               ]
             },
@@ -224,7 +221,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "linkPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
+                  disabled: inPopup || inPopup2 || _isPopup || _isStory,
                   type: "promptAddPopup",
                   label: t("Popup"),
                   config: {

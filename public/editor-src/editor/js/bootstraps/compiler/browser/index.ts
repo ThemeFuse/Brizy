@@ -1,6 +1,5 @@
 import { expose } from "comlink";
 import { mergeDeep } from "timm";
-import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Static } from "./bootstrap/types";
 import { getProScriptUrl } from "./utils/getProScriptUrl";
@@ -42,8 +41,6 @@ class Core {
 
     // @ts-expect-error: Config in worker
     const config: ConfigCommon = mergeDeep(global.__VISUAL_CONFIG__, _config);
-    // @ts-expect-error: Config in worker
-    Config.init(config);
 
     const { bootstrap } = await import("./bootstrap");
 

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import {
   makeAttr,
   makeDataAttr,
@@ -95,6 +96,11 @@ export default class CustomCSS extends React.Component {
   }
 
   render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return (
+      <RenderFor
+        forView={this.renderForView()}
+        forEdit={this.renderForEdit()}
+      />
+    );
   }
 }

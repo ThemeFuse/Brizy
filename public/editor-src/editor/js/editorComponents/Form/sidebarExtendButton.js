@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 
 // Override Button's sidebar title
-export const title = t("Submit Form");
+export const title = () => t("Submit Form");
 
 export function getItems() {
   // Button disables it's own sidebar options when it's type === "submit"

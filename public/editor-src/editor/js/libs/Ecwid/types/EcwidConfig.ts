@@ -1,13 +1,11 @@
 export interface RedirectConfig {
-  redirect: {
-    fromFooter: Array<{ route: FooterRoutes; selector: string }>;
-    fromContent: Array<{ route: ContentRoutes; selector: string }>;
-  };
+  fromFooter: Array<{ route: FooterRoutes; selector: string }>;
+  fromContent: Array<{ route: ContentRoutes; selector: string }>;
 }
 
-export type FooterRoutes = "/account" | "/account/favorites" | "/cart";
+export type FooterRoutes = "/my-account" | "/favorites" | "/cart";
 
-export type ContentRoutes = "/cart" | "/account/thank-you";
+export type ContentRoutes = "/cart" | "/thank-you" | "/favorites";
 
 export interface EcwidConfig {
   // Products
@@ -61,10 +59,8 @@ export interface EcwidConfig {
 
   onPageLoaded?: VoidFunction;
 
-  redirect?: {
-    fromFooter: Array<{ route: FooterRoutes; selector: string }>;
-    fromContent: Array<{ route: ContentRoutes; selector: string }>;
-  };
+  redirect?: RedirectConfig;
+  restoreUrl?: boolean;
 
   // Cart & Checkout
   shopping_cart_show_qty_inputs?: boolean;

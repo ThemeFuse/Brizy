@@ -12,6 +12,10 @@ export const error: RError = (state = errorDefault, action) => {
     case "HYDRATE": {
       const { projectStatus } = action.payload;
 
+      if (!projectStatus) {
+        return state;
+      }
+
       if (projectStatus.locked) {
         return {
           code: PROJECT_LOCKED_ERROR,

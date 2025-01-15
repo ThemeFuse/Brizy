@@ -24,9 +24,16 @@ type Dvv = (key: string) => unknown;
 export function cssStyleElementShareButtonIconSize({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeFontSize({ v, device, state, prefix: "iconCustom" });
+  return cssStyleSizeFontSize({
+    v,
+    device,
+    state,
+    store,
+    prefix: "iconCustom"
+  });
 }
 
 export function cssStyleElementShareButtonWidthText({
@@ -100,9 +107,10 @@ export function cssStyleElementShareButtonColumnsIcon({
 export function cssStyleElementShareButtonHeight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix: "button" });
+  return cssStyleSizeHeight({ v, device, state, store, prefix: "button" });
 }
 
 export function cssStyleElementShareButtonViewIcon({
@@ -136,7 +144,8 @@ export function cssStyleElementShareButtonViewText({
 export function cssStyleElementShareButtonBgColorIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv: Dvv = (key) => defaultValueValue({ v, key, device });
 
@@ -148,14 +157,15 @@ export function cssStyleElementShareButtonBgColorIcon({
 
     return `background-color: ${networkColorText.colorBgIcon};`;
   } else {
-    return cssStyleBgColor({ v, device, state, prefix: "iconBg" });
+    return cssStyleBgColor({ v, device, state, store, prefix: "iconBg" });
   }
 }
 
 export function cssStyleElementShareButtonBgGradientIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv: Dvv = (key) => defaultValueValue({ v, key, device });
 
@@ -167,14 +177,15 @@ export function cssStyleElementShareButtonBgGradientIcon({
 
     return `background-color: ${networkColorText.colorBgIcon};`;
   } else {
-    return cssStyleBgGradient({ v, device, state, prefix: "icon" });
+    return cssStyleBgGradient({ v, device, state, store, prefix: "icon" });
   }
 }
 
 export function cssStyleElementShareButtonBgColorText({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv: Dvv = (key) => defaultValueValue({ v, key, device });
 
@@ -186,14 +197,15 @@ export function cssStyleElementShareButtonBgColorText({
 
     return `background-color: ${networkColorIcon.colorBgText};`;
   } else {
-    return cssStyleBgColor({ v, device, state, prefix: "textBg" });
+    return cssStyleBgColor({ v, device, state, store, prefix: "textBg" });
   }
 }
 
 export function cssStyleElementShareButtonBgGradientText({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv: Dvv = (key) => defaultValueValue({ v, key, device });
 
@@ -205,7 +217,7 @@ export function cssStyleElementShareButtonBgGradientText({
 
     return `background-color: ${networkColorIcon.colorBgText};`;
   } else {
-    return cssStyleBgGradient({ v, device, state, prefix: "text" });
+    return cssStyleBgGradient({ v, device, state, store, prefix: "text" });
   }
 }
 
@@ -213,6 +225,7 @@ export function cssStyleElementShareButtonCustomColorText({
   v,
   device,
   state,
+  store,
   prefix = "textColor"
 }: CSSValue): string {
   const dvv: Dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -221,7 +234,7 @@ export function cssStyleElementShareButtonCustomColorText({
   if (colorType === Color.Official) {
     return "color: #ffffff;";
   } else {
-    return cssStyleColor({ v, device, state, prefix });
+    return cssStyleColor({ v, device, state, store, prefix });
   }
 }
 
@@ -229,6 +242,7 @@ export function cssStyleElementShareButtonCustomColorIcon({
   v,
   device,
   state,
+  store,
   prefix = "iconColor"
 }: CSSValue): string {
   const dvv: Dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -237,7 +251,7 @@ export function cssStyleElementShareButtonCustomColorIcon({
   if (colorType === Color.Official) {
     return "color: #ffffff;";
   } else {
-    return cssStyleColor({ v, device, state, prefix });
+    return cssStyleColor({ v, device, state, store, prefix });
   }
 }
 

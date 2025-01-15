@@ -2,12 +2,17 @@ import { cssStyleSizeMinHeightPx } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "../style2/types";
 
-export function cssStyleColumnHeight({ v, device, state }: CSSValue): string {
+export function cssStyleColumnHeight({
+  v,
+  device,
+  store,
+  state
+}: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const heightStyle = dvv("heightStyle");
 
   if (heightStyle === "custom") {
-    return cssStyleSizeMinHeightPx({ v, device, state });
+    return cssStyleSizeMinHeightPx({ v, device, store, state });
   } else {
     return "min-height:100%;";
   }
@@ -16,13 +21,14 @@ export function cssStyleColumnHeight({ v, device, state }: CSSValue): string {
 export function cssStyleEmptyColumnHeight({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const heightStyle = dvv("heightStyle");
 
   if (heightStyle === "custom") {
-    return cssStyleSizeMinHeightPx({ v, device, state });
+    return cssStyleSizeMinHeightPx({ v, device, store, state });
   }
 
   return "";

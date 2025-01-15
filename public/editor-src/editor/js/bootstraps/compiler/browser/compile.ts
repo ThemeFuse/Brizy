@@ -2,17 +2,13 @@ import { produce } from "immer";
 import { t } from "visual/utils/i18n";
 import { assetManager } from "../common/assetManager";
 import { makeStyles } from "../common/assetManager/utils";
-import { compileProject } from "../common/compileProject";
 import { Compile, Data } from "./types";
 import { getDemoPage } from "./utils/demo";
 import { compilePage } from "./worker";
 
 export const getCompileHTML = async (data: Data): Promise<Compile> => {
-  const { config, project, needToCompile } = data;
+  const { config, project } = data;
   const { auth, compiler } = config;
-  const compiledProject = needToCompile.project
-    ? compileProject(config)
-    : undefined;
 
   if (AUTHORIZATION_URL) {
     if (!auth?.token) {
@@ -35,21 +31,18 @@ export const getCompileHTML = async (data: Data): Promise<Compile> => {
         });
 
         if (compiler?.assets === "html") {
-          const { page, globalBlocks } = HTML;
+          const { page } = HTML;
           return {
             page: { html: page.html, ...assetManager(page.assets) },
-            ...(Array.isArray(globalBlocks) && {
-              globalBlocks: globalBlocks.map((block) => ({
-                uid: block.uid,
-                html: block.html,
-                ...assetManager(block.assets)
-              }))
+            ...(HTML.project && {
+              project: { styles: HTML.project.styles.map(makeStyles) }
             })
           };
         }
 
         return {
-          page: HTML.page
+          page: HTML.page,
+          project: HTML.project
         };
       } catch (e) {
         throw Error(t("Fail to compile the page"));
@@ -73,18 +66,13 @@ export const getCompileHTML = async (data: Data): Promise<Compile> => {
           }))
         }),
 
-        ...(compiledProject && {
-          project: { styles: compiledProject.map(makeStyles) }
+        ...(compile.project && {
+          project: { styles: compile.project.styles.map(makeStyles) }
         })
       };
     }
 
-    return {
-      ...compile,
-      ...(compiledProject && {
-        project: { styles: compiledProject }
-      })
-    };
+    return compile;
   } catch (e) {
     if (process.env.NODE_ENV === "development") {
       console.error(e);

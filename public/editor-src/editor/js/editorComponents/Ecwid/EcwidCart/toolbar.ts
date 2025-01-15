@@ -1,8 +1,7 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { Value } from "./types/Value";
 
@@ -15,9 +14,10 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: parentBgColorHex } = getOptionColorHexByPalette(
+  const parentBgColor = getColor(
+    dvv("parentBgColorPalette"),
     dvv("parentBgColorHex"),
-    dvv("parentBgColorPalette")
+    dvv("parentBgColorOpacity")
   );
 
   return [
@@ -36,12 +36,6 @@ export function getItems({
             content:
               "Cart items list is shown in collapsed view on desktop when more than 4 products added."
           }
-        },
-        {
-          id: "breadcrumbsDisplay",
-          label: t("Breadcrumbs"),
-          devices: "desktop",
-          type: "switch"
         },
         {
           id: "qtyDisplay",
@@ -93,10 +87,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              parentBgColorHex,
-              dvv("parentBgColorOpacity")
-            )
+            backgroundColor: parentBgColor
           }
         }
       },

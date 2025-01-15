@@ -4,20 +4,15 @@ import { AnchorInput as _AnchorInput, ThumbnailsProps } from "./types";
 import { ThumbnailBlockWithInput } from "./ThumbnailBlockWithInput";
 
 export const Thumbnails = ({
-  pageBlocksAssembled,
-  globalBlocks,
+  blocks,
   value,
   onClick,
   anchorInputs,
   onChange
 }: ThumbnailsProps): JSX.Element => (
   <>
-    {pageBlocksAssembled.map((block) => {
+    {blocks.map((block) => {
       const { _id } = block.value;
-
-      if (block.type === "GlobalBlock" && globalBlocks[_id]?.data) {
-        block = globalBlocks[_id].data;
-      }
 
       const className = classnames("brz-ed-option__block-thumbnail-item", {
         active: _id === value

@@ -1,30 +1,30 @@
+import { Obj } from "@brizy/readers";
+import classnames from "classnames";
 import React from "react";
 import { omit } from "timm";
+import { isEmpty } from "underscore";
+import { isEditor } from "visual/providers/RenderProvider";
 import Toolbar from "visual/component/Toolbar";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { blocksDataSelector } from "visual/redux/selectors";
+import { Block } from "visual/types";
 import { t } from "visual/utils/i18n";
+import { getLinkData } from "visual/utils/models/link";
+import { handleLinkChange } from "visual/utils/patch/Link";
+import { PatchValue } from "visual/utils/patch/Link/types";
+import { DESKTOP } from "visual/utils/responsiveMode";
+import { FormInput } from "../../type";
 import { CheckboxIcon } from "./Components/CheckboxIcon";
+import CheckboxItem from "./Components/CheckboxItem";
+import RadioItem from "./Components/RadioItem";
+import SelectItem from "./Components/SelectItem";
 import defaultValue from "./defaultValue.json";
 import * as toolbar from "./toolbar";
 import { Props, Value } from "./type";
-import { FormInput } from "../../type";
-import SelectItem from "./Components/SelectItem";
-import CheckboxItem from "./Components/CheckboxItem";
-import { DESKTOP } from "visual/utils/responsiveMode";
-import { getLinkData } from "visual/utils/models/link";
-import { Obj } from "@brizy/readers";
-import RadioItem from "./Components/RadioItem";
-import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types";
-import { getStore } from "visual/redux/store";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { Form2OptionConnector, convertLinkData } from "./utils";
-import { isEmpty } from "underscore";
-import classnames from "classnames";
-import { handleLinkChange } from "visual/utils/patch/Link";
-import { PatchValue } from "visual/utils/patch/Link/types";
 
 class Form2FieldOption extends EditorComponent<Value, Props> {
   static get componentId(): ElementTypes.Form2FieldOption {
@@ -77,8 +77,14 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
   }
 
   renderRadioItem(v: Value, isEditor: boolean): React.JSX.Element {
-    const { onRemove, activeRadioItem, onClickRadioIcon, placeholder, label } =
-      this.props;
+    const {
+      onRemove,
+      activeRadioItem,
+      onClickRadioIcon,
+      placeholder,
+      label,
+      name
+    } = this.props;
     const { value } = v;
 
     return (
@@ -86,7 +92,7 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
         <RadioItem
           value={value}
           label={label}
-          name={label}
+          name={name ?? label}
           active={activeRadioItem}
           placeholder={placeholder}
           onRemove={onRemove}
@@ -113,7 +119,7 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
 
@@ -142,12 +148,21 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
   }
 
   renderCheckboxItem(v: Value, isEditor: boolean): React.JSX.Element {
-    const { onRemove, active, handleChangeActive, label, required, type } =
-      this.props;
+    const {
+      onRemove,
+      active,
+      handleChangeActive,
+      label,
+      required,
+      type,
+      name
+    } = this.props;
+
     const { value } = v;
     const isActive = Obj.isObject(active) ? active[value] : false;
+    const config = this.getGlobalConfig();
 
-    const linkData = getLinkData(v);
+    const linkData = getLinkData(v, config);
     const checkboxLinkData = convertLinkData(linkData);
 
     const checkboxUnderlineClassname = classnames({
@@ -162,6 +177,7 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
             label={label}
             value={value}
             active={active}
+            name={name}
             required={required}
             isEditor={isEditor}
             onRemove={onRemove}
@@ -174,7 +190,7 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
             {...checkboxLinkData}
           />
         </Toolbar>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
     );
@@ -182,36 +198,17 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
 
   renderForEdit(v: Value): React.JSX.Element | null {
     const { type } = this.props;
+    const _isEditor = isEditor(this.renderContext);
 
     switch (type) {
       case FormInput.Select: {
-        return this.renderSelectItem(v, true);
+        return this.renderSelectItem(v, _isEditor);
       }
       case FormInput.Checkbox: {
-        return this.renderCheckboxItem(v, true);
+        return this.renderCheckboxItem(v, _isEditor);
       }
       case FormInput.Radio: {
-        return this.renderRadioItem(v, true);
-      }
-
-      default: {
-        return null;
-      }
-    }
-  }
-
-  renderForView(v: Value): React.JSX.Element | null {
-    const { type } = this.props;
-
-    switch (type) {
-      case FormInput.Select: {
-        return this.renderSelectItem(v, false);
-      }
-      case FormInput.Checkbox: {
-        return this.renderCheckboxItem(v, false);
-      }
-      case FormInput.Radio: {
-        return this.renderRadioItem(v, false);
+        return this.renderRadioItem(v, _isEditor);
       }
 
       default: {
