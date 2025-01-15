@@ -21,7 +21,7 @@ define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '2.6.6' );
 define( 'BRIZY_MINIMUM_PRO_VERSION', '2.4.15' );
-define( 'BRIZY_MINIMUM_COMPILER_VERSION', '300-wp' );
+define( 'BRIZY_MINIMUM_COMPILER_VERSION', '303-wp' );
 define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '303-wp' );
 define( 'BRIZY_SYNC_VERSION', '303' );
 define( 'BRIZY_FILE', __FILE__ );
