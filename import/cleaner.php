@@ -39,51 +39,73 @@ class Brizy_Import_Cleaner {
 		$this->urlBuilder = new Brizy_Editor_UrlBuilder( $this->project );
 	}
 
-	/**
-	 * @throws Exception
-	 */
-	public function clean() {
-		$this->deleteFiles();
-		$this->cleanTables();
-	}
-
-	private function deleteFiles() {
-
-		$ids = $this->wpdb->get_results( "SELECT p.ID FROM {$this->wpdb->posts} p WHERE p.post_type = 'attachment'", ARRAY_N );
-
-		foreach ( $ids as $id ) {
-			wp_delete_attachment( $id, true );
-		}
-
-		$this->fileSystem->delete( $this->urlBuilder->brizy_upload_path(), true );
-	}
-
     /**
      * @throws Exception
      */
-    private function cleanTables() {
+    public function clean() {
+        $brzPostTypes = $this->getPostTypes();
+        $placeholders = implode( ', ', array_fill( 0, count( $brzPostTypes ), '%s' ) );
 
+        $this->deletePostRelationships( $brzPostTypes, $placeholders );
+        $this->deletePostsComments( $brzPostTypes, $placeholders );
+        $this->deleteMedia();
+
+        $this->project->setDataAsJson( json_encode( new stdClass() ) )->saveStorage();
+        $this->project->cleanClassCache();
+    }
+
+    private function getPostTypes() {
+        return [
+            Brizy_Admin_Blocks_Main::CP_GLOBAL,
+            Brizy_Admin_Blocks_Main::CP_SAVED,
+            Brizy_Admin_Fonts_Main::CP_FONT,
+            BrizyPro_Admin_Membership_Membership::CP_ROLE,
+            Brizy_Admin_Layouts_Main::CP_LAYOUT,
+            Brizy_Admin_Stories_Main::CP_STORY,
+            Brizy_Admin_Popups_Main::CP_POPUP,
+            Brizy_Admin_Templates::CP_TEMPLATE,
+            Brizy_Admin_FormEntries::CP_FORM_ENTRY,
+
+            // not deleted
+            // Brizy_Editor_Project::BRIZY_PROJECT,
+        ];
+    }
+
+    private function deletePostRelationships( $brzPostTypes, $placeholders ) {
         $this->wpdb->query(
             $this->wpdb->prepare(
                 "DELETE p, m, tr, tt, t, tm
-                FROM {$this->wpdb->posts} p
-                LEFT JOIN {$this->wpdb->term_relationships} tr ON p.ID = tr.object_id
-                LEFT JOIN {$this->wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
-                LEFT JOIN {$this->wpdb->terms} t ON t.term_id = tt.term_id
-                LEFT JOIN {$this->wpdb->termmeta} tm ON tm.term_id = t.term_id
-                LEFT JOIN {$this->wpdb->postmeta} m ON p.ID = m.post_id
-                WHERE p.post_type <> %s AND p.post_type <> %s AND p.post_type <> %s",
-                Brizy_Editor_Project::BRIZY_PROJECT,
-                'wp_global_styles',
-                'wpcode'
+            FROM {$this->wpdb->posts} p
+            LEFT JOIN {$this->wpdb->term_relationships} tr ON p.ID = tr.object_id
+            LEFT JOIN {$this->wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+            LEFT JOIN {$this->wpdb->terms} t ON t.term_id = tt.term_id
+            LEFT JOIN {$this->wpdb->termmeta} tm ON tm.term_id = t.term_id
+            LEFT JOIN {$this->wpdb->postmeta} m ON p.ID = m.post_id
+            WHERE p.post_type IN ($placeholders)",
+                ...$brzPostTypes
             )
         );
-
-        $this->wpdb->query( "DELETE FROM {$this->wpdb->commentmeta}" );
-        $this->wpdb->query( "DELETE FROM {$this->wpdb->comments}" );
-
-        $this->project->setDataAsJson( json_encode( new stdClass() ) )->saveStorage();
-
-        $this->project->cleanClassCache();
     }
+
+    private function deletePostsComments( $brzPostTypes, $placeholders ) {
+        $this->wpdb->query(
+            $this->wpdb->prepare(
+                "DELETE c, cm
+            FROM {$this->wpdb->comments} c
+            INNER JOIN {$this->wpdb->posts} p ON c.comment_post_ID = p.ID
+            LEFT JOIN {$this->wpdb->commentmeta} cm ON c.comment_ID = cm.comment_id
+            WHERE p.post_type IN ($placeholders)",
+                ...$brzPostTypes
+            )
+        );
+    }
+
+    private function deleteMedia() {
+        $media_ids = $this->wpdb->get_col( "SELECT ID FROM {$this->wpdb->posts} WHERE post_type = 'attachment'" );
+
+        foreach ( $media_ids as $media_id ) {
+            wp_delete_attachment( $media_id, true );
+        }
+    }
+
 }
