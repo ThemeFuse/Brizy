@@ -13,8 +13,7 @@ export const ThumbnailSelector = ({
   onChange,
   onClick,
   anchorInputs,
-  pageBlocksAssembled,
-  globalBlocks,
+  blocks,
   value
 }: ThumbnailSelectorProps): JSX.Element => (
   <div {...attr} className={className}>
@@ -30,8 +29,7 @@ export const ThumbnailSelector = ({
         onChange={onChange}
         onClick={onClick}
         anchorInputs={anchorInputs}
-        pageBlocksAssembled={pageBlocksAssembled}
-        globalBlocks={globalBlocks}
+        blocks={blocks}
         value={value}
       />
     </Scrollbar>

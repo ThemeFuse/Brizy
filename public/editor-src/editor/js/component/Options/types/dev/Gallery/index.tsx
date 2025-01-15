@@ -4,6 +4,7 @@ import React, {
   Reducer,
   useCallback,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState
@@ -23,8 +24,8 @@ import {
 } from "visual/component/Controls/Gallery";
 import { ToastNotification } from "visual/component/Notifications";
 import * as Option from "visual/component/Options/Type";
-import Config from "visual/global/Config";
 import { AddImageData } from "visual/global/Config/types/configs/common";
+import { useConfig } from "visual/global/hooks";
 import * as Arr from "visual/utils/array";
 import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
@@ -62,10 +63,12 @@ export function Gallery<I extends Image.Image>({
       return Item.thumbnail(idx, payload);
     })
   );
+  const globalConfig = useConfig();
   const items$ = useRef(new BehaviorSubject<Items>(items));
   const value$ = useRef(new BehaviorSubject<Value<I>>(value));
   const handleOnChange = useRef({ fn: onChange });
   handleOnChange.current.fn = onChange;
+  const media = globalConfig.api?.media;
 
   const onRemove = useCallback<Required<ControlProps<number>>["onRemove"]>(
     (payload) => dispatch(Actions.remove(payload)),
@@ -82,13 +85,13 @@ export function Gallery<I extends Image.Image>({
   );
 
   const onAdd = useCallback(() => {
-    const config = Config.getAll();
-    const { media } = config.api ?? {};
-
     if (media?.addMediaGallery) {
       setIsLoading(true);
       const res = (data: Array<AddImageData>) => {
-        pipe(Actions.add, dispatch)(data.map(toUploadData));
+        pipe(
+          Actions.add,
+          dispatch
+        )(data.map((d) => toUploadData(d, globalConfig)));
         setIsLoading(false);
       };
       const rej = (t: string): void => {
@@ -103,7 +106,7 @@ export function Gallery<I extends Image.Image>({
       ToastNotification.error(t("Missing addMediaGallery key in config.api"));
       pipe(Actions.add, dispatch)([]);
     }
-  }, []);
+  }, [media, globalConfig]);
 
   useEffect(() => value$.current.next(value), [value]);
   useEffect(() => items$.current.next(items), [items]);
@@ -157,6 +160,11 @@ export function Gallery<I extends Image.Image>({
     "brz-ed-control__gallery--fixed": items.length
   });
 
+  const controlItems = useMemo(
+    () => items.map((item) => Item.toGalleryItem(item, globalConfig)),
+    [globalConfig, items]
+  );
+
   return (
     <>
       {label}
@@ -165,7 +173,7 @@ export function Gallery<I extends Image.Image>({
         onSort={onSort}
         isLoading={isLoading}
         onAdd={onAdd}
-        items={items.map(Item.toGalleryItem)}
+        items={controlItems}
         onRemove={_onRemove}
       />
     </>

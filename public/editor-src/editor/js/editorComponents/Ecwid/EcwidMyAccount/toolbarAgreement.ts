@@ -1,8 +1,7 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
@@ -18,9 +17,10 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: agreementColorHex } = getOptionColorHexByPalette(
+  const agreementColor = getColor(
+    dvv("agreementColorPalette"),
     dvv("agreementColorHex"),
-    dvv("agreementColorPalette")
+    dvv("agreementColorOpacity")
   );
 
   return [
@@ -51,10 +51,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              agreementColorHex,
-              dvv("agreementColorOpacity")
-            )
+            backgroundColor: agreementColor
           }
         }
       },

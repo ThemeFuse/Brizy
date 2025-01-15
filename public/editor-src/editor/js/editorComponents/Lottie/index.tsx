@@ -1,16 +1,23 @@
 import { DotLottieEditor, LottieEditor, LottieView } from "@brizy/component";
+import {
+  RendererType,
+  TriggerType
+} from "@brizy/component/src/Flex/Lottie/types";
 import classnames from "classnames";
 import React from "react";
+import { omit } from "timm";
+import { isEditor } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
+import { Patch } from "visual/component/BoxResizer/types";
 import Link from "visual/component/Link";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
+import { Block } from "visual/types";
 import { customFileUrl } from "visual/utils/customFile";
 import { t } from "visual/utils/i18n";
 import { getLinkData } from "visual/utils/models/link";
@@ -20,26 +27,19 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { omit } from "timm";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Meta, State, Value } from "./type";
-import { Block } from "visual/types";
-import { Patch } from "visual/component/BoxResizer/types";
 import {
   getBoxResizerParams,
   getDirection,
   getRendererType,
   isLottieFile
 } from "./utils";
-import {
-  RendererType,
-  TriggerType
-} from "@brizy/component/src/Flex/Lottie/types";
 
 class Lottie extends EditorComponent<Value> {
   static get componentId(): ElementTypes.Lottie {
     return ElementTypes.Lottie;
   }
+
   static defaultValue = defaultValue;
 
   state = {
@@ -146,7 +146,7 @@ class Lottie extends EditorComponent<Value> {
 
         if (itemData.type === "GlobalBlock") {
           // TODO: some kind of error handling
-          const globalBlocks = blocksDataSelector(getStore().getState());
+          const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
 
@@ -160,7 +160,7 @@ class Lottie extends EditorComponent<Value> {
         return {
           blockId,
           meta: newMeta,
-          ...(IS_EDITOR && {
+          ...(isEditor(this.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -197,7 +197,17 @@ class Lottie extends EditorComponent<Value> {
 
     const className = classnames(
       "brz-lottie",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const LottieComponent = isLottieFile(animationData)
@@ -224,7 +234,7 @@ class Lottie extends EditorComponent<Value> {
             </BoxResizer>
           </Wrapper>
         </Toolbar>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
     );
@@ -245,14 +255,25 @@ class Lottie extends EditorComponent<Value> {
 
     const className = classnames(
       "brz-lottie",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const _animationData = animationFile
       ? customFileUrl(animationFile)
       : animationLink;
 
-    const linkData = getLinkData(v);
+    const config = this.getGlobalConfig();
+    const linkData = getLinkData(v, config);
     const { href, type, target, rel, slide } = linkData;
 
     const isLoop = loop === "on";
@@ -290,7 +311,7 @@ class Lottie extends EditorComponent<Value> {
             <LottieView {...lottieViewProps} />
           )}
         </Wrapper>
-        {shouldRenderPopup(v, blocksDataSelector(getStore().getState())) &&
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
     );

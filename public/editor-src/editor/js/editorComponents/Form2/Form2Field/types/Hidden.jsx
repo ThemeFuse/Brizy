@@ -1,6 +1,7 @@
 import React from "react";
-import TextField from "./common/TextField";
+import { isEditor } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
+import TextField from "./common/TextField";
 
 export default class Hidden extends TextField {
   static get componentTitle() {
@@ -13,7 +14,7 @@ export default class Hidden extends TextField {
 
   static Label(...props) {
     // input hidden don't have label on preview
-    return IS_EDITOR ? super.Label(...props) : null;
+    return isEditor(props[0].renderContext) ? super.Label(...props) : null;
   }
 
   renderForView(v) {

@@ -8,6 +8,7 @@ export function convertEcwidWidget(widget: EcwidWidget): {
   switch (widget.type) {
     case "cart":
     case "account":
+    case "account/favorites":
       return {
         id: widget.id,
         widgetType: "ProductBrowser",
@@ -74,5 +75,17 @@ export const replaceContentLink = (
         e.stopPropagation();
       });
     }
+  }
+};
+
+export const addListenerToPlaceOrder = () => {
+  const placeOrderButton = document.querySelector(
+    ".ec-cart__step.ec-cart-step.ec-cart-step--payment .ec-cart-step__body .ec-form"
+  );
+
+  if (placeOrderButton) {
+    placeOrderButton.addEventListener("click", () => {
+      window.location.href = "/thank-you";
+    });
   }
 };

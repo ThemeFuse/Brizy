@@ -8,20 +8,17 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
+import { Patch } from "visual/utils/patch/types";
 import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
 import { encodeToString } from "visual/utils/string";
+import { Model } from "../EditorComponent/types";
+import { Meta } from "../ToolbarItemType";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { Model } from "../EditorComponent/types";
-import { Patch } from "visual/utils/patch/types";
-import { Meta } from "../ToolbarItemType";
 
 export interface Value extends ElementModel {
   twitterType: "embed" | "followButton" | "mentionButton";
@@ -65,7 +62,7 @@ class Twitter extends EditorComponent<Value> {
 
   dvv = (key: string): string => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
 
     return defaultValueValue({ v, key, device });
   };
@@ -79,8 +76,7 @@ class Twitter extends EditorComponent<Value> {
   }
 
   handleChange = (): void => {
-    const state = getStore().getState();
-    const deviceMode = deviceModeSelector(state);
+    const deviceMode = this.getDeviceMode();
 
     if (!this.isUnMounted && this.currentDeviceMode !== deviceMode) {
       this.forceUpdate();
@@ -195,7 +191,17 @@ class Twitter extends EditorComponent<Value> {
     const className = classnames(
       "brz-twitter",
       { "brz-twitter__embed": twitter === "embed" },
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const props: TwitterOptions = {
@@ -249,7 +255,17 @@ class Twitter extends EditorComponent<Value> {
     const className = classnames(
       "brz-twitter",
       `brz-twitter__${type}`,
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const props: PreviewTwitterOptions = {

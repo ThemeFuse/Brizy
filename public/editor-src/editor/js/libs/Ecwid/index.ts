@@ -4,21 +4,21 @@ import { uniqueId } from "underscore";
 import {
   ContentRoutes,
   EcwidConfig,
-  FooterRoutes,
-  RedirectConfig
+  FooterRoutes
 } from "visual/libs/Ecwid/types/EcwidConfig";
 import * as EcwidWidget from "visual/libs/Ecwid/types/EcwidWidget";
-import {
-  convertEcwidWidget,
-  replaceContentLink,
-  replaceFooterLink
-} from "visual/libs/Ecwid/utils";
 import {
   EcwidCategoryId,
   EcwidProductId,
   EcwidStoreId
 } from "../../global/Ecwid";
 import { PageType } from "./types/PageType";
+import {
+  addListenerToPlaceOrder,
+  convertEcwidWidget,
+  replaceContentLink,
+  replaceFooterLink
+} from "./utils";
 
 // there is a bug with "onPageLoaded" event in My Account component
 // "onPageLoaded" is triggered faster than render is finished
@@ -32,9 +32,9 @@ const myAccountRedirects = () => {
   );
 
   if (node && node.children.length > 0) {
-    replaceFooterLink(node, ".footer__link--my-account", "/account");
-    replaceFooterLink(node, ".footer__link--favorites", "/account/favorites");
-    replaceFooterLink(node, ".footer__link--track-order", "/account");
+    replaceFooterLink(node, ".footer__link--my-account", "/my-account");
+    replaceFooterLink(node, ".footer__link--favorites", "/favorites");
+    replaceFooterLink(node, ".footer__link--track-order", "/my-account");
     replaceFooterLink(node, ".footer__link--shopping-cart", "/cart");
 
     linksWasChanged = true;
@@ -101,10 +101,16 @@ declare global {
         };
       };
     };
+    pathBeforeEcwidChange?: string;
   }
 }
 
-export type EcwidPageSlug = "cart" | "account" | "product" | "CATEGORY";
+export type EcwidPageSlug =
+  | "cart"
+  | "account"
+  | "product"
+  | "account/favorites"
+  | "CATEGORY";
 
 declare function ecwid_onBodyDone(): void;
 
@@ -130,25 +136,27 @@ declare const Ecwid: {
   refreshConfig?: () => void;
 };
 
-const defaultConfig: RedirectConfig = {
+const defaultConfig: Partial<EcwidConfig> = {
   redirect: {
     fromFooter: [
-      { route: "/account", selector: ".footer__link--my-account" },
-      { route: "/account", selector: ".footer__link--track-order" },
-      { route: "/account/favorites", selector: ".footer__link--favorites" },
+      { route: "/my-account", selector: ".footer__link--my-account" },
+      { route: "/my-account", selector: ".footer__link--track-order" },
+      { route: "/favorites", selector: ".footer__link--favorites" },
       { route: "/cart", selector: ".footer__link--shopping-cart" }
     ],
     fromContent: [
-      { route: "/cart", selector: ".details-product-purchase__checkout" }
+      { route: "/cart", selector: ".details-product-purchase__checkout" },
+      { route: "/favorites", selector: ".favorite-product__button-view" }
     ]
-  }
+  },
+  restoreUrl: true
 };
 
 const footerRoutes: {
   [k in FooterRoutes]: string;
 } = {
-  "/account": "/account",
-  "/account/favorites": "/account/favorites",
+  "/my-account": "/my-account",
+  "/favorites": "/favorites",
   "/cart": "/cart"
 };
 
@@ -156,7 +164,8 @@ const contentRoutes: {
   [k in ContentRoutes]: string;
 } = {
   "/cart": "/cart",
-  "/account/thank-you": "/account/thank-you"
+  "/thank-you": "/thank-you",
+  "/favorites": "/favorites"
 };
 
 export class EcwidService {
@@ -186,12 +195,18 @@ export class EcwidService {
         withLatestFrom(this.$widgets),
         map(([, b]) => b)
       )
-      .subscribe((widget) => Ecwid.openPage(widget.type, widget.args));
+      .subscribe((widget) => {
+        requestAnimationFrame(() => {
+          Ecwid.openPage(widget.type, widget.args);
+        });
+      });
 
     this.$widgets.subscribe((widget) => {
       try {
         if (typeof Ecwid !== "undefined") {
-          Ecwid.openPage(widget.type, widget.args);
+          requestAnimationFrame(() => {
+            Ecwid.openPage(widget.type, widget.args);
+          });
         }
       } catch (e) {
         if (process.env.NODE_ENV === "development") {
@@ -224,11 +239,24 @@ export class EcwidService {
           if (this.config.redirect && node) {
             this.changeRedirectLinks(node);
           }
+
+          addListenerToPlaceOrder();
+
+          if (
+            window &&
+            window.pathBeforeEcwidChange &&
+            window.location.pathname !== window.pathBeforeEcwidChange &&
+            this.config.restoreUrl
+          ) {
+            window.history.pushState({}, "", window.pathBeforeEcwidChange);
+          }
         });
       };
       document.body.append(script);
     } else {
-      typeof ecwid_onBodyDone === "function" && ecwid_onBodyDone();
+      if (typeof Ecwid !== "undefined" && typeof Ecwid.init === "function") {
+        Ecwid.init();
+      }
     }
   }
 
@@ -280,6 +308,8 @@ export class EcwidService {
     node: HTMLElement,
     config?: { clearPrevious?: boolean }
   ) {
+    window.pathBeforeEcwidChange = window.location.pathname;
+
     const el = this.setId(node);
 
     if (config && config.clearPrevious) {
@@ -296,9 +326,19 @@ export class EcwidService {
   }
 
   public cart(node: HTMLElement) {
+    window.pathBeforeEcwidChange = window.location.pathname;
+
     const el = this.setId(node);
 
     this.openPage(EcwidWidget.cart(el.id), node);
+  }
+
+  public favorites(node: HTMLElement): void {
+    window.pathBeforeEcwidChange = window.location.pathname;
+
+    const el = this.setId(node);
+
+    this.openPage(EcwidWidget.favorites(el.id), node);
   }
 
   public shoppingCart(node?: HTMLElement) {
@@ -316,13 +356,17 @@ export class EcwidService {
   }
 
   public myAccount(node: HTMLElement) {
+    window.pathBeforeEcwidChange = window.location.pathname;
+
     const el = this.setId(node);
     this.openPage(EcwidWidget.myAccount(el.id), node);
 
-    observer("myAccount").observe(node, {
-      attributes: true,
-      subtree: true
-    });
+    if (this.config.redirect) {
+      observer("myAccount").observe(node, {
+        attributes: true,
+        subtree: true
+      });
+    }
   }
 
   public updateConfig(config: EcwidConfig) {

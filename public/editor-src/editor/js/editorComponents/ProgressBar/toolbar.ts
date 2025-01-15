@@ -1,23 +1,25 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ProgressStyle, Value } from "./types";
 
-export const getItems: GetItems<Value> = ({ v, device, context }) => {
+export const getItems: GetItems<Value> = ({
+  v,
+  device,
+  context,
+  editorMode
+}) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
   const progressBarStyle = dvv("progressBarStyle");
@@ -33,7 +35,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     type: DCTypes.richText
   });
 
-  const IS_STORY = isStory(Config.getAll());
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -204,7 +206,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },
@@ -284,7 +286,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         title: t("Settings")
       },
       roles: ["admin"],
-      disabled: IS_STORY,
+      disabled: _isStory,
       position: 110,
       options: [
         {
@@ -365,7 +367,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
     {
       id: "advancedSettings",
       type: "advancedSettings",
-      disabled: !IS_STORY,
+      disabled: !_isStory,
       position: 110,
       devices: "desktop"
     }

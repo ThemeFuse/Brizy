@@ -8,11 +8,14 @@ import React, {
   useState
 } from "react";
 import { MIN_COL_WIDTH } from "visual/config/columns";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   SizeType,
   defaultCrop
 } from "visual/global/Config/types/configs/common";
-import { css } from "visual/utils/cssStyle";
+import { useConfig } from "visual/global/hooks";
+import { isEditor } from "visual/providers/RenderProvider";
+import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { getImageUrl } from "visual/utils/image";
 import {
   defaultValueValue,
@@ -21,7 +24,7 @@ import {
 } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { styleImage } from "../styles";
-import { Device, ImageProps, ImageSizes, Styles } from "../types";
+import { Device, ImageProps, ImageSizes } from "../types";
 import { calcImageSizes } from "../utils";
 
 interface RetinaData {
@@ -31,48 +34,57 @@ interface RetinaData {
   maxCw: number;
 }
 
-const formatRetinaSrc = (data: RetinaData): string => {
+const formatRetinaSrc = (data: RetinaData, config: ConfigCommon): string => {
   const { sizeType, src, maxCw, fileName } = data;
 
   switch (sizeType) {
     case SizeType.custom: {
-      const url_1X = getImageUrl({
-        fileName,
-        uid: src,
-        sizeType: SizeType.custom,
-        crop: { ...defaultCrop, iW: maxCw }
-      });
-      const url_2X = getImageUrl({
-        fileName,
-        uid: src,
-        sizeType: SizeType.custom,
-        crop: { ...defaultCrop, iW: maxCw * 2 }
-      });
+      const url_1X = getImageUrl(
+        {
+          fileName,
+          uid: src,
+          sizeType: SizeType.custom,
+          crop: { ...defaultCrop, iW: maxCw }
+        },
+        config
+      );
+      const url_2X = getImageUrl(
+        {
+          fileName,
+          uid: src,
+          sizeType: SizeType.custom,
+          crop: { ...defaultCrop, iW: maxCw * 2 }
+        },
+        config
+      );
       return `${url_1X} 1x, ${url_2X} 2x`;
     }
     default: {
-      const url = getImageUrl({ fileName, sizeType, uid: src });
+      const url = getImageUrl({ fileName, sizeType, uid: src }, config);
       return `${url} 1x, ${url} 2x`;
     }
   }
 };
 
-const formatSrc = (data: RetinaData): string => {
+const formatSrc = (data: RetinaData, config: ConfigCommon): string => {
   const { sizeType, src, maxCw, fileName } = data;
 
   switch (sizeType) {
     case SizeType.custom: {
       return (
-        getImageUrl({
-          fileName,
-          sizeType: SizeType.custom,
-          uid: src,
-          crop: { ...defaultCrop, iW: maxCw, iH: "any" }
-        }) ?? ""
+        getImageUrl(
+          {
+            fileName,
+            sizeType: SizeType.custom,
+            uid: src,
+            crop: { ...defaultCrop, iW: maxCw, iH: "any" }
+          },
+          config
+        ) ?? ""
       );
     }
     default: {
-      return getImageUrl({ sizeType, uid: src, fileName }) ?? "";
+      return getImageUrl({ sizeType, uid: src, fileName }, config) ?? "";
     }
   }
 };
@@ -86,7 +98,9 @@ const SimpleImage = (props: ImageProps): ReactElement => {
     componentId,
     meta,
     extraAttributes = {},
-    getResponsiveUrls
+    getResponsiveUrls,
+    store,
+    renderContext
   } = props;
   const { desktopW, tabletW, mobileW, row } = meta;
   const {
@@ -108,6 +122,7 @@ const SimpleImage = (props: ImageProps): ReactElement => {
     className
   } = v;
   const isFirstRun = useRef(true);
+  const config = useConfig();
 
   const dvv: <T>(key: string, device: Device) => T = useCallback(
     (key, device) => defaultValueValue({ v, key, device }),
@@ -246,43 +261,53 @@ const SimpleImage = (props: ImageProps): ReactElement => {
   const responsiveUrls = getResponsiveUrls && getResponsiveUrls(imageSizes);
 
   const { desktopSrc, tabletSrc, mobileSrc, sourceSrc } = responsiveUrls || {
-    desktopSrc: formatRetinaSrc({
-      src: imageSrc,
-      fileName: imageFileName,
-      sizeType: sizeType,
-      maxCw: maxDesktopCW
-    }),
-    tabletSrc: formatRetinaSrc({
-      src: imageSrc,
-      fileName: imageFileName,
-      sizeType: tabletSizeType,
-      maxCw: maxTabletCW
-    }),
-    mobileSrc: formatRetinaSrc({
-      src: imageSrc,
-      fileName: imageFileName,
-      sizeType: mobileSizeType,
-      maxCw: maxMobileCW
-    }),
-    sourceSrc: formatSrc({
-      src: imageSrc,
-      fileName: imageFileName,
-      sizeType: sizeType,
-      maxCw: maxMobileCW
-    })
+    desktopSrc: formatRetinaSrc(
+      {
+        src: imageSrc,
+        fileName: imageFileName,
+        sizeType: sizeType,
+        maxCw: maxDesktopCW
+      },
+      config
+    ),
+    tabletSrc: formatRetinaSrc(
+      {
+        src: imageSrc,
+        fileName: imageFileName,
+        sizeType: tabletSizeType,
+        maxCw: maxTabletCW
+      },
+      config
+    ),
+    mobileSrc: formatRetinaSrc(
+      {
+        src: imageSrc,
+        fileName: imageFileName,
+        sizeType: mobileSizeType,
+        maxCw: maxMobileCW
+      },
+      config
+    ),
+    sourceSrc: formatSrc(
+      {
+        src: imageSrc,
+        fileName: imageFileName,
+        sizeType: sizeType,
+        maxCw: maxMobileCW
+      },
+      config
+    )
   };
   // ! find less hacky way
 
-  const imageClassName = IS_EDITOR
-    ? classnames(
-        "brz-img",
-        className,
-        css(
-          `${componentId}-${_id}-image`,
-          `${_id}-image`,
-          styleImage(v, vs, vd, imageSizes) as Styles
-        )
-      )
+  const modelClassName = useCSS({
+    id: `${_id}-image`,
+    componentId: `${componentId}-${_id}-image`,
+    css: styleImage({ v, vs, vd, props: imageSizes, store, renderContext })
+  });
+
+  const imageClassName = isEditor(renderContext)
+    ? classnames("brz-img", className, modelClassName)
     : "brz-img";
 
   return (

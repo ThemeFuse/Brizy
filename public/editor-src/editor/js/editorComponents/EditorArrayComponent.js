@@ -8,17 +8,14 @@ import {
   makeToolbarPropsFromConfigDefaults
 } from "visual/editorComponents/EditorComponent/utils";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
-import Config from "visual/global/Config";
 import Editor from "visual/global/Editor";
 import { updateCopiedElement, updateUI } from "visual/redux/actions2";
 import {
   copiedElementNoRefsSelector,
-  deviceModeSelector,
   pageDataNoRefsSelector,
   rulesSelector,
   uiSelector
 } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import { move } from "visual/utils/array";
 import { applyFilter } from "visual/utils/filters";
 import {
@@ -37,8 +34,6 @@ import { read as readNumber } from "visual/utils/reader/number";
 import * as State from "visual/utils/stateMode";
 import { getComponentDefaultValue } from "visual/utils/traverse/common";
 import EditorComponent from "./EditorComponent";
-
-const menusConfig = Config.get("menuData");
 
 const emptyTarget = (value) => (Array.isArray(value) ? [] : {});
 const clone = (value, options) => deepMerge(emptyTarget(value), value, options);
@@ -154,6 +149,7 @@ export default class EditorArrayComponent extends EditorComponent {
       arrayOperation: "moveItem"
     });
   }
+
   handleOpenRightSidebar(tab) {
     const state = this.getReduxState();
     const dispatch = this.getReduxDispatch();
@@ -200,9 +196,10 @@ export default class EditorArrayComponent extends EditorComponent {
       case "cmd+D":
       case "right_cmd+D":
         if (v[itemIndex].type === "StoryWrapper") {
+          const rules = rulesSelector(this.getReduxStore().getState());
           this.insertItem(
             itemIndex + 1,
-            setOffsetsToElementFromWrapper(v[itemIndex])
+            setOffsetsToElementFromWrapper(v[itemIndex], rules)
           );
         } else {
           this.cloneItem(itemIndex);
@@ -232,7 +229,8 @@ export default class EditorArrayComponent extends EditorComponent {
               ["value", "items", 0, "value", "offsetY"],
               offsetY
             );
-            return setOffsetsToElementFromWrapper(newV);
+            const rules = rulesSelector(this.getReduxStore().getState());
+            return setOffsetsToElementFromWrapper(newV, rules);
           });
         } else {
           this.paste(itemIndex);
@@ -381,12 +379,7 @@ export default class EditorArrayComponent extends EditorComponent {
       throw new Error("Missing itemIndex in options");
     }
 
-    // WARNING: we use getStore instead of this.getReduxState()
-    // because the page does not rerender when changing deviceMode
-    // and thus we might get false (outdated) results
-    const getItems = (
-      deviceMode = deviceModeSelector(getStore().getState())
-    ) => {
+    const getItems = (deviceMode = this.getDeviceMode()) => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
           // eslint-disable-next-line no-console
@@ -459,9 +452,7 @@ export default class EditorArrayComponent extends EditorComponent {
       return items;
     };
 
-    const getSidebarItems = (
-      deviceMode = deviceModeSelector(getStore().getState())
-    ) => {
+    const getSidebarItems = (deviceMode = this.getDeviceMode()) => {
       const v = this.getItemValue(itemIndex);
       const stateMode = State.mRead(v.tabsState);
       let items = this.bindToolbarItems(
@@ -599,14 +590,18 @@ export default class EditorArrayComponent extends EditorComponent {
         <ErrorBoundary
           key={itemKey}
           onRemove={() => this.removeItem(itemIndex)}
+          renderContext={this.renderContext}
         >
           <ItemComponent
             {...itemProps}
             defaultValue={itemDefaultValue}
             dbValue={itemDBValue}
             reduxState={this.getReduxState()}
+            reduxStore={this.getReduxStore()}
             reduxDispatch={this.getReduxDispatch()}
             onChange={itemOnChange}
+            renderContext={this.renderContext}
+            editorMode={this.props.editorMode}
           />
         </ErrorBoundary>
       );
@@ -620,9 +615,12 @@ export default class EditorArrayComponent extends EditorComponent {
           defaultValue={itemDefaultValue}
           dbValue={itemDBValue}
           reduxState={this.getReduxState()}
+          reduxStore={this.getReduxStore()}
           reduxDispatch={this.getReduxDispatch()}
           onChange={itemOnChange}
           componentId={type}
+          renderContext={this.renderContext}
+          editorMode={this.props.editorMode}
         />
       );
     }
@@ -632,6 +630,7 @@ export default class EditorArrayComponent extends EditorComponent {
   renderItemWrapper(item, itemKey, itemIndex, itemData, items) {
     return item;
   }
+
   /* eslint-enabled no-unused-vars */
 
   renderItem = (itemData, itemIndex, items) => {
@@ -680,10 +679,12 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 
   getCurrentCopiedElement = () => {
-    const { path, value } = copiedElementNoRefsSelector(getStore().getState());
+    const { path, value } = copiedElementNoRefsSelector(
+      this.getReduxStore().getState()
+    );
 
     if (value && path.length > 0) {
-      return getIn(attachMenu(value), path);
+      return getIn(attachMenu(value, this.getGlobalConfig().menuData), path);
     }
 
     return null;
@@ -691,7 +692,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
   changeVerticalAlign(index, alignDirection) {
     const v = this.getValue();
-    const data = pageDataNoRefsSelector(getStore().getState());
+    const data = pageDataNoRefsSelector(this.getReduxStore().getState());
     const activeElementId = global.Brizy.activeEditorComponent.getId();
     const activeElementPath = createFullModelPath(data, [activeElementId]);
 
@@ -748,7 +749,7 @@ export default class EditorArrayComponent extends EditorComponent {
   changeHorizontalAlign(index, alignDirection) {
     const v = this.getValue();
     const activeElementId = global.Brizy.activeEditorComponent.getId();
-    const state = getStore().getState();
+    const state = this.getReduxStore().getState();
     const data = pageDataNoRefsSelector(state);
     const activeElementPath = createFullModelPath(data, [activeElementId]);
 
@@ -812,7 +813,7 @@ export default class EditorArrayComponent extends EditorComponent {
     const { id, bindKey } = this.getIdBindKey();
     const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
     const shortcodePath = createFullModelPath(data, pathUid);
-    const pageData = attachMenu(data);
+    const pageData = attachMenu(data, this.getGlobalConfig().menuData);
 
     dispatch(
       updateCopiedElement({
@@ -826,7 +827,7 @@ export default class EditorArrayComponent extends EditorComponent {
   paste(index, cb = (v) => v) {
     const v = this.getValue()[index];
     const { path, value: copiedValue } = copiedElementNoRefsSelector(
-      getStore().getState()
+      this.getReduxStore().getState()
     );
     if (!copiedValue) {
       return;
@@ -834,7 +835,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
     const { value } = getClosestParent(
       path,
-      attachMenu(copiedValue),
+      attachMenu(copiedValue, this.getGlobalConfig().menuData),
       v.type === "Cloneable" || v.type === "Wrapper"
         ? ({ type }) => type === "Cloneable" || type === "Wrapper"
         : ({ type }) => type === v.type
@@ -846,7 +847,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
   pasteStyles(index) {
     const { path, value: copiedValue } = copiedElementNoRefsSelector(
-      getStore().getState()
+      this.getReduxStore().getState()
     );
     if (!copiedValue) {
       return;
@@ -877,12 +878,16 @@ export default class EditorArrayComponent extends EditorComponent {
 
     const { value } = getClosestParent(
       path,
-      attachMenu(copiedValue),
+      attachMenu(copiedValue, this.getGlobalConfig().menuData),
       ({ type }) => type === v.type
     );
 
     if (value) {
-      const newValue = setStyles(value, depth);
+      const newValue = setStyles({
+        depth,
+        componentValue: value,
+        deviceMode: this.getDeviceMode()
+      });
 
       const mergedValue = deepMerge(v, newValue, {
         arrayMerge: combineMerge
@@ -893,7 +898,7 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 }
 
-function attachMenu(value) {
+function attachMenu(value, menusConfig) {
   return mapModels((block) => {
     const { type, value } = block;
 

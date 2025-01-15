@@ -1,5 +1,4 @@
 import { checkValue2 } from "visual/utils/checkValue";
-import type { MValue } from "visual/utils/value";
 
 export enum ElementTypes {
   Text = "Text",
@@ -144,6 +143,7 @@ export enum ElementTypes {
   EcwidProduct = "EcwidProduct",
   EcwidCart = "EcwidCart",
   EcwidMyAccount = "EcwidMyAccount",
+  EcwidFavorites = "EcwidFavorites",
   Breadcrumbs = "Breadcrumbs",
   Radio = "Radio",
   Section = "Section",
@@ -177,5 +177,4 @@ export enum ElementTypes {
   InstagramFeed = "InstagramFeed"
 }
 
-export const readElementType = (v: unknown): MValue<ElementTypes> =>
-  checkValue2<ElementTypes>(ElementTypes)(v);
+export const readElementType = checkValue2(ElementTypes);

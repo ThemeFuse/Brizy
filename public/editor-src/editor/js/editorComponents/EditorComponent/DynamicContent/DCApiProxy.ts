@@ -1,5 +1,5 @@
 import QuickLRU from "quick-lru";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Dictionary } from "visual/types/utils";
 import { getDynamicContent as apiGetDynamicContent } from "visual/utils/api";
 import { GetDynamicContent } from "visual/utils/api/types";
@@ -8,7 +8,9 @@ import { MValue } from "visual/utils/value";
 export interface DCApiProxyConfig {
   postId: string;
   cache?: boolean;
+  globalConfig: ConfigCommon;
 }
+
 interface DCApiProxyFetcher {
   getDC(placeholders: string[], config: DCApiProxyConfig): Promise<string[]>;
 }
@@ -51,7 +53,7 @@ export class BatchFetcher implements DCApiProxyFetcher {
         this.buffer.clear();
         this.promise = undefined;
 
-        return this.fetcher({ placeholders });
+        return this.fetcher({ placeholders, config: config.globalConfig });
       });
     }
 
@@ -192,8 +194,6 @@ export class DCApiProxy {
   }
 }
 
-const config = Config.getAll();
-
 export const DCApiProxyInstance = new DCApiProxy({
-  fetcher: new BatchFetcher(apiGetDynamicContent(config))
+  fetcher: new BatchFetcher(apiGetDynamicContent())
 });

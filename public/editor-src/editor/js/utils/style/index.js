@@ -49,9 +49,6 @@ export { stylePadding } from "./stylePadding";
 // Margin
 export { styleMargin } from "./styleMargin";
 
-// Box Shadow
-export { styleBoxShadow } from "./styleBoxShadow";
-
 // Shape
 export {
   styleShapeTopHeight,
@@ -61,8 +58,7 @@ export {
   styleShapeTopIndex,
   styleShapeBottomIndex,
   styleShapeTopBackgroundSize,
-  styleShapeBottomBackgroundSize,
-  styleShapeType
+  styleShapeBottomBackgroundSize
 } from "./styleShape";
 
 // Show on Devices

@@ -5,7 +5,6 @@ import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
@@ -57,8 +56,8 @@ class FacebookButton extends EditorComponent {
           ? showFriends === "on"
             ? "standard"
             : showCounter === "on"
-            ? "button_count"
-            : "button"
+              ? "button_count"
+              : "button"
           : "box_count",
       size,
       share: share === "on",
@@ -70,10 +69,16 @@ class FacebookButton extends EditorComponent {
 
     const className = classnames(
       "brz-fb-like",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -83,7 +88,12 @@ class FacebookButton extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
-            <Facebook appId={appData.appId} type="Like" data={data} />
+            <Facebook
+              appId={appData.appId}
+              type="Like"
+              data={data}
+              renderContext={this.renderContext}
+            />
           </div>
         </CustomCSS>
       </Toolbar>
@@ -114,8 +124,8 @@ class FacebookButton extends EditorComponent {
             ? showFriends === "on"
               ? "standard"
               : showCounter === "on"
-              ? "button_count"
-              : "button"
+                ? "button_count"
+                : "button"
             : "box_count"
       }),
       ...makeDataAttr({ name: "size", value: size }),
@@ -133,17 +143,28 @@ class FacebookButton extends EditorComponent {
     };
     const className = classnames(
       "brz-fb-like",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={className}>
-          <Facebook appId={appData.appId} type="Like" data={data} />
+          <Facebook
+            appId={appData.appId}
+            type="Like"
+            data={data}
+            renderContext={this.renderContext}
+          />
         </div>
       </CustomCSS>
     );

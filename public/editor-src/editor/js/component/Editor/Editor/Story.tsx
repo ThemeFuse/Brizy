@@ -1,17 +1,29 @@
 import React, { useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Root } from "visual/component/Root";
-import Config from "visual/global/Config";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
+import { useConfig } from "visual/global/hooks";
+import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { updateBlocks } from "visual/redux/actions2";
 import { pageBlocksSelector, stateSelector } from "visual/redux/selectors";
-import { areStatesEqual } from "../utils";
 import { t } from "visual/utils/i18n";
+import { areStatesEqual, getPageId } from "../utils";
+import { Props } from "./types";
 
-const Story = (): JSX.Element => {
+const Story = (props: Props): JSX.Element => {
+  const { mode } = props;
   const state = useSelector(stateSelector, areStatesEqual);
   const items = useSelector(pageBlocksSelector);
+  const store = useStore();
   const dispatch = useDispatch();
+  const config = useConfig();
+  const { pagePreview } = config.urls ?? {};
+  // @ts-expect-error: ConfigCommon to Config
+  const pageId = getPageId(config);
+  const modulesGroup = config.dynamicContent?.groups;
+
+  const groups = useMemo(() => modulesGroup, [modulesGroup]);
+  const dbValue = useMemo(() => ({ items }), [items]);
 
   const handlePageChange = useCallback(
     ({ items: blocks }, meta) => {
@@ -21,10 +33,6 @@ const Story = (): JSX.Element => {
   );
 
   const { PageStory } = EditorGlobal.getComponents();
-  const pagePreview = useMemo(() => {
-    const { pagePreview } = Config.getAll().urls;
-    return pagePreview;
-  }, []);
 
   if (!PageStory) {
     return <div>{t("Missing PageStory Component")}</div>;
@@ -35,15 +43,20 @@ const Story = (): JSX.Element => {
       {items.length > 0 && (
         <iframe id="brz-ed-home-page" src={pagePreview} title="story" />
       )}
-      <Root type="story">
-        {/* @ts-expect-error: Missing EditorComponent props */}
-        <PageStory
-          dbValue={{ items }}
-          reduxState={state}
-          reduxDispatch={dispatch}
-          onChange={handlePageChange}
-        />
-      </Root>
+      <RootContainer className="brz brz-ed" editorMode={mode}>
+        <EditorComponentProvider pageId={pageId} groups={groups}>
+          {/* @ts-expect-error: Missing EditorComponent props */}
+          <PageStory
+            dbValue={dbValue}
+            reduxState={state}
+            reduxStore={store}
+            reduxDispatch={dispatch}
+            onChange={handlePageChange}
+            renderContext="editor"
+            editorMode={mode}
+          />
+        </EditorComponentProvider>
+      </RootContainer>
     </>
   );
 };

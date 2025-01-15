@@ -16,7 +16,6 @@ import {
 } from "visual/config/columns";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { css } from "visual/utils/cssStyle";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -28,26 +27,21 @@ import { styleContainer, styleSection } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 export default class SectionHeaderStickyItem extends EditorComponent {
-  static get componentId() {
-    return "SectionHeaderStickyItem";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   mounted = false;
-
   collapsibleToolbarRef = React.createRef();
-
   state = {
     isDragging: false,
     paddingPatch: null
   };
+
+  static get componentId() {
+    return "SectionHeaderStickyItem";
+  }
 
   getDBValue() {
     if (this.state.paddingPatch) {
@@ -167,10 +161,16 @@ export default class SectionHeaderStickyItem extends EditorComponent {
   getSectionClassName(v, vs, vd) {
     return classnames(
       "brz-section__header-sticky-item",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
   }
@@ -199,10 +199,16 @@ export default class SectionHeaderStickyItem extends EditorComponent {
     const className = classnames(
       "brz-container",
       v.containerClassName,
-      css(
-        `${this.constructor.componentId}-container`,
+      this.css(
+        `${this.getComponentId()}-container`,
         `${this.getId()}-container`,
-        styleContainer(v, vs, vd)
+        styleContainer({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const itemsProps = this.makeSubcomponentProps({
@@ -218,6 +224,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
           onStart={this.onPaddingResizerStart}
           onChange={this.handlePaddingResizerChange}
           onEnd={this.onPaddingResizerEnd}
+          renderContext={this.renderContext}
         >
           <SectionHeaderStickyItemItems {...itemsProps} />
         </PaddingResizer>

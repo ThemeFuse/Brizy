@@ -1,3 +1,4 @@
+import { isEditor } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBgColorHex,
@@ -58,16 +59,6 @@ import {
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
 
-export function cssStyleElementMenuAlign({ v, device, state }) {
-  const mode = styleElementMenuMode({ v, device, state });
-  const mMenu = styleElementMMenu({ v, device, state });
-
-  if (mode === "horizontal" || mMenu === "on") {
-    return cssStyleFlexHorizontalAlign({ v, device, state });
-  }
-
-  return cssStyleTextAlign({ v, device, state });
-}
 export function cssStyleElementMenuIconPosition({ v, device, state }) {
   const iconPosition = styleElementMenuIconPosition({ v, device, state });
 
@@ -88,8 +79,8 @@ export function cssStyleElementMenuIconSpacing({ v, device, state }) {
   }
 }
 
-export function cssStyleElementMenuIconSize({ v, device, state }) {
-  return cssStyleSizeFontSize({ v, device, state, prefix: "icon" });
+export function cssStyleElementMenuIconSize({ v, device, store, state }) {
+  return cssStyleSizeFontSize({ v, device, state, store, prefix: "icon" });
 }
 
 export function cssStyleElementMenuShowIcon({ v, device, state }) {
@@ -127,11 +118,11 @@ export function cssStyleElementMenuSize({ v, device, state }) {
     : "max-width: none;";
 }
 
-export function cssStyleElementMenuBgColor({ v, device, state }) {
+export function cssStyleElementMenuBgColor({ v, device, store, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "vertical") {
-    return cssStyleBgColor({ v, device, state, prefix: "menuBg" });
+    return cssStyleBgColor({ v, device, state, store, prefix: "menuBg" });
   }
 
   return "background-color: transparent;";
@@ -159,47 +150,37 @@ export function cssStyleElementMenuPadding({ v, device, state }) {
   return cssStylePaddingFourFields({ v, device, state, prefix: "menu" });
 }
 
-export function cssStyleElementMenuActiveColor({ v, device }) {
-  return cssStyleColor({ v, device, state: ACTIVE });
-}
-
-export function cssStyleElementMenuActiveLinkBgColor({ v, device, state }) {
-  const mode = styleElementMenuMode({ v, device, state });
-
-  if (mode === "horizontal") {
-    return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "menuBg" });
-  }
-
-  return "background-color: transparent;";
-}
-
-export function cssStyleElementMenuActiveBgColor({ v, device }) {
-  return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "menuBg" });
-}
-
-export function cssStyleElementMenuActiveBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "menu" });
-}
-
 // Current
 export function cssStyleElementMenuCurrentColor({ v, device }) {
   return cssStyleColor({ v, device, state: ACTIVE });
 }
 
-export function cssStyleElementMenuCurrentBgColor({ v, device }) {
+export function cssStyleElementMenuCurrentBgColor({ v, device, store }) {
   return cssStyleBgColor({
     v,
     device,
+    store,
     state: ACTIVE,
     prefix: "menuBg"
   });
 }
 
-export function cssStyleElementMenuCurrentLinkBgColor({ v, device, state }) {
+export function cssStyleElementMenuCurrentLinkBgColor({
+  v,
+  device,
+  state,
+  store
+}) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "horizontal") {
-    return cssStyleBgColor({ v, device, state: ACTIVE, prefix: "menuBg" });
+    return cssStyleBgColor({
+      v,
+      device,
+      store,
+      state: ACTIVE,
+      prefix: "menuBg"
+    });
   }
 
   return "background-color: transparent;";
@@ -214,61 +195,89 @@ export function cssStyleElementMenuBorderRadius({ v, device, state }) {
 }
 
 // MMenu
-export function cssStyleElementMMenuSize({ v, device, state }) {
+export function cssStyleElementMMenuSize({ v, device, state, store }) {
   return cssStyleSizeFontSize({
     v,
     device,
     state,
+    store,
     prefix: "mMenu"
   });
 }
 
-export function cssStyleElementMMenuFontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "mMenu" });
+export function cssStyleElementMMenuFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "mMenu",
+    renderContext
+  });
 }
 
-export function cssStyleElementMMenuFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "mMenu" });
+export function cssStyleElementMMenuFontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "mMenu" });
 }
 
-export function cssStyleElementMMenuLineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "mMenu" });
+export function cssStyleElementMMenuLineHeight({ v, device, store }) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "mMenu" });
 }
 
-export function cssStyleElementMMenuFontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "mMenu" });
+export function cssStyleElementMMenuFontWeight({ v, device, store }) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "mMenu" });
 }
 
-export function cssStyleElementMMenuLetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "mMenu" });
+export function cssStyleElementMMenuLetterSpacing({ v, device, store }) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "mMenu"
+  });
 }
 
-export function cssStyleElementMMenuFontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "mMenu" });
+export function cssStyleElementMMenuFontVariation({ v, device, store }) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "mMenu"
+  });
 }
 
-export function cssStyleElementMMenuTextTransform({ v, device, state }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "mMenu" });
+export function cssStyleElementMMenuTextTransform({ v, device, store, state }) {
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "mMenu" });
 }
 
-export function cssStyleElementMMenuColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "mMenuColor" });
+export function cssStyleElementMMenuColor({ v, device, store, state }) {
+  return cssStyleColor({ v, device, state, store, prefix: "mMenuColor" });
 }
 
-export function cssStyleElementMMenuTitleColor({ v, device }) {
-  return cssStyleColor({ v, device, prefix: "mMenuColor" });
+export function cssStyleElementMMenuTitleColor({ v, device, store }) {
+  return cssStyleColor({ v, device, store, prefix: "mMenuColor" });
 }
 
-export function cssStyleElementMMenuActiveColor({ v, device }) {
-  return cssStyleColor({ v, device, state: ACTIVE, prefix: "mMenuColor" });
+export function cssStyleElementMMenuActiveColor({ v, device, store }) {
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state: ACTIVE,
+    prefix: "mMenuColor"
+  });
 }
 
-export function cssStyleElementMenuColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state });
+export function cssStyleElementMenuColor({ v, device, state, store }) {
+  return cssStyleColor({ v, device, state, store });
 }
 
-export function cssStyleElementMenuCloseColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "closeColor" });
+export function cssStyleElementMenuCloseColor({ v, device, state, store }) {
+  return cssStyleColor({ v, device, state, store, prefix: "closeColor" });
 }
 
 export function cssStyleElementMMenuBorderColor({ v, device, state }) {
@@ -277,8 +286,13 @@ export function cssStyleElementMMenuBorderColor({ v, device, state }) {
   return `border-color: ${borderColor};`;
 }
 
-export function cssStyleElementMMenuBackgroundColor({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "mMenuBg" });
+export function cssStyleElementMMenuBackgroundColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleBgColor({ v, device, state, store, prefix: "mMenuBg" });
 }
 
 export function cssStyleElementMMenuDynamicImage({ v, device, state }) {
@@ -308,26 +322,32 @@ export function cssStyleElementMMenuImageFilter({ v, device, state }) {
     : "";
 }
 
-export function cssStyleElementMMenuGradientBgColor({ v, state, device }) {
-  return cssStyleBgGradient({ v, state, device, prefix: "mMenu" });
+export function cssStyleElementMMenuGradientBgColor({
+  v,
+  state,
+  device,
+  store
+}) {
+  return cssStyleBgGradient({ v, state, device, store, prefix: "mMenu" });
 }
 
 export function cssStyleElementMMenuItemHorizontalAlign({
   v,
   device,
   state,
+  store,
   prefix = "mMenuItem"
 }) {
-  const align = styleAlignHorizontal({ v, device, state, prefix });
+  const align = styleAlignHorizontal({ v, device, state, store, prefix });
   const iconPosition = styleElementMMenuIconPosition({ v, device, state });
 
   if (iconPosition === "left") {
-    return cssStyleFlexHorizontalAlign({ v, device, state, prefix });
+    return cssStyleFlexHorizontalAlign({ v, device, store, state, prefix });
   }
 
   switch (align) {
     case "center":
-      return cssStyleFlexHorizontalAlign({ v, device, state, prefix });
+      return cssStyleFlexHorizontalAlign({ v, device, store, state, prefix });
     case "left":
       return "justify-content: flex-end;";
     case "right":
@@ -345,8 +365,8 @@ export function cssStyleElementMMenuItemTextHorizontalAlign({
   return cssStyleTextAlign({ v, device, state, prefix: "mMenuItem" });
 }
 
-export function cssStyleElementMMenuIconColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "mMenuIconColor" });
+export function cssStyleElementMMenuIconColor({ v, device, state, store }) {
+  return cssStyleColor({ v, device, state, store, prefix: "mMenuIconColor" });
 }
 
 export function cssStyleElementMMenuIconSpacing({ v, device, state }) {
@@ -386,15 +406,17 @@ export function cssStyleElementMMenuIconPosition({ v, device, state }) {
     : "flex-flow: row nowrap;";
 }
 
-export function cssStyleElementMMenuBtnNext({ v, device }) {
+export function cssStyleElementMMenuBtnNext({ v, device, store }) {
   const mMenuLineHeight = styleTypography2LineHeight({
     v,
     device,
+    store,
     prefix: "mMenu"
   });
   const mMenuFontSize = styleTypography2FontSize({
     v,
     device,
+    store,
     prefix: "mMenu"
   });
   const {
@@ -480,41 +502,72 @@ export function cssStyleElementMMenuCloseMargin({ v, device, state }) {
   return cssStyleMargin({ v, device, state, prefix: "close" });
 }
 
-export function cssStyleElementMMenuCloseTransition({ v, device, state }) {
-  return cssStyleHoverTransition({ v, device, state, prefix: "close" });
+export function cssStyleElementMMenuCloseTransition({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleHoverTransition({ v, device, store, state, prefix: "close" });
 }
 
 // SubMenu
-export function cssStyleElementMenuSubMenuFontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "subMenu" });
+export function cssStyleElementMenuSubMenuFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "subMenu",
+    renderContext
+  });
 }
 
-export function cssStyleElementMenuSubMenuFontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "subMenu" });
+export function cssStyleElementMenuSubMenuFontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "subMenu" });
 }
 
-export function cssStyleElementMenuSubMenuLineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "subMenu" });
+export function cssStyleElementMenuSubMenuLineHeight({ v, device, store }) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "subMenu" });
 }
 
-export function cssStyleElementMenuSubMenuFontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "subMenu" });
+export function cssStyleElementMenuSubMenuFontWeight({ v, device, store }) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "subMenu" });
 }
 
-export function cssStyleElementMenuSubMenuLetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "subMenu" });
+export function cssStyleElementMenuSubMenuLetterSpacing({ v, device, store }) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "subMenu"
+  });
 }
 
-export function cssStyleElementMenuSubMenuFontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "subMenu" });
+export function cssStyleElementMenuSubMenuFontVariation({ v, device, store }) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "subMenu"
+  });
 }
 
-export function cssStyleElementMenuSubMenuTextTransform({ v, device, state }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "subMenu" });
+export function cssStyleElementMenuSubMenuTextTransform({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, store, state, prefix: "subMenu" });
 }
 
-export function cssStyleElementMenuSubMenuColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "subMenuColor" });
+export function cssStyleElementMenuSubMenuColor({ v, device, store, state }) {
+  return cssStyleColor({ v, device, store, state, prefix: "subMenuColor" });
 }
 
 export function cssStyleElementMenuSubMenuIconPosition({ v, device, state }) {
@@ -545,16 +598,32 @@ export function cssStyleElementMenuSubMenuIconSpacing({ v, device, state }) {
   }
 }
 
-export function cssStyleElementMenuSubMenuIconSize({ v, device, state }) {
-  return cssStyleSizeFontSize({ v, device, state, prefix: "subMenuIcon" });
+export function cssStyleElementMenuSubMenuIconSize({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleSizeFontSize({
+    v,
+    device,
+    store,
+    state,
+    prefix: "subMenuIcon"
+  });
 }
 
-export function cssStyleElementMenuSubMenuBgColor({ v, device, state }) {
-  return cssStyleBgColor({ v, device, state, prefix: "subMenuBg" });
+export function cssStyleElementMenuSubMenuBgColor({ v, device, store, state }) {
+  return cssStyleBgColor({ v, device, store, state, prefix: "subMenuBg" });
 }
 
-export function cssStyleElementMenuSubMenuBorderColor({ v, device, state }) {
-  const color = styleColor({ v, device, state, prefix: "subMenuColor" });
+export function cssStyleElementMenuSubMenuBorderColor({
+  v,
+  device,
+  store,
+  state
+}) {
+  const color = styleColor({ v, device, store, state, prefix: "subMenuColor" });
 
   return `border-color: ${color};`;
 }
@@ -591,8 +660,12 @@ export function cssStyleElementMenuSubMenuCurrentBgColor({ v, device }) {
   });
 }
 
-export function cssStyleElementMenuSubMenuCurrentBoxShadow({ v, device }) {
-  return cssStyleBoxShadow({ v, device, state: ACTIVE });
+export function cssStyleElementMenuSubMenuCurrentBoxShadow({
+  v,
+  device,
+  store
+}) {
+  return cssStyleBoxShadow({ v, device, store, state: ACTIVE });
 }
 
 // Dropdown Open / Close
@@ -686,15 +759,21 @@ export function cssStyleMenuFirstDropdownPositionRight({ v, device, state }) {
   }
 }
 
-export function cssStyleElementMenuHamburgerBgImage({ v, device, state }) {
+export function cssStyleElementMenuHamburgerBgImage({
+  v,
+  device,
+  state,
+  store,
+  renderContext
+}) {
   const dvv = (key) => defaultValueValue({ key, v, device, state });
   const bgPopulation = dvv("bgPopulation");
 
-  if (bgPopulation && IS_EDITOR) {
+  if (bgPopulation && isEditor(renderContext)) {
     return cssStyleElementMMenuDynamicImage({ v, device, state });
   }
 
-  return cssStyleBgImage({ v, device, state });
+  return cssStyleBgImage({ v, device, state, store, renderContext });
 }
 
 export function cssStyleMenuCustomIconColor({ v, device, state }) {
@@ -702,6 +781,24 @@ export function cssStyleMenuCustomIconColor({ v, device, state }) {
     v,
     device,
     state,
+    prefix: "mMenuColor"
+  });
+}
+
+export function cssStyleMenuCustomIconActiveColor({ v, device }) {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state: ACTIVE
+  });
+}
+
+export function cssStyleElementMMenuIconActiveColor({ v, device, store }) {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    store,
+    state: ACTIVE,
     prefix: "mMenuColor"
   });
 }

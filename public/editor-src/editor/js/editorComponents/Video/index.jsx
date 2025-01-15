@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import { mergeDeep } from "timm";
+import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
@@ -9,9 +10,8 @@ import Placeholder from "visual/component/Placeholder";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { customFileUrl } from "visual/utils/customFile";
-import { isStory } from "visual/utils/models";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import { read as readString } from "visual/utils/string/specs";
@@ -29,17 +29,16 @@ import { containsShorts } from "./utils";
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
 class Video extends EditorComponent {
-  static get componentId() {
-    return "Video";
-  }
-
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
-
   state = {
     isDragging: false,
     sizePatch: null
   };
+
+  static get componentId() {
+    return "Video";
+  }
 
   getDBValue() {
     if (this.state.sizePatch) {
@@ -105,7 +104,9 @@ class Video extends EditorComponent {
 
     return videoSrc
       ? getVideoUrl(videoSrc, {
-          autoplay: IS_PREVIEW && (!!coverImageSrc || autoplay === "on"),
+          autoplay:
+            isView(this.renderContext) &&
+            (!!coverImageSrc || autoplay === "on"),
           controls: updatedControls,
           branding,
           intro,
@@ -148,6 +149,7 @@ class Video extends EditorComponent {
 
     const isCustomVideo = type === "custom" || type === "url";
     const isLightboxOn = lightbox === "on";
+    const IS_VIEW = isView(this.renderContext);
 
     const _href = type === "custom" ? customFileUrl(custom) : video;
     const href = isCustomVideo
@@ -157,12 +159,12 @@ class Video extends EditorComponent {
     const popupType = isCustomVideo ? "inline" : "iframe";
 
     const coverClassName = classnames("brz-video__cover", {
-      "brz-blocked": IS_PREVIEW && isLightboxOn
+      "brz-blocked": IS_VIEW && isLightboxOn
     });
 
     return (
       <React.Fragment key="cover">
-        {coverImageSrc && isLightboxOn && IS_PREVIEW && (
+        {coverImageSrc && isLightboxOn && IS_VIEW && (
           <a
             className="brz-video__lightbox"
             href={href}
@@ -284,6 +286,8 @@ class Video extends EditorComponent {
           }
         : {};
 
+    const IS_VIEW = isView(this.renderContext);
+
     return (
       <>
         <div className={classNameWrapper}>{content}</div>
@@ -296,7 +300,7 @@ class Video extends EditorComponent {
                   name="button-play"
                   type="glyph"
                 />
-                {IS_PREVIEW && (
+                {IS_VIEW && (
                   <ThemeIcon
                     className="brz-hidden brz-icon-svg brz-video-custom-pause"
                     name="button-pause"
@@ -327,7 +331,7 @@ class Video extends EditorComponent {
                     name="volume-97"
                     type="glyph"
                   />
-                  {IS_PREVIEW && (
+                  {IS_VIEW && (
                     <ThemeIcon
                       className="brz-hidden brz-icon-svg brz-video-custom-unmute"
                       name="volume-ban"
@@ -341,7 +345,7 @@ class Video extends EditorComponent {
               </div>
             </div>
           )}
-          {IS_PREVIEW && (
+          {IS_VIEW && (
             <video
               data-time-start={start}
               data-time-end={end}
@@ -428,12 +432,13 @@ class Video extends EditorComponent {
       );
 
     const _hoverName = readString(hoverName) ?? "none";
-    const options = makeOptionValueToAnimation(v);
+    const store = this.getReduxStore();
+    const options = makeOptionValueToAnimation({ v, store });
     const { wrapperAnimationId } = this.props.meta;
     const animationId = readString(wrapperAnimationId) ?? this.getId();
     const { wrapperAnimationActive } = this.props.meta;
     const isDisabledHover = readBoolean(wrapperAnimationActive);
-    const isHidden = isStory(Config.getAll()) || _hoverName === "none";
+    const isHidden = isStory(this.props.editorMode) || _hoverName === "none";
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}

@@ -1,7 +1,6 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export const getItems = ({ v, device, state }) => {
@@ -9,9 +8,10 @@ export const getItems = ({ v, device, state }) => {
 
   const inputPosition = dvv("inputPosition");
 
-  const { hex: inputColorHex } = getOptionColorHexByPalette(
+  const inputColor = getColor(
+    dvv("inputColorPalette"),
     dvv("inputColorHex"),
-    dvv("inputColorPalette")
+    dvv("inputColorOpacity")
   );
 
   return [
@@ -99,7 +99,7 @@ export const getItems = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(inputColorHex, dvv("inputColorOpacity"))
+            backgroundColor: inputColor
           }
         }
       },

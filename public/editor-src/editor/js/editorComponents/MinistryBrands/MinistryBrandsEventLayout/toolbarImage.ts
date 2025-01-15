@@ -1,24 +1,23 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
 import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
   const maskShape = readString(dvv("maskShape")) ?? "none";
@@ -76,7 +75,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes
+                  choices: getMaskShapes()
                 },
                 {
                   id: "maskCustomUpload",
@@ -102,7 +101,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -128,7 +127,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -159,7 +158,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             },
@@ -188,7 +187,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },

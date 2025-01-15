@@ -1,8 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
@@ -17,12 +16,14 @@ export const getItems = <
   v,
   device
 }: Params<M, P, S>): ToolbarItemType[] => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: metaLinksBgColorHex } = getOptionColorHexByPalette(
+  const metaLinksBgColor = getColor(
+    dvv("metaLinksBgColorPalette"),
     dvv("metaLinksBgColorHex"),
-    dvv("metaLinksBgColorPalette")
+    dvv("metaLinksBgColorOpacity")
   );
+
   return [
     {
       id: "toolbarTypography",
@@ -51,10 +52,7 @@ export const getItems = <
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              metaLinksBgColorHex,
-              dvv("metaLinksBgColorOpacity")
-            )
+            backgroundColor: metaLinksBgColor
           }
         }
       },

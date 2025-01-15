@@ -1,3 +1,5 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+
 export type PromptAuthorizationTabs<T> = {
   id: string;
   title: string;
@@ -6,6 +8,8 @@ export type PromptAuthorizationTabs<T> = {
 };
 
 export type SignAuthorizationProps = {
+  checkCompatibilityAfter?: boolean;
+  config: ConfigCommon;
   className?: string;
   onSuccess?: () => void;
   onSkip?: () => void;

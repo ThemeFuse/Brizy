@@ -1,23 +1,26 @@
-import classnames from "classnames";
-import React from "react";
 import { Arr, Bool, Str } from "@brizy/readers";
+import classnames from "classnames";
 import { mPipe, or } from "fp-utilities";
-import { Root } from "visual/component/Root";
+import React from "react";
+import { addFirst, getIn, setIn } from "timm";
+import { RootContainer } from "visual/component/RootContainer";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
+import { EditorMode } from "visual/global/EditorModeContext";
+import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import {
   pageDataDraftBlocksSelector,
   triggersSelector
 } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
-import { projectClassName } from "../utils/projectClassName";
-import { baseToStatic } from "./baseToStatic";
+import { TriggerType, Triggers } from "visual/types";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { Triggers, TriggerType } from "visual/types";
 import { isExternalPopup, isInternalPopup } from "visual/utils/models";
 import { compileProject } from "../compileProject";
-import { addFirst, getIn, setIn } from "timm";
+import { Providers } from "../controls/Providers";
 import { Asset } from "../transforms/assets";
+import { projectClassName } from "../utils/projectClassName";
+import { baseToStatic } from "./baseToStatic";
 import { Output } from "./types";
 
 interface Props {
@@ -51,8 +54,12 @@ const convertString = (name: string): string =>
 const getData = mPipe(Str.read, decodeData, Arr.read);
 const readValue = or(Str.read, Bool.read);
 
-export const popupToStatic = async (props: Props): Promise<Output> => {
-  const { store, config } = props;
+const RenderPage = (props: {
+  store: Store;
+  editorMode: EditorMode;
+  className?: string;
+}) => {
+  const { store, editorMode, className } = props;
   const { PagePopup } = EditorGlobal.getComponents();
 
   if (!PagePopup) {
@@ -61,6 +68,25 @@ export const popupToStatic = async (props: Props): Promise<Output> => {
 
   const reduxState = store.getState();
   const dbValue = pageDataDraftBlocksSelector(reduxState);
+
+  return (
+    <>
+      {/* @ts-expect-error: Missing optional props */}
+      <PagePopup
+        className={className}
+        dbValue={dbValue}
+        reduxStore={store}
+        reduxState={reduxState}
+        renderContext="view"
+        editorMode={editorMode}
+      />
+    </>
+  );
+};
+
+export const popupToStatic = (props: Props): Output => {
+  const { store, config } = props;
+  const reduxState = store.getState();
   const triggers: Triggers = triggersSelector(reduxState);
   const isInternal = isInternalPopup(config);
   const isExternal = isExternalPopup(config);
@@ -73,6 +99,8 @@ export const popupToStatic = async (props: Props): Promise<Output> => {
     "brz-conditions-internal-popup": isInternal,
     "brz-conditions-external-popup": isExternal
   });
+  const editorMode = config.mode;
+  const sheet = new ServerStyleSheet();
 
   const attr = triggers
     .filter((t) => t.active)
@@ -100,24 +128,29 @@ export const popupToStatic = async (props: Props): Promise<Output> => {
     );
 
   const Page = (
-    <Root className={rootClassName} type="popup" attr={attr}>
-      {/* @ts-expect-error: Missing optional props */}
-      <PagePopup
-        className={className}
-        dbValue={dbValue}
-        reduxState={reduxState}
-      />
-    </Root>
+    <Providers store={store} sheet={sheet.instance} config={config}>
+      <RootContainer
+        className={rootClassName}
+        attr={attr}
+        editorMode={editorMode}
+      >
+        <RenderPage
+          className={className}
+          store={store}
+          editorMode={editorMode}
+        />
+      </RootContainer>
+    </Providers>
   );
 
-  const output = await baseToStatic({ store, Page, config });
+  const output = baseToStatic({ store, Page, sheet: sheet.instance });
 
   if (isInternal) {
     return output;
   }
 
   // For External Popup we need to embedded global css(pallet) inside pageStyles
-  const projectAssets = compileProject(config);
+  const projectAssets = compileProject(config, store);
   const pageStylesPath = ["assets", "freeStyles", "pageStyles"];
   const pageStyles = (getIn(output, pageStylesPath) ?? []) as Array<Asset>;
   const newPageStyles = addFirst(pageStyles, projectAssets);

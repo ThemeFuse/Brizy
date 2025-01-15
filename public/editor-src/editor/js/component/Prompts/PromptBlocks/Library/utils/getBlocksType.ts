@@ -6,10 +6,8 @@ import { BLOCK, LAYOUT, LibraryProps, POPUP } from "../types";
 
 export const getBlocksType = (
   type: LibraryProps["type"],
-  config: ConfigCommon
+  api: ConfigCommon["api"] = {}
 ): BlockCategory[] => {
-  const api = config.api ?? {};
-
   if (type === "normal") {
     const { savedLayouts, savedBlocks } = api;
     const types: BlockCategory[] = [];

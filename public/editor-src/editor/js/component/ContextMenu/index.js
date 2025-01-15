@@ -1,10 +1,18 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef
+} from "react";
 import { contextMenu } from "react-contexify";
+import { findDOMNode } from "react-dom";
 import { rolesHOC } from "visual/component/Roles";
+import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
+import { ContextMenuExtendContext } from "./ContextMenuExtend";
 import { Dropdown } from "./Dropdown";
-import { mergeItems, concatItems, filterItems } from "./utils";
+import { ContextMenuContext } from "./context";
+import { concatItems, filterItems, mergeItems } from "./utils";
 
 const meta = {
   depth: 0
@@ -13,64 +21,53 @@ const meta = {
 // this component is a temporary hacky solution
 // to avoid ContextMenuProvider to render a wrapper div
 // because that breaks our layout
-class TmpContextMenuWrapper extends Component {
-  componentDidMount() {
-    /* eslint-disable react/no-find-dom-node */
-    ReactDOM.findDOMNode(this).addEventListener(
-      "contextmenu",
-      this.handleContextMenu
-    );
-    /* eslint-enabled react/no-find-dom-node */
-  }
+const TmpContextMenuWrapper = ({ id, children, setRef }) => {
+  const wrapperRef = useRef();
 
-  componentWillUnmount() {
-    /* eslint-disable react/no-find-dom-node */
-    ReactDOM.findDOMNode(this).removeEventListener(
-      "contextmenu",
-      this.handleContextMenu
-    );
-    /* eslint-enabled react/no-find-dom-node */
-  }
+  const handleContextMenu = useCallback(
+    (e) => {
+      if (!e.shiftKey) {
+        contextMenu.show({
+          id,
+          event: e
+        });
+      }
+    },
+    [id]
+  );
 
-  handleContextMenu = e => {
-    if (!e.shiftKey) {
-      contextMenu.show({
-        id: this.props.id,
-        event: e
-      });
+  useEffect(() => {
+    // eslint-disable-next-line react/no-find-dom-node
+    const element = findDOMNode(wrapperRef.current);
+
+    if (element) {
+      element.addEventListener("contextmenu", handleContextMenu);
     }
-  };
 
-  render() {
-    return this.props.children;
-  }
-}
+    return () => {
+      if (element) {
+        element.removeEventListener("contextmenu", handleContextMenu);
+      }
+    };
+  }, [id]);
 
-class ContextMenuComponent extends Component {
-  static defaultProps = {
-    id: "",
-    getItems: () => []
-  };
+  return React.Children.only(
+    React.cloneElement(children, { ref: setRef ?? wrapperRef })
+  );
+};
 
-  static contextTypes = {
-    getParentContextMenuExtendItems: PropTypes.func,
-    getParentContextMenuItems: PropTypes.func
-  };
+export const ContextMenuProvider = ({
+  getItems: _getItems,
+  children,
+  id,
+  componentId,
+  setRef
+}) => {
+  const { getParentContextMenuExtendItems } =
+    useContext(ContextMenuExtendContext) ?? {};
+  const { getParentContextMenuItems } = useContext(ContextMenuContext) ?? {};
 
-  static childContextTypes = {
-    getParentContextMenuItems: PropTypes.func
-  };
-
-  getChildContext() {
-    return { getParentContextMenuItems: this.getItems };
-  }
-
-  getItems = () => {
-    let { componentId, getItems: _getItems } = this.props;
-    const {
-      getParentContextMenuExtendItems,
-      getParentContextMenuItems
-    } = this.context;
+  const getItems = useCallback(() => {
     let items = _getItems();
 
     items = [
@@ -87,9 +84,14 @@ class ContextMenuComponent extends Component {
     }
 
     return items;
-  };
+  }, [
+    _getItems,
+    getParentContextMenuItems,
+    getParentContextMenuExtendItems,
+    componentId
+  ]);
 
-  squashItems(items) {
+  const squashItems = useCallback((items) => {
     return items.reduce(
       (acc, [componentId, items]) => {
         if (!acc.componentIdMap[componentId]) {
@@ -104,32 +106,36 @@ class ContextMenuComponent extends Component {
         items: []
       }
     ).items;
-  }
+  }, []);
 
-  getSquashedItems = () => {
-    const items = this.squashItems(this.getItems());
+  const getSquashedItems = useCallback(() => {
+    const items = squashItems(getItems());
     return filterItems(items, meta);
-  };
+  }, [getItems, squashItems]);
 
-  render() {
-    const { id, children } = this.props;
+  const value = useMemo(
+    () => ({
+      getParentContextMenuItems: getItems
+    }),
+    [getItems]
+  );
 
-    if (IS_PREVIEW) {
-      return children;
-    }
-
-    return (
-      <>
-        <TmpContextMenuWrapper id={id}>{children}</TmpContextMenuWrapper>
-        <Dropdown id={id} getItems={this.getSquashedItems} itemsMeta={meta} />
-      </>
-    );
-  }
-}
+  return (
+    <ContextMenuContext.Provider value={value}>
+      <TmpContextMenuWrapper id={id} setRef={setRef}>
+        {children}
+      </TmpContextMenuWrapper>
+      <Dropdown id={id} getItems={getSquashedItems} itemsMeta={meta} />
+    </ContextMenuContext.Provider>
+  );
+};
 
 export default rolesHOC({
   allow: ["admin"],
-  component: ContextMenuComponent,
+  component: renderHOC({
+    ForEdit: ContextMenuProvider,
+    ForView: ({ children }) => <>{children}</>
+  }),
   fallbackComponent: ({ children }) => children
 });
 

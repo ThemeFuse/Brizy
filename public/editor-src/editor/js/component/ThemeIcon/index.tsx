@@ -1,11 +1,12 @@
 import cn from "classnames";
 import React, { useMemo } from "react";
-import { templateIconUrl, compileTemplateIconUrl } from "visual/utils/icons";
 import { IconTypes } from "visual/config/icons/Type";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
+import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { compileTemplateIconUrl, templateIconUrl } from "visual/utils/icons";
 import { CustomIcon } from "./Custom";
 import { ThemeIconProps as Props } from "./types";
-import { makePlaceholder } from "visual/utils/dynamicContent";
 
 type Suffix = "nc_icon" | "brz_icon" | "fa_icon";
 
@@ -23,8 +24,6 @@ function getSuffix(type: string): Suffix {
   }
 }
 
-const getIconUrl = IS_EDITOR ? templateIconUrl : compileTemplateIconUrl;
-
 const Svg = ({
   className,
   href
@@ -39,14 +38,14 @@ const Svg = ({
 
 const ThemeIconPreview = (props: Props): JSX.Element => {
   const { type, name, className: _className, filename } = props;
-  const urls = Config.getAll().urls;
-  const { compileTemplateIconsPlaceholder } = urls;
+
+  const config = useConfig();
   const className = cn("brz-icon-svg align-[initial]", _className);
 
   if (type === IconTypes.Custom) {
     return (
       <CustomIcon
-        src={getIconUrl({
+        src={compileTemplateIconUrl({
           type,
           filename,
           iconName: name,
@@ -57,17 +56,21 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
     );
   }
 
-  return compileTemplateIconsPlaceholder ? (
+  return config?.urls?.compileTemplateIconsPlaceholder ? (
     <>
       {makePlaceholder({
-        content: compileTemplateIconsPlaceholder,
+        content: config?.urls?.compileTemplateIconsPlaceholder,
         attr: { type, name, class: className }
       })}
     </>
   ) : (
     <Svg
       className={className}
-      href={getIconUrl({ type, iconName: name, suffix: getSuffix(type) })}
+      href={compileTemplateIconUrl({
+        type,
+        iconName: name,
+        suffix: getSuffix(type)
+      })}
     />
   );
 };
@@ -78,7 +81,7 @@ const ThemeIconEditor = (props: Props): JSX.Element => {
 
   const pathToIcon = useMemo(() => {
     const suffix = getSuffix(type);
-    return getIconUrl({ type, iconName: name, filename, suffix });
+    return templateIconUrl({ type, iconName: name, filename, suffix });
   }, [type, name, filename]);
 
   return type === IconTypes.Custom ? (
@@ -88,5 +91,11 @@ const ThemeIconEditor = (props: Props): JSX.Element => {
   );
 };
 
-export const ThemeIcon = (props: Props): JSX.Element =>
-  IS_EDITOR ? <ThemeIconEditor {...props} /> : <ThemeIconPreview {...props} />;
+export const ThemeIcon = (props: Props): JSX.Element => {
+  return (
+    <RenderFor
+      forView={<ThemeIconPreview {...props} />}
+      forEdit={<ThemeIconEditor {...props} />}
+    />
+  );
+};

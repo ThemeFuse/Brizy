@@ -1,13 +1,13 @@
+import { Num, Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
 import { getColor } from "visual/utils/color";
+import { hexToBlendedRgba } from "visual/utils/color/RGB";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
 import { State } from "../stateMode";
 import { CSSValue } from "./types";
-import { Str, Num } from "@brizy/readers";
 import { gradientCssDeclaration } from "./utils";
-import { hexToBlendedRgba } from "visual/utils/color/RGB";
 
 const getState = (v: ElementModel, state: State): string =>
   styleState({ v, state }) === "hover" ? "hover" : state;
@@ -77,7 +77,7 @@ export function styleBgGradient({
 }: CSSValue): string {
   const _state = getState(v, state);
 
-  const dvv = (key: string): string =>
+  const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: _state });
 
   const bgColorType = dvv(capByPrefix(prefix, "bgColorType"));

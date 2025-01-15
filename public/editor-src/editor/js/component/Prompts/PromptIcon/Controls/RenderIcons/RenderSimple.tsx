@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { PromiseComponent } from "visual/component/PromiseComponent";
 import { Icon } from "visual/config/icons/Icon";
 import { getTypeIcons } from "visual/config/icons/icons";
+import { useConfig } from "visual/global/hooks";
 import { FCC } from "visual/utils/react/types";
 import { Filters } from "../Filters";
 import { IconGrid } from "../IconGrid";
@@ -38,6 +39,8 @@ export const RenderSimple: FCC<Props> = ({
     [categoryId, search, typeId]
   );
 
+  const config = useConfig();
+
   return (
     <div className="brz-ed-popup-body">
       <div className="brz-ed-popup__head--search brz-d-xs-flex brz-align-items-center brz-justify-content-xs-center">
@@ -51,7 +54,7 @@ export const RenderSimple: FCC<Props> = ({
       </div>
       <div className="brz brz-ed-popup-icons__grid">
         <PromiseComponent
-          getPromise={() => getTypeIcons(typeId)}
+          getPromise={() => getTypeIcons(typeId, config)}
           renderResolved={(icons) => {
             const normalisedIcons = getIcons(icons);
 
@@ -66,6 +69,7 @@ export const RenderSimple: FCC<Props> = ({
                 icons={filteredIcons}
                 value={{ name, type }}
                 onChange={onIconClick}
+                config={config}
               />
             );
           }}

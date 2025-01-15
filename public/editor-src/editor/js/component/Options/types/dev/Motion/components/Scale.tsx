@@ -18,24 +18,24 @@ import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassN
 import { Direction, Props } from "./Direction";
 import { Viewport } from "./Viewport";
 
-const directionTitle: { [k in ScaleDirection]: string } = {
+const getDirectionTitle = (): { [k in ScaleDirection]: string } => ({
   up: t("Up"),
   down: t("Down"),
   downUp: t("Down Up"),
   upDown: t("Up Down")
-};
+});
 
-const xPositionTitle: { [k in XPosition]: string } = {
+const getXPositionTitle = (): { [k in XPosition]: string } => ({
   left: t("Left"),
   center: t("Center"),
   right: t("Right")
-};
+});
 
-const yPositionTitle: { [k in YPosition]: string } = {
+const getYPositionTitle = (): { [k in YPosition]: string } => ({
   top: t("Top"),
   center: t("Center"),
   bottom: t("Bottom")
-};
+});
 
 export const Scale: JSXElementConstructor<EffectProps<V>> = ({
   value,
@@ -71,15 +71,15 @@ export const Scale: JSXElementConstructor<EffectProps<V>> = ({
     [value, onChange]
   );
   const directions = useMemo<Props<V["direction"]>["directions"]>(
-    () => Object.entries(directionTitle) as [ScaleDirection, string][],
+    () => Object.entries(getDirectionTitle()) as [ScaleDirection, string][],
     []
   );
   const xs = useMemo<Props<V["x"]>["directions"]>(
-    () => Object.entries(xPositionTitle) as [XPosition, string][],
+    () => Object.entries(getXPositionTitle) as [XPosition, string][],
     []
   );
   const ys = useMemo<Props<V["y"]>["directions"]>(
-    () => Object.entries(yPositionTitle) as [YPosition, string][],
+    () => Object.entries(getYPositionTitle) as [YPosition, string][],
     []
   );
   return (

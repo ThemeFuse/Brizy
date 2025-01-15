@@ -1,13 +1,16 @@
+import { WithEditorMode, isStory } from "visual/global/EditorModeContext";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
-import { isStory } from "visual/utils/models";
-import Config from "visual/global/Config";
 import { Value } from "./types";
 
-export function style(v: Value, vs: Value, vd: Value): OutputStyle {
-  const IS_STORY = isStory(Config.getAll());
+export function style(
+  data: DynamicStylesProps<Value> & WithEditorMode
+): OutputStyle {
+  const { editorMode } = data;
+  const _isStory = isStory(editorMode);
 
-  const sizeFns = IS_STORY
+  const sizeFns = _isStory
     ? ["cssStyleSizeWidth"]
     : ["cssStyleSizeWidth", "cssStyleCustomHeight"];
 
@@ -30,5 +33,5 @@ export function style(v: Value, vs: Value, vd: Value): OutputStyle {
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

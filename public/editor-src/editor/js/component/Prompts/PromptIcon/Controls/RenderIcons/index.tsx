@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
-import Config from "visual/global/Config";
+import { getTypes } from "visual/config/icons";
 import { TypeId } from "visual/config/icons/Type";
+import { isWp } from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { FCC } from "visual/utils/react/types";
 import { ProContent } from "./ProContent";
 import { RenderCustom } from "./RenderCustom";
 import { RenderSimple } from "./RenderSimple";
 import { Props } from "./types";
-import { getTypes } from "visual/config/icons";
 
 export const RenderIcons: FCC<Props> = ({
   name,
@@ -17,17 +18,19 @@ export const RenderIcons: FCC<Props> = ({
   categoryId,
   onIconClick,
   onSelectChange,
-  onInputChange
+  onInputChange,
+  config
 }) => {
+  const _isPro = isPro(config);
+  const _isWp = isWp(config);
   const proDescription = useMemo(() => {
-    const config = Config.getAll();
     const { proDescription } =
-      getTypes(config).find(({ id }) => id === typeId) ?? {};
+      getTypes(_isPro, _isWp).find(({ id }) => id === typeId) ?? {};
     return proDescription;
-  }, [typeId]);
+  }, [typeId, _isPro, _isWp]);
 
   if (proDescription) {
-    return <ProContent />;
+    return <ProContent upgradeToPro={config.urls?.upgradeToPro} />;
   }
 
   if (typeId === TypeId.Custom) {
@@ -52,6 +55,7 @@ export const RenderIcons: FCC<Props> = ({
       onIconClick={onIconClick}
       onSelectChange={onSelectChange}
       onInputChange={onInputChange}
+      config={config}
     />
   );
 };

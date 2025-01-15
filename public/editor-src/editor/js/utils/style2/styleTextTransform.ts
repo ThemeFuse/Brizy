@@ -8,6 +8,7 @@ export function styleTextTransformBold({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
@@ -25,7 +26,7 @@ export function styleTextTransformBold({
 
   return (
     globalSize ??
-    getOptionFontByGlobal({ key: boldKey, value, style: fontStyle })
+    getOptionFontByGlobal({ key: boldKey, value, style: fontStyle, store })
   );
 }
 
@@ -33,6 +34,7 @@ export function styleTextTransformItalic({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
@@ -50,7 +52,7 @@ export function styleTextTransformItalic({
 
   return (
     globalSize ??
-    getOptionFontByGlobal({ key: italicKey, value, style: fontStyle })
+    getOptionFontByGlobal({ key: italicKey, value, style: fontStyle, store })
   );
 }
 
@@ -58,6 +60,7 @@ export function styleTextTransformTextDecoration({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
@@ -78,7 +81,12 @@ export function styleTextTransformTextDecoration({
 
   return (
     globalSize ??
-    getOptionFontByGlobal({ key: textDecorationKey, value, style: fontStyle })
+    getOptionFontByGlobal({
+      key: textDecorationKey,
+      value,
+      style: fontStyle,
+      store
+    })
   );
 }
 
@@ -86,6 +94,7 @@ export function styleTextTransformUpperLowerCase({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
@@ -107,7 +116,7 @@ export function styleTextTransformUpperLowerCase({
 
   return (
     globalSize ??
-    getOptionFontByGlobal({ key: uppercaseKey, value, style: fontStyle })
+    getOptionFontByGlobal({ key: uppercaseKey, value, style: fontStyle, store })
   );
 }
 

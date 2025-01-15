@@ -1,5 +1,4 @@
 import { Calendly as CalendlyComponent } from "@brizy/component";
-import classnames from "classnames";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
@@ -7,13 +6,12 @@ import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { WithClassName } from "visual/types/attributes";
-import { css } from "visual/utils/cssStyle";
 import EditorComponent from "../EditorComponent";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 export interface Value extends ElementModel {
@@ -46,21 +44,22 @@ const resizerRestrictions = {
 };
 
 class Calendly extends EditorComponent<Value, Props> {
-  static get componentId(): string {
-    return "Calendly";
-  }
-
   static defaultValue = defaultValue;
+
+  static get componentId(): ElementTypes.Calendly {
+    return ElementTypes.Calendly;
+  }
 
   handleResizerChange = (patch: Patch): void => this.patchValue(patch);
 
-  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+  renderForEdit(v: Value): ReactNode {
     const { link } = v;
 
-    const className = classnames(
-      "brz-calendly",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
-    );
+    const className = this.getCSSClassnames({
+      toolbars: [toolbarConfig],
+      sidebars: [sidebarConfig],
+      extraClassNames: ["brz-calendly"]
+    });
 
     return (
       <Toolbar
@@ -85,12 +84,14 @@ class Calendly extends EditorComponent<Value, Props> {
     );
   }
 
-  renderForView(v: Value, vs: Value, vd: Value): ReactNode {
+  renderForView(v: Value): ReactNode {
     const { link } = v;
-    const className = classnames(
-      "brz-calendly",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
-    );
+
+    const className = this.getCSSClassnames({
+      toolbars: [toolbarConfig],
+      sidebars: [sidebarConfig],
+      extraClassNames: ["brz-calendly"]
+    });
 
     return (
       <Wrapper

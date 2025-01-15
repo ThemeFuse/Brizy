@@ -1,15 +1,8 @@
-import Config from "visual/global/Config";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import {
-  defaultValueValue,
-  mobileSyncOnChange,
-  tabletSyncOnChange
-} from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
+import { defaultValueValue } from "visual/utils/onChange";
 
-const getMenuChoices = (menuSelected) => {
-  const { menuData } = Config.getAll();
+const getMenuChoices = (menuSelected, menuData) => {
   if (menuData.length === 0) return [{ title: t("Missing Menus"), value: "" }];
   const menus = menuData.map(({ id, name }) => ({
     title: name,
@@ -20,22 +13,15 @@ const getMenuChoices = (menuSelected) => {
   return hasMenu ? menus : [{ title: t("Select a Menu"), value: "" }, ...menus];
 };
 
-export function getItems({ v, device }) {
+export function getItems({ v, device, component }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   const menuSelected = dvv("menuSelected");
 
-  const { hex: mMenuIconColorHex } = getOptionColorHexByPalette(
+  const mMenuIconColor = getColor(
+    dvv("mMenuIconColorPalette"),
     dvv("mMenuIconColorHex"),
-    dvv("mMenuIconColorPalette")
-  );
-  const mMenuIconBgColor = hexToRgba(
-    mMenuIconColorHex,
-    device === "desktop"
-      ? dvv("mMenuIconColorOpacity")
-      : device === "tablet"
-      ? tabletSyncOnChange(v, "mMenuIconColorOpacity")
-      : mobileSyncOnChange(v, "mMenuIconColorOpacity")
+    dvv("mMenuIconColorOpacity")
   );
 
   return [
@@ -55,7 +41,10 @@ export function getItems({ v, device }) {
           devices: "desktop",
           position: 10,
           label: t("Menu"),
-          choices: getMenuChoices(menuSelected)
+          choices: getMenuChoices(
+            menuSelected,
+            component.getGlobalConfig().menuData
+          )
         },
         {
           id: "groupSettings",
@@ -131,7 +120,7 @@ export function getItems({ v, device }) {
         title: t("Color"),
         icon: {
           style: {
-            backgroundColor: mMenuIconBgColor
+            backgroundColor: mMenuIconColor
           }
         }
       },

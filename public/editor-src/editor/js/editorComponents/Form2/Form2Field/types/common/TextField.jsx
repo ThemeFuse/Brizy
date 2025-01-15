@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { Component } from "react";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 function isExistingType(value) {
@@ -39,10 +40,10 @@ export default class TextField extends Component {
     selectToolbarItems: null
   };
 
-  static Label({ id, value, onChange }) {
+  static Label({ id, value, onChange, renderContext }) {
     const { label, placeholder: _placeholder } = value;
 
-    return IS_EDITOR ? (
+    return isEditor(renderContext) ? (
       <label className="brz-label brz-forms2__field-label">
         <div className="brz-p-relative">
           <input
@@ -67,12 +68,9 @@ export default class TextField extends Component {
   input = React.createRef();
 
   getClassName(v) {
-    const { attr, showPlaceholder } = v;
+    const { attr } = v;
 
-    return classnames(
-      `brz-input brz-forms2__field brz-forms2__field-${attr.type}`,
-      { "brz-p-events--none": IS_EDITOR && !showPlaceholder }
-    );
+    return `brz-input brz-forms2__field brz-forms2__field-${attr.type}`;
   }
 
   getPlaceholder() {
@@ -82,7 +80,7 @@ export default class TextField extends Component {
       return "";
     }
 
-    if (IS_EDITOR) {
+    if (isEditor(this.props.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -115,13 +113,17 @@ export default class TextField extends Component {
   };
 
   renderForEdit(v) {
-    const { labelType, attr } = v;
+    const { labelType, attr, showPlaceholder } = v;
+
+    const className = classnames(this.getClassName(v), {
+      "brz-p-events--none": !showPlaceholder
+    });
 
     return labelType === "outside" ? (
       <input
         {...attr}
         ref={this.input}
-        className={this.getClassName(v)}
+        className={className}
         value={attr.placeholder}
         onChange={(e) => {
           this.handleChange({ placeholder: e.target.value });
@@ -131,7 +133,7 @@ export default class TextField extends Component {
       <input
         {...attr}
         ref={this.input}
-        className={this.getClassName(v)}
+        className={className}
         onChange={(e) => {
           this.handleChange({
             label: e.target.value,
@@ -160,10 +162,11 @@ export default class TextField extends Component {
       options,
       tabletColumns,
       mobileColumns,
-      labelId
+      labelId,
+      renderContext
     } = this.props;
 
-    if (IS_EDITOR) {
+    if (isEditor(renderContext)) {
       const props = {
         options,
         label,

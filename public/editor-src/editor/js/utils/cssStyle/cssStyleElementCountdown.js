@@ -15,121 +15,221 @@ import {
   styleTypographyElementCountdownLabelFontSize
 } from "visual/utils/style2";
 
-export function cssStyleTypographyElementCountdownLabelFontSize({ v, device }) {
+export function cssStyleTypographyElementCountdownLabelFontSize({
+  v,
+  device,
+  store
+}) {
   return `font-size:${styleTypographyElementCountdownLabelFontSize({
     v,
+    store,
     device
   })};`;
 }
 
-export function cssStyleElementCountDown2SpacingLeft({ v, device }) {
+export function cssStyleElementCountDown2SpacingLeft({ v, device, store }) {
   return `margin-left:${styleElementCountdown2Spacing({
     v,
+    store,
     device
   })};`;
 }
 
-export function cssStyleElementCountDown2SpacingRight({ v, device }) {
+export function cssStyleElementCountDown2SpacingRight({ v, device, store }) {
   return `margin-right:${styleElementCountdown2Spacing({
     v,
+    store,
     device
   })};`;
 }
 
 // Style Typography Number
-export function cssStyleNumberTypography2FontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "number" });
+export function cssStyleNumberTypography2FontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "number",
+    renderContext
+  });
 }
 
-export function cssStyleNumberTypography2FontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "number" });
+export function cssStyleNumberTypography2FontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "number" });
 }
 
-export function cssStyleNumberTypography2LineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "number" });
+export function cssStyleNumberTypography2LineHeight({ v, device, store }) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "number" });
 }
 
-export function cssStyleNumberTypography2FontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "number" });
+export function cssStyleNumberTypography2FontWeight({ v, device, store }) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "number" });
 }
 
-export function cssStyleNumberTypography2LetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "number" });
+export function cssStyleNumberTypography2LetterSpacing({ v, device, store }) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "number"
+  });
 }
 
-export function cssStyleNumberTypography2FontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "number" });
+export function cssStyleNumberTypography2FontVariation({ v, device, store }) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "number"
+  });
 }
 
-export function cssStyleNumberTypography2TextTransform({ v, device, state }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "number" });
+export function cssStyleNumberTypography2TextTransform({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "number" });
 }
 // Style Typography Title
-export function cssStyleTitleTypography2FontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "title" });
+export function cssStyleTitleTypography2FontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "title",
+    renderContext
+  });
 }
 
-export function cssStyleTitleTypography2FontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "title" });
+export function cssStyleTitleTypography2FontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "title" });
 }
 
-export function cssStyleTitleTypography2LineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "title" });
+export function cssStyleTitleTypography2LineHeight({ v, device, store }) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "title" });
 }
 
-export function cssStyleTitleTypography2FontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "title" });
+export function cssStyleTitleTypography2FontWeight({ v, device, store }) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "title" });
 }
 
-export function cssStyleTitleTypography2LetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "title" });
+export function cssStyleTitleTypography2LetterSpacing({ v, device, store }) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "title"
+  });
 }
 
-export function cssStyleTitleTypography2FontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "title" });
+export function cssStyleTitleTypography2FontVariation({ v, device, store }) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "title"
+  });
 }
 
-export function cssStyleCountdownTitleTextTransform({ v, device, state }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "title" });
+export function cssStyleCountdownTitleTextTransform({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "title" });
 }
 
 // Style Typography Message
-export function cssStyleMessageTypography2FontFamily({ v, device }) {
-  return cssStyleTypography2FontFamily({ v, device, prefix: "message" });
+export function cssStyleMessageTypography2FontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix: "message",
+    renderContext
+  });
 }
 
-export function cssStyleMessageTypography2FontSize({ v, device }) {
-  return cssStyleTypography2FontSize({ v, device, prefix: "message" });
+export function cssStyleMessageTypography2FontSize({ v, device, store }) {
+  return cssStyleTypography2FontSize({ v, device, store, prefix: "message" });
 }
 
-export function cssStyleMessageTypography2LineHeight({ v, device }) {
-  return cssStyleTypography2LineHeight({ v, device, prefix: "message" });
+export function cssStyleMessageTypography2LineHeight({ v, device, store }) {
+  return cssStyleTypography2LineHeight({ v, device, store, prefix: "message" });
 }
 
-export function cssStyleMessageTypography2FontWeight({ v, device }) {
-  return cssStyleTypography2FontWeight({ v, device, prefix: "message" });
+export function cssStyleMessageTypography2FontWeight({ v, device, store }) {
+  return cssStyleTypography2FontWeight({ v, device, store, prefix: "message" });
 }
 
-export function cssStyleMessageTypography2LetterSpacing({ v, device }) {
-  return cssStyleTypography2LetterSpacing({ v, device, prefix: "message" });
+export function cssStyleMessageTypography2LetterSpacing({ v, device, store }) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    prefix: "message"
+  });
 }
 
-export function cssStyleMessageTypography2FontVariation({ v, device }) {
-  return cssStyleTypography2FontVariation({ v, device, prefix: "message" });
+export function cssStyleMessageTypography2FontVariation({ v, device, store }) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    prefix: "message"
+  });
 }
 
-export function cssStyleCountdownMessageTextTransform({ v, device, state }) {
-  return cssStyleTextTransforms({ v, device, state, prefix: "message" });
+export function cssStyleCountdownMessageTextTransform({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleTextTransforms({ v, device, state, store, prefix: "message" });
 }
 // Color
-export function cssStyleElementCountDown2NumberColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "numberColor" });
+export function cssStyleElementCountDown2NumberColor({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleColor({ v, device, state, store, prefix: "numberColor" });
 }
 
-export function cssStyleElementCountDown2TitleColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "titleColor" });
+export function cssStyleElementCountDown2TitleColor({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleColor({ v, device, state, store, prefix: "titleColor" });
 }
 
-export function cssStyleElementCountDown2MessageColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "messageColor" });
+export function cssStyleElementCountDown2MessageColor({
+  v,
+  device,
+  store,
+  state
+}) {
+  return cssStyleColor({ v, device, state, store, prefix: "messageColor" });
 }

@@ -4,9 +4,7 @@ import { noop } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
-import { css } from "visual/utils/cssStyle";
-import { makeDataAttr } from "../../utils/i18n/attribute";
+import { makeAttr, makeDataAttr } from "../../utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendButton from "./sidebarExtendButton";
 import * as sidebarExtendParent from "./sidebarExtendParent";
@@ -75,10 +73,16 @@ export default class Form extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const _className = classnames(
       "brz-forms",
-      css(
+      this.css(
         `${this.getComponentId()}-form`,
         `${this.getId()}-form`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -95,7 +99,7 @@ export default class Form extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
     const { _id, messageSuccess, messageError, messageRedirect, customCSS } = v;
     const { action, recaptcha } = config?.integrations?.form ?? {};
     const projectId = config?.project?.id ?? "";
@@ -103,12 +107,29 @@ export default class Form extends EditorComponent {
 
     const _className = classnames(
       "brz-forms",
-      css(
+      this.css(
         `${this.getComponentId()}-form`,
         `${this.getId()}-form`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
+
+    const attr = {
+      ...makeDataAttr({ name: "form-id", value: _id }),
+      ...makeDataAttr({ name: "project-id", value: projectId }),
+      ...makeDataAttr({ name: "success", value: messageSuccess }),
+      ...makeDataAttr({ name: "error", value: messageError }),
+      ...makeDataAttr({ name: "redirect", value: messageRedirect }),
+      [makeAttr("default-success", true)]: "Your email was sent successfully",
+      [makeAttr("default-error", true)]: "Your email was not sent",
+      [makeAttr("default-empty", true)]: "Please check your entry and try again"
+    };
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
@@ -117,11 +138,7 @@ export default class Form extends EditorComponent {
             className="brz-form"
             action={action}
             noValidate
-            {...makeDataAttr({ name: "form-id", value: _id })}
-            {...makeDataAttr({ name: "project-id", value: projectId })}
-            {...makeDataAttr({ name: "success", value: messageSuccess })}
-            {...makeDataAttr({ name: "error", value: messageError })}
-            {...makeDataAttr({ name: "redirect", value: messageRedirect })}
+            {...attr}
             onSubmit={this.handleSubmit}
           >
             {this.renderFields(v)}

@@ -1,15 +1,12 @@
+import { Str } from "@brizy/readers";
 import deepmerge from "deepmerge";
 import { setIn } from "timm";
 import { overwriteMerge } from "visual/bootstraps/initConfig/default/utils";
 import { ElementModel } from "visual/component/Elements/Types";
 import { updateCopiedElement } from "visual/redux/actions2";
-import {
-  deviceModeSelector,
-  pageDataNoRefsSelector
-} from "visual/redux/selectors";
+import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { createFullModelPath } from "visual/utils/models";
-import { read as strRead } from "visual/utils/reader/string";
 import { ContextGetItems, ContextMenuItem } from "../EditorComponent/types";
 import {
   getInnerElement,
@@ -22,9 +19,11 @@ const getItems: ContextGetItems<ElementModel> = (
   _,
   component
 ): ContextMenuItem[] => {
-  const innerElement = getInnerElement();
+  const config = component.getGlobalConfig();
+  const state = component.getReduxStore().getState();
+  const innerElement = getInnerElement(state, config.menuData);
   const canPaste = component.getComponentId() === innerElement?.type;
-  const device = deviceModeSelector(component.getReduxState());
+  const device = component.getDeviceMode();
 
   return [
     {
@@ -43,7 +42,7 @@ const getItems: ContextGetItems<ElementModel> = (
 
             const data = pageDataNoRefsSelector(component.getReduxState());
             const { wrapperAnimationId, wrapperId } = component.props.meta;
-            const _wrapperId = strRead(wrapperAnimationId ?? wrapperId);
+            const _wrapperId = Str.read(wrapperAnimationId ?? wrapperId);
             if (!_wrapperId) return;
 
             const id = component.getId();
@@ -87,7 +86,8 @@ const getItems: ContextGetItems<ElementModel> = (
               // @ts-expect-error couldn't extend component type
               onChange: component.handleChange,
               v: component.getValue(),
-              device
+              device,
+              config
             });
           }
         },
@@ -97,8 +97,12 @@ const getItems: ContextGetItems<ElementModel> = (
           title: t("Clear formatting"),
           helperText: handleRenderText(["\\"]),
           onChange: () => {
-            // @ts-expect-error couldn't extend component type
-            handleClearFormatting(component.handleChange);
+            handleClearFormatting({
+              // @ts-expect-error couldn't extend component type
+              onChange: component.handleChange,
+              editorMode: component.props.editorMode,
+              config
+            });
           }
         },
         {

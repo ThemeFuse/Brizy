@@ -19,7 +19,7 @@ const fontSizeMap: FontSizes = {
   parisienne: "18px"
 };
 
-const systemFont = [
+const getSystemFont = () => [
   {
     id: FONT_INITIAL,
     family: FONT_INITIAL,
@@ -95,7 +95,7 @@ export class FontFamily extends Component<Props> {
       google: googleFonts = [],
       upload: uploadFonts = [],
       adobe: adobeFonts = [],
-      system: systemFonts = systemFont
+      system: systemFonts = getSystemFont()
     } = normalFonts;
 
     const needSeparator =

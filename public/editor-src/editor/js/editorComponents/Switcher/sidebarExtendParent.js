@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Switcher");
+export const title = () => t("Switcher");
 
 const getHtml = () => {
   return `

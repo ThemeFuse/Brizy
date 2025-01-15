@@ -6,7 +6,7 @@ import _ from "underscore";
 import { updateBlocks, updateGlobalBlock } from "visual/redux/actions2";
 import {
   globalBlocksAssembled2Selector,
-  pageBlocksAssembledRawSelector,
+  pageBlocksDataAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
 import { GlobalBlockBase } from "visual/types";
@@ -26,9 +26,8 @@ export const BlockThumbnail: FCC<Props> = ({
   const { className, helper, helperContent, attr } = config ?? {};
 
   const dispatch = useDispatch();
-
   const blocks = useSelector(pageBlocksSelector);
-  const pageBlocksAssembled = useSelector(pageBlocksAssembledRawSelector);
+  const pageBlocksAssembled = useSelector(pageBlocksDataAssembledSelector);
   const globalBlocks = useSelector(globalBlocksAssembled2Selector);
 
   const [anchorInputs, setAnchorInputs] = useState(
@@ -143,7 +142,7 @@ export const BlockThumbnail: FCC<Props> = ({
 
   useEffect(() => () => handleInputChange.cancel(), [handleInputChange]);
 
-  const blocksAssembled = pageBlocksAssembled?.filter(
+  const blocksAssembled = pageBlocksAssembled.filter(
     (block: PreloadThumbnailProps) =>
       block.value._blockVisibility !== "unlisted"
   );
@@ -158,8 +157,7 @@ export const BlockThumbnail: FCC<Props> = ({
       onChange={handleInputChange}
       onClick={handleThumbnailClick}
       anchorInputs={anchorInputs}
-      pageBlocksAssembled={blocksAssembled}
-      globalBlocks={globalBlocks}
+      blocks={blocksAssembled}
       value={value}
     />
   );

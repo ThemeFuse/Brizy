@@ -1,4 +1,4 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 type SelectChoices = {
   title: string;
@@ -7,7 +7,7 @@ type SelectChoices = {
 };
 
 export const getTaxonomies = (
-  taxonomies = Config.getAll().taxonomies
+  taxonomies: ConfigCommon["taxonomies"]
 ): SelectChoices[] => {
   if (!taxonomies) {
     return [{ title: "-", value: "" }];
@@ -40,9 +40,9 @@ export const getTaxonomies = (
   });
 };
 
-export const getTaxonomiesMultiOptions = (): SelectChoices[] => {
-  const postTypesTaxs = Config.getAll().postTypesTaxs;
-
+export const getTaxonomiesMultiOptions = (
+  postTypesTaxs: ConfigCommon["postTypesTaxs"]
+): SelectChoices[] => {
   if (!postTypesTaxs) {
     return [{ title: "-", value: "" }];
   }
@@ -54,10 +54,9 @@ export const getTaxonomiesMultiOptions = (): SelectChoices[] => {
 };
 
 export const getTaxonomiesMultiOptionsSub = (
+  postTypesTaxs: ConfigCommon["postTypesTaxs"],
   taxonomies: string
 ): SelectChoices[] => {
-  const postTypesTaxs = Config.getAll().postTypesTaxs;
-
   if (!taxonomies || !postTypesTaxs) {
     return [{ title: "-", value: "" }];
   }

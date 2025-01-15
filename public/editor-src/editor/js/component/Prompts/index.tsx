@@ -5,6 +5,7 @@ import React, {
   ElementType,
   ReactElement
 } from "react";
+import { ConnectedProps, connect } from "react-redux";
 import { SignAuthorizationProps } from "visual/component/Prompts/PromptAuthorization/types";
 import { PromptBlocksProps } from "visual/component/Prompts/PromptBlocks/types";
 import { Props as PromptPageArticleProps } from "visual/component/Prompts/PromptPageArticle/types";
@@ -16,9 +17,14 @@ import {
   PromptFontsProps,
   PromptFormProps,
   PromptIconProps,
-  PromptKeyHelperProps
+  PromptKeyHelperProps,
+  PromptsOpenProps
 } from "visual/component/Prompts/types";
+import { getConfigById } from "visual/global/Config/InitConfig";
+import { EditorMode } from "visual/global/EditorModeContext";
 import UIState from "visual/global/UIState";
+import { configIdSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { BlockMetaType } from "visual/types";
 import Apps from "./PromptApps";
 import Authorization from "./PromptAuthorization";
@@ -57,10 +63,10 @@ export type PromptsProps<T extends BlockMetaType = "normal"> = {
   props:
     | PromptFormProps
     | SignAuthorizationProps
-    | PromptBlocksProps<T>
+    | Omit<PromptBlocksProps<T>, "config">
     | PromptConditionsProps
     | PromptAppsProps
-    | PromptIconProps
+    | Omit<PromptIconProps, "config">
     | PromptFontsProps
     | PromptKeyHelperProps
     | PromptPageRulesProps
@@ -72,7 +78,13 @@ type PromptsState = {
   prompts: (PromptsProps & { opened: boolean })[];
 };
 
-class Prompts extends Component<Record<string, never>, PromptsState> {
+type PromptProps = ConnectedProps<typeof connector> & {
+  editorMode: EditorMode;
+};
+
+class Prompts extends Component<PromptProps, PromptsState> {
+  globalConfig = getConfigById(this.props.configId);
+
   state: PromptsState = {
     prompts: []
   };
@@ -80,7 +92,7 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
   static open<K extends PromptKey>(data: {
     prompt: K;
     mode: PromptsMode;
-    props?: ComponentProps<PromptTypes[K]>;
+    props?: PromptsOpenProps<ComponentProps<PromptTypes[K]>>;
   }): void {
     Prompt.open(data);
   }
@@ -92,6 +104,15 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
   componentDidMount(): void {
     UIState.addChangeListener("prompt", this.onUIStateChange);
     UIState.addChangeListener("closePrompt", this.onUIStateClosePrompt);
+  }
+
+  componentDidUpdate(prevProps: Readonly<PromptProps>) {
+    const { configId: prevConfigId } = prevProps;
+    const { configId } = this.props;
+
+    if (prevConfigId !== configId) {
+      this.globalConfig = getConfigById(configId);
+    }
   }
 
   componentWillUnmount(): void {
@@ -185,7 +206,7 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
   ): ReactElement<PromptTypes[K]> {
     const Component: ElementType = PROMPTS[type];
 
-    return <Component {...props} />;
+    return <Component {...props} editorMode={this.props.editorMode} />;
   }
 
   render(): ReactElement[] | null {
@@ -196,6 +217,7 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
         return this.getComponent(prompt, {
           ...props,
           opened,
+          config: this.globalConfig,
           key: index,
           onClose: (): void => {
             this.close(index);
@@ -212,4 +234,10 @@ class Prompts extends Component<Record<string, never>, PromptsState> {
   }
 }
 
-export default Prompts;
+const mapStateToProps = (state: ReduxState) => ({
+  configId: configIdSelector(state)
+});
+
+const connector = connect(mapStateToProps);
+
+export default connector(Prompts);

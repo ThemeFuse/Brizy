@@ -1,8 +1,9 @@
 import React from "react";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import MenuDropDown from "visual/component/MenuDropDown";
+import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
+import MenuDropDown from "visual/component/MenuDropDown";
+import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 const SubMenuForView = (props) => {
@@ -11,20 +12,14 @@ const SubMenuForView = (props) => {
 };
 
 const SubMenuForEdit = (props) => {
-  const { mMenu, items } = props;
+  const { mMenu, items, renderContext } = props;
 
   return mMenu ? (
     <ul className="brz-menu__sub-menu">{items}</ul>
   ) : (
-    <MenuDropDown className="brz-menu__sub-menu">{items}</MenuDropDown>
-  );
-};
-
-const SubMenu = (props) => {
-  return IS_PREVIEW ? (
-    <SubMenuForView {...props} />
-  ) : (
-    <SubMenuForEdit {...props} />
+    <MenuDropDown className="brz-menu__sub-menu" renderContext={renderContext}>
+      {items}
+    </MenuDropDown>
   );
 };
 
@@ -99,7 +94,19 @@ class MenuItemItems extends EditorArrayComponent {
       return null;
     }
 
-    return megaMenu ? items : <SubMenu mMenu={mMenu} items={items} />;
+    if (megaMenu) {
+      return items;
+    }
+
+    return isView(this.renderContext) ? (
+      <SubMenuForView mMenu={mMenu} items={items} />
+    ) : (
+      <SubMenuForEdit
+        mMenu={mMenu}
+        items={items}
+        renderContext={this.renderContext}
+      />
+    );
   }
 }
 

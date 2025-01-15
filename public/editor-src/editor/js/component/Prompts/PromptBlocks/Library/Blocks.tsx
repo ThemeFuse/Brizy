@@ -4,13 +4,13 @@ import React, {
   CSSProperties,
   Component,
   ComponentType,
-  ReactElement,
-  PropsWithChildren
+  PropsWithChildren,
+  ReactElement
 } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import { MValue } from "visual/utils/value";
@@ -56,6 +56,10 @@ export interface Props {
   onSuccessSync: VoidFunction;
   onUpdate?: (b: BlockData) => void;
   onFilterChange?: (filter: string, type: BlockTypes) => void;
+  config: ConfigCommon;
+  isPro: boolean;
+  isStory: boolean;
+  upgradeToPro: string;
 }
 
 interface BlocksFilter {
@@ -73,6 +77,24 @@ const scrollStyle: CSSProperties = {
   flex: 1
 };
 
+const storyGrid = {
+  columns: 5,
+  responsive: [
+    {
+      breakpoint: 1460,
+      settings: {
+        columns: 4
+      }
+    },
+    {
+      breakpoint: 1200,
+      settings: {
+        columns: 3
+      }
+    }
+  ]
+};
+
 class Blocks extends Component<Props> {
   static defaultProps: Props = {
     type: "normal",
@@ -87,7 +109,11 @@ class Blocks extends Component<Props> {
     onChange: _.noop,
     onDelete: _.noop,
     onSuccessSync: _.noop,
-    onUpdate: _.noop
+    onUpdate: _.noop,
+    config: {} as ConfigCommon,
+    isPro: false,
+    isStory: false,
+    upgradeToPro: ""
   };
 
   currentFilter: BlocksFilter;
@@ -108,7 +134,7 @@ class Blocks extends Component<Props> {
   }
 
   getSidebarFilter(type: BlockTypes) {
-    const config = Config.getAll();
+    const { config } = this.props;
     const getFilter = match(
       [isBlock, () => config.api?.savedBlocks?.filter],
       [isPopup, () => config.api?.savedPopups?.filter],
@@ -287,6 +313,10 @@ class Blocks extends Component<Props> {
       showTitle,
       thumbnailSync,
       thumbnailDownload,
+      isPro,
+      isStory,
+      upgradeToPro,
+      config,
       onChange,
       onDelete,
       onExport,
@@ -309,6 +339,11 @@ class Blocks extends Component<Props> {
             onThumbnailAdd={onChange}
             onThumbnailRemove={onDelete}
             onUpdate={onUpdate}
+            isStory={isStory}
+            isPro={isPro}
+            upgradeToPro={upgradeToPro}
+            config={config}
+            {...(isStory ? storyGrid : {})}
           />
         </Scrollbars>
         {showImportExport && (
@@ -377,7 +412,8 @@ class Blocks extends Component<Props> {
       sidebarSync,
       HeaderSlotLeft,
       onFilterChange,
-      onSuccessSync
+      onSuccessSync,
+      config
     } = this.props;
     const data = Object.values(items)
       .filter(isT)
@@ -449,6 +485,7 @@ class Blocks extends Component<Props> {
                         this.currentFilter.filter = value;
                         onFilterChange(value, currentFilter.type);
                       }}
+                      api={config.api}
                     />
                   </SidebarOption>
                 )}

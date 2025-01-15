@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import _ from "underscore";
 import { getCategories, getTypes } from "visual/config/icons";
-import Config from "visual/global/Config";
+import { isWp } from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import Control from "./Controls";
-import { loadFonts } from "./utils";
 import { Icon, Props, State } from "./types";
+import { loadFonts } from "./utils";
 
 export default class PromptIcon extends Component<Props, State> {
   static defaultProps = {
@@ -18,8 +19,10 @@ export default class PromptIcon extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const { type } = props;
-    const types = getTypes(Config.getAll());
+    const { type, config } = props;
+    const _isPro = isPro(config);
+    const _isWp = isWp(config);
+    const types = getTypes(_isPro, _isWp);
     const typeId = (types.find((t) => t.name === type) ?? types[0]).id;
 
     this.state = {
@@ -33,8 +36,10 @@ export default class PromptIcon extends Component<Props, State> {
     const node = this.containerRef.current;
 
     if (node) {
-      const { templateFonts } = Config.getAll().urls;
-      loadFonts(this.containerRef.current, templateFonts);
+      loadFonts(
+        this.containerRef.current,
+        this.props.config.urls?.templateFonts
+      );
     }
   }
 
@@ -60,7 +65,7 @@ export default class PromptIcon extends Component<Props, State> {
   };
 
   render() {
-    const { name, type, opened = false, onClose } = this.props;
+    const { name, type, opened = false, onClose, config } = this.props;
     const { typeId, categoryId, search } = this.state;
     const categories = [
       {
@@ -76,6 +81,7 @@ export default class PromptIcon extends Component<Props, State> {
         name={name}
         type={type}
         opened={opened}
+        config={config}
         ref={this.containerRef}
         categoryId={categoryId}
         categories={categories}

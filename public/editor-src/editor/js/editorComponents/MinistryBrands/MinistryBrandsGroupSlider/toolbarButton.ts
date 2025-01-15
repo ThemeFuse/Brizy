@@ -1,9 +1,8 @@
+import { Num } from "@brizy/readers";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { read as readNumber } from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getButtonMaxBorderRadius } from "../utils/helpers";
 import { Props, Value } from "./types";
@@ -11,18 +10,17 @@ import { Props, Value } from "./types";
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: buttonBgColorHex } = getOptionColorHexByPalette(
+  const buttonBgColor = getColor(
+    dvv("buttonBgColorPalette"),
     dvv("buttonBgColorHex"),
-    dvv("buttonBgColorPalette")
+    dvv("buttonBgColorOpacity")
   );
 
-  const { hex: buttonColorHex } = getOptionColorHexByPalette(
+  const buttonColor = getColor(
+    dvv("buttonColorPalette"),
     dvv("buttonColorHex"),
-    dvv("buttonColorPalette")
+    dvv("buttonColorOpacity")
   );
-
-  const buttonColorOpacity = dvv("buttonColorOpacity");
-  const buttonBgColorOpacity = dvv("buttonBgColorOpacity");
 
   const customSize = dvv("buttonSize") !== "custom";
   const fillType = dvv("buttonFillType");
@@ -30,10 +28,10 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const fillTypeDefault = fillType === "default";
 
   const detailButtonTypographyFontSize =
-    readNumber(dvv("detailButtonTypographyFontSize")) ?? 15;
+    Num.read(dvv("detailButtonTypographyFontSize")) ?? 15;
 
   const detailButtonTypographyLineHeight =
-    readNumber(dvv("detailButtonTypographyLineHeight")) ?? 1.6;
+    Num.read(dvv("detailButtonTypographyLineHeight")) ?? 1.6;
 
   const customBorderRadius = dvv("buttonsBorderRadiusType") !== "custom";
   const maxBorderRadius = getButtonMaxBorderRadius(
@@ -153,10 +151,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor:
-              fillType === "filled"
-                ? hexToRgba(buttonBgColorHex, buttonBgColorOpacity)
-                : hexToRgba(buttonColorHex, buttonColorOpacity)
+            backgroundColor: fillType === "filled" ? buttonBgColor : buttonColor
           }
         }
       },

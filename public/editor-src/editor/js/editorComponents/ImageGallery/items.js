@@ -3,6 +3,7 @@ import React from "react";
 import ContextMenu from "visual/component/ContextMenu";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import contextMenuConfig from "./contextMenu";
 
@@ -40,8 +41,8 @@ class Items extends EditorArrayComponent {
                 itemIndex === 0 || (itemIndex === 1 && layout === "bigImage")
                   ? "prev"
                   : itemIndex === items.length - 1
-                  ? "next"
-                  : undefined,
+                    ? "next"
+                    : undefined,
               onChange: (v) => {
                 switch (v) {
                   case "prev":
@@ -121,7 +122,10 @@ class Items extends EditorArrayComponent {
 
     const className = classnames(
       "brz-image__gallery-item",
-      { "brz-cursor-pointer": layout === "bigImage" && IS_PREVIEW },
+      {
+        "brz-cursor-pointer":
+          layout === "bigImage" && isView(this.renderContext)
+      },
       {
         "brz-image__gallery-item-empty": (isMasonry || isJustified) && !imageSrc
       },

@@ -1,14 +1,14 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { DynamicContent } from "visual/global/Config/types/DynamicContent";
 import { Urls } from "visual/global/Config/types/Urls";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
 import { CollectionItemId, CustomerId } from "visual/types";
 import { WithId } from "visual/types/attributes";
 import { Role } from "visual/utils/membership";
 import { Module } from "../Module";
-import { Shopify } from "./modules/shop/Shopify";
 import { WhiteLabel } from "./WhiteLabel";
+import { Shopify } from "./modules/shop/Shopify";
 
 export type ShopModules = undefined | Ecwid | Shopify;
 
@@ -60,6 +60,7 @@ export const isEcwidCategory = (p: Page): p is EcwidCategory =>
 // endregion
 
 export type Page = CollectionPage | CustomerPage | EcwidProduct | EcwidCategory;
+
 // endregion
 
 export interface Base<Platform> extends ConfigCommon, WithId<number> {
@@ -70,6 +71,7 @@ export interface Base<Platform> extends ConfigCommon, WithId<number> {
   };
   tokenV1?: string;
   tokenV2?: {
+    token_type: string;
     access_token: string;
   };
   platform: Platform;

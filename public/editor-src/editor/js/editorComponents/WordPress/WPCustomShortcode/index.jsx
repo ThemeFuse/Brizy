@@ -3,7 +3,6 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { WPShortcode } from "../common/WPShortcode";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -32,10 +31,16 @@ class WPCustomShortcode extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { className } = v;
     const classNameWP = classnames(
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       ),
       className
     );
@@ -53,6 +58,8 @@ class WPCustomShortcode extends EditorComponent {
             resizerMeta={this.props.meta}
             resizerValue={v}
             resizerOnChange={this.handleResizerChange}
+            renderContext={this.renderContext}
+            config={this.getGlobalConfig()}
           />
         </CustomCSS>
       </Toolbar>

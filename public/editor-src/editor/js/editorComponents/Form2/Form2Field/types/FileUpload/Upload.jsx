@@ -1,8 +1,9 @@
+import classnames from "classnames";
 import React, { Component } from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import { ThemeIcon } from "visual/component/ThemeIcon";
+import { isEditor } from "visual/providers/RenderProvider";
 import { TextEditor } from "visual/component/Controls/TextEditor";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 
 class Upload extends Component {
   static defaultProps = {
@@ -38,7 +39,9 @@ class Upload extends Component {
     const classNameInput = classnames(
       "brz-input",
       "brz-input__upload-placeholder",
-      { "brz-p-events--none": IS_EDITOR && !showPlaceholder }
+      {
+        "brz-p-events--none": !showPlaceholder
+      }
     );
 
     return (
@@ -81,7 +84,9 @@ class Upload extends Component {
   }
 
   render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return isEditor(this.props.renderContext)
+      ? this.renderForEdit()
+      : this.renderForView();
   }
 }
 

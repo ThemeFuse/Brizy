@@ -4,19 +4,17 @@ import { getIn } from "timm";
 import { rolesHOC } from "visual/component/Roles";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 import Config from "visual/global/Config";
+import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import {
   copiedElementNoRefsSelector,
   pageDataNoRefsSelector
 } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
 import {
   createFullModelPath,
   getClosestParent,
   mapModels
 } from "visual/utils/models";
 import HotKeysPlugin from "./HotKeysPlugin";
-
-const menusConfig = Config.get("menuData");
 
 const keyNamesShortKeys = {
   duplicate: ["ctrl+D", "cmd+D", "right_cmd+D"],
@@ -30,11 +28,7 @@ const keyNamesShortKeys = {
     "right_cmd+shift+V",
     "shift+right_cmd+V"
   ],
-  delete: [
-    "ctrl+del",
-    "cmd+del",
-    "right_cmd+del"
-  ],
+  delete: ["ctrl+del", "cmd+del", "right_cmd+del"],
   horizontalAlign: [
     "ctrl+right",
     "ctrl+left",
@@ -53,7 +47,7 @@ const keyNamesShortKeys = {
   ],
   showSidebarStyling: ["ctrl+M", "cmd+M", "right_cmd+M"],
   showSidebarAdvanced: ["ctrl+K", "cmd+K", "right_cmd+K"],
-  clearFormatting : ["alt+\\", "ctrl+\\", "cmd+\\", "right_cmd+\\"]
+  clearFormatting: ["alt+\\", "ctrl+\\", "cmd+\\", "right_cmd+\\"]
 };
 
 const getShortKeysByShortcuts = (types) => {
@@ -74,7 +68,7 @@ class HotKeys extends React.Component {
     getParentContextMenuItems: this.getItems
   };
 
-  handleFilterItems(items) {
+  handleFilterItems(items, state) {
     // It's hack only for shortcodes. We calculate current active shortcode and return his callback
     if (items.length && items[0].id.startsWith("key-helper")) {
       // this enables toolbar's escape handler to work properly inside SectionPopup.
@@ -95,8 +89,6 @@ class HotKeys extends React.Component {
     }
 
     const activeElementId = activeEditorComponent.getId();
-
-    const state = getStore().getState();
     const data = pageDataNoRefsSelector(state);
     const copiedElement = copiedElementNoRefsSelector(state);
     const activeElementPath = createFullModelPath(data, [activeElementId]);
@@ -208,10 +200,6 @@ class HotKeys extends React.Component {
   };
 
   render() {
-    if (IS_PREVIEW) {
-      return this.props.children || null;
-    }
-
     const { children, id } = this.props;
     const items = this.getItems();
 
@@ -231,11 +219,16 @@ class HotKeys extends React.Component {
 }
 export default rolesHOC({
   allow: ["admin"],
-  component: HotKeys,
+  component: renderHOC({
+    ForEdit: HotKeys,
+    ForView: ({ children }) => <>{children}</>
+  }),
   fallbackComponent: ({ children }) => children || null
 });
 
 function attachMenu(value) {
+  const menusConfig = Config.get("menuData");
+
   return mapModels((block) => {
     const { type, value } = block;
 

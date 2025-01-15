@@ -74,22 +74,31 @@ export function cssStyleAnimationIterationCount({
   return `animation-iteration-count : ${animation};`;
 }
 
-export function cssStyleAnimationAll({ v, device, state }: CSSValue): string {
+export function cssStyleAnimationAll({
+  v,
+  device,
+  state,
+  store
+}: CSSValue): string {
   return `${cssStyleAnimation({
     v,
     device,
+    store,
     state
   })} ${cssStyleAnimationDuration({
     v,
     device,
+    store,
     state
   })} ${cssStyleAnimationDelay({
     v,
     device,
+    store,
     state
   })} ${cssStyleAnimationIterationCount({
     v,
     device,
+    store,
     state
   })}
   `;

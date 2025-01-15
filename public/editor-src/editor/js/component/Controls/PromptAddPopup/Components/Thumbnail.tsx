@@ -1,5 +1,6 @@
 import React, { ReactElement, useMemo } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { useConfig } from "visual/global/hooks";
 import { Block } from "visual/types";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
@@ -7,7 +8,7 @@ import { imageWrapperSize } from "visual/utils/image";
 import { FCC } from "visual/utils/react/types";
 
 interface Props {
-  popupBlock: Block;
+  block: Block;
   onEdit?: VoidFunction;
   onDelete?: VoidFunction;
 }
@@ -15,16 +16,16 @@ interface Props {
 const MAX_CONTAINER_WIDTH = 140;
 
 export const Thumbnail: FCC<Props> = ({
-  popupBlock,
+  block,
   onEdit,
   onDelete
 }): ReactElement => {
+  const config = useConfig();
+  const { screenshot } = config.urls ?? {};
+
   const { width, height, url } = useMemo(
-    () =>
-      blockThumbnailData(popupBlock, {
-        searchScreenshotInStoreFirst: true
-      }),
-    [popupBlock]
+    () => blockThumbnailData(block, screenshot),
+    [block, screenshot]
   );
 
   const { width: wrapperWidth, height: wrapperHeight } = useMemo(

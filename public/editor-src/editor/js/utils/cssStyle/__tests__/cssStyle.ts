@@ -1,4 +1,6 @@
 import { ModelType } from "visual/component/Elements/Types";
+import { RenderType } from "visual/providers/RenderProvider";
+import { createStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import {
@@ -119,12 +121,17 @@ export const heightElementModel = {
 };
 
 describe("Testing getCSSObjects that should return { selector, css } objects", () => {
+  const store = createStore();
+  const renderContext: RenderType = "editor";
+
   test("Empty values, should return empty object", () => {
     expect(
       getCSSObjects({
+        renderContext,
         currentModel: ModelType.Default,
         model: { vd: {}, vs: {}, v: {} },
-        options: []
+        options: [],
+        store
       })
     ).toStrictEqual(emptyCSS);
   });
@@ -139,6 +146,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
         currentModel: ModelType.Default,
         model: {
           vd: { ...backgroundColorElementModel, ...borderElementModel },
@@ -148,7 +156,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         options: [
           { ...borderOptionWithSelector, selector: "{{WRAPPER}}" },
           backgroundOptionWithSelector
-        ]
+        ],
+        store
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -174,6 +183,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -218,6 +229,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [borderOptionWithSelector, backgroundOptionWithSelector]
@@ -236,6 +249,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [heightOptionWithStyle]
@@ -259,6 +274,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [heightOptionWithStyle, widthOptionWithStyle]
@@ -285,6 +302,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -313,6 +332,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -348,6 +369,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -408,6 +431,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -491,6 +516,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -524,6 +551,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Rules,
         model: {
           vd: borderElementModel,
@@ -551,6 +580,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
@@ -575,6 +606,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
     ];
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
@@ -598,6 +631,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
 
     expect(
       getCSSObjects({
+        renderContext,
+        store,
         currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,

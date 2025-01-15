@@ -1,3 +1,4 @@
+import { Str } from "@brizy/readers";
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import {
@@ -5,11 +6,9 @@ import {
   isViewTypeWithIcon,
   isViewTypeWithNumber
 } from "visual/editorComponents/Form2/utils";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
-import { Str } from "@brizy/readers";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import type { Props } from "./types";
 
@@ -32,7 +31,7 @@ export const getItems: GetItems<ElementModel, Props> = ({
   device,
   component
 }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ key, v, device });
+  const dvv = (key: string) => defaultValueValue({ key, v, device });
 
   const viewType = Str.read(component.props.viewType) ?? "";
   const iconSize = dvv("iconSize");
@@ -44,9 +43,10 @@ export const getItems: GetItems<ElementModel, Props> = ({
   const isNumberText = viewType === "number-text";
   const isIconText = viewType === "icon-text";
 
-  const { hex: bgColor } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
   return [
@@ -137,7 +137,7 @@ export const getItems: GetItems<ElementModel, Props> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColor, v.bgColorOpacity)
+            backgroundColor: bgColor
           }
         }
       },

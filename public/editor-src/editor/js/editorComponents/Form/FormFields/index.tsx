@@ -3,7 +3,6 @@ import React from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
@@ -25,10 +24,16 @@ export default class FormItem extends EditorComponent<ElementModel> {
 
     const _className = classnames(
       "brz-forms__fields",
-      css(
+      this.css(
         `${this.getComponentId()}-fields`,
         `${this.getId()}-fields`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

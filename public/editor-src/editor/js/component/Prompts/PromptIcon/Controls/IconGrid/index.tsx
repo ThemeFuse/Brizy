@@ -1,13 +1,14 @@
 import classNames from "classnames";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Config from "visual/global/Config";
 import SmartGrid from "visual/component/Prompts/common/SmartGrid";
 import { getIconClassName, getTypes } from "visual/config/icons";
+import { isWp } from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { FCC } from "visual/utils/react/types";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { Props } from "./types";
 
-export const IconGrid: FCC<Props> = ({ icons, value, onChange }) => {
+export const IconGrid: FCC<Props> = ({ icons, value, onChange, config }) => {
   const [gridSize, setGridSize] = useState<{
     width: number;
     height: number;
@@ -17,17 +18,18 @@ export const IconGrid: FCC<Props> = ({ icons, value, onChange }) => {
   const rowCount = Math.floor(icons.length / 8) + 1;
   const activeRowIndex = Math.floor(activeIconIndex / 8);
   const prettyRowIndex = activeRowIndex === 0 ? 0 : activeRowIndex - 1;
+  const _isPro = isPro(config);
+  const _isWp = isWp(config);
 
   const typeIdsToNames = useMemo(() => {
-    const config = Config.getAll();
-    return getTypes(config).reduce<Record<string, string>>(
+    return getTypes(_isPro, _isWp).reduce<Record<string, string>>(
       (acc, { id, name }) => {
         acc[id] = name;
         return acc;
       },
       {}
     );
-  }, []);
+  }, [_isPro, _isWp]);
 
   useEffect(() => {
     if (node.current) {

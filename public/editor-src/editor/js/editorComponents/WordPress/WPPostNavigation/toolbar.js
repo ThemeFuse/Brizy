@@ -1,4 +1,3 @@
-import Config from "visual/global/Config";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -11,14 +10,15 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 const disabledTaxonomy = (arr, taxonomy = "") =>
   !arr.some((elem) => taxonomy === elem);
 
-export function getItems({ v, device, state }) {
+export function getItems({ v, device, state, component }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const wordpress = Boolean(Config.get("wp"));
+  const wordpress = !!component.getGlobalConfig().wp;
 
   const categories = JSON.parse(dvv("categories"));
   const showPost = dvv("showPost");
   const showTitle = dvv("showTitle");
+  const { postTypesTaxs } = component.getGlobalConfig();
 
   return [
     {
@@ -112,21 +112,21 @@ export function getItems({ v, device, state }) {
           config: {
             size: "large"
           },
-          choices: getTaxonomiesMultiOptions()
+          choices: getTaxonomiesMultiOptions(postTypesTaxs)
         },
         {
           id: "post",
           label: t("Post"),
           type: "select",
           disabled: disabledTaxonomy(categories, "post"),
-          choices: getTaxonomiesMultiOptionsSub("post")
+          choices: getTaxonomiesMultiOptionsSub(postTypesTaxs, "post")
         },
         {
           id: "product",
           label: t("Product"),
           type: "select",
           disabled: disabledTaxonomy(categories, "product"),
-          choices: getTaxonomiesMultiOptionsSub("product")
+          choices: getTaxonomiesMultiOptionsSub(postTypesTaxs, "product")
         }
       ]
     },

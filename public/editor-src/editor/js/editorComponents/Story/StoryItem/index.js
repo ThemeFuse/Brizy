@@ -1,19 +1,17 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import _ from "underscore";
-
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
-import Items from "./items";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
+import CustomCSS from "visual/component/CustomCSS";
 import { Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import defaultValue from "./defaultValue.json";
+import Items from "./items";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
-import { css } from "visual/utils/cssStyle";
-import defaultValue from "./defaultValue.json";
+import * as toolbarConfig from "./toolbar";
 
 class StoryItem extends EditorComponent {
   static get componentId() {
@@ -87,10 +85,17 @@ class StoryItem extends EditorComponent {
     const classNameSectionContent = classnames(
       "brz-section__content",
       className,
-      css(
-        `${this.constructor.componentId}-bg`,
+      this.css(
+        `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd, this.props)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          props: this.props,
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -125,10 +130,17 @@ class StoryItem extends EditorComponent {
     const classNameSectionContent = classnames(
       "brz-section__content",
       className,
-      css(
-        `${this.constructor.componentId}-bg`,
+      this.css(
+        `${this.getComponentId()}-bg`,
         `${this.getId()}-bg`,
-        style(v, vs, vd, this.props)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          props: this.props,
+          renderContext: this.renderContext
+        })
       )
     );
 

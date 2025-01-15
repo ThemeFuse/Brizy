@@ -3,7 +3,10 @@ import { ThunkAction } from "redux-thunk";
 import { mergeDeep } from "timm";
 import _ from "underscore";
 import { Layout } from "visual/component/Prompts/common/PromptPage/types";
-import { PublishData } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConfigCommon,
+  PublishData
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector } from "visual/redux/selectors";
 import {
   ActiveElement,
@@ -63,6 +66,8 @@ export type ActionHydrate = {
     page: ReduxState["page"];
     authorized: ReduxState["authorized"];
     syncAllowed: ReduxState["syncAllowed"];
+    config: ConfigCommon;
+    configId: string;
   };
 };
 
@@ -127,18 +132,41 @@ export type ActionDeleteGlobalBlock = {
 
 //#region Global Popup
 
+type GBPopupNormal<T> = {
+  block: T;
+  type: "normal";
+  fromBlockId: string;
+  parentId: string;
+};
+type GBPopupExternal<T> = {
+  block: T;
+  type: "external";
+  fromBlockId: string;
+};
+
+type MakeGBToPopupPayload<T> = GBPopupNormal<T> | GBPopupExternal<T>;
+
+type PopupGBNormal<T> = {
+  block: T;
+  type: "normal";
+  fromBlockId: string;
+};
+type PopupGBExternal<T> = {
+  block: T;
+  type: "external";
+  fromBlockId: string;
+};
+
+type MakePopupToGbPayload<T> = PopupGBNormal<T> | PopupGBExternal<T>;
+
 export type ActionMakePopupToGlobalPopup = {
   type: "MAKE_POPUP_TO_GLOBAL_POPUP";
-  payload: {
-    block: GlobalBlockPopup;
-    fromBlockId: string;
-    type: "popup" | "externalPopup";
-  };
+  payload: MakePopupToGbPayload<GlobalBlockPopup>;
 };
 
 export type ActionMakeGlobalPopupToPopup = {
   type: "MAKE_GLOBAL_POPUP_TO_POPUP";
-  payload: { block: Block; fromBlockId: string; parentId: string };
+  payload: MakeGBToPopupPayload<Block>;
 };
 
 export const ADD_GLOBAL_POPUP = "ADD_GLOBAL_POPUP";
@@ -313,7 +341,8 @@ export type ReduxAction =
   | EditGlobalStyleName
   | UpdateCurrentStyleId
   | RegenerateColors
-  | RegenerateTypography;
+  | RegenerateTypography
+  | UpdateConfigId;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";
@@ -450,41 +479,21 @@ export function makeGlobalToNormalBlock({
   };
 }
 
-export function makePopupToGlobalBlock({
-  fromBlockId,
-  block,
-  type
-}: {
-  fromBlockId: string;
-  block: GlobalBlockPopup;
-  type: "popup" | "externalPopup";
-}): ActionMakePopupToGlobalPopup {
+export function makePopupToGlobalBlock(
+  payload: MakePopupToGbPayload<GlobalBlockPopup>
+): ActionMakePopupToGlobalPopup {
   return {
     type: "MAKE_POPUP_TO_GLOBAL_POPUP",
-    payload: {
-      fromBlockId,
-      block,
-      type
-    }
+    payload
   };
 }
 
-export function makeGlobalBlockToPopup({
-  fromBlockId,
-  parentId,
-  block
-}: {
-  fromBlockId: string;
-  block: Block;
-  parentId: string;
-}): ActionMakeGlobalPopupToPopup {
+export function makeGlobalBlockToPopup(
+  payload: MakeGBToPopupPayload<Block>
+): ActionMakeGlobalPopupToPopup {
   return {
     type: "MAKE_GLOBAL_POPUP_TO_POPUP",
-    payload: {
-      fromBlockId,
-      parentId,
-      block
-    }
+    payload
   };
 }
 
@@ -875,7 +884,8 @@ export enum ActionTypes {
   "REMOVE_BLOCKS" = "REMOVE_BLOCKS",
   "UPDATE_PINNED_ELEMENTS" = "UPDATE_PINNED_ELEMENTS",
   "REGENERATE_COLORS" = "REGENERATE_COLORS",
-  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY"
+  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY",
+  "UPDATE_CONFIG_ID" = "UPDATE_CONFIG_ID"
 }
 
 // templates
@@ -1069,3 +1079,17 @@ export function updateScreenshot({
     meta
   };
 }
+
+interface UpdateConfigId {
+  type: ActionTypes.UPDATE_CONFIG_ID;
+  payload: {
+    configId: string;
+  };
+}
+
+export const updateConfigId = (configId: string): UpdateConfigId => ({
+  type: ActionTypes.UPDATE_CONFIG_ID,
+  payload: {
+    configId
+  }
+});

@@ -6,7 +6,6 @@ import { createGlobalBlockSymbol } from "visual/utils/blocks";
 import {
   insertItemsBatch,
   isModel,
-  isPopup,
   isStory,
   mapModels
 } from "visual/utils/models";
@@ -139,14 +138,15 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
     }
 
     case "MAKE_GLOBAL_POPUP_TO_POPUP": {
-      const { block: blockData, fromBlockId, parentId } = action.payload;
+      const { block: blockData, fromBlockId, type } = action.payload;
 
-      if (isPopup(Config.getAll())) {
+      if (type === "external") {
         return {
           ...state,
           [blockData.value._id]: blockData
         };
       }
+      const parentId = action.payload.parentId;
 
       const childCb = (data: Block): Block => {
         if (data.value._id === fromBlockId) {

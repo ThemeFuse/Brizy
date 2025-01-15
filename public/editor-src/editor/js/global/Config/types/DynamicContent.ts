@@ -22,7 +22,7 @@ export interface ConfigDCItem extends BaseDCItem {
   optgroup?: ConfigDCItem[];
 }
 
-interface DCItemHandler {
+export interface DCItemHandler {
   handler: (
     res: Response<BaseDCItem>,
     rej: Response<string>,

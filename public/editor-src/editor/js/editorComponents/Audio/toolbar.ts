@@ -1,12 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
@@ -29,14 +26,17 @@ export function getItems({
   context: EditorComponentContextValue;
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const bgColorOpacity = dvv("bgColorOpacity");
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    bgColorOpacity
   );
-  const { hex: borderColorHex } = getOptionColorHexByPalette(
+  const borderColor = getColor(
+    dvv("borderColorPalette"),
     dvv("borderColorHex"),
-    dvv("borderColorPalette")
+    dvv("borderColorOpacity")
   );
   const linkDC = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -169,10 +169,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor:
-              dvv("bgColorOpacity") > 0
-                ? hexToRgba(borderColorHex, dvv("borderColorOpacity"))
-                : hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColorOpacity > 0 ? borderColor : bgColor
           }
         }
       },

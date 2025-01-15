@@ -1,19 +1,20 @@
 import { Num, Str } from "@brizy/readers";
 import { OptionValue } from "visual/component/Options/types";
-import Config from "visual/global/Config";
+import { WithRenderContext } from "visual/providers/RenderProvider";
+import { configSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { Fonts } from "visual/types";
 import { getFontCssStyle } from "visual/utils/fonts";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import {
+  Weight,
   empty as defaultWeight,
-  fromNumber as readWeight,
-  Weight
+  fromNumber as readWeight
 } from "visual/utils/fonts/Weight";
+import { FontFamilyType } from "visual/utils/fonts/familyType";
 import {
-  fromNumber as readPositive,
-  Positive
+  Positive,
+  fromNumber as readPositive
 } from "visual/utils/math/Positive";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
@@ -21,7 +22,7 @@ import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelF
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
 import { CSSValue as CSSValue_ } from "visual/utils/style2/types";
-import { isNullish, MValue } from "visual/utils/value";
+import { MValue, isNullish } from "visual/utils/value";
 
 type CSSValue = Omit<CSSValue_, "v"> & {
   v: OptionValue<"typography">;
@@ -37,24 +38,25 @@ export function styleTypographyFontFamily({
   device,
   state,
   prefix = "",
-  fontsData
-}: CSSValue): string {
+  fontsData,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const fontFamilyKey = capByPrefix(prefix, "fontFamily");
   const fontFamilyTypeKey = capByPrefix(prefix, "fontFamilyType");
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
+  const config = configSelector(store.getState());
 
-  const { fonts, fontStyles, extraFontStyles } = fontsData;
-  const allFontStyles = { fontStyles, extraFontStyles };
-  const config = Config.getAll();
+  const { fonts } = fontsData;
 
   const family = Str.read(
     getOptionFontByGlobal({
       key: "fontFamily",
       value: defaultValueValue({ v, key: fontFamilyKey, device: DESKTOP }),
       style: dvv(fontStyleKey),
-      styles: allFontStyles
+      store
     })
   );
   const familyType = Str.read(
@@ -62,7 +64,7 @@ export function styleTypographyFontFamily({
       key: "fontFamilyType",
       value: defaultValueValue({ v, key: fontFamilyTypeKey, device: DESKTOP }),
       style: dvv(fontStyleKey),
-      styles: allFontStyles
+      store
     })
   ) as MValue<FontFamilyType>;
 
@@ -71,10 +73,11 @@ export function styleTypographyFontFamily({
   }
 
   return (
-    getDetailsModelFontFamily(
-      { family, familyType, style: fontStyle, fonts },
-      config
-    ) ?? ""
+    getDetailsModelFontFamily({
+      data: { family, familyType, style: fontStyle, fonts, store },
+      config,
+      renderContext
+    }) ?? ""
   );
 }
 
@@ -83,7 +86,7 @@ export function styleTypographyFontSize({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue): Positive | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -98,10 +101,7 @@ export function styleTypographyFontSize({
       key: dvk("fontSize"),
       value: dvv(fontSizeKey),
       style: dvv(fontStyleKey),
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     });
 
   const nValue = Num.read(value);
@@ -115,8 +115,8 @@ export function styleTypographyFontSizeSuffix({
   v,
   device,
   state,
-  prefix = "",
-  fontsData
+  store,
+  prefix = ""
 }: CSSValue): SizeSuffix {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -132,10 +132,7 @@ export function styleTypographyFontSizeSuffix({
         key: dvk("fontSizeSuffix"),
         value: dvv(fontSizeSuffixKey),
         style: dvv(fontStyleKey),
-        styles: {
-          fontStyles: fontsData.fontStyles,
-          extraFontStyles: fontsData.extraFontStyles
-        }
+        store
       }) || "px";
 
     return suffix as SizeSuffix;
@@ -147,7 +144,7 @@ export function styleTypographyLineHeight({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue): Positive | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -162,10 +159,7 @@ export function styleTypographyLineHeight({
       key: dvk("lineHeight"),
       value: dvv(lineHeightKey),
       style: dvv(fontStyleKey),
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     });
 
   const nValue = Num.read(value);
@@ -180,7 +174,7 @@ export function styleTypographyFontWeight({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue): Weight | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -195,10 +189,7 @@ export function styleTypographyFontWeight({
       key: dvk("fontWeight"),
       value: dvv(fontWeightKey),
       style: dvv(fontStyleKey),
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     });
 
   const nValue = Num.read(value);
@@ -213,7 +204,7 @@ export function styleTypographyLetterSpacing({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -234,10 +225,7 @@ export function styleTypographyLetterSpacing({
       key: dvk("letterSpacing"),
       value: dvv(letterSpacingKey),
       style: dvv(fontStyleKey),
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     })}${suffix}`
   );
 }
@@ -247,7 +235,7 @@ export function styleTypography2FontVariation({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -276,10 +264,7 @@ export function styleTypography2FontVariation({
       key: fontVariationKey,
       value,
       style: dvv(fontStyleKey),
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     });
 
   return Str.read(_value) ?? "";
@@ -290,7 +275,7 @@ export function styleTextTransformBold({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
   const boldKey = capByPrefix(prefix, "bold");
@@ -311,10 +296,7 @@ export function styleTextTransformBold({
       key: boldKey,
       value,
       style: fontStyle,
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     })
   );
 }
@@ -324,7 +306,7 @@ export function styleTextTransformItalic({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
   const italicKey = capByPrefix(prefix, "italic");
@@ -345,10 +327,7 @@ export function styleTextTransformItalic({
       key: italicKey,
       value,
       style: fontStyle,
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     })
   );
 }
@@ -358,7 +337,7 @@ export function styleTextTransformTextDecoration({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
   const underlineKey = capByPrefix(prefix, "underline");
@@ -382,10 +361,7 @@ export function styleTextTransformTextDecoration({
       key: textDecorationKey,
       value,
       style: fontStyle,
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     })
   );
 }
@@ -395,7 +371,7 @@ export function styleTextTransformUpperLowerCase({
   device,
   state,
   prefix = "",
-  fontsData
+  store
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
   const uppercaseKey = capByPrefix(prefix, "uppercase");
@@ -418,10 +394,7 @@ export function styleTextTransformUpperLowerCase({
       key: uppercaseKey,
       value,
       style: fontStyle,
-      styles: {
-        fontStyles: fontsData.fontStyles,
-        extraFontStyles: fontsData.extraFontStyles
-      }
+      store
     })
   );
 }

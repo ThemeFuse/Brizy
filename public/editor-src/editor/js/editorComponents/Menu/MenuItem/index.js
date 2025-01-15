@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import { noop } from "underscore";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import ClickOutside from "visual/component/ClickOutside";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import Link from "visual/component/Link";
@@ -9,9 +10,8 @@ import Portal from "visual/component/Portal";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config from "visual/global/Config";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
+import { isPro } from "visual/utils/env";
+import { getBlockData } from "visual/utils/models";
 import { attachRef } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import {
@@ -20,6 +20,8 @@ import {
   styleElementMegaMenuWidthSuffix
 } from "visual/utils/style2";
 import { getParentMegaMenuUid } from "../utils.common";
+import { IconContainer } from "./controls/Icon";
+import { MegaMenuContainer } from "./controls/MegaMenu";
 import defaultValue from "./defaultValue.json";
 import MenuItemItems from "./items";
 import { calculateMeta } from "./meta";
@@ -27,11 +29,7 @@ import sidebarConfigFn from "./sidebar";
 import { styleClassName, styleMegaMenu, styleMmMenuClassName } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import toolbarExtendFn from "./toolbarExtend";
-import { getBlockData } from "visual/utils/models";
-import { IconContainer } from "./controls/Icon";
-import { MegaMenuContainer } from "./controls/MegaMenu";
 
-const IS_PRO = Config.get("pro");
 let openedMegaMenu = null;
 
 class MenuItem extends EditorComponent {
@@ -61,6 +59,8 @@ class MenuItem extends EditorComponent {
   menuItem = React.createRef();
 
   megaMenuRef = React.createRef();
+
+  isPro = isPro(this.getGlobalConfig());
 
   componentDidUpdate(nextProps) {
     if (
@@ -217,7 +217,7 @@ class MenuItem extends EditorComponent {
     return hasIcon ? (
       <IconContainer
         itemId={id}
-        wrapInPlaceholder={IS_PREVIEW && IS_PRO}
+        wrapInPlaceholder={isView(this.renderContext) && this.isPro}
         iconName={iconName}
         iconType={iconType}
         iconFilename={iconFilename}
@@ -250,18 +250,18 @@ class MenuItem extends EditorComponent {
   }
 
   renderMegaMenu(v, vs, vd) {
-    if (!IS_PRO) {
+    if (!this.isPro) {
       return null;
     }
 
-    return IS_EDITOR
+    return isEditor(this.renderContext)
       ? this.renderMegaMenuForEdit(v, vs, vd)
       : this.renderMegaMenuForView(v, vs, vd);
   }
 
   renderMegaMenuForEdit(v, vs, vd) {
     const { mMenu, level, getParent, mods, meta } = this.props;
-    const { deviceMode: device } = getStore().getState().ui;
+    const device = this.getDeviceMode();
     const mode = getModeByDevice(mods, device);
     const placement = styleElementMegaMenuPlacement({ v, device });
     const toolbarExtend = toolbarExtendFn(mode, Boolean(mMenu));
@@ -293,7 +293,17 @@ class MenuItem extends EditorComponent {
     }
 
     const className = classnames(
-      css(this.getComponentId(), this.getId(), styleMegaMenu(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleMegaMenu({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     // don't need Popper for mobile and vertical mode
@@ -334,7 +344,7 @@ class MenuItem extends EditorComponent {
       <Popper {...props}>
         {({ ref, style, placement }) => (
           <Portal node={document.body}>
-            <SortableZIndex zIndex={2}>
+            <SortableZIndex zIndex={2} renderContext={this.renderContext}>
               <div
                 className={portalClassName}
                 ref={(el) => {
@@ -379,7 +389,17 @@ class MenuItem extends EditorComponent {
     const className = classnames(
       "brz brz-mega-menu__portal",
       { "brz-mega-menu__portal-inPopup": meta.sectionPopup2 },
-      css(this.getComponentId(), this.getId(), styleMegaMenu(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleMegaMenu({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const dW = styleElementMegaMenuWidth({ v, device: DESKTOP });
     const dWS = styleElementMegaMenuWidthSuffix({ v, device: DESKTOP });
@@ -416,7 +436,7 @@ class MenuItem extends EditorComponent {
   }
 
   renderDropDown(v) {
-    if (!IS_PRO) {
+    if (!this.isPro) {
       return null;
     }
 
@@ -439,8 +459,8 @@ class MenuItem extends EditorComponent {
 
   renderSimpleForEdit(v, vs, vd, content) {
     const { level, mMenu, mods } = this.props;
-    const className = styleClassName(v, this.state);
-    const { deviceMode: device } = getStore().getState().ui;
+    const className = styleClassName(v, this.state, this.renderContext);
+    const device = this.getDeviceMode();
     const mode = getModeByDevice(mods, device);
     const toolbarConfig = toolbarConfigFn(level, mMenu);
     const sidebarConfig = sidebarConfigFn(level, mMenu);
@@ -529,7 +549,11 @@ class MenuItem extends EditorComponent {
     return (
       <li
         ref={this.menuItem}
-        className={styleMmMenuClassName(v, this.menuItem.current)}
+        className={styleMmMenuClassName(
+          v,
+          this.menuItem.current,
+          this.renderContext
+        )}
       >
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -567,7 +591,7 @@ class MenuItem extends EditorComponent {
     const { megaMenu, id } = v;
     const item =
       megaMenu === "on" ? (
-        <MegaMenuContainer itemId={id} wrapInPlaceholder={IS_PRO}>
+        <MegaMenuContainer itemId={id} wrapInPlaceholder={this.isPro}>
           {this.renderMegaMenu(v, vs, vd)}
         </MegaMenuContainer>
       ) : (

@@ -1,15 +1,11 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentChoices,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentChoices } from "visual/utils/options";
 
-export function getItems({ v, device, context }) {
-  const config = Config.getAll();
+export function getItems({ v, device, context, component }) {
+  const config = component.getGlobalConfig();
 
   const activeChoice = config.contentDefaults.PostContent.textPopulation;
   const disablePredefinedPopulation =
@@ -21,9 +17,10 @@ export function getItems({ v, device, context }) {
 
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("paragraphColorPalette"),
     dvv("paragraphColorHex"),
-    dvv("paragraphColorPalette")
+    dvv("paragraphColorOpacity")
   );
 
   return [
@@ -369,7 +366,7 @@ export function getItems({ v, device, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: color
           }
         }
       },

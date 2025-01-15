@@ -1,6 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getThirtyOptions, inputTypesChoice } from "./utils";
@@ -8,7 +7,7 @@ import { Value, Props } from "./type";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
 
   const type = dvv("type");
 
@@ -32,13 +31,15 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
 
   const fileUploadSizes: { title: string; value: string }[] = [];
   if (isFileUpload) {
-    const { maxUploadFileSize } = Config.getAll().server || {};
+    const { maxUploadFileSize } = config.server || {};
     const maxFileUpload = Number(maxUploadFileSize);
     for (let idx = 1; idx <= maxFileUpload; idx++) {
       fileUploadSizes.push({ title: `${idx} MB`, value: `${idx}mb` });
     }
   }
-  const inputTypes = inputTypesChoice();
+
+  const choices = config.elements?.form?.inputTypes;
+  const inputTypes = inputTypesChoice(choices);
 
   const dateOrTimeOptions = (): ToolbarItemType[] => [
     {
@@ -295,7 +296,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   label: thirtyOptionLabel,
                   disabled: typeof thirtyOptionHandler !== "function",
                   choices: {
-                    load: getThirtyOptions(fieldId)
+                    load: getThirtyOptions(fieldId, config)
                   }
                 }
               ]

@@ -1,11 +1,10 @@
 import type { ElementProps } from "visual/component/Elements/Types";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import type { GetItems } from "../EditorComponent/types";
 import type { Value } from "./types";
 
-export const getItems: GetItems<Value, ElementProps> = () => [
+export const getItems: GetItems<Value, ElementProps> = ({ editorMode }) => [
   {
     id: "sidebarTabs",
     type: "sidebarTabs",
@@ -43,7 +42,7 @@ export const getItems: GetItems<Value, ElementProps> = () => [
                   {
                     id: "hoverTransition",
                     label: t("Hover Transition"),
-                    disabled: isStory(Config.getAll()),
+                    disabled: isStory(editorMode),
                     devices: "desktop",
                     position: 100,
                     type: "slider",

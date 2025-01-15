@@ -1,6 +1,7 @@
 import { TypeId } from "visual/config/icons/Type";
 import { Literal } from "visual/utils/types/Literal";
 import { Icon } from "visual/config/icons/Icon";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export interface Category {
   id: Literal;
@@ -25,4 +26,5 @@ export interface Props {
   onSelectChange: (id: Literal) => void;
   onInputChange: (value: string) => void;
   onClose?: VoidFunction;
+  config: ConfigCommon;
 }

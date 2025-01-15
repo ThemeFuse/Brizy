@@ -1,3 +1,4 @@
+import { DeviceMode } from "visual/types";
 import { ElementModel } from "visual/component/Elements/Types";
 
 export type RestrictionsClamp = {
@@ -63,11 +64,15 @@ export type ValueMapping = Partial<Record<keyof Restrictions, number>>;
 
 export type TransformRestrictions = (
   restrictions: Partial<Restrictions>,
-  value: V
+  value: V,
+  device: DeviceMode
 ) => SimpleRestriction;
 
 export type RestrictionMapping = Partial<Record<keyof Restriction, number>>;
-export type TransformValue = (value: V) => RestrictionMapping;
+export type TransformValue = (
+  value: V,
+  device: DeviceMode
+) => RestrictionMapping;
 
 // should V type be returned?
 export type TransformStory = (
@@ -86,7 +91,8 @@ export type RestrictionsMapping = Record<keyof Restrictions, number>;
 export type TransformPatch = (
   patch: Partial<RestrictionMapping>,
   startValue: RestrictionMapping,
-  value: V
+  value: V,
+  device: DeviceMode
 ) => Partial<RestrictionsMapping>;
 
 export type Point =

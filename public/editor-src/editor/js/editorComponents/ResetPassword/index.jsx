@@ -3,7 +3,7 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -31,7 +31,7 @@ class ResetPassword extends EditorComponent {
       {
         allowExtend: false,
         allowExtendFromThirdParty: true,
-        thirdPartyExtendId: `${this.constructor.componentId}Parent`
+        thirdPartyExtendId: `${this.getComponentId()}Parent`
       }
     );
     this.props.extendParentToolbar(toolbarExtend);
@@ -103,7 +103,7 @@ class ResetPassword extends EditorComponent {
   }
 
   renderForm(v) {
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       return (
         <form className="brz-reset-psw-form">
           {this.renderResetPasswordForm(v)}
@@ -130,10 +130,16 @@ class ResetPassword extends EditorComponent {
     } = v;
     const className = classnames(
       "brz-reset-psw",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -162,7 +168,10 @@ class ResetPassword extends EditorComponent {
                 name: "error-passlength",
                 value: passLengthError
               }),
-              ...makeDataAttr({ name: "error-passmatch", value: passMatchError })
+              ...makeDataAttr({
+                name: "error-passmatch",
+                value: passMatchError
+              })
             }
           })}
         >

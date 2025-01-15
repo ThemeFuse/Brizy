@@ -1,22 +1,22 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { t } from "visual/utils/i18n";
-import { Value, Props } from "./type";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ElementTypes,
   readElementType
 } from "visual/global/Config/types/configs/ElementTypes";
-import { getDynamicContentOption } from "visual/utils/options";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import Config from "visual/global/Config";
-import { isPopup, isStory } from "visual/utils/models";
-import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentOption } from "visual/utils/options";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { Props, Value } from "./type";
 
 export const getItems: GetItems<Value, Props> = ({
   v,
   device,
   component,
-  context
+  context,
+  editorMode
 }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const inPopup = Boolean(component.props.meta.sectionPopup);
@@ -30,9 +30,8 @@ export const getItems: GetItems<Value, Props> = ({
     type: DCTypes.link
   });
 
-  const config = Config.getAll();
-  const IS_STORY = isStory(config);
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isStory = isStory(editorMode);
+  const _isPopup = isPopup(editorMode);
 
   return [
     {
@@ -105,7 +104,7 @@ export const getItems: GetItems<Value, Props> = ({
                   v,
                   device,
                   state: "normal",
-                  disabled: IS_GLOBAL_POPUP || IS_STORY
+                  disabled: _isPopup || _isStory
                 })
               ]
             },
@@ -116,7 +115,7 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "linkPopup",
                   type: "promptAddPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
+                  disabled: inPopup || inPopup2 || _isPopup || _isStory,
                   label: t("Popup"),
                   config: {
                     popupKey: `${component.getId()}_${dvv("linkPopup")}`
@@ -132,7 +131,7 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "linkToSlide",
                   type: "number",
                   label: t("Slide"),
-                  disabled: !IS_STORY,
+                  disabled: !_isStory,
                   config: {
                     min: 1,
                     max: 1000000,

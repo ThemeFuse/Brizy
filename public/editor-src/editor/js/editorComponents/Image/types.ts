@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from "react";
+import { RenderType } from "visual/providers/RenderProvider";
 import { LinkData } from "visual/component/Link/types/Type";
 import { LinkProps } from "visual/component/hooks/withLink";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ECDC } from "visual/editorComponents/EditorComponent/types";
+import { Store } from "visual/redux/store";
 import { ImageType } from "visual/utils/image/types";
 
 type sizes = {
@@ -109,6 +111,7 @@ export type ImageProps = {
   meta: Meta;
   wrapperSizes: WrapperSizes;
   getResponsiveUrls: GetResponsiveUrls;
+  renderContext: RenderType;
   extraAttributes?: React.HTMLAttributes<HTMLImageElement>;
   children: ReactNode;
   onChange: (arg0: Patch) => void;
@@ -118,11 +121,10 @@ export type ImageProps = {
     inGallery: boolean;
     layout: string;
   };
+  store: Store;
 
   linkProps?: LinkProps;
 };
-
-export type Styles = [string, string, string];
 
 export type Device = "desktop" | "tablet" | "mobile";
 

@@ -1,6 +1,5 @@
 import { produce } from "immer";
 import { ConnectedProps, connect } from "react-redux";
-import Config from "visual/global/Config";
 import { fontsSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { pendingRequest } from "visual/utils/api";
@@ -8,8 +7,7 @@ import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 import { Fonts, StateToProps } from "./types";
-
-const IS_PRO = Config.get("pro");
+import { isPro } from "visual/utils/env";
 
 const mapState = (state: ReduxState): StateToProps => ({
   fonts: fontsSelector(state)
@@ -25,7 +23,7 @@ type IntegrationProps = BaseIntegrationProps &
 class Integration extends BaseIntegration<IntegrationProps> {
   appsData: AppData[] = [];
   appsComponent = AppsComponent;
-  proExceptions = !IS_PRO;
+  proExceptions = !isPro(this.props.config);
 
   async componentDidMount(): Promise<void> {
     const { Integrations } = await import("visual/config/integrations");

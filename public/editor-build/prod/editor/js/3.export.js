@@ -2,7 +2,7 @@ exports.id = 3;
 exports.ids = [3];
 exports.modules = {
 
-/***/ 6992:
+/***/ 7018:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(FilePlayer_exports, {
   default: () => FilePlayer
 });
 module.exports = __toCommonJS(FilePlayer_exports);
-var import_react = __toESM(__webpack_require__(470));
-var import_utils = __webpack_require__(3805);
-var import_patterns = __webpack_require__(3808);
+var import_react = __toESM(__webpack_require__(24));
+var import_utils = __webpack_require__(3837);
+var import_patterns = __webpack_require__(3840);
 const HAS_NAVIGATOR = typeof navigator !== "undefined";
 const IS_IPAD_PRO = HAS_NAVIGATOR && navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
 const IS_IOS = HAS_NAVIGATOR && (/iPad|iPhone|iPod/.test(navigator.userAgent) || IS_IPAD_PRO) && !undefined.MSStream;

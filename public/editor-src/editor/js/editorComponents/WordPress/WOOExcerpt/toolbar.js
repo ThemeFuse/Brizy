@@ -1,15 +1,15 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const { hex: paragraphColorHex } = getOptionColorHexByPalette(
+  const paragraphColor = getColor(
+    dvv("paragraphColorPalette"),
     dvv("paragraphColorHex"),
-    dvv("paragraphColorPalette")
+    dvv("paragraphColorOpacity")
   );
 
   return [
@@ -130,10 +130,7 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              paragraphColorHex,
-              dvv("paragraphColorOpacity")
-            )
+            backgroundColor: paragraphColor
           }
         }
       },

@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { isEditor } from "visual/providers/RenderProvider";
 import { renderStyles } from "visual/utils/cssStyle";
 
 const hasSubMenu = ({ items = [] }) =>
@@ -25,18 +26,18 @@ const getMMenuClassNames = (node) => {
   return classNames;
 };
 
-export function styleClassName(v, state) {
+export function styleClassName(v, state, renderContext) {
   const { className, liClasses, megaMenu, current } = v;
 
   return classnames("brz-menu__item", className, liClasses, {
-    "brz-menu__item--current": current && IS_EDITOR,
+    "brz-menu__item--current": current && isEditor(renderContext),
     "brz-menu__item-mega-menu": megaMenu === "on",
     "brz-menu__item-dropdown": hasDropDown(v),
     "brz-menu__item--opened": state.isOpen
   });
 }
 
-export function styleMmMenuClassName(v, menuItem) {
+export function styleMmMenuClassName(v, menuItem, renderContext) {
   const { className, liClasses, megaMenu, current } = v;
   const needMegaMenu = megaMenu === "on";
   const needDropDown = hasDropDown(v);
@@ -49,14 +50,14 @@ export function styleMmMenuClassName(v, menuItem) {
     liClasses,
     {
       "brz-mm-menu__item-empty": !needMegaMenu && !needDropDown,
-      "brz-menu__item--current": current && IS_EDITOR,
+      "brz-menu__item--current": current && isEditor(renderContext),
       "brz-mm-menu__item-mega-menu": needMegaMenu,
       "brz-mm-menu__item-dropdown": needDropDown
     }
   );
 }
 
-export function styleMegaMenu(v, vs, vd) {
+export function styleMegaMenu(data) {
   const styles = {
     ".brz &&:hover": {
       standart: ["cssStyleElementMegaMenuWidth"],
@@ -64,5 +65,5 @@ export function styleMegaMenu(v, vs, vd) {
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

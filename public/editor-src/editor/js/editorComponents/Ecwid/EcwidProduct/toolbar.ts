@@ -1,21 +1,20 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { getEcwidProducts } from "visual/utils/api";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { EcwidProductColumns, Value } from "./types/Value";
 
-export const getItems: GetItems<Value> = ({ v, device, state }) => {
-  const config = Config.getAll();
+export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
+  const config = component.getGlobalConfig();
 
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
   const columns = dvv("columns");
@@ -118,11 +117,6 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                     content:
                       "The product name always shows on top on the mobile version."
                   }
-                },
-                {
-                  id: "breadcrumbsDisplay",
-                  label: t("Breadcrumbs"),
-                  type: "switch"
                 },
                 {
                   id: "skuDisplay",
@@ -265,7 +259,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },

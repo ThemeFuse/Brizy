@@ -1,9 +1,8 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
@@ -14,9 +13,10 @@ export const getItems: GetItems<Value> = ({
 }): ToolbarItemType[] => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: totalProductsCountColorHex } = getOptionColorHexByPalette(
+  const totalProductsCountColor = getColor(
+    dvv("cartTotalProductsCountColorPalette"),
     dvv("cartTotalProductsCountColorHex"),
-    dvv("cartTotalProductsCountColorPalette")
+    dvv("cartTotalProductsCountColorOpacity")
   );
 
   return [
@@ -47,10 +47,7 @@ export const getItems: GetItems<Value> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              totalProductsCountColorHex,
-              dvv("cartTotalProductsCountColorOpacity")
-            )
+            backgroundColor: totalProductsCountColor
           }
         }
       },

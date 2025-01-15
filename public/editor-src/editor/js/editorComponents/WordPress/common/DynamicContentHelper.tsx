@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React, { ReactElement, useEffect } from "react";
 import Placeholder from "visual/component/Placeholder";
 import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
+import { isEditor, isView, useRender } from "visual/providers/RenderProvider";
 
 type Props<T extends keyof JSX.IntrinsicElements> = {
   placeholder: string;
@@ -25,12 +26,15 @@ export function DynamicContentHelper<T extends keyof JSX.IntrinsicElements>({
   placeholderIcon = "wp-shortcode",
   placeholderHeight,
   onSuccess,
-  blocked = IS_EDITOR,
+  blocked: _blocked,
   fallbackComponent
 }: Props<T>): ReactElement {
   const state = useDC(placeholder);
   const innerHtml = state.status === "success" ? state.data : placeholder;
   const status = state.status;
+  const { renderType } = useRender();
+
+  const blocked = _blocked !== undefined ? _blocked : isEditor(renderType);
 
   useEffect(() => {
     if (status === "success" && onSuccess) {
@@ -38,7 +42,7 @@ export function DynamicContentHelper<T extends keyof JSX.IntrinsicElements>({
     }
   }, [status, innerHtml, onSuccess]);
 
-  if (IS_PREVIEW || (status === "success" && !dataIsEmpty(innerHtml))) {
+  if (isView(renderType) || (status === "success" && !dataIsEmpty(innerHtml))) {
     const className = classnames(props?.className, { "brz-blocked": blocked });
     return React.createElement(tagName, {
       ...props,

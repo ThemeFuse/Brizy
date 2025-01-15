@@ -1,21 +1,23 @@
-import Config from "visual/global/Config";
+import { WithEditorMode, isStory } from "visual/global/EditorModeContext";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
+import { calendlySelector, getSizeCSSFn } from "./css";
 import { Value } from "./index";
 
 export function getItems({
   v,
-  device
+  device,
+  editorMode
 }: {
   v: Value;
   device: ResponsiveMode;
-}): ToolbarItemType[] {
+} & WithEditorMode): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const _isStory = isStory(editorMode);
 
   return [
     {
@@ -63,7 +65,8 @@ export function getItems({
                 {
                   id: "",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  selector: calendlySelector
                 }
               ]
             },
@@ -74,7 +77,8 @@ export function getItems({
                 {
                   id: "border",
                   type: "border",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  selector: calendlySelector
                 }
               ]
             },
@@ -85,7 +89,8 @@ export function getItems({
                 {
                   id: "boxShadow",
                   type: "boxShadow",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  selector: calendlySelector
                 }
               ]
             }
@@ -114,7 +119,8 @@ export function getItems({
               { value: "px", title: "px" },
               { value: "%", title: "%" }
             ]
-          }
+          },
+          style: getSizeCSSFn("width")
         },
         {
           id: "height",
@@ -124,7 +130,8 @@ export function getItems({
             min: 150,
             max: 1000,
             units: [{ value: "px", title: "px" }]
-          }
+          },
+          style: getSizeCSSFn("height")
         },
         {
           id: "grid",
@@ -168,7 +175,7 @@ export function getItems({
     {
       id: "advancedSettings",
       type: "sidebarTabsButton",
-      disabled: !isStory(Config.getAll()),
+      disabled: !_isStory,
       position: 110
     }
   ];

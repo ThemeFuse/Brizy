@@ -1,15 +1,14 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
 import type { Props, Value } from "./types";
-import { additionalColorOptions } from "./utils/toolbarExtensions";
+import { getAdditionalColorOptions } from "./utils/toolbarExtensions";
 
 export const getItems: GetItems<Value, Props> = (data) => {
-  const { v, device } = data;
-  const config = Config.getAll();
+  const { v, device, component } = data;
+  const config = component.getGlobalConfig();
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const isDisabledFilterCategory = dvv("showCategoryFilter") === "off";
@@ -362,7 +361,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
         }
       ]
     },
-    ...toolbarParentColors<Value, Props>(data, additionalColorOptions),
+    ...toolbarParentColors<Value, Props>(data, getAdditionalColorOptions()),
     {
       id: "horizontalAlign",
       type: "toggle",

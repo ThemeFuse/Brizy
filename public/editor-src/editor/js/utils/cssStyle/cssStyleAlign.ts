@@ -56,10 +56,11 @@ export function cssStyleFlexVerticalAlign({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readVerticalAlign(
-    styleAlignFlexVerticalAlign({ v, device, state, prefix })
+    styleAlignFlexVerticalAlign({ v, device, state, store, prefix })
   );
 
   return alignItems ? `align-items:${FlexVerticalAligns[alignItems]};` : "";
@@ -69,10 +70,11 @@ export function cssStyleFlexHorizontalAlign({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readHorizontalAlign(
-    styleAlignHorizontal({ v, device, state, prefix })
+    styleAlignHorizontal({ v, device, state, store, prefix })
   );
 
   return alignItems
@@ -84,6 +86,7 @@ export function cssStyleMarginAlign({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const aligns = {
@@ -92,7 +95,7 @@ export function cssStyleMarginAlign({
     right: "margin-left: auto; margin-right: 0;"
   };
   const alignment = readHorizontalAlign(
-    styleAlignHorizontal({ v, device, state, prefix })
+    styleAlignHorizontal({ v, device, state, store, prefix })
   );
 
   return alignment ? aligns[alignment] : "";
@@ -102,10 +105,11 @@ export function cssStyleFlexColumnVerticalAlign({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readVerticalAlign(
-    styleAlignFlexVerticalAlign({ v, device, state, prefix })
+    styleAlignFlexVerticalAlign({ v, device, state, store, prefix })
   );
 
   return alignItems ? `justify-content:${FlexVerticalAligns[alignItems]};` : "";
@@ -115,10 +119,11 @@ export function cssStyleFlexColumnHorizontalAlign({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readHorizontalAlign(
-    styleAlignHorizontal({ v, device, state, prefix })
+    styleAlignHorizontal({ v, device, state, store, prefix })
   );
 
   return alignItems ? `align-items:${FlexHorizontalAligns[alignItems]};` : "";
@@ -128,9 +133,10 @@ export function cssStyleTextAlign({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
-  const textAlign = styleAlignHorizontal({ v, device, state, prefix });
+  const textAlign = styleAlignHorizontal({ v, device, state, store, prefix });
 
   return textAlign ? `text-align:${textAlign};` : "";
 }
@@ -139,7 +145,8 @@ export function cssStyleContentAlign({
   v,
   device,
   state,
+  store,
   prefix = "content"
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix });
+  return cssStyleTextAlign({ v, device, state, store, prefix });
 }

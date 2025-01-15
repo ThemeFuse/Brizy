@@ -1,9 +1,15 @@
 import classnames from "classnames";
 import React from "react";
+import {
+  CustomVideoEdit,
+  ExternalVideoEdit,
+  PlaylistPreview,
+  Sidebar
+} from "visual/component/Controls/VideoPlaylist";
+import { isCustomVideo } from "visual/component/Controls/VideoPlaylist/utils";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { getImageUrl } from "visual/utils/image";
 import { getUrlQueryParam } from "visual/utils/url";
 import {
@@ -13,13 +19,6 @@ import {
 import defaultValue from "./defaultValue.json";
 import { styleContent } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { isCustomVideo } from "visual/component/Controls/VideoPlaylist/utils";
-import {
-  ExternalVideoEdit,
-  CustomVideoEdit,
-  PlaylistPreview,
-  Sidebar
-} from "visual/component/Controls/VideoPlaylist";
 import { getVideoAttributes } from "./utils";
 
 class VideoPlaylistItem extends EditorComponent {
@@ -94,21 +93,31 @@ class VideoPlaylistItem extends EditorComponent {
     } = v;
 
     const { onClick, active } = this.props;
+    const config = this.getGlobalConfig();
     const videoSrc = this.getVideoSrc(v);
-    const coverUrl = getImageUrl({
-      uid: coverImageSrc,
-      fileName: coverImageFileName,
-      sizeType: coverSizeType
-    });
+    const coverUrl = getImageUrl(
+      {
+        uid: coverImageSrc,
+        fileName: coverImageFileName,
+        sizeType: coverSizeType
+      },
+      config
+    );
 
     const classNameContent = classnames(
       "brz-video-playlist-video-item",
       { "brz-video-playlist-video-item__cover": v.coverImageSrc },
       { "brz-video-playlist-video-item--active": active },
-      css(
-        `${this.constructor.componentId}`,
+      this.css(
+        `${this.getComponentId()}`,
         `${this.getId()}`,
-        styleContent(v, vs, vd)
+        styleContent({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

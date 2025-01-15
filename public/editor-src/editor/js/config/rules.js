@@ -107,6 +107,9 @@ export default {
   "wrapper-ecwid-products": {
     showToolbar: "on"
   },
+  "wrapper-ecwid-favorites": {
+    showToolbar: "on"
+  },
   "column--carousel": {
     width: 100
   },

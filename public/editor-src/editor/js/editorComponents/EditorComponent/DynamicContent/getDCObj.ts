@@ -1,4 +1,5 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Dictionary } from "visual/types/utils";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { ECKeyDCInfo } from "../types";
@@ -20,6 +21,7 @@ export interface DCObjComplete {
   value: DCObjResult;
   details: DCObjDetails;
 }
+
 export interface DCObjIncomplete {
   type: "incomplete";
   _getCompleteAborted: boolean;
@@ -55,7 +57,7 @@ export const getDCObjPreview = (keys: ECKeyDCInfo[]): DCObjComplete => {
 
 // exported for testing purposes
 export const getDCObjEditor_ =
-  (apiProxy: DCApiProxy) =>
+  (apiProxy: DCApiProxy, config: ConfigCommon) =>
   (
     keys: ECKeyDCInfo[],
     context: EditorComponentContextValue
@@ -65,7 +67,8 @@ export const getDCObjEditor_ =
     const partialValue: DCObjResult = {};
     const details: DCObjDetails = {};
     const apiProxyConfig = {
-      postId: context.dynamicContent.itemId
+      postId: context.dynamicContent.itemId,
+      globalConfig: config
     };
 
     for (const keyDCInfo of keys) {
@@ -139,4 +142,5 @@ export const getDCObjEditor_ =
     }
   };
 
-export const getDCObjEditor = getDCObjEditor_(DCApiProxyInstance);
+export const getDCObjEditor = (config: ConfigCommon) =>
+  getDCObjEditor_(DCApiProxyInstance, config);

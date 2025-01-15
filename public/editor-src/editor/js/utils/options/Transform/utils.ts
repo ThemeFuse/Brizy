@@ -8,49 +8,12 @@ import { Value } from "visual/component/Controls/Transform/types/Value";
 import { FromElementModelGetter } from "visual/component/Options/Type";
 import { capByPrefix } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
-import { Obj } from "@brizy/readers";
-import { Type } from "visual/component/Controls/Transform/types/Patch";
-import { OptionPatch } from "visual/component/Options/types";
-import { Effects } from "./types";
 
 export const wrap =
   (prefix: string) =>
   (f: FromElementModelGetter): FromElementModelGetter =>
   (s): ReturnType<FromElementModelGetter> =>
     f(capByPrefix(prefix, s));
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type RecordType<T extends Record<any, any>> =
-  T extends Record<never, infer V> ? V : never;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const prefixKeys = <T extends Record<any, any>>(
-  prefix: string,
-  v: T
-): Record<string, RecordType<T>> => {
-  const acc: Record<string, RecordType<T>> = {};
-
-  for (const k in v) {
-    if (Object.prototype.hasOwnProperty.call(v, k)) {
-      acc[capByPrefix(prefix, k)] = v[k];
-    }
-  }
-
-  return acc;
-};
-
-export const flattenObject = (
-  v: Record<string, Record<string, unknown>>
-): Record<string, unknown> => {
-  const acc: Record<string, Primitive> = {};
-  for (const k in v) {
-    if (Object.prototype.hasOwnProperty.call(v, k)) {
-      Object.assign(acc, prefixKeys(k, v[k]));
-    }
-  }
-
-  return acc;
-};
 
 export const isEnabled = (get: FromElementModelGetter): boolean =>
   !!get("enabled");
@@ -200,75 +163,4 @@ export const getTransformCSSVars = (model: Partial<Value>): string => {
     flipVars,
     anchorVars
   );
-};
-
-export const hasEffect = (patch: Record<string, unknown>) => {
-  for (const [key, value] of Object.entries(patch)) {
-    if (
-      Effects.hasOwnProperty(key) &&
-      Obj.isObject(value) &&
-      Obj.length(value)
-    ) {
-      return true;
-    }
-  }
-  return false;
-};
-
-export const hasActive = (patch: Record<string, unknown>) => !!patch.active;
-
-export const getPatchType = (patch: OptionPatch<"transform">): MValue<Type> => {
-  if (patch.type) {
-    return patch.type;
-  }
-
-  const hasActiveType = hasActive(patch);
-  const hasEffectType = hasEffect(patch);
-
-  if (hasActiveType && hasEffectType) {
-    return Type.multiple;
-  }
-
-  if (hasActiveType) {
-    return Type.active;
-  }
-
-  if (hasEffectType) {
-    return Type.effect;
-  }
-};
-
-export const getEnabledEffects = (
-  patch: Record<string, unknown>
-): Record<string, boolean> =>
-  Object.entries(patch).reduce((acc, [key, value]) => {
-    // here is enough to check if the value is an object, because if the effect is not enabled, the value will be undefined
-    if (Obj.isObject(value) && Obj.length(value)) {
-      return {
-        ...acc,
-        [capByPrefix(key, "enabled")]: true
-      };
-    }
-    return acc;
-  }, {});
-
-export const flattEffects = (patch: Record<string, unknown>) => {
-  let newPatch = {};
-
-  for (const [key, value] of Object.entries(patch)) {
-    if (
-      Effects.hasOwnProperty(key) &&
-      Obj.isObject(value) &&
-      Obj.length(value)
-    ) {
-      newPatch = {
-        ...newPatch,
-        ...flattenObject({
-          [key]: value
-        })
-      };
-    }
-  }
-
-  return newPatch;
 };

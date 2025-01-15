@@ -4,8 +4,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { css } from "visual/utils/cssStyle";
-import * as sidebarConfig from "./sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
 import {
@@ -29,6 +27,7 @@ import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import { Props, Value } from "./types";
@@ -60,7 +59,17 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-ministryBrands",
       "brz-sermonLayout",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

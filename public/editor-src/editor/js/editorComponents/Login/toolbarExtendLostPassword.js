@@ -1,15 +1,15 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: lostColorHex } = getOptionColorHexByPalette(
+  const lostColor = getColor(
+    dvv("lostColorPalette"),
     dvv("lostColorHex"),
-    dvv("lostColorPalette")
+    dvv("lostColorOpacity")
   );
 
   return [
@@ -40,7 +40,7 @@ export function getItems({ v, device }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(lostColorHex, dvv("lostColorOpacity"))
+            backgroundColor: lostColor
           }
         }
       },

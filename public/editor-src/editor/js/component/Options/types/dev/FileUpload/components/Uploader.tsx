@@ -8,12 +8,12 @@ import React, {
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { WithValue } from "visual/component/Options/types/dev/FileUpload/types/Value";
-import Config from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
   FileUploadData,
   Response
 } from "visual/global/Config/types/configs/common";
+import { useConfig } from "visual/global/hooks";
 import { t } from "visual/utils/i18n";
 import {
   Actions,
@@ -57,6 +57,8 @@ export function Uploader({
   componentId,
   onChange
 }: Props): ReactElement {
+  const config = useConfig();
+
   const [state, dispatch] = useReducer(
     (s: State, a: Actions): State => {
       switch (a.type) {
@@ -95,11 +97,10 @@ export function Uploader({
   const isEmpty = useMemo(() => type === "Empty", [type]);
   const isErr = useMemo(() => type === "Err", [type]);
 
-  useEffect(() => {
-    if (isLoading) {
-      const { api = {} } = Config.getAll();
-      const { customFile = {} } = api;
+  const customFile = config.api?.customFile;
 
+  useEffect(() => {
+    if (isLoading && customFile) {
       if (!customFile.addFile) {
         ToastNotification.error(t("Config : Missing addFile callback"));
         return;
@@ -118,7 +119,7 @@ export function Uploader({
         componentId
       });
     }
-  }, [isLoading, extensions, componentId]);
+  }, [isLoading, extensions, componentId, customFile]);
 
   useEffect(() => {
     if (isWithFile) {

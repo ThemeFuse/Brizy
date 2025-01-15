@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import { ConditionsComponent } from "visual/component/ConditionsComponent";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { t } from "visual/utils/i18n";
 import { Props } from "./types";
 import { useConditions } from "./utils";
@@ -10,7 +10,7 @@ export const PopupCondition = ({
   className: _className,
   attr: _attr = {}
 }: Props) => {
-  const config = Config.getAll();
+  const config = useConfig();
   const { className: attrClassName, ...rest } = _attr;
   const className = classNames(
     "brz-ed-option__popup_conditions",

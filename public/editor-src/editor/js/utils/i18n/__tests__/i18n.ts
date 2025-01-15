@@ -1,13 +1,47 @@
+import { I18n } from "../I18n";
 import { makeAttr, makeDataAttr, makeDataAttrString } from "../attribute";
-import { translate } from "../translate";
+import { t } from "../t";
 
 describe("Testing 'translate' function", function () {
+  I18n.init({
+    resources: {
+      key: "cheie",
+      hello: "Noroc"
+    }
+  });
+
   test("Should return key if it's not in the dictionary", () => {
-    expect(translate({}, "key")).toBe("key");
+    expect(I18n.t("key1")).toBe("key1");
   });
 
   test("Should return translation if key is present in the dictionary", () => {
-    expect(translate({ key: "cheie" }, "key")).toBe("cheie");
+    expect(I18n.t("key")).toBe("cheie");
+  });
+
+  test("Should return translation if key is present in the dictionary", () => {
+    expect(I18n.t("hello")).toBe("Noroc");
+  });
+
+  test("T fn: Should return key if it's not in the dictionary", () => {
+    expect(t("key1")).toBe("key1");
+  });
+
+  test("T fn: Should return translation if key is present in the dictionary", () => {
+    expect(t("key")).toBe("cheie");
+  });
+
+  test("Should return translation if key is present in the dictionary", () => {
+    expect(t("hello")).toBe("Noroc");
+  });
+
+  test("Update instance t", () => {
+    I18n.update({
+      resources: {
+        key: "cheie reinoita"
+      }
+    });
+    expect(t("hello")).toBe("hello");
+    expect(t("key")).toBe("cheie reinoita");
   });
 });
 

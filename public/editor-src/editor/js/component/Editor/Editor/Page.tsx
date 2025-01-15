@@ -1,19 +1,29 @@
-import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback, useMemo } from "react";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
-import { Root } from "visual/component/Root";
+import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
+import { useConfig } from "visual/global/hooks";
+import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { updateBlocks } from "visual/redux/actions2";
 import {
   pageDataDraftBlocksSelector,
   stateSelector
 } from "visual/redux/selectors";
-import { areStatesEqual } from "../utils";
 import { t } from "visual/utils/i18n";
+import { areStatesEqual, getPageId } from "../utils";
+import { Props } from "./types";
 
-const Page = (): JSX.Element => {
+const Page = (props: Props): JSX.Element => {
+  const { mode } = props;
   const dispatch = useDispatch();
   const state = useSelector(stateSelector, areStatesEqual);
+  const store = useStore();
+  const config = useConfig();
+  // @ts-expect-error: ConfigCommon to Config
+  const pageId = getPageId(config);
+  const modulesGroup = config.dynamicContent?.groups;
+  const groups = useMemo(() => modulesGroup, [modulesGroup]);
 
   const handlePageChange = useCallback(
     ({ items: blocks }, meta) => {
@@ -30,16 +40,21 @@ const Page = (): JSX.Element => {
   }
 
   return (
-    <Root>
-      {/* @ts-expect-error: Missing EditorComponent props */}
-      <Page
-        dbValue={pageData}
-        reduxState={state}
-        reduxDispatch={dispatch}
-        onChange={handlePageChange}
-      />
-      <DraggableOverlay />
-    </Root>
+    <RootContainer className="brz brz-ed" editorMode={mode}>
+      <EditorComponentProvider pageId={pageId} groups={groups}>
+        {/* @ts-expect-error: Missing EditorComponent props */}
+        <Page
+          dbValue={pageData}
+          reduxState={state}
+          reduxStore={store}
+          reduxDispatch={dispatch}
+          onChange={handlePageChange}
+          renderContext="editor"
+          editorMode={mode}
+        />
+        <DraggableOverlay />
+      </EditorComponentProvider>
+    </RootContainer>
   );
 };
 

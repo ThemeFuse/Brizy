@@ -11,6 +11,7 @@ import {
   SimpleValue
 } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { useConfig, usePro } from "visual/global/hooks";
 import { WithClassName, WithConfig, WithId } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
@@ -51,6 +52,10 @@ export const Tabs = ({
   const [_value, setValue] = useState(value);
   const _onChange = useCallback(setValue, [setValue]);
 
+  const cnfg = useConfig();
+
+  const pro = usePro();
+
   useEffect(() => {
     if (saveTab) {
       onChange({ value: _value });
@@ -76,7 +81,13 @@ export const Tabs = ({
               label={label}
               className={className}
             >
-              <Options wrapOptions={false} data={options} toolbar={toolbar} />
+              <Options
+                wrapOptions={false}
+                data={options}
+                toolbar={toolbar}
+                isPro={pro}
+                upgradeToPro={cnfg?.urls?.upgradeToPro}
+              />
             </Tab>
           );
         }

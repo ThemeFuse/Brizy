@@ -1,6 +1,8 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { EcwidProductId } from "visual/global/Ecwid";
 import { request } from "../../utils/api";
 import { Product } from "./types/Product";
+
 
 /**
  * https://api-docs.ecwid.com/reference/search-products#searchresult
@@ -40,14 +42,18 @@ export class Products {
    *
    * https://api-docs.ecwid.com/reference/search-products
    */
-  search(): Promise<ProductsList> {
-    return request(`${this.baseUrl}/products`).then((r) => r.json());
+  search(config: ConfigCommon): Promise<ProductsList> {
+    return request(`${this.baseUrl}/products`, {}, config).then((r) =>
+      r.json()
+    );
   }
 
   /**
    * Get all details of a specific product in an Ecwid store by its ID.
    */
-  getById(id: EcwidProductId): Promise<Product> {
-    return request(`${this.baseUrl}/products/${id}`).then((r) => r.json());
+  getById(id: EcwidProductId, config: ConfigCommon): Promise<Product> {
+    return request(`${this.baseUrl}/products/${id}`, {}, config).then((r) =>
+      r.json()
+    );
   }
 }

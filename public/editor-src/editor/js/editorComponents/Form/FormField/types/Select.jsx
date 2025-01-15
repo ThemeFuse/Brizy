@@ -1,18 +1,24 @@
 import React from "react";
 import { addLast, removeAt, replaceAt } from "timm";
 import _ from "underscore";
+import { connect } from "react-redux";
+import { deviceModeSelector } from "visual/redux/selectors";
 import ClickOutside from "visual/component/ClickOutside";
 import SelectControl from "visual/component/Controls/Select";
 import SelectControlItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { getStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import TextField from "./common/TextField";
 
-export default class Select extends TextField {
+const mapState = (state) => ({
+  deviceMode: deviceModeSelector(state)
+});
+const connector = connect(mapState);
+
+class Select extends TextField {
   static get componentTitle() {
     return t("Select");
   }
@@ -60,7 +66,7 @@ export default class Select extends TextField {
   };
 
   renderOptions = () => {
-    const isDesktop = getStore().getState().ui.deviceMode === "desktop";
+    const isDesktop = this.props.deviceMode === "desktop";
     return _.map(this.props.options, (item, index) => {
       return (
         <div key={index} className="brz-forms__select-item">
@@ -85,7 +91,7 @@ export default class Select extends TextField {
   };
 
   renderForEdit = (v) => {
-    const isDesktop = getStore().getState().ui.deviceMode === "desktop";
+    const isDesktop = this.props.deviceMode === "desktop";
     const { isOpen, newItemValue } = this.state;
     const scrollPaneHeight =
       (this.props.options.length + Number(isDesktop)) * 52;
@@ -169,3 +175,5 @@ export default class Select extends TextField {
     );
   };
 }
+
+export default connector(Select);

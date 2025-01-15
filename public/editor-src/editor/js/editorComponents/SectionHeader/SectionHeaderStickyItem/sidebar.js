@@ -1,22 +1,23 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { getShapes } from "visual/utils/options";
 
-export const title = t("Header");
+export const title = () => t("Header");
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: shapeTopColorHex } = getOptionColorHexByPalette(
+  const shapeTopColor = getColor(
+    dvv("shapeTopColorPalette"),
     dvv("shapeTopColorHex"),
-    dvv("shapeTopColorPalette")
+    dvv("shapeTopColorOpacity")
   );
 
-  const { hex: shapeBottomColorHex } = getOptionColorHexByPalette(
+  const shapeBottomColor = getColor(
+    dvv("shapeBottomColorPalette"),
     dvv("shapeBottomColorHex"),
-    dvv("shapeBottomColorPalette")
+    dvv("shapeBottomColorOpacity")
   );
 
   const isShapeTopType = dvv("shapeTopType") === "none";
@@ -98,10 +99,7 @@ export function getItems({ v, device }) {
                                 title: t("Color"),
                                 icon: {
                                   style: {
-                                    backgroundColor: hexToRgba(
-                                      shapeTopColorHex,
-                                      dvv("shapeTopColorOpacity")
-                                    )
+                                    backgroundColor: shapeTopColor
                                   }
                                 }
                               },
@@ -170,10 +168,7 @@ export function getItems({ v, device }) {
                                 title: t("Color"),
                                 icon: {
                                   style: {
-                                    backgroundColor: hexToRgba(
-                                      shapeBottomColorHex,
-                                      dvv("shapeBottomColorOpacity")
-                                    )
+                                    backgroundColor: shapeBottomColor
                                   }
                                 }
                               },

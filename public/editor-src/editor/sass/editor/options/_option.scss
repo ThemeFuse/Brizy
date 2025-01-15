@@ -124,7 +124,7 @@
 
   &__advanced {
     padding: 14px 0 12px 12px;
-    color: $white;
+    color: $toolbar__item-color;
     transition: color 0.2s linear;
     font-size: 0;
 
@@ -210,7 +210,7 @@
   }
 }
 
-.brz-ed-option__label span{
+.brz-ed-option__label span {
   word-break: break-word;
   overflow: hidden;
   display: -webkit-box;

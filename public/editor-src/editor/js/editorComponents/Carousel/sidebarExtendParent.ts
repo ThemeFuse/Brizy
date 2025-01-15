@@ -2,7 +2,7 @@ import { t } from "visual/utils/i18n";
 import { GetItems } from "../EditorComponent/types";
 import { Value } from "./types";
 
-export const title = t("Carousel");
+export const title = () => t("Carousel");
 
 const getHtml = () => {
   return `

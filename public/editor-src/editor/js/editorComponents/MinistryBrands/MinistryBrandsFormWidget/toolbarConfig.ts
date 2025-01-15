@@ -1,11 +1,10 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { Props, Value } from "./types";
 
-export const getItems: GetItems<Value, Props> = () => {
-  const config = Config.getAll();
+export const getItems: GetItems<Value, Props> = ({ component }) => {
+  const config = component.getGlobalConfig();
 
   return [
     {

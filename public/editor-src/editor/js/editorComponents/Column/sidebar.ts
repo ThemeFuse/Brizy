@@ -1,18 +1,22 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
 
-export const title = t("Column");
+export const title = () => t("Column");
 
-export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
+export const getItems: GetItems<ElementModel> = ({
+  v,
+  device,
+  context,
+  editorMode
+}) => {
   const toolbarTagsChoices = [
     { title: "Div", value: "div" },
     { title: t("Header"), value: "header" },
@@ -30,7 +34,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
     type: DCTypes.richText
   });
 
-  const IS_STORY = isStory(Config.getAll());
+  const _isStory = isStory(editorMode);
   const hoverName = readString(dvv("hoverName")) ?? "none";
 
   return [
@@ -252,7 +256,7 @@ export const getItems: GetItems<ElementModel> = ({ v, device, context }) => {
                     {
                       id: "hover",
                       type: "animation",
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       config: {
                         types: hoverEffects,

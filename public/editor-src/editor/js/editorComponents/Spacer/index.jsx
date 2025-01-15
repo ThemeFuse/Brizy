@@ -1,10 +1,9 @@
-import classnames from "classnames";
 import { Gap } from "@brizy/component";
+import classnames from "classnames";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -41,10 +40,16 @@ class Spacer extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const className = classnames(
       "brz-spacer",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -70,10 +75,16 @@ class Spacer extends EditorComponent {
   renderForView(v, vs, vd) {
     const className = classnames(
       "brz-spacer",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

@@ -14,12 +14,19 @@ import {
   styleTypography2LineHeight
 } from "visual/utils/style2";
 
-export function cssStyleElementPostNavigation2TitleFontFamily({ v, device }) {
+export function cssStyleElementPostNavigation2TitleFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
   return device === "desktop"
     ? `font-family:${styleTypography2FontFamily({
+        store,
         v,
         device,
-        prefix: "titleTypography"
+        prefix: "titleTypography",
+        renderContext
       })};`
     : "";
 }
@@ -77,12 +84,19 @@ export function cssStyleElementPostNavigationTitleTextTransform({ v, device }) {
     prefix: "titleTypography"
   });
 }
-export function cssStyleElementPostNavigation2PostFontFamily({ v, device }) {
+export function cssStyleElementPostNavigation2PostFontFamily({
+  v,
+  device,
+  store,
+  renderContext
+}) {
   return device === "desktop"
     ? `font-family:${styleTypography2FontFamily({
         v,
         device,
-        prefix: "postTypography"
+        store,
+        prefix: "postTypography",
+        renderContext
       })};`
     : "";
 }
@@ -165,8 +179,8 @@ export function cssStyleElementPostNavigationSpacing({ v, device, state }) {
   return spacing === undefined
     ? ""
     : showPost === "off"
-    ? "margin-bottom: 0;"
-    : `margin-bottom:${spacing}px`;
+      ? "margin-bottom: 0;"
+      : `margin-bottom:${spacing}px`;
 }
 
 export function cssStyleElementPostNavigationShowSeparation({

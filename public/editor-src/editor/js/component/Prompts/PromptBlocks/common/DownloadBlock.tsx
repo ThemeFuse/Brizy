@@ -2,7 +2,6 @@ import { match } from "fp-utilities";
 import React, { ReactElement, useCallback, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import Config from "visual/global/Config";
 import {
   getSavedBlockById,
   getSavedLayoutById,
@@ -18,10 +17,12 @@ import {
   isPopup
 } from "../common/utils";
 import { BlockTypes } from "../types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export interface Props {
   id: string;
   type: BlockTypes;
+  config: ConfigCommon;
 }
 
 const showNotification = (type: BlockTypes): void => {
@@ -34,7 +35,7 @@ const showNotification = (type: BlockTypes): void => {
 };
 
 export const DownloadBlock = (props: Props): ReactElement => {
-  const { id, type } = props;
+  const { id, type, config } = props;
   const [loading, setLoading] = useState(false);
   const rootEl = useRef<HTMLDivElement>(null);
   const [src, setSrc] = useState<undefined | string>(undefined);
@@ -42,11 +43,11 @@ export const DownloadBlock = (props: Props): ReactElement => {
   const handleDownload = useCallback(async () => {
     setLoading(true);
     setSrc(undefined);
-    const config = Config.getAll();
+
     const getBlock = match(
-      [isBlock, () => getSavedBlockById(id, config)],
-      [isLayout, () => getSavedLayoutById(id, config)],
-      [isPopup, () => getSavedPopupById(id, config)]
+      [isBlock, () => getSavedBlockById(id, config.api)],
+      [isLayout, () => getSavedLayoutById(id, config.api)],
+      [isPopup, () => getSavedPopupById(id, config.api)]
     );
 
     try {
@@ -55,7 +56,7 @@ export const DownloadBlock = (props: Props): ReactElement => {
 
       if (node) {
         const isPro = blockIsPro({ models: data, config });
-        const url = getExportBlocksUrls(type, id, isPro);
+        const url = getExportBlocksUrls(type, id, isPro, config);
         const contentType = await getContentType(url);
 
         if (
@@ -79,7 +80,7 @@ export const DownloadBlock = (props: Props): ReactElement => {
         showNotification(type);
       }
     }
-  }, [id, type, rootEl]);
+  }, [id, type, rootEl, config]);
 
   const handleCheck = useCallback(() => {
     setSrc(undefined);

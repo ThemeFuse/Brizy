@@ -13,7 +13,9 @@ class Options extends React.Component {
     location: "",
     data: null,
     toolbar: null,
-    wrapOptions: true
+    wrapOptions: true,
+    isPro: false,
+    upgradeToPro: ""
   };
 
   render() {
@@ -23,7 +25,9 @@ class Options extends React.Component {
       optionClassName,
       toolbar,
       location,
-      wrapOptions
+      wrapOptions,
+      isPro,
+      upgradeToPro
     } = this.props;
     const options = data.map((optionData, index) => (
       <Option
@@ -32,6 +36,8 @@ class Options extends React.Component {
         toolbar={toolbar}
         data={optionData}
         location={location}
+        isPro={isPro}
+        upgradeToPro={upgradeToPro}
       />
     ));
 

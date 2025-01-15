@@ -10,7 +10,6 @@ import { Spacer } from "visual/component/Controls/Spacer";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
 import { validateEmail } from "visual/component/Prompts/common/utils";
-import Config, { isWp } from "visual/global/Config";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
@@ -101,8 +100,14 @@ class SignIn extends Component<SingInProps, SignInState> {
 
   handleConnect = (): void => {
     const { username, password } = this.state.formData;
-    const { onSuccess, onClose, updateAuthorization, updateSyncAllowed } =
-      this.props;
+    const {
+      onSuccess,
+      onClose,
+      updateAuthorization,
+      updateSyncAllowed,
+      checkCompatibilityAfter,
+      config
+    } = this.props;
 
     this.setState({
       notice: null,
@@ -110,10 +115,13 @@ class SignIn extends Component<SingInProps, SignInState> {
     });
 
     if (username.trim() && password.trim()) {
-      signIn({
-        password,
-        email: username
-      })
+      signIn(
+        {
+          password,
+          email: username
+        },
+        config
+      )
         .then((r) => {
           if (!r.status || r.status >= 400) {
             throw r;
@@ -121,8 +129,8 @@ class SignIn extends Component<SingInProps, SignInState> {
             updateAuthorization("connected");
             setAuthorized("connected");
 
-            if (isWp(Config.getAll())) {
-              checkCompatibility().then((r) => {
+            if (checkCompatibilityAfter) {
+              checkCompatibility(config).then((r) => {
                 const { status, data } = r || {};
 
                 if (!status || status >= 400) {
@@ -179,6 +187,7 @@ class SignIn extends Component<SingInProps, SignInState> {
 
   handleRecover = async (): Promise<void> => {
     const { recoverEmail } = this.state.formData;
+    const { config } = this.props;
 
     this.setState({
       notice: null,
@@ -198,7 +207,7 @@ class SignIn extends Component<SingInProps, SignInState> {
     }
 
     if (recoverEmail.trim()) {
-      recoveryEmail(recoverEmail)
+      recoveryEmail(recoverEmail, config)
         .then((r) => {
           if (!r.status || r.status >= 400) {
             throw r;

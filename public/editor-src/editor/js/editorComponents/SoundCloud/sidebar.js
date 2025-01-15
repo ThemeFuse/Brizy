@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("SoundCloud");
+export const title = () => t("SoundCloud");
 
 export function getItems() {
   return [

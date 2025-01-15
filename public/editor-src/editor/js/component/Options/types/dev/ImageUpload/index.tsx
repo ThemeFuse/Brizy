@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useCallback, useMemo } from "react";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import { Component } from "./Types";
@@ -14,16 +14,21 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
     "brz-ed-option__inline"
   );
 
+  const globalConfig = useConfig();
+
+  const { addMedia } = globalConfig.api?.media ?? {};
+
   const disableSizes = config?.disableSizes ?? false;
+  const imageSizes = globalConfig.imageSizes;
   const sizes = useMemo(
     () => [
       {
         value: "custom",
         label: t("Custom")
       },
-      ...(Config.getAll().imageSizes ?? []).map(configSizeToSize)
+      ...(imageSizes ?? []).map(configSizeToSize)
     ],
-    []
+    [imageSizes]
   );
 
   const onImageChange = useCallback(
@@ -83,6 +88,8 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
         sizes={!disableSizes && value.extension !== "svg" ? sizes : undefined}
         onSizeChange={onTypeChange}
         acceptedExtensions={config?.acceptedExtensions}
+        addMedia={addMedia}
+        globalConfig={globalConfig}
       />
     </>
   );

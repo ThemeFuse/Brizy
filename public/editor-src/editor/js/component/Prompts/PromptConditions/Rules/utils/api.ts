@@ -1,12 +1,14 @@
 import { isT } from "fp-utilities";
 import { Dictionary } from "visual/types/utils";
 import { getCustomersAndCollectionTypes } from "visual/utils/api/cms";
+import { CreateApolloClientProps } from "visual/utils/api/cms/graphql/apollo";
 import { GetCustomerAndCollection_customers_collection as CustomerAPI } from "visual/utils/api/cms/graphql/types/GetCustomerAndCollection";
 
 export interface Base {
   value: string;
   title: string;
 }
+
 interface Collection extends Base {
   slug?: string | null;
 }
@@ -41,8 +43,10 @@ const formatCustomer = (c: CustomerAPI): Base => {
   };
 };
 
-export async function getCustomerAndCollectionTypes(): Promise<GetCustomersAndCollectionTypes> {
-  const r = await getCustomersAndCollectionTypes();
+export async function getCustomerAndCollectionTypes(
+  data: CreateApolloClientProps
+): Promise<GetCustomersAndCollectionTypes> {
+  const r = await getCustomersAndCollectionTypes(data);
   const { collectionTypes, customers, customerGroups } = r;
 
   const _collectionTypes = collectionTypes.filter(

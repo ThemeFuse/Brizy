@@ -1,8 +1,6 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { ToElementModel } from "visual/component/Options/Type";
 import { OptionName, OptionValue } from "visual/component/Options/types";
-import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { defaultValueKey } from "visual/utils/onChange";
 import { toElementModel as ai } from "visual/utils/options/AiText/converters";
 import { toElementModel as alert } from "visual/utils/options/Alert/converters";
 import { toElementModel as animation } from "visual/utils/options/Animation/converters";
@@ -63,9 +61,6 @@ import { toElementModel as fontStyleEditor } from "visual/utils/options/FontStyl
 import { toElementModel as popupCondition } from "visual/utils/options/PopupCondition/converters";
 import { toElementModel as showOnDevice } from "visual/utils/options/ShowOnDevice/converters";
 import { toElementModel as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { getOptionModel } from "./fromElementModel";
 import { toElementModel as symbols } from "visual/utils/options/Symbols/converters";
 
 type ToElementModelFns = {
@@ -153,58 +148,3 @@ export const toElementModel = <T extends OptionName>(
     }, {} as ElementModel);
   };
 };
-
-export const getElementModelFromOption = <T extends OptionName>({
-  id,
-  type,
-  device,
-  state,
-  v
-}: {
-  id: string;
-  type: T;
-  device: ResponsiveMode;
-  state: State;
-  v: ElementModel;
-}) => {
-  const getKey = (id: string, key: string, isDev: boolean) => {
-    return id === "tabsState" || !isDev
-      ? id
-      : defaultValueKey({
-          key: createOptionId(id, key),
-          device,
-          state
-        });
-  };
-
-  const elementModel = toElementModel<typeof type>(type, (key) =>
-    getKey(id, key, true)
-  );
-
-  const value = getOptionModel<T>({
-    id,
-    type,
-    v,
-    breakpoint: device,
-    state
-  });
-
-  return elementModel(value);
-};
-
-export const getElementMoldelKeysFromOption = <T extends OptionName>({
-  id,
-  type,
-  v,
-  device,
-  state
-}: {
-  id: string;
-  type: T;
-  device: ResponsiveMode;
-  state: State;
-  v: ElementModel;
-}) =>
-  Object.keys(getElementModelFromOption({ id, type, v, device, state })).filter(
-    (k) => !k.startsWith("temp")
-  );

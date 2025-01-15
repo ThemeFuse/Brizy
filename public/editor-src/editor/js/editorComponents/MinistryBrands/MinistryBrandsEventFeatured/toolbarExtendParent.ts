@@ -1,14 +1,13 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { getEkklesiaChoiches } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
-import { helperDateFormatInputHTML } from "../utils/helpers";
+import { getHelperDateFormatInputHTML } from "../utils/helpers";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = (data) => {
-  const config = Config.getAll();
+  const config = data.component.getGlobalConfig();
   const { v, device } = data;
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
@@ -280,7 +279,7 @@ export const getItems: GetItems<Value, Props> = (data) => {
                   devices: "desktop",
                   helper: {
                     enabled: true,
-                    content: helperDateFormatInputHTML
+                    content: getHelperDateFormatInputHTML()
                   },
                   label: t("Date Format")
                 }

@@ -1,4 +1,4 @@
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -15,8 +15,12 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
+    dvv("bgColorHex"),
+    dvv("bgColorOpacity")
+  );
 
-  const { bgColorHex, bgColorHexOpacity } = v;
   return [
     {
       id: "toolbarShowHideButton",
@@ -67,7 +71,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, bgColorHexOpacity)
+            backgroundColor: bgColor
           }
         }
       },

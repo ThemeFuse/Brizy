@@ -1,8 +1,9 @@
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
+import { DynamicStylesProps } from "visual/types";
 
-export function styleItem(v: Value, vs: Value, vd: Value): OutputStyle {
+export function styleItem(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
     ".brz &&": {
       standart: [
@@ -14,5 +15,5 @@ export function styleItem(v: Value, vs: Value, vd: Value): OutputStyle {
       standart: ["cssStyleElementShareButtonColumnsIcon"]
     }
   };
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

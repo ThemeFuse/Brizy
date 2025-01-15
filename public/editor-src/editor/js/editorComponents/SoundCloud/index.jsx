@@ -1,16 +1,16 @@
-import React from "react";
 import classnames from "classnames";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import CustomCSS from "visual/component/CustomCSS";
+import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
-import * as sidebarConfig from "./sidebar";
-import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
-import defaultValue from "./defaultValue.json";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isEditor } from "visual/providers/RenderProvider";
 import { Wrapper } from "../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
 const resizerPoints = [
   "topLeft",
@@ -30,7 +30,7 @@ class SoundCloud extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  handleResizerChange = patch => this.patchValue(patch);
+  handleResizerChange = (patch) => this.patchValue(patch);
 
   getResizerRestrictions(v) {
     return {
@@ -73,17 +73,23 @@ class SoundCloud extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const className = classnames(
       "brz-soundcloud",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     // intrinsic-ignore - this class is needed for WP theme twentytwenty(themes/twentytwenty/assets/js/index.js?ver=1.1)
     // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
     // and breaks our code(video, map inside megamenu isn't showing as example)
     const wrapperClassName = classnames("brz-iframe", "intrinsic-ignore", {
-      "brz-blocked": IS_EDITOR
+      "brz-blocked": isEditor(this.renderContext)
     });
     let { url, autoPlay, showArtwork } = v;
     autoPlay = autoPlay === "on";

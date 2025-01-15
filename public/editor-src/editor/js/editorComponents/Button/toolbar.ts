@@ -1,42 +1,49 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { isPopup, isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Props, Value } from "./types";
 import { getMaxBorderRadius } from "./utils";
 
-export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
-  const config = Config.getAll();
-
-  const IS_STORY = isStory(config);
-  const IS_GLOBAL_POPUP = isPopup(config);
+export const getItems: GetItems<Value, Props> = ({
+  v,
+  device,
+  component,
+  editorMode
+}) => {
+  const _isStory = isStory(editorMode);
+  const _isPopup = isPopup(editorMode);
 
   const inPopup = Boolean(component.props.meta?.sectionPopup);
   const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
 
   const context = component.context;
 
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const maxBorderRadius = getMaxBorderRadius(v, device);
+  // Used getReduxStore() to retrieve the latest state
+  const maxBorderRadius = getMaxBorderRadius({
+    v,
+    device,
+    store: component.getReduxStore()
+  });
 
   // Colors
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
-  const { hex: colorHex } = getOptionColorHexByPalette(
+
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   const richTextDC = getDynamicContentOption({
@@ -53,9 +60,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const type = dvv("type");
   const linkPopup = dvv("linkPopup");
   const fillType = dvv("fillType");
-
-  const colorOpacity = dvv("colorOpacity");
-  const bgColorOpacity = dvv("bgColorOpacity");
 
   const submitType = type === "submit";
   const searchType = type === "search";
@@ -92,7 +96,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "sizeGroup",
                   type: "group",
                   position: 10,
-                  disabled: IS_STORY,
+                  disabled: _isStory,
                   options: [
                     {
                       id: "size",
@@ -164,7 +168,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                       disabled: customBorderRadius,
                       config: {
                         min: 0,
-                        max: IS_STORY ? 100 : maxBorderRadius,
+                        max: _isStory ? 100 : maxBorderRadius,
                         units: [{ title: "px", value: "px" }]
                       }
                     }
@@ -302,10 +306,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor:
-              fillType === "filled"
-                ? hexToRgba(bgColorHex, bgColorOpacity)
-                : hexToRgba(colorHex, colorOpacity)
+            backgroundColor: fillType === "filled" ? bgColor : color
           }
         }
       },
@@ -438,7 +439,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "linkAnchor",
                   label: t("Block"),
                   type: "blockThumbnail",
-                  disabled: IS_GLOBAL_POPUP || IS_STORY
+                  disabled: _isPopup || _isStory
                 }
               ]
             },
@@ -448,7 +449,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               options: [
                 {
                   id: "linkPopup",
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP || IS_STORY,
+                  disabled: inPopup || inPopup2 || _isPopup || _isStory,
                   type: "promptAddPopup",
                   label: t("Popup"),
                   config: {
@@ -467,7 +468,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   id: "linkToSlide",
                   type: "number",
                   label: t("Slide"),
-                  disabled: !IS_STORY,
+                  disabled: !_isStory,
                   config: {
                     min: 1,
                     max: 1000000

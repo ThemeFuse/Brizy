@@ -1,9 +1,8 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 
 export interface Value extends ElementModel {
@@ -22,9 +21,10 @@ export function getItems({
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: iconsColorHex } = getOptionColorHexByPalette(
+  const iconsColor = getColor(
+    dvv("iconsColorPalette"),
     dvv("iconsColorHex"),
-    dvv("iconsColorPalette")
+    dvv("iconsColorOpacity")
   );
 
   return [
@@ -100,7 +100,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(iconsColorHex, dvv("iconsColorOpacity"))
+            backgroundColor: iconsColor
           }
         }
       },

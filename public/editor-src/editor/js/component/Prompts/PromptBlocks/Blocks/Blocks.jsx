@@ -4,6 +4,7 @@ import _ from "underscore";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
+import { EditorModeContext } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
@@ -14,6 +15,24 @@ let defaultFilter = {
   type: "light",
   category: "*",
   search: ""
+};
+
+const storyGrid = {
+  columns: 5,
+  responsive: [
+    {
+      breakpoint: 1460,
+      settings: {
+        columns: 4
+      }
+    },
+    {
+      breakpoint: 1200,
+      settings: {
+        columns: 3
+      }
+    }
+  ]
 };
 
 class Blocks extends Component {
@@ -30,8 +49,20 @@ class Blocks extends Component {
     onAddBlocks: _.noop,
     onClose: _.noop,
     onChange: _.noop,
-    onChangeKit: _.noop
+    onChangeKit: _.noop,
+    isPro: false,
+    isStory: false,
+    upgradeToPro: ""
   };
+
+  adjustFilter() {
+    const { types } = this.props;
+    const machTypes = types.find((type) => type.name === defaultFilter.type);
+
+    if (types.length && machTypes === undefined) {
+      defaultFilter.type = types[0].name;
+    }
+  }
 
   filterData = (item, currentFilter) => {
     const typeMatch = item.type.includes(currentFilter.type);
@@ -121,16 +152,23 @@ class Blocks extends Component {
       showSidebar,
       HeaderSlotLeft,
       onChangeKit,
-      onChange
+      onChange,
+      isPro,
+      isStory,
+      upgradeToPro
     } = this.props;
 
     if (loading) {
       return this.renderLoading();
     }
 
+    if (types.length < 2) {
+      this.adjustFilter();
+    }
+
     const showImportKit =
       kits.filter(({ id }) => id !== selectedKit).length > 0;
-    const showType = types.length > 0;
+    const showType = types.length > 1;
     const showCategories = categories.length > 0;
 
     return (
@@ -199,10 +237,19 @@ class Blocks extends Component {
               <div className="brz-ed-popup-two-body__content">
                 <Scrollbars>
                   {filteredThumbnails.length > 0 ? (
-                    <ThumbnailGrid
-                      data={filteredThumbnails}
-                      onThumbnailAdd={onChange}
-                    />
+                    <EditorModeContext.Consumer>
+                      {(editorMode) => (
+                        <ThumbnailGrid
+                          data={filteredThumbnails}
+                          onThumbnailAdd={onChange}
+                          isStory={isStory}
+                          isPro={isPro}
+                          upgradeToPro={upgradeToPro}
+                          editorMode={editorMode}
+                          {...(isStory ? storyGrid : {})}
+                        />
+                      )}
+                    </EditorModeContext.Consumer>
                   ) : (
                     <div className="brz-ed-popup-two-blocks__grid brz-ed-popup-two-blocks__grid-clear">
                       <p className="brz-ed-popup-two-blocks__grid-clear-text">

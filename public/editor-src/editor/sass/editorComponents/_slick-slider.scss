@@ -43,6 +43,8 @@
   margin: 0;
   font-size: 0;
   text-align: center;
+  max-width: 90%;
+  min-width: 90%;
 
   li {
     display: inline-block;
@@ -61,11 +63,15 @@
     border: 2px solid currentColor;
     border-radius: 0;
     background-color: transparent !important;
-    transition: transform linear 0.2s, background-color linear 0.2s;
+    transition:
+      transform linear 0.2s,
+      background-color linear 0.2s;
   }
   .slick-active button {
     background-color: currentColor !important;
-    transition: transform linear 0.2s, background-color linear 0.2s;
+    transition:
+      transform linear 0.2s,
+      background-color linear 0.2s;
   }
 
   // Type

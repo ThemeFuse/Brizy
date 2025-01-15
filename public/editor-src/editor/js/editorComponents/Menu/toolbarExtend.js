@@ -1,31 +1,31 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-import Config from "visual/global/Config";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
-export function getItems({ v, device, state, context }) {
+
+export function getItems({ v, device, state, context, component }) {
   return defaultValueValue({ v, device, state, key: "mMenu" }) === "on"
-    ? getItemsMMenu({ v, device, state, context })
+    ? getItemsMMenu({ v, device, state, context, component })
     : getItemsSimple({ v, device, state });
 }
+
 export function getItemsSimple({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
-  const { hex: subMenuColorHex } = getOptionColorHexByPalette(
+  const subMenuColor = getColor(
+    dvv("subMenuColorPalette"),
     dvv("subMenuColorHex"),
-    dvv("subMenuColorPalette")
+    dvv("subMenuColorOpacity")
   );
 
   return [
@@ -201,7 +201,7 @@ export function getItemsSimple({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: color
           }
         }
       },
@@ -259,10 +259,7 @@ export function getItemsSimple({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              subMenuColorHex,
-              dvv("subMenuColorOpacity")
-            )
+            backgroundColor: subMenuColor
           }
         }
       },
@@ -332,14 +329,15 @@ export function getItemsSimple({ v, device, state }) {
   ];
 }
 
-export function getItemsMMenu({ v, device, state, context }) {
+export function getItemsMMenu({ v, device, state, context, component }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const { hex: mMenuColorHex } = getOptionColorHexByPalette(
+  const mMenuColor = getColor(
+    dvv("mMenuColorPalette"),
     dvv("mMenuColorHex"),
-    dvv("mMenuColorPalette")
+    dvv("mMenuColorOpacity")
   );
 
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
 
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -468,7 +466,7 @@ export function getItemsMMenu({ v, device, state, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(mMenuColorHex, dvv("mMenuColorOpacity"))
+            backgroundColor: mMenuColor
           }
         }
       },

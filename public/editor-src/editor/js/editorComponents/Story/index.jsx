@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React from "react";
+import { isEditor } from "visual/providers/RenderProvider";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import StoryItems from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -25,10 +25,11 @@ class Story extends EditorComponent {
 
   getMeta() {
     const { meta } = this.props;
+    const _isEditor = isEditor(this.renderContext);
 
-    const Dwidth = IS_EDITOR ? DW : 470;
-    const Twidth = IS_EDITOR ? TW : 470;
-    const Mwidth = IS_EDITOR ? MW : 470;
+    const Dwidth = _isEditor ? DW : 470;
+    const Twidth = _isEditor ? TW : 470;
+    const Mwidth = _isEditor ? MW : 470;
 
     const desktopW = Math.round(Dwidth * 10) / 10;
     const tabletW = Math.round(Twidth * 10) / 10;
@@ -93,10 +94,16 @@ class Story extends EditorComponent {
       "brz-story",
       className,
       cssClass || customClassName,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -120,10 +127,16 @@ class Story extends EditorComponent {
       "brz-story",
       className,
       cssClass || customClassName,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        styleSection(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        styleSection({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 

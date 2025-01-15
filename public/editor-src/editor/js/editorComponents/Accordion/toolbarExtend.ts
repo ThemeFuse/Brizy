@@ -1,8 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
@@ -28,15 +27,18 @@ export function getItems({
   device: ResponsiveMode;
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
+  const bgColorOpacity = dvv("bgColorOpacity");
 
   // Color
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    bgColorOpacity
   );
-  const { hex: colorHex } = getOptionColorHexByPalette(
+  const color = getColor(
+    dvv("colorPalette"),
     dvv("colorHex"),
-    dvv("colorPalette")
+    dvv("colorOpacity")
   );
 
   return [
@@ -209,10 +211,7 @@ export function getItems({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor:
-              dvv("bgColorOpacity") > 0
-                ? hexToRgba(bgColorHex, dvv("bgColorOpacity"))
-                : hexToRgba(colorHex, dvv("colorOpacity"))
+            backgroundColor: bgColorOpacity > 0 ? bgColor : color
           }
         }
       },

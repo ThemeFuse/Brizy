@@ -10,9 +10,7 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { CMS, isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
@@ -85,7 +83,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
 
     const { nameDisplay, showName, showFlags } = v;
 
-    const config = Config.getAll() as CMS;
+    const config = this.getGlobalConfig() as CMS;
     const flagsUrl = isCloud(config) && isCMS(config) ? config.urls.flags : "";
 
     const fakeLangs = [
@@ -102,10 +100,16 @@ export default class Translation extends EditorComponent<Value, Props, State> {
       const className = classnames(
         "brz-portal-translation__select",
         { "brz-translation__code": nameDisplay === "code" },
-        css(
+        this.css(
           `${this.getComponentId()}-dropdown`,
           `${this.getId()}-dropdown`,
-          styleDropdown(v, vs, vd)
+          styleDropdown({
+            v,
+            vs,
+            vd,
+            store: this.getReduxStore(),
+            renderContext: this.renderContext
+          })
         )
       );
 
@@ -171,14 +175,20 @@ export default class Translation extends EditorComponent<Value, Props, State> {
     const className = classnames(
       "brz-translation",
       { "brz-translation__code": nameDisplay === "code" },
-      css(
+      this.css(
         `${this.getComponentId()}-current`,
         `${this.getId()}-current`,
-        style(v, vs, vd)
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
     const flagsUrl = isCloud(config) && isCMS(config) ? config.urls.flags : "";
 
     return (
@@ -224,7 +234,17 @@ export default class Translation extends EditorComponent<Value, Props, State> {
     const className = classnames(
       "brz-translation",
       { "brz-translation__code": nameDisplay === "code" },
-      css(`${this.getComponentId()}`, `${this.getId()}`, style(v, vs, vd))
+      this.css(
+        `${this.getComponentId()}`,
+        `${this.getId()}`,
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const placeholder = makePlaceholder({
       content: "{{translation_switcher}}",

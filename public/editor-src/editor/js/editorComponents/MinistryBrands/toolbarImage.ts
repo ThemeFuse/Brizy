@@ -1,16 +1,15 @@
+import { Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { read as readString } from "visual/utils/string/specs";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
 
@@ -25,18 +24,19 @@ export const getItems = <
   device,
   state
 }: Params<M, P, S>): ToolbarItemType[] => {
-  const dvv = (key: string): unknown =>
-    defaultValueValue({ v, key, device, state });
-  const { hex: imgBgColorHex } = getOptionColorHexByPalette(
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+
+  const imgBgColor = getColor(
+    dvv("imgBgColorPalette"),
     dvv("imgBgColorHex"),
-    dvv("imgBgColorPalette")
+    dvv("imgBgColorOpacity")
   );
 
-  const maskShape = readString(dvv("maskShape")) ?? "none";
-  const maskPosition = readString(dvv("maskPosition")) ?? "center center";
-  const maskSize = readString(dvv("maskSize")) ?? "cover";
-  const maskScaleSuffix = readString(dvv("maskScaleSuffix")) ?? "%";
-  const maskCustomUploadImageSrc = readString(dvv("maskCustomUploadImageSrc"));
+  const maskShape = Str.read(dvv("maskShape")) ?? "none";
+  const maskPosition = Str.read(dvv("maskPosition")) ?? "center center";
+  const maskSize = Str.read(dvv("maskSize")) ?? "cover";
+  const maskScaleSuffix = Str.read(dvv("maskScaleSuffix")) ?? "%";
+  const maskCustomUploadImageSrc = Str.read(dvv("maskCustomUploadImageSrc"));
   const maskShapeIsDisabled =
     maskShape === "none" ||
     (maskShape === "custom" && !maskCustomUploadImageSrc);
@@ -66,7 +66,7 @@ export const getItems = <
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes
+                  choices: getMaskShapes()
                 },
                 {
                   id: "maskCustomUpload",
@@ -92,7 +92,7 @@ export const getItems = <
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -118,7 +118,7 @@ export const getItems = <
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -149,7 +149,7 @@ export const getItems = <
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             },
@@ -178,7 +178,7 @@ export const getItems = <
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(imgBgColorHex, dvv("imgBgColorOpacity"))
+            backgroundColor: imgBgColor
           }
         }
       },

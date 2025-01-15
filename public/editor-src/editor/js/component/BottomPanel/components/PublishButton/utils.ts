@@ -5,7 +5,7 @@ import { Page } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { MValue } from "visual/utils/value";
 
-type Mode = "withRules" | "withTemplate" | "withArticle";
+export type Mode = "withRules" | "withTemplate" | "withArticle";
 
 export const getTooltipPageTitle = (status: Page["status"]): string => {
   switch (status) {

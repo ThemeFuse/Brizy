@@ -1,4 +1,6 @@
 import { OptionValue } from "visual/component/Options/types";
+import { Config } from "visual/global/Config/InitConfig";
+import { RenderType } from "visual/providers/RenderProvider";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import {
@@ -55,92 +57,6 @@ const output = {
   textDecoration: "text-decoration:underline line-through;",
   textTransform: "text-transform:lowercase;"
 };
-
-beforeAll(() => {
-  const store = createStore();
-  // @ts-expect-error IS_PREVIEW si on build time added by webpack
-  global.IS_PREVIEW = false;
-  store.dispatch(
-    // @ts-expect-error There is not need to add types because is only for testing purposes
-    hydrate(mockDataForReduxStore)
-  );
-});
-
-describe("Testing getTypographyValues that should return typography values", () => {
-  test("Nullish values, should return same nullish values", () => {
-    expect(
-      getTypographyValues({
-        value: nullishValue,
-        device: "desktop",
-        state: NORMAL
-      })
-    ).toStrictEqual({
-      fontStyle: undefined,
-      fontFamilyType: undefined,
-      fontFamily: "",
-      fontSize: 0,
-      fontSizeSuffix: "px",
-      fontWeight: 400,
-      letterSpacing: "NaNpx",
-      lineHeight: 0,
-      variableFontWeight:
-        '"wght" undefined, "wdth" undefined, "SOFT" undefined',
-      textStyle: "",
-      textDecoration: "",
-      textTransform: ""
-    });
-  });
-
-  test("Desktop normal", () => {
-    expect(
-      getTypographyValues({
-        value,
-        device: "desktop",
-        state: NORMAL
-      })
-    ).toStrictEqual(output);
-  });
-
-  test("Desktop hover", () => {
-    expect(
-      getTypographyValues({
-        value,
-        device: "desktop",
-        state: HOVER
-      })
-    ).toStrictEqual(output);
-  });
-
-  test("Desktop active", () => {
-    expect(
-      getTypographyValues({
-        value,
-        device: "desktop",
-        state: ACTIVE
-      })
-    ).toStrictEqual(output);
-  });
-
-  test("Tablet", () => {
-    expect(
-      getTypographyValues({
-        value,
-        device: "tablet",
-        state: NORMAL
-      })
-    ).toStrictEqual(output);
-  });
-
-  test("Tablet", () => {
-    expect(
-      getTypographyValues({
-        value,
-        device: "mobile",
-        state: NORMAL
-      })
-    ).toStrictEqual(output);
-  });
-});
 
 const mockDataForReduxStore = {
   project: {
@@ -471,5 +387,115 @@ const mockDataForReduxStore = {
         }
       ]
     }
+  },
+  configId: "test",
+  config: {
+    mode: "page"
   }
 };
+
+beforeAll(() => {
+  // @ts-expect-error IS_PREVIEW si on build time added by webpack
+  global.IS_PREVIEW = false;
+
+  new Config({
+    // @ts-expect-error: Mock ConfigCommon
+    config: mockDataForReduxStore.config,
+    id: mockDataForReduxStore.configId
+  });
+});
+
+describe("Testing getTypographyValues that should return typography values", () => {
+  const store = createStore();
+  const renderContext: RenderType = "editor";
+  store.dispatch(
+    // @ts-expect-error There is not need to add types because is only for testing purposes
+    hydrate(mockDataForReduxStore)
+  );
+
+  test("Nullish values, should return same nullish values", () => {
+    expect(
+      getTypographyValues({
+        renderContext,
+        value: nullishValue,
+        device: "desktop",
+        state: NORMAL,
+        store
+      })
+    ).toStrictEqual({
+      fontStyle: undefined,
+      fontFamilyType: undefined,
+      fontFamily: "",
+      fontSize: 0,
+      fontSizeSuffix: "px",
+      fontWeight: 400,
+      letterSpacing: "NaNpx",
+      lineHeight: 0,
+      variableFontWeight:
+        '"wght" undefined, "wdth" undefined, "SOFT" undefined',
+      textStyle: "",
+      textDecoration: "",
+      textTransform: ""
+    });
+  });
+
+  test("Desktop normal", () => {
+    expect(
+      getTypographyValues({
+        renderContext,
+        value,
+        device: "desktop",
+        state: NORMAL,
+        store
+      })
+    ).toStrictEqual(output);
+  });
+
+  test("Desktop hover", () => {
+    expect(
+      getTypographyValues({
+        renderContext,
+        value,
+        device: "desktop",
+        state: HOVER,
+        store
+      })
+    ).toStrictEqual(output);
+  });
+
+  test("Desktop active", () => {
+    expect(
+      getTypographyValues({
+        renderContext,
+        value,
+        device: "desktop",
+        state: ACTIVE,
+        store
+      })
+    ).toStrictEqual(output);
+  });
+
+  test("Tablet", () => {
+    expect(
+      getTypographyValues({
+        renderContext,
+        value,
+        device: "tablet",
+        state: NORMAL,
+        store
+      })
+    ).toStrictEqual(output);
+  });
+
+  test("Tablet", () => {
+    expect(
+      getTypographyValues({
+        renderContext,
+        value,
+        device: "mobile",
+        state: NORMAL,
+        store
+      })
+    ).toStrictEqual(output);
+  });
+});

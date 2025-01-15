@@ -1,16 +1,16 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { EcwidProductColumns, Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: descriptionColorHex } = getOptionColorHexByPalette(
+  const descriptionColor = getColor(
+    dvv("descriptionColorPalette"),
     dvv("descriptionColorHex"),
-    dvv("descriptionColorPalette")
+    dvv("descriptionColorOpacity")
   );
 
   const columns = dvv("columns");
@@ -64,10 +64,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              descriptionColorHex,
-              dvv("descriptionColorOpacity")
-            )
+            backgroundColor: descriptionColor
           }
         }
       },

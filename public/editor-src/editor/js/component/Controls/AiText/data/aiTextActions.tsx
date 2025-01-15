@@ -11,7 +11,7 @@ import { Action, action } from "../types";
 
 const simplifyIconSpacing: Spacing = [0, 5, 0, 0];
 
-export const actions: Action[] = [
+export const getActions = (): Action[] => [
   {
     action: action.Extend,
     icon: (

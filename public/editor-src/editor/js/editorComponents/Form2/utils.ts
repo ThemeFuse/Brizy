@@ -1,7 +1,9 @@
+import { Str } from "@brizy/readers";
 import { memoize } from "underscore";
-import { BoxResizerParams } from "visual/editorComponents/Form2/types";
 import { checkValue } from "visual/utils/checkValue";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { ViewType } from "./Form2Steps/types";
+import { BoxResizerParams, MessageStatus, ResponseMessages } from "./types";
 
 export const isViewType = (v: string): v is ViewType =>
   !!checkValue<ViewType>([
@@ -28,3 +30,19 @@ export const getBoxResizerParams: BoxResizerParams = memoize(() => ({
     }
   }
 }));
+
+export const getTranslatedResponseMessages = (
+  form: HTMLFormElement
+): ResponseMessages =>
+  Object.keys(MessageStatus).reduce((acc, _status) => {
+    const status = _status.toLowerCase();
+
+    const translatedMessage = Str.read(
+      form.getAttribute(makeAttr("default-" + status, true))
+    );
+
+    return {
+      ...acc,
+      [status]: translatedMessage
+    };
+  }, {} as ResponseMessages);

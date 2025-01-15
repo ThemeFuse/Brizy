@@ -1,14 +1,14 @@
 import { once } from "underscore";
-import Config from "visual/global/Config";
 import { Config as ConfigType } from "visual/global/Config/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon.js";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { assetUrl } from "visual/utils/asset";
 import { urlContainsQueryString } from "visual/utils/url";
 import { uuid } from "visual/utils/uuid";
-import { cloneAndInlineStyles } from "./cloneAndInlineStyles.js";
 import { _Worker } from "visual/utils/worker";
+import { cloneAndInlineStyles } from "./cloneAndInlineStyles.js";
 
-export { browserSupports } from "./browserSupports";
+export { browserSupports, isScreenshotSupported } from "./browserSupports";
 
 // Note: Workers are build in a separated files
 // See webpack.config.worker.js
@@ -35,9 +35,9 @@ const promises: Record<
   [(s: Screenshot) => void, OnErrorEventHandler, Options, string]
 > = {};
 
-const getWorker = once(() => {
+const getWorker = once((config: ConfigType) => {
   const Worker = _Worker.getInstance();
-  const worker = new Worker(getWorkerUrl(Config.getAll()), { type: "module" });
+  const worker = new Worker(getWorkerUrl(config), { type: "module" });
 
   worker.onmessage = async (e) => {
     const { id, url: workerUrl } = e.data;
@@ -88,6 +88,7 @@ const getWorker = once(() => {
 
 export async function makeNodeScreenshot(
   node: Element | null,
+  globalConfig: ConfigCommon,
   config?: { maxWidth?: number }
 ): Promise<Screenshot> {
   if (!node) {
@@ -118,7 +119,8 @@ export async function makeNodeScreenshot(
 
   return new Promise((resolve, reject) => {
     const id = uuid(3);
-    const { assets: assetUrl, site: siteUrl } = Config.getAll().urls;
+    const _globalConfig = globalConfig as ConfigType;
+    const { assets: assetUrl, site: siteUrl } = _globalConfig.urls;
 
     promises[id] = [
       resolve,
@@ -127,7 +129,7 @@ export async function makeNodeScreenshot(
       url
     ];
 
-    const worker = getWorker();
+    const worker = getWorker(_globalConfig);
 
     worker.postMessage({
       id,
@@ -135,7 +137,7 @@ export async function makeNodeScreenshot(
       assetUrl,
       siteUrl,
       options,
-      proxyUrl: proxyUrl()
+      proxyUrl: proxyUrl(_globalConfig)
     });
   });
 }
@@ -146,8 +148,7 @@ function calcOptions(node: Element): { width: number; height: number } {
   return { width, height };
 }
 
-function proxyUrl() {
-  const config = Config.getAll();
+function proxyUrl(config: ConfigType) {
   if (TARGET === "WP") {
     const siteUrl = config.urls.site;
     const prefix = (isWp(config) ? config.prefix : undefined) ?? "brizy";

@@ -1,27 +1,31 @@
+import { Num, Str } from "@brizy/readers";
 import { getIn } from "timm";
 import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
+import configRules from "visual/config/rules";
 import { attachMenu } from "visual/editorComponents/Page/utils/helpers/normalize";
 import {
-  changeColor,
-  getColorValues,
-  getShadowData,
-  patchImagePopulation
-} from "visual/editorComponents/RichText/toolbar/color";
-import { ColorOption } from "visual/editorComponents/RichText/toolbar/types";
-import Config from "visual/global/Config";
+  ConfigCommon,
+  MenuData
+} from "visual/global/Config/types/configs/ConfigCommon";
+import { EditorMode, isStory } from "visual/global/EditorModeContext";
 import { copiedElementNoRefsSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { ReduxState } from "visual/redux/types";
+import { DeviceMode } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { detectOS } from "visual/utils/dom/detectOS";
-import defaultValue from "../defaultValue.json";
 import { hasSomeKey } from "visual/utils/reader/object";
+import { MValue } from "visual/utils/value";
+import defaultValue from "../defaultValue.json";
+import {
+  changeColor,
+  getShadowData,
+  patchImagePopulation
+} from "../toolbar/color";
+import { ColorOption } from "../toolbar/types";
 import { Patch, patchTextTransform } from "./dependencies";
-import { isStory } from "visual/utils/models";
-import configRules from "visual/config/rules";
-import { DeviceMode } from "visual/types";
 
 type CopiedElementRef = {
   path: string[];
@@ -60,16 +64,17 @@ export const handleRenderText = (key: string[]) => () => {
   return isMac ? `⌘ + ${nestedKeys}` : `ctrl + ${nestedKeys}`;
 };
 
-export const getInnerElement = (): InnerElementType | null => {
+export const getInnerElement = (
+  state: ReduxState,
+  menuData: MValue<MenuData[]>
+): InnerElementType | null => {
   let copiedElement;
   const { path, value } = copiedElementNoRefsSelector(
-    getStore().getState()
+    state
   ) as unknown as CopiedElementRef;
 
-  const config = Config.getAll();
-
   if (value && path.length > 0) {
-    copiedElement = getIn(attachMenu({ model: value, config }), path);
+    copiedElement = getIn(attachMenu({ model: value, menuData }), path);
   }
 
   if (!copiedElement) return null;
@@ -93,20 +98,14 @@ const getStyles = (
   }, {});
 };
 
-const convertStylesFromDCToCustom = (styles: Value, v: Value) => {
-  const config = Config.getAll();
-  const shadowData = getShadowData(styles, config);
+const convertStylesFromDCToCustom = (dcValue: Value, config: ConfigCommon) => {
+  const shadowData = getShadowData(dcValue, config);
 
   return {
-    ...styles,
+    ...dcValue,
     ...shadowData,
-    ...changeColor(getColorValues(v, styles), ColorOption.Color, config),
-    ...changeColor(
-      getColorValues(v, styles, "text"),
-      ColorOption.Background,
-      config,
-      "text"
-    )
+    ...changeColor(dcValue, ColorOption.Color, config),
+    ...changeColor(dcValue, ColorOption.Background, config, "text")
   };
 };
 
@@ -144,12 +143,8 @@ const patchDCValue = (values: Value) => {
   };
 };
 
-const patchCustomValue = (values: Value, v: Value) => {
+const patchCustomValue = (values: Value, v: Value, config: ConfigCommon) => {
   const {
-    bgColorHex,
-    bgColorOpacity,
-    textBgColorHex,
-    textBgColorOpacity,
     imageSrc = v.imageSrc,
     imageFileName = v.imageFileName,
     imageExtension = v.imageExtension,
@@ -161,10 +156,16 @@ const patchCustomValue = (values: Value, v: Value) => {
     imagePopulationEntityType,
     imagePopulationEntityId
   } = values;
+  const bgColorHex = Str.read(values.bgColorHex);
+  const bgColorOpacity = Num.read(values.bgColorOpacity) ?? 1;
+  const textBgColorHex = Str.read(values.textBgColorHex);
+  const textBgColorOpacity = Num.read(values.textBgColorOpacity) ?? 1;
 
-  const color = hexToRgba(bgColorHex, bgColorOpacity) ?? "";
-  const background = hexToRgba(textBgColorHex, textBgColorOpacity) ?? "";
-  const shadowData = getShadowData(values, Config.getAll());
+  const color = bgColorHex ? hexToRgba(bgColorHex, bgColorOpacity) : "";
+  const background = textBgColorHex
+    ? hexToRgba(textBgColorHex, textBgColorOpacity)
+    : "";
+  const shadowData = getShadowData(values, config);
 
   const backgroundImage = imagePopulation
     ? patchImagePopulation(v, {
@@ -222,12 +223,14 @@ export const handlePasteStyles = ({
   innerElement,
   onChange,
   v,
-  device
+  device,
+  config
 }: {
   innerElement: InnerElementType;
   onChange: (v: Value) => void;
   v: ElementModel;
   device: DeviceMode;
+  config: ConfigCommon;
 }) => {
   const { textPopulation } = innerElement.value;
   const values = getStyles(innerElement.value, prefixes);
@@ -235,16 +238,25 @@ export const handlePasteStyles = ({
 
   if (extraStyles) {
     if (textPopulation) {
-      const dcValues = patchDCValue(extraStyles);
-      return onChange(convertStylesFromDCToCustom(dcValues, v));
+      return onChange(
+        convertStylesFromDCToCustom(patchDCValue(extraStyles), config)
+      );
     }
 
-    const customValues = patchCustomValue(extraStyles, v);
+    const customValues = patchCustomValue(extraStyles, v, config);
     onChange(customValues);
   }
 };
 
-export const handleClearFormatting = (onChange: (v: Value) => void) => {
+export const handleClearFormatting = ({
+  onChange,
+  editorMode,
+  config
+}: {
+  onChange: (v: Value) => void;
+  editorMode: EditorMode;
+  config: ConfigCommon
+}) => {
   const {
     bgColorType,
     bgColorHex,
@@ -264,7 +276,6 @@ export const handleClearFormatting = (onChange: (v: Value) => void) => {
     images: { bgImageSrc }
   } = defaultValue.content;
 
-  const config = Config.getAll();
   const color = changeColor(
     {
       bgColorType,
@@ -299,7 +310,7 @@ export const handleClearFormatting = (onChange: (v: Value) => void) => {
 
   onChange({
     ...defaultValue.style,
-    ...(isStory(config) && { width: configRules["story-richText"].width }),
+    ...(isStory(editorMode) && { width: configRules["story-richText"].width }),
     ...color,
     ...textBgColor,
     background: null,

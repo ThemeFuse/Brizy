@@ -6,11 +6,15 @@ import { fromElementModel } from "visual/utils/options/Animation/converters";
 import { Value } from "visual/utils/options/Animation/types/Value";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
+import { Store } from "visual/redux/store";
 
-export const makeOptionValueToAnimation = (
-  v: ElementModel,
-  prefix: undefined | string = "hover"
-): Partial<Value> => {
+export const makeOptionValueToAnimation = (data: {
+  v: ElementModel;
+  store: Store;
+  prefix?: string;
+}): Partial<Value> => {
+  const { v, prefix = "hover" } = data;
+
   const getDesktop: FromElementModelGetter = (k) =>
     defaultValueValue({
       v,

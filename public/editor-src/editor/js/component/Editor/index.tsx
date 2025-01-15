@@ -1,4 +1,4 @@
-import React, { ReactElement, KeyboardEvent } from "react";
+import React, { KeyboardEvent, ReactElement } from "react";
 import { ToastContainer } from "react-toastify";
 import { noop } from "underscore";
 import BottomPanel from "visual/component/BottomPanel";
@@ -8,16 +8,31 @@ import Notifications from "visual/component/Notifications";
 import Portal from "visual/component/Portal";
 import Prompts from "visual/component/Prompts";
 import { RightSidebar } from "visual/component/RightSidebar";
-import Conf from "visual/global/Config";
+import { CustomFile } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  EditorMode,
+  getCommonEditorMode
+} from "visual/global/EditorModeContext";
 import Page from "./Editor/Page";
 import Popup from "./Editor/Popup";
 import Story from "./Editor/Story";
-import { getRenderType } from "./utils";
 
-class Editor extends React.Component {
-  parentWindowDocument = window.parent.document;
+interface Props {
+  addFile: CustomFile["addFile"];
+  editorMode: EditorMode;
+}
 
-  handleKeyDown(_: KeyboardEvent, { keyName }: { keyName: string }): void {
+class Editor extends React.Component<Props> {
+  parentWindowDocument = () => {
+    if (typeof window !== "undefined") {
+      return window.parent.document;
+    }
+  };
+
+  handleKeyDown = (
+    _: KeyboardEvent,
+    { keyName }: { keyName: string }
+  ): void => {
     switch (keyName) {
       case "ctrl+/":
       case "cmd+/":
@@ -28,51 +43,63 @@ class Editor extends React.Component {
       case "cmd+L":
       case "right_cmd+L":
         {
-          const { api } = Conf.getAll();
-          api?.customFile?.addFile?.handler(noop, noop, {
+          this.props.addFile?.handler(noop, noop, {
             acceptedExtensions: [],
             insertFilesType: "none"
           });
         }
         break;
     }
-  }
+  };
 
   getEditor(): ReactElement {
-    const type = getRenderType(Conf.getAll());
-
+    const editorMode = this.props.editorMode;
+    const type = getCommonEditorMode(editorMode);
     switch (type) {
-      case "basic": {
-        return <Page />;
+      case "page": {
+        return <Page mode={editorMode} />;
       }
       case "popup": {
-        return <Popup />;
+        return <Popup mode={editorMode} />;
       }
       case "story": {
-        return <Story />;
+        return <Story mode={editorMode} />;
       }
     }
   }
 
+  renderEditorPortals(element: HTMLElement): ReactElement {
+    return (
+      <>
+        <Portal node={element}>
+          <LeftSidebar />
+        </Portal>
+        <Portal node={element}>
+          <RightSidebar />
+        </Portal>
+        <Portal node={element}>
+          <BottomPanel />
+        </Portal>
+        <Portal node={element}>
+          <Prompts editorMode={this.props.editorMode} />
+        </Portal>
+        <Portal node={element}>
+          <Notifications />
+        </Portal>
+        <Portal node={element}>
+          <ToastContainer />
+        </Portal>
+      </>
+    );
+  }
+
   render(): ReactElement {
+    const doc = this.parentWindowDocument();
+
     return (
       <>
         {this.getEditor()}
-        <Portal node={this.parentWindowDocument.body}>
-          <LeftSidebar />
-        </Portal>
-        <Portal node={this.parentWindowDocument.body}>
-          <RightSidebar />
-        </Portal>
-        <Portal node={this.parentWindowDocument.body}>
-          <BottomPanel />
-        </Portal>
-        <Portal node={this.parentWindowDocument.body}>
-          <Prompts />
-        </Portal>
-        <Portal node={this.parentWindowDocument.body}>
-          <Notifications />
-        </Portal>
+        {doc && this.renderEditorPortals(doc.body)}
         <HotKeys
           keyNames={[
             "ctrl+/",
@@ -85,9 +112,6 @@ class Editor extends React.Component {
           id="key-helper-editor"
           onKeyDown={this.handleKeyDown}
         />
-        <Portal node={this.parentWindowDocument.body}>
-          <ToastContainer />
-        </Portal>
       </>
     );
   }

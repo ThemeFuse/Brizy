@@ -2,6 +2,7 @@ import {
   Orientation,
   VariantStyle
 } from "@brizy/widget/src/Shopify/Variant/types";
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
@@ -58,45 +59,58 @@ export function cssStyleElementShopifyVariantColorLabel({
   v,
   device,
   state,
+  store,
   prefix = "labelColor"
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantFontFamilyLabel({
   v,
   device,
-  prefix = "label"
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  store,
+  prefix = "label",
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementShopifyVariantFontSizeLabel({
   v,
   device,
+  store,
   prefix = "label"
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantFontWeightLabel({
   v,
   device,
+  store,
   prefix = "label"
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantLetterSpacingLabel({
   v,
   device,
   state,
+  store,
   prefix = "label"
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -104,11 +118,13 @@ export function cssStyleElementShopifyVariantLetterSpacingLabel({
 export function cssStyleElementShopifyVariantLineHeightLabel({
   v,
   device,
+  store,
   prefix = "label"
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
     v,
     device,
+    store,
     prefix
   });
 }
@@ -116,11 +132,13 @@ export function cssStyleElementShopifyVariantLineHeightLabel({
 export function cssStyleElementShopifyVariantFontVariationLabel({
   v,
   device,
+  store,
   prefix = "label"
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    store,
     prefix
   });
 }
@@ -129,12 +147,14 @@ export function cssStyleElementShopifyVariantTextTransformLabel({
   v,
   device,
   state,
+  store,
   prefix = "label"
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -143,12 +163,14 @@ export function cssStyleElementShopifyVariantAlignLabel({
   v,
   device,
   state,
+  store,
   prefix = "label"
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     state,
     device,
+    store,
     prefix
   });
 }
@@ -157,34 +179,38 @@ export function cssStyleElementShopifyVariantBgRadio({
   v,
   device,
   state,
+  store,
   prefix = "bgRadio"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix });
+  return cssStyleBgColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBgRadioActive({
   v,
   device,
+  store,
   prefix = "bgRadio"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state: "active", prefix });
+  return cssStyleBgColor({ v, device, state: "active", store, prefix });
 }
 
 export function cssStyleElementShopifyVariantColorRadio({
   v,
   device,
   state,
+  store,
   prefix = "radioColor"
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantColorRadioActive({
   v,
   device,
+  store,
   prefix = "radioColor"
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state: "active", prefix });
+  return cssStyleColor({ v, device, state: "active", store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBorderRadio({
@@ -208,52 +234,66 @@ export function cssStyleElementShopifyVariantBoxShadowRadio({
   v,
   device,
   state,
+  store,
   prefix = "radio"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBoxShadowRadioActive({
   v,
   device,
+  store,
   prefix = "radio"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state: "active", prefix });
+  return cssStyleBoxShadow({ v, device, state: "active", store, prefix });
 }
 export function cssStyleElementShopifyVariantFontFamilyRadio({
   v,
   device,
-  prefix = "radioValue"
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  store,
+  prefix = "radioValue",
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementShopifyVariantFontSizeRadio({
   v,
   device,
+  store,
   prefix = "radioValue"
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantFontWeightRadio({
   v,
   device,
+  store,
   prefix = "radioValue"
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantLetterSpacingRadio({
   v,
   device,
   state,
+  store,
   prefix = "radioValue"
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -261,11 +301,13 @@ export function cssStyleElementShopifyVariantLetterSpacingRadio({
 export function cssStyleElementShopifyVariantFontVariationRadio({
   v,
   device,
+  store,
   prefix = "radioValue"
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    store,
     prefix
   });
 }
@@ -274,12 +316,14 @@ export function cssStyleElementShopifyVariantTextTransformRadio({
   v,
   device,
   state,
+  store,
   prefix = "radio"
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -287,11 +331,13 @@ export function cssStyleElementShopifyVariantTextTransformRadio({
 export function cssStyleElementShopifyVariantLineHeightRadio({
   v,
   device,
+  store,
   prefix = "radioValue"
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
     v,
     device,
+    store,
     prefix
   });
 }
@@ -300,12 +346,14 @@ export function cssStyleElementShopifyVariantBorderRadiusRadio({
   v,
   device,
   state,
+  store,
   prefix = "radio"
 }: CSSValue): string {
   return cssStyleBorderRadius({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -323,35 +371,39 @@ export function cssStyleElementShopifyVariantSelectWidth({
   v,
   device,
   state,
+  store,
   prefix = "select"
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix });
+  return cssStyleSizeWidth({ v, device, state, store, prefix });
 }
 export function cssStyleElementShopifyVariantSelectHeight({
   v,
   device,
   state,
+  store,
   prefix = "select"
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix });
+  return cssStyleSizeHeight({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBgSelectedItem({
   v,
   device,
   state,
+  store,
   prefix = "bgSelectedItem"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix });
+  return cssStyleBgColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantColorSelectedItem({
   v,
   device,
   state,
+  store,
   prefix = "selectedItemColor"
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBorderSelectedItem({
@@ -367,45 +419,58 @@ export function cssStyleElementShopifyVariantBoxShadowSelectedItem({
   v,
   device,
   state,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantFontFamilySelectedItem({
   v,
   device,
-  prefix = "selectedItem"
-}: CSSValue): string {
-  return cssStyleTypography2FontFamily({ v, device, prefix });
+  store,
+  prefix = "selectedItem",
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    prefix,
+    renderContext
+  });
 }
 
 export function cssStyleElementShopifyVariantFontSizeSelectedItem({
   v,
   device,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantFontWeightSelectedItem({
   v,
   device,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantLetterSpacingSelectedItem({
   v,
   device,
   state,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -413,11 +478,13 @@ export function cssStyleElementShopifyVariantLetterSpacingSelectedItem({
 export function cssStyleElementShopifyVariantLineHeightSelectedItem({
   v,
   device,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
     v,
     device,
+    store,
     prefix
   });
 }
@@ -425,11 +492,13 @@ export function cssStyleElementShopifyVariantLineHeightSelectedItem({
 export function cssStyleElementShopifyVariantFontVariationSelectedItem({
   v,
   device,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    store,
     prefix
   });
 }
@@ -438,12 +507,14 @@ export function cssStyleElementShopifyVariantTextTransformSelectedItem({
   v,
   device,
   state,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -452,18 +523,20 @@ export function cssStyleElementShopifyVariantBgDropdown({
   v,
   device,
   state,
+  store,
   prefix = "bgDropdown"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix });
+  return cssStyleBgColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantColorDropdown({
   v,
   device,
   state,
+  store,
   prefix = "dropdownColor"
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBorderDropdown({
@@ -479,43 +552,48 @@ export function cssStyleElementShopifyVariantBoxShadowDropdown({
   v,
   device,
   state,
+  store,
   prefix = "dropdown"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBgImageBlock({
   v,
   device,
   state,
+  store,
   prefix = "imageBlockBg"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix });
+  return cssStyleBgColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBgImageBlockActive({
   v,
   device,
+  store,
   prefix = "imageBlockBg"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state: "active", prefix });
+  return cssStyleBgColor({ v, device, state: "active", store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBoxShadowImageBlock({
   v,
   device,
   state,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBoxShadowImageBlockActive({
   v,
   device,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state: "active", prefix });
+  return cssStyleBoxShadow({ v, device, state: "active", store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBorderImageBlock({
@@ -539,56 +617,63 @@ export function cssStyleElementShopifyVariantGradientImageBlock({
   v,
   device,
   state,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix });
+  return cssStyleBgGradient({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantImageBlockWidth({
   v,
   device,
   state,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix });
+  return cssStyleSizeWidth({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantImageBlockHeight({
   v,
   device,
   state,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix });
+  return cssStyleSizeHeight({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantRadioWidth({
   v,
   device,
   state,
+  store,
   prefix = "radio"
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix });
+  return cssStyleSizeWidth({ v, device, state, store, prefix });
 }
 export function cssStyleElementShopifyVariantRadioHeight({
   v,
   device,
   state,
+  store,
   prefix = "radio"
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix });
+  return cssStyleSizeHeight({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBorderRadiusImageBlock({
   v,
   device,
   state,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
   return cssStyleBorderRadius({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -606,12 +691,14 @@ export function cssStyleElementShopifyVariantSelectBorderRadius({
   v,
   device,
   state,
+  store,
   prefix = "select"
 }: CSSValue): string {
   return cssStyleBorderRadius({
     v,
     device,
     state,
+    store,
     prefix
   });
 }
@@ -619,7 +706,8 @@ export function cssStyleElementShopifyVariantSelectBorderRadius({
 export const cssStyleElementShopifyVariantSelectSpacing = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   const { orientation } = v;
 
@@ -629,6 +717,7 @@ export const cssStyleElementShopifyVariantSelectSpacing = ({
     v,
     device,
     state,
+    store,
     direction,
     prefix: "select"
   });
@@ -637,12 +726,14 @@ export const cssStyleElementShopifyVariantSelectSpacing = ({
 export const cssStyleElementShopifyVariantRadioSpacing = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     direction: "right",
     prefix: "radio"
   });
@@ -651,12 +742,14 @@ export const cssStyleElementShopifyVariantRadioSpacing = ({
 export const cssStyleElementShopifyVariantRadioRowSpacing = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleSpacing({
     v,
     device,
     state,
+    store,
     direction: "bottom",
     prefix: "radioRow"
   });
@@ -665,7 +758,8 @@ export const cssStyleElementShopifyVariantRadioRowSpacing = ({
 export const cssStyleElementShopifyVariantLabelSpacing = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   const { variantStyle, orientation } = v;
 
@@ -679,6 +773,7 @@ export const cssStyleElementShopifyVariantLabelSpacing = ({
       v,
       device,
       state,
+      store,
       direction,
       prefix: "label"
     });
@@ -690,14 +785,24 @@ export const cssStyleElementShopifyVariantLabelSpacing = ({
 export const cssStyleElementShopifyVariantDropdownTypography = ({
   v,
   device,
-  state
-}: CSSValue): string => {
-  return getAllCssStyleTypography({ v, device, state, prefix: "dropdown" });
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    store,
+    prefix: "dropdown",
+    renderContext
+  });
 };
 
 export const cssStyleElementShopifyVariantLabelWidth = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string =>
-  cssStyleSizeWidth({ v, device, state, prefix: "label" });
+  cssStyleSizeWidth({ v, device, state, store, prefix: "label" });

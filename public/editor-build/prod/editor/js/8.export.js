@@ -2,7 +2,7 @@ exports.id = 8;
 exports.ids = [8];
 exports.modules = {
 
-/***/ 6981:
+/***/ 7007:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __create = Object.create;
@@ -42,9 +42,9 @@ __export(SoundCloud_exports, {
   default: () => SoundCloud
 });
 module.exports = __toCommonJS(SoundCloud_exports);
-var import_react = __toESM(__webpack_require__(470));
-var import_utils = __webpack_require__(3805);
-var import_patterns = __webpack_require__(3808);
+var import_react = __toESM(__webpack_require__(24));
+var import_utils = __webpack_require__(3837);
+var import_patterns = __webpack_require__(3840);
 const SDK_URL = "https://w.soundcloud.com/player/api.js";
 const SDK_GLOBAL = "SC";
 class SoundCloud extends import_react.Component {

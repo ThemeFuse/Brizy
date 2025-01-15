@@ -1,7 +1,7 @@
 import { Type as LinkType } from "visual/component/Link/types/Type";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
+import { configSelector, pageDataNoRefsSelector } from "visual/redux/selectors";
+import { Store } from "visual/redux/store";
 import { Block } from "visual/types";
 import { customFileUrl } from "visual/utils/customFile";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -19,9 +19,10 @@ const linkClassNames = [
   "link--popup",
   "is-empty"
 ];
-
-export const changeRichText = ($: cheerio.Root): void => {
+export const changeRichText = ($: cheerio.Root, store: Store): void => {
   const $richText = $(".brz-rich-text");
+  const pageDataNoRefs = pageDataNoRefsSelector(store.getState());
+  const pageBlocks: Array<Block> = pageDataNoRefs.items || [];
 
   // Change Links
   $richText
@@ -88,7 +89,14 @@ export const changeRichText = ($: cheerio.Root): void => {
 
         $this.replaceWith(link);
       } else if (url) {
-        link.attr("href", getLinkContentByType(data.type, url));
+        link.attr(
+          "href",
+          getLinkContentByType({
+            type: data.type,
+            href: url,
+            pageBlocks
+          })
+        );
         link.attr("data-brz-link-type", data.type);
 
         if (
@@ -143,12 +151,16 @@ export const changeRichText = ($: cheerio.Root): void => {
     const src = $this.attr("data-image_src") ?? "";
     const population = $this.attr("data-image_population");
     const fileName = $this.attr("data-image_file_name") ?? "image";
+    const config = configSelector(store.getState());
 
-    const imgUrl = getImageUrl({
-      fileName,
-      uid: src,
-      sizeType: SizeType.custom
-    });
+    const imgUrl = getImageUrl(
+      {
+        fileName,
+        uid: src,
+        sizeType: SizeType.custom
+      },
+      config
+    );
 
     // required some property
     const css = $this.css();
@@ -189,12 +201,19 @@ export const changeRichText = ($: cheerio.Root): void => {
   });
 };
 
-function getLinkContentByType(type: LinkType, href: string): string {
+type Data = {
+  type: LinkType;
+  href: string;
+  pageBlocks: Array<Block>;
+};
+
+function getLinkContentByType(data: Data): string {
+  // eslint-disable-next-line prefer-const
+  let { type, href, pageBlocks } = data;
+
   switch (type) {
     case "anchor": {
       href = href.replace("#", "");
-      const pageDataNoRefs = pageDataNoRefsSelector(getStore().getState());
-      const pageBlocks: Array<Block> = pageDataNoRefs.items || [];
       const blockByHref = pageBlocks.find((block) => block.value._id === href);
 
       // Use the key:href(UID of the block) to ensure the `random_id`

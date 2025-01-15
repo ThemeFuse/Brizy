@@ -1,10 +1,9 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import type { Props, State, Value } from "./types";
 
-export const getItems: GetItems<Value, Props, State> = () => {
+export const getItems: GetItems<Value, Props, State> = ({ editorMode }) => {
   return [
     {
       id: "sidebarTabs",
@@ -34,7 +33,7 @@ export const getItems: GetItems<Value, Props, State> = () => {
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: isStory(Config.getAll()),
+                      disabled: isStory(editorMode),
                       devices: "desktop",
                       position: 100,
                       type: "slider",

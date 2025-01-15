@@ -1,10 +1,11 @@
+import classnames from "classnames";
 import React, { Component } from "react";
 import _ from "underscore";
-import classnames from "classnames";
-import Placeholder from "visual/component/Placeholder";
 import BoxResizer from "visual/component/BoxResizer";
-import { uuid } from "visual/utils/uuid";
+import Placeholder from "visual/component/Placeholder";
+import { isEditor } from "visual/providers/RenderProvider";
 import { shortcodeContent } from "visual/utils/api";
+import { uuid } from "visual/utils/uuid";
 
 export class WPShortcode extends Component {
   static defaultProps = {
@@ -34,11 +35,12 @@ export class WPShortcode extends Component {
       resizerMeta,
       resizerValue,
       resizerOnChange,
+      config,
       ...innerProps
     } = this.props;
 
     const className = classnames("brz-wp-shortcode", _className);
-    let content = <WPShortcodeInner {...innerProps} />;
+    let content = <WPShortcodeInner config={config} {...innerProps} />;
 
     if (resizerValue !== null) {
       content = (
@@ -117,10 +119,12 @@ export class WPShortcodeInner extends Component {
       return;
     }
 
-    shortcodeContent(shortcodeString).then(({ shortcode }) => {
-      this.props.onLoadHTML(shortcode);
-      this.setState({ shortcodeHTML: shortcode });
-    });
+    shortcodeContent(shortcodeString, this.props.config).then(
+      ({ shortcode }) => {
+        this.props.onLoadHTML(shortcode);
+        this.setState({ shortcodeHTML: shortcode });
+      }
+    );
   }
 
   getShortcodeString() {
@@ -133,7 +137,7 @@ export class WPShortcodeInner extends Component {
     const attributesStr =
       attributes &&
       Object.keys(attributes)
-        .map(k => String(attributes[k]) && `${k}="${attributes[k]}"`)
+        .map((k) => String(attributes[k]) && `${k}="${attributes[k]}"`)
         .join(" ");
 
     return `[${name} ${attributesStr || ""}]`;
@@ -182,6 +186,8 @@ export class WPShortcodeInner extends Component {
   }
 
   render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return isEditor(this.props.renderContext)
+      ? this.renderForEdit()
+      : this.renderForView();
   }
 }

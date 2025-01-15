@@ -1,14 +1,14 @@
 import React, { Component, ReactElement } from "react";
 import _ from "underscore";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import { FormField } from "../common/GlobalApps/type";
-
-import Service from "./Service";
 import Email from "./Email";
 import Recaptcha from "./Recaptcha";
+import Service from "./Service";
 
-const TABS = [
+const getTabs = () => [
   {
     id: "email",
     title: t("Email"),
@@ -34,7 +34,8 @@ type Props = {
   formFields: FormField[];
   opened: boolean;
   onClose: () => void;
-}
+  config: ConfigCommon;
+};
 
 class PromptWPForm extends Component<Props> {
   static defaultProps = {
@@ -45,7 +46,8 @@ class PromptWPForm extends Component<Props> {
   };
 
   render(): ReactElement {
-    const { formId, formFields, opened, onClose } = this.props;
+    const { formId, formFields, opened, onClose, config } = this.props;
+    const tabs = getTabs();
 
     return (
       <Tabs
@@ -53,8 +55,9 @@ class PromptWPForm extends Component<Props> {
         formId={formId}
         formFields={formFields}
         opened={opened}
-        tabs={TABS}
+        tabs={tabs}
         onClose={onClose}
+        config={config}
       />
     );
   }

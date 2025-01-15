@@ -7,7 +7,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { getTerms } from "visual/utils/api";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { DynamicContentHelper } from "../common/DynamicContentHelper";
 import defaultValue from "./defaultValue.json";
@@ -51,7 +50,9 @@ export default class WOOPages extends EditorComponent {
   };
 
   componentDidMount() {
-    getTerms("product_cat").then((taxonomies) => this.setState({ taxonomies }));
+    getTerms("product_cat", this.getGlobalConfig()).then((taxonomies) =>
+      this.setState({ taxonomies })
+    );
   }
 
   containerRef = React.createRef();
@@ -75,7 +76,17 @@ export default class WOOPages extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const className = classnames(
       "brz-woo-pages",
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

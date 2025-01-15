@@ -1,15 +1,17 @@
-import React, { Component, createRef, ReactElement, ReactNode } from "react";
 import classnames from "classnames";
+import React, { Component, ReactElement, ReactNode, createRef } from "react";
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { DeviceMode } from "visual/types";
 import { encodeToString } from "visual/utils/string";
 
 export interface Props {
+  children: ReactNode;
+  renderContext: RenderType;
   className?: string;
   position?: "right-start" | "left-start" | "bottom-start";
   target?: null | HTMLElement;
   mods?: Record<DeviceMode, "vertical" | "horizontal">;
   placement?: Record<DeviceMode, Props["position"]>;
-  children: ReactNode;
 }
 
 interface State {
@@ -101,7 +103,9 @@ class MenuDropDown extends Component<Props, State> {
   }
 
   render(): ReactElement {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return isEditor(this.props.renderContext)
+      ? this.renderForEdit()
+      : this.renderForView();
   }
 }
 

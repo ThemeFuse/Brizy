@@ -9,6 +9,7 @@ import {
   globalBlocksInPageSelector,
   globalBlocksPositionsSelector
 } from "visual/redux/selectors";
+import { configSelector } from "visual/redux/selectors";
 import {
   changeRule,
   getAllowedGBIds,
@@ -35,7 +36,8 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
         globalBlocks,
         page: {
           data: { items = [] }
-        }
+        },
+        config: payloadConfig
       } = action.payload;
 
       // it needs only for legacy models, when _id & globalBlock differed
@@ -47,7 +49,12 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       return Object.entries(globalBlocks).reduce((acc, [id, block]) => {
         if (legacyGlobalBlockIds.includes(id) && !isPopup(block.data)) {
           acc[id] = produce(block, (draft) => {
-            draft.rules = changeRule(block, true, action.payload.page).rules;
+            draft.rules = changeRule(
+              block,
+              true,
+              action.payload.page,
+              payloadConfig
+            ).rules;
             draft.data.value._id = id;
           });
         } else {
@@ -62,10 +69,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
     case "ADD_GLOBAL_BLOCK": {
       const { _id } = action.payload.block.value;
+      const config = configSelector(allState);
 
       return {
         ...state,
-        [_id]: changeRule(state[_id], true, allState?.page)
+        [_id]: changeRule(state[_id], true, allState?.page, config)
       };
     }
 
@@ -104,7 +112,13 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const { uid, data, title = "", tags = "" } = action.payload;
 
       if (data.value === null && !isPopup(state[uid].data)) {
-        const globalBlock = changeRule(state[uid], false, allState?.page);
+        const config = configSelector(allState);
+        const globalBlock = changeRule(
+          state[uid],
+          false,
+          allState?.page,
+          config
+        );
         return {
           ...state,
           [uid]: globalBlock
@@ -126,7 +140,13 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const _id = blocks[index];
 
       if (globalBlockIds.includes(blocks[index]) && !isPopup(state[_id].data)) {
-        const globalBlock = changeRule(state[_id], false, allState?.page);
+        const config = configSelector(allState);
+        const globalBlock = changeRule(
+          state[_id],
+          false,
+          allState?.page,
+          config
+        );
         return {
           ...state,
           [_id]: globalBlock
@@ -138,8 +158,14 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { fromBlockId } = action.payload;
+      const config = configSelector(allState);
 
-      const globalBlock = changeRule(state[fromBlockId], false, allState?.page);
+      const globalBlock = changeRule(
+        state[fromBlockId],
+        false,
+        allState?.page,
+        config
+      );
 
       return {
         ...state,
@@ -177,17 +203,21 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           oldPositionAlignment === "center" &&
           (newPositionAlignment === "top" || newPositionAlignment === "bottom")
         ) {
-          const allowedGBIds: string[] = getAllowedGBIds(
-            blocksOrderRawSelector(allState),
-            state,
-            allState?.page
-          );
+          const config = configSelector(allState);
+
+          const allowedGBIds: string[] = getAllowedGBIds({
+            pageBlocksIds: blocksOrderRawSelector(allState),
+            globalBlocks: state,
+            page: allState?.page,
+            config
+          });
 
           if (!allowedGBIds.includes(globalBlockId)) {
             const globalBlock = changeRule(
               state[globalBlockId],
               true,
-              allState?.page
+              allState?.page,
+              config
             );
 
             return {
@@ -203,13 +233,14 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
     case ActionTypes.REMOVE_BLOCKS: {
       const pageBlocksIds = blocksOrderSelector(allState);
+      const config = configSelector(allState);
       const globalBlockIds = Object.keys(state);
       const gbIds = _.intersection(pageBlocksIds, globalBlockIds);
 
       return produce(state, (draft) => {
         gbIds.forEach((id) => {
           if (!isPopup(draft[id].data)) {
-            draft[id] = changeRule(draft[id], false, allState?.page);
+            draft[id] = changeRule(draft[id], false, allState?.page, config);
           }
         });
       });
@@ -217,13 +248,14 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "UPDATE_BLOCKS": {
       const { blocks } = action.payload;
       const prevIds = blocksOrderSelector(allState);
+      const config = configSelector(allState);
       const nextIds = blocks.map((block) => block.value._id);
 
       const gbIds = _.difference(prevIds, nextIds);
       return produce(state, (draft) => {
         gbIds.forEach((id) => {
           if (draft[id] && !isPopup(draft[id].data)) {
-            draft[id] = changeRule(draft[id], false, allState?.page);
+            draft[id] = changeRule(draft[id], false, allState?.page, config);
           }
         });
       });

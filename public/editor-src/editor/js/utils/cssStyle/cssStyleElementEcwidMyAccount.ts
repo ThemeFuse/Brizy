@@ -1,3 +1,4 @@
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBgGradient,
@@ -22,49 +23,58 @@ import { CSSValue } from "visual/utils/style2/types";
 export function cssStyleElementEcwidMyAccountParentBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "parentBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "parentBg" });
 }
 
 export function cssStyleElementEcwidMyAccountParentBgGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "parent" });
+  return cssStyleBgGradient({ v, device, store, state, prefix: "parent" });
 }
 
 // Style Title
 export function cssStyleElementEcwidMyAccountTitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "titleColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "titleColor" });
 }
 
 export function cssStyleElementEcwidMyAccountTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "titleTypography"
+    prefix: "titleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountTitleSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "title",
     direction: "bottom"
@@ -74,41 +84,49 @@ export function cssStyleElementEcwidMyAccountTitleSpacing({
 export function cssStyleElementEcwidMyAccountTitleAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "title" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "title" });
 }
 
 // Style Description
 export function cssStyleElementEcwidMyAccountDescriptionColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "descriptionColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "descriptionColor" });
 }
 
 export function cssStyleElementEcwidMyAccountDescriptionTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "descriptionTypography"
+    prefix: "descriptionTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountDescriptionAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "description"
   });
@@ -117,11 +135,13 @@ export function cssStyleElementEcwidMyAccountDescriptionAlign({
 export function cssStyleElementEcwidMyAccountDescriptionSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "description",
     direction: "bottom"
@@ -132,62 +152,72 @@ export function cssStyleElementEcwidMyAccountDescriptionSpacing({
 export function cssStyleElementEcwidMyAccountInputColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "inputColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "inputColor" });
 }
 
 export function cssStyleElementEcwidMyAccountInputTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "inputTypography"
+    prefix: "inputTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountInputBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "input" });
+  return cssStyleBorderRadius({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputHeight({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix: "input" });
+  return cssStyleSizeHeight({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputWidth({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
+  return cssStyleSizeWidth({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "inputBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "inputBg" });
 }
 
 export function cssStyleElementEcwidMyAccountInputBgGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "input" });
+  return cssStyleBgGradient({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputBorderColor({
@@ -201,9 +231,10 @@ export function cssStyleElementEcwidMyAccountInputBorderColor({
 export function cssStyleElementEcwidMyAccountInputBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "input" });
+  return cssStyleBoxShadow({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputSpacing({
@@ -226,32 +257,39 @@ export function cssStyleElementEcwidMyAccountInputSpacing({
 export function cssStyleElementEcwidMyAccountAgreementColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "agreementColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "agreementColor" });
 }
 
 export function cssStyleElementEcwidMyAccountAgreementTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "agreementTypography"
+    prefix: "agreementTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountAgreementAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "agreement"
   });
@@ -260,11 +298,13 @@ export function cssStyleElementEcwidMyAccountAgreementAlign({
 export function cssStyleElementEcwidMyAccountAgreementSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "agreement",
     direction: "bottom"
@@ -275,19 +315,28 @@ export function cssStyleElementEcwidMyAccountAgreementSpacing({
 export function cssStyleElementEcwidMyAccountAccountTitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "accountTitleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state,
+    prefix: "accountTitleColor"
+  });
 }
 
 export function cssStyleElementEcwidMyAccountAccountTitleAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "accountTitle"
   });
@@ -296,24 +345,30 @@ export function cssStyleElementEcwidMyAccountAccountTitleAlign({
 export function cssStyleElementEcwidMyAccountAccountTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "accountTitleTypography"
+    prefix: "accountTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountAccountTitleSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "accountTitle",
     direction: "bottom"
@@ -324,21 +379,26 @@ export function cssStyleElementEcwidMyAccountAccountTitleSpacing({
 export function cssStyleElementEcwidMyAccountProductsColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "productsColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "productsColor" });
 }
 
 export function cssStyleElementEcwidMyAccountProductsTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "productsTypography"
+    prefix: "productsTypography",
+    renderContext
   });
 }
 
@@ -346,40 +406,48 @@ export function cssStyleElementEcwidMyAccountProductsTypography({
 export function cssStyleElementEcwidMyAccountShopTitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "shopTitleColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "shopTitleColor" });
 }
 
 export function cssStyleElementEcwidMyAccountShopTitleAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "shopTitle" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "shopTitle" });
 }
 
 export function cssStyleElementEcwidMyAccountShopTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "shopTitleTypography"
+    prefix: "shopTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountShopTitleSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "shopTitle",
     direction: "bottom"
@@ -390,32 +458,39 @@ export function cssStyleElementEcwidMyAccountShopTitleSpacing({
 export function cssStyleElementEcwidMyAccountEmptyColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "emptyColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "emptyColor" });
 }
 
 export function cssStyleElementEcwidMyAccountEmptyTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "emptyTypography"
+    prefix: "emptyTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountEmptyAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "empty"
   });
@@ -425,11 +500,13 @@ export function cssStyleElementEcwidMyAccountEmptyAlign({
 export function cssStyleElementEcwidMyAccountSummaryLinkColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "summaryLinkColor"
   });
@@ -438,11 +515,13 @@ export function cssStyleElementEcwidMyAccountSummaryLinkColor({
 export function cssStyleElementEcwidMyAccountSummaryLinkAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "summaryLink"
   });
@@ -451,13 +530,17 @@ export function cssStyleElementEcwidMyAccountSummaryLinkAlign({
 export function cssStyleElementEcwidMyAccountSummaryLinkTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "summaryLinkTypography"
+    prefix: "summaryLinkTypography",
+    renderContext
   });
 }
 
@@ -465,19 +548,22 @@ export function cssStyleElementEcwidMyAccountSummaryLinkTypography({
 export function cssStyleElementEcwidMyAccountConnectColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "connectColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "connectColor" });
 }
 
 export function cssStyleElementEcwidMyAccountConnectLinkAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "connectLink"
   });
@@ -486,24 +572,30 @@ export function cssStyleElementEcwidMyAccountConnectLinkAlign({
 export function cssStyleElementEcwidMyAccountConnectTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "connectTypography"
+    prefix: "connectTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountConnectLinkColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "connectLinkColor"
   });
@@ -512,13 +604,17 @@ export function cssStyleElementEcwidMyAccountConnectLinkColor({
 export function cssStyleElementEcwidMyAccountConnectLinkTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "connectLinkTypography"
+    prefix: "connectLinkTypography",
+    renderContext
   });
 }
 
@@ -526,33 +622,37 @@ export function cssStyleElementEcwidMyAccountConnectLinkTypography({
 export function cssStyleElementEcwidMyAccountUserSize({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidthHeight({ v, device, state, prefix: "user" });
+  return cssStyleSizeWidthHeight({ v, device, store, state, prefix: "user" });
 }
 
 export function cssStyleElementEcwidMyAccountUserColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "userColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "userColor" });
 }
 
 export function cssStyleElementEcwidMyAccountUserBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "userBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "userBg" });
 }
 
 export function cssStyleElementEcwidMyAccountUserBgGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "user" });
+  return cssStyleBgGradient({ v, device, store, state, prefix: "user" });
 }
 
 export function cssStyleElementEcwidMyAccountUserBorder({
@@ -566,27 +666,31 @@ export function cssStyleElementEcwidMyAccountUserBorder({
 export function cssStyleElementEcwidMyAccountUserBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "user" });
+  return cssStyleBoxShadow({ v, device, store, state, prefix: "user" });
 }
 
 export function cssStyleElementEcwidMyAccountUserBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "user" });
+  return cssStyleBorderRadius({ v, device, store, state, prefix: "user" });
 }
 
 export function cssStyleElementEcwidMyAccountUserSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "user",
     direction: "right"
@@ -597,40 +701,48 @@ export function cssStyleElementEcwidMyAccountUserSpacing({
 export function cssStyleElementEcwidMyAccountTitle2Color({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "title2Color" });
+  return cssStyleColor({ v, device, store, state, prefix: "title2Color" });
 }
 
 export function cssStyleElementEcwidMyAccountTitle2Typography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "title2Typography"
+    prefix: "title2Typography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountTitle2Align({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "title2" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "title2" });
 }
 
 export function cssStyleElementEcwidMyAccountTitle2Spacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "title2",
     direction: "bottom"
@@ -651,54 +763,63 @@ export function cssStyleElementEcwidMyAccountInputPlaceholderDisplay({
 export function cssStyleElementEcwidMyAccountButtonTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "buttonTypography"
+    prefix: "buttonTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidMyAccountButtonSize({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "button" });
+  return cssStyleSizePadding({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonWidth({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "button" });
+  return cssStyleSizeWidth({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "buttonColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "buttonColor" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "buttonBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "buttonBg" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonBgGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "button" });
+  return cssStyleBgGradient({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonBorder({
@@ -712,44 +833,62 @@ export function cssStyleElementEcwidMyAccountButtonBorder({
 export function cssStyleElementEcwidMyAccountButtonBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "button" });
+  return cssStyleBorderRadius({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "button" });
+  return cssStyleBoxShadow({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "button" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    store,
+    state,
+    prefix: "button"
+  });
 }
 
 // Style Footer
 export function cssStyleElementEcwidMyAccountFooterIconSize({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidthHeight({ v, device, state, prefix: "footerIcon" });
+  return cssStyleSizeWidthHeight({
+    v,
+    device,
+    store,
+    state,
+    prefix: "footerIcon"
+  });
 }
 
 export function cssStyleElementEcwidMyAccountFooterIconSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "footer",
     direction: "bottom"
@@ -759,11 +898,13 @@ export function cssStyleElementEcwidMyAccountFooterIconSpacing({
 export function cssStyleElementEcwidMyAccountFooterIconColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "footerIconColor"
   });
@@ -772,40 +913,39 @@ export function cssStyleElementEcwidMyAccountFooterIconColor({
 export function cssStyleElementEcwidMyAccountFooterColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "footerColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "footerColor" });
 }
 
 export function cssStyleElementEcwidMyAccountFooterTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "footerTypography"
+    prefix: "footerTypography",
+    renderContext
   });
-}
-
-export function cssStyleElementEcwidMyAccountBreadcrumbsAlign({
-  v,
-  device,
-  state
-}: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "breadcrumbs" });
 }
 
 export function cssStyleElementEcwidMyAccountTermsColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "termsColor"
   });
@@ -814,13 +954,17 @@ export function cssStyleElementEcwidMyAccountTermsColor({
 export function cssStyleElementEcwidMyAccountTermsTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "termsTypography"
+    prefix: "termsTypography",
+    renderContext
   });
 }
 

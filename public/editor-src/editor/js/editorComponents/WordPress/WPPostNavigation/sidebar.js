@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Post Navigation");
+export const title = () => t("Post Navigation");
 
 const getHtml = () => {
   return `

@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React from "react";
+import { isView } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
@@ -71,7 +72,9 @@ class SwitcherTab extends EditorComponent {
     return (
       <Animation
         iterationCount={
-          IS_PREVIEW && (sectionPopup || sectionPopup2) ? Infinity : 1
+          isView(this.renderContext) && (sectionPopup || sectionPopup2)
+            ? Infinity
+            : 1
         }
         component="div"
         componentProps={{ className }}

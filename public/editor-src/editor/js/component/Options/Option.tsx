@@ -5,9 +5,7 @@ import { OptionWrapper } from "visual/component/OptionWrapper";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import Config from "visual/global/Config";
 import { WithClassName } from "visual/types/attributes";
-import { isPro } from "visual/utils/env";
 import { types } from "./types";
 
 export interface Props extends WithClassName {
@@ -15,6 +13,8 @@ export interface Props extends WithClassName {
   toolbar?: ToolbarItemsInstance;
   location?: string;
   className?: string;
+  isPro: boolean;
+  upgradeToPro: string;
 }
 
 export interface LegacyProps extends WithClassName {
@@ -68,10 +68,10 @@ class Option extends React.Component<Props> {
         type,
         ...optionProps
       },
+      isPro,
+      upgradeToPro,
       className: _className = ""
     } = this.props;
-
-    const config = Config.getAll();
 
     const className = classNames(
       "brz-ed-option",
@@ -92,8 +92,8 @@ class Option extends React.Component<Props> {
       <OptionWrapper
         className={className}
         display={display}
-        lock={optionProps.isPro && !isPro(config)}
-        upgradeToPro={config.urls.upgradeToPro}
+        lock={optionProps.isPro && !isPro}
+        upgradeToPro={upgradeToPro}
       >
         <Component
           toolbar={this.props.toolbar}

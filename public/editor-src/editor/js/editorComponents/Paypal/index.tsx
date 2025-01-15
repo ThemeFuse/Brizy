@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { JSX } from "react";
+import { isEditor } from "visual/providers/RenderProvider";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import type { ElementProps } from "visual/component/Elements/Types";
@@ -7,7 +8,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import { Button } from "./controls/Button";
 import { InputCommon } from "./controls/InputCommon";
 import { InputsPayment } from "./controls/InputsPayment";
@@ -60,7 +60,17 @@ class Paypal extends EditorComponent<Value, ElementProps> {
     const className = classnames(
       "brz-paypal",
       extraClassName,
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const url =
@@ -69,7 +79,8 @@ class Paypal extends EditorComponent<Value, ElementProps> {
         : "https://www.paypal.com/cgi-bin/webscr";
 
     const target = openInNewTab === "on" ? "_blank" : "_top";
-    const buttonType = account === "" || IS_EDITOR ? "button" : "submit";
+    const buttonType =
+      account === "" || isEditor(this.renderContext) ? "button" : "submit";
 
     const _tax = tax === "none" ? 0 : rate;
     const _donationAmount = donationAmount === "anyAmount" ? 0 : amount;

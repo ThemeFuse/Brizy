@@ -87,11 +87,10 @@ export const getPopulationColor = (
   const palette = capByPrefix("paragraphColor", `${type}Palette`);
 
   if (value[palette]) {
-    const paletteValue = setIn(
-      populationColor,
-      [type, "colorPalette"],
-      value[palette]
-    );
+    const paletteValue = setIn(populationColor, [type], {
+      colorPalette: value[palette],
+      opacity: value[opacity] ?? 1
+    });
 
     if (isObject(paletteValue)) {
       return encodeToString(setIn(paletteValue, [type, "hex"], null));

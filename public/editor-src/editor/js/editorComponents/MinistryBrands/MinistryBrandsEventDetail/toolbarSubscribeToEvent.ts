@@ -1,24 +1,25 @@
+import { Num } from "@brizy/readers";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: subscribeEventButtonBgColorHex } = getOptionColorHexByPalette(
+  const subscribeEventButtonBgColor = getColor(
+    dvv("subscribeEventButtonBgColorPalette"),
     dvv("subscribeEventButtonBgColorHex"),
-    dvv("subscribeEventButtonBgColorPalette")
+    dvv("subscribeEventButtonBgColorOpacity")
   );
 
-  const { hex: subscribeEventButtonColorHex } = getOptionColorHexByPalette(
+  const subscribeEventButtonColor = getColor(
+    dvv("subscribeEventButtonColorPalette"),
     dvv("subscribeEventButtonColorHex"),
-    dvv("subscribeEventButtonColorPalette")
+    dvv("subscribeEventButtonColorOpacity")
   );
 
   const subscribeEventButtonTypographyFontSize =
@@ -30,14 +31,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const maxBorderRadius = getButtonMaxBorderRadius(
     subscribeEventButtonTypographyFontSize,
     subscribeEventButtonTypographyLineHeight
-  );
-
-  const subscribeEventButtonColorOpacity = dvv(
-    "subscribeEventButtonColorOpacity"
-  );
-
-  const subscribeEventButtonBgColorOpacity = dvv(
-    "subscribeEventButtonBgColorOpacity"
   );
 
   const fillType = dvv("subscribeEventButtonFillType");
@@ -170,14 +163,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           style: {
             backgroundColor:
               fillType === "filled"
-                ? hexToRgba(
-                    subscribeEventButtonBgColorHex,
-                    subscribeEventButtonBgColorOpacity
-                  )
-                : hexToRgba(
-                    subscribeEventButtonColorHex,
-                    subscribeEventButtonColorOpacity
-                  )
+                ? subscribeEventButtonBgColor
+                : subscribeEventButtonColor
           }
         }
       },

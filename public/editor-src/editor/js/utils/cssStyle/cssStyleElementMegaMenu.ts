@@ -15,13 +15,20 @@ import { CSSValue } from "../style2/types";
 export function cssStyleElementMegaMenuWidth({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const mode = styleElementMenuMode({ v, device, state });
 
   // max-width need only horizontal and mobile
   if (mode === "vertical" || device === MOBILE) {
-    return cssStyleSizeMaxWidth({ v, device, state, prefix: "megaMenu" });
+    return cssStyleSizeMaxWidth({
+      v,
+      device,
+      state,
+      store,
+      prefix: "megaMenu"
+    });
   }
 
   return "max-width: 100%;";
@@ -40,12 +47,19 @@ export function cssStyleElementMegaMenuOffsetTop({
 export function cssStyleElementMegaMenuHeight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const style = styleElementMegaMenuHeightStyle({ v, device, state });
 
   if (style === "custom") {
-    return cssStyleSizeMinHeightPx({ v, device, state, prefix: "section" });
+    return cssStyleSizeMinHeightPx({
+      v,
+      device,
+      state,
+      store,
+      prefix: "section"
+    });
   }
 
   return "min-height: auto;";

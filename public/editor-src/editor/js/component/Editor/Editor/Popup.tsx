@@ -1,17 +1,29 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Root } from "visual/component/Root";
-import Config from "visual/global/Config";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
+import { useConfig } from "visual/global/hooks";
+import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { updateBlocks } from "visual/redux/actions2";
 import { pageBlocksSelector, stateSelector } from "visual/redux/selectors";
-import { areStatesEqual } from "../utils";
 import { t } from "visual/utils/i18n";
+import { areStatesEqual, getPageId } from "../utils";
+import { Props } from "./types";
 
-const Popup = (): JSX.Element => {
+const Popup = (props: Props): JSX.Element => {
+  const { mode } = props;
   const state = useSelector(stateSelector, areStatesEqual);
   const items = useSelector(pageBlocksSelector);
+  const store = useStore();
   const dispatch = useDispatch();
+  const config = useConfig();
+  // @ts-expect-error: ConfigCommon to Config
+  const pageId = getPageId(config);
+  const modulesGroup = config.dynamicContent?.groups;
+  const { backgroundPreviewUrl } = config.ui?.popupSettings ?? {};
+
+  const groups = useMemo(() => modulesGroup, [modulesGroup]);
+  const dbValue = useMemo(() => ({ items }), [items]);
 
   const handlePageChange = useCallback(
     ({ items: blocks }, meta) => {
@@ -22,12 +34,6 @@ const Popup = (): JSX.Element => {
 
   useEffect(() => {
     document.body.classList.add("brz-ow-hidden", "brz-height--100vh");
-  }, []);
-
-  const backgroundPreviewUrl = useMemo(() => {
-    const config = Config.getAll();
-    const { backgroundPreviewUrl } = config.ui?.popupSettings ?? {};
-    return backgroundPreviewUrl;
   }, []);
 
   const { PagePopup } = EditorGlobal.getComponents();
@@ -45,15 +51,20 @@ const Popup = (): JSX.Element => {
           title="popup"
         />
       )}
-      <Root type="popup">
-        {/* @ts-expect-error: Missing EditorComponent props */}
-        <PagePopup
-          dbValue={{ items }}
-          reduxState={state}
-          reduxDispatch={dispatch}
-          onChange={handlePageChange}
-        />
-      </Root>
+      <RootContainer className="brz brz-ed" editorMode={mode}>
+        <EditorComponentProvider pageId={pageId} groups={groups}>
+          {/* @ts-expect-error: Missing EditorComponent props */}
+          <PagePopup
+            dbValue={dbValue}
+            reduxState={state}
+            reduxStore={store}
+            reduxDispatch={dispatch}
+            onChange={handlePageChange}
+            renderContext="editor"
+            editorMode={mode}
+          />
+        </EditorComponentProvider>
+      </RootContainer>
     </>
   );
 };

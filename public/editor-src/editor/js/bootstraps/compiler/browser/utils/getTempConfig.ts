@@ -4,6 +4,10 @@ import { Err, Str, Arr, Obj, pipe } from "@brizy/readers";
 
 interface TempConfig {
   thirdPartyComponentHosts?: ThirdPartyComponentsHosts;
+  urls?: {
+    templateIcons?: string;
+    compileTemplateIcons?: string;
+  };
 }
 
 const parseComponents = mPipe(
@@ -26,7 +30,34 @@ const parse = mPipe(
   Arr.readWithItemReader(parseComponents)
 );
 
+const parseIcons = mPipe(
+  Obj.read,
+  Obj.readKey("urls"),
+  Obj.read,
+  Obj.readKey("templateIcons"),
+  Str.read
+);
+
+const parseCompileIcons = mPipe(
+  Obj.read,
+  Obj.readKey("urls"),
+  Obj.read,
+  Obj.readKey("compileTemplateIcons"),
+  Str.read
+);
+
 export function getTempConfig(config: unknown): TempConfig {
   const thirdPartyComponentHosts = parse(config);
-  return thirdPartyComponentHosts ? { thirdPartyComponentHosts } : {};
+  const templateIcons = parseIcons(config);
+  const compileTemplateIcons = parseCompileIcons(config);
+
+  return thirdPartyComponentHosts
+    ? {
+        thirdPartyComponentHosts,
+        urls: {
+          templateIcons: templateIcons,
+          compileTemplateIcons: compileTemplateIcons
+        }
+      }
+    : {};
 }

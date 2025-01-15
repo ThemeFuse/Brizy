@@ -1,11 +1,9 @@
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from "./types/Value";
 
-export function style(
-  v: Value,
-  vs: Value,
-  vd: Value
-): [string, string, string] {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser:hover": {
       standart: [
@@ -57,19 +55,6 @@ export function style(
           "cssStyleElementEcwidCartTitleTypography",
           "cssStyleElementEcwidCartTitleAlign",
           "cssStyleElementEcwidCartTitleSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation":
-      { standart: ["cssStyleElementEcwidProductBreadcrumbsSpacing"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .ec-breadcrumbs .breadcrumbs__link:hover":
-      {
-        standart: [
-          "cssStyleElementEcwidProductBreadcrumbsColor",
-          "cssStyleElementEcwidProductBreadcrumbsTypography"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details__top .product-details__top-active-navigation .product-details__navigation":
@@ -136,7 +121,7 @@ export function style(
           "cssStyleElementEcwidProducButtonSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more .form-control__button":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more:hover .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidMyAccountButtonSize",
@@ -231,16 +216,7 @@ export function style(
           "cssStyleElementEcwidProductDetailsSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar div .product-details-module__title.ec-header-h6":
-      {
-        standart: [
-          "cssStyleElementEcwidProductDetailsColor",
-          "cssStyleElementEcwidProductDetailsTypography",
-          "cssStyleElementEcwidProductDetailsAlign",
-          "cssStyleElementEcwidProductDetailsSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option .product-details-module__title":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__title":
       {
         standart: [
           "cssStyleElementEcwidProductSizeColor",
@@ -627,7 +603,7 @@ export function style(
           "cssStyleElementEcwidCartFooterTypography"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.ec-link.ec-link--muted":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.ec-link.ec-link--muted:hover":
       {
         standart: [
           "cssStyleElementEcwidCartFooterColor",
@@ -636,7 +612,7 @@ export function style(
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon":
       { standart: ["cssStyleElementEcwidCartFooterIconSpacing"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon svg":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link:hover .svg-icon svg":
       {
         standart: [
           "cssStyleElementEcwidCartFooterIconSize",
@@ -1210,5 +1186,5 @@ export function style(
       }
   };
 
-  return renderStyles({ v, vs, vd, styles }) as [string, string, string];
+  return renderStyles({ ...data, styles });
 }

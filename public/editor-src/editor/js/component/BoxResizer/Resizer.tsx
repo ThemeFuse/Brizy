@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React, { Component, ForwardedRef, ReactNode } from "react";
 import {
   calcMaxHeightBasedOnWidth,
   calcRectangleSide,
@@ -7,6 +7,7 @@ import {
 import ClickOutside from "visual/component/ClickOutside";
 import { DraggableDiv } from "visual/component/DraggableDiv";
 import { clamp } from "visual/utils/math";
+import { attachRef } from "visual/utils/react";
 import { Patch, Point, RestrictionMapping, SimpleRestriction } from "./types";
 
 interface State {
@@ -24,12 +25,14 @@ interface Props {
   onStart?: () => void;
   onEnd?: () => void;
   onChange: (data: Patch) => void;
+  containerRef: ForwardedRef<HTMLElement>;
 }
 
 interface DragInfo {
   deltaX: number;
   deltaY: number;
 }
+
 interface DragHandler {
   (dragInfo: DragInfo): void;
 }
@@ -264,7 +267,7 @@ export class Resizer extends Component<Props, State> {
 
   render(): React.ReactNode {
     const { showPoints } = this.state;
-    const { points, children } = this.props;
+    const { points, children, containerRef } = this.props;
     const {
       topCenter,
       topRight,
@@ -285,7 +288,10 @@ export class Resizer extends Component<Props, State> {
     return (
       <ClickOutside onClickOutside={this.handleClickOutside}>
         <div
-          ref={this.contentRef}
+          ref={(el) => {
+            attachRef(el, this.contentRef);
+            attachRef(el, containerRef);
+          }}
           className="brz-ed-box__resizer"
           onClick={this.handleClick}
         >

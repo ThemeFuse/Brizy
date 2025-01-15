@@ -37,7 +37,13 @@ class Page extends EditorComponent {
 
   handleDNDSort = (data) => {
     const { dbValue } = this.props;
-    const newValue = changeValueAfterDND(dbValue, data);
+    const store = this.getReduxStore();
+    const newValue = changeValueAfterDND(
+      dbValue,
+      data,
+      store,
+      this.getGlobalConfig().menuData
+    );
 
     this.props.onChange(newValue);
   };

@@ -1,11 +1,12 @@
 import React from "react";
+import { isView } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 
 class SortableHandle extends React.Component {
   render() {
-    const { children } = this.props;
+    const { children, renderContext } = this.props;
 
-    if (IS_PREVIEW) {
+    if (isView(renderContext)) {
       return React.Children.only(children);
     }
 

@@ -1,5 +1,7 @@
 import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Response } from "visual/utils/api/response";
+
 
 // Forms
 
@@ -136,11 +138,14 @@ export type UpdateSmptIntegration = (data: {
   completed: boolean;
 }) => Promise<SmptIntegrationResponse>;
 
-export type DeleteSmtpIntegration = (data: {
-  formId: string;
-  integration: string;
-  notificationId: string;
-}) => Promise<Response>;
+export type DeleteSmtpIntegration = (
+  data: {
+    formId: string;
+    integration: string;
+    notificationId: string;
+  },
+  config: ConfigCommon
+) => Promise<Response>;
 
 // Recaptcha
 

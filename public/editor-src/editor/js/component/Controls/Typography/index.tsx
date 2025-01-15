@@ -5,9 +5,8 @@ import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import Stepper from "visual/component/Controls/Stepper";
 import { Label } from "visual/component/Label";
-import Config from "visual/global/Config";
+import { WithValue } from "visual/types/attributes";
 import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
-import { isStory } from "visual/utils/models";
 import { FontStyle } from "./Components/FontStyle";
 import { FontTransform } from "./Components/FontTransform";
 import { FontWeight } from "./Components/FontWeight";
@@ -15,7 +14,6 @@ import { Icon } from "./Components/TabIcon";
 import { Font } from "./types/FontFamily";
 import { TypographyProps as Props } from "./types/Props";
 import { Value } from "./types/Value";
-import { WithValue } from "visual/types/attributes";
 
 export class Typography extends PureComponent<Props> {
   onFontFamily = (v: Font): void =>
@@ -117,10 +115,10 @@ export class Typography extends PureComponent<Props> {
       activeIcon,
       variations,
       showTextTransform,
-      onIconClick
+      onIconClick,
+      showFontSize,
+      showFontStyles
     } = this.props;
-
-    const IS_STORY = isStory(Config.getAll());
 
     const typographyStyleClassName = classnames(
       "brz-ed-control__typography-styles",
@@ -171,7 +169,7 @@ export class Typography extends PureComponent<Props> {
 
         <div className={typographyStyleClassName}>
           <div className="brz-ed__col brz-ed__col-1-1">
-            {icons?.length && !IS_STORY ? (
+            {icons?.length && showFontStyles ? (
               <div className="brz-ed-control__typography-styles_icon">
                 {icons?.map((icon, index) => (
                   <Icon
@@ -195,7 +193,7 @@ export class Typography extends PureComponent<Props> {
             )}
           </div>
           <div className="brz-ed__col brz-ed__col-1-2">
-            {IS_STORY ? (
+            {showFontSize ? (
               <Label title={sizeLabel}>{sizeLabel}</Label>
             ) : (
               <div className="brz-control__typography-suffix">

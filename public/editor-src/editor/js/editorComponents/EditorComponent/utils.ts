@@ -1,8 +1,8 @@
+import { Bool } from "@brizy/readers";
 import deepMerge from "deepmerge";
 import { mPipe, or } from "fp-utilities";
 import { getIn } from "timm";
 import { flatten, intersection, isEmpty } from "underscore";
-import { Bool } from "@brizy/readers";
 import {
   ElementDefaultValue,
   ElementModel
@@ -16,20 +16,22 @@ import {
   ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import {
-  hasId,
-  is as isToolbarItemType,
   OptionDefinition,
-  ToolbarItemType
+  ToolbarItemType,
+  hasId,
+  is as isToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { getShortcodeComponents } from "visual/shortcodeComponents";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Store } from "visual/redux/store";
+import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 import { DeviceMode, UserRole } from "visual/types";
 import { Dictionary } from "visual/types/utils";
 import * as Device from "visual/utils/devices";
 import {
   ALL,
   DESKTOP as DesktopDevice,
-  getDevice,
   RESPONSIVE,
+  getDevice,
   supportsMode
 } from "visual/utils/devices";
 import { isPro } from "visual/utils/env";
@@ -58,7 +60,6 @@ import { camelCase } from "visual/utils/string";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Literal from "visual/utils/types/Literal";
 import { isNullish, isT } from "visual/utils/value";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 /**
  * Create an complete option id that consists from 2 parts: base id and suffix
@@ -292,7 +293,7 @@ export const getProTitle = (
   model: ElementModel,
   config: ConfigCommon
 ): ProElementTitle | undefined => {
-  const shortcodes = getShortcodeComponents(config);
+  const shortcodes = getFlatShortcodes(config);
   const element = Object.values(shortcodes)
     .flat()
     .filter((item) => typeof item.pro === "function" || item.pro)
@@ -366,7 +367,9 @@ function generateKeyValue<T extends OptionName>({
 
 function parseOption(
   acc: ParsedToolbarData,
-  option: ToolbarItemType
+  option: ToolbarItemType,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _: Store
 ): ParsedToolbarData {
   const elementModel = toElementModel(option.type, (key) =>
     getKey(option.id, key)
@@ -408,15 +411,29 @@ function parseOption(
   };
 }
 
-export function getToolbarData(toolbar?: ToolbarItemType[]): ParsedToolbarData {
-  const data = { dv: {}, DCKeys: [] };
+export function getToolbarData(
+  store: Store,
+  toolbar?: ToolbarItemType[]
+): ParsedToolbarData {
+  const data: ParsedToolbarData = {
+    dv: {},
+    DCKeys: []
+  };
 
   if (!toolbar) {
     return data;
   }
 
   return deepMerge.all(
-    toolbar.map((option) => reduce(parseOption, data, option))
+    toolbar.map((option) =>
+      reduce(
+        (acc, item) => {
+          return parseOption(acc, item, store);
+        },
+        data,
+        option
+      )
+    )
   ) as ParsedToolbarData;
 }
 
@@ -459,6 +476,7 @@ export function getOptionValueByDevice({
 }: {
   v: ElementModel;
   id: string;
+  store: Store;
   currentDevice: DeviceMode;
   toolbarConfig: ToolbarConfig[];
 }): Record<string, unknown> | undefined {

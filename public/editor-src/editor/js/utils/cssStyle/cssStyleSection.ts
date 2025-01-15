@@ -1,3 +1,4 @@
+import { WithRenderContext, isEditor } from "visual/providers/RenderProvider";
 import { cssStyleColor, cssStylePadding } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
@@ -76,17 +77,25 @@ export function cssStyleSectionSliderHeight({
 export function cssStyleSectionColorDots({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "sliderDotsColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "sliderDotsColor" });
 }
 
 export function cssStyleSectionColorArrows({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "sliderArrowsColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "sliderArrowsColor"
+  });
 }
 
 export function cssStyleSectionToolbarOffset({
@@ -149,8 +158,8 @@ export function cssStyleSectionHeightStyle({ v, device }: CSSValue): string {
     minHeightType === "custom"
       ? `${dvv("sectionHeight")}${dvv("sectionHeightSuffix")}`
       : minHeightType === "on"
-      ? "100vh"
-      : "auto";
+        ? "100vh"
+        : "auto";
 
   return `min-height: ${minHeight};`;
 }
@@ -158,9 +167,10 @@ export function cssStyleSectionHeightStyle({ v, device }: CSSValue): string {
 export function cssStyleSectionPaddingsForEditorResize({
   v,
   device,
-  state
-}: CSSValue): string {
-  if (IS_EDITOR) {
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  if (isEditor(renderContext)) {
     const { paddingLeft, paddingLeftSuffix, paddingRight, paddingRightSuffix } =
       cssStylePadding({ v, device, state });
 

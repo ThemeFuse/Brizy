@@ -4,15 +4,24 @@ import {
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
+import { OptionPatch } from "visual/component/Options/types";
 import * as Unit from "visual/utils/math/Unit";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { capByPrefix } from "visual/utils/string";
+import {
+  Type,
+  flattEffects,
+  flattenObject,
+  getEnabledEffects,
+  getPatchType
+} from "../utils/effects";
+import { Effects } from "./types";
 import * as Blur from "./types/Blur";
 import * as Horizontal from "./types/Horizontal";
 import * as MouseTilt from "./types/MouseTilt";
 import * as Tilt from "./types/MouseTilt";
 import * as MouseTrack from "./types/MouseTrack";
-import { Type, disableEffects } from "./types/Patch";
+import { disableEffects } from "./types/Patch";
 import * as Rotate from "./types/Rotate";
 import * as Scale from "./types/Scale";
 import * as Transparency from "./types/Transparency";
@@ -20,7 +29,7 @@ import { Value, isActive } from "./types/Value";
 import * as Vertical from "./types/Vertical";
 import * as Viewport from "./types/Viewport";
 import { wrap } from "./types/utils";
-import { flattenObject, isEnabled } from "./utils";
+import { isEnabled } from "./utils";
 
 export const defaultValue: Value = {
   active: undefined,
@@ -139,8 +148,27 @@ export const fromElementModel: FromElementModel<"motion"> = parseStrict<
   )
 });
 
-export const toElementModel: ToElementModel<"motion"> = (patch) => {
+export const toElementModel: ToElementModel<"motion"> = (_patch) => {
+  const patch = {
+    ..._patch,
+    type: getPatchType(_patch, Effects)
+  } as OptionPatch<"motion">;
+
+  if (!patch.type) {
+    return {};
+  }
+
   switch (patch.type) {
+    case Type.multiple:
+      return {
+        active: patch.active,
+        ...(patch.active
+          ? { [capByPrefix(patch.active, "enabled")]: true }
+          : {}),
+        ...getEnabledEffects(patch),
+        ...flattEffects(patch, Effects)
+      };
+
     case Type.active:
       return {
         active: patch.active,

@@ -3,13 +3,11 @@ import React, { ReactNode } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { EkklesiaMessages } from "visual/editorComponents/MinistryBrands/utils/helpers";
+import { getEkklesiaMessages } from "visual/editorComponents/MinistryBrands/utils/helpers";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
@@ -46,14 +44,15 @@ export class MinistryBrandsArticleDetail extends EditorComponent<Value, Props> {
     this.props.extendParentToolbar(toolbarExtend);
 
     const { recentArticles } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [{ value: { recentArticles }, module: { key: "articleRecent" } }]
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["article_detail"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["article_detail"]);
       this.patchValue(changedKeys);
     }
   }
@@ -62,7 +61,17 @@ export class MinistryBrandsArticleDetail extends EditorComponent<Value, Props> {
     const className = classnames(
       "brz-articleDetail__wrapper",
       "brz-ministryBrands",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

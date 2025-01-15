@@ -1,6 +1,20 @@
 import $ from "jquery";
 import { initHoverAnimation } from "visual/libs/hoveranimation/utils";
 
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      const $slick = $(entry.target);
+      if (entry.isIntersecting) {
+        $slick.slick("slickPlay");
+      } else {
+        $slick.slick("slickPause");
+      }
+    });
+  },
+  { threshold: 0.5 }
+);
+
 export default function ($node) {
   const isRtl = $node.closest("[dir='rtl']").length > 0;
   const makeArrow = (node) => {
@@ -73,10 +87,14 @@ export default function ($node) {
       draggable: swipe,
       nextArrow: arrows && getArrow("brz-slick-slider__arrow-next"),
       prevArrow: arrows && getArrow("brz-slick-slider__arrow-prev"),
-      autoplay: autoPlay,
+      autoplay: false,
       autoplaySpeed: autoPlaySpeed,
       rtl: isRtl
     });
+
+    if (autoPlay) {
+      observer.observe(_this);
+    }
 
     window.Brz.emit("elements.slick.ready", $this.get(0));
 

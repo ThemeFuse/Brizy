@@ -67,10 +67,7 @@ module.exports = (options = {}) => {
     entry: {
       polyfill: "./editor/js/bootstraps/polyfill.js",
       editor: [
-        "./editor/js/bootstraps/initConfig/index.js",
-        "./editor/js/bootstraps/editor/webpack-public-path.js",
         "./editor/js/bootstraps/initBrizyGlobal.ts",
-        "./editor/js/bootstraps/registerEditorParts.ts",
         "./editor/js/bootstraps/editor/index.tsx"
       ]
     },

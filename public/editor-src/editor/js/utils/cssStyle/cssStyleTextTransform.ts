@@ -12,9 +12,10 @@ export function cssStyleTextBold({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
-  const bold = styleTextTransformBold({ v, device, state, prefix });
+  const bold = styleTextTransformBold({ v, device, state, store, prefix });
   const value = readTextTransformValue(bold, "bold");
 
   return value ? `font-weight:${value};` : "";
@@ -24,9 +25,10 @@ export function cssStyleTextItalic({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
-  const italic = styleTextTransformItalic({ v, device, state, prefix });
+  const italic = styleTextTransformItalic({ v, device, state, store, prefix });
   const value = readTextTransformValue(italic, "italic");
 
   return value ? `font-style:${value};` : "";
@@ -36,12 +38,14 @@ export function cssStyleTextDecoration({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const decoration = styleTextTransformTextDecoration({
     v,
     device,
     state,
+    store,
     prefix
   });
 
@@ -52,22 +56,37 @@ export function cssStyleTextUpperLowerCase({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const value =
-    styleTextTransformUpperLowerCase({ v, device, state, prefix }) || "inherit";
+    styleTextTransformUpperLowerCase({ v, device, state, store, prefix }) ||
+    "inherit";
 
   return value ? `text-transform:${value} !important;` : "";
 }
 
-export function cssStyleTextTransforms({ v, device, state, prefix }: CSSValue) {
-  const bold = cssStyleTextBold({ v, device, state, prefix });
-  const italic = cssStyleTextItalic({ v, device, state, prefix });
-  const decoration = cssStyleTextDecoration({ v, device, state, prefix });
+export function cssStyleTextTransforms({
+  v,
+  device,
+  state,
+  prefix,
+  store
+}: CSSValue) {
+  const bold = cssStyleTextBold({ v, device, state, prefix, store });
+  const italic = cssStyleTextItalic({ v, device, state, prefix, store });
+  const decoration = cssStyleTextDecoration({
+    v,
+    device,
+    state,
+    prefix,
+    store
+  });
   const upperLowerCase = cssStyleTextUpperLowerCase({
     v,
     device,
     state,
+    store,
     prefix
   });
 
@@ -78,9 +97,10 @@ export function cssStyleTextScript({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
-  const value = styleTextTransformScript({ v, device, state, prefix });
+  const value = styleTextTransformScript({ v, device, state, prefix, store });
 
   return value ? `display : inline-block; vertical-align:${value};` : "";
 }

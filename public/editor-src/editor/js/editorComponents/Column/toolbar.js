@@ -1,34 +1,30 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { isPopup } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
+import { Toggle } from "visual/utils/options/utils/Type";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { capitalize } from "visual/utils/string";
 import { read as readString } from "visual/utils/string/specs";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
-import { Toggle } from "visual/utils/options/utils/Type";
 
-export function getItems({ v, device, component, context, state }) {
-  const config = Config.getAll();
+export function getItems({ v, device, component, context, state, editorMode }) {
+  const config = component.getGlobalConfig();
 
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isPopup = isPopup(editorMode);
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
@@ -37,9 +33,10 @@ export function getItems({ v, device, component, context, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const dvvState = (key, state) => defaultValueValue({ v, key, device, state });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -267,7 +264,7 @@ export function getItems({ v, device, component, context, state }) {
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes,
+                  choices: getMaskShapes(),
                   disabled: disableMaskTab
                 },
                 {
@@ -294,7 +291,7 @@ export function getItems({ v, device, component, context, state }) {
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -320,7 +317,7 @@ export function getItems({ v, device, component, context, state }) {
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -351,7 +348,7 @@ export function getItems({ v, device, component, context, state }) {
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }
@@ -367,7 +364,7 @@ export function getItems({ v, device, component, context, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },
@@ -500,7 +497,7 @@ export function getItems({ v, device, component, context, state }) {
                   v,
                   device,
                   state: "normal",
-                  disabled: IS_GLOBAL_POPUP
+                  disabled: _isPopup
                 })
               ]
             },
@@ -514,7 +511,7 @@ export function getItems({ v, device, component, context, state }) {
                   label: t("Popup"),
                   disabled:
                     device === "desktop"
-                      ? inPopup || inPopup2 || IS_GLOBAL_POPUP
+                      ? inPopup || inPopup2 || _isPopup
                       : dvv("linkType") !== "popup" || linkPopup === "",
                   config: {
                     popupKey: `${component.getId()}_${linkPopup}`,

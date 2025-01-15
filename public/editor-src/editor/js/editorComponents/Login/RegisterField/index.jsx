@@ -1,13 +1,13 @@
 import classnames from "classnames";
 import React from "react";
-import Config, { isWp } from "visual/global/Config";
+import { isEditor } from "visual/providers/RenderProvider";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
-import { css } from "visual/utils/cssStyle";
+import { isWp } from "visual/global/Config";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
@@ -45,7 +45,7 @@ class RegisterField extends EditorComponent {
 
   static defaultValue = defaultValue;
 
-  isWp = isWp(Config.getAll());
+  isWp = isWp(this.getGlobalConfig());
 
   handleLabelChange = (label) => {
     this.patchValue({ label });
@@ -65,7 +65,7 @@ class RegisterField extends EditorComponent {
       return "";
     }
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -82,6 +82,7 @@ class RegisterField extends EditorComponent {
         return "";
     }
   }
+
   getWpFieldName(type) {
     switch (readRegisterWpType(type)) {
       case "Name":
@@ -109,6 +110,7 @@ class RegisterField extends EditorComponent {
         return "";
     }
   }
+
   getCloudFieldName(type) {
     switch (readRegisterCloudType(type)) {
       case "FirstName":
@@ -180,6 +182,7 @@ class RegisterField extends EditorComponent {
       )
     );
   }
+
   renderRegisterInfoForView(v, showRegisterInfo) {
     const { type } = v;
     return (
@@ -191,6 +194,7 @@ class RegisterField extends EditorComponent {
       )
     );
   }
+
   renderForEdit(v, vs, vd) {
     const {
       showLabel,
@@ -211,10 +215,16 @@ class RegisterField extends EditorComponent {
         "brz-login-form__field-registerInfo-off":
           showRegisterInfo === "off" && type === "RegisterInfo"
       },
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const styleLabel = {
@@ -351,10 +361,16 @@ class RegisterField extends EditorComponent {
         "brz-login-form__field-registerInfo-off":
           showRegisterInfo === "off" && type === "RegisterInfo"
       },
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     const styleLabel = {
@@ -424,4 +440,5 @@ class RegisterField extends EditorComponent {
     );
   }
 }
+
 export default RegisterField;

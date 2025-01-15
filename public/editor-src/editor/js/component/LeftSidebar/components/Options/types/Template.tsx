@@ -1,52 +1,29 @@
-import React, { ReactElement } from "react";
-import { connect, ConnectedProps } from "react-redux";
 import classnames from "classnames";
-import Config from "visual/global/Config";
+import React, { ReactElement } from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import { ReduxState } from "visual/redux/types";
-import { isWPPage } from "visual/types";
-import { isWp } from "visual/global/Config/types/configs/WP";
+import { TemplateProps } from "visual/component/LeftSidebar/components/Options/utils";
 
-const getTemplate = (state: ReduxState): string => {
-  if (isWPPage(state.page)) {
-    return state.page.template;
-  }
-
-  return "";
-};
-
-export interface BaseProps {
+export interface Props extends TemplateProps {
   label?: string;
   className?: string;
 }
 
-const mapState = (state: ReduxState): { currentTemplate: string } => ({
-  currentTemplate: getTemplate(state)
-});
-
-const connector = connect(mapState, null);
-
-export type Props = ConnectedProps<typeof connector> & BaseProps;
-
-class Template extends React.Component<Props> {
+export default class Template extends React.Component<Props> {
   handleTemplateChange = (template: string): void => {
+    const { isWP, changeTemplateUrl } = this.props;
     const win = window.parent || window;
-    const config = Config.getAll();
 
-    if (isWp(config)) {
-      const changeTemplate = config.urls.changeTemplate ?? "";
-
-      win.location.href = `${changeTemplate}&template=${template}`;
+    if (isWP) {
+      win.location.href = `${changeTemplateUrl}&template=${template}`;
     }
   };
 
-  renderOptions(): JSX.Element[] {
-    const config = Config.getAll();
-
-    if (isWp(config)) {
-      const templates = config.wp.templates;
-
+  renderOptions(
+    isWP: boolean,
+    templates: { id: string; title: string }[]
+  ): JSX.Element[] {
+    if (isWP) {
       return templates.map((template, index) => (
         <SelectItem key={index} value={template.id}>
           {template.title}
@@ -58,7 +35,14 @@ class Template extends React.Component<Props> {
   }
 
   render(): ReactElement {
-    const { label, className: _className, currentTemplate } = this.props;
+    const {
+      label,
+      className: _className,
+      currentTemplate,
+      isWP,
+      templates
+    } = this.props;
+
     const className = classnames(
       "brz-ed-sidebar-bottom__option brz-ed-sidebar__wp-template",
       _className
@@ -74,10 +58,9 @@ class Template extends React.Component<Props> {
           itemHeight="30"
           onChange={this.handleTemplateChange}
         >
-          {this.renderOptions()}
+          {this.renderOptions(isWP, templates)}
         </Select>
       </div>
     );
   }
 }
-export default connector(Template);

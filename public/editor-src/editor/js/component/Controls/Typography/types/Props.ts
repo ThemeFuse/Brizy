@@ -1,15 +1,14 @@
+import { Choice } from "visual/component/Controls/Toggle/types";
 import { OnChange } from "visual/component/Options/Type";
 import { FontTransform, TextScripts, VariationFont } from "visual/types";
+import { WithValue } from "visual/types/attributes";
 import { Font, FontFamily } from "./FontFamily";
 import { FontLetterSpacing } from "./FontLetterSpacing";
 import { FontLineHeight } from "./FontLineHeight";
 import { FontSize } from "./FontSize";
-import { FontStyle } from "./FontStyle";
-import { FontStyle as FontStyleType } from "./FontStyle";
+import { FontStyle, FontStyle as FontStyleType } from "./FontStyle";
 import { FontWeight } from "./FontWeight";
 import { Value } from "./Value";
-import { Choice } from "visual/component/Controls/Toggle/types";
-import { WithValue } from "visual/types/attributes";
 
 type changeValue = Value[keyof Value] | Font;
 type changeMeta = {
@@ -31,8 +30,10 @@ export interface TypographyProps
   activeIcon?: string;
   onIconClick: (icon: string) => void;
   variations?: VariationFont[];
-  showTextTransform?: boolean;
   scriptChoices?: Choice<FontTransform["script"]>[];
+  showTextTransform?: boolean;
+  showFontSize?: boolean;
+  showFontStyles?: boolean;
 }
 
 export interface FontStyleProps {

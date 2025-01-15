@@ -5,7 +5,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -30,7 +29,17 @@ export default class WOOAttributes extends EditorComponent {
     const className = classnames(
       "brz-woo-attributes",
       className_,
-      css(this.constructor.componentId, this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const restrictions = {

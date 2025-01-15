@@ -1,7 +1,7 @@
 import jQuery from "jquery";
+import { t } from "visual/utils/i18n";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
-import { t } from "visual/utils/i18n";
 
 export const STICKY_ITEM_INDEX = 1;
 
@@ -31,7 +31,7 @@ export const fixedContainerPlus = ({
   }
 };
 
-export const toolbarTagsChoices = [
+export const getToolbarTagsChoices = () => [
   { title: "Div", value: "div" },
   { title: t("Header"), value: "header" },
   { title: t("Footer"), value: "footer" },

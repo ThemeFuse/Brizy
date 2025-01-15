@@ -1,10 +1,12 @@
 import React from "react";
+import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { rulesSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { setOffsetsToElementFromWrapper } from "visual/utils/models";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
@@ -35,7 +37,8 @@ class StoryItemItems extends EditorArrayComponent {
           position: 200,
           onClick: () => {
             const wrapper = this.getDBValue()[itemIndex];
-            const newWrapper = setOffsetsToElementFromWrapper(wrapper);
+            const rules = rulesSelector(this.getReduxStore().getState());
+            const newWrapper = setOffsetsToElementFromWrapper(wrapper, rules);
 
             this.insertItem(itemIndex + 1, newWrapper);
           }
@@ -90,7 +93,7 @@ class StoryItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    if (IS_PREVIEW) {
+    if (isView(this.renderContext)) {
       return <div className={this.props.className}>{items}</div>;
     }
 

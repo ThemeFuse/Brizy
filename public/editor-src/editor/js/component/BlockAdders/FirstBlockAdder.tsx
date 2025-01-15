@@ -13,7 +13,7 @@ import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { First as Control } from "./Controls/First";
 
-const textsByDeviceMode = {
+const getTextsByDeviceMode = () => ({
   desktop: {
     title: t("START BUILDING YOUR PAGE"),
     description: t("Press the button above to add blocks")
@@ -26,7 +26,7 @@ const textsByDeviceMode = {
     title: t("SWITCH TO DESKTOP"),
     description: t("Switch to desktop to add blocks")
   }
-};
+});
 
 interface Props {
   onAddBlock?: (block: PromptBlock) => void;
@@ -61,7 +61,8 @@ export const FirstBlockAdder = (props: Props): ReactElement => {
     }
   }, [deviceMode, dispatch, onAddBlock, onAddGlobalBlock, onAddTemplate]);
 
-  const { title, description } = textsByDeviceMode[deviceMode];
+  const docs = getTextsByDeviceMode();
+  const { title, description } = docs[deviceMode];
   const icon =
     deviceMode === "mobile" || deviceMode === "tablet"
       ? "nc-desktop"

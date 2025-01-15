@@ -5,15 +5,17 @@ import { cssStyleIconMargin } from "./cssStyleSize";
 export function cssStyleElementPaypalBtnSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleIconMargin({ v, device, state, prefix: "icon" });
+  return cssStyleIconMargin({ v, device, state, store, prefix: "icon" });
 }
 
 export function cssStyleElementPaypalIconPosition({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleIconPosition({ v, device, state, prefix: "icon" });
+  return cssStyleIconPosition({ v, device, state, store, prefix: "icon" });
 }

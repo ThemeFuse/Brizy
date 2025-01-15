@@ -1,9 +1,6 @@
-import { getStore } from "visual/redux/store";
+import { Str, Num } from "@brizy/readers";
 import { roundTo } from "visual/utils/math";
-import * as Num from "visual/utils/math/number";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { capitalize } from "visual/utils/string";
-import * as Str from "visual/utils/string/specs";
 import { MValue } from "visual/utils/value";
 import {
   Aligns,
@@ -30,41 +27,43 @@ import {
   calcOffsetYBySize,
   RESTRICTIONS
 } from "./utils";
+import { DeviceMode } from "visual/types";
 
 const normalizeKeyForCurrentDeviceMode = (
-  key: keyof Restrictions | Aligns | keyof DimensionSuffix
+  key: keyof Restrictions | Aligns | keyof DimensionSuffix,
+  device: DeviceMode
 ): keyof ValueMapping => {
-  const { deviceMode } = getStore().getState().ui;
-  const value =
-    deviceMode !== "desktop" ? `${deviceMode}${capitalize(key)}` : key;
+  const value = device !== "desktop" ? `${device}${capitalize(key)}` : key;
 
   return value as keyof ValueMapping;
 };
 
 export const transformAlign = (
   meta: Meta,
-  alignKey: Aligns
+  alignKey: Aligns,
+  device: DeviceMode
 ): MValue<string> => {
-  const normalizedAlignKey = normalizeKeyForCurrentDeviceMode(alignKey);
+  const normalizedAlignKey = normalizeKeyForCurrentDeviceMode(alignKey, device);
 
   return Str.read(meta[normalizedAlignKey]) || Str.read(meta[alignKey]);
 };
 
 export const transformRestrictions: TransformRestrictions = (
   restrictions = {},
-  value
+  value,
+  device
 ) => {
-  const deviceMode: ResponsiveMode = getStore().getState().ui.deviceMode;
-
   const keys = Object.keys(RESTRICTIONS.desktop) as (keyof Restriction)[];
   return keys.reduce((acc, key) => {
     const normalizedKey = normalizeKeyForCurrentDeviceMode(
-      key
+      key,
+      device
     ) as keyof Restrictions;
 
     const keySuffix = `${key}Suffix` as keyof DimensionSuffix;
     const normalizedKeySuffix = normalizeKeyForCurrentDeviceMode(
-      keySuffix
+      keySuffix,
+      device
     ) as keyof DimensionSuffixs;
 
     const normalizedValueSuffix = (value[normalizedKeySuffix] ||
@@ -72,18 +71,19 @@ export const transformRestrictions: TransformRestrictions = (
 
     acc[key] = Object.assign(
       {},
-      RESTRICTIONS[deviceMode][key][normalizedValueSuffix],
+      RESTRICTIONS[device][key][normalizedValueSuffix],
       restrictions?.[normalizedKey]?.[normalizedValueSuffix]
     );
     return acc;
   }, {} as SimpleRestriction);
 };
 
-export const transformValue: TransformValue = (value) => {
+export const transformValue: TransformValue = (value, device) => {
   const keys = Object.keys(RESTRICTIONS.desktop) as (keyof Restriction)[];
   return keys.reduce((acc, key) => {
     const normalizedKey = normalizeKeyForCurrentDeviceMode(
-      key
+      key,
+      device
     ) as keyof Restrictions;
 
     const v = Num.read(value[normalizedKey]) ?? Num.read(value[key]);
@@ -99,19 +99,26 @@ export const transformValue: TransformValue = (value) => {
 export const resizerTransformPatch: TransformPatch = (
   patch,
   startValue,
-  value
+  value,
+  device
 ) => {
   const keys = Object.keys(patch) as (keyof Restriction)[];
 
   return keys.reduce((acc, key) => {
-    const normalizedKey = normalizeKeyForCurrentDeviceMode(key);
+    const normalizedKey = normalizeKeyForCurrentDeviceMode(key, device);
 
-    const normalizedHeightKey = normalizeKeyForCurrentDeviceMode("height");
-    const normalizedHeightSuffixKey =
-      normalizeKeyForCurrentDeviceMode(`heightSuffix`);
+    const normalizedHeightKey = normalizeKeyForCurrentDeviceMode(
+      "height",
+      device
+    );
+    const normalizedHeightSuffixKey = normalizeKeyForCurrentDeviceMode(
+      `heightSuffix`,
+      device
+    );
 
     const normalizedKeySuffix = normalizeKeyForCurrentDeviceMode(
-      `${key}Suffix` as keyof DimensionSuffix
+      `${key}Suffix` as keyof DimensionSuffix,
+      device
     );
     const keySuffix = `${key}Suffix` as keyof DimensionSuffix;
 

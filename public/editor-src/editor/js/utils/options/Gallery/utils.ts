@@ -4,6 +4,7 @@ import {
   Image
 } from "visual/component/Options/types/dev/Gallery/types/Image";
 import { UploadData } from "visual/component/Options/types/dev/Gallery/types/UploadData";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { WithId } from "visual/types/attributes";
 import { getImageUrl, preloadImage } from "visual/utils/image";
@@ -17,14 +18,20 @@ export const allowedExtensions = ["jpeg", "jpg", "png", "gif", "svg", "webp"];
 export const maxId = <T extends WithId<number>>(ts: T[]): number =>
   ts.reduce((id, i) => (i.id > id ? i.id : id), 0);
 
-export const toUploadData = (d: AddImageData): Promise<UploadData> => {
+export const toUploadData = (
+  d: AddImageData,
+  config: ConfigCommon
+): Promise<UploadData> => {
   return new Promise((res, rej) => {
     const { uid, fileName = "" } = d;
-    const url = getImageUrl({
-      uid,
-      fileName,
-      sizeType: SizeType.custom
-    });
+    const url = getImageUrl(
+      {
+        uid,
+        fileName,
+        sizeType: SizeType.custom
+      },
+      config
+    );
 
     preloadImage(url)
       .then(({ width, height }) => {

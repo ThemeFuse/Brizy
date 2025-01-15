@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Gallery Tags");
+export const title = () => t("Gallery Tags");
 
 export function getItems() {
   return [

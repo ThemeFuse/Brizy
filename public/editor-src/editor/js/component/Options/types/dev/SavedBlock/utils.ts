@@ -1,4 +1,3 @@
-import Config from "visual/global/Config";
 import { Block, SavedBlock } from "visual/types";
 import {
   createBlockScreenshot,
@@ -44,7 +43,8 @@ export const handleCreateSaveBlock = async ({
   block,
   blockType,
   blockId,
-  extraFontStyles
+  extraFontStyles,
+  config
 }: HandleCreateBlock): Promise<void> => {
   const meta: SavedBlock["meta"] = {
     extraFontStyles,
@@ -52,7 +52,6 @@ export const handleCreateSaveBlock = async ({
     ...block.meta
   };
 
-  const config = Config.getAll();
   let screenshotsSupported: boolean;
 
   try {
@@ -67,13 +66,14 @@ export const handleCreateSaveBlock = async ({
     const node: HTMLElement | null = document.getElementById(blockId);
 
     if (node) {
-      const { src, width, height } = await makeNodeScreenshot(node).catch(
-        () => ({
-          src: undefined,
-          width: undefined,
-          height: undefined
-        })
-      );
+      const { src, width, height } = await makeNodeScreenshot(
+        node,
+        config
+      ).catch(() => ({
+        src: undefined,
+        width: undefined,
+        height: undefined
+      }));
 
       if (src && isNumber(width) && isNumber(height)) {
         const { id } = await createBlockScreenshot(

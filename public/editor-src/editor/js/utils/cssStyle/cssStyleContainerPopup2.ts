@@ -32,18 +32,20 @@ export function cssStyleContainerPopup2CloseState({
   return closeState === undefined
     ? ""
     : closeState === "on"
-    ? cssStyleDisplayBlock()
-    : cssStyleDisplayNone();
+      ? cssStyleDisplayBlock()
+      : cssStyleDisplayNone();
 }
 
 export function cssStyleContainerPopup2CloseColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "closeColor"
   });
@@ -87,11 +89,13 @@ export function cssStyleContainerPopup2CloseBgSize({
 export function cssStyleContainerPopup2CloseBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleBorderRadiusType({
     v,
     device,
+    store,
     state,
     prefix: "close"
   });
@@ -157,20 +161,22 @@ export function cssStyleContainerPopup2RowFlexVerticalAlign({
   v,
   device,
   state,
+  store,
   prefix = "popupRow"
 }: CSSValue): string {
-  return cssStyleFlexVerticalAlign({ v, device, state, prefix });
+  return cssStyleFlexVerticalAlign({ v, device, state, store, prefix });
 }
 
 export function cssStyleContainerPopup2CustomHeight({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const columnSizeStyle = dvv("columnsHeightStyle");
 
   return columnSizeStyle === "custom2"
-    ? cssStyleSizeHeight({ v, device, state, prefix: "columns" })
+    ? cssStyleSizeHeight({ v, device, state, store, prefix: "columns" })
     : "";
 }

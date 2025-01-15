@@ -1,3 +1,4 @@
+import { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBgGradient,
@@ -22,57 +23,67 @@ import { styleColor } from "../style2/styleColor";
 export function cssStyleElementEcwidCartParentBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "parentBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "parentBg" });
 }
 
 export function cssStyleElementEcwidCartParentBgGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "parent" });
+  return cssStyleBgGradient({ v, device, store, state, prefix: "parent" });
 }
 
 // Style Title
 export function cssStyleElementEcwidCartTitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "titleColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "titleColor" });
 }
 
 export function cssStyleElementEcwidCartTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "titleTypography"
+    prefix: "titleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartTitleAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "title" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "title" });
 }
 
 export function cssStyleElementEcwidCartTitleSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "title",
     direction: "bottom"
@@ -83,70 +94,84 @@ export function cssStyleElementEcwidCartTitleSpacing({
 export function cssStyleElementEcwidCartTitle2Color({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "title2Color" });
+  return cssStyleColor({ v, device, store, state, prefix: "title2Color" });
 }
 
 export function cssStyleElementEcwidCartTitle2Typography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "title2Typography"
+    prefix: "title2Typography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartTitle2Align({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "title2" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "title2" });
 }
 
 // Style Subtitle
 export function cssStyleElementEcwidCartSubtitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "subtitleColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "subtitleColor" });
 }
 
 export function cssStyleElementEcwidCartSubtitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "subtitleTypography"
+    prefix: "subtitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartSubtitleAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "subtitle" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "subtitle" });
 }
 
 export function cssStyleElementEcwidCartSubtitleSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     direction: "bottom",
     prefix: "subtitle"
@@ -157,54 +182,63 @@ export function cssStyleElementEcwidCartSubtitleSpacing({
 export function cssStyleElementEcwidCartButtonTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "buttonTypography"
+    prefix: "buttonTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartButtonSize({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizePadding({ v, device, state, prefix: "button" });
+  return cssStyleSizePadding({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonWidth({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "button" });
+  return cssStyleSizeWidth({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "buttonColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "buttonColor" });
 }
 
 export function cssStyleElementEcwidCartButtonBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "buttonBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "buttonBg" });
 }
 
 export function cssStyleElementEcwidCartButtonBgGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "button" });
+  return cssStyleBgGradient({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonBorder({
@@ -218,35 +252,46 @@ export function cssStyleElementEcwidCartButtonBorder({
 export function cssStyleElementEcwidCartButtonBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "button" });
+  return cssStyleBorderRadius({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "button" });
+  return cssStyleBoxShadow({ v, device, store, state, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "button" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    store,
+    state,
+    prefix: "button"
+  });
 }
 
 export function cssStyleElementEcwidCartButtonSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "button",
     direction: "bottom"
@@ -257,40 +302,48 @@ export function cssStyleElementEcwidCartButtonSpacing({
 export function cssStyleElementEcwidCartEmailColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "emailColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "emailColor" });
 }
 
 export function cssStyleElementEcwidCartEmailTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "emailTypography"
+    prefix: "emailTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartEmailAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "email" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "email" });
 }
 
 export function cssStyleElementEcwidCartEmailSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "email",
     direction: "bottom"
@@ -301,32 +354,39 @@ export function cssStyleElementEcwidCartEmailSpacing({
 export function cssStyleElementEcwidCartCheckboxColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "checkboxColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "checkboxColor" });
 }
 
 export function cssStyleElementEcwidCartCheckboxTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "checkboxTypography"
+    prefix: "checkboxTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartCheckboxSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "checkbox",
     direction: "bottom"
@@ -337,69 +397,82 @@ export function cssStyleElementEcwidCartCheckboxSpacing({
 export function cssStyleElementEcwidCartNextColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "nextColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "nextColor" });
 }
 
 export function cssStyleElementEcwidCartNextTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "nextTypography"
+    prefix: "nextTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartNextAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "next" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "next" });
 }
 
 // Style Payment
 export function cssStyleElementEcwidCartPaymentColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "paymentColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "paymentColor" });
 }
 
 export function cssStyleElementEcwidCartPaymentTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "paymentTypography"
+    prefix: "paymentTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartPaymentAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, prefix: "payment" });
+  return cssStyleTextAlign({ v, device, store, state, prefix: "payment" });
 }
 
 // Style Input
 export function cssStyleElementEcwidCartInputColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "inputColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "inputColor" });
 }
 
 export function cssStyleElementEcwidCartInputColorAutofill({
@@ -415,54 +488,63 @@ export function cssStyleElementEcwidCartInputColorAutofill({
 export function cssStyleElementEcwidCartInputTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "inputTypography"
+    prefix: "inputTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartInputBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "input" });
+  return cssStyleBorderRadius({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputHeight({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, prefix: "input" });
+  return cssStyleSizeHeight({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputWidth({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "input" });
+  return cssStyleSizeWidth({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "inputBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "inputBg" });
 }
 
 export function cssStyleElementEcwidCartInputBgGradient({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, prefix: "input" });
+  return cssStyleBgGradient({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputBorderColor({
@@ -476,19 +558,22 @@ export function cssStyleElementEcwidCartInputBorderColor({
 export function cssStyleElementEcwidCartInputBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "input" });
+  return cssStyleBoxShadow({ v, device, store, state, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "input",
     direction: "bottom"
@@ -498,20 +583,29 @@ export function cssStyleElementEcwidCartInputSpacing({
 export function cssStyleElementEcwidCartInputAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "input" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    store,
+    state,
+    prefix: "input"
+  });
 }
 
 // Style Product Name
 export function cssStyleElementEcwidCartProductNameColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "productNameColor"
   });
@@ -520,24 +614,30 @@ export function cssStyleElementEcwidCartProductNameColor({
 export function cssStyleElementEcwidCartProductNameTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "productNameTypography"
+    prefix: "productNameTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartProductNameAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "productName"
   });
@@ -547,11 +647,13 @@ export function cssStyleElementEcwidCartProductNameAlign({
 export function cssStyleElementEcwidCartProductSizeColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "productSizeColor"
   });
@@ -560,24 +662,30 @@ export function cssStyleElementEcwidCartProductSizeColor({
 export function cssStyleElementEcwidCartProductSizeTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "productSizeTypography"
+    prefix: "productSizeTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartProductSizeAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "productSize"
   });
@@ -587,11 +695,13 @@ export function cssStyleElementEcwidCartProductSizeAlign({
 export function cssStyleElementEcwidCartEmptyColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "emptyColor"
   });
@@ -600,24 +710,30 @@ export function cssStyleElementEcwidCartEmptyColor({
 export function cssStyleElementEcwidCartEmptyTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "emptyTypography"
+    prefix: "emptyTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartEmptyAlign({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleTextAlign({
     v,
     device,
+    store,
     state,
     prefix: "empty"
   });
@@ -626,11 +742,13 @@ export function cssStyleElementEcwidCartEmptyAlign({
 export function cssStyleElementEcwidCartEmptySpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "empty",
     direction: "bottom"
@@ -641,19 +759,28 @@ export function cssStyleElementEcwidCartEmptySpacing({
 export function cssStyleElementEcwidCartFooterIconSize({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidthHeight({ v, device, state, prefix: "footerIcon" });
+  return cssStyleSizeWidthHeight({
+    v,
+    device,
+    store,
+    state,
+    prefix: "footerIcon"
+  });
 }
 
 export function cssStyleElementEcwidCartFooterIconSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "footer",
     direction: "bottom"
@@ -663,11 +790,13 @@ export function cssStyleElementEcwidCartFooterIconSpacing({
 export function cssStyleElementEcwidCartFooterIconColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "footerIconColor"
   });
@@ -676,38 +805,45 @@ export function cssStyleElementEcwidCartFooterIconColor({
 export function cssStyleElementEcwidCartFooterColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "footerColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "footerColor" });
 }
 
 export function cssStyleElementEcwidCartFooterTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "footerTypography"
+    prefix: "footerTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartWidth({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "cart" });
+  return cssStyleSizeWidth({ v, device, store, state, prefix: "cart" });
 }
 
 export function cssStyleElementEcwidCartImageWidth({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "image" });
+  return cssStyleSizeWidth({ v, device, store, state, prefix: "image" });
 }
 
 export function cssStyleElementEcwidCartImageBorder({
@@ -721,27 +857,31 @@ export function cssStyleElementEcwidCartImageBorder({
 export function cssStyleElementEcwidCartImageBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "image" });
+  return cssStyleBorderRadius({ v, device, store, state, prefix: "image" });
 }
 
 export function cssStyleElementEcwidCartImageBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "image" });
+  return cssStyleBoxShadow({ v, device, store, state, prefix: "image" });
 }
 
 export function cssStyleElementEcwidCartImageSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "image",
     direction: "right"
@@ -751,55 +891,81 @@ export function cssStyleElementEcwidCartImageSpacing({
 export function cssStyleElementEcwidCartSummaryTitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "summaryTitleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state,
+    prefix: "summaryTitleColor"
+  });
 }
 
 export function cssStyleElementEcwidCartSummaryTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "summaryTitleTypography"
+    prefix: "summaryTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartSummaryPriceColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "summaryPriceColor" });
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state,
+    prefix: "summaryPriceColor"
+  });
 }
 
 export function cssStyleElementEcwidCartSummaryPriceTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "summaryPriceTypography"
+    prefix: "summaryPriceTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartQtyTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "qtyTypography"
+    prefix: "qtyTypography",
+    renderContext
   });
 }
 
@@ -810,17 +976,19 @@ export function cssStylePropertyHoverTransitionElementEcwid(): string {
 export function cssStyleElementEcwidCartCloseIconColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "closeColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "closeColor" });
 }
 
 export function cssStyleElementEcwidCartCloseBgColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, prefix: "closeBg" });
+  return cssStyleBgColor({ v, device, store, state, prefix: "closeBg" });
 }
 
 export function cssStyleElementEcwidCartCloseBorderColor({
@@ -834,17 +1002,19 @@ export function cssStyleElementEcwidCartCloseBorderColor({
 export function cssStyleElementEcwidCartCloseBorderRadiusColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "close" });
+  return cssStyleBorderRadius({ v, device, store, state, prefix: "close" });
 }
 
 export function cssStyleElementEcwidCartCloseBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "close" });
+  return cssStyleBoxShadow({ v, device, store, state, prefix: "close" });
 }
 
 export function cssStyleElementEcwidCartClosePadding({
@@ -861,19 +1031,22 @@ export function cssStyleElementEcwidCartClosePadding({
 export function cssStyleElementEcwidCartCloseSize({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidthHeight({ v, device, state, prefix: "close" });
+  return cssStyleSizeWidthHeight({ v, device, store, state, prefix: "close" });
 }
 
 export function cssStyleElementEcwidCartCloseSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
+    store,
     state,
     prefix: "close",
     direction: "bottom"
@@ -883,9 +1056,16 @@ export function cssStyleElementEcwidCartCloseSpacing({
 export function cssStyleElementEcwidCartCollapsedImageWidth({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, prefix: "collapsedImage" });
+  return cssStyleSizeWidth({
+    v,
+    device,
+    store,
+    state,
+    prefix: "collapsedImage"
+  });
 }
 
 export function cssStyleElementEcwidCartCollapsedImageBorder({
@@ -899,27 +1079,43 @@ export function cssStyleElementEcwidCartCollapsedImageBorder({
 export function cssStyleElementEcwidCartCollapsedImageBorderRadius({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, prefix: "collapsedImage" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    store,
+    state,
+    prefix: "collapsedImage"
+  });
 }
 
 export function cssStyleElementEcwidCartCollapsedImageBoxShadow({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, prefix: "collapsedImage" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    store,
+    state,
+    prefix: "collapsedImage"
+  });
 }
 
 export function cssStyleElementEcwidCartCollapsedImageSpacing({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleSpacingWithPadding({
     v,
     device,
+    store,
     state,
     prefix: "collapsedImage",
     direction: "right"
@@ -929,11 +1125,13 @@ export function cssStyleElementEcwidCartCollapsedImageSpacing({
 export function cssStyleElementEcwidCartTotalProductsCountColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
+    store,
     state,
     prefix: "cartTotalProductsCountColor"
   });
@@ -942,117 +1140,158 @@ export function cssStyleElementEcwidCartTotalProductsCountColor({
 export function cssStyleElementEcwidCartTotalProductsCountTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "cartTotalProductsCountTypography"
+    prefix: "cartTotalProductsCountTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartSubtotalTitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "subtotalTitleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state,
+    prefix: "subtotalTitleColor"
+  });
 }
 
 export function cssStyleElementEcwidCartSubtotalTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "subtotalTitleTypography"
+    prefix: "subtotalTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartSubtotalPriceColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "subtotalPriceColor" });
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state,
+    prefix: "subtotalPriceColor"
+  });
 }
 
 export function cssStyleElementEcwidCartSubtotalPriceTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "subtotalPriceTypography"
+    prefix: "subtotalPriceTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartTaxesTitleColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "taxesTitleColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "taxesTitleColor" });
 }
 
 export function cssStyleElementEcwidCartTaxesTitleTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "taxesTitleTypography"
+    prefix: "taxesTitleTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartTaxesPriceColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "taxesPriceColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "taxesPriceColor" });
 }
 
 export function cssStyleElementEcwidCartTaxesPriceTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "taxesPriceTypography"
+    prefix: "taxesPriceTypography",
+    renderContext
   });
 }
 
 export function cssStyleElementEcwidCartSummaryNoteColor({
   v,
   device,
+  store,
   state
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, prefix: "summaryNoteColor" });
+  return cssStyleColor({ v, device, store, state, prefix: "summaryNoteColor" });
 }
 
 export function cssStyleElementEcwidCartSummaryNoteTypography({
   v,
   device,
-  state
-}: CSSValue): string {
+  store,
+  state,
+  renderContext
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
+    store,
     state,
-    prefix: "summaryNoteTypography"
+    prefix: "summaryNoteTypography",
+    renderContext
   });
 }

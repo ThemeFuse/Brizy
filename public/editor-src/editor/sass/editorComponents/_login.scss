@@ -1,6 +1,5 @@
 &:not(.brz-ed) {
   .brz-login {
-
     .brz-login-form,
     .brz-login__authorized {
       display: none;
@@ -77,6 +76,16 @@
 
     .brz-icon-svg {
       flex-grow: 0;
+    }
+
+    .brz-text__editor {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brz-icon-svg {
+      min-width: 1em;
     }
   }
 

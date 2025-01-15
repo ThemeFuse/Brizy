@@ -9,12 +9,14 @@ import { CSSValue } from "../style2/types";
 export function cssStyleElementPostInfoColorIcons({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "iconsColor"
   });
 }
@@ -22,14 +24,29 @@ export function cssStyleElementPostInfoColorIcons({
 export function cssStyleElementPostInfoSpacing({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const large = dvv("large");
 
   return large === "inline"
-    ? cssStyleSpacing({ v, device, state, prefix: "text", direction: "right" })
-    : cssStyleSpacing({ v, device, state, prefix: "text", direction: "top" });
+    ? cssStyleSpacing({
+        v,
+        device,
+        state,
+        store,
+        prefix: "text",
+        direction: "right"
+      })
+    : cssStyleSpacing({
+        v,
+        device,
+        state,
+        store,
+        prefix: "text",
+        direction: "top"
+      });
 }
 
 export function cssStyleElementPostInfoDirection({
@@ -53,20 +70,42 @@ export function cssStyleElementPostInfoDirection({
 export function cssStyleElementPostInfoAlign({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleFlexHorizontalAlign({ v, device, state, prefix: "content" });
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    store,
+    prefix: "content"
+  });
 }
 
 export function cssStyleElementPostInfoSpacingCloud({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const orientation = dvv("orientation");
 
   return orientation === "inline"
-    ? cssStyleSpacing({ v, device, state, prefix: "text", direction: "right" })
-    : cssStyleSpacing({ v, device, state, prefix: "text", direction: "top" });
+    ? cssStyleSpacing({
+        v,
+        device,
+        state,
+        store,
+        prefix: "text",
+        direction: "right"
+      })
+    : cssStyleSpacing({
+        v,
+        device,
+        state,
+        store,
+        prefix: "text",
+        direction: "top"
+      });
 }

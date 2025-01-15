@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import EditorIcon from "visual/component/EditorIcon";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { updateError } from "visual/redux/actions2";
 import { errorSelector } from "visual/redux/selectors";
 import { sendHeartBeatTakeOver } from "visual/utils/api";
@@ -51,7 +51,7 @@ const NotificationCloseIcon = ({ onClick }) => (
 );
 
 const Notification = ({ error, dispatch }) => {
-  const config = Config.getAll();
+  const config = useConfig();
   const { code, data } = error || {};
   let content;
 
@@ -59,7 +59,7 @@ const Notification = ({ error, dispatch }) => {
   const handleTakeOver = useCallback(async () => {
     clearError();
     try {
-      await sendHeartBeatTakeOver(config);
+      await sendHeartBeatTakeOver(config.api);
     } catch (e) {
       ToastNotification.error(t("Take over failed please refresh the page"));
     }

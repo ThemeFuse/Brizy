@@ -3,6 +3,8 @@ import { produce } from "immer";
 import { CSSProperties } from "react";
 import { ElementModel, ModelType } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { RenderType } from "visual/providers/RenderProvider";
+import { Store } from "visual/redux/store";
 import { mPipe } from "visual/utils/fp";
 import { getOptionModelWithDesktopDefaults } from "visual/utils/options/utils/fromElementModel";
 import {
@@ -17,9 +19,9 @@ import { filterNullish } from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { breakpoints, isBreakpointWithMediaQuery } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
-import { ResponsiveMode } from "../responsiveMode";
+import { DESKTOP, MOBILE, ResponsiveMode, TABLET } from "../responsiveMode";
 import { ACTIVE, HOVER, NORMAL, State } from "../stateMode";
-import { isAllT, MValue, onNullish } from "../value";
+import { MValue, isAllT, onNullish } from "../value";
 import {
   AllCSSKeys,
   CSS,
@@ -79,12 +81,16 @@ export const getCSSObjectFromStyle = ({
   v,
   breakpoint,
   option,
-  state = NORMAL
+  store,
+  state = NORMAL,
+  renderContext
 }: {
   v: ElementModel;
   initialV?: ElementModel;
   breakpoint: BreakpointsNames;
   option: Option;
+  store: Store;
+  renderContext: RenderType;
   state?: State;
 }): MValue<OutputOptionStyle> => {
   const { id, type, style } = option;
@@ -94,6 +100,7 @@ export const getCSSObjectFromStyle = ({
     type,
     v,
     breakpoint,
+    store,
     state
   });
 
@@ -104,8 +111,10 @@ export const getCSSObjectFromStyle = ({
       ...(meta && Obj.length(meta) > 0 ? { meta } : {}),
       value: normalizeOptionModel({
         type,
+        store,
         optionModel: model,
-        extraData: { device: breakpoint, state }
+        extraData: { device: breakpoint, state },
+        renderContext
       })
     });
 
@@ -117,21 +126,30 @@ export const getCSSFromSelector = ({
   v,
   breakpoint,
   option,
-  state = NORMAL
+  store,
+  state = NORMAL,
+  renderContext
 }: {
   v: ElementModel;
   breakpoint: BreakpointsNames;
   option: Option;
+  store: Store;
   state?: State;
+  renderContext: RenderType;
 }): MValue<string> => {
   const { id, type } = option;
 
   if (isOptionWithStyles(type)) {
-    const style = getCSSByOptionType(type, {
-      v,
-      device: breakpoint as ResponsiveMode,
-      state,
-      id
+    const style = getCSSByOptionType({
+      type,
+      renderContext,
+      data: {
+        v,
+        device: breakpoint as ResponsiveMode,
+        state,
+        store,
+        id
+      }
     });
 
     if (style) {
@@ -158,6 +176,53 @@ export const addBreakpointsToCSS = (
       }px){${css}}`;
     case "mobile":
       return `@media only screen and (max-width: ${mobile}px) {${css}}`;
+  }
+};
+
+export const addBreakpointForStandart = (
+  device: ResponsiveMode,
+  state: State,
+  devices: Record<string, number | undefined>
+): string => {
+  const tabletWidth = devices[TABLET];
+  const mobileWidth = devices[MOBILE];
+
+  if (device === DESKTOP && state === HOVER) {
+    return `@media(min-width:${tabletWidth}px){`;
+  }
+
+  switch (device) {
+    case DESKTOP:
+      return "";
+    case TABLET:
+      return tabletWidth && mobileWidth
+        ? `@media(max-width:${tabletWidth}px) and (min-width:${
+            mobileWidth + 1
+          }px){`
+        : "";
+    case MOBILE:
+      return mobileWidth ? `@media(max-width:${mobileWidth}px){` : "";
+  }
+};
+
+export const addBreakpointForInterval = (
+  device: ResponsiveMode,
+  devices: Record<string, number | undefined>
+): string => {
+  const tabletWidth = devices[TABLET];
+  const mobileWidth = devices[MOBILE];
+
+  switch (device) {
+    case DESKTOP:
+      return `@media(min-width:${tabletWidth}px){`;
+    case TABLET:
+      return tabletWidth && mobileWidth
+        ? `@media(max-width:${tabletWidth}px) and (min-width:${
+            mobileWidth + 1
+          }px){`
+        : "";
+    case MOBILE:
+      return mobileWidth ? `@media(max-width:${mobileWidth}px){` : "";
   }
 };
 
@@ -334,15 +399,26 @@ export const getNewGeneratesCSSfromStyle = ({
   breakpoint,
   option,
   state,
-  allCSS
+  store,
+  allCSS,
+  renderContext
 }: {
   v: ElementModel;
   breakpoint: BreakpointsNames;
   option: ToolbarItemType;
   state: State;
+  store: Store;
   allCSS: CSS;
+  renderContext: RenderType;
 }): MValue<CSS> => {
-  const cssObject = getCss({ v, breakpoint, option, state });
+  const cssObject = getCss({
+    v,
+    breakpoint,
+    option,
+    state,
+    renderContext,
+    store
+  });
 
   if (Obj.length(cssObject) > 0) {
     const allCSSKey = state === HOVER || state === ACTIVE ? state : breakpoint;
@@ -361,17 +437,28 @@ export const getNewGeneratesCSSfromSelector = ({
   breakpoint,
   option,
   state,
-  allCSS
+  store,
+  allCSS,
+  renderContext
 }: {
   v: ElementModel;
   breakpoint: BreakpointsNames;
   option: ToolbarItemType;
   state: State;
+  store: Store;
   allCSS: CSS;
+  renderContext: RenderType;
 }): MValue<CSS> => {
   const suffix = state === HOVER ? ":hover" : state === ACTIVE ? ".active" : "";
 
-  const css = getCSSFromSelector({ v, breakpoint, option, state });
+  const css = getCSSFromSelector({
+    v,
+    breakpoint,
+    option,
+    state,
+    store,
+    renderContext
+  });
 
   const _selector = Str.read(option.selector);
 

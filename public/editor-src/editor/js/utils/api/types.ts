@@ -1,5 +1,7 @@
 import { Sources } from "visual/editorComponents/Posts/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Dictionary } from "visual/types/utils";
+
 
 export enum AutoSave {
   publish = 0,
@@ -16,12 +18,16 @@ export interface ResponseWithBody<T> {
 
 export type GetDynamicContent = (args: {
   placeholders: Dictionary<string[]>;
+  config: ConfigCommon;
   signal?: AbortSignal;
 }) => Promise<Dictionary<string[]>>;
 
 //#endregion
 
-export type GetTerms = (taxonomy: string) => Promise<
+export type GetTerms = (
+  taxonomy: string,
+  config: ConfigCommon
+) => Promise<
   {
     name: string;
     term_id: number;
@@ -29,31 +35,35 @@ export type GetTerms = (taxonomy: string) => Promise<
   }[]
 >;
 
-export type GetAuthors = (data?: {
+export type GetAuthors = (data: {
   search?: string;
   include?: string[];
   abortSignal?: AbortSignal;
+  config: ConfigCommon;
 }) => Promise<{ ID: number; display_name: string }[]>;
 
-export type GetTermsBy = (data?: {
+export type GetTermsBy = (data: {
   search?: string;
   include?: [string, string][];
   abortSignal?: AbortSignal;
+  config: ConfigCommon;
 }) => Promise<
   { term_id: number; name: string; taxonomy: string; taxonomy_name: string }[]
 >;
 
-export type GetPosts = (data?: {
+export type GetPosts = (data: {
   search?: string;
   include?: string[];
   postType?: string[];
   excludePostType?: string[];
   abortSignal?: AbortSignal;
+  config: ConfigCommon;
 }) => Promise<{ ID: number; title: string; permalink: string }[]>;
 
 export type GetPostTaxonomies = (data: {
   taxonomy: string;
   abortSignal?: AbortSignal;
+  config: ConfigCommon;
 }) => Promise<
   {
     name: string;
@@ -62,15 +72,6 @@ export type GetPostTaxonomies = (data: {
     hierarchical: boolean;
     labels: { name: string; singular_name: string };
   }[]
->;
-
-interface CloudCollectionSourceType {
-  id: string;
-  title: string;
-  slug?: string;
-}
-export type GetCollectionSourceTypes = () => Promise<
-  CloudCollectionSourceType[]
 >;
 
 export interface CollectionItem {
@@ -90,27 +91,6 @@ export interface BlogSourceItem {
   title: string;
 }
 
-export type GetCollectionSourceItems = (
-  id: string
-) => Promise<CollectionSourceItem[]>;
-
-interface WPCollectionSourceType {
-  name: string;
-  label: string;
-}
-export type GetWPCollectionSourceTypes = () => Promise<
-  WPCollectionSourceType[]
->;
-
-interface WPCollectionSourceItem {
-  ID: number;
-  post_title: string;
-  title: string;
-}
-export type GetWPCollectionSourceItems = (
-  id: string
-) => Promise<{ posts: WPCollectionSourceItem[] }>;
-
 //#region rules
 
 export interface Rule {
@@ -126,7 +106,10 @@ export interface SelectedItem extends Rule {
 
 //#endregion
 
-export type GetRulePostsGroupList = (p: string) => Promise<
+export type GetRulePostsGroupList = (
+  p: string,
+  config: ConfigCommon
+) => Promise<
   {
     title: string;
     value: number;

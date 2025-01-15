@@ -55,26 +55,24 @@ const handleArrowChange = function () {
   return !prepopulation && !population;
 };
 
-const bindings = IS_EDITOR
-  ? {
-      enter: {
-        key: Keyboard.keys.ENTER,
-        handler: handleEnter
-      },
-      "header enter": handleEnter,
-      arrowUp: {
-        key: 38,
-        handler: handleArrowChange
-      },
-      arrowDown: {
-        key: 40,
-        handler: handleArrowChange
-      },
-      backspace: {
-        key: 8,
-        handler: handleDelete
-      }
-    }
-  : {};
+const bindings = () => ({
+  enter: {
+    key: Keyboard.keys.ENTER,
+    handler: handleEnter
+  },
+  "header enter": handleEnter,
+  arrowUp: {
+    key: 38,
+    handler: handleArrowChange
+  },
+  arrowDown: {
+    key: 40,
+    handler: handleArrowChange
+  },
+  backspace: {
+    key: 8,
+    handler: handleDelete
+  }
+});
 
 export default bindings;

@@ -3,9 +3,10 @@ import { useEffect, useMemo, useState } from "react";
 import { from, of } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 import { setIn } from "timm";
-import Config from "visual/global/Config";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
 import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
@@ -54,6 +55,8 @@ export default function useRuleList(
 
   const [listLoading, setListLoading] = useState(true);
 
+  const config = useConfig();
+
   // it's needed only for cms!
   const [refsById, setRefsById] = useState<RefsById>({});
 
@@ -62,34 +65,28 @@ export default function useRuleList(
   const { type: currentTypeCategories, items: currentItemsCategories } =
     ecwidCategoriesList;
 
+  const _isCloud = isCloud(config);
+  const _isCMS = _isCloud && isCMS(config);
+  const shopModules =
+    _isCMS && config?.modules?.shop && isEcwidShop(config.modules.shop)
+      ? config?.modules?.shop
+      : undefined;
+  const shopModulesApiUrl = shopModules?.apiUrl;
+
   const ecwidProductsClient = useMemo((): Products | undefined => {
-    const config = Config.getAll();
-
-    if (
-      isCloud(config) &&
-      isCMS(config) &&
-      config.modules?.shop &&
-      isEcwidShop(config.modules.shop)
-    ) {
-      return new Products(config.modules.shop.apiUrl);
+    if (shopModulesApiUrl) {
+      return new Products(shopModulesApiUrl);
     }
 
     return undefined;
-  }, []);
+  }, [shopModulesApiUrl]);
   const ecwidCategoriesClient = useMemo((): Categories | undefined => {
-    const config = Config.getAll();
-
-    if (
-      isCloud(config) &&
-      isCMS(config) &&
-      config.modules?.shop &&
-      isEcwidShop(config.modules.shop)
-    ) {
-      return new Categories(config.modules.shop.apiUrl);
+    if (shopModulesApiUrl) {
+      return new Categories(shopModulesApiUrl);
     }
 
     return undefined;
-  }, []);
+  }, [shopModulesApiUrl]);
   const ecwidProductsRules = useMemo((): RuleList[] => {
     if (!ecwidProductsClient) {
       return [];
@@ -147,7 +144,12 @@ export default function useRuleList(
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
-      const { collections, customers } = await getCustomerAndCollectionTypes();
+      const { collections, customers } = await getCustomerAndCollectionTypes({
+        uri: config.api?.brizyApiUrl ?? "",
+        authorization: config.tokenV2
+          ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
+          : undefined
+      });
       const { types: collectionTypes, refsById } = collections;
       const { types: customerTypes, groups } = customers;
 
@@ -194,7 +196,7 @@ export default function useRuleList(
     }
 
     fetchData();
-  }, []);
+  }, [config]);
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
@@ -214,7 +216,8 @@ export default function useRuleList(
             const items = await fetchRuleListItems(
               rule,
               newRulesList[ruleIndex],
-              refsById
+              refsById,
+              config
             );
 
             newRulesList = setIn(
@@ -240,7 +243,7 @@ export default function useRuleList(
     if (collectionRuleList.length) {
       fetchData();
     }
-  }, [rules, collectionRuleList, refsById]);
+  }, [rules, collectionRuleList, refsById, config]);
 
   useEffect(() => {
     setCustomerRuleList(disableAlreadyUsedRules(rules, customerRuleList));
@@ -256,7 +259,7 @@ export default function useRuleList(
     ) {
       setEcwidProductsList({ type: "loading" });
       setListLoading(true);
-      const fetch$ = from(ecwidProductsClient.search())
+      const fetch$ = from(ecwidProductsClient.search(config))
         .pipe(
           map((r): CmsListItem[] => {
             return [
@@ -279,7 +282,7 @@ export default function useRuleList(
 
       return () => fetch$.unsubscribe();
     }
-  }, [rules, ecwidProductsClient, currentTypeProducts]);
+  }, [rules, ecwidProductsClient, currentTypeProducts, config]);
 
   useEffect(() => {
     if (
@@ -291,7 +294,7 @@ export default function useRuleList(
     ) {
       setEcwidCategoriesList({ type: "loading" });
       setListLoading(true);
-      const fetch$ = from(ecwidCategoriesClient.search())
+      const fetch$ = from(ecwidCategoriesClient.search(config))
         .pipe(
           map((r): CmsListItem[] => {
             return [
@@ -314,7 +317,7 @@ export default function useRuleList(
 
       return () => fetch$.unsubscribe();
     }
-  }, [rules, ecwidCategoriesClient, currentTypeCategories]);
+  }, [rules, ecwidCategoriesClient, currentTypeCategories, config]);
 
   return [
     listLoading,
@@ -327,8 +330,20 @@ export default function useRuleList(
   ];
 }
 
-async function getItems(entityType: string): Promise<RuleList[]> {
-  const items = await getCollectionItems(entityType, { status: "all" });
+async function getItems(
+  entityType: string,
+  config: ConfigCommon
+): Promise<RuleList[]> {
+  const items = await getCollectionItems(
+    entityType,
+    {
+      uri: config?.api?.brizyApiUrl ?? "",
+      authorization: config.tokenV2
+        ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
+        : undefined
+    },
+    { status: "all" }
+  );
 
   return items.map(({ id, title, status }) => ({
     title: title,
@@ -340,10 +355,11 @@ async function getItems(entityType: string): Promise<RuleList[]> {
 async function fetchRuleListItems(
   rule: CollectionTypeRule | CollectionItemRule,
   collectionType: RuleList,
-  refsById: RefsById
+  refsById: RefsById,
+  config: ConfigCommon
 ): Promise<RuleListItem[]> {
   // maybe we should union our queries into one!
-  const items = await getItems(rule.entityType);
+  const items = await getItems(rule.entityType, config);
 
   const ruleList: RuleListItem[] = [
     {
@@ -366,7 +382,7 @@ async function fetchRuleListItems(
               value: createEntityValueAll({ fieldId: ref.fieldId })
             }
           ];
-          const items = await getItems(ref.value);
+          const items = await getItems(ref.value, config);
           const itemWithRefId = items.map((i) => ({
             title: i.title,
             value: createEntityValue({

@@ -111,7 +111,7 @@ describe("testing adapter", () => {
       }
     ]
   ])("editorRuleToApiRule nr %#", (rule, apiRule) => {
-    expect(editorRuleToApiRule(rule)).toStrictEqual(apiRule);
+    expect(editorRuleToApiRule(rule, true)).toStrictEqual(apiRule);
   });
 });
 
@@ -220,6 +220,6 @@ describe("testing adapter WP", () => {
 
     //#endregion
   ])("editorRuleToApiRule nr %#", (rule, apiRule) => {
-    expect(editorRuleToApiRule(rule)).toStrictEqual(apiRule);
+    expect(editorRuleToApiRule(rule, false)).toStrictEqual(apiRule);
   });
 });

@@ -321,18 +321,22 @@ export const updateSmtpIntegration: UpdateSmptIntegration = ({
   );
 };
 
-export const deleteSmtpIntegration: DeleteSmtpIntegration = ({
-  formId,
-  notificationId
-}) => {
-  const { api } = Config.get("urls");
+export const deleteSmtpIntegration: DeleteSmtpIntegration = (
+  { formId, notificationId },
+  config
+) => {
+  const { api } = config?.urls ?? {};
 
-  return request(`${api}/forms/${formId}/notifications/${notificationId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8"
-    }
-  }).then((r) => ({ status: r.status, message: r.statusText }));
+  return request(
+    `${api}/forms/${formId}/notifications/${notificationId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    },
+    config
+  ).then((r) => ({ status: r.status, message: r.statusText }));
 };
 
 // Recaptcha

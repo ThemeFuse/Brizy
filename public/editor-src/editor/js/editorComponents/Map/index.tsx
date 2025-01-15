@@ -9,10 +9,10 @@ import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import Config, { isWp } from "visual/global/Config";
+import { isWp } from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isStory } from "visual/global/EditorModeContext";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { read as readBoolean } from "visual/utils/reader/bool";
@@ -37,11 +37,8 @@ class Map extends EditorComponent<Value> {
   }
 
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
-  isStory = isStory(Config.getAll());
-  isWp = isWp(Config.getAll());
+  isWp = isWp(this.getGlobalConfig());
 
   handleResizerChange = (patch: Patch): void =>
     this.patchValue(resizerTransformPatch(patch));
@@ -58,7 +55,8 @@ class Map extends EditorComponent<Value> {
     const { wrapperAnimationId, wrapperAnimationActive = "false" } =
       this.props.meta;
     const hoverName = readString(this.dvv("hoverName")) ?? "none";
-    const options = makeOptionValueToAnimation(v);
+    const store = this.getReduxStore();
+    const options = makeOptionValueToAnimation({ v, store });
     const animationId = readString(wrapperAnimationId) ?? this.getId();
     const isDisabledHover = readBoolean(wrapperAnimationActive);
 
@@ -99,7 +97,7 @@ class Map extends EditorComponent<Value> {
               cssKeyframe={hoverName}
               options={options}
               isDisabledHover={isDisabledHover}
-              isHidden={isHidden || this.isStory}
+              isHidden={isHidden || isStory(this.props.editorMode)}
               withoutWrapper={true}
             >
               <BoxResizer
@@ -143,7 +141,7 @@ class Map extends EditorComponent<Value> {
             animationId={animationId}
             cssKeyframe={hoverName}
             options={options}
-            isHidden={isHidden || this.isStory}
+            isHidden={isHidden || isStory(this.props.editorMode)}
             withoutWrapper={true}
           >
             <AlphaMapPreview

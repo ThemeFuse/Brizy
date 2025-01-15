@@ -1,4 +1,8 @@
 import {
+  WithRenderContext,
+  isView
+} from "visual/providers/RenderProvider";
+import {
   cssStyleSizeHeight,
   cssStyleSizeMaxWidthPrefixEmpty,
   cssStyleSizeMinHeightPx
@@ -31,9 +35,11 @@ export function cssStyleElementProgressBarPadding({
 export function cssStyleSizeProgressBarMaxWidthPercent({
   v,
   device,
-  state
-}: CSSValue): string {
-  if (IS_PREVIEW) {
+  state,
+  store,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  if (isView(renderContext)) {
     // INFO: is needed to avoid blinking, because in preview animation always starts from 0%
     return `max-width: 0%;`;
   }
@@ -42,6 +48,7 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
     v,
     device,
     state,
+    store,
     prefix: "percentage"
   });
 }
@@ -49,12 +56,14 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
 export function cssStyleSizeProgressBarStyle1Height({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeMinHeightPx({
     v,
     device,
     state,
+    store,
     prefix: "style1"
   });
 }
@@ -62,12 +71,14 @@ export function cssStyleSizeProgressBarStyle1Height({
 export function cssStyleSizeProgressBarStyle2Height({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleSizeHeight({
     v,
     device,
     state,
+    store,
     prefix: "style2"
   });
 }

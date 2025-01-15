@@ -8,18 +8,14 @@ export const PromptAddPopup: FCC<Props> = ({
   onCreate,
   onEdit,
   onDelete,
-  popupBlock,
+  block,
   className
 }) => {
   return (
     <Main display="inline" className={className}>
       {label}
-      {popupBlock ? (
-        <Thumbnail
-          popupBlock={popupBlock}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
+      {block ? (
+        <Thumbnail block={block} onEdit={onEdit} onDelete={onDelete} />
       ) : (
         <Adder onClick={onCreate} />
       )}

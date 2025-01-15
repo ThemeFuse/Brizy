@@ -1,18 +1,17 @@
+import { Str } from "@brizy/readers";
 import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
 import { EcwidService } from "visual/libs/Ecwid";
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { ExportFunction } from "visual/types";
-import { read as parseJson } from "visual/utils/reader/json";
 import * as Num from "visual/utils/reader/number";
+import { parseFromString } from "visual/utils/string";
 
 export const fn: ExportFunction = ($node) => {
   $node.find(".brz-ecwid-product").each((_, node) => {
     const storeId = node.getAttribute("data-store-id") as EcwidStoreId | null;
-    const config = {
-      ...(parseJson(
-        decodeURIComponent(node.getAttribute("data-storefront") ?? "")
-      ) as EcwidConfig | undefined)
-    };
+    const config = Str.read(node.getAttribute("data-storefront"));
+    const cfg = config ? parseFromString<EcwidConfig>(config) : {};
+
     const productId = Num.read(node.getAttribute("data-product-id")) as
       | EcwidProductId
       | undefined;
@@ -23,7 +22,7 @@ export const fn: ExportFunction = ($node) => {
     const _productId = productId ?? defaultProductId;
 
     if (_productId && storeId) {
-      EcwidService.init(storeId, config ?? {}).product(_productId, node);
+      EcwidService.init(storeId, cfg ?? {}).product(_productId, node);
     }
   });
 };

@@ -2,6 +2,9 @@ import Loadable from "@loadable/component";
 import classnames from "classnames";
 import React, { CSSProperties, MouseEvent, ReactElement } from "react";
 import _ from "underscore";
+import { Config } from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
+import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { editorIconUrl } from "visual/utils/icons";
 import type { IconNames } from "./Icon";
 
@@ -26,6 +29,9 @@ const _EditorIcon = (props: Props): ReactElement => {
     onClick = _.noop
   } = props;
 
+  const config = useConfig() as Config;
+  const { editorIcons } = config.urls;
+
   const className = classnames(
     "brz-icon-svg brz-ed-icon-svg align-[initial]",
     _className
@@ -40,11 +46,13 @@ const _EditorIcon = (props: Props): ReactElement => {
     />
   ) : (
     <svg className={className} onClick={onClick} style={style}>
-      <use xlinkHref={editorIconUrl(icon)} />
+      <use xlinkHref={editorIconUrl({ icon, url: editorIcons })} />
     </svg>
   );
 };
 
-export const EditorIcon = IS_EDITOR ? _EditorIcon : _PreviewIcon;
+export const EditorIcon = (props: Props) => (
+  <RenderFor forEdit={<_EditorIcon {...props} />} forView={<_PreviewIcon />} />
+);
 
 export default EditorIcon;

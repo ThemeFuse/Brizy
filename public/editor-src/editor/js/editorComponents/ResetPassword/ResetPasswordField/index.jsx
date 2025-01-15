@@ -1,16 +1,16 @@
-import React from "react";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import { TextEditor } from "visual/component/Controls/TextEditor";
-import defaultValue from "./defaultValue";
-import Toolbar from "visual/component/Toolbar";
-import * as toolbarConfig from "./toolbar";
 import classnames from "classnames";
-import { css } from "visual/utils/cssStyle";
-import { style } from "./styles";
+import React from "react";
+import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isEditor } from "visual/providers/RenderProvider";
+import defaultValue from "./defaultValue";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
 
-const readResetPasswordType = type => {
+const readResetPasswordType = (type) => {
   switch (type) {
     case "Password":
     case "PasswordConfirm":
@@ -33,11 +33,11 @@ class ResetPasswordField extends EditorComponent {
     active: {}
   };
 
-  handleActive = active => {
+  handleActive = (active) => {
     this.setState({ active });
   };
 
-  handleLabelChange = label => {
+  handleLabelChange = (label) => {
     this.patchValue({ label });
   };
 
@@ -55,7 +55,7 @@ class ResetPasswordField extends EditorComponent {
       return "";
     }
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -123,10 +123,16 @@ class ResetPasswordField extends EditorComponent {
     const className = classnames(
       "brz-reset-psw-form__field",
       `brz-reset-psw-form__field-${type}`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          renderContext: this.renderContext,
+          store: this.getReduxStore()
+        })
       )
     );
 
@@ -159,7 +165,7 @@ class ResetPasswordField extends EditorComponent {
                   placeholder={this.getPlaceholder(v)}
                   value={this.getPlaceholder(v)}
                   required
-                  onChange={e => {
+                  onChange={(e) => {
                     showLabel === "on"
                       ? this.patchValue({
                           placeholder: e.target.value
@@ -185,10 +191,16 @@ class ResetPasswordField extends EditorComponent {
     const className = classnames(
       "brz-reset-psw-form__field",
       `brz-reset-psw-form__field-${type}`,
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          renderContext: this.renderContext,
+          store: this.getReduxStore()
+        })
       )
     );
 

@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  Props as ShadowProps,
-  TextShadow as ShadowControl
+  TextShadow as ShadowControl,
+  Props as ShadowProps
 } from "visual/component/Controls/TextShadow";
 import {
   Meta as CMeta,
@@ -14,19 +14,19 @@ import {
   Meta as OptionMeta,
   Props as OptionProps
 } from "visual/component/Options/Type";
-import Config from "visual/global/Config";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
+import { currentStyleSelector } from "visual/redux/selectors";
 import { WithClassName } from "visual/types/attributes";
-import { getColorPaletteColors } from "visual/utils/color";
 import { Palette } from "visual/utils/color/Palette";
 import { mPipe } from "visual/utils/fp";
 import { Meta } from "visual/utils/options/TextShadow/meta";
 import * as Value from "visual/utils/options/TextShadow/types/Value";
 import * as Utils from "visual/utils/options/TextShadow/utils";
 import {
-  options,
   SelectType,
+  getOptions,
   selectTypeFromValue,
   valueFromSelectType
 } from "visual/utils/options/TextShadow/utils";
@@ -42,6 +42,10 @@ export const TextShadow = ({
   className
 }: Props): ReactElement => {
   const dispatch = useDispatch();
+  const { colorPalette } = useSelector(currentStyleSelector);
+
+  const globalConfig = useConfig();
+
   const _className = classNames("brz-ed-option__textShadow", className);
   const onValueChange = useCallback<
     ShadowProps<Palette, SelectType>["onChange"]
@@ -117,14 +121,15 @@ export const TextShadow = ({
   );
 
   const enableGlobalStyle = useMemo((): boolean => {
-    const config = Config.getAll();
     const { bottomTabsOrder = [], topTabsOrder = [] } =
-      config.ui?.leftSidebar ?? {};
+      globalConfig?.ui?.leftSidebar ?? {};
 
-    return [...bottomTabsOrder, ...topTabsOrder].includes(
-      LeftSidebarOptionsIds.globalStyle
+    return [...bottomTabsOrder, ...topTabsOrder].some(
+      (tab) => tab.type === LeftSidebarOptionsIds.globalStyle
     );
-  }, []);
+  }, [globalConfig?.ui?.leftSidebar]);
+
+  const options = getOptions();
 
   return (
     <ShadowControl<Palette, SelectType>
@@ -132,7 +137,7 @@ export const TextShadow = ({
       className={_className}
       value={shadowValue}
       onChange={onValueChange}
-      palette={getColorPaletteColors()}
+      palette={colorPalette}
       paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
       options={options}
     />

@@ -17,13 +17,19 @@ const PromptIcon = (
     categories,
     onSelectChange,
     onInputChange,
-    typeId
+    typeId,
+    config
   }: Props,
   ref: Ref<HTMLDivElement>
 ): JSX.Element => (
   <Fixed opened={opened} onClose={onClose}>
     <div ref={ref} className="brz-ed-popup-wrapper">
-      <Tabs currentTypeId={typeId} onClose={onClose} onClick={onTabClick} />
+      <Tabs
+        currentTypeId={typeId}
+        onClose={onClose}
+        onClick={onTabClick}
+        config={config}
+      />
       <div className="brz-ed-popup-content brz-ed-popup-pane brz-ed-popup-icons">
         <RenderIcons
           name={name}
@@ -35,6 +41,7 @@ const PromptIcon = (
           categories={categories}
           onSelectChange={onSelectChange}
           onInputChange={onInputChange}
+          config={config}
         />
       </div>
     </div>

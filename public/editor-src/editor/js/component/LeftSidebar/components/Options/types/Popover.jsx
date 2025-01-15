@@ -6,9 +6,16 @@ import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
 import Options from "visual/component/LeftSidebar/components/Options";
 import { updateUI } from "visual/redux/actions2";
-import { getStore } from "visual/redux/store";
+import { connect } from "react-redux";
+import { leftSidebarSelector } from "visual/redux/selectors";
 
-export default class DrawerPopover extends React.Component {
+const mapState = (state) => ({
+  leftSidebar: leftSidebarSelector(state)
+});
+
+const connector = connect(mapState);
+
+class DrawerPopover extends React.Component {
   static defaultProps = {
     icon: "",
     options: [],
@@ -22,15 +29,11 @@ export default class DrawerPopover extends React.Component {
   };
 
   handleClick = () => {
-    if (!this.state.isOpen) {
-      const store = getStore();
+    const { leftSidebar, dispatch } = this.props;
 
-      if (store.getState().ui.leftSidebar.isOpen) {
-        store.dispatch(
-          updateUI("leftSidebar", {
-            isOpen: false
-          })
-        );
+    if (!this.state.isOpen) {
+      if (leftSidebar.isOpen) {
+        dispatch(updateUI("leftSidebar", { isOpen: false }));
       }
 
       this.open();
@@ -169,3 +172,5 @@ export default class DrawerPopover extends React.Component {
     );
   }
 }
+
+export default connector(DrawerPopover);

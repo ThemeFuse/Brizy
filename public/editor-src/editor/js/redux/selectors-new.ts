@@ -5,11 +5,13 @@ import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
+import { getConfigById } from "visual/global/Config/InitConfig";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
 import {
   Authorized,
+  Block,
   Font,
   GlobalBlock,
   GlobalBlockPopup,
@@ -96,9 +98,13 @@ export const currentStyleSelector = (
 export const errorSelector = (state: ReduxState): ReduxState["error"] =>
   state.error;
 
+export const configIdSelector = (state: ReduxState): ReduxState["configId"] =>
+  state.configId;
+
 //#endregion
 
 //#region === 1 DEPENDENCIES ===
+export const configSelector = createSelector(configIdSelector, getConfigById);
 
 export const pageDataSelector = createSelector(
   pageSelector,
@@ -191,13 +197,17 @@ export const leftSidebarSelector = createSelector(
   (ui) => ui.leftSidebar
 );
 
-export const pageLayout = createSelector(pageSelector, (page) => {
-  if (isShopifyPage(page)) {
-    return page.layout;
-  }
+export const pageLayout = createSelector(
+  pageSelector,
+  configSelector,
+  (page, config) => {
+    if (isShopifyPage(page, config)) {
+      return page.layout;
+    }
 
-  return undefined;
-});
+    return undefined;
+  }
+);
 
 //#endregion
 
@@ -321,10 +331,13 @@ export const pageBlocksDataSelector = createSelector(
   globalBlocksAssembled2Selector,
   blocksDataSelector,
   pageSelector,
-  (blocksOrder, globalBlocks, blocksData, page) => {
+  configSelector,
+  (blocksOrder, globalBlocks, blocksData, page, config): Array<Block> => {
     const blocks = blocksOrder.filter((uid) => {
-      if (globalBlocks[uid]?.data) {
-        return canUseCondition(globalBlocks[uid], page);
+      const globalBlock = globalBlocks[uid];
+
+      if (globalBlock?.data) {
+        return canUseCondition({ globalBlock, page, config });
       }
       return true;
     });
@@ -339,14 +352,37 @@ export const pageBlocksDataSelector = createSelector(
   }
 );
 
+// Retrieve all blocks from the page, including their global blocks with data.
+// Included new screenshots data used inside LeftSidebar
+export const pageBlocksDataAssembledSelector = createSelector(
+  pageBlocksDataSelector,
+  screenshotsSelector,
+  (blocksOrder, screenshots) => {
+    return blocksOrder.map((data) => {
+      const newScreenshot = screenshots[data.value._id];
+
+      if (newScreenshot) {
+        return produce(data, (draft) => {
+          Object.assign(draft.value, newScreenshot);
+        });
+      }
+
+      return data;
+    });
+  }
+);
+
 export const globalBlocksInPageSelector = createSelector(
   pageSelector,
   blocksOrderSelector,
   globalBlocksSelector,
-  (page, blocksOrder, globalBlocks) => {
+  configSelector,
+  (page, blocksOrder, globalBlocks, config) => {
     return blocksOrder.reduce<Record<string, GlobalBlock>>((acc, id) => {
-      if (globalBlocks[id] && canUseCondition(globalBlocks[id], page)) {
-        acc[id] = globalBlocks[id];
+      const globalBlock = globalBlocks[id];
+
+      if (globalBlock && canUseCondition({ globalBlock, page, config })) {
+        acc[id] = globalBlock;
       }
 
       return acc;

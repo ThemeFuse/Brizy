@@ -4,10 +4,10 @@ import _ from "underscore";
 import { CheckGroup } from "visual/component/Controls/CheckGroup";
 import { CheckGroupIcon } from "visual/component/Controls/CheckGroup/CheckGroupIcon";
 import { CheckGroupItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
+import Fixed from "visual/component/Prompts/Fixed";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
-import Fixed from "visual/component/Prompts/Fixed";
 import {
   canSyncPage,
   getAllOptionText,
@@ -18,17 +18,17 @@ import {
   isAllChecked,
   isShopifyLayout
 } from "visual/component/Prompts/utils";
-import Config from "visual/global/Config";
 import {
+  Shopify,
   isCloud,
-  isShopify,
-  Shopify
+  isShopify
 } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  getShopifyTemplate,
-  ShopifyTemplate
+  ShopifyTemplate,
+  getShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { useConfig } from "visual/global/hooks";
 import {
   updateError,
   updatePageLayout,
@@ -68,7 +68,8 @@ const getErrors = (s: RulesState): string | undefined => {
 };
 
 export const PromptPageRules = (props: Props): JSX.Element => {
-  const _config = useMemo(() => Config.getAll(), []);
+  const _config = useConfig();
+  const _isShopify = isCloud(_config) && isShopify(_config);
 
   const templateType = useMemo(() => {
     return getShopifyTemplate(_config) ?? ShopifyTemplate.Product;
@@ -86,6 +87,11 @@ export const PromptPageRules = (props: Props): JSX.Element => {
 
   const { value } = selectedLayout || { value: undefined };
 
+  const page = (_config as Shopify).page;
+  const modules = (_config as Shopify).modules;
+  const _templateType = (_config as Shopify).templateType;
+  const templates = (_config as Shopify).templates;
+
   const dispatch = useDispatch();
   const handleSave = useCallback(
     ({ items, title, layout }: Valid): Promise<void> => {
@@ -99,7 +105,8 @@ export const PromptPageRules = (props: Props): JSX.Element => {
       return onSave()
         .then(() => {
           return shopifySyncRules({
-            config: _config as Shopify,
+            page,
+            modules,
             rules: _items.filter((i): i is SelectedItem => i.selected),
             title
           }).then(() => {
@@ -110,15 +117,14 @@ export const PromptPageRules = (props: Props): JSX.Element => {
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave, _config]
+    [dispatch, onSave, onAfterSave, page, modules]
   );
   const getData = useCallback(async () => {
-    const config = Config.getAll();
-    if (isCloud(config) && isShopify(config)) {
-      const selectedP = getPageRelations(config).then((is) =>
+    if (_isShopify) {
+      const selectedP = getPageRelations(modules).then((is) =>
         is.map((i) => i.id)
       );
-      const itemsP = getCollectionSourceItemsById(config);
+      const itemsP = getCollectionSourceItemsById(_templateType, _config.api);
 
       const _items = await Promise.all([itemsP, selectedP]).then(
         ([items, selected]): Item[] =>
@@ -135,7 +141,7 @@ export const PromptPageRules = (props: Props): JSX.Element => {
         ..._items
       ];
 
-      const layouts = getChoices(config);
+      const layouts = getChoices(templates);
 
       if (isNonEmptyArray(layouts)) {
         return {
@@ -149,7 +155,16 @@ export const PromptPageRules = (props: Props): JSX.Element => {
     }
 
     return Promise.reject();
-  }, [pageTitle, value, templateType]);
+  }, [
+    _isShopify,
+    pageTitle,
+    value,
+    templateType,
+    templates,
+    _config.api,
+    _templateType,
+    modules
+  ]);
 
   const [state, dispatchS] = useStateReducer(
     reducer,
@@ -282,7 +297,7 @@ export const PromptPageRules = (props: Props): JSX.Element => {
                       inline={true}
                       value={rule.id}
                       renderIcons={CheckGroupIcon}
-                      isEditor={IS_EDITOR}
+                      isEditor
                     >
                       {rule.title}
                     </CheckGroupItem>

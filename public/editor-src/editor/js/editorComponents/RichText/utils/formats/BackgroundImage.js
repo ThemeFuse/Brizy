@@ -61,6 +61,8 @@ class BackgroundImage extends Inline {
       imagePopulation
     } = value;
 
+    const config = Config.getAll();
+
     if (imagePopulation && typeof imagePopulation === "string") {
       node.style.backgroundImage = null;
       // ! should be 50% 50% or should we set image position?
@@ -74,13 +76,12 @@ class BackgroundImage extends Inline {
         const itemId = node
           .closest("[data-item_id]")
           .getAttribute("data-item_id");
-        const dynamicContent = Config.getAll().dynamicContent;
 
         const renderDC =
-          typeof dynamicContent.getPlaceholderData === "function";
+          typeof config?.dynamicContent?.getPlaceholderData === "function";
 
         if (renderDC) {
-          getImagePopulation(imagePopulation, itemId).then((url) => {
+          getImagePopulation(imagePopulation, itemId, config).then((url) => {
             if (url) {
               node.style.backgroundImage = `url('${url}')`;
               node.classList.add("brz-population-mask__style");
@@ -92,11 +93,14 @@ class BackgroundImage extends Inline {
         }
       });
     } else if (imageSrc) {
-      const imgUrl = getImageUrl({
-        fileName: imageFileName,
-        uid: imageSrc,
-        sizeType: SizeType.custom
-      });
+      const imgUrl = getImageUrl(
+        {
+          fileName: imageFileName,
+          uid: imageSrc,
+          sizeType: SizeType.custom
+        },
+        config
+      );
       node.classList.add("brz-text-mask");
       node.classList.remove("brz-population-mask");
       node.classList.remove("brz-population-mask__style");
@@ -137,6 +141,7 @@ class BackgroundImage extends Inline {
     }
   }
 }
+
 BackgroundImage.blotName = "backgroundImage";
 BackgroundImage.tagName = "span";
 

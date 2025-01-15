@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import _ from "underscore";
+import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 
 export { default as RadioItem } from "./RadioItem";
 
@@ -30,12 +31,13 @@ export default class Radio extends React.Component {
     );
   };
 
-  renderOptions() {
+  renderOptions(renderContext) {
     return React.Children.map(this.props.children, (child, index) => {
       return React.cloneElement(child, {
         key: index,
         active: this.state.currentValue === child.props.value,
         name: this.props.name,
+        renderContext,
         onClick: child.props.disabled
           ? null
           : this.onItemClick.bind(null, child.props.value)
@@ -51,7 +53,7 @@ export default class Radio extends React.Component {
 
     return (
       <div className={className}>
-        {this.renderOptions()}
+        {this.renderOptions("editor")}
         <input
           className="brz-input"
           name={name}
@@ -65,10 +67,15 @@ export default class Radio extends React.Component {
   renderForView() {
     const className = classnames("brz-control__radio", this.props.className);
 
-    return <div className={className}>{this.renderOptions()}</div>;
+    return <div className={className}>{this.renderOptions("view")}</div>;
   }
 
   render() {
-    return IS_EDITOR ? this.renderForEdit() : this.renderForView();
+    return (
+      <RenderFor
+        forView={this.renderForView()}
+        forEdit={this.renderForEdit()}
+      />
+    );
   }
 }

@@ -1,5 +1,4 @@
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import { pipe } from "visual/utils/fp";
@@ -288,7 +287,7 @@ export const getTextBackground = (background, textBackgroundGradient) => {
 };
 
 // population
-const getPopulation = (value, $elem) => {
+const getPopulation = (value, $elem, dcGroups) => {
   if (isNullish(value)) {
     return null;
   }
@@ -296,10 +295,8 @@ const getPopulation = (value, $elem) => {
   const population = explodePlaceholder(value);
 
   if (population?.content) {
-    const config = Config.getAll();
-
     const richTextDCChoices = getDynamicContentChoices(
-      config.dynamicContent.groups,
+      dcGroups,
       DCTypes.richText
     );
 
@@ -317,7 +314,7 @@ const getPopulation = (value, $elem) => {
   return null;
 };
 
-export const getFormats = ($elem, format = {}, deviceMode) => {
+export const getFormats = ($elem, format = {}, dcGroups) => {
   const v = classNamesToV(
     $elem
       .closest("p, :header, pre, li, div.brz-tp__dc-block")
@@ -438,7 +435,7 @@ export const getFormats = ($elem, format = {}, deviceMode) => {
     ...getPopulationColorFormat({ ...populationColor }),
 
     list: format.list ?? "",
-    population: getPopulation(format.population, $elem),
+    population: getPopulation(format.population, $elem, dcGroups),
     prepopulation: format.prepopulation
       ? $elem.closest(".brz-pre-population-visible").text()
       : null,

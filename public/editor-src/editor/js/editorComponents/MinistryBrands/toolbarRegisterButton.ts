@@ -1,10 +1,9 @@
+import { Num } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
 import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Params } from "../EditorComponent/types";
 import { ToolbarItemType } from "../ToolbarItemType";
@@ -19,16 +18,18 @@ export const getItems = <
   v,
   device
 }: Params<M, P, S>): ToolbarItemType[] => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: registerButtonBgColorHex } = getOptionColorHexByPalette(
+  const registerButtonBgColor = getColor(
+    dvv("registerButtonBgColorPalette"),
     dvv("registerButtonBgColorHex"),
-    dvv("registerButtonBgColorPalette")
+    dvv("registerButtonBgColorOpacity")
   );
 
-  const { hex: registerButtonColorHex } = getOptionColorHexByPalette(
+  const registerButtonColor = getColor(
+    dvv("registerButtonColorPalette"),
     dvv("registerButtonColorHex"),
-    dvv("registerButtonColorPalette")
+    dvv("registerButtonColorOpacity")
   );
 
   const registerButtonTypographyFontSize =
@@ -41,9 +42,6 @@ export const getItems = <
     registerButtonTypographyFontSize,
     registerButtonTypographyLineHeight
   );
-
-  const registerButtonColorOpacity = dvv("registerButtonColorOpacity");
-  const registerButtonBgColorOpacity = dvv("registerButtonBgColorOpacity");
 
   const fillType = dvv("registerButtonFillType");
 
@@ -186,11 +184,8 @@ export const getItems = <
           style: {
             backgroundColor:
               fillType === "filled"
-                ? hexToRgba(
-                    registerButtonBgColorHex,
-                    registerButtonBgColorOpacity
-                  )
-                : hexToRgba(registerButtonColorHex, registerButtonColorOpacity)
+                ? registerButtonBgColor
+                : registerButtonColor
           }
         }
       },

@@ -5,11 +5,16 @@ import { disableNavigation, maxColumn } from "./utils.common";
 
 const getItems =
   (context) =>
-  ({ v, device, componentConfig }) => {
-    const { icon: popoverIcon, title: popoverTitle } = getTypeInfo(v);
+  ({ v, device, componentConfig, component }) => {
+    const config = component.getGlobalConfig();
+
+    const { icon: popoverIcon, title: _popoverTitle } = getTypeInfo(v);
+
     const tabCurrentElement_ = tabCurrentElement(v, device);
-    const tabFilter_ = tabFilter(v, context, componentConfig);
-    const tabNavigation_ = tabNavigation(v);
+    const tabFilter_ = tabFilter(v, context, componentConfig, config);
+    const tabNavigation_ = tabNavigation(v, config);
+
+    const popoverTitle = getTitle(v.component) ?? _popoverTitle;
 
     return [
       {
@@ -74,18 +79,21 @@ const getTypeInfo = (v) => {
 };
 
 /*
-component: "shopify-products" | "shopify-collections" | "shopify-posts"
+component: "shopify-products" | "shopify-collections" | "shopify-posts" | "ecwid-product" | "ecwid-category"
 
 returnType: string | undefined;
 */
-const getTitle = (component) => {
+export const getTitle = (component) => {
   switch (component) {
     case "shopify-product":
+    case "ecwid-product":
       return t("Products");
     case "shopify-collection":
       return t("Collections");
     case "shopify-article":
       return t("Posts");
+    case "ecwid-category":
+      return t("Categories");
   }
 };
 
@@ -137,14 +145,14 @@ const tabCurrentElement = (v, device) => {
   };
 };
 
-function tabNavigation(v) {
+function tabNavigation(v, config) {
   const accepted = ["posts", "products", "archives", "archives-product"];
 
   if (!accepted.includes(v.type)) {
     return undefined;
   }
 
-  const filters = tagsFilter(v);
+  const filters = tagsFilter(v, config);
 
   return {
     id: "navigation",

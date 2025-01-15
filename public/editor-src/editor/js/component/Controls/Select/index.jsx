@@ -6,6 +6,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import Portal from "visual/component/Portal";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 
 function getDropdownHeight(itemsCount, itemHeight, minItems, maxItems) {
   const minHeight = itemHeight * minItems;
@@ -138,14 +139,48 @@ class Select extends React.Component {
     }
   }
 
-  renderLabel() {
+  renderLabelForEdit() {
     const { labelType } = this.props;
 
     switch (labelType) {
       case "icon":
         return this.renderLabelIcon();
-      case "input":
-        return this.renderLabelInput();
+      case "input": {
+        /**
+         * we are using EditorIcon in editor mode because select is widely used
+         * in toolbars and there is a noticeable delay when using ThemeIcon because
+         * it fetches the icon in componentDidMount and renders after that causing
+         * an unpleasant user experience
+         */
+        const icon = (
+          <EditorIcon
+            icon="nc-stre-down"
+            className="brz-control__select--arrow"
+          />
+        );
+        return this.renderLabelInput(icon);
+      }
+      default:
+        throw new Error(`Invalid label type ${labelType}`);
+    }
+  }
+
+  renderLabelForView() {
+    const { labelType } = this.props;
+
+    switch (labelType) {
+      case "icon":
+        return this.renderLabelIcon();
+      case "input": {
+        const icon = (
+          <ThemeIcon
+            name="arrow-down"
+            type="editor"
+            className="brz-control__select--arrow"
+          />
+        );
+        return this.renderLabelInput(icon);
+      }
       default:
         throw new Error(`Invalid label type ${labelType}`);
     }
@@ -155,7 +190,7 @@ class Select extends React.Component {
     return <EditorIcon icon={this.props.labelIcon} />;
   }
 
-  renderLabelInput() {
+  renderLabelInput(arrowIcon) {
     const { children } = this.props;
     const { currentValue } = this.state;
     let selectedItem;
@@ -177,21 +212,6 @@ class Select extends React.Component {
         selectedItem = child;
       }
     });
-    /**
-     * we are using EditorIcon in editor mode because select is widely used
-     * in toolbars and there is a noticeable delay when using ThemeIcon because
-     * it fetches the icon in componentDidMount and renders after that causing
-     * an unpleasant user experience
-     */
-    const arrowIcon = IS_EDITOR ? (
-      <EditorIcon icon="nc-stre-down" className="brz-control__select--arrow" />
-    ) : (
-      <ThemeIcon
-        name="arrow-down"
-        type="editor"
-        className="brz-control__select--arrow"
-      />
-    );
     const currentItem = selectedItem || this.findFirstItem();
 
     return (
@@ -227,18 +247,8 @@ class Select extends React.Component {
     });
   }
 
-  renderDropDown() {
+  renderDropdownForEdit() {
     const { inPortal, className: _className } = this.props;
-
-    if (IS_PREVIEW) {
-      return (
-        <div className="brz-control__select-options">
-          <Scrollbar autoHeightMax={this.getScrollPaneStyle()} theme="light">
-            {this.renderItems()}
-          </Scrollbar>
-        </div>
-      );
-    }
 
     if (this.state.isOpen && !inPortal) {
       return (
@@ -277,7 +287,17 @@ class Select extends React.Component {
     }
   }
 
-  render() {
+  renderDropdownForView() {
+    return (
+      <div className="brz-control__select-options">
+        <Scrollbar autoHeightMax={this.getScrollPaneStyle()} theme="light">
+          {this.renderItems()}
+        </Scrollbar>
+      </div>
+    );
+  }
+
+  renderForEdit() {
     const {
       className: _className,
       labelType,
@@ -308,12 +328,50 @@ class Select extends React.Component {
             className={`brz-control__select-current brz-control__select-current__${labelType}`}
             onClick={this.handleLabelClick}
           >
-            {this.renderLabel()}
+            {this.renderLabelForEdit()}
           </div>
-          {this.renderDropDown()}
+          {this.renderDropdownForEdit()}
           <input type="hidden" value={currentValue} {...inputAttributes} />
         </div>
       </ClickOutside>
+    );
+  }
+
+  renderForView() {
+    const {
+      className: _className,
+      labelType,
+      currentValue,
+      inputAttributes,
+      fullWidth
+    } = this.props;
+    const { position } = this.state;
+    const className = classnames(
+      "brz-control__select",
+      `brz-control__select--${position}`,
+      _className,
+      { "brz-control__select--full-width": fullWidth }
+    );
+
+    return (
+      <div className={className}>
+        <div
+          className={`brz-control__select-current brz-control__select-current__${labelType}`}
+        >
+          {this.renderLabelForView()}
+        </div>
+        {this.renderDropdownForView()}
+        <input type="hidden" value={currentValue} {...inputAttributes} />
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <RenderFor
+        forEdit={this.renderForEdit()}
+        forView={this.renderForView()}
+      />
     );
   }
 

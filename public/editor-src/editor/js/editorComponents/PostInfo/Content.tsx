@@ -2,13 +2,16 @@ import React, { ReactElement } from "react";
 import { PostInfoEditor, PostInfoPreview } from "visual/component/BrizyBuilder";
 import Placeholder from "visual/component/Placeholder";
 import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { Slug } from "./types";
 import { getPlaceholder } from "./utils";
 
 export const Content = ({
-  postElements
+  postElements,
+  renderContext
 }: {
   postElements: Slug[];
+  renderContext: RenderType;
 }): ReactElement => {
   const {
     author: authorPlaceholder,
@@ -20,7 +23,7 @@ export const Content = ({
   const date = useDC(datePlaceholder);
   const time = useDC(timePlaceholder);
 
-  const PostInfo = IS_EDITOR ? PostInfoEditor : PostInfoPreview;
+  const PostInfo = isEditor(renderContext) ? PostInfoEditor : PostInfoPreview;
 
   const res = [author, date, time];
   if (res.every((data) => data.status !== "success")) {

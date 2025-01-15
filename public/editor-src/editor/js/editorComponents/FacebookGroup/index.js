@@ -4,7 +4,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
@@ -41,10 +40,16 @@ class FacebookGroup extends EditorComponent {
     };
     const className = classnames(
       "brz-fb-group",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
 
@@ -54,7 +59,12 @@ class FacebookGroup extends EditorComponent {
       >
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
           <div className={className}>
-            <Facebook appId={appData.appId} type="Group" data={data} />
+            <Facebook
+              appId={appData.appId}
+              type="Group"
+              data={data}
+              renderContext={this.renderContext}
+            />
           </div>
         </CustomCSS>
       </Toolbar>
@@ -87,16 +97,27 @@ class FacebookGroup extends EditorComponent {
     };
     const className = classnames(
       "brz-fb-group",
-      css(
-        `${this.constructor.componentId}`,
-        `${this.getId()}`,
-        style(v, vs, vd)
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
       )
     );
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={className}>
-          <Facebook appId={appData.appId} type="Group" data={data} />
+          <Facebook
+            appId={appData.appId}
+            type="Group"
+            data={data}
+            renderContext={this.renderContext}
+          />
         </div>
       </CustomCSS>
     );

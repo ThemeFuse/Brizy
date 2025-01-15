@@ -1,17 +1,18 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import type { Props, State, Value } from "./types";
 
 export const getItems: GetItems<Value, Props, State> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
-  const { hex: bodyBgHex } = getOptionColorHexByPalette(
+  const bodyBg = getColor(
+    dvv("bodyBgColorPalette"),
     dvv("bodyBgColorHex"),
-    dvv("bodyBgColorPalette")
+    dvv("bodyBgColorOpacity")
   );
+
   return [
     {
       id: "toolbarTOC",
@@ -202,7 +203,7 @@ export const getItems: GetItems<Value, Props, State> = ({ v, device }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bodyBgHex, v.bodyBgColorOpacity)
+            backgroundColor: bodyBg
           }
         }
       },

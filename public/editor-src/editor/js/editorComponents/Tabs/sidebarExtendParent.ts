@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { ToolbarItemType } from "../ToolbarItemType";
 
-export const title = t("Tabs");
+export const title = () => t("Tabs");
 
 export function getItems(): ToolbarItemType[] {
   return [

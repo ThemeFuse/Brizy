@@ -1,8 +1,7 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
@@ -18,9 +17,10 @@ export const getItems: GetItems<Value> = ({
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const { hex: closeColorHex } = getOptionColorHexByPalette(
+  const closeColor = getColor(
+    dvv("closeColorPalette"),
     dvv("closeColorHex"),
-    dvv("closeColorPalette")
+    dvv("closeColorOpacity")
   );
 
   return [
@@ -82,7 +82,7 @@ export const getItems: GetItems<Value> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(closeColorHex, dvv("closeColorOpacity"))
+            backgroundColor: closeColor
           }
         }
       },

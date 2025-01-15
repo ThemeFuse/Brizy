@@ -1,37 +1,13 @@
 import { FC } from "react";
 import * as Option from "visual/component/Options/Type";
 import { ReduxState } from "visual/redux/types";
-import { Block, GlobalBlock, Page, Screenshot } from "visual/types";
+import { Block, GlobalBlock, Page } from "visual/types";
 import { WithClassName, WithConfig } from "visual/types/attributes";
 
 export interface OpenPromptCondition {
-  _id: Config["_id"];
   type: "block" | "popup";
-}
-
-export interface GlobalBlockMeta {
-  type: Config["blockType"];
-  extraFontStyles: [];
-  _thumbnailSrc?: string;
-  _thumbnailWidth?: number;
-  _thumbnailHeight?: number;
-  _thumbnailTime?: number;
-}
-
-export interface PageBlocks {
-  blocks: Block[];
-  meta?: Screenshot;
-}
-
-export interface APIGlobalBlockData {
-  data?: {
-    uid: string;
-    data: string;
-    dataVersion: number;
-    meta: string;
-    rules: [];
-    position: null | string;
-  };
+  blockId: Config["_id"];
+  rules: GlobalBlock["rules"];
 }
 
 export interface Config {

@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React from "react";
-import { from, Subject } from "rxjs";
+import { Subject, from } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -8,6 +8,7 @@ import {
   tap
 } from "rxjs/operators";
 import { noop } from "underscore";
+import { isEditor } from "visual/providers/RenderProvider";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorIcon from "visual/component/EditorIcon";
@@ -15,19 +16,17 @@ import Placeholder from "visual/component/Placeholder";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
-import Config from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { pageSelector } from "visual/redux/selectors";
 import { defaultPostsSources } from "visual/utils/api";
-import { css } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getCurrentPageId } from "visual/utils/env";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import * as json from "visual/utils/reader/json";
+import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import Items from "./Items";
 import { getCollectionTypesInfo, migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
@@ -71,7 +70,7 @@ export class Posts extends EditorComponent {
   constructor(props) {
     super(props);
 
-    if (IS_EDITOR) {
+    if (isEditor(this.renderContext)) {
       this.subject$ = new Subject().pipe(
         debounceTime(1000),
         distinctUntilChanged(),
@@ -105,7 +104,8 @@ export class Posts extends EditorComponent {
           return from(
             DCApiProxyInstance.getDC(loops, {
               postId: getCurrentPageId(),
-              cache: false
+              cache: false,
+              globalConfig: this.getGlobalConfig()
             }).then((r) => {
               const [loop, pagination, tags] = r || [];
               return {
@@ -122,6 +122,7 @@ export class Posts extends EditorComponent {
         if (!this.unmounted) {
           const { collection = [], config = {} } = loop || {};
           const context = collection.map((item) => ({
+            sheet: this.context.sheet,
             dynamicContent: {
               itemId: item,
               config: (config[item] || config["*"])?.dynamicContent?.groups || {
@@ -148,13 +149,14 @@ export class Posts extends EditorComponent {
   async componentDidMount() {
     this.reloadData();
 
+    const config = this.getGlobalConfig();
+
     const toolbarContext = await (async () => {
       try {
         // INFO: this "id" persists only in Shopify and arrive in "v" from shortcodes in next elements: ProductList, CollectionList, BlogPostList
         const { collectionTypeId } = this.getValue();
         const state = this.getReduxState();
         const page = pageSelector(state);
-        const config = Config.getAll();
 
         if (page) {
           const { collectionFilters } = this.getComponentConfig() ?? {};
@@ -221,7 +223,7 @@ export class Posts extends EditorComponent {
       )
     };
 
-    if (isWp(Config.getAll())) {
+    if (isWp(this.getGlobalConfig())) {
       const loopAttr = getLoopTagsAttributes(v);
 
       if (loopAttr) {
@@ -284,7 +286,17 @@ export class Posts extends EditorComponent {
     const className = classnames(
       "brz-posts",
       { "brz-posts--masonry": filter === "on" && masonryFilter === "on" },
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const itemsProps = this.makeSubcomponentProps({
       allTag,
@@ -333,7 +345,17 @@ export class Posts extends EditorComponent {
     const className = classnames(
       "brz-posts",
       { "brz-posts--masonry": filter === "on" && masonryFilter === "on" },
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
     const tagsAttribute = getLoopTagsAttributes(v);
     const itemsProps = this.makeSubcomponentProps({
@@ -359,9 +381,14 @@ export class Posts extends EditorComponent {
 }
 
 export default withMigrations(Posts, migrations, {
-  getValue: async () => {
-    return IS_EDITOR && isCloud(Config.getAll())
-      ? await getCollectionTypesInfo()
+  getValue: async (renderContext, config) => {
+    return isEditor(renderContext) && isCloud(config)
+      ? await getCollectionTypesInfo({
+          uri: config?.api?.brizyApiUrl,
+          authorization: config.tokenV2
+            ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
+            : undefined
+        })
       : Promise.resolve(undefined);
   }
 });

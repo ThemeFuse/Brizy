@@ -2,9 +2,15 @@ import { fromJS } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { LabelWithButton } from "visual/component/Controls/LeftSidebar/Styling/LabelWithButton";
+import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
 import { OnChangeActionTypes } from "visual/component/Options/types/dev/EditableSelect/types";
-import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import { getConfigById } from "visual/global/Config/InitConfig";
+import {
+  ConfigCommon,
+  LeftSidebarOptionsIds
+} from "visual/global/Config/types/configs/ConfigCommon";
 import {
   addNewGlobalStyle,
   editGlobalStyleName,
@@ -16,6 +22,11 @@ import {
   updateExtraFontStyles
 } from "visual/redux/actions2";
 import {
+  REGENERATED_STYLE_TITLE,
+  REGENERATED_STYLE_UID
+} from "visual/redux/reducers/currentStyleId";
+import {
+  configIdSelector,
   currentStyleSelector,
   extraFontStylesSelector,
   extraStylesSelector,
@@ -29,24 +40,18 @@ import {
   Style,
   isExtraFontStyle
 } from "visual/types";
+import { getGlobalColors } from "visual/utils/api";
+import { getGlobalTypography } from "visual/utils/api/common";
 import { brizyToBranding } from "visual/utils/branding";
 import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
-import { getGlobalColors } from "visual/utils/api";
-import Config from "visual/global/Config";
-import { getGlobalTypography } from "visual/utils/api/common";
-import { LabelWithButton } from "visual/component/Controls/LeftSidebar/Styling/LabelWithButton";
-import { ToastNotification } from "visual/component/Notifications";
-import {
-  REGENERATED_STYLE_TITLE,
-  REGENERATED_STYLE_UID
-} from "visual/redux/reducers/currentStyleId";
 
 interface StateProps {
   styles: Style[];
   currentStyle: ReduxState["currentStyle"];
   extraFontStyles: ExtraFontStyle[];
   extraStyles: Style[];
+  config: ConfigCommon;
 }
 
 interface DispatchProps {
@@ -123,8 +128,7 @@ class DrawerComponent extends React.Component<Props, State> {
   handleRegenerateColors = async () => {
     try {
       this.setState({ loadingColor: true });
-      const { dispatch, styles } = this.props;
-      const config = Config.getAll();
+      const { dispatch, styles, config } = this.props;
 
       const colorPalette = await getGlobalColors(config);
 
@@ -142,8 +146,7 @@ class DrawerComponent extends React.Component<Props, State> {
   handleRegenerateTypography = async () => {
     try {
       this.setState({ loadingTypography: true });
-      const { dispatch, styles } = this.props;
-      const config = Config.getAll();
+      const { dispatch, styles, config } = this.props;
 
       const fontStyles = await getGlobalTypography(config);
 
@@ -200,37 +203,36 @@ class DrawerComponent extends React.Component<Props, State> {
     label: string,
     onClick: VoidFunction,
     loading: boolean
-  ): JSX.Element => {
-    const config = Config.getAll();
-
-    return (
-      <LabelWithButton
-        label={label}
-        loading={loading}
-        onClick={onClick}
-        tooltip={config.ui?.leftSidebar?.styles?.label ?? t("Regenerate")}
-      />
-    );
-  };
+  ): JSX.Element => (
+    <LabelWithButton
+      label={label}
+      loading={loading}
+      onClick={onClick}
+      tooltip={
+        this.props.config?.ui?.leftSidebar?.styles?.label ?? t("Regenerate")
+      }
+    />
+  );
 
   render() {
     const {
       styles,
       extraStyles,
       currentStyle: { id, colorPalette, fontStyles },
-      extraFontStyles
+      extraFontStyles,
+      config
     } = this.props;
-    const config = Config.getAll();
+
     const { loadingTypography, loadingColor } = this.state;
     const stylesChoices = styles.map((style) => ({
-      title: brizyToBranding(style.title),
+      title: brizyToBranding(style.title, config),
       value: style.id,
       allowRemove: false,
       allowEdit: false,
       allowDuplicate: true
     }));
     const extraChoices = extraStyles.map((style) => ({
-      title: brizyToBranding(style.title),
+      title: brizyToBranding(style.title, config),
       value: style.id,
       allowRemove: true,
       allowEdit: true,
@@ -240,9 +242,9 @@ class DrawerComponent extends React.Component<Props, State> {
     const finalChoices = [...stylesChoices, ...extraChoices];
 
     const showColorsRegenerate: boolean =
-      typeof config.ui?.leftSidebar?.styles?.regenerateColors === "function";
+      typeof config?.ui?.leftSidebar?.styles?.regenerateColors === "function";
     const showTypographyRegenerate: boolean =
-      typeof config.ui?.leftSidebar?.styles?.regenerateTypography ===
+      typeof config?.ui?.leftSidebar?.styles?.regenerateTypography ===
       "function";
 
     const options = [
@@ -300,7 +302,8 @@ const mapStateToProps = (state: ReduxState): StateProps => ({
   styles: stylesSelector(state),
   extraStyles: extraStylesSelector(state),
   currentStyle: currentStyleSelector(state),
-  extraFontStyles: extraFontStylesSelector(state)
+  extraFontStyles: extraFontStylesSelector(state),
+  config: getConfigById(configIdSelector(state))
 });
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   dispatch

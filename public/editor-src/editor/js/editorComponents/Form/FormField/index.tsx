@@ -5,7 +5,6 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Model } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { css } from "visual/utils/cssStyle";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
@@ -28,13 +27,24 @@ export default class Input extends EditorComponent<Value> {
     const _className = classnames(
       "brz-forms__item",
       className,
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
         <div className={_className}>
           <Component
+            renderContext={this.renderContext}
             {...v}
             onChange={(value: Partial<Model<ElementModel>>) =>
               this.patchValue(value)

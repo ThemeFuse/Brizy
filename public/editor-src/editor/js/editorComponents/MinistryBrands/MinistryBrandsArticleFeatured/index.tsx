@@ -5,10 +5,8 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import Config from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api/common";
-import { css } from "visual/utils/cssStyle";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
@@ -18,7 +16,7 @@ import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
-import { EkklesiaMessages } from "../utils/helpers";
+import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -32,6 +30,7 @@ export class MinistryBrandsArticleFeatured extends EditorComponent<
   static get componentId(): ElementTypes.MinistryBrandsArticleFeatured {
     return ElementTypes.MinistryBrandsArticleFeatured;
   }
+
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
@@ -49,7 +48,7 @@ export class MinistryBrandsArticleFeatured extends EditorComponent<
     this.props.extendParentToolbar(toolbarExtend);
 
     const { category, group, recentArticles } = this.getValue();
-    const config = Config.getAll();
+    const config = this.getGlobalConfig();
 
     const changedKeys = await updateEkklesiaFields(config, {
       fields: [
@@ -60,7 +59,8 @@ export class MinistryBrandsArticleFeatured extends EditorComponent<
     });
 
     if (changedKeys) {
-      ToastNotification.warn(EkklesiaMessages["article_featured"]);
+      const messages = getEkklesiaMessages();
+      ToastNotification.warn(messages["article_featured"]);
       this.patchValue(changedKeys);
     }
   }
@@ -69,7 +69,17 @@ export class MinistryBrandsArticleFeatured extends EditorComponent<
     const className = classnames(
       "brz-articleFeatured__wrapper",
       "brz-ministryBrands",
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     return (

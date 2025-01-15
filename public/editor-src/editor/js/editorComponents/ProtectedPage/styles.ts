@@ -1,11 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { DynamicStylesProps } from "visual/types";
 
-export function styles(
-  v: ElementModel,
-  vs: ElementModel,
-  vd: ElementModel
-): [string, string, string] {
+export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
     ".brz &&": {
       standart: ["cssStyleSizeWidth"]
@@ -60,5 +58,5 @@ export function styles(
     }
   };
 
-  return renderStyles({ v, vs, vd, styles });
+  return renderStyles({ ...data, styles });
 }

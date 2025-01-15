@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Table Sidebar");
+export const title = () => t("Table Sidebar");
 
 export function getItems() {
   return [

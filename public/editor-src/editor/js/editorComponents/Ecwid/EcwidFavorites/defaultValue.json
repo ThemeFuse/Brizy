@@ -1,0 +1,281 @@
+{
+  "content": {
+    "footerDisplay": "on",
+    "signinLink": "on"
+  },
+
+  "style": {
+    "families": {
+      "titleTypographyFontFamily": "lato",
+      "title2TypographyFontFamily": "lato",
+      "priceTypographyFontFamily": "lato",
+      "buttonTypographyFontFamily": "lato",
+      "footerTypographyFontFamily": "lato",
+      "titleTypographyEmptyFontFamily": "lato"
+    },
+
+    "parentBgColorType": "solid",
+
+    "parentBgColorHex": "#ffffff",
+    "parentBgColorOpacity": 1,
+    "parentBgColorPalette": "",
+
+    "parentGradientActivePointer": "startPointer",
+    "parentGradientStartPointer": 0,
+    "parentGradientFinishPointer": 100,
+
+    "parentGradientColorHex": "#009900",
+    "parentGradientColorOpacity": 0.8,
+    "parentGradientColorPalette": "",
+
+    "parentGradientType": "linear",
+    "parentGradientLinearDegree": 90,
+    "parentGradientRadialDegree": 90,
+
+    "titleTypographyFontStyle": "",
+    "titleTypographyFontFamilyType": "google",
+    "titleTypographyFontSize": 30,
+    "titleTypographyFontSizeSuffix": "px",
+    "titleTypographyFontWeight": 600,
+    "titleTypographyLetterSpacing": 1.3,
+    "titleTypographyLineHeight": 1,
+    "titleTypographyVariableFontWeight": 600,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
+    "titleTypographyBold": false,
+    "titleTypographyItalic": false,
+    "titleTypographyUnderline": false,
+    "titleTypographyStrike": false,
+    "titleTypographyUppercase": false,
+    "titleTypographyLowercase": false,
+
+    "titleColorHex": "#000000",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "",
+
+    "titleSpacing": 0,
+    "titleSpacingSuffix": "px",
+
+    "titleHorizontalAlign": "left",
+
+    "imageBorderStyle": "none",
+
+    "imageBorderColorHex": "#239ddb",
+    "imageBorderColorOpacity": 0,
+    "imageBorderColorPalette": "",
+
+    "imageBorderRadiusType": "grouped",
+
+    "imageBorderRadius": 0,
+    "imageBorderRadiusSuffix": "px",
+
+    "imageBorderWidthType": "grouped",
+
+    "imageBorderWidth": 2,
+    "imageBorderTopWidth": 2,
+    "imageBorderRightWidth": 2,
+    "imageBorderBottomWidth": 2,
+    "imageBorderLeftWidth": 2,
+
+    "imageBorderTopLeftRadius": 0,
+    "imageBorderTopRightRadius": 0,
+    "imageBorderBottomRightRadius": 0,
+    "imageBorderBottomLeftRadius": 0,
+
+    "imageBorderTopLeftRadiusSuffix": "px",
+    "imageBorderTopRightRadiusSuffix": "px",
+    "imageBorderBottomRightRadiusSuffix": "px",
+    "imageBorderBottomLeftRadiusSuffix": "px",
+
+    "buttonBorderRadiusType": "grouped",
+
+    "buttonBorderRadius": 0,
+    "buttonBorderRadiusSuffix": "px",
+
+    "buttonBorderTopLeftRadius": 0,
+    "buttonBorderTopRightRadius": 0,
+    "buttonBorderBottomRightRadius": 0,
+    "buttonBorderBottomLeftRadius": 0,
+
+    "buttonBorderTopLeftRadiusSuffix": "px",
+    "buttonBorderTopRightRadiusSuffix": "px",
+    "buttonBorderBottomRightRadiusSuffix": "px",
+    "buttonBorderBottomLeftRadiusSuffix": "px",
+
+    "imageBoxShadow": "none",
+
+    "imageBoxShadowColorHex": "#000000",
+    "imageBoxShadowColorOpacity": 0,
+    "imageBoxShadowColorPalette": "",
+
+    "imageBoxShadowBlur": 0,
+    "imageBoxShadowSpread": 0,
+    "imageBoxShadowVertical": 0,
+    "imageBoxShadowHorizontal": 0,
+
+    "imageSpacing": 5,
+    "imageSpacingSuffix": "px",
+
+    "title2TypographyFontStyle": "",
+    "title2TypographyFontFamilyType": "google",
+    "title2TypographyFontSize": 16,
+    "title2TypographyFontSizeSuffix": "px",
+    "title2TypographyFontWeight": 400,
+    "title2TypographyLetterSpacing": 1.3,
+    "title2TypographyLineHeight": 1,
+    "title2TypographyVariableFontWeight": 400,
+    "title2TypographyFontWidth": 100,
+    "title2TypographyFontSoftness": 0,
+    "title2TypographyBold": false,
+    "title2TypographyItalic": false,
+    "title2TypographyUnderline": false,
+    "title2TypographyStrike": false,
+    "title2TypographyUppercase": false,
+    "title2TypographyLowercase": false,
+
+    "title2ColorHex": "#000000",
+    "title2ColorOpacity": 1,
+    "title2ColorPalette": "",
+
+    "title2HorizontalAlign": "center",
+
+    "title2Spacing": 10,
+    "title2SpacingSuffix": "px",
+
+    "priceTypographyFontStyle": "",
+    "priceTypographyFontFamilyType": "google",
+    "priceTypographyFontSize": 22,
+    "priceTypographyFontSizeSuffix": "px",
+    "priceTypographyFontWeight": 600,
+    "priceTypographyLetterSpacing": 1.3,
+    "priceTypographyLineHeight": 1,
+    "priceTypographyVariableFontWeight": 600,
+    "priceTypographyFontWidth": 100,
+    "priceTypographyFontSoftness": 0,
+    "priceTypographyBold": false,
+    "priceTypographyItalic": false,
+    "priceTypographyUnderline": false,
+    "priceTypographyStrike": false,
+    "priceTypographyUppercase": false,
+    "priceTypographyLowercase": false,
+
+    "priceColorHex": "#000000",
+    "priceColorOpacity": 1,
+    "priceColorPalette": "",
+
+    "priceSpacing": 20,
+    "priceSpacingSuffix": "px",
+
+    "priceHorizontalAlign": "center",
+
+    "buttonTextColorHex": "#333",
+    "buttonTextColorOpacity": 1,
+    "buttonTextColorPalette": "",
+
+    "buttonIconColorHex": "#fd7474",
+    "buttonIconColorOpacity": 1,
+    "buttonIconColorPalette": "",
+
+    "buttonBgColorType": "solid",
+
+    "buttonBgColorHex": "#f2f2f2",
+    "buttonBgColorOpacity": 1,
+    "buttonBgColorPalette": "",
+
+    "buttonGradientActivePointer": "startPointer",
+    "buttonGradientStartPointer": 0,
+    "buttonGradientFinishPointer": 100,
+
+    "buttonGradientColorHex": "#009900",
+    "buttonGradientColorOpacity": 0.8,
+    "buttonGradientColorPalette": "",
+
+    "buttonGradientType": "linear",
+    "buttonGradientLinearDegree": 90,
+    "buttonGradientRadialDegree": 90,
+
+    "buttonTypographyFontStyle": "",
+    "buttonTypographyFontFamilyType": "google",
+    "buttonTypographyFontSize": 14,
+    "buttonTypographyFontSizeSuffix": "px",
+    "buttonTypographyFontWeight": 600,
+    "buttonTypographyLetterSpacing": 1.3,
+    "buttonTypographyLineHeight": 1,
+    "buttonTypographyVariableFontWeight": 600,
+    "buttonTypographyFontWidth": 100,
+    "buttonTypographyFontSoftness": 0,
+    "buttonTypographyBold": false,
+    "buttonTypographyItalic": false,
+    "buttonTypographyUnderline": false,
+    "buttonTypographyStrike": false,
+    "buttonTypographyUppercase": false,
+    "buttonTypographyLowercase": false,
+
+    "buttonBoxShadow": "none",
+
+    "buttonBoxShadowColorHex": "#000000",
+    "buttonBoxShadowColorOpacity": 0,
+    "buttonBoxShadowColorPalette": "",
+
+    "buttonBoxShadowBlur": 0,
+    "buttonBoxShadowSpread": 0,
+    "buttonBoxShadowVertical": 0,
+    "buttonBoxShadowHorizontal": 0,
+
+    "footerTypographyFontStyle": "",
+    "footerTypographyFontFamilyType": "google",
+    "footerTypographyFontSize": 16,
+    "footerTypographyFontSizeSuffix": "px",
+    "footerTypographyFontWeight": 400,
+    "footerTypographyLetterSpacing": 1.3,
+    "footerTypographyLineHeight": 1,
+    "footerTypographyVariableFontWeight": 400,
+    "footerTypographyFontWidth": 100,
+    "footerTypographyFontSoftness": 0,
+    "footerTypographyBold": false,
+    "footerTypographyItalic": false,
+    "footerTypographyUnderline": false,
+    "footerTypographyStrike": false,
+    "footerTypographyUppercase": false,
+    "footerTypographyLowercase": false,
+
+    "footerIconSize": "medium",
+
+    "footerIconCustomSize": 16,
+    "footerIconCustomSizeSuffix": "px",
+
+    "footerColorHex": "#757575",
+    "footerColorOpacity": 1,
+    "footerColorPalette": "",
+
+    "footerIconColorHex": "#757575",
+    "footerIconColorOpacity": 1,
+    "footerIconColorPalette": "",
+
+    "footerSpacing": 20,
+    "footerSpacingSuffix": "px",
+
+    "titleColorEmptyHex": "#000000",
+    "titleColorEmptyOpacity": 1,
+    "titleColorEmptyPalette": "",
+
+    "titleHorizontalAlignEmpty": "left",
+
+    "titleTypographyEmptyFontStyle": "",
+    "titleTypographyEmptyFontFamilyType": "google",
+    "titleTypographyEmptyFontSize": 15,
+    "titleTypographyEmptyFontSizeSuffix": "px",
+    "titleTypographyEmptyFontWeight": 400,
+    "titleTypographyEmptyLetterSpacing": 1.3,
+    "titleTypographyEmptyLineHeight": 1,
+    "titleTypographyEmptyVariableFontWeight": 400,
+    "titleTypographyEmptyFontWidth": 100,
+    "titleTypographyEmptyFontSoftness": 0,
+    "titleTypographyEmptyBold": false,
+    "titleTypographyEmptyItalic": false,
+    "titleTypographyEmptyUnderline": false,
+    "titleTypographyEmptyStrike": false,
+    "titleTypographyEmptyUppercase": false,
+    "titleTypographyEmptyLowercase": false
+  }
+}

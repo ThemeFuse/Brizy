@@ -1,5 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { ToolbarItemType } from "../ToolbarItemType";
+import { calendlySelector, hoverTransitionCSS } from "./css";
 
 export function getItems(): ToolbarItemType[] {
   return [
@@ -33,9 +34,9 @@ export function getItems(): ToolbarItemType[] {
                     {
                       id: "calendlyPadding",
                       type: "padding",
-                      devices: "desktop",
                       label: t("Padding"),
-                      position: 50
+                      position: 50,
+                      selector: calendlySelector
                     }
                   ]
                 },
@@ -52,7 +53,8 @@ export function getItems(): ToolbarItemType[] {
                         min: 0,
                         max: 99,
                         units: [{ title: "ms", value: "ms" }]
-                      }
+                      },
+                      style: hoverTransitionCSS
                     }
                   ]
                 }

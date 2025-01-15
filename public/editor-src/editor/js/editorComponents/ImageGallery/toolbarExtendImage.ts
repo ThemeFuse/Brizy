@@ -1,14 +1,14 @@
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { t } from "visual/utils/i18n";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
 import { defaultValueValue } from "visual/utils/onChange";
 import type { GetItems } from "../EditorComponent/types";
 import type { Props, Value } from "./types";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string): unknown =>
@@ -68,7 +68,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes
+                  choices: getMaskShapes()
                 },
                 {
                   id: "imagesMaskCustomUpload",
@@ -95,7 +95,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                       id: "imagesMaskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "imagesMaskScale",
@@ -121,7 +121,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                       id: "imagesMaskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "imagesMaskPositionx",
@@ -152,7 +152,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }

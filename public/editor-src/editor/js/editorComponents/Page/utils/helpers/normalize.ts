@@ -9,13 +9,14 @@ import {
   normalizeMenuItems,
   symbolsToItems
 } from "visual/editorComponents/Menu/utils";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { Block } from "visual/types";
 import { mapModels } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
 import { FromTo } from "../types";
+import { MValue } from "visual/utils/value";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 
@@ -121,13 +122,12 @@ export function gbTransform(
 
 interface AttachMenu {
   model: ElementModelType;
-  config: ConfigCommon;
+  menuData: MValue<MenuData[]>;
   omitSymbols?: boolean;
 }
 
 export function attachMenu(data: AttachMenu): ElementModelType {
-  const { config, model, omitSymbols = false } = data;
-  const menuData = config.menuData;
+  const { model, omitSymbols = false, menuData } = data;
 
   if (menuData === undefined) {
     return model;

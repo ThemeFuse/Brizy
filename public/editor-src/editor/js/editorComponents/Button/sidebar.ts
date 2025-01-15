@@ -1,9 +1,8 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { isStory } from "visual/global/EditorModeContext";
 import { t } from "visual/utils/i18n";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { buttonHoverEffects } from "visual/utils/options/Animation/utils";
@@ -11,9 +10,14 @@ import { read as readString } from "visual/utils/string/specs";
 import { Props, Value } from "./types";
 import { isButtonFillHover } from "./utils";
 
-export const title = t("Button");
+export const title = () => t("Button");
 
-export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
+export const getItems: GetItems<Value, Props> = ({
+  v,
+  context,
+  device,
+  editorMode
+}) => {
   const richTextDC = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.richText
@@ -22,7 +26,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const type = dvv("type");
 
-  const IS_STORY = isStory(Config.getAll());
+  const _isStory = isStory(editorMode);
   const hoverName = readString(dvv("hoverName")) ?? "none";
   const maxAnimationDuration = isButtonFillHover(hoverName) ? 1.0 : undefined;
   return [
@@ -53,7 +57,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                       id: "showOnDesktop",
                       label: t("Show on Desktop"),
                       type: "switch",
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       position: 10,
                       closeTooltip: true,
                       devices: "desktop"
@@ -97,7 +101,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                     {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       position: 100,
                       type: "slider",
@@ -133,7 +137,7 @@ export const getItems: GetItems<Value, Props> = ({ v, context, device }) => {
                     {
                       id: "hover",
                       type: "animation",
-                      disabled: IS_STORY,
+                      disabled: _isStory,
                       devices: "desktop",
                       config: {
                         types: buttonHoverEffects,

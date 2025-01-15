@@ -1,32 +1,28 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { hexToRgba } from "visual/utils/color";
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { isPopup } from "visual/global/EditorModeContext";
+import { getColor } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
-  MaskPositions,
-  MaskRepeat,
-  MaskShapes,
-  MaskSizes
+  getMaskPositions,
+  getMaskRepeat,
+  getMaskShapes,
+  getMaskSizes
 } from "visual/utils/mask/Mask";
-import { isPopup } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
-import {
-  getDynamicContentOption,
-  getOptionColorHexByPalette
-} from "visual/utils/options";
+import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
+import { Toggle } from "visual/utils/options/utils/Type";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { capitalize } from "visual/utils/string";
 import { read as readString } from "visual/utils/string/specs";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { getMaxRowWidth, getMinRowWidth } from "./utils";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { Toggle } from "visual/utils/options/utils/Type";
 
-export function getItems({ v, device, component, context }) {
+export function getItems({ v, device, component, context, editorMode }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
   const linkDC = getDynamicContentOption({
@@ -34,9 +30,10 @@ export function getItems({ v, device, component, context }) {
     type: DCTypes.link
   });
 
-  const { hex: bgColorHex } = getOptionColorHexByPalette(
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
     dvv("bgColorHex"),
-    dvv("bgColorPalette")
+    dvv("bgColorOpacity")
   );
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
@@ -47,9 +44,9 @@ export function getItems({ v, device, component, context }) {
     type: DCTypes.image
   });
 
-  const config = Config.getAll();
+  const config = component.getGlobalConfig();
 
-  const IS_GLOBAL_POPUP = isPopup(config);
+  const _isPopup = isPopup(editorMode);
 
   const customVideo = isPro(config)
     ? [
@@ -270,7 +267,7 @@ export function getItems({ v, device, component, context }) {
                   label: t("Shape"),
                   devices: "desktop",
                   type: "select",
-                  choices: MaskShapes,
+                  choices: getMaskShapes(),
                   disabled: disableMaskTab
                 },
                 {
@@ -297,7 +294,7 @@ export function getItems({ v, device, component, context }) {
                       id: "maskSize",
                       label: t("Size"),
                       type: "select",
-                      choices: MaskSizes
+                      choices: getMaskSizes()
                     },
                     {
                       id: "maskScale",
@@ -323,7 +320,7 @@ export function getItems({ v, device, component, context }) {
                       id: "maskPosition",
                       type: "select",
                       label: t("Position"),
-                      choices: MaskPositions
+                      choices: getMaskPositions()
                     },
                     {
                       id: "maskPositionx",
@@ -354,7 +351,7 @@ export function getItems({ v, device, component, context }) {
                   label: t("Repeat"),
                   type: "select",
                   disabled: maskShapeIsDisabled || maskSize === "cover",
-                  choices: MaskRepeat
+                  choices: getMaskRepeat()
                 }
               ]
             }
@@ -370,7 +367,7 @@ export function getItems({ v, device, component, context }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(bgColorHex, dvv("bgColorOpacity"))
+            backgroundColor: bgColor
           }
         }
       },
@@ -441,7 +438,7 @@ export function getItems({ v, device, component, context }) {
       devices: "desktop",
       position: 100,
       disabled:
-        inPopup || inPopup2 || IS_GLOBAL_POPUP
+        inPopup || inPopup2 || _isPopup
           ? true
           : device === "desktop"
             ? dvv("linkLightBox") === "on"
@@ -519,7 +516,7 @@ export function getItems({ v, device, component, context }) {
                   config: {
                     popupKey: `${component.getId()}_${linkPopup}`
                   },
-                  disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+                  disabled: inPopup || inPopup2 || _isPopup,
                   dependencies: popupToOldModel
                 }
               ]
@@ -586,7 +583,7 @@ export function getItems({ v, device, component, context }) {
           label: t("Width"),
           type: "slider",
           position: 80,
-          disabled: inPopup || inPopup2 || IS_GLOBAL_POPUP,
+          disabled: inPopup || inPopup2 || _isPopup,
           config: {
             min: getMinRowWidth({ v, device }),
             max: getMaxRowWidth({ v, device }),
@@ -600,7 +597,7 @@ export function getItems({ v, device, component, context }) {
           id: "multiPicker",
           type: "group",
           position: 90,
-          disabled: inPopup2 || IS_GLOBAL_POPUP,
+          disabled: inPopup2 || _isPopup,
           options: [
             {
               id: "columnsHeightStyle",

@@ -6,6 +6,7 @@ import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { useConfig, usePro } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
 import { WithClassName, WithId } from "visual/types/attributes";
@@ -33,6 +34,10 @@ const selector = pipe(uiSelector, prop("rightSidebar"));
 export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
   const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
   const dispatch = useDispatch();
+  const config = useConfig();
+
+  const pro = usePro();
+
   const onLock = useCallback(
     () =>
       pipe(
@@ -103,7 +108,13 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
           label={label}
           className={className}
         >
-          <Options wrapOptions={false} data={options} toolbar={toolbar} />
+          <Options
+            wrapOptions={false}
+            data={options}
+            toolbar={toolbar}
+            isPro={pro}
+            upgradeToPro={config?.urls?.upgradeToPro}
+          />
         </Tab>
       ))}
     </Control>

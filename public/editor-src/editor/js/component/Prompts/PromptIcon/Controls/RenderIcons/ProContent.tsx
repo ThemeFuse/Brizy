@@ -1,14 +1,17 @@
 import React from "react";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { t } from "visual/utils/i18n";
-import Config from "visual/global/Config";
 
-export const ProContent = (): JSX.Element => (
+interface Props {
+  upgradeToPro?: string;
+}
+
+export const ProContent = ({ upgradeToPro }: Props): JSX.Element => (
   <div className="brz-ed-popup-body-pro-content">
     <ProBlocked
       text={t("Option")}
       message={t("Upgrade to PRO to use this")}
-      upgradeLink={Config.getAll().urls.upgradeToPro}
+      upgradeLink={upgradeToPro ?? ""}
       upgradeText={t("Get a PRO plan")}
       needElementTitle={false}
       className="brz-ed-popup-body-pro-blocked"

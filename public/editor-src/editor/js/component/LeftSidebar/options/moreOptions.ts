@@ -1,10 +1,12 @@
 import { Prompt } from "visual/component/Prompts/api";
-import { Config } from "visual/global/Config";
-import { LeftSidebarMoreOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConfigCommon,
+  LeftSidebarMoreOptionsIds
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { Option } from "./index";
 
-export const getMoreOptions = (config: Config): Array<Option> => {
-  const { leftSidebar = {} } = config.ui ?? {};
+export const getMoreOptions = (ui: ConfigCommon["ui"]): Array<Option> => {
+  const { leftSidebar = {} } = ui ?? {};
   const { options = [] } = leftSidebar.more ?? {};
 
   const _options: Array<Option> = [];

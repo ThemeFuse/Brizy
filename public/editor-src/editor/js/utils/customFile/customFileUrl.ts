@@ -1,8 +1,6 @@
 import Config from "visual/global/Config";
 import { getFileFormat } from "./utils";
 
-const isWP = Config.get("wp");
-
 export const customFileUrl = (file: string) => {
   if (!file) return null;
 
@@ -11,6 +9,7 @@ export const customFileUrl = (file: string) => {
 
   if (fileUrl) {
     const [uid, filename] = file.split("|||");
+    const isWP = Config.get("wp");
 
     if (isWP) {
       return `${fileUrl}${uid}`;

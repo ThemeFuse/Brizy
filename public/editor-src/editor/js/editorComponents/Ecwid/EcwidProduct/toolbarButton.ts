@@ -1,17 +1,17 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: buttonBgColorHex } = getOptionColorHexByPalette(
+  const buttonBgColor = getColor(
+    dvv("buttonBgColorPalette"),
     dvv("buttonBgColorHex"),
-    dvv("buttonBgColorPalette")
+    dvv("buttonBgColorOpacity")
   );
 
   return [
@@ -65,16 +65,6 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
               }
             }
           ]
-        },
-        {
-          id: "buttonRightSpacing",
-          label: t("Spacing"),
-          type: "slider",
-          config: {
-            min: 0,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
         }
       ]
     },
@@ -106,10 +96,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              buttonBgColorHex,
-              dvv("buttonBgColorOpacity")
-            )
+            backgroundColor: buttonBgColor
           }
         }
       },

@@ -1,18 +1,16 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { deviceModeSelector } from "visual/redux/selectors";
-import { getStore } from "visual/redux/store";
-import { css } from "visual/utils/cssStyle";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
 import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
-import defaultValue from "./defaultValue.json";
 import Items from "./Items";
+import defaultValue from "./defaultValue.json";
 import * as Flipboxpatch from "./patch";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
@@ -22,8 +20,8 @@ import {
   Meta,
   Patch,
   Props,
-  State as _State,
-  Value
+  Value,
+  State as _State
 } from "./types";
 import { getHeight } from "./utils";
 
@@ -32,6 +30,7 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
     return ElementTypes.Flipbox;
   }
 
+  static experimentalDynamicContent = true;
   static defaultValue = defaultValue;
 
   state = {
@@ -160,7 +159,7 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
 
   dvv = (key: string): unknown => {
     const v = this.getValue();
-    const device = deviceModeSelector(getStore().getState());
+    const device = this.getDeviceMode();
     const state = State.mRead(v.tabsState);
 
     return defaultValueValue({ v, key, device, state });
@@ -174,15 +173,27 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
     const flipboxActive = this.dvv("flipboxActive");
 
     const animationClassName = `brz-flipbox-${transition}-${direction}`;
+    const _isView = isView(this.renderContext);
+    const _isEditor = isEditor(this.renderContext);
 
     const className = classnames(
       "brz-flipbox",
       `brz-flipbox-${transition}`,
       {
-        [`brz-flipbox-${trigger}`]: IS_PREVIEW,
-        "brz-flipbox-back-active": IS_EDITOR && flipboxActive === "back"
+        [`brz-flipbox-${trigger}`]: _isView,
+        "brz-flipbox-back-active": _isEditor && flipboxActive === "back"
       },
-      css(this.getComponentId(), this.getId(), style(v, vs, vd))
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          renderContext: this.renderContext
+        })
+      )
     );
 
     const classNameContent = classnames(
@@ -218,7 +229,7 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
       <Wrapper
         {...this.makeWrapperProps({ className })}
         attributes={{
-          ...(IS_PREVIEW
+          ...(_isView
             ? {
                 [makeAttr("trigger")]: Str.read(trigger) ?? "hover",
                 [makeAttr("transition")]: transition

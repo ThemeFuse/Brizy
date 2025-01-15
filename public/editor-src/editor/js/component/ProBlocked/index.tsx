@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React, { MouseEvent, useCallback } from "react";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { t } from "visual/utils/i18n";
+import { MValue } from "visual/utils/value";
 
 export interface Props {
   className?: string;
@@ -11,7 +12,7 @@ export interface Props {
   onRemove?: VoidFunction;
   message: string;
   upgradeText: string;
-  upgradeLink: string;
+  upgradeLink: MValue<string>;
 }
 
 export const ProBlocked = (props: Props): JSX.Element => {

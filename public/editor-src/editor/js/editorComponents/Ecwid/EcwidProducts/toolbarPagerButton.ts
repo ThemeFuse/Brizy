@@ -1,8 +1,7 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL, State } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
@@ -18,9 +17,10 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const { hex: pagerButtonColorHex } = getOptionColorHexByPalette(
+  const pagerButtonColor = getColor(
+    dvv("pagerButtonColorPalette"),
     dvv("pagerButtonColorHex"),
-    dvv("pagerButtonColorPalette")
+    dvv("pagerButtonColorOpacity")
   );
 
   return [
@@ -51,10 +51,7 @@ export function getItems({
         size: "auto",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              pagerButtonColorHex,
-              dvv("pagerButtonColorOpacity")
-            )
+            backgroundColor: pagerButtonColor
           }
         }
       },

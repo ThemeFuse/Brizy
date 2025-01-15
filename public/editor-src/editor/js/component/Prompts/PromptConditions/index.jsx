@@ -2,12 +2,9 @@ import classnames from "classnames";
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Fixed from "visual/component/Prompts/Fixed";
-import Config from "visual/global/Config";
-import { IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import items from "./items";
-
-const ConfigUrls = Config.get("urls");
 
 export default class PromptConditions extends Component {
   static defaultProps = {
@@ -19,6 +16,10 @@ export default class PromptConditions extends Component {
   state = {
     activeTab: this.props.options[0].type
   };
+
+  upgradeToPro = this.props.config.urls.upgradeToPro;
+
+  isPro = isPro(this.props.config);
 
   handleTabChange = (activeTab) => this.setState({ activeTab });
 
@@ -61,7 +62,7 @@ export default class PromptConditions extends Component {
         <a
           className="brz-ed-btn brz-ed-btn-width-2 brz-ed-btn-sm brz-ed-btn-icon brz-ed-btn-icon--left brz-ed-btn-rounded brz-ed-btn-pro"
           rel="noopener noreferrer"
-          href={ConfigUrls.upgradeToPro}
+          href={this.upgradeToPro}
           target="_blank"
         >
           <EditorIcon icon="nc-lock" />
@@ -72,7 +73,7 @@ export default class PromptConditions extends Component {
   }
 
   render() {
-    const { options, opened, onClose } = this.props;
+    const { options, opened, config, onClose } = this.props;
     const { activeTab } = this.state;
     const Item = items[activeTab];
 
@@ -92,17 +93,17 @@ export default class PromptConditions extends Component {
           </div>
           <div className="brz-ed-popup-content brz-ed-popup-pane brz-ed-popup-icons">
             <div className="brz-ed-popup-body">
-              {!IS_PRO && this.renderProException()}
+              {!this.isPro && this.renderProException()}
               <div
                 className={classnames("brz-ed-popup-conditions", {
-                  "brz-ed-popup-conditions__free": !IS_PRO
+                  "brz-ed-popup-conditions__free": !this.isPro
                 })}
               >
                 <div className="brz-ed-popup-conditions__head">
                   <h3>{title}</h3>
                 </div>
                 <div className="brz-ed-popup-conditions__body">
-                  <Item {...itemProps} onClose={onClose} />
+                  <Item {...itemProps} config={config} onClose={onClose} />
                 </div>
               </div>
             </div>

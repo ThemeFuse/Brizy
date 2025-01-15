@@ -1,13 +1,22 @@
 import classnames from "classnames";
 import FuzzySearch from "fuzzy-search";
-import React, { Component, Fragment, ReactElement } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import React, { Component, Fragment, JSX, ReactElement } from "react";
+import { ConnectedProps, connect } from "react-redux";
 import _ from "underscore";
+import {
+  CategoryTitle,
+  ShortcodeElement
+} from "visual/component/Controls/LeftSidebar/AddElements";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { ProInfo } from "visual/component/ProInfo";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  EditorMode,
+  EditorModeContext,
+  isStory
+} from "visual/global/EditorModeContext";
 import UIEvents from "visual/global/UIEvents";
 import {
   updateDisabledElements,
@@ -19,18 +28,13 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { Shortcode } from "visual/types";
-import { IS_PRO } from "visual/utils/env";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
-import { isStory, setIds } from "visual/utils/models";
+import { setIds } from "visual/utils/models";
 import { Category } from "./Category";
+import { CollapseShortcodes } from "./CollapseShortcodes";
 import { SortData } from "./types";
-import {
-  CategoryTitle,
-  ShortcodeElement
-} from "visual/component/Controls/LeftSidebar/AddElements";
-
-const { upgradeToPro } = Config.get("urls");
 
 export interface BaseProps {
   isEditMode: boolean;
@@ -38,6 +42,8 @@ export interface BaseProps {
   shortcodes: {
     [k: string]: Shortcode[];
   };
+  config: ConfigCommon;
+  editorMode: EditorMode;
 }
 
 type MapStateProps = {
@@ -64,6 +70,9 @@ export type WithBaseProps<T> = ConnectedProps<typeof connector> & T;
 export type Props = WithBaseProps<BaseProps>;
 
 class ControlInner extends Component<Props, State> {
+  private readonly isPro: boolean;
+  private readonly upgradeToPro: string;
+
   constructor(props: Props) {
     super(props);
     // convert arr to object like {text: true, icon: true}
@@ -82,6 +91,10 @@ class ControlInner extends Component<Props, State> {
       disabledElements,
       inputValue: ""
     };
+    const config = this.props.config;
+
+    this.isPro = isPro(config);
+    this.upgradeToPro = config?.urls?.upgradeToPro ?? "";
   }
 
   componentDidUpdate(prevProps: Props): void {
@@ -130,7 +143,7 @@ class ControlInner extends Component<Props, State> {
   handleClick = (shortcodes: Shortcode[], elementIndex: number): void => {
     const { component, pro } = shortcodes[elementIndex];
 
-    if (!pro || IS_PRO) {
+    if (!pro || this.isPro) {
       const itemData = setIds(component.resolve);
       const slickContainer = document.querySelector(
         ".slick-list .slick-active"
@@ -250,7 +263,7 @@ class ControlInner extends Component<Props, State> {
         overlay={
           <ProInfo
             text={t("Upgrade to PRO to use this element")}
-            url={upgradeToPro}
+            url={this.upgradeToPro}
           />
         }
         offset={10}
@@ -265,14 +278,22 @@ class ControlInner extends Component<Props, State> {
     );
   }
 
-  renderIcons(shortcodes: Shortcode[]): ReactElement[] {
+  renderIcons({
+    shortcodes,
+    isStory,
+    config
+  }: {
+    shortcodes: Shortcode[];
+    isStory: boolean;
+    config: ConfigCommon;
+  }): ReactElement[] {
     const { disabledElements, pinnedElements } = this.state;
     const { isEditMode, isPinMode } = this.props;
 
     return shortcodes.map(({ component, pro }, index) => {
-      const config = Config.getAll();
+      const shortcodeIsPro = typeof pro === "function" ? pro(config) : pro;
 
-      const clickFn = isStory(config)
+      const clickFn = isStory
         ? (): void => this.handleClick(shortcodes, index)
         : _.noop;
 
@@ -285,13 +306,14 @@ class ControlInner extends Component<Props, State> {
       const iconElem = this.renderIcon(
         component.title,
         component.icon,
-        !IS_PRO && (typeof pro === "function" ? pro(config) : pro)
+        !this.isPro && shortcodeIsPro
       );
 
       const iconContainer = (
         <div
           className={classnames("brz-ed-sidebar__add-elements__item", {
-            "brz-ed-sidebar__add-elements__item-pro": pro && !IS_PRO
+            "brz-ed-sidebar__add-elements__item-pro":
+              shortcodeIsPro && !this.isPro
           })}
           onClick={clickFn}
           key={component.id}
@@ -319,7 +341,7 @@ class ControlInner extends Component<Props, State> {
           iconElement={iconElem}
           isChecked={!disabledElements[component.id]}
         />
-      ) : pro && !IS_PRO ? (
+      ) : pro && !this.isPro ? (
         iconContainer
       ) : (
         <SortableElement
@@ -333,10 +355,19 @@ class ControlInner extends Component<Props, State> {
     });
   }
 
-  renderPinned(
-    isEveryPinnedElementDisabled: boolean,
-    pinnedElementsShortcodes: Shortcode[]
-  ): JSX.Element | null {
+  renderPinned({
+    isEveryPinnedElementDisabled,
+    pinnedElementsShortcodes,
+    showLines,
+    isStory,
+    config
+  }: {
+    isEveryPinnedElementDisabled: boolean;
+    pinnedElementsShortcodes: Shortcode[];
+    showLines: boolean;
+    isStory: boolean;
+    config: ConfigCommon;
+  }): JSX.Element | null {
     const { isEditMode, isPinMode } = this.props;
 
     const isOneOfModes = isEditMode || isPinMode;
@@ -350,16 +381,31 @@ class ControlInner extends Component<Props, State> {
     }
 
     return (
-      <>
-        <CategoryTitle title={t("Pinned")} />
-        <Category
-          category="pinned"
-          shortcodes={pinnedElementsShortcodes}
-          onChange={this.handleSortableSort}
-        >
-          {this.renderIcons(pinnedElementsShortcodes)}
-        </Category>
-      </>
+      <CollapseShortcodes>
+        {({ open, setOpen }) => (
+          <>
+            <CategoryTitle
+              title={t("Pinned")}
+              onClick={() => setOpen(!open)}
+              open={open}
+            />
+            {open && (
+              <Category
+                category="pinned"
+                shortcodes={pinnedElementsShortcodes}
+                onChange={this.handleSortableSort}
+                showLines={showLines}
+              >
+                {this.renderIcons({
+                  shortcodes: pinnedElementsShortcodes,
+                  isStory,
+                  config
+                })}
+              </Category>
+            )}
+          </>
+        )}
+      </CollapseShortcodes>
     );
   }
 
@@ -367,7 +413,9 @@ class ControlInner extends Component<Props, State> {
     category: string,
     index: number,
     pinnedElementsShortcodes: Shortcode[],
-    isEveryPinnedElementDisabled: boolean
+    isEveryPinnedElementDisabled: boolean,
+    onClick: VoidFunction,
+    open: boolean
   ): JSX.Element | null {
     const { isEditMode, isPinMode } = this.props;
 
@@ -381,12 +429,13 @@ class ControlInner extends Component<Props, State> {
       return null;
     }
 
-    return <CategoryTitle title={category} />;
+    return <CategoryTitle title={category} onClick={onClick} open={open} />;
   }
 
   render(): ReactElement {
     const { inputValue, pinnedElements, disabledElements } = this.state;
-    const { shortcodes } = this.props;
+    const { shortcodes, config } = this.props;
+
     // why does Category class need for?
     // Sortable plugin doesn't update options when new props arrive
     // and in old variant
@@ -412,61 +461,86 @@ class ControlInner extends Component<Props, State> {
       );
 
     return (
-      <>
-        <div className="brz-ed-sidebar__search">
-          <input
-            type="text"
-            className="brz-input"
-            placeholder={t("Search element")}
-            autoFocus
-            spellCheck={false}
-            value={inputValue}
-            onChange={({ target: { value } }): void =>
-              this.setState({ inputValue: value })
-            }
-          />
-          <div className="brz-ed-sidebar__button-search">
-            <EditorIcon icon="nc-search" />
-          </div>
-        </div>
-        {this.renderPinned(
-          isEveryPinnedElementDisabled,
-          pinnedElementsShortcodes
-        )}
-        {Object.entries(shortcodes)
-          .filter(
-            ([, categoryShortcodes]) =>
-              this.getFilteredShortcodes(categoryShortcodes).length > 0
-          )
-          .map(([category, categoryShortcodes], index) => {
-            const shortcodes = this.getFilteredShortcodes(categoryShortcodes);
-            // we use _.sortBy instead of native sort
-            // because native can be unstable and change
-            // the order of elements with equal positions
-            const prepared = _.sortBy(
-              shortcodes.filter((s) => !s.component.hidden),
-              (s) => s.component.position || 10
-            );
+      <EditorModeContext.Consumer>
+        {(editorMode) => {
+          const _isStory = isStory(editorMode);
+          const showLines = !_isStory;
+          return (
+            <>
+              <div className="brz-ed-sidebar__search">
+                <input
+                  type="text"
+                  className="brz-input"
+                  placeholder={t("Search element")}
+                  autoFocus
+                  spellCheck={false}
+                  value={inputValue}
+                  onChange={({ target: { value } }): void =>
+                    this.setState({ inputValue: value })
+                  }
+                />
+                <div className="brz-ed-sidebar__button-search">
+                  <EditorIcon icon="nc-search" />
+                </div>
+              </div>
+              {this.renderPinned({
+                isEveryPinnedElementDisabled,
+                pinnedElementsShortcodes,
+                showLines,
+                isStory: _isStory,
+                config
+              })}
+              {Object.entries(shortcodes)
+                .filter(
+                  ([, categoryShortcodes]) =>
+                    this.getFilteredShortcodes(categoryShortcodes).length > 0
+                )
+                .map(([category, categoryShortcodes], index) => {
+                  const shortcodes =
+                    this.getFilteredShortcodes(categoryShortcodes);
+                  // we use _.sortBy instead of native sort
+                  // because native can be unstable and change
+                  // the order of elements with equal positions
+                  const prepared = _.sortBy(
+                    shortcodes.filter((s) => !s.component.hidden),
+                    (s) => s.component.position || 10
+                  );
 
-            return (
-              <Fragment key={category}>
-                {this.renderShortcodeCategory(
-                  category,
-                  index,
-                  pinnedElementsShortcodes,
-                  isEveryPinnedElementDisabled
-                )}
-                <Category
-                  category={category}
-                  shortcodes={prepared}
-                  onChange={this.handleSortableSort}
-                >
-                  {this.renderIcons(prepared)}
-                </Category>
-              </Fragment>
-            );
-          })}
-      </>
+                  return (
+                    <CollapseShortcodes key={index}>
+                      {({ open, setOpen }) => (
+                        <Fragment>
+                          {this.renderShortcodeCategory(
+                            category,
+                            index,
+                            pinnedElementsShortcodes,
+                            isEveryPinnedElementDisabled,
+                            () => setOpen(!open),
+                            open
+                          )}
+                          {open && (
+                            <Category
+                              category={category}
+                              shortcodes={prepared}
+                              onChange={this.handleSortableSort}
+                              showLines={showLines}
+                            >
+                              {this.renderIcons({
+                                shortcodes: prepared,
+                                isStory: _isStory,
+                                config
+                              })}
+                            </Category>
+                          )}
+                        </Fragment>
+                      )}
+                    </CollapseShortcodes>
+                  );
+                })}
+            </>
+          );
+        }}
+      </EditorModeContext.Consumer>
     );
   }
 }

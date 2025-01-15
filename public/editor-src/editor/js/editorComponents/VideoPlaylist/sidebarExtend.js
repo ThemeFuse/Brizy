@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 
-export const title = t("Playlist Items");
+export const title = () => t("Playlist Items");
 
 export function getItems() {
   return [

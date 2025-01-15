@@ -1,18 +1,19 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { hexToRgba } from "visual/utils/color";
+import { getColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getOptionColorHexByPalette } from "visual/utils/options";
 import { NORMAL } from "visual/utils/stateMode";
 import type { Props, Value } from "../types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
-  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const { hex: listPaginationColorHex } = getOptionColorHexByPalette(
+  const listPaginationColor = getColor(
+    dvv("listPaginationColorPalette"),
     dvv("listPaginationColorHex"),
-    dvv("listPaginationColorPalette")
+    dvv("listPaginationColorOpacity")
   );
+
   return [
     {
       id: "toolbarTypography",
@@ -42,10 +43,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         size: "medium",
         icon: {
           style: {
-            backgroundColor: hexToRgba(
-              listPaginationColorHex,
-              dvv("listPaginationColorOpacity")
-            )
+            backgroundColor: listPaginationColor
           }
         }
       },
