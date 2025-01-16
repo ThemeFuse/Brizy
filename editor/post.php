@@ -317,7 +317,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 			return $emptyContent . $versionTime;
 		}
 
-		if ( ! $createRevision && false === strpos( $post->post_content, '{{' ) ) {
+		if ( ! $createRevision && false === strpos( $post->post_content, 'brizy_dc_global_block' ) ) {
 			return $post->post_content;
 		}
 
