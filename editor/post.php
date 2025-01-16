@@ -301,34 +301,9 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $this->createUid();
     }
 
-    private function getPostContent()
-    {
-        $post = $this->getWpPost();
-        $emptyContent = '<div class="brz-root__container"></div>';
-        $versionTime = '<!-- version:'.time().' -->';
-
-        $excluded = [
-            Brizy_Admin_Blocks_Main::CP_GLOBAL,
-            Brizy_Admin_Blocks_Main::CP_SAVED,
-            Brizy_Admin_Templates::CP_TEMPLATE,
-            Brizy_Admin_Popups_Main::CP_POPUP,
-        ];
-
-        if (in_array($post->post_type, $excluded)) {
-            return $emptyContent.$versionTime;
-        }
-
-	    $content = apply_filters( 'brizy_content', $this->get_compiled_html(), Brizy_Editor_Project::get(), $post );
-	    $content = strpos( $content, 'brz-root__container' ) ? preg_replace(
-		    '/<!-- version:\d+ -->/',
-		    '',
-		    $content
-	    ) : $emptyContent;
-
-	    $content = Brizy_Editor_CompiledHtml::getPageContent($content . $versionTime);
-
-	    return $content;
-    }
+	private function getPostContent() {
+		return '<div class="brz-root__container"></div><!-- version:' . time() . ' -->';
+	}
 
     /**
      * @param int $autosave
