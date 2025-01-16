@@ -411,8 +411,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
      */
     public function set_compiled_html($compiled_html)
     {
-        $compiled_html = Brizy_SiteUrlReplacer::hideSiteUrl($compiled_html);
-		$compiled_html = $this->sanitizeHtml($compiled_html);
         $this->compiled_html = $compiled_html;
         return $this;
     }
@@ -456,7 +454,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 
         return $this;
     }
-
 
     /**
      * @deprcated
@@ -512,7 +509,21 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
      */
     public function set_encoded_compiled_html($compiled_html)
     {
+        if (($decodedData = base64_decode($compiled_html, true)) !== false) {
+            $decodedData = $this->sanitizeHtml($decodedData);
+            $decodedData = Brizy_SiteUrlReplacer::hideSiteUrl($decodedData);
+            $this->set_compiled_html($decodedData);
+        } else {
+            $compiled_html = $this->sanitizeHtml($compiled_html);
+            $compiled_html = Brizy_SiteUrlReplacer::hideSiteUrl($compiled_html);
+            $this->set_compiled_html($compiled_html);
+        }
 
+        return $this;
+    }
+
+    protected function set_encoded_compiled_html_unfiltered($compiled_html)
+    {
         if (($decodedData = base64_decode($compiled_html, true)) !== false) {
             $this->set_compiled_html($decodedData);
         } else {
@@ -527,7 +538,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
      */
     public function get_encoded_compiled_html()
     {
-
         return base64_encode($this->get_compiled_html());
     }
 
@@ -847,7 +857,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
             if (is_array($storage_post)) {
 
                 if (isset($storage_post['compiled_html'])) {
-                    $this->set_encoded_compiled_html($storage_post['compiled_html']);
+                    $this->set_encoded_compiled_html_unfiltered($storage_post['compiled_html']);
                 }
                 if (isset($storage_post['compiled_scripts'])) {
                     $this->set_compiled_scripts($storage_post['compiled_scripts']);
