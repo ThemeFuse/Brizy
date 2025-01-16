@@ -194,7 +194,8 @@ trait Brizy_Editor_Asset_StaticFileTrait
         }
 
         if(!@copy($uploadData['file'], $assetPath)) {
-            return new WP_Error('upload_error', "Unable to copy file in: ".htmlentities($assetPath));
+	        $error = error_get_last();
+	        return new WP_Error('upload_error',  htmlentities( $error['message'] ));
         }
 
         unlink($uploadData['file']);
