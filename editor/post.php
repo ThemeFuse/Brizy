@@ -279,7 +279,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $postarr = [
             'ID' => $this->getWpPostId(),
             'post_title' => $this->getTitle(),
-            'post_content' => $this->getPostContent($createRevision),
+            'post_content' => $this->getPostContent(),
         ];
 
         $this->deleteOldAutosaves($this->getWpPostId());
@@ -301,7 +301,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $this->createUid();
     }
 
-    private function getPostContent($noFilters)
+    private function getPostContent()
     {
         $post = $this->getWpPost();
         $emptyContent = '<div class="brz-root__container"></div>';
@@ -318,32 +318,16 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
             return $emptyContent.$versionTime;
         }
 
-        if ($noFilters) {
-            $content = $this->get_compiled_html();
-        } else {
-            $context = Brizy_Content_ContextFactory::createContext(Brizy_Editor_Project::get());
-            $placeholderProvider = new Brizy_Content_Providers_PlaceholderWpProvider($context);
-            $context->setProvider($placeholderProvider);
-            $extractor = new \BrizyPlaceholders\Extractor($placeholderProvider);
+	    $content = apply_filters( 'brizy_content', $this->get_compiled_html(), Brizy_Editor_Project::get(), $post );
+	    $content = strpos( $content, 'brz-root__container' ) ? preg_replace(
+		    '/<!-- version:\d+ -->/',
+		    '',
+		    $content
+	    ) : $emptyContent;
 
-            list($placeholders, $placeholderInstances, $content) = $extractor->extract(
-                $this->get_compiled_html()
-            );
+	    $content = Brizy_Editor_CompiledHtml::getPageContent($content . $versionTime);
 
-            $replacer = new \BrizyPlaceholders\Replacer($placeholderProvider);
-            $content = $replacer->replaceWithExtractedData($placeholders, $placeholderInstances, $content, $context);
-
-            $content = $extractor->stripPlaceholders($content);
-            $content = apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $post);
-        }
-
-        $content = strpos($content, 'brz-root__container') ? preg_replace(
-            '/<!-- version:\d+ -->/',
-            '',
-            $content
-        ) : $emptyContent;
-
-        return $content.$versionTime;
+	    return $content;
     }
 
     /**
