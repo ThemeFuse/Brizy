@@ -279,7 +279,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $postarr = [
             'ID' => $this->getWpPostId(),
             'post_title' => $this->getTitle(),
-            'post_content' => $this->getPostContent(),
+            'post_content' => $this->getPostContent( $createRevision ),
         ];
 
         $this->deleteOldAutosaves($this->getWpPostId());
@@ -301,8 +301,37 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $this->createUid();
     }
 
-	private function getPostContent() {
-		return '<div class="brz-root__container"></div><!-- version:' . time() . ' -->';
+	private function getPostContent( $createRevision ) {
+		$post         = $this->getWpPost();
+		$emptyContent = '<div class="brz-root__container"></div>';
+		$versionTime  = '<!-- version:' . time() . ' -->';
+
+		$excluded = [
+			Brizy_Admin_Blocks_Main::CP_GLOBAL,
+			Brizy_Admin_Blocks_Main::CP_SAVED,
+			Brizy_Admin_Templates::CP_TEMPLATE,
+			Brizy_Admin_Popups_Main::CP_POPUP,
+		];
+
+		if ( in_array( $post->post_type, $excluded ) ) {
+			return $emptyContent . $versionTime;
+		}
+
+		if ( ! $createRevision && false === strpos( $post->post_content, '{{' ) ) {
+			return $post->post_content;
+		}
+
+		$content = $this->get_compiled_html();
+		$content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
+		$content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
+		$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $post );
+		$content = strpos( $content, 'brz-root__container' ) ? preg_replace(
+			'/<!-- version:\d+ -->/',
+			'',
+			$content
+		) : $emptyContent;
+
+		return $content . $versionTime;
 	}
 
     /**
