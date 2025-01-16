@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.7.1<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.6.7<br>
+Stable tag: 2.6.8<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.6.8 - 2025-01-16
+* Fixed: Bug with the html escape in preview
 
 ### 2.6.7 - 2025-01-15
 * Fixed: Increased the minimum compiler version
