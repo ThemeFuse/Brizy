@@ -225,11 +225,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	private function getImgUrlByWpSize( $uid, $size ) {
 		$size = $size == 'original' ? 'full' : $size;
 
-		if ( $size == 'full' ) {
-			$imgUrl = wp_get_attachment_url( $this->getAttachmentId( $uid ) );
-		} else {
-			$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
-		}
+		$imgUrl = wp_get_attachment_image_url( $this->getAttachmentId( $uid ), $size );
 
 		if ( ! $imgUrl && $size != 'full' ) {
 			$imgUrl = $this->getImgUrlByWpSize( $uid, 'full' );
