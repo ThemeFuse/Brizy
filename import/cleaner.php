@@ -72,6 +72,18 @@ class Brizy_Import_Cleaner {
     }
 
     private function deletePostRelationships( $brzPostTypes, $placeholders ) {
+        $post_ids = $this->wpdb->get_col(
+            $this->wpdb->prepare(
+                "SELECT ID FROM {$this->wpdb->posts} WHERE post_type IN ($placeholders)", ...$brzPostTypes
+            )
+        );
+
+        if ( empty( $post_ids ) ) {
+            return;
+        }
+
+        $id_placeholders = implode( ',', array_fill( 0, count( $post_ids ), '%d' ) );
+
         $this->wpdb->query(
             $this->wpdb->prepare(
                 "DELETE p, m, tr, tt, t, tm
@@ -81,8 +93,8 @@ class Brizy_Import_Cleaner {
             LEFT JOIN {$this->wpdb->terms} t ON t.term_id = tt.term_id
             LEFT JOIN {$this->wpdb->termmeta} tm ON tm.term_id = t.term_id
             LEFT JOIN {$this->wpdb->postmeta} m ON p.ID = m.post_id
-            WHERE p.post_type IN ($placeholders) OR p.post_type = 'revision'",
-                ...$brzPostTypes
+            WHERE p.ID IN ($id_placeholders) OR (p.post_type = 'revision' AND p.post_parent IN ($id_placeholders))",
+                ...array_merge( $post_ids, $post_ids )
             )
         );
     }
