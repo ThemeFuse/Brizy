@@ -241,17 +241,14 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
      * @return string The updated image URL with the server domain and without query parameters.
      */
     private function replaceCdnUrl($imgUrl) {
-        $server_domain = site_url();
+        $parsed_url = parse_url(site_url());
+        $server_domain = $parsed_url['scheme'].'://'.$parsed_url['host'];
 
         $parsed_url = parse_url($imgUrl);
         $img_domain = $parsed_url['scheme'].'://'.$parsed_url['host'];
 
-        $path = isset($parsed_url['path']) ? $parsed_url['path'] : '';
-
         if ($img_domain !== $server_domain) {
-            $imgUrl = str_replace($img_domain, $server_domain, $img_domain.$path);
-        } else {
-            $imgUrl = $img_domain.$path;
+            $imgUrl = str_replace($img_domain, $server_domain, $imgUrl);
         }
 
         return $imgUrl;
