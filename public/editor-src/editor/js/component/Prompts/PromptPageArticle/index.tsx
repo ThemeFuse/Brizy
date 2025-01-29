@@ -84,7 +84,8 @@ export const PromptPageArticle = (props: Props): ReactElement => {
             config: config as Shopify,
             blogId: selected.id,
             blogTitle: selected.title,
-            title
+            title,
+            layout
           }).then(() => {
             if (typeof onAfterSave === "function") {
               onAfterSave();

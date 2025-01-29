@@ -1,8 +1,9 @@
 import { ChoicesSync } from "visual/component/Options/types/dev/Select/types";
-import { Response } from "../../common";
+import { ShopifyPage } from "visual/types";
 import { Rule as PublishRule } from "visual/utils/api/types";
 import { BlogSourceItem } from "visual/utils/api/types";
 import { SelectedItem } from "visual/utils/api/types";
+import { Response } from "../../common";
 
 export interface Shopify {
   type: "shopify";
@@ -38,21 +39,34 @@ export interface Shopify {
       handler: (
         res: Response<unknown>,
         rej: Response<string>,
-        extra: unknown
+        extra: {
+          id: string;
+          layout: ShopifyPage["layout"]["value"];
+        }
       ) => void;
     };
     shopifySyncRules?: {
       handler: (
         res: Response<{ message: string }>,
         rej: Response<string>,
-        extra: { id: string; rules: SelectedItem[]; title: string }
+        extra: {
+          id: string;
+          rules: SelectedItem[];
+          title: string;
+          layout: ShopifyPage["layout"]["value"];
+        }
       ) => void;
     };
     shopifySyncPage?: {
       handler: (
         res: Response<{ message: string }>,
         rej: Response<string>,
-        extra: { id: string; title: string; isHomePage: boolean }
+        extra: {
+          id: string;
+          title: string;
+          isHomePage: boolean;
+          layout: ShopifyPage["layout"]["value"];
+        }
       ) => void;
     };
     getPageRelations?: {

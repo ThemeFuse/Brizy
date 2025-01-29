@@ -31,7 +31,8 @@ export const fromElementModel: FromElementModel<"gallery-for-gallery"> = pipe(
       .map((v) => v.value)
       .filter(isObject)
       .map(fromRecord)
-      .filter(isT);
+      .filter(isT)
+      .filter(({ uid, width, height }) => uid && width && height);
   }),
   onNullish<Image[]>(defaultValue)
 );

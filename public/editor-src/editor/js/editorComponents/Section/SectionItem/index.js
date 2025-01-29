@@ -2,7 +2,6 @@ import classnames from "classnames";
 import React from "react";
 import { mergeDeep } from "timm";
 import _ from "underscore";
-import { isEditor } from "visual/providers/RenderProvider";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
@@ -10,10 +9,19 @@ import Link from "visual/component/Link";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
+import {
+  minWInBoxedPage,
+  minWInMobilePage,
+  minWInTabletPage,
+  wInMobilePage,
+  wInTabletPage
+} from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
+import { clamp } from "visual/utils/math";
 import { hasMembership } from "visual/utils/membership";
 import { getLinkData } from "visual/utils/models/link";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
@@ -141,32 +149,61 @@ class SectionItem extends EditorComponent {
         ? meta.desktopFullWNoSpacing
         : meta.desktopBoxedWNoSpacing;
 
+    const maxAdmissibleDesktopWidth = meta.desktopFullW;
+
     const desktopW =
       desktopSuffix === "%"
-        ? Math.round(_desktopW * (size / 100) * 10) / 10
-        : size;
+        ? clamp(
+            Math.round(_desktopW * (size / 100) * 10) / 10,
+            minWInBoxedPage,
+            maxAdmissibleDesktopWidth
+          )
+        : clamp(size, minWInBoxedPage, maxAdmissibleDesktopWidth);
+
     const desktopWNoSpacing =
       desktopSuffix === "%"
-        ? Math.round(_desktopWNoSpacing * (size / 100) * 10) / 10
-        : size;
+        ? clamp(
+            Math.round(_desktopWNoSpacing * (size / 100) * 10) / 10,
+            minWInBoxedPage,
+            maxAdmissibleDesktopWidth
+          )
+        : clamp(size, minWInBoxedPage, maxAdmissibleDesktopWidth);
 
     const tabletW =
       tabletSuffix === "%"
-        ? Math.round(meta.tabletW * (tabletSize / 100) * 10) / 10
-        : tabletSize;
+        ? clamp(
+            Math.round(meta.tabletW * (tabletSize / 100) * 10) / 10,
+            minWInTabletPage,
+            wInTabletPage
+          )
+        : clamp(tabletSize, minWInTabletPage, wInTabletPage);
+
     const tabletWNoSpacing =
       tabletSuffix === "%"
-        ? Math.round(meta.tabletWNoSpacing * (tabletSize / 100) * 10) / 10
-        : tabletSize;
+        ? clamp(
+            Math.round(meta.tabletWNoSpacing * (tabletSize / 100) * 10) / 10,
+            minWInTabletPage,
+            wInTabletPage
+          )
+        : clamp(tabletSize, minWInTabletPage, wInTabletPage);
 
     const mobileW =
       mobileSuffix === "%"
-        ? Math.round(meta.mobileW * (mobileSize / 100) * 10) / 10
-        : mobileSize;
+        ? clamp(
+            Math.round(meta.mobileW * (mobileSize / 100) * 10) / 10,
+            minWInMobilePage,
+            wInMobilePage
+          )
+        : clamp(mobileSize, minWInMobilePage, wInMobilePage);
+
     const mobileWNoSpacing =
       mobileSuffix === "%"
-        ? Math.round(meta.mobileWNoSpacing * (mobileSize / 100) * 10) / 10
-        : mobileSize;
+        ? clamp(
+            Math.round(meta.mobileWNoSpacing * (mobileSize / 100) * 10) / 10,
+            minWInMobilePage,
+            wInMobilePage
+          )
+        : clamp(mobileSize, minWInMobilePage, wInMobilePage);
 
     return {
       ...meta,
