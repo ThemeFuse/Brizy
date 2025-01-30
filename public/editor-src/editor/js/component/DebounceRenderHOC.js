@@ -1,12 +1,12 @@
+import { debounce } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 
 export default function debounceRenderHOC(
   ComponentToDebounce,
   ...debounceArgs
 ) {
   return class DebouncedContainer extends Component {
-    updateDebounced = _.debounce(this.forceUpdate, ...debounceArgs);
+    updateDebounced = debounce(this.forceUpdate, ...debounceArgs);
 
     shouldComponentUpdate() {
       this.updateDebounced();
@@ -18,7 +18,8 @@ export default function debounceRenderHOC(
     }
 
     render() {
-      return <ComponentToDebounce {...this.props} />;
+      const { containerRef, ...rest } = this.props;
+      return <ComponentToDebounce {...rest} ref={containerRef} />;
     }
   };
 }

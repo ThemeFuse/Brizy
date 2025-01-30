@@ -1,4 +1,4 @@
-import { EcwidProductId } from "visual/global/Ecwid";
+import { EcwidProductId } from "visual/global/Ecwid/types";
 
 // region Sku
 declare const _sku: unique symbol;

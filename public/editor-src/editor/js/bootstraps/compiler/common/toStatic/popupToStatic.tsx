@@ -6,7 +6,7 @@ import { addFirst, getIn, setIn } from "timm";
 import { RootContainer } from "visual/component/RootContainer";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
-import { EditorMode } from "visual/global/EditorModeContext";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import {
   pageDataDraftBlocksSelector,
@@ -26,6 +26,7 @@ import { Output } from "./types";
 interface Props {
   store: Store;
   config: ConfigCommon;
+  editorMode: EditorMode;
 }
 
 const encodeIdsList = [
@@ -85,7 +86,7 @@ const RenderPage = (props: {
 };
 
 export const popupToStatic = (props: Props): Output => {
-  const { store, config } = props;
+  const { store, config, editorMode } = props;
   const reduxState = store.getState();
   const triggers: Triggers = triggersSelector(reduxState);
   const isInternal = isInternalPopup(config);
@@ -99,7 +100,6 @@ export const popupToStatic = (props: Props): Output => {
     "brz-conditions-internal-popup": isInternal,
     "brz-conditions-external-popup": isExternal
   });
-  const editorMode = config.mode;
   const sheet = new ServerStyleSheet();
 
   const attr = triggers
@@ -128,12 +128,13 @@ export const popupToStatic = (props: Props): Output => {
     );
 
   const Page = (
-    <Providers store={store} sheet={sheet.instance} config={config}>
-      <RootContainer
-        className={rootClassName}
-        attr={attr}
-        editorMode={editorMode}
-      >
+    <Providers
+      store={store}
+      sheet={sheet.instance}
+      config={config}
+      editorMode={editorMode}
+    >
+      <RootContainer className={rootClassName} attr={attr}>
         <RenderPage
           className={className}
           store={store}

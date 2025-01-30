@@ -1,5 +1,4 @@
 import tinycolor from "tinycolor2";
-import _ from "underscore";
 import {
   HSLAChange,
   HSVAChange,
@@ -25,7 +24,7 @@ export default {
     const keysToCheck = ["r", "g", "b", "a", "h", "s", "l", "v"];
     let checked = 0;
     let passed = 0;
-    _.each(keysToCheck, (letter) => {
+    for (const letter of keysToCheck) {
       if (data[letter as keyof T]) {
         checked += 1;
 
@@ -40,7 +39,8 @@ export default {
           }
         }
       }
-    });
+    }
+
     return checked === passed ? data : false;
   },
 

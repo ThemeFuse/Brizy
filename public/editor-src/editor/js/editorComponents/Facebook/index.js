@@ -6,6 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { defaultValueValue } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -101,7 +102,7 @@ class Facebook extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -180,16 +181,27 @@ class Facebook extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <FacebookPlugin
-              renderContext={this.renderContext}
-              appId={appData.appId}
-              type={typeData[facebookType]}
-              data={data[facebookType]}
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <FacebookPlugin
+                  renderContext={this.props.renderContext}
+                  appId={appData.appId}
+                  type={typeData[facebookType]}
+                  data={data[facebookType]}
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -246,7 +258,7 @@ class Facebook extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -328,7 +340,7 @@ class Facebook extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <div className={className}>
           <FacebookPlugin
-            renderContext={this.renderContext}
+            renderContext={this.props.renderContext}
             appId={appData.appId}
             type={typeData[facebookType]}
             data={data[facebookType]}

@@ -1,4 +1,4 @@
-import { noop } from "underscore";
+import { noop } from "es-toolkit";
 import { Config } from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
@@ -6,17 +6,15 @@ import {
   Mode
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page, PageCollection, PageCommon } from "visual/types/Page";
 import {
   AllRule,
   BlockTypeRule,
   CollectionItemRule,
   CollectionTypeRule,
-  GlobalBlock,
-  Page,
-  PageCollection,
-  DataCommon as PageCommon,
   Rule
-} from "visual/types";
+} from "visual/types/Rule";
 import { NoEmptyString } from "visual/utils/string/NoEmptyString";
 import { CUSTOMER_TYPE, PAGES_GROUP_ID } from "../blocksConditions";
 import { canUseConditionInPage, pageSplitRules } from "../getAllowedGBIds";
@@ -154,6 +152,8 @@ export const configWp: WPPropConfig = {
 };
 
 const pageCommon: PageCommon = {
+  slug: "",
+  title: "",
   id: "1",
   status: "publish",
   dataVersion: 1,

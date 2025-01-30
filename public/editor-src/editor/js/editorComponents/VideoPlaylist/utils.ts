@@ -1,10 +1,10 @@
-import { once } from "underscore";
-import { videoData as getVideoData } from "visual/utils/video";
-import { makeAttr } from "visual/utils/i18n/attribute";
+import { once } from "es-toolkit";
 import { makeUrl } from "visual/utils/api/utils";
+import { makeAttr } from "visual/utils/i18n/attribute";
+import { videoData as getVideoData } from "visual/utils/video";
 import {
-  initCustomVideoActions,
-  changePlayerState
+  changePlayerState,
+  initCustomVideoActions
 } from "visual/utils/video/exportUtils";
 
 let isVideoActionsCreated = false;

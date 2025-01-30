@@ -14,12 +14,14 @@ export function cssStyleElementMenuSimpleItemPadding({
 export function cssStyleElementMenuSimpleColorBars({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const color = styleColor({
     v,
     device,
-    state
+    state,
+    store
   });
 
   return `background-color: ${color};`;

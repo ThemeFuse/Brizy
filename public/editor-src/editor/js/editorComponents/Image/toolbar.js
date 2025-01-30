@@ -4,8 +4,8 @@ import {
   isImagePointerEnabled,
   isImageZoomEnabled
 } from "visual/global/Config/types/configs/featuresValue";
-import { isPopup, isStory } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
@@ -76,7 +76,7 @@ export const getItems =
       type: DCTypes.link
     });
     const borderColorOpacity = dvv("borderColorOpacity");
-    const borderColor = getColor(
+    const borderColor = getColorToolbar(
       dvv("borderColorPalette"),
       dvv("borderColorHex"),
       borderColorOpacity
@@ -163,7 +163,11 @@ export const getItems =
                         : undefined,
                     fallback: {
                       id: keyToDCFallback2Key("image"),
-                      type: "imageUpload"
+                      type: "imageUpload",
+                      config: {
+                        pointer: isPointerEnabled,
+                        edit: device === "desktop"
+                      }
                     },
                     option: {
                       id: "",

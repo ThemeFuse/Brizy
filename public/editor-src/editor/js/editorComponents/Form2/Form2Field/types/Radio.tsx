@@ -1,17 +1,12 @@
-import RadioControls from "visual/component/Controls/Radio";
 import React from "react";
+import RadioControls from "visual/component/Controls/Radio";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { t } from "visual/utils/i18n";
+import { AddOption } from "./common/AddOption";
 import TextField from "./common/TextField";
 import { RadioProps } from "./type";
-import { AddOption } from "./common/AddOption";
 import { createNewFieldOption } from "./utils";
 
 export default class Radio extends TextField {
-  static get componentTitle(): string {
-    return t("Radio");
-  }
-
   static get componentType(): ElementTypes.Radio {
     return ElementTypes.Radio;
   }

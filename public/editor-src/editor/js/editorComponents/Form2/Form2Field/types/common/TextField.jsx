@@ -40,31 +40,6 @@ export default class TextField extends Component {
     selectToolbarItems: null
   };
 
-  static Label({ id, value, onChange, renderContext }) {
-    const { label, placeholder: _placeholder } = value;
-
-    return isEditor(renderContext) ? (
-      <label className="brz-label brz-forms2__field-label">
-        <div className="brz-p-relative">
-          <input
-            className="brz-input brz-p-absolute"
-            type="text"
-            value={label}
-            placeholder={_placeholder === null ? label : _placeholder}
-            onChange={(e) => {
-              onChange({ label: e.target.value });
-            }}
-          />
-          <span className="brz-invisible">{label}</span>
-        </div>
-      </label>
-    ) : (
-      <label className="brz-label brz-forms2__field-label" htmlFor={id}>
-        {label}
-      </label>
-    );
-  }
-
   input = React.createRef();
 
   getClassName(v) {

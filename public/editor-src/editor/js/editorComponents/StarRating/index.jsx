@@ -5,6 +5,7 @@ import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -12,13 +13,12 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 export default class StarRating extends EditorComponent {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId() {
     return "StarRating";
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
 
   handleTextChange = (patch) => {
     this.patchValue(patch);
@@ -44,7 +44,7 @@ export default class StarRating extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -62,32 +62,41 @@ export default class StarRating extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            {ratingStyle === "style1" && (
-              <StarRating1
-                label={labelElement}
-                showLeftLabel={label === "on"}
-                showRightLabel={label === "on-right"}
-                rating={rating}
-                ratingScale={ratingScale}
-                iconName={iconName}
-                iconType={iconType}
-                iconFilename={iconFilename}
-              />
-            )}
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                {ratingStyle === "style1" && (
+                  <StarRating1
+                    label={labelElement}
+                    showLeftLabel={label === "on"}
+                    showRightLabel={label === "on-right"}
+                    rating={rating}
+                    ratingScale={ratingScale}
+                    iconName={iconName}
+                    iconType={iconType}
+                    iconFilename={iconFilename}
+                  />
+                )}
 
-            {ratingStyle === "style2" && (
-              <StarRating2
-                showIcon={label !== "off"}
-                rating={rating}
-                iconName={iconName}
-                iconType={iconType}
-                iconFilename={iconFilename}
-              />
+                {ratingStyle === "style2" && (
+                  <StarRating2
+                    showIcon={label !== "off"}
+                    rating={rating}
+                    iconName={iconName}
+                    iconType={iconType}
+                    iconFilename={iconFilename}
+                  />
+                )}
+              </Wrapper>
             )}
-          </Wrapper>
-        </CustomCSS>
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -112,7 +121,7 @@ export default class StarRating extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

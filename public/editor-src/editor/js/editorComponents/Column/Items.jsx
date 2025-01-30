@@ -1,26 +1,26 @@
 import deepMerge from "deepmerge";
 import React from "react";
-import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 class Items extends EditorArrayComponent {
-  static get componentId() {
-    return "Column.Items";
-  }
-
   static defaultProps = {
     containerClassName: "",
     meta: {},
     itemProps: {}
   };
+
+  static get componentId() {
+    return "Column.Items";
+  }
 
   handleSortableAcceptElements = (from) => {
     const { row } = this.props.meta;
@@ -146,7 +146,7 @@ class Items extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { containerClassName: className } = this.props;
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import {
-  ColorPickerSelect,
-  Props as CProps
+  Props as CProps,
+  ColorPickerSelect
 } from "visual/component/Controls/ColorPickerSelect";
 import {
   ColorPickerInputs,
@@ -25,7 +25,7 @@ export interface Props<P, O>
     WithValue<Value<P, O>>,
     WithOnChange2<Value<P, O>, Meta<P, O>> {
   opacity: boolean;
-  palette: PaletteObject[];
+  palette?: PaletteObject[];
   paletteOpenSettings?: () => void;
   options: Array<{ id: O; title: string }>;
 }
@@ -39,6 +39,7 @@ export function TextShadow<P extends string, O extends string>({
   value,
   onChange,
   options,
+  palette = [],
   ...props
 }: Props<P, O>): ReactElement {
   const className = classNames("brz-ed-control__textShadow", props.className);
@@ -91,7 +92,7 @@ export function TextShadow<P extends string, O extends string>({
         onChange={onColorChange}
         value={colorPickerValue}
         opacity={props.opacity}
-        palette={props.palette}
+        palette={palette}
         paletteOpenSettings={props.paletteOpenSettings}
       >
         {options.map(({ id, title }) => {

@@ -1,5 +1,5 @@
 import { mPipe, optional, or, parseStrict } from "fp-utilities";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { pipe } from "visual/utils/fp";
 import { readWithItemReader } from "visual/utils/reader/array";
 import { read as readNum } from "visual/utils/reader/number";

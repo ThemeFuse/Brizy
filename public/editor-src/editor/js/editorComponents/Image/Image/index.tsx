@@ -24,7 +24,8 @@ const Content = (props: ImageProps): JSX.Element => {
     extraAttributes,
     meta,
     store,
-    renderContext
+    renderContext,
+    editorMode
   } = props;
   const { imageSrc, imageExtension, imagePopulation } = v;
   const modelClassName = useCSS({
@@ -43,7 +44,10 @@ const Content = (props: ImageProps): JSX.Element => {
         showOriginalImage: showOriginalImage(v)
       },
       store,
-      renderContext
+      contexts: {
+        renderContext,
+        mode: editorMode
+      }
     })
   });
 

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement, ReactNode, RefObject } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { Popper } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
@@ -10,9 +10,10 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { CMS, isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
+import { CMS } from "visual/global/Config/types/configs/Cloud";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -25,6 +26,7 @@ export interface Value extends ElementModel {
   nameDisplay: "full" | "code";
   showFlags: "on" | "off";
   showName: "on" | "off";
+  customCSS: string;
 }
 
 type Props = ElementModel;
@@ -58,15 +60,13 @@ const renderOption = (
 };
 
 export default class Translation extends EditorComponent<Value, Props, State> {
+  static defaultValue = defaultValue;
+  content = React.createRef<HTMLDivElement>();
+  state = { isOpen: false };
+
   static get componentId(): "Translation" {
     return "Translation";
   }
-
-  static defaultValue = defaultValue;
-
-  content = React.createRef<HTMLDivElement>();
-
-  state = { isOpen: false };
 
   handleOutside = (): void => {
     if (this.state.isOpen) {
@@ -84,7 +84,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
     const { nameDisplay, showName, showFlags } = v;
 
     const config = this.getGlobalConfig() as CMS;
-    const flagsUrl = isCloud(config) && isCMS(config) ? config.urls.flags : "";
+    const flagsUrl = config.urls.flags ?? "";
 
     const fakeLangs = [
       { name: "French", code: "fr" },
@@ -108,7 +108,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
             vs,
             vd,
             store: this.getReduxStore(),
-            renderContext: this.renderContext
+            contexts: this.getContexts()
           })
         )
       );
@@ -116,43 +116,53 @@ export default class Translation extends EditorComponent<Value, Props, State> {
       return (
         <Portal node={content.ownerDocument.body} className={className}>
           <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarExtendSelect)}>
-            <Popper
-              referenceElement={content}
-              placement="bottom-start"
-              modifiers={[
-                {
-                  name: "sameWidth",
-                  enabled: true,
-                  fn: ({ state }) => {
-                    state.styles.popper.width = `${state.rects.reference.width}px`;
-                  },
-                  phase: "beforeWrite",
-                  requires: ["computeStyles"]
-                }
-              ]}
-            >
-              {({ ref, style }): ReactElement => (
-                <div
-                  ref={ref}
-                  className={"brz-translation__select-list"}
-                  style={style}
-                >
-                  <Scrollbars autoHeight={true}>
-                    {langOptions.map((item, index) => (
-                      <div key={index} className="brz-translation__select-item">
-                        {renderOption(
-                          showName,
-                          showFlags,
-                          nameDisplay,
-                          item,
-                          flagsUrl
-                        )}
-                      </div>
-                    ))}
-                  </Scrollbars>
-                </div>
-              )}
-            </Popper>
+            {({ ref: toolbarRef }) => (
+              <Popper
+                referenceElement={content}
+                placement="bottom-start"
+                modifiers={[
+                  {
+                    name: "sameWidth",
+                    enabled: true,
+                    fn: ({ state }) => {
+                      state.styles.popper.width = `${state.rects.reference.width}px`;
+                    },
+                    phase: "beforeWrite",
+                    requires: ["computeStyles"]
+                  }
+                ]}
+              >
+                {({ ref, style }): ReactElement => (
+                  <div
+                    ref={(el) => {
+                      attachRefs(el, [
+                        ref as RefObject<HTMLDivElement>,
+                        toolbarRef
+                      ]);
+                    }}
+                    className={"brz-translation__select-list"}
+                    style={style}
+                  >
+                    <Scrollbars autoHeight={true}>
+                      {langOptions.map((item, index) => (
+                        <div
+                          key={index}
+                          className="brz-translation__select-item"
+                        >
+                          {renderOption(
+                            showName,
+                            showFlags,
+                            nameDisplay,
+                            item,
+                            flagsUrl
+                          )}
+                        </div>
+                      ))}
+                    </Scrollbars>
+                  </div>
+                )}
+              </Popper>
+            )}
           </Toolbar>
         </Portal>
       );
@@ -183,13 +193,14 @@ export default class Translation extends EditorComponent<Value, Props, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     const config = this.getGlobalConfig();
-    const flagsUrl = isCloud(config) && isCMS(config) ? config.urls.flags : "";
+
+    const flagsUrl = config.urls?.flags ?? "";
 
     return (
       <>
@@ -197,31 +208,44 @@ export default class Translation extends EditorComponent<Value, Props, State> {
           exceptions={clickOutsideExceptions}
           onClickOutside={this.handleOutside}
         >
-          <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-            <CustomCSS selectorName={this.getId()} css={customCSS}>
-              <Wrapper
-                {...this.makeWrapperProps({
-                  className,
-                  ref: this.content,
-                  onClick: this.handleOpen
-                })}
-              >
-                {renderOption(
-                  showName,
-                  showFlags,
-                  nameDisplay,
-                  { name: "English", code: "en" },
-                  flagsUrl
-                )}
+          {({ ref: clickOutsideRef }) => (
+            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
+              {({ ref: toolbarRef }) => (
+                <CustomCSS selectorName={this.getId()} css={customCSS}>
+                  {({ ref: cssRef }) => (
+                    <Wrapper
+                      {...this.makeWrapperProps({
+                        className,
+                        ref: (el) => {
+                          attachRefs(el, [
+                            this.content,
+                            clickOutsideRef,
+                            toolbarRef,
+                            cssRef
+                          ]);
+                        },
+                        onClick: this.handleOpen
+                      })}
+                    >
+                      {renderOption(
+                        showName,
+                        showFlags,
+                        nameDisplay,
+                        { name: "English", code: "en" },
+                        flagsUrl
+                      )}
 
-                <ThemeIcon
-                  className="brz-translation__arrow"
-                  name="triangle-down-20"
-                  type="glyph"
-                />
-              </Wrapper>
-            </CustomCSS>
-          </Toolbar>
+                      <ThemeIcon
+                        className="brz-translation__arrow"
+                        name="triangle-down-20"
+                        type="glyph"
+                      />
+                    </Wrapper>
+                  )}
+                </CustomCSS>
+              )}
+            </Toolbar>
+          )}
         </ClickOutside>
         {isOpen && this.renderDropdown(v, vs, vd)}
       </>
@@ -242,7 +266,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

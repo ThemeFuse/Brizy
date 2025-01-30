@@ -11,6 +11,7 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
+import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -43,7 +44,7 @@ class PostNavigation extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -53,20 +54,31 @@ class PostNavigation extends EditorComponent<Value> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCss}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <PostNavigationEditor
-              showPost={showPost === "on"}
-              showTitle={showTitle === "on"}
-              prevPostLabel={prevLabel}
-              nextPostLabel={nextLabel}
-              onChangeNextLabel={this.handleChangeNext}
-              onChangePrevLabel={this.handleChangePrevious}
-              prevPost={t("Previous post")}
-              nextPost={t("Next post")}
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <PostNavigationEditor
+                  showPost={showPost === "on"}
+                  showTitle={showTitle === "on"}
+                  prevPostLabel={prevLabel}
+                  nextPostLabel={nextLabel}
+                  onChangeNextLabel={this.handleChangeNext}
+                  onChangePrevLabel={this.handleChangePrevious}
+                  prevPost={t("Previous post")}
+                  nextPost={t("Next post")}
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -82,7 +94,7 @@ class PostNavigation extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -106,7 +118,7 @@ class PostNavigation extends EditorComponent<Value> {
     });
 
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCss}>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Wrapper {...this.makeWrapperProps({ className })}>
           <PostNavigationPreview
             showPost={showPost === "on"}

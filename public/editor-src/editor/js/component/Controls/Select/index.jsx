@@ -1,12 +1,13 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
 import Portal from "visual/component/Portal";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
+import { attachRef } from "visual/utils/react";
 
 function getDropdownHeight(itemsCount, itemHeight, minItems, maxItems) {
   const minHeight = itemHeight * minItems;
@@ -30,7 +31,7 @@ class Select extends React.Component {
     inPortal: false,
     clickOutsideExceptions: [],
     fullWidth: false,
-    onChange: _.noop
+    onChange: noop
   };
 
   state = {
@@ -39,10 +40,13 @@ class Select extends React.Component {
     position: "bottom-left"
   };
 
-  componentDidMount() {
-    if (!this.props.inPortal) {
-      this.reposition();
+  static getDerivedStateFromProps(nextProps, state) {
+    if (state.defaultValue !== nextProps.defaultValue) {
+      return {
+        currentValue: nextProps.defaultValue
+      };
     }
+    return null;
   }
 
   /*
@@ -56,13 +60,10 @@ class Select extends React.Component {
   //   }
   // }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    if (state.defaultValue !== nextProps.defaultValue) {
-      return {
-        currentValue: nextProps.defaultValue
-      };
+  componentDidMount() {
+    if (!this.props.inPortal) {
+      this.reposition();
     }
-    return null;
   }
 
   getScrollPaneStyle() {
@@ -106,8 +107,9 @@ class Select extends React.Component {
     this.props.onChange(value);
   };
 
-  handleContentRef = (node) => {
+  handleContentRef = (node, additionalRef) => {
     this.content = node;
+    attachRef(node, additionalRef);
   };
 
   handleDropdownNode = (node) => {
@@ -323,16 +325,25 @@ class Select extends React.Component {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.onClickOutside}
       >
-        <div className={className} ref={this.handleContentRef}>
-          <div
-            className={`brz-control__select-current brz-control__select-current__${labelType}`}
-            onClick={this.handleLabelClick}
-          >
-            {this.renderLabelForEdit()}
-          </div>
-          {this.renderDropdownForEdit()}
-          <input type="hidden" value={currentValue} {...inputAttributes} />
-        </div>
+        {({ ref }) => (
+                <div
+                  className={className}
+                  ref={(node) => this.handleContentRef(node, ref)}
+                >
+                  <div
+                    className={`brz-control__select-current brz-control__select-current__${labelType}`}
+                    onClick={this.handleLabelClick}
+                  >
+                    {this.renderLabelForEdit()}
+                  </div>
+                  {this.renderDropdownForEdit()}
+                  <input
+                    type="hidden"
+                    value={currentValue}
+                    {...inputAttributes}
+                  />
+                </div>
+              )}
       </ClickOutside>
     );
   }

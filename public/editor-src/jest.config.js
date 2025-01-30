@@ -28,7 +28,6 @@ module.exports = {
   transformIgnorePatterns: ["/node_modules/(?!(nanoid|normalize-url)/)"],
   globals: {
     TARGET: "Jest",
-    IS_EDITOR: true,
     __VISUAL_CONFIG__: {
       pageData: {
         id: "",

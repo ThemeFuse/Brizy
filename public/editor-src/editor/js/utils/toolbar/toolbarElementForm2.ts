@@ -1,5 +1,5 @@
+import { flatten } from "es-toolkit";
 import { mPipe } from "fp-utilities";
-import _, { flatten } from "underscore";
 import {
   ElementModel,
   ElementModelType2
@@ -22,7 +22,8 @@ interface Data {
 }
 
 const repeatFunc = mPipe(
-  (items: ElementModel["items"]) => items?.map((item) => item.value.items),
+  (items: ElementModel["items"]) =>
+    items?.map((item) => item.value.items ?? []),
   flatten
 );
 
@@ -48,7 +49,7 @@ export function toolbarElementForm2Apps({
       : v.items?.[0].value.items;
 
   const fields = Array.isArray(items)
-    ? (_.pluck(items, "value") as FormField[])
+    ? (items.map((o) => o.value) as FormField[])
     : [];
   const dvk = (key: string) => defaultValueKey({ key, device, state });
 

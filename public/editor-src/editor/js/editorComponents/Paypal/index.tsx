@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import React, { JSX } from "react";
-import { isEditor } from "visual/providers/RenderProvider";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import type { ElementProps } from "visual/component/Elements/Types";
@@ -8,6 +7,8 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isEditor } from "visual/providers/RenderProvider";
+import { attachRefs } from "visual/utils/react";
 import { Button } from "./controls/Button";
 import { InputCommon } from "./controls/InputCommon";
 import { InputsPayment } from "./controls/InputsPayment";
@@ -18,12 +19,12 @@ import * as toolbarConfig from "./toolbar";
 import type { Value } from "./types";
 
 class Paypal extends EditorComponent<Value, ElementProps> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): ElementTypes.Paypal {
     return ElementTypes.Paypal;
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   handleTextChange = (patch: Partial<Value>): void => this.patchValue(patch);
 
@@ -68,7 +69,7 @@ class Paypal extends EditorComponent<Value, ElementProps> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -80,7 +81,9 @@ class Paypal extends EditorComponent<Value, ElementProps> {
 
     const target = openInNewTab === "on" ? "_blank" : "_top";
     const buttonType =
-      account === "" || isEditor(this.renderContext) ? "button" : "submit";
+      account === "" || isEditor(this.props.renderContext)
+        ? "button"
+        : "submit";
 
     const _tax = tax === "none" ? 0 : rate;
     const _donationAmount = donationAmount === "anyAmount" ? 0 : amount;
@@ -90,48 +93,59 @@ class Paypal extends EditorComponent<Value, ElementProps> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <form
-              className="brz-paypal-form"
-              action={url}
-              method="POST"
-              target={target}
-            >
-              <InputCommon
-                type={type}
-                account={account}
-                name={name}
-                sku={sku}
-                currency={currency}
-                redirect={redirect}
-              />
-              <InputsPayment
-                type={type}
-                donationAmount={_donationAmount}
-                price={price}
-                billingCycle={billingCycle}
-                billingCycleDuration={billingCycleDuration}
-                autoRenewal={_autoRenewal}
-                shippingPrice={shippingPrice}
-                tax={_tax}
-                quantity={quantity}
-              />
-              <Button
-                iconName={iconName}
-                iconType={iconType}
-                buttonType={buttonType}
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
               >
-                <Text
-                  className="brz-paypal-text"
-                  id="text"
-                  v={v}
-                  onChange={this.handleTextChange}
-                />
-              </Button>
-            </form>
-          </Wrapper>
-        </CustomCSS>
+                <form
+                  className="brz-paypal-form"
+                  action={url}
+                  method="POST"
+                  target={target}
+                >
+                  <InputCommon
+                    type={type}
+                    account={account}
+                    name={name}
+                    sku={sku}
+                    currency={currency}
+                    redirect={redirect}
+                  />
+                  <InputsPayment
+                    type={type}
+                    donationAmount={_donationAmount}
+                    price={price}
+                    billingCycle={billingCycle}
+                    billingCycleDuration={billingCycleDuration}
+                    autoRenewal={_autoRenewal}
+                    shippingPrice={shippingPrice}
+                    tax={_tax}
+                    quantity={quantity}
+                  />
+                  <Button
+                    iconName={iconName}
+                    iconType={iconType}
+                    buttonType={buttonType}
+                  >
+                    <Text
+                      className="brz-paypal-text"
+                      id="text"
+                      v={v}
+                      onChange={this.handleTextChange}
+                    />
+                  </Button>
+                </form>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

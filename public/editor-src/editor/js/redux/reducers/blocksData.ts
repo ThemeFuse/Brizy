@@ -1,14 +1,9 @@
 import { produce } from "immer";
 import { setIn } from "timm";
-import Config from "visual/global/Config";
-import { Block } from "visual/types";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { Block } from "visual/types/Block";
 import { createGlobalBlockSymbol } from "visual/utils/blocks";
-import {
-  insertItemsBatch,
-  isModel,
-  isStory,
-  mapModels
-} from "visual/utils/models";
+import { insertItemsBatch, isModel, mapModels } from "visual/utils/models";
 import { map, objectTraverse2 } from "visual/utils/object";
 import { ActionTypes, ReduxAction } from "../actions2";
 import { blocksOrderSelector, globalBlocksSelector } from "../selectors";
@@ -20,10 +15,10 @@ type RBlocksData = (s: BlocksData, a: ReduxAction, f: ReduxState) => BlocksData;
 export const blocksData: RBlocksData = (state = {}, action, allState) => {
   switch (action.type) {
     case "HYDRATE": {
-      const { page, globalBlocks } = action.payload;
+      const { page, globalBlocks, editorMode } = action.payload;
       const items = page.data?.items || [];
 
-      if (isStory(Config.getAll()) && items.length === 0) {
+      if (isStory(editorMode) && items.length === 0) {
         return {
           ecupxjcqmrpxjdimoebbkbnotrlufkfokjvr: {
             type: "Story",

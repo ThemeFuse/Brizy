@@ -11,6 +11,7 @@ export interface Value extends ElementModel {
   showPercentage: "on" | "off";
   showText: "on" | "off";
   progressBarStyle: ProgressStyle;
+  customCSS: string;
 }
 
 export type Animate = (data: {

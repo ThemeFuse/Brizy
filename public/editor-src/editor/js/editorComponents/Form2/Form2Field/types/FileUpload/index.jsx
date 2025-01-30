@@ -1,15 +1,11 @@
 import classnames from "classnames";
 import React from "react";
-import { t } from "visual/utils/i18n";
-import { encodeToString } from "visual/utils/string";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { encodeToString } from "visual/utils/string";
 import TextField from "../common/TextField";
 import Upload from "./Upload";
 
 export default class FileUpload extends TextField {
-  static get componentTitle() {
-    return t("File");
-  }
   static get componentType() {
     return "FileUpload";
   }

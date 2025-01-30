@@ -2,7 +2,6 @@ import { Str } from "@brizy/readers";
 import deepmerge from "deepmerge";
 import { setIn } from "timm";
 import { overwriteMerge } from "visual/bootstraps/initConfig/default/utils";
-import { ElementModel } from "visual/component/Elements/Types";
 import { updateCopiedElement } from "visual/redux/actions2";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
@@ -14,11 +13,9 @@ import {
   handlePasteStyles,
   handleRenderText
 } from "./utils/ContextMenu";
+import type { Value } from "./types";
 
-const getItems: ContextGetItems<ElementModel> = (
-  _,
-  component
-): ContextMenuItem[] => {
+const getItems: ContextGetItems<Value> = (_, component): ContextMenuItem[] => {
   const config = component.getGlobalConfig();
   const state = component.getReduxStore().getState();
   const innerElement = getInnerElement(state, config.menuData);

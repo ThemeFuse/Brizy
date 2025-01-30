@@ -1,5 +1,5 @@
+import { sortBy } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import { getTypes } from "visual/config/icons";
 import { TypeId } from "visual/config/icons/Type";
 import { isWp } from "visual/global/Config";
@@ -16,7 +16,7 @@ export const Tabs: FCC<Props> = ({
 }) => {
   const _isPro = isPro(config);
   const _isWp = isWp(config);
-  const tabs = _.sortBy(getTypes(_isPro, _isWp), (type) => type.id)
+  const tabs = sortBy(getTypes(_isPro, _isWp), [(type) => type.id])
     .filter(
       (tab) =>
         // hide custom tab if get custom icons handler is not defined

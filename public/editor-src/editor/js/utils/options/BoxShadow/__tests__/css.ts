@@ -11,6 +11,7 @@ import {
   empty as emptyOpacity,
   fromNumber as readOpacity
 } from "visual/utils/cssProps/opacity";
+import { config } from "../../../../../../jest-utils/mocks";
 import { css as cssStyleBoxShadow } from "../css";
 
 describe("Testing cssStyleBoxShadow that should return CSS for box-shadow", () => {
@@ -37,25 +38,25 @@ describe("Testing cssStyleBoxShadow that should return CSS for box-shadow", () =
   };
 
   test("Empty, should return box-shadow: none;", () => {
-    expect(cssStyleBoxShadow({ meta: { isEmpty: true }, value })).toBe(
+    expect(cssStyleBoxShadow({ meta: { isEmpty: true }, value, config })).toBe(
       "box-shadow: none;"
     );
   });
 
   test("Disabled, should return box-shadow: none;", () => {
-    expect(cssStyleBoxShadow({ meta: { isDisabled: true }, value })).toBe(
-      "box-shadow: none;"
-    );
+    expect(
+      cssStyleBoxShadow({ meta: { isDisabled: true }, value, config })
+    ).toBe("box-shadow: none;");
   });
 
   test("Inset, should return inset box-shadow", () => {
-    expect(cssStyleBoxShadow({ meta: { isInset: true }, value })).toBe(
+    expect(cssStyleBoxShadow({ meta: { isInset: true }, value, config })).toBe(
       "box-shadow:inset 4px 5px 2px 3px rgba(255, 0, 0, 1);"
     );
   });
 
   test("Without meta, should return Outset box-shadow", () => {
-    expect(cssStyleBoxShadow({ value })).toBe(
+    expect(cssStyleBoxShadow({ value, config })).toBe(
       "box-shadow: 4px 5px 2px 3px rgba(255, 0, 0, 1);"
     );
   });

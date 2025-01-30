@@ -29,11 +29,11 @@ const resizerRestrictions = {
 };
 
 class Spacer extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "Spacer";
   }
-
-  static defaultValue = defaultValue;
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -48,7 +48,7 @@ class Spacer extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -59,15 +59,17 @@ class Spacer extends EditorComponent {
           allowSidebarExtend: false
         })}
       >
-        <BoxResizer
-          points={resizerPoints}
-          restrictions={resizerRestrictions}
-          meta={this.props.meta}
-          value={v}
-          onChange={this.handleResizerChange}
-        >
-          <Gap className={className} />
-        </BoxResizer>
+        {({ ref }) => (
+          <BoxResizer
+            points={resizerPoints}
+            restrictions={resizerRestrictions}
+            meta={this.props.meta}
+            value={v}
+            onChange={this.handleResizerChange}
+          >
+            <Gap className={className} ref={ref} />
+          </BoxResizer>
+        )}
       </Toolbar>
     );
   }
@@ -83,7 +85,7 @@ class Spacer extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

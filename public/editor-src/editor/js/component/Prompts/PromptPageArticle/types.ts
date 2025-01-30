@@ -1,12 +1,12 @@
 import {
-  Layout,
   Tabs,
   ThemeLayout
 } from "visual/component/Prompts/common/PromptPage/types";
 import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { State } from "visual/component/Prompts/common/states/Classic/types/State";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ShopifyPage } from "visual/types";
+import { Layout } from "visual/types/Layout";
+import { ShopifyPage } from "visual/types/Page";
 import { BlogSourceItem } from "visual/utils/api/types";
 import { Setters } from "./types/Setters";
 

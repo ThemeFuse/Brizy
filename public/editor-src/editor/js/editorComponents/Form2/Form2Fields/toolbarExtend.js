@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -6,13 +6,13 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
   );
 
-  const checkboxColor = getColor(
+  const checkboxColor = getColorToolbar(
     dvv("checkboxColorPalette"),
     dvv("checkboxColorHex"),
     dvv("checkboxColorOpacity")

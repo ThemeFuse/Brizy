@@ -1,11 +1,11 @@
-import { pipe } from "@brizy/readers";
+import { Bool, Obj, Str, pipe } from "@brizy/readers";
+import { mPipe } from "fp-utilities";
 import { produce } from "immer";
 import { CSSProperties } from "react";
 import { ElementModel, ModelType } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { RenderType } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
-import { mPipe } from "visual/utils/fp";
 import { getOptionModelWithDesktopDefaults } from "visual/utils/options/utils/fromElementModel";
 import {
   getCSSByOptionType,
@@ -13,10 +13,7 @@ import {
   normalizeOptionModel
 } from "visual/utils/options/utils/toCSS/utils";
 import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
-import * as Bool from "visual/utils/reader/bool";
-import * as Obj from "visual/utils/reader/object";
 import { filterNullish } from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
 import { breakpoints, isBreakpointWithMediaQuery } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
 import { DESKTOP, MOBILE, ResponsiveMode, TABLET } from "../responsiveMode";

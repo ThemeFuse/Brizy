@@ -5,6 +5,7 @@ import React, {
   ReactElement,
   ReactNode,
   Ref,
+  RefObject,
   createRef
 } from "react";
 import Animation from "visual/component/Animation";
@@ -55,7 +56,7 @@ import {
 } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import * as Position from "visual/utils/position/element";
-import { attachRef } from "visual/utils/react";
+import { attachRefs } from "visual/utils/react";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
@@ -104,17 +105,14 @@ type Static = WithClassName & {
 };
 
 export default class Wrapper extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+  childToolbarExtend?: ToolbarExtend = undefined;
+  toolbarRef = createRef<PortalToolbar>();
+
   static get componentId(): string {
     return "Wrapper";
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
-
-  childToolbarExtend?: ToolbarExtend = undefined;
-
-  toolbarRef = createRef<PortalToolbar>();
 
   shouldComponentUpdate(nextProps: EDProps<Value, Props>): boolean {
     return this.optionalSCU(nextProps);
@@ -279,60 +277,62 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       );
 
       return (
-        <ContextMenuExtend
-          // @ts-expect-error: Need to convert contextMenuConfig to TS
-          {...this.makeContextMenuProps(contextMenuConfigPro)}
-        >
+        <ContextMenuExtend {...this.makeContextMenuProps(contextMenuConfigPro)}>
           <ContextMenu
             // @ts-expect-error: Need to convert contextMenuConfig to TS
             {...this.makeContextMenuProps(contextMenuConfig)}
             componentId={v?.items[0]?.type}
           >
-            <ContainerBorder type="wrapper" color="grey" borderStyle="dotted">
-              {({
-                ref: containerBorderRef,
-                attr: containerBorderAttr,
-                border: ContainerBorderBorder
-              }: {
-                ref: Ref<HTMLDivElement>;
-                border: ReactElement;
-                attr: HTMLAttributes<Element>;
-              }): ReactElement => (
-                <Animation<"div">
-                  ref={(v: HTMLDivElement | null): void => {
-                    attachRef(v, containerBorderRef);
-                    attachRef(v, ref || null);
-                  }}
-                  component="div"
-                  className={classNames(
-                    this.getWrapperClassName(v, vs, vd),
-                    className
-                  )}
-                  animationId={this.getId()}
-                  animationClass={this.getAnimationClassName(v, vs, vd)}
-                  componentProps={{
-                    ...Attr.mRead(customAttributes),
-                    ...containerBorderAttr,
-                    ...extraAttr,
-                    id: cssId
-                  }}
-                >
-                  <Roles
-                    allow={["admin"]}
-                    fallbackRender={(): ReactNode => content}
-                  >
-                    {v.showToolbar === "on" ? (
-                      <_ToolbarExtend onEscape={this.handleToolbarEscape}>
-                        {content}
-                      </_ToolbarExtend>
-                    ) : (
-                      content
+            {({ ref: contextMenuRef }: { ref: RefObject<HTMLDivElement> }) => (
+              <ContainerBorder type="wrapper" color="grey" borderStyle="dotted">
+                {({
+                  ref: containerBorderRef,
+                  attr: containerBorderAttr,
+                  border: ContainerBorderBorder
+                }: {
+                  ref: Ref<HTMLDivElement>;
+                  border: ReactElement;
+                  attr: HTMLAttributes<Element>;
+                }): ReactElement => (
+                  <Animation<"div">
+                    ref={(v: HTMLDivElement | null): void => {
+                      attachRefs(v, [
+                        containerBorderRef,
+                        ref || null,
+                        contextMenuRef
+                      ] as RefObject<HTMLDivElement>[]);
+                    }}
+                    component="div"
+                    className={classNames(
+                      this.getWrapperClassName(v, vs, vd),
+                      className
                     )}
-                    {ContainerBorderBorder}
-                  </Roles>
-                </Animation>
-              )}
-            </ContainerBorder>
+                    animationId={this.getId()}
+                    animationClass={this.getAnimationClassName(v, vs, vd)}
+                    componentProps={{
+                      ...Attr.mRead(customAttributes),
+                      ...containerBorderAttr,
+                      ...extraAttr,
+                      id: cssId
+                    }}
+                  >
+                    <Roles
+                      allow={["admin"]}
+                      fallbackRender={(): ReactNode => content}
+                    >
+                      {v.showToolbar === "on" ? (
+                        <_ToolbarExtend onEscape={this.handleToolbarEscape}>
+                          {content}
+                        </_ToolbarExtend>
+                      ) : (
+                        content
+                      )}
+                      {ContainerBorderBorder}
+                    </Roles>
+                  </Animation>
+                )}
+              </ContainerBorder>
+            )}
           </ContextMenu>
         </ContextMenuExtend>
       );
@@ -372,62 +372,68 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         {...this.makeContextMenuProps(contextMenuConfig)}
         componentId={v?.items[0]?.type}
       >
-        <ContainerBorder
-          type="wrapper"
-          color="grey"
-          borderStyle="dotted"
-          buttonPosition="topRight"
-          renderButtonWrapper={this.renderToolbar}
-        >
-          {({
-            ref: containerBorderRef,
-            attr: containerBorderAttr,
-            button: ContainerBorderButton,
-            border: ContainerBorderBorder
-          }: {
-            ref: Ref<HTMLDivElement>;
-            button: ReactElement;
-            border: ReactElement;
-            attr: HTMLAttributes<Element>;
-          }): ReactElement => (
-            <Animation<"div">
-              ref={(v: HTMLDivElement | null): void => {
-                attachRef(v, containerBorderRef);
-                attachRef(v, ref || null);
-              }}
-              animationId={this.getId()}
-              component="div"
-              className={classNames(
-                this.getWrapperClassName(v, vs, vd),
-                className
-              )}
-              animationClass={this.getAnimationClassName(v, vs, vd)}
-              componentProps={{
-                ...Attr.mRead(customAttributes),
-                ...containerBorderAttr,
-                ...extraAttr,
-                id: cssId
-              }}
-            >
-              <Roles
-                allow={["admin"]}
-                fallbackRender={(): ReactNode => content}
-              >
-                {v.showToolbar === "on" ? (
-                  <>
-                    <_ToolbarExtend onEscape={this.handleToolbarEscape}>
-                      {content}
-                    </_ToolbarExtend>
-                    {ContainerBorderButton}
-                  </>
-                ) : (
-                  content
+        {({ ref: contextMenuRef }: { ref: RefObject<HTMLDivElement> }) => (
+          <ContainerBorder
+            type="wrapper"
+            color="grey"
+            borderStyle="dotted"
+            buttonPosition="topRight"
+            renderButtonWrapper={this.renderToolbar}
+          >
+            {({
+              ref: containerBorderRef,
+              attr: containerBorderAttr,
+              button: ContainerBorderButton,
+              border: ContainerBorderBorder
+            }: {
+              ref: Ref<HTMLDivElement>;
+              button: ReactElement;
+              border: ReactElement;
+              attr: HTMLAttributes<Element>;
+            }): ReactElement => (
+              <Animation<"div">
+                ref={(v: HTMLDivElement | null): void => {
+                  const refs = [
+                    containerBorderRef,
+                    ref || null,
+                    contextMenuRef
+                  ] as RefObject<HTMLDivElement>[];
+                  attachRefs(v, refs);
+                }}
+                animationId={this.getId()}
+                component="div"
+                className={classNames(
+                  this.getWrapperClassName(v, vs, vd),
+                  className
                 )}
-                {ContainerBorderBorder}
-              </Roles>
-            </Animation>
-          )}
-        </ContainerBorder>
+                animationClass={this.getAnimationClassName(v, vs, vd)}
+                componentProps={{
+                  ...Attr.mRead(customAttributes),
+                  ...containerBorderAttr,
+                  ...extraAttr,
+                  id: cssId
+                }}
+              >
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={(): ReactNode => content}
+                >
+                  {v.showToolbar === "on" ? (
+                    <>
+                      <_ToolbarExtend onEscape={this.handleToolbarEscape}>
+                        {content}
+                      </_ToolbarExtend>
+                      {ContainerBorderButton}
+                    </>
+                  ) : (
+                    content
+                  )}
+                  {ContainerBorderBorder}
+                </Roles>
+              </Animation>
+            )}
+          </ContainerBorder>
+        )}
       </ContextMenu>
     );
   }
@@ -505,6 +511,10 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const { cssKeyframe, animationId, options, isHidden } =
       this.getHoverData(v);
     const store = this.getReduxStore();
+    const componentProps = {
+      ...Attr.mRead(customAttributes),
+      id: cssId
+    };
 
     const content = (
       <TransformWrapper<Value> v={v}>
@@ -532,10 +542,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         animationId={this.getId()}
         className={classNames(this.getWrapperClassName(v, vs, vd))}
         animationClass={this.getAnimationClassName(v, vs, vd)}
-        componentProps={{
-          ...Attr.mRead(customAttributes),
-          id: cssId
-        }}
+        componentProps={componentProps}
       >
         {content}
       </Animation>
@@ -555,7 +562,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       "brz-wrapper",
@@ -587,7 +594,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
@@ -621,9 +628,11 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >
-        <SortableHandle renderContext={this.renderContext}>
-          <Button />
-        </SortableHandle>
+        {({ ref }) => (
+          <SortableHandle renderContext={this.props.renderContext}>
+            <Button containerRef={ref} />
+          </SortableHandle>
+        )}
       </Toolbar>
     ) : null;
   };

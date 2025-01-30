@@ -1,17 +1,18 @@
+import { uniqueId } from "es-toolkit/compat";
 import { ReplaySubject, Subject } from "rxjs";
 import { map, withLatestFrom } from "rxjs/operators";
-import { uniqueId } from "underscore";
 import {
   ContentRoutes,
   EcwidConfig,
   FooterRoutes
 } from "visual/libs/Ecwid/types/EcwidConfig";
 import * as EcwidWidget from "visual/libs/Ecwid/types/EcwidWidget";
+import { EcwidCartCheckoutStep } from "../../editorComponents/Ecwid/EcwidCart/types/Value";
 import {
   EcwidCategoryId,
   EcwidProductId,
   EcwidStoreId
-} from "../../global/Ecwid";
+} from "../../global/Ecwid/types";
 import { PageType } from "./types/PageType";
 import {
   addListenerToPlaceOrder,
@@ -110,15 +111,18 @@ export type EcwidPageSlug =
   | "account"
   | "product"
   | "account/favorites"
-  | "CATEGORY";
+  | "CATEGORY"
+  | EcwidCartCheckoutStep.Address
+  | EcwidCartCheckoutStep.Shipping
+  | EcwidCartCheckoutStep.Payment;
 
 declare function ecwid_onBodyDone(): void;
 
 declare const Ecwid: {
-  init: () => void;
-  destroy?: () => void;
+  init: VoidFunction;
+  destroy?: VoidFunction;
   OnAPILoaded: {
-    add: (fn: () => void) => void;
+    add: (fn: VoidFunction) => void;
   };
   OnPageLoad: {
     add: (fn: (page: PageType) => void | boolean) => void;
@@ -133,7 +137,7 @@ declare const Ecwid: {
     page: EcwidPageSlug,
     payload?: Record<string, string | number>
   ) => void;
-  refreshConfig?: () => void;
+  refreshConfig?: VoidFunction;
 };
 
 const defaultConfig: Partial<EcwidConfig> = {
@@ -146,7 +150,11 @@ const defaultConfig: Partial<EcwidConfig> = {
     ],
     fromContent: [
       { route: "/cart", selector: ".details-product-purchase__checkout" },
-      { route: "/favorites", selector: ".favorite-product__button-view" }
+      { route: "/favorites", selector: ".favorite-product__button-view" },
+      {
+        route: "/",
+        selector: ".ec-cart--empty .form-control.form-control--done"
+      }
     ]
   },
   restoreUrl: true
@@ -165,13 +173,15 @@ const contentRoutes: {
 } = {
   "/cart": "/cart",
   "/thank-you": "/thank-you",
-  "/favorites": "/favorites"
+  "/favorites": "/favorites",
+  "/": "/"
 };
 
 export class EcwidService {
   private $load: ReplaySubject<void>;
   private $widgets: Subject<EcwidWidget.EcwidWidget>;
   private config: EcwidConfig;
+  private wasPrefetched = false;
 
   private constructor(
     public readonly storeId: EcwidStoreId,
@@ -216,6 +226,13 @@ export class EcwidService {
     });
   }
 
+  prefetchScriptsForCart() {
+    Ecwid.openPage(EcwidCartCheckoutStep.Payment, {});
+    Ecwid.openPage(EcwidCartCheckoutStep.Address, {});
+    Ecwid.openPage(EcwidCartCheckoutStep.Shipping, {});
+    Ecwid.openPage(EcwidCartCheckoutStep.Cart, {});
+  }
+
   private loadScripts(node?: HTMLElement) {
     if (!document.getElementById("ecwid-script")) {
       window.ecwid_script_defer = true;
@@ -229,6 +246,11 @@ export class EcwidService {
       script.onload = () => {
         Ecwid.OnAPILoaded.add(() => {
           this.$load.next();
+
+          if (!this.wasPrefetched && this.config.prefetchScripts) {
+            this.prefetchScriptsForCart();
+            this.wasPrefetched = true;
+          }
         });
 
         Ecwid.OnPageLoaded.add(() => {
@@ -240,6 +262,7 @@ export class EcwidService {
             this.changeRedirectLinks(node);
           }
 
+          window.dispatchEvent(new Event("resize"));
           addListenerToPlaceOrder();
 
           if (
@@ -249,6 +272,14 @@ export class EcwidService {
             this.config.restoreUrl
           ) {
             window.history.pushState({}, "", window.pathBeforeEcwidChange);
+          }
+
+          if (Array.isArray(this.config.onPageLoadCallbacks)) {
+            this.config.onPageLoadCallbacks.forEach((cb) => {
+              if (typeof cb === "function") {
+                cb();
+              }
+            });
           }
         });
       };
@@ -325,12 +356,20 @@ export class EcwidService {
     node.innerHTML = "";
   }
 
-  public cart(node: HTMLElement) {
+  public cart(
+    node: HTMLElement,
+    step?: EcwidCartCheckoutStep,
+    config?: { clearPrevious?: boolean }
+  ) {
     window.pathBeforeEcwidChange = window.location.pathname;
 
     const el = this.setId(node);
 
-    this.openPage(EcwidWidget.cart(el.id), node);
+    if (config && config.clearPrevious) {
+      this.clearWidget(node);
+    }
+
+    this.openPage(EcwidWidget.cart(el.id, step), node);
   }
 
   public favorites(node: HTMLElement): void {

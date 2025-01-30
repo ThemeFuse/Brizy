@@ -1,5 +1,5 @@
 import { configSelector } from "visual/redux/selectors";
-import { getFontCssStyle } from "visual/utils/fonts";
+import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
 import { isNullish } from "visual/utils/value";
@@ -32,13 +32,15 @@ export function styleTypographyFontFamily({
   });
 }
 
-export function styleTypographyFontSize({ v, device, state }) {
+export function styleTypographyFontSize({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const fontStyle = dvv("fontStyle");
   const globalStyle = getFontCssStyle({
     fontStyle,
     key: "fontSize",
-    device
+    device,
+    config
   });
 
   return (
@@ -74,14 +76,16 @@ export function styleTypographyFontSizeSuffix({ v, device, state }) {
   }
 }
 
-export function styleTypographyLineHeight({ v, device, state }) {
+export function styleTypographyLineHeight({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
 
   const fontStyle = dvv("fontStyle");
   const globalStyle = getFontCssStyle({
     fontStyle,
     key: "lineHeight",
-    device
+    device,
+    config
   });
 
   return (
@@ -89,14 +93,16 @@ export function styleTypographyLineHeight({ v, device, state }) {
   );
 }
 
-export function styleTypographyFontWeight({ v, device, state }) {
+export function styleTypographyFontWeight({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
 
   const fontStyle = dvv("fontStyle");
   const globalStyle = getFontCssStyle({
     fontStyle,
     key: "fontWeight",
-    device
+    device,
+    config
   });
 
   return (
@@ -104,15 +110,17 @@ export function styleTypographyFontWeight({ v, device, state }) {
   );
 }
 
-export function styleTypographyLetterSpacing({ v, device, state }) {
+export function styleTypographyLetterSpacing({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
 
   const fontStyle = dvv("fontStyle");
   const suffix = fontStyle ? "" : "px";
   const globalStyle = getFontCssStyle({
     fontStyle,
     key: "letterSpacing",
-    device
+    device,
+    config
   });
 
   return (

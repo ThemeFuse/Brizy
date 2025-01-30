@@ -8,6 +8,7 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
+import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import * as sidebarProduct from "./sidebarProduct";
@@ -21,19 +22,16 @@ import * as toolbarProductSubtotal from "./toolbarProductSubtotal";
 import * as toolbarSidebarSettings from "./toolbarSidebarSettings";
 
 export default class WOOCart extends EditorComponent {
-  static get componentId() {
-    return "WOOCart";
-  }
-
   static defaultValue = defaultValue;
-
   state = {
     sidebarOpened: false
   };
-
   backgroundRef = React.createRef();
-
   dcRef = React.createRef();
+
+  static get componentId() {
+    return "WOOCart";
+  }
 
   componentDidMount() {
     // a hack that stops click propagation on the backdrop
@@ -94,7 +92,7 @@ export default class WOOCart extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -107,85 +105,118 @@ export default class WOOCart extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}
         selector=".brz-a.brz-woocart, .brz-shortcode__placeholder"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarProductName,
-            sidebarProduct,
-            {
-              allowExtend: false
-            }
-          )}
-          selector=".brz-woocart__sidebar__product-name"
-        >
+        {({ ref: placeholderRef }) => (
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
-              toolbarProductPrice,
+              toolbarProductName,
               sidebarProduct,
               {
                 allowExtend: false
               }
             )}
-            selector=".brz-woocart__sidebar__product-price__container"
+            selector=".brz-woocart__sidebar__product-name"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarProductSubtotal,
-                sidebarProduct,
-                {
-                  allowExtend: false
-                }
-              )}
-              selector=".brz-woocart__sidebar-subtotal"
-            >
+            {({ ref: productNameRef }) => (
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarProductButton,
+                  toolbarProductPrice,
                   sidebarProduct,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-woocart__sidebar-buttons"
+                selector=".brz-woocart__sidebar__product-price__container"
               >
-                <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-                  <Wrapper
-                    {...this.makeWrapperProps({
-                      className,
-                      attributes: { id: id }
-                    })}
+                {({ ref: productPriceRef }) => (
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarProductSubtotal,
+                      sidebarProduct,
+                      {
+                        allowExtend: false
+                      }
+                    )}
+                    selector=".brz-woocart__sidebar-subtotal"
                   >
-                    {isEditor(this.renderContext) && (
+                    {({ ref: productSubtotalRef }) => (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarSidebarSettings,
-                          sidebarSidebarSettings,
+                          toolbarProductButton,
+                          sidebarProduct,
                           {
                             allowExtend: false
                           }
                         )}
+                        selector=".brz-woocart__sidebar-buttons"
                       >
-                        <div className="brz-woocart__sidebar-toolbar">
-                          {t("Cart Settings")}
-                        </div>
+                        {({ ref: productButtonRef }) => (
+                          <CustomCSS
+                            selectorName={this.getId()}
+                            css={v.customCSS}
+                          >
+                            {({ ref: cssRef }) => (
+                              <Wrapper
+                                {...this.makeWrapperProps({
+                                  className,
+                                  attributes: { id: id },
+                                  ref: (el) => {
+                                    attachRefs(el, [
+                                      placeholderRef,
+                                      productNameRef,
+                                      productPriceRef,
+                                      productSubtotalRef,
+                                      productButtonRef,
+                                      cssRef
+                                    ]);
+                                  }
+                                })}
+                              >
+                                {isEditor(this.props.renderContext) && (
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarSidebarSettings,
+                                      sidebarSidebarSettings,
+                                      {
+                                        allowExtend: false
+                                      }
+                                    )}
+                                  >
+                                    {({ ref: toolbarRef }) => (
+                                      <div
+                                        className="brz-woocart__sidebar-toolbar"
+                                        ref={toolbarRef}
+                                      >
+                                        {t("Cart Settings")}
+                                      </div>
+                                    )}
+                                  </Toolbar>
+                                )}
+                                <div
+                                  className="brz-woocart__background"
+                                  ref={this.backgroundRef}
+                                />
+                                <DynamicContentHelper
+                                  placeholder={placeholder}
+                                  placeholderIcon="woo-cart"
+                                  tagName="div"
+                                  props={{
+                                    className: "brz-woocart__dc",
+                                    ref: this.dcRef
+                                  }}
+                                  onSuccess={this.handleDCSuccess}
+                                />
+                              </Wrapper>
+                            )}
+                          </CustomCSS>
+                        )}
                       </Toolbar>
                     )}
-                    <div
-                      className="brz-woocart__background"
-                      ref={this.backgroundRef}
-                    />
-                    <DynamicContentHelper
-                      placeholder={placeholder}
-                      placeholderIcon="woo-cart"
-                      tagName="div"
-                      props={{ className: "brz-woocart__dc", ref: this.dcRef }}
-                      onSuccess={this.handleDCSuccess}
-                    />
-                  </Wrapper>
-                </CustomCSS>
+                  </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }

@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import Downshift from "downshift";
+import { has } from "es-toolkit/compat";
 import FuzzySearch from "fuzzy-search";
 import React, { ChangeEvent, Component, RefObject } from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import { addLast, removeAt, removeLast } from "timm";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import Portal from "visual/component/Portal";
 import { Scrollbar } from "visual/component/Scrollbar";
@@ -51,7 +51,7 @@ class ReactSelect extends Component<Props, State> {
         this.setState({ inputValue: "" });
       }
 
-      if (_.has(changes, "value")) {
+      if (has(changes, "value")) {
         const newValue = Array.isArray(value) ? value : [];
         onChange(addLast(newValue, changes.value));
       }

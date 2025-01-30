@@ -1,10 +1,11 @@
 import classNames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { percentageToPixels } from "visual/utils/meta";
+import { attachRefs } from "visual/utils/react";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
@@ -14,15 +15,14 @@ import toolbarConfigFn from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
 class Carousel extends EditorComponent {
-  static get componentId() {
-    return "Carousel";
-  }
-
   static defaultValue = defaultValue;
-
   static defaultProps = {
     extendParentToolbar: noop
   };
+
+  static get componentId() {
+    return "Carousel";
+  }
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -179,7 +179,7 @@ class Carousel extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -214,9 +214,16 @@ class Carousel extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <Items {...itemsProps} />
-        </ContextMenu>
+        {({ ref: cssRef }) => (
+          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+            {({ ref: contextMenuRef }) => (
+              <Items
+                {...itemsProps}
+                containerRef={(el) => attachRefs(el, [cssRef, contextMenuRef])}
+              />
+            )}
+          </ContextMenu>
+        )}
       </CustomCSS>
     );
   }

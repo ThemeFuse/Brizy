@@ -1,16 +1,16 @@
-import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import React from "react";
 
 export default class DrawerPopoverButton extends React.Component {
   static defaultProps = {
     label: "",
     link: "",
     title: "",
-    onClick: _.noop
+    onClick: noop
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     const { onClick, link } = this.props;
 
     onClick();

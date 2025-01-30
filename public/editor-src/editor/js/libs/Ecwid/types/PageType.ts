@@ -2,7 +2,7 @@ import {
   EcwidCategoryId,
   EcwidOrderId,
   EcwidProductId
-} from "../../../global/Ecwid";
+} from "../../../global/Ecwid/types";
 
 interface Base<T extends string> {
   type: T;

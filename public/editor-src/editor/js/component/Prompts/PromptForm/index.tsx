@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component, ReactElement } from "react";
-import _ from "underscore";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
@@ -32,9 +32,9 @@ const getTabs = () => [
 type Props = {
   formId: string;
   formFields: FormField[];
-  opened: boolean;
-  onClose: () => void;
+  opened?: boolean;
   config: ConfigCommon;
+  onClose?: () => void;
 };
 
 class PromptForm extends Component<Props> {
@@ -42,11 +42,12 @@ class PromptForm extends Component<Props> {
     formId: "",
     formFields: [],
     opened: false,
-    onClose: _.noop
+    onClose: noop
   };
 
   render(): ReactElement {
-    const { formId, formFields, opened, onClose, config } = this.props;
+    const { formId, formFields, opened, config, onClose } = this.props;
+
     return (
       <Tabs
         currentTab="email"
@@ -55,8 +56,8 @@ class PromptForm extends Component<Props> {
         opened={opened}
         blockTabsWhenLoading={false}
         tabs={getTabs()}
-        onClose={onClose}
         config={config}
+        onClose={onClose}
       />
     );
   }

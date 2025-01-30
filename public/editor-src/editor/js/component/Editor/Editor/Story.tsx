@@ -4,19 +4,19 @@ import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/global/hooks";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
+import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { updateBlocks } from "visual/redux/actions2";
 import { pageBlocksSelector, stateSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { areStatesEqual, getPageId } from "../utils";
-import { Props } from "./types";
 
-const Story = (props: Props): JSX.Element => {
-  const { mode } = props;
+const Story = (): JSX.Element => {
   const state = useSelector(stateSelector, areStatesEqual);
   const items = useSelector(pageBlocksSelector);
   const store = useStore();
   const dispatch = useDispatch();
   const config = useConfig();
+  const { mode } = useEditorMode();
   const { pagePreview } = config.urls ?? {};
   // @ts-expect-error: ConfigCommon to Config
   const pageId = getPageId(config);
@@ -43,7 +43,7 @@ const Story = (props: Props): JSX.Element => {
       {items.length > 0 && (
         <iframe id="brz-ed-home-page" src={pagePreview} title="story" />
       )}
-      <RootContainer className="brz brz-ed" editorMode={mode}>
+      <RootContainer className="brz brz-ed">
         <EditorComponentProvider pageId={pageId} groups={groups}>
           {/* @ts-expect-error: Missing EditorComponent props */}
           <PageStory

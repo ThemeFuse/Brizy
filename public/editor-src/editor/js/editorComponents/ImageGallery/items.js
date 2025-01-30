@@ -124,7 +124,7 @@ class Items extends EditorArrayComponent {
       "brz-image__gallery-item",
       {
         "brz-cursor-pointer":
-          layout === "bigImage" && isView(this.renderContext)
+          layout === "bigImage" && isView(this.props.renderContext)
       },
       {
         "brz-image__gallery-item-empty": (isMasonry || isJustified) && !imageSrc
@@ -136,7 +136,11 @@ class Items extends EditorArrayComponent {
         key={itemKey}
         {...this.makeContextMenuProps(contextMenuConfig, { id: itemKey })}
       >
-        <div className={className}>{item}</div>
+        {({ ref }) => (
+          <div className={className} ref={ref}>
+            {item}
+          </div>
+        )}
       </ContextMenu>
     );
   }

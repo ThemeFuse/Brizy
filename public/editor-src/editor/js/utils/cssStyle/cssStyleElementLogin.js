@@ -117,8 +117,13 @@ export function cssStyleElementLoginLostPasswordTypography2LetterSpacing({
 }
 
 // Color Lost Password
-export function cssStyleElementLoginLostPasswordColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "lostColor" });
+export function cssStyleElementLoginLostPasswordColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, store, prefix: "lostColor" });
 }
 
 // Align Lost Password
@@ -320,8 +325,14 @@ export function cssStyleElementLoginRegisterInfoTextTransform({
   });
 }
 
-export function cssStyleElementRegisterInfoColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "registerInfoColor" });
+export function cssStyleElementRegisterInfoColor({ v, device, state, store }) {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "registerInfoColor"
+  });
 }
 
 export function cssStyleElementRegisterInfoAlign({ v, device, store, state }) {
@@ -535,8 +546,13 @@ export function cssStyleElementLoginLoginLinkTextTransform({
   });
 }
 
-export function cssStyleElementLoginLoginLinkColor({ v, device, state }) {
-  return cssStyleColor({ v, device, state, prefix: "loginLinkColor" });
+export function cssStyleElementLoginLoginLinkColor({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleColor({ v, device, state, store, prefix: "loginLinkColor" });
 }
 
 export function cssStyleElementLoginLoginLinkAlign({

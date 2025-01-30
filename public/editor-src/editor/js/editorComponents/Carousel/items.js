@@ -1,16 +1,16 @@
 import classnames from "classnames";
 import React from "react";
-import ReactDOM from "react-dom";
 import SlickSlider from "react-slick";
-import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
+import { attachRef } from "visual/utils/react";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { normalizeCarouselColumns, setDataSortable } from "./utils";
 
@@ -22,10 +22,6 @@ const SliderArrow = ({ className, extraClassName, onClick, icon }) => (
 );
 
 class Items extends EditorArrayComponent {
-  static get componentId() {
-    return "Carousel.Items";
-  }
-
   static defaultProps = {
     containerClassName: "",
     dynamic: "off",
@@ -40,11 +36,15 @@ class Items extends EditorArrayComponent {
     sliderDots: "none",
     meta: {}
   };
-
   slider = null;
   reopenOnIndex = null;
   toolbarRef = React.createRef();
   openSlideId = null;
+
+  static get componentId() {
+    return "Carousel.Items";
+  }
+
   componentDidMount() {
     setDataSortable(this.slider);
   }
@@ -72,10 +72,13 @@ class Items extends EditorArrayComponent {
     clearTimeout(this.openSlideId);
   }
 
-  handleRefSlider = (node) => {
-    /* eslint-disable react/no-find-dom-node */
-    this.slider = ReactDOM.findDOMNode(node);
-    /* eslint-enabled react/no-find-dom-node */
+  handleRefSlider = (ref) => {
+    if (ref) {
+      const { list } = ref.innerSlider;
+      const { containerRef } = this.props;
+      this.slider = list;
+      attachRef(list, containerRef);
+    }
   };
 
   handleSliderAfterChange = () => {
@@ -229,7 +232,7 @@ class Items extends EditorArrayComponent {
   }
 
   renderItemWrapper(item, itemKey, itemIndex) {
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return (
         <div key={itemKey} className="brz-carousel__item">
           {item}
@@ -299,7 +302,7 @@ class Items extends EditorArrayComponent {
       mobileSlidesToShow
     } = this.props;
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       const responsive = [
         {
           breakpoint: 991,

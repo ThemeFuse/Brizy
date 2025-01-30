@@ -10,7 +10,7 @@ import {
   ConfigCommon,
   MenuData
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorMode, isStory } from "visual/global/EditorModeContext";
+import { EditorMode, isStory } from "visual/providers/EditorModeProvider";
 import { copiedElementNoRefsSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
@@ -255,7 +255,7 @@ export const handleClearFormatting = ({
 }: {
   onChange: (v: Value) => void;
   editorMode: EditorMode;
-  config: ConfigCommon
+  config: ConfigCommon;
 }) => {
   const {
     bgColorType,

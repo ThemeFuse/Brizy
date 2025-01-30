@@ -7,6 +7,7 @@ import {
   empty as emptyOpacity,
   fromNumber as readOpacity
 } from "visual/utils/cssProps/opacity";
+import { config } from "../../../../../../jest-utils/mocks";
 import { css as cssStyleBackgroundColor } from "../css";
 
 describe("Testing cssStyleBackgroundColor that should return CSS for background color or gradient", () => {
@@ -34,22 +35,23 @@ describe("Testing cssStyleBackgroundColor that should return CSS for background 
   };
 
   test("Background transparent", () => {
-    expect(cssStyleBackgroundColor({ meta: { isDisabled: true }, value })).toBe(
-      "background-color: transparent;"
-    );
+    expect(
+      cssStyleBackgroundColor({ meta: { isDisabled: true }, value, config })
+    ).toBe("background-color: transparent;");
   });
 
   test("Solid color", () => {
-    expect(cssStyleBackgroundColor({ meta: { isSolid: true }, value })).toBe(
-      "background-color:rgba(255, 0, 0, 1); background-image:none;"
-    );
+    expect(
+      cssStyleBackgroundColor({ meta: { isSolid: true }, value, config })
+    ).toBe("background-color:rgba(255, 0, 0, 1); background-image:none;");
   });
 
   test("Gradient color", () => {
     expect(
       cssStyleBackgroundColor({
         meta: { isGradient: true, isLinearGradient: true },
-        value
+        value,
+        config
       })
     ).toBe(
       "background-image: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);"
@@ -58,7 +60,8 @@ describe("Testing cssStyleBackgroundColor that should return CSS for background 
     expect(
       cssStyleBackgroundColor({
         meta: { isGradient: true, isRadialGradient: true },
-        value
+        value,
+        config
       })
     ).toBe(
       "background-image: radial-gradient(circle 90px, rgba(255, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);"
@@ -69,7 +72,8 @@ describe("Testing cssStyleBackgroundColor that should return CSS for background 
     expect(
       cssStyleBackgroundColor({
         meta: { isGradient: true },
-        value
+        value,
+        config
       })
     ).toBe("");
   });
@@ -78,7 +82,8 @@ describe("Testing cssStyleBackgroundColor that should return CSS for background 
     expect(
       cssStyleBackgroundColor({
         meta: {},
-        value
+        value,
+        config
       })
     ).toBe("");
   });
@@ -87,7 +92,8 @@ describe("Testing cssStyleBackgroundColor that should return CSS for background 
     expect(
       cssStyleBackgroundColor({
         meta: { isSolid: true, isGradient: true, isRadialGradient: true },
-        value
+        value,
+        config
       })
     ).toBe("background-color:rgba(255, 0, 0, 1); background-image:none;");
   });

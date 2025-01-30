@@ -5,6 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -17,11 +18,11 @@ import * as toolbarTableGrouped from "./toolbarTableGrouped";
 import * as toolbarTableVariations from "./toolbarTableVariations";
 
 export default class WOOAddToCart extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "WOOAddToCart";
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v, vs, vd) {
     const { className: className_ } = v;
@@ -36,7 +37,7 @@ export default class WOOAddToCart extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -49,63 +50,88 @@ export default class WOOAddToCart extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         selector="button, .brz-shortcode__placeholder"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarTableGrouped,
-            sidebarConfig,
-            {
-              allowExtend: false
-            }
-          )}
-          selector="table.group_table"
-        >
+        {({ ref: buttonRef }) => (
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
-              toolbarTableVariations,
+              toolbarTableGrouped,
               sidebarConfig,
               {
                 allowExtend: false
               }
             )}
-            selector="table.variations"
+            selector="table.group_table"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarInput,
-                sidebarInputConfig,
-                {
-                  allowExtend: false
-                }
-              )}
-              selector=".brz-woo-add-to-cart .cart:not(.grouped_form) .quantity"
-            >
+            {({ ref: tableRef }) => (
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarInputGrouped,
-                  sidebarInputConfig,
+                  toolbarTableVariations,
+                  sidebarConfig,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-woo-add-to-cart .grouped_form .quantity"
+                selector="table.variations"
               >
-                <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-                  <Wrapper
-                    {...this.makeWrapperProps({
-                      className
-                    })}
+                {({ ref: variationsRef }) => (
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarInput,
+                      sidebarInputConfig,
+                      {
+                        allowExtend: false
+                      }
+                    )}
+                    selector=".brz-woo-add-to-cart .cart:not(.grouped_form) .quantity"
                   >
-                    <DynamicContentHelper
-                      placeholder={placeholder}
-                      placeholderIcon="woo-addToCart"
-                      tagName="div"
-                    />
-                  </Wrapper>
-                </CustomCSS>
+                    {({ ref: quantityRef }) => (
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarInputGrouped,
+                          sidebarInputConfig,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-woo-add-to-cart .grouped_form .quantity"
+                      >
+                        {({ ref: formRef }) => (
+                          <CustomCSS
+                            selectorName={this.getId()}
+                            css={v.customCSS}
+                          >
+                            {({ ref: cssRef }) => (
+                              <Wrapper
+                                {...this.makeWrapperProps({
+                                  className,
+                                  ref: (el) => {
+                                    attachRefs(el, [
+                                      buttonRef,
+                                      tableRef,
+                                      variationsRef,
+                                      quantityRef,
+                                      formRef,
+                                      cssRef
+                                    ]);
+                                  }
+                                })}
+                              >
+                                <DynamicContentHelper
+                                  placeholder={placeholder}
+                                  placeholderIcon="woo-addToCart"
+                                  tagName="div"
+                                />
+                              </Wrapper>
+                            )}
+                          </CustomCSS>
+                        )}
+                      </Toolbar>
+                    )}
+                  </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }

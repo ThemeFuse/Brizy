@@ -1,5 +1,6 @@
 import { Num, Str } from "@brizy/readers";
 import { WithRenderContext } from "visual/providers/RenderProvider";
+import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { isNullish } from "visual/utils/value";
 import { defaultValueValue } from "../onChange";
@@ -76,7 +77,8 @@ export const cssStyleElementEventLayoutViewBgColorActive = ({
 export const cssStyleElementEventLayoutListTitleBorderBottom = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -98,7 +100,14 @@ export const cssStyleElementEventLayoutListTitleBorderBottom = ({
     return "";
   }
 
-  const _borderColor = getColor(borderPalette, borderColor, borderOpacity);
+  const config = configSelector(store.getState());
+
+  const _borderColor = getColor(
+    borderPalette,
+    borderColor,
+    borderOpacity,
+    config
+  );
 
   return `border-bottom-width:${borderWidth}px; border-bottom-style:${borderStyle}; border-bottom-color:${_borderColor};`;
 };
@@ -419,12 +428,14 @@ export const cssStyleElementEventLayoutCalendarDaysColor = ({
 export const cssStyleElementEventLayoutCalendarDaysBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "calendarDays"
   });
 };
@@ -491,24 +502,28 @@ export const cssStyleElementEventLayoutViewColorActive = ({
 export const cssStyleElementEventLayoutViewBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "view"
   });
 };
 
 export const cssStyleElementEventLayoutViewBorderActive = ({
   v,
-  device
+  device,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state: ACTIVE,
+    store,
     prefix: "view"
   });
 };

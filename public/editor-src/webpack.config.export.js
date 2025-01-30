@@ -5,6 +5,39 @@ const BundleAnalyzerPlugin =
 const editorConfigFn = require("./webpack.config.editor");
 const swcrc = require("./swc.config.all");
 
+const defaultExtensions = [".ts", ".tsx", ".js", ".jsx", ".json"];
+
+const getExtensions = (target) => {
+  switch (target) {
+    case "WP": {
+      return [
+        ".preview.wp.ts",
+        ".preview.wp.tsx",
+        ".preview.wp.js",
+        ".preview.wp.jsx",
+        ".preview.ts",
+        ".preview.tsx",
+        ".preview.js",
+        ".preview.jsx",
+        ".wp.ts",
+        ".wp.tsx",
+        ".wp.js",
+        ".wp.jsx",
+        ...defaultExtensions
+      ];
+    }
+    default: {
+      return [
+        ".preview.ts",
+        ".preview.tsx",
+        ".preview.js",
+        ".preview.jsx",
+        ...defaultExtensions
+      ];
+    }
+  }
+};
+
 exports.node = (options) => {
   const editorConfig = editorConfigFn(options);
   const nullLoaderArr = [
@@ -38,7 +71,10 @@ exports.node = (options) => {
       filename: "export.js",
       libraryTarget: "commonjs2"
     },
-    resolve: editorConfig.resolve,
+    resolve: {
+      ...editorConfig.resolve,
+      extensions: getExtensions(options.TARGET)
+    },
     module: {
       rules: [
         {
@@ -69,8 +105,6 @@ exports.node = (options) => {
         ),
         TARGET: JSON.stringify(options.TARGET),
         COMPILER_TYPE: JSON.stringify("node"),
-        IS_EDITOR: false,
-        IS_PREVIEW: true,
         window: "undefined"
       }),
       new webpack.NormalModuleReplacementPlugin(
@@ -94,8 +128,14 @@ exports.node = (options) => {
   };
 
   const configAnalyze = {
-    mode: "production",
-    plugins: [...config.plugins, new BundleAnalyzerPlugin()],
+    plugins: [
+      ...config.plugins,
+      new BundleAnalyzerPlugin({
+        analyzerMode: "json", // use "server" if needed to start a dev server to inspect the bundle
+        generateStatsFile: true,
+        statsFilename: "nodeCompiler-bundle-stats.json"
+      })
+    ],
     watch: false
   };
 
@@ -142,6 +182,7 @@ exports.browser = (options) => {
     },
     resolve: {
       ...editorConfig.resolve,
+      extensions: getExtensions(options.TARGET),
       fallback: {
         ...editorConfig.resolve.fallback,
         // Need for webpack 5 and sanitize-html package
@@ -182,8 +223,6 @@ exports.browser = (options) => {
         ),
         TARGET: JSON.stringify(options.TARGET),
         COMPILER_TYPE: JSON.stringify("worker"),
-        IS_EDITOR: false,
-        IS_PREVIEW: true,
         window: "undefined"
       }),
       new webpack.ProvidePlugin({
@@ -226,8 +265,14 @@ exports.browser = (options) => {
   };
 
   const configAnalyze = {
-    mode: "production",
-    plugins: [...config.plugins, new BundleAnalyzerPlugin()],
+    plugins: [
+      ...config.plugins,
+      new BundleAnalyzerPlugin({
+        analyzerMode: "json", // use "server" if needed to start a dev server to inspect the bundle
+        generateStatsFile: true,
+        statsFilename: "browserCompiler-bundle-stats.json"
+      })
+    ],
     watch: false
   };
 

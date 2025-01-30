@@ -105,7 +105,7 @@ export default class TimelineTabItems extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { className } = this.props;
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

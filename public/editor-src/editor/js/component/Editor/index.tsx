@@ -1,6 +1,6 @@
+import { noop } from "es-toolkit";
 import React, { KeyboardEvent, ReactElement } from "react";
 import { ToastContainer } from "react-toastify";
-import { noop } from "underscore";
 import BottomPanel from "visual/component/BottomPanel";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebar } from "visual/component/LeftSidebar";
@@ -8,19 +8,11 @@ import Notifications from "visual/component/Notifications";
 import Portal from "visual/component/Portal";
 import Prompts from "visual/component/Prompts";
 import { RightSidebar } from "visual/component/RightSidebar";
-import { CustomFile } from "visual/global/Config/types/configs/ConfigCommon";
-import {
-  EditorMode,
-  getCommonEditorMode
-} from "visual/global/EditorModeContext";
+import { getCommonEditorMode } from "visual/providers/EditorModeProvider";
 import Page from "./Editor/Page";
 import Popup from "./Editor/Popup";
 import Story from "./Editor/Story";
-
-interface Props {
-  addFile: CustomFile["addFile"];
-  editorMode: EditorMode;
-}
+import { Props } from "./types";
 
 class Editor extends React.Component<Props> {
   parentWindowDocument = () => {
@@ -57,13 +49,13 @@ class Editor extends React.Component<Props> {
     const type = getCommonEditorMode(editorMode);
     switch (type) {
       case "page": {
-        return <Page mode={editorMode} />;
+        return <Page />;
       }
       case "popup": {
-        return <Popup mode={editorMode} />;
+        return <Popup />;
       }
       case "story": {
-        return <Story mode={editorMode} />;
+        return <Story />;
       }
     }
   }

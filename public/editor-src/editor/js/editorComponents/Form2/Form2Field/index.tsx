@@ -13,17 +13,18 @@ import Form2FieldItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
-import * as toolbar from "./toolbar";
+import * as toolbar from "./toolbars/toolbar";
 import { Error, FormInput, Props, Value } from "./type";
+import { Label } from "./types/common/Label";
 import types from "./types/index";
 import { Active } from "./types/type";
 
 class Form2Field extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.Form2Field {
     return ElementTypes.Form2Field;
   }
-
-  static defaultValue = defaultValue;
 
   getError(v: Value): Error {
     const {
@@ -79,7 +80,7 @@ class Form2Field extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -112,51 +113,59 @@ class Form2Field extends EditorComponent<Value, Props> {
 
     return (
       <div className={classNameField}>
-        {labelType === "outside" && "Label" in Component && (
+        {labelType === "outside" && (
           // @ts-expect-error: Need transform toolbarExtendLabel to TS
           <Toolbar {...toolbarExtendLabel}>
-            <Component.Label
-              id={this.getId()}
-              value={v}
-              onChange={(value: Partial<Model<Value>>) =>
-                this.patchValue(value)
-              }
-              renderContext={this.renderContext}
-            />
+            {({ ref }) => (
+              <Label
+                id={this.getId()}
+                value={v}
+                onChange={(value: Partial<Model<Value>>) =>
+                  this.patchValue(value)
+                }
+                renderContext={this.props.renderContext}
+                ref={ref}
+                type={type}
+              />
+            )}
           </Toolbar>
         )}
 
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-          <div>
-            {!isTypeWithItems && (
-              <Component
-                {...v}
-                showPlaceholder={showPlaceholder}
-                labelType={labelType}
-                {...(isSelect ? { toolbarExtendSelect, selectClassName } : {})}
-                onChange={(value: Partial<Model<Value>>) =>
-                  this.patchValue(value)
-                }
-                renderContext={this.renderContext}
-              />
-            )}
-            {isSelect && (
-              <Component
-                {...v}
-                showPlaceholder={showPlaceholder}
-                labelType={labelType}
-                toolbarExtendSelect={toolbarExtendSelect}
-                selectClassName={selectClassName}
-                onChange={(value: Partial<Model<Value>>) =>
-                  this.patchValue(value)
-                }
-                renderContext={this.renderContext}
-              >
-                {/* @ts-expect-error: ArrayComponent to ts */}
-                <Form2FieldItems {...itemProps} />
-              </Component>
-            )}
-          </div>
+          {({ ref }) => (
+            <div ref={ref}>
+              {!isTypeWithItems && (
+                <Component
+                  {...v}
+                  showPlaceholder={showPlaceholder}
+                  labelType={labelType}
+                  {...(isSelect
+                    ? { toolbarExtendSelect, selectClassName }
+                    : {})}
+                  onChange={(value: Partial<Model<Value>>) =>
+                    this.patchValue(value)
+                  }
+                  renderContext={this.props.renderContext}
+                />
+              )}
+              {isSelect && (
+                <Component
+                  {...v}
+                  showPlaceholder={showPlaceholder}
+                  labelType={labelType}
+                  toolbarExtendSelect={toolbarExtendSelect}
+                  selectClassName={selectClassName}
+                  onChange={(value: Partial<Model<Value>>) =>
+                    this.patchValue(value)
+                  }
+                  renderContext={this.props.renderContext}
+                >
+                  {/* @ts-expect-error: ArrayComponent to ts */}
+                  <Form2FieldItems {...itemProps} />
+                </Component>
+              )}
+            </div>
+          )}
         </Toolbar>
         {/* render Radio and Checkbox here because toolbar above we merge with toolbar from From2FieldOption */}
         {isRadioOrCheckbox && (
@@ -168,7 +177,7 @@ class Form2Field extends EditorComponent<Value, Props> {
               onChange={(value: Partial<Model<Value>>) =>
                 this.patchValue(value)
               }
-              renderContext={this.renderContext}
+              renderContext={this.props.renderContext}
             >
               {/* @ts-expect-error: ArrayComponent to ts */}
               <Form2FieldItems {...itemProps} />
@@ -210,7 +219,7 @@ class Form2Field extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -236,12 +245,13 @@ class Form2Field extends EditorComponent<Value, Props> {
 
     return (
       <Translate className={classNameField}>
-        {labelType === "outside" && Component && "Label" in Component && (
-          <Component.Label
+        {labelType === "outside" && (
+          <Label
             id={labelId}
             value={v}
             onChange={(value: Partial<Model<Value>>) => this.patchValue(value)}
-            renderContext={this.renderContext}
+            renderContext={this.props.renderContext}
+            type={type}
           />
         )}
         {!isTypeWithItems ? (
@@ -252,7 +262,7 @@ class Form2Field extends EditorComponent<Value, Props> {
             error={this.getError(v)}
             showPlaceholder={showPlaceholder}
             labelType={labelType}
-            renderContext={this.renderContext}
+            renderContext={this.props.renderContext}
             {...(isSelect ? { selectClassName } : {})}
           />
         ) : (
@@ -265,7 +275,7 @@ class Form2Field extends EditorComponent<Value, Props> {
             showPlaceholder={showPlaceholder}
             selectClassName={selectClassName}
             labelType={labelType}
-            renderContext={this.renderContext}
+            renderContext={this.props.renderContext}
           >
             {/* @ts-expect-error: ArrayComponent to ts */}
             <Form2FieldItems {...itemProps} />

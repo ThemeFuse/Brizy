@@ -1,4 +1,5 @@
-import { partial, property } from "underscore";
+import { partial } from "es-toolkit";
+import { property } from "es-toolkit/compat";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getCollectionTypes } from "visual/utils/api";
 import * as A from "visual/utils/array";

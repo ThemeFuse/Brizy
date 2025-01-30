@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
@@ -10,7 +10,7 @@ export function getItems({ v, device, state }) {
   const firstIconName = dvv("firstIconName");
   const firstIconType = dvv("firstIconType");
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")

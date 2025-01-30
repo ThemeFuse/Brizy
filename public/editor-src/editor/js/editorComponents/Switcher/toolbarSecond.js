@@ -1,11 +1,12 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const bgColor = getColor(
+
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")

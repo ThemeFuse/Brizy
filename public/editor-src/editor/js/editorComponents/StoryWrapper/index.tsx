@@ -4,7 +4,7 @@ import React, {
   ComponentType,
   ReactElement,
   ReactNode,
-  Ref,
+  RefObject,
   createRef
 } from "react";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -30,6 +30,7 @@ import {
   validateKeyByProperty
 } from "visual/utils/onChange";
 import * as Position from "visual/utils/position/element";
+import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
@@ -57,13 +58,12 @@ type Props = {
 };
 
 export class StoryWrapper extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  toolbarRef = createRef<PortalToolbar>();
+
   static get componentId(): string {
     return "StoryWrapper";
   }
-
-  static defaultValue = defaultValue;
-
-  toolbarRef = createRef<PortalToolbar>();
 
   handleExtendParentToolbar = (childToolbarExtend: ToolbarExtend): void => {
     this.childToolbarExtend = childToolbarExtend;
@@ -84,90 +84,93 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
     const isRelative = Position.getPosition(dvv) === "relative";
 
     return (
-      <ContainerBorder
-        type="wrapper"
-        color="grey"
-        borderStyle="dotted"
-        buttonPosition="topRight"
-        renderButtonWrapper={this.renderToolbar}
+      <ContextMenu
+        {...{
+          // @ts-expect-error: Need to transform to TS
+          ...this.makeContextMenuProps(contextMenuConfig),
+          componentId: v?.items[0]?.type ?? ""
+        }}
       >
-        {({
-          ref,
-          attr,
-          border,
-          button
-        }: {
-          ref: Ref<HTMLDivElement>;
-          attr: Attributes;
-          border: ReactElement;
-          button: ReactNode;
-        }): ReactNode => {
-          const itemsProps = this.makeSubcomponentProps({
-            bindWithKey: "items",
-            itemProps: {
-              toolbarExtend: this.makeToolbarPropsFromConfig2(
-                toolbarExtendConfig,
-                // @ts-expect-error: Need convert to ts
-                sidebarExtendConfig,
-                {
-                  allowExtendFromChild: false,
-                  parentItemsFilter: toolbarExtendFilter
-                }
-              ),
-              extendParentToolbar: this.handleExtendParentToolbar,
-              meta: { ...this.props.meta, wrapperId: this.getId() },
-              wrapperExtend: {
-                ref,
-                attributes: attr,
-                className: this.getWrapperClassName(v, vs, vd),
-                animationClass: this.getAnimationClassName(v, vs, vd),
-                // eslint-disable-next-line react/display-name
-                renderContent: (children: ReactElement): React.ReactNode => {
-                  const content = isRelative ? (
-                    <SortableElement type="shortcode">
-                      {children}
-                    </SortableElement>
-                  ) : (
-                    children
-                  );
-
-                  return (
-                    <>
-                      {v.showToolbar === "on" ? (
-                        <_ToolbarExtend onEscape={this.handleToolbarEscape}>
-                          {content}
-                          {button}
-                        </_ToolbarExtend>
+        {({ ref: contextMenuRef }: { ref: RefObject<HTMLDivElement> }) => (
+          <ContainerBorder
+            type="wrapper"
+            color="grey"
+            borderStyle="dotted"
+            buttonPosition="topRight"
+            renderButtonWrapper={this.renderToolbar}
+          >
+            {({
+              ref,
+              attr,
+              border,
+              button
+            }: {
+              ref: RefObject<HTMLDivElement>;
+              attr: Attributes;
+              border: ReactElement;
+              button: ReactNode;
+            }): ReactNode => {
+              const itemsProps = this.makeSubcomponentProps({
+                bindWithKey: "items",
+                itemProps: {
+                  toolbarExtend: this.makeToolbarPropsFromConfig2(
+                    toolbarExtendConfig,
+                    // @ts-expect-error: Need convert to ts
+                    sidebarExtendConfig,
+                    {
+                      allowExtendFromChild: false,
+                      parentItemsFilter: toolbarExtendFilter
+                    }
+                  ),
+                  extendParentToolbar: this.handleExtendParentToolbar,
+                  meta: { ...this.props.meta, wrapperId: this.getId() },
+                  wrapperExtend: {
+                    ref: (el: HTMLDivElement) =>
+                      attachRefs(el, [ref, contextMenuRef]),
+                    attributes: attr,
+                    className: this.getWrapperClassName(v, vs, vd),
+                    animationClass: this.getAnimationClassName(v, vs, vd),
+                    // eslint-disable-next-line react/display-name
+                    renderContent: (
+                      children: ReactElement
+                    ): React.ReactNode => {
+                      const content = isRelative ? (
+                        <SortableElement type="shortcode">
+                          {children}
+                        </SortableElement>
                       ) : (
-                        content
-                      )}
-                      {border}
-                    </>
-                  );
-                }
-              }
-            }
-          });
+                        children
+                      );
 
-          return (
-            <ContextMenu
-              {...{
-                // @ts-expect-error: Need to transform to TS
-                ...this.makeContextMenuProps(contextMenuConfig),
-                componentId: v?.items[0]?.type ?? ""
-              }}
-            >
-              {
+                      return (
+                        <>
+                          {v.showToolbar === "on" ? (
+                            <_ToolbarExtend onEscape={this.handleToolbarEscape}>
+                              {content}
+                              {button}
+                            </_ToolbarExtend>
+                          ) : (
+                            content
+                          )}
+                          {border}
+                        </>
+                      );
+                    }
+                  }
+                }
+              });
+
+              return (
                 /**
                  * Since the EditorArrayComponent is still in JS
                  * TS cannot read properly it's return type
                  * @ts-expect-error */
                 <EditorArrayComponent {...itemsProps} />
-              }
-            </ContextMenu>
-          );
-        }}
-      </ContainerBorder>
+              );
+            }}
+          </ContainerBorder>
+        )}
+      </ContextMenu>
     );
   }
 
@@ -203,7 +206,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       "brz-wrapper",
@@ -222,7 +225,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
             vs,
             vd,
             store: this.getReduxStore(),
-            renderContext: this.renderContext
+            contexts: this.getContexts()
           })
         )
     );
@@ -230,16 +233,18 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
 
   handleToolbarEscape = (): void => this.toolbarRef.current?.show();
 
-  renderToolbar = (Button: Component<unknown>): ReactNode => {
+  renderToolbar = (Button: Component<Record<string, unknown>>): ReactNode => {
     return (
       <Toolbar
         // @ts-expect-error: Need to transform to TS
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >
-        <SortableHandle renderContext={this.renderContext}>
-          <Button />
-        </SortableHandle>
+        {({ ref }) => (
+          <SortableHandle renderContext={this.props.renderContext}>
+            <Button containerRef={ref} />
+          </SortableHandle>
+        )}
       </Toolbar>
     );
   };

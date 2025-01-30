@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component, ReactElement } from "react";
-import _ from "underscore";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
@@ -33,8 +33,8 @@ type Props = {
   formId: string;
   formFields: FormField[];
   opened: boolean;
-  onClose: () => void;
   config: ConfigCommon;
+  onClose: () => void;
 };
 
 class PromptWPForm extends Component<Props> {
@@ -42,11 +42,11 @@ class PromptWPForm extends Component<Props> {
     formId: "",
     formFields: [],
     opened: false,
-    onClose: _.noop
+    onClose: noop
   };
 
   render(): ReactElement {
-    const { formId, formFields, opened, onClose, config } = this.props;
+    const { formId, formFields, opened, config, onClose } = this.props;
     const tabs = getTabs();
 
     return (
@@ -56,8 +56,8 @@ class PromptWPForm extends Component<Props> {
         formFields={formFields}
         opened={opened}
         tabs={tabs}
-        onClose={onClose}
         config={config}
+        onClose={onClose}
       />
     );
   }

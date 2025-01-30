@@ -9,6 +9,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getBoxResizerParams } from "visual/editorComponents/ProgressBar/utils";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -17,13 +18,12 @@ import * as toolbarConfig from "./toolbar";
 import { ProgressStyle, Value } from "./types";
 
 export default class ProgressBar extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): ElementTypes.ProgressBar {
     return ElementTypes.ProgressBar;
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
 
   handleChange = (patch: Partial<Value>): void => this.patchValue(patch);
 
@@ -51,7 +51,7 @@ export default class ProgressBar extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -72,7 +72,7 @@ export default class ProgressBar extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -90,40 +90,47 @@ export default class ProgressBar extends EditorComponent<Value> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className: classNameBg,
-              attributes: {
-                ...makeDataAttr({ name: "type", value: progressBarStyle })
-              }
-            })}
-          >
-            <BoxResizer
-              points={points}
-              restrictions={restrictions}
-              meta={meta}
-              value={v}
-              onChange={this.handleChange}
-            >
-              {progressBarStyle === ProgressStyle.Style1 ? (
-                <ProgressBar1
-                  text={progressBarText}
-                  className={classNameBar}
-                  showText={showText === "on"}
-                  showPercentage={_showPercentage}
-                  percentage={percentage}
-                />
-              ) : (
-                <ProgressBar2
-                  className={classNameBar}
-                  showPercentage={_showPercentage}
-                  percentage={percentage}
-                />
-              )}
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: classNameBg,
+                  attributes: {
+                    ...makeDataAttr({ name: "type", value: progressBarStyle })
+                  },
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={points}
+                  restrictions={restrictions}
+                  meta={meta}
+                  value={v}
+                  onChange={this.handleChange}
+                >
+                  {progressBarStyle === ProgressStyle.Style1 ? (
+                    <ProgressBar1
+                      text={progressBarText}
+                      className={classNameBar}
+                      showText={showText === "on"}
+                      showPercentage={_showPercentage}
+                      percentage={percentage}
+                    />
+                  ) : (
+                    <ProgressBar2
+                      className={classNameBar}
+                      showPercentage={_showPercentage}
+                      percentage={percentage}
+                    />
+                  )}
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -149,7 +156,7 @@ export default class ProgressBar extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -170,7 +177,7 @@ export default class ProgressBar extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

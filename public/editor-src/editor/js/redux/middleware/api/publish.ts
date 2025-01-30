@@ -1,13 +1,14 @@
-import { fromJS } from "immutable";
-import _ from "underscore";
+import { isEqual, noop } from "es-toolkit";
+import { isStory } from "visual/providers/EditorModeProvider";
 import {
   changedGBIdsSelector,
   globalBlocksAssembledSelector,
   pageSelector,
   projectSelector
 } from "visual/redux/selectors";
-import { GlobalBlock, Page, Project } from "visual/types";
-import { isStory } from "visual/utils/models";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
+import { Project } from "visual/types/Project";
 import { MValue, isT } from "visual/utils/value";
 import { PUBLISH } from "../../actions2";
 import { Data } from "./types";
@@ -23,10 +24,11 @@ export function handlePublish({
   state,
   oldState,
   config,
-  apiHandler
+  apiHandler,
+  editorMode
 }: Data) {
   if (action.type === PUBLISH) {
-    const { onSuccess = _.noop, onError = _.noop } = action.meta ?? {};
+    const { onSuccess = noop, onError = noop } = action.meta ?? {};
 
     const oldProject = projectSelector(oldState);
     const project = projectSelector(state);
@@ -45,7 +47,7 @@ export function handlePublish({
       globalBlocks?: Array<GlobalBlock>;
     }> = undefined;
 
-    if (!isStory(config)) {
+    if (!isStory(editorMode)) {
       const changedGBIds = changedGBIdsSelector(state);
       const oldGlobalBlocks = globalBlocksAssembledSelector(oldState);
 
@@ -58,10 +60,7 @@ export function handlePublish({
             }
 
             // Check the data from JSON
-            const oldGlobalBlock = fromJS(oldGlobalBlocks[id]);
-            const newGlobalBlock = fromJS(globalBlock);
-
-            if (!oldGlobalBlock.equals(newGlobalBlock)) {
+            if (!isEqual(oldGlobalBlocks[id], globalBlock)) {
               return globalBlock;
             }
           })

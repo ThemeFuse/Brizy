@@ -17,6 +17,7 @@
     "bgImageWidth": 0,
     "bgImageHeight": 0,
     "bgImageType": "internal",
+    "bgAlt": "",
 
     "bgPositionY": 50,
     "bgPositionX": 50,
@@ -202,6 +203,7 @@
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
     "maskCustomUploadImageType": "internal",
+    "maskCustomUploadAlt": "",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

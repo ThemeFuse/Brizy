@@ -8,6 +8,7 @@ import {
   empty as emptyOpacity,
   fromNumber as readOpacity
 } from "visual/utils/cssProps/opacity";
+import { config } from "../../../../../../jest-utils/mocks";
 import { css as cssStyleColor } from "../css";
 
 describe("Testing cssStyleColor that should return CSS for box-shadow", () => {
@@ -23,7 +24,7 @@ describe("Testing cssStyleColor that should return CSS for box-shadow", () => {
   };
 
   test("Without meta", () => {
-    expect(cssStyleColor({ value })).toBe("color: rgba(255, 0, 0, 1);");
+    expect(cssStyleColor({ value, config })).toBe("color: rgba(255, 0, 0, 1);");
   });
 
   test("Opacity 0", () => {
@@ -32,7 +33,8 @@ describe("Testing cssStyleColor that should return CSS for box-shadow", () => {
         value: {
           ...value,
           opacity: emptyOpacity
-        }
+        },
+        config
       })
     ).toBe("color: rgba(255, 0, 0, 0);");
   });
@@ -43,7 +45,8 @@ describe("Testing cssStyleColor that should return CSS for box-shadow", () => {
         value: {
           ...value,
           hex: "#123123``95943213" as Hex
-        }
+        },
+        config
       })
     ).toBe("");
   });
@@ -54,7 +57,8 @@ describe("Testing cssStyleColor that should return CSS for box-shadow", () => {
         value: {
           ...value,
           palette: "color3"
-        }
+        },
+        config
       })
     ).toBe("color: rgba(var(--brz-global-color3),1);");
   });

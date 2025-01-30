@@ -1,23 +1,8 @@
-import { memoize } from "underscore";
+import { memoize } from "es-toolkit";
 import * as Responsive from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { camelCase } from "visual/utils/string";
 import { onNullish } from "visual/utils/value";
-
-/**
- * Returns default device
- *
- * @return {string}
- */
-export const defaultDevice = () => "desktop";
-
-/**
- * Check if the device is the default device;
- *
- * @param {string} device
- * @return {boolean}
- */
-export const isDefault = (device) => device === defaultDevice();
 
 function syncOnChange(device, v, key) {
   const capKey = String(key).charAt(0).toUpperCase() + String(key).substr(1);
@@ -32,11 +17,6 @@ export function tabletSyncOnChange(v, key) {
 
 export function mobileSyncOnChange(v, key) {
   return syncOnChange("mobile", v, key);
-}
-
-// Utilities
-export function keySyncOnChange(key, deviceKey) {
-  return onNullish(key, deviceKey);
 }
 
 /**
@@ -101,24 +81,6 @@ export function defaultValueValue({
     v[___key],
     onNullish(onNullish(v[__key], v[_key]), v[deviceKey])
   );
-}
-
-/**
- * Returns specific value from model based on key, device and state
- *  - If the result value from specifies device or state is null, return value from base original key
- *
- * Note: This is similar to `defaultValueValue`, but uses `defaultValueKey2` instead of `defaultValueKey`
- *
- * @param {object} v
- * @param {string} key
- * @param {string} device
- * @param {string} state
- * @returns {*}
- */
-export function defaultValueValue2({ v, key, device, state }) {
-  const deviceKey = defaultValueKey2({ key, device, state });
-
-  return onNullish(v[key], v[deviceKey]);
 }
 
 /**

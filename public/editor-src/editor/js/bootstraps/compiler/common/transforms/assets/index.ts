@@ -1,4 +1,4 @@
-import { AdobeFont, GoogleFont, UploadedFont } from "visual/types";
+import { AdobeFont, GoogleFont, UploadedFont } from "visual/types/Fonts";
 import { makeScripts } from "./makeScripts";
 import { makeStyles } from "./makeStyles";
 

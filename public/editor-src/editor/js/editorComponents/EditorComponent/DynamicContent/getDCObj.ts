@@ -3,7 +3,8 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Dictionary } from "visual/types/utils";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { ECKeyDCInfo } from "../types";
-import { DCApiProxy, DCApiProxyInstance } from "./DCApiProxy";
+import { DCApiProxy } from "./DCApiProxy";
+import { DCApiProxyInstance } from "./DCApiProxyInstance";
 import { placeholderObjFromECKeyDCInfo } from "./utils";
 
 export interface DCObjResult {

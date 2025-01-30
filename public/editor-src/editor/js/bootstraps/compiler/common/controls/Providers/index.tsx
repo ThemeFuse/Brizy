@@ -3,6 +3,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { RegisterParts } from "visual/bootstraps/module/components/RegisterParts";
 import { Config } from "visual/global/Config/InitConfig";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
+import { EditorModeProvider } from "visual/providers/EditorModeProvider";
 import { I18nextProvider } from "visual/providers/I18nProvider";
 import { RenderProvider } from "visual/providers/RenderProvider";
 import { StyleProvider } from "visual/providers/StyleProvider";
@@ -12,7 +13,7 @@ import { I18n } from "visual/utils/i18n";
 import { Props } from "./types";
 
 export function Providers(props: Props): JSX.Element {
-  const { sheet, store, config, children } = props;
+  const { sheet, store, config, children, editorMode } = props;
   const i18n = I18n.init({
     resources: {}
   });
@@ -27,11 +28,13 @@ export function Providers(props: Props): JSX.Element {
           <RegisterParts config={config}>
             <ReduxProvider store={store}>
               <RenderProvider renderType="view">
-                <StyleProvider>
-                  <EditorComponentProvider pageId={pageId}>
-                    {children}
-                  </EditorComponentProvider>
-                </StyleProvider>
+                <EditorModeProvider mode={editorMode}>
+                  <StyleProvider>
+                    <EditorComponentProvider pageId={pageId}>
+                      {children}
+                    </EditorComponentProvider>
+                  </StyleProvider>
+                </EditorModeProvider>
               </RenderProvider>
             </ReduxProvider>
           </RegisterParts>

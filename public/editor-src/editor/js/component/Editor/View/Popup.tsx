@@ -4,19 +4,19 @@ import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/global/hooks";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
+import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { getPageId } from "../utils";
-import { Props } from "./types";
 
-export const Popup = (props: Props): JSX.Element => {
-  const { mode } = props;
+export const Popup = (): JSX.Element => {
   const { PagePopup } = EditorGlobal.getComponents();
   const dbValue = useSelector(pageDataDraftBlocksSelector);
   const state = useSelector<ReduxState, ReduxState>((state) => state);
   const store = useStore();
   const config = useConfig();
+  const { mode } = useEditorMode();
   // @ts-expect-error: ConfigCommon to Config
   const pageId = getPageId(config);
 
@@ -25,7 +25,7 @@ export const Popup = (props: Props): JSX.Element => {
   }
 
   return (
-    <RootContainer className="brz" editorMode={mode}>
+    <RootContainer className="brz">
       <EditorComponentProvider pageId={pageId}>
         {/* @ts-expect-error: Missing EditorComponent props */}
         <PagePopup

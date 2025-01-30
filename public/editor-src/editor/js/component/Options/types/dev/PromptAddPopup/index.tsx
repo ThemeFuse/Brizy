@@ -19,7 +19,7 @@ import {
   globalBlocksAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { insertItem } from "visual/utils/models";
 import { FCC } from "visual/utils/react/types";
 import { uuid } from "visual/utils/uuid";

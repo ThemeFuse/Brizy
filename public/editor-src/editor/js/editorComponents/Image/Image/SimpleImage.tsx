@@ -100,7 +100,8 @@ const SimpleImage = (props: ImageProps): ReactElement => {
     extraAttributes = {},
     getResponsiveUrls,
     store,
-    renderContext
+    renderContext,
+    editorMode
   } = props;
   const { desktopW, tabletW, mobileW, row } = meta;
   const {
@@ -303,7 +304,17 @@ const SimpleImage = (props: ImageProps): ReactElement => {
   const modelClassName = useCSS({
     id: `${_id}-image`,
     componentId: `${componentId}-${_id}-image`,
-    css: styleImage({ v, vs, vd, props: imageSizes, store, renderContext })
+    css: styleImage({
+      v,
+      vs,
+      vd,
+      props: imageSizes,
+      store,
+      contexts: {
+        renderContext,
+        mode: editorMode
+      }
+    })
   });
 
   const imageClassName = isEditor(renderContext)

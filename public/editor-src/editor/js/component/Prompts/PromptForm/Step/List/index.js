@@ -83,17 +83,22 @@ class List extends Component {
   };
 
   handleConfirm = async (confirmed) => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
       onChange
     } = this.context;
 
-    const { status, data } = await updateIntegration({
-      ...appData,
-      formId,
-      confirmationNeeded: confirmed
-    });
+    const { status, data } = await updateIntegration(
+      {
+        ...appData,
+        formId,
+        confirmationNeeded: confirmed
+      },
+      config
+    );
 
     if (status !== 200) {
       this.setState({
@@ -135,6 +140,8 @@ class List extends Component {
   };
 
   handleCreateList = async () => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -149,12 +156,15 @@ class List extends Component {
     });
 
     if (!keysValue.some((key) => !key)) {
-      const { status, data } = await createIntegrationList({
-        formId,
-        id: appData.id,
-        data: apiKeyValue,
-        usedAccount: appData.usedAccount
-      });
+      const { status, data } = await createIntegrationList(
+        {
+          formId,
+          id: appData.id,
+          data: apiKeyValue,
+          usedAccount: appData.usedAccount
+        },
+        config
+      );
 
       if (status !== 200) {
         if (data.message) {
@@ -191,6 +201,8 @@ class List extends Component {
   };
 
   handleNext = async () => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -205,11 +217,14 @@ class List extends Component {
     });
 
     if (active !== appData.usedList) {
-      const { status, data } = await updateIntegration({
-        ...appData,
-        formId,
-        usedList: active
-      });
+      const { status, data } = await updateIntegration(
+        {
+          ...appData,
+          formId,
+          usedList: active
+        },
+        config
+      );
 
       if (status !== 200) {
         this.setState({

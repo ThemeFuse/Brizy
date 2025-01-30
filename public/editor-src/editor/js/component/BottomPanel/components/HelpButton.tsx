@@ -55,7 +55,7 @@ const HelpButton = (): ReactElement => {
         onClickOutside={onClickOutside}
         exceptions={clickOutsideExceptions}
       >
-        <EditorIcon icon={"nc-help"} />
+        {({ ref }) => <EditorIcon icon={"nc-help"} ref={ref} />}
       </ClickOutside>
     </BottomPanelItem>
   );

@@ -65,21 +65,23 @@ class Calendly extends EditorComponent<Value, Props> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          <BoxResizer
-            points={resizerPoints}
-            restrictions={resizerRestrictions}
-            meta={this.props.meta}
-            value={v}
-            onChange={this.handleResizerChange}
-          >
-            {!link ? (
-              <Placeholder icon="calendly" />
-            ) : (
-              <CalendlyComponent link={link} />
-            )}
-          </BoxResizer>
-        </Wrapper>
+        {({ ref }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref })}>
+            <BoxResizer
+              points={resizerPoints}
+              restrictions={resizerRestrictions}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
+            >
+              {!link ? (
+                <Placeholder icon="calendly" />
+              ) : (
+                <CalendlyComponent link={link} />
+              )}
+            </BoxResizer>
+          </Wrapper>
+        )}
       </Toolbar>
     );
   }

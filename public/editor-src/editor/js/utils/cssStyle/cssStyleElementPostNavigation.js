@@ -31,56 +31,80 @@ export function cssStyleElementPostNavigation2TitleFontFamily({
     : "";
 }
 
-export function cssStyleElementPostNavigation2TitleFontSize({ v, device }) {
+export function cssStyleElementPostNavigation2TitleFontSize({
+  v,
+  device,
+  store
+}) {
   return `font-size:${styleTypography2FontSize({
     v,
     device,
+    store,
     prefix: "titleTypography"
   })}px;`;
 }
 
-export function cssStyleElementPostNavigation2TitleLineHeight({ v, device }) {
+export function cssStyleElementPostNavigation2TitleLineHeight({
+  v,
+  device,
+  store
+}) {
   return `line-height:${styleTypography2LineHeight({
     v,
     device,
+    store,
     prefix: "titleTypography"
   })};`;
 }
 
-export function cssStyleElementPostNavigation2TitleFontWeight({ v, device }) {
+export function cssStyleElementPostNavigation2TitleFontWeight({
+  v,
+  device,
+  store
+}) {
   return `font-weight:${styleTypography2FontWeight({
     v,
     device,
+    store,
     prefix: "titleTypography"
   })};`;
 }
 
 export function cssStyleElementPostNavigation2TitleLetterSpacing({
   v,
-  device
+  device,
+  store
 }) {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
+    store,
     prefix: "titleTypography"
   })};`;
 }
 
 export function cssStyleElementPostNavigation2TitleFontVariation({
   v,
-  device
+  device,
+  store
 }) {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    store,
     prefix: "titleTypography"
   });
 }
 
-export function cssStyleElementPostNavigationTitleTextTransform({ v, device }) {
+export function cssStyleElementPostNavigationTitleTextTransform({
+  v,
+  device,
+  store
+}) {
   return cssStyleTextTransforms({
     v,
     device,
+    store,
     prefix: "titleTypography"
   });
 }
@@ -101,80 +125,133 @@ export function cssStyleElementPostNavigation2PostFontFamily({
     : "";
 }
 
-export function cssStyleElementPostNavigation2PostFontSize({ v, device }) {
+export function cssStyleElementPostNavigation2PostFontSize({
+  v,
+  device,
+  store
+}) {
   return `font-size:${styleTypography2FontSize({
     v,
     device,
+    store,
     prefix: "postTypography"
   })}px;`;
 }
 
-export function cssStyleElementPostNavigation2PostLineHeight({ v, device }) {
+export function cssStyleElementPostNavigation2PostLineHeight({
+  v,
+  device,
+  store
+}) {
   return `line-height:${styleTypography2LineHeight({
     v,
     device,
+    store,
     prefix: "postTypography"
   })};`;
 }
 
-export function cssStyleElementPostNavigation2PostFontWeight({ v, device }) {
+export function cssStyleElementPostNavigation2PostFontWeight({
+  v,
+  device,
+  store
+}) {
   return `font-weight:${styleTypography2FontWeight({
     v,
     device,
+    store,
     prefix: "postTypography"
   })};`;
 }
 
-export function cssStyleElementPostNavigation2PostLetterSpacing({ v, device }) {
+export function cssStyleElementPostNavigation2PostLetterSpacing({
+  v,
+  device,
+  store
+}) {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
+    store,
     prefix: "postTypography"
   })};`;
 }
 
-export function cssStyleElementPostNavigation2PostFontVariation({ v, device }) {
+export function cssStyleElementPostNavigation2PostFontVariation({
+  v,
+  device,
+  store
+}) {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    store,
     prefix: "postTypography"
   });
 }
 
-export function cssStyleElementPostNavigationPostTextTransform({ v, device }) {
+export function cssStyleElementPostNavigationPostTextTransform({
+  v,
+  device,
+  store
+}) {
   return cssStyleTextTransforms({
     v,
     device,
+    store,
     prefix: "postTypography"
   });
 }
 
-export function cssStyleElementPostNavigationColorTitle({ v, device, state }) {
+export function cssStyleElementPostNavigationColorTitle({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleColor({
     v,
     device,
     prefix: "titleColor",
-    state
+    state,
+    store
   });
 }
 
-export function cssStyleElementPostNavigationColorPost({ v, device, state }) {
+export function cssStyleElementPostNavigationColorPost({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleColor({
     v,
     device,
     prefix: "postColor",
-    state
+    state,
+    store
   });
 }
 
-export function cssStyleElementPostNavigationSpacing({ v, device, state }) {
+export function cssStyleElementPostNavigationSpacing({
+  v,
+  device,
+  state,
+  store
+}) {
   const spacing = styleElementPostNavigationSpacing({
     v,
     device,
-    state
+    state,
+    store
   });
 
-  const showPost = styleElementPostNavigationShowPost({ v, device, state });
+  const showPost = styleElementPostNavigationShowPost({
+    v,
+    device,
+    state,
+    store
+  });
 
   return spacing === undefined
     ? ""
@@ -186,12 +263,14 @@ export function cssStyleElementPostNavigationSpacing({ v, device, state }) {
 export function cssStyleElementPostNavigationShowSeparation({
   v,
   device,
-  state
+  state,
+  store
 }) {
   const showSeparation = styleElementPostNavigationShowSeparation({
     v,
     device,
-    state
+    state,
+    store
   });
 
   return showSeparation === undefined || showSeparation !== "off"

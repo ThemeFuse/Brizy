@@ -1,5 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -19,16 +19,17 @@ export const getItems = <
   device
 }: Params<M, P, S>): ToolbarItemType[] => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+
   const detailButtonColorOpacity = dvv("detailButtonColorOpacity");
   const detailButtonBgColorOpacity = dvv("detailButtonBgColorOpacity");
 
-  const detailButtonBgColor = getColor(
+  const detailButtonBgColor = getColorToolbar(
     dvv("detailButtonBgColorPalette"),
     dvv("detailButtonBgColorHex"),
     detailButtonBgColorOpacity
   );
 
-  const detailButtonColor = getColor(
+  const detailButtonColor = getColorToolbar(
     dvv("detailButtonColorPalette"),
     dvv("detailButtonColorHex"),
     detailButtonColorOpacity

@@ -43,55 +43,59 @@ export function MultiSelect<T>({
 
   return (
     <ClickOutside onClickOutside={(): void => setIsOpen(false)}>
-      <div className={_className}>
-        <Manager>
-          <Reference>
-            {({ ref }): ReactElement => (
-              <SelectValue
-                customRef={ref}
-                items={items}
-                value={value}
-                valueIsLoading={valueIsLoading}
-                showArrow={showArrow}
-                placeholder={placeholder}
-                onClick={(): void => setIsOpen(!isOpen)}
-              />
-            )}
-          </Reference>
-          <div className="brz-ed-control__multiSelect2__dropdown-container">
-            <Popper>
-              {({ ref, style }): ReactElement | null => {
-                if (!isOpen) {
-                  return null;
-                }
+      {({ ref }) => (
+        <div className={_className} ref={ref}>
+          <Manager>
+            <Reference>
+              {({ ref }): ReactElement => (
+                <SelectValue
+                  customRef={ref}
+                  items={items}
+                  value={value}
+                  valueIsLoading={valueIsLoading}
+                  showArrow={showArrow}
+                  placeholder={placeholder}
+                  onClick={(): void => setIsOpen(!isOpen)}
+                />
+              )}
+            </Reference>
+            <div className="brz-ed-control__multiSelect2__dropdown-container">
+              <Popper>
+                {({ ref, style }): ReactElement | null => {
+                  if (!isOpen) {
+                    return null;
+                  }
 
-                return (
-                  <SelectDropdown
-                    customRef={ref}
-                    items={items}
-                    value={value}
-                    style={style}
-                    search={search}
-                    searchIsEmpty={searchIsEmpty}
-                    searchIsLoading={searchIsLoading}
-                    useAsSimpleSelect={useAsSimpleSelect}
-                    onItemClick={(item): void => {
-                      onChange(toggleItemValue(item, value, useAsSimpleSelect));
+                  return (
+                    <SelectDropdown
+                      customRef={ref}
+                      items={items}
+                      value={value}
+                      style={style}
+                      search={search}
+                      searchIsEmpty={searchIsEmpty}
+                      searchIsLoading={searchIsLoading}
+                      useAsSimpleSelect={useAsSimpleSelect}
+                      onItemClick={(item): void => {
+                        onChange(
+                          toggleItemValue(item, value, useAsSimpleSelect)
+                        );
 
-                      if (useAsSimpleSelect) {
-                        setIsOpen(false);
+                        if (useAsSimpleSelect) {
+                          setIsOpen(false);
+                        }
+                      }}
+                      onSearchChange={
+                        onSearchChange && ((s): void => onSearchChange(s))
                       }
-                    }}
-                    onSearchChange={
-                      onSearchChange && ((s): void => onSearchChange(s))
-                    }
-                  />
-                );
-              }}
-            </Popper>
-          </div>
-        </Manager>
-      </div>
+                    />
+                  );
+                }}
+              </Popper>
+            </div>
+          </Manager>
+        </div>
+      )}
     </ClickOutside>
   );
 }

@@ -1,4 +1,4 @@
-import { EntityTypeRule } from "visual/types";
+import { EntityTypeRule } from "visual/types/Rule";
 
 export type StatusRule = "published" | "draft";
 
@@ -6,7 +6,7 @@ export interface ValueItems {
   title: string;
   value: EntityTypeRule;
   status?: StatusRule;
-};
+}
 
 export type CmsListItem = {
   title: string;

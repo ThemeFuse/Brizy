@@ -1,6 +1,6 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { defaultValueValue } from "visual/utils/onChange";

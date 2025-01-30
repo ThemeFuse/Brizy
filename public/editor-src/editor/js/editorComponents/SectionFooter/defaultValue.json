@@ -37,6 +37,7 @@
     "bgPopulationEntityType": "",
     "bgPopulationEntityId": "",
     "bgImageExtension": "",
+    "bgAlt": "",
 
     "bgSize": "cover",
     "bgRepeat": "off",
@@ -120,6 +121,7 @@
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
     "maskCustomUploadImageType": "internal",
+    "maskCustomUploadAlt": "",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

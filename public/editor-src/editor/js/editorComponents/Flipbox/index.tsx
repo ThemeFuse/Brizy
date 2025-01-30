@@ -26,27 +26,23 @@ import {
 import { getHeight } from "./utils";
 
 class Flipbox extends EditorComponent<Value, Props, _State> {
-  static get componentId(): ElementTypes.Flipbox {
-    return ElementTypes.Flipbox;
-  }
-
   static experimentalDynamicContent = true;
   static defaultValue = defaultValue;
-
   state = {
     isTransitioned: false,
     height: 0,
     itTurns: false
   };
-
   lastFlipboxActive: FlipboxType = "front";
-
   animationFrameId: MValue<number> = undefined;
   updateHeightFrameId: MValue<number> = undefined;
-
   frontSideNode: MValue<HTMLDivElement> = undefined;
   backSideNode: MValue<HTMLDivElement> = undefined;
   wrapperRef = React.createRef<HTMLDivElement>();
+
+  static get componentId(): ElementTypes.Flipbox {
+    return ElementTypes.Flipbox;
+  }
 
   componentDidMount(): void {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(toolbar, sidebar, {
@@ -173,8 +169,8 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
     const flipboxActive = this.dvv("flipboxActive");
 
     const animationClassName = `brz-flipbox-${transition}-${direction}`;
-    const _isView = isView(this.renderContext);
-    const _isEditor = isEditor(this.renderContext);
+    const _isView = isView(this.props.renderContext);
+    const _isEditor = isEditor(this.props.renderContext);
 
     const className = classnames(
       "brz-flipbox",
@@ -191,7 +187,7 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

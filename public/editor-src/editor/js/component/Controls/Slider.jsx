@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import _ from "underscore";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import RCSlider from "rc-slider";
+import React, { Component } from "react";
 
 export default class Slider extends Component {
   static defaultProps = {
@@ -9,8 +9,8 @@ export default class Slider extends Component {
     min: 0,
     max: 100,
     step: 1,
-    onChange: _.noop,
-    onChangeEnd: _.noop
+    onChange: noop,
+    onChangeEnd: noop
   };
 
   render() {

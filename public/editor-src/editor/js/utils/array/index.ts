@@ -1,9 +1,8 @@
-import { findIndex as _findIndex } from "underscore";
-import { mApply, MValue } from "visual/utils/value";
-import { Reader } from "visual/utils/types/Type";
-import { onEmpty as _onEmpty } from "visual/utils/value";
+import { findIndex as _findIndex } from "es-toolkit/compat";
 import { insert, removeAt } from "timm";
 import { IsEqual } from "visual/utils/types/Eq";
+import { Reader } from "visual/utils/types/Type";
+import { MValue, onEmpty as _onEmpty, mApply } from "visual/utils/value";
 
 export const flatMap = <T, U>(
   arr: T[],
@@ -73,14 +72,14 @@ export const readIndex = (i: number, arr: unknown[]): MValue<number> =>
  * If index is 0, return last index
  */
 export const prevIndex = (i: number, arr: Array<unknown>): MValue<number> =>
-  mApply(i => (i || arr.length) - 1, readIndex(i, arr));
+  mApply((i) => (i || arr.length) - 1, readIndex(i, arr));
 
 /**
  * Return next index to current in array
  * If index is the last, return first index
  */
 export const nextIndex = (i: number, arr: Array<unknown>): MValue<number> =>
-  mApply(i => (i + 1) % arr.length, readIndex(i, arr));
+  mApply((i) => (i + 1) % arr.length, readIndex(i, arr));
 
 /**
  * Return index of value in array or undefined
@@ -249,5 +248,5 @@ export const eq = <T>(eq: IsEqual<T>, a: T[], b: T[]): boolean => {
 };
 
 export const eliminateItems = <T>(arr: T[], toRemove: unknown[]): T[] => {
-  return arr.filter(el => !toRemove.includes(el));
+  return arr.filter((el) => !toRemove.includes(el));
 };

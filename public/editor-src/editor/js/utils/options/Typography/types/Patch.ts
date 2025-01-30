@@ -1,8 +1,8 @@
-import { FontTransform } from "visual/types";
+import { FontFamilyType } from "visual/types/Fonts";
+import { FontTransform } from "visual/types/Style";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import { Weight } from "visual/utils/fonts/Weight";
 import * as FamilyType from "visual/utils/fonts/familyType";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
 import { Positive } from "visual/utils/math/Positive";
 import * as Obj from "visual/utils/reader/object";
 import { Value } from "./Value";

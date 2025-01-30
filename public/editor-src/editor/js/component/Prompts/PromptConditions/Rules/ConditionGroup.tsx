@@ -3,12 +3,16 @@ import React from "react";
 import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
-import { Rule } from "visual/types";
+import { Rule } from "visual/types/Rule";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
-import { getValue } from "./utils/index";
+import { t } from "visual/utils/i18n";
+import { MValue } from "visual/utils/value";
+import { ControlTypeOptions } from "../common/ControlTypeOptions";
+import { LegacyRuleList } from "../common/LegacyRuleList";
+import { ListItems } from "../common/ListItems";
 import {
   RuleList,
   RuleListItem,
@@ -16,11 +20,7 @@ import {
   isLegacyRuleListItem
 } from "./types";
 import { getRulesListIndexByRule } from "./utils";
-import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
-import { LegacyRuleList } from "../common/LegacyRuleList";
-import { ListItems } from "../common/ListItems";
-import { ControlTypeOptions } from "../common/ControlTypeOptions";
+import { getValue } from "./utils/index";
 
 interface ConditionGroupProps {
   rule: Rule;

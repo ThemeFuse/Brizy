@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { Component, ReactElement } from "react";
-import _ from "underscore";
 import {
   ChangeFunction,
   OnSwatchHover
@@ -60,7 +60,7 @@ class Brizy extends Component<Props> {
       hsv,
       rgb,
       renderers = {},
-      onChange = _.noop
+      onChange = noop
     } = this.props;
 
     const _className = classnames(

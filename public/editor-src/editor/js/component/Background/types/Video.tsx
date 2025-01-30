@@ -1,5 +1,6 @@
 import jQuery from "jquery";
 import React, { ReactElement, RefObject, useMemo, useRef } from "react";
+import { useConfig } from "visual/global/hooks";
 import { customFileUrl } from "visual/utils/customFile";
 import { videoUrl } from "visual/utils/video";
 import "../lib/jquery.background-video.js";
@@ -67,6 +68,7 @@ const Video = ({
   const videoRef = useRef<HTMLElement>(null);
   const customVideoRef = useRef<HTMLVideoElement>(null);
   const isInitialMount = useRef(true);
+  const config = useConfig();
 
   useLayoutEffect(() => {
     if (videoRef.current) {
@@ -139,7 +141,7 @@ const Video = ({
     video && !isCustomVideo
       ? videoUrl(video, settings)
       : dataType === VideoType.BgVideoCustom && customVideo
-        ? customFileUrl(customVideo)
+        ? customFileUrl(customVideo, config)
         : customVideo;
 
   const getContent = useMemo((): ReactElement => {

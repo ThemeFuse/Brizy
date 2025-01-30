@@ -1,21 +1,9 @@
 import { Num, Str } from "@brizy/readers";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
-
-// region EcwidStoreId
-declare const storeId: unique symbol;
-
-export type EcwidStoreId = string & { [storeId]: "EcwidStoreId" };
-// endregion
+import { EcwidProductId, EcwidProductIdWithSlug } from "./types";
 
 // region EcwidProductId
-declare const productId: unique symbol;
-declare const productIdWithSlug: unique symbol;
-
-export type EcwidProductId = number & { [productId]: "EcwidProductId" };
-export type EcwidProductIdWithSlug = string & {
-  [productIdWithSlug]: "EcwidProductIdWithSlug";
-};
 
 export const isEcwidProductId = (id: unknown): id is EcwidProductId =>
   !!Num.read(id);
@@ -55,16 +43,4 @@ export const getEcwidProductId = (id: Literal): EcwidProductId => {
 
   return id as EcwidProductId;
 };
-// endregion
-
-// region EcwidCategoryId
-declare const categoryId: unique symbol;
-
-export type EcwidCategoryId = number & { [categoryId]: "EcwidCategoryId" };
-// endregion
-
-// region EcwidOrderId
-declare const orderId: unique symbol;
-
-export type EcwidOrderId = string & { [orderId]: "EcwidOrderId" };
 // endregion

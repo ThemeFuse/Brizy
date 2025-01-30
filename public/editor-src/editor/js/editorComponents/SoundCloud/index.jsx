@@ -6,6 +6,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { isEditor } from "visual/providers/RenderProvider";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -24,11 +25,11 @@ const resizerPoints = [
 ];
 
 class SoundCloud extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "SoundCloud";
   }
-
-  static defaultValue = defaultValue;
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -81,7 +82,7 @@ class SoundCloud extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -89,7 +90,7 @@ class SoundCloud extends EditorComponent {
     // intrinsicRatioVideos - property contain function - makeFit which changes iframes width
     // and breaks our code(video, map inside megamenu isn't showing as example)
     const wrapperClassName = classnames("brz-iframe", "intrinsic-ignore", {
-      "brz-blocked": isEditor(this.renderContext)
+      "brz-blocked": isEditor(this.props.renderContext)
     });
     let { url, autoPlay, showArtwork } = v;
     autoPlay = autoPlay === "on";
@@ -114,19 +115,28 @@ class SoundCloud extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={this.getResizerRestrictions(v)}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              {content}
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  restrictions={this.getResizerRestrictions(v)}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                >
+                  {content}
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

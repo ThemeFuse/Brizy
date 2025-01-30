@@ -71,7 +71,8 @@ export const mockValue: Value = {
   tabletThumbWidthSuffix: "px",
   mobileThumbWidth: 150,
   mobileThumbWidthSuffix: "px",
-  _id: "1"
+  _id: "1",
+  customCSS: ""
 };
 
 export const emptyImage: ElementModelType = { type: "Image", value: {} };

@@ -6,7 +6,7 @@ import {
 import { Cloud } from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -27,7 +27,6 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { capitalize } from "visual/utils/string";
 import { getInstanceParentId } from "visual/utils/toolbar";
 
-
 export const getItems: GetItems = ({ v, device, component, context }) => {
   const config = component.getGlobalConfig();
   const disabledSavedBlock =
@@ -42,7 +41,7 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
     defaultValueValue({ v, key, device, state: "normal" });
   const sectionHeightSuffix = dvv("sectionHeightSuffix");
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
@@ -392,8 +391,8 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
       id: "makeItSaved",
       type: "savedBlock",
       devices: "desktop",
-      position: 90,
       disabled: disabledSavedBlock,
+      position: 90,
       config: {
         icon: "nc-save-section",
         blockType: "normal",

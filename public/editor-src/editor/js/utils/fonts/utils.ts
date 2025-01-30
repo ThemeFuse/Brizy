@@ -1,5 +1,5 @@
-import { Config } from "visual/global/Config";
-import { FontStyle } from "visual/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { FontStyle } from "visual/types/Style";
 import { makeStyleCSSVar } from "visual/utils/fonts/makeGlobalStylesTypography";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
@@ -27,7 +27,7 @@ export const makeGlobalStylesTextTransform = (
     mobileFontWeight,
     id
   }: Partial<FontStyle> & { id: string },
-  config: Config
+  config: ConfigCommon
 ): string => {
   const boldValue = bold ? "bold" : fontWeight;
   const mobileBoldValue = bold ? "bold" : mobileFontWeight;

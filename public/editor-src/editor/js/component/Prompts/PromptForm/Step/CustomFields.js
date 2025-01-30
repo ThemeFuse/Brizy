@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { replaceAt } from "timm";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { Fields } from "../../common/GlobalApps/StepsView/Fields";
-import { getFields, checkRequiredFields } from "../../common/utils";
-import { pendingRequest } from "visual/utils/api";
+import { checkRequiredFields, getFields } from "../../common/utils";
+import { updateIntegration } from "../api";
 
 class CustomFields extends Component {
   static contextType = Context;
@@ -57,6 +57,8 @@ class CustomFields extends Component {
   };
 
   handleNext = async () => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -79,12 +81,15 @@ class CustomFields extends Component {
         nextLoading: false
       });
     } else {
-      const { status, data } = await updateIntegration({
-        ...appData,
-        formId,
-        fieldsMap: JSON.stringify(formFields),
-        completed: true
-      });
+      const { status, data } = await updateIntegration(
+        {
+          ...appData,
+          formId,
+          fieldsMap: JSON.stringify(formFields),
+          completed: true
+        },
+        config
+      );
 
       if (status !== 200) {
         this.setState({

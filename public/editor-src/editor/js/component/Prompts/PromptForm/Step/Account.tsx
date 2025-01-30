@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
@@ -17,6 +18,7 @@ interface AppData {
 interface Props {
   app: { id: string; data: AppData };
   formId: string;
+  config: ConfigCommon;
   onChange: (id: string, data: AppData) => void;
   onDisconnectApp: (id: string) => void;
   onChangeProgress: (progress: { showProgress: boolean }) => void;
@@ -74,6 +76,8 @@ class Account extends Component<Props, State> {
   };
 
   handleDisconnect = async (): Promise<void> => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -87,11 +91,14 @@ class Account extends Component<Props, State> {
       error: null
     });
 
-    const { status, data } = await updateIntegration({
-      ...appData,
-      formId,
-      usedAccount: null
-    });
+    const { status, data } = await updateIntegration(
+      {
+        ...appData,
+        formId,
+        usedAccount: null
+      },
+      config
+    );
 
     if (status !== 200) {
       this.setState({
@@ -145,6 +152,8 @@ class Account extends Component<Props, State> {
   };
 
   handleNext = async (): Promise<void> => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -160,11 +169,14 @@ class Account extends Component<Props, State> {
     });
 
     if (active !== appData.usedAccount) {
-      const { status, data } = await updateIntegration({
-        ...appData,
-        formId,
-        usedAccount: active
-      });
+      const { status, data } = await updateIntegration(
+        {
+          ...appData,
+          formId,
+          usedAccount: active
+        },
+        config
+      );
 
       if (status !== 200) {
         this.setState({

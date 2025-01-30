@@ -15,8 +15,7 @@ import { optionValueToModel } from "visual/component/Options/types/dev/FontStyle
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { DeviceMode } from "visual/types";
-import { getFontById } from "visual/utils/fonts";
-import { ModelFamilyType } from "visual/utils/fonts/getFontById";
+import { ModelFamilyType, getFontById } from "visual/utils/fonts/getFontById";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { FCC } from "visual/utils/react/types";

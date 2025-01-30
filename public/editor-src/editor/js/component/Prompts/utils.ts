@@ -1,3 +1,4 @@
+import { Arr, Str } from "@brizy/readers";
 import { RulesState as PageArticleRulesState } from "visual/component/Prompts/PromptPageArticle/types";
 import {
   Item,
@@ -5,7 +6,6 @@ import {
   Valid
 } from "visual/component/Prompts/PromptPageRules/types";
 import {
-  Layout,
   Tabs,
   ThemeLayout,
   getTabs,
@@ -14,9 +14,8 @@ import {
 import { Shopify } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { Layout } from "visual/types/Layout";
 import { t } from "visual/utils/i18n";
-import * as Arr from "visual/utils/reader/array";
-import * as Str from "visual/utils/reader/string";
 import { MValue } from "visual/utils/value";
 
 export const getChoices = (templates: Shopify["templates"]): ThemeLayout[] =>

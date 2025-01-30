@@ -1,8 +1,7 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-
 
 export function getItems({ v, device, state, component }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -12,7 +11,7 @@ export function getItems({ v, device, state, component }) {
   const review = dvv("review") === "true";
   const WPComments = type !== "WPComments";
 
-  const borderColor = getColor(
+  const borderColor = getColorToolbar(
     dvv("borderColorPalette"),
     dvv("borderColorHex"),
     dvv("borderColorOpacity")

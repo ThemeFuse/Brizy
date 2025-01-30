@@ -10,8 +10,8 @@ import { types as Devices } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 
 export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
-  const { v, renderContext } = data;
-  const _isEditor = isEditor(renderContext);
+  const { v, contexts } = data;
+  const _isEditor = isEditor(contexts.renderContext);
   const get = (k: string) => {
     return Devices.some((device) => {
       return defaultValueValue({
@@ -128,7 +128,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
 export function styleContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const _isEditor = isEditor(renderContext);
   const styles = {
     ".brz &&:hover": {

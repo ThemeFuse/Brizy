@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { extend } from "es-toolkit/compat";
 import React from "react";
-import _ from "underscore";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu from "visual/component/ContextMenu";
@@ -19,7 +19,7 @@ import {
   validateKeyByProperty
 } from "visual/utils/onChange";
 import * as Position from "visual/utils/position/element";
-import { attachRef } from "visual/utils/react";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -33,22 +33,19 @@ import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
 
 export default class Cloneable extends EditorComponent {
-  static get componentId() {
-    return "Cloneable";
-  }
-
   static defaultProps = {
     className: "",
     customID: "",
     showBorder: true,
     meta: {}
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   containerBorder = React.createRef();
+
+  static get componentId() {
+    return "Cloneable";
+  }
 
   shouldComponentUpdate(nextProps) {
     return this.optionalSCU(nextProps);
@@ -120,7 +117,7 @@ export default class Cloneable extends EditorComponent {
       device: MOBILE
     });
 
-    return _.extend({}, meta, {
+    return extend({}, meta, {
       desktopW,
       desktopWNoSpacing,
       tabletW,
@@ -155,7 +152,7 @@ export default class Cloneable extends EditorComponent {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
@@ -173,7 +170,7 @@ export default class Cloneable extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       className
@@ -204,7 +201,7 @@ export default class Cloneable extends EditorComponent {
 
     return (
       <CustomCSS selector={this.getId()} css={customCSS}>
-        <Items {...itemsProps} />
+        {({ ref: cssRef }) => <Items {...itemsProps} containerRef={cssRef} />}
       </CustomCSS>
     );
   }
@@ -235,7 +232,7 @@ export default class Cloneable extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       cssClass || customClassName,
@@ -267,44 +264,49 @@ export default class Cloneable extends EditorComponent {
                     <ContextMenu
                       {...this.makeContextMenuProps(contextMenuConfig)}
                     >
-                      <ContainerBorder
-                        ref={this.containerBorder}
-                        type="wrapper__clone"
-                        color="grey"
-                        borderStyle="dotted"
-                        renderButtonWrapper={this.renderToolbar}
-                      >
-                        {({
-                          ref: containerBorderRef,
-                          attr: containerBorderAttr,
-                          button: ContainerBorderButton,
-                          border: ContainerBorderBorder
-                        }) => (
-                          <Animation
-                            ref={(v) => {
-                              attachRef(v, containerBorderRef);
-                              attachRef(v, ref || null);
-                            }}
-                            component={"div"}
-                            componentProps={{
-                              ...parseCustomAttributes(customAttributes),
-                              ...containerBorderAttr,
-                              ...(id && { id }),
-                              ...extraAttr,
-                              className: classnames(
-                                className,
-                                draggableClassName
-                              )
-                            }}
-                            animationId={this.getId()}
-                            animationClass={animationClassName}
-                          >
-                            {this.renderContent(v, vs, vd)}
-                            {ContainerBorderButton}
-                            {ContainerBorderBorder}
-                          </Animation>
-                        )}
-                      </ContainerBorder>
+                      {({ ref: contextMenuRef }) => (
+                        <ContainerBorder
+                          ref={this.containerBorder}
+                          type="wrapper__clone"
+                          color="grey"
+                          borderStyle="dotted"
+                          renderButtonWrapper={this.renderToolbar}
+                        >
+                          {({
+                            ref: containerBorderRef,
+                            attr: containerBorderAttr,
+                            button: ContainerBorderButton,
+                            border: ContainerBorderBorder
+                          }) => (
+                            <Animation
+                              ref={(v) => {
+                                attachRefs(v, [
+                                  containerBorderRef,
+                                  contextMenuRef,
+                                  ref || null
+                                ]);
+                              }}
+                              component={"div"}
+                              componentProps={{
+                                ...parseCustomAttributes(customAttributes),
+                                ...containerBorderAttr,
+                                ...(id && { id }),
+                                ...extraAttr,
+                                className: classnames(
+                                  className,
+                                  draggableClassName
+                                )
+                              }}
+                              animationId={this.getId()}
+                              animationClass={animationClassName}
+                            >
+                              {this.renderContent(v, vs, vd)}
+                              {ContainerBorderButton}
+                              {ContainerBorderBorder}
+                            </Animation>
+                          )}
+                        </ContainerBorder>
+                      )}
                     </ContextMenu>
                   );
                 }}
@@ -379,22 +381,24 @@ export default class Cloneable extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       cssClass || customClassName,
       propsClassName
     );
 
+    const componentProps = {
+      ...parseCustomAttributes(customAttributes),
+      ...(id && { id }),
+      className
+    };
+
     return (
       <Animation
         iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
         component={"div"}
-        componentProps={{
-          ...parseCustomAttributes(customAttributes),
-          ...(id && { id }),
-          className
-        }}
+        componentProps={componentProps}
         animationId={this.getId()}
         animationClass={animationClassName}
       >
@@ -407,9 +411,11 @@ export default class Cloneable extends EditorComponent {
     <Toolbar
       {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
     >
-      <SortableHandle renderContext={this.renderContext}>
-        <Button />
-      </SortableHandle>
+      {({ ref }) => (
+        <SortableHandle renderContext={this.props.renderContext}>
+          <Button containerRef={ref} />
+        </SortableHandle>
+      )}
     </Toolbar>
   );
 }

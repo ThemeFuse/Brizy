@@ -5,7 +5,7 @@ export interface RedirectConfig {
 
 export type FooterRoutes = "/my-account" | "/favorites" | "/cart";
 
-export type ContentRoutes = "/cart" | "/thank-you" | "/favorites";
+export type ContentRoutes = "/cart" | "/thank-you" | "/favorites" | "/";
 
 export interface EcwidConfig {
   // Products
@@ -91,6 +91,9 @@ export interface EcwidConfig {
   product_details_position_save_for_later?: number;
   product_details_position_share_buttons?: number;
   product_details_layout?: string;
+
+  prefetchScripts?: boolean;
+  onPageLoadCallbacks?: VoidFunction[];
 }
 
 export const eq = (a: EcwidConfig, b: EcwidConfig): boolean => {

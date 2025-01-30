@@ -3,6 +3,7 @@ import { Config } from "visual/global/Config/InitConfig";
 import { RenderType } from "visual/providers/RenderProvider";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
+import { FontFamilyType } from "visual/types/Fonts";
 import {
   empty as pxSuffix,
   fromString as readSuffix
@@ -11,10 +12,7 @@ import {
   empty as normalWeight,
   fromNumber as readWeight
 } from "visual/utils/fonts/Weight";
-import {
-  FontFamilyType,
-  fromString as readFontFamilyType
-} from "visual/utils/fonts/familyType";
+import { fromString as readFontFamilyType } from "visual/utils/fonts/familyType";
 import {
   Zero as emptyPositive,
   fromNumber as readPositive
@@ -391,13 +389,11 @@ const mockDataForReduxStore = {
   configId: "test",
   config: {
     mode: "page"
-  }
+  },
+  editorMode: "page"
 };
 
 beforeAll(() => {
-  // @ts-expect-error IS_PREVIEW si on build time added by webpack
-  global.IS_PREVIEW = false;
-
   new Config({
     // @ts-expect-error: Mock ConfigCommon
     config: mockDataForReduxStore.config,

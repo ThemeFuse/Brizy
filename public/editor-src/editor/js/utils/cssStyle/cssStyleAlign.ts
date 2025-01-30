@@ -18,7 +18,7 @@ interface VerticalAlign {
   between: string;
 }
 
-const FlexHorizontalAligns: HorizontalAlign = {
+export const FlexHorizontalAligns: HorizontalAlign = {
   left: "flex-start",
   center: "center",
   right: "flex-end"
@@ -42,7 +42,7 @@ const readVerticalAlign: Reader<keyof VerticalAlign> = (v) => {
   return undefined;
 };
 
-const readHorizontalAlign: Reader<keyof HorizontalAlign> = (v) => {
+export const readHorizontalAlign: Reader<keyof HorizontalAlign> = (v) => {
   switch (v) {
     case "left":
     case "center":

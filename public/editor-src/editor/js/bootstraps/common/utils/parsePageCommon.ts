@@ -1,4 +1,4 @@
-import { PageCommon } from "visual/types";
+import { PageCommon } from "visual/types/Page";
 import { mPipe } from "visual/utils/fp";
 import * as Json from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";

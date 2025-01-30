@@ -2,8 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const swcrc = require("./swc.config.all");
 
 const getExtensions = (target) => {
@@ -103,19 +102,16 @@ module.exports = (options = {}) => {
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(BUILD_MODE),
         TARGET: JSON.stringify(options.TARGET),
-        IS_EDITOR: true,
-        IS_PREVIEW: false,
         AUTHORIZATION_URL: JSON.stringify(options.AUTHORIZATION_URL)
       }),
       new webpack.ProvidePlugin({
-        process: "process/browser"
-      }),
-      new webpack.ProvidePlugin({
+        process: "process/browser",
         Buffer: ["buffer", "Buffer"]
       }),
       new CopyPlugin({
         patterns: getVendors(BUILD_MODE)
-      })
+      }),
+      ...(options.ANALYZE ? [new BundleAnalyzerPlugin()] : [])
     ],
     optimization: {
       splitChunks: {

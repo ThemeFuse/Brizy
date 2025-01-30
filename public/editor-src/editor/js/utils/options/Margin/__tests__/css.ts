@@ -3,6 +3,7 @@ import {
   Zero as emptyPositive,
   fromNumber as readPositive
 } from "visual/utils/math/Positive";
+import { config } from "../../../../../../jest-utils/mocks";
 import { css as cssStyleMargin } from "../css";
 
 describe("Testing cssStyleMargin that should return CSS for margin", () => {
@@ -33,26 +34,27 @@ describe("Testing cssStyleMargin that should return CSS for margin", () => {
   };
 
   test("Without meta, should return empty string", () => {
-    expect(cssStyleMargin({ value })).toBe("margin:0;");
+    expect(cssStyleMargin({ value, config })).toBe("margin:0;");
   });
 
   test("Grouped, should return grouped margin", () => {
-    expect(cssStyleMargin({ meta: { isNoEmptyGrouped: true }, value })).toBe(
-      "margin:1px;"
-    );
+    expect(
+      cssStyleMargin({ meta: { isNoEmptyGrouped: true }, value, config })
+    ).toBe("margin:1px;");
   });
 
   test("Ungrouped, should return ungrouped margin", () => {
-    expect(cssStyleMargin({ meta: { isNoEmptyUngrouped: true }, value })).toBe(
-      "margin:1px 1px 1px 1px;"
-    );
+    expect(
+      cssStyleMargin({ meta: { isNoEmptyUngrouped: true }, value, config })
+    ).toBe("margin:1px 1px 1px 1px;");
   });
 
   test("Grouped and ungrouped, should return grouped margin", () => {
     expect(
       cssStyleMargin({
         meta: { isNoEmptyGrouped: true, isNoEmptyUngrouped: true },
-        value
+        value,
+        config
       })
     ).toBe("margin:1px;");
   });

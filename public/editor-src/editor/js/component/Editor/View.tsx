@@ -2,7 +2,7 @@ import React from "react";
 import {
   EditorMode,
   getCommonEditorMode
-} from "visual/global/EditorModeContext";
+} from "visual/providers/EditorModeProvider";
 import { Page } from "./View/Page";
 import { Popup } from "./View/Popup";
 import { Story } from "./View/Story";
@@ -11,13 +11,13 @@ const View = ({ editorMode }: { editorMode: EditorMode }) => {
   const type = getCommonEditorMode(editorMode);
   switch (type) {
     case "popup": {
-      return <Popup mode={editorMode} />;
+      return <Popup />;
     }
     case "story": {
-      return <Story mode={editorMode} />;
+      return <Story />;
     }
     case "page": {
-      return <Page mode={editorMode} />;
+      return <Page />;
     }
   }
 };

@@ -4,6 +4,7 @@ import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/D
 import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getDataSkin } from "./getDataSkin";
+import { Base64 } from "js-base64";
 
 class WPComments extends Component {
   static defaultProps = {
@@ -228,9 +229,14 @@ class WPComments extends Component {
 
   renderForView() {
     const { limit, skin, linkPage } = this.props;
+    const encodedLinkPage = Base64.encode(linkPage);
     const placeholder = makePlaceholder({
       content: "{{editor_comments}}",
-      attr: { limit, skin, linkPage }
+      attr: {
+        limit,
+        skin,
+        linkPage: encodedLinkPage
+      }
     });
 
     return (

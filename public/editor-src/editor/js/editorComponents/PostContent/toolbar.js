@@ -1,5 +1,5 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
@@ -17,7 +17,7 @@ export function getItems({ v, device, context, component }) {
 
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("paragraphColorPalette"),
     dvv("paragraphColorHex"),
     dvv("paragraphColorOpacity")

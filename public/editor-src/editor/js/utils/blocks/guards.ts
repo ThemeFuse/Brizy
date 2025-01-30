@@ -3,7 +3,7 @@ import {
   CollectionItemRule,
   CollectionTypeRule,
   Rule
-} from "visual/types";
+} from "visual/types/Rule";
 
 export function isCollectionItemRule(rule: Rule): rule is CollectionItemRule {
   const appliedFor = "appliedFor" in rule;

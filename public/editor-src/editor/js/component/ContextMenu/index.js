@@ -1,4 +1,5 @@
 import React, {
+  forwardRef,
   useCallback,
   useContext,
   useEffect,
@@ -6,7 +7,6 @@ import React, {
   useRef
 } from "react";
 import { contextMenu } from "react-contexify";
-import { findDOMNode } from "react-dom";
 import { rolesHOC } from "visual/component/Roles";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import { ContextMenuExtendContext } from "./ContextMenuExtend";
@@ -18,12 +18,8 @@ const meta = {
   depth: 0
 };
 
-// this component is a temporary hacky solution
-// to avoid ContextMenuProvider to render a wrapper div
-// because that breaks our layout
-const TmpContextMenuWrapper = ({ id, children, setRef }) => {
-  const wrapperRef = useRef();
-
+// this component is needed to avoid ContextMenuProvider to render a wrapper div  because that breaks our layout
+const ContextMenuWrapper = forwardRef(({ id, children }, wrapperRef) => {
   const handleContextMenu = useCallback(
     (e) => {
       if (!e.shiftKey) {
@@ -37,8 +33,7 @@ const TmpContextMenuWrapper = ({ id, children, setRef }) => {
   );
 
   useEffect(() => {
-    // eslint-disable-next-line react/no-find-dom-node
-    const element = findDOMNode(wrapperRef.current);
+    const element = wrapperRef.current;
 
     if (element) {
       element.addEventListener("contextmenu", handleContextMenu);
@@ -51,18 +46,16 @@ const TmpContextMenuWrapper = ({ id, children, setRef }) => {
     };
   }, [id]);
 
-  return React.Children.only(
-    React.cloneElement(children, { ref: setRef ?? wrapperRef })
-  );
-};
+  return children;
+});
 
 export const ContextMenuProvider = ({
   getItems: _getItems,
   children,
   id,
-  componentId,
-  setRef
+  componentId
 }) => {
+  const ref = useRef(null);
   const { getParentContextMenuExtendItems } =
     useContext(ContextMenuExtendContext) ?? {};
   const { getParentContextMenuItems } = useContext(ContextMenuContext) ?? {};
@@ -122,9 +115,9 @@ export const ContextMenuProvider = ({
 
   return (
     <ContextMenuContext.Provider value={value}>
-      <TmpContextMenuWrapper id={id} setRef={setRef}>
-        {children}
-      </TmpContextMenuWrapper>
+      <ContextMenuWrapper id={id} ref={ref}>
+        {typeof children === "function" ? children({ ref }) : children}
+      </ContextMenuWrapper>
       <Dropdown id={id} getItems={getSquashedItems} itemsMeta={meta} />
     </ContextMenuContext.Provider>
   );
@@ -134,7 +127,9 @@ export default rolesHOC({
   allow: ["admin"],
   component: renderHOC({
     ForEdit: ContextMenuProvider,
-    ForView: ({ children }) => <>{children}</>
+    ForView: ({ children }) => (
+      <>{typeof children === "function" ? children({}) : children}</>
+    )
   }),
   fallbackComponent: ({ children }) => children
 });

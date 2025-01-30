@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getShapes } from "visual/utils/options";
@@ -8,13 +8,13 @@ export const title = () => t("Header");
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const shapeTopColor = getColor(
+  const shapeTopColor = getColorToolbar(
     dvv("shapeTopColorPalette"),
     dvv("shapeTopColorHex"),
     dvv("shapeTopColorOpacity")
   );
 
-  const shapeBottomColor = getColor(
+  const shapeBottomColor = getColorToolbar(
     dvv("shapeBottomColorPalette"),
     dvv("shapeBottomColorHex"),
     dvv("shapeBottomColorOpacity")

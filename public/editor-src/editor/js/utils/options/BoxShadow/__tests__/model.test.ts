@@ -1,4 +1,5 @@
-import { identity, times } from "underscore";
+import { identity } from "es-toolkit";
+import { times } from "es-toolkit/compat";
 import * as Hex from "visual/utils/color/Hex";
 import { palettes } from "visual/utils/color/Palette";
 import * as Blur from "visual/utils/cssProps/Blur";

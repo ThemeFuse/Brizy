@@ -1,18 +1,23 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
+
   const bgColorOpacity = dvv("bgColorOpacity");
   const colorOpacity = dvv("colorOpacity");
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     bgColorOpacity
   );
 
-  const color = getColor(dvv("colorPalette"), dvv("colorHex"), colorOpacity);
+  const color = getColorToolbar(
+    dvv("colorPalette"),
+    dvv("colorHex"),
+    colorOpacity
+  );
 
   return [
     {

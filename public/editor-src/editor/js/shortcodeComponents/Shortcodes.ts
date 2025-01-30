@@ -95,6 +95,7 @@ import getFacebookComments from "./pro/FacebookComments";
 import getFlipbox from "./pro/Flipbox";
 import getImageGallery from "./pro/ImageGallery";
 import getInstagramFeed from "./pro/InstagramFeed";
+import getLinkedinFeed from "./pro/LinkedinFeed";
 import getLogin from "./pro/Login";
 import getLottie from "./pro/Lottie";
 import getMenu from "./pro/Menu";
@@ -211,6 +212,7 @@ export function getProShortCodes(
     Twitter: true,
     FacebookComments: true,
     InstagramFeed: true,
+    LinkedinFeed: true,
 
     Columns: false,
     Row: false,
@@ -530,6 +532,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     Twitter: getTwitter(),
     FacebookComments: getFacebookComments(),
     InstagramFeed: getInstagramFeed(),
+    LinkedinFeed: getLinkedinFeed(),
 
     Columns: getColumns(config),
     Row: getRow(config),

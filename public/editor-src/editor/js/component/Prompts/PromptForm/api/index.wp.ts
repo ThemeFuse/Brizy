@@ -1,7 +1,7 @@
 import { Str } from "@brizy/readers";
-import _ from "underscore";
+import { pick } from "es-toolkit";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import Config, { WP } from "visual/global/Config";
+import { WP } from "visual/global/Config";
 import { request } from "visual/utils/api/index.wp";
 import {
   AddRecaptcha,
@@ -20,12 +20,12 @@ import {
 } from "./types";
 
 // Form
-export const getForm: GetForm = ({ formId }) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const getForm: GetForm = ({ formId }, config) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
     formId,
-    action: api.getForm,
+    action: Str.read(api.getForm) ?? "",
     hash: api.hash,
     version
   });
@@ -40,11 +40,11 @@ export const getForm: GetForm = ({ formId }) => {
     .then((res) => res);
 };
 
-export const createForm: CreateForm = ({ formId }) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const createForm: CreateForm = ({ formId }, config) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.createForm,
+    action: Str.read(api.createForm) ?? "",
     hash: api.hash,
     version
   });
@@ -58,16 +58,15 @@ export const createForm: CreateForm = ({ formId }) => {
   }).then((r) => parseJSON<FormData>(r));
 };
 
-export const updateForm: UpdateForm = ({
-  formId,
-  hasEmailTemplate,
-  emailTemplate
-}) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const updateForm: UpdateForm = (
+  { formId, hasEmailTemplate, emailTemplate },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
     formId,
-    action: api.updateForm,
+    action: Str.read(api.updateForm) ?? "",
     hash: api.hash,
     version
   });
@@ -84,11 +83,11 @@ export const updateForm: UpdateForm = ({
 };
 
 // Service mailchimp, zepier etc.
-export const getIntegration: GetIntegration = ({ formId, id }) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const getIntegration: GetIntegration = ({ formId, id }, config) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.getIntegration,
+    action: Str.read(api.getIntegration) ?? "",
     hash: api.hash,
     version,
     formId,
@@ -109,11 +108,14 @@ export const getIntegration: GetIntegration = ({ formId, id }) => {
   );
 };
 
-export const createIntegration: CreateIntegration = ({ formId, id }) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const createIntegration: CreateIntegration = (
+  { formId, id },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.createIntegration,
+    action: Str.read(api.createIntegration) ?? "",
     hash: api.hash,
     version,
     formId
@@ -134,19 +136,19 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
   );
 };
 
-export const updateIntegration: UpdateIntegration = ({
-  formId,
-  ...appData
-}) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const updateIntegration: UpdateIntegration = (
+  { formId, ...appData },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.updateIntegration,
+    action: Str.read(api.updateIntegration) ?? "",
     hash: api.hash,
     version,
     formId
   });
-  const data = _.pick(appData, [
+  const data = pick(appData, [
     "id",
     "usedAccount",
     "fieldsMap",
@@ -171,14 +173,14 @@ export const updateIntegration: UpdateIntegration = ({
   );
 };
 
-export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
-  formId,
-  id
-}) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = (
+  { formId, id },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.getAccountProperties,
+    action: Str.read(api.getAccountProperties) ?? "",
     hash: api.hash,
     version,
     formId,
@@ -193,15 +195,14 @@ export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
   }).then((r) => parseJSON<Array<{ name: string }>>(r));
 };
 
-export const createIntegrationAccount: CreateIntegrationAccount = ({
-  formId,
-  id,
-  data
-}) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const createIntegrationAccount: CreateIntegrationAccount = (
+  { formId, id, data },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.authenticateIntegration,
+    action: Str.read(api.authenticateIntegration) ?? "",
     hash: api.hash,
     version,
     formId,
@@ -223,15 +224,14 @@ export const createIntegrationAccount: CreateIntegrationAccount = ({
   );
 };
 
-export const createIntegrationList: CreateIntegrationList = ({
-  formId,
-  id,
-  data
-}) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const createIntegrationList: CreateIntegrationList = (
+  { formId, id, data },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.createIntegrationGroup,
+    action: Str.read(api.createIntegrationGroup) ?? "",
     hash: api.hash,
     version,
     formId,
@@ -261,14 +261,14 @@ export const getSmtpIntegration: GetIntegration = (...args) =>
 export const createSmtpIntegration: CreateIntegration = (...args) =>
   createIntegration(...args);
 
-export const updateSmtpIntegration: UpdateSmptIntegration = ({
-  formId,
-  ...appData
-}) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const updateSmtpIntegration: UpdateSmptIntegration = (
+  { formId, ...appData },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.updateIntegration,
+    action: Str.read(api.updateIntegration) ?? "",
     hash: api.hash,
     version,
     formId
@@ -295,8 +295,8 @@ export const deleteSmtpIntegration: DeleteSmtpIntegration = (
   const {
     api: { url, hash, deleteIntegration }
   } = (config as WP).wp;
-
   const version = config.editorVersion;
+
   const reqUrl = makeUrl(url, {
     action: Str.read(deleteIntegration) ?? "",
     hash: hash,
@@ -317,17 +317,14 @@ export const deleteSmtpIntegration: DeleteSmtpIntegration = (
 
 // Recaptcha
 
-export const addRecaptcha: AddRecaptcha = ({
-  group,
-  service,
-  secretkey,
-  sitekey,
-  response
-}) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const addRecaptcha: AddRecaptcha = (
+  { group, service, secretkey, sitekey, response },
+  config
+) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.addAccount,
+    action: Str.read(api.addAccount) ?? "",
     hash: api.hash,
     version,
     secretkey,

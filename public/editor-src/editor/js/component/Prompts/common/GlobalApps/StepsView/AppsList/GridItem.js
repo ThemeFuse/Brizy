@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { ProInfo } from "visual/component/ProInfo";
@@ -15,7 +15,7 @@ export default class GridItem extends Component {
     shortTitle: "",
     loading: false,
     active: false,
-    onClick: _.noop
+    onClick: noop
   };
 
   state = {

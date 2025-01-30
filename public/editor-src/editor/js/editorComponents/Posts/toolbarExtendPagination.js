@@ -1,11 +1,12 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
-  const paginationColor = getColor(
+
+  const paginationColor = getColorToolbar(
     dvv("paginationColorPalette"),
     dvv("paginationColorHex"),
     dvv("paginationColorOpacity")

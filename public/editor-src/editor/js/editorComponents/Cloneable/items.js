@@ -8,7 +8,7 @@ import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
-import { attachRef } from "visual/utils/react";
+import { attachRefs } from "visual/utils/react";
 import contextMenuConfig from "./contextMenuChild";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
@@ -98,7 +98,7 @@ class Items extends EditorArrayComponent {
 
   // Div
   renderItemsContainerDiv(items, sortableRef, sortableAttr) {
-    const { motion, containerClassName } = this.props;
+    const { motion, containerClassName, containerRef } = this.props;
 
     return (
       <ScrollMotion options={motion}>
@@ -107,8 +107,7 @@ class Items extends EditorArrayComponent {
             {...sortableAttr}
             {...scrollMotionAttr?.options}
             ref={(v) => {
-              attachRef(v, sortableRef);
-              attachRef(v, scrollMotionRef);
+              attachRefs(v, [containerRef, sortableRef, scrollMotionRef]);
             }}
             className={classnames(containerClassName, scrollMotionAttr?.class)}
           >
@@ -121,7 +120,7 @@ class Items extends EditorArrayComponent {
 
   // List
   renderItemsContainerList(items, sortableRef, sortableAttr) {
-    const { motion, containerClassName } = this.props;
+    const { motion, containerClassName, containerRef } = this.props;
 
     return (
       <ScrollMotion options={motion}>
@@ -130,8 +129,7 @@ class Items extends EditorArrayComponent {
             {...sortableAttr}
             {...scrollMotionAttr?.options}
             ref={(v) => {
-              attachRef(v, sortableRef);
-              attachRef(v, scrollMotionRef);
+              attachRefs(v, [containerRef, sortableRef, scrollMotionRef]);
             }}
             className={classnames(
               "brz-ul brz-list",
@@ -173,9 +171,11 @@ class Items extends EditorArrayComponent {
     } = this.props;
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
-    let content = (
+    let content;
+
+    const getContent = (ref) => (
       <SortableElement key={itemKey} type="shortcode">
-        <div className={itemClassName} id={itemKey}>
+        <div className={itemClassName} id={itemKey} ref={ref}>
           {item}
         </div>
       </SortableElement>
@@ -197,19 +197,21 @@ class Items extends EditorArrayComponent {
           {...this.makeContextMenuProps(contextMenuExtendConfig)}
         >
           <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-            <HotKeys
-              shortcutsTypes={shortcutsTypes}
-              id={itemKey}
-              onKeyDown={this.handleKeyDown}
-            >
-              {content}
-            </HotKeys>
+            {({ ref }) => (
+              <HotKeys
+                shortcutsTypes={shortcutsTypes}
+                id={itemKey}
+                onKeyDown={this.handleKeyDown}
+              >
+                {getContent(ref)}
+              </HotKeys>
+            )}
           </ContextMenu>
         </ContextMenuExtend>
       );
     }
 
-    return content;
+    return content ?? getContent(null);
   }
 
   renderItemWrapperList(item, itemKey, itemIndex) {
@@ -221,9 +223,9 @@ class Items extends EditorArrayComponent {
     const className = classnames("brz-li brz-list__item", itemClassName);
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
-    let content = (
+    const getContent = (ref) => (
       <SortableElement type="shortcode">
-        <li key={itemKey} className={className}>
+        <li key={itemKey} className={className} ref={ref}>
           {item}
         </li>
       </SortableElement>
@@ -245,19 +247,21 @@ class Items extends EditorArrayComponent {
           {...this.makeContextMenuProps(contextMenuExtendConfig)}
         >
           <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-            <HotKeys
-              shortcutsTypes={shortcutsTypes}
-              id={itemKey}
-              onKeyDown={this.handleKeyDown}
-            >
-              {content}
-            </HotKeys>
+            {({ ref }) => (
+              <HotKeys
+                shortcutsTypes={shortcutsTypes}
+                id={itemKey}
+                onKeyDown={this.handleKeyDown}
+              >
+                {getContent(ref)}
+              </HotKeys>
+            )}
           </ContextMenu>
         </ContextMenuExtend>
       );
     }
 
-    return content;
+    return getContent(null);
   }
 
   renderItemWrapper(item, itemKey, itemIndex, itemData, items) {

@@ -1,8 +1,11 @@
 import { ModelType } from "visual/component/Elements/Types";
+import { Config } from "visual/global/Config/InitConfig";
 import { RenderType } from "visual/providers/RenderProvider";
+import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import { t } from "visual/utils/i18n";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import { mockDataForReduxStore } from "../../../../../jest-utils/mocks";
 import {
   filterMergedStylesByDevice,
   filterStylesByDevice,
@@ -120,8 +123,20 @@ export const heightElementModel = {
   heightSuffix: "px"
 };
 
+beforeAll(() => {
+  // @ts-expect-error: Mock ConfigCommon
+  new Config({
+    config: mockDataForReduxStore.config,
+    id: mockDataForReduxStore.configId
+  });
+});
+
 describe("Testing getCSSObjects that should return { selector, css } objects", () => {
   const store = createStore();
+  store.dispatch(
+    // @ts-expect-error There is not need to add types because is only for testing purposes
+    hydrate(mockDataForReduxStore)
+  );
   const renderContext: RenderType = "editor";
 
   test("Empty values, should return empty object", () => {

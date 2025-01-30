@@ -2,9 +2,10 @@ import classnames from "classnames";
 import React, { useCallback } from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
+import { attachRef } from "visual/utils/react";
+import { FCC } from "visual/utils/react/types";
 import { PopulationIcon } from "../../PopulationIcon";
 import type { Props } from "./types";
-import { FCC } from "visual/utils/react/types";
 
 export const Dropdown: FCC<Props> = (props) => {
   const { isOpen, className, onOpened, children, clickOutsideExceptions } =
@@ -51,13 +52,18 @@ export const Dropdown: FCC<Props> = (props) => {
                   exceptions={clickOutsideExceptions}
                   onClickOutside={handleClickOutside}
                 >
-                  <div
-                    style={style}
-                    ref={ref}
-                    className="brz-ed-control__population-content-wrapper"
-                  >
-                    {children}
-                  </div>
+                  {({ ref: clickOutsideRef }) => (
+                    <div
+                      style={style}
+                      ref={(el) => {
+                        attachRef(el, ref);
+                        attachRef(el, clickOutsideRef);
+                      }}
+                      className="brz-ed-control__population-content-wrapper"
+                    >
+                      {children}
+                    </div>
+                  )}
                 </ClickOutside>
               );
             }}

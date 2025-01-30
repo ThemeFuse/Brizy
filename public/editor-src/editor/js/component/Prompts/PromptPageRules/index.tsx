@@ -1,6 +1,7 @@
+import { omit, without } from "es-toolkit";
+import { find } from "es-toolkit/compat";
 import React, { JSX, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import _ from "underscore";
 import { CheckGroup } from "visual/component/Controls/CheckGroup";
 import { CheckGroupIcon } from "visual/component/Controls/CheckGroup/CheckGroupIcon";
 import { CheckGroupItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
@@ -34,6 +35,7 @@ import {
   updatePageLayout,
   updatePageTitle
 } from "visual/redux/actions2";
+import { Layout } from "visual/types/Layout";
 import {
   getCollectionSourceItemsById,
   getPageRelations,
@@ -48,7 +50,7 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { Layout, Tabs } from "../common/PromptPage/types";
+import { Tabs } from "../common/PromptPage/types";
 import * as Actions from "../common/states/Classic/types/Actions";
 import { reducer } from "./reducer";
 import { Item, Props, RulesState, Valid } from "./types";
@@ -95,9 +97,9 @@ export const PromptPageRules = (props: Props): JSX.Element => {
   const dispatch = useDispatch();
   const handleSave = useCallback(
     ({ items, title, layout }: Valid): Promise<void> => {
-      const optionAll = _.findWhere(items, { id: "all" });
+      const optionAll = find(items, { id: "all" });
 
-      const _items = optionAll ? _.without(items, optionAll) : items;
+      const _items = optionAll ? without(items, optionAll) : items;
 
       dispatch(updatePageLayout(layout));
       dispatch(updatePageTitle(title));
@@ -277,7 +279,7 @@ export const PromptPageRules = (props: Props): JSX.Element => {
 
                         if (someItemWasUnchecked) {
                           dispatchS(
-                            Setters.setRules(getRulesId(_.omit(v, "all")))
+                            Setters.setRules(getRulesId(omit(v, ["all"])))
                           );
                         } else {
                           const rules = items.map((i) => i.id);

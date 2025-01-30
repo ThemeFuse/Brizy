@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -20,15 +20,14 @@ const TEXT_ITEM_INDEX = 1;
 const BUTTONS_ITEM_INDEX = 2;
 
 class IconText extends EditorComponent {
-  static get componentId() {
-    return "IconText";
-  }
-
   static defaultValue = defaultValue;
-
   static defaultProps = {
     extendParentToolbar: noop
   };
+
+  static get componentId() {
+    return "IconText";
+  }
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -114,17 +113,19 @@ class IconText extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={className}>
-          {icon}
-          <div className="brz-text-btn">{textAndButtons}</div>
-        </div>
+        {({ ref: cssRef }) => (
+          <div className={className} ref={cssRef}>
+            {icon}
+            <div className="brz-text-btn">{textAndButtons}</div>
+          </div>
+        )}
       </CustomCSS>
     );
   }

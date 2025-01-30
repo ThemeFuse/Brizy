@@ -52,20 +52,8 @@ export * from "./cssStyleElementComments";
 export * from "./cssStyleElementCountdown";
 //Element Counter
 export * from "./cssStyleElementCounter";
-// Element Ecwid Cart
-export * from "./cssStyleElementEcwidCart";
-// Element Ecwid My Account
-export * from "./cssStyleElementEcwidMyAccount";
-// Element Ecwid Product
-export * from "./cssStyleElementEcwidProduct";
-// Element Ecwid Products
-export * from "./cssStyleElementEcwidProducts";
-// Element Ecwid Shopping Bag
-export * from "./cssStyleElementEcwidShoppingBag";
 // Element EmbedCode
 export * from "./cssStyleElementEmbedCode";
-// Ministry Brands Event Layout
-export * from "./cssStyleElementEventLayout";
 // Facebook
 export * from "./cssStyleElementFacebook";
 // Element Flipbox
@@ -92,14 +80,6 @@ export * from "./cssStyleElementMegaMenu";
 export * from "./cssStyleElementMenu";
 // Menu Simple
 export * from "./cssStyleElementMenuSimple";
-// Ministry Brands
-export * from "./cssStyleElementMinistryBrands";
-// Ministry Event Calendar
-export * from "./cssStyleElementMinistryEventCalendar";
-// Ministry Brands Event Detail
-export * from "./cssStyleElementMinistryEventDetail";
-// Ministry Group Slider
-export * from "./cssStyleElementMinistryGroupSlider";
 // Paypal
 export * from "./cssStyleElementPaypal";
 // Element Post Info
@@ -213,3 +193,27 @@ export * from "./cssStyleZIndex";
 // Bg Video
 export * from "./styleBgVideo";
 export * from "./utils";
+
+// Ecwid
+// Element Ecwid Cart
+export * from "./cssStyleElementEcwidCart";
+// Element Ecwid My Account
+export * from "./cssStyleElementEcwidMyAccount";
+// Element Ecwid Product
+export * from "./cssStyleElementEcwidProduct";
+// Element Ecwid Products
+export * from "./cssStyleElementEcwidProducts";
+// Element Ecwid Shopping Bag
+export * from "./cssStyleElementEcwidShoppingBag";
+
+// Ministry Brands
+//
+// Event Layout
+export * from "./cssStyleElementEventLayout";
+export * from "./cssStyleElementMinistryBrands";
+// Event Calendar
+export * from "./cssStyleElementMinistryEventCalendar";
+// Brands Event Detail
+export * from "./cssStyleElementMinistryEventDetail";
+// Group Slider
+export * from "./cssStyleElementMinistryGroupSlider";

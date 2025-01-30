@@ -1,5 +1,6 @@
 import { Num, Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
+import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { hexToBlendedRgba } from "visual/utils/color/RGB";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -73,12 +74,14 @@ export function styleBgGradient({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const _state = getState(v, state);
 
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: _state });
+  const config = configSelector(store.getState());
 
   const bgColorType = dvv(capByPrefix(prefix, "bgColorType"));
   const gradientType = dvv(capByPrefix(prefix, "gradientType"));
@@ -113,11 +116,12 @@ export function styleBgGradient({
     gradientRadialDegree,
     gradientStartPointer,
     gradientFinishPointer,
-    bgColor: getColor(bgColorPalette, bgColorHex, bgColorOpacity),
+    bgColor: getColor(bgColorPalette, bgColorHex, bgColorOpacity, config),
     gradientColor: getColor(
       gradientColorPalette,
       gradientColorHex,
-      gradientColorOpacity
+      gradientColorOpacity,
+      config
     )
   });
 }

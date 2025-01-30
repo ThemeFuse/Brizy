@@ -7,6 +7,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -18,13 +19,12 @@ import * as toolbarThumbnail from "./toolbarThumbnail";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 export default class WOOGallery extends EditorComponent {
+  static defaultValue = defaultValue;
+  containerRef = React.createRef();
+
   static get componentId() {
     return "WOOGallery";
   }
-
-  static defaultValue = defaultValue;
-
-  containerRef = React.createRef();
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -85,7 +85,7 @@ export default class WOOGallery extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -113,37 +113,53 @@ export default class WOOGallery extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}
         selector=".woocommerce-product-gallery__image, .brz-shortcode__placeholder"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarThumbnail,
-            sidebarThumbnail,
-            { allowExtend: false }
-          )}
-          selector=".flex-control-thumbs"
-        >
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <Wrapper
-              {...this.makeWrapperProps({ className, ref: this.containerRef })}
-            >
-              <BoxResizer
-                points={resizerPoints}
-                meta={this.props.meta}
-                value={v}
-                onChange={this.handleResizerChange}
-                restrictions={restrictions}
-              >
-                <DynamicContentHelper
-                  placeholder={placeholder}
-                  placeholderIcon="woo-gallery"
-                  placeholderHeight={250}
-                  tagName="div"
-                  onSuccess={this.handleDynamicContentSuccess}
-                  blocked={false}
-                />
-              </BoxResizer>
-            </Wrapper>
-          </CustomCSS>
-        </Toolbar>
+        {({ ref: placeholderRef }) => (
+          <Toolbar
+            {...this.makeToolbarPropsFromConfig2(
+              toolbarThumbnail,
+              sidebarThumbnail,
+              { allowExtend: false }
+            )}
+            selector=".flex-control-thumbs"
+          >
+            {({ ref: thumbsRef }) => (
+              <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                {({ ref: cssRef }) => (
+                  <Wrapper
+                    {...this.makeWrapperProps({
+                      className,
+                      ref: (el) => {
+                        attachRefs(el, [
+                          this.containerRef,
+                          placeholderRef,
+                          thumbsRef,
+                          cssRef
+                        ]);
+                      }
+                    })}
+                  >
+                    <BoxResizer
+                      points={resizerPoints}
+                      meta={this.props.meta}
+                      value={v}
+                      onChange={this.handleResizerChange}
+                      restrictions={restrictions}
+                    >
+                      <DynamicContentHelper
+                        placeholder={placeholder}
+                        placeholderIcon="woo-gallery"
+                        placeholderHeight={250}
+                        tagName="div"
+                        onSuccess={this.handleDynamicContentSuccess}
+                        blocked={false}
+                      />
+                    </BoxResizer>
+                  </Wrapper>
+                )}
+              </CustomCSS>
+            )}
+          </Toolbar>
+        )}
       </Toolbar>
     );
   }

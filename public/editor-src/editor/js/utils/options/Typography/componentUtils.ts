@@ -1,14 +1,12 @@
-import { flatten, partition } from "underscore";
+import { flatten, partition } from "es-toolkit";
 import { FontObject } from "visual/component/Controls/FontFamily/types";
 import { DividedFonts } from "visual/component/Controls/Typography/types/FontFamily";
 import { Store } from "visual/redux/store";
 import { DeviceMode } from "visual/types";
-import {
-  fontTransform,
-  getDefaultFont,
-  getFontStyle
-} from "visual/utils/fonts";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { FontFamilyType } from "visual/types/Fonts";
+import { getDefaultFont } from "visual/utils/fonts/getFontById";
+import { getFontStyle } from "visual/utils/fonts/getFontStyle";
+import { fontTransform } from "visual/utils/fonts/transform";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   defaultValue,

@@ -1,8 +1,8 @@
-import { getFontStyle } from "visual/utils/fonts";
-import { Literal, read } from "visual/utils/types/Literal";
 import { Obj } from "@brizy/readers";
 import { mPipe } from "fp-utilities";
 import { Store } from "visual/redux/store";
+import { getFontStyle } from "visual/utils/fonts/getFontStyle";
+import { Literal, read } from "visual/utils/types/Literal";
 
 interface Data {
   key: string;

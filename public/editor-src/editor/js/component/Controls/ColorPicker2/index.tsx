@@ -1,5 +1,5 @@
+import { throttle } from "es-toolkit";
 import React, { ReactElement, useRef } from "react";
-import { throttle } from "underscore";
 import {
   HSLAChange,
   HSVAChange
@@ -40,8 +40,7 @@ function ColorPicker2({
   const throttleOnChange =
     onChange &&
     throttle(onChange, 500, {
-      leading: false,
-      trailing: true
+      edges: ["trailing"]
     });
 
   const hex = !isHex(value.hex) ? DEFAULT_HEX : value.hex;

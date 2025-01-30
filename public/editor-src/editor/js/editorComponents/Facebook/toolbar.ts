@@ -1,12 +1,11 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
 
 export interface Value extends ElementModel {
@@ -19,17 +18,7 @@ export interface Value extends ElementModel {
   boxShadowColorPalette: string;
 }
 
-export function getItems({
-  v,
-  device,
-  state,
-  context
-}: {
-  v: ElementModel;
-  device: ResponsiveMode;
-  state: State;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
   const facebookType = dvv("facebookType");
@@ -45,13 +34,13 @@ export function getItems({
 
   const boxedLayout = dvv("layout") === "boxed";
 
-  const borderColor = getColor(
+  const borderColor = getColorToolbar(
     dvv("borderColorPalette"),
     dvv("borderColorHex"),
     dvv("borderColorOpacity")
   );
 
-  const boxShadowColor = getColor(
+  const boxShadowColor = getColorToolbar(
     dvv("boxShadowColorPalette"),
     dvv("boxShadowColorHex"),
     dvv("boxShadowColorOpacity")
@@ -521,4 +510,4 @@ export function getItems({
     ...(groupType || pageType ? disableAdvancedSettings() : advancedSettings()),
     ...(embedType ? disableAlign() : pageType ? pageAlign() : align())
   ];
-}
+};

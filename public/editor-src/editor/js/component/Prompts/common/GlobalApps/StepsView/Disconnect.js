@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../Button";
 
@@ -10,8 +10,8 @@ class Disconnect extends Component {
     nextLoading: null,
     prevLoading: null,
     error: null,
-    onNext: _.noop,
-    onPrev: _.noop
+    onNext: noop,
+    onPrev: noop
   };
 
   renderError() {

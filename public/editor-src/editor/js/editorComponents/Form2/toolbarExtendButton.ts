@@ -1,10 +1,15 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
 import type { Value } from "./types";
 
-export const getItems: GetItems<Value> = ({ v, device, editorMode, component }) => {
+export const getItems: GetItems<Value> = ({
+  v,
+  device,
+  editorMode,
+  component
+}) => {
   const _isStory = isStory(editorMode);
   const config = component.getGlobalConfig();
 

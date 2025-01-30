@@ -2,10 +2,10 @@ import React from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
-import { EditorMode } from "visual/global/EditorModeContext";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { Store } from "visual/redux/store";
-import { GlobalBlockPopup } from "visual/types";
+import { GlobalBlockPopup } from "visual/types/GlobalBlock";
 import { Providers } from "../controls/Providers";
 import { Root } from "../controls/Root";
 import { baseToStatic } from "./baseToStatic";
@@ -15,6 +15,7 @@ interface Props {
   store: Store;
   compiledBlocks: Array<GlobalBlockPopup>;
   config: ConfigCommon;
+  editorMode: EditorMode;
 }
 
 type GlobalBlocksOutput = Array<GlobalBlockStatic>;
@@ -48,8 +49,7 @@ const RenderPage = (props: {
 };
 
 export const globalPopupsToStatic = (props: Props): GlobalBlocksOutput => {
-  const { store, compiledBlocks, config } = props;
-  const editorMode = config.mode;
+  const { store, compiledBlocks, config, editorMode } = props;
   const popupBlocks = compiledBlocks.map((block) => ({
     uid: block.uid,
     data: block.data
@@ -62,8 +62,13 @@ export const globalPopupsToStatic = (props: Props): GlobalBlocksOutput => {
     const dbValue = { items };
 
     const Page = (
-      <Providers store={store} sheet={sheet.instance} config={config}>
-        <Root className="brz" type="block" editorMode={editorMode}>
+      <Providers
+        store={store}
+        sheet={sheet.instance}
+        config={config}
+        editorMode={editorMode}
+      >
+        <Root className="brz" type="block">
           <RenderPage store={store} dbValue={dbValue} editorMode={editorMode} />
         </Root>
       </Providers>

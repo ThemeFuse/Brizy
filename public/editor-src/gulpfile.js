@@ -31,7 +31,7 @@ const tailwindcss = require("tailwindcss");
 const chalk = require("chalk");
 const del = require("del");
 
-const { uniq } = require("underscore");
+const { uniq } = require("es-toolkit");
 
 // build utils
 const argvVars = require("./build-utils/argvVars");
@@ -53,10 +53,17 @@ const {
   NO_VERIFICATION,
   ANALYZE_EXPORT,
   ANALYZE_PREVIEW,
+  ANALYZE_EDITOR,
   AUTHORIZATION_URL,
+  CHECK_BUNDLE_SIZE,
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
+
+const brizyUIDistPath = path.resolve(
+  require.resolve("@brizy/ui"),
+  "../../dist"
+);
 
 const postsCssProcessors = [
   sass({
@@ -68,7 +75,7 @@ const postsCssProcessors = [
   }),
   postcssURL({
     filter: "**/Nunito-*",
-    basePath: path.resolve("../node_modules/@brizy/ui/dist"),
+    basePath: brizyUIDistPath,
     assetsPath: paths.build,
     url: (asset, _, options) => {
       fs.copyFileSync(
@@ -137,7 +144,8 @@ function editorJS(done) {
     BUILD_PATH: paths.build,
     BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH,
-    AUTHORIZATION_URL
+    AUTHORIZATION_URL,
+    ANALYZE: ANALYZE_EDITOR
   };
   const config = [
     webpackConfigEditor(options),
@@ -272,15 +280,11 @@ function exportJS(done) {
       webpackConfigExport.browser(options)
     );
   } else {
-    if (ANALYZE_EXPORT) {
-      config.push(
-        webpackConfigExport.node(options),
-        webpackConfigExport.browser(options)
-      );
-    }
-    if (ANALYZE_PREVIEW) {
-      config.push(webpackConfigPreview.preview(options));
-    }
+    config.push(
+      webpackConfigExport.node(options),
+      webpackConfigExport.browser(options),
+      webpackConfigPreview.preview(options)
+    );
   }
 
   let doneCalled = false;
@@ -645,6 +649,59 @@ function watch() {
   );
 }
 
+// Threshold in kilobytes (adjust as needed)
+const BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB = 6404;
+const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 18841;
+const MAX_BUNDLE_SIZE_DEVIATION_KB = 200;
+
+function calculateSize(assets, size) {
+  // Calculate total size
+  const totalSizeBytes = Object.values(assets).reduce(
+    (acc, asset) => acc + asset.size,
+    0
+  );
+
+  const totalSizeKB = totalSizeBytes / 1024;
+
+  // Check if the size exceeds the threshold
+  if (totalSizeKB > size + MAX_BUNDLE_SIZE_DEVIATION_KB) {
+    console.error(
+      `Bundle size exceeded: ${totalSizeKB.toFixed(2)} KB (max: ${size} KB)`
+    );
+    process.exit(1); // Exit with an error
+  } else {
+    console.log(`Bundle size is within limit: ${totalSizeKB.toFixed(2)} KB`);
+  }
+}
+
+function checkBundleSize(done) {
+  const options = {
+    TARGET,
+    BUILD_PATH: paths.build,
+    BUILD_DIR_PRO: paths.buildPro
+  };
+  const outputPath = path.resolve(options.BUILD_PATH, "editor/js");
+  const pathToBrowserStats = path.resolve(
+    outputPath,
+    "browserCompiler-bundle-stats.json"
+  );
+  const pathToNodeStats = path.resolve(
+    outputPath,
+    "nodeCompiler-bundle-stats.json"
+  );
+
+  const browserStats = require(pathToBrowserStats);
+  const nodeStats = require(pathToNodeStats);
+
+  console.log("Calculate Bundle Size for Browser Compiler");
+  calculateSize(browserStats.assets, BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB);
+
+  console.log("Calculate Bundle Size for Node Compiler");
+  calculateSize(nodeStats.assets, NODE_COMPILER_MAX_BUNDLE_SIZE_KB);
+
+  done();
+}
+
 exports.build = gulp.series.apply(undefined, [
   ...(NO_VERIFICATION ? [] : [verifications]),
   clean,
@@ -693,8 +750,13 @@ exports.build = gulp.series.apply(undefined, [
     : []),
 
   // watch
-  ...(IS_PRODUCTION || NO_WATCH ? [] : [watch])
+  ...(IS_PRODUCTION || NO_WATCH ? [] : [watch]),
+
+  // Check Bundle Size
+  ...(CHECK_BUNDLE_SIZE && IS_EXPORT ? [checkBundleSize] : [])
 ]);
+
+//#region External Popup
 
 function externalPopupsPopup() {
   const src = paths.editor + "/js/bootstraps/popups/popup.js";
@@ -713,6 +775,10 @@ exports.external_popups = gulp.series(
   externalPopupsPopup,
   externalPopupsCodeInjection
 );
+
+//#endregion
+
+//#region Libs
 
 function deleteLibs(done) {
   const src = `${paths.editor}/js/libs/group-*_*`;
@@ -1018,10 +1084,37 @@ exports.libs = gulp.series.apply(undefined, [
   generateLibsConfig
 ]);
 
-exports.analyze_export = gulp.series(clean, exportJS);
+//#endregion
 
-exports.compilerWorker = gulp.series(clean, exportJS);
+//#region WP Translations
 
 exports.translation = gulp.series(wpTranslations);
 
-exports.editorKitIcons = gulp.series(editorKitIcons);
+//#endregion
+
+//#region OPENSOURCE
+
+exports.opensource = gulp.series.apply(undefined, [
+  clean,
+
+  // Google Fonts, Integrations
+  config,
+
+  // Editor
+  gulp.parallel(
+    editorJS,
+    editorCSS,
+    editorFonts,
+    editorIcons,
+    editorKitIcons,
+    editorImg
+  ),
+
+  // pro
+  gulp.parallel(proJS, proEditorCSS),
+
+  // watch
+  ...(IS_PRODUCTION || NO_WATCH ? [] : [watch])
+]);
+
+//#endregion

@@ -188,7 +188,7 @@ export function cssStyleElementImageFilter({
   return cssStyleFilter({ v, device, state, prefix });
 }
 
-export function cssStyleElementImageBoxShadow({ v, device, state }) {
+export function cssStyleElementImageBoxShadow({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const maskShape = dvv("maskShape");
@@ -196,5 +196,7 @@ export function cssStyleElementImageBoxShadow({ v, device, state }) {
   if (isNullish(maskShape)) {
     return "";
   }
-  return maskShape === "none" ? cssStyleBoxShadow({ v, device, state }) : "";
+  return maskShape === "none"
+    ? cssStyleBoxShadow({ v, device, state, store })
+    : "";
 }

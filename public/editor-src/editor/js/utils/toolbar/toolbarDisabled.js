@@ -1,15 +1,4 @@
-import _ from "underscore";
-import { defaultValueKey } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
-
-export function toolbarDisabledToolbarSettings({ devices = "all" }) {
-  return {
-    id: "toolbarSettings",
-    type: "popover",
-    devices,
-    disabled: true
-  };
-}
 
 export function toolbarDisabledShowOnTablet({ devices = "responsive" }) {
   return {
@@ -40,26 +29,6 @@ export function toolbarDisabledShowOnResponsive({ device }) {
   }
 
   return r;
-}
-
-export function toolbarDisabledDuplicate({ device, devices = "all" }) {
-  return {
-    id: defaultValueKey({ key: "duplicate", device }),
-    type: "button",
-    devices,
-    onClick: _.noop,
-    disabled: true
-  };
-}
-
-export function toolbarDisabledRemove({ device, devices = "all" }) {
-  return {
-    id: defaultValueKey({ key: "remove", device }),
-    type: "button",
-    devices,
-    onClick: _.noop,
-    disabled: true
-  };
 }
 
 export function toolbarDisabledPadding({ prefix = "", devices = "all" }) {

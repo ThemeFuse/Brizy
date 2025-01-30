@@ -1,27 +1,20 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { Value } from "./index";
+import { Props, Value } from "./index";
 
-export const getItems = ({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] => {
+export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   // Color
   const bgColorOpacity = dvv("bgColorOpacity");
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     bgColorOpacity
   );
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")

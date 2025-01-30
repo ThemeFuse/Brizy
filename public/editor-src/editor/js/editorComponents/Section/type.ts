@@ -4,7 +4,7 @@ import {
 } from "visual/component/Elements/Types";
 import { Target } from "visual/component/Link/types/Target";
 import { Type } from "visual/component/Link/types/Type";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { ComponentsMeta } from "../EditorComponent/types";
 
 type Switch = "on" | "off";

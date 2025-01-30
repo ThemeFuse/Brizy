@@ -98,10 +98,10 @@ const parallaxInitClassName = "brz-bg-image-parallax--init";
         (this.options.v = event.notRealWheel
           ? -event.deltaY / 4
           : 1 === event.deltaMode
-          ? -event.deltaY / 3
-          : 100 === Math.abs(event.deltaY)
-          ? -event.deltaY / 120
-          : -event.deltaY / 40),
+            ? -event.deltaY / 3
+            : 100 === Math.abs(event.deltaY)
+              ? -event.deltaY / 120
+              : -event.deltaY / 40),
         (this.options.v = -y > this.options.v ? -y : this.options.v),
         (this.options.v = this.options.v > y ? y : this.options.v),
         (this.options.s = true),
@@ -264,7 +264,8 @@ const parallaxInitClassName = "brz-bg-image-parallax--init";
       }
       this.options.s &&
         ((D += -this.options.v * this.c(this.options.u, 0, A, C)),
-        (D > B || -B > D) && (this.options.baseElement.scrollBy(0, D), (D = 0)),
+        (D > B || -B > D) &&
+          (this.options.baseElement.scrollBy(0, Math.round(D)), (D = 0)),
         this.options.u++,
         this.options.u > C &&
           ((this.options.u = 0),
@@ -283,8 +284,8 @@ const parallaxInitClassName = "brz-bg-image-parallax--init";
       return this.options.baseElement != window
         ? this.options.baseElement.scrollTop
         : 0 === document.documentElement.scrollTop
-        ? document.body.scrollTop
-        : document.documentElement.scrollTop;
+          ? document.body.scrollTop
+          : document.documentElement.scrollTop;
     }
   });
 

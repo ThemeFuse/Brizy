@@ -8,6 +8,7 @@ import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import { Ref } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
 import { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
 import {
   EkklesiaFieldMap,
@@ -20,17 +21,14 @@ import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { UrlsCommon } from "visual/global/Config/types/Urls";
-import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
-import {
-  FontStyle,
-  GlobalBlock,
-  Page,
-  PageCommon,
-  Palette,
-  Project,
-  Rule,
-  UploadedFont
-} from "visual/types";
+import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
+import { UploadedFont } from "visual/types/Fonts";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page, PageCommon } from "visual/types/Page";
+import { Project } from "visual/types/Project";
+import { Rule } from "visual/types/Rule";
+import { FontStyle, Palette } from "visual/types/Style";
+import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import {
   AdobeAddAccount,
   AdobeFonts,
@@ -118,6 +116,7 @@ export interface MenuItem {
     megaMenuItems: ElementModel[];
     attrTitle: string;
     classes: string[];
+    liClasses: string[];
     current: boolean;
   };
 }
@@ -295,6 +294,32 @@ export interface CustomFile {
   };
 }
 
+interface ColllectionBase {
+  id: string;
+  title: string;
+}
+
+type RefById = Omit<Ref, "value"> & {
+  id: string;
+  __typename: string;
+  label: string;
+  settings: {
+    collectionType: {
+      id: string;
+    };
+  };
+};
+
+export interface ConditionCollectionType extends ColllectionBase {
+  fields: RefById[];
+}
+
+export interface ConditionalTypesData {
+  collectionTypes: ConditionCollectionType[];
+  customers: ColllectionBase[];
+  customerGroups: ColllectionBase[];
+}
+
 export interface API {
   // Used only in Posts(Migration) & GlobalBlocks PopupConditions
   /** @deprecated */
@@ -423,6 +448,14 @@ export interface API {
         }
       ) => void;
     };
+
+    getConditionalItems?: {
+      handler: (
+        res: Response<CollectionItem[]>,
+        rej: Response<string>,
+        args: { entityType: string }
+      ) => void;
+    };
   };
 
   // Collection Types
@@ -432,6 +465,13 @@ export interface API {
         res: Response<ChoicesSync>,
         rej: Response<string>,
         extraData?: { defaultTitle?: string; defaultValue?: string }
+      ) => void;
+    };
+
+    getConditionalTypes: {
+      handler: (
+        res: Response<ConditionalTypesData>,
+        rej: Response<string>
       ) => void;
     };
   };

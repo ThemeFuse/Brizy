@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import React, { ReactElement } from "react";
-import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
@@ -10,6 +9,7 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { isView } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
@@ -24,9 +24,10 @@ import * as toolbarExtendTitle from "./toolbarExtendTitle";
 
 export type Value = ElementModel & {
   showCloseButtonAfter: number;
+  customCSS: string;
 };
 
-interface Props extends WithClassName {
+export interface Props extends WithClassName {
   meta: ComponentsMeta;
 }
 
@@ -47,12 +48,12 @@ const resizerRestrictions = {
 };
 
 class Alert extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): string {
     return "Alert";
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   handleResizerChange = (patch: Patch): void => this.patchValue(patch);
   handleTextChange = (patch: { [k: string]: string }): void => {
@@ -86,16 +87,18 @@ class Alert extends EditorComponent<Value, Props> {
             sidebarDisabled
           )}
         >
-          {/* when we use dymanic content <Text/> component does re-render and toolbar above loses his reference */}
-          {/* in this case wraping in another span solve the problem */}
-          <span>
-            <Text
-              className="brz-alert-title"
-              id="title"
-              v={v}
-              onChange={this.handleTextChange}
-            />
-          </span>
+          {({ ref }) => (
+            /* when we use dymanic content <Text/> component does re-render and toolbar above loses his reference */
+            /* in this case wraping in another span solve the problem */
+            <span ref={ref}>
+              <Text
+                className="brz-alert-title"
+                id="title"
+                v={v}
+                onChange={this.handleTextChange}
+              />
+            </span>
+          )}
         </Toolbar>
 
         <Toolbar
@@ -104,16 +107,18 @@ class Alert extends EditorComponent<Value, Props> {
             sidebarDisabled
           )}
         >
-          {/* when we use dymanic content <Text/> component does re-render and toolbar above loses his reference */}
-          {/* in this case wraping in another span solve the problem */}
-          <span>
-            <Text
-              className="brz-alert-description"
-              id="description"
-              v={v}
-              onChange={this.handleTextChange}
-            />
-          </span>
+          {({ ref }) => (
+            /* when we use dymanic content <Text/> component does re-render and toolbar above loses his reference */
+            /* in this case wraping in another span solve the problem */
+            <span ref={ref}>
+              <Text
+                className="brz-alert-description"
+                id="description"
+                v={v}
+                onChange={this.handleTextChange}
+              />
+            </span>
+          )}
         </Toolbar>
 
         <Toolbar
@@ -122,13 +127,15 @@ class Alert extends EditorComponent<Value, Props> {
             sidebarDisabled
           )}
         >
-          <span className={iconClassnames}>
-            <ThemeIcon
-              name="close-popup"
-              className="brz-alert-close-icon"
-              type="editor"
-            />
-          </span>
+          {({ ref }) => (
+            <span className={iconClassnames} ref={ref}>
+              <ThemeIcon
+                name="close-popup"
+                className="brz-alert-close-icon"
+                type="editor"
+              />
+            </span>
+          )}
         </Toolbar>
       </>
     );
@@ -145,23 +152,25 @@ class Alert extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          <BoxResizer
-            points={resizerPoints}
-            restrictions={resizerRestrictions}
-            meta={this.props.meta}
-            value={v}
-            onChange={this.handleResizerChange}
-          >
-            {this.renderAlert(v)}
-          </BoxResizer>
-        </Wrapper>
+        {({ ref: cssRef }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref: cssRef })}>
+            <BoxResizer
+              points={resizerPoints}
+              restrictions={resizerRestrictions}
+              meta={this.props.meta}
+              value={v}
+              onChange={this.handleResizerChange}
+            >
+              {this.renderAlert(v)}
+            </BoxResizer>
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }
@@ -179,20 +188,22 @@ class Alert extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
     return (
-      <Wrapper
-        {...this.makeWrapperProps({ className })}
-        attributes={makeDataAttr({
-          name: "delay",
-          value: showCloseButtonAfter
-        })}
-      >
-        {this.renderAlert(v)}
-      </Wrapper>
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Wrapper
+          {...this.makeWrapperProps({ className })}
+          attributes={makeDataAttr({
+            name: "delay",
+            value: showCloseButtonAfter
+          })}
+        >
+          {this.renderAlert(v)}
+        </Wrapper>
+      </CustomCSS>
     );
   }
 }

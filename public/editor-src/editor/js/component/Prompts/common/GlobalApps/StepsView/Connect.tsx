@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import _ from "underscore";
+import { noop } from "es-toolkit";
+import React, { Component, KeyboardEvent } from "react";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../Button";
 import { InputField } from "./index";
-import { Scrollbar } from "visual/component/Scrollbar";
 import { ConnectProps } from "./types";
-import { KeyboardEvent } from "react";
 
 class Connect extends Component<ConnectProps> {
   static defaultProps = {
@@ -25,8 +24,8 @@ class Connect extends Component<ConnectProps> {
     nextLoading: null,
     prevLoading: null,
     error: null,
-    onNext: _.noop,
-    onPrev: _.noop
+    onNext: noop,
+    onPrev: noop
   };
 
   renderError(): React.JSX.Element {

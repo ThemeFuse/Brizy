@@ -7,7 +7,10 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 export function styleSection(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
-  const { renderContext, v } = data;
+  const {
+    v,
+    contexts: { renderContext }
+  } = data;
   const { maskShape = "none" } = v;
 
   const styles: {

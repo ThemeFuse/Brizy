@@ -1,10 +1,10 @@
+import { noop } from "es-toolkit";
 import React, { Component, ReactElement } from "react";
-import { noop } from "underscore";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import Integration from "./Integration";
 import { List } from "./List";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 const getTabs = () => [
   {

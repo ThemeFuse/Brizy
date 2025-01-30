@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { BaseKey } from "./BaseApp";
 import { BaseIntegrationContext } from "./type";

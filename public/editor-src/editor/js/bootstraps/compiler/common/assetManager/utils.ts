@@ -1,4 +1,4 @@
-import { intersection, uniq } from "underscore";
+import { intersection, uniq } from "es-toolkit";
 import { toHashCode } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
 import {

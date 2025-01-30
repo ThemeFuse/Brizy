@@ -41,7 +41,8 @@
     "coverPositionX": 50,
 
     "coverZoom": 100,
-    "coverZoomSuffix": "%"
+    "coverZoomSuffix": "%",
+    "coverAlt": ""
   },
 
   "toolbar": {

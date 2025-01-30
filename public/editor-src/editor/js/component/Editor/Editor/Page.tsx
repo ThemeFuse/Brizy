@@ -5,6 +5,7 @@ import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/global/hooks";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
+import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { updateBlocks } from "visual/redux/actions2";
 import {
   pageDataDraftBlocksSelector,
@@ -12,14 +13,13 @@ import {
 } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { areStatesEqual, getPageId } from "../utils";
-import { Props } from "./types";
 
-const Page = (props: Props): JSX.Element => {
-  const { mode } = props;
+const Page = (): JSX.Element => {
   const dispatch = useDispatch();
   const state = useSelector(stateSelector, areStatesEqual);
   const store = useStore();
   const config = useConfig();
+  const { mode } = useEditorMode();
   // @ts-expect-error: ConfigCommon to Config
   const pageId = getPageId(config);
   const modulesGroup = config.dynamicContent?.groups;
@@ -40,7 +40,7 @@ const Page = (props: Props): JSX.Element => {
   }
 
   return (
-    <RootContainer className="brz brz-ed" editorMode={mode}>
+    <RootContainer className="brz brz-ed">
       <EditorComponentProvider pageId={pageId} groups={groups}>
         {/* @ts-expect-error: Missing EditorComponent props */}
         <Page

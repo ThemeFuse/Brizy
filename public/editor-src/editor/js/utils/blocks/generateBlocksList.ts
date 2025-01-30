@@ -1,9 +1,10 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxState } from "visual/redux/types";
-import { Block, GlobalBlockPosition } from "visual/types";
+import { Block } from "visual/types/Block";
+import { GlobalBlockPosition } from "visual/types/GlobalBlock";
 import { isGlobalBlock } from "visual/types/utils";
 import { isPopup, isStory } from "visual/utils/models";
 import { getAllowedGBIds } from "./getAllowedGBIds";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 const generateConditionBlocks = (
   ids: string[],

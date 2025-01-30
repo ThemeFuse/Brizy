@@ -1,4 +1,5 @@
-import _ from "underscore";
+import { Obj } from "@brizy/readers";
+import { flatten } from "es-toolkit";
 import {
   ConfigDCItem,
   DCGroup
@@ -6,7 +7,6 @@ import {
 import { MValue } from "visual/utils/value";
 import { Literal } from "../types/Literal";
 import { TypeChoices } from "./types";
-import { Obj } from "@brizy/readers";
 
 type Options = DCGroup<"wp"> | DCGroup<"cloud">;
 
@@ -57,7 +57,7 @@ const configDCItemToChoices = (option: ConfigDCItem): Choice | OptGroup => {
 export const optionsToChoices = <T extends keyof Options>(
   options: Options[T]
 ): (Choice | OptGroup)[] => {
-  return _.flatten(_.values(options), true).map(configDCItemToChoices);
+  return flatten(Object.values(options), 1).map(configDCItemToChoices);
 };
 
 export const getDynamicContentChoices = (

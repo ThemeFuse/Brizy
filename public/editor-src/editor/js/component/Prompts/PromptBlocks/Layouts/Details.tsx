@@ -1,4 +1,7 @@
+import { Num } from "@brizy/readers";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import { find } from "es-toolkit/compat";
 import React, {
   Component,
   ComponentType,
@@ -8,21 +11,22 @@ import React, {
 } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { ConnectedProps, connect } from "react-redux";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { LayoutData } from "visual/component/Prompts/PromptBlocks/Layouts/types";
 import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector, stylesSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { Block, Style } from "visual/types";
+import { Block } from "visual/types/Block";
+import { Style } from "visual/types/Style";
 import { defaultLayoutsData, defaultStoriesData } from "visual/utils/api";
 import { flatMap } from "visual/utils/array";
 import { ArrayType } from "visual/utils/array/types";
 import { placeholderBlockThumbnailUrl } from "visual/utils/blocks";
-import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
+import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
+import { normalizeStyles } from "visual/utils/fonts/transform";
 import { t } from "visual/utils/i18n";
-import * as Num from "visual/utils/math/number";
 import {
   getBlocksStylesFonts,
   getUsedModelsFonts,
@@ -30,7 +34,6 @@ import {
 } from "visual/utils/traverse";
 import { Button } from "../../common/Button";
 import ImageLoad from "../common/ImageLoad";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 const TRANSITION_DELAY = 500;
 
@@ -87,9 +90,9 @@ class Details extends Component<AllProps, State> {
       keywords: "",
       layoutId: ""
     },
-    onClose: _.noop,
-    onAddBlocks: _.noop,
-    onBack: _.noop,
+    onClose: noop,
+    onAddBlocks: noop,
+    onBack: noop,
     isPro: false,
     upgradeToPro: "",
     config: {} as ConfigCommon
@@ -173,7 +176,7 @@ class Details extends Component<AllProps, State> {
         loading: true
       });
 
-      const activePage = _.find(data.pages, { id: pageId });
+      const activePage = find(data.pages, { id: pageId });
 
       if (!activePage) {
         return;
@@ -209,6 +212,7 @@ class Details extends Component<AllProps, State> {
         onAddBlocks({
           blocks,
           styles,
+          // @ts-expect-error: is not assignable to type FontPayload<keyof Fonts>
           fonts,
           currentStyleId: replaceStyle ? data.styles?.[0]?.id : undefined
         });

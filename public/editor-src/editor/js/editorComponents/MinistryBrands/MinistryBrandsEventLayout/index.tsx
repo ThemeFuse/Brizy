@@ -7,6 +7,7 @@ import type { Model } from "visual/editorComponents/EditorComponent/types";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { updateEkklesiaFields } from "visual/utils/api/common";
+import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
@@ -39,12 +40,12 @@ import type { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): "MinistryBrandsEventLayout" {
     return "MinistryBrandsEventLayout";
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -118,7 +119,7 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -134,186 +135,262 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
         )}
         selector=".brz-eventLayout--view"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarExtendFilters,
-            sidebarExtendFilters,
-            {
-              allowExtend: false
-            }
-          )}
-          selector=".brz-eventLayout--filters"
-        >
+        {({ ref: viewRef }) => (
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
-              toolbarTitle,
-              sidebarMinistryBrandsMetaTitle,
+              toolbarExtendFilters,
+              sidebarExtendFilters,
               {
                 allowExtend: false
               }
             )}
-            selector=".brz-ministryBrands__item--meta-title"
+            selector=".brz-eventLayout--filters"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarDate,
-                sidebarMinistryBrandsMetaDate,
-                {
-                  allowExtend: false
-                }
-              )}
-              selector=".brz-ministryBrands__item--meta-date"
-            >
+            {({ ref: filtersRef }) => (
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarExtendListPagination,
-                  undefined,
+                  toolbarTitle,
+                  sidebarMinistryBrandsMetaTitle,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-eventLayout__pagination span"
+                selector=".brz-ministryBrands__item--meta-title"
               >
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarExtendListPaginationArrows,
-                    undefined,
-                    {
-                      allowExtend: false
-                    }
-                  )}
-                  selector=".brz-eventLayout__pagination a"
-                >
+                {({ ref: titleRef }) => (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarExtendListTitle,
-                      undefined,
+                      toolbarDate,
+                      sidebarMinistryBrandsMetaDate,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-eventLayout--list-item__grouping-day"
+                    selector=".brz-ministryBrands__item--meta-date"
                   >
-                    <Toolbar
-                      {...this.makeToolbarPropsFromConfig2(
-                        toolbarGroupingDate,
-                        undefined,
-                        {
-                          allowExtend: false
-                        }
-                      )}
-                      selector=".brz-eventLayout--list-item__grouping-date"
-                    >
+                    {({ ref: dateRef }) => (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarExtendListItemDate,
+                          toolbarExtendListPagination,
                           undefined,
                           {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-eventLayout--list-item__content-date"
+                        selector=".brz-eventLayout__pagination span"
                       >
-                        <Toolbar
-                          {...this.makeToolbarPropsFromConfig2(
-                            toolbarExtendListItemTitle,
-                            undefined,
-                            {
-                              allowExtend: false
-                            }
-                          )}
-                          selector=".brz-eventLayout--list-item__content__heading"
-                        >
+                        {({ ref: paginationRef }) => (
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarExtendListItemMeta,
+                              toolbarExtendListPaginationArrows,
                               undefined,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-eventLayout--list-item__content__meta"
+                            selector=".brz-eventLayout__pagination a"
                           >
-                            <Toolbar
-                              {...this.makeToolbarPropsFromConfig2(
-                                toolbarExtendCalendarHeading,
-                                undefined,
-                                {
-                                  allowExtend: false
-                                }
-                              )}
-                              selector=".brz-eventLayout--calendar-heading th"
-                            >
+                            {({ ref: paginationArrowsRef }) => (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarExtendCalendarDays,
+                                  toolbarExtendListTitle,
                                   undefined,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-eventLayout--calendar-day"
+                                selector=".brz-eventLayout--list-item__grouping-day"
                               >
-                                <Toolbar
-                                  {...this.makeToolbarPropsFromConfig2(
-                                    toolbarExtendDayEvents,
-                                    undefined,
-                                    {
-                                      allowExtend: false
-                                    }
-                                  )}
-                                  selector=".brz-eventLayout--calendar-day li"
-                                >
+                                {({ ref: groupingDayRef }) => (
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
-                                      toolbarImage,
-                                      sidebarImage,
+                                      toolbarGroupingDate,
+                                      undefined,
                                       {
                                         allowExtend: false
                                       }
                                     )}
-                                    selector=".brz-ministryBrands__item--media"
+                                    selector=".brz-eventLayout--list-item__grouping-date"
                                   >
-                                    <Toolbar
-                                      {...this.makeToolbarPropsFromConfig2(
-                                        toolbarExtendButtons,
-                                        sidebarExtendButtons,
-                                        {
-                                          allowExtend: false
-                                        }
-                                      )}
-                                      selector=".brz-ministryBrands__item--meta--button"
-                                    >
-                                      <Wrapper
-                                        {...this.makeWrapperProps({
-                                          className
-                                        })}
+                                    {({ ref: groupingDateRef }) => (
+                                      <Toolbar
+                                        {...this.makeToolbarPropsFromConfig2(
+                                          toolbarExtendListItemDate,
+                                          undefined,
+                                          {
+                                            allowExtend: false
+                                          }
+                                        )}
+                                        selector=".brz-eventLayout--list-item__content-date"
                                       >
-                                        <DynamicContentHelper
-                                          placeholder={getPlaceholder(v)}
-                                          props={{
-                                            className:
-                                              "brz-ministryBrands brz-eventLayout"
-                                          }}
-                                          blocked={false}
-                                          tagName="div"
-                                        />
-                                      </Wrapper>
-                                    </Toolbar>
+                                        {({ ref: contentDateRef }) => (
+                                          <Toolbar
+                                            {...this.makeToolbarPropsFromConfig2(
+                                              toolbarExtendListItemTitle,
+                                              undefined,
+                                              {
+                                                allowExtend: false
+                                              }
+                                            )}
+                                            selector=".brz-eventLayout--list-item__content__heading"
+                                          >
+                                            {({ ref: headingRef }) => (
+                                              <Toolbar
+                                                {...this.makeToolbarPropsFromConfig2(
+                                                  toolbarExtendListItemMeta,
+                                                  undefined,
+                                                  {
+                                                    allowExtend: false
+                                                  }
+                                                )}
+                                                selector=".brz-eventLayout--list-item__content__meta"
+                                              >
+                                                {({ ref: metaRef }) => (
+                                                  <Toolbar
+                                                    {...this.makeToolbarPropsFromConfig2(
+                                                      toolbarExtendCalendarHeading,
+                                                      undefined,
+                                                      {
+                                                        allowExtend: false
+                                                      }
+                                                    )}
+                                                    selector=".brz-eventLayout--calendar-heading th"
+                                                  >
+                                                    {({
+                                                      ref: calendarHeadingRef
+                                                    }) => (
+                                                      <Toolbar
+                                                        {...this.makeToolbarPropsFromConfig2(
+                                                          toolbarExtendCalendarDays,
+                                                          undefined,
+                                                          {
+                                                            allowExtend: false
+                                                          }
+                                                        )}
+                                                        selector=".brz-eventLayout--calendar-day"
+                                                      >
+                                                        {({
+                                                          ref: calendarDayRef
+                                                        }) => (
+                                                          <Toolbar
+                                                            {...this.makeToolbarPropsFromConfig2(
+                                                              toolbarExtendDayEvents,
+                                                              undefined,
+                                                              {
+                                                                allowExtend:
+                                                                  false
+                                                              }
+                                                            )}
+                                                            selector=".brz-eventLayout--calendar-day li"
+                                                          >
+                                                            {({
+                                                              ref: dayEventsRef
+                                                            }) => (
+                                                              <Toolbar
+                                                                {...this.makeToolbarPropsFromConfig2(
+                                                                  toolbarImage,
+                                                                  sidebarImage,
+                                                                  {
+                                                                    allowExtend:
+                                                                      false
+                                                                  }
+                                                                )}
+                                                                selector=".brz-ministryBrands__item--media"
+                                                              >
+                                                                {({
+                                                                  ref: mediaRef
+                                                                }) => (
+                                                                  <Toolbar
+                                                                    {...this.makeToolbarPropsFromConfig2(
+                                                                      toolbarExtendButtons,
+                                                                      sidebarExtendButtons,
+                                                                      {
+                                                                        allowExtend:
+                                                                          false
+                                                                      }
+                                                                    )}
+                                                                    selector=".brz-ministryBrands__item--meta--button"
+                                                                  >
+                                                                    {({
+                                                                      ref: buttonRef
+                                                                    }) => (
+                                                                      <Wrapper
+                                                                        {...this.makeWrapperProps(
+                                                                          {
+                                                                            className,
+                                                                            ref: (
+                                                                              el
+                                                                            ) => {
+                                                                              attachRefs(
+                                                                                el,
+                                                                                [
+                                                                                  viewRef,
+                                                                                  filtersRef,
+                                                                                  titleRef,
+                                                                                  dateRef,
+                                                                                  paginationRef,
+                                                                                  paginationArrowsRef,
+                                                                                  groupingDayRef,
+                                                                                  groupingDateRef,
+                                                                                  contentDateRef,
+                                                                                  headingRef,
+                                                                                  metaRef,
+                                                                                  calendarHeadingRef,
+                                                                                  calendarDayRef,
+                                                                                  dayEventsRef,
+                                                                                  mediaRef,
+                                                                                  buttonRef
+                                                                                ]
+                                                                              );
+                                                                            }
+                                                                          }
+                                                                        )}
+                                                                      >
+                                                                        <DynamicContentHelper
+                                                                          placeholder={getPlaceholder(
+                                                                            v
+                                                                          )}
+                                                                          props={{
+                                                                            className:
+                                                                              "brz-ministryBrands brz-eventLayout"
+                                                                          }}
+                                                                          blocked={
+                                                                            false
+                                                                          }
+                                                                          tagName="div"
+                                                                        />
+                                                                      </Wrapper>
+                                                                    )}
+                                                                  </Toolbar>
+                                                                )}
+                                                              </Toolbar>
+                                                            )}
+                                                          </Toolbar>
+                                                        )}
+                                                      </Toolbar>
+                                                    )}
+                                                  </Toolbar>
+                                                )}
+                                              </Toolbar>
+                                            )}
+                                          </Toolbar>
+                                        )}
+                                      </Toolbar>
+                                    )}
                                   </Toolbar>
-                                </Toolbar>
+                                )}
                               </Toolbar>
-                            </Toolbar>
+                            )}
                           </Toolbar>
-                        </Toolbar>
+                        )}
                       </Toolbar>
-                    </Toolbar>
+                    )}
                   </Toolbar>
-                </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }

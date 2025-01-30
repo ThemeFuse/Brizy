@@ -5,4 +5,5 @@ export interface Config {
   opacity?: boolean;
   styles?: Style[];
   width?: WidthType[];
+  isPaletteHidden?: boolean;
 }

@@ -5,6 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -12,11 +13,11 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class WPPostInfo extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "WPPostInfo";
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v, vs, vd) {
     const { className, postElements } = v;
@@ -40,7 +41,7 @@ class WPPostInfo extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -52,16 +53,25 @@ class WPPostInfo extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className: classNameBC })}>
-            <DynamicContentHelper
-              placeholder={placeholder}
-              placeholderIcon="wp-post-info"
-              tagName="div"
-              blocked={false}
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: classNameBC,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                <DynamicContentHelper
+                  placeholder={placeholder}
+                  placeholderIcon="wp-post-info"
+                  tagName="div"
+                  blocked={false}
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

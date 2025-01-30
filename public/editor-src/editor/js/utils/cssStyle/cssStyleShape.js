@@ -1,4 +1,4 @@
-import Config from "visual/global/Config";
+import { configSelector } from "visual/redux/selectors";
 import { makeStylePaletteCSSVar } from "visual/utils/color";
 import {
   styleShapeBottomFlip,
@@ -16,13 +16,13 @@ import {
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
 
-export function cssStyleShapeTopType({ v, device, state }) {
+export function cssStyleShapeTopType({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const shapeTopType = styleShapeTopType({ v, device, state });
   const shapeTopSvg = styleShapeTopSvg({ v, device, state });
   const shapeTopColorPalette = dvv("shapeTopColorPalette");
   const shapeTopColorOpacity = dvv("shapeTopColorOpacity");
-  const config = Config.getAll();
+  const config = configSelector(store.getState());
 
   const shape = shapeTopColorPalette
     ? `background-color: rgba(var(${makeStylePaletteCSSVar(
@@ -34,8 +34,8 @@ export function cssStyleShapeTopType({ v, device, state }) {
   return shapeTopType === undefined
     ? ""
     : shapeTopType === "none"
-    ? "background-image: none; -webkit-mask-image: none;"
-    : shape;
+      ? "background-image: none; -webkit-mask-image: none;"
+      : shape;
 }
 
 export function cssStyleShapeTopHeight({ v, device, state }) {
@@ -60,13 +60,13 @@ export function cssStyleShapeTopIndex({ v, device, state }) {
   return `z-index: ${shapeTopIndex};`;
 }
 
-export function cssStyleShapeBottomType({ v, device, state }) {
+export function cssStyleShapeBottomType({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const shapeBottomType = styleShapeBottomType({ v, device, state });
   const shapeBottomSvg = styleShapeBottomSvg({ v, device, state });
   const shapeBottomColorPalette = dvv("shapeBottomColorPalette");
   const shapeBottomColorOpacity = dvv("shapeBottomColorOpacity");
-  const config = Config.getAll();
+  const config = configSelector(store.getState());
   const shape = shapeBottomColorPalette
     ? `background-color: rgba(var(${makeStylePaletteCSSVar(
         shapeBottomColorPalette,
@@ -77,8 +77,8 @@ export function cssStyleShapeBottomType({ v, device, state }) {
   return shapeBottomType === undefined
     ? ""
     : shapeBottomType === "none"
-    ? "background-image: none; -webkit-mask-image: none;"
-    : shape;
+      ? "background-image: none; -webkit-mask-image: none;"
+      : shape;
 }
 
 export function cssStyleShapeBottomHeight({ v, device, state }) {

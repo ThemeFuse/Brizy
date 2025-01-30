@@ -1,14 +1,8 @@
-import React, {
-  PropsWithChildren,
-  ReactElement,
-  forwardRef,
-  useCallback
-} from "react";
+import React, { ReactElement, forwardRef, useCallback } from "react";
 import { useStore } from "react-redux";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
-import { isStory } from "visual/global/EditorModeContext";
-import { useEditorMode } from "visual/global/hooks";
+import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { Resizer } from "./Resizer";
@@ -39,8 +33,8 @@ let startValue: RM | null = null;
 const BoxResizer = forwardRef<HTMLElement, Props>(
   ({ value, onChange, meta = {}, ...props }, ref): ReactElement => {
     const store = useStore();
-    const editorMode = useEditorMode();
-    const _isStory = isStory(editorMode);
+    const { mode } = useEditorMode();
+    const _isStory = isStory(mode);
 
     // Although the standard way of accessing data from the store is by using connect from react-redux,
     // it could cause issues in this case due to potential re-renders triggered by connect.
@@ -131,8 +125,9 @@ const BoxResizer = forwardRef<HTMLElement, Props>(
 
 export default rolesHOC({
   allow: ["admin"],
-  component: renderHOC<Props>({
-    ForEdit: BoxResizer as (props: PropsWithChildren<Props>) => JSX.Element,
+  component: renderHOC<typeof BoxResizer, Props>({
+    // @ts-expect-error: Types of property defaultProps are incompatible.
+    ForEdit: BoxResizer,
     ForView: ({ children }) => <>{children}</>
   }),
   fallbackRender: ({

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { CSSTransition } from "react-transition-group";
 import EditorIcon from "visual/component/EditorIcon";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 
 class ContainerBorderButton extends Component {
   static defaultProps = {
@@ -42,7 +43,12 @@ class ContainerBorderButton extends Component {
   }
 
   render() {
-    const { innerRef, className: className_, position } = this.props;
+    const {
+      innerRef,
+      className: className_,
+      position,
+      containerRef
+    } = this.props;
     const { active } = this.state;
 
     const className = classnames("brz-ed-border__button", className_, {
@@ -53,7 +59,9 @@ class ContainerBorderButton extends Component {
 
     return (
       <div
-        ref={innerRef}
+        ref={(el) => {
+          attachRefs(el, [innerRef, containerRef]);
+        }}
         className={className}
         {...makeDataAttr({
           name: "sortable-handle",

@@ -1,6 +1,6 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";

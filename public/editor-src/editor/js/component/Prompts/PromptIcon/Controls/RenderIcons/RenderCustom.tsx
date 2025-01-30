@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { useMemo } from "react";
-import _ from "underscore";
 import { PromiseComponent } from "visual/component/PromiseComponent";
 import { TypeId } from "visual/config/icons/Type";
 import { getTypeIcons } from "visual/config/icons/icons";
@@ -22,7 +22,7 @@ export const RenderCustom: FCC<Props> = ({ name, onIconClick }) => {
         <CustomIcon
           icons={[]}
           canUpload={false}
-          onChange={_.noop}
+          onChange={noop}
           name={name}
           config={config}
         />

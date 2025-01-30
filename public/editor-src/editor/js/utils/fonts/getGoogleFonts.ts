@@ -1,5 +1,6 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
+import { GoogleFont } from "visual/types/Fonts";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 
@@ -16,7 +17,7 @@ export const getGoogleFonts = async ({
 }: {
   config: ConfigCommon;
   renderContext: RenderType;
-}) => {
+}): Promise<Array<GoogleFont>> => {
   return new Promise((res, rej) => {
     if (isEditor(renderContext) || COMPILER_TYPE === "worker") {
       try {
@@ -32,7 +33,7 @@ export const getGoogleFonts = async ({
     if (isView(renderContext) && COMPILER_TYPE === "node") {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const fonts = require("visual/config/googleFonts.json");
-      return res(fonts);
+      return res(fonts.items);
     }
   });
 };

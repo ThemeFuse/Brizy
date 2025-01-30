@@ -150,7 +150,7 @@ class SectionItems extends EditorArrayComponent {
     if (showSlider) {
       const { sliderDots, sliderArrows, sliderAnimation } = this.props;
 
-      if (isEditor(this.renderContext)) {
+      if (isEditor(this.props.renderContext)) {
         ret = (
           <SlickSlider
             className={`brz-slick-slider brz-slick-slider--${sliderAnimation}`}
@@ -187,7 +187,7 @@ class SectionItems extends EditorArrayComponent {
         );
       }
 
-      if (isView(this.renderContext)) {
+      if (isView(this.props.renderContext)) {
         const {
           sliderAutoPlay,
           sliderAutoPlaySpeed,

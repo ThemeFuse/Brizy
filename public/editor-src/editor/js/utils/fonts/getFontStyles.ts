@@ -4,7 +4,7 @@ import {
 } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
-import { FontStyle } from "visual/types";
+import { FontStyle } from "visual/types/Style";
 
 interface AllFontStyles {
   fontStyles?: ReduxState["currentStyle"]["fontStyles"];

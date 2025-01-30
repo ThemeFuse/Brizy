@@ -1,5 +1,5 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
@@ -624,10 +624,7 @@ const getItems =
                 options: [
                   {
                     ...toolbarLinkAnchor({ v }),
-                    disabled:
-                      device !== "desktop" ||
-                      isPopup(editorMode) ||
-                      isStory(editorMode),
+                    disabled: device !== "desktop" || _isPopup || _isStory,
                     ...(v.textPopulation
                       ? {}
                       : {

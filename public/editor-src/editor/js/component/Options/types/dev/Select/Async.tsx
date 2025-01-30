@@ -1,5 +1,5 @@
+import { isEqual } from "es-toolkit";
 import React, { ReactElement, useEffect, useRef, useState } from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { t } from "visual/utils/i18n";
@@ -28,7 +28,7 @@ export const Async = (
           setIsLoaded(true);
           setChoices(r);
 
-          if (!_.isEqual(prevChoices.current, r)) {
+          if (!isEqual(prevChoices.current, r)) {
             prevChoices.current = r;
 
             props?.onLoad?.();

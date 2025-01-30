@@ -1,5 +1,5 @@
+import { debounce } from "es-toolkit";
 import { getIn } from "timm";
-import _ from "underscore";
 import {
   ADD_BLOCK,
   EDITOR_RENDERED,
@@ -140,7 +140,7 @@ function allBlocks(store, config, next) {
   enqueueTasks(changedBlocks, store, config, next);
 }
 
-const allBlocksDebounced = _.debounce(allBlocks, DEBOUNCE_INTERVAL);
+const allBlocksDebounced = debounce(allBlocks, DEBOUNCE_INTERVAL);
 
 function changedBlocks(prevState, store, config, next, options) {
   const changedBlocks = {

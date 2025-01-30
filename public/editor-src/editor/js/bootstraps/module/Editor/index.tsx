@@ -1,9 +1,9 @@
-import { fromJS } from "immutable";
+import { isEqual } from "es-toolkit";
 import React, { MutableRefObject, useMemo, useRef } from "react";
 import Page from "visual/component/Editor";
 import { Config } from "visual/global/Config/InitConfig";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorModeContext } from "visual/global/EditorModeContext";
+import { EditorModeProvider } from "visual/providers/EditorModeProvider";
 import { I18nextProvider } from "visual/providers/I18nProvider";
 import { RenderProvider } from "visual/providers/RenderProvider";
 import { StyleProvider } from "visual/providers/StyleProvider";
@@ -19,10 +19,7 @@ export const Editor = (props: Props): JSX.Element => {
   const lastUid = useRef(uuid());
 
   const configId = useMemo(() => {
-    const _lastConfig = fromJS(lastConfig.current);
-    const currentConfig = fromJS(config);
-
-    if (!_lastConfig?.equals(currentConfig)) {
+    if (!isEqual(lastConfig.current, config)) {
       lastConfig.current = config;
       lastUid.current = uuid();
     }
@@ -35,12 +32,16 @@ export const Editor = (props: Props): JSX.Element => {
       <RenderProvider renderType="editor">
         <Config id={configId} config={config}>
           <RegisterParts config={config}>
-            <InitStore renderType="editor" configId={configId} config={config}>
-              <StyleProvider>
-                <EditorModeContext.Provider value={editorMode}>
+            <InitStore
+              configId={configId}
+              config={config}
+              editorMode={editorMode}
+            >
+              <EditorModeProvider mode={editorMode}>
+                <StyleProvider>
                   <Page addFile={addFile} editorMode={editorMode} />
-                </EditorModeContext.Provider>
-              </StyleProvider>
+                </StyleProvider>
+              </EditorModeProvider>
             </InitStore>
           </RegisterParts>
         </Config>

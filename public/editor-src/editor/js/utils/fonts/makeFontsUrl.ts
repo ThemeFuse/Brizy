@@ -1,5 +1,5 @@
-import Config from "visual/global/Config";
-import { GoogleFont, UploadedFont } from "visual/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { GoogleFont, UploadedFont } from "visual/types/Fonts";
 
 export const makeSubsetGoogleFontsUrl = (fonts: GoogleFont[]): string => {
   const family = fonts.reduce((acc, curr) => {
@@ -14,8 +14,11 @@ export const makeSubsetGoogleFontsUrl = (fonts: GoogleFont[]): string => {
 };
 
 // {editorFonts}fontId:400|fontId:400,700
-export const makeUploadFontsUrl = (fonts: UploadedFont[]): string => {
-  const baseUrl = Config.getAll().urls.editorFonts;
+export const makeUploadFontsUrl = (
+  fonts: UploadedFont[],
+  config: ConfigCommon
+): string => {
+  const baseUrl = config.urls?.editorFonts;
   const fontsStr = fonts.reduce((acc, { id, weights }) => {
     const _weights = weights.join();
 
@@ -26,8 +29,8 @@ export const makeUploadFontsUrl = (fonts: UploadedFont[]): string => {
 };
 
 // prefetch assets
-export const makePrefetchFonts = (): string[] => {
-  const prefetchFonts = Config.getAll().urls.prefetchFonts;
+export const makePrefetchFonts = (config: ConfigCommon): string[] => {
+  const prefetchFonts = config.urls?.prefetchFonts;
   const links = [
     /* eslint-disable quotes */
     '<link class="brz-link brz-link-bunny-fonts-prefetch" rel="dns-prefetch" href="//fonts.bunny.net">',

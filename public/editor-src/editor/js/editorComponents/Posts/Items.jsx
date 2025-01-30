@@ -20,6 +20,7 @@ import {
   makeDataAttr,
   makeDataAttrString
 } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { disconnect, observe } from "./resizeObserver";
@@ -208,16 +209,18 @@ export default class Items extends EditorArrayComponent {
 
               return (
                 <Toolbar key={index} {...toolbarExtendFilter}>
-                  <li className={itemClassName}>
-                    {tag.name === allTag ? (
-                      <TextEditor
-                        value={allTag}
-                        onChange={handleAllTagChange}
-                      />
-                    ) : (
-                      tag.name
-                    )}
-                  </li>
+                  {({ ref }) => (
+                    <li className={itemClassName} ref={ref}>
+                      {tag.name === allTag ? (
+                        <TextEditor
+                          value={allTag}
+                          onChange={handleAllTagChange}
+                        />
+                      ) : (
+                        tag.name
+                      )}
+                    </li>
+                  )}
                 </Toolbar>
               );
             })}
@@ -237,24 +240,28 @@ export default class Items extends EditorArrayComponent {
 
     return (
       <Toolbar {...this.props.toolbarExtendPagination}>
-        <Wrapper
-          {...this.makeWrapperProps({
-            className
-          })}
-        >
-          <DynamicContentHelper
-            placeholder={placeholder}
-            tagName="div"
-            placeholderIcon="wp-post-info"
-            blocked={false}
-          />
-        </Wrapper>
+        {({ ref }) => (
+          <Wrapper
+            {...this.makeWrapperProps({
+              className,
+              ref
+            })}
+          >
+            <DynamicContentHelper
+              placeholder={placeholder}
+              tagName="div"
+              placeholderIcon="wp-post-info"
+              blocked={false}
+            />
+          </Wrapper>
+        )}
       </Toolbar>
     );
   }
 
   renderForEdit(v) {
-    const { className, showFilter, showPagination, data } = this.props;
+    const { className, showFilter, showPagination, data, containerRef } =
+      this.props;
     const item = super.renderForEdit(v);
     const items = data?.context.map((context) => (
       <EditorComponentContext.Provider
@@ -273,7 +280,10 @@ export default class Items extends EditorArrayComponent {
       >
         <div className={className}>
           {showFilter && this.renderTagsForEdit()}
-          <div className="brz-posts__wrapper" ref={this.node}>
+          <div
+            className="brz-posts__wrapper"
+            ref={(el) => attachRefs(el, [this.node, containerRef])}
+          >
             {items}
           </div>
           {showPagination && this.renderPaginationForEdit()}

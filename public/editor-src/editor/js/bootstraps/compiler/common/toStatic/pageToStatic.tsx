@@ -1,7 +1,7 @@
 import React from "react";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
-import { EditorMode } from "visual/global/EditorModeContext";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
@@ -14,6 +14,7 @@ interface Props {
   store: Store;
   config: ConfigCommon;
   hasGlobalBlocks: boolean;
+  editorMode: EditorMode;
 }
 
 const RenderPage = (props: { store: Store; editorMode: EditorMode }) => {
@@ -45,18 +46,17 @@ const RenderPage = (props: { store: Store; editorMode: EditorMode }) => {
 };
 
 export const pageToStatic = (props: Props): Output => {
-  const { store, hasGlobalBlocks, config } = props;
-  const editorMode = config.mode;
+  const { store, hasGlobalBlocks, config, editorMode } = props;
   const sheet = new ServerStyleSheet();
 
   const Page = (
-    <Providers store={store} sheet={sheet.instance} config={config}>
-      <Root
-        className="brz"
-        type="page"
-        editorMode={editorMode}
-        hasGlobalBlocks={hasGlobalBlocks}
-      >
+    <Providers
+      store={store}
+      sheet={sheet.instance}
+      config={config}
+      editorMode={editorMode}
+    >
+      <Root className="brz" type="page" hasGlobalBlocks={hasGlobalBlocks}>
         <RenderPage store={store} editorMode={editorMode} />
       </Root>
     </Providers>

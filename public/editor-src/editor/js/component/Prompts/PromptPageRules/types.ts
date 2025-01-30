@@ -1,9 +1,10 @@
-import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
-import { Setters } from "visual/component/Prompts/PromptPageRules/types/Setters";
-import { ShopifyPage } from "visual/types";
+import { Layout } from "visual/types/Layout";
+import { ShopifyPage } from "visual/types/Page";
 import { Rule } from "visual/utils/api/types";
-import { Layout, Tabs, ThemeLayout } from "../common/PromptPage/types";
+import { Tabs, ThemeLayout } from "../common/PromptPage/types";
+import { Actions as _Actions } from "../common/states/Classic/types/Actions";
 import { State } from "../common/states/Classic/types/State";
+import { Setters } from "./types/Setters";
 
 export interface Props {
   headTitle: string;

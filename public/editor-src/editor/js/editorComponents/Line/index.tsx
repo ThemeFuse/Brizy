@@ -6,6 +6,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -91,19 +92,30 @@ class Line extends EditorComponent<Value, Props> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={resizerRestrictions}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              {this.renderLine(v)}
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  restrictions={resizerRestrictions}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                >
+                  {this.renderLine(v)}
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

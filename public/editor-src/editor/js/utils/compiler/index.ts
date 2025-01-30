@@ -7,7 +7,9 @@ import {
   PublishedPage,
   PublishedProject
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, Page, Project } from "visual/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
+import { Project } from "visual/types/Project";
 import { stringifyGlobalBlock } from "visual/utils/api/adapter";
 import { t } from "visual/utils/i18n";
 import { read as readStr } from "visual/utils/reader/string";
@@ -35,10 +37,19 @@ interface Compiled {
 
 export const getCompile = async (data: Data): Promise<Compiled> => {
   const { config, state, needToCompile } = data;
+  const { disabled } = config.compiler ?? {};
   let output: Compiled = {
     pageData: needToCompile.page,
     projectData: needToCompile.project
   };
+  const is_cloud = isCloud(config);
+
+  if (disabled) {
+    const gb = needToCompile.globalBlocks?.map((block) =>
+      stringifyGlobalBlock(block, is_cloud)
+    );
+    return { ...output, globalBlocks: gb };
+  }
 
   try {
     const {
@@ -57,7 +68,7 @@ export const getCompile = async (data: Data): Promise<Compiled> => {
         );
 
         if (globalBlock) {
-          const toApi = stringifyGlobalBlock(globalBlock, isCloud(config));
+          const toApi = stringifyGlobalBlock(globalBlock, is_cloud);
           return { ...toApi, compiled };
         }
       })

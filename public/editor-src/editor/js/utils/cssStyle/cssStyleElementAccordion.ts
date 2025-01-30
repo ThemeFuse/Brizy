@@ -66,12 +66,14 @@ export function cssStyleElementAccordionFilterActiveBgColor({
 
 export function cssStyleElementAccordionFilterActiveBorder({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
   return cssStyleBorder({
     v,
     device,
     state: "active",
+    store,
     prefix: "filter"
   });
 }
@@ -102,9 +104,10 @@ export function cssStyleElementAccordionFilterBgColor({
 export function cssStyleElementAccordionFilterBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "filter" });
+  return cssStyleBorder({ v, device, state, store, prefix: "filter" });
 }
 
 export function cssStyleElementAccordionFilterBorderRadius({
@@ -335,9 +338,10 @@ export function cssStyleElementAccordionActiveBgColor({
 
 export function cssStyleElementAccordionActiveBorder({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active" });
+  return cssStyleBorder({ v, device, state: "active", store });
 }
 
 export function cssStyleElementAccordionActiveShadow({

@@ -1,21 +1,21 @@
+import { noop } from "es-toolkit";
 import { match } from "fp-utilities";
 import { produce } from "immer";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import _ from "underscore";
 import { ToastNotification } from "visual/component/Notifications";
 import { currentUserRole } from "visual/component/Roles";
 import { isWp } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { FontsPayload } from "visual/redux/actions2";
 import {
   authorizedSelector,
   extraFontStylesSelector,
   fontsSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { SavedBlock, SavedLayout, isStyle } from "visual/types";
+import { SavedBlock, SavedLayout } from "visual/types";
+import { isStyle } from "visual/types/utils";
 import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
 import {
   deleteSavedBlock,
@@ -35,7 +35,8 @@ import {
 } from "visual/utils/api";
 import { updateSavedPopup } from "visual/utils/api/common";
 import { blockThumbnailData } from "visual/utils/blocks";
-import { normalizeFontStyles, normalizeFonts } from "visual/utils/fonts";
+import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
+import { normalizeFontStyles } from "visual/utils/fonts/transform";
 import { t } from "visual/utils/i18n";
 import { read as JSONReader } from "visual/utils/reader/json";
 import * as Str from "visual/utils/string/specs";
@@ -78,8 +79,8 @@ class Library extends Component<
     projectFonts: {},
     projectExtraFontStyles: [],
     isAuthorized: false,
-    onAddBlocks: _.noop,
-    onClose: _.noop,
+    onAddBlocks: noop,
+    onClose: noop,
     HeaderSlotLeft: Component,
     getParentNode: () => null,
     config: {} as ConfigCommon
@@ -228,7 +229,7 @@ class Library extends Component<
     const blockFonts = getUsedModelsFonts({ models: block });
     const stylesFonts = getUsedStylesFonts(extraFontStyles);
 
-    const fonts: FontsPayload = await normalizeFonts({
+    const fonts = await normalizeFonts({
       config: config,
       renderContext: "editor",
       newFonts: getBlocksStylesFonts(
@@ -243,6 +244,7 @@ class Library extends Component<
     );
 
     return {
+      // @ts-expect-error Fonts to Payload Reducers
       fonts,
       // @ts-expect-error: Need to convert normalizeFontStyles to TS
       extraFontStyles: normalizeFontStyles(filteredStyles)

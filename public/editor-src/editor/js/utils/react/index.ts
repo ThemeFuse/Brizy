@@ -1,4 +1,4 @@
-import { Ref, SyntheticEvent } from "react";
+import { Ref, RefObject, SyntheticEvent } from "react";
 
 type WithValue = HTMLElement & { value: string };
 
@@ -12,4 +12,11 @@ export function attachRef<T>(t: T | null, ref: Ref<T>): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (ref as any).current = t;
   }
+}
+
+export function attachRefs<T>(
+  t: T | null,
+  refs: (RefObject<T> | null)[]
+): void {
+  refs.forEach((ref) => attachRef(t, ref));
 }

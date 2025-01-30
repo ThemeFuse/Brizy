@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { ReactElement, ReactNode } from "react";
-import _ from "underscore";
 import Sortable from "visual/component/Sortable";
 import { Shortcode } from "visual/types";
 import { SortData } from "./types";
@@ -28,7 +28,7 @@ export class Category extends React.Component<Props> {
   static defaultProps = {
     category: "",
     shortcodes: [],
-    onChange: _.noop,
+    onChange: noop,
     showLines: false
   };
 

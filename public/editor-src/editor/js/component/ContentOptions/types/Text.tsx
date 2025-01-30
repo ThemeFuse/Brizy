@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { ReactElement } from "react";
-import _ from "underscore";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { Translate } from "visual/component/Translate";
 import { hasDC } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
@@ -25,7 +25,7 @@ export const Text = ({
   tagName = "span",
   className: className_,
   allowLineBreak,
-  onChange = _.noop
+  onChange = noop
 }: Props): ReactElement => {
   const className = classnames(className_, `brz-${tagName}`);
   const hasDC_ = hasDC(v, id);

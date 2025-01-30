@@ -1,5 +1,5 @@
+import { isEqual } from "es-toolkit";
 import { produce } from "immer";
-import { fromJS } from "immutable";
 import { projectAssembled } from "visual/redux/selectors";
 import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
@@ -16,10 +16,8 @@ export const project: RProject = (state, action, fullState) => {
     }
     case "PUBLISH": {
       const newProject = projectAssembled(fullState);
-      const oldState = fromJS(state);
-      const newState = fromJS(newProject);
 
-      if (oldState.equals(newState)) {
+      if (isEqual(state, newProject)) {
         return state;
       }
 

@@ -1,13 +1,12 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-
 
 export function getItems({ v, device, state, context, component }) {
   return defaultValueValue({ v, device, state, key: "mMenu" }) === "on"
@@ -17,12 +16,12 @@ export function getItems({ v, device, state, context, component }) {
 
 export function getItemsSimple({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")
   );
-  const subMenuColor = getColor(
+  const subMenuColor = getColorToolbar(
     dvv("subMenuColorPalette"),
     dvv("subMenuColorHex"),
     dvv("subMenuColorOpacity")
@@ -331,13 +330,13 @@ export function getItemsSimple({ v, device, state }) {
 
 export function getItemsMMenu({ v, device, state, context, component }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const mMenuColor = getColor(
+  const config = component.getGlobalConfig();
+
+  const mMenuColor = getColorToolbar(
     dvv("mMenuColorPalette"),
     dvv("mMenuColorHex"),
     dvv("mMenuColorOpacity")
   );
-
-  const config = component.getGlobalConfig();
 
   const imageDynamicContentChoices = getDynamicContentOption({
     options: context.dynamicContent.config,
@@ -372,6 +371,7 @@ export function getItemsMMenu({ v, device, state, context, component }) {
                   type: "imageUpload",
                   population: imageDynamicContentChoices,
                   config: {
+                    edit: device === "desktop",
                     disableSizes: isExternalImage,
                     pointer: !isExternalImage && isPointerEnabled
                   }

@@ -6,7 +6,7 @@ export interface UrlsCommon {
   customFile: string;
   editorFonts: string;
   prefetchFonts?: string;
-  pagePreview: string;
+  pagePreview?: string;
   preview: string;
   site: string;
   support: string;
@@ -18,6 +18,7 @@ export interface UrlsCommon {
   templateIcons: string;
   screenshot: string;
   changeTemplate?: string;
+  flags?: string;
 
   // On Compile time
   compileAssets?: string;
@@ -44,7 +45,6 @@ interface CloudUrls extends UrlsCommon {
   projectSettings: string;
   prefetchFonts: string;
   flags: string;
-  worker: string;
 }
 
 type Cnf = {

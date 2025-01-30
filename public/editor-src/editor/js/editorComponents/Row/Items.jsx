@@ -1,8 +1,6 @@
 import deepMerge from "deepmerge";
 import React from "react";
 import { getIn, mergeDeep, setIn } from "timm";
-import _ from "underscore";
-import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
@@ -10,6 +8,7 @@ import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { clamp, isNumeric } from "visual/utils/math";
@@ -17,6 +16,7 @@ import * as N from "visual/utils/math/number";
 import { defaultValueKey } from "visual/utils/onChange";
 import { attachRef } from "visual/utils/react";
 import { capByPrefix } from "visual/utils/string";
+import { isT } from "visual/utils/value";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { getElemWidthWithoutPaddings, normalizeRowColumns } from "./utils";
 
@@ -25,30 +25,25 @@ const MAX_ITEMS_IN_ROW = 6;
 const toDecimalTen = (number) => Math.round(number * 10) / 10;
 
 class RowItems extends EditorArrayComponent {
-  static get componentId() {
-    return "Row.Items";
-  }
-
   static defaultProps = {
     containerClassName: "",
     meta: {},
     itemProps: {}
   };
-
   nodeRef = React.createRef();
-
   columnWidths = null;
-
   popoverData = null;
-
   resizerState = {
     isDragging: false,
     deltaX: 0
   };
-
   state = {
     patch: null
   };
+
+  static get componentId() {
+    return "Row.Items";
+  }
 
   getDBValue() {
     if (this.state.patch) {
@@ -422,7 +417,9 @@ class RowItems extends EditorArrayComponent {
     const node = this.nodeRef.current;
 
     if (node) {
-      return _.map(node.children, (elem) => elem.getBoundingClientRect().width);
+      return Array.from(node.children)
+        .map((elem) => elem.getBoundingClientRect().width)
+        .filter(isT);
     }
 
     return [];
@@ -509,7 +506,7 @@ class RowItems extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { containerClassName: className } = this.props;
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

@@ -8,6 +8,7 @@ import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/D
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api/common";
+import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarImage from "../toolbarImage";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
@@ -23,12 +24,12 @@ import { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsStaffDetail extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): ElementTypes.MinistryBrandsStaffDetail {
     return ElementTypes.MinistryBrandsStaffDetail;
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -68,7 +69,7 @@ export class MinistryBrandsStaffDetail extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -80,76 +81,105 @@ export class MinistryBrandsStaffDetail extends EditorComponent<Value, Props> {
         })}
         selector=".brz-ministryBrands__item--media"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarTitle, undefined, {
-            allowExtend: false
-          })}
-          selector=".brz-staffDetail__item--meta--title"
-        >
+        {({ ref: mediaRef }) => (
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(
-              toolbarMetaTypography,
-              undefined,
-              {
-                allowExtend: false
-              }
-            )}
-            selector=".brz-staffDetail__item--meta"
+            {...this.makeToolbarPropsFromConfig2(toolbarTitle, undefined, {
+              allowExtend: false
+            })}
+            selector=".brz-staffDetail__item--meta--title"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarMetaIcons,
-                undefined,
-                {
-                  allowExtend: false
-                }
-              )}
-              selector=".brz-ministryBrands__meta--icons"
-            >
+            {({ ref: titleRef }) => (
               <Toolbar
-                {...this.makeToolbarPropsFromConfig2(toolbarSocial, undefined, {
-                  allowExtend: false
-                })}
-                selector=".brz-staffDetail__item--social a"
+                {...this.makeToolbarPropsFromConfig2(
+                  toolbarMetaTypography,
+                  undefined,
+                  {
+                    allowExtend: false
+                  }
+                )}
+                selector=".brz-staffDetail__item--meta"
               >
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarPreview,
-                    undefined,
-                    {
-                      allowExtend: false
-                    }
-                  )}
-                  selector=".brz-staffDetail__item--about"
-                >
+                {({ ref: itemMetaRef }) => (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarMetaLinks,
+                      toolbarMetaIcons,
                       undefined,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-ministryBrands__item--meta--links--previous"
+                    selector=".brz-ministryBrands__meta--icons"
                   >
-                    <Wrapper
-                      {...this.makeWrapperProps({
-                        className
-                      })}
-                    >
-                      <DynamicContentHelper
-                        placeholder={getPlaceholder(v)}
-                        props={{ className: "brz-staffDetail" }}
-                        blocked={false}
-                        tagName="div"
-                      />
-                    </Wrapper>
+                    {({ ref: metaIconsRef }) => (
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarSocial,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-staffDetail__item--social a"
+                      >
+                        {({ ref: socialRef }) => (
+                          <Toolbar
+                            {...this.makeToolbarPropsFromConfig2(
+                              toolbarPreview,
+                              undefined,
+                              {
+                                allowExtend: false
+                              }
+                            )}
+                            selector=".brz-staffDetail__item--about"
+                          >
+                            {({ ref: aboutRef }) => (
+                              <Toolbar
+                                {...this.makeToolbarPropsFromConfig2(
+                                  toolbarMetaLinks,
+                                  undefined,
+                                  {
+                                    allowExtend: false
+                                  }
+                                )}
+                                selector=".brz-ministryBrands__item--meta--links--previous"
+                              >
+                                {({ ref: previousRef }) => (
+                                  <Wrapper
+                                    {...this.makeWrapperProps({
+                                      className,
+                                      ref: (el) => {
+                                        attachRefs(el, [
+                                          mediaRef,
+                                          titleRef,
+                                          itemMetaRef,
+                                          metaIconsRef,
+                                          socialRef,
+                                          aboutRef,
+                                          previousRef
+                                        ]);
+                                      }
+                                    })}
+                                  >
+                                    <DynamicContentHelper
+                                      placeholder={getPlaceholder(v)}
+                                      props={{ className: "brz-staffDetail" }}
+                                      blocked={false}
+                                      tagName="div"
+                                    />
+                                  </Wrapper>
+                                )}
+                              </Toolbar>
+                            )}
+                          </Toolbar>
+                        )}
+                      </Toolbar>
+                    )}
                   </Toolbar>
-                </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }

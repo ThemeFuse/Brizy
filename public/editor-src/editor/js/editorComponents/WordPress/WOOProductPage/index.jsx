@@ -3,6 +3,7 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { attachRefs } from "visual/utils/react";
 import { WPShortcode } from "../common/WPShortcode";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -12,11 +13,11 @@ import * as toolbarConfig from "./toolbar";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 class WOOProductPage extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "WOOProductPage";
   }
-
-  static defaultValue = defaultValue;
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -34,7 +35,7 @@ class WOOProductPage extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -43,20 +44,25 @@ class WOOProductPage extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <WPShortcode
-            name="brizy_product_page"
-            attributes={attributes}
-            placeholderIcon="woo-2"
-            className={className}
-            resizerPoints={resizerPoints}
-            resizerMeta={this.props.meta}
-            resizerValue={v}
-            resizerOnChange={this.handleResizerChange}
-            renderContext={this.renderContext}
-            config={this.getGlobalConfig()}
-          />
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <WPShortcode
+                name="brizy_product_page"
+                attributes={attributes}
+                placeholderIcon="woo-2"
+                className={className}
+                resizerPoints={resizerPoints}
+                resizerMeta={this.props.meta}
+                resizerValue={v}
+                resizerOnChange={this.handleResizerChange}
+                renderContext={this.props.renderContext}
+                config={this.getGlobalConfig()}
+                contentRef={(el) => attachRefs(el, [toolbarRef, cssRef])}
+              />
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

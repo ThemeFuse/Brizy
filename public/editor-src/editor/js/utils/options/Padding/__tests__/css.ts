@@ -3,6 +3,7 @@ import {
   Zero as emptyPositive,
   fromNumber as readPositive
 } from "visual/utils/math/Positive";
+import { config } from "../../../../../../jest-utils/mocks";
 import { css as cssStylePadding } from "../css";
 
 describe("Testing cssStylePadding that should return CSS for padding", () => {
@@ -33,20 +34,21 @@ describe("Testing cssStylePadding that should return CSS for padding", () => {
   };
 
   test("Without meta, should return empty string", () => {
-    expect(cssStylePadding({ value })).toBe("padding:1px 1px 1px 1px;");
+    expect(cssStylePadding({ value, config })).toBe("padding:1px 1px 1px 1px;");
   });
 
   test("Grouped, should return grouped padding", () => {
-    expect(cssStylePadding({ meta: { isNoEmptyGrouped: true }, value })).toBe(
-      "padding:1px;"
-    );
+    expect(
+      cssStylePadding({ meta: { isNoEmptyGrouped: true }, value, config })
+    ).toBe("padding:1px;");
   });
 
   test("Grouped, should return grouped padding", () => {
     expect(
       cssStylePadding({
         meta: { isNoEmptyGrouped: true },
-        value
+        value,
+        config
       })
     ).toBe("padding:1px;");
   });

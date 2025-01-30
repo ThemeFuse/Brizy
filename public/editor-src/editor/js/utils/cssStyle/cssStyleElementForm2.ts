@@ -1,7 +1,7 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
 import { ElementModel } from "visual/component/Elements/Types";
 import type { StylesProps as Props } from "visual/editorComponents/Form2/Form2Steps/types";
-import Config from "visual/global/Config";
+import { WithRenderContext } from "visual/providers/RenderProvider";
+import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import {
   cssStyleBgColor,
@@ -121,12 +121,14 @@ export function cssStyleElementForm2FieldsLabelAlign({
 export function cssStyleElementForm2Margin({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const padding = dvv("padding");
 
-  return padding === undefined || isStory(Config.getAll())
+  return padding === undefined || isStory(config)
     ? ""
     : `margin: 0 -${padding / 2}px -${padding}px -${padding / 2}px;`;
 }
@@ -134,15 +136,17 @@ export function cssStyleElementForm2Margin({
 export function cssStyleElementForm2Padding({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const padding = dvv("padding");
   const suffix = dvv("paddingSuffix");
 
   return padding === undefined
     ? ""
-    : isStory(Config.getAll())
+    : isStory(config)
       ? `padding:0 0 ${padding}${suffix} 0;`
       : `padding: 0 ${padding / 2}${suffix} ${padding}${suffix} ${
           padding / 2
@@ -370,9 +374,10 @@ export function cssStyleElementForm2FieldsSelectChoiceBgColor({
 export function cssStyleElementForm2FieldsSelectBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "select" });
+  return cssStyleBorder({ v, device, state, store, prefix: "select" });
 }
 
 export function cssStyleElementForm2FieldsSelectBorderRadius({
@@ -554,16 +559,22 @@ export function cssStyleElementFomr2MSDividerMargin({
   return "margin-top:0;";
 }
 
-export function cssStyleElementFomr2MSDivider({ v, device }: CSSValue): string {
+export function cssStyleElementFomr2MSDivider({
+  v,
+  device,
+  store
+}: CSSValue): string {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
+  const config = configSelector(store.getState());
 
   const dividerWidth = dvv("dividerWidth");
 
   const color = getColor(
     dvv("borderColorPalette"),
     dvv("borderColorHex"),
-    dvv("borderColorOpacity")
+    dvv("borderColorOpacity"),
+    config
   );
 
   if (Num.read(dividerWidth) && Str.read(color)) {
@@ -635,7 +646,8 @@ export function cssStyleElementForm2MSIndicatorsSpacing({
 export function cssStyleElementForm2MSProgressMargin({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const {
     paddingTop,
@@ -657,7 +669,8 @@ export function cssStyleElementForm2MSProgressMargin({
     return "";
   }
 
-  if (isStory(Config.getAll())) {
+  const config = configSelector(store.getState());
+  if (isStory(config)) {
     return `margin:0 0 ${paddingBottom}${paddingBottomSuffix} 0;`;
   }
 
@@ -669,9 +682,10 @@ export function cssStyleElementForm2MSProgressMargin({
 
 export function cssStyleElementForm2MSActiveBorder({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: ACTIVE });
+  return cssStyleBorder({ v, device, store, state: ACTIVE });
 }
 
 export function cssStyleElementForm2MSActiveBg({

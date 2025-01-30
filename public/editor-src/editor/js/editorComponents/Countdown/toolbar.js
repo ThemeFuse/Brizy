@@ -1,12 +1,12 @@
-import _ from "underscore";
-import { getColor } from "visual/utils/color";
+import { times } from "es-toolkit/compat";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")
@@ -74,7 +74,7 @@ export function getItems({ v, device, state }) {
           type: "select",
           label: t("Hour"),
           devices: "desktop",
-          choices: _.times(24, (index) => {
+          choices: times(24, (index) => {
             const hour = (index + 12) % 12 || 12;
             const suffix = index >= 12 ? "pm" : "am";
 
@@ -89,7 +89,7 @@ export function getItems({ v, device, state }) {
           type: "select",
           devices: "desktop",
           label: t("Minutes"),
-          choices: _.times(6, (index) => {
+          choices: times(6, (index) => {
             const current = index * 10;
             return {
               title: `${index}0 m`,

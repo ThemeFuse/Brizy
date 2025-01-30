@@ -1,14 +1,14 @@
 import classnames from "classnames";
+import { debounce } from "es-toolkit";
 import { produce } from "immer";
 import React, { ReactElement } from "react";
-import _ from "underscore";
 import { CodeMirror } from "visual/component/Controls/CodeMirror";
 import { Switch } from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { EmailDisconnect } from "visual/component/Prompts/PromptForm/Step";
 import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
-import Config, { isWp } from "visual/global/Config";
+import { isWp } from "visual/global/Config";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
@@ -67,8 +67,19 @@ class Email extends BaseIntegration<Props, State, Context> {
 
   appsData: AppData[] = [];
   appsComponent = AppsComponent;
-  proExceptions = !isPro(Config.getAll());
-  isWp = isWp(Config.getAll());
+  proExceptions = !isPro(this.props.config);
+  isWp = isWp(this.props.config);
+
+  updateForm = debounce(() => {
+    updateForm(
+      {
+        formId: this.props.formId,
+        hasEmailTemplate: this.state.hasEmailTemplate,
+        emailTemplate: this.state.emailTemplate
+      },
+      this.props.config
+    );
+  }, 1000);
 
   async componentDidMount(): Promise<void> {
     const { Integrations } = await import("visual/config/integrations");
@@ -82,12 +93,12 @@ class Email extends BaseIntegration<Props, State, Context> {
   }
 
   async getData(): Promise<void> {
-    const { formId, onLoading } = this.props;
-    const { status, data } = await getForm({ formId });
+    const { formId, config, onLoading } = this.props;
+    const { status, data } = await getForm({ formId }, config);
 
     if (status !== 200) {
       if (status === 404) {
-        const { status, data } = await createForm({ formId });
+        const { status, data } = await createForm({ formId }, config);
 
         if (status >= 400 || !data) {
           this.setState({
@@ -128,32 +139,32 @@ class Email extends BaseIntegration<Props, State, Context> {
     };
   }
 
-  updateForm = _.debounce(() => {
-    updateForm({
-      formId: this.props.formId,
-      hasEmailTemplate: this.state.hasEmailTemplate,
-      emailTemplate: this.state.emailTemplate
-    });
-  }, 1000);
+    handleConnectApp = async (appData: AppData): Promise<void> => {
+    const { config } = this.props;
 
-  handleConnectApp = async (appData: AppData): Promise<void> => {
     const connectedApp = appData.id;
     const { formId } = this.props;
     const { stages = [] } =
       this.appsData.find((app) => app.id === connectedApp) || {};
 
     // eslint-disable-next-line prefer-const
-    let { status, data: integrationData } = await getSmtpIntegration({
-      formId,
-      id: connectedApp
-    });
+    let { status, data: integrationData } = await getSmtpIntegration(
+      {
+        formId,
+        id: connectedApp
+      },
+      config
+    );
 
     if (status !== 200) {
       if (status === 404) {
-        const { status, data } = await createSmtpIntegration({
-          formId,
-          id: connectedApp
-        });
+        const { status, data } = await createSmtpIntegration(
+          {
+            formId,
+            id: connectedApp
+          },
+          config
+        );
 
         if (status !== 200) {
           this.setState({
