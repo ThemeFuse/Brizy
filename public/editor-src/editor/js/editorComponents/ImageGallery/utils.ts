@@ -221,6 +221,8 @@ export const multiUpload = (
 ): ElementModelType[] => {
   const { _id, layout, items: dbItems, lightBox } = v;
 
+  let placeholderIndex = 0;
+
   if (!initialPlaceholders.get(_id)) {
     const placeholders = dbItems.filter(isPlaceholderImage);
 
@@ -265,25 +267,22 @@ export const multiUpload = (
 
         let value = {};
 
-        const placeholderIndex = Num.read(item.id);
+        const placeholders = initialPlaceholders.get(_id);
+        const currentPlaceholder = placeholders?.[placeholderIndex];
 
-        if (placeholderIndex && placeholderIndex - 1 >= 0) {
-          const i = placeholderIndex - 1;
-
-          if (i >= 0) {
-            const placeholders = initialPlaceholders.get(_id);
-
-            value = placeholders?.[i]?.value ?? {};
-            const newPlaceholders = produce<ElementModel[]>(
-              placeholders,
-              (draft) => {
-                if (draft && draft[i]) {
-                  draft[i].wasUsed = true;
-                }
+        if (currentPlaceholder) {
+          value = currentPlaceholder.value ?? {};
+          const newPlaceholders = produce<ElementModel[]>(
+            placeholders,
+            (draft) => {
+              if (draft && draft[placeholderIndex]) {
+                draft[placeholderIndex].wasUsed = true;
               }
-            );
-            initialPlaceholders.set(_id, newPlaceholders);
-          }
+            }
+          );
+          initialPlaceholders.set(_id, newPlaceholders);
+
+          placeholderIndex++;
         }
 
         return setIds({

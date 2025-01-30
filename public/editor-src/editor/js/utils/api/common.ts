@@ -69,7 +69,8 @@ import {
   Project,
   Rule,
   SavedBlock,
-  SavedLayout
+  SavedLayout,
+  ShopifyPage
 } from "visual/types";
 import { Dictionary } from "visual/types/utils";
 import {
@@ -1087,12 +1088,14 @@ export function shopifySyncRules({
   page,
   modules,
   rules,
-  title
+  title,
+  layout
 }: {
   page: Shopify["page"];
   modules: Shopify["modules"];
   rules: SelectedItem[];
   title: string;
+  layout: ShopifyPage["layout"]["value"];
 }) {
   const { id } = page;
   const { shop } = modules ?? {};
@@ -1100,7 +1103,7 @@ export function shopifySyncRules({
 
   return new Promise((res, rej) => {
     if (typeof handler === "function") {
-      handler(res, rej, { id, rules, title });
+      handler(res, rej, { id, rules, title, layout });
     } else {
       rej(t("Missing shopifySyncRules handler"));
     }
@@ -1143,6 +1146,7 @@ export function shopifySyncArticle(props: {
   blogId: string;
   blogTitle: string;
   title: string;
+  layout: ShopifyPage["layout"]["value"];
 }) {
   const { config, ...extra } = props;
   const {
@@ -1166,6 +1170,7 @@ export function shopifySyncPage(props: {
   page: Shopify["page"];
   title: string;
   isHomePage: boolean;
+  layout: ShopifyPage["layout"]["value"];
 }) {
   const { modules, page, ...extra } = props;
 

@@ -9,6 +9,9 @@ import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
+  minWInBoxedPage,
+  minWInMobilePage,
+  minWInTabletPage,
   wInBoxedPage,
   wInFullPage,
   wInMobilePage,
@@ -16,6 +19,7 @@ import {
 } from "visual/config/columns";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { clamp } from "visual/utils/math";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -139,18 +143,34 @@ export default class SectionHeaderItem extends EditorComponent {
 
     const wInPage = containerType === "fullWidth" ? wInFullPage : wInBoxedPage;
 
+    const maxAdmissibleDesktopWidth = wInFullPage;
+
     const desktopW =
       desktopSuffix === "%"
-        ? Math.round(wInPage * (size / 100) * 10) / 10
-        : size;
+        ? clamp(
+            Math.round(wInPage * (size / 100) * 10) / 10,
+            minWInBoxedPage,
+            maxAdmissibleDesktopWidth
+          )
+        : clamp(size, minWInBoxedPage, maxAdmissibleDesktopWidth);
+
     const tabletW =
       tabletSuffix === "%"
-        ? Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10
-        : tabletSize;
+        ? clamp(
+            Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10,
+            minWInTabletPage,
+            wInTabletPage
+          )
+        : clamp(tabletSize, minWInTabletPage, wInTabletPage);
+
     const mobileW =
       mobileSuffix === "%"
-        ? Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10
-        : mobileSize;
+        ? clamp(
+            Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10,
+            minWInMobilePage,
+            wInMobilePage
+          )
+        : clamp(mobileSize, minWInMobilePage, wInMobilePage);
 
     return {
       ...meta,

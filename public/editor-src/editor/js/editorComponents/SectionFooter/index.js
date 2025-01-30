@@ -10,6 +10,9 @@ import { ProBlocked } from "visual/component/ProBlocked";
 import { Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
+  minWInBoxedPage,
+  minWInMobilePage,
+  minWInTabletPage,
   wInBoxedPage,
   wInFullPage,
   wInMobilePage,
@@ -24,6 +27,7 @@ import {
 } from "visual/utils/dynamicContent";
 import { isPro } from "visual/utils/env";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { clamp } from "visual/utils/math";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import {
@@ -152,18 +156,34 @@ class SectionFooter extends EditorComponent {
 
     const wInPage = containerType === "fullWidth" ? wInFullPage : wInBoxedPage;
 
+    const maxAdmissibleDesktopWidth = wInFullPage;
+
     const desktopW =
       desktopSuffix === "%"
-        ? Math.round(wInPage * (size / 100) * 10) / 10
-        : size;
+        ? clamp(
+            Math.round(wInPage * (size / 100) * 10) / 10,
+            minWInBoxedPage,
+            maxAdmissibleDesktopWidth
+          )
+        : clamp(size, minWInBoxedPage, maxAdmissibleDesktopWidth);
+
     const tabletW =
       tabletSuffix === "%"
-        ? Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10
-        : tabletSize;
+        ? clamp(
+            Math.round(wInTabletPage * (tabletSize / 100) * 10) / 10,
+            minWInTabletPage,
+            wInTabletPage
+          )
+        : clamp(tabletSize, minWInTabletPage, wInTabletPage);
+
     const mobileW =
       mobileSuffix === "%"
-        ? Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10
-        : mobileSize;
+        ? clamp(
+            Math.round(wInMobilePage * (mobileSize / 100) * 10) / 10,
+            minWInMobilePage,
+            wInMobilePage
+          )
+        : clamp(mobileSize, minWInMobilePage, wInMobilePage);
 
     return {
       ...meta,
