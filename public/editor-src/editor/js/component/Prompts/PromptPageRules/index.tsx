@@ -108,7 +108,8 @@ export const PromptPageRules = (props: Props): JSX.Element => {
             page,
             modules,
             rules: _items.filter((i): i is SelectedItem => i.selected),
-            title
+            title,
+            layout
           }).then(() => {
             if (typeof onAfterSave === "function") {
               onAfterSave();

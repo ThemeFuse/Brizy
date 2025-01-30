@@ -83,7 +83,8 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
             modules,
             page,
             title,
-            isHomePage
+            isHomePage,
+            layout
           }).then(() => {
             if (typeof onAfterSave === "function") {
               onAfterSave();
