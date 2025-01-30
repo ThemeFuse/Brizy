@@ -470,6 +470,7 @@ class PublishButton extends Component<Props, State> {
             upgradeToProUrl: (config as ConfigCommon)?.modules?.shop
               ?.upgradeToProUrl
           };
+          const layout = page.layout.value;
 
           this.setState({ updateLoading: true });
           try {
@@ -490,7 +491,8 @@ class PublishButton extends Component<Props, State> {
                   modules: (config as Shopify).modules,
                   page: (config as Shopify).page,
                   title: page.title,
-                  isHomePage
+                  isHomePage,
+                  layout
                 });
 
                 break;
@@ -519,7 +521,8 @@ class PublishButton extends Component<Props, State> {
                     page: config.page,
                     modules: config.modules,
                     rules: items,
-                    title: page.title
+                    title: page.title,
+                    layout
                   });
                 } else {
                   this.handlePublishWithRules("saveAndPublishLoading");
@@ -548,7 +551,8 @@ class PublishButton extends Component<Props, State> {
                     config,
                     blogId: selectedBlog.id,
                     blogTitle: selectedBlog.title,
-                    title: page.title
+                    title: page.title,
+                    layout
                   });
                 } else {
                   this.handlePublishWithArticle("saveAndPublishLoading");

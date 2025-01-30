@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.6.8\n"
+"Project-Id-Version: Brizy 2.6.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-16T10:56:33+00:00\n"
+"POT-Creation-Date: 2025-01-30T06:39:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: brizy\n"
@@ -260,7 +260,7 @@ msgid "The latest update includes some substantial changes across different area
 msgstr ""
 
 #: admin/membership/membership.php:64
-#: editor/post.php:742
+#: editor/post.php:730
 #: public/editor-build/prod/texts.php:484
 msgid "Default"
 msgstr ""
@@ -468,6 +468,10 @@ msgstr ""
 #: admin/stories/main.php:60
 #: public/editor-build/prod/texts.php:1850
 msgid "stories"
+msgstr ""
+
+#: admin/svg/main.php:71
+msgid "Sorry, this SVG file can't be sanitized."
 msgstr ""
 
 #: admin/templates.php:127
