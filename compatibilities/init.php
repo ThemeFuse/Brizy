@@ -42,7 +42,9 @@ class Brizy_Compatibilities_Init {
 	}
 
 	public function action_plugins_loaded() {
-
+        if ( defined( 'IMAGIFY_VERSION' ) ) {
+            new Brizy_Compatibilities_Imagify();
+        }
 
 		if ( defined( 'SEOPRESS_VERSION' ) ) {
 			new Brizy_Compatibilities_SeoPress();
