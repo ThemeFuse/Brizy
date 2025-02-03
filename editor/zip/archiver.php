@@ -521,8 +521,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
         // enable svg upload
         $svnUpload = new Brizy_Admin_Svg_Main();
         $jsonUpload = new Brizy_Admin_Json_Main();
-        $svnUploadEnabled = Brizy_Editor_Storage_Common::instance()->get('svg-upload', false);
-        $jsonUploadEnabled = Brizy_Editor_Storage_Common::instance()->get('json-upload', false);
+        $svnUploadEnabled = Brizy_Admin_Svg_Main::isSvgEnabled();
+        $jsonUploadEnabled = Brizy_Admin_Json_Main::isJsonEnabled();
 
         if (!$svnUploadEnabled) {
             $svnUpload->enableSvgUpload();

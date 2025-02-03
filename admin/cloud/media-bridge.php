@@ -52,8 +52,8 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		// enable svg upload
 		$svnUpload        = new Brizy_Admin_Svg_Main();
 		$jsonUpload        = new Brizy_Admin_Json_Main();
-		$svnUploadEnabled = Brizy_Editor_Storage_Common::instance()->get( 'svg-upload', false );
-		$jsonUploadEnabled = Brizy_Editor_Storage_Common::instance()->get( 'json-upload', false );
+		$svnUploadEnabled = Brizy_Admin_Svg_Main::isSvgEnabled();
+		$jsonUploadEnabled = Brizy_Admin_Json_Main::isJsonEnabled();
 
 		if ( ! $svnUploadEnabled ) {
 			$svnUpload->enableSvgUpload();
