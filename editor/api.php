@@ -987,7 +987,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			function ( $user ) {
 				$user->ID = (int) $user->ID;
 
-				return $user;
+				return [
+					'ID'              => $user->ID,
+					'display_name'    => $user->display_name,
+					'user_nicename'   => $user->user_nicename,
+					'user_email'      => $user->user_email,
+					'user_registered' => $user->user_registered,
+				];
 			},
 			$users
 		);
