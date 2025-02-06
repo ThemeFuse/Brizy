@@ -61,15 +61,15 @@ trait Brizy_Editor_Asset_StaticFileTrait
 
             $content = self::get_asset_content($asset_source);
 
-	        $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+	        $tempFile = Brizy_Editor_Asset_StaticFile::createSideLoadFile(
 		        $basename,
 		        $content
 	        );
 
-	        $filePath = Brizy_Editor_Asset_StaticFileTrait::createSideLoadMedia( $tempFile, $asset_path );
+	        $filePath = Brizy_Editor_Asset_StaticFile::createSideLoadMedia( $tempFile, $asset_path );
 
 	        if ( $filePath instanceof WP_Error ) {
-		        throw new Exception( "Unable to store the thumbnail" );
+		        throw new Exception( "Unable to store the thumbnail: ".$filePath->get_error_message() );
 	        }
 
         } catch (Exception $e) {
@@ -171,37 +171,36 @@ trait Brizy_Editor_Asset_StaticFileTrait
         wp_update_attachment_metadata($id, $attach_data);
     }
 
-    public static function createSideLoadMedia($tempFileArray, $assetPath, $postId = null, $uid = null)
-    {
+	public static function createSideLoadMedia( $tempFileArray, $assetPath, $postId = null, $uid = null ) {
 
-        $overrides = array('test_form' => false);
-        $post = get_post($postId);
+		$overrides = array( 'test_form' => false );
+		$post      = get_post( $postId );
+		$time = date( "Y/m" );
+		if ( $post && substr( $post->post_date, 0, 4 ) > 0 ) {
+			$time = $post->post_date;
+		}
+		if ( wp_mkdir_p( dirname( $assetPath ) ) === false ) {
+			Brizy_Logger::instance()->critical( 'Unable to create folder', [ $assetPath ] );
+			throw new Exception( 'Unable to create folder for block images' );
+		}
+		$uploadData = wp_handle_sideload( $tempFileArray, $overrides, $time );
+		if ( isset( $uploadData['error'] ) ) {
+			return new WP_Error( 'upload_error', $uploadData['error'] );
+		}
 
-        $time = date("Y/m");
-        if ($post && substr($post->post_date, 0, 4) > 0) {
-            $time = $post->post_date;
-        }
+		if ( $uploadData['file'] == $assetPath ) {
+			return $assetPath;
+		}
 
-        if (wp_mkdir_p(dirname($assetPath)) === false) {
-            Brizy_Logger::instance()->critical('Unable to create folder', [$assetPath]);
-            throw new Exception('Unable to create folder for block images');
-        }
+		if ( ! @copy( $uploadData['file'], $assetPath ) ) {
+			$error = error_get_last();
 
-        $uploadData = wp_handle_sideload($tempFileArray, $overrides, $time);
+			return new WP_Error( 'upload_error', htmlentities( $error['message'] ) );
+		}
+		unlink( $uploadData['file'] );
 
-        if (isset($uploadData['error'])) {
-            return new WP_Error('upload_error', $uploadData['error']);
-        }
-
-        if(!@copy($uploadData['file'], $assetPath)) {
-	        $error = error_get_last();
-	        return new WP_Error('upload_error',  htmlentities( $error['message'] ));
-        }
-
-        unlink($uploadData['file']);
-
-        return $assetPath;
-    }
+		return $assetPath;
+	}
 
     public static function createSideLoadFile($basename, $content)
     {
