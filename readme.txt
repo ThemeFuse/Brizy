@@ -133,6 +133,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 == Changelog ==
 
+= 2.6.10 - 2025-02-11
+* Fixed: SVG attachment creation
+* Fixed: added a security fix on API endpoint
+
 = 2.6.9 - 2025-01-30 =
 * Fixed: Image upload 
 * Fixed: Importing starter template erases code snippet 
