@@ -23,17 +23,7 @@ abstract class Brizy_Admin_AbstractApi {
 	 */
 	protected function verifyNonce( $action ) {
 
-		$version = $this->param( 'version' );
-		if ( $version !== BRIZY_EDITOR_VERSION ) {
-			Brizy_Logger::instance()->critical( 'Request with invalid editor version',
-				[
-					'editorVersion'   => BRIZY_EDITOR_VERSION,
-					'providedVersion' => $version
-				] );
-
-			$this->error( 400, "Invalid editor version. Please refresh the page and try again" );
-		}
-
+		$this->validateEditorVersion();
 		$this->checkNonce( $action );
 	}
 
@@ -70,5 +60,19 @@ abstract class Brizy_Admin_AbstractApi {
 	 */
 	protected function success( $data ) {
 		wp_send_json_success( $data );
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function validateEditorVersion() {
+		$version = $this->param( 'version' );
+		if ( $version !== BRIZY_EDITOR_VERSION ) {
+			Brizy_Logger::instance()->critical( 'Request with invalid editor version', [
+					'editorVersion'   => BRIZY_EDITOR_VERSION,
+					'providedVersion' => $version
+				] );
+			$this->error( 400, "Invalid editor version. Please refresh the page and try again" );
+		}
 	}
 }

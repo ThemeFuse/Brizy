@@ -338,6 +338,7 @@ class Brizy_Editor {
 				Brizy_Editor_Accounts_Api::_init();
 			}
 
+			new Brizy_Editor_HeartbeatAPI(  );
 			new Brizy_Editor_Forms_Api( $post );
 
 			// for other apis

@@ -266,13 +266,13 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             $basename = basename($path);
             $imageContent = $z->getFromName($path);
 
-            $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+            $tempFile = Brizy_Editor_Asset_StaticFile::createSideLoadFile(
                 $basename,
                 $imageContent
             );
             $original_asset_path = $urlBuilder->page_upload_path("/assets/images/" . $basename);
 
-            Brizy_Editor_Asset_StaticFileTrait::createSideLoadMediaAttachment(
+            Brizy_Editor_Asset_StaticFile::createSideLoadMediaAttachment(
                 $tempFile,
                 $original_asset_path,
                 $block->getWpPostId(),
@@ -309,7 +309,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
 
             foreach ((array)$weights as $weight => $weightType) {
                 foreach ((array)$weightType as $type => $filePath) {
-                    $newWeights[$weight][$type] = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+                    $newWeights[$weight][$type] = Brizy_Editor_Asset_StaticFile::createSideLoadFile(
                         basename($filePath),
                         $z->getFromName($filePath)
                     );
@@ -341,18 +341,18 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             $original_asset_path = $urlBuilder->brizy_upload_path("/custom_files/" . $uploadName);
             $original_asset_path_relative = $urlBuilder->brizy_upload_relative_path("/custom_files/" . $uploadName);
 
-            $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+            $tempFile = Brizy_Editor_Asset_StaticFile::createSideLoadFile(
                 $uploadName,
                 $z->getFromName($path)
             );
 
-            $filePath = Brizy_Editor_Asset_StaticFileTrait::createSideLoadMedia($tempFile, $original_asset_path);
+            $filePath = Brizy_Editor_Asset_StaticFile::createSideLoadMedia($tempFile, $original_asset_path);
 
             if ($filePath instanceof WP_Error) {
                 throw new Exception($filePath->get_error_message() . " File Path: " . htmlentities($original_asset_path_relative));
             }
 
-            Brizy_Editor_Asset_StaticFileTrait::createMediaAttachment(
+            Brizy_Editor_Asset_StaticFile::createMediaAttachment(
                 $filePath,
                 $original_asset_path_relative,
                 $block->getWpPostId(),

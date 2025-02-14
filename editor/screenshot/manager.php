@@ -120,12 +120,12 @@ class Brizy_Editor_Screenshot_Manager
      */
     private function storeThumbnail($content, $filePath)
     {
-         $tempFile = Brizy_Editor_Asset_StaticFileTrait::createSideLoadFile(
+         $tempFile = Brizy_Editor_Asset_StaticFile::createSideLoadFile(
             basename($filePath),
             $content
         );
 
-        $filePath = Brizy_Editor_Asset_StaticFileTrait::createSideLoadMedia( $tempFile, $filePath );
+        $filePath = Brizy_Editor_Asset_StaticFile::createSideLoadMedia( $tempFile, $filePath );
 
 		if($filePath instanceof WP_Error) {
 			throw new Exception("Unable to store the thumbnail");
