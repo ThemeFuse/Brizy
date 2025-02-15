@@ -57,7 +57,8 @@ class Brizy_Public_Main {
 			add_filter( 'the_content', array( $this, '_filter_the_content' ), - 12000 );
 			add_action( 'brizy_template_content', array( $this, '_action_the_content' ) );
 			add_action( 'post_password_required', '__return_false' );
-		}
+            add_action( 'wp_footer', [ $this, 'insertAuthModal' ] );
+        }
 
 		do_action( 'brizy_edit_mode', $this->post );
 	}
@@ -85,6 +86,35 @@ class Brizy_Public_Main {
 		add_filter( 'get_the_excerpt', array( $this, 'brizy_post_excerpt' ), 10, 2 );
 		add_action( 'brizy_template_content', array( $this, 'brizy_the_content' ) );
 	}
+
+    public function insertAuthModal(): void {
+        $login_url = esc_url( wp_login_url() );
+
+        echo <<<HTML
+            <div id="wp-login-modal" class="wp-login-modal"
+                style="
+                    display:none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 9999;">
+                <div class="wp-login-modal-content"
+                    style="
+                        background: #fff;
+                        padding: 20px;
+                        border-radius: 8px;
+                        width: 400px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+                    <iframe id="wp-login-iframe" src="$login_url" width="100%" height="505px" style="border:none;"></iframe>
+                </div>
+            </div>
+        HTML;
+    }
 
 	/**
 	 * @internal
