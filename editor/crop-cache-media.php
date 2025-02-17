@@ -96,7 +96,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
 		$originalPath = $this->getOriginalPath( $uid );
 
-       $originalPath = apply_filters( 'brizy_after_cropped_img', $originalPath );
+       $originalPath = apply_filters( 'brizy_after_cropped_img_path', $originalPath );
 
 		$cropper      = new Brizy_Editor_Asset_Crop_Cropper();
 		$options      = $cropper->getFilterOptions( $originalPath, $size, $this->getOrignalImgSizes( $uid ) );
@@ -240,7 +240,7 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 
         $imgUrl = $this->replaceCdnUrl( $imgUrl );
 
-        $imgUrl = apply_filters( 'brizy_after_cropped_img', $imgUrl );
+        $imgUrl = apply_filters( 'brizy_after_cropped_img_url', $imgUrl );
 
         return $imgUrl;
     }
