@@ -6,7 +6,8 @@ const getElement = (selector: string): HTMLElement | null => {
     return document.querySelector(selector);
   } catch {
     try {
-      return document.getElementById(selector);
+      const _selector = selector.startsWith("#") ? selector.slice(1) : selector;
+      return document.getElementById(_selector);
     } catch {
       return null;
     }
