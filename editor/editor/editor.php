@@ -112,7 +112,7 @@ class Brizy_Editor_Editor_Editor {
 		$preview_post_link = $this->getPreviewUrl( $this->post->getWpPost() );
 		$mode              = $this->getMode( $parent_post_type );
 		$heartBeatInterval = (int) apply_filters( 'wp_check_post_lock_window', 150 );
-		$config            = array(
+        $config            = array(
 			'user'            => array(
 				'role'         => 'admin',
 				'isAuthorized' => $this->project->getMetaValue( 'brizy-cloud-token' ) !== null,
@@ -127,6 +127,7 @@ class Brizy_Editor_Editor_Editor {
 //                'type' => ($context=='compile' ? Brizy_Editor_Entity::COMPILER_EXTERNAL : Brizy_Editor_Entity::COMPILER_BROWSER)
 //            ),
 			'urls'            => array(
+                'authModal'            => esc_url( wp_login_url() ),
 				'site'                 => home_url(),
 				'api'                  => home_url( '/wp-json/v1' ),
 				'assets'               => $this->urlBuilder->plugin_url( Brizy_Config::EDITOR_BUILD_RELATIVE_PATH ),
