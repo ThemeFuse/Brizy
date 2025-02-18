@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.7.1<br>
+Tested up to: 6.7.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.6.9<br>
+Stable tag: 2.6.11<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,9 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.6.11 - 2025-02-18
+* Fixed: Gallery with layout justify 
 
 ### 2.6.10 - 2025-02-11
 * Fixed: SVG attachment creation
