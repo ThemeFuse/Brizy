@@ -6,19 +6,13 @@ import _ from "underscore";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent, {
-  Props as NextProps
-} from "visual/editorComponents/EditorComponent";
+import EditorComponent, { Props as NextProps } from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import {
-  GalleryIsotope,
-  GalleryIsotopeType,
-  GalleryJustified,
-  GalleryJustifiedType
-} from "visual/types/global";
-import { applyFilter } from "visual/utils/filters";
+import { GalleryIsotope, GalleryIsotopeType, GalleryJustified, GalleryJustifiedType } from "visual/types/global";
+import { addFilter, applyFilter } from "visual/utils/filters";
+import { isFunction } from "visual/utils/function";
 import { getImageUrl } from "visual/utils/image";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
@@ -30,21 +24,7 @@ import EditorArrayComponent from "../EditorArrayComponent";
 import { readSizeType, readUnit } from "../Image/utils";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
-import {
-  patchOnBigImageAsCurrLayout,
-  patchOnBigImageAsPrevLayout,
-  patchOnBigImageChange,
-  patchOnBigImageImagesThumbSizeChange,
-  patchOnBigImageLayout,
-  patchOnColumnChange,
-  patchOnGridAspectRationAndColumnChange,
-  patchOnGridItemsChange,
-  patchOnGridLayout,
-  patchOnJustifiedLayout,
-  patchOnLightBox,
-  patchOnMasonryLayout,
-  patchOnThumbStyleChange
-} from "./imageGalleryChange";
+import { patchOnBigImageAsCurrLayout, patchOnBigImageAsPrevLayout, patchOnBigImageChange, patchOnBigImageImagesThumbSizeChange, patchOnBigImageLayout, patchOnColumnChange, patchOnGridAspectRationAndColumnChange, patchOnGridItemsChange, patchOnGridLayout, patchOnJustifiedLayout, patchOnLightBox, patchOnMasonryLayout, patchOnThumbStyleChange } from "./imageGalleryChange";
 import Items from "./items";
 import * as sidebarExtendImage from "./sidebarExtendImage";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
@@ -54,15 +34,9 @@ import * as toolbarExtendImage from "./toolbarExtendImage";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarFilterConfig from "./toolbarFilter";
 import type { Meta, Patch, Props, Value } from "./types";
-import {
-  JustifySettings,
-  breakpoints,
-  getSpacing,
-  imagesSrc,
-  makeOptionValueToSettings,
-  multiUpload
-} from "./utils";
+import { JustifySettings, breakpoints, getSpacing, imagesSrc, makeOptionValueToSettings, multiUpload } from "./utils";
 import { arrangeGridByTags } from "./utils.export";
+
 
 class ImageGallery extends EditorComponent<Value, Props> {
   static get componentId(): "ImageGallery" {
@@ -97,11 +71,13 @@ class ImageGallery extends EditorComponent<Value, Props> {
     if (layout === "justified") {
       const ImagesLoaded = applyFilter("getLibs", {}).ImagesLoaded;
 
-      ImagesLoaded(this.node, () => {
-        if (this.gallery) {
-          this.gallery.arrange();
-        }
-      });
+      if (isFunction(ImagesLoaded)) {
+        ImagesLoaded(this.node, () => {
+          if (this.gallery) {
+            this.gallery.arrange();
+          }
+        });
+      }
     }
   };
 
@@ -125,6 +101,19 @@ class ImageGallery extends EditorComponent<Value, Props> {
     this.props.extendParentToolbar(toolbarExtend);
 
     this.initGallery();
+
+    addFilter("initBrizyPro", () => {
+      const { layout } = this.getValue();
+
+      switch (layout) {
+        case "masonry":
+          this.reinitIsotopes();
+          break;
+        case "justified":
+          this.initGallery();
+          break;
+      }
+    });
   }
 
   componentDidUpdate(nextProps: NextProps<Value, Props>): void {
@@ -168,9 +157,13 @@ class ImageGallery extends EditorComponent<Value, Props> {
       }
       case "justified": {
         const ImagesLoaded = applyFilter("getLibs", {}).ImagesLoaded;
-        ImagesLoaded(this.node, () => {
-          this.initJustifiedGallery(v);
-        });
+
+        if (isFunction(ImagesLoaded)) {
+          ImagesLoaded(this.node, () => {
+            this.initJustifiedGallery(v);
+          });
+        }
+
         break;
       }
     }
