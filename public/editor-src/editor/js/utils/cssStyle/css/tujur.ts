@@ -2,6 +2,7 @@ import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import { murmurhash2 } from "visual/utils/crypto";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
+import { addUuid, getNodeWithNewReference } from "./utils";
 
 interface Data {
   node?: Element;
@@ -20,12 +21,11 @@ const cssOrdered: {
 };
 
 // ====== tujur ======
-
 export function css(
   defaultID: string,
   elementID: string,
   [defaultStyle, rulesStyle, elementStyle]: [string, string, string],
-  sheet: Sheet
+  sheet: Readonly<Sheet>
 ) {
   let defaultData;
   const isBrowser = typeof window !== "undefined";
@@ -41,14 +41,18 @@ export function css(
       let node;
 
       if (isBrowser) {
-        node = document.createElement("style");
+        const doc = sheet.getDoc() ?? document;
+        node = doc.createElement("style");
+
+        addUuid(node);
+
         if (process.env.NODE_ENV === "development") {
           node.setAttribute(makeAttr("css"), `default-${defaultID}`);
         }
-        node.appendChild(document.createTextNode(""));
+        node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
 
-        insertStyleNodeIntoDOM("default", node);
+        insertStyleNodeIntoDOM("default", node, doc);
       }
 
       defaultData = {
@@ -84,14 +88,18 @@ export function css(
       let node;
 
       if (isBrowser) {
-        node = document.createElement("style");
+        const doc = sheet.getDoc() ?? document;
+        node = doc.createElement("style");
+
+        addUuid(node);
+
         if (process.env.NODE_ENV === "development") {
           node.setAttribute(makeAttr("css"), `rules-${defaultID}`);
         }
-        node.appendChild(document.createTextNode(""));
+        node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
 
-        insertStyleNodeIntoDOM("rules", node);
+        insertStyleNodeIntoDOM("rules", node, doc);
       }
 
       rulesData = {
@@ -114,14 +122,18 @@ export function css(
       let node;
 
       if (isBrowser) {
-        node = document.createElement("style");
+        const doc = sheet.getDoc() ?? document;
+        node = doc.createElement("style");
+
+        addUuid(node);
+
         if (process.env.NODE_ENV === "development") {
           node.setAttribute(makeAttr("css"), `custom-${defaultID}`);
         }
-        node.appendChild(document.createTextNode(""));
+        node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
 
-        insertStyleNodeIntoDOM("custom", node);
+        insertStyleNodeIntoDOM("custom", node, doc);
       }
 
       elementData = {
@@ -133,10 +145,22 @@ export function css(
       cssOrdered.custom.push(elementData);
       sheet.set(elementID, elementData);
     } else {
-      const { node, className, cssText } = elementData;
+      const { className, cssText } = elementData;
+      let { node } = elementData;
       const cssTextNext = replacePlaceholders(elementStyle, className);
 
       if (cssTextNext !== cssText) {
+        if (node && !document.head.contains(node)) {
+          const doc = sheet.getDoc() ?? document;
+
+          const newRef = getNodeWithNewReference(node, doc);
+
+          if (newRef) {
+            node = newRef;
+            elementData.node = newRef;
+          }
+        }
+
         if (node) {
           node.childNodes[0].nodeValue = cssTextNext;
         }
@@ -157,7 +181,7 @@ export function css(
 export function css1(
   elementID: string,
   elementStyle: string,
-  sheet: Sheet,
+  sheet: Readonly<Sheet>,
   replacePlaceholdersCb = replacePlaceholders
 ) {
   let elementData = sheet.get(elementID);
@@ -169,14 +193,15 @@ export function css1(
     let node;
 
     if (isBrowser) {
-      node = document.createElement("style");
+      const doc = sheet.getDoc() ?? document;
+
+      node = doc.createElement("style");
       if (process.env.NODE_ENV === "development") {
         node.setAttribute(makeAttr("css"), "");
       }
-      node.appendChild(document.createTextNode(""));
+      node.appendChild(doc.createTextNode(""));
       node.childNodes[0].nodeValue = cssText;
-
-      insertStyleNodeIntoDOM("custom", node);
+      insertStyleNodeIntoDOM("custom", node, doc);
     }
 
     elementData = {
@@ -209,9 +234,10 @@ export function css1(
     cssText: elementData.cssText,
     clean() {
       const elementData = sheet.get(elementID);
+      const doc = sheet.getDoc() ?? document;
 
       if (elementData?.node) {
-        document.head.removeChild(elementData.node);
+        doc.head.removeChild(elementData.node);
       }
       sheet.delete(elementID);
     }
@@ -225,7 +251,8 @@ export function replacePlaceholders(styles: string, className: string) {
 
 function insertStyleNodeIntoDOM(
   styleType: "default" | "rules" | "custom",
-  styleNode: HTMLElement
+  styleNode: HTMLElement,
+  doc: Document
 ) {
   const default_ = cssOrdered.default; // can't use default as a identifier
   const rules = cssOrdered.rules;
@@ -259,8 +286,16 @@ function insertStyleNodeIntoDOM(
   }
 
   if (refNode) {
+    if (!doc.head.contains(refNode)) {
+      const newRef = getNodeWithNewReference(refNode, doc);
+
+      if (newRef) {
+        refNode = newRef;
+      }
+    }
+
     refNode.insertAdjacentElement("afterend", styleNode);
   } else {
-    document.head.appendChild(styleNode);
+    doc.head.appendChild(styleNode);
   }
 }

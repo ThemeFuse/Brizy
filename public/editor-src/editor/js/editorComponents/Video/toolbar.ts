@@ -2,8 +2,8 @@ import { Str } from "@brizy/readers";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { isStory } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
   getMaskPositions,
@@ -48,13 +48,13 @@ export const getItems: GetItems<Value> = ({
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
   );
 
-  const borderColor = getColor(
+  const borderColor = getColorToolbar(
     dvv("borderColorPalette"),
     dvv("borderColorHex"),
     dvv("borderColorOpacity")
@@ -414,7 +414,7 @@ export const getItems: GetItems<Value> = ({
                   type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: !isCustomOrUrl || offControls,
-                  style: barBgColorCSS
+                  style: barBgColorCSS(config)
                 }
               ]
             },
@@ -427,7 +427,7 @@ export const getItems: GetItems<Value> = ({
                   type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: !isCustomOrUrl || offControls,
-                  style: sliderBgColorCSS
+                  style: sliderBgColorCSS(config)
                 }
               ]
             },
@@ -440,7 +440,7 @@ export const getItems: GetItems<Value> = ({
                   type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: noCover || onAutoplay,
-                  style: playBgColorCSS
+                  style: playBgColorCSS(config)
                 }
               ]
             },

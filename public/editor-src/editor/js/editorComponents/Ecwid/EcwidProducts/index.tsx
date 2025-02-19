@@ -1,7 +1,6 @@
 import classNames from "classnames";
+import { uniqueId } from "es-toolkit/compat";
 import React, { ReactNode, createRef } from "react";
-import { uniqueId } from "underscore";
-import { isView } from "visual/providers/RenderProvider";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -9,7 +8,9 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
+import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import * as sidebarButton from "../sidebarButton";
 import * as sidebarDisable from "../sidebarDisable";
 import { ecwidToolbarFooter } from "../toolbarFooter";
@@ -34,17 +35,14 @@ import { Value } from "./types/Value";
 import { valueToEciwdConfigProducts } from "./utils";
 
 export class EcwidProducts extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
   private uniqueId = `${EcwidProducts.componentId}-${uniqueId()}`;
-
   private containerRef = createRef<HTMLDivElement>();
-
   private ecwid: EcwidService | undefined;
 
   static get componentId(): "EcwidProducts" {
     return "EcwidProducts";
   }
-
-  static defaultValue = defaultValue;
 
   componentDidMount(): void {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -58,7 +56,7 @@ export class EcwidProducts extends EditorComponent<Value> {
     );
     this.props.extendParentToolbar(toolbarExtend);
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return;
     }
 
@@ -100,7 +98,7 @@ export class EcwidProducts extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -114,7 +112,7 @@ export class EcwidProducts extends EditorComponent<Value> {
         selector=".ec-page-title.ec-page-title__featured-products"
         selectorSearchStrategy="dom-tree"
       >
-        {({ open: openFeaturedProducts }) => {
+        {({ open: openFeaturedProducts, ref: featuredProductsRef }) => {
           return (
             <Toolbar
               {...this.makeToolbarPropsFromConfig2(
@@ -124,7 +122,7 @@ export class EcwidProducts extends EditorComponent<Value> {
               selector=".grid-product__title-inner"
               selectorSearchStrategy="dom-tree"
             >
-              {({ open: openTitle }) => {
+              {({ open: openTitle, ref: titleRef }) => {
                 return (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
@@ -134,7 +132,7 @@ export class EcwidProducts extends EditorComponent<Value> {
                     selector=".grid-product__price-value.ec-price-item"
                     selectorSearchStrategy="dom-tree"
                   >
-                    {({ open: openShopTitle }) => {
+                    {({ open: openShopTitle, ref: shopTitleRef }) => {
                       return (
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
@@ -144,7 +142,7 @@ export class EcwidProducts extends EditorComponent<Value> {
                           selector=".grid-product__sku"
                           selectorSearchStrategy="dom-tree"
                         >
-                          {({ open: openSKU }) => {
+                          {({ open: openSKU, ref: skuRef }) => {
                             return (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
@@ -157,7 +155,7 @@ export class EcwidProducts extends EditorComponent<Value> {
                                 selector=".form-control.form-control--button"
                                 selectorSearchStrategy="dom-tree"
                               >
-                                {({ open: openButton }) => {
+                                {({ open: openButton, ref: buttonRef }) => {
                                   return (
                                     <Toolbar
                                       {...this.makeToolbarPropsFromConfig2(
@@ -167,7 +165,10 @@ export class EcwidProducts extends EditorComponent<Value> {
                                       selector=".grid-product__subtitle-inner"
                                       selectorSearchStrategy="dom-tree"
                                     >
-                                      {({ open: openSubtitle }) => {
+                                      {({
+                                        open: openSubtitle,
+                                        ref: subTitleRef
+                                      }) => {
                                         return (
                                           <Toolbar
                                             {...this.makeToolbarPropsFromConfig2(
@@ -180,7 +181,10 @@ export class EcwidProducts extends EditorComponent<Value> {
                                             selector=".grid-product"
                                             selectorSearchStrategy="dom-tree"
                                           >
-                                            {({ open: openImage }) => {
+                                            {({
+                                              open: openImage,
+                                              ref: imageRef
+                                            }) => {
                                               return (
                                                 <Toolbar
                                                   {...this.makeToolbarPropsFromConfig2(
@@ -194,7 +198,8 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                   selectorSearchStrategy="dom-tree"
                                                 >
                                                   {({
-                                                    open: openSortingOption
+                                                    open: openSortingOption,
+                                                    ref: sortingOptionRef
                                                   }) => {
                                                     return (
                                                       <Toolbar
@@ -206,7 +211,8 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                         selectorSearchStrategy="dom-tree"
                                                       >
                                                         {({
-                                                          open: openCountPages
+                                                          open: openCountPages,
+                                                          ref: countPagesRef
                                                         }) => {
                                                           return (
                                                             <Toolbar
@@ -222,7 +228,8 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                               selectorSearchStrategy="dom-tree"
                                                             >
                                                               {({
-                                                                open: openPagination
+                                                                open: openPagination,
+                                                                ref: paginationRef
                                                               }) => {
                                                                 return (
                                                                   <Toolbar
@@ -234,7 +241,8 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                                     selectorSearchStrategy="dom-tree"
                                                                   >
                                                                     {({
-                                                                      open: openFooter
+                                                                      open: openFooter,
+                                                                      ref: footerRef
                                                                     }) => {
                                                                       return (
                                                                         <CustomCSS
@@ -243,144 +251,169 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                                             customCSS
                                                                           }
                                                                         >
-                                                                          <Wrapper
-                                                                            {...this.makeWrapperProps(
-                                                                              {
-                                                                                className
-                                                                              }
-                                                                            )}
-                                                                          >
-                                                                            <div
-                                                                              onClickCapture={(
-                                                                                e
-                                                                              ) => {
-                                                                                e.stopPropagation();
-                                                                                e.preventDefault();
-                                                                                if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".ec-page-title.ec-page-title__featured-products"
-                                                                                  )
-                                                                                ) {
-                                                                                  openFeaturedProducts(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".grid-product__title-inner"
-                                                                                  )
-                                                                                ) {
-                                                                                  openTitle(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".grid-product__price-value.ec-price-item"
-                                                                                  )
-                                                                                ) {
-                                                                                  openShopTitle(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".grid-product__sku"
-                                                                                  )
-                                                                                ) {
-                                                                                  openSKU(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".form-control.form-control--button"
-                                                                                  )
-                                                                                ) {
-                                                                                  openButton(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".grid-product__subtitle-inner"
-                                                                                  )
-                                                                                ) {
-                                                                                  openSubtitle(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".grid-product"
-                                                                                  )
-                                                                                ) {
-                                                                                  openImage(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".grid__sort.ec-text-muted"
-                                                                                  )
-                                                                                ) {
-                                                                                  openSortingOption(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".pager__count-pages"
-                                                                                  )
-                                                                                ) {
-                                                                                  openCountPages(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".pager__body.pager__body--has-next"
-                                                                                  )
-                                                                                ) {
-                                                                                  openPagination(
-                                                                                    e.nativeEvent
-                                                                                  );
-                                                                                } else if (
-                                                                                  (
-                                                                                    e.target as HTMLElement | null
-                                                                                  )?.closest(
-                                                                                    ".ec-footer"
-                                                                                  )
-                                                                                ) {
-                                                                                  openFooter(
-                                                                                    e.nativeEvent
-                                                                                  );
+                                                                          {({
+                                                                            ref: cssRef
+                                                                          }) => (
+                                                                            <Wrapper
+                                                                              {...this.makeWrapperProps(
+                                                                                {
+                                                                                  className,
+                                                                                  ref: (
+                                                                                    el
+                                                                                  ) => {
+                                                                                    attachRefs(
+                                                                                      el,
+                                                                                      [
+                                                                                        featuredProductsRef,
+                                                                                        titleRef,
+                                                                                        shopTitleRef,
+                                                                                        skuRef,
+                                                                                        buttonRef,
+                                                                                        subTitleRef,
+                                                                                        imageRef,
+                                                                                        sortingOptionRef,
+                                                                                        countPagesRef,
+                                                                                        paginationRef,
+                                                                                        footerRef,
+                                                                                        cssRef
+                                                                                      ]
+                                                                                    );
+                                                                                  }
                                                                                 }
+                                                                              )}
+                                                                            >
+                                                                              <div
+                                                                                onClickCapture={(
+                                                                                  e
+                                                                                ) => {
+                                                                                  e.stopPropagation();
+                                                                                  e.preventDefault();
+                                                                                  if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".ec-page-title.ec-page-title__featured-products"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openFeaturedProducts(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".grid-product__title-inner"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openTitle(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".grid-product__price-value.ec-price-item"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openShopTitle(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".grid-product__sku"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openSKU(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".form-control.form-control--button"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openButton(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".grid-product__subtitle-inner"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openSubtitle(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".grid-product"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openImage(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".grid__sort.ec-text-muted"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openSortingOption(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".pager__count-pages"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openCountPages(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".pager__body.pager__body--has-next"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openPagination(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  } else if (
+                                                                                    (
+                                                                                      e.target as HTMLElement | null
+                                                                                    )?.closest(
+                                                                                      ".ec-footer"
+                                                                                    )
+                                                                                  ) {
+                                                                                    openFooter(
+                                                                                      e.nativeEvent
+                                                                                    );
+                                                                                  }
 
-                                                                                return false;
-                                                                              }}
-                                                                              className="brz-ecwid-products"
-                                                                              id={
-                                                                                this
-                                                                                  .uniqueId
-                                                                              }
-                                                                              ref={
-                                                                                this
-                                                                                  .containerRef
-                                                                              }
-                                                                            />
-                                                                          </Wrapper>
+                                                                                  return false;
+                                                                                }}
+                                                                                className="brz-ecwid-products"
+                                                                                id={
+                                                                                  this
+                                                                                    .uniqueId
+                                                                                }
+                                                                                ref={
+                                                                                  this
+                                                                                    .containerRef
+                                                                                }
+                                                                              />
+                                                                            </Wrapper>
+                                                                          )}
                                                                         </CustomCSS>
                                                                       );
                                                                     }}
@@ -430,7 +463,7 @@ export class EcwidProducts extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

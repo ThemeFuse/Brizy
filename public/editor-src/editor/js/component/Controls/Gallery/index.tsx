@@ -1,18 +1,18 @@
 import {
-  closestCenter,
   DndContext,
   DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   UniqueIdentifier,
+  closestCenter,
   useSensor,
   useSensors
 } from "@dnd-kit/core";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import classNames from "classnames";
+import { noop } from "es-toolkit";
 import React, { ReactElement, useCallback } from "react";
-import { noop } from "underscore";
 import { Item } from "visual/component/Controls/Gallery/types/Item";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { WithClassName } from "visual/types/attributes";

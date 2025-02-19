@@ -7,6 +7,7 @@ import { Content } from "visual/editorComponents/PostInfo/Content";
 import { readPostElements } from "visual/editorComponents/PostInfo/utils";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -31,26 +32,37 @@ class PostInfo extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
-    const { customCss, postElements } = v;
+    const { customCSS, postElements } = v;
     const elements = readPostElements(postElements);
 
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCss}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <Content
-              postElements={elements}
-              renderContext={this.renderContext}
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <Content
+                  postElements={elements}
+                  renderContext={this.props.renderContext}
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

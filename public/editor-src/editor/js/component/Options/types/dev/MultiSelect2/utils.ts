@@ -1,8 +1,8 @@
-import _ from "underscore";
-import * as Str from "visual/utils/reader/string";
+import { difference } from "es-toolkit";
 import { t } from "visual/utils/i18n";
+import * as Str from "visual/utils/reader/string";
 import { printf } from "visual/utils/string";
-import { Value, ChoicesSync, ChoicesAsync } from "./types";
+import { ChoicesAsync, ChoicesSync, Value } from "./types";
 
 export function isChoicesSync(
   choices: ChoicesSync | ChoicesAsync
@@ -11,14 +11,17 @@ export function isChoicesSync(
 }
 
 export function valueChoices(value: Value, choices: ChoicesSync): ChoicesSync {
-  return choices.filter(c => value.includes(c.value));
+  return choices.filter((c) => value.includes(c.value));
 }
 
 export function missingChoices(
   value: Value,
   choices: ChoicesSync
 ): ChoicesSync {
-  return _.difference(value, _.pluck(choices, "value")).map(v => ({
+  return difference(
+    value,
+    choices.map((o) => o.value)
+  ).map((v) => ({
     title: printf(t("? (%s)"), Str.read(v) ?? "?"),
     value: v
   }));

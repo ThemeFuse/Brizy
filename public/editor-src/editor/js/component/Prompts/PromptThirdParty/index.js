@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import { noop } from "es-toolkit";
 import PropTypes from "prop-types";
-import _ from "underscore";
-import Fixed from "../Fixed";
+import React, { useEffect, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import Fixed from "../Fixed";
 
 export function PromptThirdParty({ iframeSrc, opened, onClose }) {
   return (
@@ -15,7 +15,7 @@ export function PromptThirdParty({ iframeSrc, opened, onClose }) {
 PromptThirdParty.defaultProps = {
   iframeSrc: "",
   opened: false,
-  onClose: _.noop
+  onClose: noop
 };
 
 PromptThirdParty.propTypes = {
@@ -29,7 +29,7 @@ function ThirdPartyIframe({ src, onRequestClose }) {
   const iframeEl = useRef(null);
 
   useEffect(() => {
-    const handler = e => {
+    const handler = (e) => {
       // check origin
       const url = new URL(src);
       if (e.origin !== url.origin) {
@@ -113,7 +113,7 @@ function ThirdPartyIframe({ src, onRequestClose }) {
 
 ThirdPartyIframe.defaultProps = {
   src: "",
-  onRequestClose: _.noop
+  onRequestClose: noop
 };
 ThirdPartyIframe.propTypes = {
   src: PropTypes.string.isRequired,

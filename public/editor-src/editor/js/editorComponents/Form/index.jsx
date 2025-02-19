@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -13,15 +13,14 @@ import * as toolbarExtendButton from "./toolbarExtendButton";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
 export default class Form extends EditorComponent {
-  static get componentId() {
-    return "Form";
-  }
-
   static defaultValue = defaultValue;
-
   static defaultProps = {
     extendParentToolbar: noop
   };
+
+  static get componentId() {
+    return "Form";
+  }
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -81,19 +80,21 @@ export default class Form extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <div className={_className}>
-          <form className="brz-form" noValidate onSubmit={this.handleSubmit}>
-            {this.renderFields(v)}
-            {this.renderButton(v)}
-          </form>
-        </div>
+        {({ ref: cssRef }) => (
+          <div className={_className} ref={cssRef}>
+            <form className="brz-form" noValidate onSubmit={this.handleSubmit}>
+              {this.renderFields(v)}
+              {this.renderButton(v)}
+            </form>
+          </div>
+        )}
       </CustomCSS>
     );
   }
@@ -115,7 +116,7 @@ export default class Form extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

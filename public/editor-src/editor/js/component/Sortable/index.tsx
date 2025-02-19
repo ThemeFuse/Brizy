@@ -1,3 +1,4 @@
+import { isEqual } from "es-toolkit";
 import React, {
   ReactElement,
   ReactNode,
@@ -7,7 +8,6 @@ import React, {
   useRef
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _ from "underscore";
 import { rolesHOC } from "visual/component/Roles";
 import { SortablePluginOptions } from "visual/component/Sortable/plugin/types";
 import { hideToolbar } from "visual/component/Toolbar";
@@ -75,7 +75,7 @@ const handleSort: onSortData = (data): void => {
   const toItemPath = [...toContainerPath, String(to.elementIndex)];
 
   // notify React to actually change state accordingly
-  if (!_.isEqual(fromItemPath, toItemPath)) {
+  if (!isEqual(fromItemPath, toItemPath)) {
     UIEvents.emit("dnd.sort", {
       from: {
         containerPath: fromContainerPath,

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { css } from "visual/utils/cssStyle";
+import { css } from "visual/utils/cssStyle/css/tujur";
 import { OutputStyle } from "visual/utils/cssStyle/types";
 import { MValue } from "visual/utils/value";
 
@@ -10,7 +10,20 @@ interface CSSSheet {
 }
 
 export class Sheet {
-  css = new Map<string, CSSSheet>();
+  private css = new Map<string, CSSSheet>();
+  private doc: Document | undefined;
+
+  constructor() {
+    this.doc = typeof window === "undefined" ? undefined : document;
+  }
+
+  setDoc(doc: Document): void {
+    this.doc = doc;
+  }
+
+  getDoc(): Document | undefined {
+    return this.doc;
+  }
 
   set(key: string, value: CSSSheet) {
     this.css.set(key, value);
@@ -43,7 +56,7 @@ export class Sheet {
 }
 
 interface Cache {
-  sheet: Sheet;
+  sheet: Readonly<Sheet>;
   id: string;
   componentId: string;
 }
@@ -55,7 +68,7 @@ export function createCache({
 }: {
   id: string;
   componentId: string;
-  sheet?: Sheet;
+  sheet?: Readonly<Sheet>;
 }): Cache {
   return {
     id,

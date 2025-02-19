@@ -35,6 +35,7 @@
     "bgImageWidth": 0,
     "bgImageHeight": 0,
     "bgImageType": "internal",
+    "bgAlt": "",
 
     "bgPositionX": 50,
     "bgPositionY": 50,

@@ -1,6 +1,13 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { Switch } from "../../utils/Value";
 
+export enum EcwidCartCheckoutStep {
+  Cart = "cart",
+  Address = "checkout/address",
+  Shipping = "checkout/delivery",
+  Payment = "checkout/payment"
+}
+
 export interface Value extends ElementModel {
   productId: string;
   customCSS: string;
@@ -9,7 +16,7 @@ export interface Value extends ElementModel {
   qtyDisplay: Switch;
   skuDisplay: Switch;
   weightDisplay: Switch;
-  inputDisplay: Switch;
-  addressDisplay: Switch;
   collapseDesktop: Switch;
+
+  step: EcwidCartCheckoutStep;
 }

@@ -4,6 +4,7 @@ import {
   OptionValue
 } from "visual/component/Options/types";
 import { GenericToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { State } from "visual/utils/stateMode";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
@@ -56,4 +57,5 @@ export type CSS = GeneratedCSS<GeneratedCSSItem>;
 export type CSSStyleFn<T extends OptionName = OptionName> = (data: {
   meta?: Partial<OptionMeta<T>>;
   value: OptionValue<T>;
+  config: ConfigCommon;
 }) => string;

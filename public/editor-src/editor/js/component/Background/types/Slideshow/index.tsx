@@ -6,31 +6,17 @@ import {
   SwiperSlide as SwiperSlideControl
 } from "swiper/react";
 import { SwiperOptions } from "swiper/types/swiper-options";
-import { SlideshowPreview } from "visual/component/Background/types/Slideshow/SlideshowPreview";
-import type { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/global/hooks";
-import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
-import { makeAttr } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { read as readString } from "visual/utils/reader/string";
 import { Effect, KenEffect, Transition } from "../../type";
 import { getSlideType, handleSwiperResize } from "../../utils";
 import { Slide } from "./Slide";
-
-interface Props {
-  images: Image[];
-  renderContext: RenderType;
-  slideshowLoop?: string;
-  slideshowDuration?: number;
-  slideshowTransitionType?: Transition;
-  slideshowTransition?: number;
-  kenBurnsEffect?: KenEffect;
-}
+import { Props } from "./types";
 
 const Slideshow = ({
   images,
-  renderContext,
   slideshowLoop = "on",
   slideshowDuration = 1,
   slideshowTransitionType = Transition.Fade,
@@ -39,13 +25,7 @@ const Slideshow = ({
 }: Props): ReactElement | null => {
   const { uid: _uid, fileName: _fileName } = images[0] ?? {};
   const config = useConfig();
-
-  const _isEditor = isEditor(renderContext);
-
-  const modules = _isEditor ? [EffectFade, Autoplay] : [];
-  const Swiper = _isEditor ? SwiperControl : undefined;
-  const SwiperSlide = _isEditor ? SwiperSlideControl : undefined;
-
+  const modules = [EffectFade, Autoplay];
   const isSlideDown = slideshowTransitionType === Transition.SlideDown;
   const isFade = slideshowTransitionType === Transition.Fade;
   const isLoopEnabled = slideshowLoop === "on";
@@ -144,27 +124,8 @@ const Slideshow = ({
     );
   }
 
-  if (isView(renderContext) || !Swiper || !SwiperSlide) {
-    const attr = {
-      [makeAttr("loop")]: slideshowLoop,
-      [makeAttr("duration")]: slideshowDuration,
-      [makeAttr("transition")]: slideshowTransition,
-      [makeAttr("transition-type")]: slideshowTransitionType,
-      [makeAttr("total-items")]: images.length
-    };
-
-    return (
-      <SlideshowPreview
-        className={className}
-        itemClassName={classNameItem}
-        images={images}
-        attributes={attr}
-      />
-    );
-  }
-
   return (
-    <Swiper
+    <SwiperControl
       {...options}
       key={key}
       className={className}
@@ -172,11 +133,11 @@ const Slideshow = ({
       onResize={handleResize}
     >
       {images.map((item, index) => (
-        <SwiperSlide key={index}>
+        <SwiperSlideControl key={index}>
           <Slide className={classNameItem} item={item} />
-        </SwiperSlide>
+        </SwiperSlideControl>
       ))}
-    </Swiper>
+    </SwiperControl>
   );
 };
 

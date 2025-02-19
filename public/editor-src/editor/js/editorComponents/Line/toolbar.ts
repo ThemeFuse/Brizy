@@ -1,8 +1,8 @@
 import { Num } from "@brizy/readers";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isStory } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -43,12 +43,14 @@ export const getItems: GetItems<Value, Props> = ({
   v,
   device,
   context,
-  editorMode
+  editorMode,
+  component
 }) => {
   const _isStory = isStory(editorMode);
 
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
+  const config = component.getGlobalConfig();
 
   const lineStyle = dvv("lineStyle");
   const style = dvv("style");
@@ -60,7 +62,7 @@ export const getItems: GetItems<Value, Props> = ({
   const defaultStyle = style === "default";
   const isDefaultLineStyle = isDefaultLineType(lineStyle);
 
-  const borderColor = getColor(
+  const borderColor = getColorToolbar(
     dvv("borderColorPalette"),
     dvv("borderColorHex"),
     dvv("borderColorOpacity")
@@ -385,7 +387,7 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "colorPicker",
                   disabled: defaultStyle,
                   states: [NORMAL, HOVER],
-                  style: colorBackgroundCSS
+                  style: colorBackgroundCSS(config)
                 }
               ]
             },
@@ -398,14 +400,14 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: !isDefaultLineStyle,
-                  style: borderColorCSSForDefault
+                  style: borderColorCSSForDefault(config)
                 },
                 {
                   id: "borderColor",
                   type: "colorPicker",
                   states: [NORMAL, HOVER],
                   disabled: isDefaultLineStyle,
-                  style: borderColorCSSForCustom
+                  style: borderColorCSSForCustom(config)
                 }
               ]
             },
@@ -418,7 +420,7 @@ export const getItems: GetItems<Value, Props> = ({
                   type: "colorPicker",
                   disabled: !iconStyle,
                   states: [NORMAL, HOVER],
-                  style: iconBgColorCSS
+                  style: iconBgColorCSS(config)
                 }
               ]
             },

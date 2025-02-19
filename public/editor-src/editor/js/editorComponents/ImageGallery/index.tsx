@@ -1,8 +1,8 @@
 import classnames from "classnames";
-import React, { Fragment, ReactNode } from "react";
+import { debounce, isEqual, noop } from "es-toolkit";
+import React, { Fragment, ReactNode, RefObject } from "react";
 import ResizeAware from "react-resize-aware";
 import { merge } from "timm";
-import _ from "underscore";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -39,32 +39,33 @@ import { arrangeGridByTags } from "./utils.export";
 
 
 class ImageGallery extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static defaultProps = {
+    meta: {},
+    onToolbarOpen: noop,
+    onToolbarClose: noop,
+    onToolbarEnter: noop,
+    onToolbarLeave: noop,
+    extendParentToolbar: noop
+  };
+  state = {
+    visibleTag: ""
+  };
+  node: HTMLElement | null = null;
+  gallery: GalleryJustified | null = null;
+  isotope: GalleryIsotope | null = null;
+  reinitIsotopes = debounce(() => {
+    this.destroyIsotope();
+    this.initIsotope();
+  }, 500);
+
   static get componentId(): "ImageGallery" {
     return "ImageGallery";
   }
 
-  static defaultValue = defaultValue;
-
   handleAllTagChange = (allTag: string): void => {
     this.patchValue({ allTag });
   };
-
-  static defaultProps = {
-    meta: {},
-    onToolbarOpen: _.noop,
-    onToolbarClose: _.noop,
-    onToolbarEnter: _.noop,
-    onToolbarLeave: _.noop,
-    extendParentToolbar: _.noop
-  };
-
-  state = {
-    visibleTag: ""
-  };
-
-  node: HTMLElement | null = null;
-  gallery: GalleryJustified | null = null;
-  isotope: GalleryIsotope | null = null;
 
   handleResize = () => {
     const { layout } = this.getValue();
@@ -143,7 +144,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
     const currentSpacing = getSpacing(this.props.dbValue);
     const nextSpacing = getSpacing(nextProps.dbValue);
 
-    if (isMasonry && !_.isEqual(currentSpacing, nextSpacing)) {
+    if (isMasonry && !isEqual(currentSpacing, nextSpacing)) {
       this.reinitIsotopes();
     }
   }
@@ -420,7 +421,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -455,48 +456,51 @@ class ImageGallery extends EditorComponent<Value, Props> {
           )}
           key={index}
         >
-          <li
-            className={
-              className +
-              `${
-                this.state.visibleTag === tag
-                  ? " brz-image__gallery-filter__item--active"
-                  : ""
-              }`
-            }
-            data-filter={filter}
-            onClick={() => {
-              const iso = this.getIsotope();
-              const gallery = this.getGallery();
-              this.handleFilterClick(tag);
-
-              if (layout === "justified" && gallery) {
-                gallery.arrange({
-                  filter
-                });
-              } else if (layout === "grid") {
-                const items = [
-                  ...(this.node?.querySelectorAll<HTMLElement>(
-                    ".brz-image__gallery-item"
-                  ) ?? [])
-                ];
-
-                arrangeGridByTags(filter, items);
-              } else {
-                if (iso) {
-                  iso.arrange({
-                    filter: tag === allTag ? "*" : `.${tagClassName}`
-                  });
-                }
+          {({ ref }) => (
+            <li
+              className={
+                className +
+                `${
+                  this.state.visibleTag === tag
+                    ? " brz-image__gallery-filter__item--active"
+                    : ""
+                }`
               }
-            }}
-          >
-            {tag === v.allTag ? (
-              <TextEditor value={allTag} onChange={this.handleAllTagChange} />
-            ) : (
-              tag
-            )}
-          </li>
+              ref={ref as unknown as RefObject<HTMLLIElement>}
+              data-filter={filter}
+              onClick={() => {
+                const iso = this.getIsotope();
+                const gallery = this.getGallery();
+                this.handleFilterClick(tag);
+
+                if (layout === "justified" && gallery) {
+                  gallery.arrange({
+                    filter
+                  });
+                } else if (layout === "grid") {
+                  const items = [
+                    ...(this.node?.querySelectorAll<HTMLElement>(
+                      ".brz-image__gallery-item"
+                    ) ?? [])
+                  ];
+
+                  arrangeGridByTags(filter, items);
+                } else {
+                  if (iso) {
+                    iso.arrange({
+                      filter: tag === allTag ? "*" : `.${tagClassName}`
+                    });
+                  }
+                }
+              }}
+            >
+              {tag === v.allTag ? (
+                <TextEditor value={allTag} onChange={this.handleAllTagChange} />
+              ) : (
+                tag
+              )}
+            </li>
+          )}
         </Toolbar>
       );
     });
@@ -584,14 +588,14 @@ class ImageGallery extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     const lightBoxContent =
       lightBox === "on" &&
-      isView(this.renderContext) &&
+      isView(this.props.renderContext) &&
       images.slice(1).map((image, index) => {
         const _image = Str.read(image) ?? "";
         return (
@@ -646,7 +650,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -703,40 +707,47 @@ class ImageGallery extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Fragment>
-          <Wrapper {...this.makeWrapperProps({ className: classNameWrapper })}>
-            {enableTags === "on" &&
-              tags.length > 0 &&
-              this.renderTags(v, vs, vd)}
-            <div className="brz-image__gallery-container">
-              {layout === "bigImage" && this.renderBigImage(v, vs, vd)}
-              <div
-                className={className}
-                ref={this.handleRef}
-                {...(isView(this.renderContext)
-                  ? {
-                      "data-settings": encodeToString(
-                        makeOptionValueToSettings(v, breakpoints)
-                      )
-                    }
-                  : {})}
-              >
-                {/* @ts-expect-error: need review when EditorArrayComponent converted to TS */}
-                <Items {...itemProps} />
+        {({ ref: cssRef }) => (
+          <Fragment>
+            <Wrapper
+              {...this.makeWrapperProps({
+                className: classNameWrapper,
+                ref: cssRef
+              })}
+            >
+              {enableTags === "on" &&
+                tags.length > 0 &&
+                this.renderTags(v, vs, vd)}
+              <div className="brz-image__gallery-container">
+                {layout === "bigImage" && this.renderBigImage(v, vs, vd)}
+                <div
+                  className={className}
+                  ref={this.handleRef}
+                  {...(isView(this.props.renderContext)
+                    ? {
+                        "data-settings": encodeToString(
+                          makeOptionValueToSettings(v, breakpoints)
+                        )
+                      }
+                    : {})}
+                >
+                  {/* @ts-expect-error: need review when EditorArrayComponent converted to TS */}
+                  <Items {...itemProps} />
+                </div>
               </div>
-            </div>
-          </Wrapper>
-          {isEditor(this.renderContext) && (
-            <ResizeAware onResize={this.handleResize} />
-          )}
-        </Fragment>
+            </Wrapper>
+            {isEditor(this.props.renderContext) && (
+              <ResizeAware onResize={this.handleResize} />
+            )}
+          </Fragment>
+        )}
       </CustomCSS>
     );
   }
@@ -763,11 +774,6 @@ class ImageGallery extends EditorComponent<Value, Props> {
       });
     }
   }
-
-  reinitIsotopes = _.debounce(() => {
-    this.destroyIsotope();
-    this.initIsotope();
-  }, 500);
 
   initJustifiedGallery(v: Value): void {
     const Gallery = this.getGalleryLib();

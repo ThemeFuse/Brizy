@@ -1,17 +1,17 @@
+import { times } from "es-toolkit/compat";
 import {
   clamp,
   inRange,
   isNumber,
   isNumeric,
   roundTo,
+  toNonNegative,
   toNumber,
-  toPositive,
-  toNonNegative
+  toPositive
 } from "visual/utils/math/index";
 import { testToValue } from "visual/utils/value/utilites.test";
-import { times } from "underscore";
 
-describe("Testing 'clamp' function", function() {
+describe("Testing 'clamp' function", function () {
   test("Return min value if number < min", () => {
     expect(clamp(5, 6, 8)).toBe(6);
   });
@@ -25,7 +25,7 @@ describe("Testing 'clamp' function", function() {
   });
 });
 
-describe("Testing 'roundTo' function", function() {
+describe("Testing 'roundTo' function", function () {
   test("Cast output to first 2 decimals if the it is longer", () => {
     expect(roundTo(10 / 3, 2)).toBe(3.33);
   });
@@ -35,15 +35,15 @@ describe("Testing 'roundTo' function", function() {
   });
 });
 
-describe("Testing 'isNumber' function", function() {
+describe("Testing 'isNumber' function", function () {
   test("Should behavior exactly like 'typeof n === number'", () => {
-    [1, 2, -2, 3.3, -5.6, "1", {}, undefined, null].map(v =>
+    [1, 2, -2, 3.3, -5.6, "1", {}, undefined, null].map((v) =>
       expect(isNumber(v)).toBe(typeof v === "number")
     );
   });
 });
 
-describe("Testing 'isNumeric' function", function() {
+describe("Testing 'isNumeric' function", function () {
   test("Boolean value", () => {
     expect(isNumeric(true)).toBe(false);
   });
@@ -76,7 +76,7 @@ describe("Testing 'isNumeric' function", function() {
   });
 });
 
-describe("Testing 'inRange' function", function() {
+describe("Testing 'inRange' function", function () {
   test("Return false if n is lower then min", () => {
     expect(inRange(1, 5, 0)).toBe(false);
   });
@@ -88,13 +88,13 @@ describe("Testing 'inRange' function", function() {
   });
 });
 
-describe("Testing 'toNumber' function", function() {
+describe("Testing 'toNumber' function", function () {
   test("Return value if it's type is a number", () => {
     expect(toNumber(2, 1)).toBe(2);
   });
 
   test("If value is not valid, return orElse value", () => {
-    [undefined, null, "", {}, () => ({})].map(v =>
+    [undefined, null, "", {}, () => ({})].map((v) =>
       expect(toNumber(v, -123456)).toBe(-123456)
     );
   });
@@ -104,18 +104,18 @@ describe("Testing 'toNumber' function", function() {
   });
 });
 
-describe("Testing 'toPositive' function", function() {
+describe("Testing 'toPositive' function", function () {
   testToValue(
     toNonNegative,
-    times(100, i => i + 1),
+    times(100, (i) => i + 1),
     [undefined, null, "", "0", {}, -1, -2]
   );
 });
 
-describe("Testing 'toPositive' function", function() {
+describe("Testing 'toPositive' function", function () {
   testToValue(
     toPositive,
-    times(100, i => i + 1),
+    times(100, (i) => i + 1),
     [undefined, null, "", "0", {}, 0, -1, -2]
   );
 });

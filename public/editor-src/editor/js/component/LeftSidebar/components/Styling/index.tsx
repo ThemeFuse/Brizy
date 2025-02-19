@@ -1,4 +1,4 @@
-import { fromJS } from "immutable";
+import { isEqual } from "es-toolkit";
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -33,13 +33,8 @@ import {
   stylesSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import {
-  ExtraFontStyle,
-  FontStyles,
-  Palette,
-  Style,
-  isExtraFontStyle
-} from "visual/types";
+import { ExtraFontStyle, FontStyles, Palette, Style } from "visual/types/Style";
+import { isExtraFontStyle } from "visual/types/utils";
 import { getGlobalColors } from "visual/utils/api";
 import { getGlobalTypography } from "visual/utils/api/common";
 import { brizyToBranding } from "visual/utils/branding";
@@ -85,7 +80,7 @@ class DrawerComponent extends React.Component<Props, State> {
 
     switch (type) {
       case OnChangeActionTypes.duplicate: {
-        const newStyle: Style = {
+        const newStyle = {
           ...this.props.currentStyle,
           id: uuid(),
           title: payload
@@ -176,10 +171,7 @@ class DrawerComponent extends React.Component<Props, State> {
     for (const fs of value) {
       for (const fs2 of mergedFontStyles) {
         if (fs.id === fs2.id) {
-          const _fs = fromJS(fs);
-          const _fs2 = fromJS(fs2);
-
-          if (_fs.equals(_fs2)) {
+          if (isEqual(fs, fs2)) {
             continue;
           }
 

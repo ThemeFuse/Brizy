@@ -8,15 +8,14 @@ import { style } from "./styles";
 import * as toolbarExtendConfig from "./toolbar";
 
 class TableHead extends EditorComponent {
-  static get componentId() {
-    return "TableHead";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "TableHead";
+  }
 
   renderForEdit(v, vs, vd) {
     const { showHead, widthType, meta } = this.props;
@@ -31,7 +30,7 @@ class TableHead extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

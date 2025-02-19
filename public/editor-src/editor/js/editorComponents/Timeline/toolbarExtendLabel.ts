@@ -1,5 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Props, Value } from "./index";
@@ -8,12 +8,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
 
   const labelBgColorOpacity = dvv("labelBgColorOpacity");
-  const labelBgColor = getColor(
+  const labelBgColor = getColorToolbar(
     dvv("labelBgColorPalette"),
     dvv("labelBgColorHex"),
     labelBgColorOpacity
   );
-  const labelColor = getColor(
+  const labelColor = getColorToolbar(
     dvv("labelColorPalette"),
     dvv("labelColorHex"),
     dvv("labelColorOpacity")

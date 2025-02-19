@@ -7,7 +7,7 @@ import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 export function styleContents(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const _isView = isView(renderContext);
   const _isEditor = isEditor(renderContext);
   const styles: Styles = {

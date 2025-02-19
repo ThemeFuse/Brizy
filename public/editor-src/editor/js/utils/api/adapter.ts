@@ -1,14 +1,13 @@
 import { match, parse } from "fp-utilities";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
+import { SavedBlock, SavedLayout } from "visual/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
 import {
   AllRule,
   CollectionItemRule,
   CollectionTypeRule,
-  GlobalBlock,
-  Rule as GlobalBlockRule,
-  SavedBlock,
-  SavedLayout
-} from "visual/types";
+  Rule as GlobalBlockRule
+} from "visual/types/Rule";
 import {
   isAllRule,
   isCollectionItemRule,

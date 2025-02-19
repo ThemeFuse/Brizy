@@ -1,18 +1,17 @@
 import {
   Authorized,
-  Block,
   DeviceMode,
   Error,
-  ExtraFontStyle,
-  Fonts,
-  GlobalBlock,
-  Page,
-  Project,
-  Screenshot,
-  Style,
   SyncAllowed,
   UserRole
 } from "visual/types";
+import { Block } from "visual/types/Block";
+import { Fonts } from "visual/types/Fonts";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
+import { Project } from "visual/types/Project";
+import { Screenshot } from "visual/types/Screenshot";
+import { ExtraFontStyle, Style } from "visual/types/Style";
 import { HistoryEnhancerState } from "./history/types";
 
 export enum StoreChanged {

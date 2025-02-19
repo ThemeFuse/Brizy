@@ -1,3 +1,4 @@
+import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { DeviceMode, DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
@@ -12,11 +13,12 @@ interface BaseData extends DynamicStylesProps<Value> {
 
 export function style(data: BaseData): OutputStyle {
   const { hasSizing, device, ...baseData } = data;
-  const { renderContext } = baseData;
+  const { renderContext, mode } = data.contexts;
   const dvv = (key: string): unknown =>
     defaultValueValue({ v: baseData.v, key, device });
 
   const _isEditor = isEditor(renderContext);
+  const _isStory = isStory(mode);
   const type = dvv("type");
   const submitType = type === "submit";
 
@@ -39,7 +41,9 @@ export function style(data: BaseData): OutputStyle {
         "cssStyleElementButtonIconPosition",
         "cssStyleSizeWidth",
         "cssStyleSizeHeightPxOnly",
-        "cssStyleElementButtonSize"
+        ...(_isStory
+          ? ["cssStyleElementButtonSizeForStory"]
+          : ["cssStyleElementButtonSize"])
       ],
       interval: [
         "cssStyleHoverTransition",

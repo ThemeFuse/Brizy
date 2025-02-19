@@ -4,7 +4,9 @@ import {
   ElementModelType2 as ElementModelType
 } from "visual/component/Elements/Types";
 import { ReduxState } from "visual/redux/types";
-import { Block, GlobalBlock, Screenshot } from "visual/types";
+import { Block } from "visual/types/Block";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Screenshot } from "visual/types/Screenshot";
 import { objectTraverse2 } from "visual/utils/object";
 import { ActionTypes, ReduxAction } from "../actions2";
 

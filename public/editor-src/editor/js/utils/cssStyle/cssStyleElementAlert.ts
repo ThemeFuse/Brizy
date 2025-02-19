@@ -86,13 +86,15 @@ export function cssStyleElementAlertCloseButtonBgSize({
 export function cssStyleElementAlertCloseButtonBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const closeBgColor = styleBgColor({
     v,
     device,
     prefix: "closeBg",
-    state
+    state,
+    store
   });
 
   return closeBgColor ? `background-color:${closeBgColor};` : "";
@@ -101,12 +103,14 @@ export function cssStyleElementAlertCloseButtonBgColor({
 export function cssStyleElementAlertCloseButtonColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const closeColor = styleColor({
     v,
     device,
     state,
+    store,
     prefix: "closeColor"
   });
 
@@ -171,9 +175,10 @@ export function cssStyleElementAlertTitleAlign({
 export function cssStyleElementAlertTitleShadow({
   v,
   state,
+  store,
   device
 }: CSSValue): string {
-  return cssStyleTextShadow2({ v, state, device, prefix: "title" });
+  return cssStyleTextShadow2({ v, state, device, store, prefix: "title" });
 }
 
 export function cssStyleElementAlertTitleColor({
@@ -311,9 +316,16 @@ export function cssStyleElementAlertDescriptionAlign({
 export function cssStyleElementAlertDescriptionShadow({
   v,
   state,
+  store,
   device
 }: CSSValue): string {
-  return cssStyleTextShadow2({ v, state, device, prefix: "description" });
+  return cssStyleTextShadow2({
+    v,
+    state,
+    device,
+    store,
+    prefix: "description"
+  });
 }
 
 export function cssStyleElementAlertDescriptionColor({

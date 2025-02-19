@@ -1,7 +1,7 @@
-import { uniq } from "underscore";
+import { uniqWith } from "es-toolkit";
 import { ElementModel } from "visual/component/Elements/Types";
+import { Block } from "visual/types/Block";
 import { objectTraverse2 } from "visual/utils/object";
-import { Block } from "visual/types";
 
 export function getModelPopups(model: ElementModel): Array<Block> {
   const popups: Array<Block> = [];
@@ -11,5 +11,5 @@ export function getModelPopups(model: ElementModel): Array<Block> {
     }
   });
 
-  return uniq(popups, (p) => p.value._id);
+  return uniqWith(popups, (p) => p.value._id);
 }

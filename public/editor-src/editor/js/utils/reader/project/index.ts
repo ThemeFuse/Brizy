@@ -1,11 +1,8 @@
+import { Json, Num, Obj, Str } from "@brizy/readers";
 import { mPipe, parseStrict } from "fp-utilities";
-import { Project } from "visual/types";
+import { Project } from "visual/types/Project";
 import { pipe } from "visual/utils/fp";
 import { MValue, onNullish, throwOnNullish } from "visual/utils/value";
-import * as Json from "../json";
-import * as Num from "../number";
-import * as Obj from "../object";
-import * as Str from "../string";
 
 type ProjectData = Project["data"];
 

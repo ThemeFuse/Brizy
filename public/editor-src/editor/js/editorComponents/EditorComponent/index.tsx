@@ -1,14 +1,14 @@
+import { Str } from "@brizy/readers";
 import classNames from "classnames";
+import { flatten, identity, noop } from "es-toolkit";
 import React, { ReactNode } from "react";
 import { mergeDeep } from "timm";
-import { flatten, identity, noop } from "underscore";
 import {
   ElementDefaultValue,
   ElementModel,
   ModelType
 } from "visual/component/Elements/Types";
 import { OptionName, OptionValue } from "visual/component/Options/types";
-import Toolbar from "visual/component/Toolbar";
 import {
   Meta,
   OptionDefinition,
@@ -18,8 +18,8 @@ import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
 import { getConfigById } from "visual/global/Config/InitConfig";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Editor from "visual/global/Editor";
-import { EditorMode } from "visual/global/EditorModeContext";
 import * as GlobalState from "visual/global/StateMode";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { RenderType, isView } from "visual/providers/RenderProvider";
 import { createCache, createSheet } from "visual/providers/StyleProvider/Sheet";
 import {
@@ -33,13 +33,10 @@ import {
   getFlatShortcodes,
   getShortcode
 } from "visual/shortcodeComponents/utils";
+import { DynamicStylesProps } from "visual/types";
 import { WithClassName } from "visual/types/attributes";
 import {
   filterMergedStylesByDevice,
-  getInitialV,
-  replaceCSSDuplicatesWithEmptyString
-} from "visual/utils/cssStyle";
-import {
   filterStylesByDevice,
   getCSSObjects
 } from "visual/utils/cssStyle/cssStyle2";
@@ -47,7 +44,9 @@ import { GeneratedCSS, OutputStyle } from "visual/utils/cssStyle/types";
 import {
   addBreakpointsToFilteredCSS,
   concatFinalCSS,
-  mergeStylesArray
+  getInitialV,
+  mergeStylesArray,
+  replaceCSSDuplicatesWithEmptyString
 } from "visual/utils/cssStyle/utils";
 import { isPro } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
@@ -64,7 +63,6 @@ import { toElementModel } from "visual/utils/options/utils/toElementModel";
 import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
 import { wrapOption } from "visual/utils/options/utils/wrap";
 import { attachRef } from "visual/utils/react";
-import * as Str from "visual/utils/reader/string";
 import * as Responsive from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { NORMAL } from "visual/utils/stateMode";
@@ -82,7 +80,7 @@ import { EditorComponentContext } from "./EditorComponentContext";
 import {
   ComponentsMeta,
   ConfigGetter,
-  ContextMenuItem,
+  ContextGetItems,
   ContextMenuProps,
   DefaultValueProcessed,
   ECDC,
@@ -164,7 +162,6 @@ export class EditorComponent<
   _defaultValueProcessedCache?: DefaultValueProcessed<M>;
   _dc: ECDC = {};
   childToolbarExtend?: ToolbarExtend;
-  renderContext = this.props.renderContext;
 
   /**
    * @return {string}
@@ -176,6 +173,13 @@ export class EditorComponent<
   // shouldComponentUpdate(nextProps) {
   //   return this.optionalSCU(nextProps);
   // }
+
+  getContexts() {
+    return {
+      renderContext: this.props.renderContext,
+      mode: this.props.editorMode
+    };
+  }
 
   getValueByOptionId = (id: string): undefined | OptionValue<OptionName> => {
     const v = this.getValue();
@@ -290,7 +294,9 @@ export class EditorComponent<
         // When we start to create the defaultValue the Getter always return undefined
         // because at the first time we don't have the value
         getValue: () => undefined,
-        getDCOption: () => undefined
+        getDCOption: () => undefined,
+        t: (k) => k,
+        device: this.getDeviceMode()
       });
 
       this._initialToolbarsConfig = toolbars;
@@ -402,7 +408,7 @@ export class EditorComponent<
           context: this.context,
           component: this as Editor<M, P, S>,
           getValue: this.getValueByOptionId,
-          renderContext: this.renderContext,
+          renderContext: this.props.renderContext,
           editorMode: this.props.editorMode
         })
       )
@@ -486,21 +492,21 @@ export class EditorComponent<
       model,
       store,
       options: defaultOptions,
-      renderContext: this.renderContext
+      renderContext: this.props.renderContext
     });
     const rulesCSSObj = getCSSObjects({
       currentModel: ModelType.Rules,
       model,
       store,
       options: rulesOptions,
-      renderContext: this.renderContext
+      renderContext: this.props.renderContext
     });
     const customCSSObj = getCSSObjects({
       currentModel: ModelType.Custom,
       model,
       store,
       options: customOptions,
-      renderContext: this.renderContext
+      renderContext: this.props.renderContext
     });
 
     const css: [
@@ -538,14 +544,22 @@ export class EditorComponent<
   }: {
     toolbars: NewToolbarConfig<M, P, S>[];
     sidebars?: NewToolbarConfig<M, P, S>[];
-    stylesFn?: (v: M, vs: M, vd: M) => OutputStyle;
+    stylesFn?: (data: DynamicStylesProps<M>) => OutputStyle;
     extraClassNames?: Array<string | Record<string, boolean>>;
   }) {
     const model = this.getValue2();
     const { v, vs, vd } = model;
 
     const cssFromStylesFn =
-      typeof stylesFn === "function" ? stylesFn(v, vs, vd) : undefined;
+      typeof stylesFn === "function"
+        ? stylesFn({
+            v,
+            vs,
+            vd,
+            store: this.getReduxStore(),
+            contexts: this.getContexts()
+          })
+        : undefined;
 
     const cssFromToolbarOptions = this.getCSS({ toolbars, sidebars, model });
 
@@ -589,7 +603,7 @@ export class EditorComponent<
       typeof _config.dynamicContent?.getPlaceholderData === "function";
 
     // Can be disabled by Config
-    if (!replaceDC || isView(this.renderContext)) {
+    if (!replaceDC || isView(this.props.renderContext)) {
       return getDCObjPreview(dcObjKeysAfterHook).value;
     }
 
@@ -784,7 +798,7 @@ export class EditorComponent<
         attachRef(v, extend.ref || null);
         attachRef(v, props.ref || null);
       },
-      renderContext: this.renderContext,
+      renderContext: this.props.renderContext,
       editorMode: this.props.editorMode
     };
   };
@@ -819,7 +833,7 @@ export class EditorComponent<
       reduxState: this.getReduxState(),
       reduxStore: this.getReduxStore(),
       reduxDispatch: this.getReduxDispatch(),
-      renderContext: this.renderContext,
+      renderContext: this.props.renderContext,
       editorMode: this.props.editorMode,
       onChange: onChange
     };
@@ -827,7 +841,7 @@ export class EditorComponent<
 
   makeContextMenuProps(
     config: {
-      getItems: (v: M, context?: unknown) => ContextMenuItem[];
+      getItems: ContextGetItems<M>;
     },
     extraProps = {}
   ): ContextMenuProps<M> {
@@ -837,7 +851,7 @@ export class EditorComponent<
     return {
       id: uuid(3),
       componentId,
-      getItems: config.getItems.bind(null, v, this),
+      getItems: config.getItems.bind(null, v, this as Editor<M>),
       ...extraProps
     };
   }
@@ -862,7 +876,7 @@ export class EditorComponent<
         const { id, type, onChange: oldOnchange } = option;
 
         const getKey = getElementModelKeyFn({ device, state, option });
-        const states = GlobalState.getStates(this.getGlobalConfig());
+        const states = GlobalState.getStates(this.props.editorMode);
         option = bindStateToOption(states, option, device);
 
         //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
@@ -963,7 +977,7 @@ export class EditorComponent<
           context: this.context,
           getValue: this.getValueByOptionId,
           componentConfig: this.getComponentConfig(),
-          renderContext: this.renderContext,
+          renderContext: this.props.renderContext,
           editorMode: this.props.editorMode
         }) ?? []
       );
@@ -1011,7 +1025,7 @@ export class EditorComponent<
               device: deviceMode,
               state: stateMode,
               context: this.context,
-              renderContext: this.renderContext,
+              renderContext: this.props.renderContext,
               editorMode: this.props.editorMode
             })
           );
@@ -1040,7 +1054,7 @@ export class EditorComponent<
           state: stateMode,
           context: this.context,
           getValue: this.getValueByOptionId,
-          renderContext: this.renderContext,
+          renderContext: this.props.renderContext,
           editorMode: this.props.editorMode
         }) || []
       );
@@ -1085,7 +1099,7 @@ export class EditorComponent<
               device: deviceMode,
               state: stateMode,
               context: this.context,
-              renderContext: this.renderContext,
+              renderContext: this.props.renderContext,
               editorMode: this.props.editorMode
             })
           );
@@ -1139,54 +1153,14 @@ export class EditorComponent<
     };
   }
 
-  renderToolbars(children: ReactNode): ReactNode {
-    if (!this.componentConfig?.getConfig) {
-      return children;
-    }
-
-    const toolbars = this.componentConfig.getConfig({
-      getValue: this.getValueByOptionId,
-      getDCOption: this.getDCOptionByType
-    });
-
-    const generate = (
-      toolbars: ToolbarConfig[],
-      child: ReactNode
-    ): ReactNode => {
-      if (!toolbars.length) {
-        return child;
-      } else {
-        const [toolbarData, ...rest] = toolbars;
-        const { selector, toolbar, sidebar } = toolbarData;
-
-        const toolbarProps = this.makeToolbarPropsFromConfig2(
-          { getItems: () => toolbar ?? [] },
-          { getItems: () => sidebar ?? [] }
-        );
-
-        const html = (
-          <Toolbar selector={selector} {...toolbarProps}>
-            <>{child}</>
-          </Toolbar>
-        );
-
-        return generate(rest, html);
-      }
-    };
-
-    return generate(toolbars, children);
-  }
-
   render(): ReactNode {
     const { v, vs, vd } = this.getValue2();
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return this.renderForView(v, vs, vd);
     }
 
-    return this.componentConfig
-      ? this.renderToolbars(this.renderForEdit(v, vs, vd))
-      : this.renderForEdit(v, vs, vd);
+    return this.renderForEdit(v, vs, vd);
   }
 
   renderForEdit(v: M, vs: M, vd: M): ReactNode {

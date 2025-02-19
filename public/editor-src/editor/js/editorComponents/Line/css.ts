@@ -1,10 +1,4 @@
 import { Base64 } from "js-base64";
-import type {
-  OptionStyle,
-  OptionStyleData,
-  OutputOptionStyle
-} from "visual/utils/cssStyle/types";
-import { read as readString } from "visual/utils/reader/string";
 import {
   getIconSizeCSS,
   getIconSpacingCSS,
@@ -13,8 +7,15 @@ import {
   isTypeWithoutWeight,
   readLineAlign
 } from "visual/editorComponents/Line/utils";
-import { length as objLength } from "visual/utils/reader/object";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getColor } from "visual/utils/color";
+import type {
+  OptionStyle,
+  OptionStyleData,
+  OutputOptionStyle
+} from "visual/utils/cssStyle/types";
+import { length as objLength } from "visual/utils/reader/object";
+import { read as readString } from "visual/utils/reader/string";
 
 export const lineStyleCSS: OptionStyle<"radioGroup"> = ({
   value: { value }
@@ -154,49 +155,49 @@ export const iconRotateCSS: OptionStyle<"slider"> = ({ value: { value } }) => ({
   }
 });
 
-export const borderColorCSSForDefault: OptionStyle<"colorPicker"> = ({
-  value: { palette, hex, opacity }
-}) => {
-  const color = getColor(palette, hex, opacity);
+export const borderColorCSSForDefault =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { palette, hex, opacity } }) => {
+    const color = getColor(palette, hex, opacity, config);
 
-  if (color) {
-    return {
-      "{{WRAPPER}}:hover .brz-hr, {{WRAPPER}}:hover .brz-line-container:before, {{WRAPPER}}:hover .brz-line-container:after":
-        {
-          "border-top-color": color
-        }
-    };
-  }
-};
+    if (color) {
+      return {
+        "{{WRAPPER}}:hover .brz-hr, {{WRAPPER}}:hover .brz-line-container:before, {{WRAPPER}}:hover .brz-line-container:after":
+          {
+            "border-top-color": color
+          }
+      };
+    }
+  };
 
-export const borderColorCSSForCustom: OptionStyle<"colorPicker"> = ({
-  value: { palette, hex, opacity }
-}) => {
-  const color = getColor(palette, hex, opacity);
+export const borderColorCSSForCustom =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { palette, hex, opacity } }) => {
+    const color = getColor(palette, hex, opacity, config);
 
-  if (color) {
-    return {
-      "{{WRAPPER}}:hover .brz-line-container:before, {{WRAPPER}}:hover .brz-line-container:after":
-        {
+    if (color) {
+      return {
+        "{{WRAPPER}}:hover .brz-line-container:before, {{WRAPPER}}:hover .brz-line-container:after":
+          {
+            "background-color": color
+          }
+      };
+    }
+  };
+
+export const iconBgColorCSS =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { palette, hex, opacity } }) => {
+    const color = getColor(palette, hex, opacity, config);
+
+    if (color) {
+      return {
+        "{{WRAPPER}}:hover .brz-line-icon-wrapper": {
           "background-color": color
         }
-    };
-  }
-};
-
-export const iconBgColorCSS: OptionStyle<"colorPicker"> = ({
-  value: { palette, hex, opacity }
-}) => {
-  const color = getColor(palette, hex, opacity);
-
-  if (color) {
-    return {
-      "{{WRAPPER}}:hover .brz-line-icon-wrapper": {
-        "background-color": color
-      }
-    };
-  }
-};
+      };
+    }
+  };
 
 export const widthCSS: OptionStyle<"slider"> = ({
   value: { value, unit }
@@ -215,19 +216,19 @@ export const transitionCSS: OptionStyle<"slider"> = ({ value: { value } }) => ({
     }
 });
 
-export const colorBackgroundCSS: OptionStyle<"colorPicker"> = ({
-  value: { opacity, hex, palette }
-}) => {
-  const color = getColor(palette, hex, opacity);
+export const colorBackgroundCSS =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { opacity, hex, palette } }) => {
+    const color = getColor(palette, hex, opacity, config);
 
-  if (color) {
-    return {
-      "{{WRAPPER}}:hover .brz-line-content": {
-        color
-      },
-      "{{WRAPPER}}:hover .brz-icon-svg-custom": {
-        "background-color": color
-      }
-    };
-  }
-};
+    if (color) {
+      return {
+        "{{WRAPPER}}:hover .brz-line-content": {
+          color
+        },
+        "{{WRAPPER}}:hover .brz-icon-svg-custom": {
+          "background-color": color
+        }
+      };
+    }
+  };

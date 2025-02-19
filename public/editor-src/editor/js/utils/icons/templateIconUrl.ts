@@ -1,4 +1,3 @@
-import Config from "visual/global/Config";
 import { IconTypes } from "visual/config/icons/Type";
 import { TemplateIconData } from "./types";
 import { getCustomIconUrl } from "./utils";
@@ -7,16 +6,14 @@ export function templateIconUrl({
   type,
   iconName,
   filename,
-  suffix
+  suffix,
+  config
 }: TemplateIconData): string {
-  const config = Config.getAll();
-  const { urls } = config;
-
   if (type === IconTypes.Custom) {
     return getCustomIconUrl(config, iconName, filename);
   }
 
-  const { templateIcons } = urls;
+  const { templateIcons } = config.urls ?? {};
   const url = `${templateIcons}/${type}/${iconName}.svg`;
 
   return suffix === undefined ? url : `${url}#${suffix}`;
@@ -27,16 +24,14 @@ export function compileTemplateIconUrl({
   type,
   iconName,
   filename,
-  suffix
+  suffix,
+  config
 }: TemplateIconData): string {
-  const config = Config.getAll();
-  const { urls } = config;
-
   if (type === IconTypes.Custom) {
     return getCustomIconUrl(config, iconName, filename);
   }
 
-  const { templateIcons, compileTemplateIcons } = urls;
+  const { templateIcons, compileTemplateIcons } = config.urls ?? {};
 
   const url = compileTemplateIcons
     ? `${compileTemplateIcons}/${type}/${iconName}.svg`

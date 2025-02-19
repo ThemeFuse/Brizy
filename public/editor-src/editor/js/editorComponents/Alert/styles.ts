@@ -4,7 +4,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const IS_VIEW = isView(renderContext);
   const styles: {
     [k: string]: {

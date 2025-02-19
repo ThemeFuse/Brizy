@@ -14,11 +14,11 @@ import { style } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
 
 export default class ShareButtonItem extends EditorComponent<ItemValue> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.ShareButtonItem {
     return ElementTypes.ShareButtonItem;
   }
-
-  static defaultValue = defaultValue;
 
   handleLabelChange = (customLabelText: string): void => {
     this.patchValue({ customLabelText });
@@ -49,7 +49,7 @@ export default class ShareButtonItem extends EditorComponent<ItemValue> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -58,31 +58,34 @@ export default class ShareButtonItem extends EditorComponent<ItemValue> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarExtend, sidebarExtend)}
       >
-        <div
-          className={className}
-          {...makeDataAttr({ name: "network", value: network })}
-          {...makeDataAttr({ name: "target", value: targetUrl })}
-          {...makeDataAttr({ name: "href", value: href })}
-        >
-          {iconName && iconType && (
-            <div className="brz-shareButton__item-icon">
-              <ThemeIcon
-                name={networkInfo.iconName}
-                type={networkInfo.iconType}
-              />
-            </div>
-          )}
-          <div className="brz-shareButton__item-text">
-            {customLabelText === "" ? (
-              <span className="brz-span">{networkInfo.labelText}</span>
-            ) : (
-              <TextEditor
-                value={customLabelText}
-                onChange={this.handleLabelChange}
-              />
+        {({ ref }) => (
+          <div
+            className={className}
+            {...makeDataAttr({ name: "network", value: network })}
+            {...makeDataAttr({ name: "target", value: targetUrl })}
+            {...makeDataAttr({ name: "href", value: href })}
+            ref={ref}
+          >
+            {iconName && iconType && (
+              <div className="brz-shareButton__item-icon">
+                <ThemeIcon
+                  name={networkInfo.iconName}
+                  type={networkInfo.iconType}
+                />
+              </div>
             )}
+            <div className="brz-shareButton__item-text">
+              {customLabelText === "" ? (
+                <span className="brz-span">{networkInfo.labelText}</span>
+              ) : (
+                <TextEditor
+                  value={customLabelText}
+                  onChange={this.handleLabelChange}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </Toolbar>
     );
   }

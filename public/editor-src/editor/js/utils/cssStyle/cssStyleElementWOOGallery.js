@@ -11,11 +11,17 @@ import {
   styleElementWOOGallerySpacing
 } from "visual/utils/style2";
 
-export function cssStyleElementWOOGalleryBorderThumbnail({ v, device, state }) {
+export function cssStyleElementWOOGalleryBorderThumbnail({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "thumbnail"
   });
 }
@@ -23,9 +29,10 @@ export function cssStyleElementWOOGalleryBorderThumbnail({ v, device, state }) {
 export function cssStyleElementWOOGalleryBorderRadiusThumbnail({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleBorderRadius({ v, device, state, prefix: "thumbnail" });
+  return cssStyleBorderRadius({ v, device, state, store, prefix: "thumbnail" });
 }
 
 export function cssStyleElementWOOGalleryBoxShadowThumbnail({

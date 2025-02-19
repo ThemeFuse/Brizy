@@ -6,6 +6,7 @@ import {
   Props as ShadowProps
 } from "visual/component/Controls/BoxShadow";
 import { TypeObject } from "visual/component/Controls/BoxShadow/types";
+import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import * as Option from "visual/component/Options/Type";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/global/hooks";
@@ -48,7 +49,12 @@ export const BoxShadow = ({
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
-  const { colorPalette } = useSelector(currentStyleSelector);
+  const style = useSelector(currentStyleSelector);
+  const colorPalette = useMemo((): PaletteObject[] => {
+    return style.colorPalette
+      .map((f) => ({ id: `${f.id}`, hex: f.hex }))
+      .filter((p): p is PaletteObject => Hex.is(p.hex));
+  }, [style]);
 
   const globalConfig = useConfig();
 
@@ -139,6 +145,12 @@ export const BoxShadow = ({
     hex: paletteHex(value.palette, colorPalette) ?? value.hex
   };
 
+  const isPaletteHidden = config?.isPaletteHidden;
+  const palette = useMemo(
+    () => (isPaletteHidden ? undefined : colorPalette),
+    [isPaletteHidden, colorPalette]
+  );
+
   return (
     <ShadowControl
       opacity={opacity ?? true}
@@ -146,7 +158,7 @@ export const BoxShadow = ({
       value={_value}
       onChange={onValueChange}
       types={types}
-      palette={colorPalette}
+      palette={palette}
       paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
     />
   );

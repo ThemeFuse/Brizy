@@ -1,5 +1,8 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, Page, Project } from "visual/types";
+import { EditorMode } from "visual/providers/EditorModeProvider";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
+import { Project } from "visual/types/Project";
 import {
   Asset,
   ScriptsFree,
@@ -44,4 +47,5 @@ export interface Props {
     project?: Project;
     globalBlocks?: Array<GlobalBlock>;
   };
+  editorMode: EditorMode;
 }

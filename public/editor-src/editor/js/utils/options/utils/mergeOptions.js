@@ -1,4 +1,4 @@
-import _ from "underscore";
+import { sortBy } from "es-toolkit";
 
 export function mergeOptions(options1, options2) {
   let merge = false;
@@ -53,7 +53,7 @@ function sortOptions(options) {
     if (option[property]) option[property] = sortOptions(option[property]);
   }
 
-  return _.sortBy(options, "position");
+  return sortBy(options, [(obj) => obj.position ?? Infinity]);
 }
 
 export default mergeOptions;

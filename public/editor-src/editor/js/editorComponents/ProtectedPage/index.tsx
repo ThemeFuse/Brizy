@@ -10,6 +10,7 @@ import EditorComponent, {
   Props as EProps
 } from "visual/editorComponents/EditorComponent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import { encodeToString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -33,16 +34,17 @@ interface Value extends ElementModel {
   emptyMessage: string;
   invalidMessage: string;
   failMessage: string;
+  customCSS: string;
 }
 
 export type Props = EProps<Value, Record<string, unknown>>;
 
 export default class ProtectedPage extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): "ProtectedPage" {
     return "ProtectedPage";
   }
-
-  static defaultValue = defaultValue;
 
   handleResizerChange = (patch: Partial<ElementModel>): void => {
     return this.patchValue(patch);
@@ -93,7 +95,7 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -115,30 +117,41 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
     return (
       // @ts-expect-error: Need transform all toolbars config to ts
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper<Props> {...this.makeWrapperProps({ className })}>
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={resizerRestrictions}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              <form className="brz-form brz-protected-form">
-                <div className="brz-protected-form__input">
-                  <TextEditor
-                    className="brz-input"
-                    value={label}
-                    onChange={this.handleLabelChange}
-                  />
-                </div>
-                <div className="brz-protected-form__button">
-                  {this.renderButton()}
-                </div>
-              </form>
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper<Props>
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  restrictions={resizerRestrictions}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                >
+                  <form className="brz-form brz-protected-form">
+                    <div className="brz-protected-form__input">
+                      <TextEditor
+                        className="brz-input"
+                        value={label}
+                        onChange={this.handleLabelChange}
+                      />
+                    </div>
+                    <div className="brz-protected-form__button">
+                      {this.renderButton()}
+                    </div>
+                  </form>
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -163,7 +176,7 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

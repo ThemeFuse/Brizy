@@ -6,6 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { updateEkklesiaFields } from "visual/utils/api/common";
+import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
@@ -35,12 +36,12 @@ import { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): "MinistryBrandsEventList" {
     return "MinistryBrandsEventList";
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -84,7 +85,7 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -100,161 +101,228 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
         )}
         selector=".brz-ministryBrands__item--meta-title"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarDate,
-            sidebarMinistryBrandsMetaDate,
-            {
-              allowExtend: false
-            }
-          )}
-          selector=".brz-ministryBrands__item--meta-date"
-        >
+        {({ ref: titleRef }) => (
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
-              toolbarMetaTypography,
-              sidebarMinistryBrandsMetaCategory,
+              toolbarDate,
+              sidebarMinistryBrandsMetaDate,
               {
                 allowExtend: false
               }
             )}
-            selector=".brz-ministryBrands__item--meta-category"
+            selector=".brz-ministryBrands__item--meta-date"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarMetaTypography,
-                sidebarMinistryBrandsMetaGroup,
-                {
-                  allowExtend: false
-                }
-              )}
-              selector=".brz-ministryBrands__item--meta-group"
-            >
+            {({ ref: dateRef }) => (
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarMetaTypography,
-                  sidebarMinistryBrandsMetaLocation,
+                  sidebarMinistryBrandsMetaCategory,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-ministryBrands__item--meta-location"
+                selector=".brz-ministryBrands__item--meta-category"
               >
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarMetaTypography,
-                    sidebarMinistryBrandsMetaAddress,
-                    {
-                      allowExtend: false
-                    }
-                  )}
-                  selector=".brz-ministryBrands__item--meta-address > .brz-eventList__item--meta"
-                >
+                {({ ref: categoryRef }) => (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarExtendButtons,
-                      sidebarExtendButtons,
+                      toolbarMetaTypography,
+                      sidebarMinistryBrandsMetaGroup,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-ministryBrands__item--meta--button"
+                    selector=".brz-ministryBrands__item--meta-group"
                   >
-                    <Toolbar
-                      {...this.makeToolbarPropsFromConfig2(
-                        toolbarRegisterButton,
-                        sidebarExtendButtons,
-                        {
-                          allowExtend: false
-                        }
-                      )}
-                      selector=".brz-ministryBrands__item--meta--register-button"
-                    >
+                    {({ ref: groupRef }) => (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarPreview,
-                          undefined,
+                          toolbarMetaTypography,
+                          sidebarMinistryBrandsMetaLocation,
                           {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-eventList__item--meta--preview"
+                        selector=".brz-ministryBrands__item--meta-location"
                       >
-                        <Toolbar
-                          {...this.makeToolbarPropsFromConfig2(
-                            toolbarLinksColor,
-                            undefined,
-                            {
-                              allowExtend: false
-                            }
-                          )}
-                          selector=".brz-eventList__item--meta--link a"
-                        >
+                        {({ ref: locationRef }) => (
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarMetaItemLinkColor,
+                              toolbarMetaTypography,
                               sidebarMinistryBrandsMetaAddress,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-ministryBrands__item--meta-address > a"
+                            selector=".brz-ministryBrands__item--meta-address > .brz-eventList__item--meta"
                           >
-                            <Toolbar
-                              {...this.makeToolbarPropsFromConfig2(
-                                toolbarPagination,
-                                undefined,
-                                {
-                                  allowExtend: false
-                                }
-                              )}
-                              selector=".brz-ministryBrands__pagination a"
-                            >
+                            {({ ref: addressRef }) => (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarImage,
-                                  undefined,
+                                  toolbarExtendButtons,
+                                  sidebarExtendButtons,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-ministryBrands__item--media"
+                                selector=".brz-ministryBrands__item--meta--button"
                               >
-                                <Toolbar
-                                  {...this.makeToolbarPropsFromConfig2(
-                                    toolbarMetaIcons,
-                                    undefined,
-                                    {
-                                      allowExtend: false
-                                    }
-                                  )}
-                                  selector=".brz-ministryBrands__meta--icons"
-                                >
-                                  <Wrapper
-                                    {...this.makeWrapperProps({
-                                      className
-                                    })}
+                                {({ ref: buttonRef }) => (
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarRegisterButton,
+                                      sidebarExtendButtons,
+                                      {
+                                        allowExtend: false
+                                      }
+                                    )}
+                                    selector=".brz-ministryBrands__item--meta--register-button"
                                   >
-                                    <DynamicContentHelper
-                                      placeholder={getPlaceholder(v)}
-                                      props={{ className: "brz-eventList" }}
-                                      blocked={false}
-                                      tagName="div"
-                                    />
-                                  </Wrapper>
-                                </Toolbar>
+                                    {({ ref: registerButtonRef }) => (
+                                      <Toolbar
+                                        {...this.makeToolbarPropsFromConfig2(
+                                          toolbarPreview,
+                                          undefined,
+                                          {
+                                            allowExtend: false
+                                          }
+                                        )}
+                                        selector=".brz-eventList__item--meta--preview"
+                                      >
+                                        {({ ref: previewRef }) => (
+                                          <Toolbar
+                                            {...this.makeToolbarPropsFromConfig2(
+                                              toolbarLinksColor,
+                                              undefined,
+                                              {
+                                                allowExtend: false
+                                              }
+                                            )}
+                                            selector=".brz-eventList__item--meta--link a"
+                                          >
+                                            {({ ref: linksRef }) => (
+                                              <Toolbar
+                                                {...this.makeToolbarPropsFromConfig2(
+                                                  toolbarMetaItemLinkColor,
+                                                  sidebarMinistryBrandsMetaAddress,
+                                                  {
+                                                    allowExtend: false
+                                                  }
+                                                )}
+                                                selector=".brz-ministryBrands__item--meta-address > a"
+                                              >
+                                                {({ ref: addressLinkRef }) => (
+                                                  <Toolbar
+                                                    {...this.makeToolbarPropsFromConfig2(
+                                                      toolbarPagination,
+                                                      undefined,
+                                                      {
+                                                        allowExtend: false
+                                                      }
+                                                    )}
+                                                    selector=".brz-ministryBrands__pagination a"
+                                                  >
+                                                    {({
+                                                      ref: paginationRef
+                                                    }) => (
+                                                      <Toolbar
+                                                        {...this.makeToolbarPropsFromConfig2(
+                                                          toolbarImage,
+                                                          undefined,
+                                                          {
+                                                            allowExtend: false
+                                                          }
+                                                        )}
+                                                        selector=".brz-ministryBrands__item--media"
+                                                      >
+                                                        {({
+                                                          ref: mediaRef
+                                                        }) => (
+                                                          <Toolbar
+                                                            {...this.makeToolbarPropsFromConfig2(
+                                                              toolbarMetaIcons,
+                                                              undefined,
+                                                              {
+                                                                allowExtend:
+                                                                  false
+                                                              }
+                                                            )}
+                                                            selector=".brz-ministryBrands__meta--icons"
+                                                          >
+                                                            {({
+                                                              ref: iconsRef
+                                                            }) => (
+                                                              <Wrapper
+                                                                {...this.makeWrapperProps(
+                                                                  {
+                                                                    className,
+                                                                    ref: (
+                                                                      el
+                                                                    ) => {
+                                                                      attachRefs(
+                                                                        el,
+                                                                        [
+                                                                          titleRef,
+                                                                          dateRef,
+                                                                          categoryRef,
+                                                                          groupRef,
+                                                                          locationRef,
+                                                                          addressRef,
+                                                                          buttonRef,
+                                                                          registerButtonRef,
+                                                                          previewRef,
+                                                                          linksRef,
+                                                                          addressLinkRef,
+                                                                          paginationRef,
+                                                                          mediaRef,
+                                                                          iconsRef
+                                                                        ]
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                )}
+                                                              >
+                                                                <DynamicContentHelper
+                                                                  placeholder={getPlaceholder(
+                                                                    v
+                                                                  )}
+                                                                  props={{
+                                                                    className:
+                                                                      "brz-eventList"
+                                                                  }}
+                                                                  blocked={
+                                                                    false
+                                                                  }
+                                                                  tagName="div"
+                                                                />
+                                                              </Wrapper>
+                                                            )}
+                                                          </Toolbar>
+                                                        )}
+                                                      </Toolbar>
+                                                    )}
+                                                  </Toolbar>
+                                                )}
+                                              </Toolbar>
+                                            )}
+                                          </Toolbar>
+                                        )}
+                                      </Toolbar>
+                                    )}
+                                  </Toolbar>
+                                )}
                               </Toolbar>
-                            </Toolbar>
+                            )}
                           </Toolbar>
-                        </Toolbar>
+                        )}
                       </Toolbar>
-                    </Toolbar>
+                    )}
                   </Toolbar>
-                </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }

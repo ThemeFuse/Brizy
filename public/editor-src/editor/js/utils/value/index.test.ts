@@ -1,17 +1,17 @@
-import { identity } from "underscore";
+import { identity } from "es-toolkit";
 import {
+  is,
   isNullish,
-  onEmpty,
-  onNullish,
-  throwOnNullish,
-  onUndefined,
   mApply,
   mCompose,
-  is
+  onEmpty,
+  onNullish,
+  onUndefined,
+  throwOnNullish
 } from "visual/utils/value/index";
 import { testMonoidBehavior } from "visual/utils/value/utilites.test";
 
-describe("Testing 'onUndefined' function", function() {
+describe("Testing 'onUndefined' function", function () {
   test("Return value if it is not undefined", () => {
     expect(onUndefined(2, 1)).toBe(2);
   });
@@ -21,17 +21,17 @@ describe("Testing 'onUndefined' function", function() {
   });
 });
 
-describe("Testing 'onEmpty' function", function() {
-  describe("Testing 'onEmpty' with string", function() {
+describe("Testing 'onEmpty' function", function () {
+  describe("Testing 'onEmpty' with string", function () {
     testMonoidBehavior(onEmpty.bind(null, ""), "", ["a", "b", "c", "d"]);
   });
 
-  describe("Testing 'onEmpty' with numbers", function() {
+  describe("Testing 'onEmpty' with numbers", function () {
     testMonoidBehavior(onEmpty.bind(null, 0), 0, [1, 2, 3, 4, 5]);
   });
 });
 
-describe("Testing 'isNullish' function", function() {
+describe("Testing 'isNullish' function", function () {
   const toString = (v: unknown): string => {
     switch (typeof v) {
       case "object":
@@ -62,7 +62,7 @@ describe("Testing 'isNullish' function", function() {
   });
 });
 
-describe("Testing 'onNullish' function", function() {
+describe("Testing 'onNullish' function", function () {
   test.each([
     [undefined, 1],
     [null, 2],
@@ -74,7 +74,7 @@ describe("Testing 'onNullish' function", function() {
 
   test.each([[0], [""], ["test"], [{}], [[]]])(
     "If value is not null, NAN, or undefined, return it",
-    v => {
+    (v) => {
       const orElse = {};
       expect(onNullish(orElse, v)).toBe(v);
       expect(onNullish(orElse)(v)).toBe(v);
@@ -82,7 +82,7 @@ describe("Testing 'onNullish' function", function() {
   );
 });
 
-describe("Testing 'throwOnNullish' function", function() {
+describe("Testing 'throwOnNullish' function", function () {
   test.each([
     [undefined, "smth. go wrong"],
     [null, "smth. go wrong"],
@@ -93,15 +93,15 @@ describe("Testing 'throwOnNullish' function", function() {
 
   test.each([[0], [""], ["test"], [{}], [[]]])(
     "If value is not null, NAN, or undefined, return it",
-    v => {
+    (v) => {
       expect(throwOnNullish("")(v)).toBe(v);
     }
   );
 });
 
-describe("Testing 'mApply' function", function() {
+describe("Testing 'mApply' function", function () {
   test("Identity law: mApply(id) === id", () => {
-    [1, "2", "test"].map(v => expect(mApply(identity, v)).toBe(identity(v)));
+    [1, "2", "test"].map((v) => expect(mApply(identity, v)).toBe(identity(v)));
   });
 
   test("Composition law: mApply(f . g . h) === map(f, map(g), map(h))", () => {
@@ -110,7 +110,7 @@ describe("Testing 'mApply' function", function() {
     const h = (v: number) => v + 3;
     const c = (v: number) => f(g(h(v)));
 
-    [0, 1, 2, 3].map(v =>
+    [0, 1, 2, 3].map((v) =>
       expect(mApply(c, v)).toBe(mApply(f, mApply(g, mApply(h, v))))
     );
   });
@@ -136,7 +136,7 @@ describe("Testing 'mApply' function", function() {
   });
 });
 
-describe("Testing 'mCompose' function", function() {
+describe("Testing 'mCompose' function", function () {
   test("Functions are applied from right to left", () => {
     const f = (v: number) => v + 1;
     const g = (v: number) => v * 2;

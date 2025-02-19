@@ -8,8 +8,6 @@ import {
   cssStyleBoxShadow,
   cssStyleColor,
   cssStyleCustomIconColor,
-  cssStyleElementMinistryBrandsButtonsBgColor,
-  cssStyleElementMinistryBrandsButtonsBgGradient,
   cssStyleFlexHorizontalAlign,
   cssStyleHoverTransition,
   cssStyleIconMargin,
@@ -24,6 +22,10 @@ import { read as readNumber } from "visual/utils/reader/number";
 import { read as readString } from "visual/utils/reader/string";
 import { CSSValue } from "visual/utils/style2/types";
 import { defaultValueValue } from "../onChange";
+import {
+  cssStyleElementMinistryBrandsButtonsBgColor,
+  cssStyleElementMinistryBrandsButtonsBgGradient
+} from "./cssStyleElementMinistryBrands";
 
 export function cssStyleElementMinistryEventCalendarTitleAlign({
   v,
@@ -178,9 +180,10 @@ export function cssStyleElementMinistryEventCalendarDayBgGradient({
 export function cssStyleElementMinistryEventCalendarDayBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "day" });
+  return cssStyleBorder({ v, device, state, store, prefix: "day" });
 }
 
 export function cssStyleElementMinistryEventCalendarDayBorderRadius({
@@ -712,9 +715,10 @@ export function cssStyleElementMinistryEventCalendarTableSpacing({
 export function cssStyleElementMinistryEventCalendarTableBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "table" });
+  return cssStyleBorder({ v, device, state, store, prefix: "table" });
 }
 
 export function cssStyleElementMinistryEventCalendarSubscribeToCalendarTypography({
@@ -782,9 +786,16 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradien
 export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "subscribeToCalendar" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    prefix: "subscribeToCalendar"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow({
@@ -907,9 +918,10 @@ export function cssStyleElementMinistryEventCalendarArrowColor({
 export function cssStyleElementMinistryEventCalendarArrowBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "arrow" });
+  return cssStyleBorder({ v, device, state, store, prefix: "arrow" });
 }
 
 export function cssStyleElementMinistryEventCalendarArrowBoxShadow({

@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
 import EditorIcon from "visual/component/EditorIcon";
 
@@ -17,7 +17,7 @@ class MultiInputOptionType extends React.Component {
     step: 1,
     value: null,
     attr: {},
-    onChange: _.noop
+    onChange: noop
   };
 
   state = {

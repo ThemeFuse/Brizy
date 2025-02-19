@@ -1,7 +1,7 @@
 import { create } from "fontkit";
 import { orElse } from "fp-utilities";
 import { produce } from "immer";
-import { VariationFont } from "visual/types";
+import { VariationFont } from "visual/types/Fonts";
 import { pipe } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";
 import { Response, VariationAxes } from "./types";
@@ -43,7 +43,7 @@ export const normalizeFonts = (
   res: Response,
   variations?: VariationFont[]
 ): Response => {
-  return produce(res,  (draft) => {
+  return produce(res, (draft) => {
     // renamed uid to id
     if (draft.data.uid) {
       draft.data.id = draft.data.uid;

@@ -175,16 +175,8 @@ export class ImageSetter<T extends ReactText> extends React.Component<
           return;
         }
 
-        const extension = getFileFormat(uid);
-
-        if (!extension) {
-          ToastNotification.error(
-            t(
-              "Failed to upload file. Please upload a valid JPG, PNG, SVG, GIF or WEBP image."
-            )
-          );
-          return;
-        }
+        const extension =
+          getFileFormat(uid) ?? getFileFormat(fileName ?? "") ?? "";
 
         const { globalConfig } = this.props;
 

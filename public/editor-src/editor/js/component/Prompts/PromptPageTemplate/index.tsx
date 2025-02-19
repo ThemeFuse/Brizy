@@ -34,6 +34,7 @@ import {
   updatePageLayout,
   updatePageTitle
 } from "visual/redux/actions2";
+import { Layout } from "visual/types/Layout";
 import { shopifySyncPage } from "visual/utils/api";
 import { isNonEmptyArray } from "visual/utils/array/types";
 import { SYNC_ERROR } from "visual/utils/errors";
@@ -42,7 +43,7 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { Layout, Tabs, getTabs } from "../common/PromptPage/types";
+import { Tabs, getTabs } from "../common/PromptPage/types";
 import { reducer } from "./reducer";
 import { Props, Valid } from "./types";
 

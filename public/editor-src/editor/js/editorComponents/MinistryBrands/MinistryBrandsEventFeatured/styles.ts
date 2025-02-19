@@ -1,11 +1,13 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./types";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const { v } = data;
+  const { v, contexts } = data;
   const { maskShape = "none" } = v;
+  const _isStory = isStory(contexts.mode);
 
   const styles: {
     [k: string]: {
@@ -219,7 +221,11 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
     ".brz && .brz-ministryBrands__item--meta--button a": {
-      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
+      standart: [
+        ...(_isStory
+          ? ["cssStyleElementButtonSizeForStory"]
+          : ["cssStyleElementMinistryBrandsButtonsSize"])
+      ]
     },
     ".brz && .brz-ministryBrands__item--meta--register-button:hover": {
       standart: [
@@ -234,7 +240,11 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
     ".brz && .brz-ministryBrands__item--meta--register-button a": {
-      standart: ["cssStyleElementMinistryBrandsRegisterButtonSize"]
+      standart: [
+        ...(_isStory
+          ? ["cssStyleElementButtonSizeForStory"]
+          : ["cssStyleElementMinistryBrandsRegisterButtonSize"])
+      ]
     }
   };
 

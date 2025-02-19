@@ -25,7 +25,7 @@ import {
   EditorModeContext,
   isPopup,
   isStory
-} from "visual/global/EditorModeContext";
+} from "visual/providers/EditorModeProvider";
 import {
   fetchPageSuccess,
   removeBlocks,
@@ -40,7 +40,8 @@ import {
   storeWasChangedSelector
 } from "visual/redux/selectors";
 import { ReduxState, StoreChanged } from "visual/redux/types";
-import { SavedLayout, Style } from "visual/types";
+import { SavedLayout } from "visual/types";
+import { Style } from "visual/types/Style";
 import {
   createBlockScreenshot,
   createSavedLayout,
@@ -142,7 +143,10 @@ class PublishButton extends Component<Props, State> {
     this.configComputedValues = this.getValuesByConfig();
   }
 
-  publish = (loading: "updateLoading" | "draftLoading"): void => {
+  publish = (
+    loading: "updateLoading" | "draftLoading",
+    editorMode: EditorMode
+  ): void => {
     const { storeWasChanged } = this.props;
     const { mode, isShopify } = this.configComputedValues;
 
@@ -150,11 +154,11 @@ class PublishButton extends Component<Props, State> {
       case "withTemplate": {
         switch (storeWasChanged) {
           case StoreChanged.changed: {
-            this.handlePublish(loading);
+            this.handlePublish(loading, editorMode);
             break;
           }
           case StoreChanged.unchanged: {
-            this.handlePublishWithLayout(loading);
+            this.handlePublishWithLayout(loading, editorMode);
             break;
           }
         }
@@ -163,11 +167,11 @@ class PublishButton extends Component<Props, State> {
       case "withRules": {
         switch (storeWasChanged) {
           case StoreChanged.changed: {
-            this.handlePublish(loading);
+            this.handlePublish(loading, editorMode);
             break;
           }
           case StoreChanged.unchanged: {
-            this.handlePublishWithRules(loading);
+            this.handlePublishWithRules(loading, editorMode);
             break;
           }
         }
@@ -176,18 +180,18 @@ class PublishButton extends Component<Props, State> {
       case "withArticle": {
         switch (storeWasChanged) {
           case StoreChanged.changed: {
-            this.handlePublish(loading);
+            this.handlePublish(loading, editorMode);
             break;
           }
           case StoreChanged.unchanged: {
-            this.handlePublishWithArticle(loading);
+            this.handlePublishWithArticle(loading, editorMode);
             break;
           }
         }
         break;
       }
       default: {
-        this.handlePublish(loading);
+        this.handlePublish(loading, editorMode);
       }
     }
 
@@ -196,7 +200,10 @@ class PublishButton extends Component<Props, State> {
     }
   };
 
-  draft = (loading: "updateLoading" | "draftLoading"): void => {
+  draft = (
+    loading: "updateLoading" | "draftLoading",
+    editorMode: EditorMode
+  ): void => {
     const { page } = this.props;
     const { mode, isShopify } = this.configComputedValues;
     const config = this.getConfig();
@@ -208,10 +215,10 @@ class PublishButton extends Component<Props, State> {
         case "withArticle": {
           switch (page.status) {
             case "draft":
-              this.handleDraft(loading);
+              this.handleDraft(loading, editorMode);
               break;
             case "publish":
-              this.handleDraft(loading).then(() =>
+              this.handleDraft(loading, editorMode).then(() =>
                 shopifyUnpublishPage(config)
               );
               break;
@@ -219,16 +226,17 @@ class PublishButton extends Component<Props, State> {
           break;
         }
         case undefined: {
-          this.handleDraft(loading);
+          this.handleDraft(loading, editorMode);
         }
       }
     } else {
-      this.handleDraft(loading);
+      this.handleDraft(loading, editorMode);
     }
   };
 
   handlePublishWithRules(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading"
+    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
+    editorMode: EditorMode
   ): void {
     const { page } = this.props;
     const config = this.getConfig();
@@ -245,7 +253,7 @@ class PublishButton extends Component<Props, State> {
           this.setState({ [loading]: false });
         },
         onSave: (): Promise<void> => {
-          return this.handlePublish(loading);
+          return this.handlePublish(loading, editorMode);
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
@@ -259,7 +267,10 @@ class PublishButton extends Component<Props, State> {
     Prompts.open(data);
   }
 
-  handlePublishWithLayout(loading: "updateLoading" | "draftLoading"): void {
+  handlePublishWithLayout(
+    loading: "updateLoading" | "draftLoading",
+    editorMode: EditorMode
+  ): void {
     const { page } = this.props;
     const config = this.getConfig();
 
@@ -275,7 +286,7 @@ class PublishButton extends Component<Props, State> {
           this.setState({ [loading]: false });
         },
         onSave: (): Promise<void> => {
-          return this.handlePublish(loading);
+          return this.handlePublish(loading, editorMode);
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
@@ -290,7 +301,8 @@ class PublishButton extends Component<Props, State> {
   }
 
   handlePublishWithArticle(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading"
+    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
+    editorMode: EditorMode
   ): void {
     const { page } = this.props;
     const config = this.getConfig();
@@ -307,7 +319,7 @@ class PublishButton extends Component<Props, State> {
           this.setState({ [loading]: false });
         },
         onSave: (): Promise<void> => {
-          return this.handlePublish(loading);
+          return this.handlePublish(loading, editorMode);
         },
         onAfterSave: () => {
           this.setState({ readyForPublish: false });
@@ -322,7 +334,8 @@ class PublishButton extends Component<Props, State> {
   }
 
   handlePublish(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading"
+    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
+    editorMode: EditorMode
   ): Promise<void> {
     if (this[loading]) {
       return this[loading] as Promise<void>;
@@ -331,7 +344,10 @@ class PublishButton extends Component<Props, State> {
     this.setState({ [loading]: true });
 
     return (this[loading] = this.props
-      .updatePageStatus("publish")
+      .updatePageStatus({
+        status: "publish",
+        editorMode: editorMode
+      })
       .then(() => {
         this.props.fetchPageSuccess();
         this.setState({ [loading]: false });
@@ -347,7 +363,10 @@ class PublishButton extends Component<Props, State> {
       }));
   }
 
-  handleDraft(loading: "updateLoading" | "draftLoading"): Promise<void> {
+  handleDraft(
+    loading: "updateLoading" | "draftLoading",
+    editorMode: EditorMode
+  ): Promise<void> {
     if (this[loading]) {
       return this[loading] as Promise<void>;
     }
@@ -358,7 +377,10 @@ class PublishButton extends Component<Props, State> {
     const pageStatus = status === "future" ? "future" : "draft";
 
     return (this[loading] = this.props
-      .updatePageStatus(pageStatus)
+      .updatePageStatus({
+        status: pageStatus,
+        editorMode: editorMode
+      })
       .then(() => {
         this.props.fetchPageSuccess();
         this.setState({ [loading]: false });
@@ -454,7 +476,7 @@ class PublishButton extends Component<Props, State> {
     this.props.removeBlocks();
   };
 
-  getSaveAndPublishOption() {
+  getSaveAndPublishOption(editorMode: EditorMode) {
     const { page, updateError } = this.props;
     const { mode, isShopify } = this.configComputedValues;
     const config = this.getConfig();
@@ -476,7 +498,7 @@ class PublishButton extends Component<Props, State> {
           try {
             switch (mode) {
               case "withTemplate": {
-                await this.handlePublish("saveAndPublishLoading");
+                await this.handlePublish("saveAndPublishLoading", editorMode);
 
                 if (!canSync) {
                   updateError({
@@ -510,7 +532,7 @@ class PublishButton extends Component<Props, State> {
                 );
 
                 if (items.length > 0) {
-                  await this.handlePublish("saveAndPublishLoading");
+                  await this.handlePublish("saveAndPublishLoading", editorMode);
 
                   if (!canSync) {
                     updateError({ code: SYNC_ERROR, data: syncErrorData });
@@ -525,7 +547,10 @@ class PublishButton extends Component<Props, State> {
                     layout
                   });
                 } else {
-                  this.handlePublishWithRules("saveAndPublishLoading");
+                  this.handlePublishWithRules(
+                    "saveAndPublishLoading",
+                    editorMode
+                  );
                 }
                 break;
               }
@@ -540,7 +565,7 @@ class PublishButton extends Component<Props, State> {
                 );
 
                 if (selectedBlog?.id && selectedBlog?.title) {
-                  await this.handlePublish("saveAndPublishLoading");
+                  await this.handlePublish("saveAndPublishLoading", editorMode);
 
                   if (!canSync) {
                     updateError({ code: SYNC_ERROR, data: syncErrorData });
@@ -555,7 +580,10 @@ class PublishButton extends Component<Props, State> {
                     layout
                   });
                 } else {
-                  this.handlePublishWithArticle("saveAndPublishLoading");
+                  this.handlePublishWithArticle(
+                    "saveAndPublishLoading",
+                    editorMode
+                  );
                 }
                 break;
               }
@@ -607,17 +635,19 @@ class PublishButton extends Component<Props, State> {
         onClick: (): void => {
           switch (page.status) {
             case "publish": {
-              this.draft("draftLoading");
+              this.draft("draftLoading", editorMode);
               break;
             }
             case "draft": {
-              this.publish("draftLoading");
+              this.publish("draftLoading", editorMode);
               break;
             }
           }
         }
       },
-      ...(isTemplateOrRulesMode(mode) ? [this.getSaveAndPublishOption()] : [])
+      ...(isTemplateOrRulesMode(mode)
+        ? [this.getSaveAndPublishOption(editorMode)]
+        : [])
     ];
   }
 
@@ -646,14 +676,14 @@ class PublishButton extends Component<Props, State> {
     }
   }
 
-  updateOnKeyDown = (e: MouseEvent): void => {
+  updateOnKeyDown = (e: MouseEvent, editorMode: EditorMode): void => {
     e.preventDefault();
     const { storeWasChanged, page } = this.props;
 
     storeWasChanged === "changed" &&
       (page.status === "publish"
-        ? this.handlePublish("updateLoading")
-        : this.handleDraft("updateLoading"));
+        ? this.handlePublish("updateLoading", editorMode)
+        : this.handleDraft("updateLoading", editorMode));
   };
 
   render(): ReactElement {
@@ -665,22 +695,22 @@ class PublishButton extends Component<Props, State> {
 
     return (
       <EditorModeContext.Consumer>
-        {(editorMode) => (
+        {({ mode }) => (
           <>
             <BottomPanelItem paddingSize="small">
               <Controls
                 disabled={
                   storeWasChanged !== StoreChanged.changed && isReadyForPublish
                 }
-                addonAfter={this.getTooltipItems(editorMode)}
+                addonAfter={this.getTooltipItems(mode)}
                 onClick={(): void => {
                   switch (this.props.page.status) {
                     case "publish":
-                      return this.publish("updateLoading");
+                      return this.publish("updateLoading", mode);
                     case "draft":
                     case "future":
                     case "private":
-                      return this.draft("updateLoading");
+                      return this.draft("updateLoading", mode);
                   }
                 }}
                 status={this.props.page.status}
@@ -692,7 +722,7 @@ class PublishButton extends Component<Props, State> {
             <HotKeys
               id="key-helper-update-page"
               keyNames={["ctrl+S", "cmd+S", "right_cmd+S"]}
-              onKeyDown={this.updateOnKeyDown}
+              onKeyDown={(e: MouseEvent) => this.updateOnKeyDown(e, mode)}
             />
           </>
         )}

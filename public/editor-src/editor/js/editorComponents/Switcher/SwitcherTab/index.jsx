@@ -1,25 +1,24 @@
 import classnames from "classnames";
 import React from "react";
-import { isView } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isView } from "visual/providers/RenderProvider";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import * as toolbarConfig from "./toolbar";
 
 class SwitcherTab extends EditorComponent {
-  static get componentId() {
-    return "SwitcherTab";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "SwitcherTab";
+  }
 
   handleLabelChange = (labelText) => {
     this.patchValue({ labelText });
@@ -37,16 +36,18 @@ class SwitcherTab extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig)}
         selector=".brz-icon-svg,.brz-span"
       >
-        <div className={className} onClick={onChangeNav}>
-          {iconName && iconType && (
-            <ThemeIcon
-              name={iconName}
-              type={iconType}
-              filename={iconFilename}
-            />
-          )}
-          <TextEditor value={labelText} onChange={this.handleLabelChange} />
-        </div>
+        {({ ref }) => (
+          <div className={className} onClick={onChangeNav} ref={ref}>
+            {iconName && iconType && (
+              <ThemeIcon
+                name={iconName}
+                type={iconType}
+                filename={iconFilename}
+              />
+            )}
+            <TextEditor value={labelText} onChange={this.handleLabelChange} />
+          </div>
+        )}
       </Toolbar>
     );
   }
@@ -72,7 +73,7 @@ class SwitcherTab extends EditorComponent {
     return (
       <Animation
         iterationCount={
-          isView(this.renderContext) && (sectionPopup || sectionPopup2)
+          isView(this.props.renderContext) && (sectionPopup || sectionPopup2)
             ? Infinity
             : 1
         }

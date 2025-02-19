@@ -371,9 +371,10 @@ export function cssStyleElementEcwidProductCheckboxBgGradient({
 export function cssStyleElementEcwidProductCheckboxBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "checkbox" });
+  return cssStyleBorder({ v, device, store, state, prefix: "checkbox" });
 }
 
 export function cssStyleElementEcwidProductCheckboxBorderRadius({
@@ -438,9 +439,16 @@ export function cssStyleElementEcwidProductCheckboxActiveBgGradient({
 
 export function cssStyleElementEcwidProductCheckboxActiveBorder({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active", prefix: "checkbox" });
+  return cssStyleBorder({
+    v,
+    device,
+    store,
+    state: "active",
+    prefix: "checkbox"
+  });
 }
 
 export function cssStyleElementEcwidProductCheckboxActiveBoxShadow({
@@ -599,9 +607,10 @@ export function cssStyleElementEcwidProductFavoriteBgGradient({
 export function cssStyleElementEcwidProductFavoriteBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "favorite" });
+  return cssStyleBorder({ v, device, store, state, prefix: "favorite" });
 }
 
 export function cssStyleElementEcwidProductFavoriteBorderRadius({
@@ -766,9 +775,10 @@ export function cssStyleElementEcwidProductFavoritedBgGradient({
 export function cssStyleElementEcwidProductFavoritedBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "favorited" });
+  return cssStyleBorder({ v, device, store, state, prefix: "favorited" });
 }
 
 export function cssStyleElementEcwidProductFavoritedBorderRadius({
@@ -948,9 +958,10 @@ export function cssStyleElementEcwidProductViewFavoritesBgGradient({
 export function cssStyleElementEcwidProductViewFavoritesBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "viewFavorites" });
+  return cssStyleBorder({ v, device, store, state, prefix: "viewFavorites" });
 }
 
 export function cssStyleElementEcwidProductViewFavoritesBorderRadius({
@@ -1092,9 +1103,10 @@ export function cssStyleElementEcwidProductShareButtonsBgGradient({
 export function cssStyleElementEcwidProductShareButtonsBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "shareButtons" });
+  return cssStyleBorder({ v, device, store, state, prefix: "shareButtons" });
 }
 
 export function cssStyleElementEcwidProductShareButtonsBorderRadius({
@@ -1203,9 +1215,10 @@ export function cssStyleElementEcwidProductShareButtonsSpacingRight({
 export function cssStyleElementEcwidProductGalleryBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "gallery" });
+  return cssStyleBorder({ v, device, store, state, prefix: "gallery" });
 }
 
 export function cssStyleElementEcwidProductGalleryBorderRadius({
@@ -1384,9 +1397,16 @@ export function cssStyleElementEcwidProductThumbnailWidthCenter({
 
 export function cssStyleElementEcwidProductThumbnailActiveBorder({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: ACTIVE, prefix: "thumbnail" });
+  return cssStyleBorder({
+    v,
+    device,
+    store,
+    state: ACTIVE,
+    prefix: "thumbnail"
+  });
 }
 
 export function cssStyleElementEcwidProductThumbnailActiveBoxShadow({
@@ -1556,9 +1576,10 @@ export function cssStyleElementEcwidProductCheckoutBgGradient({
 export function cssStyleElementEcwidProductCheckoutBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "checkout" });
+  return cssStyleBorder({ v, device, store, state, prefix: "checkout" });
 }
 
 export function cssStyleElementEcwidProductCheckoutBorderRadius({
@@ -1676,9 +1697,10 @@ export function cssStyleElementEcwidProductAddToBagBgGradient({
 export function cssStyleElementEcwidProductAddToBagBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "addToBag" });
+  return cssStyleBorder({ v, device, store, state, prefix: "addToBag" });
 }
 
 export function cssStyleElementEcwidProductAddToBagBorderRadius({
@@ -1810,9 +1832,10 @@ export function cssStyleElementEcwidProductBgGradient({
 export function cssStyleElementEcwidProductBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "product" });
+  return cssStyleBorder({ v, device, store, state, prefix: "product" });
 }
 
 export function cssStyleElementEcwidProductBoxShadow({
@@ -1919,9 +1942,10 @@ export function cssStyleElementEcwidProductRadioColorIcon({
 export function cssStyleElementEcwidProductRadioBorderColorIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, prefix: "radioBgColor" });
+  const color = styleColor({ v, device, state, store, prefix: "radioBgColor" });
 
   return `border-color:${color};`;
 }
@@ -2007,12 +2031,14 @@ export function cssStyleElementEcwidProductCheckbox2ColorIcon({
 export function cssStyleElementEcwidProductCheckbox2BorderColorIcon({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const color = styleColor({
     v,
     device,
     state,
+    store,
     prefix: "checkbox2BgColor"
   });
 
@@ -2084,12 +2110,14 @@ export function cssStyleElementEcwidProductTextFieldColor({
 export function cssStyleElementEcwidProductTextFieldColorFocus({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const color = styleColor({
     v,
     device,
     state,
+    store,
     prefix: "textFieldColor"
   });
 
@@ -2117,9 +2145,10 @@ export function cssStyleElementEcwidProductTextFieldBgGradient({
 export function cssStyleElementEcwidProductTextFieldBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "textField" });
+  return cssStyleBorder({ v, device, store, state, prefix: "textField" });
 }
 
 export function cssStyleElementEcwidProductTextFieldBorderRadius({
@@ -2276,9 +2305,10 @@ export function cssStyleElementEcwidProductTextareaBgGradient({
 export function cssStyleElementEcwidProductTextareaBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "textarea" });
+  return cssStyleBorder({ v, device, store, state, prefix: "textarea" });
 }
 
 export function cssStyleElementEcwidProductTextareaBorderRadius({
@@ -2414,9 +2444,10 @@ export function cssStyleElementEcwidProductDatepickerBgGradient({
 export function cssStyleElementEcwidProductDatepickerBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "datepicker" });
+  return cssStyleBorder({ v, device, store, state, prefix: "datepicker" });
 }
 
 export function cssStyleElementEcwidProductDatepickerBorderRadius({
@@ -2490,12 +2521,14 @@ export function cssStyleElementEcwidProductDatepickerAlign({
 export function cssStyleElementEcwidProductDatepickerColorFocus({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const color = styleColor({
     v,
     device,
     state,
+    store,
     prefix: "datepickerColor"
   });
 
@@ -2585,9 +2618,10 @@ export function cssStyleElementEcwidProductSelectBgGradient({
 export function cssStyleElementEcwidProductSelectBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "select" });
+  return cssStyleBorder({ v, device, store, state, prefix: "select" });
 }
 
 export function cssStyleElementEcwidProductSelectBorderRadius({
@@ -2747,9 +2781,10 @@ export function cssStyleElementEcwidProductFilesBgGradient({
 export function cssStyleElementEcwidProductFilesBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "files" });
+  return cssStyleBorder({ v, device, store, state, prefix: "files" });
 }
 
 export function cssStyleElementEcwidProductFilesBorderRadius({
@@ -2918,9 +2953,10 @@ export function cssStyleElementEcwidProductQtyBgGradient({
 export function cssStyleElementEcwidProductQtyBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "qty" });
+  return cssStyleBorder({ v, device, store, state, prefix: "qty" });
 }
 
 export function cssStyleElementEcwidProductQtyBorderRadius({
@@ -3869,9 +3905,10 @@ export function cssStyleElementEcwidProductGridBuyNowBgGradient({
 export function cssStyleElementEcwidProductGridBuyNowBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "gridBuyNow" });
+  return cssStyleBorder({ v, device, store, state, prefix: "gridBuyNow" });
 }
 
 export function cssStyleElementEcwidProductGridBuyNowBorderRadius({
@@ -3950,9 +3987,10 @@ export function cssStyleElementEcwidProductGridBgGradient({
 export function cssStyleElementEcwidProductGridBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "grid" });
+  return cssStyleBorder({ v, device, store, state, prefix: "grid" });
 }
 
 export function cssStyleElementEcwidProductGridBorderRadius({
@@ -4019,9 +4057,10 @@ export function cssStyleElementEcwidProductArrowBgGradient({
 export function cssStyleElementEcwidProductArrowBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "arrow" });
+  return cssStyleBorder({ v, device, store, state, prefix: "arrow" });
 }
 
 export function cssStyleElementEcwidProductArrowBorderRadius({

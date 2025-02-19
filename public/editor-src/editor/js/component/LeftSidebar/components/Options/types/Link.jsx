@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 
 export default class DrawerPopoverItem extends React.Component {
@@ -11,7 +11,7 @@ export default class DrawerPopoverItem extends React.Component {
     link: "",
     linkTarget: "",
     title: "",
-    onClick: _.noop
+    onClick: noop
   };
 
   handleClick = (e) => {

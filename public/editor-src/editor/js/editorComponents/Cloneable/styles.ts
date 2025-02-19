@@ -29,7 +29,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
 export function styleContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const styles: {
     [k: string]: {
       interval?: string[];

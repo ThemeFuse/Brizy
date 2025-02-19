@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component, ReactElement } from "react";
-import { noop } from "underscore";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";

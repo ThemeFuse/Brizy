@@ -1,5 +1,6 @@
-import { getFilteredPopups } from "..";
+import { ElementModelType2 } from "visual/component/Elements/Types";
 import { encodeToString } from "visual/utils/string";
+import { getFilteredPopups } from "..";
 
 describe("Testing getFilteredPopups", () => {
   const popups = [
@@ -21,7 +22,7 @@ describe("Testing getFilteredPopups", () => {
         name: "popup4"
       }
     }
-  ];
+  ] as unknown as Array<ElementModelType2>;
 
   it("should return empty array for empty string", () => {
     const filteredPopups = getFilteredPopups("", popups);

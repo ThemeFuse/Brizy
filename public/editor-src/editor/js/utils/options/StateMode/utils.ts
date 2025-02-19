@@ -1,4 +1,4 @@
-import { unique } from "underscore";
+import { uniq } from "es-toolkit";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
 import { filter } from "visual/utils/options/filter";
@@ -11,7 +11,7 @@ export const itemStates = (item: ToolbarItemType): State.State[] => {
     [],
     item
   );
-  return states.length ? unique(states) : ["normal"];
+  return states.length ? uniq(states) : ["normal"];
 };
 
 /**

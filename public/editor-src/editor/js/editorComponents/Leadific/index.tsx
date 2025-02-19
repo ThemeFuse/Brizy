@@ -7,9 +7,10 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getLinkData } from "visual/utils/models/link";
+import { attachRefs } from "visual/utils/react";
 import EditorArrayComponent from "../EditorArrayComponent";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import { Wrapper } from "../tools/Wrapper";
@@ -20,12 +21,12 @@ import * as toolbarConfig from "./toolbar";
 import { Props, Value } from "./types";
 
 class Leadific extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): string {
     return "Leadific";
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   componentDidMount(): void {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -63,7 +64,7 @@ class Leadific extends EditorComponent<Value, Props> {
         return {
           blockId,
           meta,
-          ...(isEditor(this.renderContext) && {
+          ...(isEditor(this.props.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -89,7 +90,7 @@ class Leadific extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -111,22 +112,33 @@ class Leadific extends EditorComponent<Value, Props> {
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <Wrapper {...this.makeWrapperProps({ className })}>
-              {linkData.href ? (
-                <Link
-                  href={linkData.href}
-                  type={linkData.type}
-                  target={linkData.target}
-                  rel={linkData.rel}
+          {({ ref }) => (
+            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+              {({ ref: cssRef }) => (
+                <Wrapper
+                  {...this.makeWrapperProps({
+                    className,
+                    ref: (el) => {
+                      attachRefs(el, [ref, cssRef]);
+                    }
+                  })}
                 >
-                  {text}
-                </Link>
-              ) : (
-                text
+                  {linkData.href ? (
+                    <Link
+                      href={linkData.href}
+                      type={linkData.type}
+                      target={linkData.target}
+                      rel={linkData.rel}
+                    >
+                      {text}
+                    </Link>
+                  ) : (
+                    text
+                  )}
+                </Wrapper>
               )}
-            </Wrapper>
-          </CustomCSS>
+            </CustomCSS>
+          )}
         </Toolbar>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}

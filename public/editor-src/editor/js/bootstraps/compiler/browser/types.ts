@@ -1,5 +1,7 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, Page, Project } from "visual/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
+import { Project } from "visual/types/Project";
 import { Asset } from "../common/transforms/assets";
 import { Output as CompilerOutput } from "./bootstrap/types";
 

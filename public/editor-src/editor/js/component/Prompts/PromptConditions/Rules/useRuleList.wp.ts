@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { setIn } from "timm";
 import { useConfig } from "visual/global/hooks";
-import { Rule } from "visual/types";
+import { Rule } from "visual/types/Rule";
 import {
   getGroupList,
   getRulePostsGroupList,

@@ -7,7 +7,7 @@ import { t } from "visual/utils/i18n";
 import { Component } from "./types";
 
 export const FormApps: Component = ({ className, config }): ReactElement => {
-  const { id, fields, icon } = config || {};
+  const { id, fields, icon, tabs } = config || {};
 
   const handleClick = (event: MouseEvent<HTMLDivElement>): void => {
     event.preventDefault();
@@ -21,7 +21,8 @@ export const FormApps: Component = ({ className, config }): ReactElement => {
       mode: "single",
       props: {
         formId: id,
-        formFields: fields
+        formFields: fields,
+        tabs
       }
     };
 

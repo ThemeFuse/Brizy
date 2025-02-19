@@ -1,3 +1,4 @@
+import { isEqual } from "es-toolkit";
 import React, {
   ElementType,
   ReactElement,
@@ -6,7 +7,6 @@ import React, {
   useRef
 } from "react";
 import { useDispatch, useStore } from "react-redux";
-import _ from "underscore";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
@@ -95,7 +95,7 @@ const Sortable = (props: Props) => {
       const toItemPath = [...toContainerPath, String(to.elementIndex)];
 
       // notify React to actually change state accordingly
-      if (!_.isEqual(fromItemPath, toItemPath)) {
+      if (!isEqual(fromItemPath, toItemPath)) {
         UIEvents.emit("dnd.sort", {
           from: {
             containerPath: fromContainerPath,

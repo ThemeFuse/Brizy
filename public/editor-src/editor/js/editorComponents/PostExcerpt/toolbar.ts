@@ -1,8 +1,8 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCGroup, DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isPopup } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
@@ -22,8 +22,9 @@ export const getItems: GetItems<ElementModel> = ({
 }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
+  const config = component.getGlobalConfig();
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")
@@ -31,8 +32,6 @@ export const getItems: GetItems<ElementModel> = ({
 
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
-
-  const config = component.getGlobalConfig();
 
   const _isPopup = isPopup(editorMode);
 

@@ -10,6 +10,8 @@ class Recaptcha extends BaseIntegration {
   appsComponent = AppsComponent;
 
   async componentDidMount(): Promise<void> {
+    const { onLoading } = this.props;
+
     const { status, data: accounts } = await getAccounts({
       group: "recaptcha",
       services: "recaptcha"
@@ -31,6 +33,8 @@ class Recaptcha extends BaseIntegration {
         loading: false
       });
     }
+
+    onLoading(false);
   }
 
   getConnectedApps(accounts: Array<{ group: string }>): Array<string> {

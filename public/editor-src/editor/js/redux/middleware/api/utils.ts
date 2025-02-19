@@ -1,4 +1,4 @@
-import _ from "underscore";
+import { debounce, once } from "es-toolkit";
 import {
   ConfigCommon,
   PublishData
@@ -29,11 +29,11 @@ export {
 
 const DEBOUNCE_WAIT = 2000;
 
-export const debouncedApiAutoSave = _.once((interval: number = DEBOUNCE_WAIT) =>
-  _.debounce(apiAutoSave, interval)
+export const debouncedApiAutoSave = once((interval: number = DEBOUNCE_WAIT) =>
+  debounce(apiAutoSave, interval)
 );
 
-export const debouncedApiPublish = _.debounce(apiPublish, DEBOUNCE_WAIT);
+export const debouncedApiPublish = debounce(apiPublish, DEBOUNCE_WAIT);
 
 // Polling
 export function pollingSendHeartBeat(heartBeat: number, config: ConfigCommon) {

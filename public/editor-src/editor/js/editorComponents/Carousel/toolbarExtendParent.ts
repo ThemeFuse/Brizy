@@ -1,6 +1,6 @@
 import { ChoicesSync } from "visual/component/Options/types/dev/MultiSelect2/types";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getTaxonomies } from "visual/utils/options";
@@ -10,7 +10,7 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
   const dvv = (key: string) =>
     defaultValueValue({ key, v, device, state: "normal" });
 
-  const sliderArrowsColor = getColor(
+  const sliderArrowsColor = getColorToolbar(
     dvv("sliderArrowsColorPalette"),
     dvv("sliderArrowsColorHex"),
     dvv("sliderArrowsColorOpacity")

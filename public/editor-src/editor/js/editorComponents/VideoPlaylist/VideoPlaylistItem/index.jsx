@@ -11,6 +11,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getImageUrl } from "visual/utils/image";
+import { attachRefs } from "visual/utils/react";
 import { getUrlQueryParam } from "visual/utils/url";
 import {
   videoData as getVideoData,
@@ -22,11 +23,11 @@ import * as toolbarConfig from "./toolbar";
 import { getVideoAttributes } from "./utils";
 
 class VideoPlaylistItem extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "VideoPlaylistItem";
   }
-
-  static defaultValue = defaultValue;
 
   handleTitleChange = (title) => {
     this.patchValue({ title });
@@ -116,7 +117,7 @@ class VideoPlaylistItem extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -132,22 +133,27 @@ class VideoPlaylistItem extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Sidebar
-            videoSrc={video}
-            imgHref={imgHref}
-            className={classNameContent}
-            coverUrl={coverUrl}
-            onClick={onClick}
-            coverImageSrc={coverImageSrc}
-            title={title}
-            subTitle={subTitle}
-            handleTitleChange={this.handleTitleChange}
-            handleSubtitleChange={this.handleSubtitleChange}
-            attributes={attributes}
-            type={type}
-          />
-        </CustomCSS>
+        {({ ref }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Sidebar
+                videoSrc={video}
+                imgHref={imgHref}
+                className={classNameContent}
+                coverUrl={coverUrl}
+                onClick={onClick}
+                coverImageSrc={coverImageSrc}
+                title={title}
+                subTitle={subTitle}
+                handleTitleChange={this.handleTitleChange}
+                handleSubtitleChange={this.handleSubtitleChange}
+                attributes={attributes}
+                type={type}
+                ref={(el) => attachRefs(el, [ref, cssRef])}
+              />
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

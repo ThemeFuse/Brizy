@@ -1,3 +1,4 @@
+import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle } from "visual/utils/cssStyle/types";
@@ -6,6 +7,9 @@ import { Value } from "./types";
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { v } = data;
   const { maskShape = "none" } = v;
+  const editorMode = data.contexts.mode;
+  const _isStory = isStory(editorMode);
+
   const styles: {
     [k: string]: {
       interval?: string[];
@@ -121,7 +125,11 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
     ".brz && .brz-ministryBrands__item--meta--button a": {
-      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
+      standart: [
+        ...(_isStory
+          ? ["cssStyleElementButtonSizeForStory"]
+          : ["cssStyleElementMinistryBrandsButtonsSize"])
+      ]
     },
     ".brz && .brz-ministryBrands__item--meta-title": {
       standart: [
@@ -225,7 +233,11 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
     ".brz && .brz-eventDetail__item--subscribe-event a": {
-      standart: ["cssStyleElementMinistryBrandsSubscribeEventSize"]
+      standart: [
+        ...(_isStory
+          ? ["cssStyleElementButtonSizeForStory"]
+          : ["cssStyleElementMinistryBrandsSubscribeEventSize"])
+      ]
     },
     ".brz && .brz-ministryBrands__item--meta--links--previous:hover": {
       standart: [

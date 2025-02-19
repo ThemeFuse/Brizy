@@ -1,4 +1,5 @@
-import _ from "underscore";
+import { isString } from "es-toolkit";
+import { every, isNumber, isObject } from "es-toolkit/compat";
 import {
   AnimationBase,
   MultiAnimation
@@ -11,22 +12,14 @@ export const getKeyframe = (keyframeEncoded: string): Keyframe[] => {
 };
 
 export const isValidKeyframe = (keyframe: unknown): keyframe is Keyframe => {
-  if (!_.isObject(keyframe)) {
-    return false;
-  }
-
-  for (const key in keyframe) {
-    if (!keyframe.hasOwnProperty(key)) {
-      continue;
-    }
-
-    const value = keyframe[key];
-    if (typeof value !== "string" && typeof value !== "number") {
-      return false;
-    }
-  }
-
-  return true;
+  return (
+    isObject(keyframe) &&
+    every(
+      keyframe as Record<string, unknown>,
+      (value, key, obj) =>
+        obj.hasOwnProperty(key) && (isString(value) || isNumber(value))
+    )
+  );
 };
 
 export const readKeyframes = (keyframes: unknown): Keyframe[] => {
@@ -59,10 +52,11 @@ export const isKeyofOptionalEffectTiming = (
 };
 
 export const readKeyframeOptions = (data: unknown): OptionalEffectTiming => {
-  if (_.isObject(data)) {
+  if (isObject(data)) {
     let options: OptionalEffectTiming = {};
-    Object.keys(data).forEach((key) => {
+    Object.keys(data as OptionalEffectTiming).forEach((key) => {
       if (isKeyofOptionalEffectTiming(key)) {
+        //@ts-expect-error: type
         options[key] = data[key];
       }
     });
@@ -72,26 +66,33 @@ export const readKeyframeOptions = (data: unknown): OptionalEffectTiming => {
   return {};
 };
 
+interface Animation {
+  multiAnimation?: Array<unknown>;
+  endAnimation?: Record<string, unknown>;
+  keyframes?: Array<unknown>;
+  extraOptions?: unknown;
+}
+
 export const getMultiAnimationKeyframes = (
   keyframeEncoded: string
 ): MultiAnimation | undefined => {
-  const animation: unknown = JSON.parse(decodeURI(keyframeEncoded));
+  const animation: unknown | Animation = JSON.parse(decodeURI(keyframeEncoded));
   if (
-    _.isObject(animation) &&
+    isObject(animation) &&
     Object.hasOwn(animation, "multiAnimation") &&
     Object.hasOwn(animation, "endAnimation")
   ) {
-    const { multiAnimation = [], endAnimation = {} } = animation;
+    const { multiAnimation = [], endAnimation = {} } = animation as Animation;
 
-    if (Array.isArray(multiAnimation) && _.isObject(endAnimation)) {
+    if (Array.isArray(multiAnimation) && isObject(endAnimation)) {
       const isMultiAnimationValide = multiAnimation.every((animation) => {
-        const { keyframes } = animation;
+        const { keyframes } = animation as Animation;
         return Array.isArray(keyframes) && keyframes.every(isValidKeyframe);
       });
 
       const _multiAnimation: AnimationBase[] = isMultiAnimationValide
         ? multiAnimation.map((animation) => {
-            const { keyframes, extraOptions } = animation;
+            const { keyframes, extraOptions } = animation as Animation;
             return {
               keyframes: readKeyframes(keyframes),
               extraOptions: readKeyframeOptions(extraOptions)

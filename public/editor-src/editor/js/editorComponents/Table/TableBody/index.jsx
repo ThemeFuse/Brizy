@@ -8,15 +8,14 @@ import { style } from "./styles";
 import * as toolbarExtendConfig from "./toolbar";
 
 class TableBody extends EditorComponent {
-  static get componentId() {
-    return "TableBody";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "TableBody";
+  }
 
   renderForEdit(v, vs, vd) {
     const { meta } = this.props;
@@ -31,7 +30,7 @@ class TableBody extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

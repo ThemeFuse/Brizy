@@ -1,20 +1,13 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { Value } from "./types/Value";
+import { EcwidCartCheckoutStep, Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const parentBgColor = getColor(
+  const parentBgColor = getColorToolbar(
     dvv("parentBgColorPalette"),
     dvv("parentBgColorHex"),
     dvv("parentBgColorOpacity")
@@ -27,6 +20,22 @@ export function getItems({
       config: { title: t("Cart"), icon: "nc-woo-add-to-cart" },
       position: 10,
       options: [
+        {
+          id: "step",
+          type: "select",
+          label: t("Step"),
+          choices: [
+            { title: t("Cart"), value: EcwidCartCheckoutStep.Cart },
+            { title: t("Address"), value: EcwidCartCheckoutStep.Address },
+            { title: t("Shipping"), value: EcwidCartCheckoutStep.Shipping },
+            { title: t("Payment"), value: EcwidCartCheckoutStep.Payment }
+          ],
+          helper: {
+            content: t(
+              "To be able to display and customize these steps, you need to configure shipping, address and payment in CMS or Ecwid store"
+            )
+          }
+        },
         {
           id: "collapseDesktop",
           label: t("Collapse"),
@@ -57,18 +66,6 @@ export function getItems({
           type: "switch",
           devices: "desktop",
           disabled: dvv("collapseDesktop") === "on"
-        },
-        {
-          id: "inputDisplay",
-          label: t("Input"),
-          devices: "desktop",
-          type: "switch"
-        },
-        {
-          id: "addressDisplay",
-          devices: "desktop",
-          label: t("Address line"),
-          type: "switch"
         },
         {
           id: "footerDisplay",
@@ -167,4 +164,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

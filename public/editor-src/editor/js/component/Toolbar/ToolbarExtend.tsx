@@ -1,7 +1,7 @@
+import { defaults } from "es-toolkit/compat";
 import React, { useContext, useMemo } from "react";
-import _ from "underscore";
-import { PortalToolbarProps } from "./PortalToolbar";
 import { FCC } from "visual/utils/react/types";
+import { PortalToolbarProps } from "./PortalToolbar/types";
 
 export type ToolbarExtendProps = Pick<
   PortalToolbarProps,
@@ -19,7 +19,7 @@ export const ToolbarExtend: FCC<ToolbarExtendProps> = ({
 }) => {
   const parentToolbarExtendProps = useContext(ToolbarExtendContext);
   const props = useMemo((): ToolbarExtendProps => {
-    return _.defaults({ position, onEscape }, parentToolbarExtendProps);
+    return defaults({ position, onEscape }, [parentToolbarExtendProps]);
   }, [position, onEscape, parentToolbarExtendProps]);
 
   return (

@@ -22,16 +22,15 @@ const readResetPasswordType = (type) => {
 };
 
 class ResetPasswordField extends EditorComponent {
-  static get componentId() {
-    return "ResetPasswordField";
-  }
-
   static defaultValue = defaultValue;
-
   state = {
     value: "",
     active: {}
   };
+
+  static get componentId() {
+    return "ResetPasswordField";
+  }
 
   handleActive = (active) => {
     this.setState({ active });
@@ -55,7 +54,7 @@ class ResetPasswordField extends EditorComponent {
       return "";
     }
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -130,8 +129,8 @@ class ResetPasswordField extends EditorComponent {
           v,
           vs,
           vd,
-          renderContext: this.renderContext,
-          store: this.getReduxStore()
+          store: this.getReduxStore(),
+          contexts: this.getContexts()
         })
       )
     );
@@ -146,37 +145,45 @@ class ResetPasswordField extends EditorComponent {
           <div className="brz-reset-psw__item">
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-reset-psw__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
+                {({ ref }) => (
+                  <div
+                    className="brz-reset-psw__field-label"
+                    style={styleLabel}
+                    ref={ref}
+                  >
+                    <label className="brz-label">
+                      <TextEditor
+                        value={this.getLabel(v)}
+                        onChange={this.handleLabelChange}
+                      />
+                    </label>
+                  </div>
+                )}
               </Toolbar>
             )}
             <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-reset-psw__field">
-                <input
-                  name="password"
-                  className="brz-input"
-                  type="text"
-                  placeholder={this.getPlaceholder(v)}
-                  value={this.getPlaceholder(v)}
-                  required
-                  onChange={(e) => {
-                    showLabel === "on"
-                      ? this.patchValue({
-                          placeholder: e.target.value
-                        })
-                      : this.patchValue({
-                          label: e.target.value,
-                          placeholder: e.target.value
-                        });
-                  }}
-                />
-              </div>
+              {({ ref }) => (
+                <div className="brz-reset-psw__field" ref={ref}>
+                  <input
+                    name="password"
+                    className="brz-input"
+                    type="text"
+                    placeholder={this.getPlaceholder(v)}
+                    value={this.getPlaceholder(v)}
+                    required
+                    onChange={(e) => {
+                      showLabel === "on"
+                        ? this.patchValue({
+                            placeholder: e.target.value
+                          })
+                        : this.patchValue({
+                            label: e.target.value,
+                            placeholder: e.target.value
+                          });
+                    }}
+                  />
+                </div>
+              )}
             </Toolbar>
           </div>
         )}
@@ -198,8 +205,8 @@ class ResetPasswordField extends EditorComponent {
           v,
           vs,
           vd,
-          renderContext: this.renderContext,
-          store: this.getReduxStore()
+          store: this.getReduxStore(),
+          contexts: this.getContexts()
         })
       )
     );

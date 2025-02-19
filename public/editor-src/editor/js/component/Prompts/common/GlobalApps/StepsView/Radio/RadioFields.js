@@ -1,6 +1,6 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
 import Select from "visual/component/Controls/Select";
@@ -27,11 +27,11 @@ class RadioFields extends Component {
     nextLoading: null,
     prevLoading: null,
     error: null,
-    onActive: _.noop,
-    onConfirm: _.noop,
-    onCreateList: _.noop,
-    onPrev: _.noop,
-    onNext: _.noop
+    onActive: noop,
+    onConfirm: noop,
+    onCreateList: noop,
+    onPrev: noop,
+    onNext: noop
   };
 
   handleConfirmation = (confirmation) => {

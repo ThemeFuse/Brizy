@@ -1,3 +1,4 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { CSSStyleFn } from "visual/utils/cssStyle/types";
 import { css as cssStyleBackgroundColor } from "visual/utils/options/BackgroundColor/css";
 import { css as cssStyleBorder } from "visual/utils/options/Border/css";
@@ -31,7 +32,7 @@ export const fns = {
 };
 
 export const toCSS =
-  <T extends OptionNameWithStyles>(type: T) =>
+  <T extends OptionNameWithStyles>(type: T, config: ConfigCommon) =>
   (data: ToCSSData<T>): MValue<string> => {
     const { model, meta } = data;
     const cssFn = fns?.[type] as CSSStyleFn<T>;
@@ -39,7 +40,8 @@ export const toCSS =
     if (typeof cssFn === "function" && model) {
       const css = cssFn({
         ...(meta && Obj.length(meta) > 0 ? { meta } : {}),
-        value: model
+        value: model,
+        config
       });
 
       if (Str.read(css) && css !== "") {

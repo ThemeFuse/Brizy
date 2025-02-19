@@ -5,7 +5,7 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from ".";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const styles = {
     ".brz &&:hover": {
       standart: [

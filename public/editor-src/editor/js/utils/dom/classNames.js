@@ -1,11 +1,12 @@
-const _ = require("underscore");
+import { isRegExp, isString, uniq } from "es-toolkit";
+import { filter, findIndex, isArray, some } from "es-toolkit/compat";
 
 function classMatches(className, match) {
-  if (_.isString(match)) {
+  if (isString(match)) {
     return className === match;
   }
 
-  if (_.isRegExp(match)) {
+  if (isRegExp(match)) {
     return match.test(className);
   }
 
@@ -18,23 +19,23 @@ export function parseClass(className) {
 
 export function addClass(className, toAdd) {
   const classes = parseClass(className);
-  const toAddNormalized = _.isArray(toAdd) ? toAdd : [toAdd];
+  const toAddNormalized = isArray(toAdd) ? toAdd : [toAdd];
 
-  return _.uniq(classes.concat(toAddNormalized)).join(" ");
+  return uniq(classes.concat(toAddNormalized)).join(" ");
 }
 
 export function removeClass(className, toRemove) {
   const classes = parseClass(className);
-  const toRemoveNormalized = _.isArray(toRemove) ? toRemove : [toRemove];
-  const notInToRemove = className =>
-    _.some(toRemoveNormalized, item => classMatches(className, item)) === false;
+  const toRemoveNormalized = isArray(toRemove) ? toRemove : [toRemove];
+  const notInToRemove = (className) =>
+    some(toRemoveNormalized, (item) => classMatches(className, item)) === false;
 
-  return _.filter(classes, notInToRemove).join(" ");
+  return filter(classes, notInToRemove).join(" ");
 }
 
 export function replaceClass(className, toRemove, toAdd) {
   const classes = parseClass(className);
-  const toRemoveIndex = _.findIndex(classes, className =>
+  const toRemoveIndex = findIndex(classes, (className) =>
     classMatches(className, toRemove)
   );
 

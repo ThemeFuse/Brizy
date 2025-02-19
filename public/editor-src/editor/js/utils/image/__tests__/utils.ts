@@ -157,6 +157,21 @@ describe("replacePlaceholders", () => {
   });
 });
 
+test("testing removeTrailingSlash param, should preserve trailingSlash", () => {
+  const options: ResizeData = {
+    pattern:
+      "{{ [baseUrl] }}/?brizy_media={{ [fileName] }}&brizy_crop={{ [sizeType] }}",
+    baseUrl: "https://www.brizy.local/media",
+    fileName: "image.jpg",
+    sizeType: "custom"
+  };
+
+  const result = replacePlaceholders(options);
+  expect(result).toBe(
+    "https://www.brizy.local/media/?brizy_media=image.jpg&brizy_crop=custom"
+  );
+});
+
 describe("generateUrl", () => {
   test("should generate valid url", () => {
     const options: DataUrl = {

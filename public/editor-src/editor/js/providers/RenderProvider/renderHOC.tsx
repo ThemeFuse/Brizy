@@ -1,16 +1,23 @@
-import React, { ForwardedRef, PropsWithChildren, forwardRef } from "react";
+import React, {
+  ForwardRefRenderFunction,
+  ForwardedRef,
+  PropsWithChildren,
+  forwardRef
+} from "react";
 import { useRender } from "./";
 
-interface HOC<T> {
-  ForView: (p: PropsWithChildren<T>) => JSX.Element;
-  ForEdit: (p: PropsWithChildren<T>) => JSX.Element;
+interface HOC<T, P> {
+  ForView: ForwardRefRenderFunction<T, P>;
+  ForEdit: ForwardRefRenderFunction<T, P>;
 }
 
-export function renderHOC<T>(props: HOC<T>) {
+export function renderHOC<T = HTMLElement, P = Record<string, unknown>>(
+  props: HOC<T, P>
+) {
   const { ForEdit, ForView } = props;
 
   function CanRender(
-    props: PropsWithChildren<T>,
+    props: PropsWithChildren<P>,
     ref: ForwardedRef<unknown>
   ): JSX.Element {
     const { renderType } = useRender();
@@ -21,6 +28,8 @@ export function renderHOC<T>(props: HOC<T>) {
 
     return <ForEdit {...props} ref={ref} />;
   }
+
+  CanRender.displayName = `RenderHOC(${ForEdit.displayName || ForView.displayName})`;
 
   return forwardRef(CanRender);
 }

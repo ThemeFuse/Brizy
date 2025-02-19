@@ -1,4 +1,4 @@
-import _ from "underscore";
+import { invert } from "es-toolkit";
 
 const isff =
   typeof navigator !== "undefined"
@@ -63,15 +63,15 @@ export const _modifier = {
   right_command: 93
 };
 
-const _invertedKeyMap = _.invert(_keyMap);
-const _invertedKeyModifier = _.invert(_modifier);
+const _invertedKeyMap = invert(_keyMap);
+const _invertedKeyModifier = invert(_modifier);
 
-export const fromCode = x =>
+export const fromCode = (x) =>
   _invertedKeyMap[x] ||
   _invertedKeyModifier[x] ||
   String.fromCharCode(x).toUpperCase();
 
-export const toCode = x =>
+export const toCode = (x) =>
   _keyMap[x.toLowerCase()] ||
   _modifier[x.toLowerCase()] ||
   x.toUpperCase().charCodeAt(0);

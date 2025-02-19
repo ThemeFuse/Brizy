@@ -4,7 +4,7 @@ import {
   ElementTypes,
   readElementType
 } from "visual/global/Config/types/configs/ElementTypes";
-import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";

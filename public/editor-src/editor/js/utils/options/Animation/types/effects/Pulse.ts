@@ -1,13 +1,12 @@
 import { mPipe, pass } from "visual/utils/fp";
-import { isEffect } from "../EffectType";
-import * as ET from "../EffectType";
-import { EffectType } from "../EffectType";
-import { LegacyEffectType } from "../LegacyEffectType";
-import * as BaseEffect from "../BaseEffect";
-import * as Parse from "visual/utils/reader/readWithParser";
-import { LegacyModel } from "../LegacyModel";
-import { prop } from "visual/utils/object/get";
 import { t } from "visual/utils/i18n";
+import { prop } from "visual/utils/object/get";
+import * as Parse from "visual/utils/reader/readWithParser";
+import * as BaseEffect from "../BaseEffect";
+import * as ET from "../EffectType";
+import { EffectType, isEffect } from "../EffectType";
+import { LegacyEffectType } from "../LegacyEffectType";
+import { LegacyModel } from "../LegacyModel";
 
 export enum Direction {
   brzPulse = "brzPulse",

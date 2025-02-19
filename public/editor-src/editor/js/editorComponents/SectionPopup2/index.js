@@ -22,13 +22,14 @@ import {
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
-import { isPopup } from "visual/global/EditorModeContext";
+import { isPopup } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import { mRead } from "visual/utils/string/specs";
@@ -199,7 +200,7 @@ class SectionPopup2 extends EditorComponent {
     const _closeCustomID = mRead(closeCustomID) || undefined;
     const className = classnames(
       "brz-popup2__close",
-      isView(this.renderContext) && showCloseButtonAfter && "brz-hidden",
+      isView(this.props.renderContext) && showCloseButtonAfter && "brz-hidden",
       closeCustomClassName
     );
     const innerClassName = classnames(
@@ -214,7 +215,7 @@ class SectionPopup2 extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -241,7 +242,7 @@ class SectionPopup2 extends EditorComponent {
     return (
       <Background value={v} meta={meta}>
         <div className={innerClassName}>
-          <SortableZIndex zIndex={1} renderContext={this.renderContext}>
+          <SortableZIndex zIndex={1} renderContext={this.props.renderContext}>
             <div className="brz-container__wrap">
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
@@ -250,14 +251,21 @@ class SectionPopup2 extends EditorComponent {
                   { allowExtend: false }
                 )}
               >
-                <CustomCSS
-                  selectorName={`${this.getId()}--close`}
-                  css={closeCustomCSS}
-                >
-                  <div {...props}>
-                    <ThemeIcon name="close-popup" type="editor" />
-                  </div>
-                </CustomCSS>
+                {({ ref: toolbarRef }) => (
+                  <CustomCSS
+                    selectorName={`${this.getId()}--close`}
+                    css={closeCustomCSS}
+                  >
+                    {({ ref: cssRef }) => (
+                      <div
+                        {...props}
+                        ref={(el) => attachRefs(el, [toolbarRef, cssRef])}
+                      >
+                        <ThemeIcon name="close-popup" type="editor" />
+                      </div>
+                    )}
+                  </CustomCSS>
+                )}
               </Toolbar>
 
               <div className={classNameContainer}>
@@ -308,7 +316,7 @@ class SectionPopup2 extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -321,36 +329,38 @@ class SectionPopup2 extends EditorComponent {
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={id} css={customCSS}>
-            <div
-              id={id}
-              className={classNamePopup}
-              {...makeDataAttr({ name: "block-id", value: blockId })}
-              ref={containerBorderRef}
-              {...parseCustomAttributes(customAttributes)}
-              {...containerBorderAttr}
-            >
-              {!isGlobal && (
-                <button
-                  className="brz-button brz-popup2__button-go-to-editor"
-                  onClick={this.handleDropClick}
-                >
-                  <EditorIcon
-                    icon="nc-arrow-left"
-                    className="brz-popup2__icon-go-to-editor"
-                  />
-                  {t("Go Back")}
-                </button>
-              )}
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderItems(v, vs, vd)}
+            {({ ref: cssRef }) => (
+              <div
+                id={id}
+                className={classNamePopup}
+                {...makeDataAttr({ name: "block-id", value: blockId })}
+                ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
+                {...parseCustomAttributes(customAttributes)}
+                {...containerBorderAttr}
               >
-                {this.renderToolbar()}
-                <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                  {this.renderItems(v, vs, vd)}
-                </ToolbarExtend>
-              </Roles>
-            </div>
+                {!isGlobal && (
+                  <button
+                    className="brz-button brz-popup2__button-go-to-editor"
+                    onClick={this.handleDropClick}
+                  >
+                    <EditorIcon
+                      icon="nc-arrow-left"
+                      className="brz-popup2__icon-go-to-editor"
+                    />
+                    {t("Go Back")}
+                  </button>
+                )}
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={() => this.renderItems(v, vs, vd)}
+                >
+                  {this.renderToolbar()}
+                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                    {this.renderItems(v, vs, vd)}
+                  </ToolbarExtend>
+                </Roles>
+              </div>
+            )}
           </CustomCSS>
         )}
       </ContainerBorder>
@@ -418,7 +428,7 @@ class SectionPopup2 extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

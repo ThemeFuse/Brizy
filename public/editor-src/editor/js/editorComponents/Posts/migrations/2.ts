@@ -1,4 +1,4 @@
-import _ from "underscore";
+import { omit } from "es-toolkit";
 import { ElementModel } from "visual/component/Elements/Types";
 import { Dictionary } from "visual/types/utils";
 import { Deps, Migration } from "visual/utils/migration";
@@ -177,7 +177,7 @@ export const m2: Migration<Deps<unknown>> = {
     }
 
     return removeUndefinedKeys({
-      ..._.omit(v, "taxonomy", "taxonomyId", "orderBy", "order"),
+      ...omit(v, ["taxonomy", "taxonomyId", "orderBy", "order"]),
       ...migrated
     });
   }

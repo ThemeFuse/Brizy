@@ -5,8 +5,8 @@ import * as Option from "visual/component/Options/Type";
 import Prompts from "visual/component/Prompts";
 import { currentUserRole } from "visual/component/Roles";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import { isStory } from "visual/global/EditorModeContext";
-import { useConfig, useEditorMode } from "visual/global/hooks";
+import { useConfig } from "visual/global/hooks";
+import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { setDeviceMode, updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
@@ -16,13 +16,11 @@ import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import { WithClassName, WithConfig } from "visual/types/attributes";
 import { DESKTOP } from "visual/utils/devices";
-import {
-  fontTransform,
-  getFontStyles,
-  getWeightChoices
-} from "visual/utils/fonts";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
+import { getFontStyles } from "visual/utils/fonts/getFontStyles";
+import { getWeightChoices } from "visual/utils/fonts/getFontWeight";
+import { fontTransform } from "visual/utils/fonts/transform";
 import { mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import {
@@ -71,9 +69,9 @@ export const Typography = ({
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
     unDeletedFontsSelector
   );
-  const editorMode = useEditorMode();
+  const { mode } = useEditorMode();
   const globalConfig = useConfig();
-  const _isStory = isStory(editorMode);
+  const _isStory = isStory(mode);
 
   const { bottomTabsOrder = [], topTabsOrder = [] } =
     globalConfig.ui?.leftSidebar ?? {};
@@ -93,7 +91,9 @@ export const Typography = ({
     lineHeight: { min: lineHeightMin = 1, max: lineHeightMax = 20 } = {},
     fontSize: { min: sizeMin = 0, max: sizeMax = 300 } = {},
     icons,
-    scriptChoices
+    scriptChoices,
+    isFontStyleSettingsDisabled,
+    isAddNewFontDisabled
   } = config ?? {};
 
   const fonts = useMemo<FontsBlock>(
@@ -249,13 +249,19 @@ export const Typography = ({
 
   const fontSizeStep = _value.fontSizeSuffix === "px" ? 1 : 0.1;
 
+  const fontAddFunc = isAddNewFontDisabled
+    ? undefined
+    : currentUserRole() === "admin"
+      ? openFontsUploader
+      : undefined;
+
   return (
     <Control
       onChange={_onChange}
       showFontFamily={fontFamily}
       fonts={dividedFonts}
       font={_value.fontFamily}
-      fontAdd={currentUserRole() === "admin" ? openFontsUploader : undefined}
+      fontAdd={fontAddFunc}
       fontAddLabel={t("Add New Font")}
       styles={styles}
       style={_value.fontStyle}
@@ -300,6 +306,7 @@ export const Typography = ({
       showTextTransform={showTextTransform}
       showFontSize={_isStory}
       showFontStyles={!_isStory}
+      isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
     />
   );
 };

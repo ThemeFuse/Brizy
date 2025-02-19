@@ -1,7 +1,6 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { ReactNode, RefObject } from "react";
 import { omit } from "timm";
-import { isEditor } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
@@ -19,14 +18,16 @@ import {
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueValue } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
+import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
@@ -88,7 +89,7 @@ export default class Button extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -103,7 +104,13 @@ export default class Button extends EditorComponent<Value, Props> {
     );
   }
 
-  renderSubmit(v: Value, vs: Value, vd: Value, content: ReactNode): ReactNode {
+  renderSubmit(
+    v: Value,
+    vs: Value,
+    vd: Value,
+    content: ReactNode,
+    refs: (RefObject<HTMLDivElement> | null)[]
+  ): ReactNode {
     const { cssClass, customClassName, tabsState, type } = v;
     const device = this.getDeviceMode();
     const state = State.mRead(tabsState);
@@ -125,16 +132,21 @@ export default class Button extends EditorComponent<Value, Props> {
           store: this.getReduxStore(),
           device,
           hasSizing: hasSizing(v, device, state),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
-    const componentType = isEditor(this.renderContext) ? "a" : "button";
+    const componentType = isEditor(this.props.renderContext) ? "a" : "button";
 
     return (
       <Wrapper
-        {...this.makeWrapperProps({ className })}
+        {...this.makeWrapperProps({
+          className,
+          ref: (el) => {
+            attachRefs(el, refs);
+          }
+        })}
         component={componentType}
         attributes={{
           ...this.props.attributes,
@@ -157,7 +169,13 @@ export default class Button extends EditorComponent<Value, Props> {
     );
   }
 
-  renderLink(v: Value, vs: Value, vd: Value, content: ReactNode): ReactNode {
+  renderLink(
+    v: Value,
+    vs: Value,
+    vd: Value,
+    content: ReactNode,
+    refs: (RefObject<HTMLDivElement> | null)[]
+  ): ReactNode {
     const { actionClosePopup, customClassName, cssClass, tabsState } = v;
     const config = this.getGlobalConfig();
 
@@ -179,7 +197,7 @@ export default class Button extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       { "brz-blocked": v.tabsState === "hover" },
@@ -194,7 +212,7 @@ export default class Button extends EditorComponent<Value, Props> {
           device,
           store: this.getReduxStore(),
           hasSizing: hasSizing(v, device, state),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       {
@@ -212,7 +230,7 @@ export default class Button extends EditorComponent<Value, Props> {
       ...(id && { id })
     };
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       props.onDragStart = (e: Event) => {
         e.preventDefault();
         return false;
@@ -222,7 +240,13 @@ export default class Button extends EditorComponent<Value, Props> {
 
     return (
       <Wrapper
-        {...this.makeWrapperProps({ attributes: props, slide: linkData.slide })}
+        {...this.makeWrapperProps({
+          attributes: props,
+          slide: linkData.slide,
+          ref: (el) => {
+            attachRefs(el, refs);
+          }
+        })}
         component={Link}
       >
         {hasSizing(v, device, state) ? (
@@ -268,7 +292,7 @@ export default class Button extends EditorComponent<Value, Props> {
           };
         }
 
-        const _isEditor = isEditor(this.renderContext);
+        const _isEditor = isEditor(this.props.renderContext);
         return {
           blockId,
           meta: newMeta,
@@ -314,7 +338,7 @@ export default class Button extends EditorComponent<Value, Props> {
     const state = State.mRead(tabsState);
     const device = this.getDeviceMode();
 
-    const _isEditor = isEditor(this.renderContext);
+    const _isEditor = isEditor(this.props.renderContext);
     const renderIcon = iconName && iconType;
     const content =
       hasSizing(v, device, state) && _isEditor && type !== "submit" ? (
@@ -352,11 +376,16 @@ export default class Button extends EditorComponent<Value, Props> {
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
           >
-            <CustomCSS selectorName={this.getId()} css={customCSS}>
-              {type === "link"
-                ? this.renderLink(v, vs, vd, content)
-                : this.renderSubmit(v, vs, vd, content)}
-            </CustomCSS>
+            {({ ref: toolbarRef }) => (
+              <CustomCSS selectorName={this.getId()} css={customCSS}>
+                {({ ref: cssRef }) => {
+                  const refs = [toolbarRef, cssRef];
+                  return type === "link"
+                    ? this.renderLink(v, vs, vd, content, refs)
+                    : this.renderSubmit(v, vs, vd, content, refs);
+                }}
+              </CustomCSS>
+            )}
           </Toolbar>
         </HoverAnimation>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&

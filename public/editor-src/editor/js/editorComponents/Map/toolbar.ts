@@ -1,9 +1,9 @@
 import { Str } from "@brizy/readers";
-import { isEditor, isView } from "visual/providers/RenderProvider";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isStory } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { isEditor, isView } from "visual/providers/RenderProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { OutputOptionStyle } from "visual/utils/cssStyle/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -26,7 +26,7 @@ export const getItems: GetItems<Value> = ({
   const borderColorPalette = dvv<string>("borderColorPalette");
   const borderColorOpacity = dvv<number>("borderColorOpacity");
 
-  const borderColorColor = getColor(
+  const borderColorColor = getColorToolbar(
     borderColorPalette,
     borderColorHex,
     borderColorOpacity

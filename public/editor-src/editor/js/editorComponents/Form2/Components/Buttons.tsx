@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { Attributes, CSSProperties } from "react";
+import React, { Attributes, CSSProperties, ReactNode, forwardRef } from "react";
 import { FCC } from "visual/utils/react/types";
 
 interface Props {
@@ -17,17 +17,15 @@ interface SubmitButtonProps {
   className?: string;
   style?: CSSProperties;
   attributes?: Attributes;
+  children?: ReactNode;
 }
 
-export const SubmitButton: FCC<SubmitButtonProps> = ({
-  className,
-  style,
-  attributes,
-  children
-}) => (
-  <div className={className} style={style} {...attributes}>
-    {children}
-  </div>
+export const SubmitButton = forwardRef<HTMLDivElement, SubmitButtonProps>(
+  ({ className, style, attributes, children }, ref) => (
+    <div className={className} style={style} {...attributes} ref={ref}>
+      {children}
+    </div>
+  )
 );
 
 interface MSButtonsProps {

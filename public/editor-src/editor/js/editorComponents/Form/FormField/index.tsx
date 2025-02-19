@@ -13,11 +13,11 @@ import { Value } from "./type";
 import * as types from "./types/index";
 
 export default class Input extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.FormField {
     return ElementTypes.FormField;
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { className } = this.props;
@@ -35,22 +35,24 @@ export default class Input extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <div className={_className}>
-          <Component
-            renderContext={this.renderContext}
-            {...v}
-            onChange={(value: Partial<Model<ElementModel>>) =>
-              this.patchValue(value)
-            }
-          />
-        </div>
+        {({ ref }) => (
+          <div className={_className} ref={ref}>
+            <Component
+              renderContext={this.props.renderContext}
+              {...v}
+              onChange={(value: Partial<Model<ElementModel>>) =>
+                this.patchValue(value)
+              }
+            />
+          </div>
+        )}
       </Toolbar>
     );
   }

@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { debounce, noop } from "es-toolkit";
 import React, { Component, forwardRef } from "react";
-import _ from "underscore";
 import { Translate } from "visual/component/Translate";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
@@ -66,7 +66,7 @@ export class _TextEditor extends Component<Props, State> {
     tagName: "span",
     className: "",
     allowLineBreak: false,
-    onChange: _.noop
+    onChange: noop
   };
 
   contentRef = React.createRef<HTMLElement>();
@@ -74,6 +74,12 @@ export class _TextEditor extends Component<Props, State> {
   unmounted = false;
 
   lastNotifiedValue: string | undefined;
+  notifyChange = debounce((value: string): void => {
+    if (!this.unmounted) {
+      this.lastNotifiedValue = value;
+      this.props.onChange(value);
+    }
+  }, 1000);
 
   shouldComponentUpdate(nextProps: Props): boolean {
     return (
@@ -163,13 +169,6 @@ export class _TextEditor extends Component<Props, State> {
     this.notifyChange(insertLineBreak || "");
   };
 
-  notifyChange = _.debounce((value: string): void => {
-    if (!this.unmounted) {
-      this.lastNotifiedValue = value;
-      this.props.onChange(value);
-    }
-  }, 1000);
-
   handleBlur = (): void => {
     this.contentRef.current?.classList.remove("brz-ed-dd-cancel");
   };
@@ -204,7 +203,7 @@ export class _TextEditor extends Component<Props, State> {
   }
 }
 
-export const TextEditor = renderHOC<Props>({
+export const TextEditor = renderHOC<HTMLElement, Props>({
   ForEdit: (props) => <_TextEditor {...props} />,
   ForView: (props) => <Control {...props} />
 });

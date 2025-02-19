@@ -9,19 +9,15 @@ import { getConfigById } from "visual/global/Config/InitConfig";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
-import {
-  Authorized,
-  Block,
-  Font,
-  GlobalBlock,
-  GlobalBlockPopup,
-  SyncAllowed
-} from "visual/types";
+import { Authorized, SyncAllowed } from "visual/types";
+import { Block } from "visual/types/Block";
+import { Font } from "visual/types/Fonts";
+import { GlobalBlock, GlobalBlockPopup } from "visual/types/GlobalBlock";
 import { NonEmptyArray } from "visual/utils/array/types";
 import { canUseCondition, createGlobalBlockSymbol } from "visual/utils/blocks";
 import { getSurroundedGBIds } from "visual/utils/blocks/blocksConditions";
 import { getModelPopups } from "visual/utils/blocks/getModelPopups";
-import { getGroupFontsById } from "visual/utils/fonts";
+import { getGroupFontsById } from "visual/utils/fonts/getFontById";
 import { mapModels } from "visual/utils/models";
 import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
 import { MValue } from "visual/utils/value";

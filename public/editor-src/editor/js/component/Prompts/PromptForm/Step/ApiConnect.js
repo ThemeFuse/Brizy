@@ -59,10 +59,13 @@ class ApiConnect extends Component {
       onError
     } = context;
 
-    let { status, data } = await getIntegrationAccountApiKey({
-      id,
-      formId
-    });
+    let { status, data } = await getIntegrationAccountApiKey(
+      {
+        id,
+        formId
+      },
+      props.config
+    );
 
     if (!status || status >= 400) {
       data = [];
@@ -88,6 +91,8 @@ class ApiConnect extends Component {
   };
 
   handleConnect = async () => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -104,18 +109,21 @@ class ApiConnect extends Component {
     });
 
     if (!keysValue.some((key) => !key)) {
-      let { status, data } = await createIntegrationAccount({
-        ...appData,
-        formId,
-        data: apiKeyValue
-      });
+      let { status, data } = await createIntegrationAccount(
+        {
+          ...appData,
+          formId,
+          data: apiKeyValue
+        },
+        config
+      );
 
       if (status === 302) {
         const { redirect: redirectUrl } = data;
 
         try {
           await authWindow(redirectUrl);
-          const { data } = await getIntegration({ formId, id });
+          const { data } = await getIntegration({ formId, id }, config);
 
           onChange(id, { ...appData, accounts: data.accounts });
           onChangeProgress({ showProgress: true });

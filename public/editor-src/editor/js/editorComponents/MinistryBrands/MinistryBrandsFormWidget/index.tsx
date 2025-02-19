@@ -58,18 +58,21 @@ export class MinistryBrandsFormWidget extends EditorComponent<Value, Props> {
           allowExtend: false
         })}
       >
-        <Wrapper
-          {...this.makeWrapperProps({
-            className: "brz-formWidget__container brz-ministryBrands"
-          })}
-        >
-          <DynamicContentHelper
-            placeholder={placeholder}
-            blocked={false}
-            props={{ className: "brz-formWidget" }}
-            tagName="div"
-          />
-        </Wrapper>
+        {({ ref }) => (
+          <Wrapper
+            {...this.makeWrapperProps({
+              className: "brz-formWidget__container brz-ministryBrands",
+              ref
+            })}
+          >
+            <DynamicContentHelper
+              placeholder={placeholder}
+              blocked={false}
+              props={{ className: "brz-formWidget" }}
+              tagName="div"
+            />
+          </Wrapper>
+        )}
       </Toolbar>
     );
   }

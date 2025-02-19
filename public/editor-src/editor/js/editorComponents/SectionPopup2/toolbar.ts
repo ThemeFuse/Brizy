@@ -1,8 +1,8 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { isPopup } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import {
@@ -28,11 +28,12 @@ export const getItems: GetItems<Value> = ({
 }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
+  const config = component.getGlobalConfig();
 
   const widthSuffix = dvv("widthSuffix");
   const columnsHeightStyle = dvv("columnsHeightStyle");
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
@@ -42,7 +43,6 @@ export const getItems: GetItems<Value> = ({
     type: DCTypes.image
   });
 
-  const config = component.getGlobalConfig();
   const disabledSavedBlock =
     typeof config.api?.savedPopups?.create !== "function";
   const disabledGlobalBlock =

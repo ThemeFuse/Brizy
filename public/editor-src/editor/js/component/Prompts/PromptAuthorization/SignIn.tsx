@@ -1,9 +1,9 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import { produce } from "immer";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { ConnectedProps, connect } from "react-redux";
-import { noop } from "underscore";
 import { Alert } from "visual/component/Alert";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { Spacer } from "visual/component/Controls/Spacer";

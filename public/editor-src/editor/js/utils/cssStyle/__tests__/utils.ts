@@ -1,5 +1,7 @@
 import { CSSProperties } from "react";
+import { Config } from "visual/global/Config/InitConfig";
 import { RenderType } from "visual/providers/RenderProvider";
+import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
 import {
@@ -17,6 +19,7 @@ import {
   OutputStyle
 } from "visual/utils/cssStyle/types";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
+import { mockDataForReduxStore } from "../../../../../jest-utils/mocks";
 import { DESKTOP, MOBILE, ResponsiveMode, TABLET } from "../../responsiveMode";
 import {
   addBreakpointForInterval,
@@ -46,6 +49,14 @@ import {
 const _undefined = undefined as unknown;
 const _null = null as unknown;
 const _NaN = NaN as unknown;
+
+beforeAll(() => {
+  // @ts-expect-error: Mock ConfigCommon
+  new Config({
+    config: mockDataForReduxStore.config,
+    id: mockDataForReduxStore.configId
+  });
+});
 
 describe("Testing filterDeviceValues that should filter all CSS by devices in vd or vs or v", () => {
   test("With same values, should return empty array", () => {
@@ -206,6 +217,10 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
 
 describe("Testing getCSSFromSelector that should return css or undefined", () => {
   const store = createStore();
+  store.dispatch(
+    // @ts-expect-error There is not need to add types because is only for testing purposes
+    hydrate(mockDataForReduxStore)
+  );
   const renderContext: RenderType = "editor";
 
   test("Empty data, should return border without styles", () => {
@@ -846,6 +861,10 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
 
 describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS object with new styles", () => {
   const store = createStore();
+  store.dispatch(
+    // @ts-expect-error There is not need to add types because is only for testing purposes
+    hydrate(mockDataForReduxStore)
+  );
   const renderContext: RenderType = "editor";
 
   test("Option with style", () => {

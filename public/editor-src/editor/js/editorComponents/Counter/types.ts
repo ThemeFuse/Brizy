@@ -24,6 +24,7 @@ export interface Value extends ElementModel {
   widthSuffix: string;
   tabletWidthSuffix: string;
   mobileWidthSuffix: string;
+  customCSS: string;
 }
 
 export interface State {

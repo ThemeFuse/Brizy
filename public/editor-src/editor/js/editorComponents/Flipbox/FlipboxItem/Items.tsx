@@ -66,7 +66,7 @@ class FlipboxItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items: Array<JSX.Element>): JSX.Element {
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <>{items}</>;
     }
 

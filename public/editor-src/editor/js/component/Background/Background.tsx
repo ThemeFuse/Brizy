@@ -159,7 +159,6 @@ class Background extends Component<Props> {
                 slideshowDuration={slideshowDuration}
                 slideshowTransition={slideshowTransition}
                 kenBurnsEffect={kenBurnsEffect}
-                renderContext={renderContext}
               />
             )}
             {map && (

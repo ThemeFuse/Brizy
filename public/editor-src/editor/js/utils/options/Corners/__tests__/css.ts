@@ -3,6 +3,7 @@ import {
   Zero as emptyPositive,
   fromNumber as readPositive
 } from "visual/utils/math/Positive";
+import { config } from "../../../../../../jest-utils/mocks";
 import { css as cssStyleCorners } from "../css";
 
 describe("Testing cssStyleCorners that should return CSS for border-radius", () => {
@@ -31,18 +32,18 @@ describe("Testing cssStyleCorners that should return CSS for border-radius", () 
   };
 
   test("Without meta, should return empty string", () => {
-    expect(cssStyleCorners({ value: _value })).toBe("");
+    expect(cssStyleCorners({ value: _value, config })).toBe("");
   });
 
   test("Grouped, should return grouped border radius", () => {
-    expect(cssStyleCorners({ meta: { isGrouped: true }, value: _value })).toBe(
-      "border-radius:5px;"
-    );
+    expect(
+      cssStyleCorners({ meta: { isGrouped: true }, value: _value, config })
+    ).toBe("border-radius:5px;");
   });
 
   test("Ungrouped, should return ungrouped border radius", () => {
     expect(
-      cssStyleCorners({ meta: { isUngrouped: true }, value: _value })
+      cssStyleCorners({ meta: { isUngrouped: true }, value: _value, config })
     ).toBe("border-radius:5px 5px 5px 5px;");
   });
 });

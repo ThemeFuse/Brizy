@@ -1,3 +1,4 @@
+import { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
 import { FormField } from "visual/component/Prompts/common/GlobalApps/type";
 
 export type PromptIconProps = {
@@ -20,6 +21,7 @@ export type PromptAppsProps = {
 export type PromptFormProps = {
   formId: string;
   formFields: FormField[];
+  tabs?: PromptFormTab[];
   onClose?: () => void;
 };
 

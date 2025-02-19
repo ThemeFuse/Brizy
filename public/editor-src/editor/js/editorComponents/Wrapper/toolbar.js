@@ -55,4 +55,4 @@ export function getItems({ device }) {
       roles: ["admin"]
     }
   ];
-}
+};

@@ -10,6 +10,7 @@ export function cssStyleBorder({
   v,
   device,
   state,
+  store,
   prefix = "",
   borderColor = "color"
 }) {
@@ -35,7 +36,7 @@ export function cssStyleBorder({
   borderColor =
     borderColor === "transparent"
       ? "transparent"
-      : styleBorderColor({ v, device, state, prefix });
+      : styleBorderColor({ v, device, state, store, prefix });
 
   if (borderWidthType === "grouped") {
     const borderWidth = styleBorderWidthGrouped({ v, device, state, prefix });
@@ -80,7 +81,7 @@ export function cssStyleBorder({
     hoverBorderColor =
       borderColor === "transparent"
         ? "transparent"
-        : styleBorderColor({ v, device, prefix, state: "hover" });
+        : styleBorderColor({ v, device, prefix, store, state: "hover" });
     hoverBorderWidthType = styleBorderWidthType({
       v,
       device,
@@ -182,8 +183,9 @@ export function cssStyleBorderTransparentColor({
   v,
   device,
   state,
+  store,
   prefix = "",
   borderColor = "transparent"
 }) {
-  return cssStyleBorder({ v, device, state, prefix, borderColor });
+  return cssStyleBorder({ v, device, state, store, prefix, borderColor });
 }

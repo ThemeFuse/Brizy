@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, ReactNode } from "react";
-import { PortalToolbarProps } from "visual/component/Toolbar/PortalToolbar";
+import { PortalToolbarProps } from "visual/component/Toolbar/PortalToolbar/types";
 
 /**
  * THis component is used to replace the PortalToolbar in export build

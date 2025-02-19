@@ -56,6 +56,8 @@ class RecaptchaConnect extends Component {
   };
 
   handleNext = async () => {
+    const { config } = this.props;
+
     const { app, onChangeNext } = this.context;
     const { apiKeyValue } = this.state;
     const keysValue = Object.values(apiKeyValue);
@@ -87,7 +89,7 @@ class RecaptchaConnect extends Component {
         }
       }
 
-      const validated = await validation(apiKeyValue);
+      const validated = await validation(apiKeyValue, config);
 
       if (validated) {
         onChangeNext();

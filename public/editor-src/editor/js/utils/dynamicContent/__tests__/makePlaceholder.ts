@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import { Base64 } from "js-base64";
-import { noop } from "underscore";
 import { placeholderObjToStr } from "../makePlaceholder";
 import { DCPlaceholderObj, placeholderName } from "../types";
 
@@ -45,7 +45,7 @@ describe("Testing 'placeholderObjToStr' function", () => {
         content: "22",
         attr: { placeholder: "This is O'reilly book" }
       },
-      `{{placeholder content='${c}' placeholder='This is O&#x27;reilly book'}}`
+      `{{placeholder content='${c}' placeholder='This is O&#39;reilly book'}}`
     ],
     [
       {

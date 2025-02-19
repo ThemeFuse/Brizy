@@ -5,7 +5,10 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const { v, renderContext } = data;
+  const {
+    v,
+    contexts: { renderContext }
+  } = data;
   const { visibleMonth = 1 } = v;
   const styles: {
     [k: string]: {

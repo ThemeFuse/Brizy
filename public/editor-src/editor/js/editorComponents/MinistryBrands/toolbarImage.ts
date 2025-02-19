@@ -1,6 +1,6 @@
 import { Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
   getMaskPositions,
@@ -26,7 +26,7 @@ export const getItems = <
 }: Params<M, P, S>): ToolbarItemType[] => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const imgBgColor = getColor(
+  const imgBgColor = getColorToolbar(
     dvv("imgBgColorPalette"),
     dvv("imgBgColorHex"),
     dvv("imgBgColorOpacity")

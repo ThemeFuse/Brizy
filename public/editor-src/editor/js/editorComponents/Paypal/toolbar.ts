@@ -1,7 +1,7 @@
 import { Str } from "@brizy/readers";
 import type { ElementProps } from "visual/component/Elements/Types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -34,7 +34,7 @@ export const getItems: GetItems<Value, ElementProps> = ({
 
   const maxBillingCycleDuration = getSubscriptionRange(billingCycle);
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")

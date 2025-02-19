@@ -14,10 +14,11 @@ export function cssStyleBoxShadowSuffixForGlamour({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const type = styleBoxShadowType({ v, device, state, prefix });
-  const color = styleBoxShadowColor({ v, device, state, prefix });
+  const color = styleBoxShadowColor({ v, device, state, store, prefix });
   const blur = styleBoxShadowBlur({ v, device, state, prefix });
   const spread = styleBoxShadowSpread({ v, device, state, prefix });
   const horizontal =
@@ -66,6 +67,7 @@ export function cssStyleBoxShadowSection({
   v,
   device,
   state,
+  store,
   prefix = ""
 }: CSSValue): string {
   const type = styleBoxShadowType({ v, device, state, prefix });
@@ -73,7 +75,7 @@ export function cssStyleBoxShadowSection({
   const vertical = styleBoxShadowVertical({ v, device, state, prefix });
   const blur = styleBoxShadowBlur({ v, device, state, prefix });
   const spread = styleBoxShadowSpread({ v, device, state, prefix });
-  const color = styleBoxShadowColor({ v, device, state, prefix });
+  const color = styleBoxShadowColor({ v, device, state, store, prefix });
 
   return type === "inset"
     ? `box-shadow:${horizontal}px ${vertical}px ${blur}px ${spread}px ${color} inset; display:block;`

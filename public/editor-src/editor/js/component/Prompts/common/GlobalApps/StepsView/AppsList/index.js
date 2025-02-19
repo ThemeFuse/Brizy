@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
 import Config from "visual/global/Config";
@@ -21,7 +21,7 @@ class AppList extends Component {
 
   state = {
     loadingApp: "",
-    onConnectApp: _.noop
+    onConnectApp: noop
   };
 
   componentDidUpdate(nextProps) {

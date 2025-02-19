@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import React from "react";
-import { isEditor } from "visual/providers/RenderProvider";
 import { CheckGroup as CheckboxControls } from "visual/component/Controls/CheckGroup";
 import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -11,6 +10,7 @@ import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import { isWp } from "visual/global/Config";
+import { isEditor } from "visual/providers/RenderProvider";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
@@ -82,7 +82,7 @@ class LoginField extends EditorComponent {
       return "";
     }
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -140,7 +140,7 @@ class LoginField extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -157,59 +157,70 @@ class LoginField extends EditorComponent {
             <div className="brz-login__item">
               {showLabel === "on" && (
                 <Toolbar {...toolbarExtendLabel}>
-                  <div className="brz-login__field-label" style={styleLabel}>
-                    <label className="brz-label">
-                      <TextEditor
-                        value={this.getLabel(v)}
-                        onChange={this.handleLabelChange}
-                      />
-                    </label>
-                  </div>
+                  {({ ref }) => (
+                    <div
+                      className="brz-login__field-label"
+                      style={styleLabel}
+                      ref={ref}
+                    >
+                      <label className="brz-label">
+                        <TextEditor
+                          value={this.getLabel(v)}
+                          onChange={this.handleLabelChange}
+                        />
+                      </label>
+                    </div>
+                  )}
                 </Toolbar>
               )}
               <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-                <div className="brz-login__field">
-                  <input
-                    name={this.isWp ? "log" : "email"}
-                    className="brz-input"
-                    type="text"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    required
-                    onChange={(e) => {
-                      showLabel === "on"
-                        ? this.patchValue({
-                            placeholder: e.target.value
-                          })
-                        : this.patchValue({
-                            label: e.target.value,
-                            placeholder: e.target.value
-                          });
-                    }}
-                  />
-                </div>
+                {({ ref }) => (
+                  <div className="brz-login__field" ref={ref}>
+                    <input
+                      name={this.isWp ? "log" : "email"}
+                      className="brz-input"
+                      type="text"
+                      placeholder={this.getPlaceholder(v)}
+                      value={this.getPlaceholder(v)}
+                      required
+                      onChange={(e) => {
+                        showLabel === "on"
+                          ? this.patchValue({
+                              placeholder: e.target.value
+                            })
+                          : this.patchValue({
+                              label: e.target.value,
+                              placeholder: e.target.value
+                            });
+                      }}
+                    />
+                  </div>
+                )}
               </Toolbar>
             </div>
           )}
           {type === "Remember" && remember === "on" && (
             <div className="brz-login__item">
               <Toolbar {...toolbarExtendCheckbox}>
-                <CheckboxControls
-                  defaultValue={active}
-                  onChange={this.handleActive}
-                >
-                  <CheckboxControlsItem
-                    name="rememberme"
-                    value="forever"
-                    isEditor={true}
-                    renderIcons={this.renderIconForEdit}
+                {({ ref }) => (
+                  <CheckboxControls
+                    defaultValue={active}
+                    onChange={this.handleActive}
+                    ref={ref}
                   >
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelRememberChange}
-                    />
-                  </CheckboxControlsItem>
-                </CheckboxControls>
+                    <CheckboxControlsItem
+                      name="rememberme"
+                      value="forever"
+                      isEditor={true}
+                      renderIcons={this.renderIconForEdit}
+                    >
+                      <TextEditor
+                        value={this.getLabel(v)}
+                        onChange={this.handleLabelRememberChange}
+                      />
+                    </CheckboxControlsItem>
+                  </CheckboxControls>
+                )}
               </Toolbar>
             </div>
           )}
@@ -236,7 +247,7 @@ class LoginField extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

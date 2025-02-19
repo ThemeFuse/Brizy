@@ -1,7 +1,7 @@
 import classnames from "classnames";
+import { isEqual } from "es-toolkit";
 import React from "react";
 import { mergeDeep } from "timm";
-import _ from "underscore";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
@@ -23,6 +23,7 @@ import { clamp } from "visual/utils/math";
 import { hasMembership } from "visual/utils/membership";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import SectionHeaderStickyItemItems from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -68,7 +69,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
   }
 
   shouldUpdateBecauseOfParent(nextProps) {
-    return !_.isEqual(this.props.rerender, nextProps.rerender);
+    return !isEqual(this.props.rerender, nextProps.rerender);
   }
 
   componentWillUnmount() {
@@ -189,7 +190,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -227,7 +228,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -244,7 +245,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
           onStart={this.onPaddingResizerStart}
           onChange={this.handlePaddingResizerChange}
           onEnd={this.onPaddingResizerEnd}
-          renderContext={this.renderContext}
+          renderContext={this.props.renderContext}
         >
           <SectionHeaderStickyItemItems {...itemsProps} />
         </PaddingResizer>
@@ -261,21 +262,23 @@ export default class SectionHeaderStickyItem extends EditorComponent {
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <div
-              ref={containerBorderRef}
-              {...containerBorderAttr}
-              className={this.getSectionClassName(v, vs, vd)}
-            >
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderItems(v, vs, vd)}
+            {({ ref: cssRef }) => (
+              <div
+                ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
+                {...containerBorderAttr}
+                className={this.getSectionClassName(v, vs, vd)}
               >
-                {this.renderToolbar()}
-                <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                  {this.renderItems(v, vs, vd)}
-                </ToolbarExtend>
-              </Roles>
-            </div>
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={() => this.renderItems(v, vs, vd)}
+                >
+                  {this.renderToolbar()}
+                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                    {this.renderItems(v, vs, vd)}
+                  </ToolbarExtend>
+                </Roles>
+              </div>
+            )}
           </CustomCSS>
         )}
       </ContainerBorder>

@@ -83,12 +83,14 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonBoxShadow =
 export const cssStyleElementMinistryEventDetailSubscribeEventButtonBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "subscribeEventButton"
   });
 };

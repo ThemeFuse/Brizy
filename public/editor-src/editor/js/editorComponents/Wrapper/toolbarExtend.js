@@ -3,7 +3,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { capitalize } from "visual/utils/string";
 import { Toggle } from "visual/utils/options/utils/Type";
 
-export function getItems({ v, device }) {
+export const getItems = ({ v, device }) => {
   const dvv = (key) => defaultValueValue({ v, key, device });
 
   const deviceCapitalize = capitalize(device);
@@ -56,4 +56,4 @@ export function getItems({ v, device }) {
       ]
     }
   ];
-}
+};

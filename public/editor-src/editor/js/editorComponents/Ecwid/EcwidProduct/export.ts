@@ -1,5 +1,5 @@
 import { Str } from "@brizy/readers";
-import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
+import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { ExportFunction } from "visual/types";

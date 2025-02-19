@@ -1,11 +1,5 @@
+import { FontFamilyType } from "visual/types/Fonts";
 import { pass } from "visual/utils/fp";
-
-export enum FontFamilyType {
-  google = "google",
-  upload = "upload",
-  adobe = "adobe",
-  system = "system"
-}
 
 /**
  * @deprecated, use FontFamilyType.google

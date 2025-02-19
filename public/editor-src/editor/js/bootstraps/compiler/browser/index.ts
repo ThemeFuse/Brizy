@@ -49,7 +49,8 @@ class Core {
       page,
       project,
       needToCompile,
-      globalBlocks
+      globalBlocks,
+      editorMode: config.mode
     });
   }
 }

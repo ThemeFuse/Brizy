@@ -1,9 +1,8 @@
-import _ from "underscore";
+import { mapValues } from "es-toolkit";
 
 export { findDeep } from "./findDeep";
 export { traverse as objectTraverse } from "./traverse";
 export { traverse2 as objectTraverse2 } from "./traverse";
-export { flat as objectFlat } from "./flat";
 export { objectFromEntries } from "./fromEntries";
 
 /**
@@ -22,7 +21,7 @@ export const map = (f, value) => {
   }
 
   if (value && typeof value === "object") {
-    return _.mapObject(value, f);
+    return mapValues(value, f);
   }
 
   return value;
@@ -35,7 +34,8 @@ export const map = (f, value) => {
  * @param {object} o object
  * @return {boolean}
  */
-export const hasProps = (ps, o) => !!(o && ps.every(p => o.hasOwnProperty(p)));
+export const hasProps = (ps, o) =>
+  !!(o && ps.every((p) => o.hasOwnProperty(p)));
 
 /**
  * Converts a value to object
@@ -44,4 +44,4 @@ export const hasProps = (ps, o) => !!(o && ps.every(p => o.hasOwnProperty(p)));
  * @param o
  * @return {*}
  */
-export const toObject = o => (o !== null && typeof o === "object" ? o : {});
+export const toObject = (o) => (o !== null && typeof o === "object" ? o : {});

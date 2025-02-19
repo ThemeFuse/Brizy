@@ -31,9 +31,10 @@ export function cssStyleElementWOOCartIconColor({
   v,
   device,
   state,
+  store,
   prefix = "iconColor"
 }) {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementWOOCartSubtotalDisabled({ v, device, state }) {
@@ -56,9 +57,10 @@ export function cssStyleElementWOOCartPurchasesColor({
   v,
   device,
   state,
+  store,
   prefix = "purchasesColor"
 }) {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementWOOCartPurchasesFontFamily({
@@ -495,8 +497,19 @@ export function cssStyleElementWOOCartButtonSpacing({ v, device, state }) {
       : `width: 100%; margin-bottom: ${spacing}px;`;
 }
 
-export function cssStyleElementWOOCartButtonBorderRadius({ v, device, state }) {
-  return cssStyleBorderRadiusType({ v, device, state, prefix: "button" });
+export function cssStyleElementWOOCartButtonBorderRadius({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleBorderRadiusType({
+    v,
+    device,
+    state,
+    store,
+    prefix: "button"
+  });
 }
 
 export function cssStyleElementWOOCartSidebarHorizontalAlign({
@@ -589,9 +602,10 @@ export function cssStyleElementWOOCartBubbleColor({
   v,
   device,
   state,
+  store,
   prefix = "bubbleColor"
 }) {
-  return cssStyleColor({ v, device, state, prefix });
+  return cssStyleColor({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementWOOCartBubbleBg({

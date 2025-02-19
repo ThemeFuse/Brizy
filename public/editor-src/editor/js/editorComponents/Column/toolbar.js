@@ -1,7 +1,7 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { isPopup } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -21,7 +21,7 @@ import { capitalize } from "visual/utils/string";
 import { read as readString } from "visual/utils/string/specs";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 
-export function getItems({ v, device, component, context, state, editorMode }) {
+export const getItems = ({ v, device, component, context, state, editorMode }) => {
   const config = component.getGlobalConfig();
 
   const _isPopup = isPopup(editorMode);
@@ -33,7 +33,7 @@ export function getItems({ v, device, component, context, state, editorMode }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const dvvState = (key, state) => defaultValueValue({ v, key, device, state });
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
@@ -140,11 +140,11 @@ export function getItems({ v, device, component, context, state, editorMode }) {
                   devices: "desktop",
                   states: [NORMAL, HOVER],
                   population: imageDynamicContentChoices,
-                  disabled: image,
                   config: {
                     disableSizes: isExternalImage,
                     pointer: !isExternalImage && isPointerEnabled
-                  }
+                  },
+                  disabled: image,
                 },
                 {
                   label: t("Image"),
@@ -157,7 +157,7 @@ export function getItems({ v, device, component, context, state, editorMode }) {
                   config: {
                     disableSizes: isExternalImage,
                     pointer: !isExternalImage && isPointerEnabled
-                  }
+                  },
                 },
                 {
                   id: "bgSize",
@@ -614,4 +614,4 @@ export function getItems({ v, device, component, context, state, editorMode }) {
       ]
     }
   ];
-}
+};

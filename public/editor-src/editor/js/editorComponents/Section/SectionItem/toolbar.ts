@@ -2,8 +2,8 @@ import { KenEffect, Transition } from "visual/component/Background/type";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { isPopup } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { BgPosition, BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -36,8 +36,9 @@ export const getItems: GetItems = ({
 
   const dvvState = (key: string, state: State): unknown =>
     defaultValueValue({ v, key, device, state });
+  const config = component.getGlobalConfig();
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
@@ -47,7 +48,6 @@ export const getItems: GetItems = ({
     type: DCTypes.image
   });
 
-  const config = component.getGlobalConfig();
   const customVideo = isPro(config)
     ? [
         {
@@ -659,6 +659,7 @@ export const getItems: GetItems = ({
           config: {
             separator: true
           },
+          position: 120,
           columns: [
             {
               id: "grid-settings",

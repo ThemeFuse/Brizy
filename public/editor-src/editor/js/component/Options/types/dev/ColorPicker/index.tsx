@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import {
   ColorPicker3,
   Props as ColorPicker3Props
@@ -49,7 +50,12 @@ export const ColorPicker = ({
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
-  const { colorPalette } = useSelector(currentStyleSelector);
+  const style = useSelector(currentStyleSelector);
+  const colorPalette = useMemo((): PaletteObject[] => {
+    return style.colorPalette
+      .map((f) => ({ id: `${f.id}`, hex: f.hex }))
+      .filter((p): p is PaletteObject => Hex.is(p.hex));
+  }, [style]);
 
   const globalConfig = useConfig();
 

@@ -6,8 +6,8 @@ import {
   compose,
   createStore as reduxCreateStore
 } from "redux";
-import { ReduxAction } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxAction } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
 import rootReducer from "./reducers";
 
 export type Store = RStore<ReduxState, ReduxAction>;

@@ -1,6 +1,5 @@
-import React, { useMemo } from "react";
-import { Attributes } from "react";
-import _ from "underscore";
+import { noop } from "es-toolkit";
+import React, { Attributes, useMemo } from "react";
 import { Translate } from "visual/component/Translate";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
@@ -43,7 +42,7 @@ export const CheckGroupItemView = ({
         value={value}
         name={name}
         checked={active}
-        onChange={_.noop}
+        onChange={noop}
         required={required}
         {...attr}
       />

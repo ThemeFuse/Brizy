@@ -1,13 +1,11 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { ToolbarItemType } from "../ToolbarItemType";
 
 export interface Value extends ElementModel {
   bgColorHex: string;
@@ -16,24 +14,17 @@ export interface Value extends ElementModel {
   borderColorPalette: string;
 }
 
-export function getItems({
-  v,
-  device,
-  context
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+
   const bgColorOpacity = dvv("bgColorOpacity");
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     bgColorOpacity
   );
-  const borderColor = getColor(
+  const borderColor = getColorToolbar(
     dvv("borderColorPalette"),
     dvv("borderColorHex"),
     dvv("borderColorOpacity")
@@ -326,4 +317,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

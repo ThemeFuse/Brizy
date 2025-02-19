@@ -1,5 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -8,7 +8,7 @@ import { Value } from "./types/Value";
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const checkoutBgColor = getColor(
+  const checkoutBgColor = getColorToolbar(
     dvv("checkoutBgColorPalette"),
     dvv("checkoutBgColorHex"),
     dvv("checkoutBgColorOpacity")

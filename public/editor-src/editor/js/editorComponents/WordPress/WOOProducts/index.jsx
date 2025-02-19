@@ -4,6 +4,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getTerms } from "visual/utils/api";
+import { attachRefs } from "visual/utils/react";
 import { WPShortcode } from "../common/WPShortcode";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -13,15 +14,14 @@ import toolbarConfigFn from "./toolbar";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 class WOOProducts extends EditorComponent {
-  static get componentId() {
-    return "WOOProducts";
-  }
-
   static defaultValue = defaultValue;
-
   state = {
     taxonomies: []
   };
+
+  static get componentId() {
+    return "WOOProducts";
+  }
 
   componentDidMount() {
     getTerms("product_cat", this.getGlobalConfig()).then((taxonomies) =>
@@ -50,7 +50,7 @@ class WOOProducts extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -59,21 +59,26 @@ class WOOProducts extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <WPShortcode
-            name="products"
-            attributes={attributes}
-            placeholderIcon="woo-2"
-            placeholderContainerWidth={this.props.meta.desktopW}
-            className={classNames}
-            resizerPoints={resizerPoints}
-            resizerMeta={this.props.meta}
-            resizerValue={v}
-            resizerOnChange={this.handleResizerChange}
-            renderContext={this.renderContext}
-            config={this.getGlobalConfig()}
-          />
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <WPShortcode
+                name="products"
+                attributes={attributes}
+                placeholderIcon="woo-2"
+                placeholderContainerWidth={this.props.meta.desktopW}
+                className={classNames}
+                resizerPoints={resizerPoints}
+                resizerMeta={this.props.meta}
+                resizerValue={v}
+                resizerOnChange={this.handleResizerChange}
+                renderContext={this.props.renderContext}
+                config={this.getGlobalConfig()}
+                containerRef={(el) => attachRefs(el, [toolbarRef, cssRef])}
+              />
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

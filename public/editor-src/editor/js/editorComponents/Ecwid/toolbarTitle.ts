@@ -1,5 +1,5 @@
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import type { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -18,7 +18,7 @@ export const ecwidToolbarTitle = (
   getItems: ({ v, device, state }) => {
     const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-    const titleColor = getColor(
+    const titleColor = getColorToolbar(
       dvv("titleColorPalette"),
       dvv("titleColorHex"),
       dvv("titleColorOpacity")

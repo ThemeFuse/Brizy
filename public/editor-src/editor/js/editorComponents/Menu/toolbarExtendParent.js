@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
@@ -18,7 +18,7 @@ export function getItems({ v, device, component }) {
 
   const menuSelected = dvv("menuSelected");
 
-  const mMenuIconColor = getColor(
+  const mMenuIconColor = getColorToolbar(
     dvv("mMenuIconColorPalette"),
     dvv("mMenuIconColorHex"),
     dvv("mMenuIconColorOpacity")

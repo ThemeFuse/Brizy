@@ -1,3 +1,4 @@
+import { noop } from "es-toolkit";
 import React, {
   CSSProperties,
   Component,
@@ -5,7 +6,6 @@ import React, {
   MouseEvent,
   ReactNode
 } from "react";
-import { noop } from "underscore";
 import Config from "visual/global/Config";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";

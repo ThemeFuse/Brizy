@@ -5,11 +5,9 @@ import { Fields } from "visual/component/Prompts/common/GlobalApps/StepsView/Fie
 import { addFonts } from "visual/redux/actions2";
 import { fontsSelector } from "visual/redux/selectors";
 import { pendingRequest } from "visual/utils/api";
-import {
-  getGoogleFontDetails,
-  getGoogleFonts,
-  getGroupFontsById
-} from "visual/utils/fonts";
+import { getGroupFontsById } from "visual/utils/fonts/getFontById";
+import { getGoogleFonts } from "visual/utils/fonts/getGoogleFonts";
+import { getGoogleFontDetails } from "visual/utils/fonts/transform";
 import { t } from "visual/utils/i18n";
 
 class GoogleConnect extends Component {

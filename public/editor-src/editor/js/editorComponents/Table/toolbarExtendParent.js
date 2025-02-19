@@ -1,5 +1,5 @@
 import { addLast, getIn, setIn } from "timm";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { setIds } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -40,13 +40,13 @@ export function getItems({ v, device }) {
 
   // Color
   const bgColorOpacity = dvv("bgColorOpacity");
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     bgColorOpacity
   );
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")

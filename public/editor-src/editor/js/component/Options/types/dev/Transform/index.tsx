@@ -1,12 +1,12 @@
+import { identity } from "es-toolkit";
 import React, { useCallback, useMemo } from "react";
-import { identity } from "underscore";
 import { Transform as Control } from "visual/component/Controls/Transform";
 import { Config } from "visual/component/Controls/Transform/types/Config";
 import { Patch as PatchType } from "visual/component/Controls/Transform/types/Patch";
 import {
   Effect,
-  EffectsWithAnchor,
   EffectValueWithAnchor,
+  EffectsWithAnchor,
   Value
 } from "visual/component/Controls/Transform/types/Value";
 import { OnChange, Props as OptionProps } from "visual/component/Options/Type";

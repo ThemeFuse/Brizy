@@ -1,8 +1,7 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
 import { Manager, Popper, Reference } from "react-popper";
-import { noop } from "underscore";
-import { isEditor, isView } from "visual/providers/RenderProvider";
 import ClickOutside from "visual/component/ClickOutside";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import Link from "visual/component/Link";
@@ -10,6 +9,7 @@ import Portal from "visual/component/Portal";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { isPro } from "visual/utils/env";
 import { getBlockData } from "visual/utils/models";
 import { attachRef } from "visual/utils/react";
@@ -33,10 +33,6 @@ import toolbarExtendFn from "./toolbarExtend";
 let openedMegaMenu = null;
 
 class MenuItem extends EditorComponent {
-  static get componentId() {
-    return "MenuItem";
-  }
-
   static defaultProps = {
     defaultValue: {},
     level: 0,
@@ -49,18 +45,17 @@ class MenuItem extends EditorComponent {
     },
     getParentWidth: noop
   };
-
   static defaultValue = defaultValue;
-
   state = {
     isOpen: false
   };
-
   menuItem = React.createRef();
-
   megaMenuRef = React.createRef();
-
   isPro = isPro(this.getGlobalConfig());
+
+  static get componentId() {
+    return "MenuItem";
+  }
 
   componentDidUpdate(nextProps) {
     if (
@@ -217,7 +212,7 @@ class MenuItem extends EditorComponent {
     return hasIcon ? (
       <IconContainer
         itemId={id}
-        wrapInPlaceholder={isView(this.renderContext) && this.isPro}
+        wrapInPlaceholder={isView(this.props.renderContext) && this.isPro}
         iconName={iconName}
         iconType={iconType}
         iconFilename={iconFilename}
@@ -226,7 +221,7 @@ class MenuItem extends EditorComponent {
     ) : null;
   }
 
-  renderLink(v, vs, vd, content) {
+  renderLink(v, vs, vd, content, ref) {
     const { target, classes, attrTitle } = v;
     let type = "";
     let href = "";
@@ -246,7 +241,11 @@ class MenuItem extends EditorComponent {
       draggable: "false"
     };
 
-    return <Link {...props}>{content}</Link>;
+    return (
+      <Link {...props} ref={ref}>
+        {content}
+      </Link>
+    );
   }
 
   renderMegaMenu(v, vs, vd) {
@@ -254,7 +253,7 @@ class MenuItem extends EditorComponent {
       return null;
     }
 
-    return isEditor(this.renderContext)
+    return isEditor(this.props.renderContext)
       ? this.renderMegaMenuForEdit(v, vs, vd)
       : this.renderMegaMenuForView(v, vs, vd);
   }
@@ -301,7 +300,7 @@ class MenuItem extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -344,7 +343,7 @@ class MenuItem extends EditorComponent {
       <Popper {...props}>
         {({ ref, style, placement }) => (
           <Portal node={document.body}>
-            <SortableZIndex zIndex={2} renderContext={this.renderContext}>
+            <SortableZIndex zIndex={2} renderContext={this.props.renderContext}>
               <div
                 className={portalClassName}
                 ref={(el) => {
@@ -397,7 +396,7 @@ class MenuItem extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -459,7 +458,7 @@ class MenuItem extends EditorComponent {
 
   renderSimpleForEdit(v, vs, vd, content) {
     const { level, mMenu, mods } = this.props;
-    const className = styleClassName(v, this.state, this.renderContext);
+    const className = styleClassName(v, this.state, this.props.renderContext);
     const device = this.getDeviceMode();
     const mode = getModeByDevice(mods, device);
     const toolbarConfig = toolbarConfigFn(level, mMenu);
@@ -490,19 +489,21 @@ class MenuItem extends EditorComponent {
           exceptions={clickOutsideExceptions}
           onClickOutside={this.handleClickOutside}
         >
-          <li className={className} onClick={this.handleClick}>
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarConfig,
-                sidebarConfig
-              )}
-            >
-              {this.renderLink(v, vs, vd, content)}
-            </Toolbar>
-            {v.megaMenu === "off"
-              ? this.renderDropDown(v, vs, vd)
-              : this.renderMegaMenu(v, vs, vd)}
-          </li>
+          {({ ref }) => (
+            <li className={className} onClick={this.handleClick} ref={ref}>
+              <Toolbar
+                {...this.makeToolbarPropsFromConfig2(
+                  toolbarConfig,
+                  sidebarConfig
+                )}
+              >
+                {({ ref }) => this.renderLink(v, vs, vd, content, ref)}
+              </Toolbar>
+              {v.megaMenu === "off"
+                ? this.renderDropDown(v, vs, vd)
+                : this.renderMegaMenu(v, vs, vd)}
+            </li>
+          )}
         </ClickOutside>
       );
     }
@@ -512,29 +513,34 @@ class MenuItem extends EditorComponent {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.handleClickOutside}
       >
-        <Manager>
-          <Reference>
-            {() => (
-              <li
-                data-menu-item-id={this.getId()}
-                ref={this.menuItem}
-                className={className}
-                onClick={this.handleClick}
-              >
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarConfig,
-                    sidebarConfig
-                  )}
+        {({ ref }) => (
+          <Manager>
+            <Reference>
+              {() => (
+                <li
+                  data-menu-item-id={this.getId()}
+                  ref={(el) => {
+                    attachRef(el, ref);
+                    attachRef(el, this.menuItem);
+                  }}
+                  className={className}
+                  onClick={this.handleClick}
                 >
-                  {this.renderLink(v, vs, vd, content)}
-                </Toolbar>
-                {v.megaMenu === "off" && this.renderDropDown(v, vs, vd)}
-              </li>
-            )}
-          </Reference>
-          {v.megaMenu === "on" && this.renderMegaMenu(v, vs, vd)}
-        </Manager>
+                  <Toolbar
+                    {...this.makeToolbarPropsFromConfig2(
+                      toolbarConfig,
+                      sidebarConfig
+                    )}
+                  >
+                    {({ ref }) => this.renderLink(v, vs, vd, content, ref)}
+                  </Toolbar>
+                  {v.megaMenu === "off" && this.renderDropDown(v, vs, vd)}
+                </li>
+              )}
+            </Reference>
+            {v.megaMenu === "on" && this.renderMegaMenu(v, vs, vd)}
+          </Manager>
+        )}
       </ClickOutside>
     );
   }
@@ -552,13 +558,13 @@ class MenuItem extends EditorComponent {
         className={styleMmMenuClassName(
           v,
           this.menuItem.current,
-          this.renderContext
+          this.props.renderContext
         )}
       >
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          {this.renderLink(v, vs, vd, content)}
+          {({ ref }) => this.renderLink(v, vs, vd, content, ref)}
         </Toolbar>
         {isDropDown ? (
           <div>{this.renderDropDown(v, vs, vd)}</div>

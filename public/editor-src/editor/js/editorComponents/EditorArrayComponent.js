@@ -590,7 +590,7 @@ export default class EditorArrayComponent extends EditorComponent {
         <ErrorBoundary
           key={itemKey}
           onRemove={() => this.removeItem(itemIndex)}
-          renderContext={this.renderContext}
+          renderContext={this.props.renderContext}
         >
           <ItemComponent
             {...itemProps}
@@ -600,7 +600,7 @@ export default class EditorArrayComponent extends EditorComponent {
             reduxStore={this.getReduxStore()}
             reduxDispatch={this.getReduxDispatch()}
             onChange={itemOnChange}
-            renderContext={this.renderContext}
+            renderContext={this.props.renderContext}
             editorMode={this.props.editorMode}
           />
         </ErrorBoundary>
@@ -619,7 +619,7 @@ export default class EditorArrayComponent extends EditorComponent {
           reduxDispatch={this.getReduxDispatch()}
           onChange={itemOnChange}
           componentId={type}
-          renderContext={this.renderContext}
+          renderContext={this.props.renderContext}
           editorMode={this.props.editorMode}
         />
       );

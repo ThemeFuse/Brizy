@@ -1,10 +1,12 @@
 import { wrap } from "comlink";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GlobalBlock, Page, Project } from "visual/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
+import { Project } from "visual/types/Project";
 import { assetUrl } from "visual/utils/asset";
+import { _Worker } from "visual/utils/worker";
 import type { Compiler } from "./";
 import { Static } from "./bootstrap/types";
-import { _Worker } from "visual/utils/worker";
 
 // Note: Workers are build in a separated files
 // See webpack.config.worker.js

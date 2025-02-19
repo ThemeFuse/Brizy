@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import { getCategories, getTypes } from "visual/config/icons";
 import { isWp } from "visual/global/Config";
 import { isPro } from "visual/utils/env";
@@ -12,7 +12,7 @@ export default class PromptIcon extends Component<Props, State> {
   static defaultProps = {
     name: "nc-star",
     type: "outline",
-    onChange: _.noop
+    onChange: noop
   };
 
   containerRef = React.createRef<HTMLDivElement>();

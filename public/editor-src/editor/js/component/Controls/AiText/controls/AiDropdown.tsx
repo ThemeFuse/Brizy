@@ -64,7 +64,7 @@ export const AiDropdown = ({
           <Space spacing={editorIconSpacing}>
             <EditorIcon
               style={editorIconStyle}
-              icon={IconsName[opened ? "nc-stre-up" : "nc-stre-down"]}
+              icon={opened ? IconsName.StreUp : IconsName.StreDown}
             />
           </Space>
         </Button>

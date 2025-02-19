@@ -1,10 +1,10 @@
 import { ComponentType, ReactElement } from "react";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontsPayload } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { BlockMetaType } from "visual/types";
+import { BlockMetaType } from "visual/types/GlobalBlock";
 import { BlockScreenshots } from "visual/utils/screenshots/types";
 import { NormalOrPopup } from "../types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export type PromptGlobalBlock<T extends BlockMetaType> = {
   fonts: FontsPayload;

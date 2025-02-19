@@ -48,9 +48,10 @@ export function cssStyleElementEcwidShoppingBagIconBgColor({
 export function cssStyleElementEcwidShoppingBagIconBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "icon" });
+  return cssStyleBorder({ v, device, state, store, prefix: "icon" });
 }
 
 export function cssStyleElementEcwidShoppingBagIconBoxShadow({

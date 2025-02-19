@@ -1,4 +1,4 @@
-import React, { Component, ForwardedRef, ReactNode } from "react";
+import React, { Component, ForwardedRef, ReactNode, RefObject } from "react";
 import {
   calcMaxHeightBasedOnWidth,
   calcRectangleSide,
@@ -7,7 +7,7 @@ import {
 import ClickOutside from "visual/component/ClickOutside";
 import { DraggableDiv } from "visual/component/DraggableDiv";
 import { clamp } from "visual/utils/math";
-import { attachRef } from "visual/utils/react";
+import { attachRefs } from "visual/utils/react";
 import { Patch, Point, RestrictionMapping, SimpleRestriction } from "./types";
 
 interface State {
@@ -287,96 +287,101 @@ export class Resizer extends Component<Props, State> {
 
     return (
       <ClickOutside onClickOutside={this.handleClickOutside}>
-        <div
-          ref={(el) => {
-            attachRef(el, this.contentRef);
-            attachRef(el, containerRef);
-          }}
-          className="brz-ed-box__resizer"
-          onClick={this.handleClick}
-        >
-          {children}
-          {showPoints && topCenter && (
-            <DraggableDiv
-              key="topCenter"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--top-center"
-              draggingCursor="ns-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleTopCenterDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-          {showPoints && topRight && (
-            <DraggableDiv
-              key="topRight"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--top-right"
-              draggingCursor="nesw-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleTopRightDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-          {showPoints && centerRight && (
-            <DraggableDiv
-              key="centerRight"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--center-right"
-              draggingCursor="col-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleCenterRightDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-          {showPoints && bottomLeft && (
-            <DraggableDiv
-              key="bottomLeft"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--bottom-left"
-              draggingCursor="nesw-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleBottomLeftDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-          {showPoints && bottomCenter && (
-            <DraggableDiv
-              key="bottomCenter"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--bottom-center"
-              draggingCursor="ns-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleBottomCenterDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-          {showPoints && bottomRight && (
-            <DraggableDiv
-              key="bottomRight"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--bottom-right"
-              draggingCursor="nwse-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleBottomRightDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-          {showPoints && centerLeft && (
-            <DraggableDiv
-              key="centerLeft"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--center-left"
-              draggingCursor="col-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleCenterLeftDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-          {showPoints && topLeft && (
-            <DraggableDiv
-              key="topLeft"
-              className="brz-ed-box__resizer--point brz-ed-box__resizer--top-left"
-              draggingCursor="nwse-resize"
-              onDragStart={this.handleDragStart}
-              onDrag={this.handleTopLeftDrag}
-              onDragEnd={this.handleDragEnd}
-            />
-          )}
-        </div>
+        {({ ref: clickOutsideRef }) => (
+          <div
+            ref={(node) => {
+              attachRefs(node, [
+                this.contentRef,
+                containerRef as RefObject<HTMLDivElement>,
+                clickOutsideRef
+              ]);
+            }}
+            className="brz-ed-box__resizer"
+            onClick={this.handleClick}
+          >
+            {children}
+            {showPoints && topCenter && (
+              <DraggableDiv
+                key="topCenter"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--top-center"
+                draggingCursor="ns-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleTopCenterDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+            {showPoints && topRight && (
+              <DraggableDiv
+                key="topRight"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--top-right"
+                draggingCursor="nesw-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleTopRightDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+            {showPoints && centerRight && (
+              <DraggableDiv
+                key="centerRight"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--center-right"
+                draggingCursor="col-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleCenterRightDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+            {showPoints && bottomLeft && (
+              <DraggableDiv
+                key="bottomLeft"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--bottom-left"
+                draggingCursor="nesw-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleBottomLeftDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+            {showPoints && bottomCenter && (
+              <DraggableDiv
+                key="bottomCenter"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--bottom-center"
+                draggingCursor="ns-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleBottomCenterDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+            {showPoints && bottomRight && (
+              <DraggableDiv
+                key="bottomRight"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--bottom-right"
+                draggingCursor="nwse-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleBottomRightDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+            {showPoints && centerLeft && (
+              <DraggableDiv
+                key="centerLeft"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--center-left"
+                draggingCursor="col-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleCenterLeftDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+            {showPoints && topLeft && (
+              <DraggableDiv
+                key="topLeft"
+                className="brz-ed-box__resizer--point brz-ed-box__resizer--top-left"
+                draggingCursor="nwse-resize"
+                onDragStart={this.handleDragStart}
+                onDrag={this.handleTopLeftDrag}
+                onDragEnd={this.handleDragEnd}
+              />
+            )}
+          </div>
+        )}
       </ClickOutside>
     );
   }

@@ -1,6 +1,6 @@
+import { Block } from "visual/types/Block";
 import { modelTraverse } from "visual/utils/traverse";
 import { getComponentDefaultValue } from "./common";
-import { Block } from "visual/types";
 
 type UsedModelsImage = {
   models: Block | { items: Block[] };

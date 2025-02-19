@@ -1,4 +1,4 @@
-import { WithEditorMode, isStory } from "visual/global/EditorModeContext";
+import { WithEditorMode, isStory } from "visual/providers/EditorModeProvider";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";

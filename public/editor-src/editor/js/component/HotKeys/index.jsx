@@ -4,7 +4,6 @@ import { getIn } from "timm";
 import { rolesHOC } from "visual/component/Roles";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 import Config from "visual/global/Config";
-import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import {
   copiedElementNoRefsSelector,
   pageDataNoRefsSelector
@@ -217,12 +216,10 @@ class HotKeys extends React.Component {
     );
   }
 }
+
 export default rolesHOC({
   allow: ["admin"],
-  component: renderHOC({
-    ForEdit: HotKeys,
-    ForView: ({ children }) => <>{children}</>
-  }),
+  component: HotKeys,
   fallbackComponent: ({ children }) => children || null
 });
 

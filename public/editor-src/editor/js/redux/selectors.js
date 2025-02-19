@@ -1,6 +1,6 @@
+import { omit } from "es-toolkit";
 import { produce } from "immer";
 import { createSelector } from "reselect";
-import _ from "underscore";
 import configRules from "visual/config/rules";
 import { getConfigById } from "visual/global/Config/InitConfig";
 import { getPositions } from "visual/utils/blocks/blocksConditions";
@@ -339,7 +339,7 @@ export const projectAssembled = createSelector(
     extraFontStyles
   ) => {
     return produce(project, (draft) => {
-      draft.data.fonts = _.omit(fonts, "system");
+      draft.data.fonts = omit(fonts, "system");
       draft.data.styles = styles;
       draft.data.selectedStyle = currentStyleId;
       draft.data.extraFontStyles = extraFontStyles;

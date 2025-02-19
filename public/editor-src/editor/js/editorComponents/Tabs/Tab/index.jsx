@@ -1,26 +1,25 @@
 import { DangerouslySetHtmlContent } from "@brizy/component/src/common/components/DangerouslySetHtmlContent";
 import classnames from "classnames";
 import React from "react";
-import { isView } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isView } from "visual/providers/RenderProvider";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as toolbarConfig from "./toolbar";
 
 class Tab extends EditorComponent {
-  static get componentId() {
-    return "Tab";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "Tab";
+  }
 
   handleLabelChange = (labelText) => {
     this.patchValue({ labelText });
@@ -40,16 +39,18 @@ class Tab extends EditorComponent {
         onMouseEnter={action === "hover" ? onChangeNav : null}
       >
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-          <div className={classnames("brz-tabs__nav--button")}>
-            {iconName && iconType && (
-              <ThemeIcon
-                name={iconName}
-                type={iconType}
-                filename={iconFilename}
-              />
-            )}
-            <TextEditor value={labelText} onChange={this.handleLabelChange} />
-          </div>
+          {({ ref }) => (
+            <div className={classnames("brz-tabs__nav--button")} ref={ref}>
+              {iconName && iconType && (
+                <ThemeIcon
+                  name={iconName}
+                  type={iconType}
+                  filename={iconFilename}
+                />
+              )}
+              <TextEditor value={labelText} onChange={this.handleLabelChange} />
+            </div>
+          )}
         </Toolbar>
       </li>
     );
@@ -70,26 +71,28 @@ class Tab extends EditorComponent {
     const labelClassName = classnames("brz-tabs__nav--mobile", {
       "brz-tabs__nav--mobile--active": active
     });
-    const IS_VIEW = isView(this.renderContext);
+    const IS_VIEW = isView(this.props.renderContext);
 
     return (
       <div className={className}>
         <div className={labelClassName} onClick={onChangeNav}>
           <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-            <div className={classnames("brz-tabs__nav--button")}>
-              {iconName && iconType && (
-                <ThemeIcon
-                  name={iconName}
-                  type={iconType}
-                  filename={iconFilename}
+            {({ ref }) => (
+              <div className={classnames("brz-tabs__nav--button")} ref={ref}>
+                {iconName && iconType && (
+                  <ThemeIcon
+                    name={iconName}
+                    type={iconType}
+                    filename={iconFilename}
+                  />
+                )}
+                <DangerouslySetHtmlContent
+                  tagName={"span"}
+                  html={labelText}
+                  ssr={IS_VIEW}
                 />
-              )}
-              <DangerouslySetHtmlContent
-                tagName={"span"}
-                html={labelText}
-                ssr={IS_VIEW}
-              />
-            </div>
+              </div>
+            )}
           </Toolbar>
         </div>
         <Animation

@@ -1,4 +1,5 @@
-import { identity as id, times } from "underscore";
+import { identity as id } from "es-toolkit";
+import { times } from "es-toolkit/compat";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { get } from "visual/utils/model";

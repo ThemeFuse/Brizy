@@ -63,4 +63,5 @@ export interface Value extends ElementModel {
   redirect: string;
   openInNewTab: Switch;
   activeSandbox: Switch;
+  customCSS: string;
 }

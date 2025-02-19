@@ -1,13 +1,11 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { ToolbarItemType } from "../ToolbarItemType";
 
 export interface Value extends ElementModel {
   ratingStyle: "style1" | "style2";
@@ -15,15 +13,7 @@ export interface Value extends ElementModel {
   label: "on" | "on-right" | "off";
 }
 
-export function getItems({
-  v,
-  device,
-  context
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
@@ -33,12 +23,12 @@ export function getItems({
   const labelOff = label === "off";
   const isStyle1 = dvv("ratingStyle") === "style1";
 
-  const ratingColor = getColor(
+  const ratingColor = getColorToolbar(
     dvv("ratingColorPalette"),
     dvv("ratingColorHex"),
     dvv("ratingColorOpacity")
   );
-  const style2RatingColor = getColor(
+  const style2RatingColor = getColorToolbar(
     dvv("style2BgColorPalette"),
     dvv("style2BgColorHex"),
     dvv("style2BgColorOpacity")
@@ -316,4 +306,4 @@ export function getItems({
       title: t("Settings")
     }
   ];
-}
+};

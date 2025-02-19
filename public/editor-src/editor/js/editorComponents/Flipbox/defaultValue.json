@@ -34,7 +34,8 @@
     "backBgImageType": "",
     "backBgAlt": ""
   },
-  "styles": {
+
+  "style": {
     "trigger": "hover",
     "tabletTrigger": "click",
     "mobileTrigger": "click",

@@ -1,11 +1,9 @@
-import Config from "visual/global/Config";
+import { Str } from "@brizy/readers";
 import * as Num from "visual/utils/math/number";
 import * as N from "visual/utils/math/number";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
-import { Str } from "@brizy/readers";
 import {
   styleSizeContainerSize,
   styleSizeCustom,
@@ -118,9 +116,7 @@ export function cssStyleSizeWidthStoryOnly({
 }: CSSValue): string {
   const width = styleSizeWidth({ v, device, state, store, prefix });
 
-  return !isStory(Config.getAll()) || width === undefined
-    ? ""
-    : `width:${width}%;`;
+  return width === undefined ? "" : `width:${width}%;`;
 }
 
 export function cssStyleSizeWidthHeight({

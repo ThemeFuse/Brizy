@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import Downshift from "downshift";
+import { property } from "es-toolkit/compat";
 import React, {
   ComponentProps,
   KeyboardEvent,
@@ -9,21 +10,20 @@ import React, {
   useRef,
   useState
 } from "react";
-import { positionValues, Scrollbars } from "react-custom-scrollbars";
+import { Scrollbars, positionValues } from "react-custom-scrollbars";
 import { Manager, Popper, Reference } from "react-popper";
-import { property } from "underscore";
 import { SelectItem } from "visual/component/Controls/Select2/SelectItem";
 import { Tag } from "visual/component/Controls/Select2/Tag";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
 import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { Position } from "visual/utils/position/Position";
 import { mRead } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
 import { Props as ItemProps } from "./Item";
 import { dropdownHeight } from "./utils";
-import { Position } from "visual/utils/position/Position";
 
 type ItemInstance<T> = ReactElement<ItemProps<T>>;
 type TagInstance = ReactElement<ComponentProps<typeof Tag>>;

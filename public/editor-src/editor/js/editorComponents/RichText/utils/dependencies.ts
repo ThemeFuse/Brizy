@@ -1,10 +1,11 @@
 import { setIn } from "timm";
-import { DeviceMode, TextScripts } from "visual/types";
+import { DeviceMode } from "visual/types";
+import { TextScripts } from "visual/types/Style";
 import { defaultValueValue } from "visual/utils/onChange";
 import { isObject } from "visual/utils/reader/object";
 import { capByPrefix, encodeToString } from "visual/utils/string";
 
-interface Value {
+export interface Value {
   linkType: string;
   linkPopup: string;
   linkExternal: string;

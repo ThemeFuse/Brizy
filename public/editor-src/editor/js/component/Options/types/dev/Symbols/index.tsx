@@ -1,8 +1,9 @@
+import { without } from "es-toolkit";
+import { find } from "es-toolkit/compat";
 import React, { useCallback, useState } from "react";
-import _ from "underscore";
 import {
-  SelectEditable2,
-  Props as ControlProps
+  Props as ControlProps,
+  SelectEditable2
 } from "visual/component/Brizy-ui/SelectEditable";
 import { FCC } from "visual/utils/react/types";
 import { uuid } from "visual/utils/uuid";
@@ -75,12 +76,12 @@ export const Symbols: FCC<Props> = ({ label }) => {
           break;
         }
         case OnChangeCases.Delete: {
-          const candidate = _.findWhere(choices, {
+          const candidate = find(choices, {
             title: current.title
           });
 
           if (candidate) {
-            setChoices(_.without(choices, candidate));
+            setChoices(without(choices, candidate));
             setCurrent(CHOICES[0]);
           }
           break;

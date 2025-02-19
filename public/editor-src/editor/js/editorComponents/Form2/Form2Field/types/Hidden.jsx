@@ -1,13 +1,8 @@
 import React from "react";
 import { isEditor } from "visual/providers/RenderProvider";
-import { t } from "visual/utils/i18n";
 import TextField from "./common/TextField";
 
 export default class Hidden extends TextField {
-  static get componentTitle() {
-    return t("Hidden");
-  }
-
   static get componentType() {
     return "Hidden";
   }

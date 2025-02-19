@@ -1,13 +1,14 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const subtotalTitleColor = getColor(
+  const subtotalTitleColor = getColorToolbar(
     dvv("subtotalTitleColorPalette"),
     dvv("subtotalTitleColorHex"),
     dvv("subtotalTitleColorOpacity")
@@ -50,7 +51,8 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       options: [
         {
           id: "subtotalTitleColor",
-          type: "colorPicker"
+          type: "colorPicker",
+          states: [NORMAL, HOVER]
         }
       ]
     }

@@ -1,7 +1,9 @@
 import { FC } from "react";
 import * as Option from "visual/component/Options/Type";
 import { ReduxState } from "visual/redux/types";
-import { Block, GlobalBlock, Page } from "visual/types";
+import { Block } from "visual/types/Block";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
 import { WithClassName, WithConfig } from "visual/types/attributes";
 
 export interface OpenPromptCondition {

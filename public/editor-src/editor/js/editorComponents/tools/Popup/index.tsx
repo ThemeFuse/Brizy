@@ -1,4 +1,4 @@
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 
 type Value = {
   popups?: Block[];

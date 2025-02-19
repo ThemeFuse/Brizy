@@ -11,21 +11,19 @@ import * as toolbarExtendConfig from "./toolbarExtend";
 import { DW, MW, TW } from "./utils";
 
 class Story extends EditorComponent {
+  static defaultProps = {
+    meta: {}
+  };
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId() {
     return "Story";
   }
 
-  static defaultProps = {
-    meta: {}
-  };
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
-
   getMeta() {
     const { meta } = this.props;
-    const _isEditor = isEditor(this.renderContext);
+    const _isEditor = isEditor(this.props.renderContext);
 
     const Dwidth = _isEditor ? DW : 470;
     const Twidth = _isEditor ? TW : 470;
@@ -102,7 +100,7 @@ class Story extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -135,7 +133,7 @@ class Story extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

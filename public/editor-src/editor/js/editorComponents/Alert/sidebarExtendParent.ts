@@ -1,4 +1,4 @@
-import { WithEditorMode, isStory } from "visual/global/EditorModeContext";
+import { WithEditorMode, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { ToolbarItemType } from "../ToolbarItemType";
 

@@ -1,7 +1,6 @@
 import classNames from "classnames";
+import { uniqueId } from "es-toolkit/compat";
 import React, { ReactNode } from "react";
-import { uniqueId } from "underscore";
-import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -14,8 +13,10 @@ import {
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { EcwidService } from "visual/libs/Ecwid";
+import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { defaultValueKey } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import * as sidebarParent from "./sidebar";
 import * as sidebarIcon from "./sidebarIcon";
@@ -26,13 +27,12 @@ import { Value } from "./types/Value";
 import { resizerRestrictions, resizerTransformValue } from "./utils";
 
 export class EcwidShoppingBag extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
+  private uniqueId = `${EcwidShoppingBag.componentId}-${uniqueId()}`;
+
   static get componentId(): "EcwidShoppingBag" {
     return "EcwidShoppingBag";
   }
-
-  static defaultValue = defaultValue;
-
-  private uniqueId = `${EcwidShoppingBag.componentId}-${uniqueId()}`;
 
   handleResizerChange = (patch: Patch): void => {
     const device = this.getDeviceMode();
@@ -45,7 +45,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
   };
 
   componentDidMount(): void {
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return;
     }
 
@@ -70,7 +70,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -79,52 +79,61 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarParent, sidebarParent)}
       >
-        {({ open: openBag }) => {
+        {({ open: openBag, ref: bagRef }) => {
           return (
             <Toolbar
               {...this.makeToolbarPropsFromConfig2(toolbarIcon, sidebarIcon)}
               selector=".brz-ecwid-shopping-bag-wrapper .ec-minicart__counter"
             >
-              {({ open: openCounter }) => {
+              {({ open: openCounter, ref: counterRef }) => {
                 return (
                   <CustomCSS selectorName={this.getId()} css={customCSS}>
-                    <Wrapper {...this.makeWrapperProps({ className })}>
-                      <BoxResizer
-                        keepAspectRatio
-                        points={resizerPoints}
-                        restrictions={resizerRestrictions}
-                        value={resizerTransformValue(v)}
-                        onChange={this.handleResizerChange}
+                    {({ ref: cssRef }) => (
+                      <Wrapper
+                        {...this.makeWrapperProps({
+                          className,
+                          ref: (el) => {
+                            attachRefs(el, [bagRef, counterRef, cssRef]);
+                          }
+                        })}
                       >
-                        <div
-                          onClickCapture={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
+                        <BoxResizer
+                          keepAspectRatio
+                          points={resizerPoints}
+                          restrictions={resizerRestrictions}
+                          value={resizerTransformValue(v)}
+                          onChange={this.handleResizerChange}
+                        >
+                          <div
+                            onClickCapture={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
 
-                            if (
-                              (e.target as HTMLElement | null)?.closest(
-                                ".brz-ecwid-shopping-bag-wrapper .ec-minicart__icon"
-                              )
-                            ) {
-                              openBag(e.nativeEvent);
-                            } else if (
-                              (e.target as HTMLElement | null)?.closest(
-                                ".brz-ecwid-shopping-bag-wrapper .ec-minicart__counter"
-                              )
-                            ) {
-                              openCounter(e.nativeEvent);
-                            }
+                              if (
+                                (e.target as HTMLElement | null)?.closest(
+                                  ".brz-ecwid-shopping-bag-wrapper .ec-minicart__icon"
+                                )
+                              ) {
+                                openBag(e.nativeEvent);
+                              } else if (
+                                (e.target as HTMLElement | null)?.closest(
+                                  ".brz-ecwid-shopping-bag-wrapper .ec-minicart__counter"
+                                )
+                              ) {
+                                openCounter(e.nativeEvent);
+                              }
 
-                            return false;
-                          }}
-                          className={classNames(
-                            "ec-cart-widget",
-                            "brz-ecwid-shopping-bag"
-                          )}
-                          id={this.uniqueId}
-                        />
-                      </BoxResizer>
-                    </Wrapper>
+                              return false;
+                            }}
+                            className={classNames(
+                              "ec-cart-widget",
+                              "brz-ecwid-shopping-bag"
+                            )}
+                            id={this.uniqueId}
+                          />
+                        </BoxResizer>
+                      </Wrapper>
+                    )}
                   </CustomCSS>
                 );
               }}
@@ -147,7 +156,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

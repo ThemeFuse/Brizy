@@ -91,9 +91,10 @@ export function cssStyleElementEcwidProductsSortingBgGradient({
 export function cssStyleElementEcwidProductsSortingBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "sorting" });
+  return cssStyleBorder({ v, device, state, store, prefix: "sorting" });
 }
 
 export function cssStyleElementEcwidProductsSortingBorderRadius({
@@ -183,9 +184,10 @@ export function cssStyleElementEcwidProductsBgGradient({
 export function cssStyleElementEcwidProductsBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "products" });
+  return cssStyleBorder({ v, device, state, store, prefix: "products" });
 }
 
 export function cssStyleElementEcwidProductsBoxShadow({

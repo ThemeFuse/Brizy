@@ -1,8 +1,7 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { EcwidProductId } from "visual/global/Ecwid";
+import { EcwidProductId } from "visual/global/Ecwid/types";
 import { request } from "../../utils/api";
 import { Product } from "./types/Product";
-
 
 /**
  * https://api-docs.ecwid.com/reference/search-products#searchresult

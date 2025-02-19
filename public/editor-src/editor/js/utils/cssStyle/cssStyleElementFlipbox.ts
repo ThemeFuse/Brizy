@@ -62,8 +62,10 @@ export const cssStyleElementFlipboxBackBgFilter = ({
 export const cssStyleElementFlipboxBackBgBorder = ({
   v,
   device,
-  state
-}: CSSValue): string => cssStyleBorder({ v, device, state, prefix: "back" });
+  state,
+  store
+}: CSSValue): string =>
+  cssStyleBorder({ v, device, state, store, prefix: "back" });
 
 export const cssStyleElementFlipboxBackBgBorderRadius = ({
   v,
@@ -87,7 +89,7 @@ export const cssStyleElementFlipboxBackBgColor = ({
   state,
   store
 }: CSSValue): string => {
-  const bgColor = styleBgColor({ v, device, state, prefix: "backBg" });
+  const bgColor = styleBgColor({ v, device, state, store, prefix: "backBg" });
 
   const bgGradient = styleBgGradient({
     v,

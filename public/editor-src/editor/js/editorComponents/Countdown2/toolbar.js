@@ -1,7 +1,7 @@
-import _ from "underscore";
+import { times } from "es-toolkit/compat";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isStory } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -10,7 +10,7 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 export function getItems({ v, device, state, context, editorMode }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const numberColor = getColor(
+  const numberColor = getColorToolbar(
     dvv("numberColorPalette"),
     dvv("numberColorHex"),
     dvv("numberColorOpacity")
@@ -78,7 +78,7 @@ export function getItems({ v, device, state, context, editorMode }) {
                   label: t("Hour"),
                   type: "select",
                   devices: "desktop",
-                  choices: _.times(24, (index) => {
+                  choices: times(24, (index) => {
                     const hour = (index + 12) % 12 || 12;
                     const suffix = index >= 12 ? "pm" : "am";
                     return {
@@ -93,7 +93,7 @@ export function getItems({ v, device, state, context, editorMode }) {
                   label: t("Minutes"),
                   type: "select",
                   devices: "desktop",
-                  choices: _.times(6, (index) => {
+                  choices: times(6, (index) => {
                     const current = index * 10;
 
                     return {

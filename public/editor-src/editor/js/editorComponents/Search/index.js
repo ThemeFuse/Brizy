@@ -6,6 +6,7 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -15,13 +16,12 @@ import * as toolbar from "./toolbar";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 export default class Search extends EditorComponent {
+  static defaultValue = defaultValue;
+  inputRef = React.createRef();
+
   static get componentId() {
     return "Search";
   }
-
-  static defaultValue = defaultValue;
-
-  inputRef = React.createRef();
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -75,7 +75,7 @@ export default class Search extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -96,32 +96,43 @@ export default class Search extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={resizerRestrictions}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              <form className="brz-form brz-search-form" noValidate>
-                {searchStyle !== "classic" && this.renderIcon()}
-                <input
-                  name="s"
-                  ref={this.inputRef}
-                  className="brz-input brz-search"
-                  autoComplete="off"
-                  value={label}
-                  onChange={this.handleInputChange}
-                  onClick={this.handleInputClick}
-                  onBlur={this.handleInputBlur}
-                />
-                {searchStyle === "classic" && this.renderButton()}
-              </form>
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  restrictions={resizerRestrictions}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                >
+                  <form className="brz-form brz-search-form" noValidate>
+                    {searchStyle !== "classic" && this.renderIcon()}
+                    <input
+                      name="s"
+                      ref={this.inputRef}
+                      className="brz-input brz-search"
+                      autoComplete="off"
+                      value={label}
+                      onChange={this.handleInputChange}
+                      onClick={this.handleInputClick}
+                      onBlur={this.handleInputBlur}
+                    />
+                    {searchStyle === "classic" && this.renderButton()}
+                  </form>
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -142,7 +153,7 @@ export default class Search extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

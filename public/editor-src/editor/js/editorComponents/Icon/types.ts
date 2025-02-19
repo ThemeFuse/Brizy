@@ -2,7 +2,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { Target } from "visual/component/Link/types/Target";
 import { Type } from "visual/component/Link/types/Type";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { WithClassName } from "visual/types/attributes";
 import { CssId } from "visual/utils/models/cssId";
 
@@ -34,6 +34,8 @@ export interface Value extends ElementModel, CssId {
   customSizeSuffix: string;
   tabletCustomSizeSuffix: string;
   mobileCustomSizeSuffix: string;
+
+  customCSS: string;
 }
 
 export interface Props extends WithClassName {

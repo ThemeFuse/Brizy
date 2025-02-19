@@ -1,7 +1,7 @@
-import _ from "underscore";
-import React from "react";
-import T from "prop-types";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import T from "prop-types";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
 export default class Tabs extends React.Component {
@@ -22,7 +22,7 @@ export default class Tabs extends React.Component {
     tabsPosition: "top",
     value: "",
     hideHandlesWhenOne: true,
-    onChange: _.noop,
+    onChange: noop,
     helper: null
   };
 
@@ -84,7 +84,9 @@ export default class Tabs extends React.Component {
       "brz-ed-control__tab__content",
       `brz-ed-control__tabs__content__${tabsPosition}`
     );
-    const activeChild = childrenArr.find(child => value === child.props.value);
+    const activeChild = childrenArr.find(
+      (child) => value === child.props.value
+    );
 
     return (
       activeChild && (

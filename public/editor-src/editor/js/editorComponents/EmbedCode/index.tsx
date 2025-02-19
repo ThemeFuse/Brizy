@@ -7,6 +7,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -47,8 +48,7 @@ export default class EmbedCode extends EditorComponent<Value, ComponentsMeta> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext,
-          editorMode: this.props.editorMode
+          contexts: this.getContexts()
         })
       )
     );
@@ -90,23 +90,34 @@ export default class EmbedCode extends EditorComponent<Value, ComponentsMeta> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={resizerRestrictions}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              {code ? (
-                <EmbedCodeComponent code={code} className="brz-blocked" />
-              ) : (
-                <Placeholder icon="iframe" />
-              )}
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  restrictions={resizerRestrictions}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                >
+                  {code ? (
+                    <EmbedCodeComponent code={code} className="brz-blocked" />
+                  ) : (
+                    <Placeholder icon="iframe" />
+                  )}
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -124,8 +135,7 @@ export default class EmbedCode extends EditorComponent<Value, ComponentsMeta> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext,
-          editorMode: this.props.editorMode
+          contexts: this.getContexts()
         })
       )
     );

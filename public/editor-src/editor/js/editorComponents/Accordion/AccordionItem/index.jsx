@@ -123,7 +123,7 @@ class AccordionItem extends EditorComponent {
   getIcon(active, navIcon) {
     const icon = active ? `up-arrow-${navIcon}` : `down-arrow-${navIcon}`;
 
-    return isEditor(this.renderContext) ? (
+    return isEditor(this.props.renderContext) ? (
       <ThemeIcon
         className="brz-accordion-icon brz-accordion__nav--icon"
         type="editor"
@@ -152,19 +152,22 @@ class AccordionItem extends EditorComponent {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <div
-          className="brz-accordion__nav"
-          {...makeDataAttr({ name: "collapsible", value: collapsible })}
-          onClick={this.handleClick}
-        >
-          <TextEditor
-            value={v.labelText}
-            tagName={tagName}
-            className="brz-accordion__nav-title"
-            onChange={this.handleTextChange}
-          />
-          {navIcon !== "none" && this.getIcon(activeIcon, navIcon)}
-        </div>
+        {({ ref }) => (
+          <div
+            className="brz-accordion__nav"
+            {...makeDataAttr({ name: "collapsible", value: collapsible })}
+            onClick={this.handleClick}
+            ref={ref}
+          >
+            <TextEditor
+              value={v.labelText}
+              tagName={tagName}
+              className="brz-accordion__nav-title"
+              onChange={this.handleTextChange}
+            />
+            {navIcon !== "none" && this.getIcon(activeIcon, navIcon)}
+          </div>
+        )}
       </Toolbar>
     );
   }
@@ -177,7 +180,7 @@ class AccordionItem extends EditorComponent {
     } = this.props;
     const className = classnames(
       "brz-accordion__item-content brz-d-xs-flex brz-flex-xs-column",
-      { "brz-accordion--sortable": isEditor(this.renderContext) }
+      { "brz-accordion--sortable": isEditor(this.props.renderContext) }
     );
 
     const itemsProps = this.makeSubcomponentProps({
@@ -191,7 +194,7 @@ class AccordionItem extends EditorComponent {
       <Animation
         ref={this.content}
         iterationCount={
-          isView(this.renderContext) && (sectionPopup || sectionPopup2)
+          isView(this.props.renderContext) && (sectionPopup || sectionPopup2)
             ? Infinity
             : 1
         }

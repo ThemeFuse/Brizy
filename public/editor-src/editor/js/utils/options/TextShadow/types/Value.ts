@@ -1,5 +1,5 @@
+import { PaletteType } from "visual/types/Style";
 import { Hex } from "visual/utils/color/Hex";
-import { Palette } from "visual/utils/color/Palette";
 import { match } from "visual/utils/fp/match";
 import { NoEmptyBlur } from "./NoEmptyBlur";
 import { NoEmptyOpacity } from "./NoEmptyOpacity";
@@ -13,7 +13,7 @@ export interface Empty {
   vertical: 0;
   horizontal: 0;
   tempOpacity: NoEmptyOpacity;
-  tempPalette: Palette | undefined;
+  tempPalette: PaletteType | undefined;
   tempBlur: NoEmptyBlur;
   tempVertical: number;
   tempHorizontal: number;
@@ -40,7 +40,7 @@ export const fromNoEmpty = (v: NoEmpty): Empty => ({
 export interface NoEmpty {
   hex: Hex;
   opacity: NoEmptyOpacity;
-  palette: Palette | undefined;
+  palette: PaletteType | undefined;
   blur: NoEmptyBlur;
   vertical: number;
   horizontal: number;
@@ -83,7 +83,7 @@ export const setHex = (hex: Hex, value: Value): Value => {
   )(value);
 };
 
-export const setPalette = (palette: Palette, value: Value): Value => {
+export const setPalette = (palette: PaletteType, value: Value): Value => {
   return match(
     [
       isEmpty,

@@ -19,7 +19,9 @@ import {
   pageSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { Block, GlobalBlock, Screenshot } from "visual/types";
+import { Block } from "visual/types/Block";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Screenshot } from "visual/types/Screenshot";
 import { isGlobalPopup } from "visual/types/utils";
 import {
   createGlobalBlock,

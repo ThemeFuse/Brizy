@@ -1,19 +1,18 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makeRichTextDCColorCSS } from "visual/utils/color";
-import { Hex } from "visual/utils/color/Hex";
-import { Palette } from "visual/utils/color/Palette";
 import { Opacity } from "visual/utils/cssProps/opacity";
 import { decodeFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
 
 interface DecodedColor {
   [k: string]: {
-    hex: Hex | undefined;
+    hex: string | undefined;
     opacity: Opacity | undefined;
-    colorPalette: Palette | undefined;
+    colorPalette: string | undefined;
   };
 }
 
-export const getDCColor = ($: cheerio.Root): string[] => {
+export const getDCColor = ($: cheerio.Root, config: ConfigCommon): string[] => {
   const rules: string[] = [];
   const $richText = $(".brz-rich-text");
 
@@ -30,7 +29,7 @@ export const getDCColor = ($: cheerio.Root): string[] => {
     const currentRule: string = Object.entries(decodedColor)
       .reduce((acc, [key, value]) => {
         const newClassName = `.${className} ${key}`;
-        const css = makeRichTextDCColorCSS(newClassName, value);
+        const css = makeRichTextDCColorCSS(newClassName, value, config);
 
         if (css) {
           acc.push(css);

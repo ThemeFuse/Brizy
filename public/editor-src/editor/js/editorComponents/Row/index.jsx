@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import React, { Fragment } from "react";
 import { omit } from "timm";
-import { isEditor } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -19,7 +18,8 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { isPopup } from "visual/global/EditorModeContext";
+import { isPopup } from "visual/providers/EditorModeProvider";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
@@ -30,6 +30,7 @@ import {
 } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -191,7 +192,7 @@ class Row extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -203,9 +204,14 @@ class Row extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         ref={this.toolbarRef}
       >
-        <SortableHandle renderContext={this.renderContext}>
-          <ContainerBorderButton className="brz-ed-border__button--row" />
-        </SortableHandle>
+        {({ ref }) => (
+          <SortableHandle renderContext={this.props.renderContext}>
+            <ContainerBorderButton
+              className="brz-ed-border__button--row"
+              containerRef={ref}
+            />
+          </SortableHandle>
+        )}
       </Toolbar>
     );
   };
@@ -237,7 +243,7 @@ class Row extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -289,7 +295,7 @@ class Row extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(isEditor(this.renderContext) && {
+          ...(isEditor(this.props.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -319,7 +325,7 @@ class Row extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       cssClass || customClassName
@@ -368,44 +374,57 @@ class Row extends EditorComponent {
         <SortableElement type="row" useHandle={true}>
           {(sortableElementAttr) => (
             <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-              <ContainerBorder
-                type="row"
-                color="grey"
-                activeBorderStyle="dotted"
-                activateOnContentClick={false}
-                buttonPosition="topLeft"
-                renderButtonWrapper={this.renderToolbar}
-              >
-                {({
-                  ref: containerBorderRef,
-                  attr: containerBorderAttr,
-                  button: ContainerBorderButton,
-                  border: ContainerBorderBorder
-                }) => (
-                  <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-                    <Animation
-                      ref={containerBorderRef}
-                      component={"div"}
-                      componentProps={{
-                        ...parseCustomAttributes(customAttributes),
-                        ...sortableElementAttr,
-                        ...containerBorderAttr,
-                        ...(id && { id }),
-                        className: classNameRowContainer
-                      }}
-                      animationClass={animationClassName}
-                    >
-                      <Roles allow={["admin"]} fallbackRender={() => content}>
-                        <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                          {content}
-                        </ToolbarExtend>
-                        {ContainerBorderButton}
-                        {ContainerBorderBorder}
-                      </Roles>
-                    </Animation>
-                  </CustomCSS>
-                )}
-              </ContainerBorder>
+              {({ ref: contextMenuRef }) => (
+                <ContainerBorder
+                  type="row"
+                  color="grey"
+                  activeBorderStyle="dotted"
+                  activateOnContentClick={false}
+                  buttonPosition="topLeft"
+                  renderButtonWrapper={this.renderToolbar}
+                >
+                  {({
+                    ref: containerBorderRef,
+                    attr: containerBorderAttr,
+                    button: ContainerBorderButton,
+                    border: ContainerBorderBorder
+                  }) => (
+                    <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                      {({ ref: cssRef }) => (
+                        <Animation
+                          ref={(el) =>
+                            attachRefs(el, [
+                              cssRef,
+                              containerBorderRef,
+                              contextMenuRef
+                            ])
+                          }
+                          component={"div"}
+                          componentProps={{
+                            ...parseCustomAttributes(customAttributes),
+                            ...sortableElementAttr,
+                            ...containerBorderAttr,
+                            ...(id && { id }),
+                            className: classNameRowContainer
+                          }}
+                          animationClass={animationClassName}
+                        >
+                          <Roles
+                            allow={["admin"]}
+                            fallbackRender={() => content}
+                          >
+                            <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                              {content}
+                            </ToolbarExtend>
+                            {ContainerBorderButton}
+                            {ContainerBorderBorder}
+                          </Roles>
+                        </Animation>
+                      )}
+                    </CustomCSS>
+                  )}
+                </ContainerBorder>
+              )}
             </ContextMenu>
           )}
         </SortableElement>
@@ -433,7 +452,7 @@ class Row extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       cssClass || customClassName
@@ -442,6 +461,11 @@ class Row extends EditorComponent {
     const animationClassName = this.getAnimationClassName(v, vs, vd);
     const { options, hoverName, isHidden, animationId } = this.getHoverData(v);
     const store = this.getReduxStore();
+    const componentProps = {
+      ...parseCustomAttributes(customAttributes),
+      ...(id && { id }),
+      className: classNameRowContainer
+    };
 
     return (
       <Fragment>
@@ -449,11 +473,7 @@ class Row extends EditorComponent {
           <Animation
             iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
             component={tagName}
-            componentProps={{
-              ...parseCustomAttributes(customAttributes),
-              ...(id && { id }),
-              className: classNameRowContainer
-            }}
+            componentProps={componentProps}
             animationClass={animationClassName}
           >
             <ScrollMotion

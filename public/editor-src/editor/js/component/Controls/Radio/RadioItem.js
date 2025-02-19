@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
@@ -15,7 +15,7 @@ export default class RadioItem extends React.Component {
     active: false,
     value: "",
     name: "",
-    onClick: _.noop
+    onClick: noop
   };
 
   renderForEdit() {

@@ -1,10 +1,12 @@
+import { isEqual } from "es-toolkit";
 import { getIn, setIn } from "timm";
-import _ from "underscore";
 import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
+import { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
 import { globalBlocksAssembledSelector } from "visual/redux/selectors";
+import { Store } from "visual/redux/store";
 import { setIds } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 import { addIn } from "./helpers/addRemove";
@@ -27,8 +29,6 @@ import {
 } from "./helpers/normalize";
 import { normalizeFromTo } from "./helpers/path";
 import { FromTo, isAddable, isColumn, isRow, isShortcode } from "./types";
-import { Store } from "visual/redux/store";
-import { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
 
 function getValue(
   value: ElementModelType,
@@ -69,7 +69,7 @@ function getValue(
         // it will go one position after the desired one
         // in the case when dragging from up to down
         if (
-          _.isEqual(from.containerPath, to.containerPath) &&
+          isEqual(from.containerPath, to.containerPath) &&
           from.itemIndex < to.itemIndex
         ) {
           to.itemIndex--;
@@ -134,7 +134,7 @@ function getValue(
         return moveColumnToSection(oldValue, from, to);
       }
       case "row": {
-        return _.isEqual(from.containerPath, to.containerPath)
+        return isEqual(from.containerPath, to.containerPath)
           ? simpleMove(oldValue, from, to)
           : moveColumnToAnotherRow(oldValue, from, to);
       }

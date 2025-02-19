@@ -217,17 +217,19 @@ export function cssStyleElementShopifyVariantBorderRadio({
   v,
   device,
   state,
+  store,
   prefix = "radio"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix });
+  return cssStyleBorder({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBorderRadioActive({
   v,
   device,
+  store,
   prefix = "radio"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active", prefix });
+  return cssStyleBorder({ v, device, state: "active", store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBoxShadowRadio({
@@ -410,9 +412,10 @@ export function cssStyleElementShopifyVariantBorderSelectedItem({
   v,
   device,
   state,
+  store,
   prefix = "selectedItem"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix });
+  return cssStyleBorder({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyVariantBoxShadowSelectedItem({
@@ -543,9 +546,10 @@ export function cssStyleElementShopifyVariantBorderDropdown({
   v,
   device,
   state,
+  store,
   prefix = "dropdown"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix });
+  return cssStyleBorder({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementShopifyVariantBoxShadowDropdown({
@@ -600,17 +604,19 @@ export function cssStyleElementShopifyVariantBorderImageBlock({
   v,
   device,
   state,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix });
+  return cssStyleBorder({ v, device, store, state, prefix });
 }
 
 export function cssStyleElementShopifyVariantBorderImageBlockActive({
   v,
   device,
+  store,
   prefix = "imageBlock"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active", prefix });
+  return cssStyleBorder({ v, device, store, state: "active", prefix });
 }
 
 export function cssStyleElementShopifyVariantGradientImageBlock({

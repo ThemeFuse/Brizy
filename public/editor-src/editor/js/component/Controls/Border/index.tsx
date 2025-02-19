@@ -16,8 +16,8 @@ import * as BorderStyle from "visual/utils/options/Border/entities/style";
 import * as BorderWidthType from "visual/utils/options/Border/entities/widthType";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { mApply } from "visual/utils/value";
-import { toggleType } from "./utils";
 import { Width } from "./Width";
+import { toggleType } from "./utils";
 
 type Style = BorderStyle.Style;
 
@@ -30,7 +30,7 @@ export type StyleObject = {
 export interface Props extends WithClassName {
   enableOpacity: boolean;
   styles: StyleObject[];
-  paletteList: PaletteObject[];
+  paletteList?: PaletteObject[];
   paletteOpenSettings?: () => void;
   widthTypes: ("grouped" | "ungrouped")[];
   style: Style;
@@ -79,6 +79,7 @@ export const Border = ({
   onChangeBottomWidth,
   leftWidth,
   onChangeLeftWidth,
+  paletteList = [],
   ...props
 }: Props): JSX.Element => {
   const _className = classNames("brz-ed-control__border", className);
@@ -126,7 +127,7 @@ export const Border = ({
           palette: palette
         }}
         opacity={props.enableOpacity}
-        palette={props.paletteList}
+        palette={paletteList}
         paletteOpenSettings={props.paletteOpenSettings}
       >
         {styles.map(({ id, title, icon }) => {

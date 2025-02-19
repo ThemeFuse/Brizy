@@ -1,4 +1,4 @@
-import { PageCommon } from "visual/types";
+import { PageCommon } from "visual/types/Page";
 
 export const getDemoPage = (): PageCommon => ({
   data: {

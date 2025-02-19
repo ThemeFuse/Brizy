@@ -1,8 +1,5 @@
 import React, { Component, ReactElement } from "react";
-import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import Config from "visual/global/Config";
 import { Context } from "../../common/GlobalApps/Context";
 import {
   BaseIntegrationContext,
@@ -22,9 +19,7 @@ const helper = {
   }
 };
 
-const getApiKeys = (config: ConfigCommon) => {
-  const is_pro = isPro(config);
-
+const getApiKeys = (isPro: boolean) => {
   return [
     {
       name: "emailTo",
@@ -37,7 +32,7 @@ const getApiKeys = (config: ConfigCommon) => {
     {
       name: "subject",
       title: t("Subject"),
-      ...(is_pro ? helper : {})
+      ...(isPro ? helper : {})
     },
     {
       name: "fromEmail",
@@ -50,7 +45,7 @@ const getApiKeys = (config: ConfigCommon) => {
     {
       name: "replayTo",
       title: t("Reply-To"),
-      ...(is_pro ? helper : {})
+      ...(isPro ? helper : {})
     },
     {
       name: "cc",
@@ -91,6 +86,7 @@ const getApiKeys = (config: ConfigCommon) => {
 };
 
 type Props = {
+  isPro: boolean;
   onClose: () => void;
 };
 
@@ -106,7 +102,7 @@ class SmtpFields extends Component<
       <Smtp
         {...this.props}
         {...this.context}
-        apiKeys={getApiKeys(Config.getAll())}
+        apiKeys={getApiKeys(this.props.isPro)}
       />
     );
   }

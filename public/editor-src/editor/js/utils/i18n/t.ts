@@ -1,5 +1,7 @@
 import { I18n } from "./I18n";
 
-export const t = (key: string): string => {
+export type Translation = (key: string) => string;
+
+export const t: Translation = (key) => {
   return I18n.t(key);
 };

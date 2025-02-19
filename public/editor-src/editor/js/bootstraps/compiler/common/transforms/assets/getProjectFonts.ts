@@ -1,20 +1,22 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   AdobeFont,
   ExtraFontData,
   GoogleFont,
   UploadedFont
-} from "visual/types";
+} from "visual/types/Fonts";
+import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl";
 import {
   makeSubsetGoogleFontsUrl,
   makeUploadFontsUrl
-} from "visual/utils/fonts";
-import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl";
+} from "visual/utils/fonts/makeFontsUrl";
 
 type Fonts = {
   google: GoogleFont[];
   upload: UploadedFont[];
   adobe: AdobeFont[];
   extra?: ExtraFontData;
+  config: ConfigCommon;
 };
 
 type FontLinks = {
@@ -27,7 +29,12 @@ const filteredByDeleted = (font: GoogleFont | UploadedFont): boolean => {
   return font.deleted !== true;
 };
 
-export const getFontLinks = ({ google, upload, extra }: Fonts): FontLinks => {
+export const getFontLinks = ({
+  google,
+  upload,
+  extra,
+  config
+}: Fonts): FontLinks => {
   const { adobeKitId } = extra ?? {};
 
   const gFonts = google.filter(filteredByDeleted);
@@ -35,7 +42,9 @@ export const getFontLinks = ({ google, upload, extra }: Fonts): FontLinks => {
   const googleLinks = gFonts.length
     ? makeSubsetGoogleFontsUrl(gFonts)
     : undefined;
-  const uploadLinks = uFonts.length ? makeUploadFontsUrl(uFonts) : undefined;
+  const uploadLinks = uFonts.length
+    ? makeUploadFontsUrl(uFonts, config)
+    : undefined;
   const adobeData = adobeKitId ? { adobe: makeAdobeFontsUrl(adobeKitId) } : {};
   return {
     google: googleLinks,

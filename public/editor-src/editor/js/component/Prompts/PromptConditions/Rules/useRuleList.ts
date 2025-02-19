@@ -9,8 +9,15 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/global/hooks";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
-import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
-import { getCollectionItems } from "visual/utils/api/cms/";
+import {
+  CollectionItemRule,
+  CollectionTypeRule,
+  Rule
+} from "visual/types/Rule";
+import {
+  getConditionalItems,
+  getConditionalTypes
+} from "visual/utils/api/common";
 import {
   CUSTOMER_TYPE,
   createEntityValue,
@@ -28,11 +35,13 @@ import { isOneOf } from "visual/utils/fp/isOneOf";
 import { t } from "visual/utils/i18n";
 import { CmsListItem, RuleList, RuleListItem } from "./types";
 import {
+  convertIdToValue,
   disableAlreadyUsedRules,
+  getRefsById,
   getRulesListIndexByRule,
   getUniqRules
 } from "./utils";
-import { Refs as RefsById, getCustomerAndCollectionTypes } from "./utils/api";
+import { Refs as RefsById } from "./utils/api";
 
 export default function useRuleList(
   rules: Rule[],
@@ -144,14 +153,17 @@ export default function useRuleList(
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
-      const { collections, customers } = await getCustomerAndCollectionTypes({
-        uri: config.api?.brizyApiUrl ?? "",
-        authorization: config.tokenV2
-          ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
-          : undefined
-      });
-      const { types: collectionTypes, refsById } = collections;
-      const { types: customerTypes, groups } = customers;
+      const data = await getConditionalTypes(config);
+
+      const {
+        collectionTypes: _collectionTypes,
+        customers: customerTypes,
+        customerGroups: groups
+      } = data;
+
+      const collectionTypes = convertIdToValue(_collectionTypes);
+
+      const refsById = getRefsById(_collectionTypes);
 
       const rulesList = collectionTypes.map(({ value, title }) => ({
         title,
@@ -171,7 +183,7 @@ export default function useRuleList(
             title: t("Specific User"),
             value: CUSTOMER_TYPE,
             mode: "specific",
-            items: customerTypes
+            items: convertIdToValue(customerTypes)
           });
         }
 
@@ -180,7 +192,7 @@ export default function useRuleList(
             title: t("Roles"),
             value: CUSTOMER_TYPE,
             mode: "reference",
-            items: groups
+            items: convertIdToValue(groups)
           });
         }
 
@@ -334,16 +346,7 @@ async function getItems(
   entityType: string,
   config: ConfigCommon
 ): Promise<RuleList[]> {
-  const items = await getCollectionItems(
-    entityType,
-    {
-      uri: config?.api?.brizyApiUrl ?? "",
-      authorization: config.tokenV2
-        ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
-        : undefined
-    },
-    { status: "all" }
-  );
+  const items = await getConditionalItems(entityType, config);
 
   return items.map(({ id, title, status }) => ({
     title: title,

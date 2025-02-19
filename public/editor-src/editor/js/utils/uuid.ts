@@ -1,6 +1,6 @@
+import { once } from "es-toolkit";
 import { Base64 } from "js-base64";
 import { customAlphabet } from "nanoid";
-import { once } from "underscore";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 

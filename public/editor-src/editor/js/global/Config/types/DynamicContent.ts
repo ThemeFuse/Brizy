@@ -1,3 +1,4 @@
+import { Obj } from "@brizy/readers";
 import { Dictionary } from "visual/types/utils";
 import { Literal } from "visual/utils/types/Literal";
 import { Response } from "./configs/common";
@@ -10,11 +11,13 @@ export enum DCTypes {
   multiReference = "multiReference"
 }
 
-interface BaseDCItem {
+export type Display = "block" | "inline";
+
+export interface BaseDCItem {
   label: string;
   placeholder: string;
   alias?: string;
-  display?: "block" | "inline";
+  display?: Display;
   attr?: Record<string, Literal>;
 }
 
@@ -30,10 +33,18 @@ export interface DCItemHandler {
   ) => void;
 }
 
-interface DCGroups {
+export interface DCGroups {
   [DCTypes.image]: Array<ConfigDCItem> | DCItemHandler;
   [DCTypes.link]: Array<ConfigDCItem> | DCItemHandler;
   [DCTypes.richText]: Array<ConfigDCItem> | DCItemHandler;
+}
+
+export function isDCItemHandler(arg: unknown): arg is DCItemHandler {
+  return (
+    Obj.isObject(arg) &&
+    Obj.hasKey("handler", arg) &&
+    typeof arg.handler === "function"
+  );
 }
 
 export interface ConfigDCReference {

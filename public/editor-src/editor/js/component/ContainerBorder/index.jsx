@@ -1,10 +1,11 @@
 import classnames from "classnames";
-import { ReactReduxContext } from "react-redux";
 import T from "prop-types";
 import React from "react";
+import { ReactReduxContext } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import ContainerBorderButton from "./ContainerBorderButton";
 
 export default class ContainerBorder extends React.Component {
@@ -66,6 +67,11 @@ export default class ContainerBorder extends React.Component {
     // React on the other hand bubbles clicks from all the subtree
     // regardless of the physical position in the DOM thus
     // we will be reacting to clicks from toolbars and other portals
+
+    if (!this.containerRef.current) {
+      return;
+    }
+
     this.containerRef.current.addEventListener(
       "click",
       this.handleContentClick
@@ -277,12 +283,16 @@ export default class ContainerBorder extends React.Component {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.handleClickOutside}
       >
-        {children({
-          ref: this.containerRef,
-          button,
-          border,
-          attr
-        })}
+        {({ ref }) =>
+          children({
+            ref: (el) => {
+              attachRefs(el, [ref, this.containerRef]);
+            },
+            button,
+            border,
+            attr
+          })
+        }
       </ClickOutside>
     );
   }
