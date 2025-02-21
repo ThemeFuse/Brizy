@@ -62,6 +62,7 @@ interface Actions {
   heartBeat: string;
   takeOver: string;
   getFonts: string;
+  getMenus: string;
 }
 
 interface ProjectStatus {
@@ -347,6 +348,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getFonts: pipe(
     mPipe(Obj.readKey("getFonts"), Str.read),
     throwOnNullish("Invalid actions: getFonts")
+  ),
+  getMenus: pipe(
+    mPipe(Obj.readKey("getMenus"), Str.read),
+    throwOnNullish("Invalid actions: getMenus")
   )
 });
 

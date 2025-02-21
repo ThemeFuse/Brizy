@@ -57,6 +57,7 @@ import {
   stringifySavedBlock
 } from "./adapter";
 import { makeFormEncode, makeUrl } from "./utils";
+import { MenuSimple } from "@/menu/types";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -1786,3 +1787,32 @@ export const getDefaultStoryPages = async (
 };
 
 //#endregion
+
+export const getMenus = async (): Promise<MenuSimple[]> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getMenus,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST",
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isT(res.data)) {
+      return res.data
+    }
+  }
+  throw new Error(t("Failed to get adobe fonts"));
+};

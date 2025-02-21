@@ -23,6 +23,7 @@ import { globalPopups } from "./globalBlocks/popups";
 import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
+import { getMenus } from "./menu";
 import { onChange } from "./onChange";
 import { onStartLoad } from "./onStartLoad";
 import { popupConditions } from "./popupConditions";
@@ -75,7 +76,10 @@ const api = {
   fonts: {
     adobeFont: adobeFont()
   },
-  heartBeat: heartBeat(config)
+  heartBeat: heartBeat(config),
+  menu: {
+    getMenus: getMenus()
+  }
 };
 
 if (window.__VISUAL_CONFIG__) {
