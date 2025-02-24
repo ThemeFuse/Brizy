@@ -63,6 +63,10 @@ interface Actions {
   takeOver: string;
   getFonts: string;
   getMenus: string;
+
+  setFeaturedImage: string;
+  setFeaturedImageFocalPoint: string;
+  removeFeaturedImage: string;
 }
 
 interface ProjectStatus {
@@ -352,6 +356,18 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getMenus: pipe(
     mPipe(Obj.readKey("getMenus"), Str.read),
     throwOnNullish("Invalid actions: getMenus")
+  ),
+  setFeaturedImage: pipe(
+    mPipe(Obj.readKey("setFeaturedImage"), Str.read),
+    throwOnNullish("Invalid actions: setFeaturedImage")
+  ),
+  setFeaturedImageFocalPoint: pipe(
+    mPipe(Obj.readKey("setFeaturedImageFocalPoint"), Str.read),
+    throwOnNullish("Invalid actions: setFeaturedImageFocalPoint")
+  ),
+  removeFeaturedImage: pipe(
+    mPipe(Obj.readKey("removeFeaturedImage"), Str.read),
+    throwOnNullish("Invalid actions: removeFeaturedImage")
   )
 });
 

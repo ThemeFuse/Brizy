@@ -17,6 +17,7 @@ import {
 import { placeholderData, placeholders } from "./dynamicContent";
 import { getMenu } from "./Elements/Menu";
 import { handler as posts } from "./Elements/Posts";
+import { featuredImage } from "./featuredImage";
 import { adobeFont, uploadedFonts } from "./fonts";
 import { globalBlocks } from "./globalBlocks/blocks";
 import { globalPopups } from "./globalBlocks/popups";
@@ -79,7 +80,8 @@ const api = {
   heartBeat: heartBeat(config),
   menu: {
     getMenus: getMenus()
-  }
+  },
+  featuredImage
 };
 
 if (window.__VISUAL_CONFIG__) {
