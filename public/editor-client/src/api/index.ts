@@ -1787,6 +1787,100 @@ export const getDefaultStoryPages = async (
 };
 
 //#endregion
+export const updateFeaturedImage = async (attachmentId: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, pageId, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.setFeaturedImage,
+    post: pageId,
+    version: editorVersion,
+    attachmentId
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to update featured image"));
+};
+
+export const updateFeaturedImageFocalPoint = async (
+  attachmentId: string,
+  pointX: string,
+  pointY: string
+) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, pageId, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.setFeaturedImageFocalPoint,
+    post: pageId,
+    version: editorVersion,
+    attachmentId,
+    pointX,
+    pointY
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to update focal point for featured image"));
+};
+
+export const removeFeaturedImage = async () => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, pageId, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.removeFeaturedImage,
+    post: pageId,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to remove featured image"));
+};
 
 export const getMenus = async (): Promise<MenuSimple[]> => {
   const config = getConfig();
