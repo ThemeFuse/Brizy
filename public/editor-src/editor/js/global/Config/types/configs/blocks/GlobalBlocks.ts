@@ -1,4 +1,4 @@
-import { GlobalBlock } from "visual/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
 import { ApiRule } from "visual/utils/api/adapter";
 import { Response } from "../common";
 

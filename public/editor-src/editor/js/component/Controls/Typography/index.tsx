@@ -117,7 +117,8 @@ export class Typography extends PureComponent<Props> {
       showTextTransform,
       onIconClick,
       showFontSize,
-      showFontStyles
+      showFontStyles,
+      isFontStyleSettingsDisabled
     } = this.props;
 
     const typographyStyleClassName = classnames(
@@ -188,6 +189,7 @@ export class Typography extends PureComponent<Props> {
                   openSettings={styleOpenSettings}
                   onChange={this.onFontStyle}
                   value={style}
+                  isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
                 />
               </>
             )}

@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import { removeAt } from "timm";
-import { noop } from "underscore";
 import { hideToolbar } from "visual/component/Toolbar/index";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";

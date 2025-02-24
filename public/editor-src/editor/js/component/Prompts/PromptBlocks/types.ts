@@ -1,13 +1,12 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontsPayload } from "visual/redux/actions2";
+import { Block } from "visual/types/Block";
 import {
-  Block,
   BlockMetaType,
-  ExtraFontStyle,
   GlobalBlockNormal,
-  GlobalBlockPopup,
-  Style
-} from "visual/types";
+  GlobalBlockPopup
+} from "visual/types/GlobalBlock";
+import { ExtraFontStyle, Style } from "visual/types/Style";
 import { PromptGlobalBlock } from "./Global/types";
 
 export type PromptTabsId = "template" | "blocks" | "saved" | "global";

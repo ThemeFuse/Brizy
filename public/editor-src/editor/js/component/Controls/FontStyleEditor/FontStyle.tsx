@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import React, { JSX, useCallback, useState } from "react";
-import { ToolbarItem } from "./ToolbarItem";
 import EditorIcon from "visual/component/EditorIcon";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import { DESKTOP } from "visual/utils/responsiveMode";
+import { ToolbarItem } from "./ToolbarItem";
 import { FontStyleProps } from "./types";
 
 const animateClassName = "brz-ed-option__font-style-editor--animate";
@@ -75,12 +75,15 @@ export const FontStyleItem = (value: FontStyleProps): JSX.Element => {
         onOpen={handleOpen}
         onClose={handleClose}
       >
-        <ToolbarItem
-          deletable={deletable}
-          style={sampleStyle}
-          title={title}
-          onClick={handleTextChange}
-        />
+        {({ ref }) => (
+          <ToolbarItem
+            ref={ref}
+            deletable={deletable}
+            style={sampleStyle}
+            title={title}
+            onClick={handleTextChange}
+          />
+        )}
       </Toolbar>
     </div>
   );

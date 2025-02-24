@@ -4,12 +4,12 @@ import {
 } from "@brizy/component/src/Flex/Lottie/types";
 import { Num, pipe } from "@brizy/readers";
 import { DotLottie } from "@lottiefiles/dotlottie-web";
-import { checkValue, checkValue2 } from "visual/utils/checkValue";
-import { BoxResizerParams } from "./type";
+import { throttle } from "es-toolkit";
 import { AnimationDirection, AnimationItem } from "lottie-web";
+import { checkValue, checkValue2 } from "visual/utils/checkValue";
 import { getCurrentDevice } from "visual/utils/export";
 import { DESKTOP } from "visual/utils/responsiveMode";
-import { throttle } from "underscore";
+import { BoxResizerParams } from "./type";
 
 export const resizerPoints = [
   "topLeft",

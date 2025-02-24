@@ -1,6 +1,6 @@
 import classNames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import ContextMenu from "visual/component/ContextMenu";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
@@ -11,6 +11,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { Wrapper } from "../tools/Wrapper";
 import contextMenuConfig from "./contextMenu";
@@ -24,16 +25,15 @@ import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 import * as toolbarSecondConfig from "./toolbarSecond";
 
 class Switcher extends EditorComponent {
-  static get componentId() {
-    return "Switcher";
-  }
-
   static defaultProps = {
     meta: {},
     extendParentToolbar: noop
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "Switcher";
+  }
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -84,12 +84,12 @@ class Switcher extends EditorComponent {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
 
-  renderNav(v, vs, vd) {
+  renderNav(v, vs, vd, ref) {
     const {
       activeTab,
       labelText1,
@@ -112,13 +112,13 @@ class Switcher extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
-      <div className="brz-switcher__nav2">
+      <div className="brz-switcher__nav2" ref={ref}>
         {Array(2)
           .fill()
           .map((_, index) => {
@@ -140,40 +140,42 @@ class Switcher extends EditorComponent {
                     }
                   )}
                 >
-                  <div className={classNameNavButton}>
-                    {index === 0 && firstIconName && firstIconType && (
-                      <ThemeIcon
-                        name={firstIconName}
-                        type={firstIconType}
-                        filename={firstIconFilename}
-                      />
-                    )}
-                    {index === 0 && (
-                      <TextEditor
-                        className="brz-switcher__nav2__item"
-                        value={labelText1}
-                        onChange={(text) =>
-                          this.handleChange({ labelText1: text })
-                        }
-                      />
-                    )}
-                    {index === 1 && secondIconName && secondIconType && (
-                      <ThemeIcon
-                        name={secondIconName}
-                        type={secondIconType}
-                        filename={secondIconFilename}
-                      />
-                    )}
-                    {index === 1 && (
-                      <TextEditor
-                        className="brz-switcher__nav2__item"
-                        value={labelText2}
-                        onChange={(text) =>
-                          this.handleChange({ labelText2: text })
-                        }
-                      />
-                    )}
-                  </div>
+                  {({ ref }) => (
+                    <div className={classNameNavButton} ref={ref}>
+                      {index === 0 && firstIconName && firstIconType && (
+                        <ThemeIcon
+                          name={firstIconName}
+                          type={firstIconType}
+                          filename={firstIconFilename}
+                        />
+                      )}
+                      {index === 0 && (
+                        <TextEditor
+                          className="brz-switcher__nav2__item"
+                          value={labelText1}
+                          onChange={(text) =>
+                            this.handleChange({ labelText1: text })
+                          }
+                        />
+                      )}
+                      {index === 1 && secondIconName && secondIconType && (
+                        <ThemeIcon
+                          name={secondIconName}
+                          type={secondIconType}
+                          filename={secondIconFilename}
+                        />
+                      )}
+                      {index === 1 && (
+                        <TextEditor
+                          className="brz-switcher__nav2__item"
+                          value={labelText2}
+                          onChange={(text) =>
+                            this.handleChange({ labelText2: text })
+                          }
+                        />
+                      )}
+                    </div>
+                  )}
                 </Toolbar>
                 {index === 0 && (
                   <div
@@ -231,7 +233,7 @@ class Switcher extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -241,18 +243,30 @@ class Switcher extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <Wrapper {...this.makeWrapperProps({ className: classNameSwitcher })}>
-            {switcherStyle === "style-2" ? (
-              this.renderNav(v, vs, vd)
-            ) : (
-              <div className={classNameNav}>
-                <Items {...itemNavProps} />
-              </div>
-            )}
-            <Items {...itemContentProps} />
-          </Wrapper>
-        </ContextMenu>
+        {({ ref: cssRef }) => (
+          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+            {({ ref: contextMenuRef }) => {
+              const ref = (el) => attachRefs(el, [cssRef, contextMenuRef]);
+
+              return (
+                <Wrapper
+                  {...this.makeWrapperProps({
+                    className: classNameSwitcher
+                  })}
+                >
+                  {switcherStyle === "style-2" ? (
+                    this.renderNav(v, vs, vd, ref)
+                  ) : (
+                    <div className={classNameNav} ref={ref}>
+                      <Items {...itemNavProps} />
+                    </div>
+                  )}
+                  <Items {...itemContentProps} />
+                </Wrapper>
+              );
+            }}
+          </ContextMenu>
+        )}
       </CustomCSS>
     );
   }

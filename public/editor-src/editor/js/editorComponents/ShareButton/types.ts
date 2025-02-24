@@ -50,6 +50,7 @@ export interface Value extends ElementModel {
   };
 
   itemIndex: number;
+  customCSS: string;
 }
 
 export interface Props extends WithClassName {

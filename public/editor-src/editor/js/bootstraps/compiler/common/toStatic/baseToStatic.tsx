@@ -14,7 +14,6 @@ import {
 } from "visual/utils/options/getDetailsModelFontFamily";
 import { getAssets } from "../transforms/assets";
 import { changeMenuUid } from "../transforms/changeMenuUid";
-import { changeRichText } from "../transforms/changeRichText";
 import { customAttributes } from "../transforms/customAttributes";
 import { dynamicContent } from "../transforms/dynamicContent";
 import { getUsedFonts } from "../utils/getUsedFonts";
@@ -23,7 +22,7 @@ import { Output } from "./types";
 interface Props {
   store: Store;
   Page: ReactElement;
-  sheet: Sheet;
+  sheet: Readonly<Sheet>;
 }
 
 export const baseToStatic = (props: Props): Output => {
@@ -50,7 +49,6 @@ export const baseToStatic = (props: Props): Output => {
     { decodeEntities: false }
   );
 
-  changeRichText($pageHTML, store);
   changeMenuUid($pageHTML);
   customAttributes($pageHTML);
 

@@ -42,9 +42,10 @@ export function cssStyleElementTOCTitleColor({
 export function cssStyleElementTOCHeaderBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "header" });
+  return cssStyleBorder({ v, device, state, store, prefix: "header" });
 }
 
 export function cssStyleElementTOCHeaderPadding({
@@ -194,7 +195,8 @@ export function cssStyleElementTOCBodyTextTransform({
 export function cssStyleElementTOCBodyBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "body" });
+  return cssStyleBorder({ v, device, state, store, prefix: "body" });
 }

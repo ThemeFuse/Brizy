@@ -3,13 +3,15 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { placeholderName } from "visual/utils/dynamicContent/types";
 import { EditorComponentContextValue } from "../../EditorComponentContext";
 import { ECKeyDCInfo } from "../../types";
-import { BatchFetcher, DCApiProxy, DCApiProxyConfig } from "../DCApiProxy";
+import { BatchFetcher } from "../BatchFetcher";
+import { DCApiProxy } from "../DCApiProxy";
 import {
   DCObjComplete,
   DCObjIncomplete,
   getDCObjEditor_,
   getDCObjPreview
 } from "../getDCObj";
+import { DCApiProxyConfig } from "../types";
 import { dcApiProxyTestFetcher } from "../utils";
 
 jest.useFakeTimers();

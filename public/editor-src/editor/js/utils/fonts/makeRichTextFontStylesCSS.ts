@@ -1,5 +1,5 @@
 import { Store } from "visual/redux/store";
-import { FontStyle } from "visual/types";
+import { FontStyle } from "visual/types/Style";
 import { getFontById } from "./getFontById";
 
 const generateStyles = (style: Omit<FontStyle, "id">, store: Store) => {
@@ -79,17 +79,11 @@ export const makeRichTextDynamicFontStylesCSS = (
       const { desktop, tablet, mobile } = generateStyles(styles, store);
       const dynamicClassName = dynamicStyleIds[id.toLowerCase()];
 
-      return IS_EDITOR
-        ? [
-            `.brz-ed--desktop .brz-tp__dc-block-st1 ${dynamicClassName} { ${desktop} }`,
-            `.brz-ed--tablet .brz-tp__dc-block-st1 ${dynamicClassName} { ${tablet} }`,
-            `.brz-ed--mobile .brz-tp__dc-block-st1 ${dynamicClassName} { ${mobile} }`
-          ].join("\n")
-        : [
-            `.brz .brz-tp__dc-block-st1 ${dynamicClassName} { ${desktop} }`,
-            `@media (max-width: 991px) {.brz .brz-tp__dc-block-st1 ${dynamicClassName} { ${tablet} } }`,
-            `@media (max-width: 767px) {.brz .brz-tp__dc-block-st1 ${dynamicClassName} { ${mobile} } }`
-          ].join("\n");
+      return [
+        `.brz .brz-tp__dc-block-st1 ${dynamicClassName} { ${desktop} }`,
+        `@media (max-width: 991px) {.brz .brz-tp__dc-block-st1 ${dynamicClassName} { ${tablet} } }`,
+        `@media (max-width: 767px) {.brz .brz-tp__dc-block-st1 ${dynamicClassName} { ${mobile} } }`
+      ].join("\n");
     })
     .join("\n");
 };

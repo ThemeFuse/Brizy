@@ -7,8 +7,6 @@ module.exports = {
   },
   globals: {
     TARGET: "readonly",
-    IS_EDITOR: "readonly",
-    IS_PREVIEW: "readonly",
     IS_EXPORT: "readonly",
     COMPILER_TYPE: "readonly",
     AUTHORIZATION_URL: "readonly",

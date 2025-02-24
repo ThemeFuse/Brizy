@@ -1,5 +1,5 @@
-import { Rule } from "visual/types";
-import { apiRuleToEditorRule, ApiRule } from "../";
+import { Rule } from "visual/types/Rule";
+import { ApiRule, apiRuleToEditorRule } from "../";
 
 describe("testing reader Global Blocks", () => {
   test.each<[ApiRule, Rule]>([

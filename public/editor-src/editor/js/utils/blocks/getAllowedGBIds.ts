@@ -1,30 +1,29 @@
+import { difference, intersection } from "es-toolkit";
 import { isT } from "fp-utilities";
-import _ from "underscore";
 import { isWp } from "visual/global/Config";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   isCloud,
   isCollectionPage
 } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxState } from "visual/redux/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page, PageCollection } from "visual/types/Page";
 import {
   AllRule,
   CollectionItemRule,
   CollectionTypeRule,
-  GlobalBlock,
-  isWPPage,
-  Page,
-  PageCollection,
   Rule
-} from "visual/types";
+} from "visual/types/Rule";
 import {
   isReferenceAllAuthor,
   isReferenceAllChild,
   isReferenceAllIn,
   isReferenceSpecificAuthor,
   isReferenceSpecificChild,
-  isReferenceSpecificIn
+  isReferenceSpecificIn,
+  isWPPage
 } from "visual/types/utils";
 import {
   GetCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference as CollectionItemFieldMultiReference,
@@ -32,12 +31,12 @@ import {
 } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { isTemplate } from "visual/utils/models";
 import {
-  createEntityValue,
   CUSTOMER_TYPE,
-  getCurrentRule,
-  getEntityValue,
+  TEMPLATES_GROUP_ID,
   TEMPLATE_TYPE,
-  TEMPLATES_GROUP_ID
+  createEntityValue,
+  getCurrentRule,
+  getEntityValue
 } from "./blocksConditions";
 import {
   isAllRule,
@@ -150,7 +149,7 @@ export function canUseConditionInTemplates(data: Data): boolean {
       ({ entityType, appliedFor, entityValues }) =>
         appliedFor === rule.appliedFor &&
         entityType === rule.entityType &&
-        _.intersection(entityValues, rule.entityValues).length
+        intersection(entityValues, rule.entityValues).length
     )
   );
 
@@ -326,13 +325,13 @@ export function pageCMSSplitRules(
 
   const referenceSingle = specificReference.find((rule) => {
     const intersectionRule = refs
-      .map((ref) => _.intersection(ref.entityValues, rule.entityValues))
+      .map((ref) => intersection(ref.entityValues, rule.entityValues))
       .flat();
 
     return intersectionRule.length;
   });
 
-  const referenceAll = _.difference(referenceRule, specificReference).find(
+  const referenceAll = difference(referenceRule, specificReference).find(
     (r) => {
       const intersectionRule = refs.filter((ref) =>
         r.entityValues.some((r) => ref.fieldId === r)
@@ -361,7 +360,7 @@ function pageCustomerSplitRules(
         (rule): rule is CollectionItemRule =>
           isCollectionItemRule(rule) && rule.entityType === CUSTOMER_TYPE
       )
-      .find((rule) => _.intersection(groupIds, rule.entityValues).length > 0);
+      .find((rule) => intersection(groupIds, rule.entityValues).length > 0);
   }
 
   return undefined;

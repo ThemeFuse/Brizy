@@ -27,18 +27,18 @@ export interface Value extends ElementModel {
   colorOpacity: number;
 }
 
-interface Props {
+export interface Props {
   verticalMode: string;
   timelineStyle: string;
   toolbarExtendLabel: ToolbarExtend;
 }
 
 export default class TimelineTab extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): "TimelineTab" {
     return "TimelineTab";
   }
-
-  static defaultValue = defaultValue;
 
   handleLabelChange = (labelText: string): void => {
     this.patchValue({ labelText });
@@ -70,30 +70,34 @@ export default class TimelineTab extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
-      <div className={className}>
-        <Toolbar {...toolbarExtendLabel}>
-          <TextEditor
-            value={labelText}
-            onChange={this.handleLabelChange}
-            className="brz-timeline__nav--title"
-          />
-        </Toolbar>
-        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
-          <div className="brz-timeline__nav--icon">
-            <ThemeIcon name={name} type={type} filename={filename} />
+      <Toolbar {...toolbarExtendLabel} selector=".brz-timeline__nav--title">
+        {({ ref }) => (
+          <div className={className} ref={ref}>
+            <TextEditor
+              value={labelText}
+              onChange={this.handleLabelChange}
+              className="brz-timeline__nav--title"
+            />
+            <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
+              {({ ref }) => (
+                <div className="brz-timeline__nav--icon" ref={ref}>
+                  <ThemeIcon name={name} type={type} filename={filename} />
+                </div>
+              )}
+            </Toolbar>
+            {
+              // @ts-expect-error: Need transform to ts
+              <Items {...itemProps} />
+            }
           </div>
-        </Toolbar>
-        {
-          // @ts-expect-error: Need transform to ts
-          <Items {...itemProps} />
-        }
-      </div>
+        )}
+      </Toolbar>
     );
   }
 }

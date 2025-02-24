@@ -1,20 +1,20 @@
 import classNames from "classnames";
 import React, { ReactElement, ReactNode } from "react";
 import {
-  EditorMode,
-  getCommonEditorMode
-} from "visual/global/EditorModeContext";
+  getCommonEditorMode,
+  useEditorMode
+} from "visual/providers/EditorModeProvider";
 
 export interface Props {
   attr?: React.Attributes;
   className?: string;
   children: ReactNode;
-  editorMode: EditorMode;
 }
 
 export const RootContainer = (props: Props): ReactElement => {
   const { children, attr, className: _className } = props;
-  const type = getCommonEditorMode(props.editorMode);
+  const { mode } = useEditorMode();
+  const type = getCommonEditorMode(mode);
   const className = classNames(
     "brz-root__container brz-reset-all",
     _className,

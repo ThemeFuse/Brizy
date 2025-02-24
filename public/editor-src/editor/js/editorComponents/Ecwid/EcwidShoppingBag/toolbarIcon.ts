@@ -1,24 +1,15 @@
-import _ from "underscore";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { noop } from "es-toolkit";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const iconColor = getColor(
+  const iconColor = getColorToolbar(
     dvv("iconColorPalette"),
     dvv("iconColorHex"),
     dvv("iconColorOpacity")
@@ -161,13 +152,13 @@ export function getItems({
     {
       id: "duplicate",
       type: "button",
-      onClick: _.noop,
+      onClick: noop,
       disabled: true
     },
     {
       id: "remove",
       type: "button",
-      onClick: _.noop,
+      onClick: noop,
       disabled: true
     },
     {
@@ -178,4 +169,4 @@ export function getItems({
       title: t("Settings")
     }
   ];
-}
+};

@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -8,7 +8,7 @@ export const getItems = ({ v, device, state }) => {
 
   const inputPosition = dvv("inputPosition");
 
-  const inputColor = getColor(
+  const inputColor = getColorToolbar(
     dvv("inputColorPalette"),
     dvv("inputColorHex"),
     dvv("inputColorOpacity")

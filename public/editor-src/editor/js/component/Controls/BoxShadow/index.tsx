@@ -31,7 +31,7 @@ export interface Props
     WithOnChange2<Value, Meta> {
   opacity: boolean;
   types: TypeObject[];
-  palette: PaletteObject[];
+  palette?: PaletteObject[];
   paletteOpenSettings?: () => void;
 }
 
@@ -39,6 +39,7 @@ export const BoxShadow = ({
   value,
   types,
   onChange,
+  palette = [],
   ...props
 }: Props): JSX.Element => {
   const className = classNames("brz-ed-control__boxShadow", props.className);
@@ -92,7 +93,7 @@ export const BoxShadow = ({
           palette: value.palette
         }}
         opacity={props.opacity}
-        palette={props.palette}
+        palette={palette}
         paletteOpenSettings={props.paletteOpenSettings}
       >
         {types.map(({ id, title }) => {

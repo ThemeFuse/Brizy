@@ -1,5 +1,5 @@
+import { throttle } from "es-toolkit";
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
-import { throttle } from "underscore";
 import { HSVAChange } from "visual/component/Controls/ColorPicker2/types";
 import { GlobalMeta } from "visual/component/Options/Type";
 import * as saturation from "../helpers/saturation";

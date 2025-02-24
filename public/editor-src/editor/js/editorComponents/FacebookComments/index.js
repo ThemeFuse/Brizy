@@ -7,6 +7,7 @@ import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarExtendConfig from "./sidebarExtend";
@@ -119,7 +120,7 @@ class FacebookComments extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -128,16 +129,25 @@ class FacebookComments extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
-            <Comments
-              appId={appData.appId}
-              type={type}
-              data={data[type]}
-              renderContext={this.renderContext}
-            />
-          </div>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <div
+                className={className}
+                ref={(el) => {
+                  attachRefs(el, [toolbarRef, cssRef]);
+                }}
+              >
+                <Comments
+                  appId={appData.appId}
+                  type={type}
+                  data={data[type]}
+                  renderContext={this.props.renderContext}
+                />
+              </div>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -186,7 +196,7 @@ class FacebookComments extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -198,7 +208,7 @@ class FacebookComments extends EditorComponent {
             appId={appData.appId}
             type={type}
             data={data[type]}
-            renderContext={this.renderContext}
+            renderContext={this.props.renderContext}
           />
         </div>
       </CustomCSS>

@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import { isT, match } from "fp-utilities";
 import React, {
   CSSProperties,
@@ -8,7 +9,6 @@ import React, {
   ReactElement
 } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
@@ -106,10 +106,10 @@ class Blocks extends Component<Props> {
     items: {},
     types: [],
     HeaderSlotLeft: Component,
-    onChange: _.noop,
-    onDelete: _.noop,
-    onSuccessSync: _.noop,
-    onUpdate: _.noop,
+    onChange: noop,
+    onDelete: noop,
+    onSuccessSync: noop,
+    onUpdate: noop,
     config: {} as ConfigCommon,
     isPro: false,
     isStory: false,

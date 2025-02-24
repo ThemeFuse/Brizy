@@ -6,7 +6,7 @@ import {
   isViewTypeWithIcon,
   isViewTypeWithNumber
 } from "visual/editorComponents/Form2/utils";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
@@ -43,7 +43,7 @@ export const getItems: GetItems<ElementModel, Props> = ({
   const isNumberText = viewType === "number-text";
   const isIconText = viewType === "icon-text";
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")

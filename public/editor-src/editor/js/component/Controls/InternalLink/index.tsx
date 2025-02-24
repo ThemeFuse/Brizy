@@ -75,45 +75,47 @@ export const Control = ({
         <div className="brz-ed-control__internalLink-wrapper">
           {label}
           <ClickOutside onClickOutside={() => setIsOpen(false)}>
-            <div className="brz-ed-control__internalLink">
-              <Manager>
-                <Reference>
-                  {({ ref }): ReactElement => (
-                    <InternalLinkValue
-                      className={inputValueClassName}
-                      ref={ref}
-                      value={_value}
-                      onClick={() => {
-                        if (!isValuePopulated(value)) {
-                          setIsOpen(!isOpen);
-                        }
-                      }}
-                      onRemove={value?.title ? resetValue : undefined}
-                    />
-                  )}
-                </Reference>
-              </Manager>
-              <div style={{ position: "relative" }}>
-                <Popper>
-                  {({ ref, style }) => {
-                    if (!isOpen) {
-                      return null;
-                    }
-
-                    return (
-                      <SelectDropdown
+            {({ ref }) => (
+              <div className="brz-ed-control__internalLink" ref={ref}>
+                <Manager>
+                  <Reference>
+                    {({ ref }): ReactElement => (
+                      <InternalLinkValue
+                        className={inputValueClassName}
                         ref={ref}
-                        style={style}
-                        searchIsLoading={loading}
-                        onSearchChange={onSearch}
-                      >
-                        {selectItems}
-                      </SelectDropdown>
-                    );
-                  }}
-                </Popper>
+                        value={_value}
+                        onClick={() => {
+                          if (!isValuePopulated(value)) {
+                            setIsOpen(!isOpen);
+                          }
+                        }}
+                        onRemove={value?.title ? resetValue : undefined}
+                      />
+                    )}
+                  </Reference>
+                </Manager>
+                <div style={{ position: "relative" }}>
+                  <Popper>
+                    {({ ref, style }) => {
+                      if (!isOpen) {
+                        return null;
+                      }
+
+                      return (
+                        <SelectDropdown
+                          ref={ref}
+                          style={style}
+                          searchIsLoading={loading}
+                          onSearchChange={onSearch}
+                        >
+                          {selectItems}
+                        </SelectDropdown>
+                      );
+                    }}
+                  </Popper>
+                </div>
               </div>
-            </div>
+            )}
           </ClickOutside>
         </div>
       )}

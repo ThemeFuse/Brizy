@@ -1,7 +1,6 @@
-import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Store } from "visual/redux/store";
-import { FontStyle } from "visual/types";
+import { FontStyle } from "visual/types/Style";
 import {
   FONT_INITIAL,
   makeGlobalStylesTextTransform
@@ -41,14 +40,14 @@ export const makeStyleCSSVar = (data: {
 interface Data {
   fontStyles: FontStyle[];
   store: Store;
+  config: ConfigCommon;
 }
 
 export const makeGlobalStylesTypography = ({
   fontStyles,
-  store
+  store,
+  config
 }: Data): string => {
-  const config = Config.getAll();
-
   const vars = fontStyles
     .map((style) => {
       const {

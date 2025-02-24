@@ -1,13 +1,8 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import TextField from "./common/TextField";
-import { t } from "visual/utils/i18n";
 
 export default class Paragraph extends TextField {
-  static get componentTitle() {
-    return t("Paragraph");
-  }
-
   static get componentType() {
     return "Paragraph";
   }
@@ -30,7 +25,7 @@ export default class Paragraph extends TextField {
         ref={this.input}
         className={this.getClassName(v)}
         value={attr.placeholder}
-        onChange={e => {
+        onChange={(e) => {
           this.handleChange({ placeholder: e.target.value });
         }}
       />
@@ -39,7 +34,7 @@ export default class Paragraph extends TextField {
         {...attr}
         ref={this.input}
         className={this.getClassName(v)}
-        onChange={e => {
+        onChange={(e) => {
           this.handleChange({
             label: e.target.value,
             placeholder: e.target.value

@@ -219,12 +219,18 @@ export function cssStyleElementWOOAttributesSpacing({ v, device, state }) {
 export function cssStyleElementWOOAttributesAttributeColor({
   v,
   device,
-  state
+  state,
+  store
 }) {
-  return cssStyleColor({ v, device, state, prefix: "attributeColor" });
+  return cssStyleColor({ v, device, state, store, prefix: "attributeColor" });
 }
 
-export function cssStyleElementWOOAttributesBorder({ v, device, state }) {
+export function cssStyleElementWOOAttributesBorder({
+  v,
+  device,
+  state,
+  store
+}) {
   const borderWidth = styleBorderWidthUngrouped({
     v,
     device,
@@ -232,7 +238,7 @@ export function cssStyleElementWOOAttributesBorder({ v, device, state }) {
     current: "top"
   });
   const borderStyle = styleBorderStyle({ v, device, state });
-  const borderColor = styleBorderColor({ v, device, state });
+  const borderColor = styleBorderColor({ v, device, state, store });
   const styleBorder = styleElementWOOAttributesStyleBorder({
     v,
     device,

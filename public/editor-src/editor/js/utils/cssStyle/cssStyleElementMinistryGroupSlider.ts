@@ -5,9 +5,6 @@ import {
   cssStyleBorderRadius,
   cssStyleBoxShadow,
   cssStyleColor,
-  cssStyleElementMinistryBrandsButtonsBgColor,
-  cssStyleElementMinistryBrandsButtonsBgGradient,
-  cssStyleElementOfMinistryBrandsSpacing,
   cssStyleMarginAlign,
   cssStylePositionElement,
   cssStyleSizeFontSizeIcon,
@@ -20,6 +17,11 @@ import {
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "visual/utils/style2/types";
 import { ACTIVE } from "../stateMode";
+import {
+  cssStyleElementMinistryBrandsButtonsBgColor,
+  cssStyleElementMinistryBrandsButtonsBgGradient,
+  cssStyleElementOfMinistryBrandsSpacing
+} from "./cssStyleElementMinistryBrands";
 
 export function cssStyleElementMinistryGroupSliderTitleSpacing({
   v,
@@ -97,9 +99,10 @@ export function cssStyleElementMinistryGroupSliderImageWidth({
 export function cssStyleElementMinistryGroupSliderImageBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "image" });
+  return cssStyleBorder({ v, device, state, store, prefix: "image" });
 }
 
 export function cssStyleElementMinistryGroupSliderImageBorderRadius({
@@ -328,9 +331,10 @@ export function cssStyleElementMinistryGroupSliderButtonBgGradient({
 export function cssStyleElementMinistryGroupSliderButtonBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "button" });
+  return cssStyleBorder({ v, device, state, store, prefix: "button" });
 }
 
 export function cssStyleElementMinistryGroupSliderButtonBoxShadow({

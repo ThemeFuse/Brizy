@@ -1,4 +1,4 @@
-import { times } from "underscore";
+import { times } from "es-toolkit/compat";
 import { StyleObject } from "visual/component/Controls/Border";
 import { t } from "visual/utils/i18n";
 import { capByPrefix } from "visual/utils/string";

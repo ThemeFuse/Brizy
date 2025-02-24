@@ -1,7 +1,10 @@
+import { isNothing } from "fp-utilities";
 import {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
+import { FontFamilyType } from "visual/types/Fonts";
+import { fromStringToScript } from "visual/types/utils";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
 import * as FontType from "visual/utils/fonts/familyType";
@@ -13,16 +16,14 @@ import {
   isFontFamily,
   isFontSettings,
   isFontStyle,
-  isFullFont,
-  isFontTransform
+  isFontTransform,
+  isFullFont
 } from "./types/Patch";
 import { Value } from "./types/Value";
-import { fromStringToScript } from "visual/types";
-import { isNothing } from "fp-utilities";
 
 export const defaultValue: Value = {
   fontFamily: "",
-  fontFamilyType: FontType.FontFamilyType.google,
+  fontFamilyType: FontFamilyType.google,
   fontStyle: "",
   fontSize: Positive.unsafe(17),
   fontSizeSuffix: SizeSuffix.empty,

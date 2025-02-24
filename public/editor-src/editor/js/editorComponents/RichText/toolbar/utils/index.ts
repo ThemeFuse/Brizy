@@ -25,6 +25,10 @@ export enum TypographyTags {
   H6 = "H6"
 }
 
+export function isTypographyTags(arg: unknown): arg is TypographyTags {
+  return typeof arg === "string" && arg in TypographyTags;
+}
+
 export function tagId(tag: TypographyTags): string {
   switch (tag) {
     case TypographyTags.P:

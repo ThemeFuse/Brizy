@@ -11,18 +11,17 @@ import { style } from "./styles";
 import toolbarConfigFn from "./toolbar";
 
 export default class MenuSimpleWP extends EditorComponent {
+  static defaultValue = defaultValue;
+  state = {
+    menus: []
+  };
+
   static get componentId() {
     // NOTE: initially we only had MenuSimple (then called WPNavigation) for WordPress.
     // After we needed to make it work for cloud as well, it was renamed to SimpleMenu,
     // but since we don't have a good migration system yet, the old componentId still remains
     return "WPNavigation";
   }
-
-  static defaultValue = defaultValue;
-
-  state = {
-    menus: []
-  };
 
   componentDidMount() {
     getMenus(this.getGlobalConfig()).then((menus) => {
@@ -46,7 +45,7 @@ export default class MenuSimpleWP extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -84,7 +83,11 @@ export default class MenuSimpleWP extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <div className={className}>{content}</div>
+        {({ ref }) => (
+          <div className={className} ref={ref}>
+            {content}
+          </div>
+        )}
       </Toolbar>
     );
   }

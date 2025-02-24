@@ -3,7 +3,6 @@
     "width": 50,
     "widthSuffix": "%",
     "tagName": "div",
-
     "media": "image",
 
     "bgSizeType": "custom",
@@ -44,6 +43,7 @@
 
     "bgSize": "cover",
     "bgRepeat": "off",
+    "bgAlt": "",
 
     "hoverMedia": "image",
 
@@ -411,6 +411,7 @@
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
     "maskCustomUploadImageType": "internal",
+    "maskCustomUploadAlt": "",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

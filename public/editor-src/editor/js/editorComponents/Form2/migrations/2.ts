@@ -1,12 +1,12 @@
+import { Arr, Obj } from "@brizy/readers";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Deps, Migration } from "visual/utils/migration";
 import { setIds } from "visual/utils/models";
-import { Obj, Arr } from "@brizy/readers";
-import { Form2FieldOption } from "./type";
 import { Value } from "../types";
+import { Form2FieldOption } from "./type";
 
 // Select, Radio, Checkbox
-const migrateFieldOptions = (v: Value): Form2FieldOption[] => {
+const migrateFieldOptions = (v: Partial<Value>): Form2FieldOption[] => {
   if (Obj.hasKey("options", v)) {
     const options = Arr.read(v.options) ?? [];
 
@@ -32,7 +32,7 @@ export const m2: Migration<Deps<unknown>> = {
       throw new Error(`Form2 Select, Radio, Checkbox migration failed ${v}`);
     }
 
-    const value: Value = {
+    const value: Partial<Value> = {
       ...v,
       multistep: "off",
       items: []

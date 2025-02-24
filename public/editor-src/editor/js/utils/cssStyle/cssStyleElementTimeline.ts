@@ -220,9 +220,16 @@ export function cssStyleElementTimelineNavTitleVisible({
 export function cssStyleElementTimelineLineBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const borderColor = styleBorderColor({ v, device, state, prefix: "line" });
+  const borderColor = styleBorderColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "line"
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = dvv("verticalMode");

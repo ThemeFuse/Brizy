@@ -7,7 +7,7 @@ import { getConfigById } from "visual/global/Config/InitConfig";
 import { setDeviceMode } from "visual/redux/actions2";
 import { configIdSelector, deviceModeSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { isWPPage } from "visual/types";
+import { isWPPage } from "visual/types/utils";
 import { Option as OptionData } from "../../options";
 import Option from "./Option";
 

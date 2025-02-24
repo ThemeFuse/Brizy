@@ -1,7 +1,7 @@
 import normalizeUrl from "normalize-url";
 import {
-  defaultCrop,
-  SizeType
+  SizeType,
+  defaultCrop
 } from "visual/global/Config/types/configs/common";
 import { makeUrl } from "visual/utils/api";
 import { parseCropData } from "visual/utils/image/parsers";
@@ -86,13 +86,14 @@ export const replacePlaceholders = (options: ResizeData): string => {
     return value
       ? url.replace(placeholder, value)
       : knownPlaceholders.includes(placeholder)
-      ? url.replace(placeholder, "")
-      : url;
+        ? url.replace(placeholder, "")
+        : url;
   }, pattern);
 
   return normalizeUrl(replaceSymbols(finalUrl), {
     sortQueryParameters: false,
-    stripWWW: false
+    stripWWW: false,
+    removeTrailingSlash: false
   });
 };
 

@@ -6,7 +6,6 @@ import {
 import classnames from "classnames";
 import React from "react";
 import { omit } from "timm";
-import { isEditor } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
 import Link from "visual/component/Link";
@@ -16,8 +15,9 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { customFileUrl } from "visual/utils/customFile";
 import { t } from "visual/utils/i18n";
 import { getLinkData } from "visual/utils/models/link";
@@ -36,16 +36,15 @@ import {
 } from "./utils";
 
 class Lottie extends EditorComponent<Value> {
-  static get componentId(): ElementTypes.Lottie {
-    return ElementTypes.Lottie;
-  }
-
   static defaultValue = defaultValue;
-
   state = {
     animation: null,
     previousLink: null
   };
+
+  static get componentId(): ElementTypes.Lottie {
+    return ElementTypes.Lottie;
+  }
 
   getAnimation = (
     link = "https://assets6.lottiefiles.com/private_files/lf30_1KyL2Q.json"
@@ -78,8 +77,9 @@ class Lottie extends EditorComponent<Value> {
 
   componentDidMount(): void {
     const { animationFile, animationLink } = this.getValue();
+    const config = this.getGlobalConfig();
     const initialLink = animationFile
-      ? customFileUrl(animationFile)
+      ? customFileUrl(animationFile, config)
       : animationLink;
 
     if (initialLink) {
@@ -92,9 +92,10 @@ class Lottie extends EditorComponent<Value> {
     prevState: Readonly<State>
   ): void {
     const { animationFile, animationLink } = this.getValue();
+    const config = this.getGlobalConfig();
 
     const currentLink = animationFile
-      ? customFileUrl(animationFile)
+      ? customFileUrl(animationFile, config)
       : animationLink;
 
     if (currentLink && currentLink !== prevState.previousLink) {
@@ -114,14 +115,16 @@ class Lottie extends EditorComponent<Value> {
     if (animationFile === undefined && animationLink === undefined) {
       return;
     }
-
-    const animationPatch = customFileUrl(animationFile) || animationLink;
+    const config = this.getGlobalConfig();
+    const animationPatch =
+      customFileUrl(animationFile, config) || animationLink;
 
     if (animationPatch) {
       this.getAnimation(animationPatch);
     } else {
       const { animationFile, animationLink } = this.getValue();
-      const animationValue = animationLink || customFileUrl(animationFile);
+      const animationValue =
+        animationLink || customFileUrl(animationFile, config);
 
       if (animationValue) {
         this.getAnimation(animationValue);
@@ -160,7 +163,7 @@ class Lottie extends EditorComponent<Value> {
         return {
           blockId,
           meta: newMeta,
-          ...(isEditor(this.renderContext) && {
+          ...(isEditor(this.props.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -205,7 +208,7 @@ class Lottie extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -219,20 +222,22 @@ class Lottie extends EditorComponent<Value> {
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <BoxResizer
-              points={points}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-              restrictions={restrictions}
-            >
-              <LottieComponent
-                {...lottieReactConfig}
-                key={`renderer-${renderer}`}
-              />
-            </BoxResizer>
-          </Wrapper>
+          {({ ref }) => (
+            <Wrapper {...this.makeWrapperProps({ className, ref })}>
+              <BoxResizer
+                points={points}
+                meta={this.props.meta}
+                value={v}
+                onChange={this.handleResizerChange}
+                restrictions={restrictions}
+              >
+                <LottieComponent
+                  {...lottieReactConfig}
+                  key={`renderer-${renderer}`}
+                />
+              </BoxResizer>
+            </Wrapper>
+          )}
         </Toolbar>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
@@ -263,16 +268,16 @@ class Lottie extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
+    const config = this.getGlobalConfig();
     const _animationData = animationFile
-      ? customFileUrl(animationFile)
+      ? customFileUrl(animationFile, config)
       : animationLink;
 
-    const config = this.getGlobalConfig();
     const linkData = getLinkData(v, config);
     const { href, type, target, rel, slide } = linkData;
 

@@ -1,7 +1,4 @@
 import React, { Component, ReactElement } from "react";
-import { isPro } from "visual/utils/env";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import Config from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import {
@@ -22,9 +19,7 @@ const helper = {
   }
 };
 
-const getApiKeys = (config: ConfigCommon) => {
-  const is_pro = isPro(config);
-
+const getApiKeys = (isPro: boolean) => {
   return [
     {
       name: "emailTo",
@@ -37,17 +32,18 @@ const getApiKeys = (config: ConfigCommon) => {
     {
       name: "subject",
       title: t("Subject"),
-      ...(is_pro ? helper : {})
+      ...(isPro ? helper : {})
     },
     {
       name: "fromName",
       title: t("From Name"),
-      ...(is_pro ? helper : {})
+      ...(isPro ? helper : {})
     }
   ];
 };
 
 type Props = {
+  isPro: boolean;
   onClose: () => void;
 };
 
@@ -62,7 +58,7 @@ class EmailFields extends Component<
     return (
       <Smtp
         {...this.context}
-        apiKeys={getApiKeys(Config.getAll())}
+        apiKeys={getApiKeys(this.props.isPro)}
         onClose={this.props.onClose}
       />
     );

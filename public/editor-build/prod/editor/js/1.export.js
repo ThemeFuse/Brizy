@@ -1,152 +1,58 @@
+"use strict";
 exports.id = 1;
 exports.ids = [1];
 exports.modules = {
 
-/***/ 7015:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ 4622:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Icon: () => (/* binding */ Icon)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1349);
+/* harmony import */ var _utils_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4623);
+
+
+var Icon = function(param) {
+    var name = param.name, className = param.className, onClick = param.onClick, style = param.style;
+    var IconComponent = _utils_icons__WEBPACK_IMPORTED_MODULE_1__.Icons[name];
+    return IconComponent ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(IconComponent, {
+        className: className,
+        onClick: onClick,
+        style: style
+    }) : null;
 };
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var __publicField = (obj, key, value) => {
-  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-  return value;
-};
-var DailyMotion_exports = {};
-__export(DailyMotion_exports, {
-  default: () => DailyMotion
-});
-module.exports = __toCommonJS(DailyMotion_exports);
-var import_react = __toESM(__webpack_require__(24));
-var import_utils = __webpack_require__(3837);
-var import_patterns = __webpack_require__(3840);
-const SDK_URL = "https://api.dmcdn.net/all.js";
-const SDK_GLOBAL = "DM";
-const SDK_GLOBAL_READY = "dmAsyncInit";
-class DailyMotion extends import_react.Component {
-  constructor() {
-    super(...arguments);
-    __publicField(this, "callPlayer", import_utils.callPlayer);
-    __publicField(this, "onDurationChange", () => {
-      const duration = this.getDuration();
-      this.props.onDuration(duration);
-    });
-    __publicField(this, "mute", () => {
-      this.callPlayer("setMuted", true);
-    });
-    __publicField(this, "unmute", () => {
-      this.callPlayer("setMuted", false);
-    });
-    __publicField(this, "ref", (container) => {
-      this.container = container;
-    });
-  }
-  componentDidMount() {
-    this.props.onMount && this.props.onMount(this);
-  }
-  load(url) {
-    const { controls, config, onError, playing } = this.props;
-    const [, id] = url.match(import_patterns.MATCH_URL_DAILYMOTION);
-    if (this.player) {
-      this.player.load(id, {
-        start: (0, import_utils.parseStartTime)(url),
-        autoplay: playing
-      });
-      return;
+
+
+/***/ }),
+
+/***/ 4623:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Icons: () => (/* binding */ Icons)
+/* harmony export */ });
+/* harmony import */ var _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2290);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2246);
+function _define_property(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, {
+            value: value,
+            enumerable: true,
+            configurable: true,
+            writable: true
+        });
+    } else {
+        obj[key] = value;
     }
-    (0, import_utils.getSDK)(SDK_URL, SDK_GLOBAL, SDK_GLOBAL_READY, (DM) => DM.player).then((DM) => {
-      if (!this.container)
-        return;
-      const Player = DM.player;
-      this.player = new Player(this.container, {
-        width: "100%",
-        height: "100%",
-        video: id,
-        params: {
-          controls,
-          autoplay: this.props.playing,
-          mute: this.props.muted,
-          start: (0, import_utils.parseStartTime)(url),
-          origin: undefined.location.origin,
-          ...config.params
-        },
-        events: {
-          apiready: this.props.onReady,
-          seeked: () => this.props.onSeek(this.player.currentTime),
-          video_end: this.props.onEnded,
-          durationchange: this.onDurationChange,
-          pause: this.props.onPause,
-          playing: this.props.onPlay,
-          waiting: this.props.onBuffer,
-          error: (event) => onError(event)
-        }
-      });
-    }, onError);
-  }
-  play() {
-    this.callPlayer("play");
-  }
-  pause() {
-    this.callPlayer("pause");
-  }
-  stop() {
-  }
-  seekTo(seconds, keepPlaying = true) {
-    this.callPlayer("seek", seconds);
-    if (!keepPlaying) {
-      this.pause();
-    }
-  }
-  setVolume(fraction) {
-    this.callPlayer("setVolume", fraction);
-  }
-  getDuration() {
-    return this.player.duration || null;
-  }
-  getCurrentTime() {
-    return this.player.currentTime;
-  }
-  getSecondsLoaded() {
-    return this.player.bufferedTime;
-  }
-  render() {
-    const { display } = this.props;
-    const style = {
-      width: "100%",
-      height: "100%",
-      display
-    };
-    return /* @__PURE__ */ import_react.default.createElement("div", { style }, /* @__PURE__ */ import_react.default.createElement("div", { ref: this.ref }));
-  }
+    return obj;
 }
-__publicField(DailyMotion, "displayName", "DailyMotion");
-__publicField(DailyMotion, "canPlay", import_patterns.canPlay.dailymotion);
-__publicField(DailyMotion, "loopOnEnded", true);
+
+
+var _obj;
+var Icons = (_obj = {}, _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.ArrowRightLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.ArrowRightLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.CheckSmallLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.CheckSmallLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.MediaImage, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MediaImage), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.MediaVideo, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MediaVideo), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.MediaMap, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MediaMap), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.HeartLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.HeartLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.SpinnerLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.SpinnerLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.TextAlignCenter, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.TextAlignCenter), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.TextAlignLeft, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.TextAlignLeft), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.TextAlignRight, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.TextAlignRight), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.PlusCircleLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.PlusCircleLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.Reverse, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.Reverse), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.DuplicateLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.DuplicateLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.CheckCircleLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.CheckCircleLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.SettingsLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.SettingsLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.CloseLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.CloseLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.StreUp, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.StreUp), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.StreDown, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.StreDown), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.Circle2, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.Circle2), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.CircleRemove, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.CircleRemove), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.User, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.User), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.Clock, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.Clock), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.CommentsLegacy, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.CommentsLegacy), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName.RightArrowThin, _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.RightArrowThin), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-sermon-list"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsSermonList), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-sermon-detail"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsSermonDetail), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-sermon-featured"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsSermonFeatured), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-sermon-layout"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsSermonLayout), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-event-list"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsEventList), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-event-detail"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsEventDetail), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-event-featured"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsEventFeatured), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-event-layout"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsEventLayout), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-event-calendar"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsEventCalendar), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-group-list"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsGroupList), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-group-detail"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsGroupDetail), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-group-featured"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsGroupFeatured), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-group-slider"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsGroupSlider), _define_property(_obj, _types__WEBPACK_IMPORTED_MODULE_1__.IconsName["t2-group-layout"], _brizy_ui_icons__WEBPACK_IMPORTED_MODULE_0__.MinistryBrandsGroupLayout), _obj);
 
 
 /***/ })

@@ -1,11 +1,11 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const labelColor = getColor(
+  const labelColor = getColorToolbar(
     dvv("labelColorPalette"),
     dvv("labelColorHex"),
     dvv("labelColorOpacity")

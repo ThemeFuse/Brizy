@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import { useConfig } from "visual/global/hooks";
 import { isView, useRender } from "visual/providers/RenderProvider";
 import { EditorComponentContext } from "../EditorComponentContext";
-import { DCApiProxyInstance } from "./DCApiProxy";
+import { DCApiProxyInstance } from "./DCApiProxyInstance";
 
 export type State =
   | {

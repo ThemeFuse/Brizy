@@ -78,8 +78,8 @@ class AccordionItems extends EditorArrayComponent {
               itemIndex === 0
                 ? "prev"
                 : itemIndex === items.length - 1
-                ? "next"
-                : undefined,
+                  ? "next"
+                  : undefined,
             onChange: (v) => {
               switch (v) {
                 case "prev":
@@ -197,32 +197,35 @@ class AccordionItems extends EditorArrayComponent {
           {tags.map((tag, index) => {
             return (
               <Toolbar {...toolbarExtendFilter} key={index}>
-                <li
-                  className={
-                    className +
-                    `${
-                      this.state.visibleTag === tag
-                        ? " brz-accordion__filter__item--active"
-                        : ""
-                    }`
-                  }
-                  {...makeDataAttr({
-                    name: "filter",
-                    value: tag === allTag ? "*" : tag
-                  })}
-                  onClick={() => {
-                    this.handleFilterClick(tag);
-                  }}
-                >
-                  {tag === allTag ? (
-                    <TextEditor
-                      value={allTag}
-                      onChange={this.handleMainTagChange}
-                    />
-                  ) : (
-                    tag
-                  )}
-                </li>
+                {({ ref }) => (
+                  <li
+                    className={
+                      className +
+                      `${
+                        this.state.visibleTag === tag
+                          ? " brz-accordion__filter__item--active"
+                          : ""
+                      }`
+                    }
+                    {...makeDataAttr({
+                      name: "filter",
+                      value: tag === allTag ? "*" : tag
+                    })}
+                    onClick={() => {
+                      this.handleFilterClick(tag);
+                    }}
+                    ref={ref}
+                  >
+                    {tag === allTag ? (
+                      <TextEditor
+                        value={allTag}
+                        onChange={this.handleMainTagChange}
+                      />
+                    ) : (
+                      tag
+                    )}
+                  </li>
+                )}
               </Toolbar>
             );
           })}
@@ -243,7 +246,8 @@ class AccordionItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    const { className, style, enableTags, animDuration } = this.props;
+    const { className, style, enableTags, animDuration, containerRef } =
+      this.props;
     const tags = this.getItemsTags(this.props.dbValue);
 
     return (
@@ -251,6 +255,7 @@ class AccordionItems extends EditorArrayComponent {
         className={className}
         style={style}
         {...makeDataAttr({ name: "duration", value: animDuration * 1000 })}
+        ref={containerRef}
       >
         {enableTags === "on" && tags.size > 0 && this.renderTags()}
         {items}

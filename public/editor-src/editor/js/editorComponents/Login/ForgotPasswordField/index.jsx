@@ -1,22 +1,21 @@
 import classnames from "classnames";
 import React from "react";
-import { isEditor } from "visual/providers/RenderProvider";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import { isWp } from "visual/global/Config";
+import { isEditor } from "visual/providers/RenderProvider";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
 
 class ForgotPasswordField extends EditorComponent {
+  static defaultValue = defaultValue;
+  isWp = isWp(this.getGlobalConfig());
+
   static get componentId() {
     return "ForgotPasswordField";
   }
-
-  static defaultValue = defaultValue;
-
-  isWp = isWp(this.getGlobalConfig());
 
   handleLabelChange = (label) => {
     this.patchValue({ label });
@@ -36,7 +35,7 @@ class ForgotPasswordField extends EditorComponent {
       return "";
     }
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       return placeholder === null ? label : placeholder;
     }
 
@@ -56,7 +55,7 @@ class ForgotPasswordField extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -71,45 +70,53 @@ class ForgotPasswordField extends EditorComponent {
           <div className="brz-login__item">
             {showLabel === "on" && (
               <Toolbar {...toolbarExtendLabel}>
-                <div className="brz-login__field-label" style={styleLabel}>
-                  <label className="brz-label">
-                    <TextEditor
-                      value={this.getLabel(v)}
-                      onChange={this.handleLabelChange}
-                    />
-                  </label>
-                </div>
+                {({ ref }) => (
+                  <div
+                    className="brz-login__field-label"
+                    style={styleLabel}
+                    ref={ref}
+                  >
+                    <label className="brz-label">
+                      <TextEditor
+                        value={this.getLabel(v)}
+                        onChange={this.handleLabelChange}
+                      />
+                    </label>
+                  </div>
+                )}
               </Toolbar>
             )}
             <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-              <div className="brz-login__field">
-                {showLabel === "on" ? (
-                  <input
-                    className="brz-input"
-                    type="email"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={(e) => {
-                      this.patchValue({
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                ) : (
-                  <input
-                    className="brz-input"
-                    type="email"
-                    placeholder={this.getPlaceholder(v)}
-                    value={this.getPlaceholder(v)}
-                    onChange={(e) => {
-                      this.patchValue({
-                        label: e.target.value,
-                        placeholder: e.target.value
-                      });
-                    }}
-                  />
-                )}
-              </div>
+              {({ ref }) => (
+                <div className="brz-login__field" ref={ref}>
+                  {showLabel === "on" ? (
+                    <input
+                      className="brz-input"
+                      type="email"
+                      placeholder={this.getPlaceholder(v)}
+                      value={this.getPlaceholder(v)}
+                      onChange={(e) => {
+                        this.patchValue({
+                          placeholder: e.target.value
+                        });
+                      }}
+                    />
+                  ) : (
+                    <input
+                      className="brz-input"
+                      type="email"
+                      placeholder={this.getPlaceholder(v)}
+                      value={this.getPlaceholder(v)}
+                      onChange={(e) => {
+                        this.patchValue({
+                          label: e.target.value,
+                          placeholder: e.target.value
+                        });
+                      }}
+                    />
+                  )}
+                </div>
+              )}
             </Toolbar>
           </div>
         )}
@@ -131,7 +138,7 @@ class ForgotPasswordField extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

@@ -9,11 +9,11 @@ import { style } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
 
 export default class FormItem extends EditorComponent<ElementModel> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.FormFields {
     return ElementTypes.FormFields;
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v: ElementModel, vs: ElementModel, vd: ElementModel) {
     const itemsProps = this.makeSubcomponentProps({
@@ -32,7 +32,7 @@ export default class FormItem extends EditorComponent<ElementModel> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

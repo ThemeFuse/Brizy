@@ -1,4 +1,4 @@
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { read as readStr } from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
 import { modelTraverse } from "visual/utils/traverse";
@@ -38,11 +38,10 @@ export const getUsedModelsUpload = ({
       while ((hrefs = hrefRgx.exec(text))) {
         try {
           const [, href] = hrefs; // eslint-disable-line @typescript-eslint/no-unused-vars
-          const { type, upload } =
-            decodeFromString<{
-              type: string;
-              upload: string;
-            }>(href);
+          const { type, upload } = decodeFromString<{
+            type: string;
+            upload: string;
+          }>(href);
 
           if (type === "upload" && upload) {
             files.add(upload);

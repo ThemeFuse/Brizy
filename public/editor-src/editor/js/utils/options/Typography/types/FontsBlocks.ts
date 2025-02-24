@@ -1,5 +1,5 @@
+import { FontFamilyType } from "visual/types/Fonts";
 import { FontObject } from "./FontObject";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
 
 export type FontsBlock = Partial<{
   config: FontObject[];

@@ -6,6 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -15,12 +16,12 @@ import * as toolbarConfig from "./toolbar";
 export default class WPPostContent extends EditorComponent {
   // NOTE: initially this element was for WordPress only.
   // After we needed to make it work for cloud as well, it was renamed,
+  static defaultValue = defaultValue;
+
   // but since we don't have a good migration system yet, the old componentId still remains
   static get componentId() {
     return "WPPostContent";
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v, vs, vd) {
     const {
@@ -47,7 +48,7 @@ export default class WPPostContent extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -56,15 +57,26 @@ export default class WPPostContent extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <DynamicContentHelper
-              placeholder={placeholder}
-              placeholderIcon="wp-content"
-              tagName="div"
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <DynamicContentHelper
+                  placeholder={placeholder}
+                  placeholderIcon="wp-content"
+                  tagName="div"
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

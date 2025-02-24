@@ -38,30 +38,32 @@ export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
   }
 }
 
-export function cssStyleElementTabsBtnActiveBorderBottomColor({ v }) {
-  const borderColor = styleBgColor({ v, state: ACTIVE, prefix: "bg" });
+export function cssStyleElementTabsBtnActiveBorderBottomColor({ v, store }) {
+  const borderColor = styleBgColor({ v, state: ACTIVE, store, prefix: "bg" });
   return `border-bottom-color: ${borderColor};`;
 }
 
-export function cssStyleElementTabsBtnActiveBorderRightColor({ v }) {
-  const borderColor = styleBgColor({ v, state: ACTIVE, prefix: "bg" });
+export function cssStyleElementTabsBtnActiveBorderRightColor({ v, store }) {
+  const borderColor = styleBgColor({ v, state: ACTIVE, store, prefix: "bg" });
   return `border-right-color: ${borderColor};`;
 }
 
-export function cssStyleElementTabsBtnActiveBorderLeftColor({ v }) {
-  const borderColor = styleBgColor({ v, state: ACTIVE, prefix: "bg" });
+export function cssStyleElementTabsBtnActiveBorderLeftColor({ v, store }) {
+  const borderColor = styleBgColor({ v, state: ACTIVE, store, prefix: "bg" });
   return `border-left-color: ${borderColor};`;
 }
 
 export function cssStyleElementTabsActiveBeforeAfterColor({
   v,
   device,
-  state
+  state,
+  store
 }) {
   return `background-color: ${styleBorderColor({
     v,
     device,
-    state
+    state,
+    store
   })}; z-index: 1;`;
 }
 
@@ -176,11 +178,16 @@ export function cssStyleElementTabsPadding({ v, device, state }) {
   }
   return "";
 }
-export function cssStyleElementTabsNavBorderBottom({ v, device, state }) {
+export function cssStyleElementTabsNavBorderBottom({
+  v,
+  device,
+  state,
+  store
+}) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
-  const color = styleBorderColor({ v, device, state });
+  const color = styleBorderColor({ v, device, store, state });
   let width = styleBorderWidthGrouped({ v, device, state });
 
   if (verticalMode === "off") {
@@ -196,11 +203,16 @@ export function cssStyleElementTabsNavBorderBottom({ v, device, state }) {
     }
   }
 }
-export function cssStyleElementTabsNavStyle3Before({ v, device, state }) {
+export function cssStyleElementTabsNavStyle3Before({
+  v,
+  device,
+  state,
+  store
+}) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
-  const color = styleBorderColor({ v, device, state: ACTIVE });
+  const color = styleBorderColor({ v, device, store, state: ACTIVE });
   const width = styleBorderWidthGrouped({ v, device, state: ACTIVE });
 
   if (verticalMode === "off") {
@@ -226,8 +238,8 @@ export function cssStyleElementTabsActiveShadow({ v, store }) {
   return cssStyleBoxShadow({ v, state: ACTIVE, store });
 }
 
-export function cssStyleElementTabsActiveBorder({ v, device }) {
-  return cssStyleBorder({ v, device, state: "active" });
+export function cssStyleElementTabsActiveBorder({ v, device, store }) {
+  return cssStyleBorder({ v, device, store, state: "active" });
 }
 
 export function cssStyleElementTabsContentBgColor({ v, device, state, store }) {
@@ -238,12 +250,12 @@ export function cssStyleElementTabsContentBgColor({ v, device, state, store }) {
     : cssStyleBgColor({ v, device, state, store, prefix: "contentBg" });
 }
 
-export function cssStyleElementTabsContentBorder({ v, device, state }) {
+export function cssStyleElementTabsContentBorder({ v, device, state, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const contentBorderColorOpacity = dvv("contentBorderColorOpacity");
   return contentBorderColorOpacity === 0
     ? ""
-    : cssStyleBorder({ v, device, state, prefix: "content" });
+    : cssStyleBorder({ v, device, state, store, prefix: "content" });
 }
 
 export function cssStyleElementTabsContentShadow({

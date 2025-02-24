@@ -47,4 +47,6 @@ export interface Value extends ElementModel {
   mobileSliderPaddingBottomSuffix: "px" | "%";
   mobileSliderPaddingLeft: number;
   mobileSliderPaddingLeftSuffix: "px" | "%";
+
+  customCSS: string;
 }

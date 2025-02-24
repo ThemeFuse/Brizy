@@ -39,6 +39,7 @@ import ImageGallery from "./ImageGallery";
 import InstagramFeed from "./InstagramFeed";
 import Leadific from "./Leadific";
 import Line from "./Line";
+import LinkedinFeed from "./LinkedinFeed";
 import Login from "./Login";
 import ForgotPasswordField from "./Login/ForgotPasswordField";
 import LoginField from "./Login/LoginField";
@@ -202,6 +203,7 @@ function getShortcodes(_config: ConfigCommon) {
     ShareButtonItem,
     Paypal,
     InstagramFeed,
+    LinkedinFeed,
 
     // DC
     PostTitle,

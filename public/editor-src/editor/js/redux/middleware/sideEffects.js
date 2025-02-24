@@ -1,4 +1,4 @@
-import _ from "underscore";
+import { difference } from "es-toolkit";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 import { StoreChanged } from "visual/redux/types";
 import {
@@ -7,14 +7,14 @@ import {
 } from "visual/utils/color";
 import { makeVariablesColor } from "visual/utils/cssVariables";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
-import {
-  makeDefaultFontCSS,
-  makeGlobalStylesTypography,
-  makeSubsetGoogleFontsUrl,
-  makeUploadFontsUrl,
-  projectFontsData
-} from "visual/utils/fonts";
 import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl.ts";
+import { makeDefaultFontCSS } from "visual/utils/fonts/makeDefaultFontCSS";
+import {
+  makeSubsetGoogleFontsUrl,
+  makeUploadFontsUrl
+} from "visual/utils/fonts/makeFontsUrl";
+import { makeGlobalStylesTypography } from "visual/utils/fonts/makeGlobalStylesTypography";
+import { projectFontsData } from "visual/utils/fonts/transform";
 import {
   getClosestSections,
   isElementInViewport,
@@ -34,6 +34,7 @@ import {
 import { historySelector } from "../history/selectors";
 import { REDO, UNDO } from "../history/types";
 import {
+  configSelector,
   currentLanguageSelector,
   currentRoleSelector,
   currentStyleSelector,
@@ -153,62 +154,78 @@ function handleHydrate(callbacks) {
     const extraFontStyles = extraFontStylesSelector(state);
     const fontStyles = [..._fontStyles, ...extraFontStyles];
     const adobeKitId = state?.fonts?.adobe?.id;
+    const { config: globalConfig } = action.payload;
 
-    const defaultFont = getDefaultFontDetailsSelector(state);
-    // Generate default @fontFace uses in project font
-    const defaultFonts = document.createElement("style");
-    defaultFonts.id = "brz-project-default-font";
-    defaultFonts.innerHTML = makeDefaultFontCSS(defaultFont);
+    if (document.getElementById("brz-project-default-font") === null) {
+      // Generate default @fontFace uses in project font
+      const defaultFont = getDefaultFontDetailsSelector(state);
+      const defaultFonts = document.createElement("style");
+      defaultFonts.id = "brz-project-default-font";
+      defaultFonts.innerHTML = makeDefaultFontCSS(defaultFont);
 
-    document.head.appendChild(defaultFonts);
-    parentDocument.head.appendChild(defaultFonts.cloneNode());
+      document.head.appendChild(defaultFonts);
+      parentDocument?.head.appendChild(defaultFonts.cloneNode());
+    }
 
     // added project fonts to Head
-    if (currentFonts.google?.length) {
+    if (
+      currentFonts.google?.length &&
+      document.getElementById("brz-project-font-links") === null
+    ) {
       const googleFonts = document.createElement("link");
+      googleFonts.id = "brz-project-font-links";
       googleFonts.href = makeSubsetGoogleFontsUrl(currentFonts.google);
       googleFonts.setAttribute("type", "text/css");
       googleFonts.setAttribute("rel", "stylesheet");
-
       document.head.appendChild(googleFonts);
-      parentDocument.head.appendChild(googleFonts.cloneNode());
+      parentDocument?.head.appendChild(googleFonts.cloneNode());
     }
 
-    if (currentFonts.adobe?.length && adobeKitId) {
+    if (
+      currentFonts.adobe?.length &&
+      adobeKitId &&
+      document.getElementById("brz-project-adobe-font-links") === null
+    ) {
       const adobeFonts = document.createElement("link");
+      adobeFonts.id = "brz-project-adobe-font-links";
       adobeFonts.href = makeAdobeFontsUrl(adobeKitId);
       adobeFonts.setAttribute("type", "text/css");
       adobeFonts.setAttribute("rel", "stylesheet");
-
       document.head.append(adobeFonts);
-      parentDocument.head.append(adobeFonts.cloneNode());
+      parentDocument?.head.append(adobeFonts.cloneNode());
     }
 
-    if (currentFonts.upload?.length) {
+    if (
+      currentFonts.upload?.length &&
+      document.getElementById("brz-project-upload-font-links") === null
+    ) {
       const uploadFonts = document.createElement("link");
-      uploadFonts.href = makeUploadFontsUrl(currentFonts.upload);
+      uploadFonts.id = "brz-project-upload-font-links";
+      uploadFonts.href = makeUploadFontsUrl(currentFonts.upload, globalConfig);
       uploadFonts.setAttribute("type", "text/css");
       uploadFonts.setAttribute("rel", "stylesheet");
-
       document.head.append(uploadFonts);
-      parentDocument.head.append(uploadFonts.cloneNode());
+      parentDocument?.head.append(uploadFonts.cloneNode());
     }
 
-    // Typography
-    const typographyStyle = document.createElement("style");
-    typographyStyle.id = "brz-typography-styles";
-    typographyStyle.innerHTML = makeGlobalStylesTypography({
-      fontStyles,
-      store: store
-    });
+    if (document.getElementById("brz-typography-styles") === null) {
+      // Typography
+      const typographyStyle = document.createElement("style");
+      typographyStyle.id = "brz-typography-styles";
+      typographyStyle.innerHTML = makeGlobalStylesTypography({
+        fontStyles,
+        store: store,
+        config
+      });
 
-    document.head.appendChild(typographyStyle);
+      document.head.appendChild(typographyStyle);
+    }
 
     // Config _variables scss
-    const colors = action.payload.config?.ui?.theme?.colors ?? {};
+    const colors = globalConfig?.ui?.theme?.colors ?? {};
     const themeVariables = makeVariablesColor(colors);
 
-    if (themeVariables) {
+    if (themeVariables && document.getElementById("themeVariables") === null) {
       const configVariables = document.createElement("style");
       configVariables.id = "themeVariables";
       configVariables.innerHTML = themeVariables;
@@ -216,20 +233,26 @@ function handleHydrate(callbacks) {
       configVariables.setAttribute("rel", "stylesheet");
 
       document.head.appendChild(configVariables);
-      parentDocument.head.appendChild(configVariables.cloneNode());
+      parentDocument?.head.appendChild(configVariables.cloneNode());
     }
 
-    // ColorPalette
-    const richTextPaletteStyle = document.createElement("style");
-    richTextPaletteStyle.id = "brz-rich-text-colors";
-    richTextPaletteStyle.innerHTML = makeRichTextColorPaletteCSS(colorPalette);
+    if (document.getElementById("brz-rich-text-colors") === null) {
+      // ColorPalette
+      const richTextPaletteStyle = document.createElement("style");
+      richTextPaletteStyle.id = "brz-rich-text-colors";
+      richTextPaletteStyle.innerHTML = makeRichTextColorPaletteCSS(
+        colorPalette,
+        globalConfig
+      );
+      document.head.appendChild(richTextPaletteStyle);
+    }
 
-    const globalColorStyles = document.createElement("style");
-    globalColorStyles.id = "brz-global-colors";
-    globalColorStyles.innerHTML = makeGlobalStylesColorPalette(colorPalette);
-
-    document.head.appendChild(richTextPaletteStyle);
-    document.head.appendChild(globalColorStyles);
+    if (document.getElementById("brz-global-colors") === null) {
+      const globalColorStyles = document.createElement("style");
+      globalColorStyles.id = "brz-global-colors";
+      globalColorStyles.innerHTML = makeGlobalStylesColorPalette(colorPalette);
+      document.head.appendChild(globalColorStyles);
+    }
 
     // Hidden Elements
     document.body.style.setProperty("--elements-visibility", "none");
@@ -260,12 +283,13 @@ function handleFontsChange(callbacks) {
     // Generate new Link for new Fonts
     if (action.type !== DELETE_FONTS) {
       const adobeKitId = state?.fonts?.adobe?.id;
+      const config = configSelector(state);
 
       diffFonts(oldState.fonts, state.fonts).forEach(({ type, fonts }) => {
         let href;
 
         if (type === "upload") {
-          href = makeUploadFontsUrl(fonts);
+          href = makeUploadFontsUrl(fonts, config);
         } else if (type === "adobe") {
           if (adobeKitId) href = makeAdobeFontsUrl(adobeKitId);
         } else {
@@ -288,13 +312,17 @@ function handleStylesChange(callbacks) {
   callbacks.onAfterNext.push(({ state, store }) => {
     const { colorPalette, fontStyles: _fontStyles } =
       currentStyleSelector(state);
+    const config = configSelector(state);
 
     const richTextColor = document.querySelector("#brz-rich-text-colors");
     const globalColor = document.querySelector("#brz-global-colors");
     const globalFontStyles = document.querySelector("#brz-typography-styles");
 
     if (richTextColor) {
-      richTextColor.innerHTML = makeRichTextColorPaletteCSS(colorPalette);
+      richTextColor.innerHTML = makeRichTextColorPaletteCSS(
+        colorPalette,
+        config
+      );
     }
 
     if (globalColor) {
@@ -306,7 +334,8 @@ function handleStylesChange(callbacks) {
       const fontStyles = [..._fontStyles, ...extraFontStyles];
       globalFontStyles.innerHTML = makeGlobalStylesTypography({
         fontStyles,
-        store
+        store,
+        config
       });
     }
   });
@@ -445,13 +474,17 @@ function handleHistoryChange(callbacks) {
     if (currStyleId !== prevStyleId || currStyle !== prevStyle) {
       const { colorPalette, fontStyles: _fontStyles } =
         currentStyleSelector(state);
+      const config = configSelector(state);
 
       const richTextColor = document.querySelector("#brz-rich-text-colors");
       const globalColor = document.querySelector("#brz-global-colors");
       const globalFontStyles = document.querySelector("#brz-typography-styles");
 
       if (richTextColor) {
-        richTextColor.innerHTML = makeRichTextColorPaletteCSS(colorPalette);
+        richTextColor.innerHTML = makeRichTextColorPaletteCSS(
+          colorPalette,
+          config
+        );
       }
 
       if (globalColor) {
@@ -463,7 +496,8 @@ function handleHistoryChange(callbacks) {
         const fontStyles = [..._fontStyles, ...extraFontStyles];
         globalFontStyles.innerHTML = makeGlobalStylesTypography({
           fontStyles,
-          store
+          store,
+          config
         });
       }
     }
@@ -484,7 +518,7 @@ function diffFonts(oldFonts, fonts) {
     }
 
     if (oldFont.data !== data) {
-      return [...acc, { type, fonts: _.difference(data, oldFont.data) }];
+      return [...acc, { type, fonts: difference(data, oldFont.data) }];
     }
 
     return acc;

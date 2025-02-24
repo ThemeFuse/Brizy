@@ -27,7 +27,7 @@ class RegisterParts extends Component<Props> {
 
     if (thirdPartyComponents) {
       Object.values(thirdPartyComponents).forEach((data) => {
-        Editor.registerThirdPartyElement(data, config);
+        Editor.registerThirdPartyElement(data);
       });
     }
   }

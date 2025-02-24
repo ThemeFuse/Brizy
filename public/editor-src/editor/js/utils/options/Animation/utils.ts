@@ -4,8 +4,9 @@ import {
 } from "visual/component/Options/Type";
 import { pipe } from "visual/utils/fp";
 import { EffectType } from "./types/EffectType";
+import { LegacyEffectType } from "./types/LegacyEffectType";
 import { Value } from "./types/Value";
-import { setDirection, WithDirection } from "./types/WithDirection";
+import { WithDirection, setDirection } from "./types/WithDirection";
 import * as Bounce from "./types/effects/Bounce";
 import * as Buzz from "./types/effects/Buzz";
 import * as Fade from "./types/effects/Fade";
@@ -19,7 +20,6 @@ import * as Skew from "./types/effects/Skew";
 import * as Slide from "./types/effects/Slide";
 import * as Wobble from "./types/effects/Wobble";
 import * as Zoom from "./types/effects/Zoom";
-import { LegacyEffectType } from "./types/LegacyEffectType";
 
 type GetDirection<T extends EffectType> = T extends Value["type"]
   ? T extends WithDirection<never>

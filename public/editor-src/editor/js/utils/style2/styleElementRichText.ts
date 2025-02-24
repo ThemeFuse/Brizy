@@ -1,4 +1,5 @@
 import { Num, Str } from "@brizy/readers";
+import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "./types";
@@ -7,9 +8,11 @@ import { gradientCssDeclaration } from "./utils";
 export function styleElementRichTextGradient({
   v,
   device,
+  store,
   state = "normal"
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
 
   const colorType = Str.read(dvv("colorType"));
   const gradientType = Str.read(dvv("gradientType"));
@@ -26,13 +29,15 @@ export function styleElementRichTextGradient({
   const bgColor = getColor(
     dvv("colorPalette"),
     dvv("colorHex"),
-    bgColorOpacity
+    bgColorOpacity,
+    config
   );
 
   const gradientColor = getColor(
     dvv("gradientColorPalette"),
     dvv("gradientColorHex"),
-    gradientColorOpacity
+    gradientColorOpacity,
+    config
   );
 
   return gradientCssDeclaration({
@@ -50,9 +55,11 @@ export function styleElementRichTextGradient({
 export function styleElementRichTextDCGradient({
   v,
   device,
+  store,
   state = "normal"
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
 
   const colorType = Str.read(dvv("bgColorType"));
   const gradientType = Str.read(dvv("gradientType"));
@@ -70,12 +77,18 @@ export function styleElementRichTextDCGradient({
   const modelColor = dvv("colorHex");
 
   const mainColor = modelBgColor ? modelBgColor : modelColor;
-  const bgColor = getColor(dvv("bgColorPalette"), mainColor, bgColorOpacity);
+  const bgColor = getColor(
+    dvv("bgColorPalette"),
+    mainColor,
+    bgColorOpacity,
+    config
+  );
 
   const gradientColor = getColor(
     dvv("gradientColorPalette"),
     dvv("gradientColorHex"),
-    gradientColorOpacity
+    gradientColorOpacity,
+    config
   );
 
   return gradientCssDeclaration({
@@ -93,9 +106,11 @@ export function styleElementRichTextDCGradient({
 export function styleElementRichTextDCGradientBackground({
   v,
   device,
+  store,
   state = "normal"
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
 
   const colorType = Str.read(dvv("textBgColorType"));
   const gradientType = Str.read(dvv("textGradientType"));
@@ -112,12 +127,14 @@ export function styleElementRichTextDCGradientBackground({
   const bgColor = getColor(
     dvv("textBgColorPalette"),
     dvv("textBgColorHex"),
-    bgColorOpacity
+    bgColorOpacity,
+    config
   );
   const gradientColor = getColor(
     dvv("textGradientColorPalette"),
     dvv("textGradientColorHex"),
-    gradientColorOpacity
+    gradientColorOpacity,
+    config
   );
 
   return gradientCssDeclaration({

@@ -1,14 +1,13 @@
+import { noop } from "es-toolkit";
 import { Component } from "react";
-import ReactDOM from "react-dom";
-import _ from "underscore";
 
 export default class MouseOverElement extends Component {
   static defaultProps = {
     delay: 1000,
-    onEnter: _.noop,
-    onEnterSuccess: _.noop,
-    onLeave: _.noop,
-    onLeaveSuccess: _.noop
+    onEnter: noop,
+    onEnterSuccess: noop,
+    onLeave: noop,
+    onLeaveSuccess: noop
   };
 
   isMount = true;
@@ -19,22 +18,23 @@ export default class MouseOverElement extends Component {
 
   componentDidMount() {
     this.isMount = true;
+    const elem = this.props.containerRef?.current;
 
-    // eslint-disable-next-line react/no-find-dom-node
-    const elem = ReactDOM.findDOMNode(this);
-
-    elem.addEventListener("mouseenter", this.handleMouseEnter);
-    elem.addEventListener("mouseleave", this.handleMouseLeave);
+    if (elem) {
+      elem.addEventListener("mouseenter", this.handleMouseEnter);
+      elem.addEventListener("mouseleave", this.handleMouseLeave);
+    }
   }
 
   componentWillUnmount() {
     this.isMount = false;
 
-    // eslint-disable-next-line react/no-find-dom-node
-    const elem = ReactDOM.findDOMNode(this);
+    const elem = this.props.containerRef?.current;
 
-    elem.removeEventListener("mouseenter", this.handleMouseEnter);
-    elem.removeEventListener("mouseleave", this.handleMouseLeave);
+    if (elem) {
+      elem.removeEventListener("mouseenter", this.handleMouseEnter);
+      elem.removeEventListener("mouseleave", this.handleMouseLeave);
+    }
   }
 
   handleMouseEnter = () => {

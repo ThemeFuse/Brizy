@@ -1,3 +1,4 @@
+import { Obj, Str } from "@brizy/readers";
 import { V } from "visual/types";
 import { GetDynamicContent } from "visual/utils/api/types";
 import {
@@ -5,8 +6,6 @@ import {
   isPlaceholderStart
 } from "visual/utils/dynamicContent";
 import { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
-import * as Obj from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
 import { camelCase } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
 import { ECKeyDCInfo } from "../types";

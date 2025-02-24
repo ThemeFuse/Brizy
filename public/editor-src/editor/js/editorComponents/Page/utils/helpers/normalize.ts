@@ -12,11 +12,11 @@ import {
 import { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { mapModels } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
-import { FromTo } from "../types";
 import { MValue } from "visual/utils/value";
+import { FromTo } from "../types";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 

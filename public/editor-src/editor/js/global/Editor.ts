@@ -1,11 +1,9 @@
-import { ComponentType } from "react";
+import type { ComponentType } from "react";
 import type { EditorInstance as EditorComponent } from "visual/editorComponents/EditorComponent";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type {
   ThirdPartyComponent,
   ThirdPartyConfig
 } from "visual/global/Config/types/configs/ThirdParty";
-import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 
 const components: Record<string, EditorComponent | null> = {};
 let notFoundComponent: undefined | EditorComponent;
@@ -52,14 +50,16 @@ const Editor = {
     return notFoundComponent;
   },
 
-  registerThirdPartyElement(
-    element: ThirdPartyComponent,
-    config: ConfigCommon
-  ): void {
-    const validConfig = isValidThirdPartyConfig(element, config);
+  registerThirdPartyElement(element: ThirdPartyComponent): void {
+    const { id } = element;
 
-    if (!validConfig) {
+    if (!id || components[id]) {
       console.error("Invalid third party element config");
+      return;
+    }
+
+    if (thirdPartyShortcodes[id]) {
+      console.warn("Already registered third-party element config", id);
       return;
     }
 
@@ -74,22 +74,5 @@ const Editor = {
     return thirdPartyShortcodes;
   }
 };
-
-function isValidThirdPartyConfig(
-  component: ThirdPartyComponent,
-  config: ConfigCommon
-): boolean {
-  const componentId = component?.id;
-
-  if (!componentId) {
-    return false;
-  }
-
-  const shortcodes = getFlatShortcodes(config);
-
-  return Object.values(shortcodes)
-    .flat()
-    .some((e) => e.component.id === componentId);
-}
 
 export default Editor;

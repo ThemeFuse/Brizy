@@ -1,5 +1,5 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -17,7 +17,7 @@ export function getItems({
 }): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const connectLinkColor = getColor(
+  const connectLinkColor = getColorToolbar(
     dvv("connectLinkColorPalette"),
     dvv("connectLinkColorHex"),
     dvv("connectLinkColorOpacity")
@@ -93,7 +93,8 @@ export function getItems({
               options: [
                 {
                   id: "connectColor",
-                  type: "colorPicker"
+                  type: "colorPicker",
+                  states: [NORMAL, HOVER]
                 }
               ]
             },

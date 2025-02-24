@@ -15,13 +15,12 @@ import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 class VideoPlaylist extends EditorComponent {
+  static defaultValue = defaultValue;
+  state = { currentIndex: 0 };
+
   static get componentId() {
     return "VideoPlaylist";
   }
-
-  state = { currentIndex: 0 };
-
-  static defaultValue = defaultValue;
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -84,7 +83,7 @@ class VideoPlaylist extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       this.css(
@@ -95,7 +94,7 @@ class VideoPlaylist extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -111,7 +110,7 @@ class VideoPlaylist extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -140,25 +139,32 @@ class VideoPlaylist extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
-          <BoxResizer
-            points={resizerPoints}
-            meta={meta}
-            value={v}
-            onChange={this.handleResizerChange}
+        {({ ref: cssRef }) => (
+          <Wrapper
+            {...this.makeWrapperProps({
+              className: classNameContent,
+              ref: cssRef
+            })}
           >
-            <div className="brz-video-playlist__container brz-ow-hidden brz-p-relative">
-              {positionItem === "horizontal" && <Items {...itemVideoProps} />}
-              <div className={classNameSidebar}>
-                <Items
-                  {...itemSidebarProps}
-                  onActiveChange={this.handleActive}
-                />
+            <BoxResizer
+              points={resizerPoints}
+              meta={meta}
+              value={v}
+              onChange={this.handleResizerChange}
+            >
+              <div className="brz-video-playlist__container brz-ow-hidden brz-p-relative">
+                {positionItem === "horizontal" && <Items {...itemVideoProps} />}
+                <div className={classNameSidebar}>
+                  <Items
+                    {...itemSidebarProps}
+                    onActiveChange={this.handleActive}
+                  />
+                </div>
+                {positionItem === "vertical" && <Items {...itemVideoProps} />}
               </div>
-              {positionItem === "vertical" && <Items {...itemVideoProps} />}
-            </div>
-          </BoxResizer>
-        </Wrapper>
+            </BoxResizer>
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }
@@ -180,7 +186,7 @@ class VideoPlaylist extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       this.css(
@@ -191,7 +197,7 @@ class VideoPlaylist extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -207,7 +213,7 @@ class VideoPlaylist extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

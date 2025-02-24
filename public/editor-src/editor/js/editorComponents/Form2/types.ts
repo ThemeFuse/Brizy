@@ -8,6 +8,7 @@ export type MultiStep = "on" | "off";
 export interface Value extends ElementModel {
   multistep: MultiStep;
   items: ElementModelType2[];
+  customCSS: string;
 }
 
 export interface State {

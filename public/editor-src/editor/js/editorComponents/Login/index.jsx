@@ -1,7 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
-import { isEditor } from "visual/providers/RenderProvider";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
@@ -15,6 +14,7 @@ import * as toolbarRegisterInfo from "visual/editorComponents/Login/toolbarRegis
 import * as toolbarRegisterLink from "visual/editorComponents/Login/toolbarRegisterLink";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { isWp } from "visual/global/Config";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -36,17 +36,15 @@ import * as toolbarExtendLostPasswordConfig from "./toolbarExtendLostPassword";
 import toolbarExtendParentFn from "./toolbarExtendParent";
 
 class Login extends EditorComponent {
-  static get componentId() {
-    return "Login";
-  }
-
   static defaultValue = defaultValue;
-
   static defaultProps = {
     extendParentToolbar: noop
   };
-
   isWp = isWp(this.getGlobalConfig());
+
+  static get componentId() {
+    return "Login";
+  }
 
   canRegister = () => {
     return this.isWp
@@ -272,7 +270,7 @@ class Login extends EditorComponent {
           sidebarExtendButton,
           { allowExtend: false }
         ),
-        attributes: isEditor(this.renderContext)
+        attributes: isEditor(this.props.renderContext)
           ? {}
           : {
               type: "submit",
@@ -298,9 +296,14 @@ class Login extends EditorComponent {
         )}
         key="forgot"
       >
-        <div className="brz-login-form__field brz-login-form__field-lost-password">
-          <TextEditor value={lostPassword} onChange={this.handleLinkChange} />
-        </div>
+        {({ ref }) => (
+          <div
+            className="brz-login-form__field brz-login-form__field-lost-password"
+            ref={ref}
+          >
+            <TextEditor value={lostPassword} onChange={this.handleLinkChange} />
+          </div>
+        )}
       </Toolbar>
     );
   }
@@ -311,12 +314,17 @@ class Login extends EditorComponent {
         {...this.makeToolbarPropsFromConfig2(toolbarRegisterLink)}
         key="register"
       >
-        <div className="brz-login-form__field brz-login-form__field-register-link">
-          <TextEditor
-            value={registerLink}
-            onChange={this.handleRegisterLinkChange}
-          />
-        </div>
+        {({ ref }) => (
+          <div
+            className="brz-login-form__field brz-login-form__field-register-link"
+            ref={ref}
+          >
+            <TextEditor
+              value={registerLink}
+              onChange={this.handleRegisterLinkChange}
+            />
+          </div>
+        )}
       </Toolbar>
     );
   }
@@ -330,9 +338,17 @@ class Login extends EditorComponent {
         )}
         key="login"
       >
-        <div className="brz-login-form__field brz-login-form__field-login-link">
-          <TextEditor value={loginLink} onChange={this.handleLoginLinkChange} />
-        </div>
+        {({ ref }) => (
+          <div
+            className="brz-login-form__field brz-login-form__field-login-link"
+            ref={ref}
+          >
+            <TextEditor
+              value={loginLink}
+              onChange={this.handleLoginLinkChange}
+            />
+          </div>
+        )}
       </Toolbar>
     );
   }
@@ -396,16 +412,18 @@ class Login extends EditorComponent {
           sidebarAutorized
         )}
       >
-        <div className="brz-login__authorized">
-          {v.showName === "on" && (
-            <DynamicContentHelper
-              placeholder={placeholder}
-              tagName="p"
-              fallbackComponent={fallbackComponent}
-            />
-          )}
-          {this.renderLink(v)}
-        </div>
+        {({ ref }) => (
+          <div className="brz-login__authorized" ref={ref}>
+            {v.showName === "on" && (
+              <DynamicContentHelper
+                placeholder={placeholder}
+                tagName="p"
+                fallbackComponent={fallbackComponent}
+              />
+            )}
+            {this.renderLink(v)}
+          </div>
+        )}
       </Toolbar>
     );
   }
@@ -459,7 +477,7 @@ class Login extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -475,13 +493,15 @@ class Login extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          {type === "authorized" ? (
-            this.renderAuthorizedForm(v)
-          ) : (
-            <form className="brz-login-form">{content}</form>
-          )}
-        </Wrapper>
+        {({ ref: cssRef }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref: cssRef })}>
+            {type === "authorized" ? (
+              this.renderAuthorizedForm(v)
+            ) : (
+              <form className="brz-login-form">{content}</form>
+            )}
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }
@@ -505,7 +525,7 @@ class Login extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

@@ -1,5 +1,5 @@
-import { useEffect, useLayoutEffect as reactUseLayoutEffect } from "react";
-import { debounce } from "underscore";
+import { debounce } from "es-toolkit";
+import { useLayoutEffect as reactUseLayoutEffect, useEffect } from "react";
 import { SwiperType } from "visual/types/global";
 import { checkValue } from "visual/utils/checkValue";
 import { MValue } from "visual/utils/value";

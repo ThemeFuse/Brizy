@@ -34,6 +34,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
@@ -44,28 +45,22 @@ import { styleAnimation, styleContainer, styleSection } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class SectionFooter extends EditorComponent {
-  static get componentId() {
-    return "SectionFooter";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   mounted = false;
-
   collapsibleToolbarRef = React.createRef();
-
   isPro = isPro(this.getGlobalConfig());
-
   state = {
     isDragging: false,
     paddingPatch: null
   };
+
+  static get componentId() {
+    return "SectionFooter";
+  }
 
   getDBValue() {
     if (this.state.paddingPatch) {
@@ -220,7 +215,7 @@ class SectionFooter extends EditorComponent {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
@@ -255,7 +250,7 @@ class SectionFooter extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -272,7 +267,7 @@ class SectionFooter extends EditorComponent {
           onStart={this.onPaddingResizerStart}
           onChange={this.handlePaddingResizerChange}
           onEnd={this.onPaddingResizerEnd}
-          renderContext={this.renderContext}
+          renderContext={this.props.renderContext}
         >
           <SectionFooterItems {...itemsProps} />
         </PaddingResizer>
@@ -291,46 +286,48 @@ class SectionFooter extends EditorComponent {
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <Animation
-              ref={containerBorderRef}
-              component="footer"
-              componentProps={{
-                ...parseCustomAttributes(customAttributes),
-                ...containerBorderAttr,
-                ...makeDataAttr({
-                  name: "block-id",
-                  value: this.props.blockId
-                }),
-                id: this.getId(),
-                className: classnames(
-                  "brz-footer",
-                  className,
-                  cssClass || customClassName,
-                  this.css(
-                    `${this.getComponentId()}-section`,
-                    `${this.getId()}-section`,
-                    styleSection({
-                      v,
-                      vs,
-                      vd,
-                      store: this.getReduxStore(),
-                      renderContext: this.renderContext
-                    })
+            {({ ref: cssRef }) => (
+              <Animation
+                ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
+                component="footer"
+                componentProps={{
+                  ...parseCustomAttributes(customAttributes),
+                  ...containerBorderAttr,
+                  ...makeDataAttr({
+                    name: "block-id",
+                    value: this.props.blockId
+                  }),
+                  id: this.getId(),
+                  className: classnames(
+                    "brz-footer",
+                    className,
+                    cssClass || customClassName,
+                    this.css(
+                      `${this.getComponentId()}-section`,
+                      `${this.getId()}-section`,
+                      styleSection({
+                        v,
+                        vs,
+                        vd,
+                        store: this.getReduxStore(),
+                        contexts: this.getContexts()
+                      })
+                    )
                   )
-                )
-              }}
-              animationClass={this.getAnimationClassName(v, vs, vd)}
-            >
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderItems(v, vs, vd)}
+                }}
+                animationClass={this.getAnimationClassName(v, vs, vd)}
               >
-                {this.renderToolbar(v)}
-                <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                  {this.renderItems(v, vs, vd)}
-                </ToolbarExtend>
-              </Roles>
-            </Animation>
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={() => this.renderItems(v, vs, vd)}
+                >
+                  {this.renderToolbar(v)}
+                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                    {this.renderItems(v, vs, vd)}
+                  </ToolbarExtend>
+                </Roles>
+              </Animation>
+            )}
           </CustomCSS>
         )}
       </ContainerBorder>
@@ -450,7 +447,7 @@ class SectionFooter extends EditorComponent {
                   vs,
                   vd,
                   store: this.getReduxStore(),
-                  renderContext: this.renderContext
+                  contexts: this.getContexts()
                 })
               )
             )

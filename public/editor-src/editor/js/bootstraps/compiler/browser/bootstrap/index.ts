@@ -1,9 +1,9 @@
 import deepMerge from "deepmerge";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
 import { systemFont } from "visual/utils/fonts/utils";
-import { isPopup, isStory } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 import { MValue } from "visual/utils/value";
 import { compileProject } from "../../common/compileProject";
@@ -20,7 +20,8 @@ export async function bootstrap(data: Props): Promise<Static> {
     page,
     project,
     globalBlocks: _globalBlocks,
-    needToCompile
+    needToCompile,
+    editorMode
   } = data;
   const { fonts } = project.data;
   const store = createStore();
@@ -44,10 +45,11 @@ export async function bootstrap(data: Props): Promise<Static> {
       globalBlocks,
       config,
       configId,
-      projectStatus: {}
+      projectStatus: {},
+      editorMode
     })
   );
-  const commonConfig = { store, config };
+  const commonConfig = { store, config, editorMode };
   const compiledGlobalBlocks = needToCompile.globalBlocks ?? [];
   const compiledPopups = compiledGlobalBlocks.filter(isGlobalPopup);
   let globalPopupsStatic: MValue<Array<GlobalBlockStatic>> = undefined;
@@ -67,8 +69,8 @@ export async function bootstrap(data: Props): Promise<Static> {
     }
   }
 
-  if (isPopup(config)) {
-    const data = popupToStatic({ ...commonConfig, config });
+  if (isPopup(editorMode)) {
+    const data = popupToStatic(commonConfig);
     return {
       project: compiledProject,
       page: data,
@@ -76,7 +78,7 @@ export async function bootstrap(data: Props): Promise<Static> {
     };
   }
 
-  if (isStory(config)) {
+  if (isStory(editorMode)) {
     const data = storyToStatic(commonConfig);
     return {
       project: compiledProject,

@@ -11,4 +11,6 @@ export interface Value extends ElementModel {
   placeholderSpinnerDisabled: Switch;
   placeholderDisabled: Switch;
   scriptLoadDisabled: Switch;
+
+  customCSS: string;
 }

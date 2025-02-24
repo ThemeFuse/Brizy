@@ -33,22 +33,22 @@ export const sizeCSS: OptionStyle<"slider"> = ({ value: { value, unit } }) => ({
   }
 });
 
-export const playBgColorCSS: OptionStyle<"colorPicker"> = ({
-  value: { palette, hex, opacity }
-}) => ({
-  "{{WRAPPER}}:hover .brz-video__cover .brz-video__cover-icon": {
-    "background-color": getColor(palette, hex, opacity) ?? ""
-  }
-});
-
-export const sliderBgColorCSS: OptionStyle<"colorPicker"> = ({
-  value: { palette, hex, opacity }
-}) => ({
-  "{{WRAPPER}} .brz-video-custom-slider:hover:before, {{WRAPPER}} .brz-video-custom-slider:hover .brz-video-custom-progress":
-    {
-      "background-color": getColor(palette, hex, opacity) ?? ""
+export const playBgColorCSS =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { palette, hex, opacity } }) => ({
+    "{{WRAPPER}}:hover .brz-video__cover .brz-video__cover-icon": {
+      "background-color": getColor(palette, hex, opacity, config) ?? ""
     }
-});
+  });
+
+export const sliderBgColorCSS =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { palette, hex, opacity } }) => ({
+    "{{WRAPPER}} .brz-video-custom-slider:hover:before, {{WRAPPER}} .brz-video-custom-slider:hover .brz-video-custom-progress":
+      {
+        "background-color": getColor(palette, hex, opacity, config) ?? ""
+      }
+  });
 
 export const iconSizeCSS: OptionStyle<"slider"> = ({
   value: { value, unit }
@@ -69,13 +69,13 @@ export const iconCustomSizeCSS: OptionStyle<"slider"> = ({
     }
 });
 
-export const barBgColorCSS: OptionStyle<"colorPicker"> = ({
-  value: { palette, hex, opacity }
-}) => ({
-  "{{WRAPPER}} .brz-video-custom-video-controls:hover": {
-    "background-color": getColor(palette, hex, opacity) ?? ""
-  }
-});
+export const barBgColorCSS =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { palette, hex, opacity } }) => ({
+    "{{WRAPPER}} .brz-video-custom-video-controls:hover": {
+      "background-color": getColor(palette, hex, opacity, config) ?? ""
+    }
+  });
 
 export const coverImageCSS =
   (config: ConfigCommon): OptionStyle<"imageUpload"> =>

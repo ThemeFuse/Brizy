@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { isEqual, pick } from "es-toolkit";
 import React, { ReactElement, ReactNode } from "react";
-import _ from "underscore";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
@@ -12,6 +12,7 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import { encodeToString } from "visual/utils/string";
 import { collapse, expand } from "../Accordion/utils";
 import { Wrapper } from "../tools/Wrapper";
@@ -36,19 +37,17 @@ import {
 } from "./utils";
 
 class TableOfContents extends EditorComponent<Value, Props, State> {
-  static get componentId(): ElementTypes.TableOfContents {
-    return ElementTypes.TableOfContents;
-  }
-
   static defaultValue = defaultValue;
-
   state: State = {
     isOpened: true,
     headings: []
   };
-
   headerRef = React.createRef<HTMLDivElement>();
   contentRef = React.createRef<HTMLDivElement>();
+
+  static get componentId(): ElementTypes.TableOfContents {
+    return ElementTypes.TableOfContents;
+  }
 
   handleTextChange = (patch: Patch): void => {
     this.patchValue(patch);
@@ -94,12 +93,12 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
     const { minimized: actualMinimized } = this.props.dbValue;
 
     const keys = ["selectedElements", "include", "exclude"];
-    const oldDbValue = _.pick(prevProps.dbValue, ...keys);
-    const newDbValue = _.pick(this.props.dbValue, ...keys);
+    const oldDbValue = pick(prevProps.dbValue, keys);
+    const newDbValue = pick(this.props.dbValue, keys);
 
     const statePatch: Partial<State> = {};
 
-    if (!_.isEqual(oldDbValue, newDbValue)) {
+    if (!isEqual(oldDbValue, newDbValue)) {
       const { selectedElements } = this.getValue();
       statePatch.headings = this.getHeadings(selectedElements);
     }
@@ -188,7 +187,7 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
   getIcon(active: boolean, navIcon: string): ReactElement {
     const icon = active ? `up-arrow-${navIcon}` : `down-arrow-${navIcon}`;
 
-    return isEditor(this.renderContext) ? (
+    return isEditor(this.props.renderContext) ? (
       <ThemeIcon type="editor" name={icon} />
     ) : (
       <>
@@ -227,7 +226,7 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
           );
         })}
       </List>
-    ) : isEditor(this.renderContext) ? (
+    ) : isEditor(this.props.renderContext) ? (
       <Error message={t("No headings were found.")} />
     ) : (
       ""
@@ -249,18 +248,22 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
             sidebarExtendHeader
           )}
         >
-          <Header
-            ref={this.headerRef}
-            icon={icon}
-            onClick={this.handleOpenClose}
-          >
-            <Text
-              id="title"
-              v={v}
-              onChange={this.handleTextChange}
-              className="brz-toc-title"
-            />
-          </Header>
+          {({ ref }) => (
+            <Header
+              ref={(el) => {
+                attachRefs(el, [ref, this.headerRef]);
+              }}
+              icon={icon}
+              onClick={this.handleOpenClose}
+            >
+              <Text
+                id="title"
+                v={v}
+                onChange={this.handleTextChange}
+                className="brz-toc-title"
+              />
+            </Header>
+          )}
         </Toolbar>
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(
@@ -268,9 +271,16 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
             sidebarExtendBody
           )}
         >
-          <Body ref={this.contentRef} underline={textUnderline === "on"}>
-            {this.renderTocList(markerType)}
-          </Body>
+          {({ ref }) => (
+            <Body
+              ref={(el) => {
+                attachRefs(el, [ref, this.contentRef]);
+              }}
+              underline={textUnderline === "on"}
+            >
+              {this.renderTocList(markerType)}
+            </Body>
+          )}
         </Toolbar>
       </>
     );
@@ -295,16 +305,18 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          {this.renderContent(v)}
-        </Wrapper>
+        {({ ref: cssRef }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref: cssRef })}>
+            {this.renderContent(v)}
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }
@@ -338,7 +350,7 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

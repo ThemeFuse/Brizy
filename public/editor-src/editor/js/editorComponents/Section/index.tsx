@@ -36,13 +36,12 @@ import { Meta, Patch, Props, Value } from "./type";
 import { getV } from "./utils";
 
 export default class Section extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): ElementTypes.Section {
     return ElementTypes.Section;
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
 
   getMeta(v: Value) {
     const { meta } = this.props;
@@ -129,7 +128,7 @@ export default class Section extends EditorComponent<Value, Props> {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
@@ -253,7 +252,7 @@ export default class Section extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -372,7 +371,7 @@ export default class Section extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

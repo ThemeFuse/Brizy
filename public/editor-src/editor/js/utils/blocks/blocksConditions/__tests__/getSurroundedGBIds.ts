@@ -1,4 +1,4 @@
-import { GlobalBlock } from "visual/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
 import { getSurroundedGBIds } from "../index";
 import { GB, PB, SurroundedConditionsIds } from "../types";
 

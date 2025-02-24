@@ -3,7 +3,7 @@ import { MValue } from "visual/utils/value";
 import { Sheet } from "../Sheet";
 
 interface StyleSheetManagerProvider {
-  sheet: Sheet;
+  sheet: Readonly<Sheet>;
 }
 
 export const StyleSheetManagerContext =

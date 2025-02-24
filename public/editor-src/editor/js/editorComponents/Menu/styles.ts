@@ -231,7 +231,30 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-
+    ".brz && .brz-menu__sub-menu > .brz-menu__item > .brz-a:hover > .brz-icon-svg.brz-icon-svg-custom":
+      {
+        standart: ["cssStyleElementMenuSubMenuCustomIconColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz && .brz-menu__sub-menu > .brz-menu__item:not(.brz-menu__item.brz-menu__item--current):hover > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
+      {
+        standart: ["cssStyleElementMenuSubMenuCustomIconColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
+      {
+        standart: ["cssStyleMenuSubMenuCustomIconActiveColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     // Background Color for Dropdown
     ".brz && .brz-menu__item-dropdown .brz-menu__item:hover": {
       standart: [

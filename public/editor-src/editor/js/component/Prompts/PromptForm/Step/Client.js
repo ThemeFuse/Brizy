@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { updateIntegration } from "../api";
 import { Context } from "../../common/GlobalApps/Context";
 import { RadioFields } from "../../common/GlobalApps/StepsView";
-import { pendingRequest } from "visual/utils/api";
+import { updateIntegration } from "../api";
 
 /**
  * @info
@@ -35,6 +35,8 @@ class Client extends Component {
   };
 
   handleNext = async () => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -50,11 +52,14 @@ class Client extends Component {
     });
 
     if (active !== appData.usedFolder) {
-      const { status, data } = await updateIntegration({
-        ...appData,
-        formId,
-        usedFolder: active
-      });
+      const { status, data } = await updateIntegration(
+        {
+          ...appData,
+          formId,
+          usedFolder: active
+        },
+        config
+      );
 
       if (status !== 200) {
         this.setState({

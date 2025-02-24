@@ -1,17 +1,17 @@
+import { memoize, omit, without } from "es-toolkit";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import _ from "underscore";
 import { createFont } from "visual/component/Prompts/PromptFonts/api";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { addFonts } from "visual/redux/actions2";
 import { pendingRequest } from "visual/utils/api";
-import { getWeightTypes } from "visual/utils/fonts";
+import { getWeightTypes } from "visual/utils/fonts/getFontWeight";
 import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
 import ViewAdd from "./ViewAdd";
 import ViewEdit from "./ViewEdit";
 
-const getWeights = _.memoize((weights) => {
+const getWeights = memoize((weights) => {
   return Object.entries(weights).map(([name, title]) => ({
     title,
     name
@@ -172,8 +172,8 @@ class Variation extends Component {
     } = this.context;
 
     const newData = Object.assign({}, data, {
-      weights: _.without(data.weights, id),
-      files: _.omit(data.files, id)
+      weights: without(data.weights, id),
+      files: omit(data.files, id)
     });
 
     onChange(appId, newData);

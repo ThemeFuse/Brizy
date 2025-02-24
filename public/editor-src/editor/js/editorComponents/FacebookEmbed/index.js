@@ -7,17 +7,18 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class FacebookEmbed extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "FacebookEmbed";
   }
-
-  static defaultValue = defaultValue;
 
   getAppData() {
     //const { social = [] } = Config.get("applications");
@@ -73,7 +74,7 @@ class FacebookEmbed extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -82,16 +83,25 @@ class FacebookEmbed extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <div className={className}>
-            <Facebook
-              appId={appData.appId}
-              type={t}
-              data={data}
-              renderContext={this.renderContext}
-            />
-          </div>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <div
+                className={className}
+                ref={(el) => {
+                  attachRefs(el, [toolbarRef, cssRef]);
+                }}
+              >
+                <Facebook
+                  appId={appData.appId}
+                  type={t}
+                  data={data}
+                  renderContext={this.props.renderContext}
+                />
+              </div>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -151,7 +161,7 @@ class FacebookEmbed extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -163,7 +173,7 @@ class FacebookEmbed extends EditorComponent {
             appId={appData.appId}
             type={t}
             data={data}
-            renderContext={this.renderContext}
+            renderContext={this.props.renderContext}
           />
         </div>
       </CustomCSS>

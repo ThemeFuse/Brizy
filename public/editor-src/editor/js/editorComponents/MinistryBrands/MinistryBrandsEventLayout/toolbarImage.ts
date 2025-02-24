@@ -1,5 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
   getMaskPositions,
@@ -14,7 +14,8 @@ import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const bgColor = getColor(
+
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")

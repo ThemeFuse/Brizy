@@ -8,9 +8,10 @@ export function cssStyleElementSearchAutocompleteColor({
   v,
   device,
   state,
+  store,
   prefix
 }) {
-  const color = styleColor({ v, device, state, prefix });
+  const color = styleColor({ v, device, state, store, prefix });
 
   return color === undefined ? "" : `-webkit-text-fill-color:${color};`;
 }

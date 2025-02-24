@@ -1,7 +1,7 @@
 import Loadable from "@loadable/component";
 import classnames from "classnames";
-import React, { CSSProperties, MouseEvent, ReactElement } from "react";
-import _ from "underscore";
+import { noop } from "es-toolkit";
+import React, { CSSProperties, MouseEvent, RefObject, forwardRef } from "react";
 import { Config } from "visual/global/Config";
 import { useConfig } from "visual/global/hooks";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
@@ -21,12 +21,12 @@ const isType2 = (i: string): i is IconNames => i.startsWith("t2-");
 
 const _PreviewIcon = (): null => null;
 
-const _EditorIcon = (props: Props): ReactElement => {
+const _EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     className: _className = "",
     icon = "nc-circle-add",
     style = {},
-    onClick = _.noop
+    onClick = noop
   } = props;
 
   const config = useConfig() as Config;
@@ -45,14 +45,22 @@ const _EditorIcon = (props: Props): ReactElement => {
       onClick={onClick}
     />
   ) : (
-    <svg className={className} onClick={onClick} style={style}>
+    <svg
+      className={className}
+      onClick={onClick}
+      style={style}
+      ref={ref as RefObject<SVGSVGElement>}
+    >
       <use xlinkHref={editorIconUrl({ icon, url: editorIcons })} />
     </svg>
   );
-};
+});
 
-export const EditorIcon = (props: Props) => (
-  <RenderFor forEdit={<_EditorIcon {...props} />} forView={<_PreviewIcon />} />
-);
+export const EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => (
+  <RenderFor
+    forEdit={<_EditorIcon {...props} ref={ref} />}
+    forView={<_PreviewIcon />}
+  />
+));
 
 export default EditorIcon;

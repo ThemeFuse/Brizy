@@ -1,5 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import type { Value } from "./types";
 

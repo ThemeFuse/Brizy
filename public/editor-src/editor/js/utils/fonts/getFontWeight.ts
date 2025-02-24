@@ -1,6 +1,5 @@
 import { Store } from "visual/redux/store";
-import { getFontById } from "visual/utils/fonts";
-import { ModelFamilyType } from "visual/utils/fonts/getFontById";
+import { ModelFamilyType, getFontById } from "visual/utils/fonts/getFontById";
 import { weightTitle } from "visual/utils/fonts/i10n";
 import * as Weight from "./Weight";
 

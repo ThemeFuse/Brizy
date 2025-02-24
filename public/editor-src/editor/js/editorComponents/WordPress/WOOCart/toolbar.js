@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -13,7 +13,7 @@ export function getItems({ v, device }) {
   const plainType = purchasesType !== "plain";
   const bubbleType = purchasesType !== "bubble";
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")

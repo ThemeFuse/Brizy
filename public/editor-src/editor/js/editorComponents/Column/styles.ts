@@ -12,7 +12,10 @@ import { NORMAL } from "visual/utils/stateMode";
 export function styleColumn(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
-  const { v, renderContext } = data;
+  const {
+    v,
+    contexts: { renderContext }
+  } = data;
   const get = (k: string) => {
     return Devices.some((device) => {
       return defaultValueValue({

@@ -1,5 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
@@ -18,7 +18,7 @@ export const getItems = <
 }: Params<M, P, S>): ToolbarItemType[] => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const paginationColor = getColor(
+  const paginationColor = getColorToolbar(
     dvv("paginationColorPalette"),
     dvv("paginationColorHex"),
     dvv("paginationColorOpacity")

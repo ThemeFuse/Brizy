@@ -1,10 +1,10 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 
 export default class Grid extends Component {
   static defaultProps = {
     apps: [],
-    render: _.noop
+    render: noop
   };
 
   render() {

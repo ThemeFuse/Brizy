@@ -103,7 +103,7 @@ const changeStepContent = (
 ): void => {
   if (multistepItems.length) {
     setHidden(multistepItems);
-    multistepItems[active - 1].style.display = "block";
+    multistepItems[active - 1].style.display = "flex";
   }
 };
 

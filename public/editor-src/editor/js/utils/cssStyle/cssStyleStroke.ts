@@ -15,9 +15,10 @@ export function cssStyleStroke({
   v,
   device,
   state,
+  store,
   prefix = "strokeColor"
 }: CSSValue): string {
-  const stroke = styleColor({ v, device, state, prefix });
+  const stroke = styleColor({ v, device, state, store, prefix });
 
   return stroke === undefined ? "" : `stroke:${stroke};`;
 }
@@ -39,14 +40,14 @@ export function cssStyleStrokeWidth({
         return customSize <= 24
           ? 1
           : customSize > 24 && customSize <= 32
-          ? 1.1
-          : customSize > 32 && customSize <= 48
-          ? 1.4
-          : customSize > 48 && customSize <= 64
-          ? 2.3
-          : customSize > 64
-          ? 3
-          : 1;
+            ? 1.1
+            : customSize > 32 && customSize <= 48
+              ? 1.4
+              : customSize > 48 && customSize <= 64
+                ? 2.3
+                : customSize > 64
+                  ? 3
+                  : 1;
     }
   };
 
@@ -66,6 +67,7 @@ export function cssStyleStrokeText({
   v,
   device,
   state,
+  store,
   prefix = "textStroke"
 }: CSSValue): string {
   const borderStrokeWidth = styleBorderWidthGrouped({
@@ -79,6 +81,7 @@ export function cssStyleStrokeText({
     v,
     device,
     state,
+    store,
     prefix
   });
 

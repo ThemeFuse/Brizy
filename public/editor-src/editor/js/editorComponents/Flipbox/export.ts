@@ -1,4 +1,4 @@
-import { throttle } from "underscore";
+import { throttle } from "es-toolkit";
 import type { DeviceMode } from "visual/types";
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";

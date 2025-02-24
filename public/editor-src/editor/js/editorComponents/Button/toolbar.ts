@@ -1,7 +1,7 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isPopup, isStory } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -34,13 +34,13 @@ export const getItems: GetItems<Value, Props> = ({
   });
 
   // Colors
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
   );
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")

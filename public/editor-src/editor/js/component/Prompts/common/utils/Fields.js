@@ -1,4 +1,4 @@
-import _ from "underscore";
+import { difference } from "es-toolkit";
 
 const bundleEmailField = (integrationFields, editorFields) => {
   const editorEmailField = editorFields.find(
@@ -17,7 +17,7 @@ const bundleEmailField = (integrationFields, editorFields) => {
 export const getFields = (fieldsMap, fields, formFields, restrictions) => {
   let integrationFields = (fieldsMap && JSON.parse(fieldsMap)) || [];
   const appFieldsLength = (fields && fields.length) || 0;
-  let requiredAppFieldLength = fields.filter(item => item.required).length;
+  let requiredAppFieldLength = fields.filter((item) => item.required).length;
 
   if (
     !integrationFields.some(({ target }) => target === "email") &&
@@ -63,15 +63,16 @@ export const isMaxFields = (fieldsLength, restrictions) => {
 };
 
 export const getEmptyField = (appFields, integrationFields, step) => {
-  const newAppFields = _.pluck(appFields, "slug");
-  const newIntegrationFields = _.pluck(integrationFields, "target");
-  return _.difference(newAppFields, newIntegrationFields)[step];
+  const newAppFields = appFields.map((o) => o.slug);
+  const newIntegrationFields = integrationFields.map((o) => o.target);
+  return difference(newAppFields, newIntegrationFields)[step];
 };
 
-export const substrString = name => {
+export const substrString = (name) => {
   if (name.length > 22) {
     /* eslint-disable no-useless-escape */
-    const re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    const re =
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
     /* eslint-enabled no-useless-escape */
     return re.test(name)
       ? `...${name.substr(-19, 19)}`

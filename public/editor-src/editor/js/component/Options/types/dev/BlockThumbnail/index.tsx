@@ -1,19 +1,19 @@
 import classnames from "classnames";
+import { debounce } from "es-toolkit";
 import { produce } from "immer";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _ from "underscore";
+import { ThumbnailSelector } from "visual/component/Controls/BlockThumbnail/ThumbnailSelector";
 import { updateBlocks, updateGlobalBlock } from "visual/redux/actions2";
 import {
   globalBlocksAssembled2Selector,
   pageBlocksDataAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
-import { GlobalBlockBase } from "visual/types";
+import { GlobalBlockBase } from "visual/types/GlobalBlock";
 import { FCC } from "visual/utils/react/types";
 import { Props } from "./types";
 import { PreloadThumbnailProps } from "./types";
-import { ThumbnailSelector } from "visual/component/Controls/BlockThumbnail/ThumbnailSelector";
 
 export const BlockThumbnail: FCC<Props> = ({
   label,
@@ -55,7 +55,7 @@ export const BlockThumbnail: FCC<Props> = ({
     [value, onChange]
   );
 
-  const handleInputChange = _.debounce((text: string, id: string) => {
+  const handleInputChange = debounce((text: string, id: string) => {
     const encodedText = encodeURIComponent(text);
 
     let anchorName = encodedText;

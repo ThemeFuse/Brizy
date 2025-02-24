@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import React from "react";
 import { mergeDeep } from "timm";
-import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
@@ -10,9 +9,11 @@ import Placeholder from "visual/component/Placeholder";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { isView } from "visual/providers/RenderProvider";
 import { customFileUrl } from "visual/utils/customFile";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
+import { attachRefs } from "visual/utils/react";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import { read as readString } from "visual/utils/string/specs";
 import {
@@ -105,7 +106,7 @@ class Video extends EditorComponent {
     return videoSrc
       ? getVideoUrl(videoSrc, {
           autoplay:
-            isView(this.renderContext) &&
+            isView(this.props.renderContext) &&
             (!!coverImageSrc || autoplay === "on"),
           controls: updatedControls,
           branding,
@@ -146,12 +147,13 @@ class Video extends EditorComponent {
       start,
       end
     } = this.getValue();
+    const config = this.getGlobalConfig();
 
     const isCustomVideo = type === "custom" || type === "url";
     const isLightboxOn = lightbox === "on";
-    const IS_VIEW = isView(this.renderContext);
+    const IS_VIEW = isView(this.props.renderContext);
 
-    const _href = type === "custom" ? customFileUrl(custom) : video;
+    const _href = type === "custom" ? customFileUrl(custom, config) : video;
     const href = isCustomVideo
       ? `#brz-custom-video-lightbox-${this.getId()}`
       : _href;
@@ -259,8 +261,10 @@ class Video extends EditorComponent {
       video,
       lightbox
     } = v;
+    const config = this.getGlobalConfig();
 
-    const customVideoFile = type === "custom" ? customFileUrl(custom) : video;
+    const customVideoFile =
+      type === "custom" ? customFileUrl(custom, config) : video;
 
     const classNameWrapper = classnames(
       "video-wrapper",
@@ -286,7 +290,7 @@ class Video extends EditorComponent {
           }
         : {};
 
-    const IS_VIEW = isView(this.renderContext);
+    const IS_VIEW = isView(this.props.renderContext);
 
     return (
       <>
@@ -443,37 +447,46 @@ class Video extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className: classNameContent })}>
-            <HoverAnimation
-              animationId={animationId}
-              cssKeyframe={_hoverName}
-              options={getHoverAnimationOptions(options, _hoverName)}
-              isDisabledHover={isDisabledHover}
-              isHidden={isHidden}
-              withoutWrapper={true}
-            >
-              <BoxResizer
-                points={resizerPoints}
-                meta={this.props.meta}
-                value={v}
-                onChange={this.handleResizerChange}
-                onStart={this.onDragStart}
-                onEnd={this.onDragEnd}
-                restrictions={restrictions}
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: classNameContent,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
               >
-                <div
-                  className="brz-video-content"
-                  data-loop={loop === "on"}
-                  data-muted={muted === "on"}
-                  data-autoplay={this.getAutoplay(v)}
+                <HoverAnimation
+                  animationId={animationId}
+                  cssKeyframe={_hoverName}
+                  options={getHoverAnimationOptions(options, _hoverName)}
+                  isDisabledHover={isDisabledHover}
+                  isHidden={isHidden}
+                  withoutWrapper={true}
                 >
-                  {content}
-                </div>
-              </BoxResizer>
-            </HoverAnimation>
-          </Wrapper>
-        </CustomCSS>
+                  <BoxResizer
+                    points={resizerPoints}
+                    meta={this.props.meta}
+                    value={v}
+                    onChange={this.handleResizerChange}
+                    onStart={this.onDragStart}
+                    onEnd={this.onDragEnd}
+                    restrictions={restrictions}
+                  >
+                    <div
+                      className="brz-video-content"
+                      data-loop={loop === "on"}
+                      data-muted={muted === "on"}
+                      data-autoplay={this.getAutoplay(v)}
+                    >
+                      {content}
+                    </div>
+                  </BoxResizer>
+                </HoverAnimation>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

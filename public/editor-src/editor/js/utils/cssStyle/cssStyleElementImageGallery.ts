@@ -256,9 +256,10 @@ export function cssStyleElementImageGalleryFilterBoxShadow({
 export function cssStyleElementImageGalleryFilterBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "filter" });
+  return cssStyleBorder({ v, device, state, store, prefix: "filter" });
 }
 
 export function cssStyleElementImageGalleryBorderRadius({
@@ -382,9 +383,16 @@ export function cssStyleElementImageGalleryFilterActiveBgColor({
 
 export function cssStyleElementImageGalleryFilterActiveBorder({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active", prefix: "filter" });
+  return cssStyleBorder({
+    v,
+    device,
+    state: "active",
+    store,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementImageGalleryFilterActiveShadow({
@@ -469,9 +477,10 @@ export function cssStyleElementImageGalleryWrapperWidth({
 export function cssStyleElementImageGalleryBigImageBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "bigImage" });
+  return cssStyleBorder({ v, device, state, store, prefix: "bigImage" });
 }
 
 export function cssStyleElementImageGalleryBigImageBoxShadow({

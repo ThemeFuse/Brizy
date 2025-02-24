@@ -1,6 +1,6 @@
-import _ from "underscore";
+import { flowRight } from "es-toolkit";
 import { ElementModelType } from "visual/component/Elements/Types";
-import { Screenshot } from "visual/types";
+import { Screenshot } from "visual/types/Screenshot";
 import {
   isAbsoluteUrl,
   objectToQueryString,
@@ -66,7 +66,7 @@ function blockScreenshotData(
       };
     }
 
-    const getUrl = _.compose(
+    const getUrl = flowRight(
       (block: WithScreenshotUrl<Screenshot>) =>
         blockScreenshotUrl({ ...block, screenshotUrl }),
       getScreenshots

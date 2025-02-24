@@ -1,7 +1,7 @@
-import React from "react";
-import T from "prop-types";
-import _ from "underscore";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import T from "prop-types";
+import React from "react";
 
 class SelectItem extends React.Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class SelectItem extends React.Component {
     title: "",
     disabled: false,
     value: "",
-    onClick: _.noop
+    onClick: noop
   };
 
   getClassName() {

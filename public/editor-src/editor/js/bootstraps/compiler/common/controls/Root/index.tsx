@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { RootContainer } from "visual/component/RootContainer";
-import { EditorMode } from "visual/global/EditorModeContext";
 import { getGlobalBlockPlaceholder } from "visual/utils/dynamicContent/globalBlocks";
 
 interface Props {
@@ -8,11 +7,10 @@ interface Props {
   type: "page" | "block";
   children: ReactElement;
   hasGlobalBlocks?: boolean;
-  editorMode: EditorMode;
 }
 
 export const Root = (props: Props): ReactElement => {
-  const { type, children, className, hasGlobalBlocks, editorMode } = props;
+  const { type, children, className, hasGlobalBlocks } = props;
 
   if (type === "page") {
     const topPlaceholder = getGlobalBlockPlaceholder({
@@ -25,7 +23,7 @@ export const Root = (props: Props): ReactElement => {
     });
 
     return (
-      <RootContainer className={className} editorMode={editorMode}>
+      <RootContainer className={className}>
         {hasGlobalBlocks && topPlaceholder}
         {children}
         {hasGlobalBlocks && bottomPlaceholder}

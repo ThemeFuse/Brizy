@@ -1,4 +1,4 @@
-import { BlockTypeRule } from "visual/types";
+import { BlockTypeRule } from "visual/types/Rule";
 
 export interface Rule {
   type: BlockTypeRule;

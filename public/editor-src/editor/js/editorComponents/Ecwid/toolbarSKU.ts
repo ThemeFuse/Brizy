@@ -1,5 +1,5 @@
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
@@ -15,7 +15,7 @@ export function getItems({
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const SKUColor = getColor(
+  const SKUColor = getColorToolbar(
     dvv("SKUColorPalette"),
     dvv("SKUColorHex"),
     dvv("SKUColorOpacity")

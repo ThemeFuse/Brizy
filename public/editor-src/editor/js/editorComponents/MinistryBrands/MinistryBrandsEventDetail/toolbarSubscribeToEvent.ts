@@ -1,7 +1,7 @@
 import { Num } from "@brizy/readers";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -10,13 +10,13 @@ import { Props, Value } from "./types";
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const subscribeEventButtonBgColor = getColor(
+  const subscribeEventButtonBgColor = getColorToolbar(
     dvv("subscribeEventButtonBgColorPalette"),
     dvv("subscribeEventButtonBgColorHex"),
     dvv("subscribeEventButtonBgColorOpacity")
   );
 
-  const subscribeEventButtonColor = getColor(
+  const subscribeEventButtonColor = getColorToolbar(
     dvv("subscribeEventButtonColorPalette"),
     dvv("subscribeEventButtonColorHex"),
     dvv("subscribeEventButtonColorOpacity")

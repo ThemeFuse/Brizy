@@ -1,0 +1,8 @@
+.brz-ecwid-wrapper {
+  select,
+  input,
+  textarea,
+  .paypal-buttons iframe {
+    pointer-events: none;
+  }
+}

@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
 import { Subject, from } from "rxjs";
 import {
@@ -7,22 +8,22 @@ import {
   switchMap,
   tap
 } from "rxjs/operators";
-import { noop } from "underscore";
-import { isEditor } from "visual/providers/RenderProvider";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorIcon from "visual/component/EditorIcon";
 import Placeholder from "visual/component/Placeholder";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
+import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxyInstance";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
+import { isEditor } from "visual/providers/RenderProvider";
 import { pageSelector } from "visual/redux/selectors";
 import { defaultPostsSources } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getCurrentPageId } from "visual/utils/env";
 import { tabletSyncOnChange } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import * as json from "visual/utils/reader/json";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
@@ -44,33 +45,21 @@ import {
 } from "./utils.common";
 
 export class Posts extends EditorComponent {
-  static get componentId() {
-    return "Posts";
-  }
-
   static defaultValue = defaultValue;
-
-  handleAllTagChange = (allTag) => {
-    this.patchValue({ allTag });
-  };
-
   static defaultProps = {
     extendParentToolbar: noop
   };
-
   state = {
     dataLoading: false,
     data: undefined
   };
-
   unmounted = false;
-
   subject$;
 
   constructor(props) {
     super(props);
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       this.subject$ = new Subject().pipe(
         debounceTime(1000),
         distinctUntilChanged(),
@@ -101,11 +90,13 @@ export class Posts extends EditorComponent {
             loops.push(placeholder);
           }
 
+          const globalConfig = this.getGlobalConfig();
+
           return from(
             DCApiProxyInstance.getDC(loops, {
-              postId: getCurrentPageId(),
+              postId: getCurrentPageId(globalConfig),
               cache: false,
-              globalConfig: this.getGlobalConfig()
+              globalConfig
             }).then((r) => {
               const [loop, pagination, tags] = r || [];
               return {
@@ -145,6 +136,14 @@ export class Posts extends EditorComponent {
       });
     }
   }
+
+  static get componentId() {
+    return "Posts";
+  }
+
+  handleAllTagChange = (allTag) => {
+    this.patchValue({ allTag });
+  };
 
   async componentDidMount() {
     this.reloadData();
@@ -294,7 +293,7 @@ export class Posts extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -327,9 +326,18 @@ export class Posts extends EditorComponent {
     return (
       <>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-            <Items {...itemsProps} />
-          </ContextMenu>
+          {({ ref: cssRef }) => (
+            <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+              {({ ref: contextMenuRef }) => (
+                <Items
+                  {...itemsProps}
+                  containerRef={(el) =>
+                    attachRefs(el, [cssRef, contextMenuRef])
+                  }
+                />
+              )}
+            </ContextMenu>
+          )}
         </CustomCSS>
         {dataLoading && (
           <div className="brz-ed-portal__loading">
@@ -353,7 +361,7 @@ export class Posts extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

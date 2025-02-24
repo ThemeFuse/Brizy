@@ -1,16 +1,16 @@
 import { Obj } from "@brizy/readers";
 import classnames from "classnames";
+import { isEmpty } from "es-toolkit/compat";
 import React from "react";
 import { omit } from "timm";
-import { isEmpty } from "underscore";
-import { isEditor } from "visual/providers/RenderProvider";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { t } from "visual/utils/i18n";
 import { getLinkData } from "visual/utils/models/link";
 import { handleLinkChange } from "visual/utils/patch/Link";
@@ -27,6 +27,8 @@ import { Props, Value } from "./type";
 import { Form2OptionConnector, convertLinkData } from "./utils";
 
 class Form2FieldOption extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.Form2FieldOption {
     return ElementTypes.Form2FieldOption;
   }
@@ -38,8 +40,6 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
   static get componentTitle(): string {
     return t("Form2FieldOption");
   }
-
-  static defaultValue = defaultValue;
 
   handleSelectInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.patchValue({ value: e.target.value });
@@ -65,13 +65,16 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
-        <SelectItem
-          value={value}
-          isEditor={isEditor}
-          renderIconTrash={isDesktop}
-          onRemove={onRemove}
-          handleSelectInputChange={this.handleSelectInputChange}
-        />
+        {({ ref }) => (
+          <SelectItem
+            value={value}
+            isEditor={isEditor}
+            renderIconTrash={isDesktop}
+            onRemove={onRemove}
+            handleSelectInputChange={this.handleSelectInputChange}
+            ref={ref}
+          />
+        )}
       </Toolbar>
     );
   }
@@ -89,17 +92,20 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
-        <RadioItem
-          value={value}
-          label={label}
-          name={name ?? label}
-          active={activeRadioItem}
-          placeholder={placeholder}
-          onRemove={onRemove}
-          handleInputChange={this.handleInputChange}
-          handleRadioIconClick={onClickRadioIcon}
-          isEditor={isEditor}
-        />
+        {({ ref }) => (
+          <RadioItem
+            value={value}
+            label={label}
+            name={name ?? label}
+            active={activeRadioItem}
+            placeholder={placeholder}
+            onRemove={onRemove}
+            handleInputChange={this.handleInputChange}
+            handleRadioIconClick={onClickRadioIcon}
+            isEditor={isEditor}
+            ref={ref}
+          />
+        )}
       </Toolbar>
     );
   }
@@ -171,25 +177,29 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
     return (
       <>
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
-          <CheckboxItem
-            className={checkboxUnderlineClassname}
-            type={type}
-            label={label}
-            value={value}
-            active={active}
-            name={name}
-            required={required}
-            isEditor={isEditor}
-            onRemove={onRemove}
-            handleChangeActive={handleChangeActive}
-            handleInputChange={this.handleInputChange}
-            renderCheckboxIconEditor={() =>
-              this.renderCheckboxIconEditor(isActive)
-            }
-            renderCheckboxIconPreview={this.renderCheckboxIconPreview}
-            {...checkboxLinkData}
-          />
+          {({ ref }) => (
+            <CheckboxItem
+              className={checkboxUnderlineClassname}
+              type={type}
+              label={label}
+              value={value}
+              active={active}
+              name={name}
+              required={required}
+              isEditor={isEditor}
+              onRemove={onRemove}
+              handleChangeActive={handleChangeActive}
+              handleInputChange={this.handleInputChange}
+              renderCheckboxIconEditor={() =>
+                this.renderCheckboxIconEditor(isActive)
+              }
+              renderCheckboxIconPreview={this.renderCheckboxIconPreview}
+              {...checkboxLinkData}
+              ref={ref}
+            />
+          )}
         </Toolbar>
+
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
       </>
@@ -198,7 +208,7 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
 
   renderForEdit(v: Value): React.JSX.Element | null {
     const { type } = this.props;
-    const _isEditor = isEditor(this.renderContext);
+    const _isEditor = isEditor(this.props.renderContext);
 
     switch (type) {
       case FormInput.Select: {

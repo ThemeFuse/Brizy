@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import React, { Fragment, ReactNode } from "react";
 import { omit } from "timm";
-import { isEditor } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
@@ -13,14 +12,16 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
+import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
 import { Literal } from "visual/utils/types/Literal";
@@ -90,7 +91,7 @@ class Icon extends EditorComponent<Value, Props> {
         return {
           blockId,
           meta: newMeta,
-          ...(isEditor(this.renderContext) && {
+          ...(isEditor(this.props.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -138,7 +139,7 @@ class Icon extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -158,7 +159,7 @@ class Icon extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -200,34 +201,41 @@ class Icon extends EditorComponent<Value, Props> {
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          <CustomCSS selectorName={this.getId()} css={customCSS}>
-            <Wrapper
-              {...this.makeWrapperProps({
-                className: isStory(this.props.editorMode)
-                  ? classWrapperStory
-                  : classWrapper,
-                attributes: { ...props }
-              })}
-            >
-              <BoxResizer
-                keepAspectRatio
-                points={resizerPoints}
-                meta={this.props.meta}
-                value={resizerTransformValue(v)}
-                onChange={this.handleResizerChange}
-              >
-                <HoverAnimation
-                  animationId={animationId}
-                  cssKeyframe={hoverName}
-                  options={getHoverAnimationOptions(options, hoverName)}
-                  isHidden={isHidden}
-                  withoutWrapper={true}
+          {({ ref: toolbarRef }) => (
+            <CustomCSS selectorName={this.getId()} css={customCSS}>
+              {({ ref: cssRef }) => (
+                <Wrapper
+                  {...this.makeWrapperProps({
+                    className: isStory(this.props.editorMode)
+                      ? classWrapperStory
+                      : classWrapper,
+                    attributes: props,
+                    ref: (el) => {
+                      attachRefs(el, [toolbarRef, cssRef]);
+                    }
+                  })}
                 >
-                  {content}
-                </HoverAnimation>
-              </BoxResizer>
-            </Wrapper>
-          </CustomCSS>
+                  <BoxResizer
+                    keepAspectRatio
+                    points={resizerPoints}
+                    meta={this.props.meta}
+                    value={resizerTransformValue(v)}
+                    onChange={this.handleResizerChange}
+                  >
+                    <HoverAnimation
+                      animationId={animationId}
+                      cssKeyframe={hoverName}
+                      options={getHoverAnimationOptions(options, hoverName)}
+                      isHidden={isHidden}
+                      withoutWrapper={true}
+                    >
+                      {content}
+                    </HoverAnimation>
+                  </BoxResizer>
+                </Wrapper>
+              )}
+            </CustomCSS>
+          )}
         </Toolbar>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}

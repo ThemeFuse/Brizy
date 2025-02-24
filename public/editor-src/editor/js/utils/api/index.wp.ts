@@ -1,7 +1,7 @@
 import { Str } from "@brizy/readers";
 import { WP } from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Rule } from "visual/types";
+import { Rule } from "visual/types/Rule";
 import { apiRuleToEditorRule } from "visual/utils/reader/globalBlocks";
 import {
   GetAuthors,
@@ -12,7 +12,6 @@ import {
   GetTermsBy
 } from "./types";
 import { makeFormEncode, makeUrl } from "./utils";
-
 
 export {
   addCustomIcon,

@@ -1,5 +1,6 @@
-import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
+import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid/types";
 import { EcwidPageSlug } from "visual/libs/Ecwid";
+import { EcwidCartCheckoutStep } from "../../../editorComponents/Ecwid/EcwidCart/types/Value";
 
 export interface Base<T extends EcwidPageSlug, P extends {}> {
   type: T;
@@ -31,11 +32,11 @@ export const product = (id: string, productId: EcwidProductId): Product => ({
 // endregion
 
 // region Cart
-export type Cart = Base<"cart", {}>;
+export type Cart = Base<EcwidCartCheckoutStep, {}>;
 
-export const cart = (id: string): Cart => ({
+export const cart = (id: string, step?: EcwidCartCheckoutStep): Cart => ({
   id,
-  type: "cart",
+  type: step ?? EcwidCartCheckoutStep.Cart,
   args: {}
 });
 // endregion

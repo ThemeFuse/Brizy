@@ -2,8 +2,8 @@ import classnames from "classnames";
 import React, { useCallback, useMemo, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Toolbar from "visual/component/Toolbar";
-import { Color, Props } from "./types";
 import { getToolbarItems } from "./toolbar";
+import { Color, Props } from "./types";
 
 export const ColorPaletteEditor = (props: Props): JSX.Element => {
   const {
@@ -76,7 +76,7 @@ export const ColorPaletteEditor = (props: Props): JSX.Element => {
         onOpen={() => handleToolbarOpen(index)}
         onClose={handleToolbarClose}
       >
-        <div className={className} style={style} />
+        {({ ref }) => <div className={className} style={style} ref={ref} />}
       </Toolbar>
     );
   });

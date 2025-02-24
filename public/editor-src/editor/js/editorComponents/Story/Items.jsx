@@ -9,55 +9,61 @@ import {
 import { SortableContext, arrayMove, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import classnames from "classnames";
-import React from "react";
+import { noop } from "es-toolkit";
+import React, { forwardRef } from "react";
 import SlickSlider from "react-slick";
-import _ from "underscore";
-import { isEditor, isView } from "visual/providers/RenderProvider";
 import debounceRenderHOC from "visual/component/DebounceRenderHOC";
 import EditorIcon from "visual/component/EditorIcon";
 import Prompts from "visual/component/Prompts";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { hideToolbar } from "visual/component/Toolbar";
-import Toolbar from "visual/component/Toolbar";
+import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { importStory } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
+import { attachRef } from "visual/utils/react";
 
-const Dot = debounceRenderHOC((props) => {
-  const { id, onClick, isActive, children } = props;
-  const {
-    active: dragged,
-    attributes,
-    listeners,
-    transform,
-    transition,
-    setNodeRef
-  } = useSortable({ id });
+const Dot = debounceRenderHOC(
+  forwardRef((props, ref) => {
+    const { id, onClick, isActive, children } = props;
+    const {
+      active: dragged,
+      attributes,
+      listeners,
+      transform,
+      transition,
+      setNodeRef
+    } = useSortable({ id });
 
-  const isDragged = dragged?.id === id;
+    const isDragged = dragged?.id === id;
 
-  const style = {
-    transition,
-    transform: CSS.Translate.toString(transform),
-    zIndex: isDragged ? 1 : 0
-  };
-  const className = classnames("story-slider-curtain", {
-    "story-slider-dot--active": isActive
-  });
+    const style = {
+      transition,
+      transform: CSS.Translate.toString(transform),
+      zIndex: isDragged ? 1 : 0
+    };
+    const className = classnames("story-slider-curtain", {
+      "story-slider-dot--active": isActive
+    });
 
-  return (
-    <li
-      onClick={onClick}
-      style={style}
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-    >
-      <div className={className} />
-      <div className="story-slider-dot">{children}</div>
-    </li>
-  );
-}, 200);
+    return (
+      <li
+        onClick={onClick}
+        style={style}
+        ref={(el) => {
+          setNodeRef(el);
+          attachRef(el, ref);
+        }}
+        {...attributes}
+        {...listeners}
+      >
+        <div className={className} />
+        <div className="story-slider-dot">{children}</div>
+      </li>
+    );
+  }),
+  200
+);
 
 const Dots = (props) => {
   const { itemsIds, onClick, onSortEnd, onSortStart, children } = props;
@@ -92,9 +98,6 @@ const Dots = (props) => {
   );
 };
 class StoryItems extends EditorArrayComponent {
-  static get componentId() {
-    return "Story.Items";
-  }
   static defaultProps = {
     className: "",
     meta: {}
@@ -102,6 +105,10 @@ class StoryItems extends EditorArrayComponent {
   state = {
     active: 0
   };
+
+  static get componentId() {
+    return "Story.Items";
+  }
 
   componentDidUpdate(_, { active }) {
     if (this.state.active !== active) {
@@ -177,14 +184,14 @@ class StoryItems extends EditorArrayComponent {
           id: "duplicate",
           type: "button",
           devices: "desktop",
-          onClick: _.noop,
+          onClick: noop,
           disabled: true
         },
         {
           id: "remove",
           type: "button",
           devices: "desktop",
-          onClick: _.noop,
+          onClick: noop,
           disabled: true
         }
       ]
@@ -275,13 +282,16 @@ class StoryItems extends EditorArrayComponent {
           key={id}
           {...this.makeToolbarPropsFromConfig2(this.getToolbarSettings(index))}
         >
-          <Dot
-            id={id}
-            onClick={() => this.handleClick(index)}
-            isActive={isActive}
-          >
-            {item}
-          </Dot>
+          {({ ref }) => (
+            <Dot
+              id={id}
+              onClick={() => this.handleClick(index)}
+              isActive={isActive}
+              containerRef={ref}
+            >
+              {item}
+            </Dot>
+          )}
         </Toolbar>
       );
     });
@@ -301,7 +311,7 @@ class StoryItems extends EditorArrayComponent {
   };
 
   renderItemsContainer(items, v) {
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       return (
         <SlickSlider
           className={"brz-slick-slider"}
@@ -332,7 +342,7 @@ class StoryItems extends EditorArrayComponent {
         </SlickSlider>
       );
     }
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       const { sliderAutoPlay, sliderAutoPlaySpeed, sliderLoop } = this.props;
       const responsive = [
         {

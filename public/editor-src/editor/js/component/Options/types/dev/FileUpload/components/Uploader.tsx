@@ -107,7 +107,7 @@ export function Uploader({
       }
 
       const response: Response<FileUploadData> = ({ uid, filename }) => {
-        const file: WithValue = { id: uid, name: filename };
+        const file: WithValue = { id: uid ?? "", name: filename };
         dispatch(success(file));
       };
       const reject: Response<string> = (message) => {

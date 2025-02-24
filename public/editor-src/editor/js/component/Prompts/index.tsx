@@ -21,11 +21,11 @@ import {
   PromptsOpenProps
 } from "visual/component/Prompts/types";
 import { getConfigById } from "visual/global/Config/InitConfig";
-import { EditorMode } from "visual/global/EditorModeContext";
 import UIState from "visual/global/UIState";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { configIdSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { BlockMetaType } from "visual/types";
+import { BlockMetaType } from "visual/types/GlobalBlock";
 import Apps from "./PromptApps";
 import Authorization from "./PromptAuthorization";
 import Blocks from "./PromptBlocks";

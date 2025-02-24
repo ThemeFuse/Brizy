@@ -1,7 +1,7 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { EditorMode, isStory } from "visual/global/EditorModeContext";
+import { EditorMode, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
 

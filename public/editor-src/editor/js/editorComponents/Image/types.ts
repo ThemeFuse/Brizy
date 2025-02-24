@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from "react";
-import { RenderType } from "visual/providers/RenderProvider";
 import { LinkData } from "visual/component/Link/types/Type";
 import { LinkProps } from "visual/component/hooks/withLink";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ECDC } from "visual/editorComponents/EditorComponent/types";
+import { EditorMode } from "visual/providers/EditorModeProvider";
+import { RenderType } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
 import { ImageType } from "visual/utils/image/types";
 
@@ -112,6 +113,7 @@ export type ImageProps = {
   wrapperSizes: WrapperSizes;
   getResponsiveUrls: GetResponsiveUrls;
   renderContext: RenderType;
+  editorMode: EditorMode;
   extraAttributes?: React.HTMLAttributes<HTMLImageElement>;
   children: ReactNode;
   onChange: (arg0: Patch) => void;

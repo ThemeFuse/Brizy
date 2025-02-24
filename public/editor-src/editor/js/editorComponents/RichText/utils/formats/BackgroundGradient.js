@@ -1,4 +1,5 @@
 import Quill from "quill";
+import Config from "visual/global/Config";
 import { getColor } from "visual/utils/color";
 
 let Inline = Quill.import("blots/inline");
@@ -17,14 +18,14 @@ export function getStyle(backgroundGradient) {
     startOpacity,
     finishOpacity
   } = backgroundGradient;
+  const config = Config.getAll();
 
   const position =
     type === "linear-gradient"
       ? `${linearAngle}deg`
       : `circle ${radialPosition}px`;
-
-  const hex1 = getColor(startPalette, startHex, startOpacity);
-  const hex2 = getColor(finishPalette, finishHex, finishOpacity);
+  const hex1 = getColor(startPalette, startHex, startOpacity, config);
+  const hex2 = getColor(finishPalette, finishHex, finishOpacity, config);
 
   return `${type}(${position}, ${hex1} ${startPointer}%, ${hex2} ${finishPointer}%)`;
 }

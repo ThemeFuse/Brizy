@@ -20,6 +20,7 @@
     "bgPopulation": "",
     "bgImageExtension": "",
     "bgImageType": "internal",
+    "bgAlt": "",
 
     "bgVideo": "",
     "bgVideoType": "youtube",
@@ -123,6 +124,7 @@
     "maskCustomUploadPositionX": 50,
     "maskCustomUploadPositionY": 50,
     "maskCustomUploadImageType": "internal",
+    "maskCustomUploadAlt": "",
 
     "maskShadowColorHex": "#000000",
     "maskShadowColorOpacity": 0,

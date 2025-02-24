@@ -1,4 +1,4 @@
-import { EcwidCategoryId } from "visual/global/Ecwid";
+import { EcwidCategoryId } from "visual/global/Ecwid/types";
 
 export interface Category {
   /**

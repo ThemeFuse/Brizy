@@ -1,31 +1,13 @@
-// Gradient
-export {
-  toolbarGradientLinearDegree,
-  toolbarGradientRadialDegree
-} from "./toolbarGradient";
-
-// Border Color
-export {
-  toolbarBorderWidthOneField2,
-  toolbarBorderWidthFourFields2
-} from "./toolbarBorder";
-
-//Box Shadow
-export { toolbarBoxShadowFields2 } from "./toolbarBoxShadow";
-
 // Anchor and URL
 export { toolbarLinkAnchor } from "./toolbarLink";
 
 // Disabled
 export {
   toolbarDisabledShowOnResponsive,
-  toolbarDisabledToolbarSettings,
   toolbarDisabledShowOnTablet,
   toolbarDisabledShowOnMobile,
   toolbarDisabledPadding,
-  toolbarDisabledMargin,
-  toolbarDisabledDuplicate,
-  toolbarDisabledRemove
+  toolbarDisabledMargin
 } from "./toolbarDisabled";
 
 // Element Section

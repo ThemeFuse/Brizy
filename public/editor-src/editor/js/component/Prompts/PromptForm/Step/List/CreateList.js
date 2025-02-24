@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { Scrollbar } from "visual/component/Scrollbar";
@@ -19,9 +19,9 @@ export default class CreateList extends Component {
     apiKeyValue: {},
     nextLoading: false,
     prevLoading: false,
-    onPrev: _.noop,
-    onNext: _.noop,
-    onChange: _.noop
+    onPrev: noop,
+    onNext: noop,
+    onChange: noop
   };
 
   renderError() {

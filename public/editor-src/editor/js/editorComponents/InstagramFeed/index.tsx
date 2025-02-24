@@ -5,6 +5,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { onOffToBool } from "visual/utils/boolean";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as toolbarConfig from "./toolbar";
@@ -45,20 +46,31 @@ export default class InstagramFeed extends EditorComponent<Value> {
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbarConfig)}>
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <InstagramEmbed
-              key={key}
-              url={embedUrl}
-              placeholderSpinner={placeholderSpinner}
-              linkText={linkText}
-              captioned={_captioned}
-              placeholderSpinnerDisabled={_placeholderSpinnerDisabled}
-              placeholderDisabled={_placeholderDisabled}
-              scriptLoadDisabled={_scriptLoadDisabled}
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <InstagramEmbed
+                  key={key}
+                  url={embedUrl}
+                  placeholderSpinner={placeholderSpinner}
+                  linkText={linkText}
+                  captioned={_captioned}
+                  placeholderSpinnerDisabled={_placeholderSpinnerDisabled}
+                  placeholderDisabled={_placeholderDisabled}
+                  scriptLoadDisabled={_scriptLoadDisabled}
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

@@ -1,6 +1,6 @@
-import PortalToolbar from "./PortalToolbar";
 import CollapsibleToolbar from "./CollapsibleToolbar";
-import { monitor as toolbarMonitor, DeactivationOptions } from "./monitor";
+import PortalToolbar from "./PortalToolbar";
+import { DeactivationOptions, monitor as toolbarMonitor } from "./monitor";
 
 export default PortalToolbar;
 

@@ -21,7 +21,7 @@ export interface ImagePatterns {
 }
 
 export interface FileUploadData {
-  uid: string;
+  uid?: string;
   filename: string;
 }
 

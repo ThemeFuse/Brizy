@@ -9,6 +9,7 @@ import { authorized } from "./authorized";
 import { blocksData } from "./blocksData";
 import { blocksOrder } from "./blocksOrder";
 import { changedGBIds } from "./changedGBIds";
+import { configId } from "./config";
 import { copiedElement } from "./copiedElement";
 import { currentStyle } from "./currentStyle";
 import { currentStyleId } from "./currentStyleId";
@@ -24,7 +25,6 @@ import { storeWasChanged } from "./storeWasChanged";
 import { styles } from "./styles";
 import { syncAllowed } from "./syncAllowed";
 import { ui } from "./ui";
-import { configId } from "./config";
 
 export default historyReducerEnhancer(
   combineReducersCustom(

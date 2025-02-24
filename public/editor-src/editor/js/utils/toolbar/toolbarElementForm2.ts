@@ -1,9 +1,10 @@
+import { flatten } from "es-toolkit";
 import { mPipe } from "fp-utilities";
-import _, { flatten } from "underscore";
 import {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
+import { ConfigTab as PromptTab } from "visual/component/Prompts/PromptForm/types";
 import type { FormField } from "visual/component/Prompts/common/GlobalApps/type";
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -19,10 +20,12 @@ interface Data {
   device: DeviceMode;
   state: State;
   showIntegrations: boolean;
+  tabs?: PromptTab[];
 }
 
 const repeatFunc = mPipe(
-  (items: ElementModel["items"]) => items?.map((item) => item.value.items),
+  (items: ElementModel["items"]) =>
+    items?.map((item) => item.value.items ?? []),
   flatten
 );
 
@@ -40,7 +43,8 @@ export function toolbarElementForm2Apps({
   device,
   state,
   devices = "all",
-  showIntegrations
+  showIntegrations,
+  tabs
 }: Data): ToolbarItemType {
   const items =
     v.multistep === "on" && v.items
@@ -48,7 +52,7 @@ export function toolbarElementForm2Apps({
       : v.items?.[0].value.items;
 
   const fields = Array.isArray(items)
-    ? (_.pluck(items, "value") as FormField[])
+    ? (items.map((o) => o.value) as FormField[])
     : [];
   const dvk = (key: string) => defaultValueKey({ key, device, state });
 
@@ -60,7 +64,8 @@ export function toolbarElementForm2Apps({
     config: {
       id: Str.read(v._id) ?? "",
       fields,
-      icon: "nc-extensions-2"
+      icon: "nc-extensions-2",
+      tabs
     }
   };
 }

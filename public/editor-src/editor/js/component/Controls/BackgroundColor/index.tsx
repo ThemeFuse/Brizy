@@ -3,23 +3,23 @@ import React from "react";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
 import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import {
-  ColorPickerSelect,
-  Props as CSProps
+  Props as CSProps,
+  ColorPickerSelect
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import { WithClassName, WithValue } from "visual/types/attributes";
 import { t } from "visual/utils/i18n";
-import { GradientType, Meta, Type, Value } from "./entities";
 import { GradientRange } from "./GradientRange";
+import { GradientType, Meta, Type, Value } from "./entities";
 import { fromColorMeta } from "./utils";
 
 type Props = WithClassName &
   WithValue<Value> & {
     onChange: (v: Value, m: Meta) => void;
     paletteOpenSettings?: () => void;
-    palette: PaletteObject[];
+    palette?: PaletteObject[];
     opacity: boolean;
     gradientColors: [string, string];
     withNone: boolean;
@@ -51,7 +51,7 @@ export const BackgroundColor = ({
   onChange,
   value,
   paletteOpenSettings,
-  palette,
+  palette = [],
   opacity,
   gradientColors: [g1, g2],
   withNone

@@ -1,14 +1,15 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
-import { isView } from "visual/providers/RenderProvider";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import PortalToolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -21,14 +22,15 @@ export interface Value extends ElementModel {
   iconType: string;
   iconFilename?: string;
   itemId: string;
+  customCSS: string;
 }
 
 export class AddToCart extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
+
   static get componentId(): "AddToCart" {
     return "AddToCart";
   }
-
-  static defaultValue = defaultValue;
 
   handleTextChange = (patch: { [k: string]: string }): void =>
     this.patchValue(patch);
@@ -61,7 +63,7 @@ export class AddToCart extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -80,31 +82,36 @@ export class AddToCart extends EditorComponent<Value> {
 
     return (
       <PortalToolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className,
-              attributes: {
-                ...makeDataAttr({ name: "product-handle", value: _itemId }),
-                ...makeDataAttr({
-                  name: "default-variant-id",
-                  value: _variantId
-                })
-              }
-            })}
-            component={"button"}
-          >
-            {this.renderIcon(v)}
-            <Text id="text" v={v} onChange={this.handleTextChange} />
-            {isView(this.renderContext) && (
-              <ThemeIcon
-                className="brz-shopify-add-to-cart--spinner brz-invisible"
-                name="circle-02"
-                type="glyph"
-              />
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  attributes: {
+                    ...makeDataAttr({ name: "product-handle", value: _itemId }),
+                    ...makeDataAttr({
+                      name: "default-variant-id",
+                      value: _variantId
+                    })
+                  },
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+                component={"button"}
+              >
+                {this.renderIcon(v)}
+                <Text id="text" v={v} onChange={this.handleTextChange} />
+                {isView(this.props.renderContext) && (
+                  <ThemeIcon
+                    className="brz-shopify-add-to-cart--spinner brz-invisible"
+                    name="circle-02"
+                    type="glyph"
+                  />
+                )}
+              </Wrapper>
             )}
-          </Wrapper>
-        </CustomCSS>
+          </CustomCSS>
+        )}
       </PortalToolbar>
     );
   }

@@ -1,7 +1,7 @@
+import { noop } from "es-toolkit";
 import { match } from "fp-utilities";
 import React, { ChangeEvent, Component, ReactElement, ReactNode } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
 import { Alert } from "visual/component/Alert";
 import ReactSelect from "visual/component/Controls/ReactSelect";
 import { SingleValue } from "visual/component/Controls/ReactSelect/types";
@@ -35,9 +35,9 @@ export class Fields extends Component<Props> {
     data: [],
     nextLoading: null,
     prevLoading: null,
-    onPrev: _.noop,
-    onNext: _.noop,
-    onActive: _.noop
+    onPrev: noop,
+    onNext: noop,
+    onActive: noop
   };
 
   renderHead(): ReactNode {
@@ -136,8 +136,8 @@ export class Fields extends Component<Props> {
         multiple && Array.isArray(value)
           ? value.join(",")
           : !Array.isArray(value) && typeof value === "object"
-          ? value.value
-          : ""
+            ? value.value
+            : ""
       );
     };
 

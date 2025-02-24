@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
