@@ -1910,3 +1910,32 @@ export const getMenus = async (): Promise<MenuSimple[]> => {
   }
   throw new Error(t("Failed to get menus"));
 };
+
+export const shortcodeContent = async (shortcode: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.shortcodeContent,
+    version: editorVersion,
+    shortcode: shortcode
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find shortcode content"));
+};
