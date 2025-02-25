@@ -8,6 +8,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { getTerms } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import { DynamicContentHelper } from "../common/DynamicContentHelper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -39,23 +40,21 @@ const shortcodeToPlaceholder = {
 const resizerPoints = ["centerLeft", "centerRight"];
 
 export default class WOOPages extends EditorComponent {
-  static get componentId() {
-    return "WOOPages";
-  }
-
   static defaultValue = defaultValue;
-
   state = {
     taxonomies: []
   };
+  containerRef = React.createRef();
+
+  static get componentId() {
+    return "WOOPages";
+  }
 
   componentDidMount() {
     getTerms("product_cat", this.getGlobalConfig()).then((taxonomies) =>
       this.setState({ taxonomies })
     );
   }
-
-  containerRef = React.createRef();
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -84,7 +83,7 @@ export default class WOOPages extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -96,25 +95,34 @@ export default class WOOPages extends EditorComponent {
           sidebarConfig
         )}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({ className, ref: this.containerRef })}
-          >
-            <BoxResizer
-              points={resizerPoints}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              <DynamicContentHelper
-                placeholder={shortcodeToPlaceholder[v.shortcode]?.(v)}
-                tagName="div"
-                placeholderIcon="woo-2"
-                onSuccess={this.handleDynamicContentSuccess}
-                props={{ className: "brz-woo-page" }}
-              />
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [this.containerRef, toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                >
+                  <DynamicContentHelper
+                    placeholder={shortcodeToPlaceholder[v.shortcode]?.(v)}
+                    tagName="div"
+                    placeholderIcon="woo-2"
+                    onSuccess={this.handleDynamicContentSuccess}
+                    props={{ className: "brz-woo-page" }}
+                  />
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

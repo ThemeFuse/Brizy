@@ -6,11 +6,12 @@ import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
+import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxyInstance";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getCurrentPageId } from "visual/utils/env";
+import { attachRefs } from "visual/utils/react";
 import { BreadcrumbsPreview } from "./components/BreadcrumbsPreview";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -45,16 +46,17 @@ class Breadcrumbs extends EditorComponent<Value> {
         content_type: "json"
       }
     });
+    const globalConfig = this.getGlobalConfig();
 
     DCApiProxyInstance.getDC([placeholder], {
-      postId: getCurrentPageId(),
-      globalConfig: this.getGlobalConfig()
+      postId: getCurrentPageId(globalConfig),
+      globalConfig
     }).then((res) => this.setState({ breadcrumbContent: Json.read(res[0]) }));
   }
 
   renderForEdit(v: Value, vs: Value, vd: Value) {
     const { breadcrumbContent } = this.state;
-    const { customCss } = v;
+    const { customCSS } = v;
 
     const items = readBreadcrumbs(breadcrumbContent);
     const className = classNames(
@@ -67,7 +69,7 @@ class Breadcrumbs extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -76,11 +78,22 @@ class Breadcrumbs extends EditorComponent<Value> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCss}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            <BreadcrumbsEditor items={items} />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BreadcrumbsEditor items={items} />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     ) : (
       <Placeholder icon="wp-breadcrumbs" style={placeholderStyle} />
@@ -88,7 +101,7 @@ class Breadcrumbs extends EditorComponent<Value> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value) {
-    const { customCss } = v;
+    const { customCSS } = v;
     const className = classNames(
       "brz-breadcrumbs",
       this.css(
@@ -99,13 +112,13 @@ class Breadcrumbs extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
-      <CustomCSS selectorName={this.getId()} css={customCss}>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper
           {...this.makeWrapperProps({
             className

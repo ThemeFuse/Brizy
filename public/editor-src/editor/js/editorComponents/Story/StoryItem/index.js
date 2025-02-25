@@ -1,12 +1,13 @@
 import classnames from "classnames";
+import { isEqual } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
 import { Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import * as sidebarConfig from "./sidebar";
@@ -14,20 +15,18 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class StoryItem extends EditorComponent {
+  static defaultProps = {
+    meta: {}
+  };
+  static defaultValue = defaultValue;
+  collapsibleToolbarRef = React.createRef();
+
   static get componentId() {
     return "StoryItem";
   }
 
-  static defaultProps = {
-    meta: {}
-  };
-
-  static defaultValue = defaultValue;
-
-  collapsibleToolbarRef = React.createRef();
-
   shouldUpdateBecauseOfParent(nextProps) {
-    return !_.isEqual(this.props.rerender, nextProps.rerender);
+    return !isEqual(this.props.rerender, nextProps.rerender);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -94,7 +93,7 @@ class StoryItem extends EditorComponent {
           vd,
           store: this.getReduxStore(),
           props: this.props,
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -103,22 +102,24 @@ class StoryItem extends EditorComponent {
       <ContainerBorder type="story__item" activateOnContentClick={false}>
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <div
-              {...containerBorderAttr}
-              id={this.getId()}
-              className={classNameSectionContent}
-              ref={containerBorderRef}
-            >
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderItems(v)}
+            {({ ref: cssRef }) => (
+              <div
+                {...containerBorderAttr}
+                id={this.getId()}
+                className={classNameSectionContent}
+                ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
               >
-                {this.renderToolbar()}
-                <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                  {this.renderItems(v)}
-                </ToolbarExtend>
-              </Roles>
-            </div>
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={() => this.renderItems(v)}
+                >
+                  {this.renderToolbar()}
+                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                    {this.renderItems(v)}
+                  </ToolbarExtend>
+                </Roles>
+              </div>
+            )}
           </CustomCSS>
         )}
       </ContainerBorder>
@@ -139,7 +140,7 @@ class StoryItem extends EditorComponent {
           vd,
           store: this.getReduxStore(),
           props: this.props,
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

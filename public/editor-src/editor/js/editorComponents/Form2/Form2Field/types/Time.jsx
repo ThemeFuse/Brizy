@@ -1,12 +1,7 @@
-import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import TextField from "./common/TextField";
 
 export default class Time extends TextField {
-  static get componentTitle() {
-    return t("Time");
-  }
-
   static get componentType() {
     return "Time";
   }

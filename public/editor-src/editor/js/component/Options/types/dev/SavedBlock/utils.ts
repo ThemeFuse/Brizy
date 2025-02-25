@@ -1,4 +1,5 @@
-import { Block, SavedBlock } from "visual/types";
+import { SavedBlock } from "visual/types";
+import { Block } from "visual/types/Block";
 import {
   createBlockScreenshot,
   createSavedBlock,

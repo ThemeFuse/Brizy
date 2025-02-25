@@ -1,6 +1,6 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -17,8 +17,9 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export function getItems({ v, component, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device });
+  const config = component.getGlobalConfig();
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
@@ -28,7 +29,6 @@ export function getItems({ v, component, device, context }) {
     type: DCTypes.image
   });
 
-  const config = component.getGlobalConfig();
   const customVideo = isPro(config)
     ? [
         {
@@ -358,7 +358,6 @@ export function getItems({ v, component, device, context }) {
         blockId: component.getId()
       }
     },
-
     {
       id: "advancedSettings",
       type: "advancedSettings",

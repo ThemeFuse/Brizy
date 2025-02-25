@@ -9,8 +9,15 @@ export interface Base {
   title: string;
 }
 
-interface Collection extends Base {
+export interface Collection extends Base {
   slug?: string | null;
+}
+
+export interface Ref {
+  type: "single" | "multi";
+  value: string;
+  title: string;
+  fieldId: string;
 }
 
 export type Refs = Dictionary<
@@ -43,6 +50,7 @@ const formatCustomer = (c: CustomerAPI): Base => {
   };
 };
 
+// this function is no longer used, it remains to be seen if it will be useful in the future
 export async function getCustomerAndCollectionTypes(
   data: CreateApolloClientProps
 ): Promise<GetCustomersAndCollectionTypes> {

@@ -1,8 +1,9 @@
-import { GlobalBlock, Screenshot } from "visual/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Screenshot } from "visual/types/Screenshot";
 import { createBlockScreenshot } from "visual/utils/api";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { Config } from "./types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const createScreenshot = async (
   node: HTMLElement,

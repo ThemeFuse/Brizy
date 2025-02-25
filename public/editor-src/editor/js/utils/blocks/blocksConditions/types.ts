@@ -1,5 +1,5 @@
 import { ReduxState } from "visual/redux/types";
-import { GlobalBlock, GlobalBlockPosition } from "visual/types";
+import { GlobalBlock, GlobalBlockPosition } from "visual/types/GlobalBlock";
 
 export type PB = ReduxState["blocksOrder"];
 export type GB = ReduxState["globalBlocks"];

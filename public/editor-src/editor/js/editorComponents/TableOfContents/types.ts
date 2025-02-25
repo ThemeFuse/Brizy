@@ -13,6 +13,7 @@ export interface Value extends ElementModel {
   exclude: string;
   navIcon: string;
   animDuration: number;
+  customCSS: string;
 }
 
 export interface Props extends WithClassName {

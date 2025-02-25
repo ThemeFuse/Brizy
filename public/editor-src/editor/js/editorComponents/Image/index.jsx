@@ -1,9 +1,9 @@
 import { Bool, Num, Str } from "@brizy/readers";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { Fragment } from "react";
 import ResizeAware from "react-resize-aware";
 import { omit } from "timm";
-import _ from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
@@ -15,7 +15,7 @@ import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/Dyn
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { imagePopulationUrl } from "visual/utils/image";
@@ -38,6 +38,7 @@ import {
 } from "visual/utils/patch/Link/";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { SizeType } from "../../global/Config/types/configs/common";
+import { attachRefs } from "../../utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import ImageContent from "./Image";
 import ImageWrapper from "./Wrapper";
@@ -71,7 +72,7 @@ import {
 class Image extends EditorComponent {
   static defaultProps = {
     meta: {},
-    onResize: _.noop
+    onResize: noop
   };
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
@@ -540,7 +541,7 @@ class Image extends EditorComponent {
               zoom: dvv("zoom")
             },
             this.props.meta[`${deviceMode}W`],
-            isView(this.renderContext)
+            isView(this.props.renderContext)
           ),
           config
         ).source;
@@ -552,7 +553,7 @@ class Image extends EditorComponent {
             ...dcKey.attr,
             cW: Math.round(cW),
             cH: Math.round(cH),
-            disableCrop: isEditor(this.renderContext)
+            disableCrop: isEditor(this.props.renderContext)
           },
           ...(fallbackUrl ? { fallback: fallbackUrl } : {})
         };
@@ -591,7 +592,7 @@ class Image extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(isEditor(this.renderContext) && {
+          ...(isEditor(this.props.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -699,7 +700,7 @@ class Image extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext,
+          contexts: this.getContexts(),
           props: {
             ...wrapperSizes,
             showOriginalImage: showOriginalImage(v)
@@ -729,56 +730,67 @@ class Image extends EditorComponent {
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          <Wrapper
-            {...this.makeWrapperProps({
-              className: classnames(parentClassName, classNameContent),
-              ref: this.container
-            })}
-          >
+          {({ ref: toolbarRef }) => (
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-              <HoverAnimation
-                animationId={animationId}
-                cssKeyframe={hoverName}
-                options={options}
-                isDisabledHover={isDisabledHover}
-                isHidden={isHidden}
-                withoutWrapper={true}
-              >
-                <ImageWrapper
-                  store={this.getReduxStore()}
-                  v={v}
-                  vs={vs}
-                  vd={vd}
-                  _id={this.getId()}
-                  componentId={this.getComponentId()}
-                  wrapperSizes={wrapperSizes}
-                  meta={meta}
-                  onChange={this.handleBoxResizerChange}
-                  onStart={this.onDragStart}
-                  onEnd={this.onDragEnd}
-                  gallery={gallery}
-                  context={this.context}
+              {({ ref: customCssRef }) => (
+                <Wrapper
+                  {...this.makeWrapperProps({
+                    className: classnames(parentClassName, classNameContent),
+                    ref: (el) => {
+                      attachRefs(el, [
+                        this.container,
+                        toolbarRef,
+                        customCssRef
+                      ]);
+                    }
+                  })}
                 >
-                  <ImageContent
-                    store={this.getReduxStore()}
-                    v={v}
-                    vs={vs}
-                    vd={vd}
-                    _id={this.getId()}
-                    componentId={this.getComponentId()}
-                    wrapperSizes={wrapperSizes}
-                    getResponsiveUrls={getResponsiveUrls}
-                    meta={meta}
-                    gallery={gallery}
-                    linkProps={linkProps}
-                    renderContext={this.renderContext}
-                  />
-                </ImageWrapper>
-              </HoverAnimation>
+                  <HoverAnimation
+                    animationId={animationId}
+                    cssKeyframe={hoverName}
+                    options={options}
+                    isDisabledHover={isDisabledHover}
+                    isHidden={isHidden}
+                    withoutWrapper={true}
+                  >
+                    <ImageWrapper
+                      store={this.getReduxStore()}
+                      v={v}
+                      vs={vs}
+                      vd={vd}
+                      _id={this.getId()}
+                      componentId={this.getComponentId()}
+                      wrapperSizes={wrapperSizes}
+                      meta={meta}
+                      onChange={this.handleBoxResizerChange}
+                      onStart={this.onDragStart}
+                      onEnd={this.onDragEnd}
+                      gallery={gallery}
+                      context={this.context}
+                    >
+                      <ImageContent
+                        store={this.getReduxStore()}
+                        v={v}
+                        vs={vs}
+                        vd={vd}
+                        _id={this.getId()}
+                        componentId={this.getComponentId()}
+                        wrapperSizes={wrapperSizes}
+                        getResponsiveUrls={getResponsiveUrls}
+                        meta={meta}
+                        gallery={gallery}
+                        linkProps={linkProps}
+                        renderContext={this.props.renderContext}
+                        editorMode={this.props.editorMode}
+                      />
+                    </ImageWrapper>
+                  </HoverAnimation>
+                </Wrapper>
+              )}
             </CustomCSS>
-          </Wrapper>
+          )}
         </Toolbar>
-        {isEditor(this.renderContext) && (
+        {isEditor(this.props.renderContext) && (
           <ResizeAware onResize={this.handleResize} />
         )}
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
@@ -836,7 +848,7 @@ class Image extends EditorComponent {
           vd,
           props: styleProps,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -851,7 +863,7 @@ class Image extends EditorComponent {
           vd,
           props: styleProps,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -889,7 +901,8 @@ class Image extends EditorComponent {
                 linkProps={linkProps}
                 onChange={this.handleChange}
                 store={this.getReduxStore()}
-                renderContext={this.renderContext}
+                renderContext={this.props.renderContext}
+                editorMode={this.props.editorMode}
               />
             </Wrapper>
           </HoverAnimation>

@@ -1,14 +1,14 @@
 import { addRecaptcha } from "visual/component/Prompts/PromptForm/api";
 
-export async function validation(data) {
+export async function validation(data, config) {
   try {
-    return await createRecaptcha(data);
+    return await createRecaptcha(data, config);
   } catch (error) {
     return error;
   }
 }
 
-function createRecaptcha(data) {
+function createRecaptcha(data, config) {
   // Uses window.parent because have problems with inner iframe and recaptcha
   const _window = window.parent;
   const recaptchaDiv = createRecaptchaDiv(_window);
@@ -22,14 +22,17 @@ function createRecaptcha(data) {
         const recaptchaId = grecaptcha.render(recaptchaDiv, {
           sitekey: data.sitekey,
           size: "invisible",
-          callback: async response => {
+          callback: async (response) => {
             // Validation response google hash and secretkey from the server
-            const { status } = await addRecaptcha({
-              group: "recaptcha",
-              service: "recaptcha",
-              ...data,
-              response
-            });
+            const { status } = await addRecaptcha(
+              {
+                group: "recaptcha",
+                service: "recaptcha",
+                ...data,
+                response
+              },
+              config
+            );
 
             recaptchaDiv.remove();
             recaptchaScript.remove();

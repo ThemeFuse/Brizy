@@ -31,9 +31,11 @@ export class NotFound extends EditorComponent {
           parentItemsFilter: toolbarExtendFilter
         })}
       >
-        <div style={style}>
-          {t("Could not find")} <b>{componentId}</b> {t("component")}
-        </div>
+        {({ ref }) => (
+          <div style={style} ref={ref}>
+            {t("Could not find")} <b>{componentId}</b> {t("component")}
+          </div>
+        )}
       </Toolbar>
     );
   }

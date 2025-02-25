@@ -1,3 +1,4 @@
+import { isEqual } from "es-toolkit";
 import React, {
   ReactElement,
   useCallback,
@@ -5,7 +6,6 @@ import React, {
   useReducer,
   useRef
 } from "react";
-import _ from "underscore";
 import { Control } from "visual/component/Controls/Population";
 import { useConfig } from "visual/global/hooks";
 import { getCollectionItems, getCollectionTypes } from "visual/utils/api";
@@ -100,7 +100,7 @@ export function PopulationSelect<T extends Literal>({
   }, [value]);
 
   useEffect(() => {
-    if (!_.isEqual(oldState.current, state)) {
+    if (!isEqual(oldState.current, state)) {
       oldState.current = state;
 
       const populationEntityType = isAuto(entityType.value)

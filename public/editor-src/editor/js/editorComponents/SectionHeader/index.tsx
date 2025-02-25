@@ -43,24 +43,20 @@ export default class SectionHeader extends EditorComponent<
   Props,
   States
 > {
-  static get componentId(): ElementTypes.SectionHeader {
-    return ElementTypes.SectionHeader;
-  }
-
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
-
   state: States = {
     height: "auto"
   };
-
   isSticky = false;
   isUpdated = false;
-
   sectionNode = React.createRef<HTMLDivElement>();
   stickyNode = React.createRef<HTMLDivElement>();
-
   isPro = isPro(this.getGlobalConfig());
+
+  static get componentId(): ElementTypes.SectionHeader {
+    return ElementTypes.SectionHeader;
+  }
 
   shouldComponentUpdate(
     nextProps: EDProps<Value, Props>,
@@ -256,7 +252,7 @@ export default class SectionHeader extends EditorComponent<
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
@@ -271,7 +267,7 @@ export default class SectionHeader extends EditorComponent<
       />
     );
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       // Render in #brz-ed-root because have problems with mmenu z-index
       const node = document.getElementById("brz-ed-root");
 
@@ -304,7 +300,7 @@ export default class SectionHeader extends EditorComponent<
       "brz-section__header--animated",
       {
         "brz-section__header--animated-closed":
-          isEditor(this.renderContext) && !isSticky
+          isEditor(this.props.renderContext) && !isSticky
       },
       { "brz-section__header--animated-opened": isSticky },
       this.css(
@@ -315,7 +311,7 @@ export default class SectionHeader extends EditorComponent<
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -334,7 +330,7 @@ export default class SectionHeader extends EditorComponent<
     });
 
     return (
-      <SortableZIndex zIndex={1} renderContext={this.renderContext}>
+      <SortableZIndex zIndex={1} renderContext={this.props.renderContext}>
         <div className={className}>
           <ToolbarExtend position="fixed">
             {
@@ -365,12 +361,12 @@ export default class SectionHeader extends EditorComponent<
     const toolbarPosition = isSticky ? "fixed" : "absolute";
 
     return (
-      <SortableZIndex zIndex={1} renderContext={this.renderContext}>
+      <SortableZIndex zIndex={1} renderContext={this.props.renderContext}>
         <div className={className} ref={this.stickyNode}>
           <ToolbarExtend position={toolbarPosition}>
             {this.renderStatic(v)}
           </ToolbarExtend>
-          {isEditor(this.renderContext) && (
+          {isEditor(this.props.renderContext) && (
             <ResizeAware onResize={this.handleUpdateHeight} />
           )}
         </div>
@@ -426,7 +422,7 @@ export default class SectionHeader extends EditorComponent<
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -561,7 +557,7 @@ export default class SectionHeader extends EditorComponent<
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

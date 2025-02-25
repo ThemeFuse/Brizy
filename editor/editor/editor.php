@@ -202,6 +202,8 @@ class Brizy_Editor_Editor_Editor {
 					'imagePointer'      => true,
 					'imageZoom'         => true,
 					'backgroundPointer' => true,
+                    'internalLink'      => true,
+                    'linkUpload'        => true,
 				],
 			],
 		);
@@ -1003,10 +1005,10 @@ class Brizy_Editor_Editor_Editor {
 	 */
 	private function get_page_attachments() {
 		global $wpdb;
-		$query           = $wpdb->prepare( "SELECT 
+		$query           = $wpdb->prepare( "SELECT
 					pm.*
-				FROM 
-					{$wpdb->prefix}postmeta pm 
+				FROM
+					{$wpdb->prefix}postmeta pm
 				    JOIN {$wpdb->prefix}postmeta pm2 ON pm2.post_id=pm.post_id AND pm2.meta_key='brizy_post_uid' AND pm2.meta_value=%s
 				WHERE pm.meta_key='brizy_attachment_uid'
 				GROUP BY pm.post_id", $this->post->getUid() );

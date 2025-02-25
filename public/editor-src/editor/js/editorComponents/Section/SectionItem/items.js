@@ -1,23 +1,23 @@
 import React from "react";
-import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 class SectionItemItems extends EditorArrayComponent {
-  static get componentId() {
-    return "SectionItem.Items";
-  }
-
   static defaultProps = {
     className: "",
     meta: {}
   };
+
+  static get componentId() {
+    return "SectionItem.Items";
+  }
 
   getItemProps(itemData, itemIndex) {
     const meta = this.props.meta;
@@ -90,7 +90,7 @@ class SectionItemItems extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { className } = this.props;
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

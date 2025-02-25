@@ -1,5 +1,6 @@
 import { WithRenderContext } from "visual/providers/RenderProvider";
 import {
+  FlexHorizontalAligns,
   cssStyleBgColor,
   cssStyleBgGradient,
   cssStyleBorder,
@@ -14,9 +15,11 @@ import {
   cssStyleSpacing,
   cssStyleSpacingWithPadding,
   cssStyleTextAlign,
-  getAllCssStyleTypography
+  getAllCssStyleTypography,
+  readHorizontalAlign
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
+import { styleAlignHorizontal } from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
 import { styleColor } from "../style2/styleColor";
 
@@ -244,9 +247,10 @@ export function cssStyleElementEcwidCartButtonBgGradient({
 export function cssStyleElementEcwidCartButtonBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "button" });
+  return cssStyleBorder({ v, device, state, store, prefix: "button" });
 }
 
 export function cssStyleElementEcwidCartButtonBorderRadius({
@@ -280,6 +284,25 @@ export function cssStyleElementEcwidCartButtonAlign({
     state,
     prefix: "button"
   });
+}
+
+export function cssStyleElementEcwidCartButtonAlignVertically({
+  v,
+  device,
+  store,
+  state
+}: CSSValue): string {
+  const alignItems = readHorizontalAlign(
+    styleAlignHorizontal({
+      v,
+      device,
+      state,
+      store,
+      prefix: "button"
+    })
+  );
+
+  return alignItems ? `align-items:${FlexHorizontalAligns[alignItems]};` : "";
 }
 
 export function cssStyleElementEcwidCartButtonSpacing({
@@ -478,9 +501,10 @@ export function cssStyleElementEcwidCartInputColor({
 export function cssStyleElementEcwidCartInputColorAutofill({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, prefix: "inputColor" });
+  const color = styleColor({ v, device, state, store, prefix: "inputColor" });
 
   return `-webkit-text-fill-color:${color}!important`;
 }
@@ -550,9 +574,10 @@ export function cssStyleElementEcwidCartInputBgGradient({
 export function cssStyleElementEcwidCartInputBorderColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "input" });
+  return cssStyleBorder({ v, device, state, store, prefix: "input" });
 }
 
 export function cssStyleElementEcwidCartInputBoxShadow({
@@ -849,9 +874,10 @@ export function cssStyleElementEcwidCartImageWidth({
 export function cssStyleElementEcwidCartImageBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "image" });
+  return cssStyleBorder({ v, device, state, store, prefix: "image" });
 }
 
 export function cssStyleElementEcwidCartImageBorderRadius({
@@ -994,9 +1020,10 @@ export function cssStyleElementEcwidCartCloseBgColor({
 export function cssStyleElementEcwidCartCloseBorderColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "close" });
+  return cssStyleBorder({ v, device, state, store, prefix: "close" });
 }
 
 export function cssStyleElementEcwidCartCloseBorderRadiusColor({
@@ -1071,9 +1098,10 @@ export function cssStyleElementEcwidCartCollapsedImageWidth({
 export function cssStyleElementEcwidCartCollapsedImageBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "collapsedImage" });
+  return cssStyleBorder({ v, device, state, store, prefix: "collapsedImage" });
 }
 
 export function cssStyleElementEcwidCartCollapsedImageBorderRadius({

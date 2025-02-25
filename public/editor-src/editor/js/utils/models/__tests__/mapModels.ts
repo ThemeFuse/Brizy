@@ -1,7 +1,7 @@
+import { pick } from "es-toolkit";
 import { produce } from "immer";
-import { pick } from "underscore";
+import { Block } from "visual/types/Block";
 import { mapModels } from "../";
-import { Block } from "visual/types";
 
 describe("Testing 'mapModels' function", () => {
   const deepPatch = (model: Block): Block => {
@@ -56,13 +56,13 @@ describe("Testing 'mapModels' function", () => {
   };
   const menuPatch = (model: Block): Block => {
     if (model.type === "SectionMegaMenu") {
-      return produce(model, draft => {
+      return produce(model, (draft) => {
         draft.value.items.push({ type: "Button", value: { text: "button" } });
       });
     }
 
     if (model.value.menuSelected === "471a84e6df843550812ccb7d1d329dbc") {
-      return produce(model, draft => {
+      return produce(model, (draft) => {
         draft.value.fontFamily = "lato";
       });
     }

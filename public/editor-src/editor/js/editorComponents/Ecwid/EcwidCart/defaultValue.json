@@ -8,11 +8,9 @@
 
     "weightDisplay": "off",
 
-    "inputDisplay": "off",
+    "collapseDesktop": "on",
 
-    "addressDisplay": "off",
-
-    "collapseDesktop": "on"
+    "step": "cart"
   },
 
   "style": {
@@ -46,7 +44,13 @@
       "subtotalPriceTypographyFontFamily": "lato",
       "taxesTitleTypographyFontFamily": "lato",
       "taxesPriceTypographyFontFamily": "lato",
-      "summaryNoteTypographyFontFamily": "lato"
+      "summaryNoteTypographyFontFamily": "lato",
+      "checkboxLinkTypographyFontFamily": "lato",
+      "checkoutFieldsTypographyFontFamily": "lato",
+      "checkoutFieldsSubtitleTypographyFontFamily": "lato",
+      "checkoutPaymentsTypographyFontFamily": "lato",
+      "checkoutShippingTypographyFontFamily": "lato",
+      "checkoutShippingPriceTypographyFontFamily": "lato"
     },
 
     "parentBgColorType": "solid",
@@ -54,6 +58,14 @@
     "parentBgColorHex": "#ffffff",
     "parentBgColorOpacity": 0,
     "parentBgColorPalette": "",
+
+    "checkoutEmailColorHex": "#000000",
+    "checkoutEmailColorOpacity": 1,
+    "checkoutEmailColorPalette": "",
+
+    "checkoutEmailBorderHex": "#000000",
+    "checkoutEmailBorderOpacity": 1,
+    "checkoutEmailBorderPalette": "",
 
     "parentGradientActivePointer": "startPointer",
     "parentGradientStartPointer": 0,
@@ -93,9 +105,16 @@
     "titleSpacing": 10,
     "titleSpacingSuffix": "px",
 
+    "title2Spacing": 10,
+    "title2SpacingSuffix": "px",
+
     "subtitleColorHex": "#000000",
     "subtitleColorOpacity": 0.8,
     "subtitleColorPalette": "",
+
+    "checkoutFieldsColorHex": "#000000",
+    "checkoutFieldsColorOpacity": 1,
+    "checkoutFieldsColorPalette": "",
 
     "subtitleTypographyFontStyle": "",
     "subtitleTypographyFontFamilyType": "google",
@@ -133,9 +152,30 @@
     "emptyTypographyUppercase": false,
     "emptyTypographyLowercase": false,
 
+    "checkoutFieldsSubtitleTypographyFontStyle": "",
+    "checkoutFieldsSubtitleTypographyFontFamilyType": "google",
+    "checkoutFieldsSubtitleTypographyFontSize": 16,
+    "checkoutFieldsSubtitleTypographyFontSizeSuffix": "px",
+    "checkoutFieldsSubtitleTypographyFontWeight": 400,
+    "checkoutFieldsSubtitleTypographyLetterSpacing": 1.3,
+    "checkoutFieldsSubtitleTypographyLineHeight": 1,
+    "checkoutFieldsSubtitleTypographyVariableFontWeight": 400,
+    "checkoutFieldsSubtitleTypographyFontWidth": 100,
+    "checkoutFieldsSubtitleTypographyFontSoftness": 0,
+    "checkoutFieldsSubtitleTypographyBold": false,
+    "checkoutFieldsSubtitleTypographyItalic": false,
+    "checkoutFieldsSubtitleTypographyUnderline": false,
+    "checkoutFieldsSubtitleTypographyStrike": false,
+    "checkoutFieldsSubtitleTypographyUppercase": false,
+    "checkoutFieldsSubtitleTypographyLowercase": false,
+
     "emptyColorHex": "#000000",
     "emptyColorOpacity": 1,
     "emptyColorPalette": "",
+
+    "checkoutFieldsSubtitleColorHex": "#000000",
+    "checkoutFieldsSubtitleColorOpacity": 1,
+    "checkoutFieldsSubtitleColorPalette": "",
 
     "emptyHorizontalAlign": "center",
 
@@ -225,6 +265,23 @@
     "priceTypographyStrike": false,
     "priceTypographyUppercase": false,
     "priceTypographyLowercase": false,
+
+    "checkoutFieldsTypographyFontStyle": "",
+    "checkoutFieldsTypographyFontFamilyType": "google",
+    "checkoutFieldsTypographyFontSize": 20,
+    "checkoutFieldsTypographyFontSizeSuffix": "px",
+    "checkoutFieldsTypographyFontWeight": 500,
+    "checkoutFieldsTypographyLetterSpacing": 1.3,
+    "checkoutFieldsTypographyLineHeight": 1,
+    "checkoutFieldsTypographyVariableFontWeight": 400,
+    "checkoutFieldsTypographyFontWidth": 100,
+    "checkoutFieldsTypographyFontSoftness": 0,
+    "checkoutFieldsTypographyBold": false,
+    "checkoutFieldsTypographyItalic": false,
+    "checkoutFieldsTypographyUnderline": false,
+    "checkoutFieldsTypographyStrike": false,
+    "checkoutFieldsTypographyUppercase": false,
+    "checkoutFieldsTypographyLowercase": false,
 
     "priceColorHex": "#000000",
     "priceColorOpacity": 1,
@@ -341,9 +398,6 @@
 
     "buttonHorizontalAlign": "left",
 
-    "buttonSpacing": 40,
-    "buttonSpacingSuffix": "px",
-
     "emailColorHex": "#000000",
     "emailColorOpacity": 0.8,
     "emailColorPalette": "",
@@ -390,6 +444,23 @@
     "checkboxTypographyStrike": false,
     "checkboxTypographyUppercase": false,
     "checkboxTypographyLowercase": false,
+
+    "checkboxLinkTypographyFontStyle": "",
+    "checkboxLinkTypographyFontFamilyType": "google",
+    "checkboxLinkTypographyFontSize": 16,
+    "checkboxLinkTypographyFontSizeSuffix": "px",
+    "checkboxLinkTypographyFontWeight": 400,
+    "checkboxLinkTypographyLetterSpacing": 1.3,
+    "checkboxLinkTypographyLineHeight": 1,
+    "checkboxLinkTypographyVariableFontWeight": 400,
+    "checkboxLinkTypographyFontWidth": 100,
+    "checkboxLinkTypographyFontSoftness": 0,
+    "checkboxLinkTypographyBold": false,
+    "checkboxLinkTypographyItalic": false,
+    "checkboxLinkTypographyUnderline": false,
+    "checkboxLinkTypographyStrike": false,
+    "checkboxLinkTypographyUppercase": false,
+    "checkboxLinkTypographyLowercase": false,
 
     "checkboxSpacing": 20,
     "checkboxSpacingSuffix": "px",
@@ -466,6 +537,10 @@
     "inputColorHex": "#000000",
     "inputColorOpacity": 0.4,
     "inputColorPalette": "",
+
+    "checkboxLinkColorHex": "#000000",
+    "checkboxLinkColorOpacity": 1,
+    "checkboxLinkColorPalette": "",
 
     "inputBgColorType": "solid",
 
@@ -963,7 +1038,6 @@
     "cartTotalProductsCountTypographyUppercase": false,
     "cartTotalProductsCountTypographyLowercase": false,
 
-
     "cartTotalProductsCountColorHex": "#000000",
     "cartTotalProductsCountColorOpacity": 1,
     "cartTotalProductsCountColorPalette": "",
@@ -1072,6 +1146,199 @@
     "summaryNoteTypographyStrike": false,
     "summaryNoteTypographyUppercase": false,
     "summaryNoteTypographyLowercase": false,
+
+    "checkoutFieldsHorizontalAlign": "left",
+    "checkoutFieldsSubtitleHorizontalAlign": "left",
+
+    "checkoutInputsColorHex": "#000000",
+    "checkoutInputsColorOpacity": 1,
+    "checkoutInputsColorPalette": "",
+
+    "checkoutInputsPlaceholderColorHex": "#000000",
+    "checkoutInputsPlaceholderColorOpacity": 1,
+    "checkoutInputsPlaceholderColorPalette": "",
+
+    "checkoutInputsBgColorType": "solid",
+
+    "checkoutInputsBgColorHex": "#ffffff",
+    "checkoutInputsBgColorOpacity": 0,
+    "checkoutInputsBgColorPalette": "",
+
+    "checkoutInputsGradientActivePointer": "startPointer",
+    "checkoutInputsGradientStartPointer": 0,
+    "checkoutInputsGradientFinishPointer": 100,
+
+    "checkoutInputsGradientColorHex": "#009900",
+    "checkoutInputsGradientColorOpacity": 0.8,
+    "checkoutInputsGradientColorPalette": "",
+
+    "checkoutInputsGradientType": "linear",
+    "checkoutInputsGradientLinearDegree": 90,
+    "checkoutInputsGradientRadialDegree": 90,
+
+    "checkoutInputsBorderStyle": "solid",
+
+    "checkoutInputsBorderColorHex": "#4e5254",
+    "checkoutInputsBorderColorOpacity": 1,
+    "checkoutInputsBorderColorPalette": "",
+
+    "checkoutInputsBorderRadiusType": "grouped",
+    "checkoutInputsBorderRadius": 0,
+    "checkoutInputsBorderRadiusSuffix": "px",
+
+    "checkoutInputsBorderWidthType": "grouped",
+    "checkoutInputsBorderWidth": 1,
+    "checkoutInputsBorderTopWidth": 1,
+    "checkoutInputsBorderRightWidth": 1,
+    "checkoutInputsBorderBottomWidth": 1,
+    "checkoutInputsBorderLeftWidth": 1,
+
+    "checkoutInputsBoxShadow": "none",
+
+    "checkoutInputsBoxShadowColorHex": "#000000",
+    "checkoutInputsBoxShadowColorOpacity": 0,
+    "checkoutInputsBoxShadowColorPalette": "",
+
+    "checkoutInputsBoxShadowBlur": 0,
+    "checkoutInputsBoxShadowSpread": 0,
+    "checkoutInputsBoxShadowVertical": 0,
+    "checkoutInputsBoxShadowHorizontal": 0,
+
+
+    "checkboxInputsBorderRadiusType": "grouped",
+
+    "checkboxInputsBorderRadius": 0,
+    "checkboxInputsBorderTopLeftRadius": 0,
+    "checkboxInputsBorderTopRightRadius": 0,
+    "checkboxInputsBorderBottomRightRadius": 0,
+    "checkboxInputsBorderBottomLeftRadius": 0,
+
+    "checkboxInputsBorderRadiusSuffix": "px",
+    "checkboxInputsBorderTopLeftRadiusSuffix": "px",
+    "checkboxInputsBorderTopRightRadiusSuffix": "px",
+    "checkboxInputsBorderBottomRightRadiusSuffix": "px",
+    "checkboxInputsBorderBottomLeftRadiusSuffix": "px",
+
+    "checkoutPaymentsTypographyFontStyle": "",
+    "checkoutPaymentsTypographyFontFamilyType": "google",
+    "checkoutPaymentsTypographyFontSize": 16,
+    "checkoutPaymentsTypographyFontSizeSuffix": "px",
+    "checkoutPaymentsTypographyFontWeight": 400,
+    "checkoutPaymentsTypographyLetterSpacing": 1.3,
+    "checkoutPaymentsTypographyLineHeight": 1,
+    "checkoutPaymentsTypographyVariableFontWeight": 400,
+    "checkoutPaymentsTypographyFontWidth": 100,
+    "checkoutPaymentsTypographyFontSoftness": 0,
+    "checkoutPaymentsTypographyBold": false,
+    "checkoutPaymentsTypographyItalic": false,
+    "checkoutPaymentsTypographyUnderline": false,
+    "checkoutPaymentsTypographyStrike": false,
+    "checkoutPaymentsTypographyUppercase": false,
+    "checkoutPaymentsTypographyLowercase": false,
+
+    "checkoutPaymentsColorHex": "#000000",
+    "checkoutPaymentsColorOpacity": 1,
+    "checkoutPaymentsColorPalette": "",
+
+    "checkoutPaymentsBgColorType": "solid",
+
+    "checkoutPaymentsBgColorHex": "#ffffff",
+    "checkoutPaymentsBgColorOpacity": 0,
+    "checkoutPaymentsBgColorPalette": "",
+
+    "checkoutPaymentsGradientActivePointer": "startPointer",
+    "checkoutPaymentsGradientStartPointer": 0,
+    "checkoutPaymentsGradientFinishPointer": 100,
+
+    "checkoutPaymentsGradientColorHex": "#009900",
+    "checkoutPaymentsGradientColorOpacity": 0.8,
+    "checkoutPaymentsGradientColorPalette": "",
+
+    "checkoutPaymentsGradientType": "linear",
+    "checkoutPaymentsGradientLinearDegree": 90,
+    "checkoutPaymentsGradientRadialDegree": 90,
+
+    "checkoutPaymentsBorderStyle": "solid",
+
+    "checkoutPaymentsBorderColorHex": "#4e5254",
+    "checkoutPaymentsBorderColorOpacity": 1,
+    "checkoutPaymentsBorderColorPalette": "",
+
+
+
+    "checkoutPaymentsBorderWidthType": "grouped",
+    "checkoutPaymentsBorderWidth": 1,
+    "checkoutPaymentsBorderTopWidth": 1,
+    "checkoutPaymentsBorderRightWidth": 1,
+    "checkoutPaymentsBorderBottomWidth": 1,
+    "checkoutPaymentsBorderLeftWidth": 1,
+
+    "checkoutPaymentsBoxShadow": "none",
+
+    "checkoutPaymentsBoxShadowColorHex": "#000000",
+    "checkoutPaymentsBoxShadowColorOpacity": 0,
+    "checkoutPaymentsBoxShadowColorPalette": "",
+
+    "checkoutPaymentsBoxShadowBlur": 0,
+    "checkoutPaymentsBoxShadowSpread": 0,
+    "checkoutPaymentsBoxShadowVertical": 0,
+    "checkoutPaymentsBoxShadowHorizontal": 0,
+
+    "checkoutPaymentsBorderRadiusType": "grouped",
+    "checkoutPaymentsBorderRadius": 0,
+    "checkoutPaymentsBorderRadiusSuffix": "px",
+
+    "checkoutPaymentsBorderTopLeftRadius": 0,
+    "checkoutPaymentsBorderTopRightRadius": 0,
+    "checkoutPaymentsBorderBottomRightRadius": 0,
+    "checkoutPaymentsBorderBottomLeftRadius": 0,
+
+    "checkoutPaymentsBorderTopLeftRadiusSuffix": "px",
+    "checkoutPaymentsBorderTopRightRadiusSuffix": "px",
+    "checkoutPaymentsBorderBottomRightRadiusSuffix": "px",
+    "checkoutPaymentsBorderBottomLeftRadiusSuffix": "px",
+
+    "checkoutShippingTypographyFontStyle": "",
+    "checkoutShippingTypographyFontFamilyType": "google",
+    "checkoutShippingTypographyFontSize": 16,
+    "checkoutShippingTypographyFontSizeSuffix": "px",
+    "checkoutShippingTypographyFontWeight": 400,
+    "checkoutShippingTypographyLetterSpacing": 1.3,
+    "checkoutShippingTypographyLineHeight": 1,
+    "checkoutShippingTypographyVariableFontWeight": 400,
+    "checkoutShippingTypographyFontWidth": 100,
+    "checkoutShippingTypographyFontSoftness": 0,
+    "checkoutShippingTypographyBold": false,
+    "checkoutShippingTypographyItalic": false,
+    "checkoutShippingTypographyUnderline": false,
+    "checkoutShippingTypographyStrike": false,
+    "checkoutShippingTypographyUppercase": false,
+    "checkoutShippingTypographyLowercase": false,
+
+    "checkoutShippingPriceTypographyFontStyle": "",
+    "checkoutShippingPriceTypographyFontFamilyType": "google",
+    "checkoutShippingPriceTypographyFontSize": 16,
+    "checkoutShippingPriceTypographyFontSizeSuffix": "px",
+    "checkoutShippingPriceTypographyFontWeight": 400,
+    "checkoutShippingPriceTypographyLetterSpacing": 1.3,
+    "checkoutShippingPriceTypographyLineHeight": 1,
+    "checkoutShippingPriceTypographyVariableFontWeight": 400,
+    "checkoutShippingPriceTypographyFontWidth": 100,
+    "checkoutShippingPriceTypographyFontSoftness": 0,
+    "checkoutShippingPriceTypographyBold": false,
+    "checkoutShippingPriceTypographyItalic": false,
+    "checkoutShippingPriceTypographyUnderline": false,
+    "checkoutShippingPriceTypographyStrike": false,
+    "checkoutShippingPriceTypographyUppercase": false,
+    "checkoutShippingPriceTypographyLowercase": false,
+
+    "checkoutShippingColorHex": "#000000",
+    "checkoutShippingColorOpacity": 1,
+    "checkoutShippingColorPalette": "",
+
+    "checkoutShippingPriceColorHex": "#000000",
+    "checkoutShippingPriceColorOpacity": 1,
+    "checkoutShippingPriceColorPalette": "",
 
     "hoverTransition": 50,
     "hoverTransitionSuffix": ""

@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { Component, SyntheticEvent } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { FontFamilyType } from "visual/types/Fonts";
 import {
   ScrollbarType,
   scrollToActiveFont

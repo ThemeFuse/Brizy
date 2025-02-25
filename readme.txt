@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.7.2
 Requires PHP: 7.2.24
-Stable tag: 2.6.11
+Stable tag: 2.6.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,16 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.6.12 - 2025-02-25 =
+* Improved: 3rd party API
+* Improved: Compiler Bundle Size
+* Updated: Removed icons from blocks
+* Fixed: Bug with Menu failing to open when clicked multiple times
+* Fixed: Parallax animation in preview with open popup
+* Fixed: Scroll on parallax in Safari
+* Fixed: Mixed content error when Brizy is installed on subfolder
+* Fixed: Deleting images on Media Gallery
 
 = 2.6.11 - 2025-02-18 =
 * Fixed: Gallery with layout justify 

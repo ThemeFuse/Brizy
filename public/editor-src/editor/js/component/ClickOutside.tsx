@@ -1,6 +1,5 @@
 import jQuery from "jquery";
-import React, { ReactElement } from "react";
-import ReactDOM from "react-dom";
+import React, { ReactElement, RefObject, createRef } from "react";
 
 type FunctionalException = (el: HTMLElement) => boolean;
 
@@ -12,7 +11,7 @@ type Acc = {
 };
 
 interface Props {
-  children: ReactElement;
+  children: ({ ref }: { ref: RefObject<HTMLDivElement> }) => ReactElement;
   exceptions: Exception[];
   onClickOutside: (e: MouseEvent) => void;
 }
@@ -20,6 +19,8 @@ interface Props {
 const instances: ClickOutside[] = [];
 
 export default class ClickOutside extends React.Component<Props> {
+  ref = createRef<HTMLDivElement>();
+
   static defaultProps = {
     exceptions: []
   };
@@ -89,8 +90,7 @@ export default class ClickOutside extends React.Component<Props> {
       }
 
       if (exceptionsCount === 0) {
-        // eslint-disable-next-line react/no-find-dom-node
-        const node = ReactDOM.findDOMNode(instance);
+        const node = instance.ref.current;
 
         if (node && !node.contains(el)) {
           onClickOutside(e);
@@ -100,6 +100,7 @@ export default class ClickOutside extends React.Component<Props> {
   };
 
   render() {
-    return React.Children.only(this.props.children);
+    const { children } = this.props;
+    return children({ ref: this.ref });
   }
 }

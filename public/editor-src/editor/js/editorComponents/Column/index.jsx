@@ -1,8 +1,8 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import { extend } from "es-toolkit/compat";
 import React from "react";
 import { omit } from "timm";
-import _ from "underscore";
-import { isEditor } from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
@@ -20,6 +20,7 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
@@ -30,7 +31,7 @@ import {
 } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
-import { attachRef } from "visual/utils/react";
+import { attachRef, attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
@@ -44,25 +45,21 @@ import { styleAnimation, styleColumn, styleItems } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class Column extends EditorComponent {
-  static get componentId() {
-    return "Column";
-  }
-
   static defaultProps = {
     meta: {},
     popoverData: [],
-    onResizeStart: _.noop,
-    onResize: _.noop,
-    onResizeEnd: _.noop
+    onResizeStart: noop,
+    onResize: noop,
+    onResizeEnd: noop
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   containerBorderRef = React.createRef();
-
   toolbarRef = React.createRef();
+
+  static get componentId() {
+    return "Column";
+  }
 
   shouldComponentUpdate(nextProps) {
     const { meta, tabletReversed, mobileReversed } = this.props;
@@ -141,7 +138,7 @@ class Column extends EditorComponent {
       device: "mobile"
     });
 
-    return _.extend({}, meta, {
+    return extend({}, meta, {
       column: {
         width,
         tabletWidth,
@@ -195,7 +192,7 @@ class Column extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -216,9 +213,11 @@ class Column extends EditorComponent {
           attachRef(el, this.getRef(el));
         }}
       >
-        <SortableHandle renderContext={this.renderContext}>
-          <ContainerBorderButton />
-        </SortableHandle>
+        {({ ref }) => (
+          <SortableHandle renderContext={this.props.renderContext}>
+            <ContainerBorderButton containerRef={ref} />
+          </SortableHandle>
+        )}
       </Toolbar>
     );
   };
@@ -276,7 +275,7 @@ class Column extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -322,7 +321,7 @@ class Column extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(isEditor(this.renderContext) && {
+          ...(isEditor(this.props.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -352,7 +351,7 @@ class Column extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       cssClass || customClassName
@@ -384,47 +383,60 @@ class Column extends EditorComponent {
         <SortableElement type="column" useHandle={true}>
           {(sortableElementAttr) => (
             <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-              <ContainerBorder
-                type={posts ? "column__posts" : "column"}
-                ref={this.containerBorderRef}
-                color={isInnerRow && inGrid ? "red" : "blue"}
-                borderStyle="solid"
-                activateOnContentClick={false}
-                buttonPosition="topRight"
-                renderButtonWrapper={this.renderToolbar}
-              >
-                {({
-                  ref: containerBorderRef,
-                  attr: containerBorderAttr,
-                  button: ContainerBorderButton,
-                  border: ContainerBorderBorder
-                }) => (
-                  <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-                    <Animation
-                      ref={containerBorderRef}
-                      component={"div"}
-                      animationClass={animationClassName}
-                      componentProps={{
-                        ...parseCustomAttributes(customAttributes),
-                        ...sortableElementAttr,
-                        ...containerBorderAttr,
-                        ...(id && { id }),
-                        className: classNameColumn
-                      }}
-                    >
-                      <Roles allow={["admin"]} fallbackRender={() => content}>
-                        {this.renderResizer("left")}
-                        {this.renderResizer("right")}
-                        <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                          {content}
-                        </ToolbarExtend>
-                        {ContainerBorderButton}
-                        {ContainerBorderBorder}
-                      </Roles>
-                    </Animation>
-                  </CustomCSS>
-                )}
-              </ContainerBorder>
+              {({ ref: contextMenuRef }) => (
+                <ContainerBorder
+                  type={posts ? "column__posts" : "column"}
+                  ref={this.containerBorderRef}
+                  color={isInnerRow && inGrid ? "red" : "blue"}
+                  borderStyle="solid"
+                  activateOnContentClick={false}
+                  buttonPosition="topRight"
+                  renderButtonWrapper={this.renderToolbar}
+                >
+                  {({
+                    ref: containerBorderRef,
+                    attr: containerBorderAttr,
+                    button: ContainerBorderButton,
+                    border: ContainerBorderBorder
+                  }) => (
+                    <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                      {({ ref: cssRef }) => (
+                        <Animation
+                          ref={(el) => {
+                            attachRefs(el, [
+                              cssRef,
+                              containerBorderRef,
+                              contextMenuRef
+                            ]);
+                          }}
+                          component={"div"}
+                          animationClass={animationClassName}
+                          componentProps={{
+                            ...parseCustomAttributes(customAttributes),
+                            ...sortableElementAttr,
+                            ...containerBorderAttr,
+                            ...(id && { id }),
+                            className: classNameColumn
+                          }}
+                        >
+                          <Roles
+                            allow={["admin"]}
+                            fallbackRender={() => content}
+                          >
+                            {this.renderResizer("left")}
+                            {this.renderResizer("right")}
+                            <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                              {content}
+                            </ToolbarExtend>
+                            {ContainerBorderButton}
+                            {ContainerBorderBorder}
+                          </Roles>
+                        </Animation>
+                      )}
+                    </CustomCSS>
+                  )}
+                </ContainerBorder>
+              )}
             </ContextMenu>
           )}
         </SortableElement>
@@ -449,7 +461,7 @@ class Column extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       cssClass || customClassName

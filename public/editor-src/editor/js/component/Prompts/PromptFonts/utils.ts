@@ -1,5 +1,5 @@
-import { Font } from "visual/types";
 import { ReduxState } from "visual/redux/types";
+import { Font } from "visual/types/Fonts";
 import { FontGroup, FontTypes } from "./types";
 
 export const compareFont = (a: Font, b: Font): 1 | -1 | 0 => {

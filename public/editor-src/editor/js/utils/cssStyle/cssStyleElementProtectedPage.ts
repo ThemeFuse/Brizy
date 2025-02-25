@@ -10,9 +10,10 @@ export function cssStyleElementProtectedPageAutocompleteColor({
   v,
   device,
   state,
+  store,
   prefix
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, prefix });
+  const color = styleColor({ v, device, state, store, prefix });
 
   return color === undefined
     ? ""

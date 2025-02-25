@@ -1,22 +1,29 @@
 import { Obj } from "@brizy/readers";
+import { pass } from "fp-utilities";
+import { isWp } from "visual/global/Config";
 import {
+  ConfigCommon,
   LeftSidebarAddElementsType,
   LeftSidebarOptionBase,
   LeftSidebarOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { SavedBlock, SavedLayout } from "visual/types";
+import { checkValue2 } from "visual/utils/checkValue";
 import {
-  EntityTypeRule,
   GlobalBlock,
   GlobalBlockNormal,
-  GlobalBlockPopup,
-  SavedBlock,
-  SavedLayout,
+  GlobalBlockPopup
+} from "./GlobalBlock";
+import { Page, PageWP } from "./Page";
+import {
+  EntityTypeRule,
   WPReferenceAllAuthor,
   WPReferenceAllInEntity,
   WPReferenceChildEntity,
   WPReferenceSpecificAuthor,
   WPReferenceSpecificInEntity
-} from "visual/types";
+} from "./Rule";
+import { ExtraFontStyle, Style, TextScripts } from "./Style";
 
 export type Dictionary<T> = {
   [k: string]: T | undefined;
@@ -154,3 +161,51 @@ export const isLeftSidebarAddElements = (
   Obj.hasKey("elements", v);
 
 // #endregion
+
+export const isWPPage = (
+  _page: Page,
+  config: ConfigCommon
+): _page is PageWP => {
+  return isWp(config);
+};
+
+//#region FontStyles
+
+const isScript = (v: string): v is TextScripts =>
+  !!checkValue2<TextScripts>(TextScripts)(v);
+
+export const fromStringToScript = pass(isScript);
+
+export const isFontStyle = (item: unknown): item is ExtraFontStyle =>
+  Obj.isObject(item) &&
+  Obj.hasKeys(
+    [
+      "id",
+      "title",
+      "fontFamily",
+      "fontFamilyType",
+      "fontSize",
+      "fontWeight",
+      "lineHeight",
+      "letterSpacing",
+      "tabletFontSize",
+      "tabletFontWeight",
+      "tabletLineHeight",
+      "tabletLetterSpacing",
+      "mobileFontSize",
+      "mobileFontWeight",
+      "mobileLineHeight",
+      "mobileLetterSpacing",
+      "deletable"
+    ],
+    item
+  );
+
+export const isStyle = (item: unknown): item is Style =>
+  Obj.isObject(item) &&
+  Obj.hasKeys(["id", "title", "fontStyles", "colorPalette"], item);
+
+export const isExtraFontStyle = (item: unknown): item is ExtraFontStyle =>
+  isFontStyle(item) && item.deletable === "on";
+
+//#endregion

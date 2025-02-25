@@ -1,6 +1,11 @@
-import { TwitterEmbedEditor, TwitterEmbedPreview } from "@brizy/component";
-import { TwitterFollowEditor, TwitterFollowPreview } from "@brizy/component";
-import { TwitterMentionEditor, TwitterMentionPreview } from "@brizy/component";
+import {
+  TwitterEmbedEditor,
+  TwitterEmbedPreview,
+  TwitterFollowEditor,
+  TwitterFollowPreview,
+  TwitterMentionEditor,
+  TwitterMentionPreview
+} from "@brizy/component";
 import classnames from "classnames";
 import React, { ReactNode } from "react";
 import ResizeAware from "react-resize-aware";
@@ -10,6 +15,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Patch } from "visual/utils/patch/types";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
 import { encodeToString } from "visual/utils/string";
 import { Model } from "../EditorComponent/types";
@@ -52,13 +58,14 @@ interface PreviewTwitterOptions extends TwitterOptions {
 }
 
 class Twitter extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+  isUnMounted = false;
+  currentDeviceMode: ResponsiveMode = DESKTOP;
+
   static get componentId(): "Twitter" {
     return "Twitter";
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
 
   dvv = (key: string): string => {
     const v = this.getValue();
@@ -66,10 +73,6 @@ class Twitter extends EditorComponent<Value> {
 
     return defaultValueValue({ v, key, device });
   };
-
-  isUnMounted = false;
-
-  currentDeviceMode: ResponsiveMode = DESKTOP;
 
   componentWillUnmount(): void {
     this.isUnMounted = true;
@@ -199,7 +202,7 @@ class Twitter extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -218,12 +221,21 @@ class Twitter extends EditorComponent<Value> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            {this.renderEditorByType(props)}
-            <ResizeAware onResize={this.handleChange} />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => attachRefs(el, [cssRef, toolbarRef])
+                })}
+              >
+                {this.renderEditorByType(props)}
+                <ResizeAware onResize={this.handleChange} />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -263,7 +275,7 @@ class Twitter extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

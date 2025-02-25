@@ -1,7 +1,7 @@
 import { HelpSidebarContent } from "@brizy/builder-ui-components";
+import { noop } from "es-toolkit";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { noop } from "underscore";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
 import { useConfig } from "visual/global/hooks";

@@ -1,20 +1,27 @@
+import { throttle } from "es-toolkit";
 import { hasScroll } from "./utils";
-import { throttle } from "underscore";
 
 type Emit = (e: Event) => void;
 
 const nodeStack = new Map<HTMLElement, Emit>();
 
-const hasThrottledScroll = throttle(
-  (element: HTMLElement) => hasScroll(element),
+// Throttle the hasScroll check and return the result via the provided callback
+const throttledHasScroll = throttle(
+  (element: HTMLElement, cb: (v: boolean) => void) => {
+    cb(hasScroll(element));
+  },
   1000
 );
 
 const handleWheel = (e: Event) => {
   const count = nodeStack.size;
   const element = e.target instanceof HTMLElement ? e.target : null;
+  let hasScroll = true;
+  const setHasScroll = (v: boolean) => (hasScroll = v);
 
-  if (element && hasThrottledScroll(element)) {
+  element && throttledHasScroll(element, setHasScroll);
+
+  if (hasScroll) {
     return;
   }
 

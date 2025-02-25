@@ -1,5 +1,5 @@
 import { Str } from "@brizy/readers";
-import { memoize } from "underscore";
+import { memoize } from "es-toolkit";
 import { checkValue } from "visual/utils/checkValue";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { ViewType } from "./Form2Steps/types";

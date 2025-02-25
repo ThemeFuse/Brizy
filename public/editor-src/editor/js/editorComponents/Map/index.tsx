@@ -11,10 +11,11 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { isWp } from "visual/global/Config";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { defaultValueValue } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
+import { attachRefs } from "visual/utils/react";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import * as State from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
@@ -24,7 +25,7 @@ import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-import { Value, Patch } from "./type";
+import { Patch, Value } from "./type";
 import {
   getBoxResizerParams,
   resizerTransformPatch,
@@ -86,36 +87,43 @@ class Map extends EditorComponent<Value> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className: wrapperClassName
-            })}
-          >
-            <HoverAnimation
-              animationId={animationId}
-              cssKeyframe={hoverName}
-              options={options}
-              isDisabledHover={isDisabledHover}
-              isHidden={isHidden || isStory(this.props.editorMode)}
-              withoutWrapper={true}
-            >
-              <BoxResizer
-                points={points}
-                restrictions={restrictions}
-                meta={this.props.meta}
-                value={resizerTransformValue(v)}
-                onChange={this.handleResizerChange}
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: wrapperClassName,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
               >
-                <AlphaMapEditor
-                  address={address}
-                  zoom={zoom}
-                  className={this.isWp ? "intrinsic-ignore" : ""}
-                />
-              </BoxResizer>
-            </HoverAnimation>
-          </Wrapper>
-        </CustomCSS>
+                <HoverAnimation
+                  animationId={animationId}
+                  cssKeyframe={hoverName}
+                  options={options}
+                  isDisabledHover={isDisabledHover}
+                  isHidden={isHidden || isStory(this.props.editorMode)}
+                  withoutWrapper={true}
+                >
+                  <BoxResizer
+                    points={points}
+                    restrictions={restrictions}
+                    meta={this.props.meta}
+                    value={resizerTransformValue(v)}
+                    onChange={this.handleResizerChange}
+                  >
+                    <AlphaMapEditor
+                      address={address}
+                      zoom={zoom}
+                      className={this.isWp ? "intrinsic-ignore" : ""}
+                    />
+                  </BoxResizer>
+                </HoverAnimation>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

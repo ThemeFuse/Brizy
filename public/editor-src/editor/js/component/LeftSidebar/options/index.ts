@@ -4,7 +4,11 @@ import {
   LeftSidebarOption,
   LeftSidebarOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorMode, isPopup, isStory } from "visual/global/EditorModeContext";
+import {
+  EditorMode,
+  isPopup,
+  isStory
+} from "visual/providers/EditorModeProvider";
 import { getShortcodeComponents } from "visual/shortcodeComponents";
 import { DeviceMode, Shortcodes } from "visual/types";
 import { t } from "visual/utils/i18n";

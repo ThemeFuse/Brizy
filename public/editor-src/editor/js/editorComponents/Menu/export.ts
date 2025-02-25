@@ -3,8 +3,8 @@ import {
   Options as PopperOptions,
   Placement as PopperPlacement
 } from "@popperjs/core";
+import { debounce } from "es-toolkit";
 import $ from "jquery";
-import { debounce } from "underscore";
 import { getProLibs } from "visual/libs";
 import { DeviceMode } from "visual/types";
 import { BrizyProLibs } from "visual/types/global";
@@ -12,12 +12,12 @@ import { getCurrentDevice } from "visual/utils/export";
 import * as Str from "visual/utils/reader/string";
 import { parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
+import { Settings } from "./types";
 import {
   getParentMegaMenuUid,
   getPlacement,
   isClonedSlide
 } from "./utils.common";
-import { Settings } from "./types";
 
 interface ClosingType {
   desktop: "on" | "off";
@@ -641,6 +641,7 @@ export default function ($node: JQuery): void {
           needToOpen = mmenuId;
           // @ts-expect-error mmApi is added by MMenu
           mMenuNode.mmApi.close(mmenuId);
+          currentMenuOpened = undefined;
         }
       } else {
         currentMenuOpened = mmenuId;

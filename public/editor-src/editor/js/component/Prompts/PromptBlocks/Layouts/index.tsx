@@ -1,3 +1,4 @@
+import { noop } from "es-toolkit";
 import React, {
   Component,
   ComponentType,
@@ -6,7 +7,6 @@ import React, {
   ReactNode
 } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
@@ -17,7 +17,7 @@ import {
   TemplateWithThumbs,
   TemplateWithThumbsAndPages
 } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
-import { EditorMode, isStory } from "visual/global/EditorModeContext";
+import { EditorMode, isStory } from "visual/providers/EditorModeProvider";
 import {
   defaultLayoutPages,
   defaultLayoutsMeta,
@@ -87,9 +87,9 @@ export default class List extends Component<Props, State> {
     type: "layouts",
     showSidebar: true,
     showSearch: true,
-    onAddBlocks: _.noop,
-    onClose: _.noop,
-    onNext: _.noop,
+    onAddBlocks: noop,
+    onClose: noop,
+    onNext: noop,
     config: {} as ConfigCommon
   };
 

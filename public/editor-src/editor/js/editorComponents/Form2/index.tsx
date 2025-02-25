@@ -1,7 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { FormEvent } from "react";
-import { noop } from "underscore";
-import { isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementPatch, ElementProps } from "visual/component/Elements/Types";
@@ -11,7 +10,8 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getBoxResizerParams } from "visual/editorComponents/Form2/utils";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
+import { isView } from "visual/providers/RenderProvider";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
 import { MValue } from "visual/utils/value";
@@ -120,7 +120,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     const itemsProps = this.getPrevAndNextButtonsItemProps(3, 4);
 
     const style = {
-      display: isView(this.renderContext) ? "none" : ""
+      display: isView(this.props.renderContext) ? "none" : ""
     };
 
     return (
@@ -150,7 +150,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
       "brz-form-ms-buttons--story": isStory(this.props.editorMode)
     });
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return (
         <MSButtons className={className}>
           {this.renderPrevButton()}
@@ -203,7 +203,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
 
   renderButton(v: Value): React.JSX.Element {
     const { multistep } = v;
-    const IS_VIEW = isView(this.renderContext);
+    const IS_VIEW = isView(this.props.renderContext);
 
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -231,21 +231,24 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <SubmitButton
-          className={className}
-          style={style}
-          attributes={Attr.mRead(v.customAttributes)}
-        >
-          {/*@ts-expect-error EditorArrayComponent should be converted to .ts*/}
-          <EditorArrayComponent {...itemsProps} />
-          {IS_VIEW && (
-            <ThemeIcon
-              className="brz-form-spinner brz-invisible brz-ed-animated--spin"
-              name="circle-02"
-              type="glyph"
-            />
-          )}
-        </SubmitButton>
+        {({ ref: cssRef }) => (
+          <SubmitButton
+            className={className}
+            style={style}
+            attributes={Attr.mRead(v.customAttributes)}
+            ref={cssRef}
+          >
+            {/*@ts-expect-error EditorArrayComponent should be converted to .ts*/}
+            <EditorArrayComponent {...itemsProps} />
+            {IS_VIEW && (
+              <ThemeIcon
+                className="brz-form-spinner brz-invisible brz-ed-animated--spin"
+                name="circle-02"
+                type="glyph"
+              />
+            )}
+          </SubmitButton>
+        )}
       </CustomCSS>
     );
   }
@@ -265,7 +268,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -288,21 +291,23 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          {isStory(this.props.editorMode) ? (
-            <BoxResizer
-              points={points}
-              meta={meta}
-              value={v}
-              onChange={this.handleResizerChange}
-              restrictions={restrictions}
-            >
-              {formContent}
-            </BoxResizer>
-          ) : (
-            formContent
-          )}
-        </Wrapper>
+        {({ ref: cssRef }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref: cssRef })}>
+            {isStory(this.props.editorMode) ? (
+              <BoxResizer
+                points={points}
+                meta={meta}
+                value={v}
+                onChange={this.handleResizerChange}
+                restrictions={restrictions}
+              >
+                {formContent}
+              </BoxResizer>
+            ) : (
+              formContent
+            )}
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }
@@ -333,7 +338,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

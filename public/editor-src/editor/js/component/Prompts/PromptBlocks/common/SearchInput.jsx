@@ -1,6 +1,6 @@
-import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
@@ -8,10 +8,10 @@ export default class SearchInput extends React.Component {
   static defaultProps = {
     className: "",
     value: "",
-    onChange: _.noop
+    onChange: noop
   };
 
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     this.props.onChange(e.target.value);
   };
 

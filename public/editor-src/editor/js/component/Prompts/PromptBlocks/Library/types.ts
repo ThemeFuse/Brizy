@@ -6,7 +6,8 @@ import {
 } from "visual/global/Config/types/configs/blocks/SavedBlocks";
 import { FontsPayload } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { BlockMetaType, ExtraFontStyle } from "visual/types";
+import { BlockMetaType } from "visual/types/GlobalBlock";
+import { ExtraFontStyle } from "visual/types/Style";
 import { BlockScreenshots } from "visual/utils/screenshots/types";
 import {
   BlockCategory,

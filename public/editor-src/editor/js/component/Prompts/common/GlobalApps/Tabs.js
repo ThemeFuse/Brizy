@@ -1,7 +1,7 @@
 import { foundUrl } from "@brizy/builder-ui-components";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import { noop } from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";

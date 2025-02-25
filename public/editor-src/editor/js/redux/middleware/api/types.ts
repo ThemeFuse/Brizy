@@ -1,4 +1,5 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ReduxState } from "visual/redux/types";
 import { ReduxAction } from "../../actions2";
 
@@ -13,4 +14,5 @@ export interface Data {
     onSuccess: VoidFunction,
     onError: VoidFunction
   ) => void;
+  editorMode: EditorMode;
 }

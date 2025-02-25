@@ -1,10 +1,14 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { Component, createRef } from "react";
 
 export default class PointerEvents extends Component {
+  nodeRef = createRef();
+
   componentDidMount() {
-    // eslint-disable-next-line react/no-find-dom-node
-    ReactDOM.findDOMNode(this).addEventListener("mousedown", this.onMouseDown);
+    const node = this.nodeRef?.current;
+
+    if (node) {
+      node.addEventListener("mousedown", this.onMouseDown);
+    }
   }
 
   onMouseDown = () => {
@@ -21,6 +25,10 @@ export default class PointerEvents extends Component {
   };
 
   render() {
-    return React.Children.only(this.props.children);
+    const { children } = this.props;
+
+    return children({
+      ref: this.nodeRef
+    });
   }
 }

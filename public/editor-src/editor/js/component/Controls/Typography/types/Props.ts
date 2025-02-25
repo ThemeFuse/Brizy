@@ -1,6 +1,7 @@
 import { Choice } from "visual/component/Controls/Toggle/types";
 import { OnChange } from "visual/component/Options/Type";
-import { FontTransform, TextScripts, VariationFont } from "visual/types";
+import { VariationFont } from "visual/types/Fonts";
+import { FontTransform, TextScripts } from "visual/types/Style";
 import { WithValue } from "visual/types/attributes";
 import { Font, FontFamily } from "./FontFamily";
 import { FontLetterSpacing } from "./FontLetterSpacing";
@@ -34,6 +35,7 @@ export interface TypographyProps
   showTextTransform?: boolean;
   showFontSize?: boolean;
   showFontStyles?: boolean;
+  isFontStyleSettingsDisabled?: boolean;
 }
 
 export interface FontStyleProps {
@@ -42,6 +44,7 @@ export interface FontStyleProps {
   openSettings: FontStyleType["styleOpenSettings"];
   onChange: (v: Value["fontStyle"]) => void;
   value: FontStyleType["style"];
+  isFontStyleSettingsDisabled?: boolean;
 }
 
 export interface FontWeightProps extends FontWeight {

@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { Props } from "visual/component/Options/Type";
 import { WithClassName } from "visual/types/attributes";
@@ -24,7 +24,7 @@ export default class Stepper extends React.Component<StepperProps> {
     max: 10,
     step: 1,
     value: 1,
-    onChange: _.noop
+    onChange: noop
   };
 
   nodeRef = React.createRef<HTMLDivElement>();

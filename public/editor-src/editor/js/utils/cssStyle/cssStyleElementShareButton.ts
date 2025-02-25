@@ -258,7 +258,8 @@ export function cssStyleElementShareButtonCustomColorIcon({
 export function cssStyleElementShareButtonBorderColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv: Dvv = (key) => defaultValueValue({ v, key, device, state });
   const colorType = getColor(dvv("colorType"));
@@ -266,6 +267,6 @@ export function cssStyleElementShareButtonBorderColor({
   if (colorType === Color.Official) {
     return "border: 0;";
   } else {
-    return cssStyleBorder({ v, device, state });
+    return cssStyleBorder({ v, device, state, store });
   }
 }

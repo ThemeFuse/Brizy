@@ -12,11 +12,11 @@ import * as toolbarExtend from "./toolbarExtend";
 import type { Props } from "./types";
 
 class Form2Steps extends EditorComponent<ElementModel, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.Form2Steps {
     return ElementTypes.Form2Steps;
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(
     v: ElementModel,
@@ -74,7 +74,7 @@ class Form2Steps extends EditorComponent<ElementModel, Props> {
           vd,
           props: { viewType },
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

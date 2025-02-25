@@ -7,6 +7,7 @@ import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/D
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api/common";
+import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
@@ -27,12 +28,12 @@ export class MinistryBrandsArticleFeatured extends EditorComponent<
   Value,
   Props
 > {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): ElementTypes.MinistryBrandsArticleFeatured {
     return ElementTypes.MinistryBrandsArticleFeatured;
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -77,7 +78,7 @@ export class MinistryBrandsArticleFeatured extends EditorComponent<
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -89,83 +90,117 @@ export class MinistryBrandsArticleFeatured extends EditorComponent<
         })}
         selector=".brz-articleFeatured__item--meta--title"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarMedia, undefined, {
-            allowExtend: false
-          })}
-          selector=".brz-articleFeatured__item--media--links a"
-        >
+        {({ ref: titleRef }) => (
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarLinksColor, undefined, {
+            {...this.makeToolbarPropsFromConfig2(toolbarMedia, undefined, {
               allowExtend: false
             })}
-            selector=":is(.brz-articleFeatured__item--meta--link, .brz-articleFeatured__item--meta--preview) a"
+            selector=".brz-articleFeatured__item--media--links a"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarMetaTypography,
-                undefined,
-                { allowExtend: false }
-              )}
-              selector=".brz-articleFeatured__item--meta"
-            >
+            {({ ref: linksRef }) => (
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
-                  toolbarMetaIcons,
+                  toolbarLinksColor,
                   undefined,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-ministryBrands__meta--icons"
+                selector=":is(.brz-articleFeatured__item--meta--link, .brz-articleFeatured__item--meta--preview) a"
               >
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarExtendButtons,
-                    undefined,
-                    {
-                      allowExtend: false
-                    }
-                  )}
-                  selector=".brz-ministryBrands__item--meta--button"
-                >
+                {({ ref: previewRef }) => (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarPreview,
+                      toolbarMetaTypography,
                       undefined,
                       { allowExtend: false }
                     )}
-                    selector=".brz-articleFeatured__item--meta--preview *:not(:is(:has(a),a))"
+                    selector=".brz-articleFeatured__item--meta"
                   >
-                    <Toolbar
-                      {...this.makeToolbarPropsFromConfig2(
-                        toolbarImage,
-                        undefined,
-                        {
-                          allowExtend: false
-                        }
-                      )}
-                      selector=".brz-ministryBrands__item--media"
-                    >
-                      <Wrapper
-                        {...this.makeWrapperProps({
-                          className
-                        })}
+                    {({ ref: itemMetaRef }) => (
+                      <Toolbar
+                        {...this.makeToolbarPropsFromConfig2(
+                          toolbarMetaIcons,
+                          undefined,
+                          {
+                            allowExtend: false
+                          }
+                        )}
+                        selector=".brz-ministryBrands__meta--icons"
                       >
-                        <DynamicContentHelper
-                          placeholder={getPlaceholder(v)}
-                          props={{ className: "brz-articleFeatured" }}
-                          blocked={false}
-                          tagName="div"
-                        />
-                      </Wrapper>
-                    </Toolbar>
+                        {({ ref: iconsRef }) => (
+                          <Toolbar
+                            {...this.makeToolbarPropsFromConfig2(
+                              toolbarExtendButtons,
+                              undefined,
+                              {
+                                allowExtend: false
+                              }
+                            )}
+                            selector=".brz-ministryBrands__item--meta--button"
+                          >
+                            {({ ref: buttonRef }) => (
+                              <Toolbar
+                                {...this.makeToolbarPropsFromConfig2(
+                                  toolbarPreview,
+                                  undefined,
+                                  { allowExtend: false }
+                                )}
+                                selector=".brz-articleFeatured__item--meta--preview *:not(:is(:has(a),a))"
+                              >
+                                {({ ref: metaPreviewRef }) => (
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarImage,
+                                      undefined,
+                                      {
+                                        allowExtend: false
+                                      }
+                                    )}
+                                    selector=".brz-ministryBrands__item--media"
+                                  >
+                                    {({ ref: itemMediaRef }) => (
+                                      <Wrapper
+                                        {...this.makeWrapperProps({
+                                          className,
+                                          ref: (el) => {
+                                            attachRefs(el, [
+                                              titleRef,
+                                              linksRef,
+                                              previewRef,
+                                              itemMetaRef,
+                                              iconsRef,
+                                              buttonRef,
+                                              metaPreviewRef,
+                                              itemMediaRef
+                                            ]);
+                                          }
+                                        })}
+                                      >
+                                        <DynamicContentHelper
+                                          placeholder={getPlaceholder(v)}
+                                          props={{
+                                            className: "brz-articleFeatured"
+                                          }}
+                                          blocked={false}
+                                          tagName="div"
+                                        />
+                                      </Wrapper>
+                                    )}
+                                  </Toolbar>
+                                )}
+                              </Toolbar>
+                            )}
+                          </Toolbar>
+                        )}
+                      </Toolbar>
+                    )}
                   </Toolbar>
-                </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }

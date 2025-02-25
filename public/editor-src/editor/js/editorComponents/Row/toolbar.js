@@ -1,7 +1,7 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { isPopup } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
@@ -22,15 +22,16 @@ import { read as readString } from "visual/utils/string/specs";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { getMaxRowWidth, getMinRowWidth } from "./utils";
 
-export function getItems({ v, device, component, context, editorMode }) {
+export const getItems = ({ v, device, component, context, editorMode }) => {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
+  const config = component.getGlobalConfig();
 
   const linkDC = getDynamicContentOption({
     option: context.dynamicContent.config,
     type: DCTypes.link
   });
 
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     dvv("bgColorOpacity")
@@ -43,8 +44,6 @@ export function getItems({ v, device, component, context, editorMode }) {
     options: context.dynamicContent.config,
     type: DCTypes.image
   });
-
-  const config = component.getGlobalConfig();
 
   const _isPopup = isPopup(editorMode);
 
@@ -676,4 +675,4 @@ export function getItems({ v, device, component, context, editorMode }) {
       ]
     }
   ];
-}
+};

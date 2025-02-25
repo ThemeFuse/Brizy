@@ -1,7 +1,11 @@
 import { getColor } from "visual/utils/color";
 import { CSSStyleFn } from "visual/utils/cssStyle/types";
 
-export const css: CSSStyleFn<"boxShadow"> = ({ meta, value }): string => {
+export const css: CSSStyleFn<"boxShadow"> = ({
+  meta,
+  value,
+  config
+}): string => {
   const { isEmpty, isDisabled, isInset } = meta ?? {};
 
   if (isEmpty || isDisabled) {
@@ -12,7 +16,7 @@ export const css: CSSStyleFn<"boxShadow"> = ({ meta, value }): string => {
 
   const inset = isInset ? "inset" : "";
 
-  const color = getColor(palette, hex, opacity);
+  const color = getColor(palette, hex, opacity, config);
 
   return `box-shadow:${inset} ${horizontal}px ${vertical}px ${blur}px ${spread}px ${color};`;
 };

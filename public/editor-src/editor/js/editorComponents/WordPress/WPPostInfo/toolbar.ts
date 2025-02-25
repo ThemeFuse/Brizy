@@ -1,9 +1,8 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 
 export interface Value extends ElementModel {
   iconsColorHex: string;
@@ -11,17 +10,11 @@ export interface Value extends ElementModel {
   iconsColorOpacity: number;
 }
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const iconsColor = getColor(
+  const iconsColor = getColorToolbar(
     dvv("iconsColorPalette"),
     dvv("iconsColorHex"),
     dvv("iconsColorOpacity")
@@ -143,4 +136,4 @@ export function getItems({
       position: 150
     }
   ];
-}
+};

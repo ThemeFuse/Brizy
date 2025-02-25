@@ -1,20 +1,20 @@
+import { Num, Obj, Str } from "@brizy/readers";
 import { parseStrict } from "fp-utilities";
 import { checkValue, checkValue2 } from "visual/utils/checkValue";
 import { mPipe, pipe } from "visual/utils/fp";
-import * as Num from "visual/utils/reader/number";
-import * as Obj from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
-import { capByPrefix } from "visual/utils/string";
+import { DESKTOP } from "visual/utils/responsiveMode";
+import { camelCase, capByPrefix } from "visual/utils/string";
+import { Literal } from "visual/utils/types/Literal";
 import { MValue, onNullish } from "visual/utils/value";
 import {
   BackgroundValue,
+  BackgroundValueGetter,
   Direction,
-  FlipboxType,
+  GetBackgroundValue,
   Transition,
   Trigger,
   Value
 } from "./types";
-
 
 export const getHeight = (
   node: HTMLElement,
@@ -58,90 +58,192 @@ export const readDirection = (v: unknown): MValue<Direction> =>
 
 export const readTrigger = checkValue2(Trigger);
 
-const backgroundValueReader = (prefix: "back" | "") =>
-  parseStrict<Value, BackgroundValue>({
-    bg: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bg")), Str.read),
+const backgroundValueReader = (
+  prefix: "back" | "",
+  device: "" | "tablet" | "mobile"
+) =>
+  parseStrict<Value, Record<string, Literal>>({
+    [capByPrefix(device, "bg")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bg"])), Str.read),
       onNullish("")
     ),
-    bgImageSrc: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgImageSrc")), Str.read),
+    [capByPrefix(device, "bgImageSrc")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgImageSrc"])), Str.read),
       onNullish("")
     ),
-    bgImageExtension: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgImageExtension")), Str.read),
+    [capByPrefix(device, "bgImageExtension")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "bgImageExtension"])),
+        Str.read
+      ),
       onNullish("")
     ),
-    bgPopulation: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgPopulation")), Str.read),
+    [capByPrefix(device, "bgPopulation")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgPopulation"])), Str.read),
       onNullish("")
     ),
-    bgImageFileName: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgImageFileName")), Str.read),
+    [capByPrefix(device, "bgImageFileName")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "bgImageFileName"])),
+        Str.read
+      ),
       onNullish("")
     ),
-    bgSizeType: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgSizeType")), Str.read),
+    [capByPrefix(device, "bgSizeType")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgSizeType"])), Str.read),
       onNullish("")
     ),
-    bgImageWidth: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgImageWidth")), Num.read),
+    [capByPrefix(device, "bgImageWidth")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgImageWidth"])), Num.read),
       onNullish(0)
     ),
-    bgImageHeight: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgImageHeight")), Num.read),
+    [capByPrefix(device, "bgImageHeight")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "bgImageHeight"])),
+        Num.read
+      ),
       onNullish(0)
     ),
-    bgPositionX: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgPositionX")), Num.read),
+    [capByPrefix(device, "bgPositionX")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgPositionX"])), Num.read),
       onNullish(50)
     ),
-    bgPositionY: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgPositionY")), Num.read),
+    [capByPrefix(device, "bgPositionY")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgPositionY"])), Num.read),
       onNullish(50)
     ),
-    bgColorType: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgColorType")), Str.read),
+    [capByPrefix(device, "bgColorType")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgColorType"])), Str.read),
       onNullish("")
     ),
-    bgColorOpacity: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgColorOpacity")), Num.read),
+    [capByPrefix(device, "bgColorOpacity")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "bgColorOpacity"])),
+        Num.read
+      ),
       onNullish(1)
     ),
-    bgColorHex: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgColorHex")), Str.read),
+    [capByPrefix(device, "bgColorHex")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "bgColorHex"])), Str.read),
       onNullish("")
     ),
-    bgColorPalette: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "bgColorPalette")), Str.read),
+    [capByPrefix(device, "bgColorPalette")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "bgColorPalette"])),
+        Str.read
+      ),
       onNullish("")
     ),
-    gradientColorHex: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "gradientColorHex")), Str.read),
+    [capByPrefix(device, "gradientColorHex")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "gradientColorHex"])),
+        Str.read
+      ),
       onNullish("")
     ),
-    gradientColorOpacity: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "gradientColorOpacity")), Num.read),
+    [capByPrefix(device, "gradientColorOpacity")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "gradientColorOpacity"])),
+        Num.read
+      ),
       onNullish(0)
     ),
-    gradientColorPalette: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "gradientColorPalette")), Str.read),
+    [capByPrefix(device, "gradientColorPalette")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "gradientColorPalette"])),
+        Str.read
+      ),
       onNullish("")
     ),
-    gradientType: pipe(
-      mPipe(Obj.readKey(capByPrefix(prefix, "gradientType")), Str.read),
+    [capByPrefix(device, "gradientType")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "gradientType"])), Str.read),
       onNullish("")
     )
   });
 
-export const getBackgroundValue = (
-  type: FlipboxType,
-  v: Value
-): BackgroundValue => {
+const bgKeys: Array<keyof BackgroundValue> = [
+  "bg",
+  "tabletBg",
+  "mobileBg",
+  "bgImageSrc",
+  "tabletBgImageSrc",
+  "mobileBgImageSrc",
+  "bgImageExtension",
+  "tabletBgImageExtension",
+  "mobileBgImageExtension",
+  "bgPopulation",
+  "tabletBgPopulation",
+  "mobileBgPopulation",
+  "bgImageFileName",
+  "tabletBgImageFileName",
+  "mobileBgImageFileName",
+  "bgSizeType",
+  "tabletBgSizeType",
+  "mobileBgSizeType",
+  "bgImageWidth",
+  "tabletBgImageWidth",
+  "mobileBgImageWidth",
+  "bgImageHeight",
+  "tabletBgImageHeight",
+  "mobileBgImageHeight",
+  "bgPositionX",
+  "tabletBgPositionX",
+  "mobileBgPositionX",
+  "bgPositionY",
+  "tabletBgPositionY",
+  "mobileBgPositionY",
+  "bgColorType",
+  "tabletBgColorType",
+  "mobileBgColorType",
+  "bgColorOpacity",
+  "tabletBgColorOpacity",
+  "mobileBgColorOpacity",
+  "bgColorHex",
+  "tabletBgColorHex",
+  "mobileBgColorHex",
+  "bgColorPalette",
+  "tabletBgColorPalette",
+  "mobileBgColorPalette",
+  "gradientColorHex",
+  "tabletGradientColorHex",
+  "mobileGradientColorHex",
+  "gradientColorOpacity",
+  "tabletGradientColorOpacity",
+  "mobileGradientColorOpacity",
+  "gradientColorPalette",
+  "tabletGradientColorPalette",
+  "mobileGradientColorPalette",
+  "gradientType",
+  "tabletGradientType",
+  "mobileGradientType"
+];
+
+const getBackgroundValue: GetBackgroundValue = ({ type, v, device }) => {
+  const _device = device === DESKTOP ? "" : device;
+
+  let value = undefined;
+
   switch (type) {
     case "front":
-      return backgroundValueReader("")(v);
+      value = backgroundValueReader("", _device)(v);
+      break;
     case "back":
-      return backgroundValueReader("back")(v);
+      value = backgroundValueReader("back", _device)(v);
+      break;
+  }
+
+  if (value) {
+    const isValid = Object.keys(value).every((k) =>
+      bgKeys.includes(k as keyof BackgroundValue)
+    );
+
+    if (isValid) {
+      return value as unknown as BackgroundValue;
+    }
   }
 };
+
+export const backgroundValueGetter: BackgroundValueGetter =
+  ({ type, v }) =>
+  (device) =>
+    getBackgroundValue({ type, v, device });

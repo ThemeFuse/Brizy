@@ -98,13 +98,13 @@ class MenuItemItems extends EditorArrayComponent {
       return items;
     }
 
-    return isView(this.renderContext) ? (
+    return isView(this.props.renderContext) ? (
       <SubMenuForView mMenu={mMenu} items={items} />
     ) : (
       <SubMenuForEdit
         mMenu={mMenu}
         items={items}
-        renderContext={this.renderContext}
+        renderContext={this.props.renderContext}
       />
     );
   }

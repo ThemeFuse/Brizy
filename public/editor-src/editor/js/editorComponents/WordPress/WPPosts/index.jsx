@@ -3,6 +3,7 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { attachRefs } from "visual/utils/react";
 import { WPShortcode } from "../common/WPShortcode";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -45,7 +46,7 @@ class WPPosts extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       className
@@ -55,21 +56,26 @@ class WPPosts extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <WPShortcode
-            name="brizy_posts"
-            attributes={attributes}
-            placeholderIcon="wp-shortcode"
-            placeholderContainerWidth={this.props.meta.desktopW}
-            className={classNameWP}
-            resizerPoints={resizerPoints}
-            resizerMeta={this.props.meta}
-            resizerValue={v}
-            resizerOnChange={this.handleResizerChange}
-            renderContext={this.renderContext}
-            config={this.getGlobalConfig()}
-          />
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <WPShortcode
+                name="brizy_posts"
+                attributes={attributes}
+                placeholderIcon="wp-shortcode"
+                placeholderContainerWidth={this.props.meta.desktopW}
+                className={classNameWP}
+                resizerPoints={resizerPoints}
+                resizerMeta={this.props.meta}
+                resizerValue={v}
+                resizerOnChange={this.handleResizerChange}
+                renderContext={this.props.renderContext}
+                config={this.getGlobalConfig()}
+                containerRef={(el) => attachRefs(el, [toolbarRef, cssRef])}
+              />
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

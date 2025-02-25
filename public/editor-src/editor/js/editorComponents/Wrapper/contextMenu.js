@@ -69,6 +69,7 @@ const getTranslationsMap = () => ({
   ShareButton: t("Share Button"),
   Paypal: t("Paypal"),
   InstagramFeed: t("Instagram Feed"),
+  LinkedinFeed: t("Linkedin Feed"),
 
   // WP
   WPSidebar: t("Sidebar"),

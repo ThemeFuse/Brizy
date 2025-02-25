@@ -1,3 +1,4 @@
+import { noop } from "es-toolkit";
 import React, {
   ReactElement,
   ReactNode,
@@ -7,7 +8,6 @@ import React, {
 } from "react";
 import { Subscription, forkJoin, of } from "rxjs";
 import { catchError, mapTo, switchMap } from "rxjs/operators";
-import { noop } from "underscore";
 import { Button } from "visual/component/Controls/Button";
 import EditorIcon from "visual/component/EditorIcon";
 import { Tabs } from "visual/component/Prompts/Tabs";

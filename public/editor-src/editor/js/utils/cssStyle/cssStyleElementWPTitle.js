@@ -1,3 +1,4 @@
+import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
@@ -10,15 +11,18 @@ export function cssStyleElementTitleTextShadow({
   v,
   device,
   state,
+  store,
   prefix = "text"
 }) {
   state = getState(v, state);
 
   const dvv = (key) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
+
   const colorHex = dvv(capByPrefix(prefix, "shadowColorHex"));
   const colorPalette = dvv(capByPrefix(prefix, "shadowColorPalette"));
   const colorOpacity = dvv(capByPrefix(prefix, "shadowColorOpacity"));
-  const color = getColor(colorPalette, colorHex, colorOpacity);
+  const color = getColor(colorPalette, colorHex, colorOpacity, config);
   const blur = dvv(capByPrefix(prefix, "shadowBlur"));
   const horizontal = dvv(capByPrefix(prefix, "shadowHorizontal"));
   const vertical = dvv(capByPrefix(prefix, "shadowVertical"));

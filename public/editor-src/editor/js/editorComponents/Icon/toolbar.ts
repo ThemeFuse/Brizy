@@ -1,7 +1,7 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isPopup, isStory } from "visual/global/EditorModeContext";
-import { getColor } from "visual/utils/color";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
+import { getColorToolbar } from "visual/utils/color";
 import { DESKTOP } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -19,7 +19,8 @@ export const getItems: GetItems<Value, Props> = ({
   editorMode
 }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
-  const color = getColor(
+
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")

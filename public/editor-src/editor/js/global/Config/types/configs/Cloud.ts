@@ -6,7 +6,7 @@ import {
   Page,
   PageCollection,
   ShopifyPage
-} from "visual/types";
+} from "visual/types/Page";
 import { Language } from "visual/utils/multilanguages";
 import { TemplateType } from "../TemplateType";
 import { ShopifyTemplate } from "../shopify/ShopifyTemplate";

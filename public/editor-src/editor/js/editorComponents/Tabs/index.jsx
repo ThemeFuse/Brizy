@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -10,6 +10,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { Wrapper } from "../tools/Wrapper";
 import Items from "./Items";
@@ -22,16 +23,15 @@ import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
 export default class Tabs extends EditorComponent {
-  static get componentId() {
-    return "Tabs";
-  }
-
   static defaultValue = defaultValue;
-
   static defaultProps = {
     meta: {},
     extendParentToolbar: noop
   };
+
+  static get componentId() {
+    return "Tabs";
+  }
 
   getMeta(v) {
     const { meta } = this.props;
@@ -109,7 +109,7 @@ export default class Tabs extends EditorComponent {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
@@ -178,7 +178,7 @@ export default class Tabs extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -201,21 +201,29 @@ export default class Tabs extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className,
-              attributes: makeDataAttr({ name: "action", value: action })
-            })}
-          >
-            <ul className={classNameNav}>
-              <Items {...itemNavProps} />
-            </ul>
-            <div className={classNameContent}>
-              <Items {...itemContentProps} />
-            </div>
-          </Wrapper>
-        </ContextMenu>
+        {({ ref: cssRef }) => (
+          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+            {({ ref: contextMenuRef }) => {
+              const ref = (el) => attachRefs(el, [cssRef, contextMenuRef]);
+
+              return (
+                <Wrapper
+                  {...this.makeWrapperProps({
+                    className,
+                    attributes: makeDataAttr({ name: "action", value: action })
+                  })}
+                >
+                  <ul className={classNameNav} ref={ref}>
+                    <Items {...itemNavProps} />
+                  </ul>
+                  <div className={classNameContent}>
+                    <Items {...itemContentProps} />
+                  </div>
+                </Wrapper>
+              );
+            }}
+          </ContextMenu>
+        )}
       </CustomCSS>
     );
   }

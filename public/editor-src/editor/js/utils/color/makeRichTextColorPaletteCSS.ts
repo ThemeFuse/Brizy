@@ -1,12 +1,11 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makeStylePaletteCSSVar } from "./makeGlobalStylesColorPallete";
 
 export const makeRichTextColorPaletteCSS = (
   palettes: { id: string; hex: string }[],
+  config: ConfigCommon,
   prefix?: (s: string) => string
 ): string => {
-  const config = Config.getAll();
-
   return palettes
     .map(({ id }) => {
       let inlineClassName = `.brz-cp-${id.toLowerCase()}`;

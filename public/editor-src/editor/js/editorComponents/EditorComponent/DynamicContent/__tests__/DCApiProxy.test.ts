@@ -1,10 +1,8 @@
 import Base64 from "js-base64";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
-  BatchFetcher,
-  DCApiProxyConfig,
-  DCApiProxy as DCApiProxy_
-} from "../DCApiProxy";
+import { BatchFetcher } from "../BatchFetcher";
+import { DCApiProxy as DCApiProxy_ } from "../DCApiProxy";
+import { DCApiProxyConfig } from "../types";
 import { dcApiProxyTestFetcher } from "../utils";
 
 jest.useFakeTimers();

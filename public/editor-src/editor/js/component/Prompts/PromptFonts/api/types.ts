@@ -1,4 +1,4 @@
-import { UploadedFont, VariationFont } from "visual/types";
+import { UploadedFont, VariationFont } from "visual/types/Fonts";
 
 interface FontFile {
   [type: string]: {

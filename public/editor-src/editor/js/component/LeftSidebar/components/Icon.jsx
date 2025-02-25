@@ -1,6 +1,6 @@
-import React from "react";
-import _ from "underscore";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
 export default class SidebarIcon extends React.Component {
@@ -8,7 +8,7 @@ export default class SidebarIcon extends React.Component {
     className: "",
     icon: "",
     title: "",
-    onClick: _.noop
+    onClick: noop
   };
 
   render() {

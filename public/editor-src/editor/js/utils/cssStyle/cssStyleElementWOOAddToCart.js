@@ -26,8 +26,8 @@ export function cssStyleElementWOOAddToCartSize({ v, device }) {
     : `padding:${height}px ${width}px!important;`;
 }
 
-export function cssStyleElementWOOAddToCartInputRadius({ v, device }) {
-  return cssStyleBorderRadius({ v, device, prefix: "input" });
+export function cssStyleElementWOOAddToCartInputRadius({ v, device, store }) {
+  return cssStyleBorderRadius({ v, device, store, prefix: "input" });
 }
 
 export function cssStyleElementWOOAddToCartSpacing({ v, device }) {
@@ -484,8 +484,13 @@ export function cssStyleElementWOOAddToCartLabelBg({
   });
 }
 
-export function cssStyleElementWOOAddToCartInputBorder({ v, device, state }) {
-  return cssStyleBorder({ v, device, prefix: "input", state });
+export function cssStyleElementWOOAddToCartInputBorder({
+  v,
+  device,
+  state,
+  store
+}) {
+  return cssStyleBorder({ v, device, prefix: "input", state, store });
 }
 
 export function cssStyleElementWOOAddToCartInputBoxShadow({
@@ -506,8 +511,8 @@ export function cssStyleElementWOOAddToCartTableBoxShadow({
   return cssStyleBoxShadow({ v, device, prefix: "table", state, store });
 }
 
-export function cssStyleElementWOOAddToCartBorder({ v, device }) {
-  return cssStyleBorder({ v, device, prefix: "button" });
+export function cssStyleElementWOOAddToCartBorder({ v, device, store }) {
+  return cssStyleBorder({ v, device, store, prefix: "button" });
 }
 
 export function cssStyleElementWOOAddToCartBorderRadius({ v, device, store }) {

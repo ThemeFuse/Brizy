@@ -1,4 +1,4 @@
-import { times } from "underscore";
+import { times } from "es-toolkit/compat";
 import {
   collectionItemAddPrefix,
   collectionItemFieldAddPrefix,
@@ -15,9 +15,9 @@ import {
 } from "visual/utils/api/cms/graphql/convertors";
 
 const testAddPrefix = (fn: (n: number) => string, prefix: string): void => {
-  const seed = times(10, i => i + 1);
+  const seed = times(10, (i) => i + 1);
 
-  seed.forEach(id => {
+  seed.forEach((id) => {
     test(`${id} should be "${prefix}${id}"`, () => {
       expect(fn(id)).toBe(`${prefix}${id}`);
     });
@@ -25,7 +25,10 @@ const testAddPrefix = (fn: (n: number) => string, prefix: string): void => {
 };
 
 const testTrimPrefix = (fn: (n: string) => number, prefix: string): void => {
-  const seed: [string, number][] = times(10, i => [`${prefix}${i + 1}`, i + 1]);
+  const seed: [string, number][] = times(10, (i) => [
+    `${prefix}${i + 1}`,
+    i + 1
+  ]);
 
   test.each(seed)("%s should be %d", (str, n) => expect(fn(str)).toBe(n));
 };

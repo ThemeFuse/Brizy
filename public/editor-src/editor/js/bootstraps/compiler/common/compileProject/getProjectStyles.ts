@@ -1,19 +1,19 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { currentStyleSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import {
   makeGlobalStylesColorPalette,
   makeRichTextColorPaletteCSS
 } from "visual/utils/color";
+import { getFontStyles } from "visual/utils/fonts/getFontStyles";
+import { makeGlobalStylesTypography } from "visual/utils/fonts/makeGlobalStylesTypography";
 import {
   dynamicStyleIds,
-  getFontStyles,
-  makeGlobalStylesTypography,
   makeRichTextDynamicFontStylesCSS
-} from "visual/utils/fonts";
+} from "visual/utils/fonts/makeRichTextFontStylesCSS";
 import { isExternalPopup } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 import { projectClassName } from "../utils/projectClassName";
-import { currentStyleSelector } from "visual/redux/selectors";
 
 function parseDynamicFontStyles(config: ConfigCommon): string[] {
   const fontStyles = new Set<string>();
@@ -55,11 +55,13 @@ export const getProjectStyles = (
 
   const typographyStyles = makeGlobalStylesTypography({
     fontStyles: getFontStyles({ store }),
-    store
+    store,
+    config
   });
 
   const richTextColorPalette = makeRichTextColorPaletteCSS(
     globalPalette,
+    config,
     getClassName
   );
 

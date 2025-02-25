@@ -1,4 +1,4 @@
-import { Rule } from "visual/types";
+import { Rule } from "visual/types/Rule";
 import { ApiRule, editorRuleToApiRule } from "../adapter";
 
 describe("testing adapter", () => {

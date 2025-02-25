@@ -155,12 +155,14 @@ export const cssStyleElementOfMinistryBrandsMetaLinksBoxShadow = ({
 export const cssStyleElementOfMinistryBrandsMetaLinksBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "metaLinks"
   });
 };
@@ -465,9 +467,10 @@ export const cssStylementOfMinistryBrandsParentBgGradient = ({
 export const cssStylementOfMinistryBrandsParentBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
-  return cssStyleBorder({ v, device, state, prefix: "parent" });
+  return cssStyleBorder({ v, device, state, store, prefix: "parent" });
 };
 
 export const cssStylementOfMinistryBrandsParentBoxShadow = ({
@@ -497,12 +500,14 @@ export function cssStyleMinistryElementFiltersBgGradient({
 export function cssStyleMinistryElementFiltersBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "input"
   });
 }
@@ -653,12 +658,14 @@ export const cssStyleElementMinistryBrandsButtonsBoxShadow = ({
 export const cssStyleElementMinistryBrandsButtonsBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "detailButton"
   });
 };
@@ -744,12 +751,14 @@ export const cssStyleElementMinistryBrandsRegisterButtonBoxShadow = ({
 export const cssStyleElementMinistryBrandsRegisterButtonBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "registerButton"
   });
 };
@@ -935,12 +944,14 @@ export function cssStyleElementOfMinistryBrandsImgBgColor({
 export const cssStyleElementOfMinistryBrandsImgBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "img"
   });
 };
@@ -1465,12 +1476,14 @@ export const cssStyleElementOfMinistryBrandsSocialBoxShadow = ({
 export const cssStyleElementOfMinistryBrandsSocialBorder = ({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    store,
     prefix: "social"
   });
 };

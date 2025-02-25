@@ -104,7 +104,7 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
 }
 
 export function styleFormSelect(data: DynamicStylesProps<Value>): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const styleSelectEdit = {
     ".brz && .brz-forms2__select-current": {
       standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]

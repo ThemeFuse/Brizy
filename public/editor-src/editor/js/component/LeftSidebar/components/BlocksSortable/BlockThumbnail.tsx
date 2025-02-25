@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { preloadImage } from "visual/utils/image";

@@ -1,14 +1,11 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType, isView } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
-import { Fonts } from "visual/types";
-import {
-  getDefaultFont,
-  getFontById,
-  getFontStyle,
-  makeStyleCSSVar
-} from "visual/utils/fonts";
-import type { FontFamilyType } from "visual/utils/fonts/familyType";
+import { Fonts } from "visual/types/Fonts";
+import type { FontFamilyType } from "visual/types/Fonts";
+import { getDefaultFont, getFontById } from "visual/utils/fonts/getFontById";
+import { getFontStyle } from "visual/utils/fonts/getFontStyle";
+import { makeStyleCSSVar } from "visual/utils/fonts/makeGlobalStylesTypography";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { MValue } from "visual/utils/value";

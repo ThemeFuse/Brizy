@@ -1,4 +1,4 @@
-import { noop } from "underscore";
+import { noop } from "es-toolkit";
 import { removeAt } from "timm";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 

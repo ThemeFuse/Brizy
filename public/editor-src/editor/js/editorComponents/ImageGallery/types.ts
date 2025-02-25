@@ -36,6 +36,7 @@ export interface Value extends ElementModel {
   tabletThumbWidthSuffix: Unit;
   mobileThumbWidthSuffix: Unit;
   _id: string;
+  customCSS: string;
 }
 
 export type LayoutType = "grid" | "masonry" | "justified" | "bigImage";

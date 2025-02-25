@@ -1,8 +1,9 @@
 import LibsConfig from "visual/bootstraps/libs.json";
 import Conf, { Config, isWp } from "visual/global/Config";
-import { ExtraFontData } from "visual/types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { ExtraFontData } from "visual/types/Fonts";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
-import { makePrefetchFonts } from "visual/utils/fonts";
+import { makePrefetchFonts } from "visual/utils/fonts/makeFontsUrl";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { toHashCode } from "visual/utils/string";
 import { getCustomCSS } from "./getCustomCSS";
@@ -51,8 +52,11 @@ const makePageMetaViewport = (): Asset => ({
   pro: false
 });
 
-const makePageFontsPrefetch = (fonts: Fonts): Array<Asset> => {
-  const content = getFontLinks(fonts)?.google;
+const makePageFontsPrefetch = (
+  fonts: Fonts,
+  config: ConfigCommon
+): Array<Asset> => {
+  const content = getFontLinks({ ...fonts, config })?.google;
 
   if (content) {
     return [
@@ -61,7 +65,7 @@ const makePageFontsPrefetch = (fonts: Fonts): Array<Asset> => {
         score: DEPENDENCY_SCORE,
         content: {
           type: "code",
-          content: makePrefetchFonts().join(" ")
+          content: makePrefetchFonts(config).join(" ")
         },
         pro: false
       }
@@ -77,7 +81,7 @@ const makePageFonts = (data: {
   config: Config;
 }): (AssetGoogle | AssetUpload | AssetAdobe)[] => {
   const { fonts, extra, config } = data;
-  const { google, upload, adobe } = getFontLinks({ ...fonts, extra });
+  const { google, upload, adobe } = getFontLinks({ ...fonts, extra, config });
   const pageFonts: (AssetGoogle | AssetUpload | AssetAdobe)[] = [];
 
   if (adobe) {
@@ -165,8 +169,8 @@ const makeCustomCSS = ($doc: cheerio.Root): Asset[] => {
   }));
 };
 
-const makeDCColor = ($doc: cheerio.Root): Asset[] => {
-  return getDCColor($doc).map((style, index) => ({
+const makeDCColor = ($doc: cheerio.Root, config: ConfigCommon): Asset[] => {
+  return getDCColor($doc, config).map((style, index) => ({
     name: toHashCode(style),
     score: OTHERS_SCORE,
     content: {
@@ -238,7 +242,7 @@ export const makeStyles = (data: Data): MakeStyles => {
   const pageFonts = makePageFonts({ fonts, extra, config });
 
   // page styles
-  const pageStyles = makePageFontsPrefetch(fonts);
+  const pageStyles = makePageFontsPrefetch(fonts, config);
 
   // page meta viewport
   const metaViewport = makePageMetaViewport();
@@ -249,7 +253,7 @@ export const makeStyles = (data: Data): MakeStyles => {
   generic.push(...customCSS);
 
   // dynamic content color
-  const dcColor = makeDCColor($root);
+  const dcColor = makeDCColor($root, config);
   generic.push(...dcColor);
 
   // dynamic styles

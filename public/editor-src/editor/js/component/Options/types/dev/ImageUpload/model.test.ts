@@ -1,18 +1,14 @@
 // @ts-nocheck
-
-import { times, identity } from "underscore";
+import { identity } from "es-toolkit";
+import { times } from "es-toolkit/compat";
 import {
-  testGetterValidation,
-  testSetterValidation
-} from "visual/utils/model/utilities.test";
-import {
+  Image,
   getExtension,
   getHeight,
   getSrc,
   getWidth,
   getX,
   getY,
-  Image,
   setExtension,
   setHeight,
   setSrc,
@@ -20,6 +16,10 @@ import {
   setX,
   setY
 } from "visual/component/Options/types/dev/ImageUpload/model";
+import {
+  testGetterValidation,
+  testSetterValidation
+} from "visual/utils/model/utilities.test";
 
 const validExtension = ["jpg", "png"];
 const invalidExtension = [undefined, null, 1, {}];
@@ -39,7 +39,7 @@ const image: Image = {
   y: 50
 };
 
-describe("Testing 'getExtension' function", function() {
+describe("Testing 'getExtension' function", function () {
   testGetterValidation(
     getExtension,
     "extension",
@@ -48,7 +48,7 @@ describe("Testing 'getExtension' function", function() {
   );
 });
 
-describe("Testing 'patchExtension' function", function() {
+describe("Testing 'patchExtension' function", function () {
   testSetterValidation(
     setExtension,
     getExtension,
@@ -62,11 +62,11 @@ describe("Testing 'patchExtension' function", function() {
   });
 });
 
-describe("Testing 'getSrc' function", function() {
+describe("Testing 'getSrc' function", function () {
   testGetterValidation(getSrc, "src", validSrc, invalidSrc);
 });
 
-describe("Testing 'patchSrc' function", function() {
+describe("Testing 'patchSrc' function", function () {
   testSetterValidation(setSrc, getSrc, {}, validSrc, invalidSrc);
 
   test("Should patch empty string", () => {
@@ -74,19 +74,19 @@ describe("Testing 'patchSrc' function", function() {
   });
 });
 
-describe("Testing 'getWidth' function", function() {
+describe("Testing 'getWidth' function", function () {
   testGetterValidation(getWidth, "width", validPositive, invalidPositive);
 });
 
-describe("Testing 'patchWidth' function", function() {
+describe("Testing 'patchWidth' function", function () {
   testSetterValidation(setWidth, getWidth, {}, validPositive, invalidPositive);
 });
 
-describe("Testing 'getHeight' function", function() {
+describe("Testing 'getHeight' function", function () {
   testGetterValidation(getHeight, "height", validPositive, invalidPositive);
 });
 
-describe("Testing 'patchHeight' function", function() {
+describe("Testing 'patchHeight' function", function () {
   testSetterValidation(
     setHeight,
     getHeight,
@@ -96,18 +96,18 @@ describe("Testing 'patchHeight' function", function() {
   );
 });
 
-describe("Testing 'getX' function", function() {
+describe("Testing 'getX' function", function () {
   testGetterValidation(getX, "x", validPositive, invalidPositive);
 });
 
-describe("Testing 'setX' function", function() {
+describe("Testing 'setX' function", function () {
   testSetterValidation(setX, getX, {}, validPositive, invalidPositive);
 });
 
-describe("Testing 'getY' function", function() {
+describe("Testing 'getY' function", function () {
   testGetterValidation(getY, "y", validPositive, invalidPositive);
 });
 
-describe("Testing 'setY' function", function() {
+describe("Testing 'setY' function", function () {
   testSetterValidation(setY, getY, {}, validPositive, invalidPositive);
 });

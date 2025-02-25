@@ -1,11 +1,12 @@
+import { last } from "es-toolkit";
 import { isT } from "fp-utilities";
 import { produce } from "immer";
 import { insert, mergeIn } from "timm";
-import { last } from "underscore";
 import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { Settings } from "visual/libs/gallery";
 import { Breakpoint, DeviceMode2 } from "visual/types";
 import { setIds } from "visual/utils/models";
@@ -15,7 +16,6 @@ import * as Str from "visual/utils/reader/string";
 import { Unit } from "../Image/types";
 import { calcWrapperSizes } from "../Image/utils";
 import { SizeChangedType, Value } from "./types";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
 interface IsotopeParams {
   itemSelector: string;

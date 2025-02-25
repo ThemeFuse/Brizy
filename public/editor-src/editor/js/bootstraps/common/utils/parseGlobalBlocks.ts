@@ -1,6 +1,6 @@
-import { GlobalBlock } from "visual/types";
-import { mPipe } from "visual/utils/fp";
 import { Json, Obj, Str } from "@brizy/readers";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { mPipe } from "visual/utils/fp";
 
 const reader = mPipe(Obj.readKey("data"), Str.read, Json.read);
 

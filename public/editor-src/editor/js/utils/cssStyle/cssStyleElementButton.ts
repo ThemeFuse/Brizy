@@ -1,5 +1,4 @@
 import { Num } from "@brizy/readers";
-import Config from "visual/global/Config";
 import {
   cssStyleBgColor,
   cssStyleBgGradient,
@@ -13,7 +12,6 @@ import {
 import { getButtonSizes } from "visual/utils/cssStyle/cssStyleSize";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
-import { isStory } from "../models";
 import { NORMAL } from "../stateMode";
 import { styleBgBlendGradient, styleBgColorHex } from "../style2";
 import { CSSValue } from "../style2/types";
@@ -45,17 +43,15 @@ export function cssStyleElementButtonIconStrokeWidth({
   return cssStyleStrokeWidth({ v, device, store, state, prefix: "icon" });
 }
 
+export function cssStyleElementButtonSizeForStory(): string {
+  return "padding: 0; align-items: center;";
+}
+
 export function cssStyleElementButtonSize({
   v,
   device,
   prefix = ""
 }: CSSValue): string {
-  const IS_STORY = isStory(Config.getAll());
-
-  if (IS_STORY) {
-    return "padding: 0; align-items: center;";
-  }
-
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
 
   const paddingTB = dvv(capByPrefix(prefix, "paddingTB"));
@@ -148,7 +144,8 @@ export function cssStyleElementButtonBgGradient({
 export function cssStyleElementButtonBorderStory({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -157,7 +154,7 @@ export function cssStyleElementButtonBorderStory({
   switch (fillType) {
     case "filled":
     case "outline":
-      return cssStyleBorder({ v, device, state });
+      return cssStyleBorder({ v, device, state, store });
     case "default": {
       return "border: 0; border-radius: 0!important;";
     }
@@ -198,9 +195,10 @@ export const cssStyleElementButtonBgBlendColor = ({
   v,
   device,
   state,
+  store,
   prefix = "bg"
 }: CSSValue): string => {
-  const hex = styleBgColorHex({ v, device, state, prefix });
+  const hex = styleBgColorHex({ v, device, store, state, prefix });
 
   return `background-color: rgba(${hex}, 1);`;
 };

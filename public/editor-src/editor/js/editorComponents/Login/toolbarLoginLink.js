@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -6,7 +6,7 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const loginLinkColor = getColor(
+  const loginLinkColor = getColorToolbar(
     dvv("loginLinkColorPalette"),
     dvv("loginLinkColorHex"),
     dvv("loginLinkColorOpacity")

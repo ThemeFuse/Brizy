@@ -7,15 +7,15 @@ import { DESKTOP } from "visual/utils/responsiveMode";
 import { getBreakpoints } from "../breakpoints";
 import { BreakpointsNames } from "../breakpoints/types";
 import { ACTIVE, HOVER, NORMAL } from "../stateMode";
+import { AllCSSKeys, CSS, GeneratedCSS } from "./types";
 import {
   filterDeviceValues,
   getInitialV,
   getNewGeneratesCSSfromSelector,
   getNewGeneratesCSSfromStyle,
-  removeDuplicateCSSByDevice
-} from "./index";
-import { AllCSSKeys, CSS, GeneratedCSS } from "./types";
-import { replaceHoverAndActive } from "./utils";
+  removeDuplicateCSSByDevice,
+  replaceHoverAndActive
+} from "./utils";
 
 export const getCSSObjects = ({
   currentModel,

@@ -1,4 +1,4 @@
-import { difference as diff } from "underscore";
+import { difference as diff } from "es-toolkit";
 import * as Union from "visual/utils/reader/union";
 import * as Str from "visual/utils/string";
 import { isT } from "visual/utils/value";

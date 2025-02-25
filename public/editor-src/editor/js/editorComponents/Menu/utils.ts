@@ -1,5 +1,5 @@
+import { omit, pick } from "es-toolkit";
 import { produce } from "immer";
-import _ from "underscore";
 import {
   ElementModel,
   ElementModelType
@@ -18,14 +18,16 @@ const configKeys = [
   "classes",
   "liClasses",
   "current"
-];
+] as const;
+
+type ConfigKeys = typeof configKeys;
 
 export function normalizeMenuItems(items: MenuItem[]): ElementModel {
   return setIds(
     mapModels(
-      ({ type, value }: ElementModel) => ({
+      ({ type, value }: MenuItem) => ({
         type,
-        value: _.pick(value, configKeys)
+        value: pick(value, configKeys as ConfigKeys)
       }),
       items
     )
@@ -62,7 +64,7 @@ export function itemsToSymbols(items: ElementModelType[]): ElementModel {
   return items.reduce((acc, item) => {
     return {
       ...acc,
-      [item.value.id as string]: _.omit(item.value, [
+      [item.value.id as string]: omit(item.value, [
         // megaMenuItems should stay
         ...configKeys.filter((k) => k !== "megaMenuItems"),
         "_id"

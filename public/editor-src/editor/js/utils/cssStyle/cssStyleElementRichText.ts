@@ -1,10 +1,7 @@
 import { Num, Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
-import Config from "visual/global/Config";
-import {
-  WithRenderContext,
-  isEditor
-} from "visual/providers/RenderProvider";
+import { WithRenderContext, isEditor } from "visual/providers/RenderProvider";
+import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import {
   cssStyleTextScript,
@@ -16,7 +13,6 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
-import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { readToggle } from "visual/utils/options/ToggleButton/utils";
 import { read as readNum } from "visual/utils/reader/number";
@@ -39,7 +35,6 @@ import { isNullish } from "visual/utils/value";
 import { styleState, styleTypography2FontSize } from "../style2";
 import { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
-import { cssStyleTypography3FontSize } from "./cssStyleTypography2";
 
 export function cssStyleElementRichTextMarginTop({
   v,
@@ -94,36 +89,32 @@ export function cssStyleElementRichTextGradient({
   return styles.join(";") + ";";
 }
 
-export function cssStyleElementRichTextFontSize(d: CSSValue): string {
+export function cssStyleElementRichTextFontSizeForStory(d: CSSValue): string {
   const { v, device, state } = d;
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
 
   const fontStyle = dvv("typographyFontStyle");
-  if (isStory(Config.getAll())) {
-    if (fontStyle) {
-      // Keys is lowercase because have problems in backend export HTML
-      return `font-size:var(--brz-${fontStyle}StoryFontSize);`.toLowerCase();
-    } else {
-      const fontSize =
-        readNum(
-          styleTypography2FontSize({
-            ...d,
-            prefix: "typography"
-          })
-        ) ?? 1;
-      const suffix = styleTypography2FontSizeSuffix({
-        ...d,
-        prefix: "typography"
-      });
+  if (fontStyle) {
+    // Keys is lowercase because have problems in backend export HTML
+    return `font-size:var(--brz-${fontStyle}StoryFontSize);`.toLowerCase();
+  } else {
+    const fontSize =
+      readNum(
+        styleTypography2FontSize({
+          ...d,
+          prefix: "typography"
+        })
+      ) ?? 1;
+    const suffix = styleTypography2FontSizeSuffix({
+      ...d,
+      prefix: "typography"
+    });
 
-      const pixelSuffix = suffix === "px" ? 1 : 0.23;
+    const pixelSuffix = suffix === "px" ? 1 : 0.23;
 
-      return `font-size:${fontSize * pixelSuffix}${suffix};`;
-    }
+    return `font-size:${fontSize * pixelSuffix}${suffix};`;
   }
-
-  return cssStyleTypography3FontSize(d);
 }
 
 export function cssStyleElementRichTextBgImage({
@@ -186,7 +177,8 @@ const getState = (v: ElementModel, state: State): string =>
 export function cssStyleElementRichTextColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
   const _state = getState(v, state);
   const dvv = (key: string): string =>
@@ -204,7 +196,8 @@ export function cssStyleElementRichTextColor({
     return "";
   }
 
-  const color = getColor(colorPalette, colorHex, colorOpacity);
+  const config = configSelector(store.getState());
+  const color = getColor(colorPalette, colorHex, colorOpacity, config);
 
   return `color:${color};`;
 }
@@ -221,9 +214,16 @@ export function cssStyleElementRichTextDCColor({
 export function cssStyleElementRichTextDCBackground({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const background = styleColor({ v, device, state, prefix: "textBgColor" });
+  const background = styleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "textBgColor"
+  });
 
   return background === undefined ? "" : `background-color:${background};`;
 }

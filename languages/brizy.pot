@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.6.11\n"
+"Project-Id-Version: Brizy 2.6.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-18T07:26:41+00:00\n"
+"POT-Creation-Date: 2025-02-25T08:41:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: brizy\n"
@@ -104,7 +104,7 @@ msgid "Wait! Don't deactivate Brizy. You have to activate both Brizy and Brizy P
 msgstr ""
 
 #: admin/feedback.php:137
-#: public/editor-build/prod/texts.php:1097
+#: public/editor-build/prod/texts.php:1100
 msgid "Other"
 msgstr ""
 
@@ -129,9 +129,9 @@ msgid "Leads details"
 msgstr ""
 
 #: admin/form-entries.php:62
-#: editor/editor/editor.php:929
-#: editor/editor/editor.php:935
-#: public/editor-build/prod/texts.php:480
+#: editor/editor/editor.php:931
+#: editor/editor/editor.php:937
+#: public/editor-build/prod/texts.php:479
 msgid "Date"
 msgstr ""
 
@@ -222,14 +222,13 @@ msgid "Layout."
 msgstr ""
 
 #: admin/main.php:246
-#: admin/settings.php:109
-#: admin/settings.php:110
-#: public/editor-build/prod/texts.php:1380
+#: admin/settings.php:96
+#: public/editor-build/prod/texts.php:1384
 msgid "Settings"
 msgstr ""
 
 #: admin/main.php:254
-#: admin/settings.php:159
+#: admin/settings.php:138
 #: import/main.php:54
 msgid "Go Pro"
 msgstr ""
@@ -261,7 +260,7 @@ msgstr ""
 
 #: admin/membership/membership.php:64
 #: editor/post.php:730
-#: public/editor-build/prod/texts.php:484
+#: public/editor-build/prod/texts.php:483
 msgid "Default"
 msgstr ""
 
@@ -320,7 +319,7 @@ msgstr ""
 
 #: admin/popups/main.php:105
 #: admin/popups/main.php:116
-#: public/editor-build/prod/texts.php:1159
+#: public/editor-build/prod/texts.php:1163
 msgid "Popups"
 msgstr ""
 
@@ -357,7 +356,7 @@ msgid "All Authors"
 msgstr ""
 
 #: admin/rules/api.php:565
-#: public/editor-build/prod/texts.php:1480
+#: public/editor-build/prod/texts.php:1485
 msgid "Specific"
 msgstr ""
 
@@ -365,45 +364,44 @@ msgstr ""
 msgid "Any child of"
 msgstr ""
 
-#: admin/settings.php:119
-#: admin/settings.php:120
+#: admin/settings.php:100
 #: admin/views/settings/tools.php:7
 msgid "Tools"
 msgstr ""
 
-#: admin/settings.php:142
+#: admin/settings.php:119
 msgid "Get Help"
 msgstr ""
 
-#: admin/settings.php:171
+#: admin/settings.php:153
 msgid "General"
 msgstr ""
 
-#: admin/settings.php:177
+#: admin/settings.php:159
 msgid "Role Manager"
 msgstr ""
 
-#: admin/settings.php:183
+#: admin/settings.php:165
 msgid "Maintenance Mode"
 msgstr ""
 
-#: admin/settings.php:315
+#: admin/settings.php:289
 msgid "Full Access"
 msgstr ""
 
-#: admin/settings.php:543
+#: admin/settings.php:497
 msgid "You must be an administrator running a replace URL session"
 msgstr ""
 
-#: admin/settings.php:552
+#: admin/settings.php:504
 msgid "The old and new URLs must be different"
 msgstr ""
 
-#: admin/settings.php:556
+#: admin/settings.php:507
 msgid "The old and new URLs must be valid URLs"
 msgstr ""
 
-#: admin/settings.php:599
+#: admin/settings.php:536
 msgid "The replacement was successful"
 msgstr ""
 
@@ -445,7 +443,7 @@ msgid "View Story"
 msgstr ""
 
 #: admin/stories/main.php:48
-#: public/editor-build/prod/texts.php:1503
+#: public/editor-build/prod/texts.php:1508
 msgid "Stories"
 msgstr ""
 
@@ -466,11 +464,11 @@ msgid "No Stories found in Trash."
 msgstr ""
 
 #: admin/stories/main.php:60
-#: public/editor-build/prod/texts.php:1850
+#: public/editor-build/prod/texts.php:1857
 msgid "stories"
 msgstr ""
 
-#: admin/svg/main.php:71
+#: admin/svg/main.php:75
 msgid "Sorry, this SVG file can't be sanitized."
 msgstr ""
 
@@ -479,13 +477,13 @@ msgid "Single"
 msgstr ""
 
 #: admin/templates.php:128
-#: editor/editor/editor.php:1975
-#: public/editor-build/prod/texts.php:213
+#: editor/editor/editor.php:1977
+#: public/editor-build/prod/texts.php:212
 msgid "Archive"
 msgstr ""
 
 #: admin/templates.php:133
-#: public/editor-build/prod/texts.php:1191
+#: public/editor-build/prod/texts.php:1195
 msgid "Product"
 msgstr ""
 
@@ -554,7 +552,7 @@ msgid "templates"
 msgstr ""
 
 #: admin/templates.php:261
-#: public/editor-build/prod/texts.php:513
+#: public/editor-build/prod/texts.php:512
 msgid "Display Conditions"
 msgstr ""
 
@@ -758,12 +756,12 @@ msgid "Who Can Access"
 msgstr ""
 
 #: admin/views/settings/maintenance.php:27
-#: public/editor-build/prod/texts.php:462
+#: public/editor-build/prod/texts.php:461
 msgid "Custom"
 msgstr ""
 
 #: admin/views/settings/maintenance.php:33
-#: public/editor-build/prod/texts.php:1296
+#: public/editor-build/prod/texts.php:1300
 msgid "Roles"
 msgstr ""
 
@@ -881,422 +879,422 @@ msgstr ""
 msgid "Invalid image content"
 msgstr ""
 
-#: editor/editor/editor.php:928
-#: editor/editor/editor.php:934
-#: editor/editor/editor.php:1962
-#: public/editor-build/prod/texts.php:1622
+#: editor/editor/editor.php:930
+#: editor/editor/editor.php:936
+#: editor/editor/editor.php:1964
+#: public/editor-build/prod/texts.php:1627
 msgid "Title"
 msgstr ""
 
-#: editor/editor/editor.php:930
-#: editor/editor/editor.php:936
-#: public/editor-build/prod/texts.php:1233
+#: editor/editor/editor.php:932
+#: editor/editor/editor.php:938
+#: public/editor-build/prod/texts.php:1237
 msgid "Random"
 msgstr ""
 
-#: editor/editor/editor.php:931
-#: editor/editor/editor.php:937
-#: public/editor-build/prod/texts.php:402
+#: editor/editor/editor.php:933
+#: editor/editor/editor.php:939
+#: public/editor-build/prod/texts.php:401
 msgid "Comment Count"
 msgstr ""
 
-#: editor/editor/editor.php:942
+#: editor/editor/editor.php:944
 msgid "Relevance"
 msgstr ""
 
-#: editor/editor/editor.php:1786
+#: editor/editor/editor.php:1788
 msgid "Get Started"
 msgstr ""
 
-#: editor/editor/editor.php:1788
+#: editor/editor/editor.php:1790
 msgid "Builder Overview"
 msgstr ""
 
-#: editor/editor/editor.php:1792
+#: editor/editor/editor.php:1794
 msgid "How to Build a Page"
 msgstr ""
 
-#: editor/editor/editor.php:1796
+#: editor/editor/editor.php:1798
 msgid "Preview Publish Update"
 msgstr ""
 
-#: editor/editor/editor.php:1800
+#: editor/editor/editor.php:1802
 msgid "Free vs PRO"
 msgstr ""
 
-#: editor/editor/editor.php:1804
+#: editor/editor/editor.php:1806
 msgid "The Basics"
 msgstr ""
 
-#: editor/editor/editor.php:1805
-#: public/editor-build/prod/texts.php:281
+#: editor/editor/editor.php:1807
+#: public/editor-build/prod/texts.php:280
 msgid "Blocks"
 msgstr ""
 
-#: editor/editor/editor.php:1807
+#: editor/editor/editor.php:1809
 msgid "Saved Blocks & Layouts"
 msgstr ""
 
-#: editor/editor/editor.php:1811
+#: editor/editor/editor.php:1813
 msgid "Premade Layouts"
 msgstr ""
 
-#: editor/editor/editor.php:1815
-#: editor/editor/editor.php:1885
+#: editor/editor/editor.php:1817
+#: editor/editor/editor.php:1887
 msgid "The Elements"
 msgstr ""
 
-#: editor/editor/editor.php:1819
-#: public/editor-build/prod/texts.php:1267
+#: editor/editor/editor.php:1821
+#: public/editor-build/prod/texts.php:1271
 msgid "Reorder Blocks"
 msgstr ""
 
-#: editor/editor/editor.php:1823
+#: editor/editor/editor.php:1825
 msgid "Global Styling"
 msgstr ""
 
-#: editor/editor/editor.php:1826
-#: public/editor-build/prod/texts.php:861
+#: editor/editor/editor.php:1828
+#: public/editor-build/prod/texts.php:862
 msgid "Links"
 msgstr ""
 
-#: editor/editor/editor.php:1827
+#: editor/editor/editor.php:1829
 #: public/editor-build/prod/texts.php:665
 msgid "Fonts"
 msgstr ""
 
-#: editor/editor/editor.php:1829
+#: editor/editor/editor.php:1831
 msgid "Paddings & Margins"
 msgstr ""
 
-#: editor/editor/editor.php:1833
+#: editor/editor/editor.php:1835
 msgid "Responsive Design"
 msgstr ""
 
-#: editor/editor/editor.php:1837
+#: editor/editor/editor.php:1839
 msgid "Headers & Footers"
 msgstr ""
 
-#: editor/editor/editor.php:1841
+#: editor/editor/editor.php:1843
 msgid "Menus & Navigation"
 msgstr ""
 
-#: editor/editor/editor.php:1845
+#: editor/editor/editor.php:1847
 msgid "Global Blocks & Conditions"
 msgstr ""
 
-#: editor/editor/editor.php:1849
+#: editor/editor/editor.php:1851
 msgid "Effects & Animations"
 msgstr ""
 
-#: editor/editor/editor.php:1853
-#: public/editor-build/prod/texts.php:539
+#: editor/editor/editor.php:1855
+#: public/editor-build/prod/texts.php:538
 msgid "Dynamic Content"
 msgstr ""
 
-#: editor/editor/editor.php:1855
+#: editor/editor/editor.php:1857
 msgid "Dynamic Elements"
 msgstr ""
 
-#: editor/editor/editor.php:1859
+#: editor/editor/editor.php:1861
 msgid "Users & Membership"
 msgstr ""
 
-#: editor/editor/editor.php:1861
+#: editor/editor/editor.php:1863
 msgid "Membership Blocks"
 msgstr ""
 
-#: editor/editor/editor.php:1865
+#: editor/editor/editor.php:1867
 msgid "Marketing Tools"
 msgstr ""
 
-#: editor/editor/editor.php:1867
+#: editor/editor/editor.php:1869
 msgid "The Popup Builder"
 msgstr ""
 
-#: editor/editor/editor.php:1871
+#: editor/editor/editor.php:1873
 msgid "Contact Form & Integrations"
 msgstr ""
 
-#: editor/editor/editor.php:1875
+#: editor/editor/editor.php:1877
 msgid "Cool Features"
 msgstr ""
 
-#: editor/editor/editor.php:1877
-#: public/editor-build/prod/texts.php:1397
+#: editor/editor/editor.php:1879
+#: public/editor-build/prod/texts.php:1402
 msgid "Shortcuts"
 msgstr ""
 
-#: editor/editor/editor.php:1881
+#: editor/editor/editor.php:1883
 msgid "Import & Export"
 msgstr ""
 
-#: editor/editor/editor.php:1887
+#: editor/editor/editor.php:1889
 msgid "Rows & Columns"
 msgstr ""
 
-#: editor/editor/editor.php:1890
-#: public/editor-build/prod/texts.php:1570
+#: editor/editor/editor.php:1892
+#: public/editor-build/prod/texts.php:1575
 msgid "Text"
 msgstr ""
 
-#: editor/editor/editor.php:1891
-#: public/editor-build/prod/texts.php:312
+#: editor/editor/editor.php:1893
+#: public/editor-build/prod/texts.php:311
 msgid "Button"
 msgstr ""
 
-#: editor/editor/editor.php:1892
+#: editor/editor/editor.php:1894
 #: public/editor-build/prod/texts.php:761
 msgid "Icon"
 msgstr ""
 
-#: editor/editor/editor.php:1893
+#: editor/editor/editor.php:1895
 #: public/editor-build/prod/texts.php:780
 msgid "Image"
 msgstr ""
 
-#: editor/editor/editor.php:1894
-#: public/editor-build/prod/texts.php:235
+#: editor/editor/editor.php:1896
+#: public/editor-build/prod/texts.php:234
 msgid "Audio"
 msgstr ""
 
-#: editor/editor/editor.php:1895
-#: public/editor-build/prod/texts.php:1736
+#: editor/editor/editor.php:1897
+#: public/editor-build/prod/texts.php:1742
 msgid "Video"
 msgstr ""
 
-#: editor/editor/editor.php:1896
-#: public/editor-build/prod/texts.php:1475
+#: editor/editor/editor.php:1898
+#: public/editor-build/prod/texts.php:1480
 msgid "Spacer"
 msgstr ""
 
-#: editor/editor/editor.php:1897
+#: editor/editor/editor.php:1899
 #: public/editor-build/prod/texts.php:854
 msgid "Line"
 msgstr ""
 
-#: editor/editor/editor.php:1898
-#: public/editor-build/prod/texts.php:891
+#: editor/editor/editor.php:1900
+#: public/editor-build/prod/texts.php:892
 msgid "Map"
 msgstr ""
 
-#: editor/editor/editor.php:1899
-#: public/editor-build/prod/texts.php:556
+#: editor/editor/editor.php:1901
+#: public/editor-build/prod/texts.php:555
 msgid "Embed"
 msgstr ""
 
-#: editor/editor/editor.php:1901
+#: editor/editor/editor.php:1903
 #: public/editor-build/prod/texts.php:763
 msgid "Icon Box"
 msgstr ""
 
-#: editor/editor/editor.php:1904
-#: public/editor-build/prod/texts.php:443
+#: editor/editor/editor.php:1906
+#: public/editor-build/prod/texts.php:442
 msgid "Counter"
 msgstr ""
 
-#: editor/editor/editor.php:1906
-#: public/editor-build/prod/texts.php:442
+#: editor/editor/editor.php:1908
+#: public/editor-build/prod/texts.php:441
 msgid "Countdown"
 msgstr ""
 
-#: editor/editor/editor.php:1909
-#: public/editor-build/prod/texts.php:1557
+#: editor/editor/editor.php:1911
+#: public/editor-build/prod/texts.php:1562
 msgid "Tabs"
 msgstr ""
 
-#: editor/editor/editor.php:1911
-#: public/editor-build/prod/texts.php:1215
+#: editor/editor/editor.php:1913
+#: public/editor-build/prod/texts.php:1219
 msgid "Progress"
 msgstr ""
 
-#: editor/editor/editor.php:1915
+#: editor/editor/editor.php:1917
 #: public/editor-build/prod/texts.php:122
 msgid "Accordion"
 msgstr ""
 
-#: editor/editor/editor.php:1918
-#: public/editor-build/prod/texts.php:925
+#: editor/editor/editor.php:1920
+#: public/editor-build/prod/texts.php:926
 msgid "Menu"
 msgstr ""
 
-#: editor/editor/editor.php:1919
-#: editor/editor/editor.php:2000
+#: editor/editor/editor.php:1921
+#: editor/editor/editor.php:2002
 #: public/editor-build/prod/texts.php:686
 msgid "Gallery"
 msgstr ""
 
-#: editor/editor/editor.php:1921
-#: public/editor-build/prod/texts.php:344
+#: editor/editor/editor.php:1923
+#: public/editor-build/prod/texts.php:343
 msgid "Carousel"
 msgstr ""
 
-#: editor/editor/editor.php:1924
-#: editor/editor/editor.php:2017
-#: public/editor-build/prod/texts.php:1234
+#: editor/editor/editor.php:1926
+#: editor/editor/editor.php:2019
+#: public/editor-build/prod/texts.php:1238
 msgid "Rating"
 msgstr ""
 
-#: editor/editor/editor.php:1926
-#: public/editor-build/prod/texts.php:1149
+#: editor/editor/editor.php:1928
+#: public/editor-build/prod/texts.php:1153
 msgid "Playlist"
 msgstr ""
 
-#: editor/editor/editor.php:1929
-#: public/editor-build/prod/texts.php:1551
+#: editor/editor/editor.php:1931
+#: public/editor-build/prod/texts.php:1556
 msgid "Table"
 msgstr ""
 
-#: editor/editor/editor.php:1931
-#: public/editor-build/prod/texts.php:1612
+#: editor/editor/editor.php:1933
+#: public/editor-build/prod/texts.php:1617
 msgid "Timeline"
 msgstr ""
 
-#: editor/editor/editor.php:1935
-#: public/editor-build/prod/texts.php:1540
+#: editor/editor/editor.php:1937
+#: public/editor-build/prod/texts.php:1545
 msgid "Switcher"
 msgstr ""
 
-#: editor/editor/editor.php:1938
-#: public/editor-build/prod/texts.php:877
+#: editor/editor/editor.php:1940
+#: public/editor-build/prod/texts.php:878
 msgid "Lottie"
 msgstr ""
 
-#: editor/editor/editor.php:1940
+#: editor/editor/editor.php:1942
 msgid "Login/register"
 msgstr ""
 
-#: editor/editor/editor.php:1944
-#: public/editor-build/prod/texts.php:605
+#: editor/editor/editor.php:1946
+#: public/editor-build/prod/texts.php:604
 msgid "Facebook"
 msgstr ""
 
-#: editor/editor/editor.php:1947
-#: public/editor-build/prod/texts.php:1655
+#: editor/editor/editor.php:1949
+#: public/editor-build/prod/texts.php:1661
 msgid "Twitter"
 msgstr ""
 
-#: editor/editor/editor.php:1949
-#: public/editor-build/prod/texts.php:403
+#: editor/editor/editor.php:1951
+#: public/editor-build/prod/texts.php:402
 msgid "Comments"
 msgstr ""
 
-#: editor/editor/editor.php:1952
-#: public/editor-build/prod/texts.php:169
+#: editor/editor/editor.php:1954
+#: public/editor-build/prod/texts.php:168
 msgid "Alert"
 msgstr ""
 
-#: editor/editor/editor.php:1954
-#: public/editor-build/prod/texts.php:337
+#: editor/editor/editor.php:1956
+#: public/editor-build/prod/texts.php:336
 msgid "Calendly"
 msgstr ""
 
-#: editor/editor/editor.php:1957
+#: editor/editor/editor.php:1959
 #: import/main.php:52
-#: public/editor-build/prod/texts.php:1345
+#: public/editor-build/prod/texts.php:1349
 msgid "Search"
 msgstr ""
 
-#: editor/editor/editor.php:1959
-#: public/editor-build/prod/texts.php:628
+#: editor/editor/editor.php:1961
+#: public/editor-build/prod/texts.php:626
 msgid "Featured Image"
 msgstr ""
 
-#: editor/editor/editor.php:1963
-#: public/editor-build/prod/texts.php:588
+#: editor/editor/editor.php:1965
+#: public/editor-build/prod/texts.php:587
 msgid "Excerpt"
 msgstr ""
 
-#: editor/editor/editor.php:1964
+#: editor/editor/editor.php:1966
 #: public/editor-build/prod/texts.php:803
 msgid "Info"
 msgstr ""
 
-#: editor/editor/editor.php:1966
-#: public/editor-build/prod/texts.php:300
+#: editor/editor/editor.php:1968
+#: public/editor-build/prod/texts.php:299
 msgid "Breadcrumbs"
 msgstr ""
 
-#: editor/editor/editor.php:1969
-#: public/editor-build/prod/texts.php:1170
+#: editor/editor/editor.php:1971
+#: public/editor-build/prod/texts.php:1174
 msgid "Posts"
 msgstr ""
 
-#: editor/editor/editor.php:1970
-#: public/editor-build/prod/texts.php:1421
+#: editor/editor/editor.php:1972
+#: public/editor-build/prod/texts.php:1426
 msgid "Sidebar"
 msgstr ""
 
-#: editor/editor/editor.php:1972
-#: public/editor-build/prod/texts.php:1396
+#: editor/editor/editor.php:1974
+#: public/editor-build/prod/texts.php:1401
 msgid "Shortcode"
 msgstr ""
 
-#: editor/editor/editor.php:1977
+#: editor/editor/editor.php:1979
 msgid "Woocommerce Elements"
 msgstr ""
 
-#: editor/editor/editor.php:1979
-#: public/editor-build/prod/texts.php:1209
+#: editor/editor/editor.php:1981
+#: public/editor-build/prod/texts.php:1213
 msgid "Products"
 msgstr ""
 
-#: editor/editor/editor.php:1982
-#: public/editor-build/prod/texts.php:346
+#: editor/editor/editor.php:1984
+#: public/editor-build/prod/texts.php:345
 msgid "Cart"
 msgstr ""
 
-#: editor/editor/editor.php:1984
-#: public/editor-build/prod/texts.php:352
+#: editor/editor/editor.php:1986
+#: public/editor-build/prod/texts.php:351
 msgid "Categories"
 msgstr ""
 
-#: editor/editor/editor.php:1988
-#: public/editor-build/prod/texts.php:1116
+#: editor/editor/editor.php:1990
+#: public/editor-build/prod/texts.php:1119
 msgid "Pages"
 msgstr ""
 
-#: editor/editor/editor.php:1992
-#: public/editor-build/prod/texts.php:413
+#: editor/editor/editor.php:1994
+#: public/editor-build/prod/texts.php:412
 msgid "Content"
 msgstr ""
 
-#: editor/editor/editor.php:1996
-#: public/editor-build/prod/texts.php:1188
+#: editor/editor/editor.php:1998
+#: public/editor-build/prod/texts.php:1192
 msgid "Price"
 msgstr ""
 
-#: editor/editor/editor.php:2004
+#: editor/editor/editor.php:2006
 #: public/editor-build/prod/texts.php:153
 msgid "Add to cart"
 msgstr ""
 
-#: editor/editor/editor.php:2008
-#: public/editor-build/prod/texts.php:1500
+#: editor/editor/editor.php:2010
+#: public/editor-build/prod/texts.php:1505
 msgid "Stock"
 msgstr ""
 
-#: editor/editor/editor.php:2011
-#: public/editor-build/prod/texts.php:1315
+#: editor/editor/editor.php:2013
+#: public/editor-build/prod/texts.php:1319
 msgid "SKU"
 msgstr ""
 
-#: editor/editor/editor.php:2013
-#: public/editor-build/prod/texts.php:933
+#: editor/editor/editor.php:2015
+#: public/editor-build/prod/texts.php:934
 msgid "Meta"
 msgstr ""
 
-#: editor/editor/editor.php:2021
-#: public/editor-build/prod/texts.php:234
+#: editor/editor/editor.php:2023
+#: public/editor-build/prod/texts.php:233
 msgid "Attributes"
 msgstr ""
 
-#: editor/editor/editor.php:2025
-#: public/editor-build/prod/texts.php:1707
+#: editor/editor/editor.php:2027
+#: public/editor-build/prod/texts.php:1713
 msgid "Upsell"
 msgstr ""
 
-#: editor/editor/editor.php:2029
+#: editor/editor/editor.php:2031
 msgid "Reviews"
 msgstr ""
 
@@ -1390,7 +1388,7 @@ msgid "Starter Templates"
 msgstr ""
 
 #: import/main.php:47
-#: public/editor-build/prod/texts.php:173
+#: public/editor-build/prod/texts.php:172
 msgid "All"
 msgstr ""
 
@@ -1411,12 +1409,12 @@ msgid "Pro"
 msgstr ""
 
 #: import/main.php:53
-#: public/editor-build/prod/texts.php:174
+#: public/editor-build/prod/texts.php:173
 msgid "All Categories"
 msgstr ""
 
 #: import/main.php:55
-#: public/editor-build/prod/texts.php:1457
+#: public/editor-build/prod/texts.php:1462
 #: public/editor-client/build/texts.php:89
 msgid "Something went wrong"
 msgstr ""
@@ -2122,1843 +2120,1843 @@ msgid "Address"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:162
-msgid "Address line"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:163
 msgid "Adobe Fonts"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:164
+#: public/editor-build/prod/texts.php:163
 msgid "Advanced"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:165
+#: public/editor-build/prod/texts.php:164
 msgid "Advanced Contact Form by POWR"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:166
+#: public/editor-build/prod/texts.php:165
 msgid "After (sec)"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:167
+#: public/editor-build/prod/texts.php:166
 msgid "After Inactivity"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:168
+#: public/editor-build/prod/texts.php:167
 msgid "AiText"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:170
+#: public/editor-build/prod/texts.php:169
 msgid "Align"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:171
+#: public/editor-build/prod/texts.php:170
 msgid "Aligned Left"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:172
+#: public/editor-build/prod/texts.php:171
 msgid "Aligned Right"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:175
+#: public/editor-build/prod/texts.php:174
 msgid "All blogs"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:176
+#: public/editor-build/prod/texts.php:175
 msgid "All collections"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:177
+#: public/editor-build/prod/texts.php:176
 msgid "All fields cannot be empty"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:178
+#: public/editor-build/prod/texts.php:177
 msgid "All fields marked with an asterisk ( * ) must be completed."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:179
+#: public/editor-build/prod/texts.php:178
 msgid "All fields marked with an asterisk ( * ) must be mapped."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:180
+#: public/editor-build/prod/texts.php:179
 msgid "All products"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:181
+#: public/editor-build/prod/texts.php:180
 msgid "All users"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:182
+#: public/editor-build/prod/texts.php:181
 msgid "Allow us to access your ActiveCampaign account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:183
+#: public/editor-build/prod/texts.php:182
 msgid "Allow us to access your Brevo account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:184
+#: public/editor-build/prod/texts.php:183
 msgid "Allow us to access your Campaign Monitor account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:185
+#: public/editor-build/prod/texts.php:184
 msgid "Allow us to access your Constant Contact account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:186
+#: public/editor-build/prod/texts.php:185
 msgid "Allow us to access your ConvertKit account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:187
+#: public/editor-build/prod/texts.php:186
 msgid "Allow us to access your Drip account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:188
+#: public/editor-build/prod/texts.php:187
 msgid "Allow us to access your Facebook account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:189
+#: public/editor-build/prod/texts.php:188
 msgid "Allow us to access your GetResponse account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:190
+#: public/editor-build/prod/texts.php:189
 msgid "Allow us to access your HubSpot account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:191
+#: public/editor-build/prod/texts.php:190
 msgid "Allow us to access your MailChimp account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:192
+#: public/editor-build/prod/texts.php:191
 msgid "Allow us to access your MailerLite account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:193
+#: public/editor-build/prod/texts.php:192
 msgid "Allow us to access your Mailjet account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:194
+#: public/editor-build/prod/texts.php:193
 msgid "Allow us to access your PayPal account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:195
+#: public/editor-build/prod/texts.php:194
 msgid "Allow us to access your Webhook account via API access."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:196
+#: public/editor-build/prod/texts.php:195
 msgid "Allow us to access your Zapier account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:197
+#: public/editor-build/prod/texts.php:196
 msgid "Allow us to access your e-goi account via API access"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:198
+#: public/editor-build/prod/texts.php:197
 msgid "Allow us to connect to your Adobe"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:199
+#: public/editor-build/prod/texts.php:198
 msgid "Allowed File Types"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:200
+#: public/editor-build/prod/texts.php:199
 msgid "Alphabet"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:201
+#: public/editor-build/prod/texts.php:200
 msgid "Alt Title"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:202
+#: public/editor-build/prod/texts.php:201
 msgid "Amount"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:203
+#: public/editor-build/prod/texts.php:202
 msgid "An error happened while trying to display this element"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:204
+#: public/editor-build/prod/texts.php:203
 msgid "An unexpected error occurred"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:205
+#: public/editor-build/prod/texts.php:204
 msgid "Animals"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:206
+#: public/editor-build/prod/texts.php:205
 msgid "Animals/Nature"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:207
+#: public/editor-build/prod/texts.php:206
 msgid "Animated"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:208
+#: public/editor-build/prod/texts.php:207
 msgid "Animation"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:209
+#: public/editor-build/prod/texts.php:208
 msgid "Any Amount"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:210
+#: public/editor-build/prod/texts.php:209
 msgid "Any Video"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:211
+#: public/editor-build/prod/texts.php:210
 msgid "Appearance"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:212
+#: public/editor-build/prod/texts.php:211
 msgid "Appointment Booking by Tipo"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:214
+#: public/editor-build/prod/texts.php:213
 msgid "Archives"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:215
+#: public/editor-build/prod/texts.php:214
 msgid "Are you sure you want to delete your account?"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:216
+#: public/editor-build/prod/texts.php:215
 msgid "Are you sure you want to disconnect Adobe Fonts integration?"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:217
+#: public/editor-build/prod/texts.php:216
 msgid "Arrangement"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:218
+#: public/editor-build/prod/texts.php:217
 msgid "Arriving"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:219
+#: public/editor-build/prod/texts.php:218
 msgid "Arriving From"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:220
+#: public/editor-build/prod/texts.php:219
 msgid "Arrow"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:221
+#: public/editor-build/prod/texts.php:220
 msgid "Arrows"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:222
+#: public/editor-build/prod/texts.php:221
 msgid "Arrows Spacing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:223
+#: public/editor-build/prod/texts.php:222
 msgid "Article"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:224
+#: public/editor-build/prod/texts.php:223
 msgid "Article Detail"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:225
+#: public/editor-build/prod/texts.php:224
 msgid "Article Featured"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:226
+#: public/editor-build/prod/texts.php:225
 msgid "Article List"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:227
+#: public/editor-build/prod/texts.php:226
 msgid "Artwork"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:228
+#: public/editor-build/prod/texts.php:227
 msgid "Asc"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:229
+#: public/editor-build/prod/texts.php:228
 msgid "Aside"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:230
+#: public/editor-build/prod/texts.php:229
 msgid "Aspect Ratio"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:231
+#: public/editor-build/prod/texts.php:230
 msgid "Assets List"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:232
+#: public/editor-build/prod/texts.php:231
 msgid "Astronomy"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:233
+#: public/editor-build/prod/texts.php:232
 msgid "Attention"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:236
+#: public/editor-build/prod/texts.php:235
 msgid "Authentication"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:237
+#: public/editor-build/prod/texts.php:236
 msgid "Author"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:238
+#: public/editor-build/prod/texts.php:237
 msgid "Authorized"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:239
+#: public/editor-build/prod/texts.php:238
 msgid "Auto"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:240
+#: public/editor-build/prod/texts.php:239
 msgid "Auto Generate"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:241
+#: public/editor-build/prod/texts.php:240
 msgid "Auto Renewal"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:242
+#: public/editor-build/prod/texts.php:241
 msgid "Auto-Draft"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:243
+#: public/editor-build/prod/texts.php:242
 msgid "AutoPlay"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:244
+#: public/editor-build/prod/texts.php:243
 msgid "Automotive"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:245
+#: public/editor-build/prod/texts.php:244
 msgid "Autoplay"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:246
+#: public/editor-build/prod/texts.php:245
 msgid "Available formatting styles can be found"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:247
+#: public/editor-build/prod/texts.php:246
 msgid "Avatar"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:248
+#: public/editor-build/prod/texts.php:247
 msgid "BLOCKS"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:249
+#: public/editor-build/prod/texts.php:248
 msgid "BRL"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:250
+#: public/editor-build/prod/texts.php:249
 msgid "Back"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:251
+#: public/editor-build/prod/texts.php:250
 msgid "Back Pulse"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:252
+#: public/editor-build/prod/texts.php:251
 msgid "Back in Stock"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:253
+#: public/editor-build/prod/texts.php:252
 msgid "Back to Layouts"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:254
+#: public/editor-build/prod/texts.php:253
 msgid "Back to Login"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:255
+#: public/editor-build/prod/texts.php:254
 msgid "Back to Stories"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:256
+#: public/editor-build/prod/texts.php:255
 msgid "Background"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:257
+#: public/editor-build/prod/texts.php:256
 msgid "Badges by Hextom"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:258
+#: public/editor-build/prod/texts.php:257
 msgid "Badges by Stamped"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:259
+#: public/editor-build/prod/texts.php:258
 msgid "Badges by Trusted"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:260
+#: public/editor-build/prod/texts.php:259
 msgid "Bar"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:261
+#: public/editor-build/prod/texts.php:260
 msgid "Basic"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:262
+#: public/editor-build/prod/texts.php:261
 msgid "Bcc"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:263
+#: public/editor-build/prod/texts.php:262
 msgid "Between"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:264
+#: public/editor-build/prod/texts.php:263
 msgid "Bg"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:265
+#: public/editor-build/prod/texts.php:264
 msgid "Bg Icon"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:266
+#: public/editor-build/prod/texts.php:265
 msgid "Bg Size"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:267
+#: public/editor-build/prod/texts.php:266
 msgid "Bg Star"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:268
+#: public/editor-build/prod/texts.php:267
 msgid "Bg Text"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:269
+#: public/editor-build/prod/texts.php:268
 msgid "Bg. Color"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:270
+#: public/editor-build/prod/texts.php:269
 msgid "Big"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:271
+#: public/editor-build/prod/texts.php:270
 msgid "Big Image"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:272
+#: public/editor-build/prod/texts.php:271
 msgid "Billing Cycle"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:273
+#: public/editor-build/prod/texts.php:272
 msgid "Billing Cycle Duration"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:274
+#: public/editor-build/prod/texts.php:273
 msgid "Black"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:275
+#: public/editor-build/prod/texts.php:274
 msgid "Blending Mode"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:276
+#: public/editor-build/prod/texts.php:275
 msgid "Block"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:277
+#: public/editor-build/prod/texts.php:276
 msgid "Block Name"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:278
+#: public/editor-build/prod/texts.php:277
 msgid "Block conditions are available only in PRO"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:279
+#: public/editor-build/prod/texts.php:278
 msgid "Block is synchronized"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:280
+#: public/editor-build/prod/texts.php:279
 msgid "Block will be synchronized"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:282
+#: public/editor-build/prod/texts.php:281
 msgid "Blur"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:283
+#: public/editor-build/prod/texts.php:282
 msgid "Bob"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:284
+#: public/editor-build/prod/texts.php:283
 msgid "Body Padding"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:285
+#: public/editor-build/prod/texts.php:284
 msgid "Bold"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:286
+#: public/editor-build/prod/texts.php:285
 msgid "Border"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:287
+#: public/editor-build/prod/texts.php:286
 msgid "Bottom"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:288
+#: public/editor-build/prod/texts.php:287
 msgid "Bottom Center"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:289
+#: public/editor-build/prod/texts.php:288
 msgid "Bottom Left"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:290
+#: public/editor-build/prod/texts.php:289
 msgid "Bottom Right"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:291
+#: public/editor-build/prod/texts.php:290
 msgid "Bounce"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:292
+#: public/editor-build/prod/texts.php:291
 msgid "Bounce In"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:293
+#: public/editor-build/prod/texts.php:292
 msgid "Bounce Out"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:294
+#: public/editor-build/prod/texts.php:293
 msgid "Bounce To Bottom"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:295
+#: public/editor-build/prod/texts.php:294
 msgid "Bounce To Left"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:296
+#: public/editor-build/prod/texts.php:295
 msgid "Bounce To Right"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:297
+#: public/editor-build/prod/texts.php:296
 msgid "Bounce To Top"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:298
+#: public/editor-build/prod/texts.php:297
 msgid "Boxed"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:299
+#: public/editor-build/prod/texts.php:298
 msgid "Branding"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:301
+#: public/editor-build/prod/texts.php:300
 msgid "Brightness"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:302
+#: public/editor-build/prod/texts.php:301
 msgid "Btn Bg"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:303
+#: public/editor-build/prod/texts.php:302
 msgid "Btn Color"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:304
+#: public/editor-build/prod/texts.php:303
 msgid "Bub."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:305
+#: public/editor-build/prod/texts.php:304
 msgid "Bub. Bg"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:306
+#: public/editor-build/prod/texts.php:305
 msgid "Bubble"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:307
+#: public/editor-build/prod/texts.php:306
 msgid "Buildings"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:308
+#: public/editor-build/prod/texts.php:307
 msgid "Bundles by Bold"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:309
+#: public/editor-build/prod/texts.php:308
 msgid "Business"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:310
+#: public/editor-build/prod/texts.php:309
 msgid "Business Hour"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:311
+#: public/editor-build/prod/texts.php:310
 msgid "Business/Finance"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:313
+#: public/editor-build/prod/texts.php:312
 msgid "Button Size"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:314
+#: public/editor-build/prod/texts.php:313
 msgid "Button Text"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:315
+#: public/editor-build/prod/texts.php:314
 msgid "Button Text..."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:316
+#: public/editor-build/prod/texts.php:315
 msgid "Button name..."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:317
+#: public/editor-build/prod/texts.php:316
 msgid "Button text"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:318
+#: public/editor-build/prod/texts.php:317
 msgid "Button text..."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:319
+#: public/editor-build/prod/texts.php:318
 msgid "Button will display if text is entered and a detail page selected."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:320
+#: public/editor-build/prod/texts.php:319
 msgid "Buttons"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:321
+#: public/editor-build/prod/texts.php:320
 msgid "Buy"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:322
+#: public/editor-build/prod/texts.php:321
 msgid "Buy now"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:323
+#: public/editor-build/prod/texts.php:322
 msgid "Buzz"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:324
+#: public/editor-build/prod/texts.php:323
 msgid "Buzz Out"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:325
+#: public/editor-build/prod/texts.php:324
 msgid "CAD"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:326
+#: public/editor-build/prod/texts.php:325
 msgid "CATEGORIES"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:327
+#: public/editor-build/prod/texts.php:326
 msgid "CHF"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:328
+#: public/editor-build/prod/texts.php:327
 msgid "CMS"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:329
+#: public/editor-build/prod/texts.php:328
 msgid "CNY"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:330
+#: public/editor-build/prod/texts.php:329
 msgid "COLORS"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:331
+#: public/editor-build/prod/texts.php:330
 msgid "CREATE LIST"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:332
+#: public/editor-build/prod/texts.php:331
 msgid "CSS Class"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:333
+#: public/editor-build/prod/texts.php:332
 msgid "CSS ID"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:334
+#: public/editor-build/prod/texts.php:333
 msgid "CSS goes here"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:335
+#: public/editor-build/prod/texts.php:334
 msgid "CZK"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:336
+#: public/editor-build/prod/texts.php:335
 msgid "Calendar View"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:338
+#: public/editor-build/prod/texts.php:337
 msgid "Camping"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:339
+#: public/editor-build/prod/texts.php:338
 msgid "Cancel"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:340
+#: public/editor-build/prod/texts.php:339
 msgid "Canvas"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:341
+#: public/editor-build/prod/texts.php:340
 msgid "Captioned"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:342
+#: public/editor-build/prod/texts.php:341
 msgid "Captions"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:343
+#: public/editor-build/prod/texts.php:342
 msgid "Card frame"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:345
+#: public/editor-build/prod/texts.php:344
 msgid "Carousel Image"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:347
+#: public/editor-build/prod/texts.php:346
 msgid "Cart & Checkout"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:348
+#: public/editor-build/prod/texts.php:347
 msgid "Cart Items"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:349
+#: public/editor-build/prod/texts.php:348
 msgid "Cart Quantity"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:350
+#: public/editor-build/prod/texts.php:349
 msgid "Cart Settings"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:351
+#: public/editor-build/prod/texts.php:350
 msgid "Casual"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:353
+#: public/editor-build/prod/texts.php:352
 msgid "Categories Count"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:354
+#: public/editor-build/prod/texts.php:353
 msgid "Categories Pagination"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:355
+#: public/editor-build/prod/texts.php:354
 msgid "Categories Tags"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:356
+#: public/editor-build/prod/texts.php:355
 msgid "Category"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:357
+#: public/editor-build/prod/texts.php:356
 msgid "Category Filter"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:358
+#: public/editor-build/prod/texts.php:357
 msgid "Cc"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:359
+#: public/editor-build/prod/texts.php:358
 msgid "Cell Phone"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:360
+#: public/editor-build/prod/texts.php:359
 msgid "Center"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:361
+#: public/editor-build/prod/texts.php:360
 msgid "Center Center"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:362
+#: public/editor-build/prod/texts.php:361
 msgid "Center Left"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:363
+#: public/editor-build/prod/texts.php:362
 msgid "Center Right"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:364
+#: public/editor-build/prod/texts.php:363
 msgid "Charity"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:365
+#: public/editor-build/prod/texts.php:364
 msgid "Charts & Diagrams"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:366
+#: public/editor-build/prod/texts.php:365
 msgid "Check your email address"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:367
+#: public/editor-build/prod/texts.php:366
 msgid "Checkbox"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:368
+#: public/editor-build/prod/texts.php:367
 msgid "Checkout"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:369
+#: public/editor-build/prod/texts.php:368
 msgid "Childcare"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:370
+#: public/editor-build/prod/texts.php:369
 msgid "Childhood"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:371
+#: public/editor-build/prod/texts.php:370
 msgid "Circle"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:372
+#: public/editor-build/prod/texts.php:371
 msgid "Classic"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:373
+#: public/editor-build/prod/texts.php:372
 msgid "Clear"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:374
+#: public/editor-build/prod/texts.php:373
 msgid "Clear Layout"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:375
+#: public/editor-build/prod/texts.php:374
 msgid "Clear formatting"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:376
+#: public/editor-build/prod/texts.php:375
 msgid "Click"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:377
+#: public/editor-build/prod/texts.php:376
 msgid "Click Outside to Close"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:378
+#: public/editor-build/prod/texts.php:377
 msgid "Click to copy"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:379
+#: public/editor-build/prod/texts.php:378
 msgid "Client"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:380
+#: public/editor-build/prod/texts.php:379
 msgid "Close"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:381
+#: public/editor-build/prod/texts.php:380
 msgid "Close Drawer Icon"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:382
+#: public/editor-build/prod/texts.php:381
 msgid "Close Popup"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:383
+#: public/editor-build/prod/texts.php:382
 msgid "Clothes/Accessories"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:384
+#: public/editor-build/prod/texts.php:383
 msgid "Clothing & Fashion"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:385
+#: public/editor-build/prod/texts.php:384
 msgid "Cloud"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:386
+#: public/editor-build/prod/texts.php:385
 msgid "Coding"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:387
+#: public/editor-build/prod/texts.php:386
 msgid "Collaborate"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:388
+#: public/editor-build/prod/texts.php:387
 msgid "Collapse"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:389
+#: public/editor-build/prod/texts.php:388
 msgid "Collapsible"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:390
+#: public/editor-build/prod/texts.php:389
 msgid "Collections"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:391
+#: public/editor-build/prod/texts.php:390
 msgid "Color"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:392
+#: public/editor-build/prod/texts.php:391
 msgid "Color Burn"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:393
+#: public/editor-build/prod/texts.php:392
 msgid "Color Dodge"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:394
+#: public/editor-build/prod/texts.php:393
 msgid "Color HEX"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:395
+#: public/editor-build/prod/texts.php:394
 msgid "Color Icon"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:396
+#: public/editor-build/prod/texts.php:395
 msgid "Color Text"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:397
+#: public/editor-build/prod/texts.php:396
 msgid "Colors"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:398
+#: public/editor-build/prod/texts.php:397
 msgid "Column"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:399
+#: public/editor-build/prod/texts.php:398
 msgid "Columns"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:400
+#: public/editor-build/prod/texts.php:399
 msgid "Columns Gap"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:401
+#: public/editor-build/prod/texts.php:400
 msgid "Comment"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:404
+#: public/editor-build/prod/texts.php:403
 msgid "Communication"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:405
+#: public/editor-build/prod/texts.php:404
 msgid "Conditions"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:406
+#: public/editor-build/prod/texts.php:405
 msgid "Confident"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:407
+#: public/editor-build/prod/texts.php:406
 msgid "Config : Missing addFile callback"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:408
+#: public/editor-build/prod/texts.php:407
 msgid "Connect"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:409
+#: public/editor-build/prod/texts.php:408
 msgid "Connect a new account"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:410
+#: public/editor-build/prod/texts.php:409
 msgid "Connectivity"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:411
+#: public/editor-build/prod/texts.php:410
 msgid "Construction"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:412
+#: public/editor-build/prod/texts.php:411
 msgid "Contain"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:414
+#: public/editor-build/prod/texts.php:413
 msgid "Content Gap"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:415
+#: public/editor-build/prod/texts.php:414
 msgid "Content Padding"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:416
+#: public/editor-build/prod/texts.php:415
 msgid "Contents"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:417
+#: public/editor-build/prod/texts.php:416
 msgid "Context"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:418
+#: public/editor-build/prod/texts.php:417
 msgid "Context Type"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:419
+#: public/editor-build/prod/texts.php:418
 msgid "Continue"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:420
+#: public/editor-build/prod/texts.php:419
 msgid "Continue with Free"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:421
+#: public/editor-build/prod/texts.php:420
 msgid "Contrast"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:422
+#: public/editor-build/prod/texts.php:421
 msgid "Controls"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:423
+#: public/editor-build/prod/texts.php:422
 msgid "Cookie"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:424
+#: public/editor-build/prod/texts.php:423
 msgid "Coordinator"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:425
+#: public/editor-build/prod/texts.php:424
 msgid "Coordinator Email"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:426
+#: public/editor-build/prod/texts.php:425
 msgid "Coordinator Phone"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:427
+#: public/editor-build/prod/texts.php:426
 msgid "Copy"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:428
+#: public/editor-build/prod/texts.php:427
 msgid "Corner"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:429
+#: public/editor-build/prod/texts.php:428
 msgid "Cost"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:430
+#: public/editor-build/prod/texts.php:429
 msgid "Could not Create Global Block"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:431
+#: public/editor-build/prod/texts.php:430
 msgid "Could not Create Global Popup"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:432
+#: public/editor-build/prod/texts.php:431
 msgid "Could not Create Saved Block"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:433
+#: public/editor-build/prod/texts.php:432
 msgid "Could not Create Saved Popup"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:434
+#: public/editor-build/prod/texts.php:433
 msgid "Could not download Saved Layout"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:435
+#: public/editor-build/prod/texts.php:434
 msgid "Could not download Saved Popup"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:436
+#: public/editor-build/prod/texts.php:435
 msgid "Could not download Saved block"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:437
+#: public/editor-build/prod/texts.php:436
 msgid "Could not find"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:438
+#: public/editor-build/prod/texts.php:437
 msgid "Could not publish or save page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:439
+#: public/editor-build/prod/texts.php:438
 msgid "Could not save layout"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:440
+#: public/editor-build/prod/texts.php:439
 msgid "Could not switch to draft"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:441
+#: public/editor-build/prod/texts.php:440
 msgid "Count"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:444
+#: public/editor-build/prod/texts.php:443
 msgid "Country Code"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:445
+#: public/editor-build/prod/texts.php:444
 msgid "Cover"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:446
+#: public/editor-build/prod/texts.php:445
 msgid "Cover Image"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:447
+#: public/editor-build/prod/texts.php:446
 msgid "Create"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:448
+#: public/editor-build/prod/texts.php:447
 msgid "Create Account & Connect"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:449
+#: public/editor-build/prod/texts.php:448
 msgid "Create a menu"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:450
+#: public/editor-build/prod/texts.php:449
 msgid "Create a new list"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:451
+#: public/editor-build/prod/texts.php:450
 msgid "Create an Account & Connect"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:452
+#: public/editor-build/prod/texts.php:451
 msgid "Create your own"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:453
+#: public/editor-build/prod/texts.php:452
 msgid "Credit"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:454
+#: public/editor-build/prod/texts.php:453
 msgid "Cross Sell"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:455
+#: public/editor-build/prod/texts.php:454
 msgid "Currency"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:456
+#: public/editor-build/prod/texts.php:455
 msgid "Current Date"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:457
+#: public/editor-build/prod/texts.php:456
 msgid "Current Page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:458
+#: public/editor-build/prod/texts.php:457
 msgid "Current Page URL"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:459
+#: public/editor-build/prod/texts.php:458
 msgid "Current Style"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:460
+#: public/editor-build/prod/texts.php:459
 msgid "Current Video Channel"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:461
+#: public/editor-build/prod/texts.php:460
 msgid "Currently, a font from Adobe Fonts is set as default. Replace it with a non-Adobe font and try again to disconnect your account"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:463
+#: public/editor-build/prod/texts.php:462
 msgid "Custom Attributes"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:464
+#: public/editor-build/prod/texts.php:463
 msgid "Custom CSS"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:465
+#: public/editor-build/prod/texts.php:464
 msgid "Custom Fields"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:466
+#: public/editor-build/prod/texts.php:465
 msgid "Custom Label"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:467
+#: public/editor-build/prod/texts.php:466
 msgid "Custom Page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:468
+#: public/editor-build/prod/texts.php:467
 msgid "Custom Text"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:469
+#: public/editor-build/prod/texts.php:468
 msgid "Custom Video"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:470
+#: public/editor-build/prod/texts.php:469
 msgid "Customizes the spinner displayed while the content is loading"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:471
+#: public/editor-build/prod/texts.php:470
 msgid "Cut description"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:472
+#: public/editor-build/prod/texts.php:471
 msgid "D. Height"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:473
+#: public/editor-build/prod/texts.php:472
 msgid "D. Indent"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:474
+#: public/editor-build/prod/texts.php:473
 msgid "DELETE"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:475
+#: public/editor-build/prod/texts.php:474
 msgid "DKK"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:476
+#: public/editor-build/prod/texts.php:475
 msgid "Daily"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:477
+#: public/editor-build/prod/texts.php:476
 msgid "Dark"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:478
+#: public/editor-build/prod/texts.php:477
 msgid "Darken"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:479
+#: public/editor-build/prod/texts.php:478
 msgid "Darken image background"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:481
+#: public/editor-build/prod/texts.php:480
 msgid "Date Format"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:482
+#: public/editor-build/prod/texts.php:481
 msgid "Day"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:483
+#: public/editor-build/prod/texts.php:482
 msgid "Days"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:485
+#: public/editor-build/prod/texts.php:484
 msgid "Default Category"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:486
+#: public/editor-build/prod/texts.php:485
 msgid "Default Roles"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:487
+#: public/editor-build/prod/texts.php:486
 msgid "Default font (can’t be deleted)"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:488
+#: public/editor-build/prod/texts.php:487
 msgid "Default system font"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:489
+#: public/editor-build/prod/texts.php:488
 msgid "Defines which level 1 category to use as a base for the layout."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:490
+#: public/editor-build/prod/texts.php:489
 msgid "Defines which level 2 category for this specific filter. If selected will show the next level of categories as select options. If a Parent Category is selected above make sure to select a child category of that parent."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:491
+#: public/editor-build/prod/texts.php:490
 msgid "Delay"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:492
+#: public/editor-build/prod/texts.php:491
 msgid "Delete"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:493
+#: public/editor-build/prod/texts.php:492
 msgid "Desc"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:494
+#: public/editor-build/prod/texts.php:493
 msgid "Description"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:495
+#: public/editor-build/prod/texts.php:494
 msgid "Deselected the “Verify the origin of reCAPTCHA solutions” checkbox within your Google account."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:496
+#: public/editor-build/prod/texts.php:495
 msgid "Design"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:497
+#: public/editor-build/prod/texts.php:496
 msgid "Design/Development"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:498
+#: public/editor-build/prod/texts.php:497
 msgid "Desktop"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:499
+#: public/editor-build/prod/texts.php:498
 msgid "Desktop view"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:500
+#: public/editor-build/prod/texts.php:499
 msgid "Detail Button"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:501
+#: public/editor-build/prod/texts.php:500
 msgid "Devices & Hardware"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:502
+#: public/editor-build/prod/texts.php:501
 msgid "Diamond"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:503
+#: public/editor-build/prod/texts.php:502
 msgid "Difference"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:504
+#: public/editor-build/prod/texts.php:503
 msgid "Direct"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:505
+#: public/editor-build/prod/texts.php:504
 msgid "Direction"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:506
+#: public/editor-build/prod/texts.php:505
 msgid "Disable on"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:507
+#: public/editor-build/prod/texts.php:506
 msgid "Disables the default loading spinner that appears while the content is loading."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:508
+#: public/editor-build/prod/texts.php:507
 msgid "Disables the placeholder completely."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:509
+#: public/editor-build/prod/texts.php:508
 msgid "Disaster"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:510
+#: public/editor-build/prod/texts.php:509
 msgid "Disconnect"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:511
+#: public/editor-build/prod/texts.php:510
 msgid "Display"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:512
+#: public/editor-build/prod/texts.php:511
 msgid "Display Close Button"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:514
+#: public/editor-build/prod/texts.php:513
 msgid "Display Description"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:515
+#: public/editor-build/prod/texts.php:514
 msgid "Display Mode"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:516
+#: public/editor-build/prod/texts.php:515
 msgid "Displays captions from the Instagram Post. If set to false, it provides a cleaner view of the embedded content without additional text."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:517
+#: public/editor-build/prod/texts.php:516
 msgid "Disqus"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:518
+#: public/editor-build/prod/texts.php:517
 msgid "Dividers"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:519
+#: public/editor-build/prod/texts.php:518
 msgid "Don't have items"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:520
+#: public/editor-build/prod/texts.php:519
 msgid "Don't have tags"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:521
+#: public/editor-build/prod/texts.php:520
 msgid "Donation"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:522
+#: public/editor-build/prod/texts.php:521
 msgid "Donation Amount"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:523
+#: public/editor-build/prod/texts.php:522
 msgid "Done"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:524
+#: public/editor-build/prod/texts.php:523
 msgid "Done, your library has synced"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:525
+#: public/editor-build/prod/texts.php:524
 msgid "Dots"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:526
+#: public/editor-build/prod/texts.php:525
 msgid "Down"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:527
+#: public/editor-build/prod/texts.php:526
 msgid "Down Left"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:528
+#: public/editor-build/prod/texts.php:527
 msgid "Down Right"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:529
+#: public/editor-build/prod/texts.php:528
 msgid "Down Up"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:530
+#: public/editor-build/prod/texts.php:529
 msgid "Download"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:531
+#: public/editor-build/prod/texts.php:530
 msgid "Download this block"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:532
+#: public/editor-build/prod/texts.php:531
 msgid "Draft"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:533
+#: public/editor-build/prod/texts.php:532
 msgid "Drag to reorder"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:534
+#: public/editor-build/prod/texts.php:533
 msgid "Drawer Position"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:535
+#: public/editor-build/prod/texts.php:534
 msgid "Duplicate"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:536
+#: public/editor-build/prod/texts.php:535
 msgid "Duplicate Account"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:537
+#: public/editor-build/prod/texts.php:536
 msgid "Duration"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:538
+#: public/editor-build/prod/texts.php:537
 msgid "Dutch"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:540
+#: public/editor-build/prod/texts.php:539
 msgid "EOT File"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:541
+#: public/editor-build/prod/texts.php:540
 msgid "EUR"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:542
+#: public/editor-build/prod/texts.php:541
 msgid "Edit"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:543
+#: public/editor-build/prod/texts.php:542
 msgid "Editable Text"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:544
+#: public/editor-build/prod/texts.php:543
 msgid "Editing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:545
+#: public/editor-build/prod/texts.php:544
 msgid "Education"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:546
+#: public/editor-build/prod/texts.php:545
 msgid "Effects"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:547
+#: public/editor-build/prod/texts.php:546
 msgid "Elements"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:548
+#: public/editor-build/prod/texts.php:547
 msgid "Email"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:549
+#: public/editor-build/prod/texts.php:548
 msgid "Email Marketing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:550
+#: public/editor-build/prod/texts.php:549
 msgid "Email Marketing by Klaviyo"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:551
+#: public/editor-build/prod/texts.php:550
 msgid "Email Notification"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:552
+#: public/editor-build/prod/texts.php:551
 msgid "Email To"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:553
+#: public/editor-build/prod/texts.php:552
 msgid "Email confirmation to join the list"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:554
+#: public/editor-build/prod/texts.php:553
 msgid "Email to recover password"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:555
+#: public/editor-build/prod/texts.php:554
 msgid "Email to recover password cannot be empty"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:557
+#: public/editor-build/prod/texts.php:556
 msgid "Emoji"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:558
+#: public/editor-build/prod/texts.php:557
 msgid "Emoticons"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:559
+#: public/editor-build/prod/texts.php:558
 msgid "Empty message"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:560
+#: public/editor-build/prod/texts.php:559
 msgid "Enable Tags"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:561
+#: public/editor-build/prod/texts.php:560
 msgid "Enable on"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:562
+#: public/editor-build/prod/texts.php:561
 msgid "Enable tags"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:563
+#: public/editor-build/prod/texts.php:562
 msgid "Encryption"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:564
+#: public/editor-build/prod/texts.php:563
 msgid "End"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:565
+#: public/editor-build/prod/texts.php:564
 msgid "Energy"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:566
+#: public/editor-build/prod/texts.php:565
 msgid "Energy/Environment"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:567
+#: public/editor-build/prod/texts.php:566
 msgid "English"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:568
+#: public/editor-build/prod/texts.php:567
 msgid "Enter API key"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:569
+#: public/editor-build/prod/texts.php:568
 msgid "Enter Search Keyword"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:570
+#: public/editor-build/prod/texts.php:569
 msgid "Enter a link ending in .mp4"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:571
+#: public/editor-build/prod/texts.php:570
 msgid "Enter address"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:572
+#: public/editor-build/prod/texts.php:571
 msgid "Enter item Name"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:573
+#: public/editor-build/prod/texts.php:572
 msgid "Enter the allowed file types, separated by a comma (jpg, gif, pdf, etc)."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:574
+#: public/editor-build/prod/texts.php:573
 msgid "Enter the tags, separated by a comma (art, sport, nature, etc)."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:575
+#: public/editor-build/prod/texts.php:574
 msgid "Entrance"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:576
+#: public/editor-build/prod/texts.php:575
 msgid "Error"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:577
+#: public/editor-build/prod/texts.php:576
 msgid "Error updating global block"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:578
+#: public/editor-build/prod/texts.php:577
 msgid "Established a stable internet connection"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:579
+#: public/editor-build/prod/texts.php:578
 msgid "Even Bg"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:580
+#: public/editor-build/prod/texts.php:579
 msgid "Event Calendar"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:581
+#: public/editor-build/prod/texts.php:580
 msgid "Event Detail"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:582
+#: public/editor-build/prod/texts.php:581
 msgid "Event Featured"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:583
+#: public/editor-build/prod/texts.php:582
 msgid "Event Layout"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:584
+#: public/editor-build/prod/texts.php:583
 msgid "Event List"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:585
+#: public/editor-build/prod/texts.php:584
 msgid "Event Start Time"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:586
+#: public/editor-build/prod/texts.php:585
 msgid "Events"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:587
+#: public/editor-build/prod/texts.php:586
 msgid "Example [gallery id='123' size='medium']"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:589
+#: public/editor-build/prod/texts.php:588
 msgid "Exclude"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:590
+#: public/editor-build/prod/texts.php:589
 msgid "Exclude Current"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:591
+#: public/editor-build/prod/texts.php:590
 msgid "Exclude by"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:592
+#: public/editor-build/prod/texts.php:591
 msgid "Exclusion"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:593
+#: public/editor-build/prod/texts.php:592
 msgid "Export All Blocks"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:594
+#: public/editor-build/prod/texts.php:593
 msgid "Export All Layouts"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:595
+#: public/editor-build/prod/texts.php:594
 msgid "Export All Popups"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:596
+#: public/editor-build/prod/texts.php:595
 msgid "Extend"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:597
+#: public/editor-build/prod/texts.php:596
 msgid "External Links"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:598
+#: public/editor-build/prod/texts.php:597
 msgid "Extra Bold"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:599
+#: public/editor-build/prod/texts.php:598
 msgid "Extra Light"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:600
+#: public/editor-build/prod/texts.php:599
 msgid "Extract headings from specific containers. Containers can be selected by CSS class name without the .dot, example: .container1, .container2"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:601
+#: public/editor-build/prod/texts.php:600
 msgid "FIELDS"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:602
+#: public/editor-build/prod/texts.php:601
 msgid "FMS Forms"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:603
+#: public/editor-build/prod/texts.php:602
 msgid "FONT VARIATION"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:604
+#: public/editor-build/prod/texts.php:603
 msgid "FORM FIELDS"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:606
+#: public/editor-build/prod/texts.php:605
 msgid "Facebook Button"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:607
+#: public/editor-build/prod/texts.php:606
 msgid "Facebook Embed"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:608
+#: public/editor-build/prod/texts.php:607
 msgid "Facebook Group"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:609
+#: public/editor-build/prod/texts.php:608
 msgid "Facebook Page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:610
+#: public/editor-build/prod/texts.php:609
 msgid "Fade"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:611
+#: public/editor-build/prod/texts.php:610
 msgid "Fail message"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:612
+#: public/editor-build/prod/texts.php:611
 msgid "Fail to authenticate"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:613
+#: public/editor-build/prod/texts.php:612
 msgid "Fail to compile"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:614
+#: public/editor-build/prod/texts.php:613
 msgid "Fail to compile the page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:615
+#: public/editor-build/prod/texts.php:614
 msgid "Failed to authenticate: invalid token"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:616
+#: public/editor-build/prod/texts.php:615
 #: public/editor-client/build/texts.php:24
 msgid "Failed to delete icon"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:617
+#: public/editor-build/prod/texts.php:616
 msgid "Failed to fetch api data"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:618
+#: public/editor-build/prod/texts.php:617
 msgid "Failed to get DynamicContent placeholders"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:619
+#: public/editor-build/prod/texts.php:618
 msgid "Failed to get savedLayout"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:620
+#: public/editor-build/prod/texts.php:619
 #: public/editor-client/build/texts.php:39
 msgid "Failed to import saved layouts"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:621
+#: public/editor-build/prod/texts.php:620
 #: public/editor-client/build/texts.php:55
 msgid "Failed to load sources"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:622
+#: public/editor-build/prod/texts.php:621
 msgid "Failed to reset password"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:623
-msgid "Failed to upload file. Please upload a valid JPG, PNG, SVG, GIF or WEBP image."
-msgstr ""
-
-#: public/editor-build/prod/texts.php:624
+#: public/editor-build/prod/texts.php:622
 #: public/editor-client/build/texts.php:68
 msgid "Failed to upload icon"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:625
+#: public/editor-build/prod/texts.php:623
 msgid "Favorites"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:626
+#: public/editor-build/prod/texts.php:624
 msgid "Favorites Buttons"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:627
+#: public/editor-build/prod/texts.php:625
 msgid "Featured"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:629
+#: public/editor-build/prod/texts.php:627
 msgid "Featured View"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:630
+#: public/editor-build/prod/texts.php:628
 msgid "Field"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:631
+#: public/editor-build/prod/texts.php:629
 msgid "Field Name"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:632
+#: public/editor-build/prod/texts.php:630
 msgid "Field Type"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:633
+#: public/editor-build/prod/texts.php:631
 msgid "Field is empty"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:634
+#: public/editor-build/prod/texts.php:632
 msgid "Fields"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:635
+#: public/editor-build/prod/texts.php:633
 msgid "Fields are empty"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:636
+#: public/editor-build/prod/texts.php:634
 msgid "Fields are empty. Please add fields and try again."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:637
+#: public/editor-build/prod/texts.php:635
 msgid "File"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:638
+#: public/editor-build/prod/texts.php:636
 msgid "File size error message"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:639
+#: public/editor-build/prod/texts.php:637
 msgid "File type error message"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:640
+#: public/editor-build/prod/texts.php:638
+msgid "FileUpload"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:639
 msgid "Files"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:641
+#: public/editor-build/prod/texts.php:640
 msgid "Files/Folders"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:642
+#: public/editor-build/prod/texts.php:641
 msgid "Fill"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:643
+#: public/editor-build/prod/texts.php:642
 msgid "Film & Video"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:644
+#: public/editor-build/prod/texts.php:643
 msgid "Filter"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:645
+#: public/editor-build/prod/texts.php:644
 msgid "Filter By"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:646
+#: public/editor-build/prod/texts.php:645
 msgid "Filters"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:647
+#: public/editor-build/prod/texts.php:646
 msgid "Find Page"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:647
+msgid "Find the post,click the 3 dots and select \"Embed this post\", then copy the src link"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:648
@@ -4781,3845 +4779,3877 @@ msgstr ""
 msgid "Linkedin"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:862
-msgid "List"
+#: public/editor-build/prod/texts.php:861
+msgid "Linkedin Feed"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:863
-msgid "List View"
+msgid "List"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:864
-msgid "Lists"
+msgid "List View"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:865
-msgid "Lists are empty. Please add a new list and try again."
+msgid "Lists"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:866
-msgid "Load"
+msgid "Lists are empty. Please add a new list and try again."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:867
-msgid "Loaders"
+msgid "Load"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:868
-msgid "Loading..."
+msgid "Loaders"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:869
-msgid "Location"
+msgid "Loading..."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:870
-msgid "Locked"
+msgid "Location"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:871
-msgid "Logged"
+msgid "Locked"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:872
-msgid "Login"
+msgid "Logged"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:873
-msgid "Logistics"
+msgid "Login"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:874
-msgid "Logout"
+msgid "Logistics"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:875
-msgid "Loop"
+msgid "Logout"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:876
+msgid "Loop"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:877
 msgid "Lost Password"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:878
+#: public/editor-build/prod/texts.php:879
 msgid "Lottie File"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:879
+#: public/editor-build/prod/texts.php:880
 msgid "Lottie Link"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:880
+#: public/editor-build/prod/texts.php:881
 msgid "Lowercase"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:881
+#: public/editor-build/prod/texts.php:882
 msgid "Luminosity"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:882
+#: public/editor-build/prod/texts.php:883
 msgid "MXN"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:883
+#: public/editor-build/prod/texts.php:884
 msgid "MYR"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:884
+#: public/editor-build/prod/texts.php:885
 msgid "Main"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:885
+#: public/editor-build/prod/texts.php:886
 msgid "Main product image"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:886
+#: public/editor-build/prod/texts.php:887
 msgid "Make it Global"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:887
+#: public/editor-build/prod/texts.php:888
 msgid "Make it Hamburger"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:888
+#: public/editor-build/prod/texts.php:889
 msgid "Make it Nofollow"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:889
+#: public/editor-build/prod/texts.php:890
 msgid "Make it a Slider"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:890
+#: public/editor-build/prod/texts.php:891
 msgid "Manual"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:892
+#: public/editor-build/prod/texts.php:893
 msgid "Maps"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:893
+#: public/editor-build/prod/texts.php:894
 msgid "Maps/Location"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:894
+#: public/editor-build/prod/texts.php:895
 msgid "Margin"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:895
+#: public/editor-build/prod/texts.php:896
 msgid "Maritime"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:896
+#: public/editor-build/prod/texts.php:897
 msgid "Marker"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:897
+#: public/editor-build/prod/texts.php:898
 msgid "Marker Size"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:898
+#: public/editor-build/prod/texts.php:899
 msgid "Marker Type"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:899
+#: public/editor-build/prod/texts.php:900
 msgid "Marketing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:900
+#: public/editor-build/prod/texts.php:901
 msgid "Marketing by Marsello"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:901
+#: public/editor-build/prod/texts.php:902
 msgid "Marketing by Omnisend"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:902
+#: public/editor-build/prod/texts.php:903
 msgid "Marketing by Social SnowBall"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:903
+#: public/editor-build/prod/texts.php:904
 msgid "Mask"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:904
+#: public/editor-build/prod/texts.php:905
 msgid "Masonry"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:905
+#: public/editor-build/prod/texts.php:906
 msgid "Masonry Arrangement"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:906
+#: public/editor-build/prod/texts.php:907
 msgid "Mathematics"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:907
+#: public/editor-build/prod/texts.php:908
 msgid "Max"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:908
+#: public/editor-build/prod/texts.php:909
 msgid "Max Date"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:909
+#: public/editor-build/prod/texts.php:910
 msgid "Max Time"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:910
+#: public/editor-build/prod/texts.php:911
 msgid "Max number error message"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:911
+#: public/editor-build/prod/texts.php:912
 msgid "Max. File Size"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:912
+#: public/editor-build/prod/texts.php:913
 msgid "Media"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:913
+#: public/editor-build/prod/texts.php:914
 msgid "Media & Playback"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:914
+#: public/editor-build/prod/texts.php:915
 msgid "Media Corner"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:915
+#: public/editor-build/prod/texts.php:916
 msgid "Media Links"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:916
+#: public/editor-build/prod/texts.php:917
 msgid "Medical & Health"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:917
+#: public/editor-build/prod/texts.php:918
 msgid "Medium"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:918
+#: public/editor-build/prod/texts.php:919
 msgid "Meeting Day"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:919
+#: public/editor-build/prod/texts.php:920
 msgid "Meeting Time"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:920
+#: public/editor-build/prod/texts.php:921
 msgid "Meeting day"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:921
+#: public/editor-build/prod/texts.php:922
 msgid "Meeting times"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:922
+#: public/editor-build/prod/texts.php:923
 msgid "Mega Menu"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:923
+#: public/editor-build/prod/texts.php:924
 msgid "Membership"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:924
+#: public/editor-build/prod/texts.php:925
 msgid "Mention"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:926
+#: public/editor-build/prod/texts.php:927
 msgid "Menu Items"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:927
+#: public/editor-build/prod/texts.php:928
 msgid "Menu Order"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:928
+#: public/editor-build/prod/texts.php:929
 msgid "Menu order"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:929
+#: public/editor-build/prod/texts.php:930
 msgid "Message"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:930
+#: public/editor-build/prod/texts.php:931
 msgid "Message not sent"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:931
+#: public/editor-build/prod/texts.php:932
 msgid "Message sent"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:932
+#: public/editor-build/prod/texts.php:933
 msgid "Messages"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:934
+#: public/editor-build/prod/texts.php:935
 msgid "Meta Data"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:935
+#: public/editor-build/prod/texts.php:936
 msgid "Meta Headings"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:936
+#: public/editor-build/prod/texts.php:937
 msgid "Meta Icons"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:937
+#: public/editor-build/prod/texts.php:938
 msgid "Meta Key"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:938
+#: public/editor-build/prod/texts.php:939
 msgid "Meta Value"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:939
+#: public/editor-build/prod/texts.php:940
 msgid "Metafield"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:940
+#: public/editor-build/prod/texts.php:941
 msgid "Min"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:941
+#: public/editor-build/prod/texts.php:942
 msgid "Min Date"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:942
+#: public/editor-build/prod/texts.php:943
 msgid "Min Time"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:943
+#: public/editor-build/prod/texts.php:944
 msgid "Min number error message"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:944
+#: public/editor-build/prod/texts.php:945
 msgid "Minimal"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:945
+#: public/editor-build/prod/texts.php:946
 msgid "Minimized"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:946
+#: public/editor-build/prod/texts.php:947
 msgid "Ministry Content - Article Detail - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:947
+#: public/editor-build/prod/texts.php:948
 msgid "Ministry Content - Article Featured - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:948
+#: public/editor-build/prod/texts.php:949
 msgid "Ministry Content - Article List - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:949
+#: public/editor-build/prod/texts.php:950
 msgid "Ministry Content - Event Calendar - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:950
+#: public/editor-build/prod/texts.php:951
 msgid "Ministry Content - Event Detail - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:951
+#: public/editor-build/prod/texts.php:952
 msgid "Ministry Content - Event Featured - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:952
+#: public/editor-build/prod/texts.php:953
 msgid "Ministry Content - Event Layout - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:953
+#: public/editor-build/prod/texts.php:954
 msgid "Ministry Content - Event List - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:954
+#: public/editor-build/prod/texts.php:955
 msgid "Ministry Content - Form Widget - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:955
+#: public/editor-build/prod/texts.php:956
 msgid "Ministry Content - Group Detail - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:956
+#: public/editor-build/prod/texts.php:957
 msgid "Ministry Content - Group Featured - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:957
+#: public/editor-build/prod/texts.php:958
 msgid "Ministry Content - Group Layout - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:958
+#: public/editor-build/prod/texts.php:959
 msgid "Ministry Content - Group List - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:959
+#: public/editor-build/prod/texts.php:960
 msgid "Ministry Content - Group Slider - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:960
+#: public/editor-build/prod/texts.php:961
 msgid "Ministry Content - Sermon Detail - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:961
+#: public/editor-build/prod/texts.php:962
 msgid "Ministry Content - Sermon Featured - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:962
+#: public/editor-build/prod/texts.php:963
 msgid "Ministry Content - Sermon Layout - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:963
+#: public/editor-build/prod/texts.php:964
 msgid "Ministry Content - Sermon List - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:964
+#: public/editor-build/prod/texts.php:965
 msgid "Ministry Content - Staff Detail - module fields have been updated."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:965
+#: public/editor-build/prod/texts.php:966
 msgid "Minutes"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:966
+#: public/editor-build/prod/texts.php:967
 msgid "Missing AI handler in api-client"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:967
+#: public/editor-build/prod/texts.php:968
 msgid "Missing Auth Token in config"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:968
+#: public/editor-build/prod/texts.php:969
 msgid "Missing Menus"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:969
+#: public/editor-build/prod/texts.php:970
 msgid "Missing Page Component"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:970
+#: public/editor-build/prod/texts.php:971
 msgid "Missing Page Components"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:971
+#: public/editor-build/prod/texts.php:972
 msgid "Missing PagePopup Component"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:972
+#: public/editor-build/prod/texts.php:973
 msgid "Missing PagePopup Components"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:973
+#: public/editor-build/prod/texts.php:974
 msgid "Missing PageStory Component"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:974
+#: public/editor-build/prod/texts.php:975
 msgid "Missing PageStory Components"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:975
+#: public/editor-build/prod/texts.php:976
 msgid "Missing addMediaGallery key in config.api"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:976
+#: public/editor-build/prod/texts.php:977
 msgid "Missing adobe fonts in api config"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:977
+#: public/editor-build/prod/texts.php:978
 msgid "Missing api collectionItems handler in config"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:978
+#: public/editor-build/prod/texts.php:979
 msgid "Missing api collectionTypes.loadCollectionTypes.handler in config"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:979
-msgid "Missing create screenshots in api config"
-msgstr ""
-
 #: public/editor-build/prod/texts.php:980
-msgid "Missing dynamicContent inside config api"
+msgid "Missing api conditional items handler in config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:981
-msgid "Missing getCollectionSourceItems in config"
+msgid "Missing api conditional types handler in config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:982
-msgid "Missing getDynamicContent inside api Config"
+msgid "Missing create screenshots in api config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:983
-msgid "Missing getEcwidProducts api handler in config"
+msgid "Missing dynamicContent inside config api"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:984
-msgid "Missing getPageRelations api handler in config"
+msgid "Missing getCollectionSourceItems in config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:985
-msgid "Missing getUploadedFonts inside api config"
+msgid "Missing getDynamicContent inside api Config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:986
-msgid "Missing google fonts json"
+msgid "Missing getEcwidProducts api handler in config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:987
-msgid "Missing page data in config"
+msgid "Missing getPageRelations api handler in config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:988
-msgid "Missing project data in config"
+msgid "Missing getUploadedFonts inside api config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:989
-msgid "Missing regenerate methods in config.api"
+msgid "Missing google fonts json"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:990
-msgid "Missing sendHandler inside config api"
+msgid "Missing page data in config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:991
-msgid "Missing shopifyBlogItems handler"
+msgid "Missing project data in config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:992
-msgid "Missing shopifySyncArticle handler"
+msgid "Missing regenerate methods in config.api"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:993
-msgid "Missing shopifySyncPage handler"
+msgid "Missing sendHandler inside config api"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:994
-msgid "Missing shopifySyncRules handler"
+msgid "Missing shopifyBlogItems handler"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:995
-msgid "Missing shopifyUnpublishPage handler"
+msgid "Missing shopifySyncArticle handler"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:996
-msgid "Missing takeOver handler inside config api"
+msgid "Missing shopifySyncPage handler"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:997
-msgid "Missing update screenshots in api config"
+msgid "Missing shopifySyncRules handler"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:998
-msgid "Mobile"
+msgid "Missing shopifyUnpublishPage handler"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:999
-msgid "Mobile view"
+msgid "Missing takeOver handler inside config api"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1000
-msgid "Modified"
+msgid "Missing update screenshots in api config"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1001
-msgid "Money"
+msgid "Mobile"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1002
-msgid "Monthly"
+msgid "Mobile view"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1003
-msgid "Months"
+msgid "Modified"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1004
-msgid "More"
+msgid "Money"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1005
-msgid "More Settings"
+msgid "Monthly"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1006
-msgid "MouseTrack"
+msgid "Months"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1007
-msgid "Move"
+msgid "More"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1008
-msgid "Move down"
+msgid "More Settings"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1009
-msgid "Move left"
+msgid "MouseTrack"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1010
-msgid "Move right"
+msgid "Move"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1011
-msgid "Move up"
+msgid "Move down"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1012
-msgid "Moving"
+msgid "Move left"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1013
-msgid "Multi Step"
+msgid "Move right"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1014
-msgid "Multi-Language"
+msgid "Move up"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1015
-msgid "Multimedia"
+msgid "Moving"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1016
-msgid "Multiple Selection"
+msgid "Multi Step"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1017
-msgid "Multiply"
+msgid "Multi-Language"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1018
-msgid "Music & Audio"
+msgid "Multimedia"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1019
-msgid "Muted"
+msgid "Multiple Selection"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1020
-msgid "My Account"
+msgid "Multiply"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1021
-msgid "N/A"
+msgid "Music & Audio"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1022
-msgid "NOK"
+msgid "Muted"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1023
-msgid "NZD"
+msgid "My Account"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1024
-msgid "Name"
+msgid "N/A"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1025
-msgid "Name - First on Mobile"
+msgid "NOK"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1026
-msgid "Native HTML5"
+msgid "NZD"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1027
-msgid "Nature"
+msgid "Name"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1028
-msgid "Nav"
+msgid "Name - First on Mobile"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1029
-msgid "Navigation"
+msgid "Native HTML5"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1030
-msgid "Need help"
+msgid "Nature"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1031
-msgid "Network"
+msgid "Nav"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1032
-msgid "New Style #%s"
+msgid "Navigation"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1033
-msgid "Next post"
+msgid "Need help"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1034
-msgid "No Repeat"
+msgid "Network"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1035
-msgid "No blogs yet!"
+msgid "New Style #%s"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1036
-msgid "No collections yet!"
+msgid "Next post"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1037
-msgid "No custom fields found!"
+msgid "No Repeat"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1038
-msgid "No headings were found."
+msgid "No blogs yet!"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1039
-msgid "No lists were created, please contact our support"
+msgid "No collections yet!"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1040
-msgid "No matches found"
+msgid "No custom fields found!"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1041
-msgid "No other popup"
+msgid "No headings were found."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1042
-msgid "No products yet!"
+msgid "No lists were created, please contact our support"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1043
-msgid "No repeat"
+msgid "No matches found"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1044
-msgid "No results"
+msgid "No other popup"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1045
-msgid "Non Featured"
+msgid "No products yet!"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1046
+msgid "No repeat"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1047
+msgid "No results"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1048
+msgid "Non Featured"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1049
 #: public/editor-client/build/texts.php:87
 msgid "None"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1047
+#: public/editor-build/prod/texts.php:1050
 msgid "Normal"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1048
+#: public/editor-build/prod/texts.php:1051
 msgid "Not Required"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1049
+#: public/editor-build/prod/texts.php:1052
 msgid "Not logged"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1050
+#: public/editor-build/prod/texts.php:1053
 msgid "Notes"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1051
+#: public/editor-build/prod/texts.php:1054
 msgid "Nothing Found"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1052
+#: public/editor-build/prod/texts.php:1055
 msgid "Nothing here yet, make a global block first."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1053
+#: public/editor-build/prod/texts.php:1056
 msgid "Nothing here yet, make a global popup first."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1054
+#: public/editor-build/prod/texts.php:1057
 msgid "Nothing here yet, save a block first."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1055
+#: public/editor-build/prod/texts.php:1058
 msgid "Nothing here yet, save a layout first."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1056
+#: public/editor-build/prod/texts.php:1059
 msgid "Nothing here yet, save a popup first."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1057
+#: public/editor-build/prod/texts.php:1060
 msgid "Nothing here, please refine your search."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1058
+#: public/editor-build/prod/texts.php:1061
 msgid "Notifications by OnVoard"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1059
+#: public/editor-build/prod/texts.php:1062
 msgid "Notifications by PushOwl"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1060
+#: public/editor-build/prod/texts.php:1063
 msgid "Notifications by ReferralCandy"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1061
+#: public/editor-build/prod/texts.php:1064
 msgid "Nr."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1062
+#: public/editor-build/prod/texts.php:1065
 msgid "Number"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1063
+#: public/editor-build/prod/texts.php:1066
 msgid "Number of"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1064
+#: public/editor-build/prod/texts.php:1067
 msgid "Number of items in stock"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1065
+#: public/editor-build/prod/texts.php:1068
 msgid "Number of months"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1066
+#: public/editor-build/prod/texts.php:1069
 msgid "Number of posts"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1067
+#: public/editor-build/prod/texts.php:1070
 msgid "Numbers"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1068
+#: public/editor-build/prod/texts.php:1071
 msgid "OK"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1069
+#: public/editor-build/prod/texts.php:1072
 msgid "Odd Bg"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1070
+#: public/editor-build/prod/texts.php:1073
 msgid "Off"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1071
+#: public/editor-build/prod/texts.php:1074
 msgid "Official"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1072
+#: public/editor-build/prod/texts.php:1075
 msgid "Offset"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1073
+#: public/editor-build/prod/texts.php:1076
 msgid "OffsetX"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1074
+#: public/editor-build/prod/texts.php:1077
 msgid "OffsetY"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1075
+#: public/editor-build/prod/texts.php:1078
 msgid "On Click"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1076
+#: public/editor-build/prod/texts.php:1079
 msgid "On Hover"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1077
+#: public/editor-build/prod/texts.php:1080
 msgid "On Page Exit Intent"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1078
+#: public/editor-build/prod/texts.php:1081
 msgid "On Page Load"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1079
+#: public/editor-build/prod/texts.php:1082
 msgid "On Scroll"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1080
+#: public/editor-build/prod/texts.php:1083
 msgid "Only select if \"Display Video\" is not selected."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1081
+#: public/editor-build/prod/texts.php:1084
 msgid "Only select if 'Display Video' is not selected."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1082
+#: public/editor-build/prod/texts.php:1085
 msgid "Only select if Video' is not selected."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1083
+#: public/editor-build/prod/texts.php:1086
 msgid "Open In New Tab"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1084
+#: public/editor-build/prod/texts.php:1087
 msgid "Open Media Library"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1085
+#: public/editor-build/prod/texts.php:1088
 msgid "Open Paypal in new Tab"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1086
+#: public/editor-build/prod/texts.php:1089
 msgid "Open in Lightbox"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1087
+#: public/editor-build/prod/texts.php:1090
 msgid "Operating System"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1088
+#: public/editor-build/prod/texts.php:1091
 msgid "Opposite"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1089
+#: public/editor-build/prod/texts.php:1092
 msgid "Option"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1090
+#: public/editor-build/prod/texts.php:1093
 msgid "Options"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1091
+#: public/editor-build/prod/texts.php:1094
 msgid "Order"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1092
+#: public/editor-build/prod/texts.php:1095
 msgid "Order By"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1093
+#: public/editor-build/prod/texts.php:1096
 msgid "Order Tracking"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1094
+#: public/editor-build/prod/texts.php:1097
 msgid "Order Tracking by Automizely"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1095
+#: public/editor-build/prod/texts.php:1098
 msgid "Organic"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1096
+#: public/editor-build/prod/texts.php:1099
 msgid "Orientation"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1098
+#: public/editor-build/prod/texts.php:1101
 msgid "Other specific popup"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1099
+#: public/editor-build/prod/texts.php:1102
 msgid "Others"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1100
+#: public/editor-build/prod/texts.php:1103
 msgid "Out"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1101
+#: public/editor-build/prod/texts.php:1104
 msgid "Out In"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1102
+#: public/editor-build/prod/texts.php:1105
 msgid "Outline"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1103
+#: public/editor-build/prod/texts.php:1106
 msgid "Outset"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1104
+#: public/editor-build/prod/texts.php:1107
 msgid "Overflow"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1105
+#: public/editor-build/prod/texts.php:1108
 msgid "Overlay"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1106
+#: public/editor-build/prod/texts.php:1109
 msgid "Overlay "
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1107
+#: public/editor-build/prod/texts.php:1110
 msgid "P"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1108
+#: public/editor-build/prod/texts.php:1111
 msgid "PHP"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1109
+#: public/editor-build/prod/texts.php:1112
 msgid "PLN"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1110
+#: public/editor-build/prod/texts.php:1113
 msgid "Padding"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1111
+#: public/editor-build/prod/texts.php:1114
 msgid "Page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1112
+#: public/editor-build/prod/texts.php:1115
 msgid "Page Template"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1113
+#: public/editor-build/prod/texts.php:1116
 msgid "Page Title"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1114
+#: public/editor-build/prod/texts.php:1117
 msgid "Page URL"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1115
+#: public/editor-build/prod/texts.php:1118
 msgid "Page title"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1117
+#: public/editor-build/prod/texts.php:1120
 msgid "Pagination"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1118
+#: public/editor-build/prod/texts.php:1121
 msgid "Paragraph"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1119
+#: public/editor-build/prod/texts.php:1122
 msgid "Parallax"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1120
+#: public/editor-build/prod/texts.php:1123
 msgid "Parcel Panel Order Tracking"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1121
+#: public/editor-build/prod/texts.php:1124
 msgid "Parent"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1122
+#: public/editor-build/prod/texts.php:1125
 msgid "Parent Category"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1123
+#: public/editor-build/prod/texts.php:1126
 msgid "Passage"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1124
+#: public/editor-build/prod/texts.php:1127
 msgid "Passages"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1125
+#: public/editor-build/prod/texts.php:1128
 msgid "Password"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1126
+#: public/editor-build/prod/texts.php:1129
 msgid "Password and confirm password is not the same"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1127
+#: public/editor-build/prod/texts.php:1130
 msgid "Paste"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1128
+#: public/editor-build/prod/texts.php:1131
 msgid "Paste Style"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1129
+#: public/editor-build/prod/texts.php:1132
 msgid "Paste Styles"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1130
+#: public/editor-build/prod/texts.php:1133
 msgid "Paste your HTML code here..."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1131
-msgid "Paypal"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1132
-msgid "Pending"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1133
-msgid "Percent"
-msgstr ""
-
 #: public/editor-build/prod/texts.php:1134
-msgid "Percentage"
+msgid "Payment"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1135
-msgid "Personalizer by Zepto"
+msgid "Paypal"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1136
-msgid "Perspective"
+msgid "Pending"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1137
-msgid "Phone Number"
+msgid "Percent"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1138
-msgid "Photos & Images"
+msgid "Percentage"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1139
-msgid "Pin Elements"
+msgid "Personalizer by Zepto"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1140
-msgid "Pinned"
+msgid "Perspective"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1141
-msgid "Pinterest"
+msgid "Phone Number"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1142
-msgid "Placeholder"
+msgid "Photos & Images"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1143
-msgid "Placeholder spinner"
+msgid "Pin Elements"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1144
-msgid "Plain"
+msgid "Pinned"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1145
-msgid "Play"
+msgid "Pinterest"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1146
-msgid "Play Counts"
+msgid "Placeholder"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1147
-msgid "Playback"
+msgid "Placeholder spinner"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1148
-msgid "Player"
+msgid "Plain"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1149
+msgid "Play"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1150
-msgid "Playlist Items"
+msgid "Play Counts"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1151
-msgid "Please provide a valid PayPal account!"
+msgid "Playback"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1152
-msgid "Pocket"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1153
-msgid "Political"
+msgid "Player"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1154
-msgid "Pop"
+msgid "Playlist Items"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1155
-msgid "Popularity"
+msgid "Please provide a valid PayPal account!"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1156
-msgid "Popup"
+msgid "Pocket"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1157
-msgid "Popup Close Icon"
+msgid "Political"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1158
-msgid "Popup Thumbnail"
+msgid "Pop"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1159
+msgid "Popularity"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1160
-msgid "Port"
+msgid "Popup"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1161
-msgid "Position"
+msgid "Popup Close Icon"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1162
-msgid "Post"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1163
-msgid "Post Content"
+msgid "Popup Thumbnail"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1164
-msgid "Post Excerpt"
+msgid "Port"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1165
-msgid "Post Info"
+msgid "Position"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1166
-msgid "Post Navigation"
+msgid "Post"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1167
-msgid "Post Title"
+msgid "Post Content"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1168
-msgid "Post Type"
+msgid "Post Excerpt"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1169
-msgid "Post info"
+msgid "Post Info"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1170
+msgid "Post Navigation"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1171
-msgid "Posts Pagination"
+msgid "Post Title"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1172
-msgid "Posts Tags"
+msgid "Post Type"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1173
-msgid "Prayer Widget"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1174
-msgid "PreProduct"
+msgid "Post info"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1175
-msgid "Preacher"
+msgid "Posts Pagination"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1176
-msgid "Prefix"
+msgid "Posts Tags"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1177
-msgid "Preserve size"
+msgid "Prayer Widget"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1178
-msgid "Press the button above to add blocks"
+msgid "PreProduct"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1179
-msgid "Press the button above to add popup"
+msgid "Preacher"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1180
-msgid "Press the button to add blocks"
+msgid "Prefix"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1181
-msgid "Prevents the automatic loading of the script that is required for embedding content."
+msgid "Preserve size"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1182
-msgid "Preview"
+msgid "Press the button above to add blocks"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1183
-msgid "Preview (ctrl+shift+P)"
+msgid "Press the button above to add popup"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1184
-msgid "Preview Page"
+msgid "Press the button to add blocks"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1185
-msgid "Preview additional Images"
+msgid "Prevents the automatic loading of the script that is required for embedding content."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1186
-msgid "Previous Page"
+msgid "Preview"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1187
-msgid "Previous post"
+msgid "Preview (ctrl+shift+P)"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1188
+msgid "Preview Page"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1189
-msgid "Privacy Mode"
+msgid "Preview additional Images"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1190
-msgid "Private"
+msgid "Previous Page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1192
-msgid "Product Attributes"
+#: public/editor-build/prod/texts.php:1191
+msgid "Previous post"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1193
-msgid "Product Breadcrumbs"
+msgid "Privacy Mode"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1194
-msgid "Product Content"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1195
-msgid "Product Excerpt"
+msgid "Private"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1196
-msgid "Product Gallery"
+msgid "Product Attributes"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1197
-msgid "Product ID"
+msgid "Product Breadcrumbs"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1198
-msgid "Product ID or SKU"
+msgid "Product Content"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1199
-msgid "Product Meta"
+msgid "Product Excerpt"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1200
-msgid "Product Options"
+msgid "Product Gallery"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1201
-msgid "Product Options by Bold"
+msgid "Product ID"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1202
-msgid "Product Options by Hulk"
+msgid "Product ID or SKU"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1203
-msgid "Product Price"
+msgid "Product Meta"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1204
-msgid "Product Rating"
+msgid "Product Options"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1205
-msgid "Product SKU"
+msgid "Product Options by Bold"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1206
-msgid "Product Stock"
+msgid "Product Options by Hulk"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1207
-msgid "Product Thumbnail"
+msgid "Product Price"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1208
-msgid "Product Title"
+msgid "Product Rating"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1209
+msgid "Product SKU"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1210
-msgid "Products Count"
+msgid "Product Stock"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1211
-msgid "Products Pagination"
+msgid "Product Thumbnail"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1212
-msgid "Products Tags"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1213
-msgid "Professional"
+msgid "Product Title"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1214
-msgid "Profile"
+msgid "Products Count"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1215
+msgid "Products Pagination"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1216
-msgid "Protected Form"
+msgid "Products Tags"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1217
-msgid "Protected Page"
+msgid "Professional"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1218
-msgid "Publish"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1219
-msgid "Publish Page"
+msgid "Profile"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1220
-msgid "Pulse"
+msgid "Protected Form"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1221
-msgid "Pulse Grow"
+msgid "Protected Page"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1222
-msgid "Pulse Shrink"
+msgid "Publish"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1223
-msgid "Punctuation & Symbols"
+msgid "Publish Page"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1224
-msgid "Push"
+msgid "Pulse"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1225
-msgid "Quantity"
+msgid "Pulse Grow"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1226
-msgid "Query"
+msgid "Pulse Shrink"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1227
-msgid "Query Source"
+msgid "Punctuation & Symbols"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1228
-msgid "RUB"
+msgid "Push"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1229
-msgid "Radial"
+msgid "Quantity"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1230
-msgid "Radial In"
+msgid "Query"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1231
-msgid "Radial Out"
+msgid "Query Source"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1232
-msgid "Radio"
+msgid "RUB"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1233
+msgid "Radial"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1234
+msgid "Radial In"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1235
-msgid "Rating scale"
+msgid "Radial Out"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1236
-msgid "Ratio"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1237
-msgid "ReCAPTCHA"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1238
-msgid "Recent Articles"
+msgid "Radio"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1239
-msgid "Recent Events"
+msgid "Rating scale"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1240
-msgid "Recent Groups"
+msgid "Ratio"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1241
-msgid "Recent Sermons"
+msgid "ReCAPTCHA"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1242
-msgid "Recent Staff"
+msgid "Recent Articles"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1243
-msgid "Recommend"
+msgid "Recent Events"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1244
-msgid "Rectangle In"
+msgid "Recent Groups"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1245
-msgid "Rectangle Out"
+msgid "Recent Sermons"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1246
-msgid "Reddit"
+msgid "Recent Staff"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1247
-msgid "Redirect"
+msgid "Recommend"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1248
-msgid "Redirect After Login"
+msgid "Rectangle In"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1249
-msgid "Redirect After Logout"
+msgid "Rectangle Out"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1250
-msgid "Redirect after successful payment!"
+msgid "Reddit"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1251
-msgid "Redo"
+msgid "Redirect"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1252
-msgid "Redo (ctrl+shift+Z)"
+msgid "Redirect After Login"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1253
-msgid "Refresh"
+msgid "Redirect After Logout"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1254
-msgid "Regenerate"
+msgid "Redirect after successful payment!"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1255
-msgid "Regex"
+msgid "Redo"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1256
-msgid "Register"
+msgid "Redo (ctrl+shift+Z)"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1257
-msgid "Register Info"
+msgid "Refresh"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1258
-msgid "Registration"
+msgid "Regenerate"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1259
-msgid "Related Products"
+msgid "Regex"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1260
-msgid "Related Products Pagination"
+msgid "Register"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1261
-msgid "Related Products Tags"
+msgid "Register Info"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1262
-msgid "Religion"
+msgid "Registration"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1263
-msgid "Remember me"
+msgid "Related Products"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1264
-msgid "Remote IP"
+msgid "Related Products Pagination"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1265
-msgid "Remove"
+msgid "Related Products Tags"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1266
-msgid "Renderer"
+msgid "Religion"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1267
+msgid "Remember me"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1268
-msgid "Repeat"
+msgid "Remote IP"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1269
-msgid "Repeat-X"
+msgid "Remove"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1270
-msgid "Repeat-Y"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1271
-msgid "Replace global styling"
+msgid "Renderer"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1272
-msgid "Replay Animation"
+msgid "Repeat"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1273
-msgid "Reply"
+msgid "Repeat-X"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1274
-msgid "Reply-To"
+msgid "Repeat-Y"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1275
-msgid "Required"
+msgid "Replace global styling"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1276
-msgid "Reset Password"
+msgid "Replay Animation"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1277
-msgid "Resource Link"
+msgid "Reply"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1278
-msgid "Resource link"
+msgid "Reply-To"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1279
-msgid "Responsive Zoom Out / In"
+msgid "Required"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1280
-msgid "Reverse"
+msgid "Reset Password"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1281
-msgid "Reverse Columns"
+msgid "Resource Link"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1282
-msgid "Review"
+msgid "Resource link"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1283
-msgid "Review by Growave"
+msgid "Responsive Zoom Out / In"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1284
-msgid "Review by Judge"
+msgid "Reverse"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1285
-msgid "Review by Loox"
+msgid "Reverse Columns"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1286
-msgid "Review by Okendo"
+msgid "Review"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1287
-msgid "Review by Opinew"
+msgid "Review by Growave"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1288
-msgid "Review by Rivyo"
+msgid "Review by Judge"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1289
-msgid "Reviews by Ali"
+msgid "Review by Loox"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1290
-msgid "Reviews by Areview"
+msgid "Review by Okendo"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1291
-msgid "Reviews by Fera"
+msgid "Review by Opinew"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1292
-msgid "Reviews by Lai"
+msgid "Review by Rivyo"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1293
-msgid "Reviews by Stamped"
+msgid "Reviews by Ali"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1294
-msgid "Reviews by Vitals"
+msgid "Reviews by Areview"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1295
-msgid "Right"
+msgid "Reviews by Fera"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1296
+msgid "Reviews by Lai"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1297
-msgid "Roll In"
+msgid "Reviews by Stamped"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1298
-msgid "Room"
+msgid "Reviews by Vitals"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1299
-msgid "Rotate"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1300
-msgid "RotateX"
+msgid "Right"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1301
-msgid "RotateY"
+msgid "Roll In"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1302
-msgid "Rotation"
+msgid "Room"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1303
-msgid "Round"
+msgid "Rotate"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1304
-msgid "Row"
+msgid "RotateX"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1305
-msgid "Rows"
+msgid "RotateY"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1306
-msgid "Rows Gap"
+msgid "Rotation"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1307
-msgid "Rss"
+msgid "Round"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1308
-msgid "Rubber Band"
+msgid "Row"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1309
-msgid "Russian"
+msgid "Rows"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1310
-msgid "SEK"
+msgid "Rows Gap"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1311
-msgid "SELECT ACCOUNT"
+msgid "Rss"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1312
-msgid "SELECT FOR WHAT THE TEMPLATE IS USED"
+msgid "Rubber Band"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1313
-msgid "SELECT LIST"
+msgid "Russian"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1314
-msgid "SGD"
+msgid "SEK"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1315
+msgid "SELECT ACCOUNT"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1316
-msgid "SMS Marketing by Yotpo"
+msgid "SELECT FOR WHAT THE TEMPLATE IS USED"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1317
-msgid "SSL"
+msgid "SELECT LIST"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1318
-msgid "START BUILDING YOUR PAGE"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1319
-msgid "START BUILDING YOUR POPUP"
+msgid "SGD"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1320
-msgid "STYLES"
+msgid "SMS Marketing by Yotpo"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1321
-msgid "SVG"
+msgid "SSL"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1322
-msgid "SWITCH TO DESKTOP"
+msgid "START BUILDING YOUR PAGE"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1323
-msgid "Sale"
+msgid "START BUILDING YOUR POPUP"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1324
-msgid "Same Page"
+msgid "STYLES"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1325
-msgid "Sandbox"
+msgid "SVG"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1326
-msgid "Saturation"
+msgid "SWITCH TO DESKTOP"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1327
-msgid "Save"
+msgid "Sale"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1328
-msgid "Save & Publish"
+msgid "Same Page"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1329
-msgid "Save Draft"
+msgid "Sandbox"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1330
-msgid "Save Layout"
+msgid "Saturation"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1331
-msgid "Saved"
+msgid "Save"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1332
-msgid "Saved Library is syncing to your Account"
+msgid "Save & Publish"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1333
-msgid "Saved Popups"
+msgid "Save Draft"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1334
-msgid "Saving"
+msgid "Save Layout"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1335
-msgid "Scale"
+msgid "Saved"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1336
-msgid "ScaleX"
+msgid "Saved Library is syncing to your Account"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1337
-msgid "ScaleY"
+msgid "Saved Popups"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1338
-msgid "School/Education"
+msgid "Saving"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1339
-msgid "Science"
+msgid "Scale"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1340
-msgid "Science Fiction"
+msgid "ScaleX"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1341
-msgid "Screen"
+msgid "ScaleY"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1342
-msgid "Script load"
+msgid "School/Education"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1343
-msgid "Scroll"
+msgid "Science"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1344
-msgid "Scroll Page Behind"
+msgid "Science Fiction"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1345
+msgid "Screen"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1346
-msgid "Search Filter"
+msgid "Script load"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1347
-msgid "Search Text..."
+msgid "Scroll"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1348
-msgid "Search element"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1349
-msgid "Seconds"
+msgid "Scroll Page Behind"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1350
-msgid "Section"
+msgid "Search Filter"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1351
-msgid "Security"
+msgid "Search Text..."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1352
-msgid "Select"
+msgid "Search element"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1353
-msgid "Select Parent Element"
+msgid "Seconds"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1354
-msgid "Select a Menu"
+msgid "Section"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1355
-msgid "Select a menu from the element options"
+msgid "Security"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1356
-msgid "Select a recent article as an example to style/setup. Since this is the article detail landing page this article will be replaced with the linked article."
+msgid "Select"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1357
-msgid "Select a recent article. Use only if you are not using \"Article Slug\" below and \"Latest\" is set to \"Off\"."
+msgid "Select Parent Element"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1358
-msgid "Select a recent event as an example to style/setup. Since this is the events detail landing page this event will be replaced with the linked event."
+msgid "Select a Menu"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1359
-msgid "Select a recent event. Use only if you are not using \"Event Slug\" below and \"Show Latest\" is set to \"Off\"."
+msgid "Select a menu from the element options"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1360
-msgid "Select a recent group. Use only if you are not using 'Group Slug' below and 'Show Latest' is set to 'Off'."
+msgid "Select a recent article as an example to style/setup. Since this is the article detail landing page this article will be replaced with the linked article."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1361
-msgid "Select a recent sermon as an example to style/setup. Since this is the sermon detail landing page this sermon will be replaced with the linked sermon."
+msgid "Select a recent article. Use only if you are not using \"Article Slug\" below and \"Latest\" is set to \"Off\"."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1362
-msgid "Select a recent sermon. Use only if you are not using 'Sermon Slug' below and 'Show Latest' is set to 'Off'."
+msgid "Select a recent event as an example to style/setup. Since this is the events detail landing page this event will be replaced with the linked event."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1363
-msgid "Select a recent staff member as an example to style/setup.  Since this is the staff detail landing page this member will be replaced with the linked staff."
+msgid "Select a recent event. Use only if you are not using \"Event Slug\" below and \"Show Latest\" is set to \"Off\"."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1364
-msgid "Select an element on the page to display more settings"
+msgid "Select a recent group. Use only if you are not using 'Group Slug' below and 'Show Latest' is set to 'Off'."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1365
-msgid "Select tags"
+msgid "Select a recent sermon as an example to style/setup. Since this is the sermon detail landing page this sermon will be replaced with the linked sermon."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1366
-msgid "Selector of container"
+msgid "Select a recent sermon. Use only if you are not using 'Sermon Slug' below and 'Show Latest' is set to 'Off'."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1367
-msgid "Semi Bold"
+msgid "Select a recent staff member as an example to style/setup.  Since this is the staff detail landing page this member will be replaced with the linked staff."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1368
-msgid "Send a support ticket"
+msgid "Select an element on the page to display more settings"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1369
-msgid "Separator"
+msgid "Select tags"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1370
-msgid "Series"
+msgid "Selector of container"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1371
-msgid "Series Filter"
+msgid "Semi Bold"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1372
-msgid "Sermon Detail"
+msgid "Send a support ticket"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1373
-msgid "Sermon Featured"
+msgid "Separator"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1374
-msgid "Sermon Layout"
+msgid "Series"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1375
-msgid "Sermon List"
+msgid "Series Filter"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1376
-msgid "Sermon Slug..."
+msgid "Sermon Detail"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1377
-msgid "Sessions"
+msgid "Sermon Featured"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1378
-msgid "Set as Homepage"
+msgid "Sermon Layout"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1379
-msgid "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
+msgid "Sermon List"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1380
+msgid "Sermon Slug..."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1381
-msgid "Shadow"
+msgid "Sessions"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1382
-msgid "Shake"
+msgid "Set as Homepage"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1383
-msgid "Shape"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1384
-msgid "Shapes"
+msgid "Set your custom attribute for wrapper element. Each attribute in a separate line. Separate attribute key from the value using : character."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1385
-msgid "Share"
+msgid "Shadow"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1386
-msgid "Share Button"
+msgid "Shake"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1387
-msgid "Share Button Item"
+msgid "Shape"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1388
-msgid "Share Buttons"
+msgid "Shapes"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1389
-msgid "Shipping Price"
+msgid "Share"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1390
-msgid "Shop Cart"
+msgid "Share Button"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1391
-msgid "Shop Categories"
+msgid "Share Button Item"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1392
-msgid "Shop Pages"
+msgid "Share Buttons"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1393
-msgid "Shop Products"
+msgid "Shipping"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1394
-msgid "Shopping"
+msgid "Shipping Price"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1395
-msgid "Shopping Bag"
+msgid "Shop Cart"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1396
+msgid "Shop Categories"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1397
+msgid "Shop Pages"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1398
-msgid "Shorten"
+msgid "Shop Products"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1399
-msgid "Shortname"
+msgid "Shopping"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1400
-msgid "Show"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1401
-msgid "Show After X"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1402
-msgid "Show Button Counter"
+msgid "Shopping Bag"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1403
-msgid "Show Friend's Faces"
+msgid "Shorten"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1404
-msgid "Show Hidden Elements"
+msgid "Shortname"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1405
-msgid "Show If Language"
+msgid "Show"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1406
-msgid "Show Latest"
+msgid "Show After X"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1407
-msgid "Show Meta Data"
+msgid "Show Button Counter"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1408
-msgid "Show Original image"
+msgid "Show Friend's Faces"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1409
-msgid "Show QTY"
+msgid "Show Hidden Elements"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1410
-msgid "Show Social Context"
+msgid "Show If Language"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1411
-msgid "Show message"
+msgid "Show Latest"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1412
-msgid "Show on Desktop"
+msgid "Show Meta Data"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1413
-msgid "Show on devices"
+msgid "Show Original image"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1414
-msgid "Show to"
+msgid "Show QTY"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1415
-msgid "Shows, in preview only, the content that renders outside the element box."
+msgid "Show Social Context"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1416
-msgid "Shrink"
+msgid "Show message"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1417
-msgid "Shutter In Horizontal"
+msgid "Show on Desktop"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1418
-msgid "Shutter In Vertical"
+msgid "Show on devices"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1419
-msgid "Shutter Out Horizontal"
+msgid "Show to"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1420
-msgid "Shutter Out Vertical"
+msgid "Shows, in preview only, the content that renders outside the element box."
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1421
+msgid "Shrink"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1422
-msgid "Sign Up"
+msgid "Shutter In Horizontal"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1423
-msgid "Sign in link"
+msgid "Shutter In Vertical"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1424
-msgid "Simplify"
+msgid "Shutter Out Horizontal"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1425
-msgid "Size"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1426
-msgid "Skew"
+msgid "Shutter Out Vertical"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1427
-msgid "Skew Backward"
+msgid "Sign Up"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1428
-msgid "Skew Forward"
+msgid "Sign in link"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1429
-msgid "SkewX"
+msgid "Simplify"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1430
-msgid "SkewY"
+msgid "Size"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1431
-msgid "Skin"
+msgid "Skew"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1432
-msgid "Skin 1"
+msgid "Skew Backward"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1433
-msgid "Skin 2"
+msgid "Skew Forward"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1434
-msgid "Skin 3"
+msgid "SkewX"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1435
-msgid "Skin 4"
+msgid "SkewY"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1436
-msgid "Skip"
+msgid "Skin"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1437
-msgid "Skype"
+msgid "Skin 1"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1438
-msgid "Slide"
+msgid "Skin 2"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1439
-msgid "Slide Down"
+msgid "Skin 3"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1440
-msgid "Slide Left"
+msgid "Skin 4"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1441
-msgid "Slide Right"
+msgid "Skip"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1442
-msgid "Slide Up"
+msgid "Skype"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1443
-msgid "Slider"
+msgid "Slide"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1444
-msgid "Slides"
+msgid "Slide Down"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1445
-msgid "Slug"
+msgid "Slide Left"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1446
-msgid "Slug of article (my-article-name). Use only if you are not selecting from the \"Recent Articles\" above and \"Latest\" is set to \"Off\"."
+msgid "Slide Right"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1447
-msgid "Slug of event (my-event-name). Use only if you are not selecting from the \"Recent Events\" above and \"Show Latest\" is set to \"Off\"."
+msgid "Slide Up"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1448
-msgid "Slug of group. Use only if you are not selecting from the 'Recent Groups' above and 'Show Latest' is set to 'Off'."
+msgid "Slider"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1449
-msgid "Slug of sermon (my-sermon-name). Use only if you are not selecting from the 'Recent Sermons' above and 'Show Latest' is set to 'Off'."
+msgid "Slides"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1450
-msgid "Slug..."
+msgid "Slug"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1451
-msgid "Social"
+msgid "Slug of article (my-article-name). Use only if you are not selecting from the \"Recent Articles\" above and \"Latest\" is set to \"Off\"."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1452
-msgid "Social Media"
+msgid "Slug of event (my-event-name). Use only if you are not selecting from the \"Recent Events\" above and \"Show Latest\" is set to \"Off\"."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1453
-msgid "Social Networks"
+msgid "Slug of group. Use only if you are not selecting from the 'Recent Groups' above and 'Show Latest' is set to 'Off'."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1454
-msgid "Softness"
+msgid "Slug of sermon (my-sermon-name). Use only if you are not selecting from the 'Recent Sermons' above and 'Show Latest' is set to 'Off'."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1455
-msgid "Solid"
+msgid "Slug..."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1456
-msgid "Some integrations are available only in PRO"
+msgid "Social"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1457
+msgid "Social Media"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1458
-msgid "Something went wrong on getting blockResolve data"
+msgid "Social Networks"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1459
-msgid "Something went wrong on getting blocks."
+msgid "Softness"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1460
-msgid "Something went wrong on getting data"
+msgid "Solid"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1461
-msgid "Something went wrong on getting layouts."
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1462
-msgid "Something went wrong on getting meta"
+msgid "Some integrations are available only in PRO"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1463
-msgid "Something went wrong on getting pages"
+msgid "Something went wrong on getting blockResolve data"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1464
-msgid "Something went wrong on getting popups."
+msgid "Something went wrong on getting blocks."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1465
-msgid "Something went wrong on publish"
+msgid "Something went wrong on getting data"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1466
-msgid "Something went wrong when creating an account"
+msgid "Something went wrong on getting layouts."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1467
-msgid "Something went wrong!"
+msgid "Something went wrong on getting meta"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1468
+msgid "Something went wrong on getting pages"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1469
+msgid "Something went wrong on getting popups."
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1470
+msgid "Something went wrong on publish"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1471
+msgid "Something went wrong when creating an account"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1472
+msgid "Something went wrong!"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1473
 #: public/editor-client/build/texts.php:90
 msgid "Something went wrong, please try again"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1469
+#: public/editor-build/prod/texts.php:1474
 msgid "Sort alphabetically"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1470
+#: public/editor-build/prod/texts.php:1475
 msgid "Sorting Options"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1471
+#: public/editor-build/prod/texts.php:1476
 msgid "SoundCloud"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1472
+#: public/editor-build/prod/texts.php:1477
 msgid "SoundCloud Link"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1473
+#: public/editor-build/prod/texts.php:1478
 msgid "Source"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1474
+#: public/editor-build/prod/texts.php:1479
 msgid "Space"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1476
+#: public/editor-build/prod/texts.php:1481
 msgid "Spacing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1477
+#: public/editor-build/prod/texts.php:1482
 msgid "Spanish"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1478
+#: public/editor-build/prod/texts.php:1483
 msgid "Speaker Filter"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1479
+#: public/editor-build/prod/texts.php:1484
 msgid "Special Offers"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1481
+#: public/editor-build/prod/texts.php:1486
 msgid "Specific Category"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1482
+#: public/editor-build/prod/texts.php:1487
 msgid "Specific Product"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1483
+#: public/editor-build/prod/texts.php:1488
 msgid "Specific User"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1484
+#: public/editor-build/prod/texts.php:1489
 msgid "Specify a start time (in seconds)"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1485
+#: public/editor-build/prod/texts.php:1490
 msgid "Specify an alternate text for the image, if it cannot be displayed."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1486
+#: public/editor-build/prod/texts.php:1491
 msgid "Specify an end time (in seconds)"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1487
+#: public/editor-build/prod/texts.php:1492
 msgid "Speed"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1488
+#: public/editor-build/prod/texts.php:1493
 msgid "Spinners"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1489
+#: public/editor-build/prod/texts.php:1494
 msgid "Sport"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1490
+#: public/editor-build/prod/texts.php:1495
 msgid "Sports & Fitness"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1491
+#: public/editor-build/prod/texts.php:1496
 msgid "Square"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1492
+#: public/editor-build/prod/texts.php:1497
 msgid "Staff Detail"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1493
+#: public/editor-build/prod/texts.php:1498
 msgid "Stars"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1494
+#: public/editor-build/prod/texts.php:1499
 msgid "Stars Bg"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1495
+#: public/editor-build/prod/texts.php:1500
 msgid "Start"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1496
+#: public/editor-build/prod/texts.php:1501
 msgid "Static"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1497
+#: public/editor-build/prod/texts.php:1502
 msgid "Status"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1498
+#: public/editor-build/prod/texts.php:1503
 msgid "Step"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1499
+#: public/editor-build/prod/texts.php:1504
 msgid "Sticky"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1501
+#: public/editor-build/prod/texts.php:1506
 msgid "Stock Availability labels"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1502
+#: public/editor-build/prod/texts.php:1507
 msgid "Stop Time"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1504
+#: public/editor-build/prod/texts.php:1509
 msgid "Story"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1505
+#: public/editor-build/prod/texts.php:1510
 msgid "Strike"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1506
+#: public/editor-build/prod/texts.php:1511
 msgid "Stroke"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1507
+#: public/editor-build/prod/texts.php:1512
 msgid "Style"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1508
+#: public/editor-build/prod/texts.php:1513
 msgid "Styles"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1509
+#: public/editor-build/prod/texts.php:1514
 msgid "Styling"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1510
+#: public/editor-build/prod/texts.php:1515
 msgid "Sub Title"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1511
+#: public/editor-build/prod/texts.php:1516
 msgid "Subject"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1512
+#: public/editor-build/prod/texts.php:1517
 msgid "Submit Form"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1513
+#: public/editor-build/prod/texts.php:1518
 msgid "Subscribe to Calendar"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1514
+#: public/editor-build/prod/texts.php:1519
 msgid "Subscribe to Event"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1515
+#: public/editor-build/prod/texts.php:1520
 msgid "Subscribers are automatically synced to your"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1516
+#: public/editor-build/prod/texts.php:1521
 msgid "Subscribers will automatically be synced to your Cloud list."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1517
+#: public/editor-build/prod/texts.php:1522
 msgid "Subscribers will automatically be synced to your WordPress list."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1518
+#: public/editor-build/prod/texts.php:1523
 msgid "Subscript"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1519
+#: public/editor-build/prod/texts.php:1524
 msgid "Subscription"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1520
+#: public/editor-build/prod/texts.php:1525
 msgid "Subscription by Appstle"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1521
+#: public/editor-build/prod/texts.php:1526
 msgid "Subscription by Bold"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1522
+#: public/editor-build/prod/texts.php:1527
 msgid "Subscription by Paywhirl"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1523
+#: public/editor-build/prod/texts.php:1528
 msgid "Subscription by Seal"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1524
+#: public/editor-build/prod/texts.php:1529
 msgid "Subscriptions by Recharge"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1525
+#: public/editor-build/prod/texts.php:1530
 msgid "Subtitle"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1526
+#: public/editor-build/prod/texts.php:1531
 msgid "Subtotal"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1527
+#: public/editor-build/prod/texts.php:1532
 msgid "Success"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1528
+#: public/editor-build/prod/texts.php:1533
 msgid "Suffix"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1529
+#: public/editor-build/prod/texts.php:1534
 msgid "Suggested Videos"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1530
+#: public/editor-build/prod/texts.php:1535
 msgid "Superscript"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1531
+#: public/editor-build/prod/texts.php:1536
 msgid "Surcharge"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1532
+#: public/editor-build/prod/texts.php:1537
 msgid "Sweep To Bottom"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1533
+#: public/editor-build/prod/texts.php:1538
 msgid "Sweep To Left"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1534
+#: public/editor-build/prod/texts.php:1539
 msgid "Sweep To Right"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1535
+#: public/editor-build/prod/texts.php:1540
 msgid "Sweep To Top"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1536
+#: public/editor-build/prod/texts.php:1541
 msgid "Swing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1537
+#: public/editor-build/prod/texts.php:1542
 msgid "Switch to Draft"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1538
+#: public/editor-build/prod/texts.php:1543
 msgid "Switch to desktop to add blocks"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1539
+#: public/editor-build/prod/texts.php:1544
 msgid "Switch to desktop to add popup"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1541
+#: public/editor-build/prod/texts.php:1546
 msgid "Sync Now"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1542
+#: public/editor-build/prod/texts.php:1547
 msgid "Sync your Library into the cloud by connecting your account"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1543
+#: public/editor-build/prod/texts.php:1548
 msgid "TAG"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1544
+#: public/editor-build/prod/texts.php:1549
 msgid "THB"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1545
+#: public/editor-build/prod/texts.php:1550
 msgid "TIME"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1546
+#: public/editor-build/prod/texts.php:1551
 msgid "TLS"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1547
+#: public/editor-build/prod/texts.php:1552
 msgid "TTF File"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1548
+#: public/editor-build/prod/texts.php:1553
 msgid "TWD"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1549
+#: public/editor-build/prod/texts.php:1554
 msgid "TYPOGRAPHY"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1550
+#: public/editor-build/prod/texts.php:1555
 msgid "Tab"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1552
+#: public/editor-build/prod/texts.php:1557
 msgid "Table Head"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1553
+#: public/editor-build/prod/texts.php:1558
 msgid "Table Sidebar"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1554
+#: public/editor-build/prod/texts.php:1559
 msgid "Table of Contents"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1555
+#: public/editor-build/prod/texts.php:1560
 msgid "Tablet"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1556
+#: public/editor-build/prod/texts.php:1561
 msgid "Tablet view"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1558
+#: public/editor-build/prod/texts.php:1563
 msgid "Tada"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1559
+#: public/editor-build/prod/texts.php:1564
 msgid "Tags"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1560
+#: public/editor-build/prod/texts.php:1565
 msgid "Tail"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1561
+#: public/editor-build/prod/texts.php:1566
 msgid "Take over"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1562
+#: public/editor-build/prod/texts.php:1567
 msgid "Take over failed please refresh the page"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1563
+#: public/editor-build/prod/texts.php:1568
 msgid "Target URL"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1564
+#: public/editor-build/prod/texts.php:1569
 msgid "Tax"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1565
+#: public/editor-build/prod/texts.php:1570
 msgid "Tax Percentage"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1566
+#: public/editor-build/prod/texts.php:1571
 msgid "Technology"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1567
+#: public/editor-build/prod/texts.php:1572
 msgid "Tel"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1568
+#: public/editor-build/prod/texts.php:1573
 msgid "Telegram"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1569
+#: public/editor-build/prod/texts.php:1574
 msgid "Tell AI what to write in any language ..."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1571
+#: public/editor-build/prod/texts.php:1576
 msgid "Text & Formatting"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1572
+#: public/editor-build/prod/texts.php:1577
 msgid "Text Bg. Color"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1573
+#: public/editor-build/prod/texts.php:1578
 msgid "Text Editing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1574
+#: public/editor-build/prod/texts.php:1579
 msgid "Text Field"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1575
+#: public/editor-build/prod/texts.php:1580
 msgid "Text Shadow"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1576
+#: public/editor-build/prod/texts.php:1581
 msgid "The calendar view default is the third position. If you change the order make sure the other view positions are updated to be unique."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1577
+#: public/editor-build/prod/texts.php:1582
 msgid "The element you have selected doesn't have more settings"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1578
+#: public/editor-build/prod/texts.php:1583
 msgid "The email address format is not valid"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1579
+#: public/editor-build/prod/texts.php:1584
 msgid "The featured view default is the first position. If you change the order make sure the other view positions are updated to be unique."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1580
+#: public/editor-build/prod/texts.php:1585
 msgid "The font can only be deleted if you disconnect from Adobe Fonts. This will remove all fonts added with this integration."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1581
+#: public/editor-build/prod/texts.php:1586
 msgid "The integration is not responding, please try again or verify the account credentials"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1582
+#: public/editor-build/prod/texts.php:1587
 msgid "The list view default is the second position. If you change the order make sure the other view positions are updated to be unique."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1583
+#: public/editor-build/prod/texts.php:1588
 msgid "The text displayed as a link to view the content."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1584
+#: public/editor-build/prod/texts.php:1589
 msgid "The token are missing"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1585
+#: public/editor-build/prod/texts.php:1590
 msgid "Theme"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1586
+#: public/editor-build/prod/texts.php:1591
 msgid "Theme Header & Footer"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1587
+#: public/editor-build/prod/texts.php:1592
 msgid "There are no choices"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1588
+#: public/editor-build/prod/texts.php:1593
 msgid "Thin"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1589
+#: public/editor-build/prod/texts.php:1594
 msgid "This is .mp4 URL."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1590
+#: public/editor-build/prod/texts.php:1595
 msgid "This is Lottie .json URL. Get more from LottieFiles.com."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1591
+#: public/editor-build/prod/texts.php:1596
 msgid "This option automatically shows the latest article and overrides the 'Recent Articles' and 'Article Slug' options."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1592
+#: public/editor-build/prod/texts.php:1597
 msgid "This option automatically shows the latest event and overrides the 'Recent Events' and 'Event Slug' options."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1593
+#: public/editor-build/prod/texts.php:1598
 msgid "This option automatically shows the latest group and overrides the 'Recent Groups' and 'Group Slug' options."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1594
+#: public/editor-build/prod/texts.php:1599
 msgid "This option automatically shows the latest sermon and overrides the 'Recent Sermons' and 'Sermon Slug' options."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1595
+#: public/editor-build/prod/texts.php:1600
 msgid "This option only applies to 'Latest' and if this is selected the 'Featured' option does not apply."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1596
+#: public/editor-build/prod/texts.php:1601
 msgid "This option only applies to 'Latest' and if this is selected the 'No featured' option does not apply."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1597
+#: public/editor-build/prod/texts.php:1602
 msgid "This option only applies to 'Latest'."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1598
+#: public/editor-build/prod/texts.php:1603
 msgid "This option only applies to 'Show Latest' and if this is selected the 'Featured' option does not apply."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1599
+#: public/editor-build/prod/texts.php:1604
 msgid "This option only applies to 'Show Latest' and if this is selected the 'No featured' option does not apply."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1600
+#: public/editor-build/prod/texts.php:1605
 msgid "This option only applies to 'Show Latest' and if this is selected the 'Non featured' option does not apply."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1601
+#: public/editor-build/prod/texts.php:1606
 msgid "This option only applies to 'Show Latest'."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1602
+#: public/editor-build/prod/texts.php:1607
 msgid "This page is currently a Draft. To enable it on your website, choose Publish after clicking the Up Arrow button."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1603
+#: public/editor-build/prod/texts.php:1608
 msgid "This page is currently set to Scheduled. If you want to publish it now, please change the status from the page settings."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1604
+#: public/editor-build/prod/texts.php:1609
 msgid "This page needs a refresh. You’ve probably updated this page (or another page) in a different tab or browser."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1605
+#: public/editor-build/prod/texts.php:1610
 msgid "This should be a comma separate list of category slugs without spaces eg. if you wanted to use the categories \"Category Example 1\" and \"Category Example 2\" the list would be \"category-example-1,category-example-2\". This option removes the parent filter options."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1606
+#: public/editor-build/prod/texts.php:1611
 msgid "This should be a comma separate list of category slugs without spaces eg. if you wanted to use the categories 'Category Example 1' and 'Category Example 2' the list would be 'category-example-1,category-example-2'. This option removes the parent filter options."
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1607
+#: public/editor-build/prod/texts.php:1612
 msgid "Thumbnail"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1608
+#: public/editor-build/prod/texts.php:1613
 msgid "Thumbs"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1609
+#: public/editor-build/prod/texts.php:1614
 msgid "Time"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1610
+#: public/editor-build/prod/texts.php:1615
 msgid "Time From"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1611
+#: public/editor-build/prod/texts.php:1616
 msgid "Time Zone"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1613
+#: public/editor-build/prod/texts.php:1618
 msgid "Timeline Items"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1614
+#: public/editor-build/prod/texts.php:1619
 msgid "Timeline Labels"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1615
+#: public/editor-build/prod/texts.php:1620
 msgid "Timer"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1616
+#: public/editor-build/prod/texts.php:1621
 msgid "Times"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1617
+#: public/editor-build/prod/texts.php:1622
 msgid "Tip: This name will be displayed in the font library"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1618
+#: public/editor-build/prod/texts.php:1623
 msgid "Tip: Use these shortcodes to populate your template"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1619
+#: public/editor-build/prod/texts.php:1624
 msgid "Tip: You can browse the Adobe font library here"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1620
+#: public/editor-build/prod/texts.php:1625
 msgid "Tip: You can browse the Google font library"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1621
+#: public/editor-build/prod/texts.php:1626
 msgid "Tip: You can browse the Google font library here"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1623
+#: public/editor-build/prod/texts.php:1628
 msgid "Title Padding"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1624
+#: public/editor-build/prod/texts.php:1629
 msgid "Titles"
 msgstr ""
 
-#: public/editor-build/prod/texts.php:1625
-msgid "To element"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1626
-msgid "Toggle"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1627
-msgid "Toggle Menu"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1628
-msgid "Tone"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1629
-msgid "Top"
-msgstr ""
-
 #: public/editor-build/prod/texts.php:1630
-msgid "Top Center"
+msgid "To be able to display and customize these steps, you need to configure shipping, address and payment in CMS or Ecwid store"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1631
-msgid "Top Left"
+msgid "To element"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1632
-msgid "Top Right"
+msgid "Toggle"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1633
-msgid "Total"
+msgid "Toggle Menu"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1634
-msgid "Touch Gestures"
+msgid "Tone"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1635
-msgid "Tracking by Omega"
+msgid "Top"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1636
-msgid "Transform"
+msgid "Top Center"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1637
-msgid "Transition"
+msgid "Top Left"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1638
-msgid "Transition Type"
+msgid "Top Right"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1639
-msgid "Translation"
+msgid "Total"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1640
-msgid "Transparency"
+msgid "Touch Gestures"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1641
-msgid "Transportation"
+msgid "Tracking by Omega"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1642
-msgid "Trash"
+msgid "Transform"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1643
-msgid "Travel"
+msgid "Transition"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1644
-msgid "Travel & Hotel"
+msgid "Transition Type"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1645
-msgid "Trigger"
+msgid "Translation"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1646
-msgid "Trigger On"
+msgid "Transparency"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1647
-msgid "Trigger Popup Only Once"
+msgid "Transportation"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1648
-msgid "Triggers"
+msgid "Trash"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1649
-msgid "Trust Product Rating"
+msgid "Travel"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1650
-msgid "Trust Product Review"
+msgid "Travel & Hotel"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1651
-msgid "Trust Product Seals"
+msgid "Trigger"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1652
-msgid "Try Again"
+msgid "Trigger On"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1653
-msgid "Tumblr"
+msgid "Trigger Popup Only Once"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1654
-msgid "Tweet"
+msgid "Triggers"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1655
+msgid "Trust Product Rating"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1656
-msgid "Type"
+msgid "Trust Product Review"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1657
-msgid "Type name"
+msgid "Trust Product Seals"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1658
-msgid "Type to Search ..."
+msgid "Try Again"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1659
-msgid "Type to search"
+msgid "Tumblr"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1660
-msgid "Typography"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1661
-msgid "UPLOAD"
+msgid "Tweet"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1662
-msgid "UPLOAD FONT"
+msgid "Type"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1663
-msgid "URL"
+msgid "Type name"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1664
-msgid "URL of article detail page. If used a link to the heading and an image will be added to take the user to the article detail page. Requires the \"Article Detail\" widget to be placed on a page and that page url/slug placed in this field ."
+msgid "Type to Search ..."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1665
-msgid "URL of article detail page. If used will add a link to the heading to take the user to the article detail page.  Requires the \"Article Detail\" widget to be placed on a page and that page url/slug placed in this field ."
+msgid "Type to search"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1666
-msgid "URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the \"Event Detail\" widget to be placed on a page and that page url/slug placed in this field ."
+msgid "Typography"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1667
-msgid "URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the \"Event Detail\" widget to be placed on a page and that page url/slug placed in this field."
+msgid "UPLOAD"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1668
-msgid "URL of event detail page. If used will add a link to the calendar titles to take the user to the event detail page. Requires the 'Event Detail' widget to be placed on a page and that page url/slug placed in this field."
+msgid "UPLOAD FONT"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1669
-msgid "URL of group detail page. If used will add a link to the heading to take the user to the group detail page. Requires the \"Group Detail\" widget to be placed on a page and that page url/slug placed in this field."
+msgid "URL"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1670
-msgid "URL of group detail page. If used will add a link to the heading to take the user to the group detail page. Requires the 'Group Detail' widget to be placed on a page and that page url/slug placed in this field ."
+msgid "URL of article detail page. If used a link to the heading and an image will be added to take the user to the article detail page. Requires the \"Article Detail\" widget to be placed on a page and that page url/slug placed in this field ."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1671
-msgid "URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the \"Sermon Detail\" widget to be placed on a page and that page url/slug placed in this field."
+msgid "URL of article detail page. If used will add a link to the heading to take the user to the article detail page.  Requires the \"Article Detail\" widget to be placed on a page and that page url/slug placed in this field ."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1672
-msgid "URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the 'Sermon Detail' widget to be placed on a page and that page url/slug placed in this field ."
+msgid "URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the \"Event Detail\" widget to be placed on a page and that page url/slug placed in this field ."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1673
-msgid "USD"
+msgid "URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the \"Event Detail\" widget to be placed on a page and that page url/slug placed in this field."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1674
-msgid "USE CUSTOM TEMPLATE"
+msgid "URL of event detail page. If used will add a link to the calendar titles to take the user to the event detail page. Requires the 'Event Detail' widget to be placed on a page and that page url/slug placed in this field."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1675
-msgid "Unable to fetch blocks by filter"
+msgid "URL of group detail page. If used will add a link to the heading to take the user to the group detail page. Requires the \"Group Detail\" widget to be placed on a page and that page url/slug placed in this field."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1676
-msgid "Unable to fetch layouts by filter"
+msgid "URL of group detail page. If used will add a link to the heading to take the user to the group detail page. Requires the 'Group Detail' widget to be placed on a page and that page url/slug placed in this field ."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1677
-msgid "Unable to fetch popups by filter"
+msgid "URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the \"Sermon Detail\" widget to be placed on a page and that page url/slug placed in this field."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1678
-msgid "Unable to insert block. Please try again or contact support"
+msgid "URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the 'Sermon Detail' widget to be placed on a page and that page url/slug placed in this field ."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1679
-msgid "Unable to insert layout. Please try again or contact support"
+msgid "USD"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1680
-msgid "Unable to insert popup. Please try again or contact support"
+msgid "USE CUSTOM TEMPLATE"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1681
-msgid "Underline"
+msgid "Unable to fetch blocks by filter"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1682
-msgid "Undo"
+msgid "Unable to fetch layouts by filter"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1683
-msgid "Undo (ctrl+Z)"
+msgid "Unable to fetch popups by filter"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1684
-msgid "Unique Id"
+msgid "Unable to insert block. Please try again or contact support"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1685
-msgid "Unlimited Bundles"
+msgid "Unable to insert layout. Please try again or contact support"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1686
-msgid "Unlocked"
+msgid "Unable to insert popup. Please try again or contact support"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1687
-msgid "Unsuccessful sync"
+msgid "Underline"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1688
-msgid "Untitled"
+msgid "Undo"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1689
-msgid "Up"
+msgid "Undo (ctrl+Z)"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1690
-msgid "Up Down"
+msgid "Unique Id"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1691
-msgid "Up Left"
+msgid "Unlimited Bundles"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1692
-msgid "Up Right"
+msgid "Unlocked"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1693
-msgid "Update"
+msgid "Unsuccessful sync"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1694
-msgid "Upgrade to PRO"
+msgid "Untitled"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1695
-msgid "Upgrade to PRO to use this"
+msgid "Up"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1696
-msgid "Upgrade to PRO to use this block"
+msgid "Up Down"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1697
-msgid "Upgrade to PRO to use this element"
+msgid "Up Left"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1698
-msgid "Upgrade to PRO to use this integration"
+msgid "Up Right"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1699
-msgid "Upgrade to PRO to use this layout"
+msgid "Update"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1700
-msgid "Upgrade to PRO to use this story"
+msgid "Upgrade to PRO"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1701
-msgid "Upgrade to PRO, to use this option"
+msgid "Upgrade to PRO to use this"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1702
-msgid "Upload"
+msgid "Upgrade to PRO to use this block"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1703
-msgid "Upload Fields by UploadKit"
+msgid "Upgrade to PRO to use this element"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1704
-msgid "Upload Icon"
+msgid "Upgrade to PRO to use this integration"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1705
-msgid "Upload only [ .png or .svg ]"
+msgid "Upgrade to PRO to use this layout"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1706
-msgid "Uppercase"
+msgid "Upgrade to PRO to use this story"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1707
+msgid "Upgrade to PRO, to use this option"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1708
-msgid "Upsell Pagination"
+msgid "Upload"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1709
-msgid "Upsell Tags"
+msgid "Upload Fields by UploadKit"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1710
-msgid "Upsell by FastSimon"
+msgid "Upload Icon"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1711
-msgid "Upsell by LimeSpot"
+msgid "Upload only [ .png or .svg ]"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1712
-msgid "Upsell by Wiser"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1713
-msgid "Upsell by Zoorix"
+msgid "Uppercase"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1714
-msgid "Url"
+msgid "Upsell Pagination"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1715
-msgid "Use Small Header"
+msgid "Upsell Tags"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1716
-msgid "Use the regular video links generated by YouTube. The 'feature=share' parameter is not a valid or recognized parameter by the YouTube platform."
+msgid "Upsell by FastSimon"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1717
-msgid "User"
+msgid "Upsell by LimeSpot"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1718
-msgid "User Agent"
+msgid "Upsell by Wiser"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1719
-msgid "User Interface"
+msgid "Upsell by Zoorix"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1720
-msgid "Username"
+msgid "Url"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1721
-msgid "Users"
+msgid "Use Small Header"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1722
-msgid "Users & People"
+msgid "Use the regular video links generated by YouTube. The 'feature=share' parameter is not a valid or recognized parameter by the YouTube platform."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1723
-msgid "VARIABLE"
+msgid "User"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1724
-msgid "VK"
+msgid "User Agent"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1725
-msgid "Value"
+msgid "User Interface"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1726
-msgid "Value Bg"
+msgid "Username"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1727
-msgid "Values"
+msgid "Users"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1728
-msgid "Variable"
+msgid "Users & People"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1729
-msgid "Variant"
+msgid "VARIABLE"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1730
-msgid "Variations"
+msgid "VK"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1731
-msgid "Vendor"
+msgid "Value"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1732
-msgid "Verification process failed, please make sure you have done the following three things and try again in a few minutes."
+msgid "Value Bg"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1733
-msgid "Vertical"
+msgid "Values"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1734
-msgid "Vertical Align"
+msgid "Variable"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1735
-msgid "Vertical Offset"
+msgid "Variant"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1736
+msgid "Variations"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1737
-msgid "Video Shopping"
+msgid "Vendor"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1738
-msgid "Video type"
+msgid "Verification process failed, please make sure you have done the following three things and try again in a few minutes."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1739
-msgid "View"
+msgid "Vertical"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1740
-msgid "View Favorites"
+msgid "Vertical Align"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1741
-msgid "View as"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1742
-msgid "View on Instagram"
+msgid "Vertical Offset"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1743
-msgid "Vimeo"
+msgid "Video Shopping"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1744
-msgid "Visible Month"
+msgid "Video type"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1745
-msgid "Volume"
+msgid "View"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1746
-msgid "WHAT WILL TRIGGER THE POPUP TO OPEN"
+msgid "View Favorites"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1747
-msgid "WHERE DO YOU WANT TO DISPLAY IT?"
+msgid "View as"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1748
-msgid "WHICH BLOG WILL USE THIS TEMPLATE ?"
+msgid "View on Instagram"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1749
-msgid "WHICH COLLECTIONS WILL USE THIS TEMPLATE ?"
+msgid "View on LinkedIn"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1750
-msgid "WHICH PRODUCTS WILL USE THIS TEMPLATE ?"
+msgid "Vimeo"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1751
-msgid "WOFF File"
+msgid "Visible Month"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1752
-msgid "WOFF2 File"
+msgid "Volume"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1753
-msgid "Weather"
+msgid "WHAT WILL TRIGGER THE POPUP TO OPEN"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1754
-msgid "Web Project ID"
+msgid "WHERE DO YOU WANT TO DISPLAY IT?"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1755
-msgid "Website"
+msgid "WHICH BLOG WILL USE THIS TEMPLATE ?"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1756
-msgid "Weekly"
+msgid "WHICH COLLECTIONS WILL USE THIS TEMPLATE ?"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1757
-msgid "Weight"
+msgid "WHICH PRODUCTS WILL USE THIS TEMPLATE ?"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1758
-msgid "WhatsApp"
+msgid "WOFF File"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1759
-msgid "When Finished"
+msgid "WOFF2 File"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1760
-msgid "Wholesale Price"
+msgid "Weather"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1761
-msgid "Wholesale Prices"
+msgid "Web Project ID"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1762
-msgid "WideBundle"
+msgid "Website"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1763
-msgid "Widgets by AliExpress"
+msgid "Weekly"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1764
-msgid "Widgets by PickyStory"
+msgid "Weight"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1765
-msgid "Width"
+msgid "WhatsApp"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1766
-msgid "Width Type"
+msgid "When Finished"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1767
-msgid "WishList by Swym"
+msgid "Wholesale Price"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1768
-msgid "Wishlist by Growave"
+msgid "Wholesale Prices"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1769
-msgid "Wishlist by Hero"
+msgid "WideBundle"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1770
-msgid "Wobble"
+msgid "Widgets by AliExpress"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1771
-msgid "WooCommerce Cart"
+msgid "Widgets by PickyStory"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1772
-msgid "WooCommerce Product"
+msgid "Width"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1773
-msgid "Word Wrap"
+msgid "Width Type"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1774
-msgid "WordPress"
+msgid "WishList by Swym"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1775
-msgid "Work Phone"
+msgid "Wishlist by Growave"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1776
-msgid "Works only in the product page"
+msgid "Wishlist by Hero"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1777
-msgid "Writing"
+msgid "Wobble"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1778
-msgid "X"
+msgid "WooCommerce Cart"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1779
-msgid "X Anchor Point"
+msgid "WooCommerce Product"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1780
-msgid "XING"
+msgid "Word Wrap"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1781
-msgid "Y"
+msgid "WordPress"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1782
-msgid "Y Anchor Point"
+msgid "Work Phone"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1783
-msgid "YOUR BLOG POST IS READY TO BE PUBLISHED"
+msgid "Works only in the product page"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1784
-msgid "YOUR PAGE IS READY TO BE PUBLISHED"
+msgid "Writing"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1785
-msgid "YOUR PAGE IS READY TO PUBLISH!"
+msgid "X"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1786
-msgid "YYYY-MM-DD"
+msgid "X Anchor Point"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1787
-msgid "Yearly"
+msgid "XING"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1788
-msgid "YotPo Product Review"
+msgid "Y"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1789
-msgid "You can"
+msgid "Y Anchor Point"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1790
-msgid "You can use the following selectors to create targeted CSS."
+msgid "YOUR BLOG POST IS READY TO BE PUBLISHED"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1791
-msgid "You can use these shortcodes in your email:"
+msgid "YOUR PAGE IS READY TO BE PUBLISHED"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1792
-msgid "You can't add it again"
+msgid "YOUR PAGE IS READY TO PUBLISH!"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1793
-msgid "You can’t make changes"
+msgid "YYYY-MM-DD"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1794
-msgid "You have reached the maximum number of published pages for the Free plan. Continue creating drafts or upgrade to PRO to unlock unlimited published pages."
+msgid "Yearly"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1795
-msgid "You have successfully connect the form with"
+msgid "YotPo Product Review"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1796
-msgid "You must be have one font added"
+msgid "You can"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1797
-msgid "You must have one selected item"
+msgid "You can use the following selectors to create targeted CSS."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1798
-msgid "You must specify a title"
+msgid "You can use these shortcodes in your email:"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1799
-msgid "You need the Shop Add-on to use this"
+msgid "You can't add it again"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1800
-msgid "YouTube"
+msgid "You can’t make changes"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1801
-msgid "Your AppId is no valid, re check and try again"
+msgid "You have reached the maximum number of published pages for the Free plan. Continue creating drafts or upgrade to PRO to unlock unlimited published pages."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1802
-msgid "Your Plugin version is incompatible with Account version, please update plugin"
+msgid "You have successfully connect the form with"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1803
-msgid "Your block was saved without screenshot, browser is not compatible"
+msgid "You must be have one font added"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1804
-msgid "Your link is not correct"
+msgid "You must have one selected item"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1805
-msgid "Youtube"
+msgid "You must specify a title"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1806
-msgid "Z-index"
+msgid "You need the Shop Add-on to use this"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1807
-msgid "Zoom"
+msgid "YouTube"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1808
-msgid "Zoom In"
+msgid "Your AppId is no valid, re check and try again"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1809
-msgid "Zoom Out"
+msgid "Your Plugin version is incompatible with Account version, please update plugin"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1810
-msgid "account via API access "
+msgid "Your block was saved without screenshot, browser is not compatible"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1811
-msgid "art, nature, etc."
+msgid "Your link is not correct"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1812
-msgid "clicks"
+msgid "Youtube"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1813
-msgid "component"
+msgid "Z-index"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1814
-msgid "contains"
+msgid "Zoom"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1815
-msgid "could not find #brz-ed-root"
+msgid "Zoom In"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1816
-msgid "days"
+msgid "Zoom Out"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1817
-msgid "does not contain"
+msgid "account via API access "
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1818
-msgid "does not match"
+msgid "art, nature, etc."
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1819
-msgid "during the session"
+msgid "clicks"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1820
-msgid "element"
+msgid "component"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1821
-msgid "element .child-element"
+msgid "contains"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1822
-msgid "element { CSS goes here }"
+msgid "could not find #brz-ed-root"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1823
-msgid "equals"
+msgid "days"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1824
-msgid "exclude"
+msgid "does not contain"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1825
-msgid "here"
+msgid "does not match"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1826
-msgid "hours"
+msgid "during the session"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1827
-msgid "https://"
+msgid "element"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1828
-msgid "include"
+msgid "element .child-element"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1829
-msgid "is"
+msgid "element { CSS goes here }"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1830
-msgid "is after"
+msgid "equals"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1831
-msgid "is already editing project"
+msgid "exclude"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1832
-msgid "is before"
+msgid "here"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1833
-msgid "is currently working on this page. Do you want to take over"
+msgid "hours"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1834
-msgid "is fewer than"
+msgid "https://"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1835
-msgid "is greater than"
+msgid "include"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1836
-msgid "is less than"
+msgid "is"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1837
-msgid "is more than"
+msgid "is after"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1838
-msgid "is not"
+msgid "is already editing project"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1839
-msgid "layout"
+msgid "is before"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1840
-msgid "layouts"
+msgid "is currently working on this page. Do you want to take over"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1841
-msgid "matches"
+msgid "is fewer than"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1842
-msgid "none"
+msgid "is greater than"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1843
-msgid "on the same page"
+msgid "is less than"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1844
-msgid "open an issue"
+msgid "is more than"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1845
-msgid "or"
+msgid "is not"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1846
-msgid "param"
+msgid "layout"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1847
-msgid "reCAPTCHA"
+msgid "layouts"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1848
-msgid "remove this element"
+msgid "matches"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1849
-msgid "required"
+msgid "none"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1850
+msgid "on the same page"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1851
-msgid "story"
+msgid "open an issue"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1852
-msgid "the first visit"
+msgid "or"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1853
-msgid "the last visit"
+msgid "param"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1854
-msgid "this is my tweet"
+msgid "reCAPTCHA"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1855
-msgid "username"
+msgid "remove this element"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1856
-msgid "value"
-msgstr ""
-
-#: public/editor-build/prod/texts.php:1857
-msgid "viewed pages"
+msgid "required"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1858
-msgid "was not shown"
+msgid "story"
 msgstr ""
 
 #: public/editor-build/prod/texts.php:1859
+msgid "the first visit"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1860
+msgid "the last visit"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1861
+msgid "this is my tweet"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1862
+msgid "useEditorProvider must be used within useEditorProvider"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1863
+msgid "username"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1864
+msgid "value"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1865
+msgid "viewed pages"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1866
+msgid "was not shown"
+msgstr ""
+
+#: public/editor-build/prod/texts.php:1867
 msgid "was shown"
 msgstr ""
 

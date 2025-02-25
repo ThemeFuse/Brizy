@@ -6,6 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { getSidebars } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -13,15 +14,14 @@ import { style } from "./styles";
 import toolbarConfigFn from "./toolbar";
 
 class WPSidebar extends EditorComponent {
-  static get componentId() {
-    return "WPSidebar";
-  }
-
   static defaultValue = defaultValue;
-
   state = {
     sidebars: []
   };
+
+  static get componentId() {
+    return "WPSidebar";
+  }
 
   componentDidMount() {
     getSidebars(this.getGlobalConfig()).then((sidebars) => {
@@ -51,7 +51,7 @@ class WPSidebar extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       ),
       className
@@ -65,11 +65,20 @@ class WPSidebar extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className: classNameWP })}>
-            <DynamicContentHelper placeholder={placeholder} tagName="div" />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: classNameWP,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                <DynamicContentHelper placeholder={placeholder} tagName="div" />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

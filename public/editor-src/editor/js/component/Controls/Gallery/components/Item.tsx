@@ -1,11 +1,11 @@
 import classNames from "classnames";
+import { noop } from "es-toolkit";
 import React, {
   MouseEvent,
   PropsWithChildren,
   ReactElement,
   useCallback
 } from "react";
-import { noop } from "underscore";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { WithClassName, WithId } from "visual/types/attributes";
 

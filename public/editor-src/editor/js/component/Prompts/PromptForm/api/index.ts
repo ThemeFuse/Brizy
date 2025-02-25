@@ -1,7 +1,7 @@
+import { pick } from "es-toolkit";
 import { produce } from "immer";
-import _ from "underscore";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { request } from "visual/utils/api";
 import {
   AddRecaptcha,
@@ -46,11 +46,11 @@ const normalizeForm = (res: FormResponse): FormResponse => {
   });
 };
 
-export const getForm: GetForm = ({ formId }) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const getForm: GetForm = ({ formId }, config) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
   const url = makeUrl(`${api}/forms/${formId}`, {
-    container: containerId
+    container: containerId.toString()
   });
 
   return request(url, {
@@ -63,9 +63,9 @@ export const getForm: GetForm = ({ formId }) => {
     .then(normalizeForm);
 };
 
-export const createForm: CreateForm = ({ formId }) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const createForm: CreateForm = ({ formId }, config: ConfigCommon) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
 
   return request(`${api}/forms`, {
     method: "POST",
@@ -81,15 +81,14 @@ export const createForm: CreateForm = ({ formId }) => {
     .then((res) => res);
 };
 
-export const updateForm: UpdateForm = ({
-  formId,
-  hasEmailTemplate,
-  emailTemplate
-}) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const updateForm: UpdateForm = (
+  { formId, hasEmailTemplate, emailTemplate },
+  config
+) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
   const url = makeUrl(`${api}/forms/${formId}`, {
-    container: containerId
+    container: containerId.toString()
   });
 
   return request(url, {
@@ -105,12 +104,12 @@ export const updateForm: UpdateForm = ({
 };
 
 // Service mailchimp, zepier etc.
-export const getIntegration: GetIntegration = ({ formId, id }) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const getIntegration: GetIntegration = ({ formId, id }, config) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
   const url = makeUrl(`${api}/forms/${formId}/integrations`, {
     type: id,
-    container: containerId
+    container: containerId.toString()
   });
 
   return request(url, {
@@ -127,9 +126,12 @@ export const getIntegration: GetIntegration = ({ formId, id }) => {
   );
 };
 
-export const createIntegration: CreateIntegration = ({ formId, id }) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const createIntegration: CreateIntegration = (
+  { formId, id },
+  config
+) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
 
   return request(`${api}/forms/${formId}/integrations`, {
     method: "POST",
@@ -149,14 +151,13 @@ export const createIntegration: CreateIntegration = ({ formId, id }) => {
   );
 };
 
-export const updateIntegration: UpdateIntegration = ({
-  formId,
-  id,
-  ...appData
-}) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
-  const data = _.pick(appData, [
+export const updateIntegration: UpdateIntegration = (
+  { formId, id, ...appData },
+  config
+) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
+  const data = pick(appData, [
     "type",
     "completed",
     "confirmationNeeded",
@@ -184,10 +185,11 @@ export const updateIntegration: UpdateIntegration = ({
   );
 };
 
-export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
-  id
-}) => {
-  const { api } = Config.get("urls");
+export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = (
+  { id },
+  config
+) => {
+  const { api } = config.urls ?? {};
 
   return request(`${api}/services/${id}/config`, {
     method: "GET",
@@ -206,12 +208,12 @@ export const getIntegrationAccountApiKey: GetIntegrationAccountApiKey = ({
     }));
 };
 
-export const createIntegrationAccount: CreateIntegrationAccount = ({
-  type,
-  data
-}) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const createIntegrationAccount: CreateIntegrationAccount = (
+  { type, data },
+  config
+) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
 
   return request(`${api}/accounts`, {
     method: "POST",
@@ -234,11 +236,11 @@ export const createIntegrationAccount: CreateIntegrationAccount = ({
     .then((res) => res);
 };
 
-export const createIntegrationList: CreateIntegrationList = ({
-  usedAccount,
-  data
-}) => {
-  const { api } = Config.get("urls");
+export const createIntegrationList: CreateIntegrationList = (
+  { usedAccount, data },
+  config
+) => {
+  const { api } = config.urls ?? {};
 
   return request(`${api}/accounts/${usedAccount}/lists`, {
     method: "POST",
@@ -259,12 +261,15 @@ export const createIntegrationList: CreateIntegrationList = ({
 };
 
 // Email smtp, gmailSmtp
-export const getSmtpIntegration: GetSmptIntegration = ({ formId, id }) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const getSmtpIntegration: GetSmptIntegration = (
+  { formId, id },
+  config
+) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
   const url = makeUrl(`${api}/forms/${formId}/notifications`, {
     type: id,
-    container: containerId
+    container: containerId.toString()
   });
 
   return request(url, {
@@ -280,9 +285,12 @@ export const getSmtpIntegration: GetSmptIntegration = ({ formId, id }) => {
   );
 };
 
-export const createSmtpIntegration: CreateSmptIntegration = ({ formId }) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const createSmtpIntegration: CreateSmptIntegration = (
+  { formId },
+  config
+) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
 
   return request(`${api}/forms/${formId}/notifications`, {
     method: "POST",
@@ -300,12 +308,11 @@ export const createSmtpIntegration: CreateSmptIntegration = ({ formId }) => {
   );
 };
 
-export const updateSmtpIntegration: UpdateSmptIntegration = ({
-  formId,
-  id,
-  ...data
-}) => {
-  const { api } = Config.get("urls");
+export const updateSmtpIntegration: UpdateSmptIntegration = (
+  { formId, id, ...data },
+  config
+) => {
+  const { api } = config.urls ?? {};
 
   return request(`${api}/forms/${formId}/notifications/${id}`, {
     method: "PUT",
@@ -340,10 +347,13 @@ export const deleteSmtpIntegration: DeleteSmtpIntegration = (
 };
 
 // Recaptcha
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const addRecaptcha: AddRecaptcha = ({ group, service, ...data }) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const addRecaptcha: AddRecaptcha = (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  { group, service, ...data },
+  config: ConfigCommon
+) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
 
   return request(`${api}/accounts`, {
     method: "POST",

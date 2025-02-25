@@ -1,10 +1,9 @@
-import React, { HTMLAttributes } from "react";
-import { FCC } from "visual/utils/react/types";
+import cn from "classnames";
+import React, { HTMLAttributes, forwardRef } from "react";
 import {
   makeEndPlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
-import cn from "classnames";
 
 interface Props {
   className?: string;
@@ -13,7 +12,7 @@ interface Props {
   attr?: HTMLAttributes<HTMLElement>;
 }
 
-export const NavContainer: FCC<Props> = (props) => {
+export const NavContainer = forwardRef<HTMLElement, Props>((props, ref) => {
   const {
     id,
     attr,
@@ -24,7 +23,7 @@ export const NavContainer: FCC<Props> = (props) => {
   const className = cn("brz-menu", attr?.className, _className);
 
   const content = (
-    <nav {...attr} id={id} className={className}>
+    <nav {...attr} id={id} className={className} ref={ref}>
       {children}
     </nav>
   );
@@ -47,4 +46,4 @@ export const NavContainer: FCC<Props> = (props) => {
   }
 
   return content;
-};
+});

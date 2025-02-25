@@ -5,7 +5,7 @@ import {
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { EditorMode } from "visual/global/EditorModeContext";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { RenderType } from "visual/providers/RenderProvider";
 import { Dictionary } from "visual/types/utils";
 import { Choices, Handler } from "visual/utils/options/getDynamicContentOption";
@@ -173,6 +173,8 @@ export interface ToolbarConfig {
 export interface ToolbarProps {
   getValue: Getter;
   getDCOption: (type: TypeChoices) => MValue<Handler | Choices>;
+  t: (key: string) => string;
+  device: Responsive.ResponsiveMode;
 }
 
 export interface ParsedToolbarData {

@@ -1,5 +1,5 @@
+import { sortBy } from "es-toolkit";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { sortBy } from "underscore";
 import {
   Props as CProps,
   Tabs as Control
@@ -71,7 +71,7 @@ export const Tabs = ({
       showSingle={showSingle}
       className={className}
     >
-      {sortBy(tabs, ({ position = 100 }) => position).map(
+      {sortBy(tabs, [({ position = 100 }) => position]).map(
         ({ id, title, label, options, className }) => {
           return (
             <Tab

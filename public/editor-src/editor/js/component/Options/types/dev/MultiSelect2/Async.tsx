@@ -1,3 +1,4 @@
+import { difference } from "es-toolkit";
 import React, {
   ReactElement,
   useCallback,
@@ -7,7 +8,6 @@ import React, {
   useRef,
   useState
 } from "react";
-import _ from "underscore";
 import {
   MultiSelect as Control,
   MultiSelectItem as ControlItem
@@ -280,7 +280,11 @@ export const Async = ({
       const choices = v
         .map((vv) => allChoices.find((item) => item.value === vv))
         .filter((item) => item !== undefined) as ChoicesSync;
-      const diffBySearch = _.difference(v, _.pluck(sChoices, "value"));
+
+      const diffBySearch = difference(
+        v,
+        sChoices.map((choice) => choice.value)
+      );
 
       if (
         sChoices.length === 0 ||

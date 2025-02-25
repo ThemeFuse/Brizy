@@ -44,7 +44,8 @@ export const CustomIcon = ({
             source={templateIconUrl({
               iconName: name,
               type: IconTypes.Custom,
-              filename
+              filename,
+              config
             })}
             size="30px"
             hoverColor="white"
@@ -52,7 +53,7 @@ export const CustomIcon = ({
           />
         )
       })),
-    [_icons]
+    [_icons, config]
   );
 
   const handleRemove = useCallback(

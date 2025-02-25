@@ -1,13 +1,15 @@
+import { isStory } from "visual/providers/EditorModeProvider";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
-import { DynamicStylesProps } from "visual/types";
-
 
 export function styleForm(data: DynamicStylesProps<Value>): OutputStyle {
+  const _isStory = isStory(data.contexts.mode);
+
   const styles: Styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidthStoryOnly"]
+      standart: [...(_isStory ? ["cssStyleSizeWidthStoryOnly"] : [])]
     },
 
     ".brz &&:hover .brz-form": {

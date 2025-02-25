@@ -22,6 +22,7 @@ import { deviceModeSelector } from "visual/redux/selectors";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import defaultValue from "./defaultValue.json";
 import { SectionPopupInstances as Instances } from "./instances";
@@ -37,16 +38,11 @@ import * as toolbarExtend from "./toolbarExtend";
 export let SectionPopupInstances = Instances;
 
 class SectionPopup extends EditorComponent {
-  static get componentId() {
-    return "SectionPopup";
-  }
-
   static defaultProps = {
     meta: {},
     onOpen: () => {},
     onClose: () => {}
   };
-
   static defaultValue = defaultValue;
 
   constructor(...args) {
@@ -54,7 +50,7 @@ class SectionPopup extends EditorComponent {
 
     this.instanceKey = this.props.instanceKey || this.getId();
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       this.state = {
         isOpened: this.props.isOpened
       };
@@ -63,6 +59,10 @@ class SectionPopup extends EditorComponent {
       this.popupsContainer = document.getElementById("brz-popups");
       this.el = document.createElement("div");
     }
+  }
+
+  static get componentId() {
+    return "SectionPopup";
   }
 
   componentDidMount() {
@@ -180,7 +180,7 @@ class SectionPopup extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -194,7 +194,7 @@ class SectionPopup extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -211,7 +211,7 @@ class SectionPopup extends EditorComponent {
 
     return (
       <Background value={v} meta={meta}>
-        <SortableZIndex zIndex={1} renderContext={this.renderContext}>
+        <SortableZIndex zIndex={1} renderContext={this.props.renderContext}>
           <div className={classNameContainerWrap}>
             <div className={classNameContainer}>
               <ContextMenuDisabled>
@@ -249,7 +249,7 @@ class SectionPopup extends EditorComponent {
           vs,
           vd,
           store: this.getReduxState(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -262,24 +262,29 @@ class SectionPopup extends EditorComponent {
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={id} css={v.customCSS}>
-            <div
-              ref={containerBorderRef}
-              id={id}
-              className={classNameClose}
-              {...makeDataAttr({ name: "block-id", value: blockId })}
-              {...containerBorderAttr}
-            >
-              <div className="brz-popup__close" onClick={this.handleDropClick}>
-                <ThemeIcon name="close-popup" type="editor" />
-              </div>
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderItems(v, vs, vd)}
+            {({ ref: cssRef }) => (
+              <div
+                ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
+                id={id}
+                className={classNameClose}
+                {...makeDataAttr({ name: "block-id", value: blockId })}
+                {...containerBorderAttr}
               >
-                {this.renderToolbar()}
-                {this.renderItems(v, vs, vd)}
-              </Roles>
-            </div>
+                <div
+                  className="brz-popup__close"
+                  onClick={this.handleDropClick}
+                >
+                  <ThemeIcon name="close-popup" type="editor" />
+                </div>
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={() => this.renderItems(v, vs, vd)}
+                >
+                  {this.renderToolbar()}
+                  {this.renderItems(v, vs, vd)}
+                </Roles>
+              </div>
+            )}
           </CustomCSS>
         )}
       </ContainerBorder>,
@@ -304,7 +309,7 @@ class SectionPopup extends EditorComponent {
           vs,
           vd,
           store: this.getReduxState(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

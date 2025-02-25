@@ -1,7 +1,8 @@
+import { PaletteType } from "visual/types/Style";
 import * as P from "visual/utils/color/Palette";
 import { Append, Concat } from "visual/utils/types/Monoid";
 
-export type Palette = "" | P.Palette;
+export type Palette = "" | PaletteType;
 
 export const palettes: Palette[] = ["", ...P.palettes];
 
@@ -12,4 +13,4 @@ export const fromString = (s: string): Palette | undefined =>
 
 export const append: Append<Palette> = (a, b) => (a === empty ? b : a);
 
-export const concat: Concat<Palette> = as => as.reduce(append, empty);
+export const concat: Concat<Palette> = (as) => as.reduce(append, empty);

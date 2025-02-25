@@ -1,8 +1,9 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import { produce } from "immer";
 import React, { Component, ElementType, ReactElement, ReactNode } from "react";
-import _ from "underscore";
 import { Alert } from "visual/component/Alert";
+import { isPro } from "visual/utils/env";
 import { Loading } from "../Loading";
 import Steppers from "../Steppers";
 import { BaseAppElementTypes, BaseKey, BaseTypes } from "./BaseApp";
@@ -29,9 +30,9 @@ class BaseIntegration<
     tab: {},
     stage: "",
     stages: [],
-    onLoading: _.noop,
-    onTabUpdate: _.noop,
-    onClose: _.noop
+    onLoading: noop,
+    onTabUpdate: noop,
+    onClose: noop
   };
 
   // @ts-expect-error: incompatible state from generic need review this class component
@@ -140,6 +141,7 @@ class BaseIntegration<
   }
 
   handleNext = async (_nextStage?: BaseKey): Promise<void> => {
+    const { config } = this.props;
     const { stages, stage } = this.state;
     const nextIdx = stages.findIndex(({ type }) => type === stage) + 1;
     const nextStage = _nextStage || stages[nextIdx].type;
@@ -149,6 +151,7 @@ class BaseIntegration<
     if (Component && typeof Component.onBeforeLoad === "function") {
       const nextStage = stages[nextIdx + 1].type;
       const props = {
+        config,
         onChangeNext: (_nextStage?: BaseKey): void => {
           const stage = _nextStage || nextStage;
           pending = true;
@@ -225,6 +228,8 @@ class BaseIntegration<
       connectedApp,
       data
     } = this.state;
+    const { config } = this.props;
+
     const showProgress =
       _showProgress && !stages.find((el) => el.type === stage)?.hideProgress;
     const progress = stages.reduce((acc, cur, index, arr) => {
@@ -261,7 +266,14 @@ class BaseIntegration<
                   render={(
                     props: Record<string, unknown>
                   ): ReactElement | undefined =>
-                    Component && <Component {...props} apps={this.appsData} />
+                    Component && (
+                      <Component
+                        {...props}
+                        isPro={isPro(config)}
+                        config={config}
+                        apps={this.appsData}
+                      />
+                    )
                   }
                 />
               );

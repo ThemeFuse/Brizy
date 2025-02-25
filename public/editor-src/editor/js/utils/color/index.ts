@@ -1,4 +1,4 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import * as Hex from "visual/utils/color/Hex";
 import { MValue } from "visual/utils/value";
 import {
@@ -75,19 +75,34 @@ export function hexToRgb(_hex: string): MValue<string> {
 export function getColor(
   palette: string,
   hex: string,
-  opacity: number
+  opacity: number,
+  config: ConfigCommon
 ): MValue<string> {
   if (palette) {
-    const config = Config.getAll();
     return `rgba(var(${makeStylePaletteCSSVar(palette, config)}),${opacity})`;
   } else {
     return hexToRgba(hex, opacity);
   }
 }
 
-export function getColorPalette(palette: string, hex: string): string {
+export function getColorToolbar(
+  palette: string,
+  hex: string,
+  opacity: number
+): MValue<string> {
   if (palette) {
-    const config = Config.getAll();
+    return `rgba(var(--brz-global-${palette}),${opacity})`;
+  } else {
+    return hexToRgba(hex, opacity);
+  }
+}
+
+export function getColorPalette(
+  palette: string,
+  hex: string,
+  config: ConfigCommon
+): string {
+  if (palette) {
     return `var(${makeStylePaletteCSSVar(palette, config)})`;
   }
 

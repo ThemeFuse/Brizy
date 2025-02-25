@@ -1,5 +1,6 @@
 import { Base64 } from "js-base64";
-import { GlobalBlock, PageCommon } from "visual/types";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { PageCommon } from "visual/types/Page";
 import { mPipe } from "visual/utils/fp";
 import * as Json from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";

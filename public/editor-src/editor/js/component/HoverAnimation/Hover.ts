@@ -1,4 +1,4 @@
-import { noop } from "underscore";
+import { noop } from "es-toolkit";
 import { AnimationBase, AnimationMode } from "./types";
 
 export class Hover {

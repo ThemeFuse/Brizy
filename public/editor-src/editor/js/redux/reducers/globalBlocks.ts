@@ -1,15 +1,15 @@
+import { difference, intersection } from "es-toolkit";
 import { produce, setAutoFreeze } from "immer";
 import { insert, removeAt } from "timm";
-import _ from "underscore";
 import {
   blocksOrderRawSelector,
   blocksOrderSelector,
   changedGBIdsSelector,
+  configSelector,
   globalBlocksAssembledSelector,
   globalBlocksInPageSelector,
   globalBlocksPositionsSelector
 } from "visual/redux/selectors";
-import { configSelector } from "visual/redux/selectors";
 import {
   changeRule,
   getAllowedGBIds,
@@ -235,7 +235,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const pageBlocksIds = blocksOrderSelector(allState);
       const config = configSelector(allState);
       const globalBlockIds = Object.keys(state);
-      const gbIds = _.intersection(pageBlocksIds, globalBlockIds);
+      const gbIds = intersection(pageBlocksIds, globalBlockIds);
 
       return produce(state, (draft) => {
         gbIds.forEach((id) => {
@@ -251,7 +251,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const config = configSelector(allState);
       const nextIds = blocks.map((block) => block.value._id);
 
-      const gbIds = _.difference(prevIds, nextIds);
+      const gbIds = difference(prevIds, nextIds);
       return produce(state, (draft) => {
         gbIds.forEach((id) => {
           if (draft[id] && !isPopup(draft[id].data)) {

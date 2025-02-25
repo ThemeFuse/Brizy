@@ -1,11 +1,12 @@
+import { noop } from "es-toolkit";
 import { isT } from "fp-utilities";
-import React, { ReactElement } from "react";
+import React, { RefObject, createRef } from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { noop } from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
+import { targetExceptions } from "visual/component/Options/constants";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { currentUserRole } from "visual/component/Roles";
 import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
@@ -13,6 +14,7 @@ import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ActionUpdateUI, setActiveElement } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { ActiveElement, DeviceMode } from "visual/types";
+import { attachRef } from "visual/utils/react";
 import {
   ToolbarExtendContext,
   ToolbarExtendContextType
@@ -22,32 +24,11 @@ import {
   ToolbarMonitorHandler,
   monitor
 } from "../monitor";
-import {
-  PortalToolbarPositioner,
-  PortalToolbarPositionerProps
-} from "./PortalToolbarPositioner";
+import { PortalToolbarPositioner } from "./PortalToolbarPositioner";
+import { PortalToolbarProps } from "./types";
 import { selectorSearchCoordinates, selectorSearchDomTree } from "./utils";
-import { targetExceptions } from "visual/component/Options/constants";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
-
-export type PortalToolbarProps = {
-  getItems: () => OptionDefinition[];
-  getSidebarItems?: () => OptionDefinition[];
-  getSidebarTitle?: () => string;
-  manualControl?: boolean;
-  selector?: string;
-  selectorSearchStrategy?: "dom-tree" | "coordinates";
-  onBeforeOpen?: () => void;
-  onBeforeClose?: () => void;
-  onOpen?: () => void;
-  onClose?: () => void;
-  onEscape?: () => void;
-  children?:
-    | ReactElement
-    | null
-    | ((props: { open: (e: MouseEvent) => void }) => ReactElement);
-} & Omit<PortalToolbarPositionerProps, "items">;
 
 type PortalToolbarState = {
   opened: boolean;
@@ -87,9 +68,10 @@ class _PortalToolbar
 
   selectorNode: Element | null = null;
 
+  ref: RefObject<HTMLDivElement> = createRef();
+
   componentDidMount(): void {
-    // eslint-disable-next-line react/no-find-dom-node
-    this.node = ReactDOM.findDOMNode(this) as Element | null;
+    this.node = this.ref.current;
 
     if (this.node === null) {
       return;
@@ -303,7 +285,7 @@ class _PortalToolbar
 
   clickOutsideException = (clickTarget: HTMLElement): boolean => {
     try {
-      const node = ReactDOM.findDOMNode(this); // eslint-disable-line react/no-find-dom-node
+      const node = this.ref.current;
       return node !== null && node.contains(clickTarget);
     } catch (e) {
       return false;
@@ -369,15 +351,22 @@ class _PortalToolbar
                 exceptions={this.getOutSideExceptions()}
                 onClickOutside={this.handleClickOutside}
               >
-                <PortalToolbarPositioner
-                  {...contextProps}
-                  {...ownProps}
-                  items={items}
-                  node={this.selectorNode ?? this.node}
-                  onClick={this.handleClick}
-                  onMouseEnter={this.handleMouseEnter}
-                  onMouseLeave={this.handleMouseLeave}
-                />
+                {({ ref }) => {
+                  const node = this.selectorNode ?? this.node;
+                  attachRef(portalNode, ref);
+
+                  return (
+                    <PortalToolbarPositioner
+                      {...contextProps}
+                      {...ownProps}
+                      items={items}
+                      node={node}
+                      onClick={this.handleClick}
+                      onMouseEnter={this.handleMouseEnter}
+                      onMouseLeave={this.handleMouseLeave}
+                    />
+                  );
+                }}
               </ClickOutside>
               {ownProps.getSidebarItems && (
                 <RightSidebarItems
@@ -404,7 +393,7 @@ class _PortalToolbar
     return (
       <>
         {typeof children === "function"
-          ? children({ open: this.handleNodeClick })
+          ? children({ open: this.handleNodeClick, ref: this.ref })
           : children}
         {opened && this.renderToolbar()}
       </>

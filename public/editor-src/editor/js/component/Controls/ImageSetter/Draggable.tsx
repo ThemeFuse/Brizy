@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { ReactElement, createRef } from "react";
-import _ from "underscore";
 import {
   DraggableProps,
   MouseCoordinates
@@ -12,9 +12,9 @@ export default class Draggable extends React.Component<
 > {
   static defaultProps = {
     bounds: "parent",
-    onDragStart: _.noop,
-    onDrag: _.noop,
-    onDragEnd: _.noop,
+    onDragStart: noop,
+    onDrag: noop,
+    onDragEnd: noop,
     defaultPosition: {
       x: 50,
       y: 50
@@ -34,18 +34,6 @@ export default class Draggable extends React.Component<
     this.window = undefined;
   }
 
-  componentDidMount() {
-    const node = this.ref.current;
-    const parent =
-      node?.parentNode || node?.ownerDocument.body;
-
-    if (parent) parent.addEventListener("click", this.onDragEnd);
-
-    if (node?.ownerDocument.defaultView) {
-      this.window = node?.ownerDocument.defaultView;
-    }
-  }
-
   static getDerivedStateFromProps(
     nextProps: { position: { x: number; y: number } },
     state: { x: number; y: number }
@@ -62,6 +50,17 @@ export default class Draggable extends React.Component<
       };
     }
     return null;
+  }
+
+  componentDidMount() {
+    const node = this.ref.current;
+    const parent = node?.parentNode || node?.ownerDocument.body;
+
+    if (parent) parent.addEventListener("click", this.onDragEnd);
+
+    if (node?.ownerDocument.defaultView) {
+      this.window = node?.ownerDocument.defaultView;
+    }
   }
 
   componentWillUnmount() {
@@ -112,7 +111,7 @@ export default class Draggable extends React.Component<
           );
       }
 
-      if(boundNode) {
+      if (boundNode) {
         propsBound = {
           left: outerWidth(boundNode),
           top: outerHeight(boundNode)
@@ -209,7 +208,9 @@ export default class Draggable extends React.Component<
   };
 
   onDragEnd = (event: Event) => {
-    const coordinatesInPercent = this.getCoordinatesInPercent(event as MouseEvent);
+    const coordinatesInPercent = this.getCoordinatesInPercent(
+      event as MouseEvent
+    );
     this.props.onDragEnd(coordinatesInPercent);
 
     this.enableTextSelect();

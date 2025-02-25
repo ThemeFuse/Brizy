@@ -234,9 +234,10 @@ export function cssStyleElementVideoPlaylistImageSize({
 export function cssStyleElementVideoPlaylistBorderItem({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "item" });
+  return cssStyleBorder({ v, device, state, store, prefix: "item" });
 }
 
 export function cssStyleSizeWidthVideoBlock({ v, device }: CSSValue): string {
@@ -295,9 +296,10 @@ export function cssStyleElementVideoPlaylistItemActiveBg({
 
 export function cssStyleElementVideoPlaylistBorderItemActive({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active", prefix: "item" });
+  return cssStyleBorder({ v, device, state: "active", store, prefix: "item" });
 }
 
 export function cssStyleElementVideoPlaylistItemActiveColor({

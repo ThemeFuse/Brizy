@@ -49,7 +49,8 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
           type,
           filename,
           iconName: name,
-          suffix: getSuffix(type)
+          suffix: getSuffix(type),
+          config
         })}
         className={className}
       />
@@ -69,7 +70,8 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
       href={compileTemplateIconUrl({
         type,
         iconName: name,
-        suffix: getSuffix(type)
+        suffix: getSuffix(type),
+        config
       })}
     />
   );
@@ -78,11 +80,12 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
 const ThemeIconEditor = (props: Props): JSX.Element => {
   const { className: _className, type, name, filename } = props;
   const className = cn("brz-icon-svg align-[initial]", _className);
+  const config = useConfig();
 
   const pathToIcon = useMemo(() => {
     const suffix = getSuffix(type);
-    return templateIconUrl({ type, iconName: name, filename, suffix });
-  }, [type, name, filename]);
+    return templateIconUrl({ type, iconName: name, filename, suffix, config });
+  }, [type, name, filename, config]);
 
   return type === IconTypes.Custom ? (
     <CustomIcon className={className} src={pathToIcon} />

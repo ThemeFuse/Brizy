@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../../common/Button";
@@ -7,7 +7,7 @@ import { Button } from "../../../common/Button";
 class ViewDone extends Component {
   static defaultProps = {
     title: "",
-    onNext: _.noop
+    onNext: noop
   };
 
   render() {

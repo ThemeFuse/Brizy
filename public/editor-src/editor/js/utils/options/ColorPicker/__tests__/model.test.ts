@@ -1,6 +1,6 @@
-import _ from "underscore";
-import { Black } from "visual/utils/color/Hex";
+import { times } from "es-toolkit/compat";
 import * as Hex from "visual/utils/color/Hex";
+import { Black } from "visual/utils/color/Hex";
 import { palettes } from "visual/utils/color/Palette";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { Value } from "visual/utils/options/ColorPicker/entities/Value";
@@ -33,7 +33,7 @@ describe("Testing 'setOpacity' function", function () {
   });
 
   test("If current value is different to new one, update new opacity", () => {
-    _.times(11, (i) =>
+    times(11, (i) =>
       expect(setOpacity(Opacity.unsafe(i * 0.1), model).opacity).toEqual(
         i * 0.1
       )
@@ -41,7 +41,7 @@ describe("Testing 'setOpacity' function", function () {
   });
 
   test("Opacity value should no affect hex value", () => {
-    _.times(10, (i) =>
+    times(10, (i) =>
       expect(setOpacity(Opacity.unsafe(i * 0.1), model).hex).toBe(model.hex)
     );
   });

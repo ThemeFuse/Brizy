@@ -1,10 +1,9 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { getColor } from "visual/utils/color";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-import { ToolbarItemType } from "../ToolbarItemType";
 
 export interface Value extends ElementModel {
   bgColorHex: string;
@@ -19,23 +18,18 @@ export interface Value extends ElementModel {
   navIconSize: "small" | "medium" | "large" | "custom";
 }
 
-export function getItems({
-  v,
-  device
-}: {
-  v: Value;
-  device: ResponsiveMode;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
+
   const bgColorOpacity = dvv("bgColorOpacity");
 
   // Color
-  const bgColor = getColor(
+  const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
     dvv("bgColorHex"),
     bgColorOpacity
   );
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")
@@ -289,4 +283,4 @@ export function getItems({
       title: t("Settings")
     }
   ];
-}
+};

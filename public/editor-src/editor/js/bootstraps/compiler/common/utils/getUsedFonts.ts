@@ -1,9 +1,14 @@
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { AdobeFont, GoogleFont, SystemFont, UploadedFont } from "visual/types";
-import { findFonts, projectFontsData } from "visual/utils/fonts";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
+import {
+  AdobeFont,
+  GoogleFont,
+  SystemFont,
+  UploadedFont
+} from "visual/types/Fonts";
+import { FontFamilyType } from "visual/types/Fonts";
 import { FontGroup } from "visual/utils/fonts/getFontById";
+import { findFonts, projectFontsData } from "visual/utils/fonts/transform";
 import { ProjectFontsData } from "../types";
 
 interface UsedFonts {

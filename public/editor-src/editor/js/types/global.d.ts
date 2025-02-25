@@ -1,5 +1,6 @@
 import Motion from "@brizy/motion";
 import { BrizyProducts } from "@brizy/widget/src/Shopify/Variant/types";
+import { DotLottie } from "@lottiefiles/dotlottie-web";
 import {
   Instance as PopperInstance,
   Options as PopperOptions
@@ -8,15 +9,14 @@ import { FlatpickrFn } from "flatpickr/dist/types/instance";
 import ImagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import Lottie from "lottie-web";
-import { DotLottie } from "@lottiefiles/dotlottie-web";
 import Scrollbars from "perfect-scrollbar";
+import { ReactElement } from "react";
 import { Swiper } from "swiper";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
 import { Store } from "visual/redux/store";
 import Gallery from "../libs/gallery";
-import { ReactElement } from "react";
 
 export type GalleryIsotope = Isotope;
 export type GalleryJustified = Gallery;
@@ -91,7 +91,6 @@ declare global {
 
   namespace NodeJS {
     interface Global {
-      IS_EDITOR: boolean;
       BRZ_IS_DRAGGING?: boolean;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Brizy: any;

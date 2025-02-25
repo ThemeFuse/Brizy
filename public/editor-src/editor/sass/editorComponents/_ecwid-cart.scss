@@ -26,7 +26,9 @@
         &__body {
           &-inner {
             .ec-cart__email .ec-cart-email__input .form-control {
+              display: flex !important;
               background: transparent !important;
+              box-shadow: none !important;
 
               &__text {
                 min-height: 0 !important;
@@ -37,10 +39,7 @@
               }
 
               &__placeholder {
-                &-inner {
-                  min-height: 0 !important;
-                  z-index: 1 !important;
-                }
+                display: none !important;
               }
             }
 
@@ -52,6 +51,10 @@
               .ec-cart__agreement {
                 &.ec-cart__marketing-agreement .form-control--checkbox {
                   margin-bottom: 0 !important;
+                }
+
+                .form-control__inline-label {
+                  background-color: transparent !important;
                 }
               }
             }
@@ -80,7 +83,18 @@
                     &-secondary .ec-cart-item__count {
                       &-inner {
                         .form-control {
+                          color: inherit !important;
                           font-size: initial !important;
+
+                          &:hover {
+                            .form-control__select-text {
+                              color: initial !important;
+                            }
+                          }
+
+                          &__select {
+                            pointer-events: none;
+                          }
                         }
 
                         .ec-link:active {
@@ -110,6 +124,125 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .ec-cart__summary {
+    .ec-cart-summary__body {
+      .ec-cart-summary__price {
+        transition: none !important;
+      }
+    }
+  }
+
+  .ec-cart-step--payment {
+    .ec-cart-step__body {
+      .ec-cart-step__section {
+        .ec-form {
+          .ec-form__row {
+            label {
+              width: 100%;
+            }
+
+            .form-control {
+              input {
+                color: inherit !important;
+                border: none !important;
+                box-shadow: none !important;
+                font-family: inherit !important;
+                font-size: inherit !important;
+                line-height: inherit !important;
+                font-weight: inherit !important;
+                letter-spacing: inherit !important;
+              }
+
+              textarea {
+                border: none !important;
+              }
+            }
+          }
+
+          .ec-form__title {
+            width: 100% !important;
+          }
+        }
+
+        .ec-radiogroup {
+          .ec-radiogroup__items {
+            border: none !important;
+          }
+        }
+      }
+
+      .ec-form {
+        .ec-form__row--continue {
+          .ec-form__cell {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  }
+
+  .ec-cart-step--address {
+    .ec-cart-step__body {
+      .ec-cart-step__section {
+        .ec-form {
+          .ec-form__row {
+            label {
+              width: 100%;
+            }
+
+            .form-control {
+              input {
+                color: inherit !important;
+                border: none !important;
+                box-shadow: none !important;
+                font-family: inherit !important;
+                font-size: inherit !important;
+                line-height: inherit !important;
+                font-weight: inherit !important;
+                letter-spacing: inherit !important;
+              }
+
+              textarea {
+                border: none !important;
+              }
+            }
+          }
+
+          .ec-form__title {
+            width: 100% !important;
+          }
+        }
+
+        .ec-tabs {
+          .ec-tabs__tab {
+            .ec-tabs__icon {
+              color: inherit !important;
+            }
+            .ec-tabs__text {
+              color: inherit !important;
+            }
+          }
+        }
+      }
+
+      .ec-form {
+        .ec-form__row--continue {
+          .ec-form__cell {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  }
+
+  .ec-cart-step--delivery {
+    .ec-radiogroup {
+      .ec-radiogroup__items {
+        border: none !important;
       }
     }
   }
@@ -168,7 +301,6 @@
     .ecwid-productBrowser {
       .ec-cart__products-inner {
         .ec-cart__item {
-          .ec-cart-item__image,
           .ec-cart-item__wrap .ec-cart-item__title {
             pointer-events: none !important;
           }

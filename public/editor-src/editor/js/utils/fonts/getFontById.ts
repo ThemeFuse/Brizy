@@ -5,10 +5,10 @@ import {
 } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
-import { Font } from "visual/types";
+import { Font } from "visual/types/Fonts";
+import { FontFamilyType } from "visual/types/Fonts";
 import { ArrayType, NonEmptyArray } from "visual/utils/array/types";
-import { findFonts, fontTransform, projectFontsData } from "visual/utils/fonts";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { findFonts, fontTransform, projectFontsData } from "./transform";
 
 export type ModelFamilyType =
   | FontFamilyType.google

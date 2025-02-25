@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { debounce } from "es-toolkit";
 import React from "react";
-import _ from "underscore";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
 import {
   removeFeaturedImage,
@@ -9,8 +9,7 @@ import {
 } from "visual/utils/api";
 import { getFileFormat } from "visual/utils/customFile/utils";
 
-
-const debouncedUpdateFeaturedImageFocalPoint = _.debounce((...args) => {
+const debouncedUpdateFeaturedImageFocalPoint = debounce((...args) => {
   updateFeaturedImageFocalPoint(...args);
 }, 1000);
 

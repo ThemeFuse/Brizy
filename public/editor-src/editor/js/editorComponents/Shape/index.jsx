@@ -4,6 +4,7 @@ import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -22,11 +23,11 @@ const resizerPoints = [
 ];
 
 class Shape extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "Shape";
   }
-
-  static defaultValue = defaultValue;
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -41,7 +42,7 @@ class Shape extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -58,17 +59,26 @@ class Shape extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className: wrapperClassName })}>
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={resizerRestrictions}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: wrapperClassName,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  restrictions={resizerRestrictions}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

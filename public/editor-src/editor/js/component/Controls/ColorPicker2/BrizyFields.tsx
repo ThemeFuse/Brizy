@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import color from "./helpers/color";
 
 const DEFAULT_HEX = "#000000";
@@ -24,7 +24,7 @@ export default class BrizyFields extends Component<Props<Value>, State> {
     value: {
       hex: DEFAULT_HEX
     },
-    onChange: _.noop,
+    onChange: noop,
     opacity: 1
   };
 

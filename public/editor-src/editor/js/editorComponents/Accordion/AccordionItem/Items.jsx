@@ -101,7 +101,7 @@ class AccordionItemItems extends EditorArrayComponent {
   renderItemsContainer(items) {
     const { className, isActive } = this.props;
 
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <div className={className}>{items}</div>;
     }
 

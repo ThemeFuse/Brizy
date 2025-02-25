@@ -1,7 +1,6 @@
 import { produce } from "immer";
-import Config from "visual/global/Config";
-import { t } from "visual/utils/i18n";
 import { isPro } from "visual/utils/env";
+import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import {
   AppData,
@@ -26,7 +25,7 @@ type Context = BaseIntegrationContext & {
 class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
   appsData: AppData[] = [];
   appsComponent = AppsComponent;
-  proExceptions = !isPro(Config.getAll());
+  proExceptions = !isPro(this.props.config);
 
   async componentDidMount(): Promise<void> {
     const { Integrations } = await import("visual/config/integrations");
@@ -35,12 +34,12 @@ class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
   }
 
   async getData(): Promise<void> {
-    const { formId } = this.props;
-    const { status, data } = await getForm({ formId });
+    const { formId, config, onLoading } = this.props;
+    const { status, data } = await getForm({ formId }, config);
 
     if (status !== 200) {
       if (status === 404) {
-        const { status } = await createForm({ formId });
+        const { status } = await createForm({ formId }, config);
 
         if (status >= 400) {
           this.setState({
@@ -62,6 +61,8 @@ class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
         loading: false
       });
     }
+
+    onLoading(false);
   }
 
   getContextValue(): Context {
@@ -77,13 +78,13 @@ class Service extends BaseIntegration<Props, BaseIntegrationState, Context> {
 
   handleConnectApp = async (appData: AppData): Promise<void> => {
     const { id, stages } = appData;
-    const { formId } = this.props;
+    const { formId, config } = this.props;
 
-    let { status, data } = await getIntegration({ formId, id });
+    let { status, data } = await getIntegration({ formId, id }, config);
 
     if (status !== 200) {
       if (status === 404) {
-        ({ status, data } = await createIntegration({ formId, id }));
+        ({ status, data } = await createIntegration({ formId, id }, config));
 
         if (status !== 200) {
           this.setState({

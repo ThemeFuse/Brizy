@@ -1,11 +1,13 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import type { Value } from "./types";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import type { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const { v } = data;
+  const { v, contexts } = data;
   const { maskShape = "none" } = v;
+  const _isStory = isStory(contexts.mode);
 
   const styles: {
     [k: string]: {
@@ -284,7 +286,11 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
     ".brz && .brz-groupLayout--item__content-detailButton a": {
-      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
+      standart: [
+        ...(_isStory
+          ? ["cssStyleElementButtonSizeForStory"]
+          : ["cssStyleElementMinistryBrandsButtonsSize"])
+      ]
     },
     ".brz && .brz-groupLayout-results-heading": {
       standart: [

@@ -5,7 +5,7 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const styles: {
     [k: string]: {
       interval?: string[];

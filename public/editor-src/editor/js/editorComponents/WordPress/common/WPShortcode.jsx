@@ -1,6 +1,6 @@
 import classnames from "classnames";
+import { isEqual, noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import BoxResizer from "visual/component/BoxResizer";
 import Placeholder from "visual/component/Placeholder";
 import { isEditor } from "visual/providers/RenderProvider";
@@ -22,7 +22,8 @@ export class WPShortcode extends Component {
     className: "",
     style: {},
     blocked: true,
-    render: null
+    render: null,
+    containerRef: null
   };
 
   id = uuid(3);
@@ -36,6 +37,7 @@ export class WPShortcode extends Component {
       resizerValue,
       resizerOnChange,
       config,
+      containerRef,
       ...innerProps
     } = this.props;
 
@@ -56,7 +58,7 @@ export class WPShortcode extends Component {
     }
 
     return (
-      <div className={className} style={style}>
+      <div className={className} style={style} ref={containerRef}>
         {content}
       </div>
     );
@@ -71,7 +73,7 @@ export class WPShortcodeInner extends Component {
     placeholderIcon: "wp-shortcode",
     renderHTMLInEditor: true,
     render: null,
-    onLoadHTML: _.noop
+    onLoadHTML: noop
   };
 
   state = {
@@ -91,7 +93,7 @@ export class WPShortcodeInner extends Component {
     const currentState = this.state;
 
     const propsChanged =
-      !_.isEqual(currentProps.attributes, nextProps.attributes) ||
+      !isEqual(currentProps.attributes, nextProps.attributes) ||
       currentProps.name !== nextProps.name ||
       currentProps.raw !== nextProps.raw;
     if (propsChanged) {
@@ -105,7 +107,7 @@ export class WPShortcodeInner extends Component {
     const currentProps = this.props;
 
     const propsChanged =
-      !_.isEqual(currentProps.attributes, prevProps.attributes) ||
+      !isEqual(currentProps.attributes, prevProps.attributes) ||
       currentProps.name !== prevProps.name ||
       currentProps.raw !== prevProps.raw;
     if (propsChanged) {

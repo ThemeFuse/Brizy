@@ -1,5 +1,5 @@
+import { debounce, noop } from "es-toolkit";
 import React, { ChangeEvent } from "react";
-import _ from "underscore";
 import { Props } from "visual/component/Options/Type";
 import { WithClassName } from "visual/types/attributes";
 import {
@@ -37,10 +37,10 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
     min: 0,
     max: 100,
     step: 1,
-    onFocus: _.noop,
-    onBlur: _.noop,
-    onTextChange: _.noop,
-    onChange: _.noop
+    onFocus: noop,
+    onBlur: noop,
+    onTextChange: noop,
+    onChange: noop
   };
 
   state: IState = {
@@ -48,6 +48,30 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
     value: this.props.value,
     prevPropsValue: this.props.value
   };
+  debouncedOnChange = debounce(() => {
+    this.setState(
+      (state: IState, props) => {
+        const { min, max, step } = props;
+        const { text, value } = state;
+        const textValue = parseFloat(String(text));
+        const correctedTextValue = correctNumber(
+          !Number.isNaN(textValue) ? textValue : value,
+          min,
+          max,
+          step
+        );
+
+        return {
+          text: formatInputValue(correctedTextValue, step),
+          value: correctedTextValue
+        };
+      },
+      () => {
+        if (this.props.onTextChange) this.props.onTextChange(this.state.text);
+        this.props.onChange(this.state.value);
+      }
+    );
+  }, DEBOUNCE_WAIT);
 
   static getDerivedStateFromProps(props: IProps, state: IState) {
     if (props.value !== state.prevPropsValue) {
@@ -129,31 +153,6 @@ export default class AutoCorrectingInput extends React.Component<IProps> {
       this.debouncedOnChange();
     });
   };
-
-  debouncedOnChange = _.debounce(() => {
-    this.setState(
-      (state: IState, props) => {
-        const { min, max, step } = props;
-        const { text, value } = state;
-        const textValue = parseFloat(String(text));
-        const correctedTextValue = correctNumber(
-          !Number.isNaN(textValue) ? textValue : value,
-          min,
-          max,
-          step
-        );
-
-        return {
-          text: formatInputValue(correctedTextValue, step),
-          value: correctedTextValue
-        };
-      },
-      () => {
-        if (this.props.onTextChange) this.props.onTextChange(this.state.text);
-        this.props.onChange(this.state.value);
-      }
-    );
-  }, DEBOUNCE_WAIT);
 
   getText() {
     return this.state.text;

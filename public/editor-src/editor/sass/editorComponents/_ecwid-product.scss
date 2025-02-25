@@ -323,6 +323,7 @@
       &__gallery .details-gallery__wrap {
         &-inner {
           width: auto !important;
+          overflow: visible !important;
 
           .details-gallery__thumbs {
             margin: 0 !important;

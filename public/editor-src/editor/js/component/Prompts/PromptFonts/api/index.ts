@@ -1,12 +1,12 @@
-import { flatten } from "underscore";
+import { flattenDeep } from "es-toolkit";
+import { isT } from "fp-utilities";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { VariationFont } from "visual/types";
+import { VariationFont } from "visual/types/Fonts";
 import { request } from "visual/utils/api";
 import { CreateFont, UploadFont } from "../api/types";
 import { getFontVariation, normalizeFonts } from "./utils";
-
 
 export const createFont = async ({ id, name, files }: CreateFont) => {
   const { api } = Config.get("urls");
@@ -17,7 +17,7 @@ export const createFont = async ({ id, name, files }: CreateFont) => {
   formData.append("uid", id);
   formData.append("family", name);
 
-  const variations: VariationFont[] = flatten(
+  const variations: VariationFont[] = flattenDeep(
     await Promise.all(
       Object.entries(files).map(async ([type, filesType]) => {
         return Promise.all(
@@ -30,7 +30,7 @@ export const createFont = async ({ id, name, files }: CreateFont) => {
         );
       })
     )
-  ).filter(Boolean);
+  ).filter(isT);
 
   return request(`${api}/fonts`, {
     method: "POST",

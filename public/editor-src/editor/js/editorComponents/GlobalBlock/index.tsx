@@ -1,4 +1,4 @@
-import { fromJS } from "immutable";
+import { isEqual } from "es-toolkit";
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
@@ -23,12 +23,11 @@ class GlobalBlock extends EditorComponent<Value, Props> {
     const _id = this.getId();
     const oldGlobalBlock = nextProps.globalBlocks[_id] ?? {};
     const newGlobalBlock = props.globalBlocks[_id] ?? {};
-    const oldValue = fromJS(oldGlobalBlock.data?.value ?? {});
-    const value = fromJS(newGlobalBlock.data?.value ?? {});
-    const oldRules = fromJS(oldGlobalBlock.rules ?? {});
-    const rules = fromJS(newGlobalBlock.rules ?? {});
 
-    if (!value.equals(oldValue) || !rules.equals(oldRules)) {
+    if (
+      !isEqual(oldGlobalBlock.data?.value, newGlobalBlock.data?.value) ||
+      !isEqual(oldGlobalBlock.rules, newGlobalBlock.rules)
+    ) {
       return true;
     }
 

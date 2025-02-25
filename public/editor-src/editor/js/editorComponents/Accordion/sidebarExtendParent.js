@@ -1,4 +1,4 @@
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 
 export const title = () => t("Accordion");

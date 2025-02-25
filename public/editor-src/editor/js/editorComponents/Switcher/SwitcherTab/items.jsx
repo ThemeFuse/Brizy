@@ -1,24 +1,24 @@
 import React from "react";
-import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import contextMenuExtendConfigFn from "./contextMenu";
 
 class SwitcherTab extends EditorArrayComponent {
-  static get componentId() {
-    return "SwitcherTab.Items";
-  }
-
   static defaultProps = {
     className: "",
     meta: {}
   };
+
+  static get componentId() {
+    return "SwitcherTab.Items";
+  }
 
   handleSortableAcceptElements = (from) => {
     const meta = this.props.meta;
@@ -100,7 +100,7 @@ class SwitcherTab extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return items;
     }
 

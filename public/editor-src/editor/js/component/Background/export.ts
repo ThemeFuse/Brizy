@@ -41,8 +41,8 @@ const fn: ExportFunction = ($node) => {
       window.Brz.on(id, (element: HTMLElement) => {
         if (id === "elements.popup.open") {
           // need to check scroll behance
-          const { scroll_page = "false" } = element.dataset;
-          const isScrolled = scroll_page === "true";
+          const { brzScroll_page = "false" } = element.dataset;
+          const isScrolled = brzScroll_page === "true";
 
           if (isScrolled) {
             return;
@@ -61,8 +61,8 @@ const fn: ExportFunction = ($node) => {
       window.Brz.on(id, (element: HTMLElement) => {
         if (id === "elements.popup.close") {
           // need to check scroll behance
-          const { scroll_page = "false" } = element.dataset;
-          const isScrolled = scroll_page === "true";
+          const { brzScroll_page = "false" } = element.dataset;
+          const isScrolled = brzScroll_page === "true";
 
           if (isScrolled) {
             return;

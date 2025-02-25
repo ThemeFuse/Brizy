@@ -1,5 +1,6 @@
 import { foundUrl } from "@brizy/builder-ui-components";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, {
   Component,
   ComponentType,
@@ -7,7 +8,6 @@ import React, {
   ReactElement
 } from "react";
 import ReactDOM from "react-dom";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";
@@ -15,8 +15,12 @@ import {
   ConfigCommon,
   HelpVideos
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorMode, isPopup, isStory } from "visual/global/EditorModeContext";
-import { BlockMetaType } from "visual/types";
+import {
+  EditorMode,
+  isPopup,
+  isStory
+} from "visual/providers/EditorModeProvider";
+import { BlockMetaType } from "visual/types/GlobalBlock";
 import { t } from "visual/utils/i18n";
 import { get } from "visual/utils/object/get";
 import { capitalize } from "visual/utils/string";
@@ -203,11 +207,11 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
     savedSearch: true,
     globalSearch: true,
 
-    onChangeBlocks: _.noop,
-    onChangeTemplate: _.noop,
-    onChangeSaved: _.noop,
-    onChangeGlobal: _.noop,
-    onClose: _.noop,
+    onChangeBlocks: noop,
+    onChangeTemplate: noop,
+    onChangeSaved: noop,
+    onChangeGlobal: noop,
+    onClose: noop,
     config: {} as ConfigCommon
   };
 

@@ -19,7 +19,9 @@ module.exports = function (argv) {
   const PORT = argv_.port || 3000;
   const ANALYZE_EXPORT = Boolean(argv_["analyze_export"]);
   const ANALYZE_PREVIEW = Boolean(argv_["analyze_preview"]);
-  const AUTHORIZATION_URL = argv_["authUrl"];
+  const ANALYZE_EDITOR = Boolean(argv_["analyze_editor"]);
+  const AUTHORIZATION_URL = argv_["authUrl"]; // https://auth.brizylocal.com/authorize
+  const CHECK_BUNDLE_SIZE = Boolean(argv_["check-bundle-size"]);
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
@@ -43,7 +45,9 @@ module.exports = function (argv) {
     PORT,
     ANALYZE_EXPORT,
     ANALYZE_PREVIEW,
+    ANALYZE_EDITOR,
     AUTHORIZATION_URL,
+    CHECK_BUNDLE_SIZE,
     paths
   };
 

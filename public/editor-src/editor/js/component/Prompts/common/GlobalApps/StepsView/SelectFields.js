@@ -1,6 +1,6 @@
+import { noop, without } from "es-toolkit";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { t } from "visual/utils/i18n";
@@ -20,21 +20,21 @@ class SelectFields extends Component {
     error: null,
     nextLoading: null,
     prevLoading: null,
-    onActive: _.noop,
-    onPrev: _.noop,
-    onNext: _.noop
+    onActive: noop,
+    onPrev: noop,
+    onNext: noop
   };
 
   renderSelect(id, target) {
     const { formFields, fields, restrictions, onActive } = this.props;
-    const busyFields = _.pluck(formFields, "target");
+    const busyFields = formFields.map((o) => o.target);
     let newFields = fields.filter((item) => {
       return busyFields.indexOf(item.slug) === -1 || item.slug === target;
     });
 
     const allBusyFields =
       fields.length +
-      (formFields.length - _.without(busyFields, "_auto_generate").length);
+      (formFields.length - without(busyFields, "_auto_generate").length);
 
     if (
       !(

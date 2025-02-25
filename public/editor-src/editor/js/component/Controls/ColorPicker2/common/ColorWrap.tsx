@@ -1,5 +1,5 @@
+import { debounce } from "es-toolkit";
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
-import _ from "underscore";
 import {
   ChangeFunction,
   HSLAChange,
@@ -51,7 +51,7 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>) => {
         prevColor: props.color
       };
 
-      this.debounce = _.debounce(
+      this.debounce = debounce(
         (
           fn: Props["onChange"],
           data: HSLAChange | HSVAChange,

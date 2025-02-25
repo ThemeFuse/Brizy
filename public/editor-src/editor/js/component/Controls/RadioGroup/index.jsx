@@ -1,13 +1,14 @@
 import classnames from "classnames";
+import { flatMap, noop } from "es-toolkit";
+import { find } from "es-toolkit/compat";
 import React from "react";
-import _ from "underscore";
 
 export default class RadioGroup extends React.Component {
   static defaultProps = {
     name: "defaultName",
     className: "",
     defaultValue: "",
-    onChange: _.noop
+    onChange: noop
   };
 
   onClick = (value) => {
@@ -16,14 +17,14 @@ export default class RadioGroup extends React.Component {
 
   getCurrent = () => {
     return (
-      _.find(this.props.children, (child) => {
+      find(this.props.children, (child) => {
         return child.props.value === this.props.defaultValue;
       }) || this.props.children[0]
     );
   };
 
   renderOptions = () => {
-    return _.map(this.props.children, (child, index) => {
+    return flatMap(this.props.children, (child, index) => {
       return React.cloneElement(child, {
         key: index,
         active: this.props.defaultValue === child.props.value,

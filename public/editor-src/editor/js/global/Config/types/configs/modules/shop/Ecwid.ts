@@ -1,6 +1,6 @@
 import { ChoicesSync } from "visual/component/Options/types/dev/Select/types";
 import { Response } from "visual/global/Config/types/configs/common";
-import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid";
+import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
 
 export interface Ecwid {
   type: "ecwid";

@@ -1,6 +1,6 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
 import EditorIcon from "visual/component/EditorIcon";
@@ -21,11 +21,11 @@ class Account extends Component {
     prevLoading: false,
     connectLoading: false,
     disconnectLoading: false,
-    onActive: _.noop,
-    onPrev: _.noop,
-    onNext: _.noop,
-    onConnect: _.noop,
-    onDisconnect: _.noop
+    onActive: noop,
+    onPrev: noop,
+    onNext: noop,
+    onConnect: noop,
+    onDisconnect: noop
   };
 
   renderOptions() {

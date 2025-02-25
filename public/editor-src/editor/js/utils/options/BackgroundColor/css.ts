@@ -1,7 +1,11 @@
 import { getColor } from "visual/utils/color";
 import { CSSStyleFn } from "visual/utils/cssStyle/types";
 
-export const css: CSSStyleFn<"backgroundColor"> = ({ meta, value }): string => {
+export const css: CSSStyleFn<"backgroundColor"> = ({
+  meta,
+  value,
+  config
+}): string => {
   const { isDisabled } = meta ?? {};
 
   if (isDisabled) {
@@ -24,7 +28,7 @@ export const css: CSSStyleFn<"backgroundColor"> = ({ meta, value }): string => {
     radialDegree
   } = value;
 
-  const backgroundColor = getColor(palette, hex, opacity);
+  const backgroundColor = getColor(palette, hex, opacity, config);
 
   if (isSolid) {
     return `background-color:${backgroundColor}; background-image:none;`;
@@ -34,7 +38,8 @@ export const css: CSSStyleFn<"backgroundColor"> = ({ meta, value }): string => {
     const gradientColor = getColor(
       gradientPalette,
       gradientHex,
-      gradientOpacity
+      gradientOpacity,
+      config
     );
 
     if (isLinearGradient) {

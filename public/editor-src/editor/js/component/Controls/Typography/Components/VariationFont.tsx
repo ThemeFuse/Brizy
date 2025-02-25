@@ -116,34 +116,38 @@ export const VariationFont = ({
           onClickOutside={() => setIsOpen(false)}
           exceptions={clickOutsideExceptions}
         >
-          <Scrollbar
-            theme="dark"
-            className="brz-ed-control__typography-variation-scrollbar"
-          >
-            {_variations.map(({ title, value, onChange, min, max }) => {
-              const _value = clamp(value, min, max);
+          {({ ref }) => (
+            <Scrollbar
+              theme="dark"
+              className="brz-ed-control__typography-variation-scrollbar"
+            >
+              <div ref={ref}>
+                {_variations.map(({ title, value, onChange, min, max }) => {
+                  const _value = clamp(value, min, max);
 
-              return (
-                <div
-                  className="brz-ed-control__typography-variation-item"
-                  key={title}
-                >
-                  <Label title={title}>{title}</Label>
-                  <NumberSlider
-                    value={{
-                      number: _value,
-                      unit: ""
-                    }}
-                    onChange={onChange}
-                    step={1}
-                    min={min}
-                    max={max}
-                    units={units}
-                  />
-                </div>
-              );
-            })}
-          </Scrollbar>
+                  return (
+                    <div
+                      className="brz-ed-control__typography-variation-item"
+                      key={title}
+                    >
+                      <Label title={title}>{title}</Label>
+                      <NumberSlider
+                        value={{
+                          number: _value,
+                          unit: ""
+                        }}
+                        onChange={onChange}
+                        step={1}
+                        min={min}
+                        max={max}
+                        units={units}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </Scrollbar>
+          )}
         </ClickOutside>
       )}
     </>

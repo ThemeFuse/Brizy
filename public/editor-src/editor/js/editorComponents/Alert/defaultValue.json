@@ -22,6 +22,8 @@
     "gap": 0,
     "gapSuffix": "px",
 
+    "customCss": "",
+
     "showCloseButtonAfter": 0,
     "showCloseButtonAfterSuffix": "s",
 
