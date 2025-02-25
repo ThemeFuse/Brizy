@@ -1,10 +1,10 @@
 import React from "react";
-import { isEditor } from "visual/providers/RenderProvider";
 import { ElementPatch } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isEditor } from "visual/providers/RenderProvider";
 import { ViewType } from "../Form2Steps/types";
 import { Divider } from "./Components/Divider";
 import { Nav } from "./Components/Nav";
@@ -13,11 +13,11 @@ import * as toolbar from "./toolbar";
 import type { Props, Value } from "./types";
 
 class Form2Step extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.Form2Step {
     return ElementTypes.Form2Step;
   }
-
-  static defaultValue = defaultValue;
 
   handleTextChange = (patch: ElementPatch<Value>): void => {
     this.patchValue(patch);
@@ -27,7 +27,7 @@ class Form2Step extends EditorComponent<Value, Props> {
     const { totalCount, active, activeStep, count, onActiveChange } =
       this.props;
 
-    const _isEditor = isEditor(this.renderContext);
+    const _isEditor = isEditor(this.props.renderContext);
     let { viewType } = this.props;
 
     if (viewType === ViewType.None) {
@@ -50,17 +50,20 @@ class Form2Step extends EditorComponent<Value, Props> {
     return (
       <>
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, undefined)}>
-          <Nav
-            v={v}
-            active={active}
-            viewType={viewType}
-            progressStyle={progressStyle}
-            progressValue={progressValue}
-            order={count}
-            onActiveChange={onActiveChange}
-            onChange={this.handleTextChange}
-            renderContext={this.renderContext}
-          />
+          {({ ref }) => (
+            <Nav
+              v={v}
+              active={active}
+              viewType={viewType}
+              progressStyle={progressStyle}
+              progressValue={progressValue}
+              order={count}
+              onActiveChange={onActiveChange}
+              onChange={this.handleTextChange}
+              renderContext={this.props.renderContext}
+              ref={ref}
+            />
+          )}
         </Toolbar>
         {!(viewType === ViewType.Progress) && count < totalCount && <Divider />}
       </>

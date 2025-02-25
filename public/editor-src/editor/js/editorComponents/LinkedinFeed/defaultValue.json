@@ -1,0 +1,27 @@
+{
+  "content": {
+    "embedUrl": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7291078452407914496",
+    "placeholderSpinner": "Loading...",
+    "linkText": "View on LinkedIn",
+
+    "placeholderSpinnerDisabled": false,
+    "placeholderDisabled": false,
+
+    "embedUrlPopulation": "",
+    "embedUrlPopulationEntityType": "",
+    "embedUrlPopulationEntityId": "",
+
+    "linkTextPopulation": "",
+    "linkTextPopulationEntityType": "",
+    "linkTextPopulationEntityId": "",
+
+    "placeholderSpinnerPopulation": "",
+    "placeholderSpinnerPopulationEntityType": "",
+    "placeholderSpinnerPopulationEntityId": ""
+  },
+
+  "style": {
+    "width": 358,
+    "widthSuffix": "px"
+  }
+}

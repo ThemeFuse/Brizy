@@ -1,24 +1,24 @@
 import React from "react";
-import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import contextMenuExtendConfigFn from "./contextMenu";
 
 class TableColItems extends EditorArrayComponent {
-  static get componentId() {
-    return "TableCol.Items";
-  }
-
   static defaultProps = {
     className: "",
     meta: {}
   };
+
+  static get componentId() {
+    return "TableCol.Items";
+  }
 
   handleSortableAcceptElements = (from) => {
     const meta = this.props.meta;
@@ -103,7 +103,7 @@ class TableColItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <div className={this.props.className}>{items}</div>;
     }
 

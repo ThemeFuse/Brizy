@@ -1,12 +1,12 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { ReactElement, ReactNode, RefObject } from "react";
 import { Manager, Reference } from "react-popper";
-import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
-import { WithClassName } from "visual/types/attributes";
 import { TimerType } from "visual/types/TimerType";
-import { Props as ContentProps, TooltipContent as Content } from "./Content";
+import { WithClassName } from "visual/types/attributes";
+import { TooltipContent as Content, Props as ContentProps } from "./Content";
 
 const stack: Tooltip[] = [];
 
@@ -233,7 +233,7 @@ export class Tooltip extends React.Component<Props> {
           title={title}
           ref={this.contentRef}
           className="brz-ed-tooltip__content"
-          onClick={openOnClick ? this.handleContentClick : _.noop}
+          onClick={openOnClick ? this.handleContentClick : noop}
         >
           {children}
         </div>
@@ -253,7 +253,7 @@ export class Tooltip extends React.Component<Props> {
               title={title}
               ref={this.contentRef}
               className={"brz-ed-tooltip__content"}
-              onClick={openOnClick ? this.handleContentClick : _.noop}
+              onClick={openOnClick ? this.handleContentClick : noop}
             >
               {children}
             </div>
@@ -288,13 +288,16 @@ export class Tooltip extends React.Component<Props> {
         onClickOutside={this.handleClickOutside}
         exceptions={clickOutsideExceptions}
       >
-        <div
-          className={className}
-          onMouseEnter={openOnClick ? _.noop : this.handleMouseEnter}
-          onMouseLeave={openOnClick ? _.noop : this.handleMouseLeave}
-        >
-          {toolbar ? this.renderInToolbar() : this.renderSimple()}
-        </div>
+        {({ ref }) => (
+          <div
+            className={className}
+            onMouseEnter={openOnClick ? noop : this.handleMouseEnter}
+            onMouseLeave={openOnClick ? noop : this.handleMouseLeave}
+            ref={ref}
+          >
+            {toolbar ? this.renderInToolbar() : this.renderSimple()}
+          </div>
+        )}
       </ClickOutside>
     );
   }

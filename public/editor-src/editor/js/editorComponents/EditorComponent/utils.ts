@@ -1,8 +1,9 @@
-import { Bool } from "@brizy/readers";
+import { Bool, Obj } from "@brizy/readers";
 import deepMerge from "deepmerge";
+import { flatten, intersection } from "es-toolkit";
+import { isEmpty } from "es-toolkit/compat";
 import { mPipe, or } from "fp-utilities";
 import { getIn } from "timm";
-import { flatten, intersection, isEmpty } from "underscore";
 import {
   ElementDefaultValue,
   ElementModel
@@ -48,7 +49,7 @@ import { reduce } from "visual/utils/options/reduce";
 import { isOption } from "visual/utils/options/utils";
 import { fromElementModel } from "visual/utils/options/utils/fromElementModel";
 import { toElementModel } from "visual/utils/options/utils/toElementModel";
-import * as Obj from "visual/utils/reader/object";
+import { hasSomeKey } from "visual/utils/reader/object";
 import * as Responsive from "visual/utils/responsiveMode";
 import {
   DESKTOP,
@@ -268,7 +269,7 @@ export const filterCSSOptions = (
       const opt = Obj.read(o);
 
       if (opt) {
-        if (Obj.hasSomeKey(["selector", "style"], opt)) {
+        if (hasSomeKey(["selector", "style"], opt)) {
           return opt;
         }
 

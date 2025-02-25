@@ -16,6 +16,7 @@ import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getPopulatedEntityValues } from "visual/utils/dynamicContent/common";
 import { getLinkData } from "visual/utils/models/link";
 import { handleLinkChange } from "visual/utils/patch/Link";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
@@ -24,14 +25,14 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class PostTitle extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     // NOTE: initially this element was for WordPress only.
     // After we needed to make it work for cloud as well, it was renamed,
     // but since we don't have a good migration system yet, the old componentId still remains
     return "WPPostsTitle";
   }
-
-  static defaultValue = defaultValue;
 
   patchValue(patch, meta) {
     const { fontStyle } = patch;
@@ -75,7 +76,7 @@ class PostTitle extends EditorComponent {
         return {
           blockId,
           meta: newMeta,
-          ...(isEditor(this.renderContext) && {
+          ...(isEditor(this.props.renderContext) && {
             instanceKey: `${this.getId()}_${popupId}`
           })
         };
@@ -114,7 +115,7 @@ class PostTitle extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -135,22 +136,33 @@ class PostTitle extends EditorComponent {
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
         >
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            <Wrapper {...this.makeWrapperProps({ className })}>
-              {linkData.href ? (
-                <Link
-                  href={linkData.href}
-                  type={linkData.type}
-                  target={linkData.target}
-                  rel={linkData.rel}
+          {({ ref: toolbarRef }) => (
+            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+              {({ ref: cssRef }) => (
+                <Wrapper
+                  {...this.makeWrapperProps({
+                    className,
+                    ref: (el) => {
+                      attachRefs(el, [toolbarRef, cssRef]);
+                    }
+                  })}
                 >
-                  {text}
-                </Link>
-              ) : (
-                text
+                  {linkData.href ? (
+                    <Link
+                      href={linkData.href}
+                      type={linkData.type}
+                      target={linkData.target}
+                      rel={linkData.rel}
+                    >
+                      {text}
+                    </Link>
+                  ) : (
+                    text
+                  )}
+                </Wrapper>
               )}
-            </Wrapper>
-          </CustomCSS>
+            </CustomCSS>
+          )}
         </Toolbar>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}

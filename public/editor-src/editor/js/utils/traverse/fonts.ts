@@ -2,18 +2,18 @@ import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
+import { Block } from "visual/types/Block";
 import {
   AdobeFont,
   Fonts,
-  Block,
-  FontStyle,
-  GlobalBlock,
   GoogleFont,
   SystemFont,
   UploadedFont
-} from "visual/types";
-import { findFonts, projectFontsData } from "visual/utils/fonts";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
+} from "visual/types/Fonts";
+import { FontFamilyType } from "visual/types/Fonts";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { FontStyle } from "visual/types/Style";
+import { findFonts, projectFontsData } from "visual/utils/fonts/transform";
 import * as Str from "visual/utils/reader/string";
 import { modelTraverse, styleTraverse } from "visual/utils/traverse";
 import {

@@ -12,6 +12,7 @@ type Props = {
   style: { [key: string]: string | number };
   choices: Choice[];
   onChange: (s: string) => void;
+  containerRef?: RefObject<HTMLDivElement>;
 };
 
 type Choice = {
@@ -159,7 +160,8 @@ class ListBox extends Component<Props, State> {
       choices,
       itemHeight,
       minItems,
-      maxItems
+      maxItems,
+      containerRef
     } = this.props;
     const className = classnames("brz-ed-listbox", _className);
     const minHeight = itemHeight * minItems;
@@ -173,7 +175,7 @@ class ListBox extends Component<Props, State> {
     );
 
     return (
-      <div className={className} style={style}>
+      <div className={className} style={style} ref={containerRef}>
         <Scrollbars
           ref={this.scrollbar}
           renderTrackVertical={() => renderTrack(this.props)}

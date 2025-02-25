@@ -1,3 +1,4 @@
+import { debounce } from "es-toolkit";
 import React, {
   ReactElement,
   useCallback,
@@ -6,7 +7,6 @@ import React, {
   useReducer,
   useRef
 } from "react";
-import _ from "underscore";
 import { Control } from "visual/component/Controls/InternalLink";
 import { Status } from "visual/component/Controls/InternalLink/types";
 import { ToastNotification } from "visual/component/Notifications";
@@ -107,7 +107,7 @@ export const InternalLink = ({
   }, [postType, resetValue]);
 
   useEffect(() => {
-    debouncedSearch.current = _.debounce((search: string) => {
+    debouncedSearch.current = debounce((search: string) => {
       if (postType && search && search.trim() !== "" && handler) {
         dispatchLoading(true);
 

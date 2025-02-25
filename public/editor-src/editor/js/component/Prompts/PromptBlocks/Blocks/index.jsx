@@ -1,8 +1,8 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import _ from "underscore";
 import { ToastNotification } from "visual/component/Notifications";
-import { isStory } from "visual/global/EditorModeContext";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { importKit, updateCurrentKitId } from "visual/redux/actions2";
 import {
   fontsSelector,
@@ -17,7 +17,8 @@ import {
   defaultPopupsMeta
 } from "visual/utils/api";
 import { isPro } from "visual/utils/env";
-import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
+import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
+import { normalizeStyles } from "visual/utils/fonts/transform";
 import { t } from "visual/utils/i18n";
 import { isExternalPopup } from "visual/utils/models";
 import {
@@ -34,9 +35,9 @@ class BlocksContainer extends Component {
     showType: true, // dark | light
     showCategories: true,
     type: "normal", // normal | popup
-    HeaderSlotLeft: _.noop(),
-    onAddBlocks: _.noop,
-    onClose: _.noop,
+    HeaderSlotLeft: noop,
+    onAddBlocks: noop,
+    onClose: noop,
     config: {}
   };
 
@@ -135,9 +136,7 @@ class BlocksContainer extends Component {
     );
 
     return {
-      types: [
-        { title: t("Light"), id: "light", name: "light", icon: "nc-light" }
-      ],
+      types: [{ title: t("Light"), id: "light", name: "light" }],
       blocks: blocksData,
       categories: categoriesData
     };

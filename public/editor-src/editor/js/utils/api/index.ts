@@ -109,11 +109,6 @@ export function request(
 
 //#endregion
 
-//#region page rules
-// right now is used only shopify integration
-
-//#endregion
-
 export const getMetafields = (
   sourceType: string,
   config: ConfigCommon

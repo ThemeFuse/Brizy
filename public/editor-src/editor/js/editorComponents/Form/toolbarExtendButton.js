@@ -1,10 +1,10 @@
-import _ from "underscore";
 import { t } from "visual/utils/i18n";
 
 export function getItems({ v, component }) {
   const showIntegrations =
     component.getGlobalConfig()?.integrations?.form?.showIntegrations ?? false;
-  const fields = _.pluck(v.items[0].value.items, "value");
+  const items = v.items[0].value.items;
+  const fields = items.map((o) => o.value);
 
   return [
     {

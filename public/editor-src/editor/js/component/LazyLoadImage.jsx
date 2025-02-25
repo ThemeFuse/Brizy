@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { preloadImage } from "visual/utils/image";
 
@@ -16,7 +16,7 @@ export default class LazyLoadImage extends Component {
     observerThreshold: [0],
     spinnerDelay: 250,
     style: {},
-    onImageLoaded: _.noop
+    onImageLoaded: noop
   };
 
   state = {
@@ -31,14 +31,10 @@ export default class LazyLoadImage extends Component {
     this.mounted = true;
 
     if (observer === null) {
-      const {
-        observerRootSelector,
-        observerRootMargin,
-        observerThreshold
-      } = this.props;
-      const observerRoot = node.ownerDocument.querySelector(
-        observerRootSelector
-      );
+      const { observerRootSelector, observerRootMargin, observerThreshold } =
+        this.props;
+      const observerRoot =
+        node.ownerDocument.querySelector(observerRootSelector);
       const options = {
         root: observerRoot,
         rootMargin: observerRootMargin,
@@ -76,7 +72,7 @@ export default class LazyLoadImage extends Component {
     }
   }
 
-  handleIntersection = entries => {
+  handleIntersection = (entries) => {
     entries.forEach(({ isIntersecting, target }) => {
       if (isIntersecting) {
         const instance = observerInstances.get(target);

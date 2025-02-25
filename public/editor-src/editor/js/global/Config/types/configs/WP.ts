@@ -72,7 +72,7 @@ export interface Prop {
 
 export interface WP extends ConfigCommon {
   prefix?: string;
-  dynamicContent: DynamicContent<"wp">;
+  dynamicContent?: DynamicContent<"wp">;
   urls: Urls<"wp">;
   template_type?: TemplateType;
   modules: Module<"wp">;

@@ -7,7 +7,7 @@ export interface EditorComponentContextValue {
     itemId: string;
     config?: DCGroup<"wp"> | DCGroup<"cloud">;
   };
-  sheet?: Sheet;
+  sheet?: Readonly<Sheet>;
 }
 
 export const EditorComponentContext =

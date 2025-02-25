@@ -1,6 +1,6 @@
 import classNames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
-import { noop } from "underscore";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -9,6 +9,7 @@ import {
   defaultValueValue,
   validateKeyByProperty
 } from "visual/utils/onChange";
+import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
@@ -22,16 +23,15 @@ import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 import * as toolbarFilterConfig from "./toolbarFilter";
 
 class Accordion extends EditorComponent {
-  static get componentId() {
-    return "Accordion";
-  }
-
   static defaultProps = {
     meta: {},
     extendParentToolbar: noop
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "Accordion";
+  }
 
   handleAllTagChange = (allTag) => {
     this.patchValue({ allTag });
@@ -94,7 +94,7 @@ class Accordion extends EditorComponent {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
   };
@@ -122,7 +122,7 @@ class Accordion extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -163,9 +163,16 @@ class Accordion extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
-          <Items {...itemProps} />
-        </ContextMenu>
+        {({ ref: cssRef }) => (
+          <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+            {({ ref: contextMenuRef }) => (
+              <Items
+                {...itemProps}
+                containerRef={(el) => attachRefs(el, [cssRef, contextMenuRef])}
+              />
+            )}
+          </ContextMenu>
+        )}
       </CustomCSS>
     );
   }

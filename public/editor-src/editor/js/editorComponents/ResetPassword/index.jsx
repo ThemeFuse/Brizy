@@ -18,11 +18,11 @@ import * as toolbarExtendLabel from "./toolbarExtendLabel";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
 class ResetPassword extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "ResetPassword";
   }
-
-  static defaultValue = defaultValue;
 
   componentDidMount() {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -103,7 +103,7 @@ class ResetPassword extends EditorComponent {
   }
 
   renderForm(v) {
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
       return (
         <form className="brz-reset-psw-form">
           {this.renderResetPasswordForm(v)}
@@ -138,45 +138,48 @@ class ResetPassword extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <Wrapper
-          {...this.makeWrapperProps({
-            className,
-            attributes: {
-              ...makeDataAttr({ name: "redirect", value: redirectType }),
-              ...makeDataAttr({
-                name: "redirect-value",
-                value: messageRedirect
-              }),
-              ...makeDataAttr({
-                name: "error-empty",
-                value: emptyFieldsError,
-                translatable: true
-              }),
-              ...makeDataAttr({
-                name: "error-url",
-                value: submitUrlError,
-                translatable: true
-              }),
-              ...makeDataAttr({
-                name: "error-passlength",
-                value: passLengthError
-              }),
-              ...makeDataAttr({
-                name: "error-passmatch",
-                value: passMatchError
-              })
-            }
-          })}
-        >
-          {this.renderForm(v)}
-        </Wrapper>
+        {({ ref: cssRef }) => (
+          <Wrapper
+            {...this.makeWrapperProps({
+              className,
+              attributes: {
+                ...makeDataAttr({ name: "redirect", value: redirectType }),
+                ...makeDataAttr({
+                  name: "redirect-value",
+                  value: messageRedirect
+                }),
+                ...makeDataAttr({
+                  name: "error-empty",
+                  value: emptyFieldsError,
+                  translatable: true
+                }),
+                ...makeDataAttr({
+                  name: "error-url",
+                  value: submitUrlError,
+                  translatable: true
+                }),
+                ...makeDataAttr({
+                  name: "error-passlength",
+                  value: passLengthError
+                }),
+                ...makeDataAttr({
+                  name: "error-passmatch",
+                  value: passMatchError
+                })
+              },
+              ref: cssRef
+            })}
+          >
+            {this.renderForm(v)}
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }

@@ -1,7 +1,7 @@
 import { getColor } from "visual/utils/color";
 import { CSSStyleFn } from "visual/utils/cssStyle/types";
 
-export const css: CSSStyleFn<"border"> = ({ meta, value }): string => {
+export const css: CSSStyleFn<"border"> = ({ meta, value, config }): string => {
   const {
     width,
     topWidth,
@@ -20,7 +20,7 @@ export const css: CSSStyleFn<"border"> = ({ meta, value }): string => {
     return "border: none;";
   }
 
-  const color = getColor(palette, hex, opacity);
+  const color = getColor(palette, hex, opacity, config);
 
   if (isNoEmptyGrouped) {
     return `border:${width}px ${style} ${color};`;

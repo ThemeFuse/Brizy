@@ -15,15 +15,14 @@ const HEAD_ITEM_INDEX = 0;
 const ASIDE_ITEM_INDEX = 1;
 
 class Table extends EditorComponent {
-  static get componentId() {
-    return "Table";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "Table";
+  }
 
   getMeta(v) {
     const { tableAside, rows, columns } = v;
@@ -86,7 +85,7 @@ class Table extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -123,10 +122,12 @@ class Table extends EditorComponent {
 
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        <table className={className}>
-          {head}
-          {body}
-        </table>
+        {({ ref: cssRef }) => (
+          <table className={className} ref={cssRef}>
+            {head}
+            {body}
+          </table>
+        )}
       </CustomCSS>
     );
   }

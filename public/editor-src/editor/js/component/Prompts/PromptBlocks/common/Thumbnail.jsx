@@ -1,8 +1,8 @@
 import classnames from "classnames";
+import { debounce, noop } from "es-toolkit";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import _ from "underscore";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import LazyLoadImage from "visual/component/LazyLoadImage";
@@ -35,11 +35,11 @@ class Thumbnail extends Component {
     tags: undefined,
     showSync: false,
     showDownload: false,
-    onAdd: _.noop,
-    onRemove: _.noop,
-    onImageLoaded: _.noop,
-    onSync: _.noop,
-    onUpdate: _.noop,
+    onAdd: noop,
+    onRemove: noop,
+    onImageLoaded: noop,
+    onSync: noop,
+    onUpdate: noop,
     isPro: false,
     isStory: false,
     upgradeToPro: "",
@@ -74,6 +74,15 @@ class Thumbnail extends Component {
   iconRef = React.createRef();
 
   isPro = this.props.isPro;
+  handleTitleChange = debounce((value) => {
+    const { data, onUpdate } = this.props;
+
+    onUpdate({
+      ...data,
+      title: value,
+      dataVersion: data.dataVersion + 1
+    });
+  }, 1000);
 
   getProUrl() {
     const { upgradeToPro } = this.props;
@@ -133,16 +142,6 @@ class Thumbnail extends Component {
 
     onSync(data);
   };
-
-  handleTitleChange = _.debounce((value) => {
-    const { data, onUpdate } = this.props;
-
-    onUpdate({
-      ...data,
-      title: value,
-      dataVersion: data.dataVersion + 1
-    });
-  }, 1000);
 
   handleChangeCategory = (value) => {
     this.setState({ category: value });

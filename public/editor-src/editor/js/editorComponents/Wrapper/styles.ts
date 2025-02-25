@@ -5,7 +5,7 @@ import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./index";
 
 export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const styles: Styles = {
     ".brz &&:hover": {
       interval: [

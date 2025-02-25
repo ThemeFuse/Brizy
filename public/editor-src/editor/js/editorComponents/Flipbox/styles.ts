@@ -5,7 +5,7 @@ import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const styles: Styles = {
     ".brz &&": {
       standart: ["cssStyleColumnHeight"]

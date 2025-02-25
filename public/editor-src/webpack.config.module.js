@@ -1,9 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
-const swcrc = require("./swc.config.all");
 const GenerateJsonPlugin = require("generate-json-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const { omit } = require("timm");
 const {
   createJoinFunction,
@@ -11,14 +12,29 @@ const {
   asGenerator,
   defaultJoinGenerator
 } = require("resolve-url-loader");
-
+const swcrc = require("./swc.config.all");
 const rootPackage = require("./package.json");
+
+const defaultExtensions = [".ts", ".tsx", ".js", ".jsx", ".json"];
+
 const packageJSON = {
   ...omit(rootPackage, ["dependencies", "scripts"]),
   exports: {
+    ".": {
+      default: {
+        types: "./dist/editor/index.d.ts",
+        default: "./dist/editor/index.js"
+      }
+    },
     "./*.css": "./dist/css/*.css",
-    "./preview": "./dist/preview.js",
-    "./editor": "./dist/editor.js"
+    "./preview": {
+      types: "./dist/editor/types/preview.d.ts",
+      default: "./dist/preview.js"
+    },
+    "./editor": {
+      types: "./dist/editor/index.d.ts",
+      default: "./dist/editor/index.js"
+    }
   },
   peerDependencies: {
     react: rootPackage.dependencies["react"],
@@ -27,6 +43,7 @@ const packageJSON = {
 };
 
 const sassDirectory = path.resolve(__dirname, "editor/sass");
+const docsDirectory = path.resolve(__dirname, "../docs");
 
 const fontsGenerator = asGenerator((item, ...rest) => {
   const defaultGenerator = defaultJoinGenerator(item, ...rest);
@@ -47,6 +64,37 @@ const myJoinFn = createJoinFunction(
   createJoinImplementation(fontsGenerator)
 );
 
+const getExtensions = (target) => {
+  switch (target) {
+    case "WP": {
+      return [
+        ".preview.wp.ts",
+        ".preview.wp.tsx",
+        ".preview.wp.js",
+        ".preview.wp.jsx",
+        ".preview.ts",
+        ".preview.tsx",
+        ".preview.js",
+        ".preview.jsx",
+        ".wp.ts",
+        ".wp.tsx",
+        ".wp.js",
+        ".wp.jsx",
+        ...defaultExtensions
+      ];
+    }
+    default: {
+      return [
+        ".preview.ts",
+        ".preview.tsx",
+        ".preview.js",
+        ".preview.jsx",
+        ...defaultExtensions
+      ];
+    }
+  }
+};
+
 const webpackConfig = (options) => {
   const BUILD_PATH = options.BUILD_PATH;
   const BUILD_MODE = options.IS_PRODUCTION ? "production" : "development";
@@ -57,7 +105,6 @@ const webpackConfig = (options) => {
     output: {
       path: distPath,
       filename: "[name].js",
-      clean: true,
       publicPath: "",
       globalObject: "this",
       library: {
@@ -70,7 +117,7 @@ const webpackConfig = (options) => {
       alias: {
         visual: path.resolve(__dirname, "editor/js")
       },
-      extensions: [".ts", ".tsx", ".js", ".jsx", ".json"]
+      extensions: getExtensions(options.TARGET)
     },
     module: {
       rules: [
@@ -105,7 +152,13 @@ const webpackConfig = (options) => {
                 join: myJoinFn
               }
             },
-            "sass-loader"
+            {
+              loader: "sass-loader",
+              options: {
+                // !!IMPORTANT!! used inside "resolve-url-loader"
+                sourceMap: true
+              }
+            }
           ]
         },
         {
@@ -119,6 +172,7 @@ const webpackConfig = (options) => {
       ]
     },
     optimization: {
+      usedExports: true,
       splitChunks: {
         chunks: "all",
         cacheGroups: {
@@ -142,7 +196,6 @@ const webpackConfig = (options) => {
     },
     plugins: [
       new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
-      new GenerateJsonPlugin("../package.json", packageJSON, (_, v) => v, 2),
       new MiniCssExtractPlugin({
         filename: "css/[name].css"
       }),
@@ -155,32 +208,6 @@ const webpackConfig = (options) => {
 
 const webpackPreviewConfig = (options) => {
   const baseConfig = webpackConfig(options);
-  const nullLoaderArr = [
-    // stripped because of errors when run in a node environment
-    /graphql/,
-    /apollo/,
-    /@apollo\/client/,
-    /quill/,
-    /isotope-layout/,
-    /magnific-popup/,
-    /slick-carousel/,
-    /react-slick/,
-    /@uiw/,
-    /@brizy\/ui\//,
-    /@brizy\/ui-icons\//,
-    /@dnd-kit/,
-    /rxjs/,
-    /swiper/,
-
-    // stripped for performance / bundle size reduction
-    /\/editor\/js\/component\/Prompts\//,
-    /\/editor\/js\/component\/Options\//,
-    /\/editor\/js\/utils\/toolbar\//,
-    /\/node_modules\/lottie-react\//,
-    /\/node_modules\/lottie-web\//,
-    /\/node_modules\/jquery\//,
-    /\/node_modules\/react-facebook\//
-  ];
 
   return {
     ...baseConfig,
@@ -193,12 +220,6 @@ const webpackPreviewConfig = (options) => {
       rules: [
         ...baseConfig.module.rules,
         {
-          test(path) {
-            return nullLoaderArr.some((r) => r.test(path));
-          },
-          loader: "null-loader"
-        },
-        {
           test: /[\\/](lib|screenshot)s?[\\/]/,
           include: [path.resolve(__dirname, "editor")],
           loader: "null-loader"
@@ -209,9 +230,7 @@ const webpackPreviewConfig = (options) => {
       ...baseConfig.plugins,
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(baseConfig.mode),
-        TARGET: JSON.stringify(options.TARGET),
-        IS_EDITOR: false,
-        IS_PREVIEW: true
+        TARGET: JSON.stringify(options.TARGET)
       })
     ]
   };
@@ -219,27 +238,47 @@ const webpackPreviewConfig = (options) => {
 
 const webpackEditorConfig = (options) => {
   const baseConfig = webpackConfig(options);
+  const outputDir = path.resolve(baseConfig.output.path, "editor");
 
   return {
     ...baseConfig,
     entry: {
-      editor: [
-        "./editor/js/bootstraps/initBrizyGlobal.ts",
-        "./editor/js/bootstraps/module/index.tsx"
-      ],
-      editorCSS: "./editor/sass/main.editor.scss"
+      editor: "./editor/opensource/index.ts"
     },
     output: {
       ...baseConfig.output,
-      clean: false
+      path: outputDir,
+      filename: "index.js"
     },
     plugins: [
       ...baseConfig.plugins,
       new webpack.DefinePlugin({
-        "process.env.NODE_ENV": JSON.stringify(baseConfig.mode),
-        TARGET: JSON.stringify(options.TARGET),
-        IS_EDITOR: true,
-        IS_PREVIEW: false
+        "process.env.NODE_ENV": JSON.stringify(baseConfig.mode)
+      }),
+      new GenerateJsonPlugin("../../package.json", packageJSON, (_, v) => v, 2),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(docsDirectory, "README.opensource.md"),
+            to: "../../README.md"
+          }
+        ]
+      }),
+      new ForkTsCheckerWebpackPlugin({
+        typescript: {
+          mode: "write-dts",
+          configOverwrite: {
+            include: [
+              "./editor/opensource/**/*.ts",
+              "./editor/opensource/**/*.tsx"
+            ],
+            compilerOptions: {
+              baseUrl: "./editor/opensource",
+              outDir: outputDir,
+              declaration: true
+            }
+          }
+        }
       })
     ]
   };
@@ -250,11 +289,16 @@ module.exports = (env, argv) => {
     TARGET: "Cloud",
     WATCH: argv.watch ?? false,
     IS_PRODUCTION: argv.mode === "production",
-    BUILD_PATH: env["build-dir"] ?? path.resolve(__dirname, "build"),
-    ANALYZE: argv.analyze ?? false
+    BUILD_PATH: env["build-dir"] ?? path.resolve(__dirname, "build")
   };
-  const previewConfig = webpackPreviewConfig(options);
-  const editorConfig = webpackEditorConfig(options);
+  const previewConfig = webpackPreviewConfig({
+    ...options,
+    ANALYZE: env["analyze_preview"] ?? false
+  });
+  const editorConfig = webpackEditorConfig({
+    ...options,
+    ANALYZE: env["analyze_editor"] ?? false
+  });
 
   return [previewConfig, editorConfig];
 };

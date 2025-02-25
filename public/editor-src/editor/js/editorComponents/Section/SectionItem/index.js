@@ -1,7 +1,7 @@
 import classnames from "classnames";
+import { isEqual } from "es-toolkit";
 import React from "react";
 import { mergeDeep } from "timm";
-import _ from "underscore";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
@@ -27,6 +27,7 @@ import { getLinkData } from "visual/utils/models/link";
 import { hasMultiLanguage } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
 import { handleLinkChange } from "visual/utils/patch/Link";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
@@ -35,26 +36,21 @@ import { style, styleContainer } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class SectionItem extends EditorComponent {
-  static get componentId() {
-    return "SectionItem";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   mounted = false;
-
   collapsibleToolbarRef = React.createRef();
-
   state = {
     isDragging: false,
     paddingPatch: null
   };
+
+  static get componentId() {
+    return "SectionItem";
+  }
 
   getDBValue() {
     if (this.state.paddingPatch) {
@@ -71,7 +67,7 @@ class SectionItem extends EditorComponent {
   shouldUpdateBecauseOfParent(nextProps) {
     return (
       this.props.meta.section.isSlider ||
-      !_.isEqual(this.props.rerender, nextProps.rerender)
+      !isEqual(this.props.rerender, nextProps.rerender)
     );
   }
 
@@ -247,7 +243,7 @@ class SectionItem extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -264,7 +260,7 @@ class SectionItem extends EditorComponent {
           onStart={this.onPaddingResizerStart}
           onChange={this.handlePaddingResizerChange}
           onEnd={this.onPaddingResizerEnd}
-          renderContext={this.renderContext}
+          renderContext={this.props.renderContext}
         >
           <Items {...itemsProps} />
         </PaddingResizer>
@@ -291,7 +287,7 @@ class SectionItem extends EditorComponent {
 
         return {
           blockId,
-          instanceKey: isEditor(this.renderContext)
+          instanceKey: isEditor(this.props.renderContext)
             ? `${this.getId()}_${popupId}`
             : itemData.type === "GlobalBlock"
               ? `global_${popupId}`
@@ -319,7 +315,7 @@ class SectionItem extends EditorComponent {
           vd,
           store: this.getReduxStore(),
           props: this.props,
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -332,25 +328,27 @@ class SectionItem extends EditorComponent {
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={customCSS}>
-            <div
-              {...containerBorderAttr}
-              ref={containerBorderRef}
-              className={classNameSectionContent}
-            >
-              <Roles
-                allow={["admin"]}
-                fallbackRender={() => this.renderItems(v, vs, vd)}
+            {({ ref: cssRef }) => (
+              <div
+                {...containerBorderAttr}
+                ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
+                className={classNameSectionContent}
               >
-                {this.renderToolbar()}
-                <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                  {this.renderItems(v, vs, vd)}
-                  {shouldRenderPopup(
-                    v,
-                    blocksDataSelector(this.getReduxState())
-                  ) && this.renderPopups()}
-                </ToolbarExtend>
-              </Roles>
-            </div>
+                <Roles
+                  allow={["admin"]}
+                  fallbackRender={() => this.renderItems(v, vs, vd)}
+                >
+                  {this.renderToolbar()}
+                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                    {this.renderItems(v, vs, vd)}
+                    {shouldRenderPopup(
+                      v,
+                      blocksDataSelector(this.getReduxState())
+                    ) && this.renderPopups()}
+                  </ToolbarExtend>
+                </Roles>
+              </div>
+            )}
           </CustomCSS>
         )}
       </ContainerBorder>
@@ -372,7 +370,7 @@ class SectionItem extends EditorComponent {
           vd,
           store: this.getReduxStore(),
           props: this.props,
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

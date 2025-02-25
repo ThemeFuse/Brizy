@@ -1,8 +1,10 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { renderStyles } from "visual/utils/cssStyle";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
+  const _isStory = isStory(data.contexts.mode);
   const styles = {
     ".brz &&": {
       standart: [
@@ -13,7 +15,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleTypographyLetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
-        "cssStyleElementFormMargin"
+        ...(_isStory ? [] : ["cssStyleElementFormMargin"])
       ]
     },
     ".brz && .brz-forms__item": {

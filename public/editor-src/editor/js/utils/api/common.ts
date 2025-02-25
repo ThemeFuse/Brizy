@@ -18,6 +18,7 @@ import { isShopifyShop } from "visual/global/Config/types/configs/Base";
 import { Shopify, isCloud } from "visual/global/Config/types/configs/Cloud";
 import {
   AutoSave,
+  ConditionalTypesData,
   ConfigCommon
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
@@ -58,21 +59,19 @@ import {
   EkklesiaExtra,
   EkklesiaFields
 } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
+import { SavedBlock, SavedLayout } from "visual/types";
+import { UploadedFont } from "visual/types/Fonts";
 import {
-  FontStyle,
   GlobalBlock,
   GlobalBlockNormal,
-  GlobalBlockPopup,
-  Page,
-  PageCommon,
-  Palette,
-  Project,
-  Rule,
-  SavedBlock,
-  SavedLayout,
-  ShopifyPage
-} from "visual/types";
+  GlobalBlockPopup
+} from "visual/types/GlobalBlock";
+import { Page, PageCommon, ShopifyPage } from "visual/types/Page";
+import { Project } from "visual/types/Project";
+import { Rule } from "visual/types/Rule";
+import { FontStyle, Palette } from "visual/types/Style";
 import { Dictionary } from "visual/types/utils";
+import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import {
   AdobeAddAccount,
   AdobeFonts,
@@ -772,7 +771,9 @@ export const defaultStoriesData = (
 //#endregion
 
 //#region Fonts
-export function getUploadedFonts(config: ConfigCommon) {
+export function getUploadedFonts(
+  config: ConfigCommon
+): Promise<Array<UploadedFont>> {
   const { get } = config.integrations?.fonts?.upload ?? {};
 
   return new Promise((res, rej) => {
@@ -821,6 +822,35 @@ export const getCollectionItems = (
       get(res, rej, { id: type, extraChoices });
     } else {
       rej(t("Missing api collectionItems handler in config"));
+    }
+  });
+};
+
+export const getConditionalItems = (
+  entityType: string,
+  config: ConfigCommon
+): Promise<CollectionItem[]> => {
+  const get = config?.api?.collectionItems?.getConditionalItems?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof get === "function") {
+      get(res, rej, { entityType });
+    } else {
+      rej(t("Missing api conditional items handler in config"));
+    }
+  });
+};
+
+export const getConditionalTypes = (
+  config: ConfigCommon
+): Promise<ConditionalTypesData> => {
+  const get = config?.api?.collectionTypes?.getConditionalTypes?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof get === "function") {
+      get(res, rej);
+    } else {
+      rej(t("Missing api conditional types handler in config"));
     }
   });
 };

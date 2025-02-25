@@ -1,7 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { Params } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -18,7 +18,7 @@ export const getItems = <
 }: Params<M, P, S>): ToolbarItemType[] => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const metaLinksColor = getColor(
+  const metaLinksColor = getColorToolbar(
     dvv("metaLinksColorPalette"),
     dvv("metaLinksColorHex"),
     dvv("metaLinksColorOpacity")

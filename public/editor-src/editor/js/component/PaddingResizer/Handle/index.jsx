@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import _ from "underscore";
 import classNames from "classnames";
-import MouseEventsDelayed from "./MouseEventsDelayed";
-import { rolesHOC } from "visual/component/Roles";
+import { noop } from "es-toolkit";
+import React, { Component } from "react";
 import Draggable from "visual/component/Draggable";
-import { attachRef } from "visual/utils/react";
+import { rolesHOC } from "visual/component/Roles";
 import { isInsideRect } from "visual/component/Sortable/plugin/utils";
+import { attachRef } from "visual/utils/react";
+import MouseEventsDelayed from "./MouseEventsDelayed";
 
 let instances = 0;
 let docX;
@@ -17,8 +17,8 @@ class PaddingResizerHandle extends Component {
     value: "",
     tabletValue: "",
     mobileValue: "",
-    onDrag: _.noop,
-    onDragEnd: _.noop
+    onDrag: noop,
+    onDragEnd: noop
   };
 
   isDragging = false;
@@ -85,7 +85,7 @@ class PaddingResizerHandle extends Component {
     }
   };
 
-  handleDrag = dragInfo => {
+  handleDrag = (dragInfo) => {
     if (!this.state.active) {
       return;
     }
@@ -145,6 +145,7 @@ class PaddingResizerHandle extends Component {
         delay={500}
         onEnterSuccess={this.handleMouseEnterSuccess}
         onLeave={this.handleMouseLeaveSuccess}
+        containerRef={this.containerRef}
       >
         <Draggable
           draggingCursor="ns-resize"
@@ -155,7 +156,7 @@ class PaddingResizerHandle extends Component {
           {(refRoot, dragClass) => {
             return (
               <div
-                ref={el => {
+                ref={(el) => {
                   attachRef(el, this.containerRef);
                   attachRef(el, refRoot);
                 }}

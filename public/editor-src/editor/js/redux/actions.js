@@ -24,7 +24,8 @@ export function hydrate({
   authorized,
   syncAllowed,
   config,
-  configId
+  configId,
+  editorMode
 }) {
   return {
     type: HYDRATE,
@@ -37,7 +38,8 @@ export function hydrate({
       authorized,
       syncAllowed,
       config,
-      configId
+      configId,
+      editorMode
     }
   };
 }

@@ -1,9 +1,8 @@
-import { flatten } from "underscore";
+import { flatten } from "es-toolkit";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
 import Config from "visual/global/Config";
 import { request } from "visual/utils/api/index.wp";
 import { getFontVariation, normalizeFonts } from "./utils";
-
 
 export const createFont = async ({ id, name, files }) => {
   const { api } = Config.get("wp");

@@ -1,62 +1,44 @@
+import { noop } from "es-toolkit";
 import React, { Component, ReactElement } from "react";
-import _ from "underscore";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { t } from "visual/utils/i18n";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Tabs from "../common/GlobalApps/Tabs";
-import { FormField } from "../common/GlobalApps/type";
-import Email from "./Email";
-import Recaptcha from "./Recaptcha";
-import Service from "./Service";
+import type { FormField } from "../common/GlobalApps/type";
+import type { ConfigTab } from "./types";
+import { getTabs } from "./utils";
 
-const getTabs = () => [
-  {
-    id: "email",
-    title: t("Email"),
-    icon: "nc-email",
-    component: Email
-  },
-  {
-    id: "service",
-    title: t("APPS"),
-    icon: "nc-extensions-2",
-    component: Service
-  },
-  {
-    id: "recaptcha",
-    title: t("ReCAPTCHA"),
-    icon: "nc-captcha",
-    component: Recaptcha
-  }
-];
-
-type Props = {
+interface Props {
   formId: string;
   formFields: FormField[];
-  opened: boolean;
-  onClose: () => void;
+  tabs?: ConfigTab[];
+  opened?: boolean;
   config: ConfigCommon;
-};
+  onClose?: () => void;
+}
 
 class PromptForm extends Component<Props> {
   static defaultProps = {
     formId: "",
     formFields: [],
     opened: false,
-    onClose: _.noop
+    onClose: noop
   };
 
   render(): ReactElement {
-    const { formId, formFields, opened, onClose, config } = this.props;
+    const { formId, formFields, tabs, opened, config, onClose } = this.props;
+
+    const _tabs = getTabs(tabs);
+    const currentTab = _tabs[0].id;
+
     return (
       <Tabs
-        currentTab="email"
+        currentTab={currentTab}
         formId={formId}
         formFields={formFields}
         opened={opened}
         blockTabsWhenLoading={false}
-        tabs={getTabs()}
-        onClose={onClose}
+        tabs={_tabs}
         config={config}
+        onClose={onClose}
       />
     );
   }

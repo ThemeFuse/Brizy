@@ -1,5 +1,5 @@
+import { has } from "es-toolkit/compat";
 import { MouseEvent } from "react";
-import _ from "underscore";
 import { GlobalMeta } from "visual/component/Options/Type";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
@@ -46,10 +46,8 @@ export type OnSwatchHover = (
 
 export const isHSLAChange = (
   data: HSLAChange | HSVAChange | string
-): data is HSLAChange =>
-  _.has(data, "h") && _.has(data, "s") && _.has(data, "l");
+): data is HSLAChange => has(data, "h") && has(data, "s") && has(data, "l");
 
 export const isHSVAChange = (
   data: HSLAChange | HSVAChange | string
-): data is HSVAChange =>
-  _.has(data, "h") && _.has(data, "s") && _.has(data, "v");
+): data is HSVAChange => has(data, "h") && has(data, "s") && has(data, "v");

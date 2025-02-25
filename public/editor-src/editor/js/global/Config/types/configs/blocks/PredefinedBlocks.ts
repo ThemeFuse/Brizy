@@ -1,5 +1,5 @@
 import { ElementModelType } from "visual/component/Elements/Types";
-import { Palette, FontStyle as _FontStyle } from "visual/types";
+import { Palette, FontStyle as _FontStyle } from "visual/types/Style";
 import { Literal } from "visual/utils/types/Literal";
 import { Response } from "../common";
 

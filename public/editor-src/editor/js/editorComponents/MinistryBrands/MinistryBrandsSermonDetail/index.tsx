@@ -6,6 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { updateEkklesiaFields } from "visual/utils/api/common";
+import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import {
@@ -34,12 +35,12 @@ import { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId(): "MinistryBrandsSermonDetail" {
     return "MinistryBrandsSermonDetail";
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
 
   async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -79,7 +80,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -95,161 +96,228 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
         )}
         selector=".brz-ministryBrands__item--meta-title"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarMetaTypography,
-            sidebarMinistryBrandsMetaDate,
-            {
-              allowExtend: false
-            }
-          )}
-          selector=".brz-ministryBrands__item--meta-date"
-        >
+        {({ ref: titleRef }) => (
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
               toolbarMetaTypography,
-              sidebarMinistryBrandsMetaCategory,
+              sidebarMinistryBrandsMetaDate,
               {
                 allowExtend: false
               }
             )}
-            selector=".brz-ministryBrands__item--meta-category"
+            selector=".brz-ministryBrands__item--meta-date"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(
-                toolbarMetaTypography,
-                sidebarMinistryBrandsMetaGroup,
-                {
-                  allowExtend: false
-                }
-              )}
-              selector=".brz-ministryBrands__item--meta-group"
-            >
+            {({ ref: metaRef }) => (
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarMetaTypography,
-                  sidebarMinistryBrandsMetaSeries,
+                  sidebarMinistryBrandsMetaCategory,
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-ministryBrands__item--meta-series"
+                selector=".brz-ministryBrands__item--meta-category"
               >
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarMetaTypography,
-                    sidebarMinistryBrandsMetaPreacher,
-                    {
-                      allowExtend: false
-                    }
-                  )}
-                  selector=".brz-ministryBrands__item--meta-preacher"
-                >
+                {({ ref: metaCategoryRef }) => (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
                       toolbarMetaTypography,
-                      sidebarMinistryBrandsMetaPassage,
+                      sidebarMinistryBrandsMetaGroup,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-ministryBrands__item--meta-passage > .brz-sermonDetail__item--meta"
+                    selector=".brz-ministryBrands__item--meta-group"
                   >
-                    <Toolbar
-                      {...this.makeToolbarPropsFromConfig2(
-                        toolbarMetaLinks,
-                        undefined,
-                        {
-                          allowExtend: false
-                        }
-                      )}
-                      selector=".brz-ministryBrands__item--meta--links--previous"
-                    >
+                    {({ ref: metaGroupRef }) => (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarLinksColor,
-                          undefined,
+                          toolbarMetaTypography,
+                          sidebarMinistryBrandsMetaSeries,
                           {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-sermonDetail__item--meta--links a"
+                        selector=".brz-ministryBrands__item--meta-series"
                       >
-                        <Toolbar
-                          {...this.makeToolbarPropsFromConfig2(
-                            toolbarMetaItemLinkColor,
-                            sidebarMinistryBrandsMetaPassage,
-                            {
-                              allowExtend: false
-                            }
-                          )}
-                          selector=".brz-ministryBrands__item--meta-passage a"
-                        >
+                        {({ ref: metaSeriesRef }) => (
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarExtendButtons,
-                              sidebarExtendButtons,
+                              toolbarMetaTypography,
+                              sidebarMinistryBrandsMetaPreacher,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-sermonDetail__item--media a"
+                            selector=".brz-ministryBrands__item--meta-preacher"
                           >
-                            <Toolbar
-                              {...this.makeToolbarPropsFromConfig2(
-                                toolbarPreview,
-                                undefined,
-                                {
-                                  allowExtend: false
-                                }
-                              )}
-                              selector=".brz-sermonDetail__item--meta--preview p"
-                            >
+                            {({ ref: metaPreacherRef }) => (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarImage,
-                                  undefined,
+                                  toolbarMetaTypography,
+                                  sidebarMinistryBrandsMetaPassage,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-ministryBrands__item--media"
+                                selector=".brz-ministryBrands__item--meta-passage > .brz-sermonDetail__item--meta"
                               >
-                                <Toolbar
-                                  {...this.makeToolbarPropsFromConfig2(
-                                    toolbarMetaIcons,
-                                    undefined,
-                                    {
-                                      allowExtend: false
-                                    }
-                                  )}
-                                  selector=".brz-ministryBrands__meta--icons"
-                                >
-                                  <Wrapper
-                                    {...this.makeWrapperProps({
-                                      className
-                                    })}
+                                {({ ref: metaPassageRef }) => (
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarMetaLinks,
+                                      undefined,
+                                      {
+                                        allowExtend: false
+                                      }
+                                    )}
+                                    selector=".brz-ministryBrands__item--meta--links--previous"
                                   >
-                                    <DynamicContentHelper
-                                      placeholder={getPlaceholder(v)}
-                                      props={{ className: "brz-sermonDetail" }}
-                                      blocked={false}
-                                      tagName="div"
-                                    />
-                                  </Wrapper>
-                                </Toolbar>
+                                    {({ ref: linksRef }) => (
+                                      <Toolbar
+                                        {...this.makeToolbarPropsFromConfig2(
+                                          toolbarLinksColor,
+                                          undefined,
+                                          {
+                                            allowExtend: false
+                                          }
+                                        )}
+                                        selector=".brz-sermonDetail__item--meta--links a"
+                                      >
+                                        {({ ref: linksColorRef }) => (
+                                          <Toolbar
+                                            {...this.makeToolbarPropsFromConfig2(
+                                              toolbarMetaItemLinkColor,
+                                              sidebarMinistryBrandsMetaPassage,
+                                              {
+                                                allowExtend: false
+                                              }
+                                            )}
+                                            selector=".brz-ministryBrands__item--meta-passage a"
+                                          >
+                                            {({
+                                              ref: metaItemLinkColorRef
+                                            }) => (
+                                              <Toolbar
+                                                {...this.makeToolbarPropsFromConfig2(
+                                                  toolbarExtendButtons,
+                                                  sidebarExtendButtons,
+                                                  {
+                                                    allowExtend: false
+                                                  }
+                                                )}
+                                                selector=".brz-sermonDetail__item--media a"
+                                              >
+                                                {({ ref: mediaRef }) => (
+                                                  <Toolbar
+                                                    {...this.makeToolbarPropsFromConfig2(
+                                                      toolbarPreview,
+                                                      undefined,
+                                                      {
+                                                        allowExtend: false
+                                                      }
+                                                    )}
+                                                    selector=".brz-sermonDetail__item--meta--preview p"
+                                                  >
+                                                    {({ ref: previewRef }) => (
+                                                      <Toolbar
+                                                        {...this.makeToolbarPropsFromConfig2(
+                                                          toolbarImage,
+                                                          undefined,
+                                                          {
+                                                            allowExtend: false
+                                                          }
+                                                        )}
+                                                        selector=".brz-ministryBrands__item--media"
+                                                      >
+                                                        {({
+                                                          ref: imageRef
+                                                        }) => (
+                                                          <Toolbar
+                                                            {...this.makeToolbarPropsFromConfig2(
+                                                              toolbarMetaIcons,
+                                                              undefined,
+                                                              {
+                                                                allowExtend:
+                                                                  false
+                                                              }
+                                                            )}
+                                                            selector=".brz-ministryBrands__meta--icons"
+                                                          >
+                                                            {({
+                                                              ref: metaIconsRef
+                                                            }) => (
+                                                              <Wrapper
+                                                                {...this.makeWrapperProps(
+                                                                  {
+                                                                    className,
+                                                                    ref: (
+                                                                      el
+                                                                    ) => {
+                                                                      attachRefs(
+                                                                        el,
+                                                                        [
+                                                                          titleRef,
+                                                                          metaRef,
+                                                                          metaIconsRef,
+                                                                          metaGroupRef,
+                                                                          metaSeriesRef,
+                                                                          metaPreacherRef,
+                                                                          metaPassageRef,
+                                                                          linksRef,
+                                                                          linksColorRef,
+                                                                          metaItemLinkColorRef,
+                                                                          mediaRef,
+                                                                          previewRef,
+                                                                          imageRef,
+                                                                          metaCategoryRef
+                                                                        ]
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                )}
+                                                              >
+                                                                <DynamicContentHelper
+                                                                  placeholder={getPlaceholder(
+                                                                    v
+                                                                  )}
+                                                                  props={{
+                                                                    className:
+                                                                      "brz-sermonDetail"
+                                                                  }}
+                                                                  blocked={
+                                                                    false
+                                                                  }
+                                                                  tagName="div"
+                                                                />
+                                                              </Wrapper>
+                                                            )}
+                                                          </Toolbar>
+                                                        )}
+                                                      </Toolbar>
+                                                    )}
+                                                  </Toolbar>
+                                                )}
+                                              </Toolbar>
+                                            )}
+                                          </Toolbar>
+                                        )}
+                                      </Toolbar>
+                                    )}
+                                  </Toolbar>
+                                )}
                               </Toolbar>
-                            </Toolbar>
+                            )}
                           </Toolbar>
-                        </Toolbar>
+                        )}
                       </Toolbar>
-                    </Toolbar>
+                    )}
                   </Toolbar>
-                </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }

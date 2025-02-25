@@ -1,5 +1,5 @@
+import { noop, once } from "es-toolkit";
 import { produce } from "immer";
-import _ from "underscore";
 import { StoreChanged } from "visual/redux/types";
 import { onChange } from "visual/utils/api";
 import {
@@ -54,23 +54,31 @@ import {
   pollingSendHeartBeat
 } from "./utils";
 
-export default (config) => (store) => (next) => {
-  const apiHandler = apiCatch.bind(null, store.dispatch);
+export default ({ config, editorMode }) =>
+  (store) =>
+  (next) => {
+    const apiHandler = apiCatch.bind(null, store.dispatch);
 
-  return (action) => {
-    const oldState = store.getState();
+    return (action) => {
+      const oldState = store.getState();
 
-    next(action);
+      next(action);
 
-    const state = store.getState();
-
-    handlePublish({ action, state, oldState, config, apiHandler });
-    handleProject({ action, state, oldState, config, apiHandler });
-    handlePage({ action, state, config, apiHandler });
-    handleGlobalBlocks({ action, state, oldState, config, apiHandler });
-    handleHeartBeat({ action, state, config, apiHandler });
+      const state = store.getState();
+      handlePublish({
+        action,
+        state,
+        oldState,
+        config,
+        apiHandler,
+        editorMode
+      });
+      handleProject({ action, state, oldState, config, apiHandler });
+      handlePage({ action, state, config, apiHandler });
+      handleGlobalBlocks({ action, state, oldState, config, apiHandler });
+      handleHeartBeat({ action, state, config, apiHandler });
+    };
   };
-};
 
 function handleProject({ action, state, oldState, config, apiHandler }) {
   const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
@@ -92,7 +100,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
     case UPDATE_CURRENT_KIT_ID:
     case UPDATE_DISABLED_ELEMENTS:
     case ActionTypes.UPDATE_PINNED_ELEMENTS: {
-      const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
+      const { onSuccess = noop, onError = noop } = action.meta || {};
       const project = projectSelector(state);
       const page = pageSelector(state);
       const data = {
@@ -116,7 +124,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
 
     case ActionTypes.IMPORT_STORY:
     case ActionTypes.IMPORT_TEMPLATE: {
-      const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
+      const { onSuccess = noop, onError = noop } = action.meta || {};
       const oldFonts = fontsSelector(oldState);
       const fonts = fontsSelector(state);
       const oldStyles = stylesSelector(oldState);
@@ -151,7 +159,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
     case ADD_FONTS:
     case DELETE_FONTS: {
       const fonts = filteredFontsSelector(state);
-      const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
+      const { onSuccess = noop, onError = noop } = action.meta || {};
       const project = produce(projectSelector(state), (draft) => {
         draft.data.fonts = fonts;
       });
@@ -176,7 +184,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
     }
     case UPDATE_DEFAULT_FONT: {
       const font = defaultFontSelector(state);
-      const { onSuccess = _.noop, onError = _.noop } = action.meta || {};
+      const { onSuccess = noop, onError = noop } = action.meta || {};
       const project = produce(projectSelector(state), (draft) => {
         draft.data.font = font;
       });
@@ -242,7 +250,7 @@ function handlePage({ action, state, config }) {
       break;
     }
     case UPDATE_POPUP_RULES: {
-      const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+      const { syncSuccess = noop, syncFail = noop } = action.meta || {};
       const data = {
         rules: action.payload.rules,
         dataVersion: state.page.dataVersion
@@ -253,7 +261,7 @@ function handlePage({ action, state, config }) {
     }
     case UPDATE_TRIGGERS: {
       const { page } = state;
-      const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+      const { syncSuccess = noop, syncFail = noop } = action.meta || {};
       const project = projectSelector(state);
       const data = {
         config,
@@ -303,7 +311,7 @@ const startHeartBeat = (apiHandler, config) => {
   apiHandler(pollingSendHeartBeat(heartBeatInterval, config));
 };
 
-const startHeartBeatOnce = _.once(startHeartBeat);
+const startHeartBeatOnce = once(startHeartBeat);
 
 function handleHeartBeat({ action, state, config, apiHandler }) {
   const { sendHandler } = config.api.heartBeat ?? {};
@@ -318,7 +326,7 @@ function handleHeartBeat({ action, state, config, apiHandler }) {
   }
 }
 
-function apiCatch(next, p, action, onSuccess = _.noop, onError = _.noop) {
+function apiCatch(next, p, action, onSuccess = noop, onError = noop) {
   return p
     .then((r) => {
       if (action?.type === PUBLISH) {

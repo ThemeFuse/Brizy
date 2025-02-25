@@ -1,7 +1,7 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
 import { merge } from "timm";
-import _ from "underscore";
 import ClickOutside from "visual/component/ClickOutside";
 import ContextMenu from "visual/component/ContextMenu";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -19,7 +19,7 @@ import { isPro } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
-import { attachRef } from "visual/utils/react";
+import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { encodeToString } from "visual/utils/string";
 import { styleElementMMenu, styleElementMenuMode } from "visual/utils/style2";
@@ -39,24 +39,19 @@ import { itemsToSymbols, normalizeMenuItems, symbolsToItems } from "./utils";
 import { isClonedSlide } from "./utils.common";
 
 export default class Menu extends EditorComponent {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+  static defaultProps = {
+    extendParentToolbar: noop,
+    meta: {}
+  };
+  nodeRef = React.createRef();
+  mMenu = null;
+  isPro = isPro(this.getGlobalConfig());
+
   static get componentId() {
     return "Menu";
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
-
-  static defaultProps = {
-    extendParentToolbar: _.noop,
-    meta: {}
-  };
-
-  nodeRef = React.createRef();
-
-  mMenu = null;
-
-  isPro = isPro(this.getGlobalConfig());
 
   getMeta(v) {
     const { meta } = this.props;
@@ -86,7 +81,7 @@ export default class Menu extends EditorComponent {
 
   hasMMenu() {
     const v = this.getValue();
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       const mMenu = styleElementMMenu({ v, device: DESKTOP });
       const tabletMMenu = styleElementMMenu({ v, device: TABLET });
       const mobileMMenu = styleElementMMenu({ v, device: MOBILE });
@@ -148,15 +143,6 @@ export default class Menu extends EditorComponent {
 
   getNode = () => {
     return this.nodeRef.current;
-  };
-
-  setRef = (ref) => {
-    attachRef(ref, this.nodeRef);
-    const extend = this.props.wrapperExtend;
-
-    if (extend) {
-      attachRef(ref, extend.ref);
-    }
   };
 
   getDefaultValue() {
@@ -254,16 +240,18 @@ export default class Menu extends EditorComponent {
               allowExtend: false
             })}
           >
-            <span className="brz-mm-close">
-              <ThemeIcon name="close-popup" type="editor" />
-            </span>
+            {({ ref }) => (
+              <span className="brz-mm-close" ref={ref}>
+                <ThemeIcon name="close-popup" type="editor" />
+              </span>
+            )}
           </Toolbar>
         )}
       </li>
     );
   }
 
-  renderMenuForEdit(v, vs, vd, id) {
+  renderMenuForEdit({ v, vs, vd, id, ref }) {
     const { className: _className, items, menuSelected } = v;
     const hasMMenu = this.hasMMenu() && !!id;
     const styleClassName = hasMMenu
@@ -275,7 +263,7 @@ export default class Menu extends EditorComponent {
             vs,
             vd,
             store: this.getReduxStore(),
-            renderContext: this.renderContext
+            contexts: this.getContexts()
           })
         )
       : this.css(
@@ -286,7 +274,7 @@ export default class Menu extends EditorComponent {
             vs,
             vd,
             store: this.getReduxStore(),
-            renderContext: this.renderContext
+            contexts: this.getContexts()
           })
         );
 
@@ -328,7 +316,7 @@ export default class Menu extends EditorComponent {
     };
 
     return (
-      <NavContainer {...props}>
+      <NavContainer {...props} ref={ref}>
         <ul className="brz-menu__ul">
           {hasMMenu && this.renderMMenuTitle(v)}
           <EditorArrayComponent {...itemsProps} />
@@ -349,7 +337,7 @@ export default class Menu extends EditorComponent {
             vs,
             vd,
             store: this.getReduxStore(),
-            renderContext: this.renderContext
+            contexts: this.getContexts()
           })
         )
       : this.css(
@@ -360,7 +348,7 @@ export default class Menu extends EditorComponent {
             vs,
             vd,
             store: this.getReduxStore(),
-            renderContext: this.renderContext
+            contexts: this.getContexts()
           })
         );
     const mods = {
@@ -412,7 +400,7 @@ export default class Menu extends EditorComponent {
     );
   }
 
-  renderMMenu(v, vs, vd) {
+  renderMMenu({ v, vs, vd, ref }) {
     const { menuSelected, mMenuPosition } = v;
 
     return (
@@ -422,8 +410,8 @@ export default class Menu extends EditorComponent {
           node={document.body}
           className="brz-ed-mmenu-portal"
         >
-          <div className="brz-ed-mmenu-portal__menu brz-d-none">
-            {this.renderMenuForEdit(v, vs, vd, this.getId())}
+          <div className="brz-ed-mmenu-portal__menu brz-d-none" ref={ref}>
+            {this.renderMenuForEdit({ v, vs, vd, id: this.getId() })}
           </div>
         </Portal>
 
@@ -438,7 +426,7 @@ export default class Menu extends EditorComponent {
     const config = this.getGlobalConfig();
     const { menuData: menusConfig, elements } = config;
     let errMsg;
-    const _isView = isView(this.renderContext);
+    const _isView = isView(this.props.renderContext);
 
     if (menusConfig.length === 0) {
       const { menu } = elements ?? {};
@@ -491,7 +479,7 @@ export default class Menu extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -501,24 +489,36 @@ export default class Menu extends EditorComponent {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.closeMMenu}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <ContextMenu
-            {...this.makeContextMenuProps(contextMenuConfig, {
-              setRef: this.setRef
-            })}
-          >
-            <Wrapper
-              {...this.makeWrapperProps({
-                className,
-                ref: this.nodeRef
-              })}
-            >
-              {this.hasMMenu()
-                ? this.renderMMenu(v, vs, vd)
-                : this.renderMenuForEdit(v, vs, vd)}
-            </Wrapper>
-          </ContextMenu>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <ContextMenu {...this.makeContextMenuProps(contextMenuConfig)}>
+                {({ ref: contextMenuRef }) => {
+                  const ref = (el) => {
+                    attachRefs(el, [
+                      toolbarRef,
+                      cssRef,
+                      this.nodeRef,
+                      contextMenuRef
+                    ]);
+                  };
+
+                  return (
+                    <Wrapper
+                      {...this.makeWrapperProps({
+                        className
+                      })}
+                    >
+                      {this.hasMMenu()
+                        ? this.renderMMenu({ v, vs, vd, ref })
+                        : this.renderMenuForEdit({ v, vs, vd, ref })}
+                    </Wrapper>
+                  );
+                }}
+              </ContextMenu>
+            )}
+          </CustomCSS>
+        )}
       </ClickOutside>
     );
   }
@@ -570,7 +570,7 @@ export default class Menu extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

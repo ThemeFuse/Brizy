@@ -1,7 +1,7 @@
 import classnames from "classnames";
+import { debounce } from "es-toolkit";
 import jQuery from "jquery";
 import React, { ReactNode } from "react";
-import _ from "underscore";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementPatch, ElementProps } from "visual/component/Elements/Types";
@@ -16,6 +16,7 @@ import EditorComponent, {
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { roundTo } from "visual/utils/math";
+import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
@@ -30,41 +31,13 @@ import type { Value } from "./types";
 import { State, StyleType } from "./types";
 
 class Counter extends EditorComponent<Value, ElementProps, State> {
-  static get componentId(): ElementTypes.Counter {
-    return ElementTypes.Counter;
-  }
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
   lastAnimation: MValue<JQuery<{ countNum: number }>> = undefined;
-
   state = {
     final: 0
   };
-
-  handleResizerChange = (patch: ElementPatch<Value>): void =>
-    this.patchValue(patch);
-
-  componentDidMount(): void {
-    this.initCounter();
-  }
-
-  componentDidUpdate(prevProps: PrevProps<Value, ElementProps>): void {
-    if (
-      prevProps.dbValue.start !== this.props.dbValue.start ||
-      prevProps.dbValue.startPopulation !==
-        this.props.dbValue.startPopulation ||
-      prevProps.dbValue.end !== this.props.dbValue.end ||
-      prevProps.dbValue.endPopulation !== this.props.dbValue.endPopulation ||
-      prevProps.dbValue.duration !== this.props.dbValue.duration
-    ) {
-      this.initCounter();
-    }
-  }
-
-  initCounter: VoidFunction = _.debounce(() => {
+  initCounter: VoidFunction = debounce(() => {
     const { duration, start, end, type } = this.getValue();
 
     const isSimple = type === StyleType.Simple;
@@ -97,6 +70,30 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
     );
   }, 1000);
 
+  static get componentId(): ElementTypes.Counter {
+    return ElementTypes.Counter;
+  }
+
+  handleResizerChange = (patch: ElementPatch<Value>): void =>
+    this.patchValue(patch);
+
+  componentDidMount(): void {
+    this.initCounter();
+  }
+
+  componentDidUpdate(prevProps: PrevProps<Value, ElementProps>): void {
+    if (
+      prevProps.dbValue.start !== this.props.dbValue.start ||
+      prevProps.dbValue.startPopulation !==
+        this.props.dbValue.startPopulation ||
+      prevProps.dbValue.end !== this.props.dbValue.end ||
+      prevProps.dbValue.endPopulation !== this.props.dbValue.endPopulation ||
+      prevProps.dbValue.duration !== this.props.dbValue.duration
+    ) {
+      this.initCounter();
+    }
+  }
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { final } = this.state;
     const { meta } = this.props;
@@ -120,7 +117,7 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -135,7 +132,7 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -150,7 +147,7 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -161,54 +158,62 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className,
-              attributes: {
-                ...makeDataAttr({ name: "start", value: start }),
-                ...makeDataAttr({ name: "end", value: end }),
-                ...makeDataAttr({ name: "duration", value: duration }),
-                ...makeDataAttr({ name: "separator", value: separator }),
-                ...makeDataAttr({ name: "type", value: type })
-              }
-            })}
-          >
-            {type !== StyleType.Simple ? (
-              <BoxResizer
-                keepAspectRatio
-                points={points}
-                restrictions={restrictions}
-                meta={meta}
-                value={resizerTransformValue(v)}
-                onChange={(patch: Partial<Value>) =>
-                  this.handleResizerChange(resizerTransformPatch(patch))
-                }
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef, ...rest }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  attributes: {
+                    ...makeDataAttr({ name: "start", value: start }),
+                    ...makeDataAttr({ name: "end", value: end }),
+                    ...makeDataAttr({ name: "duration", value: duration }),
+                    ...makeDataAttr({ name: "separator", value: separator }),
+                    ...makeDataAttr({ name: "type", value: type })
+                  },
+                  ...rest,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
               >
-                <Chart
-                  className={classNameChart}
-                  type={type}
-                  strokeW={strokeWidth}
-                />
-                <Text
-                  className={classNameNumber}
-                  prefix={prefixLabel}
-                  suffix={suffixLabel}
-                >
-                  {text}
-                </Text>
-              </BoxResizer>
-            ) : (
-              <Text
-                className={classNameNumber}
-                prefix={Str.read(prefixLabel)}
-                suffix={Str.read(suffixLabel)}
-              >
-                {text}
-              </Text>
+                {type !== StyleType.Simple ? (
+                  <BoxResizer
+                    keepAspectRatio
+                    points={points}
+                    restrictions={restrictions}
+                    meta={meta}
+                    value={resizerTransformValue(v)}
+                    onChange={(patch: Partial<Value>) =>
+                      this.handleResizerChange(resizerTransformPatch(patch))
+                    }
+                  >
+                    <Chart
+                      className={classNameChart}
+                      type={type}
+                      strokeW={strokeWidth}
+                    />
+                    <Text
+                      className={classNameNumber}
+                      prefix={prefixLabel}
+                      suffix={suffixLabel}
+                    >
+                      {text}
+                    </Text>
+                  </BoxResizer>
+                ) : (
+                  <Text
+                    className={classNameNumber}
+                    prefix={Str.read(prefixLabel)}
+                    suffix={Str.read(suffixLabel)}
+                  >
+                    {text}
+                  </Text>
+                )}
+              </Wrapper>
             )}
-          </Wrapper>
-        </CustomCSS>
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

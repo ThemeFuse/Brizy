@@ -1,7 +1,7 @@
 import { Shopify } from "visual/global/Config/types/configs/Cloud";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { StoreChanged } from "visual/redux/types";
-import { Page } from "visual/types";
+import { Page } from "visual/types/Page";
 import { t } from "visual/utils/i18n";
 import { MValue } from "visual/utils/value";
 

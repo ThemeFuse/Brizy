@@ -1,12 +1,13 @@
 import {
-  ElementProps,
   ElementModel,
-  ElementModelType2
+  ElementModelType2,
+  ElementProps
 } from "visual/component/Elements/Types";
-import { FormInputTypesName } from "./types";
-import { Literal } from "visual/utils/types/Literal";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { Translation } from "visual/utils/i18n/t";
+import { Literal } from "visual/utils/types/Literal";
+import { FormInputTypesName } from "./types";
 
 export interface Props extends ElementProps {
   labelType: "inside" | "outside";
@@ -40,7 +41,7 @@ export interface Value extends Omit<ElementModel, "items"> {
 }
 
 export interface InputTypeChoice {
-  title: FormInputTypesName;
+  title: string;
   value: Literal;
 }
 
@@ -64,4 +65,9 @@ export enum FormInput {
   Hidden = "Hidden",
   Tel = "Tel",
   Password = "Password"
+}
+
+export interface MatchTypeToNameProps {
+  componentType: Literal;
+  t: Translation;
 }

@@ -1,4 +1,4 @@
-import { Arr } from "@brizy/readers";
+import { Arr, Bool, Str } from "@brizy/readers";
 import { mPipe } from "fp-utilities";
 import { TypographyProps } from "visual/component/Controls/Typography/types/Props";
 import { OptionValue } from "visual/component/Options/types";
@@ -7,14 +7,12 @@ import { currentStyleSelector } from "visual/redux/selectors";
 import {
   extraFontStylesSelector,
   unDeletedFontsSelector
-} from "visual/redux/selectors-new";
+} from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
-import { TextScripts } from "visual/types";
-import { getDefaultFont } from "visual/utils/fonts";
+import { TextScripts } from "visual/types/Style";
+import { getDefaultFont } from "visual/utils/fonts/getFontById";
 import { t } from "visual/utils/i18n";
 import { TypographyValues } from "visual/utils/options/Typography/types";
-import * as Bool from "visual/utils/reader/bool";
-import * as Str from "visual/utils/reader/string";
 import * as Union from "visual/utils/reader/union";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";

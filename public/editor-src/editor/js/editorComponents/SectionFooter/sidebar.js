@@ -1,5 +1,5 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -10,13 +10,13 @@ export const title = () => t("Footer");
 export function getItems({ v, device, context }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
 
-  const shapeTopColor = getColor(
+  const shapeTopColor = getColorToolbar(
     dvv("shapeTopColorPalette"),
     dvv("shapeTopColorHex"),
     dvv("shapeTopColorOpacity")
   );
 
-  const shapeBottomColor = getColor(
+  const shapeBottomColor = getColorToolbar(
     dvv("shapeBottomColorPalette"),
     dvv("shapeBottomColorHex"),
     dvv("shapeBottomColorOpacity")

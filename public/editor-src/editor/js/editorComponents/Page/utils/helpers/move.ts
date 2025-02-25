@@ -1,5 +1,6 @@
+import { isEqual } from "es-toolkit";
+import { every, some } from "es-toolkit/compat";
 import { getIn, setIn } from "timm";
-import { every, isEqual, some } from "underscore";
 import {
   ElementModel,
   ElementModelType

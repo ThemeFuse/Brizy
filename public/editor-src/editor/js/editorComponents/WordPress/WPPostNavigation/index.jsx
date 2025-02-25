@@ -6,6 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -13,11 +14,11 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class WPPostNavigation extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "WPPostNavigation";
   }
-
-  static defaultValue = defaultValue;
 
   handleChangeNext = (next) => {
     this.patchValue({ next });
@@ -54,7 +55,7 @@ class WPPostNavigation extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -63,31 +64,40 @@ class WPPostNavigation extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper {...this.makeWrapperProps({ className })}>
-            {showTitle === "on" && (
-              <div className="brz-navigation-title">
-                <TextEditor
-                  value={previous}
-                  onChange={this.handleChangePrevious}
-                />
-                <TextEditor value={next} onChange={this.handleChangeNext} />
-              </div>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                {showTitle === "on" && (
+                  <div className="brz-navigation-title">
+                    <TextEditor
+                      value={previous}
+                      onChange={this.handleChangePrevious}
+                    />
+                    <TextEditor value={next} onChange={this.handleChangeNext} />
+                  </div>
+                )}
+                {showPost === "on" && (
+                  <div className="brz-wp-shortcode">
+                    <div className="brz-navigation">
+                      <a className="brz-a" href="#" rel="prev">
+                        Previous post
+                      </a>
+                      <a className="brz-a" href="#" rel="next">
+                        Next post
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </Wrapper>
             )}
-            {showPost === "on" && (
-              <div className="brz-wp-shortcode">
-                <div className="brz-navigation">
-                  <a className="brz-a" href="#" rel="prev">
-                    Previous post
-                  </a>
-                  <a className="brz-a" href="#" rel="next">
-                    Next post
-                  </a>
-                </div>
-              </div>
-            )}
-          </Wrapper>
-        </CustomCSS>
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -104,7 +114,7 @@ class WPPostNavigation extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

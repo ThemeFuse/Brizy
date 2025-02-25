@@ -1,8 +1,8 @@
 import classnames from "classnames";
+import { noop, sortBy, without } from "es-toolkit";
 import FuzzySearch from "fuzzy-search";
 import React, { Component, Fragment, JSX, ReactElement } from "react";
 import { ConnectedProps, connect } from "react-redux";
-import _ from "underscore";
 import {
   CategoryTitle,
   ShortcodeElement
@@ -12,12 +12,12 @@ import EditorIcon from "visual/component/EditorIcon";
 import { ProInfo } from "visual/component/ProInfo";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import UIEvents from "visual/global/UIEvents";
 import {
   EditorMode,
   EditorModeContext,
   isStory
-} from "visual/global/EditorModeContext";
-import UIEvents from "visual/global/UIEvents";
+} from "visual/providers/EditorModeProvider";
 import {
   updateDisabledElements,
   updatePinnedElements
@@ -199,7 +199,7 @@ class ControlInner extends Component<Props, State> {
     const { pinnedElements } = this.state;
 
     if (pinnedElements.includes(id)) {
-      const filtered = _.without(pinnedElements, id);
+      const filtered = without(pinnedElements, id);
 
       this.setState({
         pinnedElements: filtered
@@ -295,7 +295,7 @@ class ControlInner extends Component<Props, State> {
 
       const clickFn = isStory
         ? (): void => this.handleClick(shortcodes, index)
-        : _.noop;
+        : noop;
 
       const clickEditMode = (): void =>
         this.handleDisabledElementsChange(component.id);
@@ -329,7 +329,7 @@ class ControlInner extends Component<Props, State> {
       return isPinMode ? (
         <ShortcodeElement
           key={component.id}
-          onClick={isDisabledAndNotPinned ? _.noop : clickPinMode}
+          onClick={isDisabledAndNotPinned ? noop : clickPinMode}
           iconElement={iconElem}
           isChecked={pinnedElements.includes(component.id)}
           isDisabled={isDisabledAndNotPinned}
@@ -462,8 +462,8 @@ class ControlInner extends Component<Props, State> {
 
     return (
       <EditorModeContext.Consumer>
-        {(editorMode) => {
-          const _isStory = isStory(editorMode);
+        {({ mode }) => {
+          const _isStory = isStory(mode);
           const showLines = !_isStory;
           return (
             <>
@@ -501,9 +501,9 @@ class ControlInner extends Component<Props, State> {
                   // we use _.sortBy instead of native sort
                   // because native can be unstable and change
                   // the order of elements with equal positions
-                  const prepared = _.sortBy(
+                  const prepared = sortBy(
                     shortcodes.filter((s) => !s.component.hidden),
-                    (s) => s.component.position || 10
+                    [(s: Shortcode) => s.component.position || 10]
                   );
 
                   return (

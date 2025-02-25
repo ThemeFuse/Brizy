@@ -1,4 +1,4 @@
-import { property } from "underscore";
+import { property } from "es-toolkit/compat";
 import {
   Choices,
   OptGroup

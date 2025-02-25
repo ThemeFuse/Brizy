@@ -1,18 +1,16 @@
+import { uniq } from "es-toolkit";
 import { pass } from "fp-utilities";
 import React, { ReactElement, useCallback, useMemo } from "react";
-import { unique } from "underscore";
 import { Group } from "visual/component/Controls/Group";
 import { ReloadButton } from "visual/component/Controls/ReloadButton";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 import * as Option from "visual/component/Options/Type";
 import { OnChange } from "visual/component/Options/Type";
-import { OptionWrapper } from "visual/component/OptionWrapper";
 import { WithClassName } from "visual/types/attributes";
 import { always, mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { fromNumber } from "visual/utils/math/Positive";
-import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
-import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
 import {
   EffectType,
   effectTypeIcon,
@@ -22,6 +20,8 @@ import * as Value from "visual/utils/options/Animation/types/Value";
 import { setDelay } from "visual/utils/options/Animation/types/WithDelay";
 import { setDuration } from "visual/utils/options/Animation/types/WithDuration";
 import { setInfiniteAnimation } from "visual/utils/options/Animation/types/WithInfiniteAnimation";
+import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
+import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
 import {
   defaultEffects,
   getDirections,
@@ -55,7 +55,7 @@ export const Animation = ({
 }: Props): ReactElement => {
   const types = useMemo(
     (): EffectType[] =>
-      unique([EffectType.None, ...(config?.types ?? defaultEffects)]),
+      uniq([EffectType.None, ...(config?.types ?? defaultEffects)]),
     [config?.types]
   );
   const replay = config?.replay ?? true;

@@ -4,6 +4,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
@@ -12,11 +13,11 @@ import * as toolbar from "./toolbar";
 import { Value } from "./types";
 
 export class Quantity extends EditorComponent<Value> {
+  static defaultValue = defaultValue;
+
   static get componentId(): "Quantity" {
     return "Quantity";
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v: Value, vs: Value, vd: Value): React.ReactNode {
     const { customCSS, itemId } = v;
@@ -30,32 +31,37 @@ export class Quantity extends EditorComponent<Value> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
 
     return (
       <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
-        <CustomCSS selectorName={this.getId()} css={customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className,
-              attributes: makeDataAttr({
-                name: "product-handle",
-                value: itemId
-              })
-            })}
-          >
-            <input
-              className="brz-input"
-              type="number"
-              defaultValue={0}
-              min="0"
-              max="100"
-            />
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  attributes: makeDataAttr({
+                    name: "product-handle",
+                    value: itemId
+                  }),
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                <input
+                  className="brz-input"
+                  type="number"
+                  defaultValue={0}
+                  min="0"
+                  max="100"
+                />
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

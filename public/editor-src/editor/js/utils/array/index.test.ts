@@ -1,57 +1,50 @@
-import { identity } from "underscore";
+import { identity } from "es-toolkit";
+import * as Num from "../math/number";
 import {
-  flatMap,
   drop,
   filter,
   findIndex,
   findIndexes,
+  flatMap,
+  fromString,
   indexOf,
   map,
+  move,
   nextIndex,
   onEmpty,
+  orderByKeys,
   pick,
   pred,
   prevIndex,
   read,
   readIndex,
   succ,
-  toArray,
-  orderByKeys,
-  move,
-  fromString
+  toArray
 } from "./index";
-import * as Num from "../math/number";
 
 test("Testing 'flatMap' function", () => {
   const arr = [1, 2, 3, 4];
 
-  expect(flatMap(arr, x => x * x)).toEqual([1, 4, 9, 16]);
-  expect(flatMap(arr, x => [x * x])).toEqual([1, 4, 9, 16]);
-  expect(flatMap(arr, x => [x / 2, x * x])).toEqual([
-    0.5,
-    1,
-    1,
-    4,
-    1.5,
-    9,
-    2,
-    16
+  expect(flatMap(arr, (x) => x * x)).toEqual([1, 4, 9, 16]);
+  expect(flatMap(arr, (x) => [x * x])).toEqual([1, 4, 9, 16]);
+  expect(flatMap(arr, (x) => [x / 2, x * x])).toEqual([
+    0.5, 1, 1, 4, 1.5, 9, 2, 16
   ]);
 });
 
 describe("Testing 'toArray' function", () => {
   test("Always return same value if it is an valid array", () => {
-    [[], [1], [undefined], [null, ""]].map(a => expect(toArray(a)).toBe(a));
+    [[], [1], [undefined], [null, ""]].map((a) => expect(toArray(a)).toBe(a));
   });
 
   test("Always return empty array for none array values", () => {
-    [undefined, null, "", 1, {}].map(a => expect(toArray(a)).toEqual([]));
+    [undefined, null, "", 1, {}].map((a) => expect(toArray(a)).toEqual([]));
   });
 });
 
 describe("Testing 'onEmpty' function", () => {
   test("Always return the array, is it has at leas one value", () => {
-    [[1], [1, 2], [1, 2, 3]].forEach(a =>
+    [[1], [1, 2], [1, 2, 3]].forEach((a) =>
       expect(onEmpty([1, 2, 3], a)).toBe(a)
     );
   });
@@ -63,13 +56,13 @@ describe("Testing 'onEmpty' function", () => {
 
   test("Always return default value if the array is not a valid array", () => {
     const def = [1, 2, 3];
-    [undefined, null, 1, "test", {}].forEach(a =>
+    [undefined, null, 1, "test", {}].forEach((a) =>
       expect(onEmpty(def, a)).toBe(def)
     );
   });
 });
 
-describe("Testing 'drop' function", function() {
+describe("Testing 'drop' function", function () {
   test("Remove 1 item", () => {
     expect(drop(0, [1, 2, 3])).toEqual([2, 3]);
   });
@@ -87,19 +80,19 @@ describe("Testing 'drop' function", function() {
   });
 });
 
-describe("Testing 'readIndex' function", function() {
+describe("Testing 'readIndex' function", function () {
   test("Return undefined if index is not a valid index of the array", () => {
-    [-1, -2, 0.5, 7, 8].map(v =>
+    [-1, -2, 0.5, 7, 8].map((v) =>
       expect(readIndex(v, [0, 1, 2, 3])).toBe(undefined)
     );
   });
 
   test("Return index if index is a valid index of the array", () => {
-    [0, 1, 2, 3].map(v => expect(readIndex(v, [0, 1, 2, 3])).toBe(v));
+    [0, 1, 2, 3].map((v) => expect(readIndex(v, [0, 1, 2, 3])).toBe(v));
   });
 });
 
-describe("Testing 'indexOf' function", function() {
+describe("Testing 'indexOf' function", function () {
   test("Return undefined if items is not part of array", () => {
     expect(indexOf("d", ["a", "b", "c"])).toBe(undefined);
   });
@@ -114,7 +107,7 @@ describe("Testing 'indexOf' function", function() {
   );
 });
 
-describe("Testing 'prevIndex' function", function() {
+describe("Testing 'prevIndex' function", function () {
   test("If index is out of boundary, return undefined", () => {
     expect(prevIndex(6, ["a", "b", "c", "d"])).toBe(undefined);
   });
@@ -123,7 +116,7 @@ describe("Testing 'prevIndex' function", function() {
     expect(prevIndex(0, ["a", "b", "c", "d"])).toBe(3);
   });
 
-  describe("Previous index o every element in: [0, 1, 2, 3]", function() {
+  describe("Previous index o every element in: [0, 1, 2, 3]", function () {
     test.each([
       [0, 3],
       [1, 0],
@@ -135,7 +128,7 @@ describe("Testing 'prevIndex' function", function() {
   });
 });
 
-describe("Testing 'nextIndex' function", function() {
+describe("Testing 'nextIndex' function", function () {
   test("If index is out of boundary, return undefined", () => {
     expect(nextIndex(6, ["a", "b", "c", "d"])).toBe(undefined);
   });
@@ -144,7 +137,7 @@ describe("Testing 'nextIndex' function", function() {
     expect(nextIndex(3, ["a", "b", "c", "d"])).toBe(0);
   });
 
-  describe("Next index o every element in: [0, 1, 2, 3]", function() {
+  describe("Next index o every element in: [0, 1, 2, 3]", function () {
     test.each([
       [0, 1],
       [1, 2],
@@ -156,7 +149,7 @@ describe("Testing 'nextIndex' function", function() {
   });
 });
 
-describe("Testing 'pred' function", function() {
+describe("Testing 'pred' function", function () {
   test("If array is empty, return undefined", () => {
     expect(pred(1, [])).toBe(undefined);
   });
@@ -169,7 +162,7 @@ describe("Testing 'pred' function", function() {
     expect(pred("a", ["a", "b", "c", "d"])).toBe("d");
   });
 
-  describe("Predecessor o every element in: ['a', 'b', 'c', 'd']", function() {
+  describe("Predecessor o every element in: ['a', 'b', 'c', 'd']", function () {
     test.each([
       ["a", "d"],
       ["b", "a"],
@@ -181,7 +174,7 @@ describe("Testing 'pred' function", function() {
   });
 });
 
-describe("Testing 'succ' function", function() {
+describe("Testing 'succ' function", function () {
   test("If array is empty, return undefined", () => {
     expect(succ(1, [])).toBe(undefined);
   });
@@ -194,7 +187,7 @@ describe("Testing 'succ' function", function() {
     expect(succ("d", ["a", "b", "c", "d"])).toBe("a");
   });
 
-  describe("Successor o every element in: ['a', 'b', 'c', 'd']", function() {
+  describe("Successor o every element in: ['a', 'b', 'c', 'd']", function () {
     test.each([
       ["a", "b"],
       ["b", "c"],
@@ -206,10 +199,10 @@ describe("Testing 'succ' function", function() {
   });
 });
 
-describe("Testing 'read' function", function() {
+describe("Testing 'read' function", function () {
   test("If value is not an array, return undefined", () => {
     const reader = (i: unknown): unknown => i;
-    [undefined, null, 1, "1", {}, () => ({})].map(v =>
+    [undefined, null, 1, "1", {}, () => ({})].map((v) =>
       expect(read(reader, v)).toBe(undefined)
     );
   });
@@ -225,27 +218,27 @@ describe("Testing 'read' function", function() {
   });
 });
 
-describe("Testing 'findIndex' function", function() {
+describe("Testing 'findIndex' function", function () {
   test("Return first index witch value satisfies the predicate", () => {
-    expect(findIndex(i => i > 4, [1, 2, 5, 3, 6])).toBe(2);
+    expect(findIndex((i) => i > 4, [1, 2, 5, 3, 6])).toBe(2);
   });
 
   test("Return undefined if no items satisfies the predicate", () => {
-    expect(findIndex(i => i < 0, [1, 2, 5, 3, 6])).toBe(undefined);
+    expect(findIndex((i) => i < 0, [1, 2, 5, 3, 6])).toBe(undefined);
   });
 });
 
-describe("Testing 'findIndexes' function", function() {
+describe("Testing 'findIndexes' function", function () {
   test("Return all indexes witch value satisfies the predicate", () => {
-    expect(findIndexes(i => i > 4, [1, 2, 5, 3, 6])).toEqual([2, 4]);
+    expect(findIndexes((i) => i > 4, [1, 2, 5, 3, 6])).toEqual([2, 4]);
   });
 
   test("Return empty array if no items satisfies the predicate", () => {
-    expect(findIndexes(i => i < 0, [1, 2, 5, 3, 6])).toEqual([]);
+    expect(findIndexes((i) => i < 0, [1, 2, 5, 3, 6])).toEqual([]);
   });
 });
 
-describe("Testing 'pick' function", function() {
+describe("Testing 'pick' function", function () {
   test("Return a list that contain exactly only the specified indexes", () => {
     expect(pick([1, 3, 5], [1, 2, 3, 4, 5, 6])).toEqual([2, 4, 6]);
   });
@@ -268,17 +261,12 @@ describe("Testing 'pick' function", function() {
 
   test("Allow indexes to repeat", () => {
     expect(pick([5, 5, 3, 1, 2, 3], [1, 2, 3, 4, 5, 6])).toEqual([
-      6,
-      6,
-      4,
-      2,
-      3,
-      4
+      6, 6, 4, 2, 3, 4
     ]);
   });
 });
 
-describe("Testing 'map' function", function() {
+describe("Testing 'map' function", function () {
   test("Identity law. map(id) == id", () => {
     expect(map(identity, [1, 2, 3, 4, 5])).toEqual([1, 2, 3, 4, 5]);
   });
@@ -288,20 +276,20 @@ describe("Testing 'map' function", function() {
     const fn2 = (i: number): number => i * 3;
     const values = [1, 2, 3, 4, 5];
 
-    expect(map(v => fn2(fn1(v)), values)).toEqual(map(fn2, map(fn1, values)));
+    expect(map((v) => fn2(fn1(v)), values)).toEqual(map(fn2, map(fn1, values)));
   });
 
   test("Alias to Array.map, should behavior exactly the same", () => {
     const fns = [identity, (i: number): number => i + 1];
     const values = [1, 2, 3, 4, 5, 6];
 
-    fns.map(fn => {
+    fns.map((fn) => {
       expect(values.map(fn)).toEqual(map(fn, values));
     });
   });
 });
 
-describe("Testing 'filter' function", function() {
+describe("Testing 'filter' function", function () {
   test("Alias to Array.filter, should behavior exactly the same", () => {
     const fns = [
       (i: number): boolean => isNaN(i),
@@ -309,13 +297,13 @@ describe("Testing 'filter' function", function() {
     ];
     const values = [1, 2, 3, 4, 5, 6];
 
-    fns.map(fn => {
+    fns.map((fn) => {
       expect(values.filter(fn)).toEqual(filter(fn, values));
     });
   });
 });
 
-describe("Testing 'orderByKey' function", function() {
+describe("Testing 'orderByKey' function", function () {
   const values = [0, 4, 1, 3, 2];
   const items = ["a", "b", "c", "d", "e"];
 
@@ -365,7 +353,7 @@ describe("Testing 'move' function", () => {
       { from: 2, to: 4, res: [1, 2, 4, 5, 3] }
     ];
 
-    seed.forEach(v => {
+    seed.forEach((v) => {
       test(`move(${v.from}, ${v.to}, [${arr}]) to be [${v.res}]`, () => {
         expect(move(v.from, v.to, arr)).toStrictEqual(v.res);
       });
@@ -382,7 +370,7 @@ describe("Testing 'move' function", () => {
       { from: 4, to: 2, res: [1, 2, 5, 3, 4] }
     ];
 
-    seed.forEach(v => {
+    seed.forEach((v) => {
       test(`move(${v.from}, ${v.to}, [${arr}]) to be [${v.res}]`, () => {
         expect(move(v.from, v.to, arr)).toStrictEqual(v.res);
       });
@@ -401,7 +389,7 @@ describe("Testing 'fromString' function", () => {
   test("Return undefined for none json arrays", () => {
     const seed = ["", "sadfsd", JSON.stringify({ a: test })];
 
-    seed.forEach(v => expect(fromString<any>(f => f, v)).toBe(undefined));
+    seed.forEach((v) => expect(fromString<any>((f) => f, v)).toBe(undefined));
   });
 
   test("If the value is an empty array, return empty array, regardless of reader", () => {

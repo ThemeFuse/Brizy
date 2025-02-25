@@ -9,6 +9,7 @@ export interface Value extends ElementModel {
   lineStyle: string;
   style: "text" | "icon" | "default";
   tagName: keyof JSX.IntrinsicElements;
+  customCSS: string;
 }
 
 export interface Props extends WithClassName {

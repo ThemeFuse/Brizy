@@ -1,6 +1,6 @@
+import { noop } from "es-toolkit";
 import React, { ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { noop } from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { Scrollbar } from "visual/component/Scrollbar";
@@ -11,10 +11,15 @@ import {
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
-import { isPopup } from "visual/global/EditorModeContext";
-import { useConfig, useEditorMode } from "visual/global/hooks";
+import { useConfig } from "visual/global/hooks";
+import { isPopup, useEditorMode } from "visual/providers/EditorModeProvider";
 import { pageSelector } from "visual/redux/selectors";
-import { AllRule, BlockTypeRule, CollectionTypeRule, Rule } from "visual/types";
+import {
+  AllRule,
+  BlockTypeRule,
+  CollectionTypeRule,
+  Rule
+} from "visual/types/Rule";
 import {
   CUSTOMER_TYPE,
   PAGES_GROUP_ID
@@ -63,7 +68,7 @@ const Rules = (props: Props): ReactElement => {
   const page = useSelector(pageSelector);
   const config = useConfig();
   const _isPro = isPro(config);
-  const editorMode = useEditorMode();
+  const { mode } = useEditorMode();
 
   useEffect(() => {
     async function fetchData(getValueFn: AsyncGetValue): Promise<void> {
@@ -87,7 +92,7 @@ const Rules = (props: Props): ReactElement => {
 
   function handleAdd(): void {
     if (_isPro) {
-      if (isPopup(editorMode)) {
+      if (isPopup(mode)) {
         const rule: AllRule = {
           type: BlockTypeRule.include
         };

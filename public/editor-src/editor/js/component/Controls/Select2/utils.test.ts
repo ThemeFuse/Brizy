@@ -1,4 +1,4 @@
-import { tail, initial } from "underscore";
+import { initial, tail } from "es-toolkit";
 import {
   apply,
   dropdownHeight,
@@ -8,20 +8,20 @@ import {
   prevValue
 } from "./utils";
 
-describe("Testing 'getValue' function", function() {
+describe("Testing 'getValue' function", function () {
   const values = [1, "2", { v: 3 }, [1, 2, 3]];
 
-  test.each(values)("Should return %s", v => {
+  test.each(values)("Should return %s", (v) => {
     const item = { props: { value: v } };
     expect(getValue(item)).toBe(v);
   });
 });
 
-describe("Testing 'getIndex' function", function() {
+describe("Testing 'getIndex' function", function () {
   const values = [0, 1, 2, 3, 4, 5];
-  const items = values.map(i => ({ props: { value: i } }));
+  const items = values.map((i) => ({ props: { value: i } }));
 
-  test.each(values)("Should return %i", i => {
+  test.each(values)("Should return %i", (i) => {
     expect(getIndex(i, items)).toBe(i);
   });
 
@@ -30,7 +30,7 @@ describe("Testing 'getIndex' function", function() {
   });
 });
 
-describe("Testing 'prevValue' function", function() {
+describe("Testing 'prevValue' function", function () {
   const values = ["a", "b", "c", "d", "E"];
 
   tail(values).map((v, i) =>
@@ -52,7 +52,7 @@ describe("Testing 'prevValue' function", function() {
   });
 });
 
-describe("Testing 'nextValue' function", function() {
+describe("Testing 'nextValue' function", function () {
   const values = ["a", "b", "c", "d", "E"];
 
   initial(values).map((v, i) =>
@@ -74,7 +74,7 @@ describe("Testing 'nextValue' function", function() {
   });
 });
 
-describe("Testing 'apply' function", function() {
+describe("Testing 'apply' function", function () {
   test("Identity test. Applying identity should lead to the same value", () => {
     const t = 3;
     let result;
@@ -85,12 +85,12 @@ describe("Testing 'apply' function", function() {
     apply(id, t);
     expect(result).toBe(t);
 
-    apply(id, () => new Promise(r => r(t)));
+    apply(id, () => new Promise((r) => r(t)));
     expect(result).toBe(t);
   });
 });
 
-describe("Testing 'dropdownHeight' function", function() {
+describe("Testing 'dropdownHeight' function", function () {
   test("Dropdown height should be 50", () => {
     expect(dropdownHeight(100, 10, 5));
   });

@@ -1,9 +1,9 @@
 import { Str } from "@brizy/readers";
 import { WithRenderContext } from "visual/providers/RenderProvider";
 import { configSelector } from "visual/redux/selectors";
+import { FontFamilyType } from "visual/types/Fonts";
 import { DESKTOP, Device } from "visual/utils/devices";
-import { getFontCssStyle } from "visual/utils/fonts";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
+import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
@@ -88,11 +88,17 @@ export function styleTypography2FontSize({
 }: CSSValue): number {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontSizeKey = capByPrefix(prefix, "fontSize");
   const fontStyle = dvv(fontStyleKey);
 
-  const globalSize = getFontCssStyle({ fontStyle, key: "fontSize", device });
+  const globalSize = getFontCssStyle({
+    fontStyle,
+    key: "fontSize",
+    device,
+    config
+  });
   const value =
     globalSize ??
     getOptionFontByGlobal({
@@ -141,11 +147,17 @@ export function styleTypography2LineHeight({
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const lineHeightKey = capByPrefix(prefix, "lineHeight");
   const fontStyle = dvv(fontStyleKey);
 
-  const globalSize = getFontCssStyle({ fontStyle, key: "lineHeight", device });
+  const globalSize = getFontCssStyle({
+    fontStyle,
+    key: "lineHeight",
+    device,
+    config
+  });
   const value =
     globalSize ??
     getOptionFontByGlobal({
@@ -167,11 +179,17 @@ export function styleTypography2FontWeight({
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontWeightKey = capByPrefix(prefix, "fontWeight");
   const fontStyle = dvv(fontStyleKey);
 
-  const globalSize = getFontCssStyle({ fontStyle, key: "fontWeight", device });
+  const globalSize = getFontCssStyle({
+    fontStyle,
+    key: "fontWeight",
+    device,
+    config
+  });
   const value =
     globalSize ??
     getOptionFontByGlobal({
@@ -193,6 +211,7 @@ export function styleTypography2LetterSpacing({
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
   const letterSpacingKey = capByPrefix(prefix, "letterSpacing");
@@ -201,7 +220,8 @@ export function styleTypography2LetterSpacing({
   const globalSize = getFontCssStyle({
     fontStyle,
     key: "letterSpacing",
-    device
+    device,
+    config
   });
 
   return (
@@ -223,6 +243,7 @@ export function styleTypography2FontVariation({
   prefix = ""
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = configSelector(store.getState());
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const variableFontWeightKey = capByPrefix(prefix, "variableFontWeight");
   const fontWidthKey = capByPrefix(prefix, "fontWidth");
@@ -236,7 +257,8 @@ export function styleTypography2FontVariation({
   const globalSize = getFontCssStyle({
     fontStyle,
     key: "fontVariation",
-    device
+    device,
+    config
   });
 
   const value = `"wght" ${dvv(variableFontWeightKey)}, "wdth" ${dvv(

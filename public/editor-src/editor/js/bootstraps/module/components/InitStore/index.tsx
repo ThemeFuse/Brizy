@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { readPageData } from "visual/bootstraps/common/adapter";
-import getMiddleware from "visual/bootstraps/editor/utils/middleware";
-import { hydrate } from "visual/redux/actions";
-import { editorRendered } from "visual/redux/actions";
+import { editorRendered, hydrate } from "visual/redux/actions";
 import { updateConfigId } from "visual/redux/actions2";
 import { Store, createStore } from "visual/redux/store";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
+import { getMiddleware } from "./getMiddleware";
 import { Props } from "./types";
 
 class InitStore extends Component<Props> {
@@ -15,7 +14,7 @@ class InitStore extends Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    const { configId, renderType } = props;
+    const { configId } = props;
     const config = props.config;
     const _page = config.pageData;
     const project = config.projectData;
@@ -32,7 +31,7 @@ class InitStore extends Component<Props> {
     const { isSyncAllowed = false } = config.cloud || {};
 
     const store = createStore({
-      middleware: getMiddleware(config, renderType)
+      middleware: getMiddleware({ config, editorMode: this.props.editorMode })
     });
     const page = readPageData(_page);
     const globalBlocks = parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
@@ -49,7 +48,8 @@ class InitStore extends Component<Props> {
         authorized: getAuthorized(config),
         syncAllowed: isSyncAllowed,
         config,
-        configId
+        configId,
+        editorMode: this.props.editorMode
       })
     );
 
@@ -66,6 +66,7 @@ class InitStore extends Component<Props> {
         payload: {
           status: store.getState().page.status,
           type: "external",
+          editorMode: this.props.editorMode,
           res
         }
       });

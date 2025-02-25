@@ -14,11 +14,11 @@ import * as toolbarExtendSelect from "./toolbarExtendSelect";
 import type { Props, Value } from "./types";
 
 class Form2Fields extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): "Form2Fields" {
     return "Form2Fields";
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v: Value, vs: Value, vd: Value): React.JSX.Element {
     const { labelType, placeholder, multistep, active } = this.props;
@@ -27,7 +27,7 @@ class Form2Fields extends EditorComponent<Value, Props> {
       vs,
       vd,
       store: this.getReduxStore(),
-      renderContext: this.renderContext
+      contexts: this.getContexts()
     };
 
     const className = classnames(
@@ -80,7 +80,7 @@ class Form2Fields extends EditorComponent<Value, Props> {
 
     if (multistep === "on") {
       return (
-        <FormFields style={{ display: active ? "block" : "none" }}>
+        <FormFields style={{ display: active ? "flex" : "none" }}>
           {items}
         </FormFields>
       );

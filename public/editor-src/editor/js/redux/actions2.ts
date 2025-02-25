@@ -1,31 +1,32 @@
+import { partition } from "es-toolkit";
 import { produce } from "immer";
 import { ThunkAction } from "redux-thunk";
 import { mergeDeep } from "timm";
-import _ from "underscore";
-import { Layout } from "visual/component/Prompts/common/PromptPage/types";
 import {
   ConfigCommon,
   PublishData
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { EditorMode } from "visual/providers/EditorModeProvider";
 import { fontsSelector } from "visual/redux/selectors";
+import { ActiveElement, Authorized, DeviceMode } from "visual/types";
+import { Block } from "visual/types/Block";
 import {
-  ActiveElement,
   AdobeFont,
-  Authorized,
-  Block,
-  DeviceMode,
-  ExtraFontStyle,
   Font,
-  GlobalBlock,
-  GlobalBlockNormal,
-  GlobalBlockPopup,
   GoogleFont,
-  Screenshot,
-  ShopifyPage,
-  Style,
   SystemFont,
   UploadedFont
-} from "visual/types";
+} from "visual/types/Fonts";
+import {
+  GlobalBlock,
+  GlobalBlockNormal,
+  GlobalBlockPopup
+} from "visual/types/GlobalBlock";
+import { Layout } from "visual/types/Layout";
+import { ShopifyPage } from "visual/types/Page";
+import { Project } from "visual/types/Project";
+import { Screenshot } from "visual/types/Screenshot";
+import { ExtraFontStyle } from "visual/types/Style";
 import { ArrayType } from "visual/utils/array/types";
 import { uuid } from "visual/utils/uuid";
 import { ReduxState, StoreChanged } from "./types";
@@ -39,6 +40,8 @@ type RFonts = ReduxState["fonts"];
 type Error = ReduxState["error"];
 
 type CopyElementPayload = ReduxState["copiedElement"];
+
+type Style = ArrayType<ReduxState["styles"]>;
 
 type StrictFonts = Required<RFonts>;
 export type FontKeyTypes = keyof StrictFonts;
@@ -56,7 +59,7 @@ export type FontsPayload = FontPayload<FontKeyTypes>[];
 export type ActionHydrate = {
   type: "HYDRATE";
   payload: {
-    project: ReduxState["project"];
+    project: Project;
     projectStatus: {
       locked: boolean;
       lockedBy: boolean | { user_email: string };
@@ -68,6 +71,7 @@ export type ActionHydrate = {
     syncAllowed: ReduxState["syncAllowed"];
     config: ConfigCommon;
     configId: string;
+    editorMode: EditorMode;
   };
 };
 
@@ -367,6 +371,7 @@ export const PUBLISH = "PUBLISH";
 
 interface PublishBase {
   status: ReduxState["page"]["status"];
+  editorMode: EditorMode;
 }
 
 interface PublishInternal extends PublishBase {
@@ -566,7 +571,7 @@ export const addFonts: ThunkAddFonts =
         usedFonts[type]?.data || [];
 
       // Separated Deleted Font with Normal Font
-      const [deletedFonts, normalFont] = _.partition(fonts, (font) =>
+      const [deletedFonts, normalFont] = partition(fonts, (font) =>
         Object.prototype.hasOwnProperty.call(font, "deleted")
       );
       const newFonts = normalFont.map((font) => ({
@@ -692,17 +697,25 @@ export const fetchPageSuccess = (): ActionFetchPageSuccess => ({
   type: FETCH_PAGE_SUCCESS
 });
 
-type ThunkPublishPage = (
-  s: ReduxState["page"]["status"]
-) => ThunkAction<Promise<void>, ReduxState, unknown, ActionUpdatePageStatus>;
+type ThunkPublishPage = ({
+  status,
+  editorMode
+}: {
+  status: ReduxState["page"]["status"];
+  editorMode: EditorMode;
+}) => ThunkAction<Promise<void>, ReduxState, unknown, ActionUpdatePageStatus>;
 
 export const updatePageStatus: ThunkPublishPage =
-  (status) =>
+  ({ status, editorMode }) =>
   (dispatch): Promise<void> => {
     return new Promise((res, rej) => {
       dispatch({
         type: "PUBLISH",
-        payload: { status, type: "internal" },
+        payload: {
+          status,
+          type: "internal",
+          editorMode
+        },
         meta: {
           onSuccess: res,
           onError: rej

@@ -1,11 +1,8 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import {
-  getColor,
-  hexToRgba,
-  makeStylePaletteCSSVar
-} from "visual/utils/color";
+import { hexToRgba, makeStylePaletteCSSVar } from "visual/utils/color";
+import { getColorToolbar as getColor } from "visual/utils/color";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";

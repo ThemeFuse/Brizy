@@ -55,4 +55,8 @@
       }
     }
   }
+
+  .ec-footer__row .ec-footer__cell:has(> .footer__link--track-order) {
+    display: none !important;
+  }
 }

@@ -1,5 +1,6 @@
 import type { OptionName, OptionValue } from "visual/component/Options/types";
 import { RenderType } from "visual/providers/RenderProvider";
+import { configSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
 import { getTypographyValues } from "visual/utils/options/Typography/utils";
@@ -63,8 +64,12 @@ export const getCSSByOptionType = <
   });
 
   const optionMeta = getOptionMeta(type, optionModel);
+  const config = configSelector(store.getState());
 
-  return toCSS(type)({
+  return toCSS(
+    type,
+    config
+  )({
     model: normalizeOptionModel({
       type,
       optionModel,

@@ -5,7 +5,7 @@ import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function styleTabs(data: DynamicStylesProps<ElementModel>): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext } = data.contexts;
   const styles = {
     ".brz && > .brz-tabs__nav .brz-tabs__nav--item, .brz && > .brz-tabs__content > .brz-tabs__items > .brz-tabs__nav--mobile .brz-tabs__nav--button":
       {

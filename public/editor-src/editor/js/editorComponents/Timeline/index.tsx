@@ -1,11 +1,11 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
-import _ from "underscore";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent, {
   Props as EProps
 } from "visual/editorComponents/EditorComponent";
+import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { getContainerW, getMargin } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
@@ -41,6 +41,8 @@ export interface Value extends ElementModel {
   labelColorHex: string;
   labelColorPalette: string;
   labelColorOpacity: number;
+
+  customCSS: string;
 }
 
 export type Props = EProps<Value, Record<string, unknown>>;
@@ -55,11 +57,11 @@ interface GetWidth {
 }
 
 export default class Timeline extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): "Timeline" {
     return "Timeline";
   }
-
-  static defaultValue = defaultValue;
 
   componentDidMount(): void {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -115,7 +117,7 @@ export default class Timeline extends EditorComponent<Value, Props> {
     };
   }
 
-  getMeta(v: Value): Value {
+  getMeta(v: Value): ComponentsMeta {
     const { meta } = this.props;
     const { w: desktopW, wNoSpacing: desktopWNoSpacing } = getContainerW(
       this.getWidthWithW({
@@ -142,7 +144,7 @@ export default class Timeline extends EditorComponent<Value, Props> {
       })
     );
 
-    return _.extend({}, meta, {
+    return Object.assign({}, meta, {
       desktopW,
       desktopWNoSpacing,
       tabletW,
@@ -169,7 +171,7 @@ export default class Timeline extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -195,12 +197,14 @@ export default class Timeline extends EditorComponent<Value, Props> {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          {
-            // @ts-expect-error: Need transform EditorArrayComponents to ts
-            <Items {...itemProps} />
-          }
-        </Wrapper>
+        {({ ref: cssRef }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref: cssRef })}>
+            {
+              // @ts-expect-error: Need transform EditorArrayComponents to ts
+              <Items {...itemProps} />
+            }
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }

@@ -6,6 +6,7 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
 import { encodeToString } from "visual/utils/string";
 import { uuidWithPlaceholderUuid } from "visual/utils/uuid";
 import type { MValue } from "visual/utils/value";
@@ -99,7 +100,7 @@ export class EcwidFavorites extends EditorComponent<Value> {
         selector=".page-title__name.ec-header-h1"
         selectorSearchStrategy="dom-tree"
       >
-        {({ open: openTitle }) => {
+        {({ open: openTitle, ref: titleRef }) => {
           return (
             <Toolbar
               {...this.makeToolbarPropsFromConfig2(
@@ -109,7 +110,7 @@ export class EcwidFavorites extends EditorComponent<Value> {
               selector=".ec-store__favorites-page--empty .ec-page-body"
               selectorSearchStrategy="dom-tree"
             >
-              {({ open: openTitleEmpty }) => {
+              {({ open: openTitleEmpty, ref: titleEmptyRef }) => {
                 return (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
@@ -119,7 +120,7 @@ export class EcwidFavorites extends EditorComponent<Value> {
                     selector=".ec-footer__row"
                     selectorSearchStrategy="dom-tree"
                   >
-                    {({ open: openFooter }) => {
+                    {({ open: openFooter, ref: footerRef }) => {
                       return (
                         <Toolbar
                           {...this.makeToolbarPropsFromConfig2(
@@ -130,7 +131,7 @@ export class EcwidFavorites extends EditorComponent<Value> {
                           selector=".grid-product__image"
                           selectorSearchStrategy="dom-tree"
                         >
-                          {({ open: openImage }) => {
+                          {({ open: openImage, ref: imageRef }) => {
                             return (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
@@ -141,7 +142,7 @@ export class EcwidFavorites extends EditorComponent<Value> {
                                 selector=".grid-product__title"
                                 selectorSearchStrategy="dom-tree"
                               >
-                                {({ open: openTitle2 }) => {
+                                {({ open: openTitle2, ref: title2Ref }) => {
                                   return (
                                     <Toolbar
                                       {...this.makeToolbarPropsFromConfig2(
@@ -152,7 +153,7 @@ export class EcwidFavorites extends EditorComponent<Value> {
                                       selector=".grid-product__price-value"
                                       selectorSearchStrategy="dom-tree"
                                     >
-                                      {({ open: openPrice }) => {
+                                      {({ open: openPrice, ref: priceRef }) => {
                                         return (
                                           <Toolbar
                                             {...this.makeToolbarPropsFromConfig2(
@@ -163,11 +164,25 @@ export class EcwidFavorites extends EditorComponent<Value> {
                                             selector=".favorite-product__button-saved"
                                             selectorSearchStrategy="dom-tree"
                                           >
-                                            {({ open: openButton }) => {
+                                            {({
+                                              open: openButton,
+                                              ref: buttonRef
+                                            }) => {
                                               return (
                                                 <Wrapper
                                                   {...this.makeWrapperProps({
-                                                    className
+                                                    className,
+                                                    ref: (el) => {
+                                                      attachRefs(el, [
+                                                        titleRef,
+                                                        titleEmptyRef,
+                                                        footerRef,
+                                                        imageRef,
+                                                        title2Ref,
+                                                        priceRef,
+                                                        buttonRef
+                                                      ]);
+                                                    }
                                                   })}
                                                 >
                                                   <div

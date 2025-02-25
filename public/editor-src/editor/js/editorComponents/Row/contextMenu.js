@@ -1,4 +1,4 @@
-import { isPopup } from "visual/global/EditorModeContext";
+import { isPopup } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 
 export default {
@@ -8,6 +8,7 @@ export default {
 function getItems(v, component) {
   const inPopup = Boolean(component.props.meta.sectionPopup);
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+  const editorMode = component.props.editorMode;
 
   return [
     {
@@ -20,7 +21,7 @@ function getItems(v, component) {
           v.showToolbar === "off" ||
           inPopup ||
           inPopup2 ||
-          isPopup(component.props.editorMode) ||
+          isPopup(editorMode) ||
           meta.isInSubMenu
         );
       },

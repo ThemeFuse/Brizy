@@ -1,15 +1,20 @@
+import { Str } from "@brizy/readers";
 import classNames from "classnames";
-import React, { ComponentType, ReactNode } from "react";
+import React, { ComponentType, ReactNode, RefObject } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
+import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import {
   ComponentsMeta,
-  NewToolbarConfig
+  NewToolbarConfig,
+  ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import Editor from "visual/global/Editor";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
+import { I18n } from "visual/utils/i18n";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 
 export interface Value extends ElementModel {
@@ -55,19 +60,12 @@ class ThirdParty extends EditorComponent<Value, Props> {
       return this.component;
     }
 
-    const {
-      component,
-      config: { options }
-    } = Editor.getThirdPartyElements()[ID];
+    const data = Editor.getThirdPartyElements()[ID] ?? {};
+    const { component, config: { options } = {} } = data;
 
-    if (
-      typeof component.editor !== "function" ||
-      typeof component.view !== "function"
-    ) {
-      return;
+    if (component) {
+      this.component = component;
     }
-
-    this.component = component;
 
     if (options) {
       this.componentConfig = {
@@ -78,10 +76,18 @@ class ThirdParty extends EditorComponent<Value, Props> {
     return this.component;
   }
 
+  translate = (key: string): string => {
+    // Used I18n instead of t because when we use t we get the error on compile time
+    // when try to extract the translation
+    return I18n.t(key);
+  };
+
   getOptions(): Options<Value, Props> {
     const config = this.componentConfig?.getConfig({
       getValue: this.getValueByOptionId,
-      getDCOption: this.getDCOptionByType
+      getDCOption: this.getDCOptionByType,
+      t: this.translate,
+      device: this.getDeviceMode()
     });
 
     return (
@@ -111,23 +117,78 @@ class ThirdParty extends EditorComponent<Value, Props> {
     );
   }
 
-  render(): ReactNode {
-    const { thirdPartyId } = this.getValue();
-    const { view, editor } = this.getComponent(thirdPartyId) ?? {};
-
-    if (!(view && editor)) {
-      return `Missing Third Party Component: ${thirdPartyId}`;
+  renderToolbars(
+    children: (refs?: RefObject<HTMLDivElement>[]) => ReactNode
+  ): ReactNode {
+    if (!this.componentConfig?.getConfig) {
+      return children();
     }
 
+    const toolbars = this.componentConfig.getConfig({
+      getValue: this.getValueByOptionId,
+      getDCOption: this.getDCOptionByType,
+      t: this.translate,
+      device: this.getDeviceMode()
+    });
+
+    const toolbarsRefs: RefObject<HTMLDivElement>[] = [];
+    const generate = (
+      toolbars: ToolbarConfig[],
+      child: ReactNode
+    ): ReactNode => {
+      if (!toolbars.length) {
+        return child;
+      } else {
+        const [toolbarData, ...rest] = toolbars;
+        const { selector, toolbar, sidebar } = toolbarData;
+
+        const toolbarProps = this.makeToolbarPropsFromConfig2(
+          { getItems: () => toolbar ?? [] },
+          { getItems: () => sidebar ?? [] }
+        );
+
+        const html = (
+          <Toolbar selector={selector} {...toolbarProps}>
+            {({ ref }) => {
+              ref && toolbarsRefs.push(ref);
+              return <>{child}</>;
+            }}
+          </Toolbar>
+        );
+
+        return generate(rest, html);
+      }
+    };
+
+    return generate(toolbars, children(toolbarsRefs));
+  }
+
+  render(): ReactNode {
+    const { thirdPartyId } = this.getValue();
     const v = this.getValue();
 
-    if (isEditor(this.renderContext)) {
+    if (isEditor(this.props.renderContext)) {
+      const { editor } = this.getComponent(thirdPartyId) ?? {};
+
+      if (!editor) {
+        return `Missing Third Party Component: ${thirdPartyId}`;
+      }
+
       if (this.componentConfig) {
-        return this.renderToolbars(this.renderForEdit(v, editor));
+        return this.renderToolbars((toolbarRefs) =>
+          this.renderForEdit(v, editor, toolbarRefs)
+        );
       }
       return this.renderForEdit(v, editor);
     }
-    if (isView(this.renderContext)) {
+
+    if (isView(this.props.renderContext)) {
+      const { view } = this.getComponent(thirdPartyId) ?? {};
+
+      if (!view) {
+        return `Missing Third Party Component: ${thirdPartyId}`;
+      }
+
       return this.renderForEdit(v, view);
     }
   }
@@ -135,7 +196,8 @@ class ThirdParty extends EditorComponent<Value, Props> {
   // @ts-expect-error: Props
   renderForEdit(
     v: Record<string, unknown>,
-    Component: ComponentType
+    Component: ComponentType,
+    toolbarsRef: RefObject<HTMLDivElement>[] = []
   ): ReactNode {
     const { customCSS } = v;
     const thirdPartyClassName = "brz-third-party";
@@ -148,12 +210,20 @@ class ThirdParty extends EditorComponent<Value, Props> {
     });
 
     const className = classNames(thirdPartyClassName, wrapperClassName);
+    const _customCSS = Str.read(customCSS) ?? "";
 
     return (
-      <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          <Component {...v} />
-        </Wrapper>
+      <CustomCSS selectorName={this.getId()} css={_customCSS}>
+        {({ ref: cssRef }) => (
+          <Wrapper
+            {...this.makeWrapperProps({
+              className,
+              ref: (el) => attachRefs(el, [cssRef, ...toolbarsRef])
+            })}
+          >
+            <Component {...v} />
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }

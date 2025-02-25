@@ -1,9 +1,10 @@
-import { times, identity as id } from "underscore";
+import { identity as id } from "es-toolkit";
+import { times } from "es-toolkit/compat";
 import { toBlur, toSpread } from "visual/utils/cssProps";
 
-describe("Testing 'toBlur' function", function() {
+describe("Testing 'toBlur' function", function () {
   test("If value is not valid, return orElse value", () => {
-    [undefined, null, "test", {}].map(v => expect(toBlur(v, -4)).toBe(-4));
+    [undefined, null, "test", {}].map((v) => expect(toBlur(v, -4)).toBe(-4));
   });
 
   test("Value should be >= 0", () => {
@@ -13,14 +14,14 @@ describe("Testing 'toBlur' function", function() {
   });
 });
 
-describe("Testing 'toSpread' function", function() {
+describe("Testing 'toSpread' function", function () {
   test("If value is not valid, return orElse value", () => {
-    [undefined, null, "test", {}].map(v => expect(toSpread(v, -4)).toBe(-4));
+    [undefined, null, "test", {}].map((v) => expect(toSpread(v, -4)).toBe(-4));
   });
 
   test("Value should be a number", () => {
-    const values = [...times(15, id), ...times(15, i => i * -1)];
+    const values = [...times(15, id), ...times(15, (i) => i * -1)];
 
-    values.map(v => expect(toSpread(v)).toBe(v));
+    values.map((v) => expect(toSpread(v)).toBe(v));
   });
 });

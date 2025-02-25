@@ -1,5 +1,5 @@
 import { match2, or } from "fp-utilities";
-import { Palette } from "visual/utils/color/Palette";
+import { PaletteType } from "visual/types/Style";
 import { match } from "visual/utils/fp/match";
 import { t } from "visual/utils/i18n";
 import { is } from "visual/utils/value";
@@ -11,9 +11,9 @@ import {
   isNoEmpty
 } from "./types/Value";
 
-export const getPalette: (v: Value) => Palette | undefined = match(
-  [isEmpty, (): Palette | undefined => undefined],
-  [isNoEmpty, (v): Palette | undefined => v.palette]
+export const getPalette: (v: Value) => PaletteType | undefined = match(
+  [isEmpty, (): PaletteType | undefined => undefined],
+  [isNoEmpty, (v): PaletteType | undefined => v.palette]
 );
 
 export type SelectType = "none" | "shadow";

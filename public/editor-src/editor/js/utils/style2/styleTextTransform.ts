@@ -1,4 +1,5 @@
-import { getFontCssStyle } from "visual/utils/fonts";
+import { configSelector } from "visual/redux/selectors";
+import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import { capByPrefix } from "visual/utils/string";
@@ -13,6 +14,7 @@ export function styleTextTransformBold({
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
   const boldKey = capByPrefix(prefix, "bold");
+  const config = configSelector(store.getState());
 
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
@@ -20,7 +22,8 @@ export function styleTextTransformBold({
   const globalSize = getFontCssStyle({
     fontStyle,
     key: "bold",
-    device
+    device,
+    config
   });
   const value = dvv(boldKey);
 
@@ -38,6 +41,7 @@ export function styleTextTransformItalic({
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
+  const config = configSelector(store.getState());
   const italicKey = capByPrefix(prefix, "italic");
 
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -46,7 +50,8 @@ export function styleTextTransformItalic({
   const globalSize = getFontCssStyle({
     fontStyle,
     key: "italic",
-    device
+    device,
+    config
   });
   const value = dvv(italicKey);
 
@@ -64,6 +69,7 @@ export function styleTextTransformTextDecoration({
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
+  const config = configSelector(store.getState());
   const underlineKey = capByPrefix(prefix, "underline");
   const strikeKey = capByPrefix(prefix, "strike");
   const textDecorationKey = capByPrefix(prefix, "textDecoration");
@@ -73,7 +79,8 @@ export function styleTextTransformTextDecoration({
   const globalSize = getFontCssStyle({
     fontStyle,
     key: "textDecoration",
-    device
+    device,
+    config
   });
   const underline = dvv(underlineKey) ? "underline" : "";
   const strike = dvv(strikeKey) ? "line-through" : "";
@@ -98,6 +105,7 @@ export function styleTextTransformUpperLowerCase({
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
+  const config = configSelector(store.getState());
   const uppercaseKey = capByPrefix(prefix, "uppercase");
   const lowercaseKey = capByPrefix(prefix, "lowercase");
 
@@ -107,7 +115,8 @@ export function styleTextTransformUpperLowerCase({
   const globalSize = getFontCssStyle({
     fontStyle,
     key: "textTransform",
-    device
+    device,
+    config
   });
   const value =
     (dvv(uppercaseKey) && "uppercase") ||

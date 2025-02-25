@@ -1,4 +1,4 @@
-import { Rule } from "visual/types";
+import { Rule } from "visual/types/Rule";
 import { ApiRule } from "visual/utils/api/adapter";
 import { t } from "visual/utils/i18n";
 import { apiRuleToEditorRule } from "visual/utils/reader/globalBlocks";

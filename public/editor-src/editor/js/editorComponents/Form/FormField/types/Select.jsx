@@ -1,14 +1,14 @@
+import { flatMap } from "es-toolkit";
 import React from "react";
-import { addLast, removeAt, replaceAt } from "timm";
-import _ from "underscore";
 import { connect } from "react-redux";
-import { deviceModeSelector } from "visual/redux/selectors";
+import { addLast, removeAt, replaceAt } from "timm";
 import ClickOutside from "visual/component/ClickOutside";
 import SelectControl from "visual/component/Controls/Select";
 import SelectControlItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import TextField from "./common/TextField";
@@ -19,14 +19,6 @@ const mapState = (state) => ({
 const connector = connect(mapState);
 
 class Select extends TextField {
-  static get componentTitle() {
-    return t("Select");
-  }
-
-  static get componentType() {
-    return "Select";
-  }
-
   constructor(props) {
     super(props);
 
@@ -34,6 +26,14 @@ class Select extends TextField {
       isOpen: false,
       newItemValue: ""
     };
+  }
+
+  static get componentTitle() {
+    return t("Select");
+  }
+
+  static get componentType() {
+    return "Select";
   }
 
   handleOptionsChange = (value, index) => {
@@ -67,7 +67,7 @@ class Select extends TextField {
 
   renderOptions = () => {
     const isDesktop = this.props.deviceMode === "desktop";
-    return _.map(this.props.options, (item, index) => {
+    return flatMap(this.props.options, (item, index) => {
       return (
         <div key={index} className="brz-forms__select-item">
           <div className="brz-forms__select-item__input">
@@ -98,55 +98,57 @@ class Select extends TextField {
 
     return (
       <ClickOutside onClickOutside={() => this.setState({ isOpen: false })}>
-        <div className="brz-forms__select">
-          <div className="brz-forms__select-current brz-forms__field">
-            <input
-              {...v}
-              ref={(el) => {
-                this.selectInput = el;
-              }}
-              className="brz-input"
-              onClick={(e) => {
-                this.setState({ isOpen: !isOpen });
-                this.handleClick(e);
-              }}
-              onBlur={this.handleBlur}
-            />
-            <ThemeIcon
-              name="arrow-down"
-              type="editor"
-              className="brz-forms__select--arrow"
-            />
-          </div>
-          {isOpen && (
-            <div className="brz-forms__select-list brz-ed-dd-cancel">
-              <Scrollbar autoHeightMax={scrollPaneHeight} theme="light">
-                {this.renderOptions()}
-                {isDesktop ? (
-                  <div className="brz-forms__select-item">
-                    <div className="brz-forms__select-item__input">
-                      <input
-                        placeholder={t("Add new option")}
-                        className="brz-input brz-input__select"
-                        value={newItemValue}
-                        onChange={({ target: { value } }) =>
-                          this.setState({ newItemValue: value })
-                        }
-                        onKeyUp={(e) => this.handleKeyUp(e)}
-                      />
-                    </div>
-                    <div
-                      className="brz-forms__select-item__icon"
-                      onClick={this.handleOptionsAdd}
-                    >
-                      <EditorIcon icon="nc-arrow-right" />
-                    </div>
-                  </div>
-                ) : null}
-              </Scrollbar>
+        {({ ref }) => (
+          <div className="brz-forms__select" ref={ref}>
+            <div className="brz-forms__select-current brz-forms__field">
+              <input
+                {...v}
+                ref={(el) => {
+                  this.selectInput = el;
+                }}
+                className="brz-input"
+                onClick={(e) => {
+                  this.setState({ isOpen: !isOpen });
+                  this.handleClick(e);
+                }}
+                onBlur={this.handleBlur}
+              />
+              <ThemeIcon
+                name="arrow-down"
+                type="editor"
+                className="brz-forms__select--arrow"
+              />
             </div>
-          )}
-        </div>
+            {isOpen && (
+              <div className="brz-forms__select-list brz-ed-dd-cancel">
+                <Scrollbar autoHeightMax={scrollPaneHeight} theme="light">
+                  {this.renderOptions()}
+                  {isDesktop ? (
+                    <div className="brz-forms__select-item">
+                      <div className="brz-forms__select-item__input">
+                        <input
+                          placeholder={t("Add new option")}
+                          className="brz-input brz-input__select"
+                          value={newItemValue}
+                          onChange={({ target: { value } }) =>
+                            this.setState({ newItemValue: value })
+                          }
+                          onKeyUp={(e) => this.handleKeyUp(e)}
+                        />
+                      </div>
+                      <div
+                        className="brz-forms__select-item__icon"
+                        onClick={this.handleOptionsAdd}
+                      >
+                        <EditorIcon icon="nc-arrow-right" />
+                      </div>
+                    </div>
+                  ) : null}
+                </Scrollbar>
+              </div>
+            )}
+          </div>
+        )}
       </ClickOutside>
     );
   };

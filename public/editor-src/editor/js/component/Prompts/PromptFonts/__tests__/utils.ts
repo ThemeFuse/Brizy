@@ -1,6 +1,6 @@
-import { sortFonts, compareFont } from "../utils";
-import { GoogleFont, UploadedFont } from "visual/types";
 import { ReduxState } from "visual/redux/types";
+import { GoogleFont, UploadedFont } from "visual/types/Fonts";
+import { compareFont, sortFonts } from "../utils";
 
 const googleFonts: GoogleFont[] = [
   {

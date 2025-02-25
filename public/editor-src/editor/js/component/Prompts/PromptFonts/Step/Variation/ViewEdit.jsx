@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
 import EditorIcon from "visual/component/EditorIcon";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Scrollbar } from "visual/component/Scrollbar";
@@ -17,10 +17,10 @@ class ViewEdit extends Component {
     nextLoading: null,
     prevLoading: null,
     createLoading: false,
-    onPrev: _.noop,
-    onNext: _.noop,
-    onActive: _.noop,
-    onCreate: _.noop
+    onPrev: noop,
+    onNext: noop,
+    onActive: noop,
+    onCreate: noop
   };
 
   renderError() {

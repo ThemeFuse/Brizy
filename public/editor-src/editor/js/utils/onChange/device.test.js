@@ -1,8 +1,7 @@
 import {
   defaultValueKey,
   defaultValueKey2,
-  defaultValueValue,
-  defaultValueValue2
+  defaultValueValue
 } from "visual/utils/onChange/device";
 import {
   DESKTOP,
@@ -148,38 +147,6 @@ describe("Testing 'defaultValueKey2' function", function () {
     );
     expect(defaultValueKey2({ key, device: MOBILE, state: NORMAL })).toBe(
       "mobileTest"
-    );
-  });
-});
-
-describe("Testing 'defaultValueValue2' function", function () {
-  test("Return the value by specified key, device, state", () => {
-    const key = "test";
-    const v = {
-      test: 1,
-      tabletTest: 2,
-      hoverTest: 3
-    };
-
-    expect(defaultValueValue2({ v, key })).toBe(1);
-    expect(defaultValueValue2({ v, key, device: TABLET })).toBe(2);
-    expect(defaultValueValue2({ v, key, state: HOVER })).toBe(3);
-  });
-
-  test("If the result value from specifies device or state is null or undefined, return value from base original key", () => {
-    const key = "test";
-    const v = {
-      test: 1,
-      tabletTest: null,
-      hoverTest: undefined,
-      hoverTabletTest: null
-    };
-
-    expect(defaultValueValue2({ v, key })).toBe(1);
-    expect(defaultValueValue2({ v, key, device: TABLET })).toBe(1);
-    expect(defaultValueValue2({ v, key, state: HOVER })).toBe(1);
-    expect(defaultValueValue2({ v, key, device: TABLET, state: HOVER })).toBe(
-      1
     );
   });
 });

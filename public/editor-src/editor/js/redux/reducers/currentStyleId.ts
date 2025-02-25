@@ -1,6 +1,6 @@
 import { ActionTypes, ReduxAction } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { Style } from "visual/types";
+import { Style } from "visual/types/Style";
 import { MValue } from "visual/utils/value";
 
 type CurrentStyleId = ReduxState["currentStyleId"];

@@ -27,6 +27,7 @@
     "coverImageSrcPopulationEntityType": "",
     "coverImageSrcPopulationEntityId": "",
     "coverSizeType": "custom",
+    "coverAlt": "",
 
     "offsetX": 0,
     "offsetY": 0,
@@ -42,6 +43,7 @@
 
     "maskCustomUploadImageExtension": "",
     "maskCustomUploadImageType": "internal",
+    "maskCustomUploadAlt": "",
 
     "coverPositionY": 50,
     "coverPositionX": 50,

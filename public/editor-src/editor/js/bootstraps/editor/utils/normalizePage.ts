@@ -1,16 +1,15 @@
 import { produce } from "immer";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { PageCommon } from "visual/types";
-import { isPopup } from "visual/utils/models";
+import { EditorMode, isPopup } from "visual/providers/EditorModeProvider";
+import { PageCommon } from "visual/types/Page";
 import { isNullish } from "visual/utils/value";
 
 const defaultTriggers = [{ id: "pageLoad", active: true, value: "1" }];
 
 export function normalizePage(
   page: PageCommon,
-  config: ConfigCommon
+  editorMode: EditorMode
 ): PageCommon {
-  if (isPopup(config) && isNullish(page.data.triggers)) {
+  if (isPopup(editorMode) && isNullish(page.data.triggers)) {
     return produce(page, (draft) => {
       draft.data.triggers = defaultTriggers;
     });

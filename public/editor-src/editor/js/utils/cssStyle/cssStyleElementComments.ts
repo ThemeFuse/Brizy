@@ -474,9 +474,16 @@ export function cssStyleElementCommentsWidthContainer({
 export function cssStyleElementCommentsPostButtonColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, prefix: "postButtonColor" });
+  const color = styleColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "postButtonColor"
+  });
 
   return color === undefined ? "" : `color:${color}!important;`;
 }
@@ -484,9 +491,16 @@ export function cssStyleElementCommentsPostButtonColor({
 export function cssStyleElementCommentsPostButtonBg({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const bgColor = styleBgColor({ v, device, state, prefix: "postButtonBg" });
+  const bgColor = styleBgColor({
+    v,
+    device,
+    state,
+    store,
+    prefix: "postButtonBg"
+  });
 
   return bgColor === undefined
     ? "background-color:transparent;"
@@ -495,12 +509,14 @@ export function cssStyleElementCommentsPostButtonBg({
 
 export function cssStyleElementCommentsColorLink({
   v,
-  device
+  device,
+  store
 }: CSSValue): string {
   const bgColor = styleBgColor({
     v,
     device,
     state: "normal",
+    store,
     prefix: "postButtonBg"
   });
 

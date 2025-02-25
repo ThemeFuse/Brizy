@@ -1,6 +1,6 @@
 import { pipe } from "@brizy/readers";
 import deepMerge from "deepmerge";
-import { flatten } from "underscore";
+import { flatten } from "es-toolkit";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getShortcodeComponents } from "visual/shortcodeComponents/index";
 import { type Shortcode, ShortcodeComponents, Shortcodes } from "visual/types";

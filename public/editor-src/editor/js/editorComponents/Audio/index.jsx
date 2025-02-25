@@ -1,14 +1,15 @@
 import { Audio as AudioComponent, SoundCloud } from "@brizy/component";
 import classnames from "classnames";
 import React from "react";
-import { isEditor, isView } from "visual/providers/RenderProvider";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { currentStyleSelector } from "visual/redux/selectors-new";
 import { customFileUrl } from "visual/utils/customFile";
+import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
@@ -32,13 +33,12 @@ const resizerPoints = [
 ];
 
 class Audio extends EditorComponent {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   static get componentId() {
     return "Audio";
   }
-
-  static defaultValue = defaultValue;
-
-  static experimentalDynamicContent = true;
 
   handleResizerChange = (patch) => this.patchValue(patch);
 
@@ -156,7 +156,7 @@ class Audio extends EditorComponent {
         showUsername={username === "on"}
         showArtwork={artWork === "on"}
         controlsColor={controlsColor}
-        className={isEditor(this.renderContext) ? "brz-blocked" : ""}
+        className={isEditor(this.props.renderContext) ? "brz-blocked" : ""}
       />
     ) : (
       <Placeholder icon="sound-cloud" />
@@ -183,7 +183,7 @@ class Audio extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -197,7 +197,7 @@ class Audio extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -209,13 +209,13 @@ class Audio extends EditorComponent {
         vs,
         vd,
         store: this.getReduxStore(),
-        renderContext: this.renderContext
+        contexts: this.getContexts()
       })
     );
+    const config = this.getGlobalConfig();
+    const audioSource = customFileUrl(audio, config) ?? "";
 
-    const audioSource = customFileUrl(audio) ?? "";
-
-    return isView(this.renderContext) ? (
+    return isView(this.props.renderContext) ? (
       <AudioComponent
         src={audioSource}
         isLoop={loop === "on"}
@@ -255,7 +255,7 @@ class Audio extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -289,7 +289,7 @@ class Audio extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -298,25 +298,32 @@ class Audio extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className: classNameContent
-            })}
-          >
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={this.getResizerRestrictions(v)}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              {type === "custom"
-                ? this.renderAudio(v, vs, vd)
-                : this.renderSoundCloud(v)}
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: classNameContent,
+                  ref: (el) => {
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  restrictions={this.getResizerRestrictions(v)}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                >
+                  {type === "custom"
+                    ? this.renderAudio(v, vs, vd)
+                    : this.renderSoundCloud(v)}
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }

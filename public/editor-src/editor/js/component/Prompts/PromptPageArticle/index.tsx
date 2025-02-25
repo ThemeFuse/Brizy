@@ -38,6 +38,7 @@ import {
   updatePageLayout,
   updatePageTitle
 } from "visual/redux/actions2";
+import { Layout } from "visual/types/Layout";
 import {
   getPageRelations,
   shopifyBlogItems,
@@ -50,7 +51,7 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { Layout, Tabs } from "../common/PromptPage/types";
+import { Tabs } from "../common/PromptPage/types";
 import { Props, Valid } from "./types";
 
 export const PromptPageArticle = (props: Props): ReactElement => {

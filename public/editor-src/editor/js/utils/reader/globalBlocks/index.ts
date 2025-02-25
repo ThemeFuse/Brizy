@@ -1,20 +1,15 @@
-import { mPipe, match, parseStrict } from "fp-utilities";
+import { Arr, Json, Num, Obj, Str } from "@brizy/readers";
+import { mPipe, match, optional, parseStrict } from "fp-utilities";
+import { GlobalBlock } from "visual/types/GlobalBlock";
 import {
   AllRule,
   CollectionItemRule,
   CollectionTypeRule,
-  GlobalBlock,
   Rule as GlobalBlockRule
-} from "visual/types";
+} from "visual/types/Rule";
 import { ArrayType } from "visual/utils/array/types";
 import { pipe } from "visual/utils/fp";
-import { optional } from "visual/utils/reader/readWithParser";
 import { MValue, onNullish, throwOnNullish } from "visual/utils/value";
-import * as Arr from "../array";
-import * as Json from "../json";
-import * as Num from "../number";
-import * as Obj from "../object";
-import * as Str from "../string";
 import * as Union from "../union";
 
 //#region Global Blocks Rules

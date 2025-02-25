@@ -9,15 +9,14 @@ import { style } from "./styles";
 import toolbarConfigFn from "./toolbar";
 
 class TableAside extends EditorComponent {
-  static get componentId() {
-    return "TableAside";
-  }
-
   static defaultProps = {
     meta: {}
   };
-
   static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "TableAside";
+  }
 
   handleLabelChange = (labelText) => {
     this.patchValue({ labelText });
@@ -38,7 +37,7 @@ class TableAside extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -61,9 +60,11 @@ class TableAside extends EditorComponent {
     return (
       <>
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
-          <th className={className}>
-            {isFromBody || showHead ? content : null}
-          </th>
+          {({ ref }) => (
+            <th className={className} ref={ref}>
+              {isFromBody || showHead ? content : null}
+            </th>
+          )}
         </Toolbar>
       </>
     );

@@ -1,5 +1,4 @@
 import { Value as NV } from "visual/component/Controls/NumberUnit/types";
-import { Props as SP } from "visual/component/Controls/Spacing";
 import { Props as SpacingPops } from "visual/component/Controls/Spacing";
 import { Edge } from "visual/component/Controls/Spacing/types";
 import { Setter } from "visual/utils/model";
@@ -28,7 +27,7 @@ export const fromNumberSlider = readWithParser<
   unit: (v) => v.unit
 });
 
-export const getIcon: SP<Unit.SpacingUnit, Edge>["getIcon"] = (e) => {
+export const getIcon: SpacingPops<Unit.SpacingUnit, Edge>["getIcon"] = (e) => {
   switch (e) {
     case "grouped":
       return "nc-styling-all";

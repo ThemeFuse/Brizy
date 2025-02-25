@@ -1,6 +1,7 @@
-import { FontFamilyType, is, types, fromString } from "./familyType";
+import { FontFamilyType } from "visual/types/Fonts";
+import { fromString, is, types } from "./familyType";
 
-describe("Testing 'types' constant", function() {
+describe("Testing 'types' constant", function () {
   test("Should be [GOOGLE, UPLOAD]", () => {
     expect(types).toEqual(Object.values(FontFamilyType));
   });
@@ -28,7 +29,7 @@ describe("Testing 'fromString' function", () => {
   ];
 
   describe("Should match `is` result", () => {
-    seed.forEach(v =>
+    seed.forEach((v) =>
       test(`Expect ${v} to be ${is(v) ? v : undefined}`, () =>
         expect(fromString(v)).toBe(is(v) ? v : undefined))
     );

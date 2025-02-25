@@ -67,18 +67,20 @@ export function cssStyleElementShopifyBorderColorPrice({
   v,
   device,
   state,
+  store,
   prefix = "price"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix });
+  return cssStyleBorder({ v, device, state, store, prefix });
 }
 
 export function cssStyleElementShopifyBorderColorThroughPrice({
   v,
   device,
   state,
+  store,
   prefix = "throughPrice"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix });
+  return cssStyleBorder({ v, device, state, store, prefix });
 }
 export function cssStyleElementShopifyBoxShadowPrice({
   v,

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import {
   TextShadow as ShadowControl,
   Props as ShadowProps
@@ -18,8 +19,9 @@ import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/Config
 import { useConfig } from "visual/global/hooks";
 import { updateUI } from "visual/redux/actions2";
 import { currentStyleSelector } from "visual/redux/selectors";
-import { WithClassName } from "visual/types/attributes";
-import { Palette } from "visual/utils/color/Palette";
+import { PaletteType as Palette } from "visual/types/Style";
+import { WithClassName, WithConfig } from "visual/types/attributes";
+import { is as isHex } from "visual/utils/color/Hex";
 import { mPipe } from "visual/utils/fp";
 import { Meta } from "visual/utils/options/TextShadow/meta";
 import * as Value from "visual/utils/options/TextShadow/types/Value";
@@ -31,18 +33,34 @@ import {
   valueFromSelectType
 } from "visual/utils/options/TextShadow/utils";
 
+export interface Config {
+  isPaletteHidden?: boolean;
+}
+
 export interface Props
   extends OptionProps<Value.Value>,
     OptionMeta<Meta>,
+    WithConfig<Config>,
     WithClassName {}
 
 export const TextShadow = ({
   onChange,
   value,
-  className
+  className,
+  config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
-  const { colorPalette } = useSelector(currentStyleSelector);
+  const style = useSelector(currentStyleSelector);
+  const { isPaletteHidden } = config ?? {};
+  const colorPalette = useMemo((): PaletteObject[] | undefined => {
+    if (isPaletteHidden) {
+      return undefined;
+    }
+
+    return style.colorPalette
+      .map((f) => ({ id: `${f.id}`, hex: f.hex }))
+      .filter((p): p is PaletteObject => isHex(p.hex));
+  }, [style, isPaletteHidden]);
 
   const globalConfig = useConfig();
 

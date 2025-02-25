@@ -1,14 +1,13 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const editorConfigFn = require("./webpack.config.editor");
 const swcrc = require("./swc.config.all");
 const LibsConfig = require("./editor/js/bootstraps/libs.json");
 
 exports.preview = (options) => {
   const editorConfig = editorConfigFn(options);
-  const config = {
+
+  return {
     mode: editorConfig.mode,
     entry: "./editor/js/bootstraps/preview/index.js",
     output: {
@@ -48,14 +47,6 @@ exports.preview = (options) => {
     devtool: editorConfig.devtool,
     watch: editorConfig.watch
   };
-
-  const configAnalyze = {
-    mode: "production",
-    plugins: [new BundleAnalyzerPlugin()],
-    watch: false
-  };
-
-  return options.ANALYZE ? { ...config, ...configAnalyze } : config;
 };
 
 exports.libs = (options) => {

@@ -1,23 +1,14 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { getColor } from "visual/utils/color";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types/Value";
 
-export function getItems({
-  v,
-  device,
-  state
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  state: State;
-}): ToolbarItemType[] {
+export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const buttonBgColor = getColor(
+  const buttonBgColor = getColorToolbar(
     dvv("buttonBgColorPalette"),
     dvv("buttonBgColorHex"),
     dvv("buttonBgColorOpacity")
@@ -181,4 +172,4 @@ export function getItems({
       title: t("Settings")
     }
   ];
-}
+};

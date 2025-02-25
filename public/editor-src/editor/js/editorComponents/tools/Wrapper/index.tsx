@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { identity } from "es-toolkit";
 import React, {
   ComponentType,
   MouseEventHandler,
@@ -9,12 +10,6 @@ import React, {
   forwardRef
 } from "react";
 import { useStore } from "react-redux";
-import { identity } from "underscore";
-import {
-  RenderType,
-  isEditor,
-  isView
-} from "visual/providers/RenderProvider";
 import Animation from "visual/component/Animation";
 import { ElementModel } from "visual/component/Elements/Types";
 import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
@@ -22,7 +17,8 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { DH, DW } from "visual/editorComponents/Story/utils";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
-import { EditorMode } from "visual/global/EditorModeContext";
+import { EditorMode } from "visual/providers/EditorModeProvider";
+import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { WithClassName } from "visual/types/attributes";
@@ -84,7 +80,8 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
     onClick,
     onDragStart,
     slide,
-    renderContext
+    renderContext,
+    editorMode
   }: PropsWithChildren<Props<T>>,
   ref: Ref<Element>
 ): ReactElement {
@@ -94,7 +91,15 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
   const modelClassName = useCSS({
     componentId: `${componentId}-${id}-${wrapperId}`,
     id: `${id}-${wrapperId}`,
-    css: isAbsoluteOrFixed ? style({ v, vs, vd, store, renderContext }) : []
+    css: isAbsoluteOrFixed
+      ? style({
+          v,
+          vs,
+          vd,
+          store,
+          contexts: { renderContext, mode: editorMode }
+        })
+      : []
   });
 
   const className = classNames(

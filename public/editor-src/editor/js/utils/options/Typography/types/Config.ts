@@ -1,4 +1,4 @@
-import { TextScripts } from "visual/types";
+import { TextScripts } from "visual/types/Style";
 
 type Boundaries = Partial<{
   min: number;
@@ -13,4 +13,7 @@ export interface Config {
 
   icons?: string[];
   scriptChoices?: TextScripts[];
+
+  isAddNewFontDisabled?: boolean;
+  isFontStyleSettingsDisabled?: boolean;
 }

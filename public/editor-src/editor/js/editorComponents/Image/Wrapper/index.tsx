@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { getSizeType } from "visual/editorComponents/Image/utils";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { useRender } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
@@ -34,6 +35,7 @@ const Image: FCC<ImageProps> = (props) => {
   const { maskShape = "none" } = v;
   const { points, restrictions } = useResizerPoints({ ...props, context });
   const { renderType } = useRender();
+  const { mode } = useEditorMode();
   const modelClassName = useCSS({
     // hard to explain, but because styles are generated from props in this case
     // we can't rely on the usual way of using css(),
@@ -50,7 +52,10 @@ const Image: FCC<ImageProps> = (props) => {
         showOriginalImage: showOriginalImage(v)
       },
       store,
-      renderContext: renderType
+      contexts: {
+        renderContext: renderType,
+        mode
+      }
     })
   });
 
@@ -69,7 +74,16 @@ const Image: FCC<ImageProps> = (props) => {
   const containerModelClassName = useCSS({
     componentId: `${componentId}-${_id}-wrapper-container`,
     id: `${_id}-wrapper-container`,
-    css: styleWrapperContainer({ v, vs, vd, store, renderContext: renderType })
+    css: styleWrapperContainer({
+      v,
+      vs,
+      vd,
+      store,
+      contexts: {
+        renderContext: renderType,
+        mode
+      }
+    })
   });
 
   const classNameWrapperContainer = classnames(

@@ -1,16 +1,15 @@
-import { configIdSelector } from "visual/redux/selectors";
+import { isStory } from "visual/providers/EditorModeProvider";
 import * as onStyles from "visual/utils/cssStyle";
 import {
   addBreakpointForInterval,
   addBreakpointForStandart
 } from "visual/utils/cssStyle";
 import { DESKTOP } from "visual/utils/devices";
-import { isStory } from "visual/utils/models";
 
 export { css, css1 } from "./css/tujur";
 
-export const getDevices = (config) =>
-  isStory(config)
+export const getDevices = (isStory) =>
+  isStory
     ? {
         desktop: 1500
       }
@@ -20,8 +19,8 @@ export const getDevices = (config) =>
         mobile: 767
       };
 
-const getStates = (config) =>
-  isStory(config)
+const getStates = (isStory) =>
+  isStory
     ? {
         normal: "normal"
       }
@@ -36,34 +35,19 @@ const getStates = (config) =>
  * @param {ElementModel} param.v
  * @param {ElementModel} param.vs
  * @param {ElementModel} param.vd
- * @param {string} param.renderContext - provide the render Context "editor" | "view"
+ * @param {object} param.contexts - object with renderContext: "editor" | "view" and editorMode
  * @param {object} param.styles
  * @param {object} param.store
  * @param {object} [param.props]
  * @return {[string, string, string]}
  */
-export function renderStyles({
-  v,
-  vs,
-  vd,
-  renderContext,
-  styles,
-  props,
-  store
-}) {
-  if (
-    //TODO: REMOVE. Temporary throw error if renderContext is not provided
-    typeof renderContext === "undefined" &&
-    process.env.NODE_ENV === "development"
-  ) {
-    throw new Error("Render context is undefined");
-  }
+export function renderStyles({ v, vs, vd, styles, props, store, contexts }) {
   if (vd) {
     const { defaultCSS, rulesCSS, customCSS } = loopStyles({
       v,
       vs,
       vd,
-      renderContext,
+      contexts,
       styles,
       props,
       store
@@ -77,7 +61,7 @@ export function renderStyles({
   }
 }
 
-function loopStyles({ v, vs, vd, renderContext, styles, store, props }) {
+function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
   let outV = "";
   let outVS = "";
   let outVD = "";
@@ -86,9 +70,12 @@ function loopStyles({ v, vs, vd, renderContext, styles, store, props }) {
   let legacyVD = {};
   let mode = "";
   let legacyByDefault = {};
-  const config = configIdSelector(store.getState());
-  const devices = getDevices(config);
-  const states = getStates(config);
+
+  const { renderContext, mode: editorMode } = contexts;
+
+  const _isStory = isStory(editorMode);
+  const devices = getDevices(_isStory);
+  const states = getStates(_isStory);
 
   /* eslint-disable no-unused-vars */
   Object.entries(devices).forEach(function ([device, deviceValue]) {

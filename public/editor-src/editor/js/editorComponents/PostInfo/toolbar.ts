@@ -1,5 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { Slug, Value } from "./types";
@@ -8,7 +8,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const iconsColor = getColor(
+  const iconsColor = getColorToolbar(
     dvv("iconsColorPalette"),
     dvv("iconsColorHex"),
     dvv("iconsColorOpacity")

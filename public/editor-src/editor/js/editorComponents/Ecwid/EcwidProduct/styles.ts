@@ -764,9 +764,12 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       {
         standart: [
           "cssStyleElementEcwidProductGalleryBorder",
-          "cssStyleElementEcwidProductGalleryBorderRadius",
-          "cssStyleElementEcwidProductGalleryBoxShadow"
+          "cssStyleElementEcwidProductGalleryBorderRadius"
         ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images:hover":
+      {
+        standart: ["cssStyleElementEcwidProductGalleryBoxShadow"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__thumbs":
       { standart: ["cssStyleElementEcwidProductThumbnailWidth"] },

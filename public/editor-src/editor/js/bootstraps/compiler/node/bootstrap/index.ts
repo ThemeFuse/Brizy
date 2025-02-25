@@ -1,12 +1,13 @@
 import deepMerge from "deepmerge";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
-import { GoogleFont } from "visual/types";
+import { GoogleFont } from "visual/types/Fonts";
 import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
-import { findFonts, getGoogleFonts } from "visual/utils/fonts";
+import { getGoogleFonts } from "visual/utils/fonts/getGoogleFonts";
+import { findFonts } from "visual/utils/fonts/transform";
 import { systemFont } from "visual/utils/fonts/utils";
-import { isPopup, isStory } from "visual/utils/models";
 import { getUsedModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getBlocksStylesFonts } from "visual/utils/traverse";
@@ -50,7 +51,6 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
 
   getBlocksStylesFonts(parsedFonts, fonts).forEach(({ type, family }) => {
     if (type === "google" || type === "unknowns") {
-      // @ts-expect-error: Temporary
       const font = findFonts(googleFonts, family);
 
       if (font) {
@@ -64,6 +64,7 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
     system: { data: systemFont }
   });
   const configId = uuid();
+  const editorMode = config.mode;
 
   store.dispatch(
     //@ts-expect-error: Need to move Hydrate reducers to ts
@@ -74,7 +75,8 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
       globalBlocks,
       projectStatus: {},
       config,
-      configId
+      configId,
+      editorMode
     })
   );
 
@@ -82,11 +84,11 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
     styles: compileProject(config, store)
   };
 
-  const commonConfig = { store, config };
+  const commonConfig = { store, config, editorMode };
   let globalPopupsStatic = undefined;
   const globalPopupsInPage = Object.values(globalBlocks).filter(isGlobalPopup);
 
-  if (isPopup(config)) {
+  if (isPopup(editorMode)) {
     if (globalPopupsInPage.length > 0) {
       try {
         globalPopupsStatic = globalPopupsToStatic({
@@ -117,7 +119,7 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
     }
   }
 
-  if (isStory(config)) {
+  if (isStory(editorMode)) {
     const data = storyToStatic(commonConfig);
     return {
       page: data,

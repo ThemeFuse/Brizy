@@ -3,13 +3,14 @@ import deepMerge from "deepmerge";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { omit } from "timm";
-import { Editor } from "visual/bootstraps/module";
-import { Font, Project } from "visual/types";
+import { Editor } from "visual/bootstraps/module/Editor";
+import { Project } from "visual/types/Project";
 import { flatMap } from "visual/utils/array";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { ConfigError, PageError, ProjectError } from "visual/utils/errors";
-import { normalizeFonts, normalizeStyles } from "visual/utils/fonts";
 import { normalizeAdobeFonts } from "visual/utils/fonts/getAdobeFonts";
+import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
+import { normalizeStyles } from "visual/utils/fonts/transform";
 import { systemFont } from "visual/utils/fonts/utils";
 import { I18n, t } from "visual/utils/i18n";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
@@ -21,7 +22,6 @@ import {
 import { readConfig } from "../initConfig/readConfig";
 import { showError } from "./utils/errors";
 import { normalizePage } from "./utils/normalizePage";
-
 
 const appDiv = document.querySelector("#brz-ed-root");
 const pageCurtain = window.parent.document.querySelector<HTMLElement>(
@@ -50,6 +50,7 @@ const _systemFont = {
 
     const project = config.projectData;
     const page = config.pageData;
+    const editorMode = config.mode;
 
     if (!project || !project.data) {
       throw new ProjectError(t("Missing project data in config"));
@@ -78,10 +79,7 @@ const _systemFont = {
     const adobeFonts = fonts.adobe?.id
       ? await normalizeAdobeFonts(config.api, fonts.adobe.id)
       : {};
-    const fontsDiff: Array<{
-      type: "blocks" | "upload" | "system";
-      fonts: Array<Font>;
-    }> = await normalizeFonts({
+    const fontsDiff = await normalizeFonts({
       config,
       renderContext: "editor",
       newFonts: getBlocksStylesFonts([...pageFonts, ...stylesFonts], {
@@ -107,7 +105,7 @@ const _systemFont = {
     const newConfig = {
       ...config,
       projectData: normalizedProject,
-      pageData: normalizePage(page, config),
+      pageData: normalizePage(page, editorMode),
       onLoad() {
         config.onLoad?.();
         pageCurtain?.parentElement?.removeChild(pageCurtain);
@@ -118,8 +116,6 @@ const _systemFont = {
       // @ts-expect-error: Removed l10n from ConfigCommon
       resources: Obj.readNoArray(config.l10n) ? config.l10n : {}
     });
-
-    const editorMode = config.mode;
 
     const app = (
       <Editor

@@ -1,8 +1,7 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { EcwidCategoryId } from "visual/global/Ecwid";
+import { EcwidCategoryId } from "visual/global/Ecwid/types";
 import { request } from "../../utils/api";
 import { Category } from "./types/Category";
-
 
 /**
  * https://api-docs.ecwid.com/reference/get-categories

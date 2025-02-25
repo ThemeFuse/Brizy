@@ -1,6 +1,7 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import { find } from "es-toolkit/compat";
 import React from "react";
-import _ from "underscore";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 
 export { default as RadioItem } from "./RadioItem";
@@ -9,7 +10,7 @@ export default class Radio extends React.Component {
   static defaultProps = {
     name: "defaultName",
     defaultValue: "",
-    onChange: _.noop
+    onChange: noop
   };
 
   state = {
@@ -25,7 +26,7 @@ export default class Radio extends React.Component {
 
   getCurrent = () => {
     return (
-      _.find(this.props.children, (child) => {
+      find(this.props.children, (child) => {
         return child.props.value === this.state.currentValue;
       }) || this.props.children[0]
     );

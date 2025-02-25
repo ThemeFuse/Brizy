@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import _ from "underscore";
+import {noop} from "es-toolkit";
+import React, {Component} from "react";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
-import { Scrollbar } from "visual/component/Scrollbar";
-import { t } from "visual/utils/i18n";
-import { Button } from "../../../common/Button";
+import {Scrollbar} from "visual/component/Scrollbar";
+import {t} from "visual/utils/i18n";
+import {Button} from "../../../common/Button";
 
 class ViewFields extends Component {
   static defaultProps = {
@@ -14,10 +14,10 @@ class ViewFields extends Component {
     error: false,
     nextLoading: false,
     prevLoading: false,
-    onChange: _.noop,
-    onChangeConfirmation: _.noop,
-    onNext: _.noop,
-    onPrev: _.noop
+    onChange: noop,
+    onChangeConfirmation: noop,
+    onNext: noop,
+    onPrev: noop
   };
 
   handleConfirmation = (e) => {

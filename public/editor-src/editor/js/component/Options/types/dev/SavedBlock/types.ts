@@ -2,7 +2,8 @@ import { FC } from "react";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxState } from "visual/redux/types";
-import { Block, ExtraFontStyle } from "visual/types";
+import { Block } from "visual/types/Block";
+import { ExtraFontStyle } from "visual/types/Style";
 import { WithClassName, WithConfig } from "visual/types/attributes";
 
 export interface Config {

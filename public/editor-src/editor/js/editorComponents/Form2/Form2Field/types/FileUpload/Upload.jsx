@@ -1,9 +1,9 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import _ from "underscore";
-import { isEditor } from "visual/providers/RenderProvider";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import { isEditor } from "visual/providers/RenderProvider";
 
 class Upload extends Component {
   static defaultProps = {
@@ -16,10 +16,10 @@ class Upload extends Component {
     accept: "",
     multiple: false,
     fileText: "",
-    onChange: _.noop,
-    onChangeText: _.noop,
-    onBlur: _.noop,
-    onClick: _.noop
+    onChange: noop,
+    onChangeText: noop,
+    onBlur: noop,
+    onClick: noop
   };
 
   renderForEdit() {

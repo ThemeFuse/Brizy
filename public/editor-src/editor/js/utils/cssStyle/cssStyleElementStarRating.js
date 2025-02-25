@@ -5,11 +5,17 @@ import {
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 
-export function cssStyleElementStarRatingRatingColor({ v, device, state }) {
+export function cssStyleElementStarRatingRatingColor({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "ratingColor"
   });
 }
@@ -17,12 +23,14 @@ export function cssStyleElementStarRatingRatingColor({ v, device, state }) {
 export function cssStyleElementStarRatingRatingBackgroundColor({
   v,
   device,
-  state
+  state,
+  store
 }) {
   return cssStyleColor({
     v,
     device,
     state,
+    store,
     prefix: "ratingBackgroundColor"
   });
 }
@@ -67,11 +75,17 @@ export function cssStyleElementStarRatingSpacing({ v, device, state }) {
   });
 }
 
-export function cssStyleElementStarRatingCustomIconColor({ v, device, state }) {
+export function cssStyleElementStarRatingCustomIconColor({
+  v,
+  device,
+  state,
+  store
+}) {
   return cssStyleCustomIconColor({
     v,
     device,
     state,
+    store,
     prefix: "ratingColor"
   });
 }

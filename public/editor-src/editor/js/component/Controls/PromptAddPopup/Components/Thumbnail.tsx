@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { useConfig } from "visual/global/hooks";
-import { Block } from "visual/types";
+import { Block } from "visual/types/Block";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { imageWrapperSize } from "visual/utils/image";

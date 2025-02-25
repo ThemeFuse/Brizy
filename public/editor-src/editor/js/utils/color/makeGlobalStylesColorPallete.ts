@@ -1,9 +1,13 @@
-import Conf, { Config } from "visual/global/Config";
+import Conf from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { hexToRgb } from "visual/utils/color";
 import { isExternalPopup } from "visual/utils/models/modes";
 import { uidByConfig } from "visual/utils/uuid";
 
-export const makeStylePaletteCSSVar = (id: string, config: Config): string => {
+export const makeStylePaletteCSSVar = (
+  id: string,
+  config: ConfigCommon
+): string => {
   if (isExternalPopup(config)) {
     const uid = uidByConfig(config);
     return `--brz-global-${id}-${uid}`;

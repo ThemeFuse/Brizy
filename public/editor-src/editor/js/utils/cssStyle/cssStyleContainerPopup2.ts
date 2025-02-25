@@ -104,9 +104,10 @@ export function cssStyleContainerPopup2CloseBorderRadius({
 export function cssStyleContainerPopup2CloseBgColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const bgColor = styleBgColor({ v, device, state, prefix: "closeBg" });
+  const bgColor = styleBgColor({ v, device, state, store, prefix: "closeBg" });
 
   return bgColor ? `background-color:${bgColor};` : "";
 }

@@ -11,11 +11,11 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
 class WOOExcerpt extends EditorComponent {
+  static defaultValue = defaultValue;
+
   static get componentId() {
     return "WOOExcerpt";
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v, vs, vd) {
     const { className: className_ } = v;
@@ -30,7 +30,7 @@ class WOOExcerpt extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -42,13 +42,15 @@ class WOOExcerpt extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          <DynamicContentHelper
-            placeholder={placeholder}
-            placeholderIcon="wp-excerpt"
-            tagName="div"
-          />
-        </Wrapper>
+        {({ ref }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref })}>
+            <DynamicContentHelper
+              placeholder={placeholder}
+              placeholderIcon="wp-excerpt"
+              tagName="div"
+            />
+          </Wrapper>
+        )}
       </Toolbar>
     );
   }

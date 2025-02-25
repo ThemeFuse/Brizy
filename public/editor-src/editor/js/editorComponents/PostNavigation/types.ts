@@ -7,4 +7,5 @@ export interface Value extends ElementModel {
   showTitle: Switch;
   prevLabel: string;
   nextLabel: string;
+  customCSS: string;
 }

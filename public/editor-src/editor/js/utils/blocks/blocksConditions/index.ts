@@ -8,16 +8,15 @@ import {
 } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid";
+import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid/types";
+import { GlobalBlock, GlobalBlockPosition } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
 import {
   BlockTypeRule,
   CloudReferenceAllEntity,
   CloudReferenceEntity,
-  CollectionTypeRule,
-  GlobalBlock,
-  GlobalBlockPosition,
-  Page
-} from "visual/types";
+  CollectionTypeRule
+} from "visual/types/Rule";
 import { isGlobalPopup } from "visual/types/utils";
 import {
   ECWID_PRODUCT_CATEGORY_TYPE,

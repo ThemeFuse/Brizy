@@ -1,7 +1,7 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { getLeadificCustomFields } from "visual/utils/api";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -21,7 +21,6 @@ export const getItems: GetItems<Value, Props> = ({
   editorMode
 }) => {
   const config = component.getGlobalConfig();
-
   const _isStory = isStory(editorMode);
   const _isPopup = isPopup(editorMode);
 
@@ -30,7 +29,7 @@ export const getItems: GetItems<Value, Props> = ({
 
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")

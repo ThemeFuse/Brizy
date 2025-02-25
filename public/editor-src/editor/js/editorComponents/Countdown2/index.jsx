@@ -1,7 +1,7 @@
 import classnames from "classnames";
+import { isEqual, pick } from "es-toolkit";
 import jQuery from "jquery";
 import React from "react";
-import _ from "underscore";
 import BoxResizer from "visual/component/BoxResizer";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
@@ -9,6 +9,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import "visual/libs/countdown2/jquery.countdown";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRefs } from "visual/utils/react";
 import { capitalize } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -20,22 +21,20 @@ import { formatDate, getTime } from "./utils";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 class Countdown2 extends EditorComponent {
-  static get componentId() {
-    return "Countdown2";
-  }
-
   static defaultValue = defaultValue;
-
   static experimentalDynamicContent = true;
-
-  handleTextChange = (propertyName, value) => {
-    this.patchValue({ [propertyName]: value });
-  };
-
   days = React.createRef();
   hours = React.createRef();
   minutes = React.createRef();
   seconds = React.createRef();
+
+  static get componentId() {
+    return "Countdown2";
+  }
+
+  handleTextChange = (propertyName, value) => {
+    this.patchValue({ [propertyName]: value });
+  };
 
   componentDidMount() {
     const v = this.getValue();
@@ -74,10 +73,10 @@ class Countdown2 extends EditorComponent {
     const v = this.getValue();
 
     const countDownKeys = ["date", "hours", "minutes", "timeZone"];
-    const oldDbValue = _.pick(prevProps.dbValue, ...countDownKeys);
-    const newDbValue = _.pick(this.props.dbValue, ...countDownKeys);
+    const oldDbValue = pick(prevProps.dbValue, countDownKeys);
+    const newDbValue = pick(this.props.dbValue, countDownKeys);
 
-    if (!_.isEqual(oldDbValue, newDbValue)) {
+    if (!isEqual(oldDbValue, newDbValue)) {
       this.endDate = this.getEndDate(v);
       this.initPlugin(v);
     }
@@ -172,7 +171,7 @@ class Countdown2 extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -186,7 +185,7 @@ class Countdown2 extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -212,29 +211,34 @@ class Countdown2 extends EditorComponent {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
       >
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-          <Wrapper
-            {...this.makeWrapperProps({
-              className: className,
-              ref: (el) => {
-                this.countdown = el;
-              }
-            })}
-          >
-            <BoxResizer
-              points={resizerPoints}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-              restrictions={resizerRestrictions}
-            >
-              {this.renderParts(v)}
-              {actions === "showMessage" && (
-                <div className={classNameMessage}>{messageText}</div>
-              )}
-            </BoxResizer>
-          </Wrapper>
-        </CustomCSS>
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className: className,
+                  ref: (el) => {
+                    this.countdown = el;
+                    attachRefs(el, [toolbarRef, cssRef]);
+                  }
+                })}
+              >
+                <BoxResizer
+                  points={resizerPoints}
+                  meta={this.props.meta}
+                  value={v}
+                  onChange={this.handleResizerChange}
+                  restrictions={resizerRestrictions}
+                >
+                  {this.renderParts(v)}
+                  {actions === "showMessage" && (
+                    <div className={classNameMessage}>{messageText}</div>
+                  )}
+                </BoxResizer>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
       </Toolbar>
     );
   }
@@ -251,7 +255,7 @@ class Countdown2 extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -265,7 +269,7 @@ class Countdown2 extends EditorComponent {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

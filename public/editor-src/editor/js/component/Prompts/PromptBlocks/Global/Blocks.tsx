@@ -9,7 +9,7 @@ import Sidebar, {
   SidebarOption
 } from "visual/component/Prompts/PromptBlocks/common/Sidebar";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { BlockMetaType } from "visual/types";
+import { BlockMetaType } from "visual/types/GlobalBlock";
 import { t } from "visual/utils/i18n";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";

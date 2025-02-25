@@ -5,7 +5,10 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 import { Value } from "./toolbar";
 
 export function styleSection(data: DynamicStylesProps<Value>): OutputStyle {
-  const { renderContext, v } = data;
+  const {
+    contexts: { renderContext },
+    v
+  } = data;
   const { maskShape = "none" } = v;
   const styles: {
     [k: string]: {

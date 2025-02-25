@@ -1,5 +1,5 @@
+import { noop } from "es-toolkit";
 import React, { Component, Fragment } from "react";
-import _ from "underscore";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import Tooltip from "visual/component/Controls/Tooltip";
@@ -19,9 +19,9 @@ class ViewAdd extends Component {
     ],
     nextLoading: null,
     prevLoading: null,
-    onPrev: _.noop,
-    onNext: _.noop,
-    onActive: _.noop
+    onPrev: noop,
+    onNext: noop,
+    onActive: noop
   };
 
   renderError() {

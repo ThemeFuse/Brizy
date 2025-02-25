@@ -3,7 +3,7 @@ import {
   LayoutsWithThumbs,
   StoriesWithThumbs
 } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
-import { Style } from "visual/types";
+import { Style } from "visual/types/Style";
 import { Literal } from "visual/utils/types/Literal";
 
 export interface Filter {

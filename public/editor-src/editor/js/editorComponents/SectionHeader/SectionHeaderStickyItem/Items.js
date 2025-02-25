@@ -85,7 +85,7 @@ class SectionHeaderStickyItemItems extends EditorArrayComponent {
   }
 
   renderItemsContainer(items) {
-    if (isView(this.renderContext)) {
+    if (isView(this.props.renderContext)) {
       return <div className={this.props.className}>{items}</div>;
     }
 

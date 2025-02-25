@@ -2,7 +2,7 @@ import React, { Component, ReactElement } from "react";
 import { ConnectedProps, connect } from "react-redux";
 import Tooltip from "visual/component/Controls/Tooltip";
 import { ToastNotification } from "visual/component/Notifications";
-import { isPopup, isStory } from "visual/global/EditorModeContext";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { deleteGlobalBlock, updateGlobalBlock } from "visual/redux/actions2";
 import {
   fontsSelector,
@@ -10,13 +10,13 @@ import {
   globalBlocksInPageSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { BlockMetaType } from "visual/types";
+import { BlockMetaType } from "visual/types/GlobalBlock";
 import {
   blockThumbnailData,
   createGlobalBlockSymbol
 } from "visual/utils/blocks";
 import { isPro } from "visual/utils/env";
-import { normalizeFonts } from "visual/utils/fonts";
+import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
 import { t } from "visual/utils/i18n";
 import {
   getBlocksStylesFonts,
@@ -96,6 +96,7 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
       newFonts: fontsDiff
     });
 
+    // @ts-expect-error: is not assignable to type FontPayload<keyof Fonts>
     onAddBlocks({ block, fonts });
     onClose();
   };

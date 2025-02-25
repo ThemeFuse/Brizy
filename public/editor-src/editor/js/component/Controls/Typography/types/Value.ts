@@ -1,7 +1,7 @@
-import { TextScripts } from "visual/types";
+import { FontFamilyType } from "visual/types/Fonts";
+import { TextScripts } from "visual/types/Style";
 import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import { Weight } from "visual/utils/fonts/Weight";
-import { FontFamilyType } from "visual/utils/fonts/familyType";
 
 export interface Value {
   fontStyle: string;

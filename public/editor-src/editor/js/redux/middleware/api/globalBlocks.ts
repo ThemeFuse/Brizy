@@ -1,11 +1,11 @@
-import _ from "underscore";
+import { noop } from "es-toolkit";
 import {
   globalBlocksAssembledSelector,
   globalBlocksSelector,
   pageSelector,
   projectSelector
 } from "visual/redux/selectors";
-import { PageCommon } from "visual/types";
+import { PageCommon } from "visual/types/Page";
 import { ActionTypes } from "../../actions2";
 import { Data } from "./types";
 import { apiAutoSave, apiOnChange } from "./utils";
@@ -41,7 +41,7 @@ export function handleGlobalBlocks({ action, state, config }: Data): void {
     }
     case "UPDATE_GB_RULES": {
       const { id } = action.payload;
-      const { syncSuccess = _.noop, syncFail = _.noop } = action.meta || {};
+      const { syncSuccess = noop, syncFail = noop } = action.meta || {};
       const globalBlocks = globalBlocksSelector(state);
       const globalBlock = globalBlocks[id];
       // @ts-expect-error Type Page is not assignable to type PageCommon

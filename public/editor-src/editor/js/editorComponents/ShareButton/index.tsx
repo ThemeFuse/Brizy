@@ -11,11 +11,11 @@ import * as toolbar from "./toolbar";
 import { Props, Value } from "./types";
 
 class ShareButton extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+
   static get componentId(): ElementTypes.ShareButton {
     return ElementTypes.ShareButton;
   }
-
-  static defaultValue = defaultValue;
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { customCSS } = v;
@@ -31,7 +31,7 @@ class ShareButton extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -46,12 +46,14 @@ class ShareButton extends EditorComponent<Value, Props> {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <Wrapper {...this.makeWrapperProps({ className })}>
-          {
-            // @ts-expect-error: Need transform EditorArrayComponents to ts
-            <Items {...itemProps} />
-          }
-        </Wrapper>
+        {({ ref: cssRef }) => (
+          <Wrapper {...this.makeWrapperProps({ className, ref: cssRef })}>
+            {
+              // @ts-expect-error: Need transform EditorArrayComponents to ts
+              <Items {...itemProps} />
+            }
+          </Wrapper>
+        )}
       </CustomCSS>
     );
   }

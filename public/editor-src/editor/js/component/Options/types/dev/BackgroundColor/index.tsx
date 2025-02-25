@@ -1,6 +1,7 @@
 import React, { ComponentProps, ReactElement, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
+import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import * as O from "visual/component/Options/Type";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/global/hooks";
@@ -20,6 +21,7 @@ export type Props = O.Props<Value> &
     config?: {
       opacity?: boolean;
       withNone?: boolean;
+      isPaletteHidden?: boolean;
     };
   };
 
@@ -29,7 +31,16 @@ export const BackgroundColor = ({
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
-  const { colorPalette } = useSelector(currentStyleSelector);
+  const style = useSelector(currentStyleSelector);
+  const isPaletteHidden = config?.isPaletteHidden;
+  const colorPalette = useMemo(() => {
+    if (isPaletteHidden) {
+      return undefined;
+    }
+    return style.colorPalette
+      .map((f) => ({ id: `${f.id}`, hex: f.hex }))
+      .filter((p): p is PaletteObject => Hex.is(p.hex));
+  }, [isPaletteHidden, style]);
 
   const globalConfig = useConfig();
 
@@ -97,9 +108,9 @@ export const BackgroundColor = ({
   };
   const _value: Value = {
     ...value,
-    hex: paletteHex(value.palette, colorPalette) ?? value.hex,
+    hex: paletteHex(value.palette, colorPalette ?? []) ?? value.hex,
     gradientHex:
-      paletteHex(value.gradientPalette, colorPalette) ?? value.gradientHex
+      paletteHex(value.gradientPalette, colorPalette ?? []) ?? value.gradientHex
   };
 
   const enableGlobalStyle = useMemo((): boolean => {

@@ -19,7 +19,6 @@ import { Effects } from "./types";
 import * as Blur from "./types/Blur";
 import * as Horizontal from "./types/Horizontal";
 import * as MouseTilt from "./types/MouseTilt";
-import * as Tilt from "./types/MouseTilt";
 import * as MouseTrack from "./types/MouseTrack";
 import { disableEffects } from "./types/Patch";
 import * as Rotate from "./types/Rotate";
@@ -221,7 +220,9 @@ export const toElementModel: ToElementModel<"motion"> = (_patch) => {
           });
         case "mouseTilt":
           return flattenObject({
-            mouseTilt: Tilt.toElementModel(patch.value as Tilt.MouseTilt)
+            mouseTilt: MouseTilt.toElementModel(
+              patch.value as MouseTilt.MouseTilt
+            )
           });
       }
     }

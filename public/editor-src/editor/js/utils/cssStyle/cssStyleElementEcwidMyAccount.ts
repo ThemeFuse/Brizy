@@ -223,9 +223,10 @@ export function cssStyleElementEcwidMyAccountInputBgGradient({
 export function cssStyleElementEcwidMyAccountInputBorderColor({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "input" });
+  return cssStyleBorder({ v, device, state, store, prefix: "input" });
 }
 
 export function cssStyleElementEcwidMyAccountInputBoxShadow({
@@ -658,9 +659,10 @@ export function cssStyleElementEcwidMyAccountUserBgGradient({
 export function cssStyleElementEcwidMyAccountUserBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "user" });
+  return cssStyleBorder({ v, device, state, store, prefix: "user" });
 }
 
 export function cssStyleElementEcwidMyAccountUserBoxShadow({
@@ -825,9 +827,10 @@ export function cssStyleElementEcwidMyAccountButtonBgGradient({
 export function cssStyleElementEcwidMyAccountButtonBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "button" });
+  return cssStyleBorder({ v, device, state, store, prefix: "button" });
 }
 
 export function cssStyleElementEcwidMyAccountButtonBorderRadius({

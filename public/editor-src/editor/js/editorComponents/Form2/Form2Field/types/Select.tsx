@@ -1,20 +1,20 @@
 import classnames from "classnames";
+import { debounce } from "es-toolkit/compat";
 import React from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
+import { connect } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { t } from "visual/utils/i18n";
-import { makeDataAttr } from "visual/utils/i18n/attribute";
-import TextField from "./common/TextField";
-import { SelectAttributes, SelectProps, SelectState } from "./type";
-import { connect } from "react-redux";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { attachRef, attachRefs } from "visual/utils/react";
 import { AddOption } from "./common/AddOption";
+import TextField from "./common/TextField";
+import { SelectAttributes, SelectProps, SelectState } from "./type";
 import { createNewFieldOption } from "./utils";
 
 const MAX_ITEM_DROPDOWN = 5;
@@ -25,21 +25,29 @@ const mapState = (state: ReduxState) => ({
 const SelectConnector = connect(mapState);
 
 class Select extends TextField {
-  static get componentTitle(): string {
-    return t("Select");
-  }
+  content = React.createRef<HTMLDivElement>();
+  dropdown = React.createRef<HTMLDivElement>();
+  scrollbar = React.createRef<Scrollbars>();
+  state: SelectState = {
+    isOpen: false
+  };
+  getHeight = debounce(() => {
+    if (this.dropdown.current) {
+      const selectItem = this.dropdown.current.querySelector(
+        ".brz-forms2__select-item"
+      );
+
+      if (selectItem) {
+        return selectItem.getBoundingClientRect().height * MAX_ITEM_DROPDOWN;
+      }
+    }
+
+    return "100px";
+  }, 100);
 
   static get componentType(): ElementTypes.Select {
     return ElementTypes.Select;
   }
-
-  content = React.createRef<HTMLDivElement>();
-  dropdown = React.createRef<HTMLDivElement>();
-  scrollbar = React.createRef<Scrollbars>();
-
-  state: SelectState = {
-    isOpen: false
-  };
 
   componentDidUpdate(prevProps: SelectProps) {
     if (this.props.items.length > prevProps.items.length) {
@@ -96,20 +104,6 @@ class Select extends TextField {
     this.handleClick(e);
   };
 
-  getHeight = _.debounce(() => {
-    if (this.dropdown.current) {
-      const selectItem = this.dropdown.current.querySelector(
-        ".brz-forms2__select-item"
-      );
-
-      if (selectItem) {
-        return selectItem.getBoundingClientRect().height * MAX_ITEM_DROPDOWN;
-      }
-    }
-
-    return "100px";
-  }, 100);
-
   handleAddOption = (value: string) => {
     const { onChange, items } = this.props;
     const newOption = createNewFieldOption(value);
@@ -144,27 +138,31 @@ class Select extends TextField {
     return (
       <Portal node={node.ownerDocument.body} className={className}>
         <Toolbar {...toolbarExtendSelect}>
-          <div
-            ref={this.dropdown}
-            className="brz-forms2__select-list"
-            style={dropdownStyle}
-          >
-            <Scrollbars
-              ref={this.scrollbar}
-              autoHeight={true}
-              autoHeightMax={this.getHeight()}
+          {({ ref }) => (
+            <div
+              ref={(el) => {
+                attachRefs(el, [ref, this.dropdown]);
+              }}
+              className="brz-forms2__select-list"
+              style={dropdownStyle}
             >
-              {children}
-              {isDesktop && (
-                <AddOption
-                  onAdd={this.handleAddOption}
-                  wrapperClassName="brz-forms2__select-item"
-                  inputWrapperClassName="brz-forms2__select-item__input"
-                  iconClassName="brz-forms2__select-item__icon"
-                />
-              )}
-            </Scrollbars>
-          </div>
+              <Scrollbars
+                ref={this.scrollbar}
+                autoHeight={true}
+                autoHeightMax={this.getHeight()}
+              >
+                {children}
+                {isDesktop && (
+                  <AddOption
+                    onAdd={this.handleAddOption}
+                    wrapperClassName="brz-forms2__select-item"
+                    inputWrapperClassName="brz-forms2__select-item__input"
+                    iconClassName="brz-forms2__select-item__icon"
+                  />
+                )}
+              </Scrollbars>
+            </div>
+          )}
         </Toolbar>
       </Portal>
     );
@@ -188,41 +186,52 @@ class Select extends TextField {
         exceptions={clickOutsideExceptions}
         onClickOutside={this.handleOutside}
       >
-        <div ref={this.content} className={this.getClassName()}>
-          <div className="brz-forms2__select-current" onClick={this.handleOpen}>
-            {labelType === "outside" ? (
-              <input
-                {...attr}
-                ref={this.input}
-                className={className}
-                value={attr?.placeholder}
-                onChange={(e) => {
-                  this.handleChange({ placeholder: e.target.value });
-                }}
-                onBlur={this.handleBlur}
+        {({ ref }) => (
+          <div
+            ref={(el) => {
+              attachRef(el, ref);
+              attachRef(el, this.content);
+            }}
+            className={this.getClassName()}
+          >
+            <div
+              className="brz-forms2__select-current"
+              onClick={this.handleOpen}
+            >
+              {labelType === "outside" ? (
+                <input
+                  {...attr}
+                  ref={this.input}
+                  className={className}
+                  value={attr?.placeholder}
+                  onChange={(e) => {
+                    this.handleChange({ placeholder: e.target.value });
+                  }}
+                  onBlur={this.handleBlur}
+                />
+              ) : (
+                <input
+                  {...attr}
+                  ref={this.input}
+                  className={className}
+                  onChange={(e) => {
+                    this.handleChange({
+                      label: e.target.value,
+                      placeholder: e.target.value
+                    });
+                  }}
+                  onBlur={this.handleBlur}
+                />
+              )}
+              <ThemeIcon
+                name="arrow-down"
+                type="editor"
+                className="brz-forms2__select--arrow"
               />
-            ) : (
-              <input
-                {...attr}
-                ref={this.input}
-                className={className}
-                onChange={(e) => {
-                  this.handleChange({
-                    label: e.target.value,
-                    placeholder: e.target.value
-                  });
-                }}
-                onBlur={this.handleBlur}
-              />
-            )}
-            <ThemeIcon
-              name="arrow-down"
-              type="editor"
-              className="brz-forms2__select--arrow"
-            />
+            </div>
+            {isOpen && this.renderDropdown()}
           </div>
-          {isOpen && this.renderDropdown()}
-        </div>
+        )}
       </ClickOutside>
     );
   }

@@ -1,17 +1,12 @@
 import React from "react";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { t } from "visual/utils/i18n";
-import TextField from "./common/TextField";
 import { CheckGroup as CheckboxControls } from "visual/component/Controls/CheckGroup";
-import { CheckboxProps } from "./type";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { AddOption } from "./common/AddOption";
+import TextField from "./common/TextField";
+import { CheckboxProps } from "./type";
 import { createNewFieldOption } from "./utils";
 
 export default class Checkbox extends TextField {
-  static get componentTitle(): string {
-    return t("Checkbox");
-  }
-
   static get componentType(): ElementTypes.Checkbox {
     return ElementTypes.Checkbox;
   }

@@ -1,10 +1,11 @@
+import { identity as id } from "es-toolkit";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { identity as id } from "underscore";
 import {
   Border as Control,
   Props as ControlProps
 } from "visual/component/Controls/Border";
+import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import * as Option from "visual/component/Options/Type";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/global/hooks";
@@ -44,7 +45,12 @@ export const Border = ({
     () => (hasNone ? id : (v: number): number => Math.max(1, v)),
     [hasNone]
   );
-  const { colorPalette } = useSelector(currentStyleSelector);
+  const style = useSelector(currentStyleSelector);
+  const colorPalette = useMemo((): PaletteObject[] => {
+    return style.colorPalette
+      .map((f) => ({ id: `${f.id}`, hex: f.hex }))
+      .filter((p): p is PaletteObject => Hex.is(p.hex));
+  }, [style]);
 
   const changeStyle = useCallback<ControlProps["onChangeStyle"]>(
     (v) => onChange(BorderModel.setStyle(v, value)),
@@ -132,10 +138,16 @@ export const Border = ({
 
   const hex = paletteHex(value.palette, colorPalette) ?? value.hex;
 
+  const isPaletteHidden = config?.isPaletteHidden;
+  const palette = useMemo(
+    () => (isPaletteHidden ? undefined : colorPalette),
+    [isPaletteHidden, colorPalette]
+  );
+
   return (
     <Control
       className={className}
-      paletteList={colorPalette}
+      paletteList={palette}
       paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
       enableOpacity={config?.opacity ?? true}
       styles={styles.map(getStyleObject).filter(Boolean)}

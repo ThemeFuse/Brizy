@@ -1,5 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
@@ -10,7 +10,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     defaultValueValue({ v, key, device, state: "normal" });
 
   const isDesktop = device === "desktop";
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("colorPalette"),
     dvv("colorHex"),
     dvv("colorOpacity")

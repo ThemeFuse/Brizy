@@ -1,5 +1,4 @@
-import { once } from "underscore";
-import { Config as ConfigType } from "visual/global/Config/types";
+import { once } from "es-toolkit";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon.js";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { assetUrl } from "visual/utils/asset";
@@ -12,7 +11,7 @@ export { browserSupports, isScreenshotSupported } from "./browserSupports";
 
 // Note: Workers are build in a separated files
 // See webpack.config.worker.js
-const getWorkerUrl = (config: ConfigType) => {
+const getWorkerUrl = (config: ConfigCommon) => {
   const base = config.urls?.worker ?? assetUrl("editor/js");
   const version = config.editorVersion;
   return `${base}/screenshots.worker.min.js?ver=${version}`;
@@ -35,7 +34,7 @@ const promises: Record<
   [(s: Screenshot) => void, OnErrorEventHandler, Options, string]
 > = {};
 
-const getWorker = once((config: ConfigType) => {
+const getWorker = once((config: ConfigCommon) => {
   const Worker = _Worker.getInstance();
   const worker = new Worker(getWorkerUrl(config), { type: "module" });
 
@@ -119,8 +118,7 @@ export async function makeNodeScreenshot(
 
   return new Promise((resolve, reject) => {
     const id = uuid(3);
-    const _globalConfig = globalConfig as ConfigType;
-    const { assets: assetUrl, site: siteUrl } = _globalConfig.urls;
+    const { assets: assetUrl, site: siteUrl } = globalConfig.urls ?? {};
 
     promises[id] = [
       resolve,
@@ -129,7 +127,7 @@ export async function makeNodeScreenshot(
       url
     ];
 
-    const worker = getWorker(_globalConfig);
+    const worker = getWorker(globalConfig);
 
     worker.postMessage({
       id,
@@ -137,7 +135,7 @@ export async function makeNodeScreenshot(
       assetUrl,
       siteUrl,
       options,
-      proxyUrl: proxyUrl(_globalConfig)
+      proxyUrl: proxyUrl(globalConfig)
     });
   });
 }
@@ -148,9 +146,10 @@ function calcOptions(node: Element): { width: number; height: number } {
   return { width, height };
 }
 
-function proxyUrl(config: ConfigType) {
-  if (TARGET === "WP") {
-    const siteUrl = config.urls.site;
+function proxyUrl(config: ConfigCommon) {
+  const siteUrl = config.urls?.site;
+
+  if (TARGET === "WP" && siteUrl) {
     const prefix = (isWp(config) ? config.prefix : undefined) ?? "brizy";
 
     return urlContainsQueryString(siteUrl)

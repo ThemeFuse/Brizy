@@ -8,6 +8,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { updateEkklesiaFields } from "visual/utils/api/common";
+import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/string/specs";
 import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
@@ -40,15 +41,14 @@ import { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
+  static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+  calendarIcon = React.createRef<Element>();
+  subscribeIcon: HTMLElement | undefined;
+
   static get componentId(): "MinistryBrandsEventCalendar" {
     return "MinistryBrandsEventCalendar";
   }
-
-  static defaultValue = defaultValue;
-  static experimentalDynamicContent = true;
-
-  calendarIcon = React.createRef<Element>();
-  subscribeIcon: HTMLElement | undefined;
 
   async componentDidMount(): Promise<void> {
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
@@ -152,7 +152,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );
@@ -166,214 +166,325 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
         })}
         selector=".brz-eventCalendar-pagination"
       >
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(toolbarCell, undefined, {
-            allowExtend: false
-          })}
-          selector=".brz-eventCalendar-month1 .brz-eventCalendar-day"
-        >
+        {({ ref: paginationRef }) => (
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarMonth2, undefined, {
+            {...this.makeToolbarPropsFromConfig2(toolbarCell, undefined, {
               allowExtend: false
             })}
-            selector=".brz-eventCalendar-month2 .brz-eventCalendar-day"
+            selector=".brz-eventCalendar-month1 .brz-eventCalendar-day"
           >
-            <Toolbar
-              {...this.makeToolbarPropsFromConfig2(toolbarMonth3, undefined, {
-                allowExtend: false
-              })}
-              selector=".brz-eventCalendar-month3 .brz-eventCalendar-day"
-            >
+            {({ ref: month1Ref }) => (
               <Toolbar
-                {...this.makeToolbarPropsFromConfig2(toolbarMonth4, undefined, {
+                {...this.makeToolbarPropsFromConfig2(toolbarMonth2, undefined, {
                   allowExtend: false
                 })}
-                selector=".brz-eventCalendar-month4 .brz-eventCalendar-day"
+                selector=".brz-eventCalendar-month2 .brz-eventCalendar-day"
               >
-                <Toolbar
-                  {...this.makeToolbarPropsFromConfig2(
-                    toolbarMonth5,
-                    undefined,
-                    {
-                      allowExtend: false
-                    }
-                  )}
-                  selector=".brz-eventCalendar-month5 .brz-eventCalendar-day"
-                >
+                {({ ref: month2Ref }) => (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarMonth6,
+                      toolbarMonth3,
                       undefined,
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-eventCalendar-month6 .brz-eventCalendar-day"
+                    selector=".brz-eventCalendar-month3 .brz-eventCalendar-day"
                   >
-                    <Toolbar
-                      {...this.makeToolbarPropsFromConfig2(
-                        toolbarMonth7,
-                        undefined,
-                        {
-                          allowExtend: false
-                        }
-                      )}
-                      selector=".brz-eventCalendar-month7 .brz-eventCalendar-day"
-                    >
+                    {({ ref: month3Ref }) => (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarMonth8,
+                          toolbarMonth4,
                           undefined,
                           {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-eventCalendar-month8 .brz-eventCalendar-day"
+                        selector=".brz-eventCalendar-month4 .brz-eventCalendar-day"
                       >
-                        <Toolbar
-                          {...this.makeToolbarPropsFromConfig2(
-                            toolbarMonth9,
-                            undefined,
-                            {
-                              allowExtend: false
-                            }
-                          )}
-                          selector=".brz-eventCalendar-month9 .brz-eventCalendar-day"
-                        >
+                        {({ ref: month4Ref }) => (
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarMonth10,
+                              toolbarMonth5,
                               undefined,
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-eventCalendar-month10 .brz-eventCalendar-day"
+                            selector=".brz-eventCalendar-month5 .brz-eventCalendar-day"
                           >
-                            <Toolbar
-                              {...this.makeToolbarPropsFromConfig2(
-                                toolbarMonth11,
-                                undefined,
-                                {
-                                  allowExtend: false
-                                }
-                              )}
-                              selector=".brz-eventCalendar-month11 .brz-eventCalendar-day"
-                            >
+                            {({ ref: month5Ref }) => (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarMonth12,
+                                  toolbarMonth6,
                                   undefined,
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-eventCalendar-month12 .brz-eventCalendar-day"
+                                selector=".brz-eventCalendar-month6 .brz-eventCalendar-day"
                               >
-                                <Toolbar
-                                  {...this.makeToolbarPropsFromConfig2(
-                                    toolbarWeekdays,
-                                    undefined,
-                                    {
-                                      allowExtend: false
-                                    }
-                                  )}
-                                  selector=".brz-eventCalendar-row-weekdays"
-                                >
+                                {({ ref: month6Ref }) => (
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
-                                      toolbarArrow,
+                                      toolbarMonth7,
                                       undefined,
                                       {
                                         allowExtend: false
                                       }
                                     )}
-                                    selector=".brz-eventCalendar-pagination a"
+                                    selector=".brz-eventCalendar-month7 .brz-eventCalendar-day"
                                   >
-                                    <Toolbar
-                                      {...this.makeToolbarPropsFromConfig2(
-                                        toolbarDay,
-                                        sidebarDay
-                                      )}
-                                      selector=".brz-eventCalendar-day-number span"
-                                    >
+                                    {({ ref: month7Ref }) => (
                                       <Toolbar
                                         {...this.makeToolbarPropsFromConfig2(
-                                          toolbarEmpty,
+                                          toolbarMonth8,
                                           undefined,
                                           {
                                             allowExtend: false
                                           }
                                         )}
-                                        selector=".brz-eventCalendar-day-np"
+                                        selector=".brz-eventCalendar-month8 .brz-eventCalendar-day"
                                       >
-                                        <Toolbar
-                                          {...this.makeToolbarPropsFromConfig2(
-                                            toolbarTitle,
-                                            undefined,
-                                            {
-                                              allowExtend: false
-                                            }
-                                          )}
-                                          selector=".brz-eventCalendar-links"
-                                        >
+                                        {({ ref: month8Ref }) => (
                                           <Toolbar
                                             {...this.makeToolbarPropsFromConfig2(
-                                              toolbarEventStartTime,
+                                              toolbarMonth9,
                                               undefined,
                                               {
                                                 allowExtend: false
                                               }
                                             )}
-                                            selector=".brz-eventCalendar-links .brz-eventCalendar__event-start-time"
+                                            selector=".brz-eventCalendar-month9 .brz-eventCalendar-day"
                                           >
-                                            <Toolbar
-                                              {...this.makeToolbarPropsFromConfig2(
-                                                toolbarSubscribeToCalendar,
-                                                sidebarSubscribeToCalendar,
-                                                {
-                                                  allowExtend: false
-                                                }
-                                              )}
-                                              selector=".brz-eventCalendar__subscribe"
-                                            >
-                                              <Wrapper
-                                                {...this.makeWrapperProps({
-                                                  className,
-                                                  ref: this.calendarIcon
-                                                })}
+                                            {({ ref: month9Ref }) => (
+                                              <Toolbar
+                                                {...this.makeToolbarPropsFromConfig2(
+                                                  toolbarMonth10,
+                                                  undefined,
+                                                  {
+                                                    allowExtend: false
+                                                  }
+                                                )}
+                                                selector=".brz-eventCalendar-month10 .brz-eventCalendar-day"
                                               >
-                                                <DynamicContentHelper
-                                                  placeholder={placeholder}
-                                                  props={{
-                                                    className:
-                                                      "brz-ministryBrands brz-eventCalendar"
-                                                  }}
-                                                  blocked={false}
-                                                  tagName="div"
-                                                  onSuccess={this.handleDcDone}
-                                                />
-                                                {icon}
-                                              </Wrapper>
-                                            </Toolbar>
+                                                {({ ref: month10Ref }) => (
+                                                  <Toolbar
+                                                    {...this.makeToolbarPropsFromConfig2(
+                                                      toolbarMonth11,
+                                                      undefined,
+                                                      {
+                                                        allowExtend: false
+                                                      }
+                                                    )}
+                                                    selector=".brz-eventCalendar-month11 .brz-eventCalendar-day"
+                                                  >
+                                                    {({ ref: month11Ref }) => (
+                                                      <Toolbar
+                                                        {...this.makeToolbarPropsFromConfig2(
+                                                          toolbarMonth12,
+                                                          undefined,
+                                                          {
+                                                            allowExtend: false
+                                                          }
+                                                        )}
+                                                        selector=".brz-eventCalendar-month12 .brz-eventCalendar-day"
+                                                      >
+                                                        {({
+                                                          ref: month12Ref
+                                                        }) => (
+                                                          <Toolbar
+                                                            {...this.makeToolbarPropsFromConfig2(
+                                                              toolbarWeekdays,
+                                                              undefined,
+                                                              {
+                                                                allowExtend:
+                                                                  false
+                                                              }
+                                                            )}
+                                                            selector=".brz-eventCalendar-row-weekdays"
+                                                          >
+                                                            {({
+                                                              ref: weekDaysRef
+                                                            }) => (
+                                                              <Toolbar
+                                                                {...this.makeToolbarPropsFromConfig2(
+                                                                  toolbarArrow,
+                                                                  undefined,
+                                                                  {
+                                                                    allowExtend:
+                                                                      false
+                                                                  }
+                                                                )}
+                                                                selector=".brz-eventCalendar-pagination a"
+                                                              >
+                                                                {({
+                                                                  ref: paginationARef
+                                                                }) => (
+                                                                  <Toolbar
+                                                                    {...this.makeToolbarPropsFromConfig2(
+                                                                      toolbarDay,
+                                                                      sidebarDay
+                                                                    )}
+                                                                    selector=".brz-eventCalendar-day-number span"
+                                                                  >
+                                                                    {({
+                                                                      ref: dayNumberRef
+                                                                    }) => (
+                                                                      <Toolbar
+                                                                        {...this.makeToolbarPropsFromConfig2(
+                                                                          toolbarEmpty,
+                                                                          undefined,
+                                                                          {
+                                                                            allowExtend:
+                                                                              false
+                                                                          }
+                                                                        )}
+                                                                        selector=".brz-eventCalendar-day-np"
+                                                                      >
+                                                                        {({
+                                                                          ref: dayRef
+                                                                        }) => (
+                                                                          <Toolbar
+                                                                            {...this.makeToolbarPropsFromConfig2(
+                                                                              toolbarTitle,
+                                                                              undefined,
+                                                                              {
+                                                                                allowExtend:
+                                                                                  false
+                                                                              }
+                                                                            )}
+                                                                            selector=".brz-eventCalendar-links"
+                                                                          >
+                                                                            {({
+                                                                              ref: linksRef
+                                                                            }) => (
+                                                                              <Toolbar
+                                                                                {...this.makeToolbarPropsFromConfig2(
+                                                                                  toolbarEventStartTime,
+                                                                                  undefined,
+                                                                                  {
+                                                                                    allowExtend:
+                                                                                      false
+                                                                                  }
+                                                                                )}
+                                                                                selector=".brz-eventCalendar-links .brz-eventCalendar__event-start-time"
+                                                                              >
+                                                                                {({
+                                                                                  ref: startTimeRef
+                                                                                }) => (
+                                                                                  <Toolbar
+                                                                                    {...this.makeToolbarPropsFromConfig2(
+                                                                                      toolbarSubscribeToCalendar,
+                                                                                      sidebarSubscribeToCalendar,
+                                                                                      {
+                                                                                        allowExtend:
+                                                                                          false
+                                                                                      }
+                                                                                    )}
+                                                                                    selector=".brz-eventCalendar__subscribe"
+                                                                                  >
+                                                                                    {({
+                                                                                      ref: subscribeRef
+                                                                                    }) => (
+                                                                                      <Wrapper
+                                                                                        {...this.makeWrapperProps(
+                                                                                          {
+                                                                                            className,
+                                                                                            ref: (
+                                                                                              el
+                                                                                            ) => {
+                                                                                              attachRefs(
+                                                                                                el,
+                                                                                                [
+                                                                                                  this
+                                                                                                    .calendarIcon,
+                                                                                                  paginationRef,
+                                                                                                  month1Ref,
+                                                                                                  month2Ref,
+                                                                                                  month3Ref,
+                                                                                                  month4Ref,
+                                                                                                  month5Ref,
+                                                                                                  month6Ref,
+                                                                                                  month7Ref,
+                                                                                                  month8Ref,
+                                                                                                  month9Ref,
+                                                                                                  month10Ref,
+                                                                                                  month11Ref,
+                                                                                                  month12Ref,
+                                                                                                  weekDaysRef,
+                                                                                                  paginationARef,
+                                                                                                  dayNumberRef,
+                                                                                                  dayRef,
+                                                                                                  linksRef,
+                                                                                                  startTimeRef,
+                                                                                                  subscribeRef
+                                                                                                ]
+                                                                                              );
+                                                                                            }
+                                                                                          }
+                                                                                        )}
+                                                                                      >
+                                                                                        <DynamicContentHelper
+                                                                                          placeholder={
+                                                                                            placeholder
+                                                                                          }
+                                                                                          props={{
+                                                                                            className:
+                                                                                              "brz-ministryBrands brz-eventCalendar"
+                                                                                          }}
+                                                                                          blocked={
+                                                                                            false
+                                                                                          }
+                                                                                          tagName="div"
+                                                                                          onSuccess={
+                                                                                            this
+                                                                                              .handleDcDone
+                                                                                          }
+                                                                                        />
+                                                                                        {
+                                                                                          icon
+                                                                                        }
+                                                                                      </Wrapper>
+                                                                                    )}
+                                                                                  </Toolbar>
+                                                                                )}
+                                                                              </Toolbar>
+                                                                            )}
+                                                                          </Toolbar>
+                                                                        )}
+                                                                      </Toolbar>
+                                                                    )}
+                                                                  </Toolbar>
+                                                                )}
+                                                              </Toolbar>
+                                                            )}
+                                                          </Toolbar>
+                                                        )}
+                                                      </Toolbar>
+                                                    )}
+                                                  </Toolbar>
+                                                )}
+                                              </Toolbar>
+                                            )}
                                           </Toolbar>
-                                        </Toolbar>
+                                        )}
                                       </Toolbar>
-                                    </Toolbar>
+                                    )}
                                   </Toolbar>
-                                </Toolbar>
+                                )}
                               </Toolbar>
-                            </Toolbar>
+                            )}
                           </Toolbar>
-                        </Toolbar>
+                        )}
                       </Toolbar>
-                    </Toolbar>
+                    )}
                   </Toolbar>
-                </Toolbar>
+                )}
               </Toolbar>
-            </Toolbar>
+            )}
           </Toolbar>
-        </Toolbar>
+        )}
       </Toolbar>
     );
   }
@@ -389,7 +500,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
           vs,
           vd,
           store: this.getReduxStore(),
-          renderContext: this.renderContext
+          contexts: this.getContexts()
         })
       )
     );

@@ -1,5 +1,13 @@
+import { Str } from "@brizy/readers";
+import classNames from "classnames";
 import { setIn } from "timm";
-import { CollectionItemRule, CollectionTypeRule, Rule } from "visual/types";
+import { Refs } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
+import { ConditionCollectionType } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  CollectionItemRule,
+  CollectionTypeRule,
+  Rule
+} from "visual/types/Rule";
 import {
   CATEGORIES_GROUP_ID,
   PAGES_GROUP_ID
@@ -9,10 +17,8 @@ import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
+import { MValue, isT } from "visual/utils/value";
 import { RuleList, RuleListItem, ValueItems } from "../types";
-import { Str } from "@brizy/readers";
-import { MValue } from "visual/utils/value";
-import classNames from "classnames";
 
 export function getRulesListIndexByRule(
   rulesList: RuleList[],
@@ -131,3 +137,46 @@ export const getOptionItemClassNames = (active: boolean): string =>
       "brz-ed-controls-item-active": active
     }
   );
+
+type WithoutId<T> = (Omit<T, "id"> & { value: string })[];
+
+export const convertIdToValue = <T extends { id: string }>(
+  items: T[]
+): WithoutId<T> =>
+  items.map(({ id, ...rest }) => ({
+    value: id,
+    ...rest
+  })) as WithoutId<T>;
+
+export const getRefsById = (collectionType: ConditionCollectionType[]) =>
+  collectionType.reduce((acc, { id, fields }) => {
+    if (fields) {
+      const refs = fields
+        .map((field) => {
+          if (field.__typename === "CollectionTypeFieldReference") {
+            return {
+              type: "single" as const,
+              value: field.settings.collectionType.id,
+              title: field.label,
+              fieldId: field.id
+            };
+          } else if (field.__typename === "CollectionTypeFieldMultiReference") {
+            return {
+              type: "multi" as const,
+              value: field.settings.collectionType.id,
+              title: field.label,
+              fieldId: field.id
+            };
+          } else {
+            return undefined;
+          }
+        })
+        .filter(isT);
+
+      if (refs.length > 0) {
+        acc[id] = refs;
+      }
+    }
+
+    return acc;
+  }, {} as Refs);

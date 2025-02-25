@@ -1,12 +1,12 @@
 import classnames from "classnames";
 import React from "react";
 import { Manager, Popper, Reference } from "react-popper";
+import { connect } from "react-redux";
 import ResizeAware from "react-resize-aware";
 import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
 import Options from "visual/component/LeftSidebar/components/Options";
 import { updateUI } from "visual/redux/actions2";
-import { connect } from "react-redux";
 import { leftSidebarSelector } from "visual/redux/selectors";
 
 const mapState = (state) => ({
@@ -126,48 +126,55 @@ class DrawerPopover extends React.Component {
         onClickOutside={this.handleClickOutside}
         exceptions={clickOutsideExceptions}
       >
-        <div className={className} title={title} onClick={this.handleClick}>
-          <Manager>
-            <Reference>
-              {({ ref }) => (
-                <div ref={ref}>
-                  <EditorIcon icon={icon} />
-                </div>
-              )}
-            </Reference>
-            {this.state.isOpen && (
-              <Popper
-                placement="right"
-                modifiers={[
-                  {
-                    name: "offset",
-                    options: { offset: [0, 10] }
-                  },
-                  {
-                    name: "preventOverflow",
-                    options: {
-                      padding: 8
-                    }
-                  }
-                ]}
-              >
-                {({ ref, style, arrowProps, placement, update }) => (
-                  <div ref={ref} style={style} data-placement={placement}>
-                    <div className={popoverClassName}>
-                      <div ref={arrowProps.ref} style={arrowProps.style}>
-                        <div
-                          className={`brz-ed-arrow brz-ed-arrow--${placement} brz-sidebar-arrow`}
-                        />
-                      </div>
-                      {this.renderOptions()}
-                      <ResizeAware onResize={update} />
-                    </div>
+        {({ ref }) => (
+          <div
+            className={className}
+            title={title}
+            onClick={this.handleClick}
+            ref={ref}
+          >
+            <Manager>
+              <Reference>
+                {({ ref }) => (
+                  <div ref={ref}>
+                    <EditorIcon icon={icon} />
                   </div>
                 )}
-              </Popper>
-            )}
-          </Manager>
-        </div>
+              </Reference>
+              {this.state.isOpen && (
+                <Popper
+                  placement="right"
+                  modifiers={[
+                    {
+                      name: "offset",
+                      options: { offset: [0, 10] }
+                    },
+                    {
+                      name: "preventOverflow",
+                      options: {
+                        padding: 8
+                      }
+                    }
+                  ]}
+                >
+                  {({ ref, style, arrowProps, placement, update }) => (
+                    <div ref={ref} style={style} data-placement={placement}>
+                      <div className={popoverClassName}>
+                        <div ref={arrowProps.ref} style={arrowProps.style}>
+                          <div
+                            className={`brz-ed-arrow brz-ed-arrow--${placement} brz-sidebar-arrow`}
+                          />
+                        </div>
+                        {this.renderOptions()}
+                        <ResizeAware onResize={update} />
+                      </div>
+                    </div>
+                  )}
+                </Popper>
+              )}
+            </Manager>
+          </div>
+        )}
       </ClickOutside>
     );
   }

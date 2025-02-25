@@ -1,7 +1,7 @@
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { ElementModel } from "visual/component/Elements/Types";
 import * as LinkType from "visual/component/Link/types/Type";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
+import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import { configSelector, pageDataNoRefsSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { customFileUrl } from "visual/utils/customFile";
 import {
@@ -118,7 +118,8 @@ export const getHref = (
       break;
     }
     case "upload": {
-      href = customFileUrl(_href) ?? "";
+      const config = configSelector(store.getState());
+      href = customFileUrl(_href, config) ?? "";
       break;
     }
     case "page":

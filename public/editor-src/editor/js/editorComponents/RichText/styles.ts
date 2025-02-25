@@ -1,4 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
@@ -15,12 +16,15 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
 }
 
 export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
+  const _isStory = isStory(data.contexts.mode);
   const styles = {
     ".brz &&:hover": {
       standart: [
         "cssStyleElementRichTextAlign",
         "cssStyleElementRichTextFontFamily",
-        "cssStyleElementRichTextFontSize",
+        ...(_isStory
+          ? ["cssStyleElementRichTextFontSizeForStory"]
+          : ["cssStyleTypography3FontSize"]),
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3FontVariation",
@@ -130,7 +134,9 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
       {
         standart: [
           "cssStyleElementRichTextFontFamily",
-          "cssStyleElementRichTextFontSize",
+          ...(_isStory
+            ? ["cssStyleElementRichTextFontSizeForStory"]
+            : ["cssStyleTypography3FontSize"]),
           "cssStyleTypography3LineHeight",
           "cssStyleTypography3FontWeight",
           "cssStyleTypography3LetterSpacing",
@@ -141,7 +147,9 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz && strong, .brz && b": {
       standart: [
         "cssStyleElementRichTextFontFamily",
-        "cssStyleElementRichTextFontSize",
+        ...(_isStory
+          ? ["cssStyleElementRichTextFontSizeForStory"]
+          : ["cssStyleTypography3FontSize"]),
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3LetterSpacing",
         "cssStyleTypography3FontVariation",
@@ -156,7 +164,7 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
 export function styleHeading(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
-  const { renderContext } = data;
+  const { renderContext, mode } = data.contexts;
   const styles = {
     ".brz &&:hover": {
       standart: [
@@ -166,7 +174,9 @@ export function styleHeading(
         "cssStyleElementRichTextMarginBottom",
         "cssStyleElementRichTextAlign",
         "cssStyleElementRichTextFontFamily",
-        "cssStyleElementRichTextFontSize",
+        ...(isStory(mode)
+          ? ["cssStyleElementRichTextFontSizeForStory"]
+          : ["cssStyleTypography3FontSize"]),
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",

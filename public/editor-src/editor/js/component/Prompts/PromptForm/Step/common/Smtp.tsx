@@ -1,12 +1,13 @@
-import React, { Component, ReactElement } from "react";
 import { isT } from "fp-utilities";
+import React, { Component, ReactElement } from "react";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { pendingRequest } from "visual/utils/api";
+import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import * as Str from "visual/utils/string/specs";
-import { pipe } from "visual/utils/fp";
-import { updateSmtpIntegration } from "../../api";
 import { Fields } from "../../../common/GlobalApps/StepsView/Fields";
 import { AppData, FormField } from "../../../common/GlobalApps/type";
-import { pendingRequest } from "visual/utils/api";
+import { updateSmtpIntegration } from "../../api";
 import { readApiKey } from "./utils";
 
 export type ApiKeys = Record<string, unknown>;
@@ -20,6 +21,7 @@ interface Props {
   formFields: FormField[];
   app: App;
   apiKeys: ApiKeys[];
+  config: ConfigCommon;
   onChange: (id: string, appData: App["data"]) => void;
   onChangePrev: (prevStage?: string) => void;
   onChangeNext: (nextState?: string) => void;
@@ -70,6 +72,8 @@ class Smtp extends Component<Props, State> {
   };
 
   handleNext = async (): Promise<void> => {
+    const { config } = this.props;
+
     const {
       app: { id, data: appData },
       formId,
@@ -97,12 +101,15 @@ class Smtp extends Component<Props, State> {
         nextLoading: false
       });
     } else {
-      const { status, data } = await updateSmtpIntegration({
-        ...appData,
-        ...apiKeyValue,
-        formId,
-        completed: true
-      });
+      const { status, data } = await updateSmtpIntegration(
+        {
+          ...appData,
+          ...apiKeyValue,
+          formId,
+          completed: true
+        },
+        config
+      );
 
       if (status !== 200) {
         this.setState({
@@ -130,7 +137,7 @@ class Smtp extends Component<Props, State> {
     const { app, apiKeys, formId, formFields } = this.props;
     const { error, prevLoading, nextLoading } = this.state;
     const data = apiKeys
-      .map(option =>
+      .map((option) =>
         readApiKey({ ...option, value: this.getValue(option.name) })
       )
       .filter(isT);

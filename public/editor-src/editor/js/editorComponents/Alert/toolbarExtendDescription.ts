@@ -1,26 +1,21 @@
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { Value } from "./index";
+import { Props, Value } from "./index";
 
-export function getItems({
+export const getItems: GetItems<Value, Props> = ({
   v,
   device,
+
   context
-}: {
-  v: Value;
-  device: ResponsiveMode;
-  context: EditorComponentContextValue;
-}): ToolbarItemType[] {
+}) => {
   const dvv = (key: string) => defaultValueValue({ key, v, device });
 
-  const descriptionColor = getColor(
+  const descriptionColor = getColorToolbar(
     dvv("descriptionColorPalette"),
     dvv("descriptionColorHex"),
     dvv("descriptionColorOpacity")
@@ -158,4 +153,4 @@ export function getItems({
       ]
     }
   ];
-}
+};

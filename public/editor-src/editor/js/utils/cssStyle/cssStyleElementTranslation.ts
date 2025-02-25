@@ -47,18 +47,20 @@ export function cssStyleElementTranslationTextSpacing({
 export function cssStyleElementTranslationPreviewArrowColorClosed({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const color = styleColor({ v, device, state });
+  const color = styleColor({ v, device, state, store });
 
   return `border-color: ${color} transparent transparent transparent;`;
 }
 export function cssStyleElementTranslationPreviewArrowColorOpen({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  const color = styleColor({ v, device, state });
+  const color = styleColor({ v, device, state, store });
 
   return `border-color: transparent transparent ${color} transparent;`;
 }
@@ -84,9 +86,10 @@ export function cssStyleElementTranslationBgColor({
 export function cssStyleElementTranslationBorder({
   v,
   device,
-  state
+  state,
+  store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, prefix: "select" });
+  return cssStyleBorder({ v, device, state, store, prefix: "select" });
 }
 
 export function cssStyleElementTranslationBoxShadow({

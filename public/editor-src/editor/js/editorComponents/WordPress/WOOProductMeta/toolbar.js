@@ -1,4 +1,4 @@
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 
@@ -7,7 +7,7 @@ export function getItems({ v, device }) {
 
   const elementType = dvv("elementType");
 
-  const color = getColor(
+  const color = getColorToolbar(
     dvv("categoryColorPalette"),
     dvv("categoryColorHex"),
     dvv("categoryColorOpacity")

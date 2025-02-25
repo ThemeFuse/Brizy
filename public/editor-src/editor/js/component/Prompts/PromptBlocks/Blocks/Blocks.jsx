@@ -1,10 +1,10 @@
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
 import Scrollbars from "react-custom-scrollbars";
-import _ from "underscore";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
-import { EditorModeContext } from "visual/global/EditorModeContext";
+import { EditorModeContext } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
@@ -45,11 +45,11 @@ class Blocks extends Component {
     types: [],
     categories: [],
     blocks: [],
-    HeaderSlotLeft: _.noop,
-    onAddBlocks: _.noop,
-    onClose: _.noop,
-    onChange: _.noop,
-    onChangeKit: _.noop,
+    HeaderSlotLeft: noop,
+    onAddBlocks: noop,
+    onClose: noop,
+    onChange: noop,
+    onChangeKit: noop,
     isPro: false,
     isStory: false,
     upgradeToPro: ""
@@ -238,14 +238,14 @@ class Blocks extends Component {
                 <Scrollbars>
                   {filteredThumbnails.length > 0 ? (
                     <EditorModeContext.Consumer>
-                      {(editorMode) => (
+                      {({ mode }) => (
                         <ThumbnailGrid
                           data={filteredThumbnails}
                           onThumbnailAdd={onChange}
                           isStory={isStory}
                           isPro={isPro}
                           upgradeToPro={upgradeToPro}
-                          editorMode={editorMode}
+                          editorMode={mode}
                           {...(isStory ? storyGrid : {})}
                         />
                       )}

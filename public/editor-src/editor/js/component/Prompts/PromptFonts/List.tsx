@@ -9,9 +9,9 @@ import {
   defaultFontSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { Font, UploadedFont } from "visual/types";
+import { Font, UploadedFont } from "visual/types/Fonts";
 import { pendingRequest } from "visual/utils/api";
-import { fontTransform } from "visual/utils/fonts";
+import { fontTransform } from "visual/utils/fonts/transform";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { t } from "visual/utils/i18n";
 import { Circle } from "./Circle";

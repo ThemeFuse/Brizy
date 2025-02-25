@@ -1,7 +1,7 @@
 import { Num } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
 import { getButtonMaxBorderRadius } from "visual/editorComponents/MinistryBrands/utils/helpers";
-import { getColor } from "visual/utils/color";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -20,13 +20,13 @@ export const getItems = <
 }: Params<M, P, S>): ToolbarItemType[] => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const registerButtonBgColor = getColor(
+  const registerButtonBgColor = getColorToolbar(
     dvv("registerButtonBgColorPalette"),
     dvv("registerButtonBgColorHex"),
     dvv("registerButtonBgColorOpacity")
   );
 
-  const registerButtonColor = getColor(
+  const registerButtonColor = getColorToolbar(
     dvv("registerButtonColorPalette"),
     dvv("registerButtonColorHex"),
     dvv("registerButtonColorOpacity")

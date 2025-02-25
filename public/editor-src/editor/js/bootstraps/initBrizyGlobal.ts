@@ -4,7 +4,7 @@ import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/f
 import {
   isPopup as isPopupMode,
   isStory as isStoryMode
-} from "visual/global/EditorModeContext";
+} from "visual/providers/EditorModeProvider";
 import { hexToRgba } from "visual/utils/color";
 import { addFilter, applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";

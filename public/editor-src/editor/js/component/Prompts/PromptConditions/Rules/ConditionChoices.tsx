@@ -5,7 +5,7 @@ import {
   CollectionItemRule,
   CollectionTypeRule,
   Rule
-} from "visual/types";
+} from "visual/types/Rule";
 import ItemWrapper from "../common/ItemWrapper";
 import ConditionGroup from "./ConditionGroup";
 import { RuleList } from "./types";
