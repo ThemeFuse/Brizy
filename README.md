@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.7.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.6.11<br>
+Stable tag: 2.6.12<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,16 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.6.12 - 2025-02-25
+* Improved: 3rd party API
+* Improved: Compiler Bundle Size
+* Updated: Removed icons from blocks
+* Fixed: Bug with Menu failing to open when clicked multiple times
+* Fixed: Parallax animation in preview with open popup
+* Fixed: Scroll on parallax in Safari
+* Fixed: Mixed content error when Brizy is installed on subfolder
+* Fixed: Deleting images on Media Gallery
 
 ### 2.6.11 - 2025-02-18
 * Fixed: Gallery with layout justify 
