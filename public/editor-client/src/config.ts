@@ -67,6 +67,8 @@ interface Actions {
   setFeaturedImage: string;
   setFeaturedImageFocalPoint: string;
   removeFeaturedImage: string;
+
+  shortcodeContent: string;
 }
 
 interface ProjectStatus {
@@ -368,6 +370,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   removeFeaturedImage: pipe(
     mPipe(Obj.readKey("removeFeaturedImage"), Str.read),
     throwOnNullish("Invalid actions: removeFeaturedImage")
+  ),
+  shortcodeContent: pipe(
+    mPipe(Obj.readKey("shortcodeContent"), Str.read),
+    throwOnNullish("Invalid actions: shortcodeContent")
   )
 });
 
