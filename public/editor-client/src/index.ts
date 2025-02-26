@@ -1,6 +1,7 @@
-import { shortcodeContent } from "@/shortcodeContent";
 import { authors } from "@/authors";
 import { terms } from "@/terms";
+import { shortcodeContent } from "@/shortcodeContent";
+import { sidebars } from "@/sidebars";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
@@ -89,7 +90,8 @@ const api = {
   shortcodeContent,
   authors,
   posts: postsAPI,
-  terms
+  terms,
+  sidebars
 };
 
 if (window.__VISUAL_CONFIG__) {
