@@ -69,6 +69,8 @@ interface Actions {
   removeFeaturedImage: string;
 
   shortcodeContent: string;
+
+  getUsers: string;
 }
 
 interface ProjectStatus {
@@ -374,6 +376,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   shortcodeContent: pipe(
     mPipe(Obj.readKey("shortcodeContent"), Str.read),
     throwOnNullish("Invalid actions: shortcodeContent")
+  ),
+  getUsers: pipe(
+    mPipe(Obj.readKey("getUsers"), Str.read),
+    throwOnNullish("Invalid actions: getUsers")
   )
 });
 

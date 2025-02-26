@@ -1,4 +1,5 @@
 import { shortcodeContent } from "@/shortcodeContent";
+import { authors } from "@/authors";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
@@ -83,7 +84,8 @@ const api = {
     getMenus: getMenus()
   },
   featuredImage,
-  shortcodeContent
+  shortcodeContent,
+  authors
 };
 
 if (window.__VISUAL_CONFIG__) {

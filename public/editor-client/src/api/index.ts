@@ -1,3 +1,4 @@
+import { GetAuthorsProps } from "@/authors/types";
 import { Config, getConfig } from "@/config";
 import {
   isDefaultBlock,
@@ -45,6 +46,7 @@ import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
 import { Arr, Json, Obj, Str } from "@brizy/readers";
 import { isT, mPipe, pass } from "fp-utilities";
+import queryString from "query-string";
 import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
@@ -1938,4 +1940,52 @@ export const shortcodeContent = async (shortcode: string) => {
   }
 
   throw new Error(t("Failed to find shortcode content"));
+};
+
+export const getAuthors = async ({
+  include = [],
+  search = "",
+  abortSignal
+}: GetAuthorsProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const urlBody: Record<string, string | string[]> = {
+    hash,
+    action: actions.getUsers,
+    version: editorVersion
+  };
+
+  if (search !== "") {
+    urlBody.search = search;
+  }
+  if (include.length > 0) {
+    urlBody.include = include;
+  }
+
+  const url = queryString.stringifyUrl(
+    {
+      url: _url,
+      query: urlBody
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find authors"));
 };
