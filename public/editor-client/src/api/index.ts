@@ -15,6 +15,7 @@ import {
 } from "@/defaultTemplates/utils";
 import { MenuSimple } from "@/menu/types";
 import { GetPostsProps, GetPostTaxonomiesProps } from "@/posts/types";
+import { GetTermsByProps } from "@/terms/types";
 import {
   APIPopup,
   DefaultBlock,
@@ -2101,6 +2102,98 @@ export const getPostTaxonomies = async ({
   }
 
   throw new Error(t("Failed to find post taxonomies"));
+};
+
+//#endregion
+
+//#region Terms
+
+export const getTerms = async (taxonomy: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getTerms,
+    version: editorVersion,
+    taxonomy
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find terms"));
+};
+
+export const getTermsBy = async ({
+  include = [],
+  search = "",
+  abortSignal
+}: GetTermsByProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const urlBody: Record<string, string | string[]> = {
+    hash,
+    action: actions.getTermsBy,
+    version: editorVersion
+  };
+
+  if (search !== "") {
+    urlBody.search = search;
+  }
+  if (include.length > 0) {
+    const incl: string[] = [];
+    const tax: string[] = [];
+
+    include.forEach((item) => {
+      const [taxonomy, termId] = item;
+
+      tax.push(taxonomy);
+      incl.push(termId);
+    });
+
+    urlBody.include = incl;
+    urlBody.taxonomy = tax;
+  }
+
+  const url = queryString.stringifyUrl(
+    {
+      url: _url,
+      query: urlBody
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find terms"));
 };
 
 //#endregion
