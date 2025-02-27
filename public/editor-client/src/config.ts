@@ -45,6 +45,7 @@ interface Actions {
   getPostObjects: string;
 
   searchPosts: string;
+  getPostTaxonomies: string;
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
@@ -300,6 +301,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   searchPosts: pipe(
     mPipe(Obj.readKey("searchPosts"), Str.read),
     throwOnNullish("Invalid actions: searchPosts")
+  ),
+  getPostTaxonomies: pipe(
+    mPipe(Obj.readKey("getPostTaxonomies"), Str.read),
+    throwOnNullish("Invalid actions: getPostTaxonomies")
   ),
   createBlockScreenshot: pipe(
     mPipe(Obj.readKey("createBlockScreenshot"), Str.read),
