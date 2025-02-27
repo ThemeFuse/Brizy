@@ -1,5 +1,6 @@
 import { shortcodeContent } from "@/shortcodeContent";
 import { authors } from "@/authors";
+import { terms } from "@/terms";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
@@ -87,7 +88,8 @@ const api = {
   featuredImage,
   shortcodeContent,
   authors,
-  posts: postsAPI
+  posts: postsAPI,
+  terms
 };
 
 if (window.__VISUAL_CONFIG__) {
