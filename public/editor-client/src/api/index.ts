@@ -14,6 +14,7 @@ import {
   isStoryDataResponse
 } from "@/defaultTemplates/utils";
 import { MenuSimple } from "@/menu/types";
+import { GetPostsProps, GetPostTaxonomiesProps } from "@/posts/types";
 import {
   APIPopup,
   DefaultBlock,
@@ -1989,3 +1990,117 @@ export const getAuthors = async ({
 
   throw new Error(t("Failed to find authors"));
 };
+
+//#region Posts
+
+export const getPosts = async ({
+  include,
+  search = "",
+  postType,
+  excludePostType,
+  abortSignal
+}: GetPostsProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const urlBody: Record<string, string | string[]> = {
+    hash,
+    action: actions.searchPosts,
+    version: editorVersion
+  };
+
+  if (search !== "") {
+    urlBody.search = search;
+  }
+
+  if (include && include.length > 0) {
+    const includeArr: string[] = [];
+
+    include.forEach((item) => {
+      includeArr.push(item);
+    });
+
+    urlBody.include = includeArr;
+  }
+
+  if (postType && postType.length > 0) {
+    const postTypeArr: string[] = [];
+
+    postType.forEach((item) => {
+      postTypeArr.push(item);
+    });
+
+    urlBody["post_type"] = postTypeArr;
+  }
+
+  if (excludePostType && excludePostType.length > 0) {
+    const excludePostTypeArr: string[] = [];
+
+    excludePostType.forEach((item) => {
+      excludePostTypeArr.push(item);
+    });
+
+    urlBody["exclude_post_type"] = excludePostTypeArr;
+  }
+
+  const url = queryString.stringifyUrl(
+    {
+      url: _url,
+      query: urlBody
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find posts"));
+};
+
+export const getPostTaxonomies = async ({
+  taxonomy,
+  abortSignal
+}: GetPostTaxonomiesProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getPostTaxonomies,
+    version: editorVersion,
+    post_type: taxonomy
+  });
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find post taxonomies"));
+};
+
+//#endregion

@@ -30,6 +30,7 @@ import { getMenus } from "./menu";
 import { onChange } from "./onChange";
 import { onStartLoad } from "./onStartLoad";
 import { popupConditions } from "./popupConditions";
+import { posts as postsAPI } from "./posts";
 import { publish } from "./publish";
 import { getRegeneratedGlobalStyles } from "./regeneratedGlobalStyles";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
@@ -85,7 +86,8 @@ const api = {
   },
   featuredImage,
   shortcodeContent,
-  authors
+  authors,
+  posts: postsAPI
 };
 
 if (window.__VISUAL_CONFIG__) {
