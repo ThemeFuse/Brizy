@@ -44,13 +44,16 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 
 
 	/**
-	 * @param $placeholderName
+	 * @param $placeholderData
 	 * @param Brizy_Content_Context $context
 	 * @param \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder
 	 *
 	 * @return int|mixed|null|string
 	 */
-	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder  ) {
+	protected function getAttachmentIdByPlaceholderName( $placeholderData, Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder  ) {
+
+        // {{brizy_dc_image_alt imagePlaceholder="e3ticml6eV9kY19pbWdfZmVhdHVyZWRfaW1hZ2UgZW50aXR5SWQ9IjkzNiJ9fQ==" cH="878" cW="1170" entityId="669" entityType="page"}}
+        // {{brizy_dc_img_featured_image entityId="936"}}
 
 		$provider = $context->getProvider();
 
@@ -61,13 +64,31 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		$extractor = new Extractor( $provider );
 		$context->setProvider( $provider );
 
-		list( $contentPlaceholders, $placeholderInstances, $content ) = $extractor->extract( $placeholderName );
+		list( $contentPlaceholders, $placeholderInstances, $content ) = $extractor->extract( $placeholderData );
 
 		if ( !isset($placeholderInstances[0]) || ! $placeholder = $placeholderInstances[0] ) {
 			return 0;
 		}
 
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
+
+            preg_match('/entityId=["\'](.*?)["\']/', $placeholderData, $match);
+            $attachmentId = isset($match[1]) ? $match[1] : null;
+
+            if ($attachmentId) {
+                $post = get_post( (int) $attachmentId );
+                if ( $post ) {
+                    $context = new Brizy_Content_Context(
+                        $context->getProject(),
+                        $post,
+                        $context->getParentContext(),
+                        $context->getParentPlaceholder()
+                    );
+
+                    $context->setProvider( $provider );
+                }
+            }
+
 			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
 		} else {
 			$attachmentId = $placeholder->getValue( $context, $contentPlaceholder );
