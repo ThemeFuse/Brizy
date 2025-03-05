@@ -72,6 +72,9 @@ interface Actions {
   shortcodeContent: string;
 
   getUsers: string;
+
+  getTerms: string;
+  getTermsBy: string;
 }
 
 interface ProjectStatus {
@@ -385,6 +388,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getUsers: pipe(
     mPipe(Obj.readKey("getUsers"), Str.read),
     throwOnNullish("Invalid actions: getUsers")
+  ),
+  getTerms: pipe(
+    mPipe(Obj.readKey("getTerms"), Str.read),
+    throwOnNullish("Invalid actions: getTerms")
+  ),
+  getTermsBy: pipe(
+    mPipe(Obj.readKey("getTermsBy"), Str.read),
+    throwOnNullish("Invalid actions: getTermsBy")
   )
 });
 
