@@ -44,17 +44,13 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 
 
 	/**
-	 * @param $placeholderData
+	 * @param $placeholderName
 	 * @param Brizy_Content_Context $context
 	 * @param \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder
 	 *
 	 * @return int|mixed|null|string
 	 */
-	protected function getAttachmentIdByPlaceholderName( $placeholderData, Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder  ) {
-
-        // {{brizy_dc_image_alt imagePlaceholder="e3ticml6eV9kY19pbWdfZmVhdHVyZWRfaW1hZ2UgZW50aXR5SWQ9IjkzNiJ9fQ==" cH="878" cW="1170" entityId="669" entityType="page"}}
-        // {{brizy_dc_img_featured_image entityId="936"}}
-
+	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder  ) {
 		$provider = $context->getProvider();
 
 		if ( ! $provider ) {
@@ -64,7 +60,7 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		$extractor = new Extractor( $provider );
 		$context->setProvider( $provider );
 
-		list( $contentPlaceholders, $placeholderInstances, $content ) = $extractor->extract( $placeholderData );
+		list( $contentPlaceholders, $placeholderInstances, $content ) = $extractor->extract( $placeholderName );
 
 		if ( !isset($placeholderInstances[0]) || ! $placeholder = $placeholderInstances[0] ) {
 			return 0;
@@ -72,12 +68,12 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
 
-            preg_match('/entityId=["\'](.*?)["\']/', $placeholderData, $match);
-            $attachmentId = isset($match[1]) ? $match[1] : null;
+            $entityId = $contentPlaceholder->getAttributes()['entityId'];
+            if ( $entityId ) {
 
-            if ($attachmentId) {
-                $post = get_post( (int) $attachmentId );
+                $post = get_post( (int) $entityId );
                 if ( $post ) {
+
                     $context = new Brizy_Content_Context(
                         $context->getProject(),
                         $post,
