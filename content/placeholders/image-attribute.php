@@ -67,13 +67,36 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		}
 
 		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
+            $context = $this->updateContextWithEntityId( $context, $contentPlaceholder, $provider );
+			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
+		} else {
+			$attachmentId = $placeholder->getValue( $context, $contentPlaceholder );
+		}
 
-            $entityId = $contentPlaceholder->getAttributes()['entityId'];
+		return $attachmentId;
+	}
+
+    /**
+     * @param  Brizy_Content_Context  $context
+     * @param  \BrizyPlaceholders\ContentPlaceholder  $contentPlaceholder
+     * @param  mixed  $provider
+     *
+     * @return Brizy_Content_Context
+     */
+    protected function updateContextWithEntityId(
+        Brizy_Content_Context $context,
+        \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder,
+        $provider
+    ) {
+        $placeholderAttributes = $contentPlaceholder->getAttributes();
+
+        if ( isset( $placeholderAttributes['entityId'] ) ) {
+            $entityId = $placeholderAttributes['entityId'];
+
             if ( $entityId ) {
-
                 $post = get_post( (int) $entityId );
-                if ( $post ) {
 
+                if ( $post ) {
                     $context = new Brizy_Content_Context(
                         $context->getProject(),
                         $post,
@@ -84,14 +107,10 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
                     $context->setProvider( $provider );
                 }
             }
+        }
 
-			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
-		} else {
-			$attachmentId = $placeholder->getValue( $context, $contentPlaceholder );
-		}
-
-		return $attachmentId;
-	}
+        return $context;
+    }
 
 	/**
 	 * @param $uid
