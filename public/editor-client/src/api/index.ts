@@ -16,6 +16,7 @@ import {
 import { MenuSimple } from "@/menu/types";
 import { GetPostsProps, GetPostTaxonomiesProps } from "@/posts/types";
 import { GetTermsByProps } from "@/terms/types";
+import { Sidebar } from "@/sidebars/types";
 import {
   APIPopup,
   DefaultBlock,
@@ -2257,3 +2258,31 @@ export const getTermsBy = async ({
 };
 
 //#endregion
+
+export const getSidebars = async (): Promise<Sidebar[]> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getSidebars,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find sidebars"));
+};
