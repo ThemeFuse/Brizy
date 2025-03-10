@@ -75,6 +75,9 @@ interface Actions {
 
   getTerms: string;
   getTermsBy: string;
+
+  getRuleList: string;
+  getRuleGroupList: string;
 }
 
 interface ProjectStatus {
@@ -396,6 +399,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getTermsBy: pipe(
     mPipe(Obj.readKey("getTermsBy"), Str.read),
     throwOnNullish("Invalid actions: getTermsBy")
+  ),
+  getRuleList: pipe(
+    mPipe(Obj.readKey("getRuleList"), Str.read),
+    throwOnNullish("Invalid actions: getRuleList")
+  ),
+  getRuleGroupList: pipe(
+    mPipe(Obj.readKey("getRuleGroupList"), Str.read),
+    throwOnNullish("Invalid actions: getRuleGroupList")
   )
 });
 

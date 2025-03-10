@@ -855,6 +855,66 @@ export const updatePopupRules = async (
   }
 };
 
+export const getRules = async () => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions, pageId } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getRuleList,
+    post: pageId,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isT(res.data)) {
+      return res.data;
+    }
+  }
+  throw new Error(t("Failed to get rules"));
+};
+
+export const getGroupList = async (type: "block" | "popup") => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getRuleGroupList,
+    version: editorVersion,
+    context: type === "popup" ? "popup-rules" : "global-block-rules"
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isT(res.data)) {
+      return res.data;
+    }
+  }
+  throw new Error(t("Failed to get group list"));
+};
+
 //#endregion
 
 //#region Screenshots
