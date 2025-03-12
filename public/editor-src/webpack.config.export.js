@@ -106,21 +106,7 @@ exports.node = (options) => {
         TARGET: JSON.stringify(options.TARGET),
         COMPILER_TYPE: JSON.stringify("node"),
         window: "undefined"
-      }),
-      new webpack.NormalModuleReplacementPlugin(
-        /visual\/component\/Toolbar/,
-        (r) => {
-          switch (r.request) {
-            case "visual/component/Toolbar/state":
-              r.request = "visual/component/ToolbarMock/state.ts";
-              break;
-            default:
-              r.request = "visual/component/ToolbarMock/Toolbar.ts";
-          }
-
-          return r;
-        }
-      )
+      })
     ],
     devtool: false,
     watch: editorConfig.watch,

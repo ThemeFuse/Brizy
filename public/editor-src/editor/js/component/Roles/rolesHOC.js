@@ -1,4 +1,5 @@
-import React from "react";
+import { isFunction } from "es-toolkit";
+import React, { forwardRef } from "react";
 import { currentUserRole } from "./utils";
 
 export const rolesHOC = ({
@@ -21,7 +22,13 @@ export const rolesHOC = ({
       }
     } else {
       if (FallbackComponent) {
-        return <FallbackComponent {...props} ref={ref} />;
+        const { children } = props;
+
+        return (
+          <FallbackComponent {...props} ref={ref}>
+            {isFunction(children) ? children(props, ref) : children}
+          </FallbackComponent>
+        );
       }
 
       if (fallbackRender) {
@@ -31,7 +38,8 @@ export const rolesHOC = ({
 
     return null;
   }
+
   rolesHOC.displayName = `RolesHOC(${Component.displayName || Component.name})`;
 
-  return React.forwardRef(rolesHOC);
+  return forwardRef(rolesHOC);
 };
