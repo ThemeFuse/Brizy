@@ -67,14 +67,15 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 		}
 
         if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
-            $context = new Brizy_Content_Context(
-                $context->getProject(),
-                $this->getEntity( $contentPlaceholder ),
-                $context->getParentContext(),
-                $context->getParentPlaceholder()
-            );
-            $context->setProvider( $provider );
-
+            if ( $entity = $this->getEntity( $contentPlaceholder ) ) {
+                $context = new Brizy_Content_Context(
+                    $context->getProject(),
+                    $entity,
+                    $context->getParentContext(),
+                    $context->getParentPlaceholder()
+                );
+                $context->setProvider( $provider );
+            }
             $attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
 		} else {
 			$attachmentId = $placeholder->getValue( $context, $contentPlaceholder );
