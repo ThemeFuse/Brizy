@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.7.2
 Requires PHP: 7.2.24
-Stable tag: 2.6.12
+Stable tag: 2.6.13
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.6.13 - 2025-03-13 =
+* Fixed: Elements not displayed in preview
+* Fixed: User with Editor role cannot edit page
 
 = 2.6.12 - 2025-02-25 =
 * Improved: 3rd party API
