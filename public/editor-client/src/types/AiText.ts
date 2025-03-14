@@ -1,11 +1,11 @@
 export enum RequestOptions {
-  Model = "gpt-3.5-turbo",
+  Model = "gpt-3.5-turbo"
 }
 
 export enum Role {
   User = "user",
   System = "system",
-  Assistant = "assistant",
+  Assistant = "assistant"
 }
 
 export enum Action {
@@ -15,7 +15,7 @@ export enum Action {
   Professional = "Professional",
   Casual = "Casual",
   Confident = "Confident",
-  Friendly = "Friendly",
+  Friendly = "Friendly"
 }
 
 interface ConversationMessage {
@@ -64,5 +64,5 @@ export const LanguageCodes: Record<string, string> = {
   ces: "Czech",
   bel: "Belarusian",
   swe: "Swedish",
-  kaz: "Kazakh",
+  kaz: "Kazakh"
 };
