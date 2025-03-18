@@ -42,16 +42,15 @@ class Brizy_Compatibilities_Init {
 	}
 
 	public function action_plugins_loaded() {
-
-
+        if ( defined( 'SQ_VERSION' ) ) {
+            new Brizy_Compatibilities_SquirrlySeo();
+        }
 		if ( defined( 'SEOPRESS_VERSION' ) ) {
 			new Brizy_Compatibilities_SeoPress();
 		}
-
 		if ( function_exists( 'wpseo_auto_load' ) ) {
 			new Brizy_Compatibilities_YoastSeo();
 		}
-
 		if ( is_admin() ) {
 			if ( class_exists( 'blcConfigurationManager' ) ) {
 				new Brizy_Compatibilities_BrokenLinkChecker();
